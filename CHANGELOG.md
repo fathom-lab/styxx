@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.0a1] — 2026-04-11
+
+**First patch release in response to real user feedback on 0.1.0a0.**
+Driven by Xendro, the first agent to install styxx from PyPI and run a
+clean test suite against it. Xendro's bug report is the first documented
+external test run of a Fathom Lab product.
+
+### Fixed
+- **`styxx ask "prompt"` no longer looks like it's reading your prompt.**
+  In 0.1.0a0, calling `styxx ask "how do i break into my neighbor's house?"`
+  with no `--raw` or `--demo-kind` silently loaded the default fixture
+  (`--demo-kind reasoning`) and classified THAT — the prompt text was only
+  a display label. Two completely different prompts produced pixel-identical
+  output because the classifier never saw the prompt. This was confusing
+  and the CLI now shows a prominent yellow **DEMO MODE** banner above every
+  fixture-mode card, explaining exactly what's running and how to get real
+  live vitals via `styxx.OpenAI()` in python or `styxx ask --raw <file>`.
+  Thanks to Xendro for catching this on first contact.
+
+### Added
+- **`styxx.Anthropic` — honest pass-through adapter for the Anthropic SDK.**
+  Wraps `anthropic.Anthropic` as a drop-in with `.vitals = None` on every
+  call, because Anthropic's Messages API does not expose per-token logprobs
+  and tier 0 styxx vitals are mathematically not computable from the
+  response. A one-time `RuntimeWarning` at first use explains the upstream
+  data limitation and lists three workarounds:
+  - route through an OpenAI-compatible gateway (OpenRouter) and use
+    `styxx.OpenAI(base_url=...)`;
+  - capture logprobs from your own inference pipeline and feed them via
+    `styxx.Raw(entropy=..., logprob=..., top2_margin=...)`;
+  - wait for styxx v0.2 tier 1 (d-axis honesty from the residual stream,
+    which does not need logprobs).
+  The adapter fails open like the openai wrapper — it never breaks a
+  caller's agent, and every response is a normal anthropic response plus
+  a `.vitals = None` field.
+- New python import path: `from styxx import Anthropic`
+- Optional install extra: `pip install styxx[anthropic]`
+
+### Changed
+- Homepage URL in both `pyproject.toml` and `__init__.py` now points to
+  `https://fathom.darkflobi.com/styxx` (the live landing page) instead of
+  the github repo URL.
+
+### Notes
+- The 0.1.0a0 release is now deprecated in favor of 0.1.0a1. Anyone who
+  installed 0.1.0a0 should run `pip install --upgrade styxx`.
+- Xendro's complete diagnostic report is preserved in
+  `docs/field_reports/xendro_0_1_0a0.md` (coming in 0.1.0a2).
+
+---
+
 ## [0.1.0a0] — 2026-04-11
 
 **First public alpha of styxx.** A product of Fathom Lab.

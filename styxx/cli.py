@@ -103,13 +103,23 @@ def cmd_ask(args):
                         category), so the classifier reads genuine
                         data and produces honest predictions
 
-    Real provider adapters (openai, anthropic) run through the import
-    path, not the CLI, for v0.1. v0.2 will add CLI-side api key flow.
+    The CLI does NOT execute live LLM calls in v0.1. For live vitals
+    on your own model calls, use the python API:
+
+        from styxx import OpenAI
+        client = OpenAI()                  # drop-in for openai.OpenAI
+        r = client.chat.completions.create(...)
+        print(r.vitals.summary)
+
+    The CLI is intentionally scoped to fixture-replay + pre-captured
+    trajectories so `styxx ask` never makes surprise network calls.
     """
     runtime = StyxxRuntime()
 
     preview_prompt = args.prompt
     source_label = args.model or "demo"
+    # Track whether we're in demo-fixture mode for the banner below
+    is_demo_mode = not args.raw
 
     if args.raw:
         entropy, logprob, top2 = _load_trajectory_json(args.raw)
@@ -129,6 +139,33 @@ def cmd_ask(args):
 
     # Blank-line padding around all CLI output for readability
     print()
+
+    # ── DEMO-MODE BANNER ──────────────────────────────────────────
+    # If we're running on bundled fixture data (no --raw), show a
+    # very prominent banner explaining that the CLI is replaying
+    # atlas data, NOT reading the prompt text. This is the fix for
+    # the v0.1.0a0 confusion where `styxx ask "prompt"` looked like
+    # it was reading your prompt but was actually replaying a fixture.
+    if is_demo_mode:
+        use_color = color_enabled()
+        c = Palette
+        kind = args.demo_kind or "reasoning"
+        print(wrap("  ╔══════════════════════════════════════════════════════════════════╗", c.YELLOW, use_color))
+        print(wrap("  ║  ", c.YELLOW, use_color) + wrap("DEMO MODE", c.YELLOW, use_color) + wrap(" · replaying bundled atlas fixture                      ║", c.YELLOW, use_color))
+        print(wrap("  ║                                                                  ║", c.YELLOW, use_color))
+        print(wrap("  ║  the classifier is reading the ", c.DIM, use_color) + wrap(f"atlas:{kind}", c.CYAN, use_color) + wrap(" trajectory.           ║", c.DIM, use_color))
+        print(wrap("  ║  the prompt text you passed is ", c.DIM, use_color) + wrap("not", c.YELLOW, use_color) + wrap(" being classified — it is a         ║", c.DIM, use_color))
+        print(wrap("  ║  display label only. the CLI does not make live model calls.    ║", c.DIM, use_color))
+        print(wrap("  ║                                                                  ║", c.YELLOW, use_color))
+        print(wrap("  ║  to see real live vitals:                                        ║", c.DIM, use_color))
+        print(wrap("  ║    ", c.DIM, use_color) + wrap("from styxx import OpenAI", c.CYAN, use_color) + wrap("   (in python, against your own model) ║", c.DIM, use_color))
+        print(wrap("  ║  to see a different category of fixture:                        ║", c.DIM, use_color))
+        print(wrap("  ║    ", c.DIM, use_color) + wrap("styxx ask --demo-kind {adversarial|refusal|hallucination}", c.CYAN, use_color) + wrap("   ║", c.DIM, use_color))
+        print(wrap("  ║  to classify a pre-captured logprob trajectory:                  ║", c.DIM, use_color))
+        print(wrap("  ║    ", c.DIM, use_color) + wrap("styxx ask --raw trajectory.json", c.CYAN, use_color) + wrap("                           ║", c.DIM, use_color))
+        print(wrap("  ╚══════════════════════════════════════════════════════════════════╝", c.YELLOW, use_color))
+        print()
+
     if args.watch:
         card = render_vitals_card(
             vitals=vitals,
@@ -146,6 +183,207 @@ def cmd_ask(args):
         print(header)
         print(render_vitals_compact(vitals, prompt=preview_prompt))
     print()
+    return 0
+
+
+def cmd_compare(args):
+    """Run all 6 bundled atlas fixtures side-by-side and print a
+    comparison table.
+
+    This is the answer to "does styxx actually discriminate between
+    categories?" — instead of showing one fixture at a time and
+    leaving the user to guess, this command classifies every
+    bundled demo trajectory and shows the 6 phase-1 / phase-4
+    predictions in one table.
+
+    Each trajectory was captured from google/gemma-2-2b-it on a
+    real atlas v0.3 probe. The classifier is the same centroid
+    model the openai adapter uses.
+    """
+    runtime = StyxxRuntime()
+    use_color = color_enabled()
+    c = Palette
+    data = _load_demo_trajectories()
+    source_model = data.get("source_model", "unknown")
+    # The source_atlas_version key in the demo JSON is a schema
+    # version (0.1), not the atlas version the probes come from.
+    # The probes are atlas v0.3 probes (see the bundled note).
+    atlas_version = "atlas v0.3"
+
+    # Order to display in — keeps the "quiet" categories first and
+    # the three load-bearing detection categories at the bottom
+    # so the interesting signals are where the eye lands last.
+    display_order = [
+        "retrieval", "reasoning", "creative",
+        "refusal", "adversarial", "hallucination",
+    ]
+
+    # Categories that carry the load-bearing calibrated signals
+    # from atlas v0.3 (tier 0 LOO report). These get a ★ marker
+    # when the prediction matches their native category — it's a
+    # visual cue that the discriminating feature fired.
+    # Chance = 1/6 = 0.167; ≥ 0.52 is the atlas v0.3 headline.
+    CALIBRATED_STRENGTH = 0.30   # minimum for a ★
+    LOAD_BEARING = {"refusal", "adversarial", "hallucination"}
+
+    rows = []
+    for kind in display_order:
+        entropy, logprob, top2, prompt_preview = _get_demo_trajectory(kind)
+        vitals = runtime.run_on_trajectories(entropy, logprob, top2)
+
+        p1 = vitals.phase1_pre
+        p4 = vitals.phase4_late
+        p1_pred = p1.predicted_category
+        p1_conf = p1.confidence
+        p4_pred = p4.predicted_category if p4 else "—"
+        p4_conf = p4.confidence if p4 else 0.0
+
+        # Did the classifier correctly identify this fixture?
+        # (We know the true label because it's the atlas probe's category.)
+        p1_hit = (p1_pred == kind)
+        p4_hit = (p4_pred == kind)
+        starred = (
+            kind in LOAD_BEARING
+            and (p1_hit or p4_hit)
+            and max(p1_conf, p4_conf) >= CALIBRATED_STRENGTH
+        )
+
+        rows.append({
+            "kind": kind,
+            "p1_pred": p1_pred,
+            "p1_conf": p1_conf,
+            "p4_pred": p4_pred,
+            "p4_conf": p4_conf,
+            "p1_hit": p1_hit,
+            "p4_hit": p4_hit,
+            "starred": starred,
+            "prompt": prompt_preview,
+        })
+
+    # ── render the table ───────────────────────────────────────
+    print()
+    print(wrap(
+        "  +====================================================================+",
+        c.MATRIX, use_color,
+    ))
+    print(wrap(
+        f"  |  styxx compare * all 6 atlas fixtures * {atlas_version:<27}|",
+        c.MATRIX, use_color,
+    ))
+    print(wrap(
+        f"  |  source: {source_model:<58}|",
+        c.DIM, use_color,
+    ))
+    print(wrap(
+        "  +====================================================================+",
+        c.MATRIX, use_color,
+    ))
+    print()
+
+    # Column header — raw text widths, color applied separately
+    header_raw = (
+        f"  {'kind':<14}{'phase 1 (t<=1)':<22}{'phase 4 (t<=25)':<22}{'verdict':<10}"
+    )
+    print(wrap(header_raw, c.DIM, use_color))
+    print(wrap("  " + "-" * 70, c.DIM, use_color))
+
+    for r in rows:
+        kind = r["kind"]
+        p1p = r["p1_pred"]
+        p1c = r["p1_conf"]
+        p4p = r["p4_pred"]
+        p4c = r["p4_conf"]
+
+        # Choose a color for each cell based on prediction meaning.
+        def _color_for(pred: str, true: str):
+            if pred == true:
+                return c.MATRIX
+            if pred == "refusal":
+                return c.YELLOW
+            if pred in ("adversarial", "hallucination"):
+                return c.RED
+            return c.DIM
+
+        p1_raw = f"{p1p:<14} {p1c:>5.2f}"
+        p4_raw = f"{p4p:<14} {p4c:>5.2f}"
+        p1_padded = p1_raw.ljust(22)
+        p4_padded = p4_raw.ljust(22)
+        p1_cell = wrap(p1_padded, _color_for(p1p, kind), use_color)
+        p4_cell = wrap(p4_padded, _color_for(p4p, kind), use_color)
+
+        # Overall verdict: if phase 4 matches the category, "match";
+        # if load-bearing and p1 or p4 hits, add a star marker
+        if r["p4_hit"]:
+            verdict_raw = "match"
+            verdict_color = c.MATRIX
+        elif p4p == "refusal":
+            verdict_raw = "warn"
+            verdict_color = c.YELLOW
+        elif p4p in ("adversarial", "hallucination"):
+            verdict_raw = "flag"
+            verdict_color = c.RED
+        else:
+            verdict_raw = "drift"
+            verdict_color = c.DIM
+
+        if r["starred"]:
+            verdict_raw = f"{verdict_raw} *"
+
+        verdict_padded = verdict_raw.ljust(10)
+        verdict_cell = wrap(verdict_padded, verdict_color, use_color)
+
+        kind_padded = f"{kind:<14}"
+        print(
+            "  "
+            + wrap(kind_padded, c.DIM, use_color)
+            + p1_cell
+            + p4_cell
+            + verdict_cell
+        )
+
+    print(wrap("  " + "-" * 70, c.DIM, use_color))
+    print(wrap(
+        "  * = load-bearing detection hit on calibrated atlas v0.3 signal",
+        c.DIM, use_color,
+    ))
+    print(wrap(
+        "  chance = 0.167 (1/6 categories) * atlas headline >= 0.52 @ best phase",
+        c.DIM, use_color,
+    ))
+    print()
+
+    # Machine-readable footer for agents parsing this output
+    summary = {
+        "command": "compare",
+        "atlas_version": atlas_version,
+        "source_model": source_model,
+        "rows": [
+            {
+                "kind": r["kind"],
+                "phase1_pred": r["p1_pred"],
+                "phase1_conf": round(r["p1_conf"], 3),
+                "phase4_pred": r["p4_pred"],
+                "phase4_conf": round(r["p4_conf"], 3),
+                "p1_hit": r["p1_hit"],
+                "p4_hit": r["p4_hit"],
+            }
+            for r in rows
+        ],
+    }
+    n_hits_p1 = sum(1 for r in rows if r["p1_hit"])
+    n_hits_p4 = sum(1 for r in rows if r["p4_hit"])
+    summary["phase1_accuracy"] = round(n_hits_p1 / len(rows), 3)
+    summary["phase4_accuracy"] = round(n_hits_p4 / len(rows), 3)
+    print(wrap(
+        f"  json → {json.dumps(summary, separators=(',', ':'))}",
+        c.DIM, use_color,
+    ))
+    print()
+
+    # Audit log every fixture too, so `styxx log tail` reflects the run
+    for r, kind in zip(rows, display_order):
+        pass  # rows already classified; audit happens in run_on_trajectories
+
     return 0
 
 
@@ -344,6 +582,13 @@ def _build_parser() -> argparse.ArgumentParser:
                        help="category of bundled atlas demo trajectory to read")
     p_ask.add_argument("--seed", type=int, default=42)
     p_ask.set_defaults(func=cmd_ask)
+
+    # compare — run all 6 atlas fixtures side-by-side
+    p_compare = sub.add_parser(
+        "compare",
+        help="run all 6 atlas fixtures and show a side-by-side table",
+    )
+    p_compare.set_defaults(func=cmd_compare)
 
     # log
     p_log = sub.add_parser("log", help="audit log operations")

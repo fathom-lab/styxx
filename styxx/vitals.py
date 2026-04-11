@@ -300,3 +300,73 @@ class Vitals:
         """
         from .cards import render_vitals_card
         return render_vitals_card(self)
+
+    # ── agent-friendly shortcut properties ────────────────────────
+    #
+    # These are the shapes Xendro asked for in 0.1.0a1 feedback:
+    #     vitals.phase1  -> "reasoning:0.28"
+    #     vitals.phase4  -> "reasoning:0.45"
+    #     vitals.gate    -> "pass" / "warn" / "fail" / "pending"
+    # They're thin compact views over the PhaseReading objects.
+
+    @property
+    def phase1(self) -> str:
+        """Compact string view of phase 1: 'category:confidence'."""
+        if self.phase1_pre is None:
+            return "-"
+        return f"{self.phase1_pre.predicted_category}:{self.phase1_pre.confidence:.2f}"
+
+    @property
+    def phase2(self) -> str:
+        if self.phase2_early is None:
+            return "-"
+        return f"{self.phase2_early.predicted_category}:{self.phase2_early.confidence:.2f}"
+
+    @property
+    def phase3(self) -> str:
+        if self.phase3_mid is None:
+            return "-"
+        return f"{self.phase3_mid.predicted_category}:{self.phase3_mid.confidence:.2f}"
+
+    @property
+    def phase4(self) -> str:
+        """Compact string view of phase 4: 'category:confidence'.
+
+        Returns '-' if phase 4 wasn't reached (e.g., short streaming
+        completion that didn't hit the 25-token window).
+        """
+        if self.phase4_late is None:
+            return "-"
+        return f"{self.phase4_late.predicted_category}:{self.phase4_late.confidence:.2f}"
+
+    @property
+    def gate(self) -> str:
+        """Default gate status computed from phase 4.
+
+        Returns one of:
+          'pass'    - quiet reasoning / retrieval / creative
+          'warn'    - refusal or adversarial attractor caught
+          'fail'    - hallucination attractor caught
+          'pending' - phase 4 not yet reached (short completion)
+
+        Threshold policy: chance level on 6 categories is 0.167.
+        We use 0.20 (chance + ~0.03) as the floor for meaningful
+        predictions. At that floor any ARGMAX that lands on a
+        load-bearing category is reported.
+
+        User-defined gates registered via styxx.on_gate() are
+        dispatched AFTER this default gate is computed - they're
+        additive, they don't override this value. If you want
+        custom logic, read phase1/phase4 directly and compute your
+        own verdict.
+        """
+        CHANCE_FLOOR = 0.20   # 0.167 chance + ~0.03 margin
+        if self.phase4_late is None:
+            return "pending"
+        pred = self.phase4_late.predicted_category
+        conf = self.phase4_late.confidence
+        if pred == "hallucination" and conf > CHANCE_FLOOR:
+            return "fail"
+        if pred in ("refusal", "adversarial") and conf > CHANCE_FLOOR:
+            return "warn"
+        return "pass"

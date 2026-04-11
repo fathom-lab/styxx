@@ -38,10 +38,10 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.1.0a0"
+__version__ = "0.1.0a1"
 __author__ = "flobi"
 __license__ = "MIT"
-__url__ = "https://github.com/heyzoos123-blip/styxx"
+__url__ = "https://fathom.darkflobi.com/styxx"
 __tagline__ = "nothing crosses unseen."
 
 
@@ -114,16 +114,74 @@ def Raw(*args, **kwargs):
     return RawAdapter(*args, **kwargs)
 
 
+def Anthropic(*args, **kwargs):
+    """Honest pass-through wrapper around anthropic.Anthropic.
+
+    Usage:
+        # Before: from anthropic import Anthropic
+        from styxx import Anthropic
+        client = Anthropic()
+        r = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": "..."}],
+        )
+        print(r.content[0].text)   # normal anthropic response
+        print(r.vitals)            # always None (see below)
+
+    IMPORTANT — .vitals is None on every Anthropic call.
+    Anthropic's Messages API does not expose per-token logprobs
+    (no logprobs=True / top_logprobs=k parameter), so tier 0 styxx
+    vitals cannot be computed from the response. This wrapper
+    exists so styxx.Anthropic is a valid import path, and so a
+    one-time warning explains the situation at first use.
+
+    Workarounds if you need vitals on Claude inference:
+      - route through an OpenAI-compatible gateway (OpenRouter)
+        and use styxx.OpenAI(base_url=...)
+      - use styxx.Raw with a pre-captured logprob trajectory
+      - wait for styxx v0.2 tier 1 (d-axis honesty from residual
+        stream — does not need logprobs)
+    """
+    from .adapters.anthropic import AnthropicWithVitals
+    return AnthropicWithVitals(*args, **kwargs)
+
+
 # Public API
 from .core import StyxxRuntime
 from .vitals import Vitals, CentroidClassifier
+from .watch import watch, observe, is_concerning, WatchSession
+from .gates import on_gate, remove_gate, clear_gates, list_gates
+from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
 
 __all__ = [
+    # core
     "StyxxRuntime",
     "Vitals",
     "CentroidClassifier",
+    # adapters
     "OpenAI",
+    "Anthropic",
     "Raw",
+    # observation — passive monitoring
+    "watch",
+    "observe",
+    "is_concerning",
+    "WatchSession",
+    # gates — programmable thresholds + callbacks
+    "on_gate",
+    "remove_gate",
+    "clear_gates",
+    "list_gates",
+    # reflex — active intervention (THE pitch)
+    "reflex",
+    "rewind",
+    "abort",
+    "ReflexSession",
+    "ReflexSignal",
+    "RewindSignal",
+    "AbortSignal",
+    # metadata
     "__version__",
     "__tagline__",
 ]

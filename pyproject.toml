@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "0.1.0a0"
+version = "0.1.0a1"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }
@@ -54,9 +54,12 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/heyzoos123-blip/styxx"
-Research = "https://github.com/heyzoos123-blip/fathom"
-"Fathom Lab" = "https://twitter.com/fathom_lab"
+Homepage       = "https://fathom.darkflobi.com/styxx"
+Documentation  = "https://fathom.darkflobi.com/styxx"
+"Fathom Lab"   = "https://fathom.darkflobi.com/"
+"Research Paper" = "https://doi.org/10.5281/zenodo.19326174"
+"@fathom_lab"  = "https://x.com/fathom_lab"
+"Source"       = "https://github.com/heyzoos123-blip/styxx"
 "Issue Tracker" = "https://github.com/heyzoos123-blip/styxx/issues"
 
 [project.scripts]
