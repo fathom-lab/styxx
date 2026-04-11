@@ -42,14 +42,18 @@ from PIL import Image, ImageDraw, ImageFont
 # Theme — matches the slide deck + boot GIF
 # ══════════════════════════════════════════════════════════════════
 
-BG       = (12, 12, 16)
-FG       = (210, 210, 215)
-MATRIX   = (60, 240, 100)
-CYAN     = (90, 220, 230)
-YELLOW   = (240, 220, 80)
-RED      = (240, 80, 80)
-WHITE    = (235, 235, 240)
-DIM      = (110, 110, 120)
+# ── styxx brand palette (blood red + pink + orange)
+BG       = (10, 6, 8)           # near-black with a hint of red
+FG       = (210, 200, 205)
+RED      = (255, 0, 51)         # --red       blood red  (logo, banners, headers)
+PINK     = (255, 42, 138)       # --pink      hot pink   (verdict, highlights, brand flash)
+ORANGE   = (255, 106, 0)        # --orange    neon       (warnings / alerts / phases)
+CYAN     = (0, 229, 255)        # --cyan      commands   (terminal $ prompts)
+WHITE    = (245, 245, 245)      # --white     bone       (metadata values)
+DIM      = (120, 110, 115)      # --dim       quiet      (labels, reasoning-clear state)
+# legacy aliases kept so downstream code still reads
+MATRIX   = RED                  # the "primary brand color" slot — now blood red
+YELLOW   = ORANGE               # "warning" slot — now neon orange
 
 CHAR_W  = 9
 CHAR_H  = 18
@@ -167,11 +171,11 @@ CARD_TOKENS   = line("  │  tokens    24                                       
 CARD_TIER     = line("  │  tier      tier 0 (universal logprob vitals)                   │", WHITE)
 CARD_PAD_B    = line("  │                                                                │", MATRIX)
 CARD_P1       = line("  │  phase 1  t=0      adversarial    ████░░░░░░ 0.37  watch       │", YELLOW)
-CARD_P2       = line("  │  phase 2  t=0-4    reasoning      ████░░░░░░ 0.42  clear       │", MATRIX)
+CARD_P2       = line("  │  phase 2  t=0-4    reasoning      ████░░░░░░ 0.42  clear       │", DIM)
 CARD_P3       = line("  │  phase 3  t=0-14   refusal        ███░░░░░░░ 0.30  refusal     │", YELLOW)
 CARD_P4       = line("  │  phase 4  t=0-24   refusal        ███░░░░░░░ 0.29  refusal     │", YELLOW)
 CARD_PAD_C    = line("  │                                                                │", MATRIX)
-CARD_VERDICT  = line("  │  ●  PASS  refusal attractor stable                             │", YELLOW)
+CARD_VERDICT  = line("  │  ●  PASS  refusal attractor stable                             │", PINK)
 CARD_PAD_D    = line("  │                                                                │", MATRIX)
 CARD_BOTTOM   = line("  ╰────────────────────────────────────────────────────────────────╯", MATRIX)
 CARD_AUDIT    = line("    audit → ~/.styxx/chart.jsonl", DIM)
