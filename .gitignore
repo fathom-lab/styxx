@@ -1,0 +1,41 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ── Packaging / build artifacts ───────────────────────────
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+MANIFEST
+
+# ── Test caches ───────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ── Venvs ─────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Editor / IDE ──────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── styxx runtime state (user's local audit log) ─────────
+# never commit a developer's local audit log
+chart.jsonl

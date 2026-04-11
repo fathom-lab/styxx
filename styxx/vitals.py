@@ -1,0 +1,302 @@
+# -*- coding: utf-8 -*-
+"""
+styxx.vitals — feature extraction + nearest-centroid classifier
+
+Loads the atlas v0.3 centroid artifact (sha256 pinned) and exposes the
+classifier that turns raw logprob trajectories into cognitive state
+readings. This is the scientific core of tier 0.
+
+No heavy dependencies — numpy only.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import os
+from dataclasses import dataclass, field, asdict
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence, Tuple
+
+import numpy as np
+
+
+# ══════════════════════════════════════════════════════════════════
+# Constants — locked from generate_centroids.py
+# ══════════════════════════════════════════════════════════════════
+
+CATEGORIES = [
+    "retrieval", "reasoning", "refusal",
+    "creative", "adversarial", "hallucination",
+]
+
+TIER0_SIGNALS = ["entropy", "logprob", "top2_margin"]
+
+PHASE_TOKEN_CUTOFFS = {
+    "phase1_preflight":  1,
+    "phase2_early":      5,
+    "phase3_mid":       15,
+    "phase4_late":      25,
+}
+
+PHASE_ORDER = ["phase1_preflight", "phase2_early", "phase3_mid", "phase4_late"]
+
+# sha256 of the shipped centroid file. Pinned for reproducibility.
+# If this ever mismatches the actual file, styxx refuses to import —
+# it means the calibration data has been tampered with or corrupted.
+EXPECTED_CENTROIDS_SHA256 = (
+    "f25edc5f47bb93928671aab05f38f351a2d0df0fb7722d53e48d2368b0d5c543"
+)
+
+
+# ══════════════════════════════════════════════════════════════════
+# Feature extraction
+# ══════════════════════════════════════════════════════════════════
+
+def extract_features(
+    trajectories: Dict[str, Sequence[float]],
+    n_tokens: int,
+) -> np.ndarray:
+    """Build the (mean, std, min, max) × (entropy, logprob, top2_margin)
+    feature vector over tokens [0, n_tokens).
+
+    Returns a 12-dim numpy array in the order locked at calibration time.
+    """
+    feats: List[float] = []
+    for signal in TIER0_SIGNALS:
+        raw = trajectories.get(signal, [])
+        if raw is None or len(raw) == 0:
+            feats.extend([0.0, 0.0, 0.0, 0.0])
+            continue
+        window = np.asarray(list(raw)[:n_tokens], dtype=float)
+        if len(window) == 0:
+            feats.extend([0.0, 0.0, 0.0, 0.0])
+            continue
+        feats.append(float(window.mean()))
+        feats.append(float(window.std(ddof=1)) if len(window) > 1 else 0.0)
+        feats.append(float(window.min()))
+        feats.append(float(window.max()))
+    return np.asarray(feats, dtype=float)
+
+
+# ══════════════════════════════════════════════════════════════════
+# Centroid loader (sha-verified)
+# ══════════════════════════════════════════════════════════════════
+
+def _compute_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 16), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _default_centroids_path() -> Path:
+    return Path(__file__).resolve().parent / "centroids" / "atlas_v0.3.json"
+
+
+def load_centroids(path: Optional[Path] = None,
+                   verify_sha: bool = True) -> dict:
+    """Load the atlas centroid artifact, verifying sha256 by default.
+
+    Raises FileNotFoundError if the centroid file is missing.
+    Raises ValueError if the sha256 does not match EXPECTED_CENTROIDS_SHA256.
+
+    STYXX_SKIP_SHA=1 in the environment will skip the sha check.
+    Intended only for local dev — never set this in production.
+    """
+    path = Path(path) if path is not None else _default_centroids_path()
+    if not path.exists():
+        raise FileNotFoundError(
+            "\n"
+            "  styxx: calibration centroids not found.\n"
+            f"  expected location: {path}\n"
+            "  this file is shipped inside the styxx package and should\n"
+            "  be installed automatically with pip. if it's missing you\n"
+            "  likely have a broken install. try:\n"
+            "    pip install --force-reinstall styxx\n"
+            "  or if working from source:\n"
+            "    python scripts/generate_centroids.py \\\n"
+            "      --captures <atlas/captures> \\\n"
+            "      --out styxx/centroids/atlas_v0.3.json\n"
+        )
+
+    # STYXX_SKIP_SHA dev escape hatch
+    import os
+    skip_sha = os.environ.get("STYXX_SKIP_SHA", "").strip().lower() in (
+        "1", "true", "yes", "on"
+    )
+
+    if verify_sha and not skip_sha:
+        actual = _compute_sha256(path)
+        if actual != EXPECTED_CENTROIDS_SHA256:
+            raise ValueError(
+                "\n"
+                "  styxx: calibration centroid sha256 mismatch.\n"
+                f"  file:     {path}\n"
+                f"  expected: {EXPECTED_CENTROIDS_SHA256}\n"
+                f"  actual:   {actual}\n"
+                "\n"
+                "  The shipped calibration data has been modified from\n"
+                "  its pinned release version. styxx refuses to load an\n"
+                "  altered centroid file — the whole point of the hash\n"
+                "  pin is to catch tampering or corruption.\n"
+                "\n"
+                "  If you know this is safe and are debugging locally,\n"
+                "  you can bypass the check with:\n"
+                "    STYXX_SKIP_SHA=1 python ...\n"
+                "\n"
+                "  Never set STYXX_SKIP_SHA in production.\n"
+            )
+
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+# ══════════════════════════════════════════════════════════════════
+# Classifier
+# ══════════════════════════════════════════════════════════════════
+
+class CentroidClassifier:
+    """Nearest-centroid classifier in z-score feature space.
+
+    Training-free at runtime: the centroids were pre-computed by
+    generate_centroids.py from the atlas v0.3 captures and ship with
+    the package. This class just applies them.
+    """
+
+    def __init__(self, centroids_artifact: Optional[dict] = None):
+        if centroids_artifact is None:
+            centroids_artifact = load_centroids()
+        self.artifact = centroids_artifact
+        self.categories: List[str] = list(centroids_artifact["categories"])
+        self._phases: Dict[str, dict] = {}
+        for phase_name, phase_data in centroids_artifact["phases"].items():
+            mu = np.asarray(phase_data["mu"], dtype=float)
+            sigma = np.asarray(phase_data["sigma"], dtype=float)
+            cent = {
+                cat: np.asarray(phase_data["centroids"][cat], dtype=float)
+                for cat in self.categories
+            }
+            self._phases[phase_name] = {
+                "mu": mu,
+                "sigma": sigma,
+                "centroids": cent,
+            }
+
+    def classify(
+        self,
+        trajectories: Dict[str, Sequence[float]],
+        phase: str,
+    ) -> "PhaseReading":
+        """Classify a trajectory at a given phase.
+
+        Returns a PhaseReading with predicted category, margin,
+        distance to every centroid, and softmax-like confidence.
+        """
+        if phase not in self._phases:
+            raise ValueError(
+                f"unknown phase '{phase}', must be one of {list(self._phases)}"
+            )
+        n_tokens = PHASE_TOKEN_CUTOFFS[phase]
+        feats = extract_features(trajectories, n_tokens)
+        phase_data = self._phases[phase]
+        mu, sigma = phase_data["mu"], phase_data["sigma"]
+        z = (feats - mu) / sigma
+        distances: Dict[str, float] = {}
+        for cat, centroid in phase_data["centroids"].items():
+            distances[cat] = float(np.linalg.norm(z - centroid))
+        # Nearest + runner-up margin
+        sorted_cats = sorted(distances.items(), key=lambda kv: kv[1])
+        nearest, nearest_d = sorted_cats[0]
+        runner_up_d = sorted_cats[1][1] if len(sorted_cats) > 1 else nearest_d
+        margin = float(runner_up_d - nearest_d)
+        # Pseudo-softmax confidence (not probabilistic, but useful for UI)
+        # lower distance = higher score
+        max_d = max(distances.values())
+        scores = {
+            cat: float(math.exp(-(d - nearest_d)))
+            for cat, d in distances.items()
+        }
+        total = sum(scores.values()) or 1.0
+        probs = {cat: scores[cat] / total for cat in self.categories}
+        return PhaseReading(
+            phase=phase,
+            n_tokens_used=n_tokens,
+            features=feats.tolist(),
+            predicted_category=nearest,
+            margin=margin,
+            distances=distances,
+            probs=probs,
+        )
+
+
+# ══════════════════════════════════════════════════════════════════
+# Data classes
+# ══════════════════════════════════════════════════════════════════
+
+@dataclass
+class PhaseReading:
+    """Result of one phase's classification."""
+    phase: str
+    n_tokens_used: int
+    features: List[float]
+    predicted_category: str
+    margin: float
+    distances: Dict[str, float]
+    probs: Dict[str, float]
+
+    def top3(self) -> List[Tuple[str, float]]:
+        """Top three categories by probability."""
+        return sorted(self.probs.items(), key=lambda kv: -kv[1])[:3]
+
+    @property
+    def confidence(self) -> float:
+        """Probability assigned to the predicted (nearest) category."""
+        return self.probs[self.predicted_category]
+
+
+@dataclass
+class Vitals:
+    """Complete cognitive vitals for one LLM generation.
+
+    This is what every call through styxx emits as .vitals alongside
+    the normal .choices.
+    """
+    phase1_pre: PhaseReading
+    phase2_early: Optional[PhaseReading] = None
+    phase3_mid: Optional[PhaseReading] = None
+    phase4_late: Optional[PhaseReading] = None
+    tier_active: int = 0
+    abort_reason: Optional[str] = None
+
+    def as_dict(self) -> dict:
+        """JSON-serializable dict view. Injects computed fields
+        (confidence, top3) that aren't stored on PhaseReading."""
+        def _phase_dict(r: Optional[PhaseReading]) -> Optional[dict]:
+            if r is None:
+                return None
+            d = asdict(r)
+            d["confidence"] = r.confidence
+            d["top3"] = r.top3()
+            return d
+        return {
+            "phase1_pre":   _phase_dict(self.phase1_pre),
+            "phase2_early": _phase_dict(self.phase2_early),
+            "phase3_mid":   _phase_dict(self.phase3_mid),
+            "phase4_late":  _phase_dict(self.phase4_late),
+            "tier_active":  self.tier_active,
+            "abort_reason": self.abort_reason,
+        }
+
+    @property
+    def summary(self) -> str:
+        """Render the full ASCII vitals card.
+
+        Delegates to styxx.cards.render_vitals_card so there's one
+        source of truth for card rendering. Lazy imported to avoid
+        a circular dependency between vitals.py and cards.py.
+        """
+        from .cards import render_vitals_card
+        return render_vitals_card(self)
