@@ -80,14 +80,14 @@ BOOT_LINES = [
     line("  [0000.155]  12 models × 6 categories × 4 phases ....................... calibrated", MATRIX),
     line(""),
     line("  ─── tier detection ─────", DIM),
-    line("  [0000.201]  tier 0  universal logprob vitals .......................... ★ active", MATRIX),
+    line("  [0000.201]  tier 0  universal logprob vitals .......................... ▸ active", MATRIX),
     line("  [0000.214]  tier 1  d-axis honesty ....................................   not detected", DIM),
     line("  [0000.227]  tier 2  k/s/c sae instruments .............................   not detected", DIM),
     line("  [0000.240]  tier 3  steering + guardian + autopilot ...................   not detected", DIM),
     line(""),
     line("  ─── phase calibration ─────", DIM),
-    line("  [0000.255]  phase 1  pre-flight ....................................... adv=0.52 ★", CYAN),
-    line("  [0000.268]  phase 4  late-flight ...................................... hall=0.52 ★  reas=0.69", CYAN),
+    line("  [0000.255]  phase 1  pre-flight ....................................... adv=0.52 ▸", CYAN),
+    line("  [0000.268]  phase 4  late-flight ...................................... hall=0.52 ▸  reas=0.69", CYAN),
     line(""),
     line("  ─── runtime ─────", DIM),
     line("  [0000.290]  runtime initialized ....................................... ok", MATRIX),
@@ -119,8 +119,8 @@ VITALS_CARD = [
     line("  │  phase 3  t=0-14   reasoning      █████░░░░░ 0.45  clear       │", MATRIX),
     line("  │  phase 4  t=0-24   reasoning      ████░░░░░░ 0.45  clear       │", MATRIX),
     line("  │                                                                │", MATRIX),
-    line("  │  entropy   █▅▅▁▁▄▇▂▂▆▁▃▁▁▅▅▃▆▄▁▇▂▂▃▁▂▄▁▁▄                      │", CYAN),
-    line("  │  logprob   ▁▆▅██▅▄██▄█▇██▅▄▇▄▆█▂█▇▇█▇▆██▅                      │", CYAN),
+    line("  │  entropy   █▓▓░░▒▓░░▓░▒░░▓▓▒▓▒░▓░░▒░░▒░░▒                      │", CYAN),
+    line("  │  logprob   ░▓▓██▓▒██▒█▓██▓▒▓▒▓█░█▓▓█▓▓██▓                      │", CYAN),
     line("  │                                                                │", MATRIX),
     line("  │  ● PASS  reasoning attractor stable                            │", MATRIX),
     line("  │                                                                │", MATRIX),
@@ -134,7 +134,14 @@ FINAL_FOOTER = [
     line("  · · · nothing crosses unseen · · ·", DIM),
 ]
 
-ALL_LINES = LOGO_LINES + BOOT_LINES + VITALS_CARD + FINAL_FOOTER
+# The GIF is a boot-log animation: logo → boot sequence → hold.
+# The vitals card is NOT included in the GIF because the 38-row
+# canvas can't fit the logo + boot log + card simultaneously, and
+# showing the card as a static slide (demo/slides/06_card.png) is
+# cleaner for social sharing anyway. If you want to re-introduce
+# the card reveal in a future GIF, use a taller canvas or a
+# scene-clear transition between boot and card.
+ALL_LINES = LOGO_LINES + BOOT_LINES + FINAL_FOOTER
 
 
 def build_frames():
@@ -161,30 +168,15 @@ def build_frames():
             dur = 110
         frames.append((ALL_LINES[:end], dur))
 
-    # Short pause before the card
-    frames[-1] = (frames[-1][0], 800)
+    # Pause on the last boot line to let it sink in
+    frames[-1] = (frames[-1][0], 900)
 
-    # Reveal vitals card line by line
-    start_card = logo_end + len(BOOT_LINES)
-    for i in range(1, len(VITALS_CARD) + 1):
-        end = start_card + i
-        text = ALL_LINES[end - 1][0]
-        if "│" in text and "phase" in text:
-            dur = 140
-        elif "entropy" in text or "logprob" in text:
-            dur = 180
-        elif "PASS" in text:
-            dur = 400
-        else:
-            dur = 90
-        frames.append((ALL_LINES[:end], dur))
-
-    # Final state with footer
-    end_full = start_card + len(VITALS_CARD) + len(FINAL_FOOTER)
-    frames.append((ALL_LINES[:end_full], 1500))
+    # Reveal the footer tagline
+    end_full = logo_end + len(BOOT_LINES) + len(FINAL_FOOTER)
+    frames.append((ALL_LINES[:end_full], 1600))
 
     # Hold on final frame so the GIF doesn't loop instantly
-    frames.append((ALL_LINES[:end_full], 2200))
+    frames.append((ALL_LINES[:end_full], 2400))
 
     return frames
 
