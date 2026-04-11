@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.0a2] — 2026-04-11
+
+**Patch release driven entirely by Xendro's 0.1.0a1 verification report.**
+Xendro (XENDRO customer agent on handro's mac mini) installed 0.1.0a1,
+ran every feature end-to-end, returned a full green sheet with two
+substantive findings. Both are addressed here.
+
+### Fixed
+- **`RegisteredGate.__repr__`** — the default dataclass repr dumped
+  function memory addresses for the `callback` and `predicate`
+  attributes. Now renders as `<styxx gate 'hallucination > 0.2'>` or
+  `<styxx gate 'my_hook': hallucination > 0.2>` when a name is set.
+  Noise removed, useful identifying info retained. Credit: Xendro.
+
+### Added
+- **`styxx.observe_raw(entropy, logprob, top2_margin)`** — explicit
+  fidelity-preserving observation helper. Bypasses every
+  response-shape detection path and feeds trajectories straight to
+  the classifier. Use this when you have raw trajectory arrays and
+  want gate callbacks to fire the same way they do for a normal
+  `observe()` call. This is the path to use for test harnesses and
+  any caller that already has clean pre-computed trajectories,
+  because it never rounds through the top-5 entropy bridge.
+- **`_styxx_raw_entropy` / `_styxx_raw_logprob` / `_styxx_raw_top2_margin`
+  sidechannel attributes** on response objects — when present,
+  `observe()` uses the attached trajectories directly instead of
+  reconstructing them from the response's top-5 logprobs. Preserves
+  fidelity for test fixtures that round-trip through synthesized
+  openai responses.
+
+### Changed
+- **`observe()` path ordering.** Previously: (1) pre-attached vitals
+  → (2) openai logprob extraction → (3) raw dict → (4) anthropic.
+  Now: (1) pre-attached vitals → (2) sidechannel raw trajectories →
+  (3) raw dict → (4) openai logprob extraction → (5) anthropic.
+  This means raw dicts NEVER go through the lossy top-5 reconstruction
+  path now; they're recognized as unambiguous "use these directly"
+  signals and bypass the bridge.
+
+### Calibration clarification (Xendro's big signal)
+- On single-model fixture data (gemma-2-2b-it alone), the classifier
+  is **under-discriminating** relative to the 0.52 headline from
+  atlas v0.3. The 0.52 is cross-model LEAVE-ONE-OUT accuracy across
+  6 model families; on any single model the discrimination is
+  weaker. This is honest, expected, and documented on the landing
+  page as of 0.1.0a2. The load-bearing test for product calibration
+  is `styxx ask compare` across all 6 fixture categories, not the
+  accuracy on any single fixture.
+- Reflex works best on **cross-model** or **multi-category** traffic,
+  not on a single homogeneous workload that lives entirely in one
+  cognitive attractor.
+
+### Notes
+- 0.1.0a1 users: `pip install --upgrade styxx` picks up 0.1.0a2.
+- No breaking changes. All 0.1.0a1 code paths work unchanged.
+- Test suite: 54 passing (added 3 new tests for the repr fix +
+  observe_raw fidelity path + sidechannel attribute path).
+
+---
+
 ## [0.1.0a1] — 2026-04-11
 
 **First patch release in response to real user feedback on 0.1.0a0.**

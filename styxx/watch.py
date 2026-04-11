@@ -123,6 +123,23 @@ class WatchSession:
           - raw dict with keys "entropy" / "logprob" / "top2_margin"
             — useful for custom adapters
 
+        Fidelity note (0.1.0a2): If the caller has pre-computed
+        trajectories and wants to preserve full fidelity, they can
+        attach ``_styxx_raw_entropy``, ``_styxx_raw_logprob``, and
+        ``_styxx_raw_top2_margin`` attributes to the response object.
+        When present, observe() bypasses the top-5 reconstruction
+        path entirely and feeds the pre-computed trajectories to the
+        classifier directly. This is the Xendro-test-harness path —
+        test fixtures that round-trip through a synthesized openai
+        response would otherwise lose entropy fidelity because the
+        top-5 reconstruction is 0.902 correlated with full-vocab
+        entropy, not identical.
+
+        For the cleanest fidelity path, prefer:
+            styxx.observe_raw(entropy=..., logprob=..., top2_margin=...)
+        or the direct runtime:
+            styxx.Raw().read(entropy=..., logprob=..., top2_margin=...)
+
         Returns the Vitals or None. Also stores on self.vitals.
         """
         self.n_observed += 1
@@ -135,17 +152,24 @@ class WatchSession:
             self._fire_gates_if_needed()
             return self.vitals
 
-        # 2. Try to extract logprobs from an openai-shaped response.
-        trajs = _extract_openai_logprobs(response)
-        if trajs is not None:
-            entropy, logprob, top2 = trajs
+        # 2. Honor pre-computed trajectories attached via sidechannel.
+        #    Bypass top-5 reconstruction to preserve fidelity.
+        raw_e = getattr(response, "_styxx_raw_entropy", None)
+        raw_l = getattr(response, "_styxx_raw_logprob", None)
+        raw_t = getattr(response, "_styxx_raw_top2_margin", None)
+        if raw_e is not None and raw_l is not None and raw_t is not None:
             self.vitals = self._runtime.run_on_trajectories(
-                entropy=entropy, logprob=logprob, top2_margin=top2,
+                entropy=list(raw_e),
+                logprob=list(raw_l),
+                top2_margin=list(raw_t),
             )
             self._fire_gates_if_needed()
             return self.vitals
 
-        # 3. Try to read a raw dict of trajectories.
+        # 3. Try to read a raw dict of trajectories BEFORE the openai
+        #    reconstruction path — a dict with entropy/logprob/top2
+        #    keys is an unambiguous "use these directly" signal and
+        #    should never go through the lossy top-5 bridge.
         if isinstance(response, dict):
             e = response.get("entropy")
             l = response.get("logprob")
@@ -156,6 +180,20 @@ class WatchSession:
                 )
                 self._fire_gates_if_needed()
                 return self.vitals
+
+        # 4. Try to extract logprobs from an openai-shaped response
+        #    via top-5 reconstruction. This path is the entropy
+        #    bridge — top-5 entropy is r=0.902 correlated with
+        #    full-vocab entropy but NOT identical. For test fixtures,
+        #    prefer one of the paths above.
+        trajs = _extract_openai_logprobs(response)
+        if trajs is not None:
+            entropy, logprob, top2 = trajs
+            self.vitals = self._runtime.run_on_trajectories(
+                entropy=entropy, logprob=logprob, top2_margin=top2,
+            )
+            self._fire_gates_if_needed()
+            return self.vitals
 
         # 4. Detect an Anthropic response and set an explicit error.
         if _looks_like_anthropic_response(response):
@@ -229,6 +267,48 @@ def observe(response: Any) -> Optional[Vitals]:
     """
     w = WatchSession()
     return w.observe(response)
+
+
+def observe_raw(
+    *,
+    entropy: List[float],
+    logprob: List[float],
+    top2_margin: List[float],
+) -> Optional[Vitals]:
+    """Direct fidelity-preserving observe for pre-captured trajectories.
+
+    Bypasses every response-shape detection path and feeds the
+    trajectories straight to the classifier. Use this when you have
+    raw trajectory arrays (e.g. test fixtures, custom adapters,
+    outputs from your own inference pipeline) and want gate
+    callbacks to dispatch automatically as if the data had come
+    from a normal observe() call.
+
+    Example:
+        vitals = styxx.observe_raw(
+            entropy=[1.2, 1.5, 1.1, ...],
+            logprob=[-0.3, -0.4, -0.2, ...],
+            top2_margin=[0.5, 0.4, 0.6, ...],
+        )
+        if styxx.is_concerning(vitals):
+            ...
+
+    Gate callbacks registered via styxx.on_gate() still fire — the
+    dispatch is wired the same way as observe() proper. This is the
+    path to use for test harnesses and any code that already has
+    clean trajectory data, because it never runs through the
+    top-5 entropy bridge.
+    """
+    w = WatchSession()
+    w.n_observed += 1
+    w.response = None
+    w.vitals = w._runtime.run_on_trajectories(
+        entropy=list(entropy),
+        logprob=list(logprob),
+        top2_margin=list(top2_margin),
+    )
+    w._fire_gates_if_needed()
+    return w.vitals
 
 
 def is_concerning(vitals: Optional[Vitals]) -> bool:

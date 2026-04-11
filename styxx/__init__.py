@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.1.0a1"
+__version__ = "0.1.0a2"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -150,7 +150,7 @@ def Anthropic(*args, **kwargs):
 # Public API
 from .core import StyxxRuntime
 from .vitals import Vitals, CentroidClassifier
-from .watch import watch, observe, is_concerning, WatchSession
+from .watch import watch, observe, observe_raw, is_concerning, WatchSession
 from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
 
@@ -166,6 +166,7 @@ __all__ = [
     # observation — passive monitoring
     "watch",
     "observe",
+    "observe_raw",
     "is_concerning",
     "WatchSession",
     # gates — programmable thresholds + callbacks

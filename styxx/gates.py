@@ -84,6 +84,15 @@ class RegisteredGate:
     # Description for logging / debugging
     name: Optional[str] = None
 
+    def __repr__(self) -> str:
+        # Xendro noticed the default dataclass repr dumps function
+        # memory addresses for `callback` and `predicate`, which is
+        # noise. The useful identifying info is the condition string
+        # (and optionally the human-readable name).
+        if self.name:
+            return f"<styxx gate '{self.name}': {self.condition}>"
+        return f"<styxx gate '{self.condition}'>"
+
 
 _GATES: List[RegisteredGate] = []
 _LOCK = threading.Lock()

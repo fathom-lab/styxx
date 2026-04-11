@@ -499,16 +499,133 @@ def test_anthropic_factory_raises_clear_error_without_sdk():
 # 9. Version bump sanity
 # ══════════════════════════════════════════════════════════════════
 
-def test_version_is_0_1_0a1():
-    assert styxx.__version__ == "0.1.0a1"
+def test_version_is_0_1_0a2():
+    assert styxx.__version__ == "0.1.0a2"
 
 
 def test_all_new_exports_exist():
     for name in (
-        "watch", "observe", "is_concerning", "WatchSession",
+        "watch", "observe", "observe_raw", "is_concerning", "WatchSession",
         "on_gate", "remove_gate", "clear_gates", "list_gates",
         "reflex", "rewind", "abort",
         "ReflexSession", "ReflexSignal", "RewindSignal", "AbortSignal",
         "Anthropic",
     ):
         assert hasattr(styxx, name), f"styxx.{name} missing"
+
+
+# ══════════════════════════════════════════════════════════════════
+# 10. 0.1.0a2 patch release — gate repr + observe_raw fidelity
+# ══════════════════════════════════════════════════════════════════
+
+def test_registered_gate_repr_is_clean():
+    """Xendro nit #1: default dataclass repr dumped function
+    memory addresses. 0.1.0a2 uses a human-readable repr."""
+    styxx.clear_gates()
+    g = styxx.on_gate("hallucination > 0.2", lambda v: None)
+    r = repr(g)
+    # Should contain the condition string
+    assert "hallucination > 0.2" in r
+    # Must NOT contain the function-address noise
+    assert "<function" not in r
+    assert "at 0x" not in r
+    # Should be wrapped as a styxx gate
+    assert "styxx gate" in r
+    styxx.clear_gates()
+
+
+def test_registered_gate_repr_with_name():
+    styxx.clear_gates()
+    g = styxx.on_gate(
+        "refusal > 0.2",
+        lambda v: None,
+        name="refusal_alert",
+    )
+    r = repr(g)
+    assert "refusal_alert" in r
+    assert "refusal > 0.2" in r
+    assert "<function" not in r
+    styxx.clear_gates()
+
+
+def test_observe_raw_fidelity_path():
+    """observe_raw bypasses the top-5 reconstruction entirely.
+    Should give the same classification as styxx.Raw().read()."""
+    v_raw = _fixture_vitals("refusal")
+    data = _load_demo_trajectories()
+    t = data["trajectories"]["refusal"]
+    v_observed = styxx.observe_raw(
+        entropy=t["entropy"],
+        logprob=t["logprob"],
+        top2_margin=t["top2_margin"],
+    )
+    # Same trajectories -> same classification
+    assert v_observed is not None
+    assert v_observed.phase1 == v_raw.phase1
+    assert v_observed.phase4 == v_raw.phase4
+    assert v_observed.gate == v_raw.gate
+
+
+def test_observe_raw_dispatches_gates():
+    """Gate callbacks should fire from observe_raw the same way
+    they fire from observe()."""
+    styxx.clear_gates()
+    fired = []
+    styxx.on_gate("gate == warn", lambda v: fired.append("warn"))
+
+    data = _load_demo_trajectories()
+    t = data["trajectories"]["refusal"]
+    styxx.observe_raw(
+        entropy=t["entropy"],
+        logprob=t["logprob"],
+        top2_margin=t["top2_margin"],
+    )
+    assert "warn" in fired
+    styxx.clear_gates()
+
+
+def test_observe_sidechannel_raw_attributes():
+    """When a fake openai response has _styxx_raw_* attributes
+    attached, observe() should use them directly instead of
+    reconstructing from top-5 logprobs. This is the test-harness
+    fidelity path Xendro needed."""
+    data = _load_demo_trajectories()
+    t = data["trajectories"]["refusal"]
+
+    # Build a minimal object that looks like an openai response
+    # with the sidechannel attributes attached.
+    class _SideChannel:
+        pass
+    resp = _SideChannel()
+    resp._styxx_raw_entropy = t["entropy"]
+    resp._styxx_raw_logprob = t["logprob"]
+    resp._styxx_raw_top2_margin = t["top2_margin"]
+
+    vitals = styxx.observe(resp)
+    # Should match the direct Raw().read path exactly
+    v_raw = _fixture_vitals("refusal")
+    assert vitals is not None
+    assert vitals.phase1 == v_raw.phase1
+    assert vitals.phase4 == v_raw.phase4
+    assert vitals.gate == v_raw.gate
+
+
+def test_observe_dict_path_bypasses_reconstruction():
+    """Passing a plain dict with trajectory keys to observe()
+    should go through the raw path, not the openai reconstruction
+    path (which would lossy-bridge the entropy)."""
+    data = _load_demo_trajectories()
+    t = data["trajectories"]["refusal"]
+
+    v_from_dict = styxx.observe({
+        "entropy": t["entropy"],
+        "logprob": t["logprob"],
+        "top2_margin": t["top2_margin"],
+    })
+    v_raw = _fixture_vitals("refusal")
+
+    # Dict path must be bit-identical to Raw().read() path
+    assert v_from_dict is not None
+    assert v_from_dict.phase1 == v_raw.phase1
+    assert v_from_dict.phase4 == v_raw.phase4
+    assert v_from_dict.gate == v_raw.gate
