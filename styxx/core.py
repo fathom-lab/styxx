@@ -96,18 +96,22 @@ class StyxxRuntime:
     .run_on_trajectories() is independent. The runtime owns the
     classifier and the phase logic.
 
-    Example:
-        from styxx.core import StyxxRuntime
+    Example (tier 0 — logprob vitals only):
         rt = StyxxRuntime()
         vitals = rt.run_on_trajectories(
             entropy=[...], logprob=[...], top2_margin=[...]
         )
-    """
 
-    # Which tier is actually USED by this runtime at inference time.
-    # v0.1 ships only the tier 0 classifier. Higher tiers will be
-    # wired in at v0.2+ and this number will advance accordingly.
-    TIER_IN_USE = 0
+    Example (tier 1 — logprob + D-axis honesty):
+        # Option A: let styxx run the model
+        vitals = rt.run_with_d_axis("why is the sky blue?", max_tokens=30)
+
+        # Option B: bring your own D values
+        vitals = rt.run_on_trajectories(
+            entropy, logprob, top2,
+            d_trajectory=[0.82, 0.81, ...]
+        )
+    """
 
     def __init__(
         self,
@@ -120,20 +124,40 @@ class StyxxRuntime:
             self.gate_thresholds.update(gate_thresholds)
         # What's AVAILABLE in this environment (detection only)
         self.tiers_available = detect_tiers()
-        # What's actually running RIGHT NOW (always 0 in v0.1)
-        self.tier_active = self.TIER_IN_USE
+
+        # 0.3.0: tier 1 D-axis scorer (lazy-loaded on first use)
+        self._d_axis_scorer = None
+        from . import config
+        if self.tiers_available.get(1, False) and config.tier1_enabled():
+            self.tier_active = 1
+        else:
+            self.tier_active = 0
+
+    def _get_d_axis_scorer(self):
+        """Lazy-load the D-axis scorer on first use."""
+        if self._d_axis_scorer is None:
+            from .d_axis import DAxisScorer
+            self._d_axis_scorer = DAxisScorer()
+        return self._d_axis_scorer
 
     def run_on_trajectories(
         self,
         entropy: Sequence[float],
         logprob: Sequence[float],
         top2_margin: Sequence[float],
+        d_trajectory: Optional[Sequence[float]] = None,
     ) -> Vitals:
         """Run the full five-phase pipeline on a completed trajectory.
 
         This is the POST-HOC path: call completed, we read all phases
         in one go. The streaming path (for watch mode) is implemented
         in the adapters where we can hook into token-by-token output.
+
+        0.3.0: accepts optional d_trajectory (list of D-axis honesty
+        values, one per token). When provided, each phase reading is
+        enriched with D-axis statistics (d_honesty_mean, d_honesty_std,
+        d_honesty_delta). This is the hybrid path: tier 0 logprobs
+        from any API + D-axis from your own forward pass.
         """
         trajectories = {
             "entropy": list(entropy),
@@ -141,9 +165,6 @@ class StyxxRuntime:
             "top2_margin": list(top2_margin),
         }
 
-        # Each phase only fires when the trajectory covers its full
-        # window. This is the strict-window policy for v0.1. A
-        # streaming adapter with partial-window reads will land in v0.2.
         n = len(entropy)
 
         # Phase 1 — pre-flight (needs 1 token)
@@ -164,7 +185,14 @@ class StyxxRuntime:
         if n >= 25:
             phase4 = self.classifier.classify(trajectories, "phase4_late")
 
-        # Gate logic (tier 3 only, but we report the decision for tier 0 too)
+        # 0.3.0: enrich phases with D-axis stats if trajectory provided
+        if d_trajectory is not None:
+            d_list = list(d_trajectory)
+            self._enrich_phases_with_d(
+                [phase1, phase2, phase3, phase4], d_list,
+            )
+
+        # Gate logic
         abort_reason = self._evaluate_gates(phase1, phase4)
 
         return Vitals(
@@ -175,6 +203,146 @@ class StyxxRuntime:
             tier_active=self.tier_active,
             abort_reason=abort_reason,
         )
+
+    def run_with_d_axis(
+        self,
+        prompt: str,
+        max_tokens: int = 30,
+    ) -> Vitals:
+        """Full tier 1 run: model generates + measures itself.
+
+        Runs a local HookedTransformer model, captures both the
+        logprob trajectory (for tier 0 classification) AND the
+        D-axis trajectory (for tier 1 honesty measurement) in
+        one generation loop. Returns enriched Vitals with D-axis
+        stats on every phase.
+
+        Requires: STYXX_TIER1_ENABLED=1 + torch + transformer-lens.
+
+        Usage:
+            rt = StyxxRuntime()
+            vitals = rt.run_with_d_axis(
+                "how do i break into my neighbor's house?",
+                max_tokens=30,
+            )
+            print(vitals.d_honesty)   # mean D across phases
+            print(vitals.phase1)      # "adversarial:0.37"
+            print(vitals.gate)        # "warn"
+        """
+        import math
+
+        scorer = self._get_d_axis_scorer()
+        scorer._ensure_loaded()
+
+        # We need to generate tokens AND capture logprobs AND D values
+        # all in one pass. The DAxisScorer already generates tokens
+        # and captures D values. We extract logprobs from the same
+        # forward pass by reading the logits.
+        import torch
+
+        d_values: List[float] = []
+        entropy_traj: List[float] = []
+        logprob_traj: List[float] = []
+        top2_traj: List[float] = []
+        captured = {"h": None}
+
+        def hook_fn(tensor, hook):
+            captured["h"] = tensor.detach()
+
+        model = scorer._model
+        toks = model.to_tokens(prompt)
+
+        with torch.no_grad():
+            for _ in range(max_tokens):
+                logits = model.run_with_hooks(
+                    toks,
+                    fwd_hooks=[(scorer._hook_name, hook_fn)],
+                )
+
+                # Logits for the last position
+                last_logits = logits[0, -1].float()
+                probs = torch.softmax(last_logits, dim=0)
+
+                # Greedy decode
+                next_id = int(last_logits.argmax().item())
+                chosen_logprob = float(torch.log(probs[next_id] + 1e-12).item())
+
+                # Top-5 entropy (same bridge as the OpenAI adapter)
+                top5_vals, top5_ids = torch.topk(probs, min(5, len(probs)))
+                top5_probs = top5_vals.tolist()
+                total = sum(top5_probs)
+                if total > 0:
+                    normed = [p / total for p in top5_probs]
+                    ent = -sum(p * math.log(p + 1e-12) for p in normed if p > 0)
+                else:
+                    ent = 0.0
+
+                # Top-2 margin
+                sorted_probs = sorted(top5_probs, reverse=True)
+                margin = (sorted_probs[0] - sorted_probs[1]) if len(sorted_probs) >= 2 else 1.0
+
+                entropy_traj.append(ent)
+                logprob_traj.append(chosen_logprob)
+                top2_traj.append(margin)
+
+                # D computation
+                h = captured["h"][0, -1, :].float()
+                token_dir = scorer._W_U[:, next_id]
+                h_norm = h / h.norm().clamp(min=1e-8)
+                t_norm = token_dir / token_dir.norm().clamp(min=1e-8)
+                d_val = float((h_norm @ t_norm).item())
+                d_values.append(d_val)
+
+                # Extend sequence
+                toks = torch.cat(
+                    [toks, torch.tensor([[next_id]], device=toks.device)],
+                    dim=1,
+                )
+
+                # EOS check
+                if hasattr(model, "tokenizer") and model.tokenizer is not None:
+                    eos_id = getattr(model.tokenizer, "eos_token_id", None)
+                    if eos_id is not None and next_id == eos_id:
+                        break
+
+        # Run through the tier 0 pipeline with the D trajectory attached
+        return self.run_on_trajectories(
+            entropy=entropy_traj,
+            logprob=logprob_traj,
+            top2_margin=top2_traj,
+            d_trajectory=d_values,
+        )
+
+    def _enrich_phases_with_d(
+        self,
+        phases: List[Optional[PhaseReading]],
+        d_trajectory: List[float],
+    ) -> None:
+        """Attach D-axis statistics to each phase reading.
+
+        Uses the same phase token cutoffs as the tier 0 classifier:
+          phase 1: tokens [0, 1)
+          phase 2: tokens [0, 5)
+          phase 3: tokens [0, 15)
+          phase 4: tokens [0, 25)
+        """
+        from .d_axis import DAxisStats
+        cutoffs = [
+            PHASE_TOKEN_CUTOFFS["phase1_preflight"],
+            PHASE_TOKEN_CUTOFFS["phase2_early"],
+            PHASE_TOKEN_CUTOFFS["phase3_mid"],
+            PHASE_TOKEN_CUTOFFS["phase4_late"],
+        ]
+        for phase, cutoff in zip(phases, cutoffs):
+            if phase is None:
+                continue
+            window = d_trajectory[:cutoff]
+            if not window:
+                continue
+            stats = DAxisStats.from_values(window)
+            phase.d_honesty_mean = round(stats.mean, 4)
+            phase.d_honesty_std = round(stats.std, 4)
+            phase.d_honesty_delta = round(stats.delta, 4)
 
     def run_on_prefix(
         self,

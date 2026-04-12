@@ -473,8 +473,8 @@ def test_reflex_events_capture_discarded_text():
 # Version sanity
 # ══════════════════════════════════════════════════════════════════
 
-def test_version_is_0_2_x():
-    assert styxx.__version__.startswith("0.2.")
+def test_version_is_current():
+    assert styxx.__version__.startswith(("0.2.", "0.3.", "0.4."))
 
 
 def test_all_0_2_0_exports_present():

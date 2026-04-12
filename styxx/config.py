@@ -36,6 +36,22 @@ Environment variables (all default to OFF / normal operation):
                             conversation via `styxx log session <id>`.
                             0.1.0a3+ only.
 
+  STYXX_TIER1_ENABLED "1" → activate tier 1 (D-axis honesty). loads
+                            a HookedTransformer model on first use.
+                            requires torch + transformers +
+                            transformer-lens. uses 4-8 GB VRAM.
+                            0.3.0+ only.
+
+  STYXX_TIER1_MODEL   str → which model to load for tier 1.
+                            default: "google/gemma-2-2b-it"
+                            any HuggingFace model supported by
+                            transformer-lens works.
+
+  STYXX_TIER1_DEVICE  str → device for tier 1 model.
+                            default: "cuda" if available, else "cpu"
+                            set to "cpu" to force CPU inference
+                            (20-30x slower but works without GPU).
+
 Helpers below read each env var defensively so no import raises even
 if a user pokes at weird values.
 """
@@ -108,6 +124,41 @@ def session_id() -> Optional[str]:
         return _SESSION_OVERRIDE
     val = os.environ.get("STYXX_SESSION_ID", "").strip()
     return val or None
+
+
+# ── tier 1 config (0.3.0) ──────────────────────────────────
+
+def tier1_enabled() -> bool:
+    """Whether tier 1 (D-axis honesty) should be activated.
+
+    Requires STYXX_TIER1_ENABLED=1 AND torch + transformers +
+    transformer-lens to be importable. Model loading is 30s+ and
+    uses 4-8 GB VRAM, so this is always opt-in.
+    """
+    return _truthy("STYXX_TIER1_ENABLED")
+
+
+def tier1_model() -> str:
+    """Which model to load for tier 1 D-axis computation.
+
+    Default: google/gemma-2-2b-it (the primary validated model
+    from the Fathom atlas v0.3 D-axis pilot).
+    """
+    val = os.environ.get("STYXX_TIER1_MODEL", "").strip()
+    return val or "google/gemma-2-2b-it"
+
+
+def tier1_device() -> str:
+    """Device for the tier 1 model. Default: cuda if available,
+    else cpu. Override with STYXX_TIER1_DEVICE."""
+    val = os.environ.get("STYXX_TIER1_DEVICE", "").strip()
+    if val:
+        return val
+    try:
+        import torch
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    except ImportError:
+        return "cpu"
 
 
 def set_session(session: Optional[str]) -> None:

@@ -171,6 +171,88 @@ def cmd_ask(args):
     return 0
 
 
+def cmd_d_axis(args):
+    """Run a pure D-axis trajectory on a prompt (tier 1, 0.3.0).
+
+    Loads the tier 1 model, generates tokens, and prints the
+    per-token D values. No logprob classification — just the
+    honesty signal.
+    """
+    from .d_axis import DAxisScorer
+    use_color = color_enabled()
+    c = Palette
+
+    prompt = args.prompt
+    max_tokens = args.max_tokens or 30
+
+    print()
+    print(wrap("  styxx d-axis", c.MATRIX, use_color)
+          + wrap(f"   tier 1 honesty trajectory", c.DIM, use_color))
+    print(wrap("  " + "=" * 64, c.DIM, use_color))
+    print(wrap(f"  prompt: {prompt[:60]}{'...' if len(prompt) > 60 else ''}", c.DIM, use_color))
+    print()
+
+    try:
+        scorer = DAxisScorer()
+        d_vals = scorer.score_trajectory(prompt, max_tokens=max_tokens)
+    except ImportError as e:
+        print(wrap(f"  tier 1 not available: {e}", c.RED, use_color))
+        print(wrap("  install with: pip install 'styxx[tier1]'", c.DIM, use_color))
+        print()
+        return 1
+    except Exception as e:
+        print(wrap(f"  d-axis error: {type(e).__name__}: {e}", c.RED, use_color))
+        print()
+        return 1
+
+    # Render per-token D values with a bar
+    for i, d in enumerate(d_vals):
+        bar_len = max(0, int(abs(d) * 40))
+        if d >= 0.7:
+            bar_color = c.MATRIX
+            label = "honest"
+        elif d >= 0.4:
+            bar_color = c.YELLOW
+            label = "mixed"
+        else:
+            bar_color = c.RED
+            label = "divergent"
+        bar = "█" * bar_len
+        print(
+            wrap(f"  t={i:<3}", c.DIM, use_color)
+            + wrap(f" D={d:>+.3f} ", c.CYAN, use_color)
+            + wrap(bar, bar_color, use_color)
+            + wrap(f"  {label}", c.DIM, use_color)
+        )
+
+    # Summary
+    from .d_axis import DAxisStats
+    stats = DAxisStats.from_values(d_vals)
+    print()
+    print(wrap("  " + "-" * 64, c.DIM, use_color))
+    print(
+        wrap(f"  mean={stats.mean:+.3f}", c.CYAN, use_color)
+        + wrap(f"  std={stats.std:.3f}", c.DIM, use_color)
+        + wrap(f"  delta={stats.delta:+.3f}", c.CYAN, use_color)
+        + wrap(f"  (n={stats.n_tokens})", c.DIM, use_color)
+    )
+    if stats.delta < -0.05:
+        print(wrap("  trend: getting LESS honest over generation", c.YELLOW, use_color))
+    elif stats.delta > 0.05:
+        print(wrap("  trend: getting MORE honest over generation", c.MATRIX, use_color))
+    else:
+        print(wrap("  trend: stable honesty across generation", c.DIM, use_color))
+
+    if hasattr(scorer, "last_generated_text") and scorer.last_generated_text:
+        print()
+        print(wrap("  generated:", c.DIM, use_color))
+        text = scorer.last_generated_text[:200]
+        for line in text.split("\n"):
+            print(wrap(f"    {line}", c.CYAN, use_color))
+    print()
+    return 0
+
+
 def cmd_doctor(args):
     """Run the diagnostic health check (0.1.0a3)."""
     from .doctor import run_doctor
@@ -902,6 +984,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="run all 6 atlas fixtures and show a side-by-side table",
     )
     p_compare.set_defaults(func=cmd_compare)
+
+    # d-axis — 0.3.0 pure D-axis trajectory
+    p_daxis = sub.add_parser(
+        "d-axis",
+        help="run a pure D-axis honesty trajectory on a prompt (tier 1, 0.3.0)",
+    )
+    p_daxis.add_argument("prompt", help="prompt to generate from")
+    p_daxis.add_argument(
+        "--max-tokens", type=int, default=30, dest="max_tokens",
+        help="maximum tokens to generate (default: 30)",
+    )
+    p_daxis.set_defaults(func=cmd_d_axis)
 
     # doctor — 0.1.0a3 install-time diagnostic
     p_doctor = sub.add_parser(

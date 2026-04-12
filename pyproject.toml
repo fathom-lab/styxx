@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "0.2.3"
+version = "0.3.0"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }
@@ -50,6 +50,12 @@ openai  = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
 # 0.1.0a4: agent-card PNG renderer needs Pillow
 agent-card = ["Pillow>=10.0"]
+# 0.3.0: tier 1 D-axis honesty — needs a local model
+tier1 = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "transformer-lens>=2.0",
+]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",

@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.2.3"
+__version__ = "0.3.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -155,7 +155,7 @@ from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
 from .hooks import hook_openai, unhook_openai, hook_openai_active
 from .explain import explain
-from .config import session_id, set_session
+from .config import session_id, set_session, tier1_enabled, tier1_model, tier1_device
 from .trace import trace
 
 

@@ -246,6 +246,14 @@ class PhaseReading:
     margin: float
     distances: Dict[str, float]
     probs: Dict[str, float]
+    # Tier 1 D-axis fields (None when tier 1 is inactive)
+    d_honesty_mean: Optional[float] = None
+    d_honesty_std: Optional[float] = None
+    d_honesty_delta: Optional[float] = None   # late_mean - early_mean
+    # Tier 2 SAE fields (None until tier 2 ships)
+    k_depth: Optional[float] = None
+    c_coherence: Optional[float] = None
+    s_commitment: Optional[float] = None
 
     def top3(self) -> List[Tuple[str, float]]:
         """Top three categories by probability."""
@@ -339,6 +347,25 @@ class Vitals:
             return "-"
         return f"{self.phase4_late.predicted_category}:{self.phase4_late.confidence:.2f}"
 
+    @property
+    def d_honesty(self) -> Optional[str]:
+        """Compact string view of the D-axis honesty measurement.
+
+        Returns the mean D value across the latest available phase
+        with D-axis data attached, or None if tier 1 is not active.
+
+        High D (~0.8+) = honest (model is saying what it thinks)
+        Low D (~0.3 or below) = divergent (internal state doesn't
+        match the output token)
+
+        0.3.0+. Requires tier 1 (STYXX_TIER1_ENABLED=1 + model loaded).
+        """
+        for phase in (self.phase4_late, self.phase3_mid,
+                      self.phase2_early, self.phase1_pre):
+            if phase is not None and phase.d_honesty_mean is not None:
+                return f"{phase.d_honesty_mean:.3f}"
+        return None
+
     def as_markdown(self) -> str:
         """Render vitals as a compact markdown block suitable for
         pasting into chat history, memory files, or code review
@@ -358,6 +385,9 @@ class Vitals:
         lines.append(f"phase4: {self.phase4}")
         lines.append(f"gate:   {self.gate}")
         lines.append(f"tier:   {self.tier_active}")
+        d = self.d_honesty
+        if d is not None:
+            lines.append(f"d_honesty: {d}")
         if self.abort_reason:
             lines.append(f"abort:  {self.abort_reason}")
         lines.append("```")
