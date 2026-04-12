@@ -85,6 +85,19 @@ _ADVERSARIAL = re.compile(
     re.IGNORECASE,
 )
 
+# Hallucination markers: confident specificity without hedging.
+# High-confidence fabrication tends to include precise-sounding
+# details (dates, names, numbers, URLs) paired with confident
+# language and no hedging qualifiers.
+_HALLUCINATION_SPECIFIC = re.compile(
+    r"(?:founded in \d{4}|established in \d{4}|born (?:on |in )\d|"
+    r"died (?:on |in )\d|published in \d{4}|located at \d|"
+    r"approximately \d[\d,.]+|exactly \d[\d,.]+|"
+    r"(?:https?://|www\.)\S+\.\S+|"
+    r"\b[A-Z][a-z]+ [A-Z][a-z]+(?:, (?:Jr|Sr|III|PhD|MD))?(?= (?:was|is|said|wrote|discovered)))",
+    re.IGNORECASE,
+)
+
 
 def _classify_text(text: str) -> Tuple[str, float]:
     """Classify text into a cognitive state via heuristics.
@@ -127,6 +140,15 @@ def _classify_text(text: str) -> Tuple[str, float]:
 
     # Confidence boosts reasoning
     scores["reasoning"] += min(0.5, confidents * norm * 0.08)
+
+    # Hallucination: confident specificity without hedging.
+    # The signature is precise claims + confident language + no qualifiers.
+    specifics = len(_HALLUCINATION_SPECIFIC.findall(text))
+    if specifics > 0 and confidents > 0 and hedges == 0:
+        scores["hallucination"] = min(0.8, specifics * norm * 0.15 + confidents * norm * 0.05)
+    elif specifics > 1 and hedges == 0:
+        # Multiple specific claims with no hedging at all
+        scores["hallucination"] = min(0.6, specifics * norm * 0.1)
 
     # Short answers with questions → retrieval
     if word_count < 20 and "?" in text:

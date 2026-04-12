@@ -400,20 +400,9 @@ def _extract_openai_logprobs(response: Any) -> Optional[tuple]:
         top_lps = getattr(tok, "top_logprobs", None) or []
         if top_lps:
             lps = [float(getattr(t, "logprob", 0.0)) for t in top_lps]
-            probs = [math.exp(lp) for lp in lps]
-            total = sum(probs)
-            if total > 0:
-                probs = [p / total for p in probs]
-                ent = -sum(p * math.log(p + 1e-12) for p in probs if p > 0)
-            else:
-                ent = 0.0
-            sorted_probs = sorted(probs, reverse=True)
-            margin = (
-                float(sorted_probs[0] - sorted_probs[1])
-                if len(sorted_probs) >= 2
-                else 1.0
-            )
-            entropy_traj.append(float(ent))
+            from .vitals import logprobs_to_entropy_margin
+            ent, margin = logprobs_to_entropy_margin(lps)
+            entropy_traj.append(ent)
             top2_traj.append(margin)
         else:
             entropy_traj.append(0.0)

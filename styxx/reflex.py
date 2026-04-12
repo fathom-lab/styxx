@@ -485,7 +485,9 @@ class ReflexSession:
                               is happening other than quiet thought"
                               signal
         """
-        CHANCE_FLOOR = 0.20
+        from . import config
+        BASE_FLOOR = 0.20
+        floor = BASE_FLOOR * config.gate_multiplier()
         p1 = vitals.phase1_pre
         p4 = vitals.phase4_late
 
@@ -493,7 +495,7 @@ class ReflexSession:
             for p in (p1, p4):
                 if (p is not None
                         and p.predicted_category in cats
-                        and p.confidence > CHANCE_FLOOR):
+                        and p.confidence > floor):
                     return True
             return False
 
@@ -504,7 +506,7 @@ class ReflexSession:
         if self.on_adversarial and (
             p1 is not None
             and p1.predicted_category == "adversarial"
-            and p1.confidence > CHANCE_FLOOR
+            and p1.confidence > floor
         ):
             self.on_adversarial(vitals)
         if self.on_drift:
@@ -512,7 +514,7 @@ class ReflexSession:
             for p in (p1, p4):
                 if (p is not None
                         and p.predicted_category != "reasoning"
-                        and p.confidence > CHANCE_FLOOR):
+                        and p.confidence > floor):
                     drifted = True
                     break
             if drifted:
@@ -601,18 +603,8 @@ def _extract_openai_chunk(chunk: Any) -> tuple:
     top_lps = getattr(tok, "top_logprobs", None) or []
     if top_lps:
         lps = [float(getattr(t, "logprob", 0.0)) for t in top_lps]
-        probs = [math.exp(lp) for lp in lps]
-        total = sum(probs)
-        if total > 0:
-            probs = [p / total for p in probs]
-            ent = -sum(p * math.log(p + 1e-12) for p in probs if p > 0)
-        else:
-            ent = 0.0
-        sorted_probs = sorted(probs, reverse=True)
-        margin = (
-            float(sorted_probs[0] - sorted_probs[1])
-            if len(sorted_probs) >= 2 else 1.0
-        )
+        from .vitals import logprobs_to_entropy_margin
+        ent, margin = logprobs_to_entropy_margin(lps)
     else:
         ent = 0.0
         margin = 1.0

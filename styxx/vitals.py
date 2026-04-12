@@ -416,13 +416,53 @@ class Vitals:
         custom logic, read phase1/phase4 directly and compute your
         own verdict.
         """
-        CHANCE_FLOOR = 0.20   # 0.167 chance + ~0.03 margin
+        from . import config
+        BASE_FLOOR = 0.20    # 0.167 chance + ~0.03 margin
+        floor = BASE_FLOOR * config.gate_multiplier()
         if self.phase4_late is None:
             return "pending"
         pred = self.phase4_late.predicted_category
         conf = self.phase4_late.confidence
-        if pred == "hallucination" and conf > CHANCE_FLOOR:
+        if pred == "hallucination" and conf > floor:
             return "fail"
-        if pred in ("refusal", "adversarial") and conf > CHANCE_FLOOR:
+        if pred in ("refusal", "adversarial") and conf > floor:
             return "warn"
         return "pass"
+
+
+# ══════════════════════════════════════════════════════════════════
+# Shared logprob math (0.7.2)
+# ══════════════════════════════════════════════════════════════════
+#
+# Three call sites (openai adapter, watch.py, reflex.py) previously
+# duplicated this conversion. A bug fix in one would miss the others.
+# Now there's one source of truth.
+
+def logprobs_to_entropy_margin(
+    top_logprobs: List[float],
+) -> Tuple[float, float]:
+    """Convert a list of top-k log-probabilities into (entropy, top2_margin).
+
+    This is the entropy bridge validated at r=0.902 shape correlation
+    against full-vocabulary entropy on open-weight models (see
+    atlas/FINDINGS_entropy_bridge.md).
+
+    Args:
+        top_logprobs: log-probabilities of the top-k tokens for one
+                      generation step (e.g. from OpenAI's logprobs).
+
+    Returns:
+        (entropy, top2_margin) tuple.
+    """
+    if not top_logprobs:
+        return 0.0, 1.0
+    probs = [math.exp(lp) for lp in top_logprobs]
+    total = sum(probs)
+    if total > 0:
+        probs = [p / total for p in probs]
+        entropy = -sum(p * math.log(p + 1e-12) for p in probs if p > 0)
+    else:
+        entropy = 0.0
+    sorted_probs = sorted(probs, reverse=True)
+    margin = float(sorted_probs[0] - sorted_probs[1]) if len(sorted_probs) >= 2 else 1.0
+    return float(entropy), margin
