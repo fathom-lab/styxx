@@ -80,6 +80,44 @@ _DATA_DIR: Path = Path.home() / ".styxx"
 
 
 # ══════════════════════════════════════════════════════════════════
+# Zero-config auto-start on import
+# ══════════════════════════════════════════════════════════════════
+#
+# If STYXX_AGENT_NAME is set in the environment, autoboot runs
+# automatically when styxx is imported. No code changes needed.
+# Just:
+#
+#   export STYXX_AGENT_NAME=xendro
+#   pip install styxx
+#   python my_agent.py     # styxx boots automatically
+#
+# The agent doesn't even need to know styxx exists in the code.
+# hook_openai() can be triggered the same way via STYXX_AUTO_HOOK=1.
+#
+# This is the true plug-and-play path. Set env vars, install the
+# package, everything else is automatic.
+
+def _auto_start_if_configured() -> None:
+    """Called from __init__.py at import time. If STYXX_AGENT_NAME
+    is set, runs autoboot automatically. If STYXX_AUTO_HOOK=1 is
+    also set, hooks openai globally too."""
+    agent = os.environ.get("STYXX_AGENT_NAME", "").strip()
+    if not agent:
+        return
+
+    # Auto-boot with the env-configured agent name
+    autoboot(agent_name=agent, quiet=False)
+
+    # Auto-hook openai if requested
+    if os.environ.get("STYXX_AUTO_HOOK", "").strip().lower() in ("1", "true", "yes"):
+        try:
+            from .hooks import hook_openai
+            hook_openai()
+        except ImportError:
+            pass  # openai not installed, that's fine
+
+
+# ══════════════════════════════════════════════════════════════════
 # Public API
 # ══════════════════════════════════════════════════════════════════
 

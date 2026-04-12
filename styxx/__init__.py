@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -156,6 +156,29 @@ from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSi
 from .guardian import guardian, GuardianSession, SteeringEvent
 from .weather import weather, WeatherReport
 from .autoboot import autoboot
+
+# ── Zero-config plug-and-play ──────────────────────────────────
+#
+# If STYXX_AGENT_NAME is set in the environment, styxx boots
+# automatically on import. No code changes needed. Just:
+#
+#   export STYXX_AGENT_NAME=xendro
+#   export STYXX_AUTO_HOOK=1          # optional: auto-wrap openai
+#   pip install styxx
+#   python my_agent.py                # styxx is running. done.
+#
+# The agent code doesn't need to import styxx, call autoboot(),
+# or do anything. If openai is installed and STYXX_AUTO_HOOK=1,
+# every openai.OpenAI() call gets vitals automatically.
+#
+# This is true plug-and-play. Set two env vars and forget.
+
+from .autoboot import _auto_start_if_configured as _asc
+try:
+    _asc()
+except Exception:
+    pass  # never crash an agent because autoboot failed
+del _asc
 from .hooks import hook_openai, unhook_openai, hook_openai_active
 from .explain import explain
 from .config import session_id, set_session, tier1_enabled, tier1_model, tier1_device
