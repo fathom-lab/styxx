@@ -36,6 +36,9 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# ── Node / JS ────────────────────────────────────────────
+node_modules/
+
 # ── styxx runtime state (user's local audit log) ─────────
 # never commit a developer's local audit log
 chart.jsonl
