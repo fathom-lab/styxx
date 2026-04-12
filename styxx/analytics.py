@@ -555,8 +555,15 @@ def streak(*, session_id: Optional[str] = None) -> Optional[Streak]:
 # Mood
 # ══════════════════════════════════════════════════════════════════
 
-def mood(*, window_s: float = 3600.0) -> str:
+def mood(*, window_s: float = 86400.0) -> str:
     """Return a one-word mood label for the recent window.
+
+    0.5.6: default window changed from 3600s (1 hour) to 86400s
+    (24 hours) to match reflect() and weather(). This was the
+    source of the mood disagreement Xendro reported — CLI said
+    "quiet" (1h window, too few samples) while reflect said
+    "steady" (24h window, enough data). Now all surfaces agree
+    unless explicitly overridden.
 
     Heuristic policy:
       - "drifting"      hallucination rate > 10%
