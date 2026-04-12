@@ -171,6 +171,28 @@ def cmd_ask(args):
     return 0
 
 
+def cmd_timeline(args):
+    """Mood + category trajectory over time (0.5.5)."""
+    from .timeline import timeline
+    name = args.name or "styxx agent"
+    hours = float(args.hours or 48.0)
+    slice_h = float(getattr(args, "slice_hours", 3.0))
+
+    tl = timeline(window_hours=hours, slice_hours=slice_h, agent_name=name)
+    if tl is None:
+        print()
+        print("  (not enough audit data for a timeline)")
+        print()
+        return 0
+
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(tl.as_json())
+    else:
+        print(tl.render())
+    return 0
+
+
 def cmd_weather(args):
     """The cognitive weather report (0.5.0).
 
@@ -1040,6 +1062,30 @@ def _build_parser() -> argparse.ArgumentParser:
         help="run all 6 atlas fixtures and show a side-by-side table",
     )
     p_compare.set_defaults(func=cmd_compare)
+
+    # timeline — mood trajectory over time (0.5.5)
+    p_timeline = sub.add_parser(
+        "timeline",
+        help="mood + category trajectory over time",
+    )
+    p_timeline.add_argument(
+        "--name", type=str, default=None,
+        help="agent name for the header",
+    )
+    p_timeline.add_argument(
+        "--hours", type=float, default=48.0,
+        help="window in hours (default: 48)",
+    )
+    p_timeline.add_argument(
+        "--slice-hours", type=float, default=3.0, dest="slice_hours",
+        help="width of each time slice in hours (default: 3)",
+    )
+    p_timeline.add_argument(
+        "--format", choices=["ascii", "json"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_timeline.set_defaults(func=cmd_timeline)
 
     # weather — THE feature (0.5.0)
     p_weather = sub.add_parser(

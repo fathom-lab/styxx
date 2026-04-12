@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.5.4"
+__version__ = "0.5.5"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -207,6 +207,7 @@ from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSi
 from .guardian import guardian, GuardianSession, SteeringEvent
 from .weather import weather, WeatherReport
 from .autoboot import autoboot
+from .timeline import timeline, Timeline
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #
@@ -316,6 +317,9 @@ __all__ = [
     "WeatherReport",
     # autoboot — persistent self-awareness in one call
     "autoboot",
+    # timeline — mood + category trajectory over time
+    "timeline",
+    "Timeline",
     # 0.1.0a3 power-ups
     # global hook for zero-code-change adoption
     "hook_openai",
