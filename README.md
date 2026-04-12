@@ -126,6 +126,52 @@ not observation. **prescription.** a therapist for an llm.
 | `styxx.streak()` | consecutive-attractor tracking |
 | `styxx.dreamer(...)` | retroactive "what-if" reflex tuning on history |
 | `styxx.hook_openai()` | global monkey-patch, zero code changes |
+| `styxx.LangSmith()` | inject vitals into LangSmith traces as flat metadata |
+| `styxx.Langfuse()` | post vitals as numeric scores on Langfuse traces |
+| `styxx.conversation(msgs)` | conversation-level cognitive EKG |
+| `styxx.sentinel(...)` | real-time drift watcher with event-driven callbacks |
+| `styxx.antipatterns()` | named failure modes from your own audit history |
+| `styxx.compare_agents(fp)` | anonymous population fingerprint comparison |
+
+---
+
+## typescript / javascript
+
+```bash
+npm install @fathom_lab/styxx
+```
+
+```typescript
+import { withVitals } from "@fathom_lab/styxx"
+import OpenAI from "openai"
+
+const client = withVitals(new OpenAI())
+const r = await client.chat.completions.create({
+  model: "gpt-4o",
+  messages: [{ role: "user", content: "why is the sky blue?" }],
+})
+
+console.log(r.vitals?.phase4)  // "reasoning:0.45"
+console.log(r.vitals?.gate)    // "pass"
+```
+
+same classifier, same output, zero runtime dependencies. works in node, deno, bun, edge runtimes. cross-language determinism verified on all 6 cognitive categories.
+
+---
+
+## observability platforms
+
+```bash
+# langsmith — vitals as searchable trace metadata
+pip install styxx[langsmith]
+handler = styxx.LangSmith()
+llm = ChatOpenAI(callbacks=[handler])
+
+# langfuse — vitals as numeric scores (gate pass=1.0, warn=0.5, fail=0.0)
+pip install styxx[langfuse]
+handler = styxx.Langfuse()
+llm = ChatOpenAI(callbacks=[handler])
+```
 
 ---
 
@@ -148,6 +194,9 @@ styxx log timeline      # ASCII timeline of recent entries
 styxx init              # live-print boot sequence
 styxx ask "..." --watch # read vitals on a one-shot call
 styxx d-axis "..."      # pure D-axis honesty trajectory
+styxx antipatterns      # detect named failure modes
+styxx conversation f.json  # conversation-level EKG
+styxx compare-agents    # fingerprint vs population
 ```
 
 ---

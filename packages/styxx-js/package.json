@@ -1,5 +1,5 @@
 {
-  "name": "@fathom-lab/styxx",
+  "name": "@fathom_lab/styxx",
   "version": "0.1.0",
   "description": "Cognitive vitals monitor for LLM agents. Nothing crosses unseen.",
   "main": "dist/index.js",
