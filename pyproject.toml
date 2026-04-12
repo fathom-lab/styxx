@@ -48,6 +48,10 @@ dependencies = [
 [project.optional-dependencies]
 openai  = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
+# 0.5.4: framework integrations
+langchain = ["langchain-core>=0.1"]
+crewai = ["crewai>=0.1", "langchain-core>=0.1"]
+autogen = ["pyautogen>=0.2"]
 # 0.1.0a4: agent-card PNG renderer needs Pillow
 agent-card = ["Pillow>=10.0"]
 # 0.3.0: tier 1 D-axis honesty — needs a local model

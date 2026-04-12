@@ -147,6 +147,57 @@ def Anthropic(*args, **kwargs):
     return AnthropicWithVitals(*args, **kwargs)
 
 
+def LangChain(*args, **kwargs):
+    """LangChain callback handler that attaches cognitive vitals.
+
+    Usage with any LangChain LLM:
+        from styxx.adapters.langchain import StyxxCallbackHandler
+        handler = StyxxCallbackHandler()
+        llm = ChatOpenAI(callbacks=[handler])
+        r = llm.invoke("why is the sky blue?")
+        print(handler.last_vitals.summary)
+
+    Or use the shorthand:
+        handler = styxx.LangChain()
+    """
+    from .adapters.langchain import StyxxCallbackHandler
+    return StyxxCallbackHandler(*args, **kwargs)
+
+
+def CrewAI(crew=None):
+    """Inject styxx observation into a CrewAI Crew.
+
+    Usage:
+        from styxx.adapters.crewai import styxx_crew
+        crew = styxx_crew(Crew(agents=[...], tasks=[...]))
+        crew.kickoff()
+        print(crew._styxx_callback.vitals_log)
+
+    Or use the shorthand:
+        styxx.CrewAI(crew)
+    """
+    from .adapters.crewai import styxx_crew
+    if crew is not None:
+        return styxx_crew(crew)
+    return styxx_crew
+
+
+def AutoGen(agent=None):
+    """Wrap an AutoGen agent with styxx observation.
+
+    Usage:
+        from styxx.adapters.autogen import styxx_agent
+        agent = styxx_agent(AssistantAgent("helper", llm_config=...))
+
+    Or use the shorthand:
+        styxx.AutoGen(agent)
+    """
+    from .adapters.autogen import styxx_agent
+    if agent is not None:
+        return styxx_agent(agent)
+    return styxx_agent
+
+
 # Public API
 from .core import StyxxRuntime
 from .vitals import Vitals, CentroidClassifier
@@ -234,6 +285,9 @@ __all__ = [
     "OpenAI",
     "Anthropic",
     "Raw",
+    "LangChain",
+    "CrewAI",
+    "AutoGen",
     # observation — passive monitoring
     "watch",
     "observe",

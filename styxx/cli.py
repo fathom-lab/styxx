@@ -975,6 +975,31 @@ def _get_demo_trajectory(kind: str):
     )
 
 
+def cmd_publish(args):
+    """Publish agent data to the remote dashboard (opt-in)."""
+    from .publish import prepare_payload, publish
+
+    name = args.name
+    endpoint = args.endpoint
+    dry_run = getattr(args, "dry_run", False)
+
+    if dry_run:
+        payload = prepare_payload(name, days=7.0)
+        print()
+        print(json.dumps(payload, indent=2))
+        print()
+        return 0
+
+    result = publish(name, endpoint)
+    print()
+    if result is not None:
+        print(f"  {result['summary']}")
+    else:
+        print("  publish failed — see warnings above.")
+    print()
+    return 0 if result is not None else 1
+
+
 # ══════════════════════════════════════════════════════════════════
 # Argparse entry point
 # ══════════════════════════════════════════════════════════════════
@@ -1229,6 +1254,26 @@ def _build_parser() -> argparse.ArgumentParser:
     p_scan.add_argument("--prompt", help="prompt to show on the card")
     p_scan.add_argument("--model", help="model name for the card metadata")
     p_scan.set_defaults(func=cmd_scan)
+
+    # publish — opt-in dashboard telemetry
+    p_publish = sub.add_parser(
+        "publish",
+        help="publish agent data to the remote dashboard (opt-in)",
+    )
+    p_publish.add_argument(
+        "--name", type=str, required=True,
+        help="agent name to publish under",
+    )
+    p_publish.add_argument(
+        "--dry-run", action="store_true", dest="dry_run",
+        help="print the payload JSON without sending",
+    )
+    p_publish.add_argument(
+        "--endpoint", type=str,
+        default="https://fathom.darkflobi.com/api/styxx-submit",
+        help="custom endpoint URL (default: fathom.darkflobi.com)",
+    )
+    p_publish.set_defaults(func=cmd_publish)
 
     return p
 
