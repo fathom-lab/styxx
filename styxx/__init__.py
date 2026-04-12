@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.5.8"
+__version__ = "0.5.9"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -208,6 +208,8 @@ from .guardian import guardian, GuardianSession, SteeringEvent
 from .weather import weather, WeatherReport
 from .autoboot import autoboot
 from .timeline import timeline, Timeline
+from .conversation import conversation, ConversationResult
+from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

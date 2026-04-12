@@ -235,6 +235,10 @@ def write_audit(
     # observe() → mood() work within the same tick.
     clear_audit_cache()
 
+    # Notify the sentinel on the write_audit path too
+    from .sentinel import _notify_sentinel
+    _notify_sentinel()
+
 
 def log(
     *,
@@ -332,6 +336,11 @@ def log(
         return entry  # return even on write failure for inline use
 
     clear_audit_cache()
+
+    # Notify the sentinel (if active) so it can check for drift
+    from .sentinel import _notify_sentinel
+    _notify_sentinel()
+
     return entry
 
 
