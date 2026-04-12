@@ -171,6 +171,37 @@ def cmd_ask(args):
     return 0
 
 
+def cmd_weather(args):
+    """The cognitive weather report (0.5.0).
+
+    Not observation. Prescription. An instrument that doesn't just
+    say what you are but suggests what you should become next.
+    """
+    from .weather import weather
+    name = args.name or "styxx agent"
+    window = float(args.window or 24.0)
+
+    report = weather(agent_name=name, window_hours=window)
+    if report is None:
+        print()
+        print("  (not enough audit data to generate a weather report)")
+        print(f"  need at least 5 entries in the last {window:.0f} hours.")
+        print("  run some observations first: styxx ask --watch --demo-kind reasoning")
+        print()
+        return 0
+
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(report.as_json())
+    elif fmt == "markdown":
+        print(report.as_markdown())
+    else:
+        print()
+        print(report.render())
+        print()
+    return 0
+
+
 def cmd_d_axis(args):
     """Run a pure D-axis trajectory on a prompt (tier 1, 0.3.0).
 
@@ -984,6 +1015,26 @@ def _build_parser() -> argparse.ArgumentParser:
         help="run all 6 atlas fixtures and show a side-by-side table",
     )
     p_compare.set_defaults(func=cmd_compare)
+
+    # weather — THE feature (0.5.0)
+    p_weather = sub.add_parser(
+        "weather",
+        help="cognitive weather report — prescription, not observation",
+    )
+    p_weather.add_argument(
+        "--name", type=str, default=None,
+        help="agent name for the report header",
+    )
+    p_weather.add_argument(
+        "--window", type=float, default=24.0,
+        help="window in hours (default: 24)",
+    )
+    p_weather.add_argument(
+        "--format", choices=["ascii", "json", "markdown"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_weather.set_defaults(func=cmd_weather)
 
     # d-axis — 0.3.0 pure D-axis trajectory
     p_daxis = sub.add_parser(
