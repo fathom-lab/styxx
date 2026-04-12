@@ -243,7 +243,7 @@ def log(
     category: Optional[str] = None,
     confidence: Optional[float] = None,
     gate: Optional[str] = None,
-    tags: Optional[Dict[str, str]] = None,
+    tags: Optional[any] = None,
 ) -> None:
     """Manual write path into the audit log.
 
@@ -317,7 +317,13 @@ def log(
         "note": (note[:500] if note else None),
     }
     if tags:
-        entry["tags"] = {str(k): str(v) for k, v in tags.items()}
+        # Accept both dict and list — Xendro bug report 0.5.5
+        if isinstance(tags, dict):
+            entry["tags"] = {str(k): str(v) for k, v in tags.items()}
+        elif isinstance(tags, (list, tuple)):
+            entry["tags"] = [str(t) for t in tags]
+        else:
+            entry["tags"] = str(tags)
 
     try:
         with open(path, "a", encoding="utf-8") as f:
