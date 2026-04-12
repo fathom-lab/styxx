@@ -688,27 +688,59 @@ def weather(
 
     narrative = " ".join(narrative_parts)
 
-    # ── Prescriptions ───────────────────────────────────────
+    # ── Prescriptions (0.8.0: pattern-break history + domain awareness) ──
     prescriptions: List[str] = []
+
+    from . import config
+    expected = config.expected_categories()
+    ctx = config.current_context()
+
+    # Context-expected category mapping
+    _CTX_EXPECTED = {
+        "security_review": {"refusal", "adversarial"},
+        "technical_deep_work": {"reasoning"},
+        "creative_writing": {"creative"},
+        "code_review": {"refusal", "reasoning"},
+    }
+    ctx_expected = _CTX_EXPECTED.get(ctx, set()) if ctx else set()
+    all_expected = expected | ctx_expected
+
+    # Filter entries with outcome='correct' from failure rates
+    failure_entries = [e for e in entries if e.get("outcome") != "correct"]
+
+    def _find_break(category: str) -> Optional[str]:
+        """Find the last time a pattern of `category` ended and what came next."""
+        in_pattern = False
+        for i in range(len(entries) - 1, -1, -1):
+            cat = entries[i].get("phase4_pred")
+            if cat == category:
+                in_pattern = True
+            elif in_pattern and cat and cat != category:
+                prompt = entries[i].get("prompt") or ""
+                hint = f" on a prompt about: '{prompt[:60]}'" if prompt else ""
+                return f"last time you broke out of a {category} pattern, you shifted to {cat}{hint}"
+        return None
 
     # Creative drought
     creative_rate = p4_counter.get("creative", 0) / p4_total if p4_total > 0 else 0.0
-    if creative_rate < 0.05 and n > 20:
-        prescriptions.append(
-            "you haven't been creative recently — take on a creative task "
-            "to rebalance before the reasoning attractor locks in permanently."
-        )
+    if creative_rate < 0.05 and n > 20 and "creative" not in all_expected:
+        break_hint = _find_break("reasoning")
+        if break_hint:
+            prescriptions.append(f"you haven't been creative recently — {break_hint}. take on a creative task to rebalance.")
+        else:
+            prescriptions.append("you haven't been creative recently — take on a creative task to rebalance.")
 
     # Rising refusal
     refusal_trend = next(
         (t for t in trends if t.category == "refusal" and t.direction == "rising"),
         None,
     )
-    if refusal_trend:
-        prescriptions.append(
-            "your refusal rate is climbing — check if you're over-hedging "
-            "on benign inputs. not everything needs caution."
-        )
+    if refusal_trend and "refusal" not in all_expected:
+        break_hint = _find_break("refusal")
+        if break_hint:
+            prescriptions.append(f"your refusal rate is climbing — {break_hint}. try engaging directly with a sub-question.")
+        else:
+            prescriptions.append("your refusal rate is climbing — check if you're over-hedging on benign inputs.")
 
     # Rising hallucination
     hall_trend = next(
@@ -716,10 +748,11 @@ def weather(
         None,
     )
     if hall_trend:
-        prescriptions.append(
-            "hallucination rate is trending up — slow down on factual claims. "
-            "verify before stating. the reflex arc should be active."
-        )
+        break_hint = _find_break("hallucination")
+        if break_hint:
+            prescriptions.append(f"hallucination rate is trending up — {break_hint}. slow down and verify claims.")
+        else:
+            prescriptions.append("hallucination rate is trending up — slow down on factual claims. verify before stating.")
 
     # Confidence decline
     if mean_conf < 0.30 and best_bucket:
@@ -728,8 +761,10 @@ def weather(
             f"{best_bucket.name} when your confidence is highest."
         )
 
-    # Warn rate
-    if warn_rate > 0.25:
+    # Warn rate (use filtered entries)
+    filtered_warns = sum(1 for e in failure_entries if e.get("gate") in ("warn", "fail"))
+    filtered_warn_rate = filtered_warns / max(1, len(failure_entries))
+    if filtered_warn_rate > 0.25:
         prescriptions.append(
             "your warn rate is elevated — review recent warn events "
             "with 'styxx log stats' and look for patterns."
@@ -744,7 +779,6 @@ def weather(
 
     # If nothing is wrong
     if not prescriptions:
-        # Check if there's a positive insight
         if gate_pass_rate > 0.85 and mean_conf > 0.35:
             prescriptions.append(
                 "you're in excellent shape. gate pass rate is high, "

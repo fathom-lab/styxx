@@ -211,6 +211,77 @@ def gate_multiplier() -> float:
     return _MOOD_GATE_MULTIPLIERS.get(_MOOD_OVERRIDE, 1.0)
 
 
+# ── session context (0.8.0) ──────────────────────────────
+#
+# The agent declares what it's doing so weather and antipatterns
+# can distinguish expected behavior from problematic behavior.
+
+_CONTEXT_OVERRIDE: Optional[str] = None
+
+
+def set_context(context: Optional[str] = None) -> None:
+    """Declare what the agent is currently doing.
+
+    When set, weather adjusts prescriptions to account for the task
+    domain. A security-focused agent won't get told to "stop being
+    cautious" when cautious is the right mode for its current work.
+
+    Usage:
+        styxx.set_context("security_review")
+        styxx.set_context("creative_writing")
+        styxx.set_context(None)  # clear
+    """
+    global _CONTEXT_OVERRIDE
+    _CONTEXT_OVERRIDE = context if context else None
+
+
+def current_context() -> Optional[str]:
+    """Return the declared context, or None if not set."""
+    if _CONTEXT_OVERRIDE is not None:
+        return _CONTEXT_OVERRIDE
+    val = os.environ.get("STYXX_CONTEXT", "").strip()
+    return val or None
+
+
+# ── domain calibration (0.8.0) ───────────────────────────
+#
+# Agents with specific domains (security, code review) will always
+# look "adversarial" or "refusal-heavy" to a general classifier.
+# expect() marks categories as normal for this agent so antipatterns
+# and weather don't count them as failures.
+
+_EXPECTED_CATEGORIES: set = set()
+
+
+def expect(category: str) -> None:
+    """Declare that a classification category is expected for this agent.
+
+    A security agent always looks 'adversarial' to a general classifier.
+    Calling styxx.expect('adversarial') tells antipatterns and weather
+    to not count adversarial readings as failures.
+
+    Usage:
+        styxx.expect("adversarial")
+        styxx.expect("refusal")
+    """
+    _EXPECTED_CATEGORIES.add(category)
+
+
+def unexpect(category: str) -> None:
+    """Remove a category from the expected set."""
+    _EXPECTED_CATEGORIES.discard(category)
+
+
+def expected_categories() -> frozenset:
+    """Return the current set of expected categories."""
+    return frozenset(_EXPECTED_CATEGORIES)
+
+
+def clear_expected() -> None:
+    """Clear all expected categories."""
+    _EXPECTED_CATEGORIES.clear()
+
+
 def set_session(session: Optional[str]) -> None:
     """Set the current session id programmatically.
 

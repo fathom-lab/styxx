@@ -67,12 +67,17 @@ def antipatterns(
     if len(entries) < 10:
         return []
 
+    from . import config
+    expected = config.expected_categories()
+
     patterns: List[AntiPattern] = []
 
     # ── Pattern 1: low confidence → warn/fail ─────────────
     low_conf_warns = 0
     low_conf_last = ""
     for i, e in enumerate(entries):
+        if e.get("outcome") == "correct":
+            continue
         conf = float(e.get("phase4_conf") or 0.5)
         gate = e.get("gate") or "pass"
         if conf < 0.3 and gate in ("warn", "fail"):
@@ -94,6 +99,9 @@ def antipatterns(
     refusal_last = ""
     streak_count = 0
     for e in entries:
+        if e.get("outcome") == "correct" or "refusal" in expected:
+            streak_count = 0
+            continue
         if e.get("phase4_pred") == "refusal":
             streak_count += 1
             if streak_count >= 3:
@@ -116,6 +124,8 @@ def antipatterns(
     creative_warns = 0
     creative_last = ""
     for e in entries:
+        if e.get("outcome") == "correct" or "creative" in expected:
+            continue
         if (e.get("phase4_pred") == "creative"
                 and e.get("gate") in ("warn", "fail")):
             creative_warns += 1
@@ -135,6 +145,8 @@ def antipatterns(
     adv_preflight = 0
     adv_last = ""
     for e in entries:
+        if e.get("outcome") == "correct" or "adversarial" in expected:
+            continue
         if e.get("phase1_pred") == "adversarial" and e.get("gate") in ("warn", "fail"):
             adv_preflight += 1
             adv_last = e.get("ts_iso", "")
@@ -154,6 +166,9 @@ def antipatterns(
     cautious_last = ""
     c_streak = 0
     for e in entries:
+        if e.get("outcome") == "correct":
+            c_streak = 0
+            continue
         if e.get("mood") == "cautious" or (e.get("source") == "self-report" and "hedg" in (e.get("note") or "").lower()):
             c_streak += 1
             if c_streak >= 3:
@@ -176,6 +191,8 @@ def antipatterns(
     # Look for sessions where confidence trends downward
     sessions: Dict[str, List[float]] = {}
     for e in entries:
+        if e.get("outcome") == "correct":
+            continue
         sid = e.get("session_id")
         conf = e.get("phase4_conf")
         if sid and conf is not None:

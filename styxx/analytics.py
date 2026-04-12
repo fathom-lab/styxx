@@ -212,6 +212,7 @@ def write_audit(
             "ts": time.time(),
             "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "source": source,
+            "context": config.current_context(),
             "session_id": config.session_id(),
             "model": model,
             "prompt": (prompt[:200] if prompt else None),
@@ -228,6 +229,7 @@ def write_audit(
             "ts": time.time(),
             "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "source": source,
+            "context": config.current_context(),
             "session_id": config.session_id(),
             "model": model,
             "prompt": (prompt[:200] if prompt else None),
@@ -270,6 +272,7 @@ def log(
     confidence: Optional[float] = None,
     gate: Optional[str] = None,
     tags: Optional[Any] = None,
+    outcome: Optional[str] = None,
 ) -> None:
     """Manual write path into the audit log.
 
@@ -277,6 +280,11 @@ def log(
     doesn't expose logprobs (Anthropic Messages, local models
     without logprob support), this function lets the agent be a
     **co-author** of its own observability data.
+
+    0.8.0: ``outcome`` lets the agent mark entries as correct or
+    incorrect. Entries with ``outcome='correct'`` are excluded from
+    antipattern counts and weather failure rates. Valid values:
+    'correct', 'incorrect', 'expected', or None.
 
     The agent notices it's being cautious, it writes it. It notices
     it's drifting into verbose mode, it writes it. The personality
@@ -322,11 +330,17 @@ def log(
     path.parent.mkdir(parents=True, exist_ok=True)
     _rotate_if_needed(path)
 
+    # Validate outcome
+    _VALID_OUTCOMES = {"correct", "incorrect", "expected", None}
+    if outcome not in _VALID_OUTCOMES:
+        outcome = None
+
     entry = {
         "ts": time.time(),
         "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "session_id": config.session_id(),
         "source": "self-report",
+        "context": config.current_context(),
         "model": None,
         "prompt": None,
         "tier_active": None,
@@ -341,6 +355,7 @@ def log(
         # Self-report-specific fields
         "mood": mood,
         "note": (note[:500] if note else None),
+        "outcome": outcome,
     }
     if tags:
         # Accept both dict and list — Xendro bug report 0.5.5
@@ -1180,6 +1195,7 @@ class ReflectionReport:
     gate_pass_rate: float
     reflex_near_miss_rate: float
     suggestions: List[str] = field(default_factory=list)
+    triggers: Dict[str, List[str]] = field(default_factory=dict)
     generated_at: float = field(default_factory=time.time)
 
     def as_dict(self) -> dict:
@@ -1198,6 +1214,7 @@ class ReflectionReport:
             "gate_pass_rate": round(self.gate_pass_rate, 4),
             "reflex_near_miss_rate": round(self.reflex_near_miss_rate, 4),
             "suggestions": list(self.suggestions),
+            "triggers": {k: list(v) for k, v in self.triggers.items()},
             "generated_at": round(self.generated_at, 3),
         }
 
@@ -1409,6 +1426,26 @@ def reflect(
                 "when confidence is low, smaller commits are safer."
             )
 
+    # ── Trigger surfacing (0.8.0) ───────────────────────────
+    # Group prompts by phase4_pred. Show top 3 most recent for
+    # categories above 10% rate. Gives the agent specific context
+    # about WHICH inputs are driving each pattern.
+    triggers: Dict[str, List[str]] = {}
+    now_entries = load_audit(since_s=now_days * 86400)
+    if now_entries:
+        from collections import defaultdict
+        cat_entries: Dict[str, list] = defaultdict(list)
+        for e in now_entries:
+            cat = e.get("phase4_pred")
+            prompt = e.get("prompt")
+            if cat and prompt:
+                cat_entries[cat].append(e)
+        n_total = max(1, len(now_entries))
+        for cat, ces in cat_entries.items():
+            if len(ces) / n_total > 0.10:
+                recent = sorted(ces, key=lambda x: x.get("ts", 0), reverse=True)[:3]
+                triggers[cat] = [e["prompt"] for e in recent]
+
     return ReflectionReport(
         now=now_profile,
         yesterday=baseline_profile,
@@ -1419,6 +1456,7 @@ def reflect(
         gate_pass_rate=gate_pass_rate,
         reflex_near_miss_rate=near_miss_rate,
         suggestions=suggestions,
+        triggers=triggers,
     )
 
 
