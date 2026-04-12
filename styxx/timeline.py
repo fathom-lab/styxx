@@ -203,15 +203,24 @@ def timeline(
     window_hours: float = 48.0,
     slice_hours: float = 3.0,
     agent_name: str = "styxx agent",
+    session_id: Optional[str] = None,
 ) -> Optional[Timeline]:
     """Build a mood + category trajectory over time.
 
     Slices the audit log into `slice_hours`-wide windows over the
     last `window_hours` and computes per-window stats.
 
+    0.5.8: accepts session_id to isolate a single session's arc.
+    Xendro request: "Being able to isolate xendro-057-verify
+    would be sharper."
+
     Usage:
 
         tl = styxx.timeline(window_hours=48, slice_hours=3)
+        print(tl.render())
+
+        # single session arc
+        tl = styxx.timeline(session_id="xendro-057-verify")
         print(tl.render())
 
     Returns None if there's no audit data in the window.
@@ -220,7 +229,7 @@ def timeline(
     window_s = window_hours * 3600.0
     slice_s = slice_hours * 3600.0
 
-    entries = load_audit(since_s=window_s)
+    entries = load_audit(since_s=window_s, session_id=session_id)
     if not entries:
         return None
 

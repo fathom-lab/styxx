@@ -177,8 +177,9 @@ def cmd_timeline(args):
     name = args.name or "styxx agent"
     hours = float(args.hours or 48.0)
     slice_h = float(getattr(args, "slice_hours", 3.0))
+    sid = getattr(args, "session", None)
 
-    tl = timeline(window_hours=hours, slice_hours=slice_h, agent_name=name)
+    tl = timeline(window_hours=hours, slice_hours=slice_h, agent_name=name, session_id=sid)
     if tl is None:
         print()
         print("  (not enough audit data for a timeline)")
@@ -1079,6 +1080,10 @@ def _build_parser() -> argparse.ArgumentParser:
     p_timeline.add_argument(
         "--slice-hours", type=float, default=3.0, dest="slice_hours",
         help="width of each time slice in hours (default: 3)",
+    )
+    p_timeline.add_argument(
+        "--session", type=str, default=None,
+        help="filter to a specific session id",
     )
     p_timeline.add_argument(
         "--format", choices=["ascii", "json"],
