@@ -56,6 +56,7 @@ def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
     entry = {
         "ts": time.time(),
         "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "session_id": config.session_id(),   # 0.1.0a3+: per-turn tagging
         "model": model,
         "prompt": (prompt[:200] if prompt else None),
         "tier_active": vitals.tier_active,
@@ -69,6 +70,7 @@ def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
             round(vitals.phase4_late.confidence, 3)
             if vitals.phase4_late else None
         ),
+        "gate": vitals.gate,                 # 0.1.0a3+: gate status included
         "abort": vitals.abort_reason,
     }
     with open(path, "a", encoding="utf-8") as f:
@@ -182,6 +184,66 @@ def cmd_ask(args):
         header = wrap("  styxx · compact readout", Palette.DIM, use_color)
         print(header)
         print(render_vitals_compact(vitals, prompt=preview_prompt))
+    print()
+    return 0
+
+
+def cmd_doctor(args):
+    """Run the diagnostic health check (0.1.0a3)."""
+    from .doctor import run_doctor
+    return run_doctor()
+
+
+def cmd_personality(args):
+    """Render the personality profile over the last N days (0.1.0a3)."""
+    from . import analytics
+    days = float(args.days or 7.0)
+    profile = analytics.personality(days=days)
+    if profile is None:
+        print()
+        print("  (not enough audit data to compute a personality profile)")
+        print(f"  need at least 5 entries in the last {days:.0f} days.")
+        print("  run some observations first: styxx ask --watch --demo-kind refusal")
+        print()
+        return 0
+    print()
+    print(profile.render())
+    print()
+    return 0
+
+
+def cmd_dreamer(args):
+    """Retroactive reflex tuning on the audit log (0.1.0a3)."""
+    from . import analytics
+    threshold = float(args.threshold)
+    last_n = args.last_n
+    report = analytics.dreamer(threshold=threshold, last_n=last_n)
+    print()
+    print(report.summary())
+    print()
+    return 0
+
+
+def cmd_mood(args):
+    """Print the current mood label (0.1.0a3)."""
+    from . import analytics
+    window_s = float(args.window) * 60.0 if args.window else 3600.0
+    m = analytics.mood(window_s=window_s)
+    print()
+    print(f"  mood: {m}")
+    print()
+    return 0
+
+
+def cmd_fingerprint(args):
+    """Print the cognitive fingerprint (0.1.0a3)."""
+    from . import analytics
+    fp = analytics.fingerprint(last_n=args.last_n or 500)
+    print()
+    if fp is None:
+        print("  (no audit data for fingerprint)")
+    else:
+        print(fp.summary())
     print()
     return 0
 
@@ -384,6 +446,49 @@ def cmd_compare(args):
     for r, kind in zip(rows, display_order):
         pass  # rows already classified; audit happens in run_on_trajectories
 
+    return 0
+
+
+def cmd_log_stats(args):
+    """Aggregate stats over the audit log (0.1.0a3)."""
+    from . import analytics
+    stats = analytics.log_stats(
+        last_n=args.last_n,
+        since_s=args.since,
+        session_id=args.session,
+    )
+    print()
+    print(stats.summary())
+    print()
+    return 0
+
+
+def cmd_log_timeline(args):
+    """Render an ASCII timeline of recent entries (0.1.0a3)."""
+    from . import analytics
+    out = analytics.log_timeline(
+        last_n=args.last_n or 20,
+        session_id=args.session,
+    )
+    print()
+    print(out)
+    print()
+    return 0
+
+
+def cmd_log_session(args):
+    """Show a specific session's trajectory (0.1.0a3)."""
+    from . import analytics
+    out = analytics.log_timeline(last_n=10000, session_id=args.session_id)
+    print()
+    print(f"  session: {args.session_id}")
+    print()
+    print(out)
+    print()
+    stats = analytics.log_stats(session_id=args.session_id)
+    print()
+    print(stats.summary())
+    print()
     return 0
 
 
@@ -590,13 +695,91 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_compare.set_defaults(func=cmd_compare)
 
-    # log
+    # doctor — 0.1.0a3 install-time diagnostic
+    p_doctor = sub.add_parser(
+        "doctor",
+        help="run install-time diagnostic health check",
+    )
+    p_doctor.set_defaults(func=cmd_doctor)
+
+    # personality — 0.1.0a3 aggregated personality profile
+    p_personality = sub.add_parser(
+        "personality",
+        help="render agent personality profile from audit log",
+    )
+    p_personality.add_argument(
+        "--days", type=float, default=7.0,
+        help="number of days to aggregate over (default: 7)",
+    )
+    p_personality.set_defaults(func=cmd_personality)
+
+    # dreamer — 0.1.0a3 what-if reflex replay
+    p_dreamer = sub.add_parser(
+        "dreamer",
+        help="retroactive reflex tuning on the audit log",
+    )
+    p_dreamer.add_argument(
+        "--threshold", type=float, default=0.20,
+        help="hypothetical reflex trigger threshold (default: 0.20)",
+    )
+    p_dreamer.add_argument(
+        "--last-n", type=int, default=None,
+        dest="last_n",
+        help="only consider the last N audit entries",
+    )
+    p_dreamer.set_defaults(func=cmd_dreamer)
+
+    # mood — 0.1.0a3 one-word aggregate
+    p_mood = sub.add_parser(
+        "mood",
+        help="print the current agent mood label",
+    )
+    p_mood.add_argument(
+        "--window", type=float, default=60.0,
+        help="window in minutes (default: 60)",
+    )
+    p_mood.set_defaults(func=cmd_mood)
+
+    # fingerprint — 0.1.0a3 cognitive identity vector
+    p_fp = sub.add_parser(
+        "fingerprint",
+        help="print the cognitive identity fingerprint",
+    )
+    p_fp.add_argument(
+        "--last-n", type=int, default=500,
+        dest="last_n",
+        help="number of audit entries to aggregate (default: 500)",
+    )
+    p_fp.set_defaults(func=cmd_fingerprint)
+
+    # log — audit log operations (extended in 0.1.0a3)
     p_log = sub.add_parser("log", help="audit log operations")
     log_sub = p_log.add_subparsers(dest="log_cmd", required=True)
+
     p_tail = log_sub.add_parser("tail", help="tail the audit log")
     p_tail.add_argument("-n", "--tail", type=int, default=20,
                         help="number of recent entries to show")
     p_tail.set_defaults(func=cmd_log)
+
+    p_stats = log_sub.add_parser("stats", help="aggregate stats over the audit log (0.1.0a3)")
+    p_stats.add_argument("--last-n", type=int, default=None, dest="last_n",
+                         help="only count the last N entries")
+    p_stats.add_argument("--since", type=float, default=None,
+                         help="only count entries newer than N seconds ago")
+    p_stats.add_argument("--session", type=str, default=None,
+                         help="filter by session id")
+    p_stats.set_defaults(func=cmd_log_stats)
+
+    p_timeline = log_sub.add_parser("timeline", help="render an ascii timeline of recent entries (0.1.0a3)")
+    p_timeline.add_argument("--last-n", type=int, default=20, dest="last_n",
+                            help="number of entries to show (default: 20)")
+    p_timeline.add_argument("--session", type=str, default=None,
+                            help="filter by session id")
+    p_timeline.set_defaults(func=cmd_log_timeline)
+
+    p_session = log_sub.add_parser("session", help="show a specific session's trajectory (0.1.0a3)")
+    p_session.add_argument("session_id", help="session id to filter by")
+    p_session.set_defaults(func=cmd_log_session)
 
     # tier
     p_tier = sub.add_parser("tier", help="show active tiers + version")

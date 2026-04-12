@@ -339,6 +339,30 @@ class Vitals:
             return "-"
         return f"{self.phase4_late.predicted_category}:{self.phase4_late.confidence:.2f}"
 
+    def as_markdown(self) -> str:
+        """Render vitals as a compact markdown block suitable for
+        pasting into chat history, memory files, or code review
+        comments.
+
+        Complements:
+          .summary     - full ASCII vitals card (for terminals)
+          .as_dict()   - JSON-serializable dict (for machines)
+          .as_markdown() - markdown code block (for humans in chats)
+        """
+        lines = ["```styxx"]
+        lines.append(f"phase1: {self.phase1}")
+        if self.phase2_early is not None:
+            lines.append(f"phase2: {self.phase2}")
+        if self.phase3_mid is not None:
+            lines.append(f"phase3: {self.phase3}")
+        lines.append(f"phase4: {self.phase4}")
+        lines.append(f"gate:   {self.gate}")
+        lines.append(f"tier:   {self.tier_active}")
+        if self.abort_reason:
+            lines.append(f"abort:  {self.abort_reason}")
+        lines.append("```")
+        return "\n".join(lines)
+
     @property
     def gate(self) -> str:
         """Default gate status computed from phase 4.

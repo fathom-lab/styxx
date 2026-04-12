@@ -7,6 +7,131 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.0a3] — 2026-04-11
+
+**The power-up release.** 10 new surfaces that turn styxx from
+"working alpha" into a proper agent observability stack.
+
+All 10 shipped in one session, driven by Flobi's "get innovative,
+think outside the box" mandate + Xendro's 0.1.0a1 wishlist. This
+release closes every open item in Xendro's P1-P5 queue and adds
+four creative primitives that no other tool in the space ships.
+
+### New — tier 1: improves the product
+
+- **`styxx doctor`** — install-time diagnostic health check.
+  Twelve checks (python/numpy versions, centroid sha, tier
+  detection, SDK availability, audit log health, last run age,
+  session id, kill switch) render as a green/red/dim sheet. The
+  "is this actually working?" command every new install should
+  run once before wiring styxx into an agent loop.
+
+- **`styxx.hook_openai()`** — zero-code-change global adoption.
+  One line at startup monkey-patches `openai.OpenAI` globally so
+  EVERY existing openai call in the process gains `.vitals`
+  automatically. No wrapping, no find-and-replace, no code
+  changes to your 30k-line agent. Reversible via
+  `styxx.unhook_openai()`, idempotent, fail-open.
+
+- **`styxx.explain(vitals)`** — natural-language prose
+  interpretation. Takes a Vitals object and returns a paragraph
+  of prose describing the phase trajectory, the verdict, and
+  the overall shape. Deterministic, template-based, sensitive
+  to the specific pattern (refusal lock-ins read differently
+  from hallucination spikes).
+
+- **`Vitals.as_markdown()`** — markdown render for agent memory
+  files and chat logs. Complements `.summary` (ASCII card for
+  terminals) and `.as_dict()` (JSON for machines). A compact
+  markdown code block with phase + gate + tier fields suitable
+  for pasting into conversation history.
+
+- **`styxx log stats` / `styxx log timeline` / `styxx log session <id>`**
+  Audit log analyzer. Reads `~/.styxx/chart.jsonl`, aggregates
+  by time window / session / last-N, renders gate distribution
+  + phase counts + mean confidences + ASCII timeline. Unlocks
+  Xendro's P3 multi-turn wishlist item.
+
+- **Session tagging** — `STYXX_SESSION_ID` env var +
+  `styxx.set_session(id)` + `styxx.session_id()`. Every audit
+  log entry written after session is set gets a `session_id`
+  field, enabling `styxx log session <id>` and filtered
+  analytics.
+
+### New — tier 2: creative moonshots
+
+- **`styxx.fingerprint()`** — cognitive identity signature.
+  Reads the last N audit entries and computes a phase-rate +
+  gate-rate vector that describes the agent's operating
+  fingerprint. Two fingerprints can be compared with
+  `.cosine_similarity(other)` to detect drift. Use case:
+  catch jailbreak, prompt injection, model swap, system prompt
+  version change — anything that shifts the agent's operating
+  identity — as a runtime property rather than a prompt
+  property. Identity-as-signature for stateless agents.
+
+- **`styxx.streak()`** — consecutive-attractor tracking.
+  Returns a Streak object with the category + length of the
+  current run of same-category phase4 classifications. Agents
+  develop rhythm; rhythm breaks matter. Lightweight helper that
+  feeds into reflex decisions.
+
+- **`styxx.mood()`** — one-word aggregate mood label over a
+  time window. Returns one of:
+  `drifting` (hallucination rate > 10%),
+  `cautious` (refusal rate > 25%),
+  `defensive` (adversarial rate > 15%),
+  `creative` (creative rate > 25%),
+  `steady` (reasoning rate > 70%),
+  `unfocused` (no dominant category),
+  `mixed` / `quiet`. Feeds into HUDs and agent status
+  dashboards.
+
+- **`styxx personality`** — THE HEADLINE FEATURE. Derives a
+  full cognitive personality profile from the last N days of
+  audit log. Phase4 category distribution + day-to-day variance
+  + gate distribution + reflex near-miss rate + mean phase
+  confidences + narrative commentary. Rendered as an ASCII
+  profile card with bars, percentages, and a human-readable
+  "the shape tells us" section. This is the Oura Ring for LLM
+  agents — sustained cognitive measurement rather than one-shot
+  classification. No other tool in the observability space
+  computes this because no other tool has a calibrated
+  cognitive-state stream to aggregate. This is what Fathom Lab
+  becomes famous for.
+
+- **`styxx dreamer --threshold X`** — retroactive reflex tuning.
+  Re-runs the audit log against hypothetical reflex trigger
+  thresholds and reports how many past calls WOULD have
+  triggered an intervention. Free reflex calibration on
+  historical data. "if I had used threshold=0.25 instead of
+  0.30, how many of my last 500 calls would have been
+  reflex-intercepted?"
+
+### Audit log schema updates
+
+- Every new entry carries `session_id` (nullable) and `gate`
+  (pass/warn/fail/pending) fields. Old entries without these
+  still parse; the analyzer treats missing gates as "pending".
+
+### Tests
+
+- 33 new assertions across `tests/test_power_ups.py`:
+    - doctor check validators (2)
+    - hooks idempotency + reversibility (2)
+    - explain pattern variation (3)
+    - Vitals.as_markdown (2)
+    - session tagging priority (3)
+    - load_audit + log_stats + log_timeline (6)
+    - streak + mood (2)
+    - fingerprint + cosine similarity + drift detection (3)
+    - personality profile + narrative (4)
+    - dreamer threshold sensitivity (3)
+    - version + export presence (3)
+- Total suite: 91 collected / 90 passing / 1 skipped / 0 failing.
+
+---
+
 ## [0.1.0a2] — 2026-04-11
 
 **Patch release driven entirely by Xendro's 0.1.0a1 verification report.**

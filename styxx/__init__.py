@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.1.0a2"
+__version__ = "0.1.0a3"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -153,6 +153,19 @@ from .vitals import Vitals, CentroidClassifier
 from .watch import watch, observe, observe_raw, is_concerning, WatchSession
 from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
+from .hooks import hook_openai, unhook_openai, hook_openai_active
+from .explain import explain
+from .config import session_id, set_session
+from .analytics import (
+    load_audit,
+    log_stats, LogStats,
+    log_timeline,
+    streak, Streak,
+    mood,
+    fingerprint, Fingerprint,
+    personality, Personality,
+    dreamer, DreamReport,
+)
 
 __all__ = [
     # core
@@ -174,7 +187,7 @@ __all__ = [
     "remove_gate",
     "clear_gates",
     "list_gates",
-    # reflex — active intervention (THE pitch)
+    # reflex — active intervention (the pitch)
     "reflex",
     "rewind",
     "abort",
@@ -182,6 +195,30 @@ __all__ = [
     "ReflexSignal",
     "RewindSignal",
     "AbortSignal",
+    # 0.1.0a3 power-ups
+    # global hook for zero-code-change adoption
+    "hook_openai",
+    "unhook_openai",
+    "hook_openai_active",
+    # natural language interpretation
+    "explain",
+    # session tagging
+    "session_id",
+    "set_session",
+    # audit log analytics
+    "load_audit",
+    "log_stats",
+    "LogStats",
+    "log_timeline",
+    "streak",
+    "Streak",
+    "mood",
+    "fingerprint",
+    "Fingerprint",
+    "personality",
+    "Personality",
+    "dreamer",
+    "DreamReport",
     # metadata
     "__version__",
     "__tagline__",

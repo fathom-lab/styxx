@@ -31,6 +31,11 @@ Environment variables (all default to OFF / normal operation):
                             it bypasses the tamper-detection guarantee.
                             intended only for development/debugging.
 
+  STYXX_SESSION_ID  str  →  tag every audit log entry with this session
+                            id. lets you slice the audit log per
+                            conversation via `styxx log session <id>`.
+                            0.1.0a3+ only.
+
 Helpers below read each env var defensively so no import raises even
 if a user pokes at weird values.
 """
@@ -38,6 +43,7 @@ if a user pokes at weird values.
 from __future__ import annotations
 
 import os
+from typing import Optional
 
 
 def _truthy(name: str) -> bool:
@@ -79,3 +85,38 @@ def boot_speed() -> float:
         return max(0.0, val)
     except ValueError:
         return 1.0
+
+
+# ── session tagging (0.1.0a3) ──────────────────────────────────
+#
+# The session id is used to tag audit log entries so the log analyzer
+# can group calls by conversation. Reads from STYXX_SESSION_ID by
+# default; can be overridden programmatically via set_session().
+
+_SESSION_OVERRIDE: Optional[str] = None
+
+
+def session_id() -> Optional[str]:
+    """Return the current session id, or None if unset.
+
+    Priority:
+      1. programmatic override via styxx.set_session(...)
+      2. STYXX_SESSION_ID environment variable
+      3. None (no tagging)
+    """
+    if _SESSION_OVERRIDE is not None:
+        return _SESSION_OVERRIDE
+    val = os.environ.get("STYXX_SESSION_ID", "").strip()
+    return val or None
+
+
+def set_session(session: Optional[str]) -> None:
+    """Set the current session id programmatically.
+
+    Pass None to clear the override and fall back to the environment
+    variable (or no tagging if it's also unset). Session id should be
+    a short stable string like 'xendro-2026-04-11' or a conversation
+    uuid — it's embedded verbatim in every audit log entry.
+    """
+    global _SESSION_OVERRIDE
+    _SESSION_OVERRIDE = session if session is None else str(session).strip() or None
