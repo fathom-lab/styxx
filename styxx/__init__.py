@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -153,6 +153,7 @@ from .vitals import Vitals, CentroidClassifier
 from .watch import watch, observe, observe_raw, is_concerning, WatchSession
 from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
+from .guardian import guardian, GuardianSession, SteeringEvent
 from .hooks import hook_openai, unhook_openai, hook_openai_active
 from .explain import explain
 from .config import session_id, set_session, tier1_enabled, tier1_model, tier1_device
@@ -219,7 +220,7 @@ __all__ = [
     "remove_gate",
     "clear_gates",
     "list_gates",
-    # reflex — active intervention (the pitch)
+    # reflex — active intervention (tier 0 level)
     "reflex",
     "rewind",
     "abort",
@@ -227,6 +228,10 @@ __all__ = [
     "ReflexSignal",
     "RewindSignal",
     "AbortSignal",
+    # guardian — in-flight cognitive steering (tier 3)
+    "guardian",
+    "GuardianSession",
+    "SteeringEvent",
     # 0.1.0a3 power-ups
     # global hook for zero-code-change adoption
     "hook_openai",

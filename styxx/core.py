@@ -72,8 +72,8 @@ def detect_tiers() -> Dict[int, bool]:
         tiers[1] = True
         if _try_import("circuit_tracer"):
             tiers[2] = True
-            # Tier 3 is tier 2 + generation hooks; shipped as v0.4+
-            tiers[3] = False
+            # Tier 3 = tier 2 + steering hooks (shipped 0.5.0)
+            tiers[3] = True
     return tiers
 
 

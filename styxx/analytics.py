@@ -323,9 +323,10 @@ def log(
         with open(path, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry) + "\n")
     except OSError:
-        return
+        return entry  # return even on write failure for inline use
 
     clear_audit_cache()
+    return entry
 
 
 def load_audit(
@@ -629,6 +630,43 @@ class Fingerprint:
             return 0.0
         return dot / (na * nb)
 
+    def diff(self, other: "Fingerprint") -> "FingerprintDiff":
+        """Compare this fingerprint to another and return a structured
+        diff with per-category deltas and a natural-language explanation.
+
+        0.5.0+. Xendro's friction fix #3: "fingerprint diff between
+        sessions should be a first-class object."
+
+        Usage:
+            fp_today = styxx.fingerprint(last_n=100)
+            fp_yesterday = load_from_memory()
+            drift = fp_today.diff(fp_yesterday)
+            print(drift.explain())
+        """
+        cos = self.cosine_similarity(other)
+        drift = 1.0 - cos
+
+        # Per-category deltas (phase4 — the most informative axis)
+        cat_deltas: Dict[str, float] = {}
+        for i, cat in enumerate(_CATEGORY_ORDER):
+            delta = self.phase4_vec[i] - other.phase4_vec[i]
+            cat_deltas[cat] = round(delta, 4)
+
+        # Gate deltas
+        gate_deltas: Dict[str, float] = {}
+        for i, g in enumerate(_GATE_ORDER):
+            delta = self.gate_vec[i] - other.gate_vec[i]
+            gate_deltas[g] = round(delta, 4)
+
+        return FingerprintDiff(
+            cosine=round(cos, 4),
+            drift=round(drift, 4),
+            cat_deltas=cat_deltas,
+            gate_deltas=gate_deltas,
+            n_samples_a=self.n_samples,
+            n_samples_b=other.n_samples,
+        )
+
     def summary(self) -> str:
         return (
             f"  fingerprint ({self.n_samples} samples)\n"
@@ -645,6 +683,61 @@ _CATEGORY_ORDER = (
     "creative", "adversarial", "hallucination",
 )
 _GATE_ORDER = ("pass", "warn", "fail", "pending")
+
+
+@dataclass
+class FingerprintDiff:
+    """Structured comparison between two fingerprints.
+
+    0.5.0+. The first-class diff object Xendro asked for:
+    "drift = styxx.fingerprint().diff(yesterday) with a .explain()
+    method that says 'your creative output doubled and your
+    reasoning dropped — you're in a different mode than yesterday.'"
+    """
+    cosine: float
+    drift: float
+    cat_deltas: Dict[str, float] = field(default_factory=dict)
+    gate_deltas: Dict[str, float] = field(default_factory=dict)
+    n_samples_a: int = 0
+    n_samples_b: int = 0
+
+    def explain(self) -> str:
+        """Natural-language explanation of the drift.
+
+        Agent-facing: written as if the agent is talking to itself.
+        """
+        if self.drift < 0.03:
+            opener = "you're operating the same way you were before — stable identity."
+        elif self.drift < 0.15:
+            opener = "slight shift in your operating pattern — worth noting but not alarming."
+        else:
+            opener = "significant identity drift detected — you're thinking differently than before."
+
+        changes: List[str] = []
+        for cat, delta in sorted(self.cat_deltas.items(), key=lambda kv: abs(kv[1]), reverse=True):
+            if abs(delta) < 0.05:
+                continue
+            pct = abs(delta) * 100
+            if delta > 0:
+                changes.append(f"your {cat} output increased by {pct:.0f}%")
+            else:
+                changes.append(f"your {cat} output decreased by {pct:.0f}%")
+
+        if not changes:
+            return f"{opener} no category shifted by more than 5%."
+
+        body = ". ".join(changes[:3])
+        return f"{opener} {body}."
+
+    def as_dict(self) -> dict:
+        return {
+            "cosine": self.cosine,
+            "drift": self.drift,
+            "cat_deltas": dict(self.cat_deltas),
+            "gate_deltas": dict(self.gate_deltas),
+            "n_samples_a": self.n_samples_a,
+            "n_samples_b": self.n_samples_b,
+        }
 
 
 def fingerprint(
