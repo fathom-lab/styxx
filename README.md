@@ -243,7 +243,7 @@ styxx detects adversarial prompts at token zero (2.8x chance), reasoning-mode ge
 
 ## where it comes from
 
-styxx is built on **fathom intelligence** — 14 months of research into cognitive measurement instruments for transformer internals. three US provisional patent filings, the fathom cognitive atlas v0.3 cross-architecture replication, and a product that shipped from 0.1 to 0.5 in a single day driven by its first external user.
+styxx is built on **fathom intelligence** — research into cognitive measurement instruments for transformer internals, backed by three US provisional patent filings, Zenodo-published datasets, and the fathom cognitive atlas v0.3 cross-architecture replication. a product that shipped from 0.1 to 0.7 in a single week driven by its first external user.
 
 - site: [fathom.darkflobi.com/styxx](https://fathom.darkflobi.com/styxx)
 - research: [fathom.darkflobi.com](https://fathom.darkflobi.com)
