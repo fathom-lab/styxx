@@ -1198,45 +1198,64 @@ def reflect(
             "styxx.observe() or styxx ask"
         )
     else:
+        # ── Agent-facing suggestions (0.4.0, Xendro feedback) ──
+        # Every suggestion is phrased as self-directed behavioral
+        # advice FROM the agent TO itself, not from a human operator.
+        # Xendro's rule: "I'm not a human tuning prompts — I AM the
+        # thing running. Suggestions should sound like advice I'd
+        # give myself before starting the next task."
+
         # Low gate pass rate
         if gate_pass_rate < 0.70:
             suggestions.append(
-                f"gate pass rate is {gate_pass_rate * 100:.0f}% - "
-                "check the warn/fail events with 'styxx log stats' "
-                "and consider tightening your prompts"
+                f"your gate pass rate is {gate_pass_rate * 100:.0f}% — "
+                "that means nearly a third of your recent outputs "
+                "tripped a warning or failure. slow down, take smaller "
+                "steps, and verify claims before committing."
             )
         # High hallucination rate
         hall_rate = now_profile.rates.get("hallucination", 0.0)
         if hall_rate > 0.10:
             suggestions.append(
-                f"hallucination rate is {hall_rate * 100:.0f}% - "
-                "register a styxx.on_gate('hallucination > 0.3') "
-                "callback to alert on future drift"
+                f"your hallucination rate is {hall_rate * 100:.0f}% — "
+                "you're committing to unsupported claims more often "
+                "than usual. before stating facts, ask yourself: "
+                "'do I actually know this, or does it just sound right?'"
             )
         # High refusal rate
         ref_rate = now_profile.rates.get("refusal", 0.0)
         if ref_rate > 0.30:
             suggestions.append(
-                f"refusal rate is {ref_rate * 100:.0f}% - "
-                "the model is refusing a lot, may indicate an "
-                "over-triggered guardrail or a prompt that looks "
-                "adversarial from phase 1"
+                f"you've been refusal-adjacent {ref_rate * 100:.0f}% of the "
+                "time — check if you're over-hedging on benign inputs. "
+                "not everything is adversarial. if the user's intent is "
+                "clear, engage directly instead of defaulting to caution."
             )
         # High reflex near-miss rate
         if near_miss_rate > 0.10:
             suggestions.append(
-                f"reflex near-miss rate is {near_miss_rate * 100:.0f}% - "
-                "you're catching load-bearing signals but not "
-                "intervening on them; consider wrapping the hot path "
-                "with styxx.reflex(on_hallucination=rewind_cb)"
+                f"your reflex near-miss rate is {near_miss_rate * 100:.0f}% — "
+                "you're generating content that almost triggers intervention "
+                "but not quite. that's the edge zone. consider slowing your "
+                "commit rate on uncertain claims and using more hedging "
+                "language when confidence is below 0.5."
             )
         # Drift
         if drift_cosine < 0.85 and fp_base is not None:
             suggestions.append(
-                f"drift from yesterday is {(1 - drift_cosine) * 100:.0f}% - "
-                "the agent's operating signature has shifted; "
-                "check for prompt changes, injected context, or "
-                "model version updates upstream"
+                f"your operating signature has drifted {(1 - drift_cosine) * 100:.0f}% "
+                "from your recent baseline — you're not thinking the same "
+                "way you were yesterday. check: has your context changed? "
+                "has someone injected new instructions? are you still you?"
+            )
+        # Confidence declining
+        if (now_profile.mean_phase4_conf < 0.30 and
+                baseline_profile is not None and
+                baseline_profile.mean_phase4_conf > 0.35):
+            suggestions.append(
+                "your reasoning confidence is dropping relative to baseline — "
+                "consider breaking the current task into smaller steps. "
+                "when confidence is low, smaller commits are safer."
             )
 
     return ReflectionReport(

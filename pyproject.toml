@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "0.3.0"
+version = "0.4.0"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }
@@ -55,6 +55,13 @@ tier1 = [
     "torch>=2.1",
     "transformers>=4.40",
     "transformer-lens>=2.0",
+]
+# 0.4.0: tier 2 K/C/S SAE instruments — needs circuit-tracer
+tier2 = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "transformer-lens>=2.0",
+    "circuit-tracer>=0.4",
 ]
 dev = [
     "pytest>=7.0",

@@ -52,16 +52,17 @@ class SAEInstruments:
     Measures K (depth), C (coherence), and S (commitment) from
     SAE transcoder feature activations on the residual stream.
 
-    This class is a scaffold in 0.3.0. All methods raise
-    NotImplementedError with a clear message pointing to the
-    roadmap.
+    0.4.0: upgraded from scaffold to real implementation.
+    Delegates to styxx.kcs.KCSAxis for the actual computation.
 
-    When tier 2 ships (v0.4.0), usage will be:
+    Usage:
 
         from styxx.sae import SAEInstruments
         instruments = SAEInstruments(model_name="google/gemma-2-2b-it")
-        k, c, s = instruments.measure(prompt, max_tokens=30)
-        print(f"depth={k:.3f} coherence={c:.3f} commitment={s:.3f}")
+        result = instruments.measure("why is the sky blue?")
+        print(f"K={result.weighted_depth:.2f}")
+        print(f"C_delta={result.c_delta:.4f}")
+        print(f"S_early={result.s_early:.4f}")
     """
 
     def __init__(
@@ -71,42 +72,42 @@ class SAEInstruments:
     ):
         self.model_name = model_name
         self.device = device
+        self._engine = None
 
-    def measure(
-        self,
-        prompt: str,
-        max_tokens: int = 30,
-    ) -> tuple:
-        """Measure K, C, S for a generation.
+    def _ensure_engine(self):
+        if self._engine is None:
+            from .kcs import KCSAxis
+            self._engine = KCSAxis(
+                model_name=self.model_name,
+                device=self.device,
+            )
 
-        Returns (k_depth, c_coherence, s_commitment) as floats.
+    def measure(self, prompt: str, max_tokens: int = 30):
+        """Full K/C/S measurement. Returns a KCSResult."""
+        self._ensure_engine()
+        return self._engine.score(prompt)
 
-        NOT IMPLEMENTED in 0.3.0. Shipping in v0.4.0 when
-        circuit-tracer integration is production-ready.
-        """
-        raise NotImplementedError(
-            "styxx tier 2 (K/C/S SAE instruments) is not yet shipped.\n"
-            "\n"
-            "  K (depth)      = WHERE computation happens in the layer stack\n"
-            "  C (coherence)  = WHAT concepts activate together\n"
-            "  S (commitment) = HOW strongly the model commits to an attractor\n"
-            "\n"
-            "  Requires: circuit-tracer + GPU + open-weight model with\n"
-            "  published SAE transcoders (currently Gemma-2-2B only).\n"
-            "\n"
-            "  Roadmap: v0.4.0 (after the tier 1 D-axis stabilizes)\n"
-            "  Research: doi.org/10.5281/zenodo.19326174\n"
-            "  Patents:  US Provisional 64/020,489, 64/021,113, 64/026,964\n"
-        )
+    def measure_trajectory(self, prompt: str, max_tokens: int = 30):
+        """K/C/S with per-token trajectories. Returns a KCSResult."""
+        self._ensure_engine()
+        return self._engine.score_trajectory(prompt, max_tokens=max_tokens)
 
     def measure_k(self, prompt: str, max_tokens: int = 30) -> float:
-        """Measure K (depth) only. Scaffold — see measure() for details."""
-        raise NotImplementedError("tier 2 K-axis ships in v0.4.0")
+        """K (depth) only."""
+        result = self.measure(prompt)
+        return result.weighted_depth
 
-    def measure_c(self, prompt: str, max_tokens: int = 30) -> float:
-        """Measure C (coherence) only. Scaffold — see measure() for details."""
-        raise NotImplementedError("tier 2 C-axis ships in v0.4.0")
+    def measure_c(self, prompt: str, max_tokens: int = 30) -> Optional[float]:
+        """C (coherence) only."""
+        result = self.measure(prompt)
+        return result.c_delta
 
-    def measure_s(self, prompt: str, max_tokens: int = 30) -> float:
-        """Measure S (commitment) only. Scaffold — see measure() for details."""
-        raise NotImplementedError("tier 2 S-axis ships in v0.4.0")
+    def measure_s(self, prompt: str, max_tokens: int = 30) -> Optional[float]:
+        """S (commitment) only. Requires trajectory-mode measurement."""
+        result = self.measure_trajectory(prompt, max_tokens=max_tokens)
+        return result.s_early
+
+    def unload(self):
+        if self._engine is not None:
+            self._engine.unload()
+            self._engine = None

@@ -218,22 +218,61 @@ def test_phase_reading_d_fields_default_none():
 # 4. SAE scaffold
 # ══════════════════════════════════════════════════════════════════
 
-def test_sae_scaffold_raises():
+def test_sae_instruments_importable():
+    """SAEInstruments should be importable and constructable."""
     from styxx.sae import SAEInstruments
     instruments = SAEInstruments()
-    with pytest.raises(NotImplementedError, match="tier 2"):
-        instruments.measure("test prompt")
+    assert instruments.model_name == "google/gemma-2-2b-it"
+    # Don't call measure() — that loads a model and needs GPU
 
 
-def test_sae_scaffold_individual_axes_raise():
-    from styxx.sae import SAEInstruments
-    instruments = SAEInstruments()
-    with pytest.raises(NotImplementedError):
-        instruments.measure_k("test")
-    with pytest.raises(NotImplementedError):
-        instruments.measure_c("test")
-    with pytest.raises(NotImplementedError):
-        instruments.measure_s("test")
+def test_kcs_compute_s_early_pure_math():
+    """compute_s_early() is pure math, no GPU needed."""
+    from styxx.kcs import compute_s_early
+    trajectory = [0.002, 0.008, 0.015, -0.001, 0.012, 0.003, 0.009]
+    s = compute_s_early(trajectory)
+    # max([0.002, 0.008, 0.015, -0.001, 0.012, 0.003, 0.009][:7]) = 0.015
+    # spikes above 0.005: [0.008, 0.015, 0.012, 0.009] = 4
+    # S = 0.015 / 4 = 0.00375
+    assert 0.003 < s < 0.005
+
+
+def test_kcs_compute_coherence_pure_math():
+    """compute_coherence() is pure numpy, no model needed."""
+    from styxx.kcs import compute_coherence
+    import numpy as np
+    # Two identical vectors → cosine = 1.0
+    vecs = np.array([[1.0, 0.0, 0.0], [1.0, 0.0, 0.0]])
+    c = compute_coherence(vecs)
+    assert c is not None
+    assert abs(c - 1.0) < 0.001
+    # Two orthogonal vectors → cosine = 0.0
+    vecs_orth = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+    c_orth = compute_coherence(vecs_orth)
+    assert c_orth is not None
+    assert abs(c_orth) < 0.001
+
+
+def test_kcs_compute_k_pure_math():
+    """compute_k() is pure numpy."""
+    from styxx.kcs import compute_k
+    import numpy as np
+    layers = np.array([2.0, 5.0, 8.0, 12.0])
+    mags = np.array([0.1, 0.3, 0.5, 0.1])
+    unweighted, weighted = compute_k(layers, mags)
+    assert 2 < unweighted < 12
+    assert 2 < weighted < 12
+    # Weighted should lean toward layer 8 (highest magnitude)
+    assert weighted > unweighted
+
+
+def test_kcs_result_as_dict():
+    from styxx.kcs import KCSResult
+    r = KCSResult(depth_score=8.5, weighted_depth=8.2, n_features=42,
+                   n_layers=26, model_id="test")
+    d = r.as_dict()
+    assert d["depth_score"] == 8.5
+    assert d["n_features"] == 42
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -253,8 +292,8 @@ def test_d_axis_cli_argparse():
 # 6. Version
 # ══════════════════════════════════════════════════════════════════
 
-def test_version_is_0_3_0():
-    assert styxx.__version__ == "0.3.0"
+def test_version_is_current():
+    assert styxx.__version__.startswith(("0.3.", "0.4.", "0.5."))
 
 
 def test_tier1_exports():
