@@ -264,5 +264,3 @@ MIT on code. CC-BY-4.0 on the atlas centroid data. patent pending on the underly
 
   nothing crosses unseen.
 ```
-
-community token: `Dxw3u4KxN32KpSdHSq4TkwjfMPJTPeosa22JXN15pump`
