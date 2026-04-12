@@ -235,6 +235,19 @@ class WatchSession:
         if self._gates_fired or self.vitals is None:
             return
         self._gates_fired = True
+
+        # 0.2.2 CRITICAL FIX: persist every vitals computation to
+        # the audit log so the analytics layer (mood, streak,
+        # personality, fingerprint, reflect, dreamer) sees real
+        # Python API traffic, not just CLI demo data.
+        #
+        # Before this fix, observe() computed vitals but never
+        # wrote to chart.jsonl. Xendro caught this on the first
+        # real 4-turn test loop: mood() returned "quiet" because
+        # it was reading stale demo entries, not the trace.
+        from .analytics import write_audit
+        write_audit(self.vitals)
+
         # Lazy import to avoid a circular dependency between watch
         # and gates at module load.
         from .gates import dispatch_gates
@@ -307,7 +320,7 @@ def observe_raw(
         logprob=list(logprob),
         top2_margin=list(top2_margin),
     )
-    w._fire_gates_if_needed()
+    w._fire_gates_if_needed()  # also writes to audit log (0.2.2)
     return w.vitals
 
 

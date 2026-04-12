@@ -232,7 +232,12 @@ def _check_last_run() -> CheckResult:
         )
     ts = entry.get("ts", 0)
     age_s = time.time() - ts
-    gate = entry.get("gate") or entry.get("phase4_pred") or "unknown"
+    # 0.2.2: handle legacy audit entries from before 0.1.0a3 which
+    # may not have the "gate" key. Fall back to phase4_pred if
+    # present, then to "pending" (which is honest — pre-0.1.0a3
+    # entries didn't compute a gate, so "pending" is the closest
+    # semantic match).
+    gate = entry.get("gate") or entry.get("phase4_pred") or "pending"
     age_human = _format_age(age_s)
     return CheckResult(
         status="ok",

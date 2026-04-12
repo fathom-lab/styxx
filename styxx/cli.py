@@ -365,12 +365,20 @@ def cmd_dreamer(args):
 
 
 def cmd_mood(args):
-    """Print the current mood label (0.1.0a3)."""
+    """Print the current mood label (0.1.0a3).
+
+    0.2.2: now prints the window used so the output is unambiguous.
+    Previously the 60-min default CLI window disagreed with
+    reflect's 24h window and card's 7d window, causing three
+    different mood labels from the same audit log. The fix is
+    transparency: show which window you're reading.
+    """
     from . import analytics
-    window_s = float(args.window) * 60.0 if args.window else 3600.0
+    window_min = float(args.window) if args.window else 60.0
+    window_s = window_min * 60.0
     m = analytics.mood(window_s=window_s)
     print()
-    print(f"  mood: {m}")
+    print(f"  mood: {m}  (window: last {window_min:.0f} min)")
     print()
     return 0
 

@@ -116,6 +116,126 @@ def clear_audit_cache() -> None:
     _AUDIT_CACHE_ENTRIES = None
 
 
+# ══════════════════════════════════════════════════════════════════
+# Audit log WRITER — 0.2.2 critical fix
+# ══════════════════════════════════════════════════════════════════
+#
+# Before 0.2.2, the only code path that wrote to chart.jsonl was
+# cli._write_audit(), which only ran from CLI commands (styxx ask,
+# styxx scan) and the OpenAI adapter. The Python API surface
+# (watch, observe, observe_raw, reflex) computed vitals but never
+# persisted them. This meant the entire analytics layer
+# (personality, fingerprint, mood, streak, dreamer, reflect) was
+# blind to Python API traffic — reading stale demo data instead
+# of real observations.
+#
+# Xendro caught this on the first real 4-turn test loop. Fixed by
+# adding write_audit() here (importable from watch.py without
+# circular deps) and calling it after every successful vitals
+# computation in observe() and observe_raw().
+
+_AUDIT_MAX_BYTES = 10 * 1024 * 1024  # 10 MB rotation cap (same as cli.py)
+
+
+def _rotate_if_needed(path: Path) -> None:
+    """Rotate chart.jsonl to chart.jsonl.1 if it's over the cap."""
+    if not path.exists():
+        return
+    try:
+        if path.stat().st_size < _AUDIT_MAX_BYTES:
+            return
+    except OSError:
+        return
+    rotated = path.with_suffix(path.suffix + ".1")
+    try:
+        if rotated.exists():
+            rotated.unlink()
+        path.rename(rotated)
+    except OSError:
+        try:
+            path.unlink()
+        except OSError:
+            pass
+
+
+def write_audit(
+    vitals: Any,
+    *,
+    prompt: Optional[str] = None,
+    model: Optional[str] = None,
+) -> None:
+    """Append a vitals entry to the audit log.
+
+    0.2.2: the canonical write path for ALL styxx surfaces (CLI,
+    OpenAI adapter, watch, observe, observe_raw, reflex). Called
+    automatically after every successful vitals computation.
+
+    Respects STYXX_NO_AUDIT and STYXX_DISABLED env vars.
+    Rotates at 10 MB. Clears the parse cache after writing so
+    mood/streak/personality see the new entry immediately.
+    """
+    # Lazy import to avoid circular dep with config at module load
+    from . import config
+
+    if config.is_disabled() or config.is_audit_disabled():
+        return
+
+    path = _audit_log_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _rotate_if_needed(path)
+
+    # Build the entry dict. Handles both Vitals objects (from the
+    # classifier) and None (for degraded-path entries where vitals
+    # couldn't be computed).
+    if vitals is None:
+        entry = {
+            "ts": time.time(),
+            "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "session_id": config.session_id(),
+            "model": model,
+            "prompt": (prompt[:200] if prompt else None),
+            "tier_active": None,
+            "phase1_pred": None,
+            "phase1_conf": None,
+            "phase4_pred": None,
+            "phase4_conf": None,
+            "gate": None,
+            "abort": None,
+        }
+    else:
+        entry = {
+            "ts": time.time(),
+            "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "session_id": config.session_id(),
+            "model": model,
+            "prompt": (prompt[:200] if prompt else None),
+            "tier_active": vitals.tier_active,
+            "phase1_pred": vitals.phase1_pre.predicted_category,
+            "phase1_conf": round(vitals.phase1_pre.confidence, 3),
+            "phase4_pred": (
+                vitals.phase4_late.predicted_category
+                if vitals.phase4_late else None
+            ),
+            "phase4_conf": (
+                round(vitals.phase4_late.confidence, 3)
+                if vitals.phase4_late else None
+            ),
+            "gate": vitals.gate,
+            "abort": vitals.abort_reason,
+        }
+
+    try:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except OSError:
+        return
+
+    # Invalidate the parse cache so the next mood/streak/personality
+    # call sees the entry we just wrote. This is the fix that makes
+    # observe() → mood() work within the same tick.
+    clear_audit_cache()
+
+
 def load_audit(
     *,
     last_n: Optional[int] = None,
