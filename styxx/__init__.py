@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -307,6 +307,7 @@ def agent_card(
         height=height,
     )
 from .analytics import (
+    LIVE_SOURCES,
     log,
     load_audit,
     clear_audit_cache,
@@ -325,6 +326,8 @@ __all__ = [
     "StyxxRuntime",
     "Vitals",
     "CentroidClassifier",
+    # provenance
+    "LIVE_SOURCES",
     # adapters
     "OpenAI",
     "Anthropic",

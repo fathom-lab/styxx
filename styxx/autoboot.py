@@ -65,7 +65,7 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 from . import config
 
@@ -268,7 +268,7 @@ def _load_fingerprint(
     fp_dir: Path,
     name: str,
     days_ago: int = 1,
-) -> Optional[any]:
+) -> Optional[Any]:
     """Load a saved fingerprint from N days ago."""
     from .analytics import Fingerprint
 

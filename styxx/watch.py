@@ -246,7 +246,7 @@ class WatchSession:
         # real 4-turn test loop: mood() returned "quiet" because
         # it was reading stale demo entries, not the trace.
         from .analytics import write_audit
-        write_audit(self.vitals)
+        write_audit(self.vitals, source="live")
 
         # Lazy import to avoid a circular dependency between watch
         # and gates at module load.
@@ -312,13 +312,35 @@ def observe_raw(
     clean trajectory data, because it never runs through the
     top-5 entropy bridge.
     """
+    ent_list = list(entropy)
+    lp_list = list(logprob)
+    t2m_list = list(top2_margin)
+
+    # Validate: reject empty input instead of returning a bogus
+    # classification (empty feature vectors land on "adversarial"
+    # by nearest-centroid accident).
+    if len(ent_list) == 0 and len(lp_list) == 0 and len(t2m_list) == 0:
+        return None
+
+    # Warn on mismatched lengths — each signal is windowed independently
+    # which can produce subtly wrong per-phase comparisons.
+    lengths = {len(ent_list), len(lp_list), len(t2m_list)}
+    if len(lengths) > 1:
+        import warnings
+        warnings.warn(
+            f"styxx.observe_raw: trajectory arrays have mismatched lengths "
+            f"({len(ent_list)}, {len(lp_list)}, {len(t2m_list)}). "
+            f"Each signal will be windowed independently.",
+            stacklevel=2,
+        )
+
     w = WatchSession()
     w.n_observed += 1
     w.response = None
     w.vitals = w._runtime.run_on_trajectories(
-        entropy=list(entropy),
-        logprob=list(logprob),
-        top2_margin=list(top2_margin),
+        entropy=ent_list,
+        logprob=lp_list,
+        top2_margin=t2m_list,
     )
     w._fire_gates_if_needed()  # also writes to audit log (0.2.2)
     return w.vitals

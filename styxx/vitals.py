@@ -70,6 +70,9 @@ def extract_features(
             feats.extend([0.0, 0.0, 0.0, 0.0])
             continue
         window = np.asarray(list(raw)[:n_tokens], dtype=float)
+        # Sanitise: replace NaN/Inf with 0.0 so they don't poison
+        # downstream z-scores and distance computations.
+        window = np.nan_to_num(window, nan=0.0, posinf=0.0, neginf=0.0)
         if len(window) == 0:
             feats.extend([0.0, 0.0, 0.0, 0.0])
             continue
@@ -214,7 +217,6 @@ class CentroidClassifier:
         margin = float(runner_up_d - nearest_d)
         # Pseudo-softmax confidence (not probabilistic, but useful for UI)
         # lower distance = higher score
-        max_d = max(distances.values())
         scores = {
             cat: float(math.exp(-(d - nearest_d)))
             for cat, d in distances.items()

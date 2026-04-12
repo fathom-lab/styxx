@@ -152,7 +152,8 @@ def _fetch_population(api_url: str) -> List[tuple]:
     """Fetch anonymous fingerprint vectors from the leaderboard API."""
     try:
         import urllib.request
-        req = urllib.request.Request(api_url, headers={"User-Agent": "styxx/0.5"})
+        from styxx import __version__
+        req = urllib.request.Request(api_url, headers={"User-Agent": f"styxx/{__version__}"})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except Exception:

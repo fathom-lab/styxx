@@ -406,6 +406,7 @@ class GuardianSession:
             None,  # no Vitals object in tier 3 path (yet)
             model=self.model_name,
             prompt=prompt[:200],
+            source="guardian",
         )
 
     # ── internal helpers ──────────────────────────────────────

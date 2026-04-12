@@ -48,7 +48,8 @@ def _audit_log_path() -> Path:
     return p
 
 
-def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
+def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str],
+                  source: str = "live"):
     """Append one entry to the audit log. Respects STYXX_NO_AUDIT.
 
     0.2.3: delegates to analytics.write_audit() which is the
@@ -57,7 +58,7 @@ def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
     still call it by name.
     """
     from .analytics import write_audit
-    write_audit(vitals, prompt=prompt, model=model)
+    write_audit(vitals, prompt=prompt, model=model, source=source)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -120,7 +121,9 @@ def cmd_ask(args):
 
     vitals = runtime.run_on_trajectories(entropy, logprob, top2)
 
-    _write_audit(vitals, prompt=preview_prompt, model=source_label)
+    is_demo_mode = not args.raw
+    _write_audit(vitals, prompt=preview_prompt, model=source_label,
+                 source="demo" if is_demo_mode else "live")
 
     # Blank-line padding around all CLI output for readability
     print()
@@ -836,6 +839,68 @@ def cmd_log_rotate(args):
     return 0
 
 
+def cmd_log_migrate_provenance(args):
+    """Retroactively label legacy audit entries with source provenance.
+
+    Entries that already have a ``source`` field are left unchanged.
+    Entries without one are labelled by heuristic:
+      - model contains "atlas:" → "demo"
+      - source is already "self-report" → unchanged
+      - everything else → "live"
+
+    Idempotent. Safe to run multiple times.
+    """
+    path = _audit_log_path()
+    if not path.exists() or path.stat().st_size == 0:
+        print()
+        print("  (audit log empty — nothing to migrate)")
+        print()
+        return 0
+
+    import json as _json
+
+    migrated = 0
+    untouched = 0
+    entries = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                e = _json.loads(line)
+            except _json.JSONDecodeError:
+                entries.append(line)
+                continue
+            if "source" not in e:
+                model = e.get("model") or ""
+                if "atlas:" in model:
+                    e["source"] = "demo"
+                elif e.get("source") == "self-report":
+                    pass  # already correct
+                else:
+                    e["source"] = "live"
+                migrated += 1
+            else:
+                untouched += 1
+            entries.append(_json.dumps(e))
+
+    with open(path, "w", encoding="utf-8") as f:
+        for line in entries:
+            f.write(line + "\n")
+
+    # Invalidate cache
+    from .analytics import clear_audit_cache
+    clear_audit_cache()
+
+    print()
+    print(f"  provenance migration complete")
+    print(f"  {migrated} entries labelled · {untouched} already had source")
+    print(f"  file: {path}")
+    print()
+    return 0
+
+
 def cmd_log(args):
     """Tail the audit log."""
     path = _audit_log_path()
@@ -1377,6 +1442,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
     p_rotate = log_sub.add_parser("rotate", help="rotate the audit log to chart.jsonl.1 (0.1.0a4)")
     p_rotate.set_defaults(func=cmd_log_rotate)
+
+    p_migrate = log_sub.add_parser("migrate-provenance",
+                                    help="label legacy entries with source provenance (0.7.1)")
+    p_migrate.set_defaults(func=cmd_log_migrate_provenance)
 
     # tier
     p_tier = sub.add_parser("tier", help="show active tiers + version")

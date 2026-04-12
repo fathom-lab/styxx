@@ -78,10 +78,14 @@ def detect_tiers() -> Dict[int, bool]:
 
 
 def _try_import(mod_name: str) -> bool:
+    """Check if a module is available without fully importing it.
+
+    Uses importlib.util.find_spec to avoid loading heavy libs (torch, etc.)
+    at tier-detection time. Actual import happens when the tier is used.
+    """
     try:
-        importlib.import_module(mod_name)
-        return True
-    except ImportError:
+        return importlib.util.find_spec(mod_name) is not None
+    except (ModuleNotFoundError, ValueError):
         return False
 
 

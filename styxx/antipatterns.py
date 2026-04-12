@@ -154,7 +154,7 @@ def antipatterns(
     cautious_last = ""
     c_streak = 0
     for e in entries:
-        if e.get("mood") == "cautious" or e.get("source") == "self-report" and "hedg" in (e.get("note") or "").lower():
+        if e.get("mood") == "cautious" or (e.get("source") == "self-report" and "hedg" in (e.get("note") or "").lower()):
             c_streak += 1
             if c_streak >= 3:
                 cautious_streaks += 1

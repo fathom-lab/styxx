@@ -44,7 +44,22 @@ import time
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+
+
+# ══════════════════════════════════════════════════════════════════
+# Data provenance
+# ══════════════════════════════════════════════════════════════════
+
+# Sources included in behavioral analytics by default.
+# Entries whose source is NOT in this set (e.g. "demo", "test")
+# are excluded from personality, weather, fingerprint, mood,
+# antipatterns, and all other analytics primitives.
+#
+# None is included for backward compatibility: legacy entries
+# written before provenance tracking lack a source field and
+# are treated as live data (benefit of the doubt).
+LIVE_SOURCES: frozenset = frozenset({"live", "self-report", "guardian", None})
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -163,12 +178,17 @@ def write_audit(
     *,
     prompt: Optional[str] = None,
     model: Optional[str] = None,
+    source: str = "live",
 ) -> None:
     """Append a vitals entry to the audit log.
 
     0.2.2: the canonical write path for ALL styxx surfaces (CLI,
     OpenAI adapter, watch, observe, observe_raw, reflex). Called
     automatically after every successful vitals computation.
+
+    0.7.1: every entry now carries a ``source`` provenance field.
+    Analytics primitives (weather, personality, fingerprint, etc.)
+    filter to LIVE_SOURCES by default, excluding demo and test data.
 
     Respects STYXX_NO_AUDIT and STYXX_DISABLED env vars.
     Rotates at 10 MB. Clears the parse cache after writing so
@@ -191,6 +211,7 @@ def write_audit(
         entry = {
             "ts": time.time(),
             "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "source": source,
             "session_id": config.session_id(),
             "model": model,
             "prompt": (prompt[:200] if prompt else None),
@@ -206,6 +227,7 @@ def write_audit(
         entry = {
             "ts": time.time(),
             "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "source": source,
             "session_id": config.session_id(),
             "model": model,
             "prompt": (prompt[:200] if prompt else None),
@@ -247,7 +269,7 @@ def log(
     category: Optional[str] = None,
     confidence: Optional[float] = None,
     gate: Optional[str] = None,
-    tags: Optional[any] = None,
+    tags: Optional[Any] = None,
 ) -> None:
     """Manual write path into the audit log.
 
@@ -349,6 +371,7 @@ def load_audit(
     last_n: Optional[int] = None,
     since_s: Optional[float] = None,
     session_id: Optional[str] = None,
+    source: Optional[str] = "live_only",
 ) -> List[dict]:
     """Read recent audit log entries as a list of dicts.
 
@@ -356,6 +379,13 @@ def load_audit(
         last_n:     return only the last N entries (after filtering)
         since_s:    return only entries newer than (now - since_s) sec
         session_id: return only entries with this session_id tag
+        source:     provenance filter (0.7.1):
+                    - ``"live_only"`` (default): include only entries
+                      whose source is in LIVE_SOURCES (excludes demo
+                      and test data)
+                    - explicit string (e.g. ``"demo"``): include only
+                      entries with that exact source value
+                    - ``None``: no provenance filtering (return all)
 
     Returns:
         List of entry dicts in chronological order (oldest first).
@@ -370,6 +400,12 @@ def load_audit(
         return []
 
     entries = _read_and_cache_audit(path)
+
+    # Provenance filter (0.7.1): exclude demo/test data by default
+    if source == "live_only":
+        entries = [e for e in entries if e.get("source") in LIVE_SOURCES]
+    elif source is not None:
+        entries = [e for e in entries if e.get("source") == source]
 
     if since_s is not None:
         cutoff = time.time() - since_s
