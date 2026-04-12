@@ -184,6 +184,10 @@ class ReflexEvent:
     rewind_n: int = 0
     rewind_anchor: str = ""
     abort_reason: str = ""
+    # 0.1.0a4: capture the discarded text on rewind events so callers
+    # can see what the model was ABOUT to say when the reflex fired.
+    # Empty string on non-rewind events.
+    discarded_text: str = ""
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -321,13 +325,21 @@ class ReflexSession:
                     continue
 
                 self.rewind_count += 1
+
+                # Capture the text that's about to be discarded
+                # so callers can inspect it via session.events later.
+                # 0.1.0a4: "what was the model about to say?" is
+                # load-bearing debug info for reflex tuning.
+                keep_tokens = max(0, len(self._tokens) - rw.n_tokens)
+                discarded_text = "".join(self._tokens[keep_tokens:])
+
                 self._append_event(
                     "rewind", self.last_vitals,
                     rewind_n=rw.n_tokens, rewind_anchor=rw.anchor,
+                    discarded_text=discarded_text,
                 )
 
                 # Truncate the accumulated text and append the anchor.
-                keep_tokens = max(0, len(self._tokens) - rw.n_tokens)
                 truncated_text = "".join(self._tokens[:keep_tokens])
                 resumed_text = truncated_text + rw.anchor
 
@@ -516,6 +528,7 @@ class ReflexSession:
         rewind_n: int = 0,
         rewind_anchor: str = "",
         abort_reason: str = "",
+        discarded_text: str = "",
     ) -> None:
         self.events.append(ReflexEvent(
             kind=kind,
@@ -524,6 +537,7 @@ class ReflexSession:
             rewind_n=rewind_n,
             rewind_anchor=rewind_anchor,
             abort_reason=abort_reason,
+            discarded_text=discarded_text,
         ))
 
 

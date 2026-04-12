@@ -48,11 +48,47 @@ def _audit_log_path() -> Path:
     return p
 
 
+# 0.1.0a4: audit log rotates at 10 MB. The rotation cap is
+# intentionally high enough that a typical dev workload won't
+# trigger it for weeks, but low enough that load_audit() stays
+# fast on a production agent loop.
+_AUDIT_MAX_BYTES = 10 * 1024 * 1024  # 10 MB
+
+
+def _rotate_audit_log_if_needed(path: Path) -> None:
+    """Rotate ~/.styxx/chart.jsonl to chart.jsonl.1 if it's over
+    the size cap. Keeps one generation of history (chart.jsonl.1
+    gets overwritten each rotation — styxx is observational data,
+    not a compliance system)."""
+    if not path.exists():
+        return
+    try:
+        if path.stat().st_size < _AUDIT_MAX_BYTES:
+            return
+    except OSError:
+        return
+    # Move to .1 (overwriting any previous rotation)
+    rotated = path.with_suffix(path.suffix + ".1")
+    try:
+        if rotated.exists():
+            rotated.unlink()
+        path.rename(rotated)
+    except OSError:
+        # If the rename fails for any reason, fall back to a
+        # best-effort truncate rather than failing the whole write.
+        try:
+            path.unlink()
+        except OSError:
+            pass
+
+
 def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
     """Append one entry to the audit log. Respects STYXX_NO_AUDIT."""
     if config.is_audit_disabled():
         return
     path = _audit_log_path()
+    # Rotate before write so one huge event doesn't blow past the cap
+    _rotate_audit_log_if_needed(path)
     entry = {
         "ts": time.time(),
         "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -194,8 +230,79 @@ def cmd_doctor(args):
     return run_doctor()
 
 
+def cmd_agent_card(args):
+    """Render a shareable agent personality PNG (0.1.0a4).
+
+    0.2.0: supports --serve to run a local live dashboard.
+    Falls back to ASCII when Pillow isn't installed.
+    """
+    # 0.2.0 live serve mode
+    if getattr(args, "serve", False):
+        from .serve import run_serve
+        return run_serve(
+            port=int(getattr(args, "port", 9797) or 9797),
+            agent_name=args.name or "styxx agent",
+            days=float(args.days or 7.0),
+            refresh_seconds=int(getattr(args, "refresh", 30) or 30),
+            open_browser=not getattr(args, "no_browser", False),
+        )
+
+    out_path = Path(args.out) if args.out else (
+        Path.home() / ".styxx" / "agent-card.png"
+    )
+    name = args.name or "styxx agent"
+    days = float(args.days or 7.0)
+
+    try:
+        from .card_image import render_agent_card
+        result = render_agent_card(
+            out_path=out_path, agent_name=name, days=days,
+        )
+    except ImportError:
+        result = None
+    except RuntimeError as e:
+        print()
+        print(f"  agent-card failed: {e}")
+        print()
+        return 1
+
+    if result is None:
+        # Pillow not installed — fall back to ASCII
+        print()
+        print("  Pillow not installed — can't render PNG.")
+        print("  install with:  pip install 'styxx[agent-card]'")
+        print()
+        print("  falling back to ASCII profile:")
+        print()
+        from . import analytics
+        profile = analytics.personality(days=days)
+        if profile is None:
+            print("  (not enough audit data to render a profile)")
+        else:
+            print(profile.render())
+        print()
+        return 0
+
+    print()
+    print(f"  agent card rendered: {result}")
+    try:
+        size = result.stat().st_size
+        print(f"  size: {size:,} bytes (1200x630)")
+    except OSError:
+        pass
+    print()
+    print("  post it: twitter, slack, your agent's self-page,")
+    print("  anywhere a shareable png fits.")
+    print()
+    return 0
+
+
 def cmd_personality(args):
-    """Render the personality profile over the last N days (0.1.0a3)."""
+    """Render the personality profile over the last N days (0.1.0a3).
+
+    0.2.0: supports --format [ascii|json|csv|markdown] for export
+    to other tools.
+    """
     from . import analytics
     days = float(args.days or 7.0)
     profile = analytics.personality(days=days)
@@ -206,9 +313,42 @@ def cmd_personality(args):
         print("  run some observations first: styxx ask --watch --demo-kind refusal")
         print()
         return 0
-    print()
-    print(profile.render())
-    print()
+
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(profile.as_json())
+    elif fmt == "csv":
+        print(profile.as_csv())
+    elif fmt == "markdown":
+        print(profile.as_markdown())
+    else:
+        print()
+        print(profile.render())
+        print()
+    return 0
+
+
+def cmd_reflect(args):
+    """Run the agent self-check and render the reflection report (0.2.0).
+
+    Calls styxx.reflect() which returns a ReflectionReport with
+    current personality + yesterday baseline + drift + suggested
+    actions. The CLI renders either text or json.
+    """
+    from . import analytics
+    now_days = float(getattr(args, "now_days", 1.0))
+    baseline_days = float(getattr(args, "baseline_days", 7.0))
+    report = analytics.reflect(
+        now_days=now_days, baseline_days=baseline_days,
+    )
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(report.as_json())
+    elif fmt == "markdown":
+        print(report.as_markdown())
+    else:
+        print()
+        print(report.render())
     return 0
 
 
@@ -236,8 +376,71 @@ def cmd_mood(args):
 
 
 def cmd_fingerprint(args):
-    """Print the cognitive fingerprint (0.1.0a3)."""
+    """Print the cognitive fingerprint (0.1.0a3).
+
+    If `compare` is set, compare two sessions' fingerprints instead
+    of printing one.
+    """
     from . import analytics
+
+    if getattr(args, "compare", False):
+        fp_a = analytics.fingerprint(
+            last_n=args.last_n or 500, session_id=args.session_a,
+        )
+        fp_b = analytics.fingerprint(
+            last_n=args.last_n or 500, session_id=args.session_b,
+        )
+        use_color = color_enabled()
+        c = Palette
+        print()
+        if fp_a is None:
+            print(f"  (no audit data for session '{args.session_a}')")
+            print()
+            return 1
+        if fp_b is None:
+            print(f"  (no audit data for session '{args.session_b}')")
+            print()
+            return 1
+
+        sim = fp_a.cosine_similarity(fp_b)
+        drift = 1.0 - sim
+
+        # Drift color: green = stable, yellow = small drift, red = big drift
+        if drift < 0.05:
+            drift_color = c.MATRIX
+            drift_label = "stable"
+        elif drift < 0.20:
+            drift_color = c.YELLOW
+            drift_label = "slight drift"
+        else:
+            drift_color = c.RED
+            drift_label = "significant drift"
+
+        print(wrap(f"  fingerprint comparison", c.MATRIX, use_color))
+        print(wrap("  " + "=" * 64, c.DIM, use_color))
+        print(f"  session a ({args.session_a}) - {fp_a.n_samples} samples")
+        print(f"  session b ({args.session_b}) - {fp_b.n_samples} samples")
+        print()
+        print(f"  cosine similarity : {sim:.4f}")
+        print(wrap(
+            f"  drift             : {drift:.4f} ({drift_label})",
+            drift_color, use_color,
+        ))
+        print()
+        # Per-component diffs
+        categories = ("retrieval", "reasoning", "refusal",
+                      "creative", "adversarial", "hallucination")
+        print("  phase4 rate changes:")
+        for i, cat in enumerate(categories):
+            delta = fp_b.phase4_vec[i] - fp_a.phase4_vec[i]
+            sign = "+" if delta >= 0 else ""
+            mark = ""
+            if abs(delta) > 0.10:
+                mark = wrap(" <- significant", c.YELLOW, use_color)
+            print(f"    {cat:<15} {fp_a.phase4_vec[i] * 100:>5.1f}% -> {fp_b.phase4_vec[i] * 100:>5.1f}%  ({sign}{delta * 100:.1f}%){mark}")
+        print()
+        return 0
+
     fp = analytics.fingerprint(last_n=args.last_n or 500)
     print()
     if fp is None:
@@ -492,6 +695,56 @@ def cmd_log_session(args):
     return 0
 
 
+def cmd_log_clear(args):
+    """Delete the audit log. Irreversible. 0.1.0a4."""
+    path = _audit_log_path()
+    if not path.exists():
+        print()
+        print("  (audit log already empty - nothing to clear)")
+        print()
+        return 0
+    size = path.stat().st_size
+    try:
+        path.unlink()
+    except OSError as e:
+        print()
+        print(f"  could not clear audit log: {e}")
+        print()
+        return 1
+    print()
+    print(f"  cleared audit log ({size:,} bytes)")
+    print(f"  path: {path}")
+    print()
+    return 0
+
+
+def cmd_log_rotate(args):
+    """Manually rotate the audit log now. 0.1.0a4."""
+    path = _audit_log_path()
+    if not path.exists():
+        print()
+        print("  (audit log does not exist - nothing to rotate)")
+        print()
+        return 0
+    rotated = path.with_suffix(path.suffix + ".1")
+    try:
+        size = path.stat().st_size
+        if rotated.exists():
+            rotated.unlink()
+        path.rename(rotated)
+    except OSError as e:
+        print()
+        print(f"  rotation failed: {e}")
+        print()
+        return 1
+    print()
+    print(f"  rotated audit log ({size:,} bytes)")
+    print(f"  archive: {rotated}")
+    print(f"  new log will be created at: {path}")
+    print()
+    return 0
+
+
 def cmd_log(args):
     """Tail the audit log."""
     path = _audit_log_path()
@@ -702,7 +955,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_doctor.set_defaults(func=cmd_doctor)
 
-    # personality — 0.1.0a3 aggregated personality profile
+    # personality — 0.1.0a3 + 0.2.0 format flag
     p_personality = sub.add_parser(
         "personality",
         help="render agent personality profile from audit log",
@@ -711,7 +964,70 @@ def _build_parser() -> argparse.ArgumentParser:
         "--days", type=float, default=7.0,
         help="number of days to aggregate over (default: 7)",
     )
+    p_personality.add_argument(
+        "--format", choices=["ascii", "json", "csv", "markdown"],
+        default="ascii",
+        help="output format (default: ascii) - 0.2.0+",
+    )
     p_personality.set_defaults(func=cmd_personality)
+
+    # reflect — 0.2.0 agent self-check
+    p_reflect = sub.add_parser(
+        "reflect",
+        help="agent self-check: current + drift vs baseline + suggestions (0.2.0)",
+    )
+    p_reflect.add_argument(
+        "--now-days", type=float, default=1.0,
+        dest="now_days",
+        help="window for current state (default: 1)",
+    )
+    p_reflect.add_argument(
+        "--baseline-days", type=float, default=7.0,
+        dest="baseline_days",
+        help="window for baseline comparison (default: 7)",
+    )
+    p_reflect.add_argument(
+        "--format", choices=["ascii", "json", "markdown"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_reflect.set_defaults(func=cmd_reflect)
+
+    # agent-card — 0.1.0a4 shareable PNG + 0.2.0 live serve mode
+    p_card = sub.add_parser(
+        "agent-card",
+        help="render a shareable agent personality PNG (0.1.0a4) or run a live dashboard (--serve, 0.2.0)",
+    )
+    p_card.add_argument(
+        "--out", type=str, default=None,
+        help="output PNG path (default: ~/.styxx/agent-card.png)",
+    )
+    p_card.add_argument(
+        "--name", type=str, default=None,
+        help="agent name to show on the card (default: 'styxx agent')",
+    )
+    p_card.add_argument(
+        "--days", type=float, default=7.0,
+        help="aggregation window in days (default: 7)",
+    )
+    # 0.2.0 serve mode
+    p_card.add_argument(
+        "--serve", action="store_true",
+        help="run a local live dashboard instead of writing a PNG (0.2.0)",
+    )
+    p_card.add_argument(
+        "--port", type=int, default=9797,
+        help="serve port (default: 9797)",
+    )
+    p_card.add_argument(
+        "--refresh", type=int, default=30,
+        help="auto-refresh interval in seconds (default: 30)",
+    )
+    p_card.add_argument(
+        "--no-browser", action="store_true", dest="no_browser",
+        help="don't auto-open the browser on serve start",
+    )
+    p_card.set_defaults(func=cmd_agent_card)
 
     # dreamer — 0.1.0a3 what-if reflex replay
     p_dreamer = sub.add_parser(
@@ -743,14 +1059,30 @@ def _build_parser() -> argparse.ArgumentParser:
     # fingerprint — 0.1.0a3 cognitive identity vector
     p_fp = sub.add_parser(
         "fingerprint",
-        help="print the cognitive identity fingerprint",
+        help="print or compare cognitive identity fingerprints",
     )
+    fp_sub = p_fp.add_subparsers(dest="fp_cmd")
+
+    # default: print (no subcommand)
     p_fp.add_argument(
         "--last-n", type=int, default=500,
         dest="last_n",
         help="number of audit entries to aggregate (default: 500)",
     )
-    p_fp.set_defaults(func=cmd_fingerprint)
+    p_fp.set_defaults(func=cmd_fingerprint, compare=False)
+
+    # fingerprint compare <session_a> <session_b>   (0.1.0a4)
+    p_fp_cmp = fp_sub.add_parser(
+        "compare",
+        help="compare two sessions' fingerprints (0.1.0a4)",
+    )
+    p_fp_cmp.add_argument("session_a", help="first session id")
+    p_fp_cmp.add_argument("session_b", help="second session id")
+    p_fp_cmp.add_argument(
+        "--last-n", type=int, default=500, dest="last_n",
+        help="max entries per session (default: 500)",
+    )
+    p_fp_cmp.set_defaults(func=cmd_fingerprint, compare=True)
 
     # log — audit log operations (extended in 0.1.0a3)
     p_log = sub.add_parser("log", help="audit log operations")
@@ -780,6 +1112,12 @@ def _build_parser() -> argparse.ArgumentParser:
     p_session = log_sub.add_parser("session", help="show a specific session's trajectory (0.1.0a3)")
     p_session.add_argument("session_id", help="session id to filter by")
     p_session.set_defaults(func=cmd_log_session)
+
+    p_clear = log_sub.add_parser("clear", help="delete the audit log (0.1.0a4)")
+    p_clear.set_defaults(func=cmd_log_clear)
+
+    p_rotate = log_sub.add_parser("rotate", help="rotate the audit log to chart.jsonl.1 (0.1.0a4)")
+    p_rotate.set_defaults(func=cmd_log_rotate)
 
     # tier
     p_tier = sub.add_parser("tier", help="show active tiers + version")

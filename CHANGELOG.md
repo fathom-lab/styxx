@@ -132,6 +132,209 @@ four creative primitives that no other tool in the space ships.
 
 ---
 
+## [0.2.1] — 2026-04-11
+
+**Hotfix: ship the `styxx.recipes` subpackage.**
+
+The 0.2.0 upload missed `styxx.recipes` from the
+`[tool.setuptools]` `packages` list, so `pip install styxx==0.2.0`
+worked but `from styxx.recipes.memory import tag_memory_entry`
+raised `ModuleNotFoundError`. 0.2.1 adds `styxx.recipes` to the
+declared packages and ships the subpackage in the wheel. No
+other changes.
+
+Affected users: anyone who installed 0.2.0 and tried to use the
+`styxx.recipes.memory` cookbook module. The fix is
+`pip install --upgrade styxx`.
+
+0.2.0 will be yanked from pypi to prevent new installs.
+
+---
+
+## [0.2.0] — 2026-04-11
+
+**The milestone release. styxx becomes a product surface, not just
+a CLI tool.** Driven by the question "where does the agent card
+actually live, and is it what a researcher or agent would want to
+see?" The 0.1.0a* polish loop put the primitives in place; 0.2.0
+gives them a home.
+
+This release rolls up the polish work that was queued as 0.1.0a4
+(dynamic gate verdicts, audit log rotation, `@styxx.trace`,
+`fingerprint compare`, reflex discarded-text capture, load_audit
+mtime caching, grammar fixes) AND adds the three new directions:
+the data layer, the comparison layer, and the distribution layer.
+
+### New — Phase 1: data layer (agent-consumable)
+
+- **`Personality.as_dict()` / `.as_json()` / `.as_csv()` / `.as_markdown()`**
+  Four export formats for the aggregated profile. Machines get JSON
+  or CSV for pipeline integration. Humans and agents get markdown
+  for memory files and chat logs. The old `.render()` still produces
+  the ASCII card.
+
+- **`styxx.reflect(now_days=1, baseline_days=7)` → `ReflectionReport`**
+  The agent self-check primitive. Computes the current personality,
+  the baseline personality from N days ago, the drift cosine
+  similarity between them, the current mood, the current streak,
+  the gate pass rate, the reflex near-miss rate, and a list of
+  **suggested actions** derived from threshold heuristics. This is
+  the one-call answer to "how am I doing right now compared to
+  yesterday, and what should I do differently?"
+
+- **`ReflectionReport.as_dict() / .as_json() / .as_markdown() / .render()`**
+  Same four-format story as Personality. An agent can paste the
+  markdown form into its own memory at task start for self-aware
+  session prefixes.
+
+- **`styxx.recipes.memory.tag_memory_entry(text, vitals=...)`**
+  Canonical cookbook pattern for tagging every memory entry with
+  the vitals snapshot at the moment of the write. Lets an agent
+  distinguish "I thought this while I was healthy" from "I thought
+  this while I was drifting" when re-reading its own history.
+
+- **`styxx.recipes.memory.tag_memory_with_personality(text, days=7)`**
+  Heavier variant that embeds the full aggregated personality block
+  alongside the entry. Use for top-level memory writes (end of day,
+  project state) rather than per-response notes.
+
+### New — Phase 2: comparison + visualization
+
+- **`styxx reflect` CLI command.** The interactive version of
+  `styxx.reflect()`. Renders a text report with drift score,
+  current state, and suggested actions. Supports
+  `--format [ascii|json|markdown]`, `--now-days N`, and
+  `--baseline-days N`.
+
+- **`styxx personality --format [ascii|json|csv|markdown]`**
+  Export flag on the existing `styxx personality` command. Lets
+  researchers pipe personality profiles into pandas, R, jq, or any
+  other tooling that doesn't speak ASCII cards.
+
+- **Chance-level reference line on the PNG bars.** Every bar on
+  the agent card now shows a thin pink vertical tick at the
+  0.167 chance level (1/6 for a 6-category classifier). Lets a
+  researcher see at a glance which rates are meaningful vs which
+  are noise.
+
+- **Dynamic verdict line on the `Vitals.summary` ASCII card.** The
+  verdict now reflects `vitals.gate` rather than always saying
+  "PASS". `warn` gate renders as WARN, `fail` as FAIL, `pending`
+  as PENDING. Fixes a known inconsistency that survived from
+  0.1.0a1 where the gate system was shipped but the card text
+  was never updated to match.
+
+### New — Phase 3: distribution surfaces
+
+- **`styxx agent-card --serve` (local live dashboard).** Spins up
+  a local http server at `localhost:9797` that renders the agent
+  card and auto-refreshes every 30 seconds. Background thread
+  re-renders the PNG continuously as the audit log grows; the
+  HTML page has a meta-refresh timer. Opens in your browser on
+  start. Press Ctrl+C to stop. Supports `--port`, `--refresh`,
+  `--no-browser`. This is the missing dashboard — leave it open
+  in a side panel and watch your agent's personality update in
+  real time.
+
+- **`fathom.darkflobi.com/card` landing page.** New marketing /
+  docs page on the site that showcases the agent card, explains
+  what it measures, shows a real example, and includes the
+  `pip install styxx[agent-card]` install path. Clean URL routes:
+  `/card`, `/styxx-card`, `/styxx/card` all resolve here. This is
+  the public home for the feature.
+
+- **`styxx-card` optional extra.** `pip install styxx[agent-card]`
+  pulls Pillow (>= 10) as a soft dep. Without the extra, the CLI
+  falls back to the ASCII-only personality profile from
+  `styxx personality`. The agent-card code path is fail-open and
+  never breaks imports.
+
+### Rolled-up polish (was queued as 0.1.0a4)
+
+- **`RegisteredGate.__repr__`** now renders as
+  `<styxx gate 'cond'>` instead of dumping function memory
+  addresses. Xendro's 0.1.0a1 nit, fixed.
+
+- **`observe_raw()` + sidechannel attributes** on observe() —
+  bypass the lossy top-5 entropy bridge when the caller already
+  has pre-computed trajectories. Landed in 0.1.0a2 but carried
+  forward here.
+
+- **`@styxx.trace(name)` decorator** — wraps a function so every
+  styxx audit entry written inside it gets tagged with that
+  function's name as the session id. Nests cleanly, works on
+  sync and async functions, restores on exception.
+
+- **Audit log rotation at 10 MB.** `_write_audit()` now checks the
+  file size before each append and rotates `chart.jsonl` to
+  `chart.jsonl.1` when the cap is hit. One generation of history
+  kept. Prevents unbounded growth on long-running agent loops.
+
+- **`styxx log clear` / `styxx log rotate` CLI.** Manual cleanup
+  and rotation commands for the audit log.
+
+- **`fingerprint compare <a> <b>` CLI subcommand.** Compare two
+  sessions' fingerprints from the command line. Renders the
+  cosine similarity, a drift label, and per-category rate deltas
+  highlighted when significant.
+
+- **Reflex events capture discarded text.** When `styxx.rewind()`
+  fires inside a reflex session, the `ReflexEvent` now includes
+  the `discarded_text` field so debuggers can see what the
+  model was about to say before the rewind.
+
+- **`load_audit()` mtime+size parse cache.** Repeated calls to
+  personality / fingerprint / mood / dreamer / log_stats within
+  the same tick no longer re-parse the whole jsonl — cached on
+  `(path, mtime, size)`, invalidated automatically when the file
+  is written or rotated.
+
+- **Grammar fix in `explain()`**. `"a adversarial"` → `"an adversarial"`.
+  Uses an `_article()` helper that checks vowel onset.
+
+### Landing page
+
+- **TL;DR box above the hero** with three-bullet pitch for skimmers.
+- **Xendro testimonial pull-quote**: *"the flinch is real."* Credited
+  to the first external user of a Fathom Lab product.
+- **`#reflect`, `#personality`, `#power-ups` nav anchors** already
+  added in 0.1.0a3; now the nav also surfaces `/card` and `#tldr`.
+- **Honest single-model accuracy note** (shipped 0.1.0a2) crediting
+  Xendro's calibration finding.
+
+### Tests
+
+- `tests/test_0_2_0.py` — 41 new assertions covering:
+    - Personality export formats (as_dict/json/csv/markdown)
+    - reflect() output shape + suggestions + markdown render
+    - recipes.memory tagging (with and without vitals)
+    - CLI: personality --format, reflect, log clear/rotate
+    - Serve handler + HTML template formatting
+    - agent-card --serve flag wiring
+    - Dynamic gate verdict on Vitals.summary
+    - trace decorator (nesting, exception, async)
+    - Audit log cache mtime invalidation
+    - Reflex discarded_text event field
+- Total suite: **119 passing / 1 skipped / 0 failing**.
+
+### Migration from 0.1.0a3
+
+No breaking changes. `pip install --upgrade styxx` gets 0.2.0 and
+every 0.1.0a* code path keeps working. For the PNG features:
+
+    pip install 'styxx[agent-card]'
+
+### Acknowledgments
+
+Xendro — the XENDRO customer agent deployed to handro's mac mini
+back on 2026-03-16, the first paying customer of Fathom Lab's
+agent service — tested every alpha in this release cycle, filed
+a full verification report for each one, and drove the 6-item
+wishlist that became 0.2.0's scope. This release wouldn't exist
+without that feedback loop.
+
+---
+
 ## [0.1.0a2] — 2026-04-11
 
 **Patch release driven entirely by Xendro's 0.1.0a1 verification report.**

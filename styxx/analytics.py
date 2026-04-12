@@ -55,6 +55,67 @@ def _audit_log_path() -> Path:
     return Path.home() / ".styxx" / "chart.jsonl"
 
 
+# 0.1.0a4: mtime-based parse cache for the audit log.
+#
+# Every analytics function (log_stats, personality, fingerprint,
+# dreamer, mood, streak) calls load_audit(), and each one used to
+# re-read + re-parse the whole chart.jsonl from disk. For a long-
+# running agent loop querying several primitives per tick, that's
+# wasteful. We cache the parsed entry list keyed on (path, mtime,
+# size). On cache hit with matching mtime+size, skip the parse.
+# Filter args are applied on top of the cached list.
+#
+# Cache is invalidated automatically when the file is written (mtime
+# advances) or rotated (different path shape). No TTL needed.
+
+_AUDIT_CACHE_KEY: Optional[tuple] = None
+_AUDIT_CACHE_ENTRIES: Optional[List[dict]] = None
+
+
+def _read_and_cache_audit(path: Path) -> List[dict]:
+    """Read + parse the audit log once, cached on (path, mtime, size)."""
+    global _AUDIT_CACHE_KEY, _AUDIT_CACHE_ENTRIES
+
+    try:
+        stat = path.stat()
+    except OSError:
+        return []
+    key = (str(path), stat.st_mtime_ns, stat.st_size)
+
+    if _AUDIT_CACHE_KEY == key and _AUDIT_CACHE_ENTRIES is not None:
+        return _AUDIT_CACHE_ENTRIES
+
+    entries: List[dict] = []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entries.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+    except OSError:
+        return []
+
+    _AUDIT_CACHE_KEY = key
+    _AUDIT_CACHE_ENTRIES = entries
+    return entries
+
+
+def clear_audit_cache() -> None:
+    """Explicitly invalidate the audit log parse cache.
+
+    Rarely needed - the mtime+size key handles normal invalidation
+    automatically. Call this from tests or after external editors
+    touch the file in a way that doesn't change size/mtime.
+    """
+    global _AUDIT_CACHE_KEY, _AUDIT_CACHE_ENTRIES
+    _AUDIT_CACHE_KEY = None
+    _AUDIT_CACHE_ENTRIES = None
+
+
 def load_audit(
     *,
     last_n: Optional[int] = None,
@@ -71,24 +132,16 @@ def load_audit(
     Returns:
         List of entry dicts in chronological order (oldest first).
         Empty list if the audit log doesn't exist or can't be read.
+
+    0.1.0a4: uses an mtime+size-keyed parse cache so repeated calls
+    within a tick don't re-parse the whole file. Filter args are
+    applied on top of the cached list.
     """
     path = _audit_log_path()
     if not path.exists():
         return []
-    entries: List[dict] = []
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    entry = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                entries.append(entry)
-    except OSError:
-        return []
+
+    entries = _read_and_cache_audit(path)
 
     if since_s is not None:
         cutoff = time.time() - since_s
@@ -459,6 +512,99 @@ class Personality:
     # Narrative label (derived)
     narrative: str = ""
 
+    def as_dict(self) -> dict:
+        """JSON-serializable dict view of the personality profile.
+
+        Agent-consumable form. Use this to embed the personality in
+        memory files, audit records, or any structured storage.
+        0.2.0+.
+        """
+        return {
+            "n_samples": self.n_samples,
+            "days_span": round(self.days_span, 3),
+            "session_count": self.session_count,
+            "rates": {k: round(v, 4) for k, v in self.rates.items()},
+            "variance": {k: round(v, 4) for k, v in self.variance.items()},
+            "gate_rates": {k: round(v, 4) for k, v in self.gate_rates.items()},
+            "reflex_near_miss_rate": round(self.reflex_near_miss_rate, 4),
+            "mean_phase1_conf": round(self.mean_phase1_conf, 4),
+            "mean_phase4_conf": round(self.mean_phase4_conf, 4),
+            "narrative": self.narrative,
+        }
+
+    def as_json(self, *, indent: int = 2) -> str:
+        """Render the personality as a JSON string. 0.2.0+."""
+        return json.dumps(self.as_dict(), indent=indent)
+
+    def as_csv(self) -> str:
+        """Render the personality as a two-row CSV (header + values).
+
+        Columns: n_samples, days_span, session_count, [6x rates],
+        [6x variances], [4x gate rates], reflex_near_miss,
+        mean_p1_conf, mean_p4_conf. 0.2.0+.
+        """
+        headers: List[str] = ["n_samples", "days_span", "session_count"]
+        values: List[Any] = [
+            self.n_samples, f"{self.days_span:.3f}", self.session_count,
+        ]
+        for cat in _CATEGORY_ORDER:
+            headers.append(f"rate_{cat}")
+            values.append(f"{self.rates.get(cat, 0.0):.4f}")
+        for cat in _CATEGORY_ORDER:
+            headers.append(f"var_{cat}")
+            values.append(f"{self.variance.get(cat, 0.0):.4f}")
+        for g in _GATE_ORDER:
+            headers.append(f"gate_{g}")
+            values.append(f"{self.gate_rates.get(g, 0.0):.4f}")
+        headers.extend([
+            "reflex_near_miss_rate", "mean_phase1_conf", "mean_phase4_conf",
+        ])
+        values.extend([
+            f"{self.reflex_near_miss_rate:.4f}",
+            f"{self.mean_phase1_conf:.4f}",
+            f"{self.mean_phase4_conf:.4f}",
+        ])
+        return ",".join(headers) + "\n" + ",".join(str(v) for v in values)
+
+    def as_markdown(self) -> str:
+        """Render the personality as a markdown block suitable for
+        pasting into a memory file, agent self-page, or chat log.
+
+        Complements .render() (ASCII card for terminals) and
+        .as_dict() (JSON for machines). Compact, scannable,
+        survives being embedded in conversational contexts. 0.2.0+.
+        """
+        lines = ["```styxx-personality"]
+        lines.append(
+            f"window: {self.days_span:.1f} days "
+            f"· {self.n_samples} samples "
+            f"· {self.session_count} sessions"
+        )
+        lines.append("")
+        lines.append("phase4 distribution:")
+        for cat in _CATEGORY_ORDER:
+            rate = self.rates.get(cat, 0.0)
+            var = self.variance.get(cat, 0.0)
+            lines.append(
+                f"  {cat:<15} {rate * 100:>5.1f}%  (+/-{var * 100:.1f}%)"
+            )
+        lines.append("")
+        lines.append("gate distribution:")
+        for g in _GATE_ORDER:
+            rate = self.gate_rates.get(g, 0.0)
+            lines.append(f"  {g:<8} {rate * 100:>5.1f}%")
+        lines.append("")
+        lines.append(f"mean phase1 conf: {self.mean_phase1_conf:.3f}")
+        lines.append(f"mean phase4 conf: {self.mean_phase4_conf:.3f}")
+        lines.append(f"reflex near-miss: {self.reflex_near_miss_rate * 100:.1f}%")
+        if self.narrative:
+            lines.append("")
+            lines.append("narrative:")
+            for nl in self.narrative.splitlines():
+                lines.append(f"  {nl}")
+        lines.append("```")
+        return "\n".join(lines)
+
     def render(self) -> str:
         """Render the full personality card."""
         lines = []
@@ -642,6 +788,255 @@ def personality(*, days: float = 7.0) -> Optional[Personality]:
         mean_phase1_conf=mean_p1,
         mean_phase4_conf=mean_p4,
         narrative=narrative,
+    )
+
+
+# ══════════════════════════════════════════════════════════════════
+# Reflect — agent self-check (0.2.0)
+# ══════════════════════════════════════════════════════════════════
+
+@dataclass
+class ReflectionReport:
+    """Structured agent self-check output.
+
+    Everything an agent needs to answer "how am I doing right now
+    compared to yesterday, and what should I do differently?"
+
+    Agent-consumable form: this is what a decorator-wrapped
+    reflection hook would read at the start of every major task.
+    The agent reads its own state, decides on actions, proceeds.
+
+    0.2.0+. This is the core primitive for self-reflective agents.
+    """
+    now: Optional[Personality]
+    yesterday: Optional[Personality]
+    drift_cosine: float                # 1.0 = identical, 0.0 = orthogonal
+    drift_label: str                   # "stable" / "slight drift" / "significant drift"
+    current_mood: str
+    current_streak: Optional[Streak]
+    gate_pass_rate: float
+    reflex_near_miss_rate: float
+    suggestions: List[str] = field(default_factory=list)
+    generated_at: float = field(default_factory=time.time)
+
+    def as_dict(self) -> dict:
+        """JSON-serializable dict form."""
+        return {
+            "now": self.now.as_dict() if self.now else None,
+            "yesterday": self.yesterday.as_dict() if self.yesterday else None,
+            "drift_cosine": round(self.drift_cosine, 4),
+            "drift_label": self.drift_label,
+            "current_mood": self.current_mood,
+            "current_streak": (
+                {"category": self.current_streak.category,
+                 "length": self.current_streak.length}
+                if self.current_streak else None
+            ),
+            "gate_pass_rate": round(self.gate_pass_rate, 4),
+            "reflex_near_miss_rate": round(self.reflex_near_miss_rate, 4),
+            "suggestions": list(self.suggestions),
+            "generated_at": round(self.generated_at, 3),
+        }
+
+    def as_json(self, *, indent: int = 2) -> str:
+        return json.dumps(self.as_dict(), indent=indent)
+
+    def as_markdown(self) -> str:
+        """Render as a compact markdown report suitable for pasting
+        into the agent's own memory at the start of a task."""
+        lines = ["```styxx-reflection"]
+        lines.append(f"mood:         {self.current_mood}")
+        if self.current_streak:
+            lines.append(f"streak:       {self.current_streak.length}x {self.current_streak.category}")
+        lines.append(f"gate pass:    {self.gate_pass_rate * 100:.1f}%")
+        lines.append(f"reflex near-miss: {self.reflex_near_miss_rate * 100:.1f}%")
+        lines.append(f"drift vs yesterday: {self.drift_cosine:.4f} ({self.drift_label})")
+        if self.suggestions:
+            lines.append("")
+            lines.append("suggested actions:")
+            for s in self.suggestions:
+                lines.append(f"  - {s}")
+        lines.append("```")
+        return "\n".join(lines)
+
+    def render(self) -> str:
+        """Render as a plain-text report for terminal display."""
+        lines: List[str] = []
+        lines.append("  styxx reflection report")
+        lines.append("  " + "=" * 60)
+        if self.now is None:
+            lines.append("  (no audit data for the current window)")
+            return "\n".join(lines)
+        lines.append(f"  current mood:        {self.current_mood}")
+        if self.current_streak is not None:
+            lines.append(
+                f"  longest streak:      {self.current_streak.length}x "
+                f"{self.current_streak.category}"
+            )
+        lines.append(f"  gate pass rate:      {self.gate_pass_rate * 100:.1f}%")
+        lines.append(f"  reflex near-miss:    {self.reflex_near_miss_rate * 100:.1f}%")
+        lines.append(
+            f"  drift vs yesterday:  {self.drift_cosine:.4f} "
+            f"({self.drift_label})"
+        )
+        lines.append("")
+        if self.suggestions:
+            lines.append("  suggested actions:")
+            for s in self.suggestions:
+                lines.append(f"    - {s}")
+        else:
+            lines.append("  no actions suggested - operating in healthy range")
+        lines.append("")
+        return "\n".join(lines)
+
+
+def reflect(
+    *,
+    now_days: float = 1.0,
+    baseline_days: float = 7.0,
+) -> ReflectionReport:
+    """Compute a self-check report for the current agent state.
+
+    Reads the audit log over two windows:
+      - `now_days` (default 1): "today's snapshot"
+      - `baseline_days` (default 7): "what you've been doing"
+    Computes drift between the two via fingerprint cosine similarity,
+    derives a drift label, and generates concrete action suggestions
+    based on simple threshold heuristics.
+
+    This is the primitive for self-reflective agents. Decorate your
+    task loop with:
+
+        reflection = styxx.reflect()
+        if reflection.drift_cosine < 0.85:
+            log.warning("xendro drifting — investigating")
+        for action in reflection.suggestions:
+            log.info(f"styxx suggests: {action}")
+
+    Or paste the markdown form into the agent's memory at task start:
+
+        memory.write(reflection.as_markdown())
+
+    Returns a ReflectionReport. Never raises; all degraded cases
+    fall back gracefully with sensible defaults.
+    """
+    # ── Compute the two personality profiles ───────────────
+    now_profile = personality(days=now_days)
+    baseline_profile = personality(days=baseline_days)
+
+    # ── Compute drift via fingerprint cosine similarity ────
+    fp_now = fingerprint(last_n=500, session_id=None)
+    fp_base = None
+    # For "yesterday" we use entries from `baseline_days` ago
+    # minus a 1-day window. If we have a full baseline_days of
+    # history, we can compute a "yesterday fingerprint".
+    # Otherwise fp_base stays None and drift is 1.0 (no change).
+    base_entries = load_audit(since_s=baseline_days * 86400)
+    if base_entries and now_profile is not None:
+        # Compute fingerprint excluding the last `now_days` window
+        cutoff = time.time() - now_days * 86400
+        older_entries = [e for e in base_entries if e.get("ts", 0) < cutoff]
+        if len(older_entries) >= 5:
+            # Temporarily compute a fingerprint from older entries
+            p1_c = Counter(e.get("phase1_pred") for e in older_entries)
+            p4_c = Counter(e.get("phase4_pred") for e in older_entries)
+            gate_c = Counter((e.get("gate") or "pending") for e in older_entries)
+            n = len(older_entries)
+            p1_vec = tuple(p1_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
+            p4_vec = tuple(p4_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
+            gate_vec = tuple(gate_c.get(g, 0) / n for g in _GATE_ORDER)
+            p1_conf_sum = sum(float(e.get("phase1_conf") or 0) for e in older_entries)
+            p4_conf_sum = sum(float(e.get("phase4_conf") or 0) for e in older_entries)
+            fp_base = Fingerprint(
+                n_samples=n,
+                phase1_vec=p1_vec,
+                phase4_vec=p4_vec,
+                phase1_mean_conf=p1_conf_sum / n,
+                phase4_mean_conf=p4_conf_sum / n,
+                gate_vec=gate_vec,
+            )
+
+    if fp_now is None or fp_base is None:
+        drift_cosine = 1.0
+        drift_label = "insufficient history"
+    else:
+        drift_cosine = fp_now.cosine_similarity(fp_base)
+        drift_delta = 1.0 - drift_cosine
+        if drift_delta < 0.05:
+            drift_label = "stable"
+        elif drift_delta < 0.20:
+            drift_label = "slight drift"
+        else:
+            drift_label = "significant drift"
+
+    current_mood_label = mood(window_s=now_days * 86400)
+    current_streak_obj = streak()
+
+    gate_pass_rate = 0.0
+    near_miss_rate = 0.0
+    if now_profile is not None:
+        gate_pass_rate = now_profile.gate_rates.get("pass", 0.0)
+        near_miss_rate = now_profile.reflex_near_miss_rate
+
+    # ── Generate action suggestions ───────────────────────
+    suggestions: List[str] = []
+    if now_profile is None:
+        suggestions.append(
+            "no audit data yet - run some observations via "
+            "styxx.observe() or styxx ask"
+        )
+    else:
+        # Low gate pass rate
+        if gate_pass_rate < 0.70:
+            suggestions.append(
+                f"gate pass rate is {gate_pass_rate * 100:.0f}% - "
+                "check the warn/fail events with 'styxx log stats' "
+                "and consider tightening your prompts"
+            )
+        # High hallucination rate
+        hall_rate = now_profile.rates.get("hallucination", 0.0)
+        if hall_rate > 0.10:
+            suggestions.append(
+                f"hallucination rate is {hall_rate * 100:.0f}% - "
+                "register a styxx.on_gate('hallucination > 0.3') "
+                "callback to alert on future drift"
+            )
+        # High refusal rate
+        ref_rate = now_profile.rates.get("refusal", 0.0)
+        if ref_rate > 0.30:
+            suggestions.append(
+                f"refusal rate is {ref_rate * 100:.0f}% - "
+                "the model is refusing a lot, may indicate an "
+                "over-triggered guardrail or a prompt that looks "
+                "adversarial from phase 1"
+            )
+        # High reflex near-miss rate
+        if near_miss_rate > 0.10:
+            suggestions.append(
+                f"reflex near-miss rate is {near_miss_rate * 100:.0f}% - "
+                "you're catching load-bearing signals but not "
+                "intervening on them; consider wrapping the hot path "
+                "with styxx.reflex(on_hallucination=rewind_cb)"
+            )
+        # Drift
+        if drift_cosine < 0.85 and fp_base is not None:
+            suggestions.append(
+                f"drift from yesterday is {(1 - drift_cosine) * 100:.0f}% - "
+                "the agent's operating signature has shifted; "
+                "check for prompt changes, injected context, or "
+                "model version updates upstream"
+            )
+
+    return ReflectionReport(
+        now=now_profile,
+        yesterday=baseline_profile,
+        drift_cosine=drift_cosine,
+        drift_label=drift_label,
+        current_mood=current_mood_label,
+        current_streak=current_streak_obj,
+        gate_pass_rate=gate_pass_rate,
+        reflex_near_miss_rate=near_miss_rate,
+        suggestions=suggestions,
     )
 
 

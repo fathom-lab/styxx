@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.1.0a3"
+__version__ = "0.2.1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -156,8 +156,38 @@ from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSi
 from .hooks import hook_openai, unhook_openai, hook_openai_active
 from .explain import explain
 from .config import session_id, set_session
+from .trace import trace
+
+
+def agent_card(
+    *,
+    out_path,
+    agent_name: str = "styxx agent",
+    days: float = 7.0,
+    width: int = 1200,
+    height: int = 630,
+):
+    """Render an agent personality card as a shareable PNG.
+
+    0.1.0a4: twitter-ready 1200x630 personality profile image
+    suitable for posting. Pillow required — install with
+    `pip install styxx[agent-card]` or `pip install Pillow`.
+
+    Returns the output Path on success, None if Pillow isn't
+    available (caller should fall back to the ASCII profile from
+    `styxx personality`).
+    """
+    from .card_image import render_agent_card
+    return render_agent_card(
+        out_path=out_path,
+        agent_name=agent_name,
+        days=days,
+        width=width,
+        height=height,
+    )
 from .analytics import (
     load_audit,
+    clear_audit_cache,
     log_stats, LogStats,
     log_timeline,
     streak, Streak,
@@ -165,6 +195,7 @@ from .analytics import (
     fingerprint, Fingerprint,
     personality, Personality,
     dreamer, DreamReport,
+    reflect, ReflectionReport,
 )
 
 __all__ = [
@@ -205,8 +236,13 @@ __all__ = [
     # session tagging
     "session_id",
     "set_session",
+    # 0.1.0a4: function-level tracing decorator
+    "trace",
+    # 0.1.0a4: shareable agent-card PNG moonshot
+    "agent_card",
     # audit log analytics
     "load_audit",
+    "clear_audit_cache",
     "log_stats",
     "LogStats",
     "log_timeline",
@@ -219,6 +255,9 @@ __all__ = [
     "Personality",
     "dreamer",
     "DreamReport",
+    # 0.2.0 self-reflection primitive
+    "reflect",
+    "ReflectionReport",
     # metadata
     "__version__",
     "__tagline__",

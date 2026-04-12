@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "0.1.0a3"
+version = "0.2.1"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }
@@ -48,6 +48,8 @@ dependencies = [
 [project.optional-dependencies]
 openai  = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
+# 0.1.0a4: agent-card PNG renderer needs Pillow
+agent-card = ["Pillow>=10.0"]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",
@@ -66,7 +68,7 @@ Documentation  = "https://fathom.darkflobi.com/styxx"
 styxx = "styxx.cli:main"
 
 [tool.setuptools]
-packages = ["styxx", "styxx.adapters", "styxx.centroids"]
+packages = ["styxx", "styxx.adapters", "styxx.centroids", "styxx.recipes"]
 
 [tool.setuptools.package-data]
 "styxx.centroids" = ["*.json"]

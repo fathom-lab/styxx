@@ -499,8 +499,8 @@ def test_anthropic_factory_raises_clear_error_without_sdk():
 # 9. Version bump sanity
 # ══════════════════════════════════════════════════════════════════
 
-def test_version_is_0_1_0a3():
-    assert styxx.__version__ == "0.1.0a3"
+def test_version_is_0_2_x():
+    assert styxx.__version__.startswith("0.2.")
 
 
 def test_all_new_exports_exist():

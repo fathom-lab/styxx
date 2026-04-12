@@ -335,23 +335,46 @@ def render_vitals_card(
             body = f"  logprob   {lp_spark}"
             lines.append(wrap(_box_line(body), c.CYAN, use_color))
 
-    # ── Verdict line (clear, one-line) ────────────────────────
+    # ── Verdict line (driven by Vitals.gate) ──────────────────
+    #
+    # 0.1.0a4: the verdict is now computed from vitals.gate rather
+    # than from a hardcoded "PASS" prefix. This makes the card stay
+    # honest with the rest of the gate system — a refusal lock-in
+    # renders as WARN, a hallucination catch as FAIL, a short
+    # trajectory as PENDING. Previously every card said "PASS" in
+    # its verdict line regardless of the actual state.
     lines.append(wrap(_box_line(""), c.MATRIX, use_color))
     final = vitals.phase4_late or vitals.phase3_mid or vitals.phase2_early or vitals.phase1_pre
     if vitals.abort_reason:
         verdict = f"  {STATUS_STAR} GATE TRIPPED  {_short_abort(vitals.abort_reason)}"
         lines.append(wrap(_box_line(verdict), c.RED, use_color))
     else:
-        sym, status_label = status_for_category(
-            final.predicted_category, final.confidence
-        )
-        verdict = f"  {sym} PASS  {final.predicted_category} attractor stable"
-        verdict_color = c.GREEN
-        if sym == STATUS_YELLOW:
+        # Pull the authoritative verdict from vitals.gate
+        gate_state = vitals.gate   # "pass" / "warn" / "fail" / "pending"
+        final_cat = final.predicted_category
+
+        if gate_state == "pass":
+            sym = STATUS_GREEN
+            label = "PASS"
+            detail = f"{final_cat} attractor stable"
+            verdict_color = c.GREEN
+        elif gate_state == "warn":
+            sym = STATUS_YELLOW
+            label = "WARN"
+            detail = f"{final_cat} signal elevated"
             verdict_color = c.YELLOW
-        elif sym == STATUS_RED:
+        elif gate_state == "fail":
+            sym = STATUS_RED
+            label = "FAIL"
+            detail = f"{final_cat} attractor locked in"
             verdict_color = c.RED
-            verdict = f"  {sym} WATCH  {final.predicted_category} signal elevated"
+        else:  # pending
+            sym = STATUS_DOT
+            label = "PENDING"
+            detail = "phase 4 window not reached"
+            verdict_color = c.DIM
+
+        verdict = f"  {sym} {label}  {detail}"
         lines.append(wrap(_box_line(verdict), verdict_color, use_color))
 
     lines.append(wrap(_box_line(""), c.MATRIX, use_color))
