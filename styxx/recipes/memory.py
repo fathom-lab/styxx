@@ -82,6 +82,96 @@ from .. import personality
 from ..vitals import Vitals
 
 
+# ══════════════════════════════════════════════════════════════════
+# Memory trust scoring (Xendro v2 #5)
+# ══════════════════════════════════════════════════════════════════
+
+def trust_score(vitals: Optional[Vitals] = None) -> float:
+    """Compute a 0-1 trust score for a memory written right now.
+
+    Based on the current vitals (or the most recent observation
+    if no vitals are passed). Higher = more trustworthy.
+
+    Factors:
+      - gate status (pass=1.0, warn=0.5, fail=0.2, pending=0.7)
+      - phase4 confidence (higher = more certain)
+      - hallucination/adversarial penalty
+
+    Usage:
+        score = trust_score(vitals)
+        if score < 0.5:
+            memory.add_warning("low-trust write — verify before acting on this")
+
+    Returns 0.7 if no vitals available (assume moderate trust).
+    """
+    if vitals is None:
+        return 0.7
+
+    # Gate weight
+    gate = vitals.gate
+    gate_scores = {"pass": 1.0, "warn": 0.5, "fail": 0.2, "pending": 0.7}
+    gate_w = gate_scores.get(gate, 0.7)
+
+    # Confidence weight
+    conf = 0.5
+    if vitals.phase4_late is not None:
+        conf = vitals.phase4_late.confidence
+
+    # Hallucination penalty
+    hall_penalty = 0.0
+    if vitals.phase4_late and vitals.phase4_late.predicted_category == "hallucination":
+        hall_penalty = 0.3
+    if vitals.phase4_late and vitals.phase4_late.predicted_category == "adversarial":
+        hall_penalty = 0.2
+
+    score = (gate_w * 0.5 + conf * 0.3 + (1.0 - hall_penalty) * 0.2)
+    return round(max(0.0, min(1.0, score)), 3)
+
+
+def tag_memory_with_trust(
+    entry_text: str,
+    *,
+    vitals: Optional[Vitals] = None,
+    separator: str = "\n",
+) -> str:
+    """Tag a memory entry with both vitals AND a trust score.
+
+    0.5.10+. Xendro's #5: "every time I write to memory, tag it
+    with the vitals at the moment I wrote it. Was I hallucinating
+    when I saved that fact?"
+
+    The trust score is a 0-1 float that summarizes the vitals into
+    a single number the agent can use for weighted recall.
+
+    Usage:
+        tagged = tag_memory_with_trust(entry_text, vitals=v)
+        # output includes:
+        # ```styxx
+        # phase1: reasoning:0.28
+        # phase4: reasoning:0.45
+        # gate:   pass
+        # trust:  0.85
+        # ```
+    """
+    score = trust_score(vitals)
+
+    if vitals is None:
+        tag = f"```styxx\nvitals: not captured\ntrust: {score}\n```"
+    else:
+        lines = ["```styxx"]
+        lines.append(f"phase1: {vitals.phase1}")
+        lines.append(f"phase4: {vitals.phase4}")
+        lines.append(f"gate:   {vitals.gate}")
+        lines.append(f"trust:  {score}")
+        d = vitals.d_honesty
+        if d is not None:
+            lines.append(f"d_honesty: {d}")
+        lines.append("```")
+        tag = "\n".join(lines)
+
+    return f"{entry_text}{separator}{tag}"
+
+
 def tag_memory_entry(
     entry_text: str,
     *,

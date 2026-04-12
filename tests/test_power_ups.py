@@ -484,7 +484,7 @@ def test_dreamer_by_category(temp_audit_log):
 # ══════════════════════════════════════════════════════════════════
 
 def test_version_is_current():
-    assert styxx.__version__.startswith(("0.2.", "0.3.", "0.4.", "0.5."))
+    assert styxx.__version__.startswith(("0.2.", "0.3.", "0.4.", "0.5.", "0.6."))
 
 
 def test_all_0_1_0a3_exports_present():

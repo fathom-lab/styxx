@@ -161,6 +161,56 @@ def tier1_device() -> str:
         return "cpu"
 
 
+# ── mood-adaptive gating (0.5.10) ──────────────────────────
+#
+# Xendro's #4: "mood as input, not just output. a cautious
+# agent should have tighter hallucination gates than a creative
+# one." The agent declares its mood, styxx adjusts thresholds.
+
+_MOOD_OVERRIDE: Optional[str] = None
+
+_MOOD_GATE_MULTIPLIERS = {
+    "cautious":  0.7,   # tighter gates (lower thresholds)
+    "defensive": 0.6,
+    "steady":    1.0,   # default
+    "creative":  1.3,   # looser gates (higher thresholds)
+    "focused":   0.9,
+    "drifting":  0.5,   # tightest — something's wrong
+}
+
+
+def set_mood(mood_: Optional[str]) -> None:
+    """Declare the agent's current mood for adaptive gating.
+
+    When set, styxx adjusts gate thresholds accordingly:
+      cautious  → tighter (0.7x thresholds — catch more)
+      creative  → looser (1.3x — let more through)
+      drifting  → tightest (0.5x — maximum sensitivity)
+      steady    → default (1.0x)
+
+    Usage:
+        styxx.set_mood("cautious")
+        # now all gate thresholds are 0.7x their default
+        # hallucination gate fires at 0.385 instead of 0.55
+
+    Pass None to clear and return to default thresholds.
+    """
+    global _MOOD_OVERRIDE
+    _MOOD_OVERRIDE = mood_ if mood_ else None
+
+
+def current_mood_override() -> Optional[str]:
+    """Return the declared mood, or None if not set."""
+    return _MOOD_OVERRIDE
+
+
+def gate_multiplier() -> float:
+    """Return the gate threshold multiplier for the current mood."""
+    if _MOOD_OVERRIDE is None:
+        return 1.0
+    return _MOOD_GATE_MULTIPLIERS.get(_MOOD_OVERRIDE, 1.0)
+
+
 def set_session(session: Optional[str]) -> None:
     """Set the current session id programmatically.
 
