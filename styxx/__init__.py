@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.6.1"
+__version__ = "0.7.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -182,6 +182,44 @@ def CrewAI(crew=None):
     return styxx_crew
 
 
+def LangSmith(*args, **kwargs):
+    """LangChain callback handler that injects vitals into LangSmith traces.
+
+    Usage:
+        from styxx.adapters.langsmith import StyxxLangSmithHandler
+        handler = StyxxLangSmithHandler()
+        llm = ChatOpenAI(callbacks=[handler])
+        r = llm.invoke("why is the sky blue?")
+        # vitals appear as flat metadata on LangSmith runs:
+        #   styxx_phase4_category: "reasoning"
+        #   styxx_gate: "pass"
+
+    Or use the shorthand:
+        handler = styxx.LangSmith()
+    """
+    from .adapters.langsmith import StyxxLangSmithHandler
+    return StyxxLangSmithHandler(*args, **kwargs)
+
+
+def Langfuse(*args, **kwargs):
+    """LangChain callback handler that posts vitals as Langfuse scores.
+
+    Usage:
+        from styxx.adapters.langfuse import StyxxLangfuseHandler
+        handler = StyxxLangfuseHandler()
+        llm = ChatOpenAI(callbacks=[handler])
+        r = llm.invoke("why is the sky blue?")
+        # vitals appear as Langfuse scores:
+        #   styxx_gate: 1.0
+        #   styxx_phase4_confidence: 0.45
+
+    Or use the shorthand:
+        handler = styxx.Langfuse()
+    """
+    from .adapters.langfuse import StyxxLangfuseHandler
+    return StyxxLangfuseHandler(*args, **kwargs)
+
+
 def AutoGen(agent=None):
     """Wrap an AutoGen agent with styxx observation.
 
@@ -294,6 +332,8 @@ __all__ = [
     "LangChain",
     "CrewAI",
     "AutoGen",
+    "LangSmith",
+    "Langfuse",
     # observation — passive monitoring
     "watch",
     "observe",

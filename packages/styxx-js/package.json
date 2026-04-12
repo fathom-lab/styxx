@@ -1,0 +1,58 @@
+{
+  "name": "@fathom-lab/styxx",
+  "version": "0.1.0",
+  "description": "Cognitive vitals monitor for LLM agents. Nothing crosses unseen.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src/centroids"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "openai": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "openai": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "^5.4",
+    "tsup": "^8.0",
+    "vitest": "^3.0",
+    "openai": "^4.0"
+  },
+  "keywords": [
+    "llm",
+    "agent",
+    "cognitive",
+    "vitals",
+    "hallucination",
+    "styxx",
+    "fathom",
+    "observability",
+    "langchain",
+    "openai"
+  ],
+  "author": "flobi <heyzoos123@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heyzoos123-blip/styxx"
+  },
+  "homepage": "https://fathom.darkflobi.com/styxx"
+}
