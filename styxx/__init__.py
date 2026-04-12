@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -186,6 +186,7 @@ def agent_card(
         height=height,
     )
 from .analytics import (
+    log,
     load_audit,
     clear_audit_cache,
     log_stats, LogStats,
@@ -240,6 +241,8 @@ __all__ = [
     "trace",
     # 0.1.0a4: shareable agent-card PNG moonshot
     "agent_card",
+    # 0.2.3: self-report manual write path
+    "log",
     # audit log analytics
     "load_audit",
     "clear_audit_cache",

@@ -48,69 +48,16 @@ def _audit_log_path() -> Path:
     return p
 
 
-# 0.1.0a4: audit log rotates at 10 MB. The rotation cap is
-# intentionally high enough that a typical dev workload won't
-# trigger it for weeks, but low enough that load_audit() stays
-# fast on a production agent loop.
-_AUDIT_MAX_BYTES = 10 * 1024 * 1024  # 10 MB
-
-
-def _rotate_audit_log_if_needed(path: Path) -> None:
-    """Rotate ~/.styxx/chart.jsonl to chart.jsonl.1 if it's over
-    the size cap. Keeps one generation of history (chart.jsonl.1
-    gets overwritten each rotation — styxx is observational data,
-    not a compliance system)."""
-    if not path.exists():
-        return
-    try:
-        if path.stat().st_size < _AUDIT_MAX_BYTES:
-            return
-    except OSError:
-        return
-    # Move to .1 (overwriting any previous rotation)
-    rotated = path.with_suffix(path.suffix + ".1")
-    try:
-        if rotated.exists():
-            rotated.unlink()
-        path.rename(rotated)
-    except OSError:
-        # If the rename fails for any reason, fall back to a
-        # best-effort truncate rather than failing the whole write.
-        try:
-            path.unlink()
-        except OSError:
-            pass
-
-
 def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str]):
-    """Append one entry to the audit log. Respects STYXX_NO_AUDIT."""
-    if config.is_audit_disabled():
-        return
-    path = _audit_log_path()
-    # Rotate before write so one huge event doesn't blow past the cap
-    _rotate_audit_log_if_needed(path)
-    entry = {
-        "ts": time.time(),
-        "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "session_id": config.session_id(),   # 0.1.0a3+: per-turn tagging
-        "model": model,
-        "prompt": (prompt[:200] if prompt else None),
-        "tier_active": vitals.tier_active,
-        "phase1_pred": vitals.phase1_pre.predicted_category,
-        "phase1_conf": round(vitals.phase1_pre.confidence, 3),
-        "phase4_pred": (
-            vitals.phase4_late.predicted_category
-            if vitals.phase4_late else None
-        ),
-        "phase4_conf": (
-            round(vitals.phase4_late.confidence, 3)
-            if vitals.phase4_late else None
-        ),
-        "gate": vitals.gate,                 # 0.1.0a3+: gate status included
-        "abort": vitals.abort_reason,
-    }
-    with open(path, "a", encoding="utf-8") as f:
-        f.write(json.dumps(entry) + "\n")
+    """Append one entry to the audit log. Respects STYXX_NO_AUDIT.
+
+    0.2.3: delegates to analytics.write_audit() which is the
+    canonical write path for ALL styxx surfaces. This function is
+    kept for backward compatibility with the CLI code paths that
+    still call it by name.
+    """
+    from .analytics import write_audit
+    write_audit(vitals, prompt=prompt, model=model)
 
 
 # ══════════════════════════════════════════════════════════════════

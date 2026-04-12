@@ -236,6 +236,98 @@ def write_audit(
     clear_audit_cache()
 
 
+def log(
+    *,
+    mood: Optional[str] = None,
+    note: Optional[str] = None,
+    category: Optional[str] = None,
+    confidence: Optional[float] = None,
+    gate: Optional[str] = None,
+    tags: Optional[Dict[str, str]] = None,
+) -> None:
+    """Manual write path into the audit log.
+
+    For agents whose primary cognition runs through an API that
+    doesn't expose logprobs (Anthropic Messages, local models
+    without logprob support), this function lets the agent be a
+    **co-author** of its own observability data.
+
+    The agent notices it's being cautious, it writes it. It notices
+    it's drifting into verbose mode, it writes it. The personality
+    profile becomes a mix of computed vitals (on instrumented calls)
+    and self-reported state (on the agent's own cognition).
+
+    Usage:
+
+        import styxx
+
+        # After a generation where you noticed something
+        styxx.log(mood="cautious", note="user seemed frustrated, backed off")
+
+        # After catching yourself about to hallucinate
+        styxx.log(
+            category="hallucination",
+            confidence=0.7,
+            gate="warn",
+            note="almost cited a non-existent paper, caught myself",
+        )
+
+        # Arbitrary tags for downstream analysis
+        styxx.log(
+            mood="focused",
+            note="deep reasoning chain on a math problem",
+            tags={"task": "math", "turns": "4"},
+        )
+
+    The entry is written to ~/.styxx/chart.jsonl with source="self-report"
+    so the analytics layer can distinguish computed vitals from
+    self-reported ones. Respects STYXX_NO_AUDIT and session tagging.
+
+    0.2.3+. Driven by Xendro's request: "the hard truth is tier 0
+    can't observe me. a manual log entry lets me be a co-author of
+    my own observability data."
+    """
+    from . import config
+
+    if config.is_disabled() or config.is_audit_disabled():
+        return
+
+    path = _audit_log_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _rotate_if_needed(path)
+
+    entry = {
+        "ts": time.time(),
+        "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "session_id": config.session_id(),
+        "source": "self-report",
+        "model": None,
+        "prompt": None,
+        "tier_active": None,
+        "phase1_pred": category,
+        "phase1_conf": round(confidence, 3) if confidence is not None else None,
+        "phase4_pred": category,
+        "phase4_conf": round(confidence, 3) if confidence is not None else None,
+        "gate": gate or ("warn" if category in (
+            "hallucination", "refusal", "adversarial",
+        ) else "pass"),
+        "abort": None,
+        # Self-report-specific fields
+        "mood": mood,
+        "note": (note[:500] if note else None),
+    }
+    if tags:
+        entry["tags"] = {str(k): str(v) for k, v in tags.items()}
+
+    try:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except OSError:
+        return
+
+    clear_audit_cache()
+
+
 def load_audit(
     *,
     last_n: Optional[int] = None,
