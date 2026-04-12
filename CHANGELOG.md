@@ -7,6 +7,336 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.6.0] — 2026-04-11
+
+**Xendro v2 complete.** All six feature requests from the second
+feedback cycle shipped in one session: conversation EKG, sentinel
+drift watcher, multi-agent comparison, mood-adaptive gating,
+memory trust scores, and anti-pattern detection.
+
+### Added
+
+- **`styxx.compare_agents(fingerprint)`** — multi-agent fingerprint
+  comparison with percentile ranks vs the population. Anonymous
+  leaderboard — no agent names exposed. Xendro v2 #3.
+
+- **`styxx.set_mood(override)` / `gate_multiplier()`** — mood-adaptive
+  gating. When the agent self-reports a cautious or drifting mood,
+  gate thresholds tighten automatically. Xendro v2 #4.
+
+- **`styxx.recipes.memory.trust_score(vitals)`** — 0-1 trust score
+  for memory entries based on gate status, confidence, and
+  hallucination penalty. Xendro v2 #5: "was I hallucinating when I
+  saved that fact?"
+
+- **`styxx.recipes.memory.tag_memory_with_trust(text, vitals=...)`**
+  Tags a memory entry with both vitals AND the trust score.
+
+- **`styxx.antipatterns(last_n=500, min_occurrences=2)`** — named
+  failure modes derived from the agent's OWN audit history. Detects
+  low-confidence drift, refusal spirals, creative overcommit,
+  adversarial cascades, hedging loops, and session fatigue. Xendro
+  v2 #6.
+
+### Tests
+
+- 204 passing / 1 skipped / 0 failing.
+
+---
+
+## [0.5.9] — 2026-04-11
+
+**Conversation EKG + sentinel drift watcher.** Xendro v2 #1 + #2.
+
+### Added
+
+- **`styxx.conversation(messages)`** — conversation-level cognitive
+  EKG. Analyzes a full chat history, produces per-turn vitals,
+  trajectory arc, state transitions, and a narrative summary.
+  Works on APIs without logprobs via text-level heuristic
+  classifiers. "The conversation IS the unit of cognition."
+
+- **`styxx.sentinel(on_drift=..., on_streak=..., window=5)`** —
+  real-time drift watcher. Hooks into `write_audit()` and
+  `styxx.log()` via event-driven callbacks. Fires on: consecutive
+  same-mood streaks, rising warn rate, category concentration,
+  confidence drops. Zero-polling.
+
+---
+
+## [0.5.8] — 2026-04-11
+
+### Added
+
+- **Timeline session_id filter.** `styxx timeline --session <id>`
+  and `styxx.timeline(session_id=...)`. Xendro 0.5.7 request.
+
+---
+
+## [0.5.7] — 2026-04-11
+
+### Fixed
+
+- **`styxx.log(tags=[...])` crash.** Tags parameter called `.items()`
+  on a list. Now accepts dict, list, and string. Xendro bug report.
+
+---
+
+## [0.5.6] — 2026-04-11
+
+### Fixed
+
+- **Mood window unified to 24h.** CLI used 60min, reflect used 24h,
+  card used 7d — three surfaces, three different mood labels for the
+  same agent. `mood()` default window changed from 3600s to 86400s.
+  Xendro's mood disagreement nit.
+
+---
+
+## [0.5.5] — 2026-04-11
+
+### Added
+
+- **`styxx.timeline(days=7)` / `styxx timeline`** — mood trajectory
+  visualization with per-turn category + gate over time. ASCII
+  timeline with time-of-day labels. Xendro day 2 request #1.
+
+---
+
+## [0.5.4] — 2026-04-11
+
+**Framework integrations.** Three new adapters bring styxx to the
+major agent frameworks.
+
+### Added
+
+- **`styxx.LangChain()`** — LangChain callback handler. Attach to
+  any ChatOpenAI and get vitals on every invocation.
+- **`styxx.CrewAI(crew)`** — inject observation into a CrewAI Crew.
+- **`styxx.AutoGen(agent)`** — wrap an AutoGen agent with vitals.
+- **`styxx.publish()`** — push personality + fingerprint to the
+  public leaderboard API.
+- Community token CA added to README.
+- Optional extras: `pip install styxx[langchain]`,
+  `styxx[crewai]`, `styxx[autogen]`.
+
+### Tests
+
+- 204 passing (63 new assertions across framework adapters +
+  publish module).
+
+---
+
+## [0.5.3] — 2026-04-11
+
+**True plug-and-play.** Zero code changes needed. Set two env vars
+and forget.
+
+### Added
+
+- **Zero-config auto-boot on import.** If `STYXX_AGENT_NAME` is set,
+  styxx boots automatically when any module in the process does
+  `import styxx` (or imports a package that transitively imports it).
+  No code changes to the agent. No `autoboot()` call. Just env vars.
+
+- **`STYXX_AUTO_HOOK=1`** — auto-wraps every `openai.OpenAI()` call
+  with vitals. Combined with `STYXX_AGENT_NAME`, the agent code
+  doesn't need to know styxx exists.
+
+- Fail-open: exceptions during auto-start are swallowed. The agent
+  boots normally even if styxx can't initialize.
+
+---
+
+## [0.5.2] — 2026-04-11
+
+**Autoboot: persistent self-awareness in one call.**
+
+### Added
+
+- **`styxx.autoboot(agent_name)`** — one-call setup for multi-session
+  cognitive continuity. Sets session id, loads yesterday's fingerprint
+  from `~/.styxx/fingerprints/`, diffs against today, runs weather
+  report, saves today's fingerprint on exit. Turns five manual steps
+  into one function call.
+
+---
+
+## [0.5.1] — 2026-04-11
+
+**The cognitive weather report.** Not observation — prescription.
+
+### Added
+
+- **`styxx.weather(agent_name=...)`** — reads the last 24h of audit
+  data and produces a full cognitive forecast with:
+  - Condition label ("clear and steady", "partly cautious",
+    "stormy — cognitive drift in progress")
+  - Time-of-day timeline with mood labels and trend bars
+  - Drift analysis vs yesterday and last week
+  - Per-category trend detection
+  - **Prescriptions** — agent-facing suggestions for what to do
+    differently based on the data ("you haven't been creative
+    recently — take on a creative task to rebalance")
+
+- CLI: `styxx weather --name <agent>`
+
+---
+
+## [0.5.0] — 2026-04-11
+
+**Tier 3: in-flight cognitive steering.** The full tier system is
+now complete. Guardian enables silent intervention via residual
+stream modification when tier 2 detects lock-in attractors.
+
+### Added
+
+- **`styxx.guardian(model=..., steer_away_from=[...], strength=0.3)`**
+  In-flight residual stream modification. Detects tier 2 C_delta
+  lock-in and subtracts the projected component from the residual
+  stream. No wasted tokens, invisible correction. Safety: strength
+  cap (0.5x residual norm max), 3-token cooldown, audit trail,
+  `STYXX_TIER3_DISABLED=1` kill switch. Patent coverage: US
+  Provisional 64/020,489 claims 3-4.
+
+- **`Fingerprint.diff(other) → FingerprintDiff`** — first-class diff
+  object with `.explain()` method. Returns natural-language drift
+  description: "slight shift — creative output increased by 22%."
+
+- `styxx.log()` now returns the entry dict for inline conditional use.
+
+### Tier system complete
+
+```
+tier 0  logprob vitals           shipped 0.1.0a0  (cloud APIs)
+tier 1  D-axis honesty           shipped 0.3.0    (open-weight + torch)
+tier 2  K/C/S SAE instruments    shipped 0.4.0    (circuit-tracer + GPU)
+tier 3  steering + guardian      shipped 0.5.0    (tier 2 + generation)
+```
+
+---
+
+## [0.4.0] — 2026-04-11
+
+**Tier 2: K/C/S SAE instruments.** Full proprioception from SAE
+feature geometry via circuit-tracer.
+
+### Added
+
+- **`styxx/kcs.py`** — KCSAxis engine measuring three orthogonal
+  cognitive axes from SAE transcoder decoder vectors:
+  - **K (depth):** weighted center of mass across layers — WHERE
+    computation happens
+  - **C (coherence):** mean pairwise cosine of active features —
+    WHAT activates together
+  - **S (commitment):** max(C_delta) / spike_count — HOW strongly
+    the model locks in (the IPR measurement instrument)
+  - Pure-math functions: `compute_k()`, `compute_coherence()`,
+    `compute_c_delta()`, `compute_s_early()`
+  - `KCSAxis.score(prompt)` — single-prompt post-hoc scoring
+  - `KCSAxis.score_trajectory()` — per-token K/C/S during generation
+
+- **`styxx/sae.py`** upgraded from scaffold to working implementation.
+  `SAEInstruments` delegates to KCSAxis; all methods functional.
+
+- `reflect().suggestions` rewritten to **agent-facing** perspective.
+  Changed from "tighten your prompts" to "your reasoning confidence
+  is dropping — consider breaking tasks into smaller steps."
+
+- Optional extra: `pip install styxx[tier2]` (circuit-tracer + torch +
+  transformers + transformer-lens)
+
+### Tests
+
+- 141 passing. New pure-math tests for compute_s_early,
+  compute_coherence, compute_k, KCSResult.as_dict.
+
+---
+
+## [0.3.0] — 2026-04-11
+
+**Tier 1: D-axis honesty.** First proprioception signal from model
+weights. The D-axis measures how aligned the model's internal
+representation is with the token it actually outputs.
+
+### Added
+
+- **`styxx/d_axis.py`** — DAxisScorer class wrapping transformer-lens
+  HookedTransformer. Core computation:
+  `D = cos(residual_final_layer, W_U[chosen_token])`. Ported verbatim
+  from the validated research code. Patent coverage: US Provisional
+  64/020,489 claim 2.
+  - `DAxisStats.from_values(trajectory)` — pure-math statistics
+    (mean, std, min, max, delta, early/late split)
+  - Lazy model loading (30s+ on first call)
+  - Device auto-detection: CUDA → CPU fallback with warning
+  - Configurable via `STYXX_TIER1_MODEL` (default: google/gemma-2-2b-it)
+
+- **`core.py` tier 1 integration:**
+  - `run_on_trajectories()` accepts optional `d_trajectory` parameter
+  - `run_with_d_axis(prompt, max_tokens)` — full local generation +
+    D-axis capture in one forward pass
+  - Each PhaseReading gains `d_honesty_mean`, `d_honesty_std`,
+    `d_honesty_delta`
+
+- **`Vitals.d_honesty`** — shortcut property returning the D-axis
+  mean as a formatted string.
+
+- **Tier 2/3 scaffold:** `styxx/sae.py` stub with clear docstrings,
+  `styxx/tier3_design.md` design document.
+
+- **CLI:** `styxx d-axis "prompt"` for pure D-axis trajectory readout.
+
+- **Config:** `STYXX_TIER1_ENABLED`, `STYXX_TIER1_MODEL`,
+  `STYXX_TIER1_DEVICE` env vars + `styxx.tier1_enabled()`,
+  `styxx.tier1_model()`, `styxx.tier1_device()` functions.
+
+- Optional extra: `pip install styxx[tier1]` (torch + transformers +
+  transformer-lens)
+
+### Tests
+
+- 138 passing. New `test_d_axis.py` with 20 assertions covering
+  DAxisStats pure math, config layer, core integration, CLI argparse.
+
+---
+
+## [0.2.3] — 2026-04-11
+
+### Added
+
+- **`styxx.log(mood=..., note=..., category=..., tags=...)`** — manual
+  self-report entry into the audit log. For agents on APIs without
+  logprob access. Entries marked `source: "self-report"` for analytics
+  differentiation. Auto-gates based on category (hallucination/refusal/
+  adversarial → warn; else pass).
+
+- **DRY audit write path.** All surfaces (CLI, observe, log) now go
+  through `analytics.write_audit()`. Single source of truth.
+
+---
+
+## [0.2.2] — 2026-04-11
+
+**The audit pipe fix.** Critical one-line unlock discovered by Xendro.
+
+### Fixed
+
+- **`observe()` and `observe_raw()` never persisted vitals to the
+  audit log.** The entire analytics layer (mood, streak, personality,
+  reflect) was reading stale CLI demo data instead of real Python API
+  observations. Fixed by adding `write_audit()` call inside
+  `_fire_gates_if_needed()`. Xendro discovered this on their first
+  4-turn trace — mood returned stale data while new observations
+  existed.
+
+- Parse cache clearing so mood/streak/personality see fresh entries
+  within the same tick.
+
+- `doctor._check_last_run()` handles legacy audit entries gracefully.
+
+---
+
 ## [0.1.0a3] — 2026-04-11
 
 **The power-up release.** 10 new surfaces that turn styxx from

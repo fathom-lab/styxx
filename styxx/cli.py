@@ -998,6 +998,89 @@ def _get_demo_trajectory(kind: str):
     )
 
 
+def cmd_antipatterns(args):
+    """Detect named failure modes from the agent's audit history."""
+    from .antipatterns import antipatterns
+
+    patterns = antipatterns(
+        last_n=args.last_n,
+        min_occurrences=args.min_occurrences,
+    )
+
+    fmt = getattr(args, "format", "ascii")
+
+    if fmt == "json":
+        import json as _json
+        print(_json.dumps([
+            {"name": p.name, "description": p.description,
+             "trigger": p.trigger, "occurrences": p.occurrences,
+             "severity": p.severity, "last_seen": p.last_seen}
+            for p in patterns
+        ], indent=2))
+        return 0
+
+    use_color = color_enabled()
+    c = Palette
+    print()
+    if not patterns:
+        print(f"  {wrap('no anti-patterns detected', c.DIM, use_color)} — not enough failure data (which is good).")
+    else:
+        print(f"  styxx anti-patterns · {len(patterns)} detected")
+        print("  " + "=" * 50)
+        for p in patterns:
+            sev_color = {"minor": c.DIM, "moderate": c.ORANGE, "critical": c.PINK}.get(p.severity, c.DIM)
+            print()
+            print(f"  {wrap(p.name, c.MATRIX, use_color)}  ({p.occurrences}x, {wrap(p.severity, sev_color, use_color)})")
+            print(f"  {p.description}")
+            print(f"  trigger: {wrap(p.trigger, c.DIM, use_color)}")
+            if p.last_seen:
+                print(f"  last seen: {p.last_seen}")
+    print()
+    return 0
+
+
+def cmd_conversation(args):
+    """Run conversation-level cognitive EKG on a message history."""
+    from .conversation import conversation as conv_fn
+
+    # Load messages from JSON file
+    path = args.file
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # Accept either a list of messages or {"messages": [...]}
+    if isinstance(data, list):
+        messages = data
+    elif isinstance(data, dict) and "messages" in data:
+        messages = data["messages"]
+    else:
+        sys.stderr.write("  error: JSON must be a list of messages or {\"messages\": [...]}\n")
+        return 1
+
+    result = conv_fn(messages)
+
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(result.as_json())
+    elif fmt == "ascii":
+        print(result.render())
+    return 0
+
+
+def cmd_compare_agents(args):
+    """Compare your fingerprint against the population."""
+    from .compare import compare_agents as compare_fn
+
+    comparison = compare_fn()
+
+    fmt = getattr(args, "format", "ascii")
+    if fmt == "json":
+        print(json.dumps(comparison.as_dict(), indent=2))
+    elif fmt == "ascii":
+        print(comparison.render())
+    return 0
+
+
 def cmd_publish(args):
     """Publish agent data to the remote dashboard (opt-in)."""
     from .publish import prepare_payload, publish
@@ -1305,6 +1388,54 @@ def _build_parser() -> argparse.ArgumentParser:
     p_scan.add_argument("--prompt", help="prompt to show on the card")
     p_scan.add_argument("--model", help="model name for the card metadata")
     p_scan.set_defaults(func=cmd_scan)
+
+    # antipatterns — 0.6.0 named failure mode detection
+    p_anti = sub.add_parser(
+        "antipatterns",
+        help="detect named failure modes from your audit history (0.6.0)",
+    )
+    p_anti.add_argument(
+        "--last-n", type=int, default=500, dest="last_n",
+        help="number of audit entries to scan (default: 500)",
+    )
+    p_anti.add_argument(
+        "--min", type=int, default=2, dest="min_occurrences",
+        help="minimum occurrences to report (default: 2)",
+    )
+    p_anti.add_argument(
+        "--format", choices=["ascii", "json"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_anti.set_defaults(func=cmd_antipatterns)
+
+    # conversation — 0.5.9 conversation-level EKG
+    p_conv = sub.add_parser(
+        "conversation",
+        help="cognitive EKG on a conversation message history (0.5.9)",
+    )
+    p_conv.add_argument(
+        "file",
+        help="path to JSON file containing messages",
+    )
+    p_conv.add_argument(
+        "--format", choices=["ascii", "json"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_conv.set_defaults(func=cmd_conversation)
+
+    # compare-agents — 0.6.0 population fingerprint comparison
+    p_cmp_agents = sub.add_parser(
+        "compare-agents",
+        help="compare your fingerprint against the agent population (0.6.0)",
+    )
+    p_cmp_agents.add_argument(
+        "--format", choices=["ascii", "json"],
+        default="ascii",
+        help="output format (default: ascii)",
+    )
+    p_cmp_agents.set_defaults(func=cmd_compare_agents)
 
     # publish — opt-in dashboard telemetry
     p_publish = sub.add_parser(
