@@ -422,6 +422,17 @@ def load_audit(
     elif source is not None:
         entries = [e for e in entries if e.get("source") == source]
 
+    # 0.8.3: expire stale pending entries (>6h old).
+    # Short responses that never reach phase4 produce gate="pending"
+    # entries that accumulate forever and inflate warn rates.
+    _PENDING_EXPIRY_S = 6 * 3600  # 6 hours
+    now = time.time()
+    entries = [
+        e for e in entries
+        if not (e.get("gate") == "pending"
+                and (now - e.get("ts", now)) > _PENDING_EXPIRY_S)
+    ]
+
     if since_s is not None:
         cutoff = time.time() - since_s
         entries = [e for e in entries if e.get("ts", 0) >= cutoff]
@@ -1498,7 +1509,7 @@ class DreamReport:
 
 def dreamer(
     *,
-    threshold: float = 0.20,
+    threshold: float = 0.40,
     last_n: Optional[int] = None,
     session_id: Optional[str] = None,
     categories: Optional[Tuple[str, ...]] = None,

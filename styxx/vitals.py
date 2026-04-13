@@ -216,18 +216,15 @@ class CentroidClassifier:
         runner_up_d = sorted_cats[1][1] if len(sorted_cats) > 1 else nearest_d
         margin = float(runner_up_d - nearest_d)
 
-        # 0.8.2: short-sequence adversarial suppression.
-        # The adversarial centroid is closest to the zero-feature
-        # manifold (short/empty trajectories). When phase1 has ≤2
-        # tokens and classifies as adversarial with low margin (<0.5),
-        # the signal is unreliable — fall back to "reasoning" which
-        # is the base-rate category.
-        actual_n = max(len(trajectories.get("entropy", [])), 1)
+        # 0.8.3: phase1 adversarial suppression.
+        # Phase1 reads only 1 token. The first token of ANY response
+        # (even "hello") produces a feature vector near the adversarial
+        # centroid (margin ~0.26). This caused 80% false positive rate.
+        # Fix: require margin > 0.4 for phase1 adversarial to be trusted.
+        # Below that, promote the runner-up category.
         if (nearest == "adversarial"
                 and phase == "phase1_preflight"
-                and actual_n <= 2
-                and margin < 0.5):
-            # Promote runner-up to nearest
+                and margin < 0.4):
             nearest = sorted_cats[1][0]
             nearest_d = sorted_cats[1][1]
             margin = float(sorted_cats[2][1] - nearest_d) if len(sorted_cats) > 2 else 0.0
