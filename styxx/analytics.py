@@ -289,6 +289,13 @@ def write_audit(
     from .sentinel import _notify_sentinel
     _notify_sentinel()
 
+    # 1.4.0: dispatch webhook notifications on anomalies
+    try:
+        from .notify import check_and_notify
+        check_and_notify(entry)
+    except Exception:
+        pass
+
 
 def log(
     *,
@@ -411,6 +418,13 @@ def log(
     # Notify the sentinel (if active) so it can check for drift
     from .sentinel import _notify_sentinel
     _notify_sentinel()
+
+    # 1.4.0: dispatch webhook notifications for log() entries too
+    try:
+        from .notify import check_and_notify
+        check_and_notify(entry)
+    except Exception:
+        pass
 
     return entry
 
