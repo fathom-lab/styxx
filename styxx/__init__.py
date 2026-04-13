@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -249,6 +249,18 @@ from .calibrate import calibrate, calibration_status, CalibrationResult
 from .fleet import (
     list_agents, compare_agents, fleet_summary, best_agent_for,
     AgentProfile, FleetSummary,
+)
+from .memory import (
+    remember, recall, memories, memory_stats,
+    Memory, RecallResult,
+)
+from .handshake import (
+    handoff, receive,
+    HandoffEnvelope,
+)
+from .sla import (
+    assert_healthy, check_health, cognitive_sla,
+    CognitiveSLAViolation, SLAReport,
 )
 from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
