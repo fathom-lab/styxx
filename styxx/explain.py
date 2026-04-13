@@ -41,11 +41,34 @@ def explain(vitals: Optional[Vitals]) -> str:
     Returns a single paragraph of prose. Never raises.
     """
     if vitals is None:
+        # 0.8.2: explain from log data when no vitals available
+        try:
+            from .analytics import load_audit, mood as get_mood
+            entries = load_audit(last_n=20)
+            if entries:
+                current_mood = get_mood()
+                n = len(entries)
+                warns = sum(1 for e in entries if e.get("gate") == "warn")
+                fails = sum(1 for e in entries if e.get("gate") == "fail")
+                cats = {}
+                for e in entries:
+                    c = e.get("phase4_pred") or e.get("phase1_pred")
+                    if c:
+                        cats[c] = cats.get(c, 0) + 1
+                top_cat = max(cats, key=cats.get) if cats else "unknown"
+                return (
+                    f"no vitals for this specific response (no logprobs available). "
+                    f"from your last {n} observations: mood is {current_mood}, "
+                    f"{warns} warns, {fails} fails, dominant category is {top_cat}. "
+                    f"use styxx.weather() for a full cognitive forecast."
+                )
+        except Exception:
+            pass
         return (
             "no vitals were computed for this response — either the "
             "underlying call didn't expose logprobs (common on "
             "anthropic), the call failed, or styxx was disabled via "
-            "STYXX_DISABLED. no cognitive state could be read."
+            "STYXX_DISABLED. try styxx.weather() for session health."
         )
 
     p1 = vitals.phase1_pre

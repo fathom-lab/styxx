@@ -972,8 +972,11 @@ class Personality:
             rate = self.gate_rates.get(g, 0.0)
             lines.append(f"  {g:<8} {rate * 100:>5.1f}%")
         lines.append("")
-        lines.append(f"mean phase1 conf: {self.mean_phase1_conf:.3f}")
-        lines.append(f"mean phase4 conf: {self.mean_phase4_conf:.3f}")
+        import math as _m
+        p1_str = f"{self.mean_phase1_conf:.3f}" if not _m.isnan(self.mean_phase1_conf) else "n/a (no logprobs)"
+        p4_str = f"{self.mean_phase4_conf:.3f}" if not _m.isnan(self.mean_phase4_conf) else "n/a (no logprobs)"
+        lines.append(f"mean phase1 conf: {p1_str}")
+        lines.append(f"mean phase4 conf: {p4_str}")
         lines.append(f"reflex near-miss: {self.reflex_near_miss_rate * 100:.1f}%")
         if self.narrative:
             lines.append("")
@@ -1095,8 +1098,13 @@ def personality(*, days: float = 7.0) -> Optional[Personality]:
     near_miss_rate = near_miss / n
 
     # ── Mean confidences ──────────────────────────────────
-    p1_confs = [float(e.get("phase1_conf") or 0) for e in entries]
-    p4_confs = [float(e.get("phase4_conf") or 0) for e in entries]
+    import math as _math
+    p1_confs = [float(e.get("phase1_conf") or 0) for e in entries
+                if e.get("phase1_conf") is not None
+                and not _math.isnan(float(e.get("phase1_conf") or 0))]
+    p4_confs = [float(e.get("phase4_conf") or 0) for e in entries
+                if e.get("phase4_conf") is not None
+                and not _math.isnan(float(e.get("phase4_conf") or 0))]
     mean_p1 = sum(p1_confs) / len(p1_confs) if p1_confs else 0.0
     mean_p4 = sum(p4_confs) / len(p4_confs) if p4_confs else 0.0
 
