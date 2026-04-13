@@ -195,16 +195,17 @@ class WatchSession:
             self._fire_gates_if_needed()
             return self.vitals
 
-        # 4. Detect an Anthropic response and set an explicit error.
-        if _looks_like_anthropic_response(response):
-            self.error = (
-                "anthropic: logprobs not available in Messages API. "
-                "Tier 0 vitals cannot be computed from this response. "
-                "Route through an OpenAI-compatible gateway (OpenRouter) "
-                "and use styxx.OpenAI, or wait for styxx v0.2 tier 1."
-            )
-            self.vitals = None
-            return None
+        # 4. Anthropic / no-logprob fallback: text-based classification.
+        #    When logprobs aren't available (Anthropic, local models),
+        #    classify the response text using heuristic patterns.
+        #    Less accurate than logprob-based, but provides real signal
+        #    for every provider. The "pip install styxx, works everywhere"
+        #    promise. (0.8.1)
+        text_content = _extract_text_content(response)
+        if text_content:
+            self.vitals = _classify_from_text(text_content, self._runtime)
+            self._fire_gates_if_needed()
+            return self.vitals
 
         # 5. Unknown response shape — fail open.
         self.error = (
@@ -425,4 +426,88 @@ def _looks_like_anthropic_response(response: Any) -> bool:
     return (from_anthropic and has_content and has_stop_reason) or (
         has_content and has_stop_reason and has_usage
         and not hasattr(response, "choices")  # openai has .choices
+    )
+
+
+# ══════════════════════════════════════════════════════════════════
+# Text-based fallback classifier (0.8.1)
+# ══════════════════════════════════════════════════════════════════
+#
+# When logprobs aren't available (Anthropic, local models without
+# logprob support), classify the response text using heuristic
+# patterns from conversation.py. Returns a real Vitals object so
+# gates, weather, antipatterns, and the full analytics pipeline
+# all work regardless of provider.
+
+
+def _extract_text_content(response: Any) -> Optional[str]:
+    """Extract text from any response shape — Anthropic, OpenAI, dict, str."""
+    # Direct string
+    if isinstance(response, str):
+        return response if response.strip() else None
+
+    # Anthropic: response.content is a list of ContentBlock with .text
+    content = getattr(response, "content", None)
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            text = getattr(block, "text", None)
+            if text:
+                parts.append(text)
+        if parts:
+            return "\n".join(parts)
+
+    # OpenAI: response.choices[0].message.content (non-streaming)
+    choices = getattr(response, "choices", None)
+    if choices and len(choices) > 0:
+        msg = getattr(choices[0], "message", None)
+        if msg:
+            text = getattr(msg, "content", None)
+            if text:
+                return text
+
+    # Dict with "text" or "content" key
+    if isinstance(response, dict):
+        return response.get("text") or response.get("content")
+
+    return None
+
+
+def _classify_from_text(text: str, runtime: Any) -> "Vitals":
+    """Build a Vitals object from text-based classification.
+
+    Uses the heuristic classifier from conversation.py. The result
+    is a single-phase Vitals (phase1 only, phases 2-4 as None)
+    since text analysis can't do per-token phase windows.
+    """
+    from .conversation import _classify_text
+    from .vitals import PhaseReading, Vitals
+
+    category, confidence = _classify_text(text)
+
+    # Build pseudo-probs — the text classifier gives us a category
+    # and confidence, we construct a plausible distribution
+    all_cats = ["retrieval", "reasoning", "refusal", "creative",
+                "adversarial", "hallucination"]
+    remainder = (1.0 - confidence) / max(1, len(all_cats) - 1)
+    probs = {c: remainder for c in all_cats}
+    probs[category] = confidence
+    distances = {c: (1.0 - p) * 5.0 for c, p in probs.items()}
+
+    reading = PhaseReading(
+        phase="text_heuristic",
+        n_tokens_used=len(text.split()),
+        features=[],  # no logprob features available
+        predicted_category=category,
+        margin=confidence - remainder,
+        distances=distances,
+        probs=probs,
+    )
+
+    return Vitals(
+        phase1_pre=reading,
+        phase2_early=None,
+        phase3_mid=None,
+        phase4_late=reading,  # copy to phase4 so gate logic works
+        tier_active=-1,  # -1 = text fallback (not tier 0/1/2/3)
     )

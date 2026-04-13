@@ -150,12 +150,16 @@ def test_observe_one_shot_helper():
     assert vitals.gate == "pass"
 
 
-def test_watch_unknown_shape_sets_error():
+def test_watch_string_uses_text_fallback():
+    """0.8.1: strings now classify via text fallback instead of erroring."""
     with styxx.watch() as w:
-        w.observe("this is not a response")
-    assert w.vitals is None
-    assert w.error is not None
-    assert "unknown" in w.error.lower()
+        w.observe("this is a test response about reasoning")
+    assert w.vitals is not None
+    assert w.vitals.tier_active == -1  # text fallback marker
+    assert w.vitals.phase1_pre.predicted_category in (
+        "reasoning", "retrieval", "refusal", "creative",
+        "adversarial", "hallucination",
+    )
 
 
 def test_watch_session_resets_on_enter():

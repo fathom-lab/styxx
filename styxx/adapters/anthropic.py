@@ -136,10 +136,31 @@ class _MessagesShim:
         return getattr(self._inner, name)
 
     def create(self, *args, **kwargs):
-        """Wrap messages.create so the response gets .vitals = None."""
-        _warn_once()
+        """Wrap messages.create with text-based vitals.
+
+        0.8.1: instead of returning vitals=None, we run the text-based
+        classifier on the response content. Less accurate than logprob-
+        based tier 0 but provides real cognitive state readings for
+        every Anthropic call.
+        """
         response = self._inner.create(*args, **kwargs)
-        _attach_vitals(response, None)
+        # Extract text and classify
+        try:
+            from ..watch import _extract_text_content, _classify_from_text, _get_runtime
+            text = _extract_text_content(response)
+            if text:
+                runtime = _get_runtime()
+                vitals = _classify_from_text(text, runtime)
+                _attach_vitals(response, vitals)
+                # Write to audit log
+                from ..analytics import write_audit
+                write_audit(vitals, source="live",
+                            prompt=(text[:200] if text else None),
+                            model="anthropic")
+            else:
+                _attach_vitals(response, None)
+        except Exception:
+            _attach_vitals(response, None)
         return response
 
     def stream(self, *args, **kwargs):

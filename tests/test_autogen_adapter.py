@@ -212,14 +212,15 @@ def test_observation_counter_increments():
     assert hook.n_observed == 5
 
 
-def test_hook_last_vitals_is_none_for_string_messages():
-    """string messages don't carry logprobs, so vitals should be None."""
+def test_hook_string_messages_use_text_fallback():
+    """0.8.1: string messages now classify via text fallback."""
     agent = FakeAgent()
     hook = StyxxAutoGenHook()
     hook.attach(agent)
     agent.simulate_reply(["hello"])
-    # observe() on a string returns None vitals
-    assert hook.last_vitals is None
+    # observe() on a string now returns text-based vitals
+    assert hook.last_vitals is not None
+    assert hook.last_vitals.tier_active == -1
 
 
 # ══════════════════════════════════════════════════════════════════
