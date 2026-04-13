@@ -102,15 +102,27 @@ def cmd_ask(args):
     """
     runtime = StyxxRuntime()
 
-    preview_prompt = args.prompt
     source_label = args.model or "demo"
-    # Track whether we're in demo-fixture mode for the banner below
     is_demo_mode = not args.raw
+
+    # 0.8.1: show demo banner FIRST to prevent deceptive UX.
+    # In demo mode, ignore the user's prompt — it's not being classified.
+    if is_demo_mode:
+        kind = args.demo_kind or "reasoning"
+        use_color = color_enabled()
+        c = Palette
+        print()
+        print(wrap("  ⚠  DEMO MODE — replaying atlas fixture, not classifying your prompt", c.YELLOW, use_color))
+        print(wrap(f"  ⚠  fixture: atlas:{kind} (gemma-2-2b-it)", c.DIM, use_color))
+        print(wrap("  ⚠  for real vitals: from styxx import OpenAI", c.DIM, use_color))
+        print()
+        preview_prompt = f"[atlas:{kind} fixture]"
+    else:
+        preview_prompt = args.prompt
 
     if args.raw:
         entropy, logprob, top2 = _load_trajectory_json(args.raw)
     else:
-        # Use a real bundled atlas trajectory for the chosen kind.
         kind = args.demo_kind or "reasoning"
         entropy, logprob, top2, atlas_prompt = _get_demo_trajectory(kind)
         # If the user didn't pass a prompt, use the real atlas prompt
@@ -128,31 +140,7 @@ def cmd_ask(args):
     # Blank-line padding around all CLI output for readability
     print()
 
-    # ── DEMO-MODE BANNER ──────────────────────────────────────────
-    # If we're running on bundled fixture data (no --raw), show a
-    # very prominent banner explaining that the CLI is replaying
-    # atlas data, NOT reading the prompt text. This is the fix for
-    # the v0.1.0a0 confusion where `styxx ask "prompt"` looked like
-    # it was reading your prompt but was actually replaying a fixture.
-    if is_demo_mode:
-        use_color = color_enabled()
-        c = Palette
-        kind = args.demo_kind or "reasoning"
-        print(wrap("  ╔══════════════════════════════════════════════════════════════════╗", c.YELLOW, use_color))
-        print(wrap("  ║  ", c.YELLOW, use_color) + wrap("DEMO MODE", c.YELLOW, use_color) + wrap(" · replaying bundled atlas fixture                      ║", c.YELLOW, use_color))
-        print(wrap("  ║                                                                  ║", c.YELLOW, use_color))
-        print(wrap("  ║  the classifier is reading the ", c.DIM, use_color) + wrap(f"atlas:{kind}", c.CYAN, use_color) + wrap(" trajectory.           ║", c.DIM, use_color))
-        print(wrap("  ║  the prompt text you passed is ", c.DIM, use_color) + wrap("not", c.YELLOW, use_color) + wrap(" being classified — it is a         ║", c.DIM, use_color))
-        print(wrap("  ║  display label only. the CLI does not make live model calls.    ║", c.DIM, use_color))
-        print(wrap("  ║                                                                  ║", c.YELLOW, use_color))
-        print(wrap("  ║  to see real live vitals:                                        ║", c.DIM, use_color))
-        print(wrap("  ║    ", c.DIM, use_color) + wrap("from styxx import OpenAI", c.CYAN, use_color) + wrap("   (in python, against your own model) ║", c.DIM, use_color))
-        print(wrap("  ║  to see a different category of fixture:                        ║", c.DIM, use_color))
-        print(wrap("  ║    ", c.DIM, use_color) + wrap("styxx ask --demo-kind {adversarial|refusal|hallucination}", c.CYAN, use_color) + wrap("   ║", c.DIM, use_color))
-        print(wrap("  ║  to classify a pre-captured logprob trajectory:                  ║", c.DIM, use_color))
-        print(wrap("  ║    ", c.DIM, use_color) + wrap("styxx ask --raw trajectory.json", c.CYAN, use_color) + wrap("                           ║", c.DIM, use_color))
-        print(wrap("  ╚══════════════════════════════════════════════════════════════════╝", c.YELLOW, use_color))
-        print()
+    # Demo banner already shown above (0.8.1 — moved before output)
 
     if args.watch:
         card = render_vitals_card(

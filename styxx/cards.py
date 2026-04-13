@@ -93,6 +93,8 @@ class Palette:
     MATRIX  = "\033[38;5;46m"
     CYANBR  = "\033[38;5;51m"
     GRAY    = "\033[38;5;240m"
+    ORANGE  = "\033[38;5;208m"
+    PINK    = "\033[38;5;204m"
 
 
 def color_enabled(stream=None) -> bool:

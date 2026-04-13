@@ -49,11 +49,15 @@ class AgentComparison:
         lines.append(f"  styxx population comparison · {self.n_agents} agents in cohort")
         lines.append("  " + "=" * 50)
         lines.append("")
-        lines.append("  -- your percentile rank " + "-" * 24)
-        for cat in _CATEGORY_ORDER:
-            pct = self.percentiles.get(cat, 50)
-            bar = "#" * int(pct / 5)
-            lines.append(f"  {cat:<14} {bar:<20} {pct:.0f}th")
+        if self.n_agents == 0 or not self.percentiles:
+            lines.append("  no population data — percentile ranks unavailable.")
+            lines.append("  you may be the first agent. publish with 'styxx publish'.")
+        else:
+            lines.append("  -- your percentile rank " + "-" * 24)
+            for cat in _CATEGORY_ORDER:
+                pct = self.percentiles.get(cat, 50)
+                bar = "#" * int(pct / 5)
+                lines.append(f"  {cat:<14} {bar:<20} {pct:.0f}th")
         lines.append("")
         if self.narrative:
             lines.append("  -- insight " + "-" * 37)

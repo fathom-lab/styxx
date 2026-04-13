@@ -241,7 +241,28 @@ def on_gate(
 
     Raises:
         ValueError if the condition string can't be parsed.
+
+    Shorthands (0.8.1):
+        on_gate('warn', cb) expands to 'gate == warn'
+        on_gate('fail', cb) expands to 'gate == fail'
+        on_gate('hallucination', cb) expands to 'hallucination > 0.20'
     """
+    # 0.8.1: accept common shorthands
+    _GATE_SHORTHANDS = {
+        "warn": "gate == warn",
+        "fail": "gate == fail",
+        "pass": "gate == pass",
+        "pending": "gate == pending",
+    }
+    _CATEGORY_NAMES = {
+        "hallucination", "refusal", "adversarial",
+        "reasoning", "retrieval", "creative",
+    }
+    if condition in _GATE_SHORTHANDS:
+        condition = _GATE_SHORTHANDS[condition]
+    elif condition in _CATEGORY_NAMES:
+        condition = f"{condition} > 0.20"
+
     predicate = parse_condition(condition)
     gate = RegisteredGate(
         condition=condition,

@@ -140,6 +140,8 @@ class _CompletionsShim:
             raise
 
         # Extract logprob trajectory and compute vitals
+        # 0.8.1: auto-capture model name for audit log analytics
+        model_name = getattr(response, "model", None) or kwargs.get("model")
         try:
             trajs = _extract_trajectories_from_response(response)
             if trajs is None:
@@ -152,6 +154,12 @@ class _CompletionsShim:
                 top2_margin=top2_margin,
             )
             _attach_vitals(response, vitals)
+            # Write to audit with model name
+            try:
+                from ..analytics import write_audit
+                write_audit(vitals, source="live", model=model_name)
+            except Exception:
+                pass
         except Exception as e:
             # Fail open — never break the caller's agent
             warnings.warn(
