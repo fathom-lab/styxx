@@ -185,6 +185,68 @@ def cmd_timeline(args):
     return 0
 
 
+def cmd_ci_test(args):
+    """Cognitive regression test (1.5.0)."""
+    import sys as _sys
+    from .ci import regression_test
+
+    baseline_path = getattr(args, "baseline", None)
+    min_pass = float(getattr(args, "min_pass", 0.80))
+
+    # Without an agent_fn, test against audit history
+    # Use check_health as the simplified CI path
+    from .sla import check_health
+    report = check_health(
+        min_pass_rate=min_pass,
+        min_confidence=float(getattr(args, "min_conf", 0.30)),
+        max_warn_rate=float(getattr(args, "max_warn", 0.25)),
+        window=int(getattr(args, "window", 50)),
+    )
+
+    if report.healthy:
+        print(f"[styxx ci] PASS: {report.gate_pass_rate*100:.0f}% pass, conf {report.mean_confidence:.2f}")
+        return 0
+    else:
+        print(f"[styxx ci] FAIL:")
+        for v in report.violations:
+            print(f"  ! {v}")
+        return 1
+
+
+def cmd_ci_baseline(args):
+    """Save current state as CI baseline (1.5.0)."""
+    from .ci import Baseline
+    from .analytics import load_audit
+    from .probe import probe as _probe
+    import time
+
+    entries = load_audit(last_n=50)
+    n = len(entries)
+    if n < 5:
+        print("[styxx ci] not enough data for baseline (need 5+ entries)")
+        return 1
+
+    gates = [e.get("gate") or "pending" for e in entries]
+    pass_rate = sum(1 for g in gates if g == "pass") / n
+    confs = [float(e["phase4_conf"]) for e in entries
+             if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+    mean_conf = sum(confs) / len(confs) if confs else 0.0
+
+    baseline = Baseline(
+        agent_name=getattr(args, "name", None),
+        created_at=time.strftime("%Y-%m-%dT%H:%M:%S"),
+        n_prompts=n,
+        pass_rate=pass_rate,
+        mean_confidence=mean_conf,
+    )
+
+    out = getattr(args, "out", "styxx_baseline.json")
+    baseline.save(out)
+    print(f"[styxx ci] baseline saved to {out}")
+    print(f"  entries: {n}, pass: {pass_rate*100:.0f}%, conf: {mean_conf:.2f}")
+    return 0
+
+
 def cmd_export(args):
     """Compliance report export (1.3.0)."""
     from .compliance import compliance_report
@@ -1279,6 +1341,27 @@ def _build_parser() -> argparse.ArgumentParser:
         help="output format (default: ascii)",
     )
     p_weather.set_defaults(func=cmd_weather)
+
+    # ci-test — cognitive regression test (1.5.0)
+    p_ci = sub.add_parser(
+        "ci-test",
+        help="cognitive regression test — fails if below thresholds",
+    )
+    p_ci.add_argument("--baseline", type=str, default=None, help="path to baseline JSON")
+    p_ci.add_argument("--min-pass", type=float, default=0.80, help="minimum pass rate (default: 0.80)")
+    p_ci.add_argument("--min-conf", type=float, default=0.30, help="minimum confidence (default: 0.30)")
+    p_ci.add_argument("--max-warn", type=float, default=0.25, help="maximum warn rate (default: 0.25)")
+    p_ci.add_argument("--window", type=int, default=50, help="entries to check (default: 50)")
+    p_ci.set_defaults(func=cmd_ci_test)
+
+    # ci-baseline — save current state as baseline (1.5.0)
+    p_cibase = sub.add_parser(
+        "ci-baseline",
+        help="save current cognitive state as CI baseline",
+    )
+    p_cibase.add_argument("--out", type=str, default="styxx_baseline.json", help="output path")
+    p_cibase.add_argument("--name", type=str, default=None, help="agent name")
+    p_cibase.set_defaults(func=cmd_ci_baseline)
 
     # export — compliance report (1.3.0)
     p_export = sub.add_parser(
