@@ -33,12 +33,12 @@ Honest specs at tier 0 (cross-model LOO, chance = 0.167):
 
 This is an instrument panel, not a fortune teller.
 
-Research: https://github.com/heyzoos123-blip/fathom
+Research: https://github.com/fathom-lab/fathom
 Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -355,6 +355,24 @@ from .analytics import (
     dreamer, DreamReport,
     reflect, ReflectionReport,
 )
+# tier 2: SAE instruments (lazy — only loads on access)
+def cognitive_scan(prompt: str, model: str = "google/gemma-2-2b-it", **kwargs):
+    """Run a full K/C/S cognitive scan. Requires pip install 'styxx[tier2]'.
+
+    Returns a KCSResult with depth_score, weighted_depth, coherence,
+    c_delta, layer_profile, n_features, compute_time_s.
+
+    Usage:
+        result = styxx.cognitive_scan("why is the sky blue?")
+        print(f"K={result.weighted_depth:.2f}, C_delta={result.c_delta}")
+    """
+    from .sae import SAEInstruments
+    inst = SAEInstruments(model_name=model)
+    try:
+        return inst.measure(prompt, **kwargs)
+    finally:
+        inst.unload()
+
 from .autoreflex import (
     autoreflex,
     autoreflex_from_prescriptions,
@@ -365,115 +383,80 @@ from .autoreflex import (
 )
 
 __all__ = [
-    # core
-    "StyxxRuntime",
-    "Vitals",
-    "CentroidClassifier",
-    # provenance
-    "LIVE_SOURCES",
-    # self-regulation (0.8.0)
-    "set_context",
-    "current_context",
-    "expect",
-    "unexpect",
-    "expected_categories",
-    "clear_expected",
+    # ── 1. observe ────────────────────────────────────────
+    "observe", "observe_raw", "watch", "is_concerning", "explain",
+    "log", "feedback",
+    "WatchSession", "Vitals", "StyxxRuntime", "CentroidClassifier",
     # adapters
-    "OpenAI",
-    "Anthropic",
-    "Raw",
-    "LangChain",
-    "CrewAI",
-    "AutoGen",
-    "LangSmith",
-    "Langfuse",
-    # observation — passive monitoring
-    "watch",
-    "observe",
-    "observe_raw",
-    "is_concerning",
-    "WatchSession",
-    # gates — programmable thresholds + callbacks
-    "on_gate",
-    "remove_gate",
-    "clear_gates",
-    "list_gates",
-    # autoreflex — declarative cognitive reflex rules (0.9.3)
-    "autoreflex",
-    "remove_autoreflex",
-    "list_autoreflex",
-    "clear_autoreflex",
-    "AutoReflexRule",
-    "autoreflex_from_prescriptions",
-    # reflex — active intervention (tier 0 level)
-    "reflex",
-    "rewind",
-    "abort",
-    "ReflexSession",
-    "ReflexSignal",
-    "RewindSignal",
-    "AbortSignal",
-    # guardian — in-flight cognitive steering (tier 3)
-    "guardian",
-    "GuardianSession",
-    "SteeringEvent",
-    # weather report — the thing that changes everything
-    "weather",
-    "WeatherReport",
-    # dashboard — live cognitive display (0.9.5)
-    "dashboard",
-    # calibration — outcome-driven centroid adjustment (1.0.0)
-    "calibrate",
-    "calibration_status",
-    "CalibrationResult",
-    # trained text classifier (1.0.0)
-    "train_text_classifier",
-    "TrainResult",
-    # autoboot — persistent self-awareness in one call
-    "autoboot",
-    # timeline — mood + category trajectory over time
-    "timeline",
-    "Timeline",
-    # 0.1.0a3 power-ups
-    # global hook for zero-code-change adoption
-    "hook_openai",
-    "unhook_openai",
-    "hook_openai_active",
-    # natural language interpretation
-    "explain",
-    # session tagging
-    "session_id",
-    "set_session",
-    # 0.1.0a4: function-level tracing decorator
+    "OpenAI", "Anthropic", "Raw",
+    "LangChain", "CrewAI", "AutoGen", "LangSmith", "Langfuse",
+    "hook_openai", "unhook_openai", "hook_openai_active",
     "trace",
-    # 0.1.0a4: shareable agent-card PNG moonshot
-    "agent_card",
-    # 0.2.3: self-report manual write path
-    "log",
-    # 0.9.0: feedback loop closer
-    "feedback",
-    # 1.0.0: session summary
-    "session_summary",
-    "SessionSummary",
-    # audit log analytics
-    "load_audit",
-    "clear_audit_cache",
-    "log_stats",
-    "LogStats",
-    "log_timeline",
-    "streak",
-    "Streak",
-    "mood",
-    "fingerprint",
-    "Fingerprint",
-    "personality",
-    "Personality",
-    "dreamer",
-    "DreamReport",
-    # 0.2.0 self-reflection primitive
-    "reflect",
-    "ReflectionReport",
-    # metadata
-    "__version__",
-    "__tagline__",
+
+    # ── 2. respond ────────────────────────────────────────
+    "reflex", "rewind", "abort",
+    "on_gate", "remove_gate", "clear_gates", "list_gates",
+    "autoreflex", "autoreflex_from_prescriptions",
+    "remove_autoreflex", "list_autoreflex", "clear_autoreflex",
+    "guardian",
+    "ReflexSession", "ReflexSignal", "RewindSignal", "AbortSignal",
+    "AutoReflexRule", "GuardianSession", "SteeringEvent",
+
+    # ── 3. scan (tier 2) ─────────────────────────────────
+    "cognitive_scan",
+
+    # ── 4. analyze ────────────────────────────────────────
+    "weather", "personality", "reflect", "mood", "streak",
+    "antipatterns", "conversation", "dreamer",
+    "session_summary", "timeline", "fingerprint",
+    "agent_card", "log_stats", "log_timeline",
+    "load_audit", "clear_audit_cache",
+    "WeatherReport", "Personality", "ReflectionReport",
+    "SessionSummary", "Timeline", "Fingerprint",
+    "Streak", "DreamReport", "LogStats",
+    "ConversationResult", "AntiPattern",
+
+    # ── 5. learn ──────────────────────────────────────────
+    "calibrate", "calibration_status", "train_text_classifier",
+    "enable_auto_feedback", "disable_auto_feedback",
+    "optimize",
+    "CalibrationResult", "TrainResult",
+
+    # ── 6. fleet ──────────────────────────────────────────
+    "set_agent_name", "agent_name", "list_agents",
+    "compare_agents", "fleet_summary", "best_agent_for",
+    "AgentProfile", "AgentComparison", "FleetSummary",
+
+    # ── 7. memory ─────────────────────────────────────────
+    "remember", "recall", "memories", "memory_stats",
+    "Memory", "RecallResult",
+
+    # ── 8. handoff ────────────────────────────────────────
+    "handoff", "receive",
+    "HandoffEnvelope",
+
+    # ── 9. compliance ─────────────────────────────────────
+    "certify", "verify", "compliance_report",
+    "probe", "on_anomaly", "notify_on_fail", "clear_notifications",
+    "regression_test", "create_baseline",
+    "assert_healthy", "check_health", "cognitive_sla",
+    "compare_sessions", "compare_windows",
+    "CognitiveCertificate", "VerificationResult",
+    "ComplianceReport", "ProbeReport",
+    "Baseline", "RegressionResult",
+    "CognitiveSLAViolation", "SLAReport",
+    "CognitiveEvent", "ComparisonDiff",
+
+    # ── 10. operations ────────────────────────────────────
+    "autoboot", "dashboard", "sentinel", "get_sentinel",
+    "session_id", "set_session", "data_dir",
+    "set_context", "current_context",
+    "expect", "unexpect", "expected_categories", "clear_expected",
+    "set_mood", "current_mood_override", "gate_multiplier",
+    "tier1_enabled", "tier1_model", "tier1_device",
+    "Sentinel", "SentinelAlert",
+    "LIVE_SOURCES",
+
+    # ── metadata ──────────────────────────────────────────
+    "__version__", "__tagline__",
 ]

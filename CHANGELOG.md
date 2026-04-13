@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [2.0.1] — 2026-04-13
+
+### Changed
+- Migrated all GitHub links to new `fathom-lab` org (`github.com/fathom-lab/styxx`, `github.com/fathom-lab/fathom`)
+- Updated PyPI metadata, centroids, patents, and package.json references
+
+---
+
 ## [0.6.0] — 2026-04-11
 
 **Xendro v2 complete.** All six feature requests from the second
@@ -849,7 +857,7 @@ task is 0.167.
 - Any consciousness / awareness / phi claims — ever
 
 ### Scientific foundation
-- Research repo: <https://github.com/heyzoos123-blip/fathom>
+- Research repo: <https://github.com/fathom-lab/fathom>
 - Zenodo concept DOI: `10.5281/zenodo.19326174`
 - OSF pre-registration project: <https://osf.io/wtkzg>
 - US Provisional patents: 64/020,489 · 64/021,113 · 64/026,964

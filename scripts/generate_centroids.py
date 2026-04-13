@@ -203,8 +203,8 @@ def generate(captures_dir, out_path):
         "n_models": len(models),
         "phases": phase_centroids,
         "atlas_source": "Fathom Cognitive Atlas v0.3 (concept DOI 10.5281/zenodo.19502715)",
-        "research_repo": "https://github.com/heyzoos123-blip/fathom",
-        "product_repo": "https://github.com/heyzoos123-blip/styxx",
+        "research_repo": "https://github.com/fathom-lab/fathom",
+        "product_repo": "https://github.com/fathom-lab/styxx",
         "honest_specs": {
             "phase1_preflight_adversarial_acc": 0.52,
             "phase1_preflight_reasoning_acc":   0.43,

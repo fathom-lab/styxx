@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "2.0.0"
+version = "2.0.1"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }
@@ -28,7 +28,7 @@ keywords = [
     "cognitive-state",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
@@ -81,8 +81,8 @@ Documentation  = "https://fathom.darkflobi.com/styxx"
 "Fathom Lab"   = "https://fathom.darkflobi.com/"
 "Research Paper" = "https://doi.org/10.5281/zenodo.19326174"
 "@fathom_lab"  = "https://x.com/fathom_lab"
-"Source"       = "https://github.com/heyzoos123-blip/styxx"
-"Issue Tracker" = "https://github.com/heyzoos123-blip/styxx/issues"
+"Source"       = "https://github.com/fathom-lab/styxx"
+"Issue Tracker" = "https://github.com/fathom-lab/styxx/issues"
 
 [project.scripts]
 styxx = "styxx.cli:main"

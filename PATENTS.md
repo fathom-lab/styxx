@@ -95,10 +95,10 @@ If you use styxx in academic research, cite both:
   author = {Rodabaugh, Alexander},
   year   = {2026},
   note   = {Fathom Lab. A product of Fathom Intelligence.
-            https://github.com/heyzoos123-blip/styxx}
+            https://github.com/fathom-lab/styxx}
 }
 ```
 
-Research repository: <https://github.com/heyzoos123-blip/fathom>
-Product repository:  <https://github.com/heyzoos123-blip/styxx>
+Research repository: <https://github.com/fathom-lab/fathom>
+Product repository:  <https://github.com/fathom-lab/styxx>
 Fathom Lab:          <https://twitter.com/fathom_lab>
