@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -262,6 +262,8 @@ from .sla import (
     assert_healthy, check_health, cognitive_sla,
     CognitiveSLAViolation, SLAReport,
 )
+from .compliance import compliance_report, ComplianceReport
+from .diff import compare_sessions, compare_windows, ComparisonDiff
 from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
 from .timeline import timeline, Timeline

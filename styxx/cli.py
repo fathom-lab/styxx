@@ -185,6 +185,30 @@ def cmd_timeline(args):
     return 0
 
 
+def cmd_export(args):
+    """Compliance report export (1.3.0)."""
+    from .compliance import compliance_report
+    days = float(args.days or 30)
+    name = args.name or None
+    report = compliance_report(days=days, agent_name=name)
+
+    fmt = getattr(args, "format", "markdown")
+    out = getattr(args, "out", None)
+
+    if fmt == "json":
+        content = report.as_json()
+    else:
+        content = report.as_markdown()
+
+    if out:
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"[styxx] report saved to {out}")
+    else:
+        print(content)
+    return 0
+
+
 def cmd_dashboard(args):
     """Live cognitive display (0.9.5)."""
     from .dashboard import dashboard
@@ -1255,6 +1279,17 @@ def _build_parser() -> argparse.ArgumentParser:
         help="output format (default: ascii)",
     )
     p_weather.set_defaults(func=cmd_weather)
+
+    # export — compliance report (1.3.0)
+    p_export = sub.add_parser(
+        "export",
+        help="generate compliance audit report (JSON or markdown)",
+    )
+    p_export.add_argument("--days", type=float, default=30.0, help="report period in days (default: 30)")
+    p_export.add_argument("--name", type=str, default=None, help="agent name for the report")
+    p_export.add_argument("--format", choices=["json", "markdown"], default="markdown", help="output format")
+    p_export.add_argument("--out", type=str, default=None, help="output file path (prints to stdout if not set)")
+    p_export.set_defaults(func=cmd_export)
 
     # dashboard — live cognitive display (0.9.5)
     p_dashboard = sub.add_parser(
