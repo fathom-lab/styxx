@@ -75,6 +75,18 @@ def _compute_stats(entries: List[dict]) -> WindowStats:
 
 def _build_diff(label_a: str, label_b: str, a: WindowStats, b: WindowStats) -> ComparisonDiff:
     diff = ComparisonDiff(label_a=label_a, label_b=label_b, stats_a=a, stats_b=b)
+
+    # Handle empty windows gracefully
+    if a.n_entries == 0 and b.n_entries == 0:
+        diff.narrative = "no data in either window."
+        return diff
+    if a.n_entries == 0:
+        diff.narrative = f"no data in {label_a} — {label_b} has {b.n_entries} entries at {b.gate_pass_rate*100:.0f}% pass."
+        return diff
+    if b.n_entries == 0:
+        diff.narrative = f"no data in {label_b} — {label_a} had {a.n_entries} entries at {a.gate_pass_rate*100:.0f}% pass."
+        return diff
+
     diff.pass_rate_delta = b.gate_pass_rate - a.gate_pass_rate
     diff.confidence_delta = b.mean_confidence - a.mean_confidence
     diff.warn_rate_delta = b.warn_rate - a.warn_rate

@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -302,6 +302,7 @@ from .explain import explain
 from .config import (
     session_id, set_session,
     agent_name, set_agent_name, data_dir,
+    enable_auto_feedback, disable_auto_feedback,
     tier1_enabled, tier1_model, tier1_device,
 )
 from .trace import trace

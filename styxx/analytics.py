@@ -265,6 +265,15 @@ def write_audit(
             "outcome": None,
         }
 
+    # 1.3.1: auto-feedback — gate=pass entries get outcome='correct'
+    # when auto-feedback is enabled. Closes the feedback loop.
+    if entry.get("outcome") is None and config.auto_feedback_enabled():
+        gate = entry.get("gate")
+        if gate == "pass":
+            entry["outcome"] = "correct"
+        elif gate in ("warn", "fail"):
+            entry["outcome"] = "incorrect"
+
     try:
         with open(path, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry) + "\n")
@@ -382,6 +391,14 @@ def log(
             entry["tags"] = [str(t) for t in tags]
         else:
             entry["tags"] = str(tags)
+
+    # 1.3.1: auto-feedback for self-report entries too
+    if entry.get("outcome") is None and config.auto_feedback_enabled():
+        gate = entry.get("gate")
+        if gate == "pass":
+            entry["outcome"] = "correct"
+        elif gate in ("warn", "fail"):
+            entry["outcome"] = "incorrect"
 
     try:
         with open(path, "a", encoding="utf-8") as f:
@@ -565,8 +582,16 @@ def session_summary(
     gate_pass_rate = gate_pass / n
 
     # Confidence
-    confs = [float(e["phase4_conf"]) for e in entries
-             if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+    confs = []
+    for e in entries:
+        c = e.get("phase4_conf")
+        if c is not None:
+            try:
+                cv = float(c)
+                if cv > 0 and cv == cv:  # skip 0 and nan
+                    confs.append(cv)
+            except (ValueError, TypeError):
+                pass
     mean_conf = sum(confs) / len(confs) if confs else 0.0
     # Trend: compare first half vs second half
     if len(confs) >= 4:

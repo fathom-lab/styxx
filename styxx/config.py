@@ -67,6 +67,31 @@ def _truthy(name: str) -> bool:
     return val in ("1", "true", "yes", "on", "y")
 
 
+# ── auto-feedback (1.3.1) ──────────────────────────────────────
+#
+# When enabled, gate=pass entries automatically get outcome='correct'
+# written back. This closes the feedback loop without manual calls.
+# Set STYXX_AUTO_FEEDBACK=1 or call styxx.enable_auto_feedback().
+
+_AUTO_FEEDBACK: bool = False
+
+
+def auto_feedback_enabled() -> bool:
+    if _AUTO_FEEDBACK:
+        return True
+    return _truthy("STYXX_AUTO_FEEDBACK")
+
+
+def enable_auto_feedback() -> None:
+    global _AUTO_FEEDBACK
+    _AUTO_FEEDBACK = True
+
+
+def disable_auto_feedback() -> None:
+    global _AUTO_FEEDBACK
+    _AUTO_FEEDBACK = False
+
+
 def is_disabled() -> bool:
     """Full styxx kill switch. When on, all adapters and runtimes
     become pass-throughs — the underlying SDK call returns normally
