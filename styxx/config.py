@@ -103,27 +103,101 @@ def boot_speed() -> float:
         return 1.0
 
 
-# ── session tagging (0.1.0a3) ──────────────────────────────────
+# ── agent namespacing (1.0.0) ──────────────────────────────────
+#
+# When STYXX_AGENT_NAME is set, all data is namespaced under
+# ~/.styxx/agents/{name}/. This means separate log files, separate
+# centroid baselines, separate calibration. Running 5 agents on
+# the same machine gives you 5 independent personality profiles
+# instead of one blended soup.
+#
+# Without an agent name, everything goes to the flat ~/.styxx/ path
+# for backwards compatibility.
+
+_AGENT_NAME_OVERRIDE: Optional[str] = None
+
+
+def agent_name() -> Optional[str]:
+    """Return the current agent name, or None if unset.
+
+    Priority:
+      1. programmatic override via set_agent_name(...)
+      2. STYXX_AGENT_NAME environment variable
+      3. None (flat namespace, backwards compatible)
+    """
+    if _AGENT_NAME_OVERRIDE is not None:
+        return _AGENT_NAME_OVERRIDE
+    val = os.environ.get("STYXX_AGENT_NAME", "").strip()
+    return val or None
+
+
+def set_agent_name(name: str) -> None:
+    """Set the agent name programmatically."""
+    global _AGENT_NAME_OVERRIDE
+    _AGENT_NAME_OVERRIDE = name
+
+
+def data_dir() -> str:
+    """Return the data directory for the current agent.
+
+    With agent name: ~/.styxx/agents/{name}/
+    Without:         ~/.styxx/
+    """
+    import pathlib
+    base = os.environ.get("STYXX_DATA_DIR", "").strip()
+    if base:
+        root = pathlib.Path(base).expanduser()
+    else:
+        root = pathlib.Path.home() / ".styxx"
+    name = agent_name()
+    if name:
+        d = root / "agents" / name
+    else:
+        d = root
+    d.mkdir(parents=True, exist_ok=True)
+    return str(d)
+
+
+# ── session tagging (0.1.0a3, 0.9.0 auto-generate) ────────────
 #
 # The session id is used to tag audit log entries so the log analyzer
 # can group calls by conversation. Reads from STYXX_SESSION_ID by
 # default; can be overridden programmatically via set_session().
+#
+# 0.9.0: if neither override nor env var is set, auto-generate a
+# timestamp-based session id. Without session ids, you can't answer
+# "is this agent healthy in this conversation" vs "is this agent
+# healthy in general." Only 8% of entries had session ids before
+# this change because nobody sets STYXX_SESSION_ID explicitly.
+# Now every session gets tagged automatically.
 
 _SESSION_OVERRIDE: Optional[str] = None
+_AUTO_SESSION: Optional[str] = None
 
 
 def session_id() -> Optional[str]:
-    """Return the current session id, or None if unset.
+    """Return the current session id, auto-generating if needed.
 
     Priority:
       1. programmatic override via styxx.set_session(...)
       2. STYXX_SESSION_ID environment variable
-      3. None (no tagging)
+      3. auto-generated timestamp-based id (0.9.0)
+
+    The auto-generated id uses the format 'styxx-{YYYY-MM-DD}-{HHMM}'
+    and is stable for the lifetime of the process. Every session gets
+    tagged even without explicit setup.
     """
     if _SESSION_OVERRIDE is not None:
         return _SESSION_OVERRIDE
     val = os.environ.get("STYXX_SESSION_ID", "").strip()
-    return val or None
+    if val:
+        return val
+    # Auto-generate a stable session id for this process
+    global _AUTO_SESSION
+    if _AUTO_SESSION is None:
+        import time as _time
+        _AUTO_SESSION = f"styxx-{_time.strftime('%Y-%m-%d-%H%M')}"
+    return _AUTO_SESSION
 
 
 # ── tier 1 config (0.3.0) ──────────────────────────────────

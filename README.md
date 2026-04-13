@@ -108,30 +108,64 @@ not observation. **prescription.** a therapist for an llm.
 
 ## what styxx gives you
 
+### observe + respond
+
 | surface | what it does |
 |---|---|
-| `styxx.observe(r)` | cognitive vitals on any openai response |
+| `styxx.observe(r)` | cognitive vitals on any openai/anthropic response |
 | `styxx.reflex(...)` | mid-generation self-interruption when hallucinating |
-| `styxx.weather(...)` | 24h cognitive forecast with prescriptions |
+| `styxx.on_gate(...)` | programmable callbacks on cognitive thresholds |
+| `styxx.autoreflex(when=..., then=...)` | declarative rules that fire mid-session — detection + response in one declaration |
+| `styxx.autoreflex_from_prescriptions()` | auto-generate autoreflex rules from weather prescriptions |
+| `styxx.feedback("correct")` | close the learning loop — mark entries correct/incorrect |
+| `styxx.guardian(...)` | in-flight steering via residual stream modification |
+
+### analyze + prescribe
+
+| surface | what it does |
+|---|---|
+| `styxx.weather(...)` | 24h cognitive forecast with data-specific prescriptions |
+| `styxx.session_summary()` | one-call session health report — entries, pass rate, conf trend, shifts |
 | `styxx.personality(...)` | sustained personality profile over days/weeks |
 | `styxx.reflect(...)` | self-check: current state + drift + suggestions |
+| `styxx.antipatterns()` | named failure modes from your own audit history |
 | `styxx.fingerprint()` | cognitive identity signature for drift detection |
+| `styxx.conversation(msgs)` | conversation-level cognitive EKG |
+| `styxx.dreamer(...)` | retroactive "what-if" reflex tuning on history |
+
+### learn + calibrate
+
+| surface | what it does |
+|---|---|
+| `styxx.calibrate()` | outcome-driven centroid adjustment — learns from feedback labels |
+| `styxx.train_text_classifier()` | train a per-agent text classifier from accumulated audit data |
+| `vitals.trust_score` | 0-1 trust weight on every observation — for memory tagging |
+
+### fleet + scale
+
+| surface | what it does |
+|---|---|
+| `styxx.set_agent_name(...)` | per-agent namespacing — separate logs, calibration, analytics |
+| `styxx.list_agents()` | discover all agent namespaces with audit data |
+| `styxx.compare_agents()` | side-by-side agent profiles sorted by pass rate |
+| `styxx.fleet_summary()` | population-level stats + anomaly detection |
+| `styxx.best_agent_for("reasoning")` | cognitive task routing — best agent for a category |
+| `styxx.dashboard()` | live cognitive display — real-time orbit + pulse + prescriptions |
+
+### utilities
+
+| surface | what it does |
+|---|---|
 | `styxx.log(...)` | self-report for agents without logprob access |
-| `styxx.agent_card(...)` | shareable ASCII + radar PNG of your personality |
-| `styxx.on_gate(...)` | programmable callbacks on cognitive thresholds |
-| `styxx.guardian(...)` | in-flight steering via residual stream modification |
 | `styxx.autoboot()` | persistent self-awareness across sessions |
+| `styxx.hook_openai()` | global monkey-patch, zero code changes |
 | `styxx.explain(v)` | natural-language interpretation of vitals |
 | `styxx.mood()` | one-word aggregate: steady, cautious, drifting... |
 | `styxx.streak()` | consecutive-attractor tracking |
-| `styxx.dreamer(...)` | retroactive "what-if" reflex tuning on history |
-| `styxx.hook_openai()` | global monkey-patch, zero code changes |
-| `styxx.LangSmith()` | inject vitals into LangSmith traces as flat metadata |
+| `styxx.agent_card(...)` | shareable ASCII + radar PNG of your personality |
+| `styxx.LangSmith()` | inject vitals into LangSmith traces |
 | `styxx.Langfuse()` | post vitals as numeric scores on Langfuse traces |
-| `styxx.conversation(msgs)` | conversation-level cognitive EKG |
 | `styxx.sentinel(...)` | real-time drift watcher with event-driven callbacks |
-| `styxx.antipatterns()` | named failure modes from your own audit history |
-| `styxx.compare_agents(fp)` | anonymous population fingerprint comparison |
 
 ---
 
@@ -178,13 +212,13 @@ llm = ChatOpenAI(callbacks=[handler])
 ## cli
 
 ```bash
-styxx weather           # cognitive weather report
+styxx weather           # cognitive weather report with prescriptions
+styxx dashboard         # live cognitive display at localhost:9800
 styxx personality       # personality profile from audit log
 styxx reflect           # self-check with drift + suggestions
 styxx doctor            # install-time health check
 styxx compare           # all 6 atlas fixtures side-by-side
 styxx agent-card        # shareable personality PNG
-styxx agent-card --serve  # live dashboard at localhost:9797
 styxx fingerprint       # cognitive identity vector
 styxx mood              # one-word aggregate mood
 styxx dreamer           # retroactive reflex tuning
@@ -196,7 +230,6 @@ styxx ask "..." --watch # read vitals on a one-shot call
 styxx d-axis "..."      # pure D-axis honesty trajectory
 styxx antipatterns      # detect named failure modes
 styxx conversation f.json  # conversation-level EKG
-styxx compare-agents    # fingerprint vs population
 ```
 
 ---
@@ -205,12 +238,12 @@ styxx compare-agents    # fingerprint vs population
 
 | variable | effect |
 |---|---|
-| `STYXX_AGENT_NAME` | set this and styxx boots automatically on import — zero code changes |
+| `STYXX_AGENT_NAME` | set this and styxx boots automatically + namespaces all data under `~/.styxx/agents/{name}/` |
 | `STYXX_AUTO_HOOK=1` | auto-wrap every `openai.OpenAI()` call with vitals |
 | `STYXX_DISABLED=1` | full kill switch — styxx becomes invisible |
 | `STYXX_NO_AUDIT=1` | disable audit log writes (vitals still computed) |
 | `STYXX_NO_COLOR=1` | disable ANSI color output |
-| `STYXX_SESSION_ID` | tag audit entries with a session id |
+| `STYXX_SESSION_ID` | tag audit entries with a session id (auto-generated if not set) |
 
 ---
 

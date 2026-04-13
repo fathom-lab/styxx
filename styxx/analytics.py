@@ -67,7 +67,13 @@ LIVE_SOURCES: frozenset = frozenset({"live", "self-report", "guardian", None})
 # ══════════════════════════════════════════════════════════════════
 
 def _audit_log_path() -> Path:
-    return Path.home() / ".styxx" / "chart.jsonl"
+    """Return the audit log path, namespaced by agent if set.
+
+    1.0.0: with STYXX_AGENT_NAME=xendro → ~/.styxx/agents/xendro/chart.jsonl
+    Without agent name → ~/.styxx/chart.jsonl (backwards compatible)
+    """
+    from . import config
+    return Path(config.data_dir()) / "chart.jsonl"
 
 
 # 0.1.0a4: mtime-based parse cache for the audit log.
@@ -177,6 +183,7 @@ def write_audit(
     vitals: Any,
     *,
     prompt: Optional[str] = None,
+    prompt_type: Optional[str] = None,
     model: Optional[str] = None,
     source: str = "live",
 ) -> None:
@@ -204,6 +211,12 @@ def write_audit(
     path.parent.mkdir(parents=True, exist_ok=True)
     _rotate_if_needed(path)
 
+    # 0.9.2: auto-classify prompt content-type if not provided
+    prompt_text = prompt[:200] if prompt else None
+    if prompt_text and not prompt_type:
+        from .watch import _classify_prompt_type
+        prompt_type = _classify_prompt_type(prompt_text)
+
     # Build the entry dict. Handles both Vitals objects (from the
     # classifier) and None (for degraded-path entries where vitals
     # couldn't be computed).
@@ -215,7 +228,8 @@ def write_audit(
             "context": config.current_context(),
             "session_id": config.session_id(),
             "model": model,
-            "prompt": (prompt[:200] if prompt else None),
+            "prompt": prompt_text,
+            "prompt_type": prompt_type,
             "tier_active": None,
             "phase1_pred": None,
             "phase1_conf": None,
@@ -223,6 +237,7 @@ def write_audit(
             "phase4_conf": None,
             "gate": None,
             "abort": None,
+            "outcome": None,
         }
     else:
         entry = {
@@ -232,7 +247,8 @@ def write_audit(
             "context": config.current_context(),
             "session_id": config.session_id(),
             "model": model,
-            "prompt": (prompt[:200] if prompt else None),
+            "prompt": prompt_text,
+            "prompt_type": prompt_type,
             "tier_active": vitals.tier_active,
             "phase1_pred": vitals.phase1_pre.predicted_category,
             "phase1_conf": round(vitals.phase1_pre.confidence, 3),
@@ -246,6 +262,7 @@ def write_audit(
             ),
             "gate": vitals.gate,
             "abort": vitals.abort_reason,
+            "outcome": None,
         }
 
     try:
@@ -379,6 +396,255 @@ def log(
     _notify_sentinel()
 
     return entry
+
+
+def feedback(
+    outcome: str,
+    *,
+    last_n: int = 1,
+) -> int:
+    """Patch the most recent audit entry (or entries) with an outcome.
+
+    This is the feedback loop closer. After a generation, the agent
+    (or the system wrapping it) calls:
+
+        styxx.feedback("correct")    # classifier got it right
+        styxx.feedback("incorrect")  # classifier got it wrong
+
+    The outcome is written back to the audit log by appending a
+    corrected copy of the entry. Downstream analytics (antipatterns,
+    weather failure rates) use outcome to filter correctly-classified
+    entries out of failure counts.
+
+    0.9.0: making the feedback loop the default path. Without
+    outcomes, the classifier can't learn if it's getting it right.
+    The adversarial miscalibration should have been auto-detectable;
+    if agents had been logging outcomes on even 10% of calls, the
+    false positive rate would have been statistically visible.
+
+    Args:
+        outcome:  "correct", "incorrect", or "expected"
+        last_n:   how many recent entries to patch (default: 1)
+
+    Returns:
+        Number of entries patched.
+    """
+    _VALID_OUTCOMES = {"correct", "incorrect", "expected"}
+    if outcome not in _VALID_OUTCOMES:
+        return 0
+
+    from . import config
+    if config.is_disabled() or config.is_audit_disabled():
+        return 0
+
+    path = _audit_log_path()
+    if not path.exists():
+        return 0
+
+    # Read the tail of the file and patch matching entries
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except OSError:
+        return 0
+
+    if not lines:
+        return 0
+
+    patched = 0
+    # Walk backwards from end, patch up to last_n entries that lack outcome
+    for i in range(len(lines) - 1, -1, -1):
+        if patched >= last_n:
+            break
+        line = lines[i].strip()
+        if not line:
+            continue
+        try:
+            entry = json.loads(line)
+        except (json.JSONDecodeError, ValueError):
+            continue
+        if entry.get("outcome") is not None:
+            continue  # already has feedback, skip
+        entry["outcome"] = outcome
+        lines[i] = json.dumps(entry) + "\n"
+        patched += 1
+
+    if patched > 0:
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.writelines(lines)
+        except OSError:
+            return 0
+        clear_audit_cache()
+
+    return patched
+
+
+# ══════════════════════════════════════════════════════════════════
+# Session summary (0.9.9 / 1.0.0)
+# ══════════════════════════════════════════════════════════════════
+
+@dataclass
+class SessionSummary:
+    """One-call health report for a session or time window."""
+    session_id: Optional[str]
+    n_entries: int
+    window_start: Optional[str]
+    window_end: Optional[str]
+    gate_pass_rate: float
+    warn_count: int
+    fail_count: int
+    mean_confidence: float
+    conf_trend: str              # "rising", "falling", "stable"
+    conf_delta: float            # change from first half to second half
+    dominant_category: str
+    started_as: Optional[str]    # first entry's category
+    ended_as: Optional[str]      # last entry's category
+    category_shifts: int         # how many times the category changed
+    prompt_type_breakdown: Dict[str, int]
+    outcome_coverage: float      # % of entries with outcome set
+    narrative: str               # one-sentence summary
+
+    def __repr__(self) -> str:
+        return (
+            f"<SessionSummary {self.n_entries} entries, "
+            f"{self.gate_pass_rate*100:.0f}% pass, "
+            f"conf {self.mean_confidence:.2f} ({self.conf_trend}), "
+            f"{self.dominant_category}>"
+        )
+
+
+def session_summary(
+    *,
+    session_id: Optional[str] = None,
+    since_s: Optional[float] = None,
+    last_n: Optional[int] = None,
+) -> Optional[SessionSummary]:
+    """One-call session health report.
+
+    Returns a SessionSummary with everything an agent needs to know
+    about its current session or a past time window:
+      - gate pass rate, warn/fail counts
+      - confidence trend (rising/falling/stable)
+      - category shifts, start/end category
+      - prompt type breakdown
+      - outcome coverage
+      - one-sentence narrative
+
+    Usage:
+        s = styxx.session_summary()
+        print(s.narrative)
+        # "82 entries, 90% pass, confidence stable at 0.65,
+        #  reasoning-dominant, 3 warn spikes, 2 category shifts"
+
+        # Or for a specific session:
+        s = styxx.session_summary(session_id="xendro-2026-04-13")
+    """
+    from . import config
+
+    # Default to current session
+    if session_id is None and since_s is None and last_n is None:
+        session_id = config.session_id()
+
+    entries = load_audit(
+        session_id=session_id,
+        since_s=since_s,
+        last_n=last_n,
+    )
+
+    if len(entries) < 2:
+        return None
+
+    n = len(entries)
+
+    # Gate stats
+    gates = [e.get("gate") or "pending" for e in entries]
+    gate_pass = sum(1 for g in gates if g == "pass")
+    gate_warn = sum(1 for g in gates if g == "warn")
+    gate_fail = sum(1 for g in gates if g == "fail")
+    gate_pass_rate = gate_pass / n
+
+    # Confidence
+    confs = [float(e["phase4_conf"]) for e in entries
+             if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+    mean_conf = sum(confs) / len(confs) if confs else 0.0
+    # Trend: compare first half vs second half
+    if len(confs) >= 4:
+        first_half = sum(confs[:len(confs)//2]) / (len(confs)//2)
+        second_half = sum(confs[len(confs)//2:]) / (len(confs) - len(confs)//2)
+        conf_delta = second_half - first_half
+        if conf_delta > 0.05:
+            conf_trend = "rising"
+        elif conf_delta < -0.05:
+            conf_trend = "falling"
+        else:
+            conf_trend = "stable"
+    else:
+        conf_delta = 0.0
+        conf_trend = "stable"
+
+    # Categories
+    cats = [e.get("phase4_pred") for e in entries if e.get("phase4_pred")]
+    cat_counter = Counter(cats)
+    dominant = cat_counter.most_common(1)[0][0] if cat_counter else "unknown"
+    started_as = entries[0].get("phase4_pred")
+    ended_as = entries[-1].get("phase4_pred")
+
+    # Category shifts
+    shifts = 0
+    prev_cat = None
+    for e in entries:
+        cat = e.get("phase4_pred")
+        if cat and cat != prev_cat and prev_cat is not None:
+            shifts += 1
+        if cat:
+            prev_cat = cat
+
+    # Prompt type breakdown
+    pt_counter = Counter(e.get("prompt_type") for e in entries if e.get("prompt_type"))
+
+    # Outcome coverage
+    outcome_set = sum(1 for e in entries if e.get("outcome") is not None)
+    outcome_coverage = outcome_set / n
+
+    # Narrative
+    parts = []
+    parts.append(f"{n} entries")
+    parts.append(f"{gate_pass_rate*100:.0f}% pass")
+    if gate_warn > 0:
+        parts.append(f"{gate_warn} warn{'s' if gate_warn > 1 else ''}")
+    if gate_fail > 0:
+        parts.append(f"{gate_fail} fail{'s' if gate_fail > 1 else ''}")
+    parts.append(f"confidence {conf_trend} at {mean_conf:.2f}")
+    if conf_trend != "stable":
+        parts.append(f"({conf_delta:+.0%})")
+    parts.append(f"{dominant}-dominant")
+    if shifts > 0:
+        parts.append(f"{shifts} category shift{'s' if shifts > 1 else ''}")
+    if started_as != ended_as and started_as and ended_as:
+        parts.append(f"started {started_as} ended {ended_as}")
+
+    narrative = ", ".join(parts) + "."
+
+    return SessionSummary(
+        session_id=session_id or entries[-1].get("session_id"),
+        n_entries=n,
+        window_start=entries[0].get("ts_iso"),
+        window_end=entries[-1].get("ts_iso"),
+        gate_pass_rate=gate_pass_rate,
+        warn_count=gate_warn,
+        fail_count=gate_fail,
+        mean_confidence=mean_conf,
+        conf_trend=conf_trend,
+        conf_delta=conf_delta,
+        dominant_category=dominant,
+        started_as=started_as,
+        ended_as=ended_as,
+        category_shifts=shifts,
+        prompt_type_breakdown=dict(pt_counter),
+        outcome_coverage=outcome_coverage,
+        narrative=narrative,
+    )
 
 
 def load_audit(

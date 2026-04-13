@@ -185,6 +185,14 @@ def cmd_timeline(args):
     return 0
 
 
+def cmd_dashboard(args):
+    """Live cognitive display (0.9.5)."""
+    from .dashboard import dashboard
+    name = args.name or "styxx agent"
+    dashboard(port=args.port, agent_name=name)
+    return 0
+
+
 def cmd_weather(args):
     """The cognitive weather report (0.5.0).
 
@@ -1247,6 +1255,21 @@ def _build_parser() -> argparse.ArgumentParser:
         help="output format (default: ascii)",
     )
     p_weather.set_defaults(func=cmd_weather)
+
+    # dashboard — live cognitive display (0.9.5)
+    p_dashboard = sub.add_parser(
+        "dashboard",
+        help="live cognitive display — orbit, pulse, status panel",
+    )
+    p_dashboard.add_argument(
+        "--port", type=int, default=9800,
+        help="HTTP port (default: 9800)",
+    )
+    p_dashboard.add_argument(
+        "--name", type=str, default=None,
+        help="agent name for the display header",
+    )
+    p_dashboard.set_defaults(func=cmd_dashboard)
 
     # d-axis — 0.3.0 pure D-axis trajectory
     p_daxis = sub.add_parser(

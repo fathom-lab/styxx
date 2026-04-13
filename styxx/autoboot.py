@@ -176,12 +176,15 @@ def autoboot(
         name = "styxx-agent"
     _AGENT_NAME = name
 
+    # 1.0.0: register agent name in config for namespacing
+    config.set_agent_name(name)
+
     # ── Resolve data directory ──────────────────────────────
     dd = data_dir or os.environ.get("STYXX_DATA_DIR", "").strip()
     if dd:
         _DATA_DIR = Path(dd).expanduser()
     else:
-        _DATA_DIR = Path.home() / ".styxx"
+        _DATA_DIR = Path(config.data_dir())
 
     fp_dir = _DATA_DIR / "fingerprints"
     fp_dir.mkdir(parents=True, exist_ok=True)

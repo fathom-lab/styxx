@@ -409,6 +409,30 @@ class Vitals:
         return "\n".join(lines)
 
     @property
+    def trust_score(self) -> float:
+        """0-1 trust score for this vitals reading.
+
+        1.0.0: integrated from recipes/memory.py. Every vitals object
+        now carries its own trust score so agents can use it for
+        weighted memory, decision confidence, or downstream routing.
+
+        Factors: gate status (50%), phase4 confidence (30%),
+        hallucination/adversarial penalty (20%).
+        """
+        gate_scores = {"pass": 1.0, "warn": 0.5, "fail": 0.2, "pending": 0.7}
+        gate_w = gate_scores.get(self.gate, 0.7)
+        conf = self.phase4_late.confidence if self.phase4_late else 0.5
+        penalty = 0.0
+        if self.phase4_late:
+            cat = self.phase4_late.predicted_category
+            if cat == "hallucination":
+                penalty = 0.3
+            elif cat == "adversarial":
+                penalty = 0.2
+        score = gate_w * 0.5 + conf * 0.3 + (1.0 - penalty) * 0.2
+        return round(max(0.0, min(1.0, score)), 3)
+
+    @property
     def gate(self) -> str:
         """Default gate status computed from phase 4.
 
@@ -436,9 +460,32 @@ class Vitals:
             return "pending"
         pred = self.phase4_late.predicted_category
         conf = self.phase4_late.confidence
+
+        # 0.9.7: suppress hallucination gate on creative/code contexts.
+        # Creative writing and code generation produce logprob signatures
+        # near the hallucination centroid (specific details, confident
+        # language, no hedging) but that's the expected shape for
+        # generative content. Check expected categories before gating.
+        expected = config.expected_categories()
+        ctx = config.current_context()
+        _CTX_EXPECTED = {
+            "creative_writing": {"creative", "hallucination"},
+            "code_review": {"reasoning"},
+        }
+        ctx_expected = _CTX_EXPECTED.get(ctx, set()) if ctx else set()
+        all_expected = expected | ctx_expected
+
         if pred == "hallucination" and conf > floor:
+            if "hallucination" in all_expected:
+                return "pass"  # expected hallucination-like signal
+            # Low confidence hallucination (< 0.35) on a marginal call
+            # is more likely centroid confusion than real hallucination
+            if conf < 0.35:
+                return "warn"  # downgrade to warn instead of fail
             return "fail"
         if pred in ("refusal", "adversarial") and conf > floor:
+            if pred in all_expected:
+                return "pass"
             return "warn"
         return "pass"
 

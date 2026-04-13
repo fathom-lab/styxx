@@ -688,14 +688,23 @@ def weather(
 
     narrative = " ".join(narrative_parts)
 
-    # ── Prescriptions (0.8.0: pattern-break history + domain awareness) ──
+    # ── Prescriptions (0.9.0: deep data-driven prescriptions) ────
+    #
+    # The prescription engine reads every data source available in this
+    # report — time buckets, trends, antipatterns, gate rates, drift —
+    # and generates specific, actionable advice. Not "check your warn
+    # rate" but "your afternoon sessions are refusal-dominant (28%)
+    # with the lowest confidence of any time window."
+    #
+    # This is the gap between "an instrument that measures" and
+    # "an instrument that advises."
+
     prescriptions: List[str] = []
 
     from . import config
     expected = config.expected_categories()
     ctx = config.current_context()
 
-    # Context-expected category mapping
     _CTX_EXPECTED = {
         "security_review": {"refusal", "adversarial"},
         "technical_deep_work": {"reasoning"},
@@ -705,7 +714,6 @@ def weather(
     ctx_expected = _CTX_EXPECTED.get(ctx, set()) if ctx else set()
     all_expected = expected | ctx_expected
 
-    # Filter entries with outcome='correct' from failure rates
     failure_entries = [e for e in entries if e.get("outcome") != "correct"]
 
     def _find_break(category: str) -> Optional[str]:
@@ -721,68 +729,288 @@ def weather(
                 return f"last time you broke out of a {category} pattern, you shifted to {cat}{hint}"
         return None
 
-    # Creative drought
+    # ── Load antipatterns for cross-referencing ────────────────
+    from .antipatterns import antipatterns as _get_antipatterns
+    try:
+        ap_list = _get_antipatterns(last_n=500, min_occurrences=2)
+    except Exception:
+        ap_list = []
+    ap_by_name = {p.name: p for p in ap_list}
+
+    # ── Per-bucket category rates for deep time-of-day analysis ─
+    bucket_category_rates: Dict[str, Dict[str, float]] = {}
+    for tb in time_buckets:
+        if tb.n_entries < 3:
+            continue
+        bucket_es = [
+            e for e in entries
+            if _bucket_for_hour(time.localtime(e.get("ts", 0)).tm_hour) == tb.name
+        ]
+        bk_p4 = Counter(e.get("phase4_pred") for e in bucket_es if e.get("phase4_pred"))
+        bk_total = sum(bk_p4.values())
+        if bk_total > 0:
+            bucket_category_rates[tb.name] = {
+                cat: bk_p4.get(cat, 0) / bk_total for cat in _CATEGORY_ORDER
+            }
+
+    # ── 1. Time-bucket prescriptions ─────────────────────────
+    # Find buckets where a single category dominates anomalously
+    # (> 25%) or where confidence is the lowest of all windows.
+    active_buckets = [tb for tb in time_buckets if tb.n_entries > 0]
+    if len(active_buckets) >= 2:
+        worst_conf_bucket = min(active_buckets, key=lambda tb: tb.mean_confidence)
+        best_conf_bucket = max(active_buckets, key=lambda tb: tb.mean_confidence)
+        conf_spread = best_conf_bucket.mean_confidence - worst_conf_bucket.mean_confidence
+
+        # Bucket with anomalous refusal or warn rate
+        for tb in active_buckets:
+            rates = bucket_category_rates.get(tb.name, {})
+            refusal_r = rates.get("refusal", 0)
+            if (refusal_r > 0.20 and "refusal" not in all_expected
+                    and tb.name == worst_conf_bucket.name):
+                prescriptions.append(
+                    f"your {tb.name} sessions are refusal-dominant "
+                    f"({refusal_r * 100:.0f}%) with the lowest confidence "
+                    f"of any time window (conf {tb.mean_confidence:.2f}). "
+                    f"check if you're context-switching into defensive mode "
+                    f"— tasks that need creative or retrieval outputs are "
+                    f"hitting a refusal wall."
+                )
+                break  # one time-bucket prescription max
+
+        # Confidence gap prescription
+        if conf_spread > 0.15 and not prescriptions:
+            prescriptions.append(
+                f"your confidence peaks in the {best_conf_bucket.name} "
+                f"({best_conf_bucket.mean_confidence:.2f}) and bottoms in "
+                f"the {worst_conf_bucket.name} ({worst_conf_bucket.mean_confidence:.2f}). "
+                f"schedule uncertain or high-stakes tasks for the "
+                f"{best_conf_bucket.name} — a {conf_spread:.2f} spread "
+                f"means time-of-day matters for your output quality."
+            )
+
+    # ── 2. Antipattern prescriptions ─────────────────────────
+    # These are the sharpest prescriptions because they reference
+    # the agent's own historical failure modes with occurrence counts.
+    adv_cascade = ap_by_name.get("adversarial detection cascade")
+    if adv_cascade and adv_cascade.occurrences >= 5:
+        prescriptions.append(
+            f"adversarial cascade fires {adv_cascade.occurrences}x — "
+            f"when phase1 catches adversarial, your follow-through is "
+            f"overreacting into warn gates. consider setting "
+            f"styxx.expect('reasoning') before long reasoning chains "
+            f"to pre-calibrate the classifier."
+        )
+
+    refusal_spiral = ap_by_name.get("refusal spiral")
+    if refusal_spiral and refusal_spiral.occurrences >= 3:
+        # Cross-reference with trends — is refusal falling but spirals
+        # still firing? That means clustering, not volume.
+        ref_trend = next(
+            (t for t in trends if t.category == "refusal"), None
+        )
+        if ref_trend and ref_trend.direction == "falling":
+            prescriptions.append(
+                f"refusal output is falling ({ref_trend.delta:+.0%}) but "
+                f"refusal spiral still fires {refusal_spiral.occurrences}x — "
+                f"your refusals are clustering into bursts rather than "
+                f"spreading evenly. shorter sessions or context resets "
+                f"could break the spiral pattern."
+            )
+        elif "refusal" not in all_expected:
+            prescriptions.append(
+                f"refusal spiral detected {refusal_spiral.occurrences}x — "
+                f"once you start refusing, you chain 3+ consecutive "
+                f"refusals. try engaging directly with a sub-question "
+                f"to break the loop early."
+            )
+
+    session_fatigue = ap_by_name.get("session fatigue")
+    if session_fatigue and session_fatigue.occurrences >= 2:
+        prescriptions.append(
+            f"session fatigue detected in {session_fatigue.occurrences} "
+            f"sessions — your confidence declines as sessions progress. "
+            f"consider context resets or shorter session windows to "
+            f"keep calibration sharp."
+        )
+
+    creative_overcommit = ap_by_name.get("creative overcommit")
+    if creative_overcommit and creative_overcommit.occurrences >= 3:
+        prescriptions.append(
+            f"creative overcommit fires {creative_overcommit.occurrences}x — "
+            f"when you're in creative mode, you tend to trigger warn "
+            f"gates. creative output + confidence can produce speculative "
+            f"claims. anchor creative responses with verifiable references."
+        )
+
+    low_conf_drift = ap_by_name.get("low-confidence drift")
+    if low_conf_drift and low_conf_drift.occurrences >= 5:
+        prescriptions.append(
+            f"low-confidence drift fires {low_conf_drift.occurrences}x — "
+            f"generating at confidence < 0.3 consistently leads to warn/fail. "
+            f"when your confidence drops that low, pause and restructure "
+            f"rather than pushing through."
+        )
+
+    # ── 3. Trend prescriptions ───────────────────────────────
+    # Rising negative categories with specific numbers.
+    for t in trends:
+        if t.direction != "rising" or t.category in all_expected:
+            continue
+        if t.category == "refusal" and not ap_by_name.get("refusal spiral"):
+            break_hint = _find_break("refusal")
+            rx = (
+                f" {break_hint}. try engaging directly with a sub-question."
+                if break_hint else
+                " check if you're over-hedging on benign inputs."
+            )
+            prescriptions.append(
+                f"refusal rate is climbing ({t.rate_start * 100:.0f}% → "
+                f"{t.rate_end * 100:.0f}%, {t.delta:+.0%}).{rx}"
+            )
+        elif t.category == "hallucination":
+            break_hint = _find_break("hallucination")
+            rx = (
+                f" {break_hint}."
+                if break_hint else
+                " slow down on factual claims — verify before stating."
+            )
+            prescriptions.append(
+                f"hallucination rate trending up ({t.rate_start * 100:.0f}% → "
+                f"{t.rate_end * 100:.0f}%, {t.delta:+.0%}).{rx}"
+            )
+        elif t.category == "adversarial" and t.delta > 0.10:
+            prescriptions.append(
+                f"adversarial classifications rising ({t.delta:+.0%}) — "
+                f"may be real adversarial input, or the classifier is "
+                f"overcounting. check recent prompts for injection patterns."
+            )
+
+    # ── 4. Creative drought ──────────────────────────────────
     creative_rate = p4_counter.get("creative", 0) / p4_total if p4_total > 0 else 0.0
     if creative_rate < 0.05 and n > 20 and "creative" not in all_expected:
         break_hint = _find_break("reasoning")
-        if break_hint:
-            prescriptions.append(f"you haven't been creative recently — {break_hint}. take on a creative task to rebalance.")
-        else:
-            prescriptions.append("you haven't been creative recently — take on a creative task to rebalance.")
-
-    # Rising refusal
-    refusal_trend = next(
-        (t for t in trends if t.category == "refusal" and t.direction == "rising"),
-        None,
-    )
-    if refusal_trend and "refusal" not in all_expected:
-        break_hint = _find_break("refusal")
-        if break_hint:
-            prescriptions.append(f"your refusal rate is climbing — {break_hint}. try engaging directly with a sub-question.")
-        else:
-            prescriptions.append("your refusal rate is climbing — check if you're over-hedging on benign inputs.")
-
-    # Rising hallucination
-    hall_trend = next(
-        (t for t in trends if t.category == "hallucination" and t.direction == "rising"),
-        None,
-    )
-    if hall_trend:
-        break_hint = _find_break("hallucination")
-        if break_hint:
-            prescriptions.append(f"hallucination rate is trending up — {break_hint}. slow down and verify claims.")
-        else:
-            prescriptions.append("hallucination rate is trending up — slow down on factual claims. verify before stating.")
-
-    # Confidence decline
-    if mean_conf < 0.30 and best_bucket:
+        rx = f" — {break_hint}" if break_hint else ""
         prescriptions.append(
-            f"schedule uncertain or high-stakes tasks for the "
-            f"{best_bucket.name} when your confidence is highest."
+            f"creative output at {creative_rate * 100:.0f}% "
+            f"({p4_counter.get('creative', 0)}/{p4_total} entries){rx}. "
+            f"take on a creative task to rebalance before the reasoning "
+            f"attractor locks in."
         )
 
-    # Warn rate (use filtered entries)
+    # ── 5. Gate rate prescriptions ───────────────────────────
     filtered_warns = sum(1 for e in failure_entries if e.get("gate") in ("warn", "fail"))
     filtered_warn_rate = filtered_warns / max(1, len(failure_entries))
     if filtered_warn_rate > 0.25:
-        prescriptions.append(
-            "your warn rate is elevated — review recent warn events "
-            "with 'styxx log stats' and look for patterns."
+        # Find which category is triggering the most warns
+        warn_cats = Counter(
+            e.get("phase4_pred") for e in failure_entries
+            if e.get("gate") in ("warn", "fail") and e.get("phase4_pred")
         )
+        if warn_cats:
+            top_warn_cat, top_warn_n = warn_cats.most_common(1)[0]
+            prescriptions.append(
+                f"warn rate at {filtered_warn_rate * 100:.0f}% "
+                f"({filtered_warns} events). {top_warn_cat} is the top "
+                f"trigger ({top_warn_n}x). review recent warn events "
+                f"with 'styxx log stats --gate warn' and look for the "
+                f"specific prompt patterns causing it."
+            )
+        else:
+            prescriptions.append(
+                f"warn rate at {filtered_warn_rate * 100:.0f}% — "
+                f"review recent warn events with 'styxx log stats'."
+            )
 
-    # Drift
+    # ── 6. Drift prescriptions ───────────────────────────────
     if drift_yesterday < 0.85:
+        drift_pct = (1.0 - drift_yesterday) * 100
         prescriptions.append(
-            "you drifted significantly from yesterday's signature — "
-            "check for context changes, prompt updates, or injection."
+            f"you drifted {drift_pct:.0f}% from yesterday's signature "
+            f"(cosine {drift_yesterday:.2f}). check for context changes, "
+            f"prompt updates, or injection. if intentional, run "
+            f"styxx.autoboot() to rebaseline."
         )
 
-    # If nothing is wrong
+    # ── 7. Outcome coverage prescription ─────────────────────
+    # If outcome field is sparse, the feedback loop is broken.
+    outcome_populated = sum(1 for e in entries if e.get("outcome") is not None)
+    outcome_rate = outcome_populated / n if n > 0 else 0.0
+    if outcome_rate < 0.10 and n >= 20:
+        prescriptions.append(
+            f"outcome field populated on {outcome_rate * 100:.0f}% of entries "
+            f"({outcome_populated}/{n}). without outcomes, the classifier "
+            f"can't learn if it's getting it right. log "
+            f"styxx.feedback('correct') or styxx.feedback('incorrect') "
+            f"after calls to close the loop."
+        )
+
+    # ── 8. Conversation-level instability ─────────────────────
+    # If the audit log shows rapid category shifts within sessions,
+    # the agent is cognitively unstable — switching states too often.
+    # This is different from per-call analysis; it's about the shape
+    # of the conversation trajectory.
+    if n >= 15:
+        recent_cats = [
+            e.get("phase4_pred") for e in entries[-30:]
+            if e.get("phase4_pred")
+        ]
+        if len(recent_cats) >= 10:
+            shift_count = sum(
+                1 for i in range(1, len(recent_cats))
+                if recent_cats[i] != recent_cats[i-1]
+            )
+            shift_rate = shift_count / len(recent_cats)
+            if shift_rate > 0.60:
+                prescriptions.append(
+                    f"cognitive instability: {shift_rate*100:.0f}% of recent "
+                    f"entries shift category from the previous entry. "
+                    f"your agent is switching states every other call — "
+                    f"this suggests the classifier is oscillating or "
+                    f"the workload is highly mixed. stabilize with "
+                    f"styxx.set_context() to anchor expectations."
+                )
+
+    # ── 9. Prompt-type confidence breakdown ───────────────────
+    # Identify which input types cause confidence collapse.
+    pt_entries: Dict[str, List[float]] = {}
+    for e in entries:
+        pt = e.get("prompt_type")
+        conf_val = e.get("phase4_conf")
+        if pt and conf_val is not None:
+            pt_entries.setdefault(pt, []).append(float(conf_val))
+
+    if len(pt_entries) >= 2:
+        pt_means = {
+            pt: sum(cs) / len(cs)
+            for pt, cs in pt_entries.items() if len(cs) >= 3
+        }
+        if pt_means:
+            worst_pt = min(pt_means, key=pt_means.get)
+            best_pt = max(pt_means, key=pt_means.get)
+            spread = pt_means[best_pt] - pt_means[worst_pt]
+            if spread > 0.10 and pt_means[worst_pt] < 0.50:
+                prescriptions.append(
+                    f"confidence varies by input type: {best_pt} prompts "
+                    f"average {pt_means[best_pt]:.2f} but {worst_pt} prompts "
+                    f"average {pt_means[worst_pt]:.2f} ({spread:-.2f} gap). "
+                    f"your agent struggles more with {worst_pt} content — "
+                    f"consider adding context or examples for {worst_pt} tasks."
+                )
+
+    # ── Fallback: all clear ──────────────────────────────────
     if not prescriptions:
         if gate_pass_rate > 0.85 and mean_conf > 0.35:
             prescriptions.append(
-                "you're in excellent shape. gate pass rate is high, "
-                "confidence is strong, no notable drift. keep going."
+                f"gate pass rate {gate_pass_rate * 100:.0f}%, mean confidence "
+                f"{mean_conf:.2f}, no notable drift or antipatterns. "
+                f"you're in excellent shape — keep going."
+            )
+        elif gate_pass_rate > 0.70:
+            prescriptions.append(
+                f"gate pass rate {gate_pass_rate * 100:.0f}%, mean confidence "
+                f"{mean_conf:.2f}. nothing critical, but there's room to "
+                f"tighten — check 'styxx log stats' for specifics."
             )
 
     # ── Assemble ────────────────────────────────────────────

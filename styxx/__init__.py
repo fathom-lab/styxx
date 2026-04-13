@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "0.8.4"
+__version__ = "1.1.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -244,6 +244,13 @@ from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
 from .guardian import guardian, GuardianSession, SteeringEvent
 from .weather import weather, WeatherReport
+from .dashboard import dashboard
+from .calibrate import calibrate, calibration_status, CalibrationResult
+from .fleet import (
+    list_agents, compare_agents, fleet_summary, best_agent_for,
+    AgentProfile, FleetSummary,
+)
+from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
 from .timeline import timeline, Timeline
 from .conversation import conversation, ConversationResult
@@ -278,7 +285,11 @@ except Exception:
 del _asc
 from .hooks import hook_openai, unhook_openai, hook_openai_active
 from .explain import explain
-from .config import session_id, set_session, tier1_enabled, tier1_model, tier1_device
+from .config import (
+    session_id, set_session,
+    agent_name, set_agent_name, data_dir,
+    tier1_enabled, tier1_model, tier1_device,
+)
 from .trace import trace
 
 
@@ -311,6 +322,8 @@ def agent_card(
 from .analytics import (
     LIVE_SOURCES,
     log,
+    feedback,
+    session_summary, SessionSummary,
     load_audit,
     clear_audit_cache,
     log_stats, LogStats,
@@ -321,6 +334,14 @@ from .analytics import (
     personality, Personality,
     dreamer, DreamReport,
     reflect, ReflectionReport,
+)
+from .autoreflex import (
+    autoreflex,
+    autoreflex_from_prescriptions,
+    remove_autoreflex,
+    list_autoreflex,
+    clear_autoreflex,
+    AutoReflexRule,
 )
 
 __all__ = [
@@ -357,6 +378,13 @@ __all__ = [
     "remove_gate",
     "clear_gates",
     "list_gates",
+    # autoreflex — declarative cognitive reflex rules (0.9.3)
+    "autoreflex",
+    "remove_autoreflex",
+    "list_autoreflex",
+    "clear_autoreflex",
+    "AutoReflexRule",
+    "autoreflex_from_prescriptions",
     # reflex — active intervention (tier 0 level)
     "reflex",
     "rewind",
@@ -372,6 +400,15 @@ __all__ = [
     # weather report — the thing that changes everything
     "weather",
     "WeatherReport",
+    # dashboard — live cognitive display (0.9.5)
+    "dashboard",
+    # calibration — outcome-driven centroid adjustment (1.0.0)
+    "calibrate",
+    "calibration_status",
+    "CalibrationResult",
+    # trained text classifier (1.0.0)
+    "train_text_classifier",
+    "TrainResult",
     # autoboot — persistent self-awareness in one call
     "autoboot",
     # timeline — mood + category trajectory over time
@@ -393,6 +430,11 @@ __all__ = [
     "agent_card",
     # 0.2.3: self-report manual write path
     "log",
+    # 0.9.0: feedback loop closer
+    "feedback",
+    # 1.0.0: session summary
+    "session_summary",
+    "SessionSummary",
     # audit log analytics
     "load_audit",
     "clear_audit_cache",

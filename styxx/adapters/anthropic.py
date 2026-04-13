@@ -142,9 +142,18 @@ class _MessagesShim:
         classifier on the response content. Less accurate than logprob-
         based tier 0 but provides real cognitive state readings for
         every Anthropic call.
+
+        0.9.2: capture the user's prompt from messages kwarg, not the
+        response text. Previous versions had a semantic bug: the
+        response text was being logged as the "prompt" field, corrupting
+        downstream analytics.
         """
+        # 0.9.2: extract user prompt BEFORE the API call
+        from ..watch import _extract_prompt
+        prompt_text = _extract_prompt(kwargs.get("messages"))
+
         response = self._inner.create(*args, **kwargs)
-        # Extract text and classify
+        # Extract response text and classify
         try:
             from ..watch import _extract_text_content, _classify_from_text, _get_runtime
             text = _extract_text_content(response)
@@ -152,11 +161,12 @@ class _MessagesShim:
                 runtime = _get_runtime()
                 vitals = _classify_from_text(text, runtime)
                 _attach_vitals(response, vitals)
-                # Write to audit log
+                # Write to audit log with USER prompt, not response text
                 from ..analytics import write_audit
+                model_name = getattr(response, "model", None) or "anthropic"
                 write_audit(vitals, source="live",
-                            prompt=(text[:200] if text else None),
-                            model="anthropic")
+                            prompt=prompt_text,
+                            model=model_name)
             else:
                 _attach_vitals(response, None)
         except Exception:

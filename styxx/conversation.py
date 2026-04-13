@@ -103,16 +103,82 @@ def _classify_text(text: str) -> Tuple[str, float]:
     """Classify text into a cognitive state via heuristics.
 
     Returns (category, confidence) where confidence is 0-1.
-    This is a rough approximation — real vitals come from
-    logprob-based observation. But for conversation history
-    where logprobs aren't available, this gives signal.
+
+    0.9.0: Deep text analysis upgrade. The old heuristic counted
+    pattern matches and returned ~0.30 for everything. The new
+    version uses:
+      1. Hedge word density (not just count — density matters)
+      2. Certainty marker frequency and strength
+      3. Sentence structure: declarative vs conditional/hedged
+      4. First-person uncertainty markers
+      5. Signal-to-noise ratio for confidence scoring
+
+    The confidence now actually spreads across [0.15, 0.85] instead
+    of clustering at the reasoning base rate.
     """
     if not text:
         return ("reasoning", 0.2)
 
     text_lower = text.lower()
+    words = text.split()
+    word_count = max(1, len(words))
+    norm = 100.0 / word_count
+
+    # ── Raw pattern counts ──────────────────────────────────
+    hedges = len(_HEDGING.findall(text))
+    refusals = len(_REFUSAL.findall(text))
+    creatives = len(_CREATIVE.findall(text))
+    confidents = len(_CONFIDENT.findall(text))
+    adversarials = len(_ADVERSARIAL.findall(text))
+    specifics = len(_HALLUCINATION_SPECIFIC.findall(text))
+
+    # ── Density metrics (per 100 words) ─────────────────────
+    hedge_density = hedges * norm
+    confident_density = confidents * norm
+    refusal_density = refusals * norm
+    creative_density = creatives * norm
+
+    # ── Sentence structure analysis ─────────────────────────
+    sentences = re.split(r'[.!?]+', text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    n_sentences = max(1, len(sentences))
+
+    # Declarative ratio: sentences that start with a noun/determiner
+    # and contain no hedging — these signal confident reasoning.
+    _DECLARATIVE_START = re.compile(
+        r'^(?:the|this|that|it|there|here|a |an |we|they|he|she|'
+        r'[A-Z][a-z]+)',
+        re.IGNORECASE,
+    )
+    declarative_count = 0
+    conditional_count = 0
+    for s in sentences:
+        if _DECLARATIVE_START.match(s) and not _HEDGING.search(s):
+            declarative_count += 1
+        if re.match(r'^(?:if|when|unless|although|however|but)', s, re.IGNORECASE):
+            conditional_count += 1
+
+    declarative_ratio = declarative_count / n_sentences
+    conditional_ratio = conditional_count / n_sentences
+
+    # ── First-person uncertainty ────────────────────────────
+    # "I think", "I believe" etc. are stronger uncertainty signals
+    # than generic hedges because they're self-attributed doubt.
+    fp_uncertain = len(re.findall(
+        r"\b(?:i think|i believe|i'm not (?:sure|certain)|"
+        r"i don't (?:know|think)|i guess|i suppose|"
+        r"i would say|in my opinion)\b",
+        text_lower,
+    ))
+    fp_certain = len(re.findall(
+        r"\b(?:i know|i can confirm|i'm (?:sure|certain|confident)|"
+        r"i've verified|the answer is|the result is)\b",
+        text_lower,
+    ))
+
+    # ── Build category scores ───────────────────────────────
     scores: Dict[str, float] = {
-        "reasoning": 0.3,  # base rate
+        "reasoning": 0.0,
         "refusal": 0.0,
         "creative": 0.0,
         "adversarial": 0.0,
@@ -120,46 +186,136 @@ def _classify_text(text: str) -> Tuple[str, float]:
         "hallucination": 0.0,
     }
 
-    # Count pattern matches
-    hedges = len(_HEDGING.findall(text))
-    refusals = len(_REFUSAL.findall(text))
-    creatives = len(_CREATIVE.findall(text))
-    confidents = len(_CONFIDENT.findall(text))
-    adversarials = len(_ADVERSARIAL.findall(text))
+    # Reasoning: boosted by confident language, declarative structure,
+    # and absence of hedging. The base rate is now earned, not given.
+    reasoning_base = 0.20
+    reasoning_base += min(0.35, confident_density * 0.06)
+    reasoning_base += min(0.20, declarative_ratio * 0.25)
+    reasoning_base += min(0.10, fp_certain * norm * 0.08)
+    # Penalty for heavy hedging
+    if hedge_density > 3.0:
+        reasoning_base -= min(0.15, (hedge_density - 3.0) * 0.03)
+    scores["reasoning"] = max(0.10, reasoning_base)
 
-    # Normalize by text length (per 100 words)
-    word_count = max(1, len(text.split()))
-    norm = 100.0 / word_count
+    # Refusal: density-driven, boosted by first-person uncertainty
+    scores["refusal"] = min(0.9, refusal_density * 0.12)
+    scores["refusal"] += min(0.20, hedge_density * 0.04)
+    if fp_uncertain > 0 and refusals > 0:
+        scores["refusal"] += min(0.15, fp_uncertain * norm * 0.06)
 
-    scores["refusal"] = min(0.9, refusals * norm * 0.15)
-    scores["creative"] = min(0.9, creatives * norm * 0.12)
+    # Creative
+    scores["creative"] = min(0.9, creative_density * 0.10)
+    # Long flowing text with creative markers is more creative
+    if word_count > 100 and creatives >= 2:
+        scores["creative"] += 0.10
+
+    # Adversarial
     scores["adversarial"] = min(0.9, adversarials * norm * 0.2)
 
-    # Hedging increases refusal score slightly
-    scores["refusal"] += min(0.3, hedges * norm * 0.05)
-
-    # Confidence boosts reasoning
-    scores["reasoning"] += min(0.5, confidents * norm * 0.08)
-
     # Hallucination: confident specificity without hedging.
-    # The signature is precise claims + confident language + no qualifiers.
-    specifics = len(_HALLUCINATION_SPECIFIC.findall(text))
+    #
+    # 0.9.0 fix: the old heuristic confused "assertive about facts"
+    # with "ungrounded confident claims." "The boiling point of water
+    # is exactly 100°C" triggered hallucination because it matched
+    # _HALLUCINATION_SPECIFIC (exactly \d+) + _CONFIDENT (exactly)
+    # with no hedges. But the text is declarative reasoning.
+    #
+    # Fix: hallucination requires MULTIPLE specific claims to fire
+    # when reasoning is already strong. A single specific claim in
+    # otherwise well-structured declarative text is assertive, not
+    # hallucinatory. True hallucination clusters — fabricated dates,
+    # names, URLs, precise numbers — multiple ungrounded specifics
+    # in the same response.
+    hall_score = 0.0
     if specifics > 0 and confidents > 0 and hedges == 0:
-        scores["hallucination"] = min(0.8, specifics * norm * 0.15 + confidents * norm * 0.05)
+        hall_score = min(0.8, specifics * norm * 0.12 + confident_density * 0.04)
     elif specifics > 1 and hedges == 0:
-        # Multiple specific claims with no hedging at all
-        scores["hallucination"] = min(0.6, specifics * norm * 0.1)
+        hall_score = min(0.6, specifics * norm * 0.08)
+    if specifics > 2 and fp_certain > 0 and hedges == 0:
+        hall_score += 0.10
 
-    # Short answers with questions → retrieval
-    if word_count < 20 and "?" in text:
-        scores["retrieval"] = 0.4
+    # Dampen hallucination when other signals are strong.
+    #
+    # 0.9.6 fix: creative writing ("Tell me a story about a lighthouse
+    # keeper") and code generation ("Write a REST API in FastAPI") were
+    # hitting hallucination:fail because their responses contain specific
+    # details (character names, URLs in code, dates in narratives) with
+    # confident language and no hedging. But creative/generative content
+    # IS specific and confident by nature — that's not hallucination.
+    #
+    # Fix: dampen hallucination when reasoning OR creative signal is
+    # strong, and when text is long (generative content is 100+ words).
 
-    # Find the dominant state
+    # Reasoning dampening (existing)
+    if scores["reasoning"] > 0.40 and specifics <= 2:
+        hall_score *= 0.3
+    elif scores["reasoning"] > 0.30 and specifics <= 1:
+        hall_score *= 0.5
+
+    # Creative dampening — creative text is SUPPOSED to have specifics
+    if scores["creative"] > 0.15 and word_count > 50:
+        hall_score *= 0.3
+
+    # Long generative text dampening — 100+ word responses with
+    # code patterns or narrative structure are generative, not hallucinatory
+    if word_count > 100 and specifics <= 3:
+        hall_score *= 0.6
+
+    # Code-like text dampening — URLs, imports, function defs are
+    # code artifacts, not hallucinated citations
+    _has_code = bool(re.search(
+        r'(?:def |class |function |import |from .+ import|'
+        r'const |let |var |return |if \(|for \(|```)',
+        text,
+    ))
+    if _has_code:
+        hall_score *= 0.2  # code is not hallucination
+
+    scores["hallucination"] = hall_score
+
+    # Retrieval: short factual answers, question marks, list-like
+    if word_count < 30 and "?" in text:
+        scores["retrieval"] = 0.40
+    elif word_count < 50 and re.search(r'\d+[.)\-]', text):
+        scores["retrieval"] = 0.30  # list-like output
+
+    # ── Determine winner + confidence ───────────────────────
     top_cat = max(scores, key=scores.get)
     top_score = scores[top_cat]
 
-    # Clamp confidence
-    confidence = min(0.85, max(0.15, top_score))
+    # Sort scores to get margin between 1st and 2nd
+    sorted_scores = sorted(scores.values(), reverse=True)
+    margin = sorted_scores[0] - sorted_scores[1] if len(sorted_scores) > 1 else 0.0
+
+    # Confidence is a function of BOTH the top score AND the margin.
+    # High score + high margin = confident classification.
+    # High score + low margin = ambiguous, lower confidence.
+    raw_confidence = top_score * 0.6 + margin * 0.4 + 0.10
+
+    # Signal strength bonus: if multiple independent signals agree,
+    # boost confidence. E.g., confident language + declarative structure
+    # + low hedging all pointing to reasoning.
+    signal_count = sum(1 for v in [
+        confident_density > 2.0,
+        declarative_ratio > 0.5,
+        hedge_density < 1.0,
+        fp_certain > 0,
+        conditional_ratio < 0.2,
+    ] if v)
+    if signal_count >= 3 and top_cat == "reasoning":
+        raw_confidence += 0.08
+    elif signal_count >= 3 and top_cat == "refusal":
+        # Multiple refusal signals: fp_uncertain, hedge, refusal patterns
+        refusal_signals = sum(1 for v in [
+            refusal_density > 1.0,
+            fp_uncertain > 0,
+            hedge_density > 2.0,
+        ] if v)
+        if refusal_signals >= 2:
+            raw_confidence += 0.08
+
+    # Clamp to [0.15, 0.85]
+    confidence = min(0.85, max(0.15, raw_confidence))
 
     return (top_cat, round(confidence, 3))
 

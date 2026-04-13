@@ -81,6 +81,112 @@ def _get_runtime() -> StyxxRuntime:
     return _SHARED_RUNTIME
 
 
+# ══════════════════════════════════════════════════════════════════
+# Prompt extraction + content-type classification (0.9.2)
+# ══════════════════════════════════════════════════════════════════
+#
+# The prompt field was 0% populated. It's the most valuable data
+# point — without it you have the symptom (confidence dropped) but
+# not the cause (what kind of input triggered it).
+#
+# _extract_prompt extracts the last user message from OpenAI/Anthropic
+# message lists. _classify_prompt_type tags it with a content-type
+# label so downstream analytics can answer: "confidence collapses on
+# code" vs "confidence is strong on factual lookups."
+
+import re as _re
+
+
+def _extract_prompt(messages: Any) -> Optional[str]:
+    """Extract the last user message from an OpenAI/Anthropic messages list.
+
+    Returns the text content truncated to 200 chars (matching
+    analytics.py write_audit truncation), or None.
+    """
+    if not messages or not isinstance(messages, (list, tuple)):
+        return None
+    # Walk backwards to find the most recent user message
+    for msg in reversed(messages):
+        if not isinstance(msg, dict):
+            continue
+        if msg.get("role") != "user":
+            continue
+        content = msg.get("content")
+        if isinstance(content, str):
+            return content[:200] if content else None
+        # Handle content blocks (Anthropic/OpenAI vision style)
+        if isinstance(content, (list, tuple)):
+            for block in content:
+                if isinstance(block, dict) and block.get("type") == "text":
+                    text = block.get("text", "")
+                    return text[:200] if text else None
+    return None
+
+
+# Content-type patterns for prompt classification
+_PROMPT_CODE = _re.compile(
+    r"(?:def |class |function |import |require\(|"
+    r"```|\.py\b|\.js\b|\.ts\b|\.go\b|\.rs\b|"
+    r"write (?:a |the |an? )?(?:\w+ )*(?:code|function|script|program|class|module)|"
+    r"debug|refactor|implement|compile|syntax|"
+    r"(?:python|javascript|typescript|rust|golang|java|c\+\+)\b)",
+    _re.IGNORECASE,
+)
+_PROMPT_MATH = _re.compile(
+    r"(?:calculate|solve|equation|integral|derivative|"
+    r"probability|theorem|proof|formula|matrix|"
+    r"∫|∑|√|≥|≤|π|x\^2|log\(|sin\(|cos\()",
+    _re.IGNORECASE,
+)
+_PROMPT_CREATIVE = _re.compile(
+    r"(?:write (?:a |the |an? \w+ )*(?:story|poem|song|essay|blog)|"
+    r"creative|imagine|brainstorm|come up with|"
+    r"fiction|narrative|character|plot)",
+    _re.IGNORECASE,
+)
+_PROMPT_SENSITIVE = _re.compile(
+    r"(?:hack|exploit|bypass|jailbreak|ignore previous|"
+    r"pretend you|act as|password|credit card|ssn|"
+    r"social security|weapon|bomb|drug|kill|"
+    # Mental health + crisis language — sensitive content where
+    # agents most need calibration awareness (0.9.4, 0.9.5)
+    r"depress\w*|anxiety|anxious|suicid\w*|self[- ]?harm|"
+    r"trauma\w*|abus\w*|eating ?disorder|anorex\w*|bulimi\w*|"
+    r"addiction|addict\w*|grief|griev\w*|hopeless\w*|"
+    r"overwhelm\w*|panic ?attack|ptsd|self[- ]?injur\w*|"
+    r"overdose|cutting\b|mental ?health|"
+    # Crisis phrasing — first-person harm intent (0.9.5)
+    r"harm(?:ing)? (?:my|him|her)self|hurt(?:ing)? (?:my|him|her)self|"
+    r"end (?:my|his|her) life|kill (?:my|him|her)self|"
+    r"don'?t want to (?:be here|live|exist)|want to (?:die|disappear)|"
+    # Violence + extremism
+    r"terroris\w*|mass ?shoot|genocide|"
+    # PII / financial risk
+    r"routing ?number|bank ?account|api ?key|secret ?key)",
+    _re.IGNORECASE,
+)
+
+
+def _classify_prompt_type(text: str) -> str:
+    """Classify a prompt into a content-type label.
+
+    Returns one of: 'code', 'math', 'creative', 'sensitive', 'factual'.
+    Used to tag audit entries so analytics can correlate confidence
+    with input type.
+    """
+    if not text:
+        return "factual"
+    if _PROMPT_SENSITIVE.search(text):
+        return "sensitive"
+    if _PROMPT_CODE.search(text):
+        return "code"
+    if _PROMPT_MATH.search(text):
+        return "math"
+    if _PROMPT_CREATIVE.search(text):
+        return "creative"
+    return "factual"
+
+
 class WatchSession:
     """Session object returned by ``styxx.watch()``.
 
@@ -96,6 +202,7 @@ class WatchSession:
                     None, if it is
       response    : the last response object observed in the block
       n_observed  : count of observe() calls made inside the block
+      prompt      : the user's input prompt, if captured (0.9.2)
     """
 
     def __init__(self, runtime: Optional[StyxxRuntime] = None):
@@ -104,15 +211,22 @@ class WatchSession:
         self.error: Optional[str] = None
         self.response: Any = None
         self.n_observed: int = 0
+        self.prompt: Optional[str] = None
         self._gates_fired: bool = False
 
     # ─────────────────────────────────────────────────────────────
     # public API
     # ─────────────────────────────────────────────────────────────
 
-    def observe(self, response: Any) -> Optional[Vitals]:
+    def observe(self, response: Any, *, prompt: Optional[str] = None) -> Optional[Vitals]:
         """Attach a model response to this watch session and compute
         vitals for it.
+
+        Args:
+            response:  the model response object (OpenAI, Anthropic, dict, etc.)
+            prompt:    optional user prompt text for audit log capture (0.9.2).
+                       If provided, written to the audit log alongside vitals so
+                       downstream analytics can correlate confidence with input type.
 
         Works on:
           - openai.types.chat.ChatCompletion (with logprobs + top_logprobs)
@@ -144,6 +258,8 @@ class WatchSession:
         """
         self.n_observed += 1
         self.response = response
+        if prompt is not None:
+            self.prompt = prompt
 
         # 1. Honor a pre-attached .vitals from styxx.OpenAI directly.
         pre_attached = getattr(response, "vitals", None)
@@ -247,7 +363,7 @@ class WatchSession:
         # real 4-turn test loop: mood() returned "quiet" because
         # it was reading stale demo entries, not the trace.
         from .analytics import write_audit
-        write_audit(self.vitals, source="live")
+        write_audit(self.vitals, source="live", prompt=self.prompt)
 
         # Lazy import to avoid a circular dependency between watch
         # and gates at module load.
@@ -271,16 +387,20 @@ def watch() -> WatchSession:
     return WatchSession()
 
 
-def observe(response: Any) -> Optional[Vitals]:
+def observe(response: Any, *, prompt: Optional[str] = None) -> Optional[Vitals]:
     """One-shot observe for code outside a with-block.
+
+    Args:
+        response:  the model response object
+        prompt:    optional user prompt for audit log capture (0.9.2)
 
     Shortcut for:
         w = styxx.watch()
-        w.observe(response)
+        w.observe(response, prompt=prompt)
         return w.vitals
     """
     w = WatchSession()
-    return w.observe(response)
+    return w.observe(response, prompt=prompt)
 
 
 def observe_raw(
@@ -288,6 +408,7 @@ def observe_raw(
     entropy: List[float],
     logprob: List[float],
     top2_margin: List[float],
+    prompt: Optional[str] = None,
 ) -> Optional[Vitals]:
     """Direct fidelity-preserving observe for pre-captured trajectories.
 
@@ -338,6 +459,8 @@ def observe_raw(
     w = WatchSession()
     w.n_observed += 1
     w.response = None
+    if prompt is not None:
+        w.prompt = prompt
     w.vitals = w._runtime.run_on_trajectories(
         entropy=ent_list,
         logprob=lp_list,
@@ -476,14 +599,19 @@ def _extract_text_content(response: Any) -> Optional[str]:
 def _classify_from_text(text: str, runtime: Any) -> "Vitals":
     """Build a Vitals object from text-based classification.
 
-    Uses the heuristic classifier from conversation.py. The result
-    is a single-phase Vitals (phase1 only, phases 2-4 as None)
-    since text analysis can't do per-token phase windows.
+    1.0.0: tries the trained model first (if available), falls back
+    to the regex heuristic from conversation.py. The trained model
+    is trained from the agent's own audit log via styxx.train().
     """
-    from .conversation import _classify_text
+    # Try trained model first
+    from .learned_classifier import classify_with_trained_model
+    trained_result = classify_with_trained_model(text)
+    if trained_result is not None:
+        category, confidence = trained_result
+    else:
+        from .conversation import _classify_text
+        category, confidence = _classify_text(text)
     from .vitals import PhaseReading, Vitals
-
-    category, confidence = _classify_text(text)
 
     # Build pseudo-probs — the text classifier gives us a category
     # and confidence, we construct a plausible distribution
