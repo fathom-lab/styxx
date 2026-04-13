@@ -272,7 +272,10 @@ def test_set_session_override():
     assert styxx.session_id() == "test-session-xyz"
     # Clear
     styxx.set_session(None)
-    assert styxx.session_id() is None or "STYXX_SESSION_ID" in os.environ
+    # 0.9.0+: session_id auto-generates when not set
+    sid = styxx.session_id()
+    assert sid is not None  # always auto-generated now
+    assert sid.startswith("styxx-") or "STYXX_SESSION_ID" in os.environ
 
 
 def test_session_id_env_fallback(monkeypatch):
@@ -280,7 +283,9 @@ def test_session_id_env_fallback(monkeypatch):
     monkeypatch.setenv("STYXX_SESSION_ID", "env-session-abc")
     assert styxx.session_id() == "env-session-abc"
     monkeypatch.delenv("STYXX_SESSION_ID", raising=False)
-    assert styxx.session_id() is None
+    # 0.9.0+: auto-generates when env var removed
+    sid = styxx.session_id()
+    assert sid is not None
 
 
 def test_session_override_beats_env(monkeypatch):
