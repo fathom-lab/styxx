@@ -10,10 +10,10 @@
 ```
 
 <p align="center">
-  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi" alt="PyPI"/></a>
-  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python" alt="Python"/></a>
-  <a href="LICENSE"><img src="https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license" alt="MIT"/></a>
-  <a href="https://www.npmjs.com/package/@fathom_lab/styxx"><img src="https://img.shields.io/npm/v/@fathom_lab/styxx.svg?color=00d26a&label=npm" alt="npm"/></a>
+  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&cacheSeconds=300&v=3.1.0" alt="PyPI"/></a>
+  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python&cacheSeconds=300&v=3.1.0" alt="Python"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license&cacheSeconds=300&v=3.1.0" alt="MIT"/></a>
+  <a href="https://www.npmjs.com/package/@fathom_lab/styxx"><img src="https://img.shields.io/npm/v/@fathom_lab/styxx.svg?color=00d26a&label=npm&cacheSeconds=300&v=3.1.0" alt="npm"/></a>
   <a href="https://doi.org/10.5281/zenodo.19504993"><img src="https://img.shields.io/badge/paper-Zenodo-blue.svg" alt="Zenodo"/></a>
   <a href="https://github.com/fathom-lab/fathom"><img src="https://img.shields.io/badge/research-fathom--lab%2Ffathom-purple.svg" alt="research"/></a>
   <a href="https://fathom.darkflobi.com/styxx"><img src="https://img.shields.io/badge/site-fathom.darkflobi.com-black.svg" alt="site"/></a>
