@@ -23,6 +23,12 @@ Environment variables (all default to OFF / normal operation):
   STYXX_NO_COLOR    "1"  →  disable ANSI colors in the terminal.
                             already respected by cards.color_enabled.
 
+  STYXX_NO_WARN     "1"  →  suppress first-time-user diagnostic warnings
+                            from observe() — e.g. the one-shot notice
+                            that fires when an openai response has no
+                            logprobs. does NOT affect gates, vitals,
+                            or exceptions.
+
   STYXX_BOOT_SPEED  float →  override the boot-log timing multiplier.
                             0 = instant, 1.0 = normal, 2.0 = slower.
 
@@ -108,6 +114,11 @@ def is_audit_disabled() -> bool:
 def is_color_disabled() -> bool:
     """Disable ANSI color output. Used by cards.color_enabled."""
     return _truthy("STYXX_NO_COLOR")
+
+
+def is_warn_disabled() -> bool:
+    """Suppress first-time-user diagnostic warnings from observe()."""
+    return _truthy("STYXX_NO_WARN")
 
 
 def skip_sha_verification() -> bool:
