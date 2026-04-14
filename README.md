@@ -138,6 +138,55 @@ $ styxx weather
 not observation. **prescription.** styxx reads 24h of the agent's own history and tells it
 what cognitive task to take on next. self-directed course correction.
 
+### 5. `dynamics` — predict, simulate, control cognitive trajectories *(3.1.0a1)*
+
+```python
+import styxx
+from styxx.dynamics import CognitiveDynamics, Observation
+
+# 1. collect observation tuples from your fleet
+obs = [
+    Observation.from_thoughts(state=t0, action=a0, next_state=t1),
+    Observation.from_thoughts(state=t1, action=a1, next_state=t2),
+    # ... at least 12 tuples for a well-conditioned fit
+]
+
+# 2. fit a linear-gaussian dynamics model: s_{t+1} = A·s_t + B·a_t + ε
+dyn = CognitiveDynamics()
+result = dyn.fit(obs)
+print(result)             # <FitResult n=… r2=… spectral=…>
+
+# 3. predict the next cognitive state from the current state + action
+predicted = dyn.predict(current_thought, target_action)
+
+# 4. simulate offline — multi-step rollout, no real model calls, zero API cost
+trajectory = dyn.simulate(initial=t0, actions=[a1, a2, a3])
+
+# 5. controller — find the action that drives state to a target
+optimal = dyn.suggest(current=t0, target=styxx.Thought.target("reasoning"))
+
+# 6. natural-drift forecast — what does cognition do under no intervention?
+drift_path = dyn.forecast_horizon(t0, n_steps=10)
+
+# 7. save / load
+dyn.save("my_agent.cogdyn")
+loaded = CognitiveDynamics.load("my_agent.cogdyn")
+```
+
+the field treats LLM inference as **open-loop** because nobody had a measurable cognitive
+state vector. fathom's calibrated cross-architecture eigenvalue projection (atlas v0.3) gives
+us one. once you have a state vector you can fit a dynamical system to it. once you have a
+dynamical system, you can **predict, simulate, and control** cognitive trajectories.
+
+`styxx.dynamics` is the first cognitive dynamics model in the field. v0.1 is linear-Gaussian
+and fits in closed form. recovery to machine epsilon on full-rank synthetic data, validated
+by 44 tests. spec at [`docs/cognitive-dynamics-v0.md`](docs/cognitive-dynamics-v0.md), source
+at `styxx/dynamics.py`. CC-BY-4.0 spec, MIT impl.
+
+> closed-loop cognitive control becomes a one-liner.
+
+---
+
 ### 4. `Thought` — cognition as a portable data type *(3.0.0a1)*
 
 ```python

@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.0.0a1"
+__version__ = "3.1.0a1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -400,6 +400,25 @@ from .thought import (
     ATLAS_VERSION,
 )
 
+# 3.1.0a1 — the first dynamical-systems model of LLM cognition.
+# Once you have a measurable state vector (Thought), you can fit a
+# dynamical system to it and predict / simulate / control cognitive
+# trajectories. CognitiveDynamics is the linear-Gaussian v0:
+#     s_{t+1} = A · s_t + B · a_t + epsilon
+# Use it for offline agent-strategy prototyping, model-predictive
+# cognitive control, counterfactual analysis, and (eventually) the
+# proof that cognitive eigenvalues are causal not correlative.
+from .dynamics import (
+    CognitiveDynamics,
+    Observation,
+    FitResult,
+    synthetic_observations,
+    thought_to_state,
+    state_to_thought,
+    COGDYN_FORMAT,
+    COGDYN_VERSION,
+)
+
 __all__ = [
     # ── 1. observe ────────────────────────────────────────
     "observe", "observe_raw", "watch", "is_concerning", "explain",
@@ -479,6 +498,12 @@ __all__ = [
     "Thought", "PhaseThought", "ThoughtDelta",
     "read_thought", "write_thought",
     "FATHOM_FORMAT", "FATHOM_VERSION", "ATLAS_VERSION",
+
+    # ── 12. cognitive dynamics (3.1.0a1) ──────────────────
+    "CognitiveDynamics", "Observation", "FitResult",
+    "synthetic_observations",
+    "thought_to_state", "state_to_thought",
+    "COGDYN_FORMAT", "COGDYN_VERSION",
 
     # ── metadata ──────────────────────────────────────────
     "__version__", "__tagline__",

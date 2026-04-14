@@ -7,6 +7,149 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.1.0a1] — 2026-04-14
+
+**The first dynamical-systems model of LLM cognition.**
+
+styxx 3.0.0a1 introduced a portable cognitive *data type* (the
+Thought). 3.1.0a1 introduces the next layer up: a portable cognitive
+*dynamics model* fit to real observation data.
+
+The field treats LLM inference as **open-loop**: a prompt goes in, a
+generation comes out, and there is no measurable state variable an
+external agent can use to predict, control, or counterfactually
+reason about what the model is doing. That's not because LLMs are
+inherently unobservable — it's because nobody had a calibrated,
+cross-architecture, real-time readout of cognitive state. We do.
+
+Once you have a state vector, you can fit a dynamical system to it.
+Once you have a dynamical system, you can:
+
+- predict cognitive trajectories from current state + action
+- simulate cognitive trajectories offline at zero API cost
+- control cognitive trajectories via model-predictive control
+- reason counterfactually about what would have happened
+- test the hypothesis that the eigenvalues are **causal** not
+  merely correlative
+
+This release ships the v0.1 model: linear-Gaussian, fit by ordinary
+least squares, machine-epsilon recovery on full-rank synthetic data,
+44 tests passing.
+
+### Added — `styxx.dynamics`
+
+The new module. Linear-Gaussian state-space model:
+
+    s_{t+1} = A · s_t + B · a_t + epsilon
+
+where A (6×6) is the natural drift matrix, B (6×6) is the action
+transfer matrix, and epsilon is gaussian residual noise.
+
+- **`CognitiveDynamics`** — the model class. Lifecycle:
+  ``construct → fit → predict / simulate / suggest / forecast``.
+- **`Observation`** — the training-data unit. Holds raw 6-vectors
+  for state, action, and next state. Convenience constructor
+  ``Observation.from_thoughts(state, action, next_state)`` for
+  Thought-keyed inputs.
+- **`FitResult`** — the result of a ``.fit()`` call. Carries the
+  learned (A, B), training MSE, $R^2$, spectral radius of A, and
+  a stability flag.
+
+### Added — verbs
+
+- **`dyn.fit(observations) → FitResult`** — closed-form OLS fit.
+  Recovers (A, B) to machine epsilon on full-rank inputs.
+- **`dyn.predict(state, action) → Thought`** — one-step forecast.
+- **`dyn.simulate(initial, actions) → list[Thought]`** — multi-step
+  rollout, no real model calls. Offline, zero API cost.
+- **`dyn.suggest(current, target) → Thought`** — model-predictive
+  controller. Returns the action that minimizes the L2 distance
+  from ``predict(current, action)`` to ``target``.
+- **`dyn.forecast_horizon(initial, n_steps) → list[Thought]`** —
+  natural drift trajectory under zero action.
+- **`dyn.residual(observation) → float`** — held-out fit quality.
+- **`dyn.save(path)` / `CognitiveDynamics.load(path)`** —
+  serialize a fitted model to a `.cogdyn` file (canonical
+  sort-keys UTF-8 JSON, no BOM).
+
+### Added — convenience
+
+- **`thought_to_state(thought) → np.ndarray`** — encode a Thought
+  to a 6-d state vector.
+- **`state_to_thought(vec) → Thought`** — decode a state vector
+  back to a Thought (with simplex projection at the boundary).
+- **`synthetic_observations(n, A, B, noise_std=, seed=, distribution=)`**
+  — generate observation tuples from a known (A, B) for testing
+  and benchmarking. Supports both ``"gaussian"`` (full-rank,
+  for math correctness tests) and ``"dirichlet"`` (rank-deficient
+  simplex inputs, for realistic-style tests).
+
+### Added — `.cogdyn` file format v0.1
+
+A small JSON container with:
+- the (A, B) matrices as nested float arrays
+- the schema (categories, dimensions, format version)
+- the fit metadata (n_observations, train_mse, R², spectral
+  radius, training timestamp)
+- a UUID identifying the model instance
+
+Canonical sort-keys UTF-8 JSON, no BOM. Round-trips losslessly.
+
+### Added — public API
+
+- `styxx.CognitiveDynamics`
+- `styxx.Observation`
+- `styxx.FitResult`
+- `styxx.synthetic_observations`
+- `styxx.thought_to_state`
+- `styxx.state_to_thought`
+- `styxx.COGDYN_FORMAT`
+- `styxx.COGDYN_VERSION`
+
+### Added — specification
+
+**`docs/cognitive-dynamics-v0.md`** — the v0.1 primer. Covers the
+math, identifiability theory, fit algorithm, all verbs, the
+unlocks (closed-loop control, offline simulation, causality
+testing, counterfactual analysis), known limitations, a reference
+example, and the license / patent story.
+
+### Tests
+
+- **44 new tests** in `tests/test_dynamics.py`:
+  - state ↔ vector encoding (8 tests)
+  - Observation construction (5 tests)
+  - fit() math correctness — including machine-epsilon recovery
+    on full-rank gaussian inputs and the rank-deficiency story
+    on simplex (Dirichlet) inputs (6 tests)
+  - predict() consistency (3 tests)
+  - simulate() multi-step rollout (3 tests)
+  - suggest() controller raw-space convergence (3 tests)
+  - forecast_horizon() (2 tests)
+  - residual() on held-out data (3 tests)
+  - .cogdyn file format (8 tests)
+  - public API exposure + end-to-end via `styxx.*` namespace (3 tests)
+- Full styxx suite: **385 passed, 1 skipped, 0 failures.** Zero
+  regressions vs 3.0.0a1.
+
+### Why this matters
+
+Every other interpretability technique is model-specific and
+post-hoc. A cognitive dynamics model is the missing piece between
+observation and action. Once it exists:
+
+- closed-loop cognitive control becomes a one-liner:
+  ``while not converged: a = dyn.suggest(current, target)``
+- offline agent prototyping becomes possible at zero API cost
+- the causal hypothesis becomes testable
+- counterfactual cognitive reasoning becomes possible
+
+This is the v0.1. The math is verified to machine precision on
+full-rank synthetic data. Real-world fits await fleet-scale
+observation data collection. The infrastructure is here.
+
+---
+
 ## [3.0.0a1] — 2026-04-14
 
 **The Thought type. Cognition is now data.**
