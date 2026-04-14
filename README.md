@@ -27,6 +27,10 @@
 LLM's internal cognitive state in real time — reasoning, refusal, hallucination, commitment —
 from signals already on the token stream. no new model. no retraining. fail-open.
 
+> **2026-04-14:** styxx is the reference implementation of **cognitive metrology** —
+> a new branch of measurement science founding tonight by public charter.
+> read the charter: [`docs/cognitive-metrology-charter.md`](docs/cognitive-metrology-charter.md)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/fathom-lab/styxx/main/demo/styxx_reflex.gif" width="720" alt="reflex arc: agent catches itself mid-hallucination, rewinds, self-corrects"/>
 </p>
