@@ -64,8 +64,35 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
+from . import config as _config
 from .core import StyxxRuntime
 from .vitals import Vitals
+
+
+_no_logprobs_warning_fired: bool = False
+
+
+def _warn_missing_logprobs_once() -> None:
+    """Emit a one-time stderr diagnostic for responses that look like
+    an openai ChatCompletion but carry no logprobs block.
+
+    Fires at most once per process. Suppressed by STYXX_NO_WARN=1.
+    Never raises — observe() remains fail-open by design.
+    """
+    global _no_logprobs_warning_fired
+    if _no_logprobs_warning_fired:
+        return
+    if _config.is_warn_disabled():
+        _no_logprobs_warning_fired = True
+        return
+    _no_logprobs_warning_fired = True
+    import sys as _sys
+    _sys.stderr.write(
+        "styxx: observe() returned None because the response has no logprobs.\n"
+        "       Pass logprobs=True, top_logprobs=5 to your openai call, or use\n"
+        "       styxx.OpenAI() which injects them automatically.\n"
+        "       (This warning fires once per process; silence with STYXX_NO_WARN=1.)\n"
+    )
 
 
 # Shared runtime used by the default watch/observe helpers.
@@ -310,6 +337,14 @@ class WatchSession:
             )
             self._fire_gates_if_needed()
             return self.vitals
+
+        # If the response looks like an openai ChatCompletion (has
+        # .choices) but we could not extract logprobs from it, emit a
+        # one-time diagnostic so first-time users don't hit the
+        # silent-None foot-gun described in issue #2. Fail-open is
+        # preserved — we still fall through to text classification.
+        if hasattr(response, "choices") and not isinstance(response, dict):
+            _warn_missing_logprobs_once()
 
         # 4. Anthropic / no-logprob fallback: text-based classification.
         #    When logprobs aren't available (Anthropic, local models),
