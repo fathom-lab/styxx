@@ -197,7 +197,7 @@ A v0 conformant implementation MUST satisfy:
    `loaded.content_hash() == t.content_hash()`.
 
 The reference implementation passes all six invariants in
-`tests/test_thought.py` (47 tests, all passing).
+`tests/test_thought.py` (68 tests, all passing).
 
 ---
 
