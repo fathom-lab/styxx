@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.1.0a1"
+__version__ = "3.1.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"

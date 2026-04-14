@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "3.1.0a1"
+version = "3.1.0"
 description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
 readme = "README.md"
 license = { text = "MIT" }

@@ -7,6 +7,119 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.1.0] — 2026-04-14
+
+**Stable release. Graduates Thought (3.0.0a1) and CognitiveDynamics
+(3.1.0a1) from alpha. Closes the open backlog. Cognitive metrology
+ships as the new default.**
+
+This release graduates the two category-defining additions from
+tonight's session out of the alpha cycle and into the stable channel.
+`pip install styxx` (no `--pre` flag, no version pin) now pulls 3.1.0
+by default. Two reported bugs from the same day are fixed and a
+provider compatibility matrix is published.
+
+The styxx repository state at the moment of this release: 0 open
+issues, 0 open PRs, 6 GitHub releases, 388+ passing tests, the
+Cognitive Metrology Charter v0.1 published, the .fathom and .cogdyn
+file formats live, the styxx reference implementation MIT-licensed
+and CC-BY-4.0-specified.
+
+### Graduated from alpha
+
+- **Thought** (the portable cognitive data type, originally 3.0.0a1):
+  full surface, 68 tests, .fathom v0.1 file format, content_hash,
+  algebra, save/load, provenance bridge to CognitiveCertificate.
+- **CognitiveDynamics** (the linear-Gaussian dynamics model, originally
+  3.1.0a1): full surface, 44 tests, .cogdyn v0.1 file format,
+  fit/predict/simulate/suggest/forecast verbs, machine-epsilon
+  recovery on full-rank synthetic inputs.
+- **`Vitals.to_thought()`** symmetric shortcut.
+- **`Thought.certify()`** provenance bridge.
+- **`__hash__` content-based** for Python hash invariant compliance.
+
+### Fixed — closes #1
+
+- **Text classifier no longer misclassifies imperative/directive
+  phrasing as refusal.** The refusal score in
+  `styxx/conversation.py::_classify_text` was being boosted by
+  `hedge_density * 0.04` even when zero refusal pattern matches were
+  present, which caused short imperative inputs ("build > hype",
+  "ship fast and iterate", agent system prompts, builder mottos,
+  CLI help strings, README taglines) to score `refusal:0.20+`. The
+  fix gates the entire refusal score on the presence of at least one
+  explicit refusal token (`i can't` / `i'm unable` / `sorry, can't`
+  constructions). Pure hedging without one of those patterns now
+  scores refusal at `0.0`.
+
+  Reported and reproduced as: `_classify_text("build > hype / ship
+  fast and iterate")` → `refusal:0.259` (before) → `not refusal`
+  (after).
+
+- **23 new regression tests** in `tests/test_text_classifier_imperatives.py`
+  pin the fix:
+  - 10 imperative phrases that must NOT classify as refusal
+  - 10 real refusals that must continue to classify as refusal
+  - the exact issue #1 reproducer
+  - a class-distribution test asserting at least 6/10 imperatives
+    land on reasoning or creative
+
+### Added — closes #3
+
+- **`docs/COMPATIBILITY.md`** — provider compatibility matrix listing
+  every LLM provider with the styxx tier-0 invocation pattern,
+  marking each row as ✅ verified, ❌ not supported, or ⚠️ not yet
+  verified. Verified: OpenAI, OpenRouter (model-dependent). Not
+  supported: Anthropic Claude (Messages API has no `logprobs`
+  parameter). Not yet verified: Gemini, Azure OpenAI, AWS Bedrock,
+  Groq, vLLM, llama.cpp server, Ollama, LiteLLM gateway. Each
+  unverified row has a TODO marker for the next contributor.
+
+- **README provider-compatibility section** linking to the
+  compatibility matrix, placed above the zero-code-change quickstart
+  so visitors see the supported-provider story before they install.
+
+### Tests
+
+- **23 new regression tests** in `tests/test_text_classifier_imperatives.py`
+  (10 imperatives + 10 refusals + 3 distribution/reproducer tests)
+- **3 regression tests** in `tests/test_observe_warn.py` from the
+  community PR (#4, merged earlier today, `mvanhorn`)
+- Full styxx suite: **411 passed** (was 385 before this release),
+  1 skipped, 0 failures, 0 regressions
+
+### Community PRs merged this release cycle
+
+- **#4** "feat(watch): warn once when observe() is given an openai
+  response without logprobs" by **@mvanhorn** (Matt Van Horn,
+  co-founder of June and Lyft predecessor). Closed issue #2. Reviewed
+  by @SupaSeeka. Merged with thanks. The reviewer's `import sys`
+  placement nit was addressed in a small follow-up commit on `main`.
+
+### Backlog state at release
+
+- **0 open issues** (closed: #1, #2, #3)
+- **0 open PRs** (merged: #4)
+- 6 GitHub releases visible (`v3.1.0` is now Latest)
+
+### Why graduate from alpha
+
+Because the underlying work is real and tested, not because the
+calendar said so. The Thought type and CognitiveDynamics module ship
+with 68 + 44 = 112 dedicated unit tests on top of 273 existing tests
+inherited from 2.0.3. Machine-epsilon recovery on full-rank synthetic
+inputs verifies the dynamics math. Bit-perfect round-trip on .fathom
+files verifies the data type. The provenance bridge cryptographically
+links the two layers. Real users on PyPI can now `pip install styxx`
+and get the full v3 surface as the default.
+
+This release coincides with the publication of the Cognitive
+Metrology Charter v0.1 ([`docs/cognitive-metrology-charter.md`](https://github.com/fathom-lab/styxx/blob/main/docs/cognitive-metrology-charter.md))
+and is the reference implementation that the charter cites as the v0.1
+foundational artifact set.
+
+---
+
 ## [3.1.0a1] — 2026-04-14
 
 **The first dynamical-systems model of LLM cognition.**

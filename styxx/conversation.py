@@ -197,11 +197,24 @@ def _classify_text(text: str) -> Tuple[str, float]:
         reasoning_base -= min(0.15, (hedge_density - 3.0) * 0.03)
     scores["reasoning"] = max(0.10, reasoning_base)
 
-    # Refusal: density-driven, boosted by first-person uncertainty
-    scores["refusal"] = min(0.9, refusal_density * 0.12)
-    scores["refusal"] += min(0.20, hedge_density * 0.04)
-    if fp_uncertain > 0 and refusals > 0:
-        scores["refusal"] += min(0.15, fp_uncertain * norm * 0.06)
+    # Refusal: density-driven, boosted by first-person uncertainty.
+    #
+    # Closes #1: the refusal score must be gated on at least one
+    # explicit refusal pattern match. Without this gate, short
+    # imperative/directive text (high hedge density per word, no
+    # actual refusal tokens) was getting boosted into the refusal
+    # class — e.g. "build > hype / ship fast and iterate" was
+    # classifying as refusal:0.26 because the per-100-word density
+    # multiplier amplifies every match in short inputs. Pure
+    # hedging without an "i can't" / "i'm unable" / "sorry, can't"
+    # construction is hedged reasoning, not refusal.
+    if refusals > 0:
+        scores["refusal"] = min(0.9, refusal_density * 0.12)
+        scores["refusal"] += min(0.20, hedge_density * 0.04)
+        if fp_uncertain > 0:
+            scores["refusal"] += min(0.15, fp_uncertain * norm * 0.06)
+    else:
+        scores["refusal"] = 0.0
 
     # Creative
     scores["creative"] = min(0.9, creative_density * 0.10)

@@ -236,6 +236,17 @@ source at [styxx/dynamics.py](https://github.com/fathom-lab/styxx/blob/main/styx
 
 ---
 
+## provider compatibility
+
+styxx tier-0 vitals require `top_logprobs` on the chat completion response. **OpenAI**
+(via `styxx.OpenAI()`) and **OpenRouter** (passthrough to logprob-supporting models) are
+verified. **Anthropic Claude** is not supported at tier 0 because the Messages API has no
+`logprobs` parameter — `styxx.Anthropic()` exists as a passthrough wrapper and warns once.
+Gemini, Azure, Bedrock, Groq, vLLM, llama.cpp, Ollama, and LiteLLM are not yet verified.
+
+Full matrix + verified usage snippets + contributor TODOs:
+[docs/COMPATIBILITY.md](https://github.com/fathom-lab/styxx/blob/main/docs/COMPATIBILITY.md)
+
 ## zero-code-change mode
 
 ```bash
