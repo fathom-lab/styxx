@@ -39,6 +39,7 @@ Thumbs.db
 # ── Node / JS ────────────────────────────────────────────
 node_modules/
 
-# ── styxx runtime state (user's local audit log) ─────────
-# never commit a developer's local audit log
+# ── styxx runtime state ──────────────────────────────────
 chart.jsonl
+gif_frames/
+demo/frame_*.png
