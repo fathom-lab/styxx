@@ -62,6 +62,7 @@ without changing the main call site.
 
 from __future__ import annotations
 
+import sys
 from typing import Any, List, Optional
 
 from . import config as _config
@@ -86,8 +87,7 @@ def _warn_missing_logprobs_once() -> None:
         _no_logprobs_warning_fired = True
         return
     _no_logprobs_warning_fired = True
-    import sys as _sys
-    _sys.stderr.write(
+    sys.stderr.write(
         "styxx: observe() returned None because the response has no logprobs.\n"
         "       Pass logprobs=True, top_logprobs=5 to your openai call, or use\n"
         "       styxx.OpenAI() which injects them automatically.\n"
