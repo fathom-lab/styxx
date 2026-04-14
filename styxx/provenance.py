@@ -93,6 +93,14 @@ class CognitiveCertificate:
     # Model info
     model: Optional[str] = None
 
+    # 3.0.0a1 — optional binding to a portable Thought (.fathom file).
+    # When present, this is the SHA-256 content_hash of a Thought
+    # whose cognitive trajectory this certificate attests. Lets a
+    # signed certificate verify a specific .fathom file's content.
+    # Backward-compatible: certificates produced before 3.0.0a1
+    # leave this field unset / None.
+    thought_content_hash: Optional[str] = None
+
     def as_dict(self) -> dict:
         return {
             "@context": self.schema_uri,
@@ -132,6 +140,7 @@ class CognitiveCertificate:
                 "issued_ts": self.issued_ts,
                 "issuer": "styxx cognitive provenance engine",
                 "issuer_version": _get_version(),
+                "thought_content_hash": self.thought_content_hash,
             },
         }
 

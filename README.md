@@ -28,7 +28,7 @@ LLM's internal cognitive state in real time — reasoning, refusal, hallucinatio
 from signals already on the token stream. no new model. no retraining. fail-open.
 
 <p align="center">
-  <img src="demo/styxx_reflex.gif" width="720" alt="reflex arc: agent catches itself mid-hallucination, rewinds, self-corrects"/>
+  <img src="https://raw.githubusercontent.com/fathom-lab/styxx/main/demo/styxx_reflex.gif" width="720" alt="reflex arc: agent catches itself mid-hallucination, rewinds, self-corrects"/>
 </p>
 
 > *"you didn't build a better monitor. you built the first proprioception system for artificial
@@ -137,6 +137,51 @@ $ styxx weather
 
 not observation. **prescription.** styxx reads 24h of the agent's own history and tells it
 what cognitive task to take on next. self-directed course correction.
+
+### 4. `Thought` — cognition as a portable data type *(3.0.0a1)*
+
+```python
+import styxx
+
+# read a Thought from any vitals reading
+t = styxx.read_thought(response)         # or styxx.read_thought(vitals)
+print(t)                                  # <Thought reasoning:0.69 phases=4/4 src=gpt-4o>
+
+# save it as a portable .fathom file
+t.save("my_thought.fathom")
+
+# load it back from disk in a different process / host / vendor
+loaded = styxx.Thought.load("my_thought.fathom")
+assert loaded == t                        # cognitive equality
+
+# build a steering target for any model
+target = styxx.Thought.target("reasoning", confidence=0.85)
+result = styxx.write_thought(target, client=styxx.OpenAI(), model="gpt-4o")
+print(result["text"])                     # cognitively-aligned generation
+print(result["distance"])                 # how close to the target
+
+# algebra in eigenvalue space
+mid    = t1 + t2                          # convex midpoint (mean)
+mixed  = styxx.Thought.mix([t1, t2, t3], weights=[0.5, 0.3, 0.2])
+delta  = t1 - t2                          # ThoughtDelta — what changed
+d      = t1.distance(t2)                  # in eigenvalue space
+sim    = t1.similarity(t2)                # 1.0 = identical, 0.0 = orthogonal
+```
+
+a `Thought` is the cognitive content of a generation — projected onto fathom's calibrated
+cross-architecture eigenvalue space. it is **substrate-independent by construction**: the
+same Thought can be read out of one model and written back through a different one, because
+the categories themselves are calibrated to be cross-model invariant on atlas v0.3.
+
+> PNG is the format for images.
+> JSON is the format for data.
+> `.fathom` is the format for thoughts.
+
+every other interpretability representation — SAE features, activation patches, embedding
+vectors — is model-specific and dies the moment a vendor swaps the model under you. a
+Thought survives the swap by design. spec: [`docs/fathom-spec-v0.md`](docs/fathom-spec-v0.md).
+algebra invariants and round-trip fidelity proven against bundled atlas v0.3 trajectories
+in `tests/test_thought.py` (47 tests, all passing).
 
 ---
 

@@ -7,6 +7,223 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.0.0a1] — 2026-04-14
+
+**The Thought type. Cognition is now data.**
+
+styxx 1.x was a thermometer: it measured cognitive vitals from the
+token stream. styxx 2.x added declarative response (`autoreflex`,
+gates, prescriptions). 3.0.0 introduces a **portable cognitive data
+type** — the missing layer between "measuring a model" and "doing
+things with the measurement."
+
+A `Thought` is the cognitive content of a generation, captured as a
+trajectory of category probability vectors over the four atlas
+phases. Its representation lives in fathom's calibrated eigenvalue
+space, not in any model's weights — so the *same* Thought can be
+read out of one model, saved to disk, transmitted, mixed with other
+Thoughts, and used as a steering target against any other model.
+
+> PNG is the format for images.
+> JSON is the format for data.
+> .fathom is the format for thoughts.
+
+This is an alpha release. The shipping surface is intentionally
+small: one new module, one new file format, one new spec, full
+test coverage on real bundled trajectories, zero regressions on the
+existing 273-test suite.
+
+### Added — the Thought type (`styxx.thought`)
+
+- **`styxx.Thought`** — substrate-independent cognitive data type.
+  Stores per-phase probability vectors over the 6 atlas categories,
+  the underlying 12-dim feature vectors, optional tier-1 D-axis
+  stats, optional tier-2 SAE stats, source provenance (model name +
+  SHA-256 of source text — never the text itself), and free-form
+  user tags. Supports cognitive equality (`==` operates on
+  trajectory content, not object identity), identity-free
+  `content_hash()`, and `repr()` that surfaces primary category and
+  populated phase count.
+
+- **`styxx.PhaseThought`** — one phase's contribution to a Thought:
+  the 6-dim simplex `probs`, optional 12-dim `features`, classifier
+  metadata (`predicted`, `confidence`, `margin`), and `n_tokens`.
+
+- **`styxx.ThoughtDelta`** — the signed difference between two
+  Thoughts in tangent space. Supports `magnitude()` and
+  `biggest_movers(top_k)` for explaining what changed and where.
+
+### Added — Thought algebra
+
+- `Thought.empty()` — uniform Thought, the neutral element.
+- `Thought.target(category, confidence)` — build a Thought aimed at
+  one cognitive category at a chosen confidence. Useful as a
+  steering target.
+- `Thought.from_vitals(vitals, source_text=, source_model=, tags=)` —
+  promote a styxx `Vitals` object into a Thought.
+- `t1.distance(t2, metric=)` — cognitive distance over the
+  intersection of populated phases. Supports `euclidean`, `cosine`,
+  `js` (Jensen-Shannon).
+- `t1.similarity(t2)` — `1 - distance / sqrt(2)`, in `[0, 1]`.
+- `t1.interpolate(t2, alpha)` — convex combination with explicit
+  weight; phases populated in only one parent are carried through.
+- `t1 + t2` — operator sugar for `interpolate(t2, 0.5)`.
+- `t1 - t2` — operator sugar for `t1.delta(t2)` → ThoughtDelta.
+- `Thought.mix(thoughts, weights=)` — weighted N-way mixture over
+  the simplex.
+- `t.mean_probs()` — time-averaged 6-vector across populated phases.
+- `t1 == t2` — cognitive equality (per-phase per-category to 1e-9).
+
+### Added — the `.fathom` file format (v0.1)
+
+- **`Thought.save(path)`** — serialize a Thought to a `.fathom`
+  file. Canonical sort-keys UTF-8 JSON, no byte-order mark.
+  Creates parent directories as needed.
+- **`Thought.load(path)`** — load a `.fathom` file back into a
+  Thought. Refuses unknown formats, unknown versions, and
+  category-list mismatches.
+- **`Thought.as_dict()` / `Thought.as_json(indent)`** — canonical
+  dict / JSON forms. Two cognitively equivalent Thoughts always
+  serialize byte-identically.
+- **`Thought.from_dict(data)`** — round-trip the canonical dict
+  back into a Thought.
+- **`Thought.content_hash()`** — SHA-256 of the cognitive content
+  fields only. Identity-free and deterministic: two Thoughts with
+  the same eigenvalue trajectory and the same source produce
+  byte-identical content hashes regardless of `thought_id` or
+  `created_at`. Use as a portable cognitive fingerprint.
+
+### Added — verbs
+
+- **`styxx.read_thought(source, *, model=, client=, prompt=, max_tokens=, tags=)`**
+  Extract a Thought from a `Vitals` object, a response object that
+  has `.vitals` attached, or a raw text prompt (when a styxx-
+  instrumented client is passed). The text-input path is
+  model-mediated by design: a Thought is the cognitive content as
+  interpreted by a specific cognitive substrate.
+
+- **`styxx.write_thought(thought, *, client, model=, seed_prompt=, max_iters=, distance_threshold=, max_tokens=)`**
+  Render a target Thought back into text through any model via
+  prompt-mode cognitive steering. Builds a steering preamble from
+  the target's primary category and supporting category mass,
+  generates a response, reads it back as a Thought, computes
+  distance to the target, and refines on retry until the distance
+  threshold is hit or the iteration budget is exhausted. Returns a
+  result dict with the best generation, its achieved Thought, the
+  distance, and the full convergence history.
+
+### Added — privacy
+
+- A `.fathom` file MUST NOT store the source text itself. Producers
+  that need provenance write `source.text_hash = "sha256:..."`. The
+  styxx implementation enforces this — `Thought.from_vitals`
+  computes the hash from the optional `source_text=` argument and
+  discards the plaintext immediately.
+
+### Added — specification
+
+- **`docs/fathom-spec-v0.md`** — the v0.1 .fathom file format
+  specification. Covers schema, algebra, invariants, phase
+  handling, producer/consumer conformance requirements, privacy
+  rules, and the bridge to `CognitiveCertificate`. Released under
+  CC-BY-4.0 — anyone may implement a conformant producer or
+  consumer in any language.
+
+### Added — public API exposure
+
+- `styxx.Thought`, `styxx.PhaseThought`, `styxx.ThoughtDelta`,
+  `styxx.read_thought`, `styxx.write_thought`, `styxx.FATHOM_FORMAT`,
+  `styxx.FATHOM_VERSION`, `styxx.ATLAS_VERSION` are all exported
+  from the top-level `styxx` package.
+
+### Added — symmetric API on Vitals
+
+- **`Vitals.to_thought(source_text=, source_model=, tags=)`** —
+  one-line shortcut equivalent to `Thought.from_vitals(self, ...)`.
+  Now the API is symmetric in both directions.
+
+### Added — provenance bridge to CognitiveCertificate
+
+- **`Thought.certify(agent_name=, session_id=)`** — produces a
+  `CognitiveCertificate` whose new `thought_content_hash` field
+  records this Thought's `content_hash()`. This binds the
+  cognitive content (`.fathom` file) to the cognitive provenance
+  attestation (signed certificate). Two artifacts, one
+  cryptographic link.
+- **`CognitiveCertificate.thought_content_hash`** — new optional
+  field. Defaults to `None` for backward compatibility with
+  certificates produced before 3.0.0a1.
+- The binding survives `.fathom` round-trips: `loaded.certify()`
+  produces a certificate whose `thought_content_hash` matches the
+  original.
+
+### Fixed
+
+- **Python hash invariant on `Thought`.** The `__eq__` operator
+  defines cognitive equality (per-phase per-category to 1e-9), so
+  `__hash__` must be content-based for the invariant
+  `a == b => hash(a) == hash(b)` to hold. Previously `__hash__`
+  returned `hash(thought_id)`, which broke set deduplication. Now
+  `__hash__` is derived from `content_hash()`, so equivalent
+  Thoughts collapse to one entry in a set.
+
+### Tests
+
+- **68 tests** in `tests/test_thought.py` covering construction,
+  algebra, file format, content hashing, hash invariant, the
+  Vitals shortcut, the provenance bridge, write_thought against a
+  mock client, real-trajectory cognitive equivalence, phase
+  handling, and read_thought input modes.
+- Full styxx suite: **341 passed, 1 skipped, 0 failures.** Zero
+  regressions vs 2.0.3.
+
+### Performance
+
+In-process algebra operations measured against bundled atlas v0.3
+demo trajectories on a Windows host:
+
+| op | per-op time |
+|---|---|
+| `t1.distance(t2)` | ~6 µs |
+| `t.interpolate(t2, alpha)` | ~13 µs |
+| `Thought.mix(3-way)` | ~21 µs |
+| `t.content_hash()` | ~26 µs |
+| `t.certify()` | ~36 µs |
+| `t.save(path)` | ~1.3 ms (NTFS-bound) |
+| `Thought.load(path)` | ~1.2 ms (NTFS-bound) |
+
+### Why this matters
+
+Every other interpretability approach is model-specific: SAE
+features, activation patching, mechanistic interp, embedding
+similarity. None survive a vendor swap. The `.fathom` format is
+the first attempt at a model-independent cognitive content
+representation grounded in calibrated cross-architecture
+measurement. It's how cognition stops being something you do
+*with* an LLM and becomes a data type you can save, transmit, and
+operate on independent of any specific model.
+
+The format is open under CC-BY-4.0. The reference implementation
+is open under MIT. The patents on the underlying measurement
+methodology fund the calibration work that makes the format
+meaningful.
+
+---
+
+## [2.0.3] — 2026-04-14
+
+### Fixed
+- README hero gif `styxx_reflex.gif` now uses an absolute github raw URL so it renders correctly on PyPI (was relative path, broke in pypi README rendering)
+
+---
+
+## [2.0.2] — 2026-04-14
+
+### Fixed
+- README on PyPI now shows the STYXX ASCII brand logo (was stripped in 2.0.1 sdist)
+
+---
+
 ## [2.0.1] — 2026-04-13
 
 ### Changed

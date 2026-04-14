@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "2.0.1"
+__version__ = "3.0.0a1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -382,6 +382,24 @@ from .autoreflex import (
     AutoReflexRule,
 )
 
+# 3.0.0a1 — Thought as a portable, substrate-independent data type.
+# A Thought is the cognitive content of a generation, projected onto
+# fathom's calibrated eigenvalue space. It can be saved to a .fathom
+# file, loaded back, mixed with other Thoughts, used as a steering
+# target, and read out of one model / written through another. PNG is
+# the format for images. JSON is the format for data. .fathom is the
+# format for thoughts.
+from .thought import (
+    Thought,
+    PhaseThought,
+    ThoughtDelta,
+    read_thought,
+    write_thought,
+    FATHOM_FORMAT,
+    FATHOM_VERSION,
+    ATLAS_VERSION,
+)
+
 __all__ = [
     # ── 1. observe ────────────────────────────────────────
     "observe", "observe_raw", "watch", "is_concerning", "explain",
@@ -456,6 +474,11 @@ __all__ = [
     "tier1_enabled", "tier1_model", "tier1_device",
     "Sentinel", "SentinelAlert",
     "LIVE_SOURCES",
+
+    # ── 11. portable thoughts (3.0.0a1) ───────────────────
+    "Thought", "PhaseThought", "ThoughtDelta",
+    "read_thought", "write_thought",
+    "FATHOM_FORMAT", "FATHOM_VERSION", "ATLAS_VERSION",
 
     # ── metadata ──────────────────────────────────────────
     "__version__", "__tagline__",

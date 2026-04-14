@@ -17,7 +17,7 @@ import math
 import os
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -46,7 +46,7 @@ PHASE_ORDER = ["phase1_preflight", "phase2_early", "phase3_mid", "phase4_late"]
 # If this ever mismatches the actual file, styxx refuses to import —
 # it means the calibration data has been tampered with or corrupted.
 EXPECTED_CENTROIDS_SHA256 = (
-    "f25edc5f47bb93928671aab05f38f351a2d0df0fb7722d53e48d2368b0d5c543"
+    "502313c2e7c160df205f24d5457bb57b8a5e1846ff4afe898db0f20d491d0beb"
 )
 
 
@@ -363,6 +363,43 @@ class Vitals:
         return f"{self.phase4_late.predicted_category}:{self.phase4_late.confidence:.2f}"
 
     @property
+    def _primary_reading(self) -> Optional[PhaseReading]:
+        """Return the latest available PhaseReading, preferring phase 4."""
+        for r in (self.phase4_late, self.phase3_mid,
+                  self.phase2_early, self.phase1_pre):
+            if r is not None:
+                return r
+        return None
+
+    @property
+    def category(self) -> str:
+        """Primary cognitive category for this generation.
+
+        Returns the predicted category from the latest available phase,
+        preferring phase 4 (post-generation) over earlier phases.
+        This is the shortcut used in the 30-second quickstart:
+
+            vitals = styxx.observe(response)
+            print(vitals.category)   # "reasoning"
+        """
+        r = self._primary_reading
+        return r.predicted_category if r is not None else "unknown"
+
+    @property
+    def confidence(self) -> float:
+        """Confidence of the primary category classification, in [0, 1].
+
+        Returns the softmax-like confidence from the latest available
+        phase, preferring phase 4. This is the shortcut used in the
+        30-second quickstart:
+
+            vitals = styxx.observe(response)
+            print(vitals.confidence)  # 0.45
+        """
+        r = self._primary_reading
+        return float(r.confidence) if r is not None else 0.0
+
+    @property
     def d_honesty(self) -> Optional[str]:
         """Compact string view of the D-axis honesty measurement.
 
@@ -380,6 +417,34 @@ class Vitals:
             if phase is not None and phase.d_honesty_mean is not None:
                 return f"{phase.d_honesty_mean:.3f}"
         return None
+
+    def to_thought(
+        self,
+        *,
+        source_text: Optional[str] = None,
+        source_model: Optional[str] = None,
+        tags: Optional[Dict[str, Any]] = None,
+    ) -> "Thought":
+        """Promote this Vitals into a portable Thought (3.0.0a1+).
+
+        Convenience shortcut for `Thought.from_vitals(self, ...)`.
+        Symmetric with the constructor: instead of
+
+            t = styxx.Thought.from_vitals(vitals)
+
+        you can write
+
+            t = vitals.to_thought()
+
+        See styxx.thought for the full Thought type documentation.
+        """
+        from .thought import Thought
+        return Thought.from_vitals(
+            self,
+            source_text=source_text,
+            source_model=source_model,
+            tags=tags,
+        )
 
     def as_markdown(self) -> str:
         """Render vitals as a compact markdown block suitable for
