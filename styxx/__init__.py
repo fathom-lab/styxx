@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.2.1"
+__version__ = "3.2.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -283,6 +283,7 @@ from .eval import EvalSuite, EvalResult, EvalFixture, compare_evals
 from .trajectory import slope, curvature, volatility, extract_shape_features
 from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon_analysis
 from .intercept import CognitiveIntercept, should_intercept, simulate_intercept, InterceptReport
+from .temperature import measure_temperature, aggregate_temperature, TruthMap, demo_temperature
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

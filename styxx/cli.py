@@ -213,6 +213,13 @@ def cmd_ci_test(args):
         return 1
 
 
+def cmd_temperature(args):
+    """Run cognitive temperature analysis on demo trajectories (3.2.0)."""
+    from .temperature import demo_temperature
+    demo_temperature(verbose=True)
+    return 0
+
+
 def cmd_intercept(args):
     """Run the cognitive intercept simulation (3.2.0)."""
     from .intercept import simulate_all_demo
@@ -1455,6 +1462,13 @@ def _build_parser() -> argparse.ArgumentParser:
     p_cibase.add_argument("--out", type=str, default="styxx_baseline.json", help="output path")
     p_cibase.add_argument("--name", type=str, default=None, help="agent name")
     p_cibase.set_defaults(func=cmd_ci_baseline)
+
+    # temperature — cognitive temperature analysis (3.2.0)
+    p_temp = sub.add_parser(
+        "temperature",
+        help="cognitive temperature profiles — knowledge converges, invention diverges",
+    )
+    p_temp.set_defaults(func=cmd_temperature)
 
     # intercept — cognitive intercept simulation (3.2.0)
     p_intercept = sub.add_parser(
