@@ -46,13 +46,26 @@ class HandoffEnvelope:
     sender_confidence: float = 0.0
     sender_category: str = "unknown"
     sender_mood: Optional[str] = None
+    # 3.2.0: forecast + coherence propagation
+    sender_forecast_risk: Optional[str] = None
+    sender_coherence: Optional[float] = None
     # Metadata
     ts: float = 0.0
     ts_iso: str = ""
 
     def is_trusted(self, threshold: float = 0.6) -> bool:
-        """Quick check: was the sender in a healthy state?"""
-        return self.sender_trust >= threshold and self.sender_gate == "pass"
+        """Quick check: was the sender in a healthy state?
+
+        3.2.0: also checks forecast risk (critical = untrusted) and
+        coherence (< 0.4 = untrusted).
+        """
+        if self.sender_trust < threshold or self.sender_gate != "pass":
+            return False
+        if self.sender_forecast_risk == "critical":
+            return False
+        if self.sender_coherence is not None and self.sender_coherence < 0.4:
+            return False
+        return True
 
     def as_dict(self) -> dict:
         return {
@@ -126,6 +139,8 @@ def handoff(
         sender_confidence=state["confidence"],
         sender_category=state["category"],
         sender_mood=state.get("mood"),
+        sender_forecast_risk=state.get("forecast_risk"),
+        sender_coherence=state.get("coherence"),
         ts=time.time(),
         ts_iso=time.strftime("%Y-%m-%dT%H:%M:%S"),
     )
@@ -190,4 +205,6 @@ def _get_sender_state() -> dict:
         "confidence": conf,
         "category": cat,
         "mood": current_mood,
+        "forecast_risk": e.get("forecast_risk"),
+        "coherence": e.get("coherence"),
     }

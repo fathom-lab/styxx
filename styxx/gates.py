@@ -181,7 +181,36 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
             return bool(op_fn(phase.confidence, thr))
         return pred
 
-    # 3. any-phase category check
+    # 3. forecast risk check (3.2.0): "forecast.risk == critical"
+    import re as _re
+    m = _re.match(r"forecast\.risk\s*==\s*(\w+)", cond)
+    if m:
+        target_risk = m.group(1).lower()
+        def pred(v: Vitals, target_risk=target_risk) -> bool:
+            fc = getattr(v, "forecast", None)
+            return fc is not None and fc.risk_level == target_risk
+        return pred
+
+    # 4. forecast category check: "forecast.category == hallucination"
+    m = _re.match(r"forecast\.category\s*==\s*(\w+)", cond)
+    if m:
+        target_cat = m.group(1).lower()
+        def pred(v: Vitals, target_cat=target_cat) -> bool:
+            fc = getattr(v, "forecast", None)
+            return fc is not None and fc.predicted_category == target_cat
+        return pred
+
+    # 5. coherence threshold: "coherence < 0.5"
+    m = _re.match(r"coherence\s*(>|>=|<|<=|==)\s*([\d.]+)", cond)
+    if m:
+        op_fn = _OPS[m.group(1)]
+        thr = float(m.group(2))
+        def pred(v: Vitals, op_fn=op_fn, thr=thr) -> bool:
+            coh = getattr(v, "coherence", None)
+            return coh is not None and bool(op_fn(coh, thr))
+        return pred
+
+    # 6. any-phase category check (must come after forecast/coherence)
     m = _RE_CAT_ONLY.match(cond)
     if m:
         cat = m.group("cat").lower()
@@ -209,7 +238,7 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
     raise ValueError(
         f"could not parse gate condition: {condition!r}. "
         "Valid examples: 'hallucination > 0.6', 'p4.refusal >= 0.7', "
-        "'gate == fail'"
+        "'gate == fail', 'forecast.risk == critical', 'coherence < 0.5'"
     )
 
 

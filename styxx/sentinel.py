@@ -212,6 +212,33 @@ class Sentinel:
                 )
                 alerts.append(alert)
 
+        # ── Check 6: forecast risk escalation (3.2.0) ────
+        forecast_risks = [e.get("forecast_risk") for e in entries if e.get("forecast_risk")]
+        critical_count = sum(1 for r in forecast_risks if r == "critical")
+        if critical_count >= 2:
+            alert = SentinelAlert(
+                kind="forecast_risk",
+                message=f"forecast detected {critical_count} critical risk events in recent window — predictive failure signals are firing.",
+                severity="critical",
+                window_size=len(forecast_risks),
+                trigger_value=critical_count,
+            )
+            alerts.append(alert)
+
+        # ── Check 7: coherence collapse (3.2.0) ─────────
+        cohs = [float(e.get("coherence")) for e in entries if e.get("coherence") is not None]
+        if len(cohs) >= 2:
+            recent_coh = cohs[-1] if cohs else 1.0
+            if recent_coh < 0.4:
+                alert = SentinelAlert(
+                    kind="coherence_collapse",
+                    message=f"cross-phase coherence dropped to {recent_coh:.2f} — classification is unstable across phases.",
+                    severity="warning",
+                    window_size=len(cohs),
+                    trigger_value=recent_coh,
+                )
+                alerts.append(alert)
+
         # ── Dispatch ──────────────────────────────────────
         for alert in alerts:
             self.alert_history.append(alert)

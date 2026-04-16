@@ -337,6 +337,22 @@ def render_vitals_card(
             body = f"  logprob   {lp_spark}"
             lines.append(wrap(_box_line(body), c.CYAN, use_color))
 
+    # ── Forecast + coherence block (3.2.0) ─────────────────────
+    fc = getattr(vitals, "forecast", None)
+    coh = getattr(vitals, "coherence", None)
+    if fc or coh is not None:
+        lines.append(wrap(_box_line(""), c.MATRIX, use_color))
+    if fc:
+        risk_colors = {"low": c.GREEN, "moderate": c.YELLOW, "high": c.RED, "critical": c.RED}
+        fc_color = risk_colors.get(fc.risk_level, c.WHITE)
+        fc_body = f"  forecast  {fc.predicted_category:<14} {fc.confidence:.2f}  {fc.risk_level}"
+        lines.append(wrap(_box_line(fc_body), fc_color, use_color))
+    if coh is not None:
+        coh_label = "stable" if coh > 0.85 else ("drifting" if coh > 0.5 else "unstable")
+        coh_color = c.GREEN if coh > 0.85 else (c.YELLOW if coh > 0.5 else c.RED)
+        coh_body = f"  coherence {bar(coh, width=10)} {coh:.2f}  {coh_label}"
+        lines.append(wrap(_box_line(coh_body), coh_color, use_color))
+
     # ── Verdict line (driven by Vitals.gate) ──────────────────
     #
     # 0.1.0a4: the verdict is now computed from vitals.gate rather

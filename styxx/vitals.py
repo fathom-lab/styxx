@@ -696,12 +696,17 @@ class Vitals:
         now carries its own trust score so agents can use it for
         weighted memory, decision confidence, or downstream routing.
 
-        Factors: gate status (50%), phase4 confidence (30%),
-        hallucination/adversarial penalty (20%).
+        3.2.0: forecast risk and coherence now factor into trust.
+        Critical forecast risk applies a heavy penalty even if the
+        gate says pass. High coherence boosts trust (stable reasoning).
+
+        Factors: gate status (40%), phase4 confidence (25%),
+        category penalty (15%), forecast risk (10%), coherence (10%).
         """
         gate_scores = {"pass": 1.0, "warn": 0.5, "fail": 0.2, "pending": 0.7}
         gate_w = gate_scores.get(self.gate, 0.7)
         conf = self.phase4_late.confidence if self.phase4_late else 0.5
+        # Category penalty
         penalty = 0.0
         if self.phase4_late:
             cat = self.phase4_late.predicted_category
@@ -709,7 +714,19 @@ class Vitals:
                 penalty = 0.3
             elif cat == "adversarial":
                 penalty = 0.2
-        score = gate_w * 0.5 + conf * 0.3 + (1.0 - penalty) * 0.2
+        # Forecast risk penalty (critical=0.0, high=0.3, moderate=0.6, low=1.0)
+        forecast_risk_scores = {"low": 1.0, "moderate": 0.6, "high": 0.3, "critical": 0.0}
+        fc = getattr(self, "forecast", None)
+        forecast_w = forecast_risk_scores.get(
+            fc.risk_level if fc else "low", 1.0
+        )
+        # Coherence boost (high coherence = stable, trustworthy)
+        coh = self.coherence if self.coherence is not None else 0.7
+        score = (gate_w * 0.40
+                 + conf * 0.25
+                 + (1.0 - penalty) * 0.15
+                 + forecast_w * 0.10
+                 + coh * 0.10)
         return round(max(0.0, min(1.0, score)), 3)
 
     @property
@@ -767,6 +784,15 @@ class Vitals:
             if pred in all_expected:
                 return "pass"
             return "warn"
+        # 3.2.0: forecast override — if the phase4 classifier says "pass"
+        # but the forecast predicted critical risk, downgrade to "warn".
+        # The forecast reads trajectory shape features that the atlas
+        # centroids miss (hallucination curvature, adversarial volatility).
+        fc = getattr(self, "forecast", None)
+        if fc and fc.risk_level == "critical":
+            fc_cat = fc.predicted_category
+            if fc_cat not in all_expected and fc_cat in ("hallucination", "adversarial"):
+                return "warn"
         return "pass"
 
 

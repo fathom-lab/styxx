@@ -124,7 +124,15 @@ def _get_current_cognitive_state() -> dict:
         penalty = 0.3
     elif cat == "adversarial":
         penalty = 0.2
-    trust = round(max(0.0, min(1.0, gate_w * 0.5 + conf * 0.3 + (1.0 - penalty) * 0.2)), 3)
+    # 3.2.0: forecast risk + coherence factor into memory trust
+    forecast_risk_scores = {"low": 1.0, "moderate": 0.6, "high": 0.3, "critical": 0.0}
+    fc_risk = e.get("forecast_risk") or "low"
+    forecast_w = forecast_risk_scores.get(fc_risk, 1.0)
+    coh = float(e.get("coherence") or 0.7)
+    trust = round(max(0.0, min(1.0,
+        gate_w * 0.40 + conf * 0.25 + (1.0 - penalty) * 0.15
+        + forecast_w * 0.10 + coh * 0.10
+    )), 3)
     return {
         "trust_score": trust,
         "gate": gate,
