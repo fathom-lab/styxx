@@ -284,6 +284,7 @@ from .trajectory import slope, curvature, volatility, extract_shape_features
 from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon_analysis
 from .intercept import CognitiveIntercept, should_intercept, simulate_intercept, InterceptReport
 from .temperature import measure_temperature, aggregate_temperature, TruthMap, demo_temperature
+from .verify import verify, Verdict
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #
