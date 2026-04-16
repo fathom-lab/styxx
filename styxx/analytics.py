@@ -263,6 +263,17 @@ def write_audit(
             "gate": vitals.gate,
             "abort": vitals.abort_reason,
             "outcome": None,
+            # 3.2.0: store 21-dim feature vector for calibration loop
+            "features_v2": (
+                vitals.phase4_late.features_v2
+                if vitals.phase4_late and getattr(vitals.phase4_late, "features_v2", None)
+                else (
+                    vitals.phase1_pre.features_v2
+                    if getattr(vitals.phase1_pre, "features_v2", None)
+                    else None
+                )
+            ),
+            "coherence": getattr(vitals, "coherence", None),
         }
 
     # 1.3.1: auto-feedback — gate=pass entries get outcome='correct'

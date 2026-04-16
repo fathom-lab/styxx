@@ -279,6 +279,8 @@ from .antipatterns import antipatterns, AntiPattern
 from .config import set_mood, current_mood_override, gate_multiplier
 from .config import set_context, current_context
 from .config import expect, unexpect, expected_categories, clear_expected
+from .eval import EvalSuite, EvalResult, EvalFixture, compare_evals
+from .trajectory import slope, curvature, volatility, extract_shape_features
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

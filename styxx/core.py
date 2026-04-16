@@ -19,6 +19,7 @@ causal intervention (tier 3) as later releases.
 from __future__ import annotations
 
 import importlib
+import importlib.util
 import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence
@@ -196,6 +197,13 @@ class StyxxRuntime:
                 [phase1, phase2, phase3, phase4], d_list,
             )
 
+        # Cross-phase coherence (needs >= 2 phases)
+        coherence = None
+        transition_vectors = None
+        phases_available = [p for p in [phase1, phase2, phase3, phase4] if p is not None]
+        if len(phases_available) >= 2:
+            coherence, transition_vectors = self._compute_coherence(phases_available)
+
         # Gate logic
         abort_reason = self._evaluate_gates(phase1, phase4)
 
@@ -206,6 +214,8 @@ class StyxxRuntime:
             phase4_late=phase4,
             tier_active=self.tier_active,
             abort_reason=abort_reason,
+            coherence=coherence,
+            transition_vectors=transition_vectors,
         )
 
     def run_with_d_axis(
@@ -347,6 +357,38 @@ class StyxxRuntime:
             phase.d_honesty_mean = round(stats.mean, 4)
             phase.d_honesty_std = round(stats.std, 4)
             phase.d_honesty_delta = round(stats.delta, 4)
+
+    def _compute_coherence(
+        self,
+        phases: List[PhaseReading],
+    ) -> "tuple[float, list[list[float]]]":
+        """Compute cross-phase coherence from consecutive probability vectors.
+
+        coherence = mean cosine similarity between consecutive phase prob vectors.
+        transition_vectors = list of (p_{i+1} - p_i) difference vectors.
+
+        Returns (coherence, transition_vectors).
+        coherence is in [0, 1]. Higher = more consistent across phases.
+        """
+        import numpy as _np
+
+        def _prob_vec(r: PhaseReading) -> "_np.ndarray":
+            return _np.array([r.probs.get(c, 0.0) for c in CATEGORIES], dtype=float)
+
+        def _cosine(a: "_np.ndarray", b: "_np.ndarray") -> float:
+            na, nb = float(_np.linalg.norm(a)), float(_np.linalg.norm(b))
+            if na < 1e-12 or nb < 1e-12:
+                return 0.0
+            return float(_np.dot(a, b) / (na * nb))
+
+        vecs = [_prob_vec(p) for p in phases]
+        sims = []
+        transitions = []
+        for i in range(len(vecs) - 1):
+            sims.append(_cosine(vecs[i], vecs[i + 1]))
+            transitions.append((vecs[i + 1] - vecs[i]).tolist())
+        coherence = float(_np.mean(sims)) if sims else 0.0
+        return coherence, transitions
 
     def run_on_prefix(
         self,

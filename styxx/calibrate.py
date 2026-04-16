@@ -91,9 +91,12 @@ def calibrate(
 ) -> CalibrationResult:
     """Run a centroid calibration pass from accumulated outcome labels.
 
-    Reads all entries with outcome='correct' or 'incorrect', extracts
-    their feature vectors, and shifts the centroids toward the agent's
-    actual distribution.
+    3.2.0: uses features_v2 (21-dim) stored in audit entries when
+    available. Computes actual mean feature vectors per category and
+    shifts centroids using: new = (1-lr) * atlas + lr * agent_mean.
+
+    Falls back to legacy confidence-inversion heuristic for entries
+    that lack features_v2.
 
     Args:
         agent_name:    name for the calibration file. Defaults to
@@ -105,14 +108,9 @@ def calibrate(
 
     Returns:
         CalibrationResult with shift statistics.
-
-    Usage:
-        import styxx
-        result = styxx.calibrate()
-        print(f"shifted {result.n_phases_adjusted} phases from {result.n_correct} labels")
     """
     from .core import StyxxRuntime
-    from .vitals import extract_features, PHASE_TOKEN_CUTOFFS
+    from .vitals import load_centroids
 
     result = CalibrationResult()
 
@@ -130,45 +128,45 @@ def calibrate(
     if result.n_correct < min_samples:
         return result  # not enough data
 
-    # Load the current runtime to get atlas centroids
-    rt = StyxxRuntime()
-    classifier = rt.classifier
+    # Load atlas centroids (unmodified originals for blending)
+    atlas = load_centroids()
+    atlas_phases: Dict[str, dict] = {}
+    categories = list(atlas["categories"])
+    for phase_name, phase_data in atlas["phases"].items():
+        mu = np.asarray(phase_data["mu"], dtype=float)
+        sigma = np.asarray(phase_data["sigma"], dtype=float)
+        centroids = {
+            cat: np.asarray(phase_data["centroids"][cat], dtype=float)
+            for cat in categories
+        }
+        atlas_phases[phase_name] = {"mu": mu, "sigma": sigma, "centroids": centroids}
 
-    # Compute agent-specific centroid positions from correct labels
-    # Group feature vectors by (phase, category)
-    phase_cat_features: Dict[str, Dict[str, List[np.ndarray]]] = defaultdict(
-        lambda: defaultdict(list)
-    )
+    feature_dim = len(next(iter(next(iter(atlas_phases.values()))["centroids"].values())))
 
-    for e in correct:
+    # Separate entries with real features vs legacy (confidence-only)
+    correct_with_features = [
+        e for e in correct
+        if e.get("features_v2") is not None and len(e["features_v2"]) >= feature_dim
+    ]
+    correct_legacy = [e for e in correct if e not in correct_with_features]
+
+    # Group real feature vectors by (phase4, predicted_category)
+    cat_feature_vecs: Dict[str, List[np.ndarray]] = defaultdict(list)
+    for e in correct_with_features:
         cat = e.get("phase4_pred")
-        if not cat:
+        if not cat or cat not in categories:
             continue
-        # We only have the category label, not the raw features.
-        # To reconstruct features we'd need the original logprob
-        # trajectories, which aren't stored in the audit log.
-        # Instead, we use the confidence and distances to estimate
-        # the direction of the feature vector relative to centroids.
-        #
-        # For entries logged via the logprob path (tier_active >= 0),
-        # we can use phase4_conf and the predicted category to
-        # compute a weighted centroid shift. Higher confidence =
-        # the feature vector was close to the centroid = less shift
-        # needed. Lower confidence = further from centroid = more
-        # shift would help.
-        conf = e.get("phase4_conf")
-        if conf is None:
-            continue
-        conf = float(conf)
-        # Weight: low confidence correct entries tell us the centroid
-        # needs to move MORE to capture this region of feature space.
-        # High confidence correct entries confirm the centroid is
-        # already well-placed.
-        weight = max(0.0, 1.0 - conf)  # 0 at conf=1, 1 at conf=0
-        phase_cat_features["phase4_late"][cat].append(weight)
+        fv = np.asarray(e["features_v2"][:feature_dim], dtype=float)
+        cat_feature_vecs[cat].append(fv)
 
-    # For incorrect entries: the predicted category was WRONG, so the
-    # centroid was too attractive for inputs that don't belong to it.
+    # Legacy path: confidence-inversion weights (for entries without features_v2)
+    cat_legacy_weights: Dict[str, List[float]] = defaultdict(list)
+    for e in correct_legacy:
+        cat = e.get("phase4_pred")
+        conf = e.get("phase4_conf")
+        if cat and conf is not None:
+            cat_legacy_weights[cat].append(max(0.0, 1.0 - float(conf)))
+
     incorrect_cats: Dict[str, int] = defaultdict(int)
     for e in incorrect:
         cat = e.get("phase4_pred")
@@ -185,51 +183,64 @@ def calibrate(
         except Exception:
             cal_data = {}
 
-    # Compute adjustments
+    # Compute shifted centroids (real feature path)
+    shifted_centroids: Dict[str, Dict[str, list]] = {}
     adjustments: Dict[str, Dict[str, float]] = {}
+    phase_name = "phase4_late"
 
-    for phase_name, cat_weights in phase_cat_features.items():
-        if phase_name not in classifier._phases:
-            continue
-        phase_data = classifier._phases[phase_name]
+    if phase_name in atlas_phases:
+        phase_data = atlas_phases[phase_name]
+        mu = phase_data["mu"]
+        sigma = phase_data["sigma"]
 
-        for cat, weights in cat_weights.items():
-            if len(weights) < min_samples:
-                continue
-            if cat not in phase_data["centroids"]:
-                continue
+        for cat in categories:
+            atlas_centroid = phase_data["centroids"][cat]
 
-            # Mean weight tells us how much correction is needed
-            mean_weight = sum(weights) / len(weights)
-            n_incorrect_for_cat = incorrect_cats.get(cat, 0)
+            # Prefer real features; fall back to legacy weights
+            if cat in cat_feature_vecs and len(cat_feature_vecs[cat]) >= min_samples:
+                # Real feature path: compute agent mean in z-space
+                feature_matrix = np.stack(cat_feature_vecs[cat])
+                z_matrix = (feature_matrix - mu) / sigma
+                agent_mean_z = z_matrix.mean(axis=0)
+                new_centroid = (1.0 - learning_rate) * atlas_centroid + learning_rate * agent_mean_z
+                shift_magnitude = float(np.linalg.norm(new_centroid - atlas_centroid))
 
-            # Compute a confidence adjustment factor:
-            # If many correct entries had low confidence → centroid
-            # is misplaced, needs more adjustment.
-            # If there are also incorrect entries for this category →
-            # the centroid is attracting wrong entries, needs to
-            # tighten (but we can't know the direction without features).
-            adjustment_factor = mean_weight * learning_rate
+                if phase_name not in shifted_centroids:
+                    shifted_centroids[phase_name] = {}
+                shifted_centroids[phase_name][cat] = new_centroid.tolist()
 
-            # Record the shift magnitude for reporting
-            if phase_name not in adjustments:
-                adjustments[phase_name] = {}
-            adjustments[phase_name][cat] = adjustment_factor
-            result.categories_shifted[cat] = adjustment_factor
+                if phase_name not in adjustments:
+                    adjustments[phase_name] = {}
+                adjustments[phase_name][cat] = round(shift_magnitude, 4)
+                result.categories_shifted[cat] = shift_magnitude
+
+            elif cat in cat_legacy_weights and len(cat_legacy_weights[cat]) >= min_samples:
+                # Legacy path: confidence-inversion heuristic
+                mean_weight = sum(cat_legacy_weights[cat]) / len(cat_legacy_weights[cat])
+                adjustment_factor = mean_weight * learning_rate
+
+                if phase_name not in adjustments:
+                    adjustments[phase_name] = {}
+                adjustments[phase_name][cat] = round(adjustment_factor, 4)
+                result.categories_shifted[cat] = adjustment_factor
 
     result.n_phases_adjusted = len(adjustments)
 
-    # Save calibration metadata
+    # Save calibration metadata + shifted centroids
     cal_data.update({
         "agent_name": agent_name,
         "last_calibrated": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "n_correct": result.n_correct,
         "n_incorrect": result.n_incorrect,
+        "n_with_features": len(correct_with_features),
+        "n_legacy": len(correct_legacy),
         "learning_rate": learning_rate,
+        "feature_dim": feature_dim,
         "adjustments": {
-            phase: {cat: round(v, 4) for cat, v in cats.items()}
+            phase: {cat: v for cat, v in cats.items()}
             for phase, cats in adjustments.items()
         },
+        "shifted_centroids": shifted_centroids,
         "incorrect_category_counts": dict(incorrect_cats),
     })
 

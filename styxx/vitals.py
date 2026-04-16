@@ -83,6 +83,147 @@ def extract_features(
     return np.asarray(feats, dtype=float)
 
 
+def extract_features_v2(
+    trajectories: Dict[str, Sequence[float]],
+    n_tokens: int,
+) -> np.ndarray:
+    """Build the 21-dim extended feature vector.
+
+    Concatenates the legacy 12-dim vector (mean, std, min, max) x 3 signals
+    with the 9-dim shape vector (slope, curvature, volatility) x 3 signals
+    from styxx.trajectory.
+
+    Falls back to 12-dim + 9 zeros if shape extraction fails (fail-open).
+    """
+    legacy = extract_features(trajectories, n_tokens)
+    try:
+        from .trajectory import extract_shape_features
+        shape = extract_shape_features(trajectories, n_tokens)
+    except Exception:
+        shape = np.zeros(9, dtype=float)
+    return np.concatenate([legacy, shape])
+
+
+# ══════════════════════════════════════════════════════════════════
+# Confidence calibration (isotonic regression, numpy-only)
+# ══════════════════════════════════════════════════════════════════
+
+class ConfidenceCalibrator:
+    """Isotonic regression calibrator for pseudo-softmax confidence.
+
+    Maps distance-to-nearest-centroid -> calibrated probability using
+    a Pool Adjacent Violators (PAVA) fit on (distance, was_correct)
+    pairs.  Pure numpy, no sklearn.
+
+    Falls back to None (caller uses pseudo-softmax) when no fit data
+    is available.
+    """
+
+    def __init__(self) -> None:
+        self._thresholds: Optional[np.ndarray] = None
+        self._values: Optional[np.ndarray] = None
+
+    @property
+    def is_fitted(self) -> bool:
+        return self._thresholds is not None
+
+    def fit(
+        self,
+        distances: Sequence[float],
+        outcomes: Sequence[bool],
+    ) -> None:
+        """Fit the calibrator on (distance, was_correct) pairs.
+
+        Shorter distance should map to higher correctness probability,
+        so we fit an antitonic (non-increasing) regression.
+        """
+        d = np.asarray(distances, dtype=float)
+        y = np.asarray(outcomes, dtype=float)
+        if len(d) < 5:
+            return
+        order = np.argsort(d)
+        d_sorted = d[order]
+        y_sorted = y[order]
+        fitted = self._pava_antitonic(y_sorted)
+        # clamp to [0.01, 0.99]
+        fitted = np.clip(fitted, 0.01, 0.99)
+        self._thresholds = d_sorted
+        self._values = fitted
+
+    def calibrate(self, distance: float) -> Optional[float]:
+        """Map a distance to a calibrated probability.
+
+        Returns None if the calibrator hasn't been fitted.
+        """
+        if self._thresholds is None or self._values is None:
+            return None
+        idx = int(np.searchsorted(self._thresholds, distance))
+        idx = min(idx, len(self._values) - 1)
+        return float(self._values[idx])
+
+    @staticmethod
+    def _pava_antitonic(y: np.ndarray) -> np.ndarray:
+        """Pool Adjacent Violators for antitonic (non-increasing) fit."""
+        n = len(y)
+        result = y.copy().astype(float)
+        weight = np.ones(n, dtype=float)
+        block_end = list(range(n))
+        i = 0
+        while i < n - 1:
+            j = block_end[i]
+            k = j + 1 if j + 1 < n else j
+            if k >= n:
+                break
+            if result[i] < result[k]:
+                # violation: pool
+                total_w = weight[i] + weight[k]
+                result[i] = (weight[i] * result[i] + weight[k] * result[k]) / total_w
+                weight[i] = total_w
+                result[k] = result[i]
+                weight[k] = total_w
+                block_end[i] = block_end[k]
+                if i > 0:
+                    i -= 1
+                else:
+                    i = block_end[i] + 1 if block_end[i] + 1 < n else n
+            else:
+                i = block_end[i] + 1 if block_end[i] + 1 < n else n
+        # propagate block values
+        i = 0
+        while i < n:
+            end = block_end[i]
+            val = result[i]
+            for j in range(i, end + 1):
+                result[j] = val
+            i = end + 1
+        return result
+
+    def save(self, path: Path) -> None:
+        """Save calibrator state as JSON."""
+        data = {}
+        if self._thresholds is not None:
+            data["thresholds"] = self._thresholds.tolist()
+            data["values"] = self._values.tolist()
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+
+    @classmethod
+    def load(cls, path: Path) -> Optional["ConfidenceCalibrator"]:
+        """Load a saved calibrator. Returns None if file doesn't exist."""
+        if not path.exists():
+            return None
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            cal = cls()
+            if "thresholds" in data and "values" in data:
+                cal._thresholds = np.asarray(data["thresholds"], dtype=float)
+                cal._values = np.asarray(data["values"], dtype=float)
+            return cal
+        except Exception:
+            return None
+
+
 # ══════════════════════════════════════════════════════════════════
 # Centroid loader (sha-verified)
 # ══════════════════════════════════════════════════════════════════
@@ -187,6 +328,43 @@ class CentroidClassifier:
                 "sigma": sigma,
                 "centroids": cent,
             }
+        # Detect feature dimensionality from centroid vectors
+        sample_phase = next(iter(self._phases.values()))
+        sample_centroid = next(iter(sample_phase["centroids"].values()))
+        self._feature_dim: int = len(sample_centroid)
+        # Confidence calibrator (loaded from disk if available)
+        self._calibrator: Optional[ConfidenceCalibrator] = None
+        self._load_calibrated_centroids()
+
+    def _load_calibrated_centroids(self) -> None:
+        """Load agent-specific calibrated centroids if available.
+
+        Checks ~/.styxx/calibration/{agent_name}.json for shifted centroids.
+        If found, overlays them on the atlas centroids.  Fail-open.
+        """
+        try:
+            from . import config as _cfg
+            agent_name = _cfg.agent_name() if hasattr(_cfg, "agent_name") else "default"
+            agent_name = agent_name or "default"
+            cal_path = Path.home() / ".styxx" / "calibration" / f"{agent_name}.json"
+            if not cal_path.exists():
+                return
+            with open(cal_path, "r", encoding="utf-8") as f:
+                cal_data = json.load(f)
+            # Overlay shifted centroids
+            shifted = cal_data.get("shifted_centroids", {})
+            for phase_name, cats in shifted.items():
+                if phase_name not in self._phases:
+                    continue
+                for cat, centroid_list in cats.items():
+                    arr = np.asarray(centroid_list, dtype=float)
+                    if cat in self._phases[phase_name]["centroids"] and len(arr) == self._feature_dim:
+                        self._phases[phase_name]["centroids"][cat] = arr
+            # Load confidence calibrator
+            cal_conf_path = Path.home() / ".styxx" / "calibration" / f"{agent_name}_confidence.json"
+            self._calibrator = ConfidenceCalibrator.load(cal_conf_path)
+        except Exception:
+            pass  # fail-open: use atlas centroids
 
     def classify(
         self,
@@ -203,7 +381,14 @@ class CentroidClassifier:
                 f"unknown phase '{phase}', must be one of {list(self._phases)}"
             )
         n_tokens = PHASE_TOKEN_CUTOFFS[phase]
-        feats = extract_features(trajectories, n_tokens)
+        # Select extractor based on centroid dimensionality
+        if self._feature_dim > 12:
+            feats = extract_features_v2(trajectories, n_tokens)
+        else:
+            feats = extract_features(trajectories, n_tokens)
+        # Defensive: fall back to 12-dim if mismatch
+        if len(feats) != self._feature_dim:
+            feats = extract_features(trajectories, n_tokens)
         phase_data = self._phases[phase]
         mu, sigma = phase_data["mu"], phase_data["sigma"]
         z = (feats - mu) / sigma
@@ -236,6 +421,26 @@ class CentroidClassifier:
         }
         total = sum(scores.values()) or 1.0
         probs = {cat: scores[cat] / total for cat in self.categories}
+        # Apply confidence calibration if available
+        if self._calibrator is not None and self._calibrator.is_fitted:
+            cal_conf = self._calibrator.calibrate(nearest_d)
+            if cal_conf is not None:
+                old_conf = probs[nearest]
+                probs[nearest] = cal_conf
+                remaining = 1.0 - cal_conf
+                other_total = sum(probs[c] for c in self.categories if c != nearest)
+                if other_total > 0:
+                    scale = remaining / other_total
+                    for c in self.categories:
+                        if c != nearest:
+                            probs[c] *= scale
+        # Always compute 21-dim features for storage/calibration
+        features_v2 = None
+        try:
+            full_feats = extract_features_v2(trajectories, n_tokens)
+            features_v2 = full_feats.tolist()
+        except Exception:
+            pass
         return PhaseReading(
             phase=phase,
             n_tokens_used=n_tokens,
@@ -244,6 +449,7 @@ class CentroidClassifier:
             margin=margin,
             distances=distances,
             probs=probs,
+            features_v2=features_v2,
         )
 
 
@@ -261,6 +467,8 @@ class PhaseReading:
     margin: float
     distances: Dict[str, float]
     probs: Dict[str, float]
+    # Extended 21-dim features (always computed when available)
+    features_v2: Optional[List[float]] = None
     # Tier 1 D-axis fields (None when tier 1 is inactive)
     d_honesty_mean: Optional[float] = None
     d_honesty_std: Optional[float] = None
@@ -293,6 +501,9 @@ class Vitals:
     phase4_late: Optional[PhaseReading] = None
     tier_active: int = 0
     abort_reason: Optional[str] = None
+    # Cross-phase coherence (set when >= 2 phases available)
+    coherence: Optional[float] = None
+    transition_vectors: Optional[List[List[float]]] = None
 
     def as_dict(self) -> dict:
         """JSON-serializable dict view. Injects computed fields
@@ -311,6 +522,8 @@ class Vitals:
             "phase4_late":  _phase_dict(self.phase4_late),
             "tier_active":  self.tier_active,
             "abort_reason": self.abort_reason,
+            "coherence":    self.coherence,
+            "transition_vectors": self.transition_vectors,
         }
 
     @property

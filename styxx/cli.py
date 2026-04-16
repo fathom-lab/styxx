@@ -213,6 +213,29 @@ def cmd_ci_test(args):
         return 1
 
 
+def cmd_eval(args):
+    """Run the ground-truth evaluation harness (3.2.0)."""
+    from .eval import EvalSuite
+
+    fmt = getattr(args, "format", "ascii")
+    fixtures_path = getattr(args, "fixtures", None)
+
+    if fixtures_path:
+        suite = EvalSuite.from_json(fixtures_path)
+    else:
+        suite = EvalSuite.from_demo_trajectories()
+
+    result = suite.run()
+
+    if fmt == "json":
+        print(json.dumps(result.as_dict(), indent=2))
+    else:
+        print()
+        print(result.render())
+        print()
+    return 0
+
+
 def cmd_ci_baseline(args):
     """Save current state as CI baseline (1.5.0)."""
     from .ci import Baseline
@@ -1061,27 +1084,74 @@ def cmd_tier(args):
 
 
 def cmd_scan(args):
-    """Read a pre-captured trajectory JSON and emit a vitals card.
+    """SAE-level cognitive scan — K/C/S measurement on any prompt.
 
-    The JSON file must contain top-level keys "entropy", "logprob",
-    "top2_margin" — arrays of equal length.
+    modes:
+      styxx scan "prompt"                    single K/C measurement
+      styxx scan --trajectory "prompt"       generate + measure S_early
+      styxx scan --compare "p1" "p2"         side-by-side comparison
+      styxx scan --batch file.jsonl          batch processing
+      styxx scan --bridge "prompt"           tier 0 vs tier 2
+      styxx scan --legacy file.json          old trajectory reader
     """
-    entropy, logprob, top2 = _load_trajectory_json(args.file)
-    runtime = StyxxRuntime()
-    vitals = runtime.run_on_trajectories(entropy, logprob, top2)
-    card = render_vitals_card(
-        vitals=vitals,
-        prompt=args.prompt,
-        model=args.model,
-        n_tokens=len(entropy),
-        entropy_traj=entropy,
-        logprob_traj=logprob,
+    from .scan import run_scan, run_compare, run_batch, run_bridge
+
+    model = args.model or "google/gemma-2-2b-it"
+    device = args.device or "cuda"
+
+    # Legacy mode — read a pre-captured trajectory JSON (old behavior)
+    if args.legacy:
+        entropy, logprob, top2 = _load_trajectory_json(args.legacy)
+        runtime = StyxxRuntime()
+        vitals = runtime.run_on_trajectories(entropy, logprob, top2)
+        card = render_vitals_card(
+            vitals=vitals,
+            prompt=args.prompt,
+            model=model,
+            n_tokens=len(entropy),
+            entropy_traj=entropy,
+            logprob_traj=logprob,
+        )
+        print()
+        print(card)
+        print()
+        _write_audit(vitals, prompt=args.prompt, model=model)
+        return 0
+
+    # Batch mode
+    if args.batch:
+        return run_batch(args.batch, args.out, model=model, device=device)
+
+    # Compare mode
+    if args.compare:
+        return run_compare(args.compare, model=model, device=device,
+                           output_json=args.json)
+
+    # Bridge mode
+    if args.bridge:
+        return run_bridge(
+            args.prompt or args.bridge,
+            model=model, device=device,
+            tier0_trajectory=getattr(args, "tier0_trajectory", None),
+        )
+
+    # Single scan (default)
+    prompt = args.prompt
+    if not prompt:
+        print("usage: styxx scan \"your prompt here\"")
+        print("       styxx scan --trajectory \"your prompt\" --tokens 30")
+        print("       styxx scan --compare \"prompt1\" \"prompt2\"")
+        return 1
+
+    return run_scan(
+        prompt,
+        model=model,
+        device=device,
+        trajectory=args.trajectory,
+        max_tokens=args.tokens,
+        show_layers=args.layers,
+        output_json=args.json,
     )
-    print()
-    print(card)
-    print()
-    _write_audit(vitals, prompt=args.prompt, model=args.model)
-    return 0
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -1363,6 +1433,17 @@ def _build_parser() -> argparse.ArgumentParser:
     p_cibase.add_argument("--name", type=str, default=None, help="agent name")
     p_cibase.set_defaults(func=cmd_ci_baseline)
 
+    # eval — ground-truth evaluation harness (3.2.0)
+    p_eval = sub.add_parser(
+        "eval",
+        help="run the ground-truth evaluation harness",
+    )
+    p_eval.add_argument("--fixtures", type=str, default=None,
+                        help="path to fixtures JSON (default: bundled demo trajectories)")
+    p_eval.add_argument("--format", choices=["ascii", "json"], default="ascii",
+                        help="output format (default: ascii)")
+    p_eval.set_defaults(func=cmd_eval)
+
     # export — compliance report (1.3.0)
     p_export = sub.add_parser(
         "export",
@@ -1580,11 +1661,39 @@ def _build_parser() -> argparse.ArgumentParser:
     p_tier = sub.add_parser("tier", help="show active tiers + version")
     p_tier.set_defaults(func=cmd_tier)
 
-    # scan
-    p_scan = sub.add_parser("scan", help="read a pre-captured trajectory JSON")
-    p_scan.add_argument("file", help="trajectory JSON path")
-    p_scan.add_argument("--prompt", help="prompt to show on the card")
-    p_scan.add_argument("--model", help="model name for the card metadata")
+    # scan — SAE-level cognitive measurement
+    p_scan = sub.add_parser(
+        "scan",
+        help="SAE-level K/C/S cognitive scan (tier 2)",
+        description="measure cognitive depth (K), coherence (C), and commitment (S) "
+                    "from SAE feature activations. requires: pip install 'styxx[tier2]'",
+    )
+    p_scan.add_argument("prompt", nargs="?", default=None,
+                        help="the prompt to scan")
+    p_scan.add_argument("--model", default=None,
+                        help="model name (default: google/gemma-2-2b-it)")
+    p_scan.add_argument("--device", default=None,
+                        help="device (default: cuda)")
+    p_scan.add_argument("--trajectory", action="store_true",
+                        help="generate tokens + measure S_early trajectory")
+    p_scan.add_argument("--tokens", type=int, default=30,
+                        help="max tokens for trajectory mode (default: 30)")
+    p_scan.add_argument("--layers", action="store_true",
+                        help="show full layer-by-layer profile")
+    p_scan.add_argument("--json", action="store_true",
+                        help="output raw JSON instead of the visual card")
+    p_scan.add_argument("--compare", nargs="+", metavar="PROMPT",
+                        help="compare K/C/S across multiple prompts")
+    p_scan.add_argument("--batch", metavar="FILE",
+                        help="batch scan from a JSONL file")
+    p_scan.add_argument("--out", metavar="FILE",
+                        help="output file for batch mode")
+    p_scan.add_argument("--bridge", metavar="PROMPT",
+                        help="run tier 0 + tier 2 side by side")
+    p_scan.add_argument("--tier0-trajectory", metavar="FILE", dest="tier0_trajectory",
+                        help="logprob trajectory JSON for bridge mode")
+    p_scan.add_argument("--legacy", metavar="FILE",
+                        help="read a pre-captured trajectory JSON (old behavior)")
     p_scan.set_defaults(func=cmd_scan)
 
     # antipatterns — 0.6.0 named failure mode detection
