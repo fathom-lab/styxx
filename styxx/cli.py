@@ -213,6 +213,13 @@ def cmd_ci_test(args):
         return 1
 
 
+def cmd_intercept(args):
+    """Run the cognitive intercept simulation (3.2.0)."""
+    from .intercept import simulate_all_demo
+    simulate_all_demo(verbose=True)
+    return 0
+
+
 def cmd_forecast(args):
     """Run the cognitive forecast horizon analysis (3.2.0)."""
     from .forecast import horizon_analysis
@@ -1448,6 +1455,13 @@ def _build_parser() -> argparse.ArgumentParser:
     p_cibase.add_argument("--out", type=str, default="styxx_baseline.json", help="output path")
     p_cibase.add_argument("--name", type=str, default=None, help="agent name")
     p_cibase.set_defaults(func=cmd_ci_baseline)
+
+    # intercept — cognitive intercept simulation (3.2.0)
+    p_intercept = sub.add_parser(
+        "intercept",
+        help="simulate real-time cognitive intervention on demo trajectories",
+    )
+    p_intercept.set_defaults(func=cmd_intercept)
 
     # forecast — predictive cognitive failure horizon analysis (3.2.0)
     p_forecast = sub.add_parser(
