@@ -504,6 +504,8 @@ class Vitals:
     # Cross-phase coherence (set when >= 2 phases available)
     coherence: Optional[float] = None
     transition_vectors: Optional[List[List[float]]] = None
+    # Predictive forecast (set when >= 5 tokens available)
+    forecast: Optional[Any] = None  # ForecastResult (lazy import to avoid circular)
 
     def as_dict(self) -> dict:
         """JSON-serializable dict view. Injects computed fields

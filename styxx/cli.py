@@ -213,6 +213,22 @@ def cmd_ci_test(args):
         return 1
 
 
+def cmd_forecast(args):
+    """Run the cognitive forecast horizon analysis (3.2.0)."""
+    from .forecast import horizon_analysis
+
+    fmt = getattr(args, "format", "ascii")
+    result = horizon_analysis()
+
+    if fmt == "json":
+        print(json.dumps(result.as_dict(), indent=2))
+    else:
+        print()
+        print(result.render())
+        print()
+    return 0
+
+
 def cmd_eval(args):
     """Run the ground-truth evaluation harness (3.2.0)."""
     from .eval import EvalSuite
@@ -1432,6 +1448,15 @@ def _build_parser() -> argparse.ArgumentParser:
     p_cibase.add_argument("--out", type=str, default="styxx_baseline.json", help="output path")
     p_cibase.add_argument("--name", type=str, default=None, help="agent name")
     p_cibase.set_defaults(func=cmd_ci_baseline)
+
+    # forecast — predictive cognitive failure horizon analysis (3.2.0)
+    p_forecast = sub.add_parser(
+        "forecast",
+        help="run predictive cognitive failure horizon analysis",
+    )
+    p_forecast.add_argument("--format", choices=["ascii", "json"], default="ascii",
+                            help="output format (default: ascii)")
+    p_forecast.set_defaults(func=cmd_forecast)
 
     # eval — ground-truth evaluation harness (3.2.0)
     p_eval = sub.add_parser(

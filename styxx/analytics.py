@@ -274,6 +274,19 @@ def write_audit(
                 )
             ),
             "coherence": getattr(vitals, "coherence", None),
+            # 3.2.0: forecast result from early-phase prediction
+            "forecast_pred": (
+                vitals.forecast.predicted_category
+                if getattr(vitals, "forecast", None) else None
+            ),
+            "forecast_risk": (
+                vitals.forecast.risk_level
+                if getattr(vitals, "forecast", None) else None
+            ),
+            "forecast_conf": (
+                round(vitals.forecast.confidence, 3)
+                if getattr(vitals, "forecast", None) else None
+            ),
         }
 
     # 1.3.1: auto-feedback — gate=pass entries get outcome='correct'

@@ -281,6 +281,7 @@ from .config import set_context, current_context
 from .config import expect, unexpect, expected_categories, clear_expected
 from .eval import EvalSuite, EvalResult, EvalFixture, compare_evals
 from .trajectory import slope, curvature, volatility, extract_shape_features
+from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon_analysis
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

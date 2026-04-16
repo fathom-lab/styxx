@@ -204,6 +204,16 @@ class StyxxRuntime:
         if len(phases_available) >= 2:
             coherence, transition_vectors = self._compute_coherence(phases_available)
 
+        # Cognitive forecast — predict phase4 from early tokens
+        forecast = None
+        if n >= 5:
+            try:
+                from .forecast import CognitiveForecaster
+                forecaster = CognitiveForecaster.bootstrap(horizon_tokens=min(n, 5))
+                forecast = forecaster.forecast(trajectories, n_tokens=min(n, 5))
+            except Exception:
+                pass  # fail-open
+
         # Gate logic
         abort_reason = self._evaluate_gates(phase1, phase4)
 
@@ -216,6 +226,7 @@ class StyxxRuntime:
             abort_reason=abort_reason,
             coherence=coherence,
             transition_vectors=transition_vectors,
+            forecast=forecast,
         )
 
     def run_with_d_axis(
