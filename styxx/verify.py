@@ -45,8 +45,29 @@ Patents:  US Provisional 64/020,489 . 64/021,113 . 64/026,964
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
+
+
+_CONFAB_CENTROID_CACHE: Optional[dict] = None
+
+
+def _load_confab_centroid() -> Optional[dict]:
+    """Load the production-calibrated confabulation centroid (v0.4)."""
+    global _CONFAB_CENTROID_CACHE
+    if _CONFAB_CENTROID_CACHE is not None:
+        return _CONFAB_CENTROID_CACHE
+    path = Path(__file__).resolve().parent / "centroids" / "confabulation_v0.4.json"
+    if not path.exists():
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            _CONFAB_CENTROID_CACHE = json.load(f)
+        return _CONFAB_CENTROID_CACHE
+    except Exception:
+        return None
 
 
 @dataclass
@@ -200,6 +221,28 @@ def verify(
 
     temp_state = classify_temperature(temperature)
 
+    # ── Confabulation centroid distance (v0.4, production-calibrated) ──
+    confab_distance = None
+    control_distance = None
+    confab_check = None
+    _confab_centroid = _load_confab_centroid()
+    if _confab_centroid is not None:
+        fv2 = None
+        if v.phase4_late and getattr(v.phase4_late, "features_v2", None):
+            fv2 = v.phase4_late.features_v2
+        elif v.phase1_pre and getattr(v.phase1_pre, "features_v2", None):
+            fv2 = v.phase1_pre.features_v2
+        if fv2 and len(fv2) == 21:
+            import numpy as _np
+            feat = _np.array(fv2, dtype=float)
+            sigma = _np.array(_confab_centroid["pooled_sigma"], dtype=float)
+            sigma[sigma < 1e-9] = 1.0
+            cc = _np.array(_confab_centroid["confab_centroid"], dtype=float)
+            rc = _np.array(_confab_centroid["control_centroid"], dtype=float)
+            confab_distance = float(_np.linalg.norm((feat - cc) / sigma))
+            control_distance = float(_np.linalg.norm((feat - rc) / sigma))
+            confab_check = confab_distance < control_distance  # closer to confab = bad
+
     # ── Make the verdict ─────────────────────────────────────
     # The decision tree: multiple signals vote on trustworthiness.
     # Any STRONG signal of fabrication → not trustworthy.
@@ -208,19 +251,27 @@ def verify(
     reasons = []
     trustworthy = True
 
-    # Signal 1: forecast predicts critical failure
+    # Signal 1: confabulation centroid proximity (production-calibrated, d=2.01)
+    if confab_check is True:
+        trustworthy = False
+        reasons.append(
+            f"closer to confabulation centroid than recall "
+            f"(d_confab={confab_distance:.2f} < d_recall={control_distance:.2f})"
+        )
+
+    # Signal 2: forecast predicts critical failure
     if forecast_risk == "critical":
         trustworthy = False
         reasons.append(f"forecast predicts {forecast_cat} at critical risk")
 
-    # Signal 2: gate fired warn or fail
+    # Signal 3: gate fired warn or fail
     if gate == "fail":
         trustworthy = False
         reasons.append(f"gate failed: {category} attractor detected")
     elif gate == "warn":
         reasons.append(f"gate warning: {category} signal elevated")
 
-    # Signal 3: cognitive temperature is hot (diverging)
+    # Signal 4: cognitive temperature is hot (diverging)
     if temp_state == "hot":
         trustworthy = False
         reasons.append(f"temperature {temperature:+.3f}: entropy diverging (confabulation signature)")
