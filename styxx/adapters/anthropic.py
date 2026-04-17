@@ -108,7 +108,24 @@ class AnthropicWithVitals:
     Anthropic — see module docstring for why).
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, ensemble_n: int = 1, ensemble_temperature: float = 0.7, **kwargs):
+        """
+        Parameters
+        ----------
+        ensemble_n : int, default 1
+            If >1, every messages.create() call runs N samples at temperature
+            ensemble_temperature, aligns their completions, and computes
+            empirical per-token entropy + agreement. This reconstructs a
+            styxx Vitals object with a real 4-phase trajectory — the only
+            way to get logprob-equivalent signal on the Anthropic API (which
+            does not expose per-token logprobs as of 2026-04).
+            Cost: N× tokens per call. Recommended: 3 for cheap ensemble,
+            5 for better entropy estimates. Default 1 = pass-through + text
+            heuristic vitals only.
+        ensemble_temperature : float, default 0.7
+            Temperature used for the ensemble samples. Higher = more
+            divergence = stronger signal, lower = closer to greedy output.
+        """
         try:
             from anthropic import Anthropic as _Anthropic
         except ImportError as e:
@@ -120,7 +137,13 @@ class AnthropicWithVitals:
                 f"  Underlying error: {e}"
             ) from e
         self._client = _Anthropic(*args, **kwargs)
-        self.messages = _MessagesShim(self._client.messages)
+        self._ensemble_n = max(1, int(ensemble_n))
+        self._ensemble_t = float(ensemble_temperature)
+        self.messages = _MessagesShim(
+            self._client.messages,
+            ensemble_n=self._ensemble_n,
+            ensemble_temperature=self._ensemble_t,
+        )
 
     def __getattr__(self, name):
         # Fall through to the real anthropic client for anything we
@@ -129,8 +152,10 @@ class AnthropicWithVitals:
 
 
 class _MessagesShim:
-    def __init__(self, inner):
+    def __init__(self, inner, ensemble_n: int = 1, ensemble_temperature: float = 0.7):
         self._inner = inner
+        self._ensemble_n = ensemble_n
+        self._ensemble_t = ensemble_temperature
 
     def __getattr__(self, name):
         return getattr(self._inner, name)
@@ -151,6 +176,38 @@ class _MessagesShim:
         # 0.9.2: extract user prompt BEFORE the API call
         from ..watch import _extract_prompt
         prompt_text = _extract_prompt(kwargs.get("messages"))
+
+        # v0.10 — sampling-ensemble path: reconstruct logprob-equivalent
+        # signal via N samples since Anthropic API doesn't expose logprobs.
+        if self._ensemble_n > 1:
+            from .anthropic_sampled import _ensemble_features, _build_sampled_vitals, _extract_text
+            temp = kwargs.pop("temperature", self._ensemble_t)
+            responses = [self._inner.create(*args, temperature=temp, **kwargs)
+                         for _ in range(self._ensemble_n)]
+            texts = [_extract_text(r) for r in responses]
+            reading = _ensemble_features(texts)
+            # choose the sample closest to ensemble median length
+            lens = [len(t) for t in texts]
+            median = sorted(lens)[len(lens) // 2]
+            chosen_idx = min(range(self._ensemble_n), key=lambda i: abs(lens[i] - median))
+            reading.chosen_index = chosen_idx
+            chosen = responses[chosen_idx]
+            vitals = _build_sampled_vitals(reading)
+            _attach_vitals(chosen, vitals)
+            try:
+                chosen.ensemble = reading
+                chosen.ensemble_texts = texts
+            except Exception:
+                pass
+            # audit log
+            try:
+                from ..analytics import write_audit
+                model_name = getattr(chosen, "model", None) or "anthropic"
+                write_audit(vitals, source="sampled",
+                            prompt=prompt_text, model=model_name)
+            except Exception:
+                pass
+            return chosen
 
         response = self._inner.create(*args, **kwargs)
         # Extract response text and classify

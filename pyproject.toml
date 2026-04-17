@@ -70,9 +70,13 @@ tier2 = [
     "transformer-lens>=2.0",
     "circuit-tracer>=0.4",
 ]
+schema = [
+    "jsonschema>=4.0",
+]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",
+    "jsonschema>=4.0",
 ]
 
 [project.urls]

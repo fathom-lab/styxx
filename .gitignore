@@ -43,3 +43,12 @@ node_modules/
 chart.jsonl
 gif_frames/
 demo/frame_*.png
+
+scratch/
+
+# safety additions
+secrets/
+tmp/
+*.env
+.env
+

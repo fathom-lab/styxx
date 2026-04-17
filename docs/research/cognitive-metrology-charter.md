@@ -6,7 +6,7 @@
 **Issuer:** Fathom Lab (founding working group)  
 **License:** CC-BY-4.0 (this charter), MIT (reference implementation), CC-BY-4.0 (calibration data)  
 **Companion artifacts:**  
-- atlas v0.3 — the calibration ([`styxx/centroids/atlas_v0.3.json`](../styxx/centroids/atlas_v0.3.json))  
+- atlas v0.3 — the calibration ([`styxx/centroids/atlas_v0.3.json`](../../styxx/centroids/atlas_v0.3.json))  
 - .fathom v0.1 — the data type spec ([`docs/fathom-spec-v0.md`](fathom-spec-v0.md))  
 - .cogdyn v0.1 — the dynamics model spec ([`docs/cognitive-dynamics-v0.md`](cognitive-dynamics-v0.md))  
 - styxx — the reference implementation ([`pypi.org/project/styxx`](https://pypi.org/project/styxx/))
@@ -162,7 +162,7 @@ The certificate is the v0.1 cognitive equivalent of a chain-of-custody document.
 
 A founding charter that makes only theoretical claims is not a science, it is a manifesto. This charter ships its first empirical observation alongside the theoretical framework.
 
-We measured the cognitive distance matrix between the six bundled atlas v0.3 demo trajectories (one per category, each 30 tokens long, all from `google/gemma-2-2b-it`). The distances are computed in cognitive eigenvalue space using the L2 metric on the per-phase probability simplex, averaged across the four populated phase windows. The script that produces this matrix is shipped at [`examples/thought_demo.py`](../examples/thought_demo.py); the .fathom files for the six trajectories are at [`demo/thoughts/`](../demo/thoughts/).
+We measured the cognitive distance matrix between the six bundled atlas v0.3 demo trajectories (one per category, each 30 tokens long, all from `google/gemma-2-2b-it`). The distances are computed in cognitive eigenvalue space using the L2 metric on the per-phase probability simplex, averaged across the four populated phase windows. The script that produces this matrix is shipped at [`examples/thought_demo.py`](../../examples/thought_demo.py); the .fathom files for the six trajectories are at [`demo/thoughts/`](../../demo/thoughts/).
 
 ```
                 retrie  reason  refusa  creati  advers  halluc
@@ -396,10 +396,10 @@ All v0.1 standards under this charter are released as follows:
 | This charter | CC-BY-4.0 | [github.com/fathom-lab/styxx](https://github.com/fathom-lab/styxx) |
 | .fathom v0.1 specification | CC-BY-4.0 | [docs/fathom-spec-v0.md](fathom-spec-v0.md) |
 | .cogdyn v0.1 specification | CC-BY-4.0 | [docs/cognitive-dynamics-v0.md](cognitive-dynamics-v0.md) |
-| Cognitive provenance certificate v1 | CC-BY-4.0 | [styxx/provenance.py](../styxx/provenance.py) |
-| Atlas v0.3 calibration data | CC-BY-4.0 | [styxx/centroids/atlas_v0.3.json](../styxx/centroids/atlas_v0.3.json) |
+| Cognitive provenance certificate v1 | CC-BY-4.0 | [styxx/provenance.py](../../styxx/provenance.py) |
+| Atlas v0.3 calibration data | CC-BY-4.0 | [styxx/centroids/atlas_v0.3.json](../../styxx/centroids/atlas_v0.3.json) |
 | styxx reference implementation | MIT | [pypi.org/project/styxx](https://pypi.org/project/styxx/) |
-| Conformance test suite | MIT | [tests/](../tests/) |
+| Conformance test suite | MIT | [tests/](../../tests/) |
 
 Contributions to any of these artifacts are welcomed by pull request to the styxx repository on github. Contributions that would be breaking changes to any v0.1 specification will be version-bumped and announced before release.
 

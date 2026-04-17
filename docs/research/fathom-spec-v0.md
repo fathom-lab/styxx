@@ -5,7 +5,7 @@
 **Audience:** anyone implementing a producer or consumer of `.fathom`
 files, in any language, against any LLM substrate  
 **Authors:** flobi (fathom lab)  
-**Reference implementation:** [`styxx.thought`](../styxx/thought.py)
+**Reference implementation:** [`styxx.thought`](../../styxx/thought.py)
 in styxx 3.0.0a1+
 
 ---
@@ -295,7 +295,7 @@ algebraic operations).
 The styxx repository ships six reference `.fathom` files generated
 from the bundled atlas v0.3 demo trajectories (one per cognitive
 category, all from `google/gemma-2-2b-it`). They are written by
-[`examples/thought_demo.py`](../examples/thought_demo.py) into
+[`examples/thought_demo.py`](../../examples/thought_demo.py) into
 `demo/thoughts/`:
 
 - `retrieval.fathom`
@@ -345,7 +345,7 @@ understand; producers MAY emit older versions for compatibility.
 - The fathom **measurement methodology** that produces the
   cognitive eigenvalues is covered by US Provisional Patents
   64/020,489, 64/021,113, and 64/026,964 — see
-  [`PATENTS.md`](../PATENTS.md) in the styxx repository for
+  [`PATENTS.md`](../../PATENTS.md) in the styxx repository for
   details. Implementations are welcome; commercial reuse of the
   measurement methodology requires a license.
 

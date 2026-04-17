@@ -128,6 +128,7 @@ def autoboot(
     print_weather: bool = True,
     print_diff: bool = True,
     quiet: bool = False,
+    stream: Optional[bool] = None,
 ) -> dict:
     """Boot styxx with persistent self-awareness.
 
@@ -237,6 +238,22 @@ def autoboot(
                 _print_stderr(report.render())
         elif not quiet:
             _print_stderr("  (not enough data for weather report yet — keep observing)")
+
+    # ── Live cognitive telemetry (opt-in) ──────────────────
+    # Enable if explicitly requested, or if STYXX_STREAM env var is set.
+    env_stream = os.environ.get("STYXX_STREAM", "").strip().lower()
+    want_stream = stream if stream is not None else env_stream in ("1", "on", "true", "yes", "public")
+    if want_stream:
+        try:
+            from . import stream as _stream
+            ok = _stream.enable(agent=name)
+            if ok and not quiet:
+                _print_stderr(f"  live feed: {_stream.dashboard_url(name)}")
+                _print_stderr("")
+            result["stream_enabled"] = bool(ok)
+            result["stream_url"] = _stream.dashboard_url(name) if ok else None
+        except Exception:
+            result["stream_enabled"] = False
 
     # ── Register exit hook to save fingerprint ──────────────
     atexit.register(_save_fingerprint_on_exit, fp_dir, name)

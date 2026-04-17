@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "styxx-mcp"
+version = "0.1.0"
+description = "Model Context Protocol (MCP) server exposing styxx cognitive-vitals tools to AI agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Fathom Lab" }]
+keywords = ["mcp", "styxx", "llm", "vitals", "interpretability", "anthropic", "claude"]
+dependencies = [
+    "mcp>=1.0.0",
+    "styxx>=3.3.1",
+]
+
+[project.urls]
+Homepage = "https://fathom.darkflobi.com/styxx"
+Repository = "https://github.com/fathom-lab/styxx"
+
+[project.scripts]
+styxx-mcp = "styxx_mcp.server:main"
+
+[tool.setuptools.packages.find]
+include = ["styxx_mcp*"]

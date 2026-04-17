@@ -65,6 +65,66 @@ def _write_audit(vitals: Vitals, prompt: Optional[str], model: Optional[str],
 # Commands
 # ══════════════════════════════════════════════════════════════════
 
+def cmd_claim(args):
+    """Claim an agent name on the live telemetry relay.
+
+    On success, prints the dashboard URL + next-step snippet and
+    saves credentials to ~/.styxx/credentials.json.
+    """
+    from . import stream as _stream
+
+    name = (args.name or "").strip()
+    if not name:
+        try:
+            sys.stdout.write("agent name: ")
+            sys.stdout.flush()
+            name = sys.stdin.readline().strip()
+        except (KeyboardInterrupt, EOFError):
+            sys.stdout.write("\n")
+            return 1
+
+    clean = _stream._sanitize_name(name)
+    if not clean:
+        sys.stderr.write("  invalid name. use lowercase letters, digits, - or _.\n")
+        return 1
+
+    sys.stdout.write("\n")
+    sys.stdout.write("  generating identity\n")
+    sys.stdout.write("  reserving subdomain\n")
+    try:
+        res = _stream.claim_agent(clean, relay=args.relay)
+    except _stream.ClaimError as e:
+        sys.stderr.write(f"\n  claim failed: {e}\n")
+        sys.stderr.write("  (the relay may be offline, or the name is taken)\n")
+        return 1
+
+    sys.stdout.write("\n")
+    sys.stdout.write(f"  registered.\n\n")
+    sys.stdout.write(f"    name         {res['name']}\n")
+    sys.stdout.write(f"    feed         {res['url']}\n")
+    sys.stdout.write(f"    credentials  ~/.styxx/credentials.json\n\n")
+    sys.stdout.write("  next: enable streaming\n\n")
+    sys.stdout.write("      import styxx\n")
+    sys.stdout.write(f"      styxx.autoboot(agent_name=\"{res['name']}\", stream=True)\n\n")
+    sys.stdout.write("  nothing crosses unseen.\n\n")
+    return 0
+
+
+def cmd_feed(args):
+    """Print the live dashboard URL for the claimed agent."""
+    from . import stream as _stream
+
+    name = (args.name or "").strip()
+    if not name:
+        creds = _stream._load_creds()
+        name = creds.get("_default", "")
+    if not name:
+        sys.stderr.write("  no agent claimed yet. run: styxx claim <name>\n")
+        return 1
+    sys.stdout.write(_stream.dashboard_url(name) + "\n")
+    return 0
+
+
 def cmd_init(args):
     """Run the live-print boot sequence (the upgrade card)."""
     speed_env = os.environ.get("STYXX_BOOT_SPEED")
@@ -1816,6 +1876,28 @@ def _build_parser() -> argparse.ArgumentParser:
         help="custom endpoint URL (default: fathom.darkflobi.com)",
     )
     p_publish.set_defaults(func=cmd_publish)
+
+    # claim — register an agent name on the live telemetry relay
+    p_claim = sub.add_parser(
+        "claim",
+        help="claim an agent name and get your live dashboard URL",
+    )
+    p_claim.add_argument(
+        "name", nargs="?",
+        help="lowercase agent name (a-z, 0-9, - _). If omitted, prompts interactively.",
+    )
+    p_claim.add_argument(
+        "--relay", help="override the relay URL (default: live.darkflobi.com)",
+    )
+    p_claim.set_defaults(func=cmd_claim)
+
+    # feed — print the dashboard URL for the current agent
+    p_feed = sub.add_parser(
+        "feed",
+        help="print the live dashboard URL for your claimed agent",
+    )
+    p_feed.add_argument("name", nargs="?", help="override agent name")
+    p_feed.set_defaults(func=cmd_feed)
 
     return p
 

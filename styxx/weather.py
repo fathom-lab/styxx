@@ -559,8 +559,8 @@ def weather(
     older = [e for e in yesterday_entries if e.get("ts", 0) < cutoff]
     drift_yesterday = 1.0
     drift_label_yesterday = "insufficient history"
+    from .analytics import _CATEGORY_ORDER as CO, _GATE_ORDER as GO
     if len(older) >= 10 and fp_now is not None:
-        from .analytics import _CATEGORY_ORDER as CO, _GATE_ORDER as GO
         p1_c = Counter(e.get("phase1_pred") for e in older)
         p4_c = Counter(e.get("phase4_pred") for e in older)
         gate_c = Counter((e.get("gate") or "pending") for e in older)

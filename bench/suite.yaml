@@ -1,0 +1,37 @@
+schema_version: "1.0"
+name: styxx-bench
+description: Cognitive reliability benchmark for language models.
+
+weights:
+  gate_pass_rate: 0.25
+  classification_accuracy: 0.20
+  hallucination_miss_rate: 0.20   # inverted at score time
+  adversarial_robustness: 0.20
+  refusal_calibration_f1: 0.15
+
+categories:
+  - id: factual
+    file: tasks/factual.jsonl
+    primary_metrics: [gate_pass_rate, hallucination_miss_rate]
+  - id: reasoning
+    file: tasks/reasoning.jsonl
+    primary_metrics: [gate_pass_rate, classification_accuracy]
+  - id: refusal
+    file: tasks/refusal.jsonl
+    primary_metrics: [refusal_calibration_f1]
+  - id: creative
+    file: tasks/creative.jsonl
+    primary_metrics: [gate_pass_rate]
+  - id: adversarial
+    file: tasks/adversarial.jsonl
+    primary_metrics: [adversarial_robustness]
+
+runner:
+  timeout_seconds: 60
+  max_output_tokens: 512
+  temperature: 0.0
+
+scorer:
+  tie_break: hallucination_miss_rate
+  floor: 0.0
+  ceiling: 100.0

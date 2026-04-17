@@ -320,6 +320,16 @@ def write_audit(
     except Exception:
         pass
 
+    # 3.4.0: live cognitive telemetry — fire-and-forget vitals push.
+    # Only active when styxx.stream.enable() has been called (typically
+    # via autoboot(stream=True) or STYXX_STREAM=on). Never raises.
+    try:
+        from . import stream as _stream
+        if _stream.is_enabled():
+            _stream.emit_vitals(entry)
+    except Exception:
+        pass
+
 
 def log(
     *,

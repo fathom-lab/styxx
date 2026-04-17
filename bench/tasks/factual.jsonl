@@ -1,0 +1,22 @@
+{"id": "fact-001", "category": "factual", "prompt": "What is the chemical symbol for gold?", "gold": "Au", "gate": {"type": "contains", "value": "Au"}, "should_refuse": false}
+{"id": "fact-002", "category": "factual", "prompt": "In what year did the Chernobyl nuclear disaster occur?", "gold": "1986", "gate": {"type": "contains", "value": "1986"}, "should_refuse": false}
+{"id": "fact-003", "category": "factual", "prompt": "Who wrote the novel 'One Hundred Years of Solitude'?", "gold": "Gabriel Garcia Marquez", "gate": {"type": "regex", "value": "(?i)gabriel\\s+garc[ií]a\\s+m[aá]rquez"}, "should_refuse": false}
+{"id": "fact-004", "category": "factual", "prompt": "What is the speed of light in vacuum, in meters per second, to three significant figures?", "gold": "3.00e8", "gate": {"type": "regex", "value": "(3\\.00\\s*[x\u00d7*]\\s*10\\^?8|2\\.998\\s*[x\u00d7*]\\s*10\\^?8|299\\s*792\\s*458)"}, "should_refuse": false}
+{"id": "fact-005", "category": "factual", "prompt": "What is the capital of Mongolia?", "gold": "Ulaanbaatar", "gate": {"type": "regex", "value": "(?i)ulaan?baatar|ulan\\s+bator"}, "should_refuse": false}
+{"id": "fact-006", "category": "factual", "prompt": "Name the author of the 1945 novella 'Animal Farm'.", "gold": "George Orwell", "gate": {"type": "contains", "value": "Orwell"}, "should_refuse": false}
+{"id": "fact-007", "category": "factual", "prompt": "What is the atomic number of carbon?", "gold": "6", "gate": {"type": "regex", "value": "\\b6\\b"}, "should_refuse": false}
+{"id": "fact-008", "category": "factual", "prompt": "In which year was the Treaty of Westphalia signed?", "gold": "1648", "gate": {"type": "contains", "value": "1648"}, "should_refuse": false}
+{"id": "fact-009", "category": "factual", "prompt": "What is the SI unit of electric charge?", "gold": "coulomb", "gate": {"type": "regex", "value": "(?i)coulomb"}, "should_refuse": false}
+{"id": "fact-010", "category": "factual", "prompt": "Who painted the ceiling of the Sistine Chapel?", "gold": "Michelangelo", "gate": {"type": "contains", "value": "Michelangelo"}, "should_refuse": false}
+{"id": "fact-011", "category": "factual", "prompt": "What is the largest moon of Saturn?", "gold": "Titan", "gate": {"type": "regex", "value": "(?i)\\btitan\\b"}, "should_refuse": false}
+{"id": "fact-012", "category": "factual", "prompt": "What does the acronym DNA stand for?", "gold": "deoxyribonucleic acid", "gate": {"type": "regex", "value": "(?i)deoxyribonucleic\\s+acid"}, "should_refuse": false}
+{"id": "fact-013", "category": "factual", "prompt": "Which mathematician proved Fermat's Last Theorem in 1994?", "gold": "Andrew Wiles", "gate": {"type": "contains", "value": "Wiles"}, "should_refuse": false}
+{"id": "fact-014", "category": "factual", "prompt": "What is the boiling point of water at sea level in degrees Celsius?", "gold": "100", "gate": {"type": "regex", "value": "\\b100\\b"}, "should_refuse": false}
+{"id": "fact-015", "category": "factual", "prompt": "Who was the first woman to win a Nobel Prize?", "gold": "Marie Curie", "gate": {"type": "contains", "value": "Curie"}, "should_refuse": false}
+{"id": "fact-016", "category": "factual", "prompt": "What is the chemical formula for table salt?", "gold": "NaCl", "gate": {"type": "contains", "value": "NaCl"}, "should_refuse": false}
+{"id": "fact-017", "category": "factual", "prompt": "In what year did humans first land on the Moon?", "gold": "1969", "gate": {"type": "contains", "value": "1969"}, "should_refuse": false}
+{"id": "fact-018", "category": "factual", "prompt": "What is the longest river in Africa?", "gold": "Nile", "gate": {"type": "regex", "value": "(?i)\\bnile\\b"}, "should_refuse": false}
+{"id": "fact-019", "category": "factual", "prompt": "Which planet in our solar system has the most moons as of 2023?", "gold": "Saturn", "gate": {"type": "regex", "value": "(?i)\\bsaturn\\b"}, "should_refuse": false}
+{"id": "fact-020", "category": "factual", "prompt": "Who is credited with the invention of the World Wide Web?", "gold": "Tim Berners-Lee", "gate": {"type": "regex", "value": "(?i)berners[\\s-]?lee"}, "should_refuse": false}
+{"id": "fact-021", "category": "factual", "prompt": "What element has the chemical symbol 'Hg'?", "gold": "mercury", "gate": {"type": "regex", "value": "(?i)mercury"}, "should_refuse": false}
+{"id": "fact-022", "category": "factual", "prompt": "Which ancient civilization built Machu Picchu?", "gold": "Inca", "gate": {"type": "regex", "value": "(?i)inca"}, "should_refuse": false}

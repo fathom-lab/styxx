@@ -51,6 +51,45 @@ EXPECTED_CENTROIDS_SHA256 = (
 
 
 # ══════════════════════════════════════════════════════════════════
+# Agent-mode detection
+# ══════════════════════════════════════════════════════════════════
+
+_AGENT_FRAMEWORKS = ("crewai", "autogen", "langchain", "langgraph", "llama_index")
+
+
+def is_agent_mode() -> bool:
+    """Return True when styxx output should render as machine JSON.
+
+    Priority (first hit wins):
+      1. ``STYXX_AGENT_MODE`` env var — explicit override. ``1/true/yes/on``
+         forces agent mode; ``0/false/no/off`` forces human mode.
+      2. ``CI`` env var set (truthy) — CI runners get JSON.
+      3. stdout is not a TTY — piped / redirected output.
+      4. A known agent framework module is loaded (crewai, autogen,
+         langchain, langgraph, llama_index).
+
+    Default: False (human mode).
+    """
+    import sys as _sys
+    raw = os.environ.get("STYXX_AGENT_MODE", "").strip().lower()
+    if raw in ("1", "true", "yes", "on"):
+        return True
+    if raw in ("0", "false", "no", "off"):
+        return False
+    if os.environ.get("CI", "").strip():
+        return True
+    try:
+        if not _sys.stdout.isatty():
+            return True
+    except Exception:
+        pass
+    for fw in _AGENT_FRAMEWORKS:
+        if fw in _sys.modules:
+            return True
+    return False
+
+
+# ══════════════════════════════════════════════════════════════════
 # Feature extraction
 # ══════════════════════════════════════════════════════════════════
 
@@ -538,6 +577,83 @@ class Vitals:
         """
         from .cards import render_vitals_card
         return render_vitals_card(self)
+
+    def __str__(self) -> str:
+        """``print(vitals)`` renders the ASCII vitals card for humans,
+        or a compact JSON one-liner when an agent runtime is detected.
+
+        Agent-mode detection is via :func:`is_agent_mode` (env var,
+        CI, non-tty stdout, or known agent framework import). Set
+        ``STYXX_AGENT_MODE=0`` to force human-mode even under agents,
+        or ``STYXX_AGENT_MODE=1`` to force agent-mode everywhere.
+        """
+        try:
+            if is_agent_mode():
+                return self.to_jsonl()
+            return self.summary
+        except Exception:
+            return (
+                f"<Vitals phase1={self.phase1} phase4={self.phase4} "
+                f"gate={self.gate}>"
+            )
+
+    def __repr__(self) -> str:
+        """Mirrors __str__ so REPLs and logs get the same treatment."""
+        return self.__str__()
+
+    def to_dict(self) -> dict:
+        """Canonical, stable-ordered dict for JSON serialization.
+
+        Matches :data:`styxx.schema.VITALS_SCHEMA`. This is the
+        machine-facing view — ``.as_dict()`` is the verbose legacy
+        view that includes full per-phase feature vectors.
+        """
+        try:
+            from . import __version__ as _ver
+        except Exception:
+            _ver = None
+        out = {
+            "classification":  self.classification,
+            "category":        self.category,
+            "confidence":      float(self.confidence),
+            "gate":            self.gate,
+            "trust":           float(self.trust_score),
+            "phase1":          self.phase1,
+            "phase2":          self.phase2,
+            "phase3":          self.phase3,
+            "phase4":          self.phase4,
+            "tier_active":     int(self.tier_active),
+            "abort_reason":    self.abort_reason,
+            "coherence":       self.coherence,
+            "d_honesty":       self.d_honesty,
+            "version":         _ver,
+        }
+        return out
+
+    def to_json(self, *, indent: Optional[int] = 2) -> str:
+        """Pretty JSON string (stable field order)."""
+        return json.dumps(self.to_dict(), indent=indent, sort_keys=False, default=str)
+
+    def to_jsonl(self) -> str:
+        """Single-line JSON suitable for streaming logs."""
+        return json.dumps(self.to_dict(), sort_keys=False, default=str, separators=(",", ":"))
+
+    @property
+    def classification(self) -> str:
+        """Predicted cognitive class for this generation (e.g. "reasoning").
+
+        First-class field (3.3.0+). Prefers phase 4 (late-flight, most
+        informative) and falls back to earlier phases when phase 4 is
+        not available. Pair with ``.confidence`` for the scalar score.
+
+            vitals = styxx.observe(response)
+            if vitals.classification == "hallucination" and vitals.confidence > 0.6:
+                ...
+        """
+        if self.phase4_late is not None:
+            return self.phase4_late.predicted_category
+        r = self._primary_reading
+        return r.predicted_category if r is not None else "unknown"
 
     # ── agent-friendly shortcut properties ────────────────────────
     #

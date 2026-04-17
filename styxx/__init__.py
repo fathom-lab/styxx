@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.2.0"
+__version__ = "3.3.1"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -238,7 +238,11 @@ def AutoGen(agent=None):
 
 # Public API
 from .core import StyxxRuntime
-from .vitals import Vitals, CentroidClassifier
+from .vitals import Vitals, CentroidClassifier, is_agent_mode
+from .errors import (
+    StyxxError, StyxxConfigError, StyxxModelError, StyxxVitalsError,
+)
+from . import schema  # noqa: F401  (expose styxx.schema)
 from .watch import watch, observe, observe_raw, is_concerning, WatchSession
 from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
@@ -253,6 +257,12 @@ from .fleet import (
 from .memory import (
     remember, recall, memories, memory_stats,
     Memory, RecallResult,
+)
+from .handoff import (
+    ProtocolEnvelope, Vitals, HandoffValidationError,
+    PROTOCOL as HANDOFF_PROTOCOL,
+    COGNITIVE_CLASSES,
+    from_handshake_envelope, to_handshake_envelope,
 )
 from .handshake import (
     handoff, receive,
@@ -271,6 +281,8 @@ from .provenance import certify, verify, CognitiveCertificate, VerificationResul
 from .diff import compare_sessions, compare_windows, ComparisonDiff
 from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
+from . import stream  # noqa: F401  (expose styxx.stream)
+from .stream import claim_agent, dashboard_url, ClaimError  # noqa: F401
 from .timeline import timeline, Timeline
 from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
@@ -285,6 +297,8 @@ from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon
 from .intercept import CognitiveIntercept, should_intercept, simulate_intercept, InterceptReport
 from .temperature import measure_temperature, aggregate_temperature, TruthMap, demo_temperature
 from .verify import verify, Verdict
+from . import community  # noqa: F401
+from .community import recommend  # noqa: F401
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #
@@ -425,92 +439,57 @@ from .dynamics import (
     COGDYN_VERSION,
 )
 
+# ── Curated public API (3.3.0+) ──────────────────────────────────
+#
+# styxx is a one-line drop-in. The top-level surface is deliberately
+# small: only the names a typical user actually types. Everything else
+# is still available via submodule imports (e.g.
+# ``from styxx.sentinel import Sentinel``, ``styxx.analytics.personality``),
+# and all previously-imported names remain attributes on the module
+# for backward compatibility — they're just not in ``__all__``, so
+# ``from styxx import *`` and tab-completion stay focused on the real
+# product surface.
 __all__ = [
-    # ── 1. observe ────────────────────────────────────────
-    "observe", "observe_raw", "watch", "is_concerning", "explain",
-    "log", "feedback",
-    "WatchSession", "Vitals", "StyxxRuntime", "CentroidClassifier",
-    # adapters
+    # adapters — the main entry points
     "OpenAI", "Anthropic", "Raw",
-    "LangChain", "CrewAI", "AutoGen", "LangSmith", "Langfuse",
-    "hook_openai", "unhook_openai", "hook_openai_active",
-    "trace",
 
-    # ── 2. respond ────────────────────────────────────────
-    "reflex", "rewind", "abort",
-    "on_gate", "remove_gate", "clear_gates", "list_gates",
-    "autoreflex", "autoreflex_from_prescriptions",
-    "remove_autoreflex", "list_autoreflex", "clear_autoreflex",
-    "guardian",
-    "ReflexSession", "ReflexSignal", "RewindSignal", "AbortSignal",
-    "AutoReflexRule", "GuardianSession", "SteeringEvent",
+    # core data type
+    "Vitals",
 
-    # ── 3. scan (tier 2) ─────────────────────────────────
-    "cognitive_scan",
+    # observation / response
+    "observe", "reflex", "rewind",
 
-    # ── 4. analyze ────────────────────────────────────────
-    "weather", "personality", "reflect", "mood", "streak",
-    "antipatterns", "conversation", "dreamer",
-    "session_summary", "timeline", "fingerprint",
-    "agent_card", "log_stats", "log_timeline",
-    "load_audit", "clear_audit_cache",
-    "WeatherReport", "Personality", "ReflectionReport",
-    "SessionSummary", "Timeline", "Fingerprint",
-    "Streak", "DreamReport", "LogStats",
-    "ConversationResult", "AntiPattern",
+    # analysis
+    "weather",
 
-    # ── 5. learn ──────────────────────────────────────────
-    "calibrate", "calibration_status", "train_text_classifier",
-    "enable_auto_feedback", "disable_auto_feedback",
-    "optimize",
-    "CalibrationResult", "TrainResult",
+    # portable thoughts
+    "Thought", "read_thought", "write_thought",
 
-    # ── 6. fleet ──────────────────────────────────────────
-    "set_agent_name", "agent_name", "list_agents",
-    "compare_agents", "fleet_summary", "best_agent_for",
-    "AgentProfile", "AgentComparison", "FleetSummary",
+    # cognitive dynamics
+    "CognitiveDynamics",
 
-    # ── 7. memory ─────────────────────────────────────────
-    "remember", "recall", "memories", "memory_stats",
-    "Memory", "RecallResult",
+    # fleet / agent identity
+    "set_agent_name",
 
-    # ── 8. handoff ────────────────────────────────────────
-    "handoff", "receive",
-    "HandoffEnvelope",
+    # hooks
+    "hook_openai", "unhook_openai",
 
-    # ── 9. compliance ─────────────────────────────────────
-    "certify", "verify", "compliance_report",
-    "probe", "on_anomaly", "notify_on_fail", "clear_notifications",
-    "regression_test", "create_baseline",
-    "assert_healthy", "check_health", "cognitive_sla",
-    "compare_sessions", "compare_windows",
-    "CognitiveCertificate", "VerificationResult",
-    "ComplianceReport", "ProbeReport",
-    "Baseline", "RegressionResult",
-    "CognitiveSLAViolation", "SLAReport",
-    "CognitiveEvent", "ComparisonDiff",
+    # compliance / verification
+    "certify", "compliance_report", "probe", "calibrate",
 
-    # ── 10. operations ────────────────────────────────────
-    "autoboot", "dashboard", "sentinel", "get_sentinel",
-    "session_id", "set_session", "data_dir",
-    "set_context", "current_context",
-    "expect", "unexpect", "expected_categories", "clear_expected",
-    "set_mood", "current_mood_override", "gate_multiplier",
-    "tier1_enabled", "tier1_model", "tier1_device",
-    "Sentinel", "SentinelAlert",
-    "LIVE_SOURCES",
+    # structured output / agent-mode (3.3.2+)
+    "schema", "StyxxError", "is_agent_mode",
 
-    # ── 11. portable thoughts (3.0.0a1) ───────────────────
-    "Thought", "PhaseThought", "ThoughtDelta",
-    "read_thought", "write_thought",
-    "FATHOM_FORMAT", "FATHOM_VERSION", "ATLAS_VERSION",
-
-    # ── 12. cognitive dynamics (3.1.0a1) ──────────────────
-    "CognitiveDynamics", "Observation", "FitResult",
-    "synthetic_observations",
-    "thought_to_state", "state_to_thought",
-    "COGDYN_FORMAT", "COGDYN_VERSION",
-
-    # ── metadata ──────────────────────────────────────────
-    "__version__", "__tagline__",
+    # metadata
+    "__version__",
 ]
+
+
+def __dir__():
+    """Limit ``dir(styxx)`` to the curated public surface.
+
+    All other names remain available as attributes for backward
+    compatibility (e.g. ``styxx.Sentinel``, ``styxx.personality``)
+    but don't clutter tab-completion or ``from styxx import *``.
+    """
+    return sorted(set(__all__) | {"__version__", "__author__", "__license__"})

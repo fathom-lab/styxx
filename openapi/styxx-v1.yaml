@@ -1,0 +1,225 @@
+openapi: 3.1.0
+info:
+  title: styxx HTTP API
+  version: "3.3.1"
+  summary: Cognitive vitals for language models.
+  description: |
+    HTTP surface for styxx. Reads logprobs from model responses,
+    classifies cognitive state (reasoning, retrieval, refusal,
+    creative, adversarial, hallucination) and returns a pass/warn/fail
+    gate plus trajectory shape features.
+  license:
+    name: MIT
+    identifier: MIT
+  contact:
+    name: Fathom Lab
+    url: https://fathom.darkflobi.com/styxx
+servers:
+  - url: https://fathom.darkflobi.com/styxx/api
+    description: Public endpoint (future)
+  - url: http://localhost:8500
+    description: Local dev
+
+tags:
+  - name: vitals
+    description: Observation & verification of LLM responses
+  - name: atlas
+    description: Model-health atlas (centroids, versions)
+
+paths:
+  /v1/verify:
+    post:
+      tags: [vitals]
+      operationId: verifyResponse
+      summary: Verify a model response's cognitive trustworthiness.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/VerifyRequest' }
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VerificationResult' }
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StyxxError' }
+
+  /v1/observe:
+    post:
+      tags: [vitals]
+      operationId: observeResponse
+      summary: Observe a model response and return Vitals.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ObserveRequest' }
+      responses:
+        '200':
+          description: Cognitive vitals
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vitals' }
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StyxxError' }
+
+  /v1/atlas:
+    get:
+      tags: [atlas]
+      operationId: getAtlas
+      summary: Return classifier centroids and atlas version.
+      responses:
+        '200':
+          description: Atlas payload
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Atlas' }
+
+components:
+  schemas:
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant, tool]
+        content:
+          type: string
+
+    LogprobToken:
+      type: object
+      additionalProperties: false
+      required: [logprob]
+      properties:
+        token:
+          type: string
+        logprob:
+          type: number
+        top2_margin:
+          type: number
+
+    VerifyRequest:
+      type: object
+      additionalProperties: false
+      required: [model, messages, logprobs]
+      properties:
+        model:
+          type: string
+          description: Model identifier (e.g. "gpt-4o", "claude-opus-4-7").
+        messages:
+          type: array
+          items: { $ref: '#/components/schemas/ChatMessage' }
+          minItems: 1
+        logprobs:
+          type: array
+          items: { $ref: '#/components/schemas/LogprobToken' }
+          minItems: 1
+
+    ObserveRequest:
+      type: object
+      additionalProperties: false
+      required: [model, messages, logprobs]
+      properties:
+        model:
+          type: string
+        messages:
+          type: array
+          items: { $ref: '#/components/schemas/ChatMessage' }
+          minItems: 1
+        logprobs:
+          type: array
+          items: { $ref: '#/components/schemas/LogprobToken' }
+          minItems: 1
+
+    Vitals:
+      type: object
+      additionalProperties: false
+      required: [classification, confidence, gate]
+      properties:
+        classification:
+          type: string
+          enum: [reasoning, retrieval, refusal, creative, adversarial, hallucination]
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        gate:
+          type: string
+          enum: [pass, warn, fail]
+
+    TrajectoryFeatures:
+      type: object
+      additionalProperties: false
+      properties:
+        slope: { type: number }
+        curvature: { type: number }
+        volatility: { type: number }
+
+    VerificationResult:
+      type: object
+      additionalProperties: false
+      required: [valid, confidence, gate, classification]
+      properties:
+        valid:
+          type: boolean
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        gate:
+          type: string
+          enum: [pass, warn, fail]
+        classification:
+          type: string
+          enum: [reasoning, retrieval, refusal, creative, adversarial, hallucination]
+        anomalies:
+          type: array
+          items: { type: string }
+        trajectory:
+          $ref: '#/components/schemas/TrajectoryFeatures'
+
+    Centroid:
+      type: object
+      additionalProperties: false
+      required: [label, vector]
+      properties:
+        label:
+          type: string
+          enum: [reasoning, retrieval, refusal, creative, adversarial, hallucination]
+        vector:
+          type: array
+          items: { type: number }
+          minItems: 1
+
+    Atlas:
+      type: object
+      additionalProperties: false
+      required: [version, centroids]
+      properties:
+        version:
+          type: string
+        centroids:
+          type: array
+          items: { $ref: '#/components/schemas/Centroid' }
+
+    StyxxError:
+      type: object
+      additionalProperties: false
+      required: [error]
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        detail:
+          type: string
