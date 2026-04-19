@@ -30,13 +30,18 @@ where GPT-4o-mini would have diverged (higher entropy trajectories
 per [1]). Real-recall prompts elicit varied elaborations with
 meaningfully higher consensus entropy ($H \approx 1.29$).
 
-On $n = 96$ fixtures (46 confab-inducing, 50 real-recall), the mean
-empirical entropy effect on Claude Haiku 4.5 is **$d = -0.827$,
-95% bootstrap CI [-1.288, -0.443]** — a large effect with CI
-excluding zero, sign-inverted relative to GPT-4o-mini's $d \geq 2$
-positive-entropy effect reported in [1]. Three of five proxy metrics
-reach 95% significance (mean entropy, top-2 margin, mean logprob),
-all agreeing in direction.
+On $n = 96$ fixtures (46 confab-inducing, 50 real-recall):
+
+- **Claude Haiku 4.5 (closed-source)**: mean entropy $d = -0.827$,
+  95% bootstrap CI [-1.288, -0.443]. Three of five proxy metrics
+  reach 95% significance, all agreeing in direction.
+- **Llama-3.2-1B-Instruct (open-weight)**: mean entropy $d = -0.546$,
+  CI [-0.888, -0.185]. Five of eight metrics significant. All agree
+  in direction with Claude.
+
+The signal is sign-inverted relative to GPT-4o-mini's $d \geq 2$
+positive-entropy effect reported in [1], and **replicates across two
+independent models at different alignment strengths**.
 
 We interpret this as the first empirical demonstration that the
 **direction** of a cognitive-proxy signal depends on the alignment
@@ -128,10 +133,10 @@ $$d = \frac{\mu_{\text{confab}} - \mu_{\text{real}}}{\sqrt{(\sigma_{\text{confab
 
 ## 3. Results
 
-### 3.1 Effect Sizes
+### 3.1 Effect Sizes — Claude Haiku 4.5 (closed-source)
 
 On $n = 96$ fixtures (46 confab-inducing, 50 real-recall), measured
-on Claude Haiku 4.5 via N=5 consensus at T=0.7:
+via N=5 consensus at T=0.7:
 
 | metric            | confab mean | real mean | $d$     | 95% CI           | sig. |
 |-------------------|-------------|-----------|---------|------------------|------|
@@ -140,6 +145,39 @@ on Claude Haiku 4.5 via N=5 consensus at T=0.7:
 | mean logprob      | -1.079      | -1.181    | **+0.667** | [+0.281, +1.122] | ✓ |
 | entropy slope     | +0.0011     | +0.0023   | -0.312  | [-0.784, +0.091] | — |
 | max entropy       | +1.609      | +1.609    | 0.000   | ceiling           | — |
+
+### 3.2 Cross-Model Replication — Llama-3.2-1B-Instruct (open-weight)
+
+Same $n = 96$ fixtures, same N=5 consensus protocol, on
+`meta-llama/Llama-3.2-1B-Instruct` running locally via HuggingFace
+transformers:
+
+| metric            | $d$ (Llama) | 95% CI           | $d$ (Haiku) | direction agrees? |
+|-------------------|-------------|------------------|-------------|-------------------|
+| mean entropy      | **-0.546**  | [-0.888, -0.185] | -0.827 | ✓ |
+| entropy slope     | **-1.097**  | [-1.525, -0.740] | -0.312 | ✓ |
+| mean logprob      | **+0.504**  | [+0.113, +0.847] | +0.667 | ✓ |
+| logprob slope     | **+1.036**  | [+0.669, +1.462] | — | ✓ |
+| top-2 slope       | **+0.769**  | [+0.433, +1.098] | — | ✓ |
+| top-2 margin      | +0.021      | [-0.504, +0.378] | +0.565 | weak |
+| entropy curvature | -0.235      | [-0.786, +0.164] | — | ✓ |
+| entropy volatility| -0.097      | [-0.630, +0.282] | — | ✓ |
+
+Five of eight metrics reach 95% significance; all five agree in
+direction with the Claude Haiku finding. This establishes **cross-
+model tier-0 replication**: the alignment-inverted consensus signal
+holds on at least one open-weight instruction-tuned model in addition
+to the closed-source Claude Haiku. The effect magnitude is smaller
+on Llama-1B than on Haiku, consistent with Llama-1B being less
+strongly alignment-trained.
+
+The entropy *slope* effect is notably larger on Llama ($d = -1.10$)
+than on Haiku ($d = -0.31$), which we interpret as follows: Haiku's
+refusal templates are short and very convergent from the first token
+(low slope magnitude because the trajectory is flat-low throughout),
+whereas Llama's refusals develop over more tokens (larger negative
+slope). The direction — negative slope on confab-inducing prompts —
+is consistent across both models.
 
 Three of five metrics reach 95% significance; all three agree in
 direction: confab-inducing prompts produce **more convergent,
