@@ -92,7 +92,12 @@ Documentation  = "https://fathom.darkflobi.com/styxx"
 styxx = "styxx.cli:main"
 
 [tool.setuptools]
-packages = ["styxx", "styxx.adapters", "styxx.centroids", "styxx.recipes"]
+packages = [
+    "styxx", "styxx.adapters", "styxx.centroids", "styxx.recipes",
+    "styxx.anthropic_hack", "styxx.residual_probe",
+    "styxx.residual_probe.atlas",
+]
 
 [tool.setuptools.package-data]
 "styxx.centroids" = ["*.json"]
+"styxx.residual_probe.atlas" = ["*.json", "*.pt", "README.md"]
