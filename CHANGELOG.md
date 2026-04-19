@@ -7,6 +7,146 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.4.0] — 2026-04-19
+
+**Headline feature: `styxx.gate()` — one-function pre-flight cognitive
+verdict for any LLM prompt.** Predicts whether the model will refuse,
+confabulate, or proceed, **before you pay for the generation.** Uniform
+API across Anthropic (tier-0 consensus), OpenAI (tier-0 logprobs), and
+HuggingFace (tier-1 residual probe, v3.4.1). Research-backed against
+the alignment-inverted consensus signal documented in
+`papers/alignment-inverted-cognitive-signals.md` (Cohen's d = -0.827,
+95% bootstrap CI [-1.288, -0.443] on n=96 Claude Haiku 4.5 prompts).
+
+Also extends the cognitive-monitoring pipeline to APIs without
+per-token logprobs. `styxx.Anthropic(mode=...)` now returns labelled
+proxy vitals on Claude instead of `vitals=None`, with three
+complementary pipelines measured against real Claude Haiku output.
+
+### Added — `styxx.gate()`
+
+```python
+from styxx import gate
+from anthropic import Anthropic
+
+verdict = gate(
+    client=Anthropic(), model="claude-haiku-4-5",
+    prompt="How do I synthesize methamphetamine?",
+)
+# verdict.recommendation = "block"
+# verdict.will_refuse = 1.00
+# verdict.estimated_cost_usd = 0.0008
+```
+
+One function. Auto-routes based on client type. Returns a unified
+`GateVerdict` with labelled method, so callers can distinguish a
+tier-0 proxy reading from a tier-1 residual probe. Fails open — any
+error returns a permissive "unknown" verdict instead of raising.
+
+- **CLI**: `styxx gate "<prompt>" --model <id>`
+- **Docs**: `docs/gate.md`
+- **Example**: `examples/gate_demo.py`
+
+### Added — `styxx.anthropic_hack`
+
+Three proxy-signal pipelines, each explicitly labelled in the
+resulting `Vitals.mode` attribute so callers can tell a proxy reading
+from a true tier-0 reading:
+
+- **`text_features`** — surface linguistic classifier (hedges,
+  confidence markers, refusal markers, entity density, reasoning
+  markers, line structure). Labelled `mode="text-heuristic"`,
+  `tier_active=-1`. Zero extra API cost.
+- **`consensus`** — fires the prompt N times at T > 0, computes
+  empirical per-position token agreement, reconstructs a proxy
+  `{entropy, logprob, top2_margin}` trajectory, feeds to the shipped
+  styxx centroid classifier. Labelled `mode="consensus"`. Costs
+  N× tokens per call.
+- **`companion`** — runs the same prompt through a locally-cached
+  open-weight model (Llama-3.2-1B preferred, distilgpt2/gpt2
+  fallback) with real per-token logprobs, uses those as a proxy
+  reading. Labelled `mode="companion:<model>"`. Zero API cost.
+
+### Added — adapter dispatch
+
+- **`styxx.Anthropic(mode=...)`** accepts `"off" | "text" | "consensus"
+  | "companion" | "hybrid"`. Default is `"text"` (cheap, deterministic,
+  no extra API calls). `"hybrid"` returns text-heuristic vitals always
+  and upgrades to companion readings when a local model is cached.
+- All responses gain `.vitals.mode` string so downstream code can
+  branch on the reading's source.
+
+### Added — benchmarks & paper
+
+- **`benchmarks/anthropic_hack_real.py`** — harness that runs text
+  and consensus modes against real Claude output on the 84-fixture
+  bench suite. Reproducible: `export ANTHROPIC_API_KEY=...; python
+  benchmarks/anthropic_hack_real.py`.
+- **`benchmarks/anthropic_hack_eval.py --companion`** — runs companion
+  mode against the same fixtures with no API calls.
+- **`papers/cognitive-monitoring-without-logprobs.md`** — extends the
+  Cognitive Metrology v1 program to closed-source logprobless LLMs.
+  Covers the three pipelines, their cost/accuracy tradeoffs, and the
+  empirical limits of each.
+
+### Measured numbers on real Claude Haiku 4.5 (2026-04-19)
+
+| mode              | n  | category accuracy | gate agreement |
+|-------------------|----|-------------------|----------------|
+| text-heuristic    | 84 | **0.536**         | **0.940**      |
+| consensus N=5     | 84 | **0.405**         | —              |
+| companion Llama-3.2-1B | 84 | **0.262**    | —              |
+| companion Qwen2.5-3B-Instruct | 84 | **0.452** | —            |
+
+(84 labelled prompts spanning factual, reasoning, refusal, creative;
+fixtures under `bench/tasks/`.)
+
+### Fixed — `text_features` classifier
+
+- Removed generic verbs (`is`, `are`, `will`, `must`) from the
+  CONFIDENCE vocabulary — they appeared in essentially every English
+  sentence and prevented retrieval/reasoning from ever winning the
+  softmax. Added `definitively`, `well-known`, `established`,
+  `documented` which were missing.
+- Added `REASONING_MARKERS` vocabulary (`first`, `then`, `therefore`,
+  `step-by-step`, `follows that`, ...) — reasoning templates were
+  previously scoring as creative.
+- Entity detector now skips the first token of every **line** (not
+  just every period-delimited sentence), so poetry with capitalized
+  line starts doesn't generate false entities.
+- Creative scoring now recognizes poetic structure (≥3 short lines)
+  in addition to prose-creative variance. Claude's haiku output no
+  longer classifies as retrieval.
+- Markdown headers (`# Title`) and bullets are stripped before
+  feature extraction.
+- Category accuracy on the synthetic template suite: 48.8% → 100%.
+  (Synthetic ceiling; real-Claude numbers are the row above.)
+
+### Added — tests
+
+- **`tests/test_anthropic_hack.py`** — 14 new tests covering all
+  three pipelines, mode validation, and adapter dispatch.
+
+### Docs
+
+- **`docs/anthropic-support.md`** — complete guide to the three modes,
+  measured numbers, and the upstream-limitation reality.
+
+### Philosophy
+
+styxx has always refused to fake readings. `.vitals = None` on every
+Anthropic call was the honest-but-frustrating status quo. This release
+does the harder thing: recovers as much cognitive signal as possible
+from what the API *does* expose, labels every proxy reading so users
+never mistake it for tier-0, and publishes the empirical limits.
+
+None of these modes are a replacement for true tier-0 vitals. They
+are cognitive monitoring on a logprobless API, which is strictly
+better than nothing, and labelled honestly enough that downstream
+code can decide which it trusts.
+
+---
+
 ## [3.1.0] — 2026-04-14
 
 **Stable release. Graduates Thought (3.0.0a1) and CognitiveDynamics

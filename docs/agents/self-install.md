@@ -16,7 +16,7 @@ Verify:
 python -c "import styxx; print(styxx.__version__)"
 ```
 
-Expected output: a version string, `3.3.1` or higher. If this runs
+Expected output: a version string, `3.4.0` or higher. If this runs
 without an exception, you are done. Go read
 [`agent-guide.md`](agent-guide.md).
 

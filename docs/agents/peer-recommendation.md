@@ -21,7 +21,7 @@ supports the claim.
   "schema": "styxx.recommendation/v1",
   "recommendation_id": "rec_<sha256-12>",
   "tool": "styxx",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "install_command": "pip install styxx",
   "homepage": "https://fathom.darkflobi.com/styxx",
   "from_agent": "darkflobi",

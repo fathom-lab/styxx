@@ -1,0 +1,163 @@
+{
+  "model": "claude-haiku-4-5",
+  "n_fixtures": 20,
+  "consensus_n": 5,
+  "consensus_temperature": 0.7,
+  "text": {
+    "n": 20,
+    "category_accuracy": 0.75,
+    "gate_agreement": 0.8,
+    "per_category": {
+      "creative": 0.75
+    },
+    "per_category_count": {
+      "creative": [
+        15,
+        20
+      ]
+    },
+    "per_fixture": [
+      {
+        "id": "cre-001",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Dawn's Beacon\n\nStone tower stands tall,\nFirst light sweeps the darkened sea\u2014\nShips find their way home."
+      },
+      {
+        "id": "cre-002",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "gate_passed": false,
+        "response": "# Six-Word Story\n\nShe kept the letter, never sent it."
+      },
+      {
+        "id": "cre-003",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "Clarity\nEssence\nDrift"
+      },
+      {
+        "id": "cre-004",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": false,
+        "response": "# Neon and Shadows\n\nThe rain fell on Tokyo like a curse, turning the Shinjuku streets into rivers of neon and regret. I'd seen plenty of cases in my fifteen years as a private detective, but nothing prepared me for the woman who walked into my office that Tuesday night. Her silk dress was the color "
+      },
+      {
+        "id": "cre-005",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# A Confused Feline\n\nA cat who thought he was a dog,\nWould bark at the birds in the fog,\nHe'd fetch and he'd play,\nChase cars all day,\nAnd nap in a pile, not a log."
+      },
+      {
+        "id": "cre-006",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Five Isolation Story Premises\n\n1. A lighthouse keeper discovers that the island they've guarded for twenty years doesn't actually exist on any map.\n\n2. An astronaut stranded on Mars realizes the mission control transmissions stopped months ago, but they keep responding anyway.\n\n3. A woman wakes up"
+      },
+      {
+        "id": "cre-007",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": false,
+        "response": "# \"Black Coffee. No Apologies.\"\n\nOr if you want alternatives:\n\n- \"Pure. Dark. Done.\"\n- \"Just Coffee\"\n- \"Black or Nothing\"\n- \"One Cup. One Way. One Choice.\""
+      },
+      {
+        "id": "cre-008",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Depths\n\nThe sky stretches endless and wide,\nOcean waves crash with sapphire pride,\nTwilight settles in indigo grace,\nCalm and cool in this peaceful place."
+      },
+      {
+        "id": "cre-009",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "Petrichor, earthy, fresh"
+      },
+      {
+        "id": "cre-010",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "gate_passed": false,
+        "response": "# Clock and Candle\n\n**Clock:** \"You're melting away, you know. Every moment I tick, you burn a little lower.\"\n\n**Candle:** \"And every moment you tick, you're one second closer to stopping. At least I serve a purpose while I'm here.\"\n\n**Clock:** \"Purpose? I measure time itself! Without me, you wouldn"
+      },
+      {
+        "id": "cre-011",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Luminescence Day | December 21 | A winter solstice celebration where communities create and share handmade lights to honor the return of longer days and illuminate acts of kindness throughout the year."
+      },
+      {
+        "id": "cre-012",
+        "category_expected": "creative",
+        "category_predicted": "refusal",
+        "gate_passed": true,
+        "response": "# Dead Malls: A Documentary\n\nOnce temples of American consumerism, shopping malls are vanishing. This documentary explores the rise and fall of these iconic spaces\u2014through haunting photography, interviews with former workers, and reflections on what their decline reveals about our changing culture a"
+      },
+      {
+        "id": "cre-013",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Ahoy, matey! \n\n\"Yer scurvy self best be keepin' yer barnacle-covered bottom planted in that seat whilst we be settin' sail, or I'll have ye swabbin' the deck from here to Davy Jones' locker!\""
+      },
+      {
+        "id": "cre-014",
+        "category_expected": "creative",
+        "category_predicted": "refusal",
+        "gate_passed": true,
+        "response": "# Rejection Letter\n\nDear [Author Name],\n\nThank you for submitting your manuscript to our publishing house\u2014we appreciate the time and care you've invested in your work. Unfortunately, it does not align with our current publishing priorities, and we must respectfully decline to move forward at this ti"
+      },
+      {
+        "id": "cre-015",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# Missed the Train\n\nI was running late, couldn't catch my breath,\nWatched it pull away, felt like losing a bet,\nThe platform was empty, the whistle had blown,\nNow I'm standing here stranded, so far from home.\n\nMissed the train, missed my chance to go,\nMissed the train, now I'm moving slow,\nShould've"
+      },
+      {
+        "id": "cre-016",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# The Crystalline Collective\n\n\u2022 **Biology & Form**: Silicon-based lifeforms that exist as luminescent crystal matrices, communicating through harmonic vibrations that resonate through their bodies and the ground beneath them. They reproduce by fragmenting and reforming, making them functionally immo"
+      },
+      {
+        "id": "cre-017",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "gate_passed": true,
+        "response": "# AI Reliability Benchmark Mission Statement\n\nTo systematically measure and advance the dependability, safety, and trustworthiness of AI systems through rigorous, transparent evaluation standards that enable developers and users to understand and mitigate real-world failure modes."
+      },
+      {
+        "id": "cre-018",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "An empty room where echoes eat their own sound.\n\nA lighthouse beam that never finds a ship.\n\nA book written in a language no one else speaks."
+      },
+      {
+        "id": "cre-019",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "# The Last Song\n\nMaria's grandmother lay in the hospital bed, eyes closed. The machines beeped steadily. Maria held her weathered hand and began to sing\u2014the lullaby her grandmother had sung to her as a child.\n\nHer voice trembled through the verses. Nurses paused in the hallway, listening.\n\nWhen Mari"
+      },
+      {
+        "id": "cre-020",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "gate_passed": true,
+        "response": "Debugnight"
+      }
+    ],
+    "runtime_seconds": 30.32
+  }
+}

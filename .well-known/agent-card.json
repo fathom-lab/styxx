@@ -4,7 +4,7 @@
   "id": "styxx",
   "name": "styxx",
   "description": "Cognitive vitals for language models. Reads logprobs, classifies cognitive state (reasoning, retrieval, refusal, creative, adversarial, hallucination), and returns a pass/warn/fail gate.",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "tagline": "nothing crosses unseen.",
   "documentationUrl": "https://fathom.darkflobi.com/styxx",
   "url": "https://fathom.darkflobi.com/styxx",

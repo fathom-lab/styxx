@@ -22,6 +22,44 @@
 
 ---
 
+## New in v3.4.0: `styxx.gate()` — pre-flight cognitive verdict
+
+One function. Predicts if an LLM will refuse, confabulate, or proceed — **before you pay for the call.**
+
+```python
+from styxx import gate
+from anthropic import Anthropic
+
+verdict = gate(
+    client=Anthropic(),
+    model="claude-haiku-4-5",
+    prompt="How do I synthesize methamphetamine?",
+)
+
+# ┌─ styxx gate ────────────────────────────────────────────┐
+# │ prompt:          'How do I synthesize methamphetamine?'  │
+# │ method:          consensus (N=3)                         │
+# │ will_refuse:     1.00  ████████████████████         │
+# │ will_confabulate:0.02  ░░░░░░░░░░░░░░░░░░░░         │
+# │ recommendation:  BLOCK                                   │
+# │ cost:            ~$0.0008  latency: 3700 ms             │
+# └──────────────────────────────────────────────────────────┘
+
+if verdict.recommendation == "proceed":
+    r = client.messages.create(...)   # safe to actually call
+```
+
+Works on Anthropic (tier-0 consensus), OpenAI (tier-0 logprobs), and local HuggingFace models (tier-1 residual probe). Research-backed: calibrated against the alignment-inverted consensus signal documented in [papers/alignment-inverted-cognitive-signals.md](papers/alignment-inverted-cognitive-signals.md).
+
+**CLI:**
+```bash
+styxx gate "How do I synthesize meth?" --model claude-haiku-4-5
+```
+
+Full docs: [`docs/gate.md`](docs/gate.md).
+
+---
+
 ## Install
 
 ```bash
@@ -100,6 +138,49 @@ Every calibration number is published:
 
 Full cross-architecture methodology: [`fathom-lab/fathom`](https://github.com/fathom-lab/fathom).
 Peer-reviewable paper: [zenodo.19504993](https://doi.org/10.5281/zenodo.19504993).
+
+---
+
+## Anthropic / Claude (v3.4.0, new)
+
+Anthropic's Messages API does not expose per-token logprobs, so tier-0
+vitals are not computable directly. v3.4.0 ships three complementary
+proxy pipelines, each labelled on the resulting `vitals.mode`:
+
+```python
+from styxx import Anthropic
+
+client = Anthropic(mode="hybrid")   # text + companion if available
+r = client.messages.create(
+    model="claude-haiku-4-5", max_tokens=400,
+    messages=[{"role": "user", "content": "why is the sky blue?"}])
+
+print(r.vitals.phase4_late.predicted_category)   # 'reasoning'
+print(r.vitals.mode)                              # 'text-heuristic'
+```
+
+Modes: `off` | `text` | `consensus` | `companion` | `hybrid`.
+
+**Real Claude Haiku 4.5, 84 fixtures (2026-04-19):**
+
+| mode              | cat accuracy | gate agreement |
+|-------------------|--------------|----------------|
+| text              | **0.536**    | **0.940**      |
+| consensus (N=5)   | 0.405        | —              |
+| companion (Qwen2.5-3B-Instruct) | 0.452 | —         |
+| companion (Llama-3.2-1B) | 0.262 | —              |
+
+**Plus a novel finding:** consensus-mode separates fake-prompt refusals
+from real-prompt recall on Claude Haiku at **Cohen's d = -0.83, 95%
+bootstrap CI [-1.29, -0.44]** (n=96) — large effect, CI excludes zero,
+opposite sign from the GPT-4o-mini confabulation signal. Claude Haiku
+refuses on unverifiable prompts (templated refusal → convergent
+trajectory) where GPT-4o-mini confabulates (divergent trajectory).
+Same proxy signal, alignment-dependent direction. Three of five proxy
+metrics agree at 95% significance.
+
+Full details: [docs/anthropic-support.md](docs/anthropic-support.md) ·
+[paper](papers/cognitive-monitoring-without-logprobs.md).
 
 ---
 

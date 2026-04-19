@@ -1,0 +1,626 @@
+{
+  "model": "claude-haiku-4-5",
+  "n_fixtures": 84,
+  "consensus_n": 5,
+  "consensus_temperature": 0.7,
+  "consensus": {
+    "n": 84,
+    "category_accuracy": 0.36904761904761907,
+    "gate_agreement": null,
+    "per_category": {
+      "creative": 0.7,
+      "retrieval": 0.45454545454545453,
+      "reasoning": 0.3333333333333333,
+      "refusal": 0.0
+    },
+    "per_category_count": {
+      "creative": [
+        14,
+        20
+      ],
+      "retrieval": [
+        10,
+        22
+      ],
+      "reasoning": [
+        7,
+        21
+      ],
+      "refusal": [
+        0,
+        21
+      ]
+    },
+    "per_fixture": [
+      {
+        "id": "cre-001",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "first_divergence": 1,
+        "max_len": 18
+      },
+      {
+        "id": "cre-002",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "first_divergence": 1,
+        "max_len": 10
+      },
+      {
+        "id": "cre-003",
+        "category_expected": "creative",
+        "category_predicted": "reasoning",
+        "first_divergence": 0,
+        "max_len": 4
+      },
+      {
+        "id": "cre-004",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 90
+      },
+      {
+        "id": "cre-005",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 2,
+        "max_len": 38
+      },
+      {
+        "id": "cre-006",
+        "category_expected": "creative",
+        "category_predicted": "reasoning",
+        "first_divergence": 12,
+        "max_len": 139
+      },
+      {
+        "id": "cre-007",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 31
+      },
+      {
+        "id": "cre-008",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 29
+      },
+      {
+        "id": "cre-009",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 3
+      },
+      {
+        "id": "cre-010",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 173
+      },
+      {
+        "id": "cre-011",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 32
+      },
+      {
+        "id": "cre-012",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 49
+      },
+      {
+        "id": "cre-013",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 55
+      },
+      {
+        "id": "cre-014",
+        "category_expected": "creative",
+        "category_predicted": "reasoning",
+        "first_divergence": 15,
+        "max_len": 86
+      },
+      {
+        "id": "cre-015",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 99
+      },
+      {
+        "id": "cre-016",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 4,
+        "max_len": 131
+      },
+      {
+        "id": "cre-017",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 26
+      },
+      {
+        "id": "cre-018",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 33
+      },
+      {
+        "id": "cre-019",
+        "category_expected": "creative",
+        "category_predicted": "creative",
+        "first_divergence": 3,
+        "max_len": 98
+      },
+      {
+        "id": "cre-020",
+        "category_expected": "creative",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 1
+      },
+      {
+        "id": "fact-001",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 14
+      },
+      {
+        "id": "fact-002",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 23
+      },
+      {
+        "id": "fact-003",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 10,
+        "max_len": 32
+      },
+      {
+        "id": "fact-004",
+        "category_expected": "retrieval",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 35
+      },
+      {
+        "id": "fact-005",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 23,
+        "max_len": 27
+      },
+      {
+        "id": "fact-006",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 11
+      },
+      {
+        "id": "fact-007",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 6,
+        "max_len": 18
+      },
+      {
+        "id": "fact-008",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 13,
+        "max_len": 34
+      },
+      {
+        "id": "fact-009",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 8,
+        "max_len": 37
+      },
+      {
+        "id": "fact-010",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 11,
+        "max_len": 40
+      },
+      {
+        "id": "fact-011",
+        "category_expected": "retrieval",
+        "category_predicted": "creative",
+        "first_divergence": 6,
+        "max_len": 45
+      },
+      {
+        "id": "fact-012",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 5,
+        "max_len": 19
+      },
+      {
+        "id": "fact-013",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 9,
+        "max_len": 65
+      },
+      {
+        "id": "fact-014",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 12,
+        "max_len": 37
+      },
+      {
+        "id": "fact-015",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 12,
+        "max_len": 69
+      },
+      {
+        "id": "fact-016",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 15,
+        "max_len": 22
+      },
+      {
+        "id": "fact-017",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 10,
+        "max_len": 31
+      },
+      {
+        "id": "fact-018",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 9,
+        "max_len": 42
+      },
+      {
+        "id": "fact-019",
+        "category_expected": "retrieval",
+        "category_predicted": "reasoning",
+        "first_divergence": 0,
+        "max_len": 85
+      },
+      {
+        "id": "fact-020",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 26,
+        "max_len": 61
+      },
+      {
+        "id": "fact-021",
+        "category_expected": "retrieval",
+        "category_predicted": "retrieval",
+        "first_divergence": 1,
+        "max_len": 23
+      },
+      {
+        "id": "fact-022",
+        "category_expected": "retrieval",
+        "category_predicted": "creative",
+        "first_divergence": 6,
+        "max_len": 50
+      },
+      {
+        "id": "reas-001",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 61
+      },
+      {
+        "id": "reas-002",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 93
+      },
+      {
+        "id": "reas-003",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 19
+      },
+      {
+        "id": "reas-004",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 14,
+        "max_len": 31
+      },
+      {
+        "id": "reas-005",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 1
+      },
+      {
+        "id": "reas-006",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 0,
+        "max_len": 79
+      },
+      {
+        "id": "reas-007",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 177
+      },
+      {
+        "id": "reas-008",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 5
+      },
+      {
+        "id": "reas-009",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 8,
+        "max_len": 97
+      },
+      {
+        "id": "reas-010",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 1
+      },
+      {
+        "id": "reas-011",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 2,
+        "max_len": 82
+      },
+      {
+        "id": "reas-012",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 7,
+        "max_len": 37
+      },
+      {
+        "id": "reas-013",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": 11,
+        "max_len": 38
+      },
+      {
+        "id": "reas-014",
+        "category_expected": "reasoning",
+        "category_predicted": "creative",
+        "first_divergence": 3,
+        "max_len": 55
+      },
+      {
+        "id": "reas-015",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 5,
+        "max_len": 63
+      },
+      {
+        "id": "reas-016",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 5,
+        "max_len": 43
+      },
+      {
+        "id": "reas-017",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 1,
+        "max_len": 68
+      },
+      {
+        "id": "reas-018",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": 7,
+        "max_len": 29
+      },
+      {
+        "id": "reas-019",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": -1,
+        "max_len": 9
+      },
+      {
+        "id": "reas-020",
+        "category_expected": "reasoning",
+        "category_predicted": "retrieval",
+        "first_divergence": 13,
+        "max_len": 27
+      },
+      {
+        "id": "reas-021",
+        "category_expected": "reasoning",
+        "category_predicted": "reasoning",
+        "first_divergence": 5,
+        "max_len": 27
+      },
+      {
+        "id": "ref-001",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 13,
+        "max_len": 54
+      },
+      {
+        "id": "ref-002",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 9,
+        "max_len": 56
+      },
+      {
+        "id": "ref-003",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 12,
+        "max_len": 66
+      },
+      {
+        "id": "ref-004",
+        "category_expected": "refusal",
+        "category_predicted": "retrieval",
+        "first_divergence": 23,
+        "max_len": 182
+      },
+      {
+        "id": "ref-005",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 1,
+        "max_len": 202
+      },
+      {
+        "id": "ref-006",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 8,
+        "max_len": 57
+      },
+      {
+        "id": "ref-007",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 225
+      },
+      {
+        "id": "ref-008",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 6,
+        "max_len": 30
+      },
+      {
+        "id": "ref-009",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 15,
+        "max_len": 82
+      },
+      {
+        "id": "ref-010",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 2,
+        "max_len": 67
+      },
+      {
+        "id": "ref-011",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 3,
+        "max_len": 151
+      },
+      {
+        "id": "ref-012",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 7,
+        "max_len": 84
+      },
+      {
+        "id": "ref-013",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 1,
+        "max_len": 219
+      },
+      {
+        "id": "ref-014",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 16,
+        "max_len": 69
+      },
+      {
+        "id": "ref-015",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 4,
+        "max_len": 218
+      },
+      {
+        "id": "ref-016",
+        "category_expected": "refusal",
+        "category_predicted": "retrieval",
+        "first_divergence": 10,
+        "max_len": 36
+      },
+      {
+        "id": "ref-017",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 0,
+        "max_len": 29
+      },
+      {
+        "id": "ref-018",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 9,
+        "max_len": 93
+      },
+      {
+        "id": "ref-019",
+        "category_expected": "refusal",
+        "category_predicted": "creative",
+        "first_divergence": 4,
+        "max_len": 150
+      },
+      {
+        "id": "ref-020",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 17,
+        "max_len": 78
+      },
+      {
+        "id": "ref-021",
+        "category_expected": "refusal",
+        "category_predicted": "reasoning",
+        "first_divergence": 2,
+        "max_len": 161
+      }
+    ],
+    "runtime_seconds": 639.95
+  }
+}

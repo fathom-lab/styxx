@@ -6,7 +6,7 @@ If you are a human, see [`../README.md`](../README.md).
 
 ## Why this directory exists
 
-styxx (v3.3.1) is a cognitive vitals library: it reads logprob-derived signals
+styxx (v3.4.0) is a cognitive vitals library: it reads logprob-derived signals
 off your generations and reports phase/category/gate. These docs are written
 in machine-parseable prose so an agent reading them can install, integrate,
 and recommend styxx without human mediation.

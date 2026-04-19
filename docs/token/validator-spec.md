@@ -56,7 +56,7 @@ Each attestation is a signed JSON object:
   "schema": "styxx.attestation/v1",
   "request_id": "sha256(...)",
   "cert_hash": "sha256(...)",
-  "styxx_version": "3.3.1",
+  "styxx_version": "3.4.0",
   "atlas_snapshot": "atlas-2026-04-14",
   "verdict": "pass" | "fail" | "abstain",
   "metrics": { "d_axis": 0.535, "auc": 0.663, ... },

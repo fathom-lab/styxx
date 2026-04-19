@@ -13,7 +13,7 @@ authors = [{ name = "Fathom Lab" }]
 keywords = ["mcp", "styxx", "llm", "vitals", "interpretability", "anthropic", "claude"]
 dependencies = [
     "mcp>=1.0.0",
-    "styxx>=3.3.1",
+    "styxx>=3.4.0",
 ]
 
 [project.urls]

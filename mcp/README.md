@@ -18,7 +18,7 @@ Six cognitive classes: **reasoning · retrieval · refusal · creative · advers
 ## Install
 
 ```bash
-pip install styxx>=3.3.1 mcp
+pip install styxx>=3.4.0 mcp
 pip install -e ./mcp     # from the styxx repo root
 # or, once published:
 # pip install styxx-mcp

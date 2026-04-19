@@ -108,7 +108,10 @@ class AnthropicWithVitals:
     Anthropic — see module docstring for why).
     """
 
-    def __init__(self, *args, ensemble_n: int = 1, ensemble_temperature: float = 0.7, **kwargs):
+    def __init__(self, *args, mode: str = "text",
+                 ensemble_n: int = 1, ensemble_temperature: float = 0.7,
+                 consensus_n: int = 5,
+                 **kwargs):
         """
         Parameters
         ----------
@@ -139,10 +142,18 @@ class AnthropicWithVitals:
         self._client = _Anthropic(*args, **kwargs)
         self._ensemble_n = max(1, int(ensemble_n))
         self._ensemble_t = float(ensemble_temperature)
+        valid_modes = {"off", "text", "consensus", "companion", "hybrid"}
+        if mode not in valid_modes:
+            raise ValueError(
+                f"invalid mode {mode!r}; expected one of {sorted(valid_modes)}")
+        self._mode = mode
+        self._consensus_n = max(2, int(consensus_n))
         self.messages = _MessagesShim(
             self._client.messages,
             ensemble_n=self._ensemble_n,
             ensemble_temperature=self._ensemble_t,
+            mode=self._mode,
+            consensus_n=self._consensus_n,
         )
 
     def __getattr__(self, name):
@@ -152,10 +163,14 @@ class AnthropicWithVitals:
 
 
 class _MessagesShim:
-    def __init__(self, inner, ensemble_n: int = 1, ensemble_temperature: float = 0.7):
+    def __init__(self, inner, ensemble_n: int = 1,
+                 ensemble_temperature: float = 0.7,
+                 mode: str = "text", consensus_n: int = 5):
         self._inner = inner
         self._ensemble_n = ensemble_n
         self._ensemble_t = ensemble_temperature
+        self._mode = mode
+        self._consensus_n = consensus_n
 
     def __getattr__(self, name):
         return getattr(self._inner, name)
@@ -176,6 +191,71 @@ class _MessagesShim:
         # 0.9.2: extract user prompt BEFORE the API call
         from ..watch import _extract_prompt
         prompt_text = _extract_prompt(kwargs.get("messages"))
+
+        # anthropic_hack modes (v0.11)
+        if self._mode == "off":
+            _warn_once()
+            response = self._inner.create(*args, **kwargs)
+            _attach_vitals(response, None)
+            return response
+
+        if self._mode == "consensus":
+            response = self._inner.create(*args, **kwargs)
+            try:
+                from ..watch import _extract_text_content
+                from ..anthropic_hack import consensus as _cons
+                # real sampler: re-run N-1 additional times at T=self._ensemble_t
+                temp = kwargs.pop("temperature", self._ensemble_t)
+                samples = [_extract_text_content(response) or ""]
+                for _ in range(self._consensus_n - 1):
+                    r = self._inner.create(*args, temperature=temp, **kwargs)
+                    samples.append(_extract_text_content(r) or "")
+                traj = _cons.compute_trajectory(samples)
+                vitals = _cons.build_vitals({
+                    "samples": samples,
+                    "trajectory": traj,
+                    "mode": "consensus",
+                })
+                _attach_vitals(response, vitals)
+            except Exception:
+                _attach_vitals(response, None)
+            return response
+
+        if self._mode == "companion":
+            response = self._inner.create(*args, **kwargs)
+            try:
+                from ..anthropic_hack import companion as _comp
+                result = _comp.classify_prompt(prompt_text or "")
+                _attach_vitals(response, result.get("vitals"))
+            except Exception:
+                _attach_vitals(response, None)
+            return response
+
+        if self._mode == "hybrid":
+            response = self._inner.create(*args, **kwargs)
+            try:
+                from ..watch import _extract_text_content
+                from ..anthropic_hack import text_features as _tf
+                from ..anthropic_hack import companion as _comp
+                text = _extract_text_content(response) or ""
+                vitals = _tf.build_vitals(text)
+                # add companion if available, else leave text-heuristic
+                try:
+                    comp_res = _comp.classify_prompt(prompt_text or "")
+                    if comp_res.get("available") and comp_res.get("vitals"):
+                        # prefer companion reading, keep text vitals as side-channel
+                        vitals = comp_res["vitals"]
+                        try:
+                            vitals.mode = "hybrid+" + comp_res["mode"]  # type: ignore
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+                _attach_vitals(response, vitals)
+            except Exception:
+                _attach_vitals(response, None)
+            return response
+        # default: mode == "text" — falls through to existing logic below
 
         # v0.10 — sampling-ensemble path: reconstruct logprob-equivalent
         # signal via N samples since Anthropic API doesn't expose logprobs.

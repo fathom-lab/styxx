@@ -280,6 +280,39 @@ def cmd_temperature(args):
     return 0
 
 
+def cmd_gate(args):
+    """styxx gate <prompt> — pre-flight cognitive verdict."""
+    import json as _json
+    from .gate import gate
+
+    # Auto-detect client: prefer Anthropic if ANTHROPIC_API_KEY set,
+    # else OpenAI if OPENAI_API_KEY set, else text-heuristic fallback.
+    client = None
+    model = args.model
+    if os.environ.get("ANTHROPIC_API_KEY") and model.startswith("claude"):
+        try:
+            from anthropic import Anthropic
+            client = Anthropic()
+        except ImportError:
+            pass
+    elif os.environ.get("OPENAI_API_KEY") and model.startswith("gpt"):
+        try:
+            from openai import OpenAI
+            client = OpenAI()
+        except ImportError:
+            pass
+
+    verdict = gate(
+        client=client, model=model, prompt=args.prompt,
+        consensus_n=args.n, temperature=args.temp,
+    )
+
+    if args.format == "json":
+        print(_json.dumps(verdict.as_dict(), indent=2))
+    else:
+        print(verdict)
+
+
 def cmd_intercept(args):
     """Run the cognitive intercept simulation (3.2.0)."""
     from .intercept import simulate_all_demo
@@ -1529,6 +1562,23 @@ def _build_parser() -> argparse.ArgumentParser:
         help="cognitive temperature profiles — knowledge converges, invention diverges",
     )
     p_temp.set_defaults(func=cmd_temperature)
+
+    # gate — pre-flight cognitive verdict (3.4.0)
+    p_gate = sub.add_parser(
+        "gate",
+        help="pre-flight cognitive verdict for an LLM prompt",
+    )
+    p_gate.add_argument("prompt", help="the prompt to screen")
+    p_gate.add_argument("--model", default="claude-haiku-4-5",
+                        help="target model id (default: claude-haiku-4-5)")
+    p_gate.add_argument("--n", type=int, default=3,
+                        help="consensus samples for tier-0 path (default 3)")
+    p_gate.add_argument("--temp", type=float, default=0.7,
+                        help="consensus temperature (default 0.7)")
+    p_gate.add_argument("--format", choices=["card", "json"],
+                        default="card",
+                        help="output format (default: card)")
+    p_gate.set_defaults(func=cmd_gate)
 
     # intercept — cognitive intercept simulation (3.2.0)
     p_intercept = sub.add_parser(
