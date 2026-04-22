@@ -160,8 +160,21 @@ def check(
     if grounding_score is not None:
         signals_dict["knowledge_grounding"] = grounding_score
 
-    raw_risk = fuse_signals(signals_dict)
-    calibrated_risk = calibrate_piecewise_linear(raw_risk)
+    # Prefer the learned LR calibration when all 4 core signals are
+    # present (HaluEval-trained; 0.90 test AUC). Fall back to the
+    # heuristic weighted-sum + piecewise linear map when signals are
+    # missing (e.g., no reference → grounding absent).
+    have_all_four = all(k in signals_dict for k in (
+        "text_claim_risk", "entity_unverified_frac",
+        "knowledge_grounding", "probe_confab",
+    ))
+    if have_all_four:
+        from .calibrated_weights import predict_proba
+        calibrated_risk = predict_proba(signals_dict)
+        raw_risk = calibrated_risk   # for audit/debug
+    else:
+        raw_risk = fuse_signals(signals_dict)
+        calibrated_risk = calibrate_piecewise_linear(raw_risk)
 
     # 7. Per-span output
     spans: List[Span] = []
@@ -223,6 +236,16 @@ def check(
         signal_readings.append(SignalReading(
             name="probe_confab",
             value=probe_score,
+        ))
+    if grounding_score is not None:
+        signal_readings.append(SignalReading(
+            name="knowledge_grounding",
+            value=grounding_score,
+        ))
+    if consensus_score is not None:
+        signal_readings.append(SignalReading(
+            name="consensus_disagreement",
+            value=consensus_score,
         ))
 
     return Verdict(

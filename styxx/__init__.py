@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.7.0"
+__version__ = "3.8.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -310,6 +310,9 @@ from .cogvm import (
     WRITE, GENERATE, WATCH,
     HALT, RETRY, SWITCH,
 )
+
+# v3.7.1: one-function residual-probe-gated generation
+from .generate_safe import generate_safe, SafeResponse
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

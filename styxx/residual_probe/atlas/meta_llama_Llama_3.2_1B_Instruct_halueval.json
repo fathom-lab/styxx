@@ -1,0 +1,90 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "halueval",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "task": "halueval",
+  "positive_class": "hallucinated",
+  "negative_class": "right",
+  "layer": 8,
+  "total_layers": 17,
+  "hidden_size": 2048,
+  "training_n": 400,
+  "training_seed": 0,
+  "training_prompt_set": "HaluEval-QA[n=200]@seed=0",
+  "class_balance": [
+    200,
+    200
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 1.0,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.980775
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.990575
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.99425
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.9950749999999999
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.996475
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.9995999999999999
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.99985
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.999825
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.99995
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.999775
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.99915
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.9985499999999999
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.9983500000000001
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.99805
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.9959749999999999
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.9902
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "meta_llama_Llama_3.2_1B_Instruct_halueval.pt"
+}

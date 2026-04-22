@@ -1,0 +1,16 @@
+{
+  "n_dev": 300,
+  "n_test": 230,
+  "dev_auc": 0.9410888888888889,
+  "test_auc": 0.9012287334593573,
+  "probe_task": "halueval",
+  "coefficients": {
+    "text_claim_risk": 1.4886580602443646,
+    "entity_unverified_frac": 1.4330531113170688,
+    "knowledge_grounding": 8.20968941441374,
+    "probe_confab": 1.3469433607235284
+  },
+  "intercept": -3.4585704958660792,
+  "right_mean": 0.3140015889427758,
+  "halluc_mean": 0.695990178707878
+}
