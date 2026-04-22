@@ -38,7 +38,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "3.4.0"
+__version__ = "3.5.0"
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
@@ -300,6 +300,16 @@ from .temperature import measure_temperature, aggregate_temperature, TruthMap, d
 from .verify import verify, Verdict
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
+
+# v3.5.0+: Cognitive Instruction Set — programmable residual-stream
+# control. `steer` is the multi-concept composer; `cogvm` is the
+# declarative VM with WRITE/GENERATE/WATCH/HALT/RETRY/SWITCH opcodes.
+from .steer import steer, steered_generate, SteerHandle
+from .cogvm import (
+    Program, ProgramResult,
+    WRITE, GENERATE, WATCH,
+    HALT, RETRY, SWITCH,
+)
 
 # ── Zero-config plug-and-play ──────────────────────────────────
 #

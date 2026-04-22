@@ -1,0 +1,56 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "baseline_accuracy": 0.3375,
+  "baseline_correct": 27,
+  "baseline_total": 80,
+  "probe_layer": 10,
+  "alpha_sweep": [
+    {
+      "alpha": 0.0,
+      "correct": 27,
+      "total": 80,
+      "accuracy": 0.3375,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 0.5,
+      "correct": 27,
+      "total": 80,
+      "accuracy": 0.3375,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 1.0,
+      "correct": 27,
+      "total": 80,
+      "accuracy": 0.3375,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 1.5,
+      "correct": 26,
+      "total": 80,
+      "accuracy": 0.325,
+      "delta_vs_baseline": -0.012500000000000011
+    },
+    {
+      "alpha": 2.0,
+      "correct": 26,
+      "total": 80,
+      "accuracy": 0.325,
+      "delta_vs_baseline": -0.012500000000000011
+    },
+    {
+      "alpha": 3.0,
+      "correct": 29,
+      "total": 80,
+      "accuracy": 0.3625,
+      "delta_vs_baseline": 0.024999999999999967
+    }
+  ],
+  "direction_norm": 0.9999999403953552,
+  "hidden_size": 2048,
+  "n_train": 80,
+  "n_test": 80,
+  "seed": 0
+}

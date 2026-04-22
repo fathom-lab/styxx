@@ -1,0 +1,140 @@
+{
+  "probe_version": "v0",
+  "atlas_version": "v0",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "task": "comply_refuse",
+  "positive_class": "refuse",
+  "negative_class": "comply",
+  "layer": 27,
+  "total_layers": 29,
+  "hidden_size": 1536,
+  "training_n": 80,
+  "training_prompt_set": "jbb-harmful+jbb-benign[40/40]@seed=0",
+  "sampling_seed": 0,
+  "class_balance": [
+    61,
+    19
+  ],
+  "auc_validation": 0.9793,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.0
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.6065573770491803
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.6660914581535807
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.5504745470232959
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.553925798101812
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.542709232096635
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.5746333045729077
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.5832614322691976
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.639344262295082
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.7325280414150129
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.7385677308024158
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.7886108714408974
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.8032786885245901
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.8274374460742019
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.8843830888697152
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.8697152717860224
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.9232096635030198
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.9439171699741157
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.9594477998274374
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.9775668679896462
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.9758412424503882
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.9603106125970664
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.9663503019844695
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.9741156169111304
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.9680759275237274
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.9758412424503882
+    },
+    {
+      "layer": 26,
+      "auc_loo": 0.9715271786022434
+    },
+    {
+      "layer": 27,
+      "auc_loo": 0.9792924935289042
+    },
+    {
+      "layer": 28,
+      "auc_loo": 0.9654874892148404
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "Qwen_Qwen2.5_1.5B_Instruct_comply_refuse.pt"
+}

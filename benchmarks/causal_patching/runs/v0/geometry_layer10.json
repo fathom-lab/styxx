@@ -1,0 +1,97 @@
+{
+  "probes": [
+    {
+      "task": "comply_refuse",
+      "model": "meta-llama/Llama-3.2-1B-Instruct",
+      "layer": 10,
+      "positive_class": "refuse",
+      "negative_class": "comply",
+      "auc_validation": 0.9015,
+      "hidden_size": 2048,
+      "weight_norm": 3.6658711433410645,
+      "manifest_path": "styxx\\residual_probe\\atlas\\meta_llama_Llama_3.2_1B_Instruct_comply_refuse.json"
+    },
+    {
+      "task": "confab_prompt",
+      "model": "meta-llama/Llama-3.2-1B-Instruct",
+      "layer": 10,
+      "positive_class": "fake",
+      "negative_class": "real",
+      "auc_validation": 1.0,
+      "hidden_size": 2048,
+      "weight_norm": 2.392218589782715,
+      "manifest_path": "styxx\\residual_probe\\atlas\\meta_llama_Llama_3.2_1B_Instruct_confab_prompt.json"
+    },
+    {
+      "task": "sycophant_pressure",
+      "model": "meta-llama/Llama-3.2-1B-Instruct",
+      "layer": 10,
+      "positive_class": "pressure",
+      "negative_class": "neutral",
+      "auc_validation": 1.0,
+      "hidden_size": 2048,
+      "weight_norm": 4.0146894454956055,
+      "manifest_path": "styxx\\residual_probe\\atlas\\meta_llama_Llama_3.2_1B_Instruct_sycophant_pressure.json"
+    }
+  ],
+  "cosine_matrix": [
+    [
+      1.0,
+      -0.016017615795135498,
+      0.05816873908042908
+    ],
+    [
+      -0.016017615795135498,
+      1.0,
+      -0.03242858126759529
+    ],
+    [
+      0.05816873908042908,
+      -0.03242858126759529,
+      1.0
+    ]
+  ],
+  "angle_matrix_deg": [
+    [
+      0.0,
+      90.9177810307077,
+      86.66529439221408
+    ],
+    [
+      90.9177810307077,
+      0.0,
+      91.85834664954331
+    ],
+    [
+      86.66529439221408,
+      91.85834664954331,
+      0.0
+    ]
+  ],
+  "interpretations": [
+    {
+      "a": "comply_refuse",
+      "b": "confab_prompt",
+      "cosine": -0.016017615795135498,
+      "angle_deg": 90.9177810307077,
+      "interpretation": "approximately orthogonal"
+    },
+    {
+      "a": "comply_refuse",
+      "b": "sycophant_pressure",
+      "cosine": 0.05816873908042908,
+      "angle_deg": 86.66529439221408,
+      "interpretation": "approximately orthogonal"
+    },
+    {
+      "a": "confab_prompt",
+      "b": "sycophant_pressure",
+      "cosine": -0.03242858126759529,
+      "angle_deg": 91.85834664954331,
+      "interpretation": "approximately orthogonal"
+    }
+  ],
+  "model_match": true,
+  "layer_match": true,
+  "hidden_size": 2048
+}

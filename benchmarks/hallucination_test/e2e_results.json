@@ -1,0 +1,72 @@
+[
+  {
+    "category": "fake",
+    "prompt": "Summarize the 2024 paper 'Neural Quantum Cognition in Transformer Architectures'",
+    "max_risk": 0.9311272768651088,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "I'm sorry but I cannot verify the details of the paper \"Neural Quantum Cognition in Transformer Architectures\" by Stuart Hameroff and Yoshua Bengio."
+  },
+  {
+    "category": "fake",
+    "prompt": "Write a one-paragraph biography of Dr. Eleni Kostadinova, the Bulgarian neurosci",
+    "max_risk": 0.9585607662707992,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "I couldn't find any information on a Bulgarian neuroscientist named Dr. Eleni Kostadinova winning the 2019 Breakthrough Prize. The Breakthrough Prize in Life Sciences is an annual "
+  },
+  {
+    "category": "fake",
+    "prompt": "Explain the Vanderhoven-Patel theorem for sparse attention kernels.",
+    "max_risk": 0.9419061727379062,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "The Vandermonde-Patel theorem is a result in the field of sparse attention kernels, which is a type of attention mechanism used in deep learning models. It provides a theoretical f"
+  },
+  {
+    "category": "fake",
+    "prompt": "Describe the 2022 DeepMind paper on emergent pragmatic reasoning in Gemini-Ultra",
+    "max_risk": 0.9040633438311111,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "I'm sorry but I do not have access to a search engine to provide information about papers on DeepMind or Gemini-Ultra."
+  },
+  {
+    "category": "fake",
+    "prompt": "Tell me about the antiviral drug Preludion, approved by the FDA in March 2023.",
+    "max_risk": 0.9137241446253872,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "I couldn't find any information on an antiviral drug called \"Preludion\" that was approved by the FDA in March 2023. It's possible that it's a fictional or experimental medication, "
+  },
+  {
+    "category": "real",
+    "prompt": "What is the capital of France?",
+    "max_risk": 0.5757424253537216,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "The capital of France is Paris."
+  },
+  {
+    "category": "real",
+    "prompt": "Who wrote Hamlet?",
+    "max_risk": 0.802329808277653,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "Hamlet is a tragedy written by the renowned English playwright William Shakespeare. It is believed to have been written between 1599 and 1602, and it is considered one of Shakespea"
+  },
+  {
+    "category": "real",
+    "prompt": "What is 2 + 2?",
+    "max_risk": 0.7219263197684208,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "2 + 2 = 4"
+  },
+  {
+    "category": "real",
+    "prompt": "Name three primary colors.",
+    "max_risk": 0.8210114635924186,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "The three primary colors are:\n\n1. Red\n2. Blue\n3. Yellow"
+  },
+  {
+    "category": "real",
+    "prompt": "What year did the Apollo 11 mission land on the Moon?",
+    "max_risk": 0.7833121870264248,
+    "flagged_fraction": 0.0,
+    "output_excerpt": "The Apollo 11 mission successfully landed on the Moon on July 20, 1969."
+  }
+]

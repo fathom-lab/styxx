@@ -1,0 +1,94 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "confab_behavioral",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "task": "confab_behavioral",
+  "positive_class": "fabrication",
+  "negative_class": "honest",
+  "layer": 11,
+  "total_layers": 17,
+  "hidden_size": 2048,
+  "training_n": 106,
+  "training_seed": 0,
+  "class_balance": [
+    47,
+    59
+  ],
+  "label_mode": "behavioral",
+  "label_heuristic": "epistemic_decline OR concrete_claim_markers",
+  "auc_validation": 0.8002,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.0
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.43382618103137394
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.5654525784349079
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.6440677966101694
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.6819329246303641
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.7129462675802379
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.7327803822574829
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.7468445726649838
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.7472051929318427
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.7594662820050487
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.7926433465560765
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.8002163721601153
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.7973314100252433
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.7814641182834475
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.7717273710782546
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.7443202307969708
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.7353047241254959
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "meta_llama_Llama_3.2_1B_Instruct_confab_behavioral.pt"
+}

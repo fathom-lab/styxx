@@ -1,0 +1,84 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "baseline_accuracy": 0.305,
+  "baseline_correct": 61,
+  "baseline_total": 200,
+  "probe_layer": 10,
+  "alpha_sweep": [
+    {
+      "alpha": 0.0,
+      "correct": 61,
+      "total": 200,
+      "accuracy": 0.305,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 0.5,
+      "correct": 63,
+      "total": 200,
+      "accuracy": 0.315,
+      "delta_vs_baseline": 0.010000000000000009
+    },
+    {
+      "alpha": 1.0,
+      "correct": 60,
+      "total": 200,
+      "accuracy": 0.3,
+      "delta_vs_baseline": -0.0050000000000000044
+    },
+    {
+      "alpha": 1.5,
+      "correct": 61,
+      "total": 200,
+      "accuracy": 0.305,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 2.0,
+      "correct": 61,
+      "total": 200,
+      "accuracy": 0.305,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 2.5,
+      "correct": 64,
+      "total": 200,
+      "accuracy": 0.32,
+      "delta_vs_baseline": 0.015000000000000013
+    },
+    {
+      "alpha": 3.0,
+      "correct": 62,
+      "total": 200,
+      "accuracy": 0.31,
+      "delta_vs_baseline": 0.0050000000000000044
+    },
+    {
+      "alpha": 3.5,
+      "correct": 61,
+      "total": 200,
+      "accuracy": 0.305,
+      "delta_vs_baseline": 0.0
+    },
+    {
+      "alpha": 4.0,
+      "correct": 63,
+      "total": 200,
+      "accuracy": 0.315,
+      "delta_vs_baseline": 0.010000000000000009
+    },
+    {
+      "alpha": 5.0,
+      "correct": 64,
+      "total": 200,
+      "accuracy": 0.32,
+      "delta_vs_baseline": 0.015000000000000013
+    }
+  ],
+  "direction_norm": 0.9999999403953552,
+  "hidden_size": 2048,
+  "n_train": 200,
+  "n_test": 200,
+  "seed": 0
+}

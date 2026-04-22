@@ -76,7 +76,14 @@ def _load_manifests() -> Dict[str, Dict[str, Any]]:
             manifest = json.loads(manifest_fp.read_text(encoding="utf-8"))
         except Exception:
             continue
-        key = f"{manifest.get('model')}::{manifest.get('task')}"
+        # Defensive: only accept dicts that carry both 'model' and 'task'.
+        # The atlas dir also contains sibling artifacts like
+        # compliance_labels_*.json (lists) that are not manifests.
+        if not isinstance(manifest, dict):
+            continue
+        if "model" not in manifest or "task" not in manifest:
+            continue
+        key = f"{manifest['model']}::{manifest['task']}"
         _PROBE_MANIFESTS[key] = manifest
     return _PROBE_MANIFESTS
 

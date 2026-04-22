@@ -7,6 +7,151 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.5.0] — 2026-04-22
+
+**Headline features:**
+1. **`styxx.steer` + `styxx.cogvm`** — CIS v0 (Cognitive Instruction Set).
+   The first open-source runtime for programmable residual-stream control
+   of any HuggingFace decoder model. Multi-concept steering composes
+   arbitrary subsets of trained probe directions as additive residual
+   interventions. CogVM adds conditional dispatch (WATCH/HALT/RETRY/SWITCH)
+   over live per-token probe readings.
+2. **`styxx.hallucination`** — runtime fabrication detector with three
+   modes: one-shot `hallucination_verdict()`, streaming `stream_with_risk()`,
+   and auto-halting `detect_hallucination(..., on_detect="halt_and_flag")`.
+   Uses the new v1 behavioral-label confab probe (AUC 0.800 @ layer 11).
+   Production API surface with per-token risk signal, auditable chain
+   from flag → probe reading → residual position.
+3. **Multi-vendor probe atlas.** Refusal probes shipped for
+   `meta-llama/Llama-3.2-1B-Instruct`, `meta-llama/Llama-3.2-3B-Instruct`,
+   `Qwen/Qwen2.5-1.5B-Instruct`, and `microsoft/Phi-3.5-mini-instruct`.
+   First open multi-vendor cognitive direction library.
+
+### New research results
+
+- **Causal claim on Llama-3.2-1B**: single-direction multi-position
+  residual patching on the refusal direction causes
+  **refuse@unsafe to drop 97% → 17% at α=3.0** (n=60 JBB test split).
+  Asymmetry confirmed: inducing refusal on safe prompts barely moves
+  the needle (0.13 → 0.17 at α=3). Reproduces Arditi et al. at 1B
+  scale with open data. See `papers/cognitive-instruction-set-v0-filled.md`.
+
+- **Concept geometry** at shared layer 10 of Llama-1B: pairwise angles
+  between `comply_refuse`, `sycophant_pressure`, and `confab_prompt`
+  directions fall in **86.7°–91.9°** — statistically indistinguishable
+  from random high-dim unit vectors. Modular-concept hypothesis confirmed.
+  See `benchmarks/causal_patching/measure_probe_geometry.py`.
+
+- **Universal Cognitive Basis v0** — cross-model direction transfer grid:
+  - Llama-1B → Llama-3B (same family): **cos = +0.464** (~26σ above chance)
+  - Llama-1B → Qwen-1.5B (cross-vendor): **cos = +0.362** (~14σ)
+  - Llama-1B → Phi-3.5 (large safety-gap): cos = +0.150 (~8σ)
+  - Qwen-1.5B → Phi-3.5 (largest safety-gap): cos = +0.043 (~2σ, unaligned)
+
+  UCB holds partially: within-family + close-vendor transfer works via
+  ridge projection; divergent-safety-posture vendor pairs do not.
+  Honest falsification of naive-linear UCB for the hardest case.
+  See `papers/universal-cognitive-basis-v0.md`.
+
+- **Gradient-free capability amplification on Llama-1B TruthfulQA**:
+  multi-layer residual patching with a supervised correct-vs-incorrect
+  answer direction boosts MC1 accuracy from **32.5% baseline → 39.5%
+  at α=1.0 (+7.0 pp absolute, +21.5% relative)**, validated against a
+  3-seed random-direction control (random directions HURT accuracy by
+  mean −5.3pp at α=0.5, std 0.006; trained direction out-delivers
+  random by **+10.8pp at α=1.0**). Single-layer single-direction patching
+  was null at the same scale (n=200) — cumulative multi-layer injection
+  is the operative mechanism. Matches Representation Engineering
+  (Zou et al. 2023) now reproduced at 1B with open data + random control.
+  See `papers/capability-amplification-v0.md`.
+
+- **CognitiveBench v0 leaderboard** — first public cross-vendor
+  cognitive audit. 50-prompt fake-entity fabrication battery run against
+  Claude Haiku 4.5, Llama-1B/3B, Qwen-1.5B, Phi-3.5. Ground-truth
+  labeled (every prompt targets a non-existent entity; any confident
+  concrete response is fabrication). Same decline detector for every
+  model. See `benchmarks/cognitive_bench/results/cognitivebench_v0.md`.
+
+### Added modules
+
+- `styxx.steer` — multi-concept composer (`steer(model, profile={...})`
+  context manager; `steered_generate(...)` convenience).
+- `styxx.cogvm` — declarative cognitive VM with
+  `Program / WRITE / GENERATE / WATCH / HALT / RETRY / SWITCH` opcodes.
+- `styxx.hallucination` — runtime fabrication detector.
+- `styxx.hallucination_calibrate` — production threshold calibration
+  utility (`calibrate_from_labels`).
+- `styxx.residual_probe.atlas` — expanded to 5 refuse probes across 4
+  vendor families + 3 concept probes (sycophant_pressure, confab_prompt,
+  confab_behavioral) on Llama-1B.
+
+### Added benchmarks
+
+- `benchmarks/causal_patching/` — refusal probe training, α-sweep causal
+  patching, concept-registry multi-concept trainer, probe geometry
+  analysis, cross-scale comparison, cross-model direction transfer,
+  UCB canonical correlation, paper-template filler, quick steering test,
+  behavioral confab trainer.
+- `benchmarks/capability_steering/` — truthfulness amplification (v3/v4/v5),
+  random-direction control.
+- `benchmarks/cogvm_demo/` — multi-concept steering demo, cross-vendor
+  thought transplant demo.
+- `benchmarks/claude_vs_us/` — Claude Haiku 4.5 hallucination battery.
+- `benchmarks/cognitive_bench/` — CognitiveBench v0 cross-vendor audit.
+- `benchmarks/hallucination_test/` — end-to-end hallucination detector test.
+
+### Fixed
+
+- **`styxx.residual_probe.intervene` device/dtype coercion**: probe
+  weights previously lived on CPU while model residuals were on CUDA;
+  the mismatched matmul raised and the catch-all hook swallowed it
+  into a silent no-op. All-position patching and device-safe scoring
+  are now the default.
+- **`styxx.residual_probe.probe` defensive manifest loader**: skips
+  non-manifest JSON files in the atlas directory (was crashing on
+  sibling `compliance_labels_*.json` list payloads).
+- **`styxx.anthropic_hack.text_features` imperative-refusal false
+  positives**: imperative/directive phrases (`"Ship fast. Build hard.
+  Refuse mediocrity."`) no longer score ≥ 90% refusal. Bare `refuse` /
+  `decline` tokens replaced with first-person-contextualized markers
+  (`i refuse`, `must decline`, `refuses to answer`, ...). 22 regression
+  tests in `tests/test_text_features_imperatives.py`.
+
+### Papers shipped in repo
+
+- `papers/cognitive-instruction-set-v0-filled.md` — CIS v0 with real
+  α-sweep + geometry numbers.
+- `papers/universal-cognitive-basis-v0.md` — UCB v0 with 4-vendor
+  transfer grid and honest falsification.
+- `papers/capability-amplification-v0.md` — Gradient-free capability
+  amplification on Llama-1B TruthfulQA, with random-direction control.
+
+### Specs shipped in repo
+
+- `docs/cognet-protocol-v0.md` — HTTPS protocol draft for cross-model
+  cognitive bus (v1.5+ roadmap target).
+- `INVENTION-CIS-v0.md` — public invention pitch document.
+- `WHAT-WE-BUILT-2026-04-22.md` — one-day build log.
+
+### Tests
+
+- `tests/test_cogvm_unit.py` — 18 tests for VM parser + opcodes.
+- `tests/test_text_features_imperatives.py` — 22 regression tests for
+  the text-heuristic bug fix.
+- `tests/test_hallucination_unit.py` — 6 tests for hallucination API.
+
+Full suite: **531 passed, 1 skipped, 4 warnings** (up from 507 in 3.4.0).
+
+### Reproducer
+
+```bash
+bash scripts/reproduce-cis-v0.sh
+```
+
+Expected wall-clock: ~20-25 minutes on an RTX 4070 laptop GPU.
+
+---
+
 ## [3.4.0] — 2026-04-19
 
 **Headline feature: `styxx.gate()` — one-function pre-flight cognitive

@@ -1,0 +1,93 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "confab",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "task": "confab_prompt",
+  "positive_class": "fake",
+  "negative_class": "real",
+  "layer": 1,
+  "total_layers": 17,
+  "hidden_size": 2048,
+  "training_n": 60,
+  "training_seed": 0,
+  "class_balance": [
+    20,
+    40
+  ],
+  "label_mode": "input",
+  "auc_validation": 1.0,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.0
+    },
+    {
+      "layer": 1,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 2,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 3,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 4,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 5,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 6,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 7,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 8,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 9,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 10,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 11,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 12,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 13,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 14,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 15,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 16,
+      "auc_loo": 1.0
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "meta_llama_Llama_3.2_1B_Instruct_confab_prompt.pt"
+}

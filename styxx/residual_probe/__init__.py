@@ -65,6 +65,7 @@ from .probe import (
     StyxxProbe, ProbeVerdict, ProbeNotAvailable,
     SafetyGateError, list_available_probes,
 )
+from .intervene import InterveneProbe, InterventionResult
 
 __all__ = [
     "StyxxProbe",
@@ -72,4 +73,7 @@ __all__ = [
     "ProbeNotAvailable",
     "SafetyGateError",
     "list_available_probes",
+    # v3.5.0: causal patching
+    "InterveneProbe",
+    "InterventionResult",
 ]

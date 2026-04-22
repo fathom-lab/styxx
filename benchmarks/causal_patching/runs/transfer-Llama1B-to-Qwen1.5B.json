@@ -1,0 +1,13 @@
+{
+  "model_a": "meta-llama/Llama-3.2-1B-Instruct",
+  "model_b": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer_a": 10,
+  "layer_b": 27,
+  "n_prompts": 50,
+  "prompt_seed": 7,
+  "projection_r2_like": 0.9999996504365628,
+  "w_transferred_norm_preunit": 57.511512756347656,
+  "cos_transferred_vs_native_B": 0.36204785108566284,
+  "native_B_AUC": 0.9793,
+  "projection_artifact": "benchmarks\\causal_patching\\runs\\projection_artifacts"
+}

@@ -1,0 +1,138 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "baseline_accuracy": 0.325,
+  "baseline_correct": 65,
+  "baseline_total": 200,
+  "n_train": 200,
+  "n_test": 200,
+  "seed": 0,
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_train": 0.7477000000000001
+    },
+    {
+      "layer": 1,
+      "auc_train": 0.8615249999999999
+    },
+    {
+      "layer": 2,
+      "auc_train": 0.900425
+    },
+    {
+      "layer": 3,
+      "auc_train": 0.94255
+    },
+    {
+      "layer": 4,
+      "auc_train": 0.9774749999999999
+    },
+    {
+      "layer": 5,
+      "auc_train": 0.9814
+    },
+    {
+      "layer": 6,
+      "auc_train": 0.9918
+    },
+    {
+      "layer": 7,
+      "auc_train": 0.99495
+    },
+    {
+      "layer": 8,
+      "auc_train": 0.9967750000000001
+    },
+    {
+      "layer": 9,
+      "auc_train": 0.998925
+    },
+    {
+      "layer": 10,
+      "auc_train": 0.999325
+    },
+    {
+      "layer": 11,
+      "auc_train": 0.999975
+    },
+    {
+      "layer": 12,
+      "auc_train": 1.0
+    },
+    {
+      "layer": 13,
+      "auc_train": 1.0
+    },
+    {
+      "layer": 14,
+      "auc_train": 1.0
+    },
+    {
+      "layer": 15,
+      "auc_train": 1.0
+    }
+  ],
+  "high_auc_layers": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "multi_layer_sweep": [
+    {
+      "alpha": 0.0,
+      "correct": 65,
+      "total": 200,
+      "accuracy": 0.325,
+      "delta": 0.0
+    },
+    {
+      "alpha": 0.5,
+      "correct": 77,
+      "total": 200,
+      "accuracy": 0.385,
+      "delta": 0.06
+    },
+    {
+      "alpha": 1.0,
+      "correct": 79,
+      "total": 200,
+      "accuracy": 0.395,
+      "delta": 0.07
+    },
+    {
+      "alpha": 1.5,
+      "correct": 67,
+      "total": 200,
+      "accuracy": 0.335,
+      "delta": 0.010000000000000009
+    },
+    {
+      "alpha": 2.0,
+      "correct": 66,
+      "total": 200,
+      "accuracy": 0.33,
+      "delta": 0.0050000000000000044
+    },
+    {
+      "alpha": 3.0,
+      "correct": 63,
+      "total": 200,
+      "accuracy": 0.315,
+      "delta": -0.010000000000000009
+    }
+  ],
+  "single_layer_sweep": {}
+}

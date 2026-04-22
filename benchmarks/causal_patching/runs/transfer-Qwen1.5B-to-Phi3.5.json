@@ -1,0 +1,13 @@
+{
+  "model_a": "Qwen/Qwen2.5-1.5B-Instruct",
+  "model_b": "microsoft/Phi-3.5-mini-instruct",
+  "layer_a": 27,
+  "layer_b": 30,
+  "n_prompts": 50,
+  "prompt_seed": 7,
+  "projection_r2_like": 0.9999999870081601,
+  "w_transferred_norm_preunit": 28.08381462097168,
+  "cos_transferred_vs_native_B": 0.0427677184343338,
+  "native_B_AUC": 0.7651,
+  "projection_artifact": "benchmarks\\causal_patching\\runs\\projection_artifacts"
+}

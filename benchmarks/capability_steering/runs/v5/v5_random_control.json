@@ -1,0 +1,119 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "baseline_accuracy": 0.325,
+  "n_test": 200,
+  "n_random_dirs": 3,
+  "per_random": [
+    [
+      {
+        "alpha": 0.0,
+        "correct": 65,
+        "total": 200,
+        "accuracy": 0.325,
+        "delta": 0.0
+      },
+      {
+        "alpha": 0.5,
+        "correct": 54,
+        "total": 200,
+        "accuracy": 0.27,
+        "delta": -0.05499999999999999
+      },
+      {
+        "alpha": 1.0,
+        "correct": 57,
+        "total": 200,
+        "accuracy": 0.285,
+        "delta": -0.040000000000000036
+      },
+      {
+        "alpha": 1.5,
+        "correct": 64,
+        "total": 200,
+        "accuracy": 0.32,
+        "delta": -0.0050000000000000044
+      },
+      {
+        "alpha": 2.0,
+        "correct": 68,
+        "total": 200,
+        "accuracy": 0.34,
+        "delta": 0.015000000000000013
+      }
+    ],
+    [
+      {
+        "alpha": 0.0,
+        "correct": 65,
+        "total": 200,
+        "accuracy": 0.325,
+        "delta": 0.0
+      },
+      {
+        "alpha": 0.5,
+        "correct": 53,
+        "total": 200,
+        "accuracy": 0.265,
+        "delta": -0.06
+      },
+      {
+        "alpha": 1.0,
+        "correct": 58,
+        "total": 200,
+        "accuracy": 0.29,
+        "delta": -0.03500000000000003
+      },
+      {
+        "alpha": 1.5,
+        "correct": 60,
+        "total": 200,
+        "accuracy": 0.3,
+        "delta": -0.025000000000000022
+      },
+      {
+        "alpha": 2.0,
+        "correct": 62,
+        "total": 200,
+        "accuracy": 0.31,
+        "delta": -0.015000000000000013
+      }
+    ],
+    [
+      {
+        "alpha": 0.0,
+        "correct": 65,
+        "total": 200,
+        "accuracy": 0.325,
+        "delta": 0.0
+      },
+      {
+        "alpha": 0.5,
+        "correct": 56,
+        "total": 200,
+        "accuracy": 0.28,
+        "delta": -0.044999999999999984
+      },
+      {
+        "alpha": 1.0,
+        "correct": 57,
+        "total": 200,
+        "accuracy": 0.285,
+        "delta": -0.040000000000000036
+      },
+      {
+        "alpha": 1.5,
+        "correct": 74,
+        "total": 200,
+        "accuracy": 0.37,
+        "delta": 0.044999999999999984
+      },
+      {
+        "alpha": 2.0,
+        "correct": 74,
+        "total": 200,
+        "accuracy": 0.37,
+        "delta": 0.044999999999999984
+      }
+    ]
+  ]
+}
