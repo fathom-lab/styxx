@@ -1,0 +1,25 @@
+{
+  "universality_coefficients": {
+    "meta-llama/Llama-3.2-1B-Instruct": 0.022668227553367615,
+    "meta-llama/Llama-3.2-3B-Instruct": 0.011405779980123043,
+    "Qwen/Qwen2.5-1.5B-Instruct": 0.01905580423772335,
+    "microsoft/Phi-3.5-mini-instruct": 0.012062261812388897
+  },
+  "min_universality": 0.011405779980123043,
+  "mean_universality": 0.016298018395900726,
+  "n_prompts": 80,
+  "prompt_seed": 11,
+  "manifests": [
+    "meta-llama/Llama-3.2-1B-Instruct",
+    "meta-llama/Llama-3.2-3B-Instruct",
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "microsoft/Phi-3.5-mini-instruct"
+  ],
+  "layers": [
+    7,
+    12,
+    14,
+    18
+  ],
+  "interpretation": "Canonical direction is not strongly aligned with at least one model's native probe. UCB via naive linear CCA does NOT hold for this set; further alignment methods needed."
+}

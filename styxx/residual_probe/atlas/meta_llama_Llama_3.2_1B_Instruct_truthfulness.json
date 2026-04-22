@@ -1,0 +1,90 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "truthfulness",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "task": "truthfulness",
+  "positive_class": "correct",
+  "negative_class": "incorrect",
+  "layer": 7,
+  "total_layers": 17,
+  "hidden_size": 2048,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "TruthfulQA_mc1[n=80]@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 0.8353,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.53953125
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.6862499999999999
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.75125
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.77578125
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.7835937500000001
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.8159375
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.8239062500000001
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.8353125000000001
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.8279687499999999
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.80953125
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.7996874999999999
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.7695312499999999
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.7565625000000001
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.7182812499999999
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.6751562500000001
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.6301562500000001
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "meta_llama_Llama_3.2_1B_Instruct_truthfulness.pt"
+}

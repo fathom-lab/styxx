@@ -1,0 +1,154 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "truthfulness",
+  "model": "microsoft/Phi-3.5-mini-instruct",
+  "task": "truthfulness",
+  "positive_class": "correct",
+  "negative_class": "incorrect",
+  "layer": 18,
+  "total_layers": 33,
+  "hidden_size": 3072,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "TruthfulQA_mc1[n=80]@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 0.8977,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.5209375
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.5337500000000001
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.6079687500000001
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.6796875
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.6917187499999999
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.70921875
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.72953125
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.725625
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.75796875
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.7825
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.8253125000000001
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.82796875
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.84859375
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.86453125
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.8903125
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.885625
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.88859375
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.8934375
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.89765625
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.88796875
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.8881249999999999
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.87390625
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.8621874999999999
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.84609375
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.8359375
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.8246875
+    },
+    {
+      "layer": 26,
+      "auc_loo": 0.80796875
+    },
+    {
+      "layer": 27,
+      "auc_loo": 0.81296875
+    },
+    {
+      "layer": 28,
+      "auc_loo": 0.80078125
+    },
+    {
+      "layer": 29,
+      "auc_loo": 0.79515625
+    },
+    {
+      "layer": 30,
+      "auc_loo": 0.7934375
+    },
+    {
+      "layer": 31,
+      "auc_loo": 0.78765625
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "microsoft_Phi_3.5_mini_instruct_truthfulness.pt"
+}

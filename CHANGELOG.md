@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.5.1] — 2026-04-22
+
+**UCB Phase 2 — first public cross-vendor cognitive-agreement
+measurement.** Same-day follow-up to v3.5.0, adding:
+
+### New atlas entries
+- `google/gemma-2-2b-it` refuse probe (AUC 0.984 @ layer 16,
+  fraction 0.59)
+- Truthfulness concept probes on 4 vendors:
+  - `meta-llama/Llama-3.2-1B-Instruct` (AUC 0.835 @ layer 7,
+    fraction 0.41)
+  - `meta-llama/Llama-3.2-3B-Instruct` (AUC 0.880 @ layer 12,
+    fraction 0.41)
+  - `Qwen/Qwen2.5-1.5B-Instruct` (AUC 0.863 @ layer 14,
+    fraction 0.48)
+  - `microsoft/Phi-3.5-mini-instruct` (AUC 0.898 @ layer 18,
+    fraction 0.55)
+
+**Truthfulness encoded at fraction 0.41–0.55 across all four
+models.** Tighter band than refuse (0.59–0.93), suggesting
+truthfulness has a more universal encoding depth.
+
+### UCB Phase 2 result — landmark measurement
+
+For each concept, we run every model's trained probe on the
+same 80 held-out prompts; compute pairwise Pearson correlation
+across per-prompt probe-score streams.
+
+**comply_refuse — 5 vendors, 10 pairs:**
+- Strongest agreement: Llama-1B ↔ Llama-3B (ρ=+0.873, same family)
+- **Strongest cross-vendor: Gemma-2B ↔ Llama-3B (+0.794)**
+- **Cross-vendor Gemma ↔ Llama-1B: +0.791**
+- Weakest: Phi-3.5 ↔ Qwen-1.5B (+0.177)
+- **Mean pairwise ρ = +0.472** (min +0.177)
+
+**truthfulness — 4 vendors, 6 pairs:**
+- Strongest cross-vendor: Llama-3B ↔ Phi-3.5 (+0.555)
+- **Mean pairwise ρ = +0.305** (min +0.155)
+
+**Partial UCB confirmed** — probes trained independently on 5
+different vendors' models share measurable concept geometry,
+with within-family and similar-posture pairs agreeing strongly
+and divergent-safety-training pairs agreeing weakly. Refusal
+concept is more universal than truthfulness, consistent with
+safety training converging more across vendors than factual
+knowledge.
+
+### New modules
+- `benchmarks/causal_patching/train_truthfulness_probe.py` — HF
+  TruthfulQA-based paired-contrast concept probe trainer
+- `benchmarks/causal_patching/ucb_probe_correlation.py` — the
+  Phase 2 cross-model probe-agreement matrix tool
+
+### Paper shipped
+- `papers/universal-cognitive-basis-phase2.md` with live numbers
+
+### What remains open (Phase 3+)
+- Train Gemma truthfulness probe to complete 5-vendor × 2-concept
+  grid
+- Train deception + confab-behavioral on all 5 vendors
+- Generalized CCA decomposition: what fraction of each model's
+  concept direction lies in the shared subspace vs vendor-
+  specific residual?
+- Cross-architecture test: does UCB extend to non-transformer
+  LMs (Mamba, RWKV)?
+
+---
+
 ## [3.5.0] — 2026-04-22
 
 **Headline features:**

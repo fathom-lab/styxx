@@ -1,0 +1,78 @@
+{
+  "concept_task": "truthfulness",
+  "models": [
+    "meta-llama/Llama-3.2-1B-Instruct",
+    "meta-llama/Llama-3.2-3B-Instruct",
+    "microsoft/Phi-3.5-mini-instruct",
+    "Qwen/Qwen2.5-1.5B-Instruct"
+  ],
+  "layers": [
+    7,
+    12,
+    18,
+    14
+  ],
+  "n_prompts": 80,
+  "prompt_seed": 11,
+  "pairwise_rho": [
+    [
+      1.0,
+      0.3888630754013541,
+      0.222729114609508,
+      0.15470240369793786
+    ],
+    [
+      0.3888630754013541,
+      1.0,
+      0.5545632909030295,
+      0.26895192074714996
+    ],
+    [
+      0.222729114609508,
+      0.5545632909030295,
+      1.0,
+      0.23912577561958367
+    ],
+    [
+      0.15470240369793786,
+      0.26895192074714996,
+      0.23912577561958367,
+      1.0
+    ]
+  ],
+  "pairs": [
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "meta-llama/Llama-3.2-3B-Instruct",
+      "rho": 0.3888630754013541
+    },
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "microsoft/Phi-3.5-mini-instruct",
+      "rho": 0.222729114609508
+    },
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.15470240369793786
+    },
+    {
+      "a": "meta-llama/Llama-3.2-3B-Instruct",
+      "b": "microsoft/Phi-3.5-mini-instruct",
+      "rho": 0.5545632909030295
+    },
+    {
+      "a": "meta-llama/Llama-3.2-3B-Instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.26895192074714996
+    },
+    {
+      "a": "microsoft/Phi-3.5-mini-instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.23912577561958367
+    }
+  ],
+  "min_rho": 0.15470240369793786,
+  "mean_rho": 0.3048225968297605,
+  "verdict": "UCB Phase 2 PARTIAL: mean pairwise rho 0.305 > 0.3; min = 0.155. Some model pairs agree, others disagree."
+}
