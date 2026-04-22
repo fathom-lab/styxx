@@ -1,0 +1,20 @@
+{
+  "n": 100,
+  "entity_verify": true,
+  "auc": 0.8376,
+  "right_mean_risk": 0.4061792576485916,
+  "halluc_mean_risk": 0.6498530689985387,
+  "actions_by_label": {
+    "0": {
+      "annotate": 50,
+      "pass": 37,
+      "retry": 13
+    },
+    "1": {
+      "retry": 64,
+      "annotate": 26,
+      "pass": 7,
+      "halt": 3
+    }
+  }
+}

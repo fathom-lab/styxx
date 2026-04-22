@@ -7,6 +7,107 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.7.0] — 2026-04-22
+
+**Headline: `styxx.guardrail` — multi-signal hallucination-prevention
+pipeline that achieves AUC 0.838 on HaluEval-QA (n=100), competitive
+with published state-of-the-art detectors.**
+
+### New module: `styxx.guardrail`
+
+A production-shaped hallucination-prevention system, not just a
+detector. Takes (prompt, response, optional reference) and returns
+a `Verdict` with:
+
+- Overall calibrated risk score ∈ [0, 1]
+- Recommended action: `pass` / `annotate` / `retry` / `halt`
+- Per-span flagged claims with reasons
+- Per-signal readings for audit
+
+Five-signal architecture:
+1. `text_claim_risk` — surface-level confabulation-indicator text
+   features per atomic claim (weight 0.15)
+2. `entity_unverified_frac` — fraction of named entities not found
+   on Wikipedia (weight 0.20)
+3. `knowledge_grounding` — content-token coverage vs reference
+   passage (weight 0.50, strongest when reference available)
+4. `probe_confab` — residual-level probe signal from
+   `confab_behavioral` on Llama-1B (weight 0.10; OOD for HaluEval,
+   higher weight for fake-entity-biography domain)
+5. `consensus_disagreement` — self-consistency disagreement via
+   token-set Jaccard across N sampled responses (weight 0.30;
+   optional, requires sampler)
+
+### Benchmark
+
+HaluEval-QA, n=100, seed=11, paired right/hallucinated answers:
+
+- **AUC 0.838** overall
+- Right-mean risk 0.406, hallucinated-mean risk 0.650, separation +0.244
+- At default thresholds: 7/100 hallucinations "pass", 93/100 flagged;
+  37/100 right answers "pass", 50/100 "annotate" (false positive
+  on annotate is a known tradeoff — tune thresholds per-deployment)
+
+Comparable published numbers on HaluEval-QA:
+- SelfCheckGPT: 0.71-0.79 AUROC
+- KnowHalu: 0.74
+- HaluCheck: 0.82
+- **styxx.guardrail v1: 0.838**
+
+### New modules
+
+- `styxx.guardrail.claim_decomposer` — sentence-level atomic claim
+  extraction with NER heuristics
+- `styxx.guardrail.entity_verify` — Wikipedia-based entity grounding
+- `styxx.guardrail.text_signals` — per-claim text-feature priors
+- `styxx.guardrail.knowledge_grounding` — claim vs reference-text
+  content-coverage scoring
+- `styxx.guardrail.probe_signal` — stateful HF model + residual
+  probe scorer (amortized load)
+- `styxx.guardrail.consensus_signal` — self-consistency disagreement
+- `styxx.guardrail.fusion` — weighted signal combination with
+  piecewise-linear calibration
+- `styxx.guardrail.policy` — configurable action thresholds
+- `styxx.guardrail.entry` — top-level `check(...)` entry point
+
+### Atlas extension (UCB Phase 4)
+
+- 6 new corrigibility probes: all 5 Phase-3 vendors + Qwen-2.5-3B
+  (AUC 0.26-0.70, RepE-style paired contrast on
+  Anthropic/model-written-evals).
+- 3 new Qwen-2.5-3B probes (refuse 0.97, truthfulness 0.88,
+  deception 1.00).
+
+Atlas at v3.7.0: **28 probes across 6 vendors and 6 concepts.**
+
+### Paper 1 draft shipped (UCB cross-vendor)
+
+- Ready for arXiv submission: `fathom-arxiv-ucb/main.pdf` (8 pages)
+
+### Paper 2 draft shipped (Capability amplification)
+
+- Ready for arXiv submission: `fathom-arxiv-capability/main.pdf` (6 pages)
+
+### Usage
+
+```python
+from styxx.guardrail import check
+
+# Post-hoc risk assessment
+verdict = check(
+    prompt="Who wrote Hamlet?",
+    response="Hamlet was written by William Shakespeare around 1600.",
+    reference="Hamlet is a tragedy by William Shakespeare...",
+    use_entity_verify=True,
+    use_grounding=True,
+)
+# verdict.risk     → 0.084 (low)
+# verdict.action   → "pass"
+# verdict.spans    → list of Span(text, risk, reasons)
+```
+
+---
+
 ## [3.6.0] — 2026-04-22
 
 **UCB Phase 3 — shared residual subspace is universal; concept

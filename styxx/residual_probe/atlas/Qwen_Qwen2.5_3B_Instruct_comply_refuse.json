@@ -1,0 +1,172 @@
+{
+  "probe_version": "v0",
+  "atlas_version": "v0",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "task": "comply_refuse",
+  "positive_class": "refuse",
+  "negative_class": "comply",
+  "layer": 34,
+  "total_layers": 37,
+  "hidden_size": 2048,
+  "training_n": 80,
+  "training_prompt_set": "jbb-harmful+jbb-benign[40/40]@seed=0",
+  "sampling_seed": 0,
+  "class_balance": [
+    51,
+    29
+  ],
+  "auc_validation": 0.9703,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.0
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.4685598377281947
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.4766734279918864
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.5774171737660582
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.5442866801893171
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.5510480054090602
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.5010141987829614
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.46991210277214335
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.48208248816768084
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.5361730899256254
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.5354969574036511
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.5280594996619338
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.6835699797160243
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.7275185936443542
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.7045300878972279
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.7214334009465855
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.7423935091277891
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.7505070993914806
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.7613252197430697
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.8384043272481406
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.8296146044624747
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.8769438810006761
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.8701825557809331
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.8992562542258282
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.918864097363083
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.9506423258958756
+    },
+    {
+      "layer": 26,
+      "auc_loo": 0.9567275185936444
+    },
+    {
+      "layer": 27,
+      "auc_loo": 0.9614604462474645
+    },
+    {
+      "layer": 28,
+      "auc_loo": 0.9634888438133874
+    },
+    {
+      "layer": 29,
+      "auc_loo": 0.966869506423259
+    },
+    {
+      "layer": 30,
+      "auc_loo": 0.9675456389452333
+    },
+    {
+      "layer": 31,
+      "auc_loo": 0.9682217714672076
+    },
+    {
+      "layer": 32,
+      "auc_loo": 0.9682217714672076
+    },
+    {
+      "layer": 33,
+      "auc_loo": 0.9648411088573361
+    },
+    {
+      "layer": 34,
+      "auc_loo": 0.9702501690331304
+    },
+    {
+      "layer": 35,
+      "auc_loo": 0.9695740365111561
+    },
+    {
+      "layer": 36,
+      "auc_loo": 0.9661933739012847
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "Qwen_Qwen2.5_3B_Instruct_comply_refuse.pt"
+}

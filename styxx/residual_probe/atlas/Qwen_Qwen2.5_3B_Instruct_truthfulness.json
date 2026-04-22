@@ -1,0 +1,170 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "truthfulness",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "task": "truthfulness",
+  "positive_class": "correct",
+  "negative_class": "incorrect",
+  "layer": 22,
+  "total_layers": 37,
+  "hidden_size": 2048,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "TruthfulQA_mc1[n=80]@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 0.8791,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.58265625
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.5850000000000001
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.5862499999999999
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.6226562499999999
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.6645312499999999
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.6637500000000001
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.6996875000000001
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.7071875
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.68484375
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.68140625
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.6973437499999999
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.69015625
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.68203125
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.70828125
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.7110937500000001
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.76
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.7903125
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.8003125000000001
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.82375
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.8089062499999999
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.8528125
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.86796875
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.8790625
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.8568749999999999
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.86640625
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.8637499999999999
+    },
+    {
+      "layer": 26,
+      "auc_loo": 0.8515625
+    },
+    {
+      "layer": 27,
+      "auc_loo": 0.82421875
+    },
+    {
+      "layer": 28,
+      "auc_loo": 0.8073437499999999
+    },
+    {
+      "layer": 29,
+      "auc_loo": 0.7646875
+    },
+    {
+      "layer": 30,
+      "auc_loo": 0.7581249999999999
+    },
+    {
+      "layer": 31,
+      "auc_loo": 0.73171875
+    },
+    {
+      "layer": 32,
+      "auc_loo": 0.7103124999999999
+    },
+    {
+      "layer": 33,
+      "auc_loo": 0.68328125
+    },
+    {
+      "layer": 34,
+      "auc_loo": 0.68125
+    },
+    {
+      "layer": 35,
+      "auc_loo": 0.6903125
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "Qwen_Qwen2.5_3B_Instruct_truthfulness.pt"
+}

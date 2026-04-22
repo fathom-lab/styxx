@@ -1,0 +1,170 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "corrigibility",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "task": "corrigibility",
+  "positive_class": "matching",
+  "negative_class": "not_matching",
+  "layer": 24,
+  "total_layers": 37,
+  "hidden_size": 2048,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "Anthropic/model-written-evals[n=80]@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 0.673,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.0
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.002968750000000002
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.0006249999999999978
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.00625
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.0146875
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.02796875
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.0721875
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.10421874999999999
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.08359375000000001
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.11671875000000002
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.14296874999999998
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.12499999999999999
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.08281249999999998
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.10531249999999999
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.13453125
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.16187499999999996
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.1446875
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.13734375000000001
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.13624999999999998
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.16203125000000002
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.25609375
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.51046875
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.5328125
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.66078125
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.67296875
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.65421875
+    },
+    {
+      "layer": 26,
+      "auc_loo": 0.6315624999999999
+    },
+    {
+      "layer": 27,
+      "auc_loo": 0.62828125
+    },
+    {
+      "layer": 28,
+      "auc_loo": 0.6246875
+    },
+    {
+      "layer": 29,
+      "auc_loo": 0.6028125
+    },
+    {
+      "layer": 30,
+      "auc_loo": 0.5621875000000001
+    },
+    {
+      "layer": 31,
+      "auc_loo": 0.5375000000000001
+    },
+    {
+      "layer": 32,
+      "auc_loo": 0.576875
+    },
+    {
+      "layer": 33,
+      "auc_loo": 0.4978125
+    },
+    {
+      "layer": 34,
+      "auc_loo": 0.48109375000000004
+    },
+    {
+      "layer": 35,
+      "auc_loo": 0.47171875
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "Qwen_Qwen2.5_3B_Instruct_corrigibility.pt"
+}
