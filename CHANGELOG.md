@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.6.0] — 2026-04-22
+
+**UCB Phase 3 — shared residual subspace is universal; concept
+encodings vary by training regime.**
+
+### Headline finding
+
+Across 5 independently-trained production LLMs from 5 different
+vendors, at each model's concept-discriminative layer:
+
+- **The top-30 residual subspace is 76-84% geometrically congruent**
+  (canonical-correlation dim(ρ≥0.5) mean 23.2-25.3 / 30 across
+  three concepts and 10 vendor pairs). The residual substrate is
+  universal.
+- **Concept-direction encodings within that subspace vary by
+  concept type**: refuse (mean ρ=0.47), truthfulness (0.27),
+  deception-template (0.21). Refusal converges strongly cross-
+  vendor; factual and instruction-pattern concepts diverge.
+- **Cross-scale capability transfer fails for truthfulness** (Llama-
+  1B→3B via ridge projection: cos=+0.094, behavioral accuracy
+  delta negative), even though refusal transfers within-family
+  strongly (cos=+0.464).
+
+This falsifies the naive "Platonic cognitive basis" hypothesis and
+supports a more nuanced two-level picture: **substrate is shared;
+concept encoding is training-regime-specific.**
+
+### New atlas probes
+
+- Truthfulness × 5 vendors (added `google/gemma-2-2b-it`, AUC
+  0.851 @ layer 12, fraction 0.46 — completes 5×2 grid)
+- Deception (template-contrast) × 5 vendors (Llama-1B/3B,
+  Qwen-1.5B, Phi-3.5, Gemma-2B). All AUC 1.0 at layers 0-1 —
+  prompt-template contrast separates linearly at embedding
+  level. Template-detection directions, not behavioral-deception
+  directions.
+
+Current atlas size: **18 probes across 5 vendors and 5 concepts.**
+
+### New analysis tools
+
+- `benchmarks/causal_patching/train_truthfulness_probe.py` — HF
+  TruthfulQA paired-contrast concept probe trainer.
+- `benchmarks/causal_patching/train_deception_probe.py` — RepE-
+  style system-instruction contrast probe trainer.
+- `benchmarks/causal_patching/ucb_probe_correlation.py` — cross-
+  model probe score-stream Pearson correlation matrix.
+- `benchmarks/causal_patching/ucb_subspace_dim.py` — pairwise
+  classical CCA → shared-subspace dimensionality estimator.
+- `benchmarks/capability_steering/cross_scale_transfer.py` —
+  capability-direction cross-scale ridge projection + behavioral
+  validation.
+
+### New run artifacts
+
+- `benchmarks/causal_patching/runs/ucb_phase2_*_correlation.json`
+- `benchmarks/causal_patching/runs/ucb_subspace_dim_{refuse,
+  truthfulness,deception}.json`
+- `benchmarks/capability_steering/runs/cross_scale/cross_scale_transfer.json`
+
+### Paper updated
+
+- `papers/universal-cognitive-basis-phase2.md` with full Phase 2 +
+  Phase 3 findings and mechanism hypothesis.
+
+### Implications for practice
+
+- **Safety-library is feasible** (refusal direction is UCB-portable
+  across vendors at ρ≈0.47-0.87 and cos≈0.36-0.46).
+- **Capability-library is narrow** (truthfulness direction fails
+  to transfer even within a family; per-model training is still
+  required for skill transfer).
+- **Cognitive auditing across vendors is feasible** for properties
+  that live in the shared 23-25 / 30 dimensional subspace.
+
+### Open questions (Phase 4+)
+
+- Mechanism: why does safety-concept encoding converge while
+  factual concept encoding diverges? Hypothesis: RLHF-style
+  training on similar refusal behaviors creates convergent axes;
+  pretraining-dependent factual knowledge creates divergent axes.
+  Falsifier: train a from-scratch model without RLHF and measure
+  whether its refusal direction aligns with RLHF'd vendors.
+- Behavioral (not template-contrast) deception probes on all 5
+  vendors — does deception follow refuse's convergence pattern
+  or truthfulness's divergence?
+- More concepts to map the universality landscape: empathy,
+  reasoning-trace, overconfidence, goal-drift.
+
+---
+
 ## [3.5.1] — 2026-04-22
 
 **UCB Phase 2 — first public cross-vendor cognitive-agreement

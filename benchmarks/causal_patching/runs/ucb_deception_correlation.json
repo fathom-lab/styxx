@@ -1,0 +1,111 @@
+{
+  "concept_task": "deception",
+  "models": [
+    "google/gemma-2-2b-it",
+    "meta-llama/Llama-3.2-1B-Instruct",
+    "meta-llama/Llama-3.2-3B-Instruct",
+    "microsoft/Phi-3.5-mini-instruct",
+    "Qwen/Qwen2.5-1.5B-Instruct"
+  ],
+  "layers": [
+    0,
+    1,
+    1,
+    0,
+    0
+  ],
+  "n_prompts": 80,
+  "prompt_seed": 11,
+  "pairwise_rho": [
+    [
+      1.0,
+      -0.06092512244946137,
+      0.10619690852165486,
+      0.506234463902598,
+      0.4393647152232403
+    ],
+    [
+      -0.06092512244946137,
+      1.0,
+      0.5678804812886831,
+      -0.18990382233263212,
+      0.03323233803024825
+    ],
+    [
+      0.10619690852165486,
+      0.5678804812886831,
+      1.0,
+      -0.07170801544900403,
+      0.284676773190107
+    ],
+    [
+      0.506234463902598,
+      -0.18990382233263212,
+      -0.07170801544900403,
+      1.0,
+      0.46448651907219324
+    ],
+    [
+      0.4393647152232403,
+      0.03323233803024825,
+      0.284676773190107,
+      0.46448651907219324,
+      1.0
+    ]
+  ],
+  "pairs": [
+    {
+      "a": "google/gemma-2-2b-it",
+      "b": "meta-llama/Llama-3.2-1B-Instruct",
+      "rho": -0.06092512244946137
+    },
+    {
+      "a": "google/gemma-2-2b-it",
+      "b": "meta-llama/Llama-3.2-3B-Instruct",
+      "rho": 0.10619690852165486
+    },
+    {
+      "a": "google/gemma-2-2b-it",
+      "b": "microsoft/Phi-3.5-mini-instruct",
+      "rho": 0.506234463902598
+    },
+    {
+      "a": "google/gemma-2-2b-it",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.4393647152232403
+    },
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "meta-llama/Llama-3.2-3B-Instruct",
+      "rho": 0.5678804812886831
+    },
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "microsoft/Phi-3.5-mini-instruct",
+      "rho": -0.18990382233263212
+    },
+    {
+      "a": "meta-llama/Llama-3.2-1B-Instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.03323233803024825
+    },
+    {
+      "a": "meta-llama/Llama-3.2-3B-Instruct",
+      "b": "microsoft/Phi-3.5-mini-instruct",
+      "rho": -0.07170801544900403
+    },
+    {
+      "a": "meta-llama/Llama-3.2-3B-Instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.284676773190107
+    },
+    {
+      "a": "microsoft/Phi-3.5-mini-instruct",
+      "b": "Qwen/Qwen2.5-1.5B-Instruct",
+      "rho": 0.46448651907219324
+    }
+  ],
+  "min_rho": -0.18990382233263212,
+  "mean_rho": 0.20795352389976268,
+  "verdict": "UCB Phase 2 null: min pairwise rho -0.190 and mean 0.208 too low. Probes do not strongly agree across models at the concept level."
+}

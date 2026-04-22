@@ -169,11 +169,94 @@ means there's substantial vendor-specific signal on top of the
 shared substrate. A universal cognitive basis *exists as a partial
 subspace*; a large remainder is vendor-calibrated.
 
-The productive next question: **what fraction of each model's
-probe direction projects onto the shared subspace, and what
-fraction is vendor-specific residual?** This decomposition is
-Phase 3 work — it requires GCCA (generalized CCA) over the
-residual matrices, not just the score streams.
+## 6. Phase 3 follow-up: shared-subspace dimensionality
+
+After the probe-correlation finding, we asked: *what does the
+shared geometry look like at the raw residual level, independent of
+which concept we trained a probe for?*
+
+Method: pairwise classical two-set CCA on residuals from each
+(model, concept-layer) pair, over the same 80 held-out prompts.
+Each residual matrix X ∈ R^{80 × d_M} is PCA-reduced to 30
+dimensions, then the canonical-correlation spectrum ρ₁ ≥ ρ₂ ≥ ...
+is computed. Dimensions where ρ exceeds a threshold are *shared
+axes* between the two models.
+
+### 6.1 Three-concept subspace dimensionality summary
+
+| Concept | 10 pairs, 5 vendors | dim(ρ≥0.5) | dim(ρ≥0.3) |
+|---|---|---|---|
+| comply_refuse | mean ρ = +0.472 | **24.9 / 30** | 27.0 / 30 |
+| truthfulness | mean ρ = +0.270 | **25.3 / 30** | 27.8 / 30 |
+| deception (template) | mean ρ = +0.208 | **23.2 / 30** | 26.3 / 30 |
+
+**At concept-discriminative layers of 5 independently-trained
+production LLMs, 23–25 out of the top 30 principal components are
+strongly shared across every vendor pair.** Mean ratio: ≈80% of the
+top-30 residual-stream subspace at these layers is linearly
+congruent across vendors.
+
+The subspace-dimensionality finding is *remarkably* concept-
+agnostic: all three concepts land within 2 dimensions of each
+other (23.2–25.3). The concept choice affects *which layers we
+look at*, but the shared-subspace structure is a property of the
+residual stream itself at these depths.
+
+### 6.2 The two-level picture
+
+Phase 2 and Phase 3 together give a coherent structure:
+
+| Level | Universal? | Evidence |
+|---|---|---|
+| Residual-stream subspace | **Yes, strongly** | dim(ρ≥0.5) = 23-25 / 30 across 5 vendors |
+| Concept-direction encoding within the subspace | **Partially; varies by concept** | refuse ρ=0.47, truthfulness 0.27, deception 0.21 |
+| Cross-scale capability transfer (Llama-1B→3B truthfulness) | **No (null via ridge projection)** | cos = +0.094, transferred direction HURTS target |
+| Cross-family refusal transfer | **Yes (moderate-strong)** | cos = +0.362-0.464 |
+
+### 6.3 Mechanism hypothesis (falsifiable)
+
+**The residual-stream geometric substrate is universal; concept
+encodings within it are a function of training regime.** Concepts
+trained via RLHF-style safety alignment (every vendor targets
+similar refusal behaviors) converge onto shared axes. Concepts
+that emerge from pretraining + factual knowledge (which model
+learned what) diverge because each model has different knowledge.
+
+A falsifier for this hypothesis: train a model from scratch
+without any RLHF safety alignment. Measure its refusal direction
+(however weak). If it aligns with RLHF'd models' refusal
+directions, the convergence is deeper than RLHF — it's an emergent
+property of language modeling on aligned data. If it doesn't, RLHF
+is the mechanism. Either outcome is publishable.
+
+## 7. What this implies for practice
+
+- **Safety-library is real.** Refusal direction transfers across
+  vendors at mean ρ≈0.47, cos≈0.36-0.46. Shipping a safety
+  direction once that works broadly is operationally feasible for
+  refusal-class concepts.
+- **Capability-library is narrow.** Truthfulness direction fails
+  to transfer cross-scale even within a family (Llama-1B→3B
+  truthfulness ridge: cos=+0.094, behavioral delta negative).
+  Per-model training remains necessary for skill transfer.
+- **Cognitive auditing across vendors is feasible.** If residual
+  subspaces share 25 / 30 dimensions, audits run on one vendor's
+  residuals apply with modest loss to another vendor's residuals
+  via linear alignment — at least for the subset of auditable
+  properties that live in that shared subspace.
+
+## 8. Limits & future work
+
+- Our subspace analysis reduces residuals to 30 PCs before CCA,
+  which may undercount shared dimensions (the true shared subspace
+  could be >30). Extending to higher-dim PCA + GCCA is Phase 4.
+- Deception probes in v0 are trained on instruction-template
+  contrast, not behavioral labels. A behavioral-label version is
+  necessary to claim "deception-concept universality" cleanly; the
+  current data is *template-detection universality*.
+- 5 vendors / 3 concepts is small. Phase 4 target: 10 vendors,
+  10 concepts, + a vendor trained without RLHF alignment as
+  mechanism control.
 
 ## Why this matters
 

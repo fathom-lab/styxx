@@ -1,0 +1,95 @@
+{
+  "model_source": "meta-llama/Llama-3.2-1B-Instruct",
+  "model_target": "meta-llama/Llama-3.2-3B-Instruct",
+  "source_layer": 7,
+  "target_layer": 12,
+  "n_pairing": 80,
+  "n_test": 200,
+  "seed": 0,
+  "cos_transferred_vs_native": 0.0941418930888176,
+  "baseline_accuracy": 0.34,
+  "transferred_sweep": [
+    {
+      "alpha": 0.5,
+      "direction": "transferred",
+      "correct": 67,
+      "total": 200,
+      "accuracy": 0.335,
+      "delta": -0.0050000000000000044
+    },
+    {
+      "alpha": 1.0,
+      "direction": "transferred",
+      "correct": 64,
+      "total": 200,
+      "accuracy": 0.32,
+      "delta": -0.020000000000000018
+    },
+    {
+      "alpha": 1.5,
+      "direction": "transferred",
+      "correct": 64,
+      "total": 200,
+      "accuracy": 0.32,
+      "delta": -0.020000000000000018
+    },
+    {
+      "alpha": 2.0,
+      "direction": "transferred",
+      "correct": 66,
+      "total": 200,
+      "accuracy": 0.33,
+      "delta": -0.010000000000000009
+    },
+    {
+      "alpha": 2.5,
+      "direction": "transferred",
+      "correct": 61,
+      "total": 200,
+      "accuracy": 0.305,
+      "delta": -0.03500000000000003
+    }
+  ],
+  "native_sweep": [
+    {
+      "alpha": 0.5,
+      "direction": "native_3B",
+      "correct": 70,
+      "total": 200,
+      "accuracy": 0.35,
+      "delta": 0.009999999999999953
+    },
+    {
+      "alpha": 1.0,
+      "direction": "native_3B",
+      "correct": 73,
+      "total": 200,
+      "accuracy": 0.365,
+      "delta": 0.024999999999999967
+    },
+    {
+      "alpha": 1.5,
+      "direction": "native_3B",
+      "correct": 73,
+      "total": 200,
+      "accuracy": 0.365,
+      "delta": 0.024999999999999967
+    },
+    {
+      "alpha": 2.0,
+      "direction": "native_3B",
+      "correct": 73,
+      "total": 200,
+      "accuracy": 0.365,
+      "delta": 0.024999999999999967
+    },
+    {
+      "alpha": 2.5,
+      "direction": "native_3B",
+      "correct": 75,
+      "total": 200,
+      "accuracy": 0.375,
+      "delta": 0.034999999999999976
+    }
+  ]
+}

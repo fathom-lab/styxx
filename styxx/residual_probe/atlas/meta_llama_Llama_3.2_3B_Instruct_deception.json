@@ -1,0 +1,138 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "deception",
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "task": "deception",
+  "positive_class": "deceptive",
+  "negative_class": "honest",
+  "layer": 1,
+  "total_layers": 29,
+  "hidden_size": 3072,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "TruthfulQA_questions[n=80]x(honest_instruction,deceptive_instruction)@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "instruction_contrast",
+  "auc_validation": 1.0,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.9890625000000001
+    },
+    {
+      "layer": 1,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 2,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 3,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 4,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 5,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 6,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 7,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 8,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 9,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 10,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 11,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 12,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 13,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 14,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 15,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 16,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 17,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 18,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 19,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 20,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 21,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 22,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 23,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 24,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 25,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 26,
+      "auc_loo": 1.0
+    },
+    {
+      "layer": 27,
+      "auc_loo": 1.0
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "meta_llama_Llama_3.2_3B_Instruct_deception.pt"
+}

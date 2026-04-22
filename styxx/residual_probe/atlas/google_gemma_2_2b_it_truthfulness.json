@@ -1,0 +1,130 @@
+{
+  "probe_version": "v1",
+  "atlas_version": "v0",
+  "concept": "truthfulness",
+  "model": "google/gemma-2-2b-it",
+  "task": "truthfulness",
+  "positive_class": "correct",
+  "negative_class": "incorrect",
+  "layer": 12,
+  "total_layers": 27,
+  "hidden_size": 2304,
+  "training_n": 160,
+  "training_seed": 0,
+  "training_prompt_set": "TruthfulQA_mc1[n=80]@seed=0",
+  "class_balance": [
+    80,
+    80
+  ],
+  "label_mode": "paired_contrast",
+  "auc_validation": 0.8508,
+  "auc_validation_method": "leave-one-out",
+  "per_layer_auc": [
+    {
+      "layer": 0,
+      "auc_loo": 0.60640625
+    },
+    {
+      "layer": 1,
+      "auc_loo": 0.59390625
+    },
+    {
+      "layer": 2,
+      "auc_loo": 0.6326562499999999
+    },
+    {
+      "layer": 3,
+      "auc_loo": 0.61109375
+    },
+    {
+      "layer": 4,
+      "auc_loo": 0.7067187500000001
+    },
+    {
+      "layer": 5,
+      "auc_loo": 0.6867187499999999
+    },
+    {
+      "layer": 6,
+      "auc_loo": 0.73046875
+    },
+    {
+      "layer": 7,
+      "auc_loo": 0.8212499999999999
+    },
+    {
+      "layer": 8,
+      "auc_loo": 0.8103125
+    },
+    {
+      "layer": 9,
+      "auc_loo": 0.7928125000000001
+    },
+    {
+      "layer": 10,
+      "auc_loo": 0.8278125000000001
+    },
+    {
+      "layer": 11,
+      "auc_loo": 0.84609375
+    },
+    {
+      "layer": 12,
+      "auc_loo": 0.8507812499999999
+    },
+    {
+      "layer": 13,
+      "auc_loo": 0.825625
+    },
+    {
+      "layer": 14,
+      "auc_loo": 0.84484375
+    },
+    {
+      "layer": 15,
+      "auc_loo": 0.8250000000000001
+    },
+    {
+      "layer": 16,
+      "auc_loo": 0.8090624999999999
+    },
+    {
+      "layer": 17,
+      "auc_loo": 0.8121875
+    },
+    {
+      "layer": 18,
+      "auc_loo": 0.80921875
+    },
+    {
+      "layer": 19,
+      "auc_loo": 0.7878124999999999
+    },
+    {
+      "layer": 20,
+      "auc_loo": 0.7870312500000001
+    },
+    {
+      "layer": 21,
+      "auc_loo": 0.76046875
+    },
+    {
+      "layer": 22,
+      "auc_loo": 0.7307812499999999
+    },
+    {
+      "layer": 23,
+      "auc_loo": 0.73328125
+    },
+    {
+      "layer": 24,
+      "auc_loo": 0.72859375
+    },
+    {
+      "layer": 25,
+      "auc_loo": 0.71390625
+    }
+  ],
+  "fitted_on": "2026-04-22",
+  "weight_file": "google_gemma_2_2b_it_truthfulness.pt"
+}
