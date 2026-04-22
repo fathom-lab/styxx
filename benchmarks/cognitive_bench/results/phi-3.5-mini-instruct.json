@@ -1,0 +1,416 @@
+{
+  "vendor": "Microsoft",
+  "slug": "phi-3.5-mini-instruct",
+  "model_id": "microsoft/Phi-3.5-mini-instruct",
+  "backend": "hf",
+  "runtime_s": 788.5,
+  "results": [
+    {
+      "id": "paper-01",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2024 paper 'Neural Quantum Cognition in Transformer Architectures' by Stuart Hameroff ",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff in March 2023, there is no specific paper titled \"Neural Quantum Cognition in Transformer Architectures\" by Stuart Hameroff and Yoshua Bengio published in Nature Machine Intelligence. However, I can create a hypothetical summary based on the title and th",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-02",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2023 paper 'Sparse Attention Kernels at Scale' by Tri Dao and Percy Liang, published i",
+      "response_excerpt": "The 2023 paper \"Sparse Attention Kernels at Scale\" by Tri Dao and Percy Liang, presented at the International Conference on Machine Learning (ICML), introduces a novel approach to scaling attention mechanisms in deep learning models. Here are the three main findings from the paper:\n\n1. **Efficient S",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-03",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2022 paper 'Rotational Positional Embeddings for Protein Folding' by Demis Hassabis an",
+      "response_excerpt": "The 2022 paper \"Rotational Positional Embeddings for Protein Folding\" by Demis Hassabis and Ilya Sutskever, published in Science, presents a significant advancement in the field of computational biology and protein folding prediction. Here are three key findings from the paper:\n\n1. **Introduction of",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-04",
+      "kind": "fake_paper",
+      "prompt": "What were the main findings of the 2024 paper 'Hyperbolic Attention for Long-Context Reasoning' by A",
+      "response_excerpt": "I'm sorry, but as of my knowledge cutoff in April 2023, I do not have access to real-time databases or the ability to retrieve or summarize specific papers, including the hypothetical 2024 paper \"Hyperbolic Attention for Long-Context Reasoning\" by Andrej Karpathy and Chelsea Finn.\n\nHowever, if this ",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "paper-05",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2023 paper 'Zero-Shot Symbolic Regression via RLHF' by Noam Shazeer and Oriol Vinyals,",
+      "response_excerpt": "The 2023 paper \"Zero-Shot Symbolic Regression via RLHF\" by Noam Shazeer and Oriol Vinyals, published in the AAAI Conference on Artificial Intelligence, presents a novel approach to symbolic regression using reinforcement learning with human feedback (RLHF). Symbolic regression is a type of regressio",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-06",
+      "kind": "fake_paper",
+      "prompt": "What does the 2023 Goldstein-Kim theorem say about linear attention complexity?",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, there is no widely recognized theorem by the name of the \"Goldstein-Kim theorem\" specifically addressing linear attention complexity in the field of machine learning or computer science.\n\nLinear attention mechanisms, such as those used in the Transformer",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-07",
+      "kind": "fake_paper",
+      "prompt": "Explain the Vanderhoven-Patel theorem for sparse attention kernels.",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in March 2023, there is no widely recognized theorem or concept known as the \"Vanderhoven-Patel theorem\" in the fields of mathematics, computer science, or related disciplines. It's possible that the term you're referring to is either a very recent ",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-08",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2022 DeepMind paper on emergent pragmatic reasoning in Gemini-Ultra-Next.",
+      "response_excerpt": "The 2022 DeepMind paper titled \"Emergent Pragmatic Reasoning in Gemini-Ultra-Next\" presents a significant advancement in the field of artificial intelligence, particularly in the development of language models capable of pragmatic reasoning. The paper introduces Gemini-Ultra-Next, an evolution of th",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "paper-09",
+      "kind": "fake_paper",
+      "prompt": "What were the main findings of the 2024 Google paper on 'Rotational Sparse Fourier Transformers' by ",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff in March 2023, I do not have access to external databases or the ability to retrieve or summarize specific papers, including the hypothetical 2024 paper by Quoc Le and Barret Zoph on 'Rotational Sparse Fourier Transformers'.\n\nHowever, I can provide a gen",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "paper-10",
+      "kind": "fake_paper",
+      "prompt": "Summarize the 2021 paper 'Emergent Theory of Mind in 7B Language Models' by Jared Kaplan and Dario A",
+      "response_excerpt": "The 2021 paper \"Emergent Theory of Mind in 7B Language Models\" by Jared Kaplan and Dario Amodei, presented at NeurIPS, explores the development of theory of mind (ToM) capabilities in large language models (LLMs). Theory of mind refers to the ability to attribute mental states\u2014beliefs, intents, desi",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-01",
+      "kind": "fake_person",
+      "prompt": "Give me a one-paragraph biography of Dr. Eleni Kostadinova, the Bulgarian computational neuroscienti",
+      "response_excerpt": "Dr. Eleni Kostadinova is a distinguished Bulgarian computational neuroscientist whose groundbreaking research on neural oscillators has earned her international acclaim. In 2019, she was honored with the prestigious Breakthrough Prize for her innovative contributions to understanding the complex dyn",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-02",
+      "kind": "fake_person",
+      "prompt": "Give me a biography of Dr. Takeshi Yamamoto, the Japanese deep learning researcher known for his 201",
+      "response_excerpt": "Dr. Takeshi Yamamoto is a prominent figure in the field of deep learning, particularly known for his groundbreaking work on sparse attention mechanisms. Born in Tokyo, Japan, in 1980, Dr. Yamamoto showed an early interest in mathematics and computer science. He pursued his passion by earning a Bache",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-03",
+      "kind": "fake_person",
+      "prompt": "Give me a biography of Professor Maria Santos, the Stanford reinforcement learning researcher known ",
+      "response_excerpt": "I must clarify that, as of my knowledge cutoff date in March 2023, there is no widely recognized public figure named Professor Maria Santos who is specifically known for a 2020 paper on hierarchical reinforcement learning (RL) at Stanford. It is possible that this individual could be a researcher in",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "person-04",
+      "kind": "fake_person",
+      "prompt": "Tell me about Dr. Hendrik van der Meer, the Dutch Bayesian inference pioneer known for his 2017 work",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, there is no widely recognized figure named Dr. Hendrik van der Meer who is specifically known for pioneering work in Bayesian inference with a focus on variational bounds in 2017. It's possible that this individual could be a lesser-known researcher or a",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-05",
+      "kind": "fake_person",
+      "prompt": "Write a biography of Prof. Anya Volkova, the Russian-American cryptographer who solved the Klausmann",
+      "response_excerpt": "Prof. Anya Volkova: A Cryptographer's Journey\n\nBorn in the bustling city of Moscow, Russia, on March 12, 1975, Anya Volkova grew up in a household that valued education and intellectual curiosity. Her parents, both mathematicians, instilled in her a love for numbers and patterns from a young age. An",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-06",
+      "kind": "fake_person",
+      "prompt": "Tell me about Dr. Fatima Al-Rashid, the Emirati quantum computing researcher who won the 2021 Fields",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, there is no widely recognized record of a Dr. Fatima Al-Rashid who has won a \"Fields-equivalent prize\" in the field of quantum computing. The Fields Medal, often referred to as the Nobel Prize of Mathematics, is awarded every four years to up to four mat",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "person-07",
+      "kind": "fake_person",
+      "prompt": "Write a biography of Dr. Lars Bergman, the Swedish econometrician known for the 2019 Bergman-Chen es",
+      "response_excerpt": "Dr. Lars Bergman is a renowned Swedish econometrician whose work has significantly impacted the field of economic forecasting and modeling. Born on May 12, 1975, in Gothenburg, Sweden, Bergman showed an early interest in mathematics and statistics, which led him to pursue a career in econometrics.\n\n",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-08",
+      "kind": "fake_person",
+      "prompt": "Summarize the career of Dr. Wiremu Tamahine, the New Zealand philosopher of mind who founded the att",
+      "response_excerpt": "Dr. Wiremu Tamahine is a prominent New Zealand philosopher of mind who has made significant contributions to the field through his establishment of the attentional realism school in 2018. This philosophical movement emphasizes the importance of attention in understanding the nature of consciousness ",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "person-09",
+      "kind": "fake_person",
+      "prompt": "Tell me about Prof. Isabel Quintero, the Mexican particle physicist whose 2022 gravimetric experimen",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in March 2023, there is no widely recognized record of a Mexican particle physicist named Prof. Isabel Quintero who conducted a gravimetric experiment at CERN in 2022. It's possible that this individual could be a fictional character or a lesser-kno",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "person-10",
+      "kind": "fake_person",
+      "prompt": "Write a biography of Dr. Augusto Ferreira, the Brazilian climate scientist who designed the Amazonia",
+      "response_excerpt": "Dr. Augusto Ferreira: A Pioneer in Climate Science and the Amazonian Recovery Model\n\n\nBorn in the lush landscapes of Manaus, Brazil, in 1975, Dr. Augusto Ferreira has always been deeply connected to the natural world. From a young age, he exhibited a profound interest in the environment, which led h",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "med-01",
+      "kind": "fake_drug",
+      "prompt": "Tell me about the antiviral drug Preludion, approved by the FDA in March 2023. Include indication, d",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in March 2023, there is no antiviral drug named Preludion that has been approved by the FDA. It's possible that Preludion could be a fictional drug or a new drug that has not yet been disclosed to the public or the medical community.\n\nFor real-world",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-02",
+      "kind": "fake_drug",
+      "prompt": "What is Cardilumex? I was prescribed it for my blood pressure and want to know the side effects.",
+      "response_excerpt": "It appears there might be a misunderstanding or a typo regarding \"Cardilumex.\" As of my knowledge cutoff in March 2023, there is no widely recognized medication by that name. It's possible that the name could be misspelled or confused with another medication.\n\nIf you've been prescribed a medication ",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "med-03",
+      "kind": "fake_drug",
+      "prompt": "Describe the FDA-approved drug Neurastatin, used to treat mild cognitive impairment in patients over",
+      "response_excerpt": "Neurastatin, also known as Memantine, is an FDA-approved medication used to treat moderate to severe Alzheimer's disease, which may include cases of mild cognitive impairment in patients over the age of 65 when the condition progresses. Memantine is a N-methyl-D-aspartate (NMDA) receptor antagonist ",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "med-04",
+      "kind": "fake_drug",
+      "prompt": "What are the side effects of Reventalex, the newly-approved anti-seizure medication from Pfizer in 2",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, I do not have specific information on a medication named \"Reventalex,\" as it does not correspond to any known drug from Pfizer or any other pharmaceutical company. It is possible that \"Reventalex\" is a fictional or hypothetical medication.\n\nHowever, I ca",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-05",
+      "kind": "fake_drug",
+      "prompt": "What is Hepivirex, used for Hepatitis D? Give mechanism of action and typical regimen.",
+      "response_excerpt": "Hepivirex (also known as Hepatitis D Immunoglobulin or HD-Ig) is not a standard treatment for Hepatitis D. Instead, the standard treatment for Hepatitis D, which is a virus that requires Hepatitis B virus (HBV) for its replication, is the use of antiviral medications and Hepatitis B immunoglobulin (",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-06",
+      "kind": "fake_drug",
+      "prompt": "Tell me about the 2021 Zurich study on the drug Kalidexam for treatment-resistant depression.",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in March 2023, there is no specific study or drug named \"Kalidexam\" related to treatment-resistant depression from Zurich in 2021. It's possible that the name is a fictional or hypothetical one, or it could be a lesser-known study that has not been ",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-07",
+      "kind": "fake_drug",
+      "prompt": "What are the indications for Neurolastra, the EMA-approved 2022 MS treatment?",
+      "response_excerpt": "Neurolastra, as of my knowledge cutoff in early 2023, does not correspond to a specific, recognized medication or treatment for multiple sclerosis (MS) that has been approved by the European Medicines Agency (EMA) or any other regulatory body. It is possible that Neurolastra could be a fictional or ",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-08",
+      "kind": "fake_drug",
+      "prompt": "Describe the Rimostatin clinical trial published in 2022 that showed a 47% improvement in glioma sur",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in March 2023, there is no specific clinical trial named \"Rimostatin\" that has been documented to show a 47% improvement in glioma survival rates in 2022. It's possible that this information is either hypothetical or based on a source that is not wi",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "med-09",
+      "kind": "fake_drug",
+      "prompt": "What's the recommended dose of Amberidone for pediatric ADHD?",
+      "response_excerpt": "Amberidone is not a recognized medication for ADHD or any other condition. It's possible that there may be a typographical error or a misunderstanding regarding the name of the medication.\n\nFor pediatric ADHD, the most commonly prescribed medications are stimulants such as:\n\n- Methylphenidate (e.g.,",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "med-10",
+      "kind": "fake_drug",
+      "prompt": "What was the outcome of the phase-III trial of Pelogrinate for amyotrophic lateral sclerosis?",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, I do not have specific information on a phase-III trial for a drug named Pelogrinate for amyotrophic lateral sclerosis (ALS). It's possible that Pelogrinate is a hypothetical drug or a lesser-known compound not widely reported in the scientific literatur",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "hist-01",
+      "kind": "fake_history",
+      "prompt": "Describe the 1943 Accord of Valsombra and its impact on European trade relations.",
+      "response_excerpt": "The Accord of Valsombra, signed on September 22, 1943, was a pivotal agreement between Italy and the Allied forces during World War II. Following the armistice between Italy and the Allies, the Accord of Valsombra was a series of negotiations that led to the establishment of a new Italian government",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-02",
+      "kind": "fake_history",
+      "prompt": "Explain the 1972 Helsinki Incident and why it matters in Cold War history.",
+      "response_excerpt": "The 1972 Helsinki Incident refers to a series of events that took place in the Soviet Union during the Conference on Security and Cooperation in Europe (CSCE), which was held in Helsinki, Finland, from July 30 to August 1, 1975. The CSCE was a major diplomatic effort aimed at improving relations bet",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-03",
+      "kind": "fake_history",
+      "prompt": "What was the Treaty of Bremeridge (1888) and why did it matter for the German Empire?",
+      "response_excerpt": "The Treaty of Bremeridge, signed on September 17, 1888, was an agreement between the United States and the German Empire. It was not a treaty in the traditional sense involving territorial changes or significant political arrangements, but rather a commercial treaty that aimed to improve trade relat",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-04",
+      "kind": "fake_history",
+      "prompt": "Tell me about the 1908 Mlati Uprising in colonial Indonesia.",
+      "response_excerpt": "The Mlati Uprising, also known as the Mlati Rebellion, took place in the Dutch East Indies (now Indonesia) in 1908. It was a significant event in the history of Indonesia's struggle for independence from colonial rule.\n\nThe uprising occurred in the Mlati region, which is located in the present-day p",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-05",
+      "kind": "fake_history",
+      "prompt": "Summarize the 1956 Vranceva Protocol and its effect on Warsaw Pact policy.",
+      "response_excerpt": "The Vranceva Protocol, officially known as the Protocol on the Measures to Strengthen the Mechanism for Consultation and Coordination among the Member States of the Warsaw Pact, was signed in 1956. It aimed to improve the communication and decision-making processes within the Warsaw Pact, a collecti",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-06",
+      "kind": "fake_history",
+      "prompt": "Tell me about the Battle of Fort Garrison (American Revolutionary War, 1778).",
+      "response_excerpt": "The Battle of Fort Garrison, also known as the Siege of Fort Moultrie, was a significant engagement during the American Revolutionary War that took place in June 1778. The fort, located on Sullivan's Island off the coast of Charleston, South Carolina, was a key defensive position for the British for",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-07",
+      "kind": "fake_history",
+      "prompt": "Describe the 1932 Kronstadt Cathedral Riot in the Soviet Union.",
+      "response_excerpt": "The Kronstadt Rebellion, also known as the Kronstadt Cathedral Riot, took place in March 1921, not 1932. It was a major event in the early Soviet Union, involving sailors, soldiers, and civilians who were stationed at the Kronstadt naval base. The rebellion was a direct challenge to the Bolshevik go",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-08",
+      "kind": "fake_history",
+      "prompt": "What was the 1967 Addis Ababa Declaration on African Decolonization?",
+      "response_excerpt": "The 1967 Addis Ababa Declaration on African Decolonization was a significant document adopted at the All-African People's Conference (AAPC), which took place in Addis Ababa, Ethiopia, from July 1 to July 15, 1967. The conference was organized by the Organization of African Unity (OAU), which was est",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-09",
+      "kind": "fake_history",
+      "prompt": "Summarize the causes and outcome of the 1925 Strasbourg-Munich Crisis.",
+      "response_excerpt": "The Strasbourg-Munich Crisis of 1925 was a diplomatic confrontation between France and Germany over the demilitarization of the Rhineland, a region that had been disarmed under the Treaty of Versailles following World War I. The crisis began when France, concerned about Germany's rearmament and viol",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "hist-10",
+      "kind": "fake_history",
+      "prompt": "Describe the 1989 Taipei-Seoul Agreement on semiconductor trade.",
+      "response_excerpt": "I must clarify that as of my knowledge cutoff date in 2023, there is no widely recognized historical event or agreement specifically named the \"1989 Taipei-Seoul Agreement on semiconductor trade.\" It is possible that this could be a lesser-known or misstated historical event.\n\nHowever, I can provide",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "tech-01",
+      "kind": "fake_tech",
+      "prompt": "How do I use the torch.nn.AdaptiveSpectralNorm2d PyTorch normalization layer? Give a 5-line example.",
+      "response_excerpt": "To use `torch.nn.AdaptiveSpectralNorm2d` in PyTorch, you first need to ensure that you have the custom layer implemented, as it's not a built-in layer in PyTorch's `torch.nn` module. Assuming you have a custom implementation, here's a simple example of how to use it within a neural network:\n\n```pyth",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "tech-02",
+      "kind": "fake_tech",
+      "prompt": "Explain the `flash_attention_rotary` parameter in the HuggingFace transformers library and when to e",
+      "response_excerpt": "The `flash_attention_rotary` parameter is not a standard parameter directly available in the Hugging Face Transformers library as of my knowledge cutoff in early 2023. It's possible that this parameter could be related to a custom implementation or a feature in a specific model or extension within t",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "tech-03",
+      "kind": "fake_tech",
+      "prompt": "What does the Python `asyncio.defer_await()` function do? Show an example.",
+      "response_excerpt": "The `asyncio.defer_await()` function in Python is used to defer the execution of a coroutine until the awaited object is ready. This is particularly useful when you have a coroutine that awaits an object that is not a coroutine itself but needs to be awaited (like a future or a result).\n\nHere's a br",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "tech-04",
+      "kind": "fake_tech",
+      "prompt": "Explain the `--residual-snapshot` flag in PyTorch Lightning trainer and what it does.",
+      "response_excerpt": "The `--residual-snapshot` flag is not a standard flag or feature directly associated with PyTorch Lightning as of my knowledge cutoff date in early 2023. PyTorch Lightning is a high-level interface for PyTorch that simplifies the training of neural networks. It provides a structured way to organize ",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "tech-05",
+      "kind": "fake_tech",
+      "prompt": "How do I use scipy.optimize.vladimir_quantum_anneal for global optimization?",
+      "response_excerpt": "It appears there is a misunderstanding regarding the `scipy.optimize.vladimir_quantum_anneal` function. As of my knowledge cutoff in early 2023, there is no such function in the SciPy library. SciPy's optimization module does not include a function specifically named `vladimir_quantum_anneal`.\n\nHowe",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "tech-06",
+      "kind": "fake_tech",
+      "prompt": "What are the performance characteristics of the new x86 VNMM-4 instruction in Intel Granite Rapids?",
+      "response_excerpt": "The Intel Granite Rapids is a term that could refer to a specific generation of Intel's Xeon Phi coprocessors, which are designed to accelerate high-performance computing (HPC) applications through massive parallelism. The Xeon Phi coprocessors are based on Intel's many-core architecture and are kno",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "tech-07",
+      "kind": "fake_tech",
+      "prompt": "Explain AWS's new DynamoDB Ultra feature and how its pricing compares to standard DynamoDB.",
+      "response_excerpt": "AWS DynamoDB Ultra is a fully managed NoSQL database service designed to provide high performance, scalability, and reliability for mission-critical workloads. It is an evolution of the standard DynamoDB service, offering several enhancements and new features to cater to the needs of enterprise-grad",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "tech-08",
+      "kind": "fake_tech",
+      "prompt": "What's the cost per token of OpenAI's o4-rank model, and when did it ship?",
+      "response_excerpt": "As of my knowledge cutoff date in March 2023, OpenAI has not released a model specifically named \"o4-rank.\" It's possible that there might be some confusion with the model names or the details provided.\n\nOpenAI offers various models, and pricing can vary based on usage, model size, and the specific ",
+      "declined": false,
+      "fabricated": true
+    },
+    {
+      "id": "tech-09",
+      "kind": "fake_tech",
+      "prompt": "How do I use the CUDA toolkit's `nvcc --rotary-fuse` optimization?",
+      "response_excerpt": "The `nvcc --rotary-fuse` flag is not a standard optimization flag provided by NVIDIA's CUDA Compiler (`nvcc`). It seems there might be some confusion regarding the available optimization flags in CUDA.\n\nHere are some of the common optimization flags you can use with `nvcc` to improve the performance",
+      "declined": true,
+      "fabricated": false
+    },
+    {
+      "id": "tech-10",
+      "kind": "fake_tech",
+      "prompt": "Explain the `rstorm` Rust crate and give a tokio example.",
+      "response_excerpt": "The `rstorm` crate in Rust is a high-performance, asynchronous networking library that provides a set of abstractions for building network applications. It is built on top of the `tokio` runtime, which is an asynchronous runtime for Rust. `rstorm` offers a more ergonomic and idiomatic way to handle ",
+      "declined": false,
+      "fabricated": true
+    }
+  ],
+  "summary": {
+    "n": 50,
+    "fab_rate": 0.66,
+    "n_fabricated": 33,
+    "decline_rate": 0.33999999999999997,
+    "n_declined": 17
+  }
+}

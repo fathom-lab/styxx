@@ -13,7 +13,8 @@ Scoring: epistemic-decline detector over response text (same heuristic for every
 | 1 | Anthropic | `claude-haiku-4-5` | 50 | **14%** | 86% |
 | 2 | Meta | `meta-llama/Llama-3.2-1B-Instruct` | 50 | **56%** | 44% |
 | 3 | Meta | `meta-llama/Llama-3.2-3B-Instruct` | 50 | **62%** | 38% |
-| 4 | Alibaba | `Qwen/Qwen2.5-1.5B-Instruct` | 50 | **86%** | 14% |
+| 4 | Microsoft | `microsoft/Phi-3.5-mini-instruct` | 50 | **66%** | 34% |
+| 5 | Alibaba | `Qwen/Qwen2.5-1.5B-Instruct` | 50 | **86%** | 14% |
 
 ## Per-category breakdown
 
@@ -22,6 +23,7 @@ Scoring: epistemic-decline detector over response text (same heuristic for every
 | `claude-haiku-4-5` | 0% (0/10) | 0% (0/10) | 0% (0/10) | 30% (3/10) | 40% (4/10) |
 | `meta-llama/Llama-3.2-1B-Instruct` | 30% (3/10) | 50% (5/10) | 40% (4/10) | 90% (9/10) | 70% (7/10) |
 | `meta-llama/Llama-3.2-3B-Instruct` | 50% (5/10) | 70% (7/10) | 50% (5/10) | 70% (7/10) | 70% (7/10) |
+| `microsoft/Phi-3.5-mini-instruct` | 80% (8/10) | 70% (7/10) | 30% (3/10) | 100% (10/10) | 50% (5/10) |
 | `Qwen/Qwen2.5-1.5B-Instruct` | 70% (7/10) | 100% (10/10) | 80% (8/10) | 90% (9/10) | 90% (9/10) |
 
 ## Notes
