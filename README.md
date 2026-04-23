@@ -56,7 +56,7 @@
 
 ---
 
-## New in v4.0: `@trust` — cross-validated on 8 benchmarks
+## `@trust` — the hallucination instrument, cross-validated on 8 benchmarks
 
 `pip install styxx[nli]` + one decorator. Any LLM. Zero config.
 
@@ -162,7 +162,7 @@ v = refuse_check(
 
 `styxx[nli]` unlocks calibrated-v4 9-signal hallucination. `refuse_check()` ships with v1 calibrated weights and requires no extras.
 
-### Tool-call drift — instrument #3 (v6.0 new)
+### Tool-call drift — instrument #3
 
 Catches when an LLM agent's stated intent doesn't match the tool call it actually made. Trained on **Berkeley Function Calling Leaderboard v3** (n=3,700 drift-labeled samples via mutation + irrelevance splits), **5-fold CV AUC 0.916 ± 0.004**.
 
@@ -216,7 +216,7 @@ DROP (extractive-span reading comp) and FinanceBench (numeric arithmetic) are be
 
 ---
 
-## Also in styxx 3.x / 4.x
+## Also in styxx 3.x – 6.x
 
 | API | What it does | Shipped |
 |---|---|---|

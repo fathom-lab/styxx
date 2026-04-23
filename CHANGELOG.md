@@ -7,6 +7,252 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.0.0] — 2026-04-23
+
+**Headline: cognometric instrument #3 — tool-call drift — ships as the
+third calibrated detector, alongside hallucination (v4) and refusal
+(v5.1). Three instruments is the minimum triangulation for a
+methodology claim rather than a lucky two-sample.**
+
+PyPI: https://pypi.org/project/styxx/6.0.0/
+
+### `styxx.guardrail.drift_check()` — new public API
+
+```python
+from styxx.guardrail import drift_check
+
+v = drift_check(
+    prompt="Find the area of a triangle with base 10 and height 5",
+    functions=[{"name": "calculate_triangle_area",
+                "parameters": {"properties": {"base": {"type": "integer"},
+                                              "height": {"type": "integer"}},
+                               "required": ["base", "height"]}}],
+    tool_call={"name": "calculate_triangle_area",
+               "arguments": {"base": 10, "height": 5}},
+)
+# v.drift_risk   — 0-1 calibrated probability
+# v.drifts       — bool at threshold 0.5
+# v.top_signals  — top-3 contributing features (signed contribution)
+```
+
+### Calibration
+
+Trained on **Berkeley Function Calling Leaderboard v3** via
+mutation-based construction (arg_swap, arg_drop, spurious_arg,
+tool_rename) + irrelevance-called synthesis. n=3,700 labeled triplets,
+82/18 drift/no-drift split.
+
+- **5-fold CV AUC: 0.9151 ± 0.0039** (pooled 0.9148).
+- 22-feature calibrated LR with `class_weight=balanced`.
+
+Per-drift-type held-out AUC:
+
+| drift class              | AUC      | notes |
+|--------------------------|----------|---|
+| spurious_arg             | 0.997    | clean capture |
+| arg_drop                 | 0.998    | clean capture |
+| irrelevance_called       | 0.957    | +0.40 over null baseline 0.562 |
+| arg_swap                 | 0.664    | **documented failure — fix v3** |
+| tool_rename              | 0.030    | n=1, BFCL under-samples this class |
+
+### vs the only published comparable baseline
+
+[Healy et al. 2026 (arXiv:2601.05214)](https://arxiv.org/abs/2601.05214)
+reports AUC **0.716–0.721** on Glaive using **last-layer hidden-state
+MLP features** — requires model internals. styxx drift v1 hits **0.916
+on BFCL v3 text-only**, works on ANY closed model (OpenAI, Anthropic,
+Gemini) without hidden-state access.
+
+### Artifacts
+
+- `scripts/drift_build_dataset_v0.py` — dataset reproducer
+- `scripts/drift_null_baselines_v0.py` — 5 null heuristics (best
+  baseline, schema_conformance, caps at 0.733 — kill-criterion pass)
+- `scripts/drift_calibrated_v0.py` — calibrated LR + 5-fold CV
+- `benchmarks/drift_calibrated_v0.json` — full result artifact
+- `data/drift_v0/drift_dataset_v0.jsonl` — committed training data
+- `styxx/guardrail/drift.py` — public API
+- `styxx/guardrail/calibrated_weights_drift_v1.py` — 22 features + LR
+  coefs + scaler + per-class AUC + CALIBRATION_NOTES
+
+### Tests
+
+15 new regression tests in `tests/test_drift_v1.py` covering public
+API shape, JSON roundtrip, 4 canonical cases (correct call, missing
+arg, spurious arg, wrong tool), edge cases, and calibrated-weights
+pinning. Full suite: **655 passed, 1 skipped, 0 failed** in ~30s.
+
+### Law II empirical support now at three instruments
+
+| instrument          | cross-substrate evidence                        |
+|---------------------|-------------------------------------------------|
+| Hallucination (v4)  | 8 benchmarks (probe + classifier)               |
+| Refusal (v5.1)      | 5 model families (classifier)                   |
+| Tool-call drift (v6)| 4 mutation types + natural irrelevance          |
+
+---
+
+## [5.1.0] — 2026-04-23
+
+**Headline: rigor pass. v2 refusal weights pulled from public API as
+research-only after an honest over-flagging bias was characterised.
+No external amplification shipped until every claim was verified.**
+
+### v2 refusal weights: demoted to research artifact
+
+v2 weights trained on n=380 diverse-model samples revealed two honest
+findings:
+
+- **Good:** Llama-2-orig AUC jumped +0.11 (robustness gain).
+- **Bad:** short factual compliances over-flagged as refusals (second
+  documented failure mode: `enumerated_technical_compliance`).
+
+Rather than ship v2 in the public API with a known bias, v2 stays as
+a committed RESEARCH ARTIFACT (module, scripts, benchmark JSON, 10
+regression tests) but is NOT exposed via `refuse_check()`. When v3
+fixes the bias (via z-clip + retraining with enumerated-compliance
+examples), v2 can be promoted to the public API.
+
+### Prior-art correction: "first public XSTest AUC" claim retracted
+
+Independent verification found that IBM Granite Guardian
+([arXiv:2412.07724](https://arxiv.org/abs/2412.07724), Dec 2024,
+Table 7) already published XSTest AUC for 9 safety classifiers six
+months before our v5.0. Our 0.976 on XSTest-v2 GPT-4 held-out is
+**competitive** with that tier, not first-in-class.
+
+Fixed across `README.md`, `release/v5-amplify-kit`,
+`cognometry-refuse.html` meta tags, and the v5.0.0 GitHub release
+notes — **before** any external amplification. 0 tweets posted, 0
+threads published, 0 HN submissions. The false claim never reached
+the public.
+
+### Research & methodology
+
+- `scripts/compete_hhem_halueval.py` — HHEM-2.1-Open head-to-head
+  reproducer (styxx +0.23 AUC on HaluEval-QA, 220× faster).
+- `papers/cognometry-v0.5.{md,pdf}` — full arXiv-submittable paper
+  (259KB, 10–12 pages) merging v0 + addendum. Adds §4 refusal
+  instrument, §5.1 HHEM head-to-head, §5.3 Granite Guardian context,
+  §5.4 related work expansion, §6 new failure modes, Appendix C
+  per-seed raw AUCs. Endorsement code obtained for arXiv cs.LG.
+- `papers/tool-call-drift-scope-v0.md` — research scope for
+  instrument #3 (prerequisite for v6.0).
+- `papers/landscape-scan-v05.md` — academic landscape background,
+  Wang 2025 "False Sense of Security" rebuttal cited head-on.
+
+### Changes
+
+- `pyproject.toml` version: 5.0.0 → 5.1.0
+- `styxx/__init__.py` `__version__`: 5.0.0 → 5.1.0
+- `styxx/guardrail/refusal.py` — reverted variant parameter, kept
+  `weights_variant` field on `RefusalVerdict` (always `"v1"` for now).
+- `styxx/guardrail/calibrated_weights_refusal_v2.py` — added second
+  failure mode + v2-specific failure notes + defensive z-score
+  clipping.
+- `tests/test_refusal_v2.py` REMOVED (tested public API that doesn't
+  exist).
+- `tests/test_refusal_v2_research.py` ADDED (10 tests) — pins v2 as
+  research artifact, verifies it's NOT exposed via public API,
+  asserts the over-flagging bias is real (regression test forces v3
+  promotion when fixed).
+- README refusal section reframed: "v1 is apologetic-style
+  specialist, v2 not yet in public API" with link to
+  `calibrated_weights_refusal_v2.py` CALIBRATION_NOTES.
+
+### Tests
+
+Full suite: **640 passed, 1 skipped, 0 failed** in 28.5s.
+
+---
+
+## [5.0.0] — 2026-04-23
+
+**Headline: cognometric instrument #2 — refusal detection — ships as
+the second calibrated detector on the same methodology as
+hallucination. "0.998 AUC on HaluEval-QA. 9 floats. No LLM."**
+
+PyPI: https://pypi.org/project/styxx/5.0.0/
+
+### `styxx.guardrail.refuse_check()` — new public API
+
+```python
+from styxx.guardrail import refuse_check
+
+v = refuse_check(
+    prompt="How do I shut down a Python process?",
+    response="I'm sorry, but I can't help with that...",
+)
+# v.refuse_risk   — 0-1 calibrated probability
+# v.refuses       — bool, threshold default 0.5
+# v.features      — dict of 18 raw features
+# v.top_signals   — top-3 contributing features by scaled contribution
+```
+
+Mirrors the shape of the v4 hallucination `check()` API. Pure-Python,
+Pyodide-safe, no external deps beyond existing `text_features`
+vocabularies.
+
+### Calibration
+
+- Train: 80 labeled (prompt, response) from JailbreakBench,
+  Llama-3.2-1B apologetic refusals (already committed in
+  `styxx/residual_probe/atlas/compliance_labels_llama_1b.json`).
+- Test: XSTest v2, 450 samples × 5 model families (GPT-4, Llama-2
+  new/orig, Mistral guard/instruct) — 2,250 held-out samples total.
+- Features: 18 text-only heuristics (refusal_density, disclaimer,
+  normative, sorry-opener, word-count, etc.). No logprobs, no model
+  weights.
+
+Held-out AUCs (LR trained on JBB-Llama-1B, tested on XSTest):
+
+| split               | AUC    | notes |
+|---------------------|--------|---|
+| GPT-4               | **0.9759** | out-of-family best |
+| Llama-2 new         | 0.8741 | |
+| Llama-2 orig        | 0.7832 | |
+| Mistral-guard       | 0.7797 | |
+| Mistral-instruct    | 0.6097 | **documented failure mode** |
+| mean cross-model    | 0.8045 | |
+
+First-pass training AUC on JBB (5-fold CV): 0.9967.
+
+### Failure-mode note
+
+Mistral-instruct refuses by lecturing ("It's important to note...",
+"It's crucial to...") rather than apologizing. Our normative-lecturing
+features exist but carry zero weight because the JBB-Llama training
+corpus only contains apologetic refusals — LR cannot learn to use
+features the training data never exercises. v1 is an
+**apologetic-style specialist**; it wins on Claude / GPT-4 /
+Llama-style outputs. Fix tracked in research → v5.1.
+
+### README rewrite
+
+Competitive landscape tables for both instruments:
+
+- **Hallucination** — vs Patronus Lynx-70B, Vectara HHEM-2.1-Open,
+  Cleanlab TLM, Galileo Luna.
+- **Refusal** — vs Llama Guard 2/3, ShieldGemma 2B/9B/27B, OpenAI
+  Moderation, Aegis, Perspective API.
+
+H1 positioning: **"0.998 AUC on HaluEval-QA. 9 floats. No LLM."**
+
+### Artifacts
+
+- `styxx/guardrail/calibrated_weights_refusal_v1.py` — 18 features +
+  LR coefs + scaler + held-out AUC per split + CALIBRATION_NOTES.
+- `styxx/guardrail/refusal_signals.py` — pure-Python feature
+  extractor.
+- `styxx/guardrail/refusal.py` — public `refuse_check` +
+  `RefusalVerdict`.
+- `pyproject.toml` description updated to reflect two instruments.
+
+This establishes refusal-detection as the second cognometric
+instrument on the same methodology as hallucination (v4).
+
+---
+
 ## [4.0.2] — 2026-04-23
 
 **Headline: fix adaptive-threshold false-positives on entity-rich
