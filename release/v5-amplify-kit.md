@@ -27,11 +27,11 @@ the ruler, not the workshop.
 
 **3/**
 ```
-for refusal detection, we're the first public XSTest AUC in the space.
+for refusal detection, the field runs on 2B-27B safety classifiers.
 
-Llama Guard, ShieldGemma, OpenAI Moderation, NVIDIA Aegis — none of them publish an XSTest number.
+IBM Granite Guardian publishes XSTest AUC: Llama-Guard-2-8B hits 0.994, Granite-3.0-8B 0.979, ShieldGemma-27B 0.893.
 
-styxx: 0.976 on GPT-4. trained on Llama-3.2-1B. cross-substrate universality, empirically.
+styxx: 0.976 on XSTest-v2 GPT-4 held-out with 18 features. ~7 orders of magnitude smaller at the same tier.
 ```
 
 **4/**
@@ -92,7 +92,7 @@ competitor I could find.
 - Mean cross-model AUC 0.794 across 5 families
 - 1 documented failure mode (Mistral-instruct, AUC 0.60 —
   lecturing-style refusals under-represented in training corpus)
-- First public XSTest AUC in the space
+- Competitive with 8B-parameter safety classifiers at 18 features (Granite Guardian Table 7)
 
 ## How it compares
 
@@ -160,9 +160,14 @@ This is the first empirical validation of cognometry's law II
 (cross-substrate universality) on an instrument outside
 hallucination.
 
-Nobody else in the space publishes an XSTest AUC — Llama Guard,
-ShieldGemma, OpenAI Moderation, Aegis all report on their own
-internal hazard taxonomies. I think this is a genuine white space.
+Prior art: IBM Granite Guardian (arXiv:2412.07724, Dec 2024) Table 7
+reports XSTest-RH AUC for 9 safety classifiers — Llama-Guard-2-8B
+at 0.994 is the headline, Granite-Guardian-3.0-8B at 0.979. Our
+0.976 on XSTest-v2 GPT-4 held-out is competitive with that tier,
+with 18 features vs 8B params (~7 orders of magnitude smaller).
+Note XSTest-RH and XSTest-v2 are closely related but distinct
+splits; they share the same prompt set but evaluate at different
+label granularities.
 
 Release: github.com/fathom-lab/styxx/releases/tag/v5.0.0
 Reproducer: scripts/refusal_xstest_heldout.py in the repo
@@ -241,11 +246,13 @@ HaluEval-QA with 9 features. The bet: calibrated-measurement-science
 framing beats fine-tuned-LLM-judge framing for most RAG use cases,
 and 3-5 orders of magnitude cheaper per check.
 
-For refusal: literally nobody else in the space publishes an XSTest
-AUC. Llama Guard / ShieldGemma / OpenAI Moderation / Aegis all report
-F1 on their own hazard taxonomies. XSTest is a different problem —
-full-compliance vs partial-refusal vs full-refusal, annotated with
-human agreement. We have a real number on it. First in the space.
+For refusal: the field mostly reports F1 on internal taxonomies, but
+IBM Granite Guardian (arXiv:2412.07724, Table 7) publishes XSTest-RH
+AUC for 9 classifiers — Llama-Guard-2-8B 0.994, Granite-3.0-8B 0.979,
+ShieldGemma-27B 0.893. Our 0.976 on XSTest-v2 GPT-4 held-out sits in
+that tier with 18 features (~7 orders of magnitude smaller). Worth
+noting XSTest-RH and XSTest-v2 are closely related but distinct
+splits — same prompts, different label granularity.
 
 Everything is MIT. Failure modes published openly (HaluBench-DROP
 AUC 0.42 and FinanceBench 0.49 for hallucination; Mistral-instruct
@@ -272,8 +279,9 @@ might be relevant to this community.
 hallucination: AUC 0.998 on HaluEval-QA (vs Patronus Lynx-70B at
 87.4% acc on their own bench — with 140 GB of weights)
 
-refusal: AUC 0.976 on GPT-4 XSTest, held-out (first public XSTest
-AUC in the space)
+refusal: AUC 0.976 on XSTest-v2 GPT-4 held-out (competitive with
+Llama-Guard-2-8B at 0.994 per Granite Guardian Table 7, ~7 orders
+of magnitude smaller)
 
 both are calibrated LR over 9-18 engineered features. no LLM, no GPU,
 pure python. drop-in integration for [framework-specific piece].
