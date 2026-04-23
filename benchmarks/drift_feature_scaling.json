@@ -1,0 +1,2812 @@
+{
+  "methodology": {
+    "dataset": "data\\drift_v0\\drift_dataset_v0.jsonl",
+    "n_samples": 3700,
+    "n_features_total": 22,
+    "feature_names": [
+      "tool_in_prompt",
+      "tool_parts_in_prompt",
+      "overlap_jaccard",
+      "prompt_coverage",
+      "arg_verbatim_rate",
+      "tool_in_schema",
+      "missing_required_frac",
+      "spurious_arg_frac",
+      "type_mismatch_frac",
+      "arg_count_zscore",
+      "required_count",
+      "placeholder_frac",
+      "tool_name_len",
+      "tool_in_any_schema",
+      "n_available_tools",
+      "n_args_called",
+      "prompt_len",
+      "avg_arg_len",
+      "has_nested",
+      "has_list",
+      "prompt_is_question",
+      "prompt_imperative"
+    ],
+    "groups": {
+      "A_semantic": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "B_schema": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "C_lexical": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "D_structural": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    "feature_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      10,
+      12,
+      14,
+      17,
+      19,
+      22
+    ],
+    "random_subset_seeds": [
+      11,
+      23,
+      47
+    ],
+    "cv_splits": 5,
+    "cv_random_state": 0,
+    "phase_transition_threshold": 0.1
+  },
+  "ranking_by_importance": [
+    "spurious_arg_frac",
+    "arg_count_zscore",
+    "n_available_tools",
+    "missing_required_frac",
+    "placeholder_frac",
+    "type_mismatch_frac",
+    "tool_in_schema",
+    "tool_in_any_schema",
+    "tool_parts_in_prompt",
+    "prompt_coverage",
+    "required_count",
+    "n_args_called",
+    "arg_verbatim_rate",
+    "overlap_jaccard",
+    "tool_in_prompt",
+    "avg_arg_len",
+    "has_list",
+    "prompt_len",
+    "prompt_is_question",
+    "prompt_imperative",
+    "has_nested",
+    "tool_name_len"
+  ],
+  "ranking_indices": [
+    7,
+    9,
+    14,
+    6,
+    11,
+    8,
+    5,
+    13,
+    1,
+    3,
+    10,
+    15,
+    4,
+    2,
+    0,
+    17,
+    19,
+    16,
+    20,
+    21,
+    18,
+    12
+  ],
+  "top_k_by_importance": [
+    {
+      "n_features": 1,
+      "fold_aucs": [
+        0.6085526315789473,
+        0.6143092105263158,
+        0.6052631578947368,
+        0.6059113300492611,
+        0.6050903119868637
+      ],
+      "mean_auc": 0.6078253284072249,
+      "std_auc": 0.0034721209514318846,
+      "pooled_auc": 0.6055054465447265,
+      "per_drift_type_auc": {
+        "arg_drop": 0.5012097912127058,
+        "arg_swap": 0.5123039916262405,
+        "irrelevance_called": 0.48602758318027406,
+        "spurious_arg": 0.9987828087323658,
+        "tool_rename": 0.6990881458966565
+      },
+      "feat_idx": [
+        7
+      ],
+      "feat_names": [
+        "spurious_arg_frac"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 1
+    },
+    {
+      "n_features": 2,
+      "fold_aucs": [
+        0.8018092105263157,
+        0.7926883971291867,
+        0.796875,
+        0.7832512315270936,
+        0.7807881773399015
+      ],
+      "mean_auc": 0.7910824033044994,
+      "std_auc": 0.007981179429546832,
+      "pooled_auc": 0.7883993393404196,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9984802431610942,
+        "arg_swap": 0.48813633527244915,
+        "irrelevance_called": 0.7046111481343021,
+        "spurious_arg": 0.9969627959830379,
+        "tool_rename": 0.899696048632219
+      },
+      "feat_idx": [
+        7,
+        9
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 2
+    },
+    {
+      "n_features": 3,
+      "fold_aucs": [
+        0.8322368421052632,
+        0.8261500697767146,
+        0.8314144736842105,
+        0.8111658456486043,
+        0.8243021346469622
+      ],
+      "mean_auc": 0.8250538731723509,
+      "std_auc": 0.007572269776876246,
+      "pooled_auc": 0.8208008349170379,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9984802431610942,
+        "arg_swap": 0.4868178707300872,
+        "irrelevance_called": 0.7931688149147473,
+        "spurious_arg": 0.996962795983038,
+        "tool_rename": 0.899696048632219
+      },
+      "feat_idx": [
+        7,
+        9,
+        14
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 3
+    },
+    {
+      "n_features": 4,
+      "fold_aucs": [
+        0.8322368421052632,
+        0.8261500697767146,
+        0.8314144736842105,
+        0.8111658456486043,
+        0.8243021346469622
+      ],
+      "mean_auc": 0.8250538731723509,
+      "std_auc": 0.007572269776876246,
+      "pooled_auc": 0.8208008349170379,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9984802431610942,
+        "arg_swap": 0.4868178707300872,
+        "irrelevance_called": 0.7931688149147473,
+        "spurious_arg": 0.9969627959830379,
+        "tool_rename": 0.899696048632219
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 4
+    },
+    {
+      "n_features": 5,
+      "fold_aucs": [
+        0.8379934210526316,
+        0.8383921451355663,
+        0.8421052631578947,
+        0.8251231527093597,
+        0.8341543513957307
+      ],
+      "mean_auc": 0.8355536666902367,
+      "std_auc": 0.005791139485579056,
+      "pooled_auc": 0.8324378158666211,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9984802431610942,
+        "arg_swap": 0.4811716218120332,
+        "irrelevance_called": 0.8279376547524232,
+        "spurious_arg": 0.9969627959830379,
+        "tool_rename": 0.6990881458966566
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 5
+    },
+    {
+      "n_features": 6,
+      "fold_aucs": [
+        0.87737365430622,
+        0.8765575159489634,
+        0.875043610446571,
+        0.8703982250968298,
+        0.8741711477957858
+      ],
+      "mean_auc": 0.874708830718874,
+      "std_auc": 0.002429050145727036,
+      "pooled_auc": 0.8739990687617528,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9980708109533523,
+        "arg_swap": 0.6908640975059884,
+        "irrelevance_called": 0.827887537993921,
+        "spurious_arg": 0.9969627959830379,
+        "tool_rename": 0.7993920972644377
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 6
+    },
+    {
+      "n_features": 8,
+      "fold_aucs": [
+        0.8812861343700159,
+        0.8758472886762361,
+        0.8766883472886762,
+        0.873644693465699,
+        0.8745597212298976
+      ],
+      "mean_auc": 0.876405237006105,
+      "std_auc": 0.0026548501263401517,
+      "pooled_auc": 0.8747634435032143,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9998380776579553,
+        "arg_swap": 0.6929625696974577,
+        "irrelevance_called": 0.8278238761655534,
+        "spurious_arg": 0.9969166027660499,
+        "tool_rename": 0.7978723404255319
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 8
+    },
+    {
+      "n_features": 10,
+      "fold_aucs": [
+        0.9161744916267944,
+        0.9129660087719298,
+        0.9290769537480064,
+        0.9188006868975543,
+        0.9248423770666467
+      ],
+      "mean_auc": 0.9203721036221865,
+      "std_auc": 0.005842898224315471,
+      "pooled_auc": 0.919965218451307,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9995026670922911,
+        "arg_swap": 0.6735517019263674,
+        "irrelevance_called": 0.9617080874903153,
+        "spurious_arg": 0.9968219066712245,
+        "tool_rename": 0.09042553191489361
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 10
+    },
+    {
+      "n_features": 12,
+      "fold_aucs": [
+        0.9139628189792663,
+        0.9137323066188198,
+        0.9278184808612441,
+        0.9190576467491445,
+        0.9222163727296656
+      ],
+      "mean_auc": 0.919357525187628,
+      "std_auc": 0.00530276618905225,
+      "pooled_auc": 0.9191578788550965,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9995304252080701,
+        "arg_swap": 0.6685835564322953,
+        "irrelevance_called": 0.9622160276102703,
+        "spurious_arg": 0.9967780231150857,
+        "tool_rename": 0.07598784194528879
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3,
+        10,
+        15
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "required_count",
+        "n_args_called"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 12
+    },
+    {
+      "n_features": 14,
+      "fold_aucs": [
+        0.9147228867623605,
+        0.9150717703349283,
+        0.9284850976874003,
+        0.918838290778275,
+        0.9228493713884606
+      ],
+      "mean_auc": 0.9199934833902847,
+      "std_auc": 0.005169149404176611,
+      "pooled_auc": 0.9196459795886964,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9995651228527942,
+        "arg_swap": 0.6687357837315566,
+        "irrelevance_called": 0.9634289886167234,
+        "spurious_arg": 0.9967710941325376,
+        "tool_rename": 0.08966565349544076
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3,
+        10,
+        15,
+        4,
+        2
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "required_count",
+        "n_args_called",
+        "arg_verbatim_rate",
+        "overlap_jaccard"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 14
+    },
+    {
+      "n_features": 17,
+      "fold_aucs": [
+        0.9176510167464115,
+        0.920392244816587,
+        0.9283791866028707,
+        0.922930846463355,
+        0.9287469133481241
+      ],
+      "mean_auc": 0.9236200415954696,
+      "std_auc": 0.00436937512223901,
+      "pooled_auc": 0.9230564398322173,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9987069344399568,
+        "arg_swap": 0.682923116407335,
+        "irrelevance_called": 0.9657858307733151,
+        "spurious_arg": 0.9964246450051275,
+        "tool_rename": 0.04255319148936165
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3,
+        10,
+        15,
+        4,
+        2,
+        0,
+        17,
+        19
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "required_count",
+        "n_args_called",
+        "arg_verbatim_rate",
+        "overlap_jaccard",
+        "tool_in_prompt",
+        "avg_arg_len",
+        "has_list"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 17
+    },
+    {
+      "n_features": 19,
+      "fold_aucs": [
+        0.918055970893142,
+        0.9213516746411483,
+        0.9283231160287082,
+        0.9236829240777649,
+        0.9286466363328698
+      ],
+      "mean_auc": 0.9240120643947266,
+      "std_auc": 0.00406756634929273,
+      "pooled_auc": 0.9236089878479403,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9990030210082673,
+        "arg_swap": 0.6851788482054791,
+        "irrelevance_called": 0.9658339157713375,
+        "spurious_arg": 0.9965378183867482,
+        "tool_rename": 0.037993920972644424
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3,
+        10,
+        15,
+        4,
+        2,
+        0,
+        17,
+        19,
+        16,
+        20
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "required_count",
+        "n_args_called",
+        "arg_verbatim_rate",
+        "overlap_jaccard",
+        "tool_in_prompt",
+        "avg_arg_len",
+        "has_list",
+        "prompt_len",
+        "prompt_is_question"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 19
+    },
+    {
+      "n_features": 22,
+      "fold_aucs": [
+        0.9188783393141947,
+        0.9205043859649124,
+        0.9284477173046252,
+        0.9231063312400506,
+        0.928533824690708
+      ],
+      "mean_auc": 0.9238941197028983,
+      "std_auc": 0.003988259567197162,
+      "pooled_auc": 0.9233467023974389,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991186798240135,
+        "arg_swap": 0.6838779967390647,
+        "irrelevance_called": 0.9656930470447367,
+        "spurious_arg": 0.9966625400726157,
+        "tool_rename": 0.02583586626139822
+      },
+      "feat_idx": [
+        7,
+        9,
+        14,
+        6,
+        11,
+        8,
+        5,
+        13,
+        1,
+        3,
+        10,
+        15,
+        4,
+        2,
+        0,
+        17,
+        19,
+        16,
+        20,
+        21,
+        18,
+        12
+      ],
+      "feat_names": [
+        "spurious_arg_frac",
+        "arg_count_zscore",
+        "n_available_tools",
+        "missing_required_frac",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "required_count",
+        "n_args_called",
+        "arg_verbatim_rate",
+        "overlap_jaccard",
+        "tool_in_prompt",
+        "avg_arg_len",
+        "has_list",
+        "prompt_len",
+        "prompt_is_question",
+        "prompt_imperative",
+        "has_nested",
+        "tool_name_len"
+      ],
+      "schedule": "top_k_by_importance",
+      "k": 22
+    }
+  ],
+  "group_incremental": [
+    {
+      "n_features": 5,
+      "fold_aucs": [
+        0.7102584230462521,
+        0.7154916766347686,
+        0.7238212719298245,
+        0.7186853683300117,
+        0.7586582935358928
+      ],
+      "mean_auc": 0.7253830066953499,
+      "std_auc": 0.01721123778463955,
+      "pooled_auc": 0.7246207602181416,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7060669988387854,
+        "arg_swap": 0.49492617605024253,
+        "irrelevance_called": 0.8990980337976583,
+        "spurious_arg": 0.6574080062083684,
+        "tool_rename": 0.11246200607902734
+      },
+      "feat_idx": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "prompt_coverage",
+        "arg_verbatim_rate"
+      ],
+      "schedule": "group_incremental",
+      "group_added": "A_semantic",
+      "groups_active": [
+        "A_semantic"
+      ]
+    },
+    {
+      "n_features": 11,
+      "fold_aucs": [
+        0.9077639055023923,
+        0.9007986941786285,
+        0.919121311802233,
+        0.9104150214968851,
+        0.9189197658531695
+      ],
+      "mean_auc": 0.9114037397666616,
+      "std_auc": 0.006967704291513822,
+      "pooled_auc": 0.9104235235577298,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991626301739972,
+        "arg_swap": 0.6596512107731638,
+        "irrelevance_called": 0.9436755359784146,
+        "spurious_arg": 0.9965678439777902,
+        "tool_rename": 0.0835866261398176
+      },
+      "feat_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "prompt_coverage",
+        "arg_verbatim_rate",
+        "tool_in_schema",
+        "missing_required_frac",
+        "spurious_arg_frac",
+        "type_mismatch_frac",
+        "arg_count_zscore",
+        "required_count"
+      ],
+      "schedule": "group_incremental",
+      "group_added": "B_schema",
+      "groups_active": [
+        "A_semantic",
+        "B_schema"
+      ]
+    },
+    {
+      "n_features": 15,
+      "fold_aucs": [
+        0.9157944577352473,
+        0.9146481259968102,
+        0.9260366826156299,
+        0.9188194888379149,
+        0.9242845861692925
+      ],
+      "mean_auc": 0.9199166682709791,
+      "std_auc": 0.0045274107931373,
+      "pooled_auc": 0.9195053446280942,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9995905677922583,
+        "arg_swap": 0.6713689385857203,
+        "irrelevance_called": 0.961563832496248,
+        "spurious_arg": 0.9968334549754714,
+        "tool_rename": 0.1063829787234043
+      },
+      "feat_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "prompt_coverage",
+        "arg_verbatim_rate",
+        "tool_in_schema",
+        "missing_required_frac",
+        "spurious_arg_frac",
+        "type_mismatch_frac",
+        "arg_count_zscore",
+        "required_count",
+        "placeholder_frac",
+        "tool_name_len",
+        "tool_in_any_schema",
+        "n_available_tools"
+      ],
+      "schedule": "group_incremental",
+      "group_added": "C_lexical",
+      "groups_active": [
+        "A_semantic",
+        "B_schema",
+        "C_lexical"
+      ]
+    },
+    {
+      "n_features": 22,
+      "fold_aucs": [
+        0.9188783393141947,
+        0.9205043859649124,
+        0.9284477173046252,
+        0.9231063312400506,
+        0.928533824690708
+      ],
+      "mean_auc": 0.9238941197028983,
+      "std_auc": 0.003988259567197162,
+      "pooled_auc": 0.9233467023974389,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991186798240135,
+        "arg_swap": 0.6838779967390647,
+        "irrelevance_called": 0.9656930470447367,
+        "spurious_arg": 0.9966625400726157,
+        "tool_rename": 0.02583586626139822
+      },
+      "feat_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "prompt_coverage",
+        "arg_verbatim_rate",
+        "tool_in_schema",
+        "missing_required_frac",
+        "spurious_arg_frac",
+        "type_mismatch_frac",
+        "arg_count_zscore",
+        "required_count",
+        "placeholder_frac",
+        "tool_name_len",
+        "tool_in_any_schema",
+        "n_available_tools",
+        "n_args_called",
+        "prompt_len",
+        "avg_arg_len",
+        "has_nested",
+        "has_list",
+        "prompt_is_question",
+        "prompt_imperative"
+      ],
+      "schedule": "group_incremental",
+      "group_added": "D_structural",
+      "groups_active": [
+        "A_semantic",
+        "B_schema",
+        "C_lexical",
+        "D_structural"
+      ]
+    }
+  ],
+  "random_subsets": [
+    {
+      "n_features": 1,
+      "fold_aucs": [
+        0.5320723684210527,
+        0.5542763157894737,
+        0.5476973684210527,
+        0.5476190476190477,
+        0.5435139573070608
+      ],
+      "mean_auc": 0.5450358115115375,
+      "std_auc": 0.007341809181124386,
+      "pooled_auc": 0.5408193597637133,
+      "per_drift_type_auc": {
+        "arg_drop": 0.48814265820969405,
+        "arg_swap": 0.49903882928400334,
+        "irrelevance_called": 0.6156342614415204,
+        "spurious_arg": 0.5048653005792629,
+        "tool_rename": 0.10030395136778114
+      },
+      "feat_idx": [
+        11
+      ],
+      "feat_names": [
+        "placeholder_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 1,
+      "seed": 11
+    },
+    {
+      "n_features": 1,
+      "fold_aucs": [
+        0.537361692583732,
+        0.5221478767942584,
+        0.5353120015948963,
+        0.5503829328520037,
+        0.5297634715902682
+      ],
+      "mean_auc": 0.5349935950830317,
+      "std_auc": 0.009326388964129784,
+      "pooled_auc": 0.5308637534496781,
+      "per_drift_type_auc": {
+        "arg_drop": 0.49721146595235777,
+        "arg_swap": 0.6966047021880473,
+        "irrelevance_called": 0.4859192226213503,
+        "spurious_arg": 0.4891030201125267,
+        "tool_rename": 0.439209726443769
+      },
+      "feat_idx": [
+        8
+      ],
+      "feat_names": [
+        "type_mismatch_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 1,
+      "seed": 23
+    },
+    {
+      "n_features": 1,
+      "fold_aucs": [
+        0.57524048046252,
+        0.5511425937001595,
+        0.5424391945773525,
+        0.5663207109640382,
+        0.5853608092355131
+      ],
+      "mean_auc": 0.5641007577879167,
+      "std_auc": 0.015608643363061381,
+      "pooled_auc": 0.5630274435511752,
+      "per_drift_type_auc": {
+        "arg_drop": 0.6556339722326314,
+        "arg_swap": 0.5138765876929889,
+        "irrelevance_called": 0.6464086601758692,
+        "spurious_arg": 0.37353682985190456,
+        "tool_rename": 0.5387537993920972
+      },
+      "feat_idx": [
+        17
+      ],
+      "feat_names": [
+        "avg_arg_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 1,
+      "seed": 47
+    },
+    {
+      "n_features": 2,
+      "fold_aucs": [
+        0.48940266148325356,
+        0.4615978867623604,
+        0.48780776515151514,
+        0.4936073402775166,
+        0.5162072725905313
+      ],
+      "mean_auc": 0.48972458525303536,
+      "std_auc": 0.01738561196734923,
+      "pooled_auc": 0.48953356154665484,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7246348651186891,
+        "arg_swap": 0.45395941947301677,
+        "irrelevance_called": 0.5076197790528203,
+        "spurious_arg": 0.2561783427721473,
+        "tool_rename": 0.7697568389057751
+      },
+      "feat_idx": [
+        12,
+        15
+      ],
+      "feat_names": [
+        "tool_name_len",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 2,
+      "seed": 11
+    },
+    {
+      "n_features": 2,
+      "fold_aucs": [
+        0.5210077751196173,
+        0.5146344198564593,
+        0.4973833732057416,
+        0.49277378758821255,
+        0.5577971646673936
+      ],
+      "mean_auc": 0.5167193040874848,
+      "std_auc": 0.023053825449816837,
+      "pooled_auc": 0.5116120013828688,
+      "per_drift_type_auc": {
+        "arg_drop": 0.5098148071042271,
+        "arg_swap": 0.47210592000644136,
+        "irrelevance_called": 0.5564971636623701,
+        "spurious_arg": 0.47375647859868253,
+        "tool_rename": 0.10182370820668696
+      },
+      "feat_idx": [
+        12,
+        19
+      ],
+      "feat_names": [
+        "tool_name_len",
+        "has_list"
+      ],
+      "schedule": "random_subsets",
+      "k": 2,
+      "seed": 23
+    },
+    {
+      "n_features": 2,
+      "fold_aucs": [
+        0.6935743122009569,
+        0.68359375,
+        0.7079283791866029,
+        0.7048408729114177,
+        0.7294024743353514
+      ],
+      "mean_auc": 0.7038679577268658,
+      "std_auc": 0.015404205672355998,
+      "pooled_auc": 0.7024983563445102,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7288101483671288,
+        "arg_swap": 0.4945651079933171,
+        "irrelevance_called": 0.8984072352345193,
+        "spurious_arg": 0.5338642473739157,
+        "tool_rename": 0.15881458966565348
+      },
+      "feat_idx": [
+        2,
+        21
+      ],
+      "feat_names": [
+        "overlap_jaccard",
+        "prompt_imperative"
+      ],
+      "schedule": "random_subsets",
+      "k": 2,
+      "seed": 47
+    },
+    {
+      "n_features": 3,
+      "fold_aucs": [
+        0.6126084031100478,
+        0.6006653708133971,
+        0.6089575857256778,
+        0.6155253888867998,
+        0.6205580415898921
+      ],
+      "mean_auc": 0.6116629580251629,
+      "std_auc": 0.006681327921187372,
+      "pooled_auc": 0.6114770617634775,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9716057607342945,
+        "arg_swap": 0.514895629944242,
+        "irrelevance_called": 0.7743154321689991,
+        "spurious_arg": 0.06302371559760164,
+        "tool_rename": 0.5197568389057751
+      },
+      "feat_idx": [
+        9,
+        16,
+        17
+      ],
+      "feat_names": [
+        "arg_count_zscore",
+        "prompt_len",
+        "avg_arg_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 3,
+      "seed": 11
+    },
+    {
+      "n_features": 3,
+      "fold_aucs": [
+        0.6284639154704943,
+        0.6038676236044657,
+        0.6335787978468899,
+        0.6311498013261635,
+        0.6178505621780168
+      ],
+      "mean_auc": 0.622982140085206,
+      "std_auc": 0.010961273095312358,
+      "pooled_auc": 0.6223771454949851,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9234824406785934,
+        "arg_swap": 0.7087401115159322,
+        "irrelevance_called": 0.7051265380426832,
+        "spurious_arg": 0.10186528210197618,
+        "tool_rename": 0.2849544072948328
+      },
+      "feat_idx": [
+        9,
+        8,
+        20
+      ],
+      "feat_names": [
+        "arg_count_zscore",
+        "type_mismatch_frac",
+        "prompt_is_question"
+      ],
+      "schedule": "random_subsets",
+      "k": 3,
+      "seed": 23
+    },
+    {
+      "n_features": 3,
+      "fold_aucs": [
+        0.6604490629984052,
+        0.6273985745614035,
+        0.6373604465709729,
+        0.6618909738151644,
+        0.6625427744143195
+      ],
+      "mean_auc": 0.6499283664720531,
+      "std_auc": 0.014686432185906234,
+      "pooled_auc": 0.6497197792205975,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9810007263373629,
+        "arg_swap": 0.5137935546206647,
+        "irrelevance_called": 0.6885602403437195,
+        "spurious_arg": 0.3775209948171211,
+        "tool_rename": 0.6253799392097263
+      },
+      "feat_idx": [
+        5,
+        6,
+        17
+      ],
+      "feat_names": [
+        "tool_in_schema",
+        "missing_required_frac",
+        "avg_arg_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 3,
+      "seed": 47
+    },
+    {
+      "n_features": 4,
+      "fold_aucs": [
+        0.6873940889154705,
+        0.6755631977671451,
+        0.7084641646730463,
+        0.700315872598052,
+        0.7420624475112498
+      ],
+      "mean_auc": 0.7027599542929928,
+      "std_auc": 0.022622868557673988,
+      "pooled_auc": 0.701649800463221,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7428268402474173,
+        "arg_swap": 0.49628238289820653,
+        "irrelevance_called": 0.8859735383515108,
+        "spurious_arg": 0.5355768608937463,
+        "tool_rename": 0.1550151975683891
+      },
+      "feat_idx": [
+        18,
+        16,
+        12,
+        2
+      ],
+      "feat_names": [
+        "has_nested",
+        "prompt_len",
+        "tool_name_len",
+        "overlap_jaccard"
+      ],
+      "schedule": "random_subsets",
+      "k": 4,
+      "seed": 11
+    },
+    {
+      "n_features": 4,
+      "fold_aucs": [
+        0.6167576255980861,
+        0.6034065988835726,
+        0.6122782097288676,
+        0.628755687586959,
+        0.5709522556061118
+      ],
+      "mean_auc": 0.6064300754807194,
+      "std_auc": 0.019530023222300325,
+      "pooled_auc": 0.6020010631303593,
+      "per_drift_type_auc": {
+        "arg_drop": 0.47961744690103764,
+        "arg_swap": 0.6969557056301455,
+        "irrelevance_called": 0.6902012255579215,
+        "spurious_arg": 0.48709938932567143,
+        "tool_rename": 0.3001519756838906
+      },
+      "feat_idx": [
+        21,
+        11,
+        20,
+        8
+      ],
+      "feat_names": [
+        "prompt_imperative",
+        "placeholder_frac",
+        "prompt_is_question",
+        "type_mismatch_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 4,
+      "seed": 23
+    },
+    {
+      "n_features": 4,
+      "fold_aucs": [
+        0.5868097089314195,
+        0.5240355861244019,
+        0.5538900518341308,
+        0.5644091803607466,
+        0.5688777748530315
+      ],
+      "mean_auc": 0.5596044604207461,
+      "std_auc": 0.02072199085509538,
+      "pooled_auc": 0.5567298449868008,
+      "per_drift_type_auc": {
+        "arg_drop": 0.6114395821478305,
+        "arg_swap": 0.4966195474949174,
+        "irrelevance_called": 0.6494556236421068,
+        "spurious_arg": 0.39950550161214327,
+        "tool_rename": 0.3343465045592705
+      },
+      "feat_idx": [
+        10,
+        17,
+        12,
+        5
+      ],
+      "feat_names": [
+        "required_count",
+        "avg_arg_len",
+        "tool_name_len",
+        "tool_in_schema"
+      ],
+      "schedule": "random_subsets",
+      "k": 4,
+      "seed": 47
+    },
+    {
+      "n_features": 5,
+      "fold_aucs": [
+        0.7959903309409888,
+        0.7844024122807016,
+        0.8075657894736841,
+        0.7892427831885583,
+        0.8363040399102522
+      ],
+      "mean_auc": 0.8027010711588369,
+      "std_auc": 0.01851391616753272,
+      "pooled_auc": 0.8025952271042287,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7843622341582122,
+        "arg_swap": 0.49083742627669635,
+        "irrelevance_called": 0.8678651344483634,
+        "spurious_arg": 0.9966429079553959,
+        "tool_rename": 0.16717325227963525
+      },
+      "feat_idx": [
+        3,
+        4,
+        20,
+        7,
+        15
+      ],
+      "feat_names": [
+        "prompt_coverage",
+        "arg_verbatim_rate",
+        "prompt_is_question",
+        "spurious_arg_frac",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 5,
+      "seed": 11
+    },
+    {
+      "n_features": 5,
+      "fold_aucs": [
+        0.6903409090909091,
+        0.7075171949760766,
+        0.7033804326156301,
+        0.6947316963110592,
+        0.7514696850048259
+      ],
+      "mean_auc": 0.7094879835997001,
+      "std_auc": 0.021854097631708615,
+      "pooled_auc": 0.7082264207877955,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7300234093443071,
+        "arg_swap": 0.5124549608486484,
+        "irrelevance_called": 0.8368604695263018,
+        "spurious_arg": 0.6475965669201134,
+        "tool_rename": 0.20060790273556228
+      },
+      "feat_idx": [
+        3,
+        17,
+        16,
+        4,
+        11
+      ],
+      "feat_names": [
+        "prompt_coverage",
+        "avg_arg_len",
+        "prompt_len",
+        "arg_verbatim_rate",
+        "placeholder_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 5,
+      "seed": 23
+    },
+    {
+      "n_features": 5,
+      "fold_aucs": [
+        0.7101649720893143,
+        0.7023462420255184,
+        0.7298955841307815,
+        0.7237430902869176,
+        0.7586958974166134
+      ],
+      "mean_auc": 0.7249691571898291,
+      "std_auc": 0.019463946751888974,
+      "pooled_auc": 0.7236488052772833,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7095945927190463,
+        "arg_swap": 0.49251192656857024,
+        "irrelevance_called": 0.8933542469212056,
+        "spurious_arg": 0.6614487578643953,
+        "tool_rename": 0.0820668693009119
+      },
+      "feat_idx": [
+        13,
+        4,
+        1,
+        2,
+        12
+      ],
+      "feat_names": [
+        "tool_in_any_schema",
+        "arg_verbatim_rate",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "tool_name_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 5,
+      "seed": 47
+    },
+    {
+      "n_features": 6,
+      "fold_aucs": [
+        0.6939045055821371,
+        0.6964027611642744,
+        0.7125323963317385,
+        0.7137655272690808,
+        0.7456222815527895
+      ],
+      "mean_auc": 0.712445494380004,
+      "std_auc": 0.018458530821923325,
+      "pooled_auc": 0.7115894198545589,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7311337339754711,
+        "arg_swap": 0.6483297771694276,
+        "irrelevance_called": 0.8607045332639824,
+        "spurious_arg": 0.49673298472852245,
+        "tool_rename": 0.14817629179331304
+      },
+      "feat_idx": [
+        11,
+        8,
+        0,
+        16,
+        13,
+        3
+      ],
+      "feat_names": [
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "tool_in_prompt",
+        "prompt_len",
+        "tool_in_any_schema",
+        "prompt_coverage"
+      ],
+      "schedule": "random_subsets",
+      "k": 6,
+      "seed": 11
+    },
+    {
+      "n_features": 6,
+      "fold_aucs": [
+        0.6300712719298245,
+        0.5903234649122807,
+        0.6200969397926636,
+        0.6300154175910955,
+        0.5651612579751564
+      ],
+      "mean_auc": 0.6071336704402042,
+      "std_auc": 0.02554220305731475,
+      "pooled_auc": 0.6160603126642407,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7968961800206333,
+        "arg_swap": 0.6846995209243343,
+        "irrelevance_called": 0.7331316472430365,
+        "spurious_arg": 0.17337700132112602,
+        "tool_rename": 0.2803951367781155
+      },
+      "feat_idx": [
+        0,
+        20,
+        9,
+        16,
+        21,
+        8
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "prompt_is_question",
+        "arg_count_zscore",
+        "prompt_len",
+        "prompt_imperative",
+        "type_mismatch_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 6,
+      "seed": 23
+    },
+    {
+      "n_features": 6,
+      "fold_aucs": [
+        0.7368670255183414,
+        0.732119716905901,
+        0.7399882874800638,
+        0.7506737361962421,
+        0.7845234961581369
+      ],
+      "mean_auc": 0.7488344524517371,
+      "std_auc": 0.018857078945847223,
+      "pooled_auc": 0.7484632570557285,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9860862444657257,
+        "arg_swap": 0.5054361500835363,
+        "irrelevance_called": 0.8891268306161924,
+        "spurious_arg": 0.4952640404283035,
+        "tool_rename": 0.19908814589665658
+      },
+      "feat_idx": [
+        0,
+        18,
+        20,
+        6,
+        17,
+        3
+      ],
+      "feat_names": [
+        "tool_in_prompt",
+        "has_nested",
+        "prompt_is_question",
+        "missing_required_frac",
+        "avg_arg_len",
+        "prompt_coverage"
+      ],
+      "schedule": "random_subsets",
+      "k": 6,
+      "seed": 47
+    },
+    {
+      "n_features": 8,
+      "fold_aucs": [
+        0.6976238536682615,
+        0.6822480562200957,
+        0.7229054525518341,
+        0.7126562127878264,
+        0.7252347108888303
+      ],
+      "mean_auc": 0.7081336572233696,
+      "std_auc": 0.01619645512200909,
+      "pooled_auc": 0.7059580263344585,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7964867478128919,
+        "arg_swap": 0.6452286177257996,
+        "irrelevance_called": 0.74158377083909,
+        "spurious_arg": 0.6113302722628209,
+        "tool_rename": 0.2021276595744681
+      },
+      "feat_idx": [
+        5,
+        0,
+        8,
+        4,
+        13,
+        18,
+        9,
+        15
+      ],
+      "feat_names": [
+        "tool_in_schema",
+        "tool_in_prompt",
+        "type_mismatch_frac",
+        "arg_verbatim_rate",
+        "tool_in_any_schema",
+        "has_nested",
+        "arg_count_zscore",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 8,
+      "seed": 11
+    },
+    {
+      "n_features": 8,
+      "fold_aucs": [
+        0.6942409290271132,
+        0.7078972288676235,
+        0.714930970893142,
+        0.7070156306797528,
+        0.7486869978315095
+      ],
+      "mean_auc": 0.7145543514598283,
+      "std_auc": 0.018324650685179834,
+      "pooled_auc": 0.7143191869051116,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7656220362428464,
+        "arg_swap": 0.5104973932647598,
+        "irrelevance_called": 0.8686561665285069,
+        "spurious_arg": 0.5877209190602453,
+        "tool_rename": 0.2522796352583586
+      },
+      "feat_idx": [
+        2,
+        4,
+        9,
+        3,
+        11,
+        15,
+        16,
+        17
+      ],
+      "feat_names": [
+        "overlap_jaccard",
+        "arg_verbatim_rate",
+        "arg_count_zscore",
+        "prompt_coverage",
+        "placeholder_frac",
+        "n_args_called",
+        "prompt_len",
+        "avg_arg_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 8,
+      "seed": 23
+    },
+    {
+      "n_features": 8,
+      "fold_aucs": [
+        0.7779106858054226,
+        0.7525356359649125,
+        0.7737552332535885,
+        0.7902768899083719,
+        0.8121874177415109
+      ],
+      "mean_auc": 0.7813331725347613,
+      "std_auc": 0.019648975644499526,
+      "pooled_auc": 0.7800758979155051,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9717422381368752,
+        "arg_swap": 0.5018330179754021,
+        "irrelevance_called": 0.7870545703774741,
+        "spurious_arg": 0.8332147707430642,
+        "tool_rename": 0.1185410334346505
+      },
+      "feat_idx": [
+        6,
+        2,
+        5,
+        9,
+        19,
+        0,
+        12,
+        15
+      ],
+      "feat_names": [
+        "missing_required_frac",
+        "overlap_jaccard",
+        "tool_in_schema",
+        "arg_count_zscore",
+        "has_list",
+        "tool_in_prompt",
+        "tool_name_len",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 8,
+      "seed": 47
+    },
+    {
+      "n_features": 10,
+      "fold_aucs": [
+        0.7274284788676235,
+        0.7412716806220097,
+        0.760061553030303,
+        0.7475714160368017,
+        0.7822108574938267
+      ],
+      "mean_auc": 0.7517087972101129,
+      "std_auc": 0.0185241971259355,
+      "pooled_auc": 0.7505560451550631,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7462376187237743,
+        "arg_swap": 0.6450361319672296,
+        "irrelevance_called": 0.8901325520537035,
+        "spurious_arg": 0.6146677321902052,
+        "tool_rename": 0.13145896656534956
+      },
+      "feat_idx": [
+        19,
+        15,
+        11,
+        2,
+        4,
+        9,
+        10,
+        14,
+        8,
+        18
+      ],
+      "feat_names": [
+        "has_list",
+        "n_args_called",
+        "placeholder_frac",
+        "overlap_jaccard",
+        "arg_verbatim_rate",
+        "arg_count_zscore",
+        "required_count",
+        "n_available_tools",
+        "type_mismatch_frac",
+        "has_nested"
+      ],
+      "schedule": "random_subsets",
+      "k": 10,
+      "seed": 11
+    },
+    {
+      "n_features": 10,
+      "fold_aucs": [
+        0.7957660486443381,
+        0.7875984350079744,
+        0.802606658692185,
+        0.7922761629000112,
+        0.8280311861517442
+      ],
+      "mean_auc": 0.8012556982792505,
+      "std_auc": 0.014255111319449057,
+      "pooled_auc": 0.8003258334682231,
+      "per_drift_type_auc": {
+        "arg_drop": 0.7445501566020366,
+        "arg_swap": 0.5048020793494232,
+        "irrelevance_called": 0.876072092279852,
+        "spurious_arg": 0.9990830646427877,
+        "tool_rename": 0.17173252279635254
+      },
+      "feat_idx": [
+        10,
+        17,
+        2,
+        5,
+        18,
+        7,
+        4,
+        16,
+        12,
+        20
+      ],
+      "feat_names": [
+        "required_count",
+        "avg_arg_len",
+        "overlap_jaccard",
+        "tool_in_schema",
+        "has_nested",
+        "spurious_arg_frac",
+        "arg_verbatim_rate",
+        "prompt_len",
+        "tool_name_len",
+        "prompt_is_question"
+      ],
+      "schedule": "random_subsets",
+      "k": 10,
+      "seed": 23
+    },
+    {
+      "n_features": 10,
+      "fold_aucs": [
+        0.8060768042264752,
+        0.7995601574960127,
+        0.823028807814992,
+        0.8194198974667519,
+        0.8341606187091841
+      ],
+      "mean_auc": 0.8164492571426832,
+      "std_auc": 0.01231776754041011,
+      "pooled_auc": 0.8155833528173954,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9816218141779203,
+        "arg_swap": 0.6512158054711246,
+        "irrelevance_called": 0.8776182620049955,
+        "spurious_arg": 0.6958488465553718,
+        "tool_rename": 0.18844984802431608
+      },
+      "feat_idx": [
+        2,
+        6,
+        10,
+        14,
+        3,
+        8,
+        5,
+        4,
+        11,
+        16
+      ],
+      "feat_names": [
+        "overlap_jaccard",
+        "missing_required_frac",
+        "required_count",
+        "n_available_tools",
+        "prompt_coverage",
+        "type_mismatch_frac",
+        "tool_in_schema",
+        "arg_verbatim_rate",
+        "placeholder_frac",
+        "prompt_len"
+      ],
+      "schedule": "random_subsets",
+      "k": 10,
+      "seed": 47
+    },
+    {
+      "n_features": 12,
+      "fold_aucs": [
+        0.811054625199362,
+        0.8001956240031898,
+        0.8218575558213717,
+        0.8304190325774953,
+        0.8328194136301532
+      ],
+      "mean_auc": 0.8192692502463144,
+      "std_auc": 0.012213985281109044,
+      "pooled_auc": 0.8188376907689511,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9878882088150523,
+        "arg_swap": 0.6573099297489885,
+        "irrelevance_called": 0.8854953973852595,
+        "spurious_arg": 0.6857475448305171,
+        "tool_rename": 0.09878419452887544
+      },
+      "feat_idx": [
+        1,
+        11,
+        6,
+        3,
+        17,
+        10,
+        12,
+        18,
+        4,
+        15,
+        5,
+        8
+      ],
+      "feat_names": [
+        "tool_parts_in_prompt",
+        "placeholder_frac",
+        "missing_required_frac",
+        "prompt_coverage",
+        "avg_arg_len",
+        "required_count",
+        "tool_name_len",
+        "has_nested",
+        "arg_verbatim_rate",
+        "n_args_called",
+        "tool_in_schema",
+        "type_mismatch_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 12,
+      "seed": 11
+    },
+    {
+      "n_features": 12,
+      "fold_aucs": [
+        0.8090423145933014,
+        0.7805273125996811,
+        0.8037343002392345,
+        0.8027488436806678,
+        0.7974717657528925
+      ],
+      "mean_auc": 0.7987049073731554,
+      "std_auc": 0.00980260976985187,
+      "pooled_auc": 0.798276010223637,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9874972820178299,
+        "arg_swap": 0.6939677731033234,
+        "irrelevance_called": 0.8595660701417897,
+        "spurious_arg": 0.6016828188948734,
+        "tool_rename": 0.07294832826747721
+      },
+      "feat_idx": [
+        17,
+        16,
+        0,
+        12,
+        15,
+        19,
+        14,
+        20,
+        10,
+        8,
+        1,
+        6
+      ],
+      "feat_names": [
+        "avg_arg_len",
+        "prompt_len",
+        "tool_in_prompt",
+        "tool_name_len",
+        "n_args_called",
+        "has_list",
+        "n_available_tools",
+        "prompt_is_question",
+        "required_count",
+        "type_mismatch_frac",
+        "tool_parts_in_prompt",
+        "missing_required_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 12,
+      "seed": 23
+    },
+    {
+      "n_features": 12,
+      "fold_aucs": [
+        0.8849930223285486,
+        0.8840647428229665,
+        0.9049229964114833,
+        0.8889056017247646,
+        0.8974792865290364
+      ],
+      "mean_auc": 0.89207312996336,
+      "std_auc": 0.007982994681201347,
+      "pooled_auc": 0.8913139052255254,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9988850490162061,
+        "arg_swap": 0.49761091205539565,
+        "irrelevance_called": 0.9790518721995568,
+        "spurious_arg": 0.9968519322622666,
+        "tool_rename": 0.12765957446808507
+      },
+      "feat_idx": [
+        14,
+        9,
+        17,
+        2,
+        7,
+        3,
+        1,
+        18,
+        4,
+        11,
+        12,
+        5
+      ],
+      "feat_names": [
+        "n_available_tools",
+        "arg_count_zscore",
+        "avg_arg_len",
+        "overlap_jaccard",
+        "spurious_arg_frac",
+        "prompt_coverage",
+        "tool_parts_in_prompt",
+        "has_nested",
+        "arg_verbatim_rate",
+        "placeholder_frac",
+        "tool_name_len",
+        "tool_in_schema"
+      ],
+      "schedule": "random_subsets",
+      "k": 12,
+      "seed": 47
+    },
+    {
+      "n_features": 14,
+      "fold_aucs": [
+        0.8505656897926634,
+        0.8473073664274322,
+        0.8589762759170654,
+        0.8735005452562705,
+        0.8731119718221587
+      ],
+      "mean_auc": 0.8606923698431179,
+      "std_auc": 0.010981337025855333,
+      "pooled_auc": 0.8601986075390331,
+      "per_drift_type_auc": {
+        "arg_drop": 0.969586357811365,
+        "arg_swap": 0.669320789468387,
+        "irrelevance_called": 0.8692413135466953,
+        "spurious_arg": 0.9119996119769773,
+        "tool_rename": 0.05167173252279633
+      },
+      "feat_idx": [
+        21,
+        11,
+        9,
+        15,
+        12,
+        19,
+        18,
+        17,
+        14,
+        6,
+        1,
+        2,
+        8,
+        20
+      ],
+      "feat_names": [
+        "prompt_imperative",
+        "placeholder_frac",
+        "arg_count_zscore",
+        "n_args_called",
+        "tool_name_len",
+        "has_list",
+        "has_nested",
+        "avg_arg_len",
+        "n_available_tools",
+        "missing_required_frac",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "type_mismatch_frac",
+        "prompt_is_question"
+      ],
+      "schedule": "random_subsets",
+      "k": 14,
+      "seed": 11
+    },
+    {
+      "n_features": 14,
+      "fold_aucs": [
+        0.9147914174641149,
+        0.9167725777511961,
+        0.9299678528708135,
+        0.918731746449567,
+        0.9256132566214166
+      ],
+      "mean_auc": 0.9211753702314217,
+      "std_auc": 0.005711625308454496,
+      "pooled_auc": 0.9208340077816346,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9990631635924553,
+        "arg_swap": 0.6795426639022525,
+        "irrelevance_called": 0.9611073636417816,
+        "spurious_arg": 0.9968773385316101,
+        "tool_rename": 0.04103343465045595
+      },
+      "feat_idx": [
+        4,
+        8,
+        19,
+        13,
+        14,
+        2,
+        3,
+        7,
+        5,
+        1,
+        11,
+        16,
+        10,
+        9
+      ],
+      "feat_names": [
+        "arg_verbatim_rate",
+        "type_mismatch_frac",
+        "has_list",
+        "tool_in_any_schema",
+        "n_available_tools",
+        "overlap_jaccard",
+        "prompt_coverage",
+        "spurious_arg_frac",
+        "tool_in_schema",
+        "tool_parts_in_prompt",
+        "placeholder_frac",
+        "prompt_len",
+        "required_count",
+        "arg_count_zscore"
+      ],
+      "schedule": "random_subsets",
+      "k": 14,
+      "seed": 23
+    },
+    {
+      "n_features": 14,
+      "fold_aucs": [
+        0.886756130382775,
+        0.8715360845295055,
+        0.8885254685007975,
+        0.8902405394903421,
+        0.8793604833352135
+      ],
+      "mean_auc": 0.8832837412477266,
+      "std_auc": 0.006947368188119994,
+      "pooled_auc": 0.8824271745712007,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9973676053536152,
+        "arg_swap": 0.7000543489200667,
+        "irrelevance_called": 0.8477520602051267,
+        "spurious_arg": 0.9954291811790358,
+        "tool_rename": 0.06990881458966569
+      },
+      "feat_idx": [
+        5,
+        8,
+        16,
+        10,
+        7,
+        13,
+        0,
+        20,
+        9,
+        17,
+        15,
+        21,
+        19,
+        6
+      ],
+      "feat_names": [
+        "tool_in_schema",
+        "type_mismatch_frac",
+        "prompt_len",
+        "required_count",
+        "spurious_arg_frac",
+        "tool_in_any_schema",
+        "tool_in_prompt",
+        "prompt_is_question",
+        "arg_count_zscore",
+        "avg_arg_len",
+        "n_args_called",
+        "prompt_imperative",
+        "has_list",
+        "missing_required_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 14,
+      "seed": 47
+    },
+    {
+      "n_features": 17,
+      "fold_aucs": [
+        0.8850054824561404,
+        0.8833981259968102,
+        0.9020260167464115,
+        0.8861229145514485,
+        0.8948407475651486
+      ],
+      "mean_auc": 0.8902786574631918,
+      "std_auc": 0.00708846109237799,
+      "pooled_auc": 0.8893687463654729,
+      "per_drift_type_auc": {
+        "arg_drop": 0.998704621263642,
+        "arg_swap": 0.4948255299019707,
+        "irrelevance_called": 0.9754387248129426,
+        "spurious_arg": 0.9968334549754713,
+        "tool_rename": 0.07750759878419455
+      },
+      "feat_idx": [
+        4,
+        1,
+        15,
+        16,
+        2,
+        12,
+        7,
+        13,
+        9,
+        3,
+        17,
+        10,
+        19,
+        14,
+        18,
+        6,
+        0
+      ],
+      "feat_names": [
+        "arg_verbatim_rate",
+        "tool_parts_in_prompt",
+        "n_args_called",
+        "prompt_len",
+        "overlap_jaccard",
+        "tool_name_len",
+        "spurious_arg_frac",
+        "tool_in_any_schema",
+        "arg_count_zscore",
+        "prompt_coverage",
+        "avg_arg_len",
+        "required_count",
+        "has_list",
+        "n_available_tools",
+        "has_nested",
+        "missing_required_frac",
+        "tool_in_prompt"
+      ],
+      "schedule": "random_subsets",
+      "k": 17,
+      "seed": 11
+    },
+    {
+      "n_features": 17,
+      "fold_aucs": [
+        0.9011475777511961,
+        0.8986368620414673,
+        0.9115268640350876,
+        0.9086288371626619,
+        0.9154100703192569
+      ],
+      "mean_auc": 0.9070700422619339,
+      "std_auc": 0.0062935408852083435,
+      "pooled_auc": 0.906531956859289,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9884572501885239,
+        "arg_swap": 0.6652509108476419,
+        "irrelevance_called": 0.9352423754801726,
+        "spurious_arg": 0.9985518426474258,
+        "tool_rename": 0.05319148936170215
+      },
+      "feat_idx": [
+        10,
+        16,
+        8,
+        11,
+        15,
+        1,
+        3,
+        17,
+        2,
+        19,
+        6,
+        4,
+        20,
+        7,
+        13,
+        12,
+        18
+      ],
+      "feat_names": [
+        "required_count",
+        "prompt_len",
+        "type_mismatch_frac",
+        "placeholder_frac",
+        "n_args_called",
+        "tool_parts_in_prompt",
+        "prompt_coverage",
+        "avg_arg_len",
+        "overlap_jaccard",
+        "has_list",
+        "missing_required_frac",
+        "arg_verbatim_rate",
+        "prompt_is_question",
+        "spurious_arg_frac",
+        "tool_in_any_schema",
+        "tool_name_len",
+        "has_nested"
+      ],
+      "schedule": "random_subsets",
+      "k": 17,
+      "seed": 23
+    },
+    {
+      "n_features": 17,
+      "fold_aucs": [
+        0.9179002192982456,
+        0.9215448066188197,
+        0.9271269437799041,
+        0.923776933779566,
+        0.9260833051304228
+      ],
+      "mean_auc": 0.9232864417213916,
+      "std_auc": 0.0033123154521108107,
+      "pooled_auc": 0.9228561037071676,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9992019541713508,
+        "arg_swap": 0.6809504519012057,
+        "irrelevance_called": 0.9658725192204541,
+        "spurious_arg": 0.9965747729603385,
+        "tool_rename": 0.10334346504559266
+      },
+      "feat_idx": [
+        10,
+        6,
+        3,
+        17,
+        11,
+        20,
+        4,
+        2,
+        9,
+        13,
+        5,
+        8,
+        0,
+        15,
+        7,
+        14,
+        1
+      ],
+      "feat_names": [
+        "required_count",
+        "missing_required_frac",
+        "prompt_coverage",
+        "avg_arg_len",
+        "placeholder_frac",
+        "prompt_is_question",
+        "arg_verbatim_rate",
+        "overlap_jaccard",
+        "arg_count_zscore",
+        "tool_in_any_schema",
+        "tool_in_schema",
+        "type_mismatch_frac",
+        "tool_in_prompt",
+        "n_args_called",
+        "spurious_arg_frac",
+        "n_available_tools",
+        "tool_parts_in_prompt"
+      ],
+      "schedule": "random_subsets",
+      "k": 17,
+      "seed": 47
+    },
+    {
+      "n_features": 19,
+      "fold_aucs": [
+        0.917034240430622,
+        0.9198190789473684,
+        0.930703000398724,
+        0.9225924115368707,
+        0.926992065581168
+      ],
+      "mean_auc": 0.9234281593789506,
+      "std_auc": 0.004903689933430703,
+      "pooled_auc": 0.9232422878085726,
+      "per_drift_type_auc": {
+        "arg_drop": 0.999012273713527,
+        "arg_swap": 0.6839157390446668,
+        "irrelevance_called": 0.9654627808570238,
+        "spurious_arg": 0.9966394434641217,
+        "tool_rename": 0.028875379939209744
+      },
+      "feat_idx": [
+        16,
+        1,
+        13,
+        2,
+        12,
+        5,
+        21,
+        8,
+        15,
+        19,
+        3,
+        6,
+        14,
+        9,
+        4,
+        11,
+        17,
+        7,
+        10
+      ],
+      "feat_names": [
+        "prompt_len",
+        "tool_parts_in_prompt",
+        "tool_in_any_schema",
+        "overlap_jaccard",
+        "tool_name_len",
+        "tool_in_schema",
+        "prompt_imperative",
+        "type_mismatch_frac",
+        "n_args_called",
+        "has_list",
+        "prompt_coverage",
+        "missing_required_frac",
+        "n_available_tools",
+        "arg_count_zscore",
+        "arg_verbatim_rate",
+        "placeholder_frac",
+        "avg_arg_len",
+        "spurious_arg_frac",
+        "required_count"
+      ],
+      "schedule": "random_subsets",
+      "k": 19,
+      "seed": 11
+    },
+    {
+      "n_features": 19,
+      "fold_aucs": [
+        0.9171713018341309,
+        0.920516846092504,
+        0.9308899023125997,
+        0.922705223179032,
+        0.9268667193120996
+      ],
+      "mean_auc": 0.9236299985460732,
+      "std_auc": 0.004805085949532176,
+      "pooled_auc": 0.9234096509055592,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9990909217082344,
+        "arg_swap": 0.6844818736286962,
+        "irrelevance_called": 0.96554269676923,
+        "spurious_arg": 0.9966787076985616,
+        "tool_rename": 0.028875379939209744
+      },
+      "feat_idx": [
+        18,
+        14,
+        19,
+        6,
+        5,
+        17,
+        16,
+        13,
+        11,
+        9,
+        10,
+        3,
+        2,
+        21,
+        1,
+        15,
+        8,
+        7,
+        4
+      ],
+      "feat_names": [
+        "has_nested",
+        "n_available_tools",
+        "has_list",
+        "missing_required_frac",
+        "tool_in_schema",
+        "avg_arg_len",
+        "prompt_len",
+        "tool_in_any_schema",
+        "placeholder_frac",
+        "arg_count_zscore",
+        "required_count",
+        "prompt_coverage",
+        "overlap_jaccard",
+        "prompt_imperative",
+        "tool_parts_in_prompt",
+        "n_args_called",
+        "type_mismatch_frac",
+        "spurious_arg_frac",
+        "arg_verbatim_rate"
+      ],
+      "schedule": "random_subsets",
+      "k": 19,
+      "seed": 23
+    },
+    {
+      "n_features": 19,
+      "fold_aucs": [
+        0.9182740231259968,
+        0.9207847388357258,
+        0.9278558612440192,
+        0.9233883603454544,
+        0.9273743717018262
+      ],
+      "mean_auc": 0.9235354710506046,
+      "std_auc": 0.0037060473060716464,
+      "pooled_auc": 0.9231311287366933,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9983969688137571,
+        "arg_swap": 0.6840126109623785,
+        "irrelevance_called": 0.9654180821264677,
+        "spurious_arg": 0.9967272105763989,
+        "tool_rename": 0.028875379939209744
+      },
+      "feat_idx": [
+        11,
+        0,
+        1,
+        2,
+        18,
+        7,
+        21,
+        19,
+        15,
+        9,
+        10,
+        12,
+        4,
+        3,
+        13,
+        14,
+        17,
+        20,
+        8
+      ],
+      "feat_names": [
+        "placeholder_frac",
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "overlap_jaccard",
+        "has_nested",
+        "spurious_arg_frac",
+        "prompt_imperative",
+        "has_list",
+        "n_args_called",
+        "arg_count_zscore",
+        "required_count",
+        "tool_name_len",
+        "arg_verbatim_rate",
+        "prompt_coverage",
+        "tool_in_any_schema",
+        "n_available_tools",
+        "avg_arg_len",
+        "prompt_is_question",
+        "type_mismatch_frac"
+      ],
+      "schedule": "random_subsets",
+      "k": 19,
+      "seed": 47
+    },
+    {
+      "n_features": 22,
+      "fold_aucs": [
+        0.9188783393141947,
+        0.9205043859649124,
+        0.9284477173046252,
+        0.9231063312400506,
+        0.928533824690708
+      ],
+      "mean_auc": 0.9238941197028983,
+      "std_auc": 0.003988259567197162,
+      "pooled_auc": 0.9233467023974389,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991186798240135,
+        "arg_swap": 0.6838779967390647,
+        "irrelevance_called": 0.9656930470447367,
+        "spurious_arg": 0.9966625400726157,
+        "tool_rename": 0.02583586626139822
+      },
+      "feat_idx": [
+        12,
+        0,
+        14,
+        17,
+        11,
+        3,
+        18,
+        8,
+        19,
+        10,
+        6,
+        2,
+        7,
+        5,
+        9,
+        13,
+        1,
+        4,
+        21,
+        16,
+        20,
+        15
+      ],
+      "feat_names": [
+        "tool_name_len",
+        "tool_in_prompt",
+        "n_available_tools",
+        "avg_arg_len",
+        "placeholder_frac",
+        "prompt_coverage",
+        "has_nested",
+        "type_mismatch_frac",
+        "has_list",
+        "required_count",
+        "missing_required_frac",
+        "overlap_jaccard",
+        "spurious_arg_frac",
+        "tool_in_schema",
+        "arg_count_zscore",
+        "tool_in_any_schema",
+        "tool_parts_in_prompt",
+        "arg_verbatim_rate",
+        "prompt_imperative",
+        "prompt_len",
+        "prompt_is_question",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 22,
+      "seed": 11
+    },
+    {
+      "n_features": 22,
+      "fold_aucs": [
+        0.9188783393141947,
+        0.9205043859649124,
+        0.9284477173046252,
+        0.9231063312400506,
+        0.928533824690708
+      ],
+      "mean_auc": 0.9238941197028983,
+      "std_auc": 0.003988259567197162,
+      "pooled_auc": 0.9233467023974389,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991186798240135,
+        "arg_swap": 0.6838779967390647,
+        "irrelevance_called": 0.9656930470447367,
+        "spurious_arg": 0.9966625400726157,
+        "tool_rename": 0.02583586626139822
+      },
+      "feat_idx": [
+        14,
+        11,
+        1,
+        13,
+        8,
+        18,
+        20,
+        9,
+        12,
+        7,
+        5,
+        4,
+        19,
+        10,
+        3,
+        2,
+        17,
+        21,
+        0,
+        6,
+        16,
+        15
+      ],
+      "feat_names": [
+        "n_available_tools",
+        "placeholder_frac",
+        "tool_parts_in_prompt",
+        "tool_in_any_schema",
+        "type_mismatch_frac",
+        "has_nested",
+        "prompt_is_question",
+        "arg_count_zscore",
+        "tool_name_len",
+        "spurious_arg_frac",
+        "tool_in_schema",
+        "arg_verbatim_rate",
+        "has_list",
+        "required_count",
+        "prompt_coverage",
+        "overlap_jaccard",
+        "avg_arg_len",
+        "prompt_imperative",
+        "tool_in_prompt",
+        "missing_required_frac",
+        "prompt_len",
+        "n_args_called"
+      ],
+      "schedule": "random_subsets",
+      "k": 22,
+      "seed": 23
+    },
+    {
+      "n_features": 22,
+      "fold_aucs": [
+        0.9188783393141947,
+        0.9205043859649124,
+        0.9284477173046252,
+        0.9231063312400506,
+        0.928533824690708
+      ],
+      "mean_auc": 0.9238941197028983,
+      "std_auc": 0.003988259567197162,
+      "pooled_auc": 0.9233467023974389,
+      "per_drift_type_auc": {
+        "arg_drop": 0.9991186798240135,
+        "arg_swap": 0.6838779967390647,
+        "irrelevance_called": 0.9656930470447367,
+        "spurious_arg": 0.9966625400726157,
+        "tool_rename": 0.02583586626139822
+      },
+      "feat_idx": [
+        9,
+        11,
+        8,
+        7,
+        19,
+        3,
+        20,
+        4,
+        10,
+        6,
+        0,
+        1,
+        14,
+        17,
+        21,
+        12,
+        2,
+        18,
+        5,
+        16,
+        15,
+        13
+      ],
+      "feat_names": [
+        "arg_count_zscore",
+        "placeholder_frac",
+        "type_mismatch_frac",
+        "spurious_arg_frac",
+        "has_list",
+        "prompt_coverage",
+        "prompt_is_question",
+        "arg_verbatim_rate",
+        "required_count",
+        "missing_required_frac",
+        "tool_in_prompt",
+        "tool_parts_in_prompt",
+        "n_available_tools",
+        "avg_arg_len",
+        "prompt_imperative",
+        "tool_name_len",
+        "overlap_jaccard",
+        "has_nested",
+        "tool_in_schema",
+        "prompt_len",
+        "n_args_called",
+        "tool_in_any_schema"
+      ],
+      "schedule": "random_subsets",
+      "k": 22,
+      "seed": 47
+    }
+  ],
+  "phase_transitions": [
+    {
+      "drift_type": "arg_drop",
+      "from_k": 1,
+      "to_k": 2,
+      "from_auc": 0.5012097912127058,
+      "to_auc": 0.9984802431610942,
+      "delta": 0.49727045194838837,
+      "feature_added": [
+        "arg_count_zscore"
+      ]
+    },
+    {
+      "drift_type": "irrelevance_called",
+      "from_k": 1,
+      "to_k": 2,
+      "from_auc": 0.48602758318027406,
+      "to_auc": 0.7046111481343021,
+      "delta": 0.2185835649540281,
+      "feature_added": [
+        "arg_count_zscore"
+      ]
+    },
+    {
+      "drift_type": "tool_rename",
+      "from_k": 1,
+      "to_k": 2,
+      "from_auc": 0.6990881458966565,
+      "to_auc": 0.899696048632219,
+      "delta": 0.2006079027355625,
+      "feature_added": [
+        "arg_count_zscore"
+      ]
+    },
+    {
+      "drift_type": "arg_swap",
+      "from_k": 5,
+      "to_k": 6,
+      "from_auc": 0.4811716218120332,
+      "to_auc": 0.6908640975059884,
+      "delta": 0.20969247569395522,
+      "feature_added": [
+        "type_mismatch_frac"
+      ]
+    },
+    {
+      "drift_type": "tool_rename",
+      "from_k": 5,
+      "to_k": 6,
+      "from_auc": 0.6990881458966566,
+      "to_auc": 0.7993920972644377,
+      "delta": 0.10030395136778114,
+      "feature_added": [
+        "type_mismatch_frac"
+      ]
+    },
+    {
+      "drift_type": "irrelevance_called",
+      "from_k": 8,
+      "to_k": 10,
+      "from_auc": 0.8278238761655534,
+      "to_auc": 0.9617080874903153,
+      "delta": 0.13388421132476191,
+      "feature_added": [
+        "tool_parts_in_prompt",
+        "prompt_coverage"
+      ]
+    }
+  ]
+}
