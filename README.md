@@ -37,7 +37,7 @@
 
 ---
 
-## New in v3.9: `@trust` — one decorator, verified output
+## New in v4.0: `@trust` — cross-validated on 8 benchmarks
 
 `pip install styxx` + one decorator is all it takes to stop hallucinations from reaching users.
 
@@ -55,30 +55,39 @@ def my_rag(question: str) -> str:
 
 Every call is cognometrically verified via `styxx.guardrail.check()` before the response reaches the caller. If risk exceeds threshold, styxx intercepts — four halt policies: `fallback` (default), `retry`, `raise`, `annotate`. Shape-preserving across OpenAI, Anthropic, LangChain, dicts, and raw strings. Sync + async. Zero config.
 
-**Cross-dataset validated** (v3.9.1 — pooled LR, n=800 train / n=400 test, seed 31):
+**Cross-validated on 8 benchmarks** (v4.0.0 — 3-seed averaged, n=150/dataset, seeds [31, 47, 83]):
 
-| dataset                 | test AUC      |
-|-------------------------|--------------:|
-| HaluEval-QA             | **1.000**     |
-| TruthfulQA              | **0.977**     |
-| HaluEval-Summarization  | 0.595         |
-| HaluEval-Dialog         | 0.601         |
+| Dataset                 | v4 test AUC       | Notes |
+|-------------------------|-------------------|---|
+| HaluEval-QA             | **0.998 ± 0.001** | near-perfect |
+| TruthfulQA              | **0.994 ± 0.006** | near-perfect |
+| HaluBench-RAGTruth      | **0.807 ± 0.043** | new — RAG faithfulness |
+| HaluBench-PubMedQA      | **0.719 ± 0.051** | new — biomedical |
+| HaluEval-Dialog         | 0.676 ± 0.037     | NLI lift |
+| HaluEval-Summarization  | 0.643 ± 0.060     | NLI lift |
+| HaluBench-FinanceBench  | 0.492 ± 0.026     | **published failure** |
+| HaluBench-DROP          | 0.424 ± 0.080     | **published failure** |
 
-Reference-grounded QA is effectively solved. Dialog and summarization are inherently NLI-requiring — v4.0 ships NLI-based signals. Honest per-dataset limits in [CHANGELOG.md](CHANGELOG.md#391--2026-04-23).
+**5/8 above AUC 0.65. Two honest failure modes published, not hidden.**
+
+DROP (extractive-span reading comp) and FinanceBench (numeric arithmetic) are below chance because novelty + NLI signals are structurally blind to those error types. Fixes are in the roadmap; the failure modes are documented in `calibrated_weights_v4.CALIBRATION_NOTES`. Full writeup: [CHANGELOG.md](CHANGELOG.md#400--2026-04-23).
+
+**Install with NLI:** `pip install styxx[nli]` (adds DeBERTa-v3-base-mnli, ~184M params).
 
 ---
 
-## Also in styxx 3.x
+## Also in styxx 3.x / 4.x
 
 | API | What it does | Shipped |
 |---|---|---|
 | `styxx.gate(...)` | Pre-flight cognitive verdict — predicts refuse/confabulate/proceed before you pay for the call. Anthropic + OpenAI + HuggingFace. | v3.4 |
-| `styxx.guardrail.check(...)` | Multi-signal hallucination pipeline behind `@trust`. Calibrated LR over text, entity, grounding, probe signals. | v3.7–3.9 |
+| `styxx.guardrail.check(...)` | Multi-signal hallucination pipeline behind `@trust`. 9-signal calibrated LR over text, entity, grounding, probe, novelty, NLI. | v3.7–4.0 |
+| `styxx.guardrail.nli_signal` | NLI contradiction scorer (DeBERTa-v3-base-mnli-fever-anli). Lazy-loaded, thread-safe, fail-open. | v4.0 |
 | `styxx.generate_safe(...)` | Real-time self-halting generation — stops mid-stream on rising risk. | v3.8 |
 | `styxx.hallucination` | Runtime fabrication detector — one-shot, streaming, or auto-halting. Behavioral-label confab probe (AUC 0.800 @ layer 11). | v3.5 |
 | `styxx.steer` + `styxx.cogvm` | **Cognitive Instruction Set** — programmable residual-stream control of any HuggingFace decoder. Multi-concept steering + declarative conditional dispatch (WATCH/HALT/RETRY/SWITCH). Causal: refuse@unsafe 97% → 17% at α=3.0 on Llama-3.2-1B. | v3.5 |
 
-Research results live in `papers/`: cognitive instruction set, universal cognitive basis (cross-vendor direction transfer), gradient-free capability amplification (+7pp MC1 on TruthfulQA), cognitive monitoring without logprobs.
+Research results live in `papers/`: cognitive instruction set, universal cognitive basis (cross-vendor direction transfer), gradient-free capability amplification (+7pp MC1 on TruthfulQA), cognitive monitoring without logprobs, cognometry v0 (8-benchmark cross-validated hallucination detection).
 
 ---
 

@@ -7,6 +7,91 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [4.0.0] — 2026-04-23
+
+**Headline: cross-validated on 8 benchmarks. The first honest
+8-benchmark audit of hallucination detection. 5/8 above AUC 0.65;
+two failure modes (DROP, FinanceBench) published, not hidden.**
+
+Extends the v3 NLI-augmented pipeline (4 benchmarks — HaluEval-QA,
+HaluEval-Dialog, HaluEval-Summ, TruthfulQA) to 8 benchmarks by
+adding 4 new domains from PatronusAI's public HaluBench:
+
+  - DROP         — reading comprehension QA
+  - PubMedQA     — biomedical QA
+  - FinanceBench — financial document QA
+  - RAGTruth     — RAG-style retrieval faithfulness
+
+### Headline numbers (3-seed mean ± std, n=150/dataset, seeds [31,47,83])
+
+| Dataset                 | v4 AUC            | Commentary |
+|-------------------------|-------------------|---|
+| HaluEval-QA             | **0.998 ± 0.001** | near-perfect |
+| TruthfulQA              | **0.994 ± 0.006** | near-perfect |
+| HaluBench-RAGTruth      | **0.807 ± 0.043** | new — RAG faithfulness |
+| HaluBench-PubMedQA      | **0.719 ± 0.051** | new — biomedical |
+| HaluEval-Dialog         | 0.676 ± 0.037     | (v3 peaked 0.729) |
+| HaluEval-Summarization  | 0.643 ± 0.060     | (v3 peaked 0.665) |
+| HaluBench-FinanceBench  | 0.492 ± 0.026     | **below chance** |
+| HaluBench-DROP          | 0.424 ± 0.080     | **below chance** |
+| **overall mean**        | **0.719**         | 5/8 above 0.65 |
+
+### Published failure modes (intentional)
+
+- **DROP** (reading comp). Extractive-span hallucinations (wrong
+  span from right passage) are *entailed* by the passage at the NLI
+  level; novelty signals are also blind because the tokens overlap.
+  Future: span-level faithfulness scoring.
+- **FinanceBench** (financial QA). Hallucinations are mostly
+  calculation/aggregation errors on numbers copied verbatim from
+  the passage. Novelty + NLI are semantically blind to arithmetic.
+  Future: number-symbolic verification signal.
+
+These are in the paper, in the CHANGELOG, in the CALIBRATION_NOTES
+dict on the weights module itself. We publish what breaks.
+
+### Design decision: v3 stays the default
+
+v4 generalizes across 8 domains; v3 is more peaked on HaluEval-style
+dialog/summarization. `guardrail.check(use_nli=True, ...)` continues
+to route through the v3 LR (peaked) when all 9 signals are present.
+v4 is available via direct import for callers who explicitly want
+cross-domain averaging:
+
+```python
+from styxx.guardrail.calibrated_weights_v4 import predict_proba_v4
+```
+
+Rationale: most production RAG/QA traffic looks more like HaluEval-QA
+than like the 8-dataset average. The broader calibration is available
+when you have reason to want it; the narrower calibration ships as
+the default because it serves the common case better.
+
+### Added modules / benchmarks
+
+- `styxx.guardrail.calibrated_weights_v4` — 9-signal, 8-benchmark
+  pooled LR, 3-seed averaged.
+- `benchmarks/hallucination_test/cross_dataset_8bench.py` — full
+  8-benchmark calibration harness.
+- `benchmarks/hallucination_test/cross_dataset_8bench_multiseed.py` —
+  multi-seed wrapper, saves averaged coefs + per-dataset AUC std
+  to `results/cross_dataset_8bench_multiseed.json`.
+- Paper: *Cognometry v0: 8-benchmark cross-validated hallucination
+  detection*. Zenodo deposit.
+
+### Tests
+
+5 new tests in `tests/test_weights_v4.py`. Full suite: 578 pass,
+1 skipped, 0 fail.
+
+### What changes vs v4.0.0rc1
+
+v4.0.0rc1 (published 2026-04-23) shipped the NLI signal + v3 weights
+on 4 benchmarks. v4.0.0 adds v4 weights (same NLI signal, broader
+calibration) plus the HaluBench harness. No breaking changes.
+
+---
+
 ## [4.0.0rc1] — 2026-04-23
 
 **Headline: NLI v4.0 preview. The ninth signal — entailment-based

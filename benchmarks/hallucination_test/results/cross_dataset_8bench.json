@@ -1,0 +1,61 @@
+{
+  "config": {
+    "n_target": 150,
+    "seed": 83,
+    "train_frac": 0.75,
+    "use_entity_verify": false,
+    "use_nli": true
+  },
+  "coefs": {
+    "text_claim_risk": 0.1899,
+    "entity_unverified_frac": 0.0,
+    "knowledge_grounding": 0.0707,
+    "content_novelty": 0.2381,
+    "entity_novelty": 0.1582,
+    "number_novelty": 0.1431,
+    "bigram_novelty": 0.1986,
+    "trigram_novelty": 0.4809,
+    "nli_contradict": 0.547
+  },
+  "intercept": -0.7966,
+  "train_pooled_auc": 0.7092,
+  "test_per_dataset": {
+    "halueval_qa": {
+      "n_test": 75,
+      "auc": 0.9979
+    },
+    "halueval_dialogue": {
+      "n_test": 75,
+      "auc": 0.6757
+    },
+    "halueval_summarization": {
+      "n_test": 75,
+      "auc": 0.6356
+    },
+    "truthfulqa": {
+      "n_test": 75,
+      "auc": 1.0
+    },
+    "halubench_drop": {
+      "n_test": 75,
+      "auc": 0.3449
+    },
+    "halubench_pubmed": {
+      "n_test": 75,
+      "auc": 0.7806
+    },
+    "halubench_finance": {
+      "n_test": 75,
+      "auc": 0.5036
+    },
+    "halubench_ragtruth": {
+      "n_test": 75,
+      "auc": 0.8272
+    }
+  },
+  "summary": {
+    "mean_test_auc": 0.7207,
+    "min_test_auc": 0.3449,
+    "n_datasets": 8
+  }
+}
