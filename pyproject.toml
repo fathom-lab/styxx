@@ -76,6 +76,8 @@ nli = [
     "torch>=2.0",
     "transformers>=4.35",
 ]
+# 4.0.3: Guardrails AI validator (HallucinationCheck) backed by styxx
+guardrails = ["guardrails-ai>=0.4"]
 schema = [
     "jsonschema>=4.0",
 ]
