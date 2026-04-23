@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "4.0.2"
-description = "nothing crosses unseen. the first drop-in cognitive vitals monitor for llm agents."
+version = "5.0.0"
+description = "nothing crosses unseen. calibrated hallucination (AUC 0.998 HaluEval-QA) + refusal (AUC 0.976 GPT-4) detection — two cognometric instruments, pure Python, no LLM required."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [

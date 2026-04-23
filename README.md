@@ -24,6 +24,13 @@
 [![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19703527)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
+# `0.998 AUC on HaluEval-QA. 9 floats. No LLM.`
+
+### Two calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+
+- 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
+- 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
+
 ### ▶&nbsp; [**Try it live — no install, runs in your browser**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
 
 **drop-in · fail-open · zero config · local-first**
@@ -101,6 +108,46 @@ Every call is cognometrically verified via `styxx.guardrail.check()` before the 
 | HaluBench-DROP          | 0.424 ± 0.080     | **published failure** |
 
 **5/8 above AUC 0.65. Two honest failure modes published, not hidden.**
+
+## Compared against the field
+
+| detector | HaluEval-QA | size / cost | method | reference |
+|---|---|---|---|---|
+| **styxx v4** | **0.998 AUC** | **9 floats, CPU** | calibrated LR | this repo |
+| Patronus Lynx-70B | 87.4% acc on own HaluBench | 70B, **140 GB**, GPU | fine-tuned LLM judge | [arXiv:2407.08488](https://arxiv.org/abs/2407.08488) |
+| Vectara HHEM-2.1 | 76.6% bal acc on AggreFact | Flan-T5-base, 440M+ | NLI-style classifier | [HF card](https://huggingface.co/vectara/hallucination_evaluation_model) |
+| Cleanlab TLM | 0.812 AUROC on TriviaQA | wraps GPT-4/Claude, SaaS | multi-sample LLM self-consistency | [blog](https://cleanlab.ai/blog/trustworthy-language-model/) |
+| Galileo Luna | RAGTruth-only (no HaluEval published) | 440M DeBERTa, SaaS | fine-tuned classifier | [arXiv:2406.00975](https://arxiv.org/abs/2406.00975) |
+| Arize / Guardrails / NeMo | no AUC published | LLM-as-judge plumbing | integration surface | — |
+
+**No competitor in this table claims AUC > 0.99 on HaluEval-QA.** Lynx dodges the comparison by reporting accuracy on their own benchmark. HHEM runs on a 440M-param T5. Cleanlab needs an LLM per check and costs $25 per 1,000 calls. We run 9 scalar features, pure Python, no network, at sub-millisecond latency.
+
+### Refusal detection — white space we just claimed
+
+| detector | XSTest AUC | benchmark reported instead |
+|---|---|---|
+| **styxx refusal v1** | **0.976 (GPT-4) / 0.794 mean** | first published XSTest AUC in the public space |
+| Meta Llama Guard 3/4 | not published | MLCommons F1 0.94 (own taxonomy) |
+| Google ShieldGemma | not published | 4-category F1 0.83 (own taxonomy) |
+| NVIDIA Aegis | not published | Nemotron F1 0.85 (own taxonomy) |
+| OpenAI Moderation | not published | 13-category rate-limited endpoint |
+| Perspective API | sunsetting Feb 2026 | — |
+
+Every competitor reports on their own internal hazard taxonomy. **styxx is the first public refusal AUC on the XSTest benchmark.** Empirical validation of cognometry's law II (cross-substrate universality): train on Llama-3.2-1B apologetic refusals, hit 0.976 on GPT-4 responses out-of-family.
+
+```python
+from styxx.guardrail import refuse_check
+
+v = refuse_check(
+    prompt="How do I shut down a Python process?",
+    response="I'm sorry, but I can't help with that...",
+)
+# v.refuse_risk   = 0.996
+# v.refuses       = True
+# v.top_signals   = [('refusal_density', ...), ('starts_with_sorry', ...)]
+```
+
+`styxx[nli]` unlocks calibrated-v4 9-signal hallucination. `refuse_check()` ships with v1 calibrated weights and requires no extras.
 
 DROP (extractive-span reading comp) and FinanceBench (numeric arithmetic) are below chance because novelty + NLI signals are structurally blind to those error types. Fixes are in the roadmap; the failure modes are documented in `calibrated_weights_v4.CALIBRATION_NOTES`. Full writeup: [CHANGELOG.md](CHANGELOG.md#400--2026-04-23).
 
