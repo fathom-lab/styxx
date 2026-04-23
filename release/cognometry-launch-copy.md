@@ -3,7 +3,7 @@
 **Manifesto:** https://fathom.darkflobi.com/cognometry
 **Leaderboard:** https://fathom.darkflobi.com/cognometry/leaderboard
 **Repo:** https://github.com/fathom-lab/styxx
-**PyPI:** https://pypi.org/project/styxx/4.0.1/
+**PyPI:** https://pypi.org/project/styxx/4.0.2/
 **Colab demo:** https://colab.research.google.com/github/fathom-lab/styxx/blob/main/examples/cognometry_colab.ipynb
 **Paper (Zenodo DOI):** https://doi.org/10.5281/zenodo.19703527
 **Prior paper (styxx v3.x):** https://doi.org/10.5281/zenodo.19504993

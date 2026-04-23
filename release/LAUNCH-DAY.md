@@ -111,7 +111,7 @@ Today we're publishing the founding manifesto for cognometry — the empirical m
 
 Every benchmark scores what the model said. None answer the question a production operator actually needs: was the model refusing, confabulating, retrieving, or reasoning when it wrote that?
 
-Styxx 4.0.1 is the open-source instrument, cross-validated across 8 public hallucination benchmarks — the first detector I'm aware of at this breadth of cross-validation. Three laws, each with a cross-validated number:
+Styxx 4.0.2 is the open-source instrument, cross-validated across 8 public hallucination benchmarks — the first detector I'm aware of at this breadth of cross-validation. Three laws, each with a cross-validated number:
 
 • Law I — every computation leaves vitals (AUC 0.998 HaluEval-QA; 5/8 benchmarks above 0.65; 2 published failure modes)
 • Law II — vitals are substrate-transferable (cos +0.464 cross-scale refusal direction, ~26σ above chance)
@@ -124,7 +124,7 @@ If you build, audit, or regulate AI systems and the question of cognitive-state 
 Manifesto: https://fathom.darkflobi.com/cognometry?ref=li
 Paper (DOI): https://doi.org/10.5281/zenodo.19703527
 Code: https://github.com/fathom-lab/styxx
-PyPI: pip install styxx==4.0.1[nli]
+PyPI: pip install styxx==4.0.2[nli]
 ```
 
 ---
@@ -267,7 +267,7 @@ comment box, paste **this exact text** and submit:
 ```
 Author here.
 
-Styxx 4.0.1 is the first hallucination detector I'm aware of cross-validated across 8 public benchmarks — HaluEval QA/Dialog/Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA, FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled 9-signal logistic regression.
+Styxx 4.0.2 is the first hallucination detector I'm aware of cross-validated across 8 public benchmarks — HaluEval QA/Dialog/Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA, FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled 9-signal logistic regression.
 
 Paper (Zenodo, peer-archived): https://doi.org/10.5281/zenodo.19703527
 Code: https://github.com/fathom-lab/styxx
@@ -428,7 +428,7 @@ number) during the launch:
    ```
 
 If something is wrong on PyPI (broken package): you CANNOT unpublish
-a version. You must ship a bugfix release (`4.0.1`). Do NOT attempt
+a version. You must ship a bugfix release (`4.0.3`). Do NOT attempt
 `--delete-version`.
 
 If something is wrong on GitHub (leaked secret, bad commit): force-push
@@ -457,13 +457,14 @@ T+24:00:
 
 ## §6 — Known launch-day risks (don't get surprised)
 
-1. **`@trust` default text-only path can flag correct answers**
-   (risk 0.4+ on clean factual responses without reference).
-   Users who skip `reference_arg='context'` and hit the default
-   will see lots of fallbacks. Mitigation: all demo code in the
-   launch content uses `reference_arg='context'` explicitly. If
-   someone complains on HN, acknowledge it — it's a known sharp
-   edge we'll tune in v4.0.1.
+1. **`@trust` without a reference passes through by default.** In
+   4.0.2, text-only heuristic path has threshold 0.99 — effectively
+   off — because without a reference the detector can't meaningfully
+   verify. Users who want strict text-only gating pass `threshold=`
+   explicitly. If anyone asks "why did it not catch X without a
+   reference?", explain: verification requires grounding, otherwise
+   we'd be gating on noise. The calibrated path (reference passed)
+   keeps the tight 0.7.
 
 2. **NLI model download is ~1GB** on first call. Users pip-installing
    `[nli]` expecting an instant demo will wait. Mitigation: pre-warm
