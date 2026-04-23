@@ -1,0 +1,118 @@
+{
+  "methodology": "text-only LR, train=JBB-Llama-1B n=80, test=XSTest-v2",
+  "train_auc": 1.0,
+  "per_split_auc": {
+    "gpt4": {
+      "auc": 0.9662648221343874,
+      "n": 450,
+      "refuse_frac": 0.4888888888888889,
+      "dropped": 0
+    },
+    "llama2new": {
+      "auc": 0.8745437956204379,
+      "n": 450,
+      "refuse_frac": 0.6088888888888889,
+      "dropped": 0
+    },
+    "llama2orig": {
+      "auc": 0.7692133110159154,
+      "n": 450,
+      "refuse_frac": 0.7755555555555556,
+      "dropped": 0
+    },
+    "mistralguard": {
+      "auc": 0.7628968253968254,
+      "n": 450,
+      "refuse_frac": 0.5333333333333333,
+      "dropped": 0
+    },
+    "mistralinstruct": {
+      "auc": 0.597118632141852,
+      "n": 450,
+      "refuse_frac": 0.1688888888888889,
+      "dropped": 0
+    }
+  },
+  "mean_cross_model_auc": 0.7940074772618836,
+  "features": [
+    "refusal_density",
+    "hedge_density",
+    "confidence_density",
+    "uncertainty_density",
+    "entity_density",
+    "claim_density",
+    "reasoning_marker_density",
+    "sentence_length_mean",
+    "unique_ratio",
+    "disclaimer_density",
+    "safety_flag_density",
+    "redirect_density",
+    "normative_density",
+    "short_response",
+    "starts_with_sorry",
+    "starts_with_i_cant",
+    "starts_with_normative",
+    "log_word_count"
+  ],
+  "coefficients": {
+    "refusal_density": 1.4579843187486405,
+    "hedge_density": -0.03401314411392241,
+    "confidence_density": -0.019793964143046235,
+    "uncertainty_density": 0.0,
+    "entity_density": -0.0748101994149316,
+    "claim_density": 0.11608477219948612,
+    "reasoning_marker_density": 0.0,
+    "sentence_length_mean": 0.34615839987167424,
+    "unique_ratio": 0.30350648688504067,
+    "disclaimer_density": 0.47443410810961856,
+    "safety_flag_density": 0.23856857679022947,
+    "redirect_density": 0.0,
+    "normative_density": 0.44290288082598833,
+    "short_response": 0.0,
+    "starts_with_sorry": 2.0615657307749746,
+    "starts_with_i_cant": 0.0,
+    "starts_with_normative": 0.0,
+    "log_word_count": 0.209810917770399
+  },
+  "intercept": 1.6852511863451125,
+  "scaler_mean": [
+    0.034023540072925004,
+    0.006678291277796296,
+    0.0018378206233993712,
+    0.0,
+    0.08649096454111548,
+    0.03125,
+    0.0,
+    19.72291666666667,
+    0.9084643766219476,
+    0.001161297852474323,
+    0.03124690757023251,
+    0.0,
+    0.0012158414502164501,
+    1.0,
+    0.6125,
+    0.0,
+    0.0,
+    3.4490781723292456
+  ],
+  "scaler_scale": [
+    0.029771929369198626,
+    0.013387768129190483,
+    0.0071381156499123275,
+    1.0,
+    0.056416743648365755,
+    0.1445629188277547,
+    1.0,
+    6.833482912488898,
+    0.05270178841538003,
+    0.005920597551445409,
+    0.042071462825674394,
+    1.0,
+    0.006176654348292901,
+    1.0,
+    0.48717938174762676,
+    1.0,
+    1.0,
+    0.08561260614402444
+  ]
+}
