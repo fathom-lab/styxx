@@ -12,10 +12,10 @@ paste material for later in the week.
 
 ## §0 — Pre-flight checklist (T-60 min, ~1 hour total)
 
-- [ ] **Zenodo deposit** — [release/zenodo-submission-package.md](zenodo-submission-package.md)
-      has all the metadata. Upload `papers/cognometry-v0.md`. Copy
-      the assigned DOI. Replace `DOI_PLACEHOLDER` throughout this
-      file with the real DOI. **(~10 min)**
+- [x] **Zenodo deposit** — **DONE**. DOI:
+      [10.5281/zenodo.19703527](https://doi.org/10.5281/zenodo.19703527).
+      Record: https://zenodo.org/record/19703527. Already backfilled
+      into the manifesto, launch copy, and this file.
 - [ ] **Analytics tabs open in separate browser windows**:
   - https://pypistats.org/packages/styxx
   - https://github.com/fathom-lab/styxx (watch stars count)
@@ -91,7 +91,14 @@ the invitation is open. tell us where we're wrong.
 github.com/fathom-lab/styxx
 ```
 
-→ **PIN THE THREAD.** Quote tweet with DOI once Zenodo deposit is live.
+→ **PIN THE THREAD.** Optional: quote-tweet after an hour with:
+
+```
+peer-archived paper for the curious:
+https://doi.org/10.5281/zenodo.19703527
+
+Zenodo DOI, CC-BY-4.0. every number in the thread has a reproducer in the repo.
+```
 
 ---
 
@@ -104,19 +111,20 @@ Today we're publishing the founding manifesto for cognometry — the empirical m
 
 Every benchmark scores what the model said. None answer the question a production operator actually needs: was the model refusing, confabulating, retrieving, or reasoning when it wrote that?
 
-Styxx 4.0.0 is the open-source instrument, cross-validated across 8 public hallucination benchmarks — the first detector I'm aware of at this breadth of cross-validation. Three laws, each with a cross-validated number:
+Styxx 4.0.1 is the open-source instrument, cross-validated across 8 public hallucination benchmarks — the first detector I'm aware of at this breadth of cross-validation. Three laws, each with a cross-validated number:
 
 • Law I — every computation leaves vitals (AUC 0.998 HaluEval-QA; 5/8 benchmarks above 0.65; 2 published failure modes)
 • Law II — vitals are substrate-transferable (cos +0.464 cross-scale refusal direction, ~26σ above chance)
 • Law III — vitals are causally actionable (refuse@unsafe 97% → 17% at α=3.0 on Llama-3.2-1B)
 
-One decorator (@trust) runs the cross-validated detector on any LLM call. MIT on code, CC-BY on weights.
+One decorator (@trust) runs the cross-validated detector on any LLM call. Zero config. MIT on code, CC-BY on weights.
 
 If you build, audit, or regulate AI systems and the question of cognitive-state measurement at runtime matters to you, the invitation is open.
 
 Manifesto: https://fathom.darkflobi.com/cognometry?ref=li
+Paper (DOI): https://doi.org/10.5281/zenodo.19703527
 Code: https://github.com/fathom-lab/styxx
-PyPI: pip install styxx==4.0.0[nli]
+PyPI: pip install styxx==4.0.1[nli]
 ```
 
 ---
@@ -259,7 +267,12 @@ comment box, paste **this exact text** and submit:
 ```
 Author here.
 
-Styxx 4.0.0 is the first hallucination detector I'm aware of cross-validated across 8 public benchmarks — HaluEval QA/Dialog/Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA, FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled 9-signal logistic regression.
+Styxx 4.0.1 is the first hallucination detector I'm aware of cross-validated across 8 public benchmarks — HaluEval QA/Dialog/Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA, FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled 9-signal logistic regression.
+
+Paper (Zenodo, peer-archived): https://doi.org/10.5281/zenodo.19703527
+Code: https://github.com/fathom-lab/styxx
+Leaderboard: https://fathom.darkflobi.com/cognometry/leaderboard
+Colab demo (2 min): https://colab.research.google.com/github/fathom-lab/styxx/blob/main/examples/cognometry_colab.ipynb
 
 Real numbers:
 
@@ -274,14 +287,14 @@ Real numbers:
 
 Two below-chance results are the part I'd most like HN to react to. They are published as failure modes in the weights module itself, not hidden:
 
-- DROP: reading-comp hallucinations are extractive-span errors — wrong span, right passage. NLI scores that as entailed; novelty signals don't fire. Tried 6 naive heuristic fixes today; all null.
+- DROP: reading-comp hallucinations are extractive-span errors — wrong span, right passage. NLI scores that as entailed; novelty signals don't fire. Tried 6 naive heuristic fixes; all null. The null probe is committed alongside the successes.
 - FinanceBench: hallucinations are calculation errors on numbers copied verbatim from the source. Novelty + NLI are semantically blind to arithmetic correctness.
 
-Both failure modes are declared in calibrated_weights_v4.CALIBRATION_NOTES.documented_failure_modes.
+Both failure modes are declared in calibrated_weights_v4.CALIBRATION_NOTES.documented_failure_modes so production callers know where the detector will lie.
 
-pip install styxx[nli] → wrap a function with @trust → get verified output on every call. MIT on code, CC-BY on weights.
+pip install styxx[nli] → wrap a function with @trust → get verified output on every call. Zero config: auto-detects context/reference/passage kwargs, auto-enables NLI when installed, adaptive threshold. MIT on code, CC-BY on calibrated weights.
 
-Happy to get disconfirmations on any of the 8 benchmarks.
+Happy to get disconfirmations on any of the 8 benchmarks at your favorite random seed.
 ```
 
 ---

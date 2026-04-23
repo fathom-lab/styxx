@@ -1,9 +1,12 @@
 # cognometry launch copy — 2026-04-23 (v4.0.0)
 
 **Manifesto:** https://fathom.darkflobi.com/cognometry
+**Leaderboard:** https://fathom.darkflobi.com/cognometry/leaderboard
 **Repo:** https://github.com/fathom-lab/styxx
-**PyPI (v4.0.0):** https://pypi.org/project/styxx/4.0.0/
-**Paper (v4.0.0 Zenodo):** https://doi.org/10.5281/zenodo.19504993 *(update with final DOI post-deposit)*
+**PyPI:** https://pypi.org/project/styxx/4.0.1/
+**Colab demo:** https://colab.research.google.com/github/fathom-lab/styxx/blob/main/examples/cognometry_colab.ipynb
+**Paper (Zenodo DOI):** https://doi.org/10.5281/zenodo.19703527
+**Prior paper (styxx v3.x):** https://doi.org/10.5281/zenodo.19504993
 
 ---
 
