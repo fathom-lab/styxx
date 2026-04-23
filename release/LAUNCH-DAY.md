@@ -1,8 +1,8 @@
-# LAUNCH-DAY PLAYBOOK — Cognometry + Styxx 4.0.0
+# LAUNCH-DAY PLAYBOOK — Cognometry + Styxx 4.0.2
 
 **Single file. Everything paste-ready. Char-count validated. UTM-tagged.**
 
-Target launch window: **Thursday 2026-04-24 08:15 PT** (HN prime).
+Target launch window: **Thursday 2026-04-23 08:15 PT** (HN prime).
 
 Before you fire, do the three pre-flight items in §0. Then execute
 §1 in order at the minute-marker times. Everything after §2 is raw
@@ -57,19 +57,19 @@ iii · vitals are causal → refuse@unsafe 97% → 17% at α=3.0 on llama-3.2-1B
 
 **Tweet 3:**
 ```
-3/ styxx 4.0.0 on pypi: first hallucination detector i'm aware of cross-validated on 8 public benchmarks. 5/8 above AUC 0.65, two published failure modes.
+3/ styxx 4.0.2 on pypi: first hallucination detector i'm aware of cross-validated on 8 public benchmarks. 5/8 above AUC 0.65, two published failure modes.
 
 pip install styxx[nli]
 ```
 
 **Tweet 4:**
 ```
-4/ the two failure modes are the part i want to draw attention to. declared in the weights module, not hidden:
+4/ the two failure modes are the interesting part. declared in the weights, not hidden:
 
-DROP: extractive-span reading comp → NLI is blind
-FinanceBench: arithmetic on verbatim numbers → novelty is blind
+DROP: extractive-span reading comp → NLI blind
+FinanceBench: arithmetic on verbatim numbers → novelty blind
 
-tried 6 cheap fixes. all null.
+6 cheap fixes for DROP tried. all null. fix needs span-level faithfulness.
 ```
 
 **Tweet 5:**
@@ -77,9 +77,9 @@ tried 6 cheap fixes. all null.
 5/ one decorator. any LLM call. verified output.
 
 @trust
-def my_rag(q, *, context=''): ...
+def my_rag(q, *, context): ...
 
-MIT code. CC-BY weights. 29 probes, 6 vendors. every coefficient has a 3-seed reproducer.
+zero config. MIT code. CC-BY weights. every number has a 3-seed reproducer in the repo.
 ```
 
 **Tweet 6:**
@@ -155,7 +155,7 @@ Go to https://www.reddit.com/r/LocalLLaMA/submit
 
 **Title:**
 ```
-Styxx 4.0.0 — local hallucination detection with NLI, no API, 8-benchmark audit
+Styxx 4.0.2 — local hallucination detection with NLI, no API, 8-benchmark audit
 ```
 
 **Body:**
@@ -328,7 +328,7 @@ Pre-filled with known handles. Confirm each before sending.
 Fill from your own network. DM template:
 
 ```
-you mentioned [thing] last time — just shipped styxx 4.0.0 + the cognometry manifesto. 8-benchmark audit, two declared failure modes (DROP, FinanceBench). would love your 15-min reaction.
+you mentioned [thing] last time — just shipped styxx 4.0.2 + the cognometry manifesto. 8-benchmark audit, two declared failure modes (DROP, FinanceBench). would love your 15-min reaction.
 
 https://fathom.darkflobi.com/cognometry?ref=dm_warm
 ```
