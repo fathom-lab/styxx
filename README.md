@@ -24,12 +24,13 @@
 [![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19703527)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
-# `0.998 AUC on HaluEval-QA. 9 floats. No LLM.`
+# `0.998 HaluEval · 0.976 XSTest · 0.916 BFCL · No LLM.`
 
-### Two calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+### Three calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
+- 🟢 **Tool-call drift detection (NEW v6)** — BFCL v3 **0.916** 5-fold CV (beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
 
 ### ▶&nbsp; [**Try it live — no install, runs in your browser**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
 
@@ -160,6 +161,46 @@ v = refuse_check(
 ```
 
 `styxx[nli]` unlocks calibrated-v4 9-signal hallucination. `refuse_check()` ships with v1 calibrated weights and requires no extras.
+
+### Tool-call drift — instrument #3 (v6.0 new)
+
+Catches when an LLM agent's stated intent doesn't match the tool call it actually made. Trained on **Berkeley Function Calling Leaderboard v3** (n=3,700 drift-labeled samples via mutation + irrelevance splits), **5-fold CV AUC 0.916 ± 0.004**.
+
+The only published comparable baseline — [Healy et al. 2026 (arXiv:2601.05214)](https://arxiv.org/abs/2601.05214) reports AUC 0.72 on Glaive using **hidden-state features**. Styxx hits 0.916 on BFCL v3 **text-only**, works on any closed model (OpenAI, Anthropic, Gemini) with zero internal access.
+
+| detector | BFCL v3 drift AUC | method |
+|---|---|---|
+| **styxx drift v1** | **0.916 ± 0.004** | 22-feature calibrated LR |
+| Healy et al. 2026 | 0.72 (Glaive, different dataset) | MLP on hidden states |
+
+Per-drift-type held-out AUC:
+
+| drift class | AUC | notes |
+|---|---|---|
+| spurious_arg (model hallucinates extra args) | **0.997** | clean capture |
+| arg_drop (model misses required field) | **0.998** | clean capture |
+| irrelevance_called (model calls when should refuse) | **0.957** | +0.40 over null baseline |
+| arg_swap (semantically wrong values, valid schema) | 0.664 | **documented failure mode** |
+
+```python
+from styxx.guardrail import drift_check
+
+v = drift_check(
+    prompt="Find the area of a triangle with base 10 and height 5",
+    functions=[{"name": "calculate_triangle_area",
+                "parameters": {"properties": {"base": {"type": "integer"},
+                                              "height": {"type": "integer"}},
+                               "required": ["base", "height"]}}],
+    tool_call={"name": "calculate_triangle_area",
+               "arguments": {"base": 10, "height": 5}},
+)
+# v.drift_risk   = 0.198
+# v.drifts       = False
+# v.top_signals  = [('spurious_arg_frac', 0, -2.44), ...]
+```
+
+Reproducer: [`scripts/drift_calibrated_v0.py`](scripts/drift_calibrated_v0.py).
+Result: [`benchmarks/drift_calibrated_v0.json`](benchmarks/drift_calibrated_v0.json).
 
 <p align="center">
   <a href="https://fathom.darkflobi.com/cognometry/refuse?scenario=lecturing">

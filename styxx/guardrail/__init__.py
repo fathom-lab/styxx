@@ -44,6 +44,10 @@ from .entry import check  # noqa: F401
 # Cross-validated law II: trained on JBB/Llama-1B, XSTest/GPT-4 AUC 0.976,
 # mean cross-model AUC 0.794 across 5 model families, n=2,250 held-out.
 from .refusal import refuse_check, RefusalVerdict  # noqa: F401
+# Third cognometric instrument (v6.0): tool-call drift detection.
+# Calibrated on BFCL v3, 5-fold CV AUC 0.916. First text-only detector
+# to beat the Healy et al. 2026 hidden-state baseline (AUC 0.72 on Glaive).
+from .drift import drift_check, DriftVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -52,4 +56,6 @@ __all__ = [
     "SignalReading",
     "refuse_check",
     "RefusalVerdict",
+    "drift_check",
+    "DriftVerdict",
 ]
