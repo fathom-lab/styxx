@@ -1,0 +1,26 @@
+{
+  "methodology": "3-seed (31,47,83) \u00d7 150 pairs HaluEval-QA, direct AUC comparison",
+  "seeds": [
+    31,
+    47,
+    83
+  ],
+  "n_per_seed": 300,
+  "styxx_v4_auc_per_seed": [
+    0.9999111111111111,
+    0.9931111111111111,
+    0.9975333333333333
+  ],
+  "styxx_v4_mean": 0.9968518518518518,
+  "styxx_v4_std": 0.0028176009602972206,
+  "hhem_2_1_open_auc_per_seed": [
+    0.7829333333333334,
+    0.7191111111111111,
+    0.7912000000000001
+  ],
+  "hhem_2_1_open_mean": 0.7644148148148148,
+  "hhem_2_1_open_std": 0.03221183655531177,
+  "delta_styxx_minus_hhem": 0.232437037037037,
+  "hhem_model": "vectara/hallucination_evaluation_model (T5-flan-base, 440M)",
+  "styxx_mode": "in-browser pipeline = text_claim_risk + knowledge_grounding + 4 novelty probes, calibrated v2"
+}

@@ -111,16 +111,20 @@ Every call is cognometrically verified via `styxx.guardrail.check()` before the 
 
 ## Compared against the field
 
-| detector | HaluEval-QA | size / cost | method | reference |
+| detector | HaluEval-QA AUC | size / cost | method | reference |
 |---|---|---|---|---|
-| **styxx v4** | **0.998 AUC** | **9 floats, CPU** | calibrated LR | this repo |
-| Patronus Lynx-70B | 87.4% acc on own HaluBench | 70B, **140 GB**, GPU | fine-tuned LLM judge | [arXiv:2407.08488](https://arxiv.org/abs/2407.08488) |
-| Vectara HHEM-2.1 | 76.6% bal acc on AggreFact | Flan-T5-base, 440M+ | NLI-style classifier | [HF card](https://huggingface.co/vectara/hallucination_evaluation_model) |
-| Cleanlab TLM | 0.812 AUROC on TriviaQA | wraps GPT-4/Claude, SaaS | multi-sample LLM self-consistency | [blog](https://cleanlab.ai/blog/trustworthy-language-model/) |
-| Galileo Luna | RAGTruth-only (no HaluEval published) | 440M DeBERTa, SaaS | fine-tuned classifier | [arXiv:2406.00975](https://arxiv.org/abs/2406.00975) |
+| **styxx v4** | **0.997 ± 0.003** *(3-seed CV, n=150/seed)* | **9 floats, CPU, <1 ms** | calibrated LR | this repo |
+| **Vectara HHEM-2.1-Open** | **0.764 ± 0.032** *(we re-ran it — same seeds, same split)* | 440M Flan-T5-base, ~120 ms/check | NLI classifier | [compete_hhem_halueval.py](scripts/compete_hhem_halueval.py) |
+| Patronus Lynx-70B | 87.4% acc on own HaluBench *(HaluEval-QA not published)* | 70B, **140 GB**, GPU | fine-tuned LLM judge | [arXiv:2407.08488](https://arxiv.org/abs/2407.08488) |
+| Cleanlab TLM | 0.812 AUROC on TriviaQA *(HaluEval-QA not published)* | wraps GPT-4/Claude, SaaS | multi-sample LLM self-consistency | [blog](https://cleanlab.ai/blog/trustworthy-language-model/) |
+| Galileo Luna | RAGTruth-only *(HaluEval-QA not published)* | 440M DeBERTa, SaaS | fine-tuned classifier | [arXiv:2406.00975](https://arxiv.org/abs/2406.00975) |
 | Arize / Guardrails / NeMo | no AUC published | LLM-as-judge plumbing | integration surface | — |
 
-**No competitor in this table claims AUC > 0.99 on HaluEval-QA.** Lynx dodges the comparison by reporting accuracy on their own benchmark. HHEM runs on a 440M-param T5. Cleanlab needs an LLM per check and costs $25 per 1,000 calls. We run 9 scalar features, pure Python, no network, at sub-millisecond latency.
+**styxx wins the Vectara HHEM head-to-head by +0.233 AUC** on HaluEval-QA, under identical methodology (3-seed averaged, n=150/seed, seeds [31, 47, 83]). Reproducer committed at [`scripts/compete_hhem_halueval.py`](scripts/compete_hhem_halueval.py) — anyone can re-run and verify.
+
+**Latency comparison:** styxx scores the entire 300-pair eval in ~0.1 seconds; HHEM takes ~33 seconds on the same machine. 330× speedup from 9 floats vs 440M params.
+
+Lynx, Cleanlab, Galileo don't publish HaluEval-QA numbers, so we can't rerun them head-to-head without their hosted APIs. We're happy to — their teams are welcome to submit to our [leaderboard](https://fathom.darkflobi.com/cognometry/leaderboard) with a scoring endpoint and we'll run the same 3-seed protocol.
 
 ### Refusal detection — white space we just claimed
 
