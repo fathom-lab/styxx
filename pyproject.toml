@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "5.0.0"
+version = "5.1.0"
 description = "nothing crosses unseen. calibrated hallucination (AUC 0.998 HaluEval-QA) + refusal (AUC 0.976 GPT-4) detection — two cognometric instruments, pure Python, no LLM required."
 readme = "README.md"
 license = { text = "MIT" }

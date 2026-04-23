@@ -145,7 +145,7 @@ Prior XSTest AUC numbers, from [IBM Granite Guardian Table 7 (arXiv:2412.07724)]
 
 Note: Granite Guardian uses **XSTest-RH** (refusal-hinted, paired prompt+response with harmfulness labels); we use **XSTest-v2** ([natolambert/xstest-v2-copy](https://huggingface.co/datasets/natolambert/xstest-v2-copy), 5 model-specific completion splits with compliance/refusal labels). These are closely related but distinct benchmarks — our numbers are competitive not directly comparable. Both evaluations committed as reproducers.
 
-Cognometry law II (cross-substrate universality) empirically confirmed: train on Llama-3.2-1B apologetic refusals → hit AUC 0.976 on GPT-4 responses out-of-family. Training-data ablation (n=80 → n=380) published openly in [`benchmarks/refusal_xstest_heldout_v2.json`](benchmarks/refusal_xstest_heldout_v2.json) — v1 was a Llama-apologetic specialist; v2 is the cross-model generalist. No silent overfit.
+Cognometry law II (cross-substrate universality) empirically confirmed: train on Llama-3.2-1B apologetic refusals → hit AUC 0.976 on GPT-4 responses out-of-family. Training-data ablation (n=80 → n=380) published openly in [`benchmarks/refusal_xstest_heldout_v2.json`](benchmarks/refusal_xstest_heldout_v2.json). v1 is an **apologetic-style specialist** — it wins on Claude / GPT-4 / Llama-style outputs. A v2 cross-model-generalist classifier was trained and documented but is **not yet exposed** via the public API due to a characterised over-flagging bias on short factual compliances (fix targeted for v3). See [`calibrated_weights_refusal_v2.py`](styxx/guardrail/calibrated_weights_refusal_v2.py) `CALIBRATION_NOTES` for the full ablation.
 
 ```python
 from styxx.guardrail import refuse_check
