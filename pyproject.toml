@@ -78,6 +78,8 @@ nli = [
 ]
 # 4.0.3: Guardrails AI validator (HallucinationCheck) backed by styxx
 guardrails = ["guardrails-ai>=0.4"]
+# 4.0.3: LlamaIndex evaluator (StyxxHallucinationEvaluator) for RAG faithfulness
+llamaindex = ["llama-index-core>=0.10"]
 schema = [
     "jsonschema>=4.0",
 ]

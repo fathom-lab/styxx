@@ -40,8 +40,25 @@
 
 ## New in v4.0: `@trust` — cross-validated on 8 benchmarks
 
-`pip install styxx[nli]` + one decorator. Zero config.
+`pip install styxx[nli]` + one decorator. Any LLM. Zero config.
 
+**Anthropic / Claude:**
+```python
+from styxx import trust
+import anthropic
+
+client = anthropic.Anthropic()
+
+@trust
+def my_rag(question, *, context):
+    r = client.messages.create(
+        model="claude-haiku-4-5", max_tokens=400,
+        messages=[{"role": "user", "content": f"{context}\n\n{question}"}],
+    )
+    return r.content[0].text
+```
+
+**OpenAI / GPT:**
 ```python
 from styxx import trust
 import openai
@@ -53,6 +70,8 @@ def my_rag(question, *, context):
         messages=[{"role": "user", "content": f"{context}\n\n{question}"}],
     )
 ```
+
+Same decorator, same detector, same 8-benchmark-cross-validated LR. `@trust` is model-agnostic — our numbers hold regardless of which LLM produced the response, and styxx ships a dedicated [`anthropic_hack`](styxx/anthropic_hack/) module for Claude (where per-token logprobs aren't exposed by the API, so we fall back to text + NLI + novelty signals that work on any string output).
 
 `@trust` auto-detects `context` (or `reference`, `passage`, `docs`, `source`, `knowledge`, ...) as the grounding passage. Auto-enables NLI if `styxx[nli]` is installed. Calibrated thresholds adapt to which signals fire. No configuration required.
 
