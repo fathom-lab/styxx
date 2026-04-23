@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LAUNCH — cognometry + styxx 4.0.2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0a0a;
+  color: #c0c0c0;
+  font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 30px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 { color: #00ff00; font-size: 22px; margin-bottom: 4px; letter-spacing: 2px; }
+.sub { color: #666; font-size: 12px; letter-spacing: 2px; margin-bottom: 24px; }
+.step {
+  border: 1px solid #1e1e1e;
+  background: #141414;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.step .when {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #00aa00;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+.step h2 {
+  color: #e0e0e0;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.step .hint {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.step a.btn {
+  display: inline-block;
+  padding: 9px 18px;
+  background: #0a1a0a;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  margin-right: 8px;
+  margin-top: 4px;
+  transition: all 0.15s;
+}
+.step a.btn:hover { background: #00ff00; color: #0a0a0a; }
+.step pre {
+  background: #0a0a0a;
+  border: 1px solid #1e1e1e;
+  padding: 10px 14px;
+  color: #00ff00;
+  font-size: 11.5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin-top: 10px;
+  user-select: all;
+}
+.step .done {
+  margin-top: 10px;
+  display: inline-block;
+  color: #666;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+.step .done input { margin-right: 6px; }
+.warn {
+  background: #1a0a0a;
+  border-color: #ff3d00;
+  color: #ff3d00;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+hr {
+  border: 0;
+  border-top: 1px solid #1e1e1e;
+  margin: 24px 0;
+}
+.timestamp-bar {
+  background: #141414;
+  border: 1px solid #00ff00;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  color: #00ff00;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+code { color: #00e5ff; }
+</style>
+</head>
+<body>
+
+<h1>launch: cognometry + styxx 4.0.2</h1>
+<div class="sub">nothing crosses unseen · click each button in order · text pre-filled where possible</div>
+
+<div class="timestamp-bar">
+  clock (local): <span id="clock">—</span> &nbsp;·&nbsp;
+  elapsed since T+0: <span id="elapsed">(press start)</span> &nbsp;·&nbsp;
+  <a href="#" id="startBtn" style="color:#00ff00;">[ START TIMER ]</a>
+</div>
+
+<div class="warn">
+  <strong>launch order matters.</strong> X thread first (tweets 2-6 must be replies to tweet 1 — you'll do this after posting tweet 1). Wait for T+0:35 before the HN self-comment.
+</div>
+
+<!-- T+0:00 — X thread -->
+<div class="step">
+  <span class="when">T + 0:00</span>
+  <h2>1. X thread — post tweet 1, then reply with tweets 2-6</h2>
+  <div class="hint">click the first button to open composer pre-filled. post it. then click tweet 2, post as reply. repeat. pin the thread after tweet 6.</div>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=1%2F%20we%27re%20naming%20a%20field%20and%20shipping%20the%20instrument.%0A%0Acognometry%20%E2%80%94%20empirical%20measurement%20of%20cognitive%20states%20in%20LLMs.%20hallucination%2C%20refusal%2C%20reasoning%2C%20drift.%20all%20measurable%2C%20from%20signals%20already%20on%20the%20token%20stream.%0A%0Ahttps%3A%2F%2Ffathom.darkflobi.com%2Fcognometry%3Fref%3Dx">tweet 1</a>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=2%2F%20three%20laws.%20each%20with%20a%20cross-validated%20number.%0A%0Ai%20%C2%B7%20vitals%20exist%20%E2%86%92%20AUC%200.998%20HaluEval-QA%0Aii%20%C2%B7%20vitals%20transfer%20%E2%86%92%20cos%20%2B0.464%20llama-1B%20to%203B%20refusal%20direction%0Aiii%20%C2%B7%20vitals%20are%20causal%20%E2%86%92%20refuse%40unsafe%2097%25%20%E2%86%92%2017%25%20at%20%CE%B1%3D3.0%20on%20llama-3.2-1B">tweet 2</a>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=3%2F%20styxx%204.0.2%20on%20pypi%3A%20first%20hallucination%20detector%20i%27m%20aware%20of%20cross-validated%20on%208%20public%20benchmarks.%205%2F8%20above%20AUC%200.65%2C%20two%20published%20failure%20modes.%0A%0Apip%20install%20styxx%5Bnli%5D">tweet 3</a>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=4%2F%20the%20two%20failure%20modes%20are%20the%20interesting%20part.%20declared%20in%20the%20weights%2C%20not%20hidden%3A%0A%0ADROP%3A%20extractive-span%20reading%20comp%20%E2%86%92%20NLI%20blind%0AFinanceBench%3A%20arithmetic%20on%20verbatim%20numbers%20%E2%86%92%20novelty%20blind%0A%0A6%20cheap%20fixes%20for%20DROP%20tried.%20all%20null.%20fix%20needs%20span-level%20faithfulness.">tweet 4</a>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=5%2F%20one%20decorator.%20any%20LLM%20call.%20verified%20output.%0A%0A%40trust%0Adef%20my_rag%28q%2C%20*%2C%20context%29%3A%20...%0A%0Azero%20config.%20MIT%20code.%20CC-BY%20weights.%20every%20number%20has%20a%203-seed%20reproducer%20in%20the%20repo.">tweet 5</a>
+  <a class="btn" target="_blank" href="https://twitter.com/intent/tweet?text=6%2F%20a%20field%20claims%20itself%20when%20someone%20names%20it%2C%20publishes%20laws%20for%20it%2C%20and%20ships%20the%20instrument%20that%20tests%20them.%0A%0Athe%20invitation%20is%20open.%20tell%20us%20where%20we%27re%20wrong.%0A%0Agithub.com%2Ffathom-lab%2Fstyxx">tweet 6</a>
+  <label class="done"><input type="checkbox"> thread posted + pinned</label>
+</div>
+
+<!-- T+0:05 — LinkedIn -->
+<div class="step">
+  <span class="when">T + 0:05</span>
+  <h2>2. LinkedIn — open, paste the box below, publish</h2>
+  <div class="hint">LinkedIn doesn't accept URL-encoded pre-fill for organic posts. open LinkedIn, click start a post, paste:</div>
+  <a class="btn" target="_blank" href="https://www.linkedin.com/feed/">open LinkedIn →</a>
+  <pre>Today we're publishing the founding manifesto for cognometry — the empirical measurement of cognitive states in machine systems.
+
+Every benchmark scores what the model said. None answer the question a production operator actually needs: was the model refusing, confabulating, retrieving, or reasoning when it wrote that?
+
+Styxx 4.0.2 is the open-source instrument, cross-validated across 8 public hallucination benchmarks — the first detector I'm aware of at this breadth of cross-validation. Three laws, each with a cross-validated number:
+
+• Law I — every computation leaves vitals (AUC 0.998 HaluEval-QA; 5/8 benchmarks above 0.65; 2 published failure modes)
+• Law II — vitals are substrate-transferable (cos +0.464 cross-scale refusal direction, ~26σ above chance)
+• Law III — vitals are causally actionable (refuse@unsafe 97% → 17% at α=3.0 on Llama-3.2-1B)
+
+One decorator (@trust) runs the cross-validated detector on any LLM call. Zero config. MIT on code, CC-BY on weights.
+
+If you build, audit, or regulate AI systems and the question of cognitive-state measurement at runtime matters to you, the invitation is open.
+
+Manifesto: https://fathom.darkflobi.com/cognometry?ref=li
+Paper (DOI): https://doi.org/10.5281/zenodo.19703527
+Code: https://github.com/fathom-lab/styxx
+PyPI: pip install styxx==4.0.2[nli]</pre>
+  <label class="done"><input type="checkbox"> LinkedIn posted</label>
+</div>
+
+<!-- T+0:10 — HN -->
+<div class="step">
+  <span class="when">T + 0:10</span>
+  <h2>3. Hacker News — submit (no self-comment yet, wait for T+0:35)</h2>
+  <div class="hint">the button below opens the HN submit form with the URL + title pre-filled. click Submit. don't add text.</div>
+  <a class="btn" target="_blank" href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Ffathom.darkflobi.com%2Fcognometry%3Fref%3Dhn&t=Cognometry%3A%20The%20measurement%20of%20machine%20cognition">HN submit (pre-filled) →</a>
+  <label class="done"><input type="checkbox"> submitted to HN (holding self-comment)</label>
+</div>
+
+<!-- T+0:15 — r/LocalLLaMA -->
+<div class="step">
+  <span class="when">T + 0:15</span>
+  <h2>4. Reddit /r/LocalLLaMA</h2>
+  <a class="btn" target="_blank" href="https://www.reddit.com/r/LocalLLaMA/submit?title=Styxx%204.0.2%20%E2%80%94%20local%20hallucination%20detection%20with%20NLI%2C%20no%20API%2C%208-benchmark%20audit">open pre-filled submit →</a>
+  <div class="hint">paste this body:</div>
+  <pre>Shipped a hallucination detector today that runs entirely locally. `pip install styxx[nli]` → one decorator wraps any LLM call and scores the response across 9 signals (text, entity, novelty, NLI contradiction) before returning. Halts on high risk.
+
+Numbers from a 3-seed averaged pooled LR across 8 public benchmarks:
+
+```
+HaluEval-QA          AUC 0.998
+TruthfulQA           AUC 0.994
+HaluBench-RAGTruth   AUC 0.807
+HaluBench-PubMedQA   AUC 0.719
+HaluEval-Dialog      AUC 0.676
+HaluEval-Summ        AUC 0.643
+HaluBench-Finance    AUC 0.492  (at chance — published)
+HaluBench-DROP       AUC 0.424  (below chance — published)
+```
+
+Uses MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli (~184M) for the NLI signal. Works on CPU (~400 ms/call) or CUDA (~30 ms/call). No API key, no phone-home, MIT-licensed. Full failure modes documented in the weights module itself.
+
+Repo + reproducers: https://github.com/fathom-lab/styxx
+Write-up: https://fathom.darkflobi.com/cognometry?ref=r_llama</pre>
+  <label class="done"><input type="checkbox"> r/LocalLLaMA posted</label>
+</div>
+
+<!-- T+0:20 — r/MachineLearning -->
+<div class="step">
+  <span class="when">T + 0:20</span>
+  <h2>5. Reddit /r/MachineLearning — remember to pick "Research" flair</h2>
+  <a class="btn" target="_blank" href="https://www.reddit.com/r/MachineLearning/submit?title=%5BR%5D%20Cognometry%3A%208-benchmark%20cross-validated%20hallucination%20detection%2C%20two%20failure%20modes%20published%20openly">open pre-filled submit →</a>
+  <pre>Paper draft: https://github.com/fathom-lab/styxx/blob/main/papers/cognometry-v0.md
+
+We propose **cognometry** — the empirical measurement of cognitive states (refusal, confabulation, retrieval, reasoning, drift) in LLMs — as a frame distinct from interpretability (what a feature represents) and eval (what the text is). The paper's central empirical claim is narrower: a 9-signal pooled logistic regression fused over text, entity, novelty, grounding, and NLI contradiction signals achieves cross-validated hallucination discrimination across 8 public benchmarks (HaluEval QA/Dialog/Summ, TruthfulQA, HaluBench DROP/PubMedQA/FinanceBench/RAGTruth).
+
+Per-dataset held-out test AUC (3-seed mean):
+
+```
+HaluEval-QA           0.998 ± 0.001
+TruthfulQA            0.994 ± 0.006
+HaluBench-RAGTruth    0.807 ± 0.043
+HaluBench-PubMedQA    0.719 ± 0.051
+HaluEval-Dialog       0.676 ± 0.037
+HaluEval-Summ         0.643 ± 0.060
+HaluBench-Finance     0.492 ± 0.026    declared failure mode
+HaluBench-DROP        0.424 ± 0.080    declared failure mode
+```
+
+Both failure modes are structural and openly characterized: DROP hallucinations are extractive-span errors (wrong span from right passage — NLI entails them, novelty is blind), and FinanceBench hallucinations are arithmetic errors on verbatim-copied source numbers (also NLI-blind and novelty-blind).
+
+Code + full reproducer: https://github.com/fathom-lab/styxx
+Drop-in API: `pip install styxx[nli]` + `@trust` decorator.
+MIT code, CC-BY-4.0 calibrated weights.
+
+Paper (Zenodo DOI): https://doi.org/10.5281/zenodo.19703527
+
+Happy to take disconfirmations on any of the 8 benchmarks at different random seeds or n.</pre>
+  <label class="done"><input type="checkbox"> r/ML posted (with Research flair)</label>
+</div>
+
+<!-- T+0:25 — r/LLMDevs -->
+<div class="step">
+  <span class="when">T + 0:25</span>
+  <h2>6. Reddit /r/LLMDevs</h2>
+  <a class="btn" target="_blank" href="https://www.reddit.com/r/LLMDevs/submit?title=How%20we%20cross-validated%20our%20hallucination%20detector%20on%208%20benchmarks%20(and%20what%20we%20didn%27t%20fix)">open pre-filled submit →</a>
+  <pre>tl;dr: `pip install styxx[nli]` + `@trust` gets you cross-validated hallucination detection on any LLM call. 5 of 8 benchmarks above AUC 0.65. Two benchmarks below chance, published openly.
+
+Full write-up: https://fathom.darkflobi.com/cognometry?ref=r_dev
+
+What actually matters for devs:
+
+- Shape-preserving: works on OpenAI, Anthropic, LangChain, dicts, raw strings. Auto-detects.
+- Sync + async
+- Four halt policies (fallback/retry/raise/annotate)
+- ~10-30ms CUDA, ~400ms CPU per call
+- MIT, no phone-home, no API key
+
+Where it'll fail you:
+
+- Reading-comp extractive-span errors (DROP) — detector can't see the wrong span.
+- Arithmetic errors on numbers copied from source (FinanceBench) — detector can't see the computation.
+
+Both declared in the weights module. Do not deploy for finance/reading-comp without reading §3.4 of the paper first.
+
+Repo: https://github.com/fathom-lab/styxx</pre>
+  <label class="done"><input type="checkbox"> r/LLMDevs posted</label>
+</div>
+
+<!-- T+0:35 — HN self-comment -->
+<div class="step">
+  <span class="when">T + 0:35</span>
+  <h2>7. HN self-comment — go back to your submission, paste this</h2>
+  <div class="hint">find your submission on hn.algolia.com or /newest, click it, scroll to comment box, paste:</div>
+  <a class="btn" target="_blank" href="https://news.ycombinator.com/from?site=fathom.darkflobi.com">find your HN submission →</a>
+  <pre>Author here.
+
+Styxx 4.0.2 is the first hallucination detector I'm aware of cross-validated across 8 public benchmarks — HaluEval QA/Dialog/Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA, FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled 9-signal logistic regression.
+
+Paper (Zenodo, peer-archived): https://doi.org/10.5281/zenodo.19703527
+Code: https://github.com/fathom-lab/styxx
+Leaderboard: https://fathom.darkflobi.com/cognometry/leaderboard
+Colab demo (2 min): https://colab.research.google.com/github/fathom-lab/styxx/blob/main/examples/cognometry_colab.ipynb
+
+Real numbers:
+
+    HaluEval-QA             AUC 0.998
+    TruthfulQA              AUC 0.994
+    HaluBench-RAGTruth      AUC 0.807   (new — RAG faithfulness)
+    HaluBench-PubMedQA      AUC 0.719   (new — biomedical)
+    HaluEval-Dialog         AUC 0.676
+    HaluEval-Summarization  AUC 0.643
+    HaluBench-FinanceBench  AUC 0.492   (below chance)
+    HaluBench-DROP          AUC 0.424   (below chance)
+
+Two below-chance results are the part I'd most like HN to react to. They are published as failure modes in the weights module itself, not hidden:
+
+- DROP: reading-comp hallucinations are extractive-span errors — wrong span, right passage. NLI scores that as entailed; novelty signals don't fire. Tried 6 naive heuristic fixes; all null. The null probe is committed alongside the successes.
+- FinanceBench: hallucinations are calculation errors on numbers copied verbatim from the source. Novelty + NLI are semantically blind to arithmetic correctness.
+
+Both failure modes are declared in calibrated_weights_v4.CALIBRATION_NOTES.documented_failure_modes so production callers know where the detector will lie.
+
+pip install styxx[nli] → wrap a function with @trust → get verified output on every call. Zero config: auto-detects context/reference/passage kwargs, auto-enables NLI when installed, adaptive threshold. MIT on code, CC-BY on calibrated weights.
+
+Happy to get disconfirmations on any of the 8 benchmarks at your favorite random seed.</pre>
+  <label class="done"><input type="checkbox"> HN self-comment posted</label>
+</div>
+
+<hr>
+
+<!-- Metrics -->
+<div class="step">
+  <span class="when">watch</span>
+  <h2>metrics tabs</h2>
+  <a class="btn" target="_blank" href="https://pypistats.org/packages/styxx">pypi downloads</a>
+  <a class="btn" target="_blank" href="https://github.com/fathom-lab/styxx/stargazers">github stars</a>
+  <a class="btn" target="_blank" href="https://news.ycombinator.com/from?site=fathom.darkflobi.com">find on HN</a>
+  <a class="btn" target="_blank" href="https://news.ycombinator.com/newest">HN /newest</a>
+</div>
+
+<script>
+// Live clock + T+0 elapsed timer
+function pad(n){return String(n).padStart(2,'0');}
+const clockEl = document.getElementById('clock');
+const elapsedEl = document.getElementById('elapsed');
+const startBtn = document.getElementById('startBtn');
+let t0 = null;
+startBtn.addEventListener('click', e=>{
+  e.preventDefault();
+  t0 = Date.now();
+  startBtn.textContent = '[ timer running ]';
+  startBtn.style.color = '#00aa00';
+  localStorage.setItem('styxx_launch_t0', t0);
+});
+// Restore t0 if present
+const stored = localStorage.getItem('styxx_launch_t0');
+if (stored) { t0 = parseInt(stored); startBtn.textContent = '[ timer running ]'; startBtn.style.color = '#00aa00'; }
+
+function tick(){
+  const d = new Date();
+  clockEl.textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  if (t0) {
+    const secs = Math.floor((Date.now()-t0)/1000);
+    const m = Math.floor(secs/60);
+    const s = secs%60;
+    elapsedEl.textContent = 'T+'+pad(m)+':'+pad(s);
+    // Highlight the active step
+    const steps = [0, 5, 10, 15, 20, 25, 35];
+    document.querySelectorAll('.step').forEach((el,i)=>{
+      if (i < steps.length && m >= steps[i] && (i+1>=steps.length || m < steps[i+1])) {
+        el.style.borderColor = '#00ff00';
+      } else {
+        el.style.borderColor = '#1e1e1e';
+      }
+    });
+  }
+}
+tick(); setInterval(tick, 1000);
+
+// Persist checkbox state
+document.querySelectorAll('input[type=checkbox]').forEach((cb,i)=>{
+  cb.checked = localStorage.getItem('styxx_launch_step_'+i) === '1';
+  cb.addEventListener('change', ()=>{
+    localStorage.setItem('styxx_launch_step_'+i, cb.checked ? '1':'0');
+  });
+});
+</script>
+</body>
+</html>
