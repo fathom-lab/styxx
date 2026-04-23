@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [4.0.2] — 2026-04-23
+
+**Headline: fix adaptive-threshold false-positives on entity-rich
+factual responses without a reference.**
+
+In 4.0.1, the adaptive threshold on the text-only heuristic path
+was 0.9. But the piecewise-linear calibration maps a saturated
+`text_claim_risk=1.0` to raw risk ~0.98 regardless of whether the
+response is correct or hallucinated — the signal is structurally
+non-discriminative without a reference. Any entity-rich factual
+claim like "The capital of France is Paris." still halted.
+
+Fix: adaptive threshold on text-only path raised to 0.99. Honest
+position: when `@trust` has no reference, it cannot meaningfully
+verify, so it passes through rather than halting on noise. Users
+who want strict text-only gating set `threshold=` explicitly.
+
+The `reference`-auto-detect path (calibrated v2/v4 weights) keeps
+the 0.7 default — nothing changes there.
+
+### Tests
+
+18 new regression tests in `tests/test_trust_v4_0_1.py` covering the
+4.0.1 effortless-mode behaviors (auto-detect, auto-NLI, adaptive
+threshold, best-of-N retry). Full suite: 591 pass.
+
+### URL health
+
+Fixed stale HuggingFace reference to `truthful_qa` (moved to
+`truthfulqa/truthful_qa`) in zenodo metadata script and
+submission-package doc. No runtime impact.
+
+### Site
+
+`og:image` now returns 200 for the cognometry manifesto
+(banner asset added to `assets/styxx/`). Leaderboard page gains
+its own `og:image` + `twitter:card` tags so link previews render
+correctly on X/LinkedIn/Slack.
+
+---
+
 ## [4.0.1] — 2026-04-23
 
 **Headline: `@trust` is now effortless. Zero config, zero sharp edges.**
