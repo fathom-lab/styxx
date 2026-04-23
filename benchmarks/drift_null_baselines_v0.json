@@ -1,0 +1,94 @@
+{
+  "methodology": "Day 1 null-heuristic baselines for drift_v0 dataset (BFCL v3, mutation-based)",
+  "n_samples": 3700,
+  "n_drift": 3042,
+  "n_no_drift": 658,
+  "overall_auc": {
+    "random": 0.4972257693206957,
+    "exact_tool_match": 0.5015090156252185,
+    "schema_conformance": 0.7332709343756807,
+    "verbatim_arg_rate": 0.5444084239092422,
+    "composite_unweighted": 0.6139098217657956
+  },
+  "per_source_auc": {
+    "irrelevance": {
+      "random": null,
+      "exact_tool_match": null,
+      "schema_conformance": null,
+      "verbatim_arg_rate": null,
+      "composite_unweighted": null
+    },
+    "live_irrelevance": {
+      "random": null,
+      "exact_tool_match": null,
+      "schema_conformance": null,
+      "verbatim_arg_rate": null,
+      "composite_unweighted": null
+    },
+    "live_simple": {
+      "random": 0.47610974270390155,
+      "exact_tool_match": 0.4987471076847616,
+      "schema_conformance": 0.8349381017881705,
+      "verbatim_arg_rate": 0.5799638527238412,
+      "composite_unweighted": 0.6921483637759508
+    },
+    "simple": {
+      "random": 0.5087489522212909,
+      "exact_tool_match": 0.5,
+      "schema_conformance": 0.8327860435875943,
+      "verbatim_arg_rate": 0.5972663453478626,
+      "composite_unweighted": 0.6960760687342833
+    }
+  },
+  "per_drift_type_auc": {
+    "arg_drop": {
+      "random": 0.5146123347813817,
+      "exact_tool_match": 0.4999884341184253,
+      "schema_conformance": 0.9756850471656651,
+      "verbatim_arg_rate": 0.5899987508847899,
+      "composite_unweighted": 0.7446681285940978
+    },
+    "arg_swap": {
+      "random": 0.4961150586767045,
+      "exact_tool_match": 0.49932063849916464,
+      "schema_conformance": 0.5000679361500835,
+      "verbatim_arg_rate": 0.503681132873045,
+      "composite_unweighted": 0.5034521628857265
+    },
+    "irrelevance_called": {
+      "random": 0.49924147608753366,
+      "exact_tool_match": 0.5044570052392331,
+      "schema_conformance": 0.5615366069058184,
+      "verbatim_arg_rate": 0.4712952879410952,
+      "composite_unweighted": 0.4949619112635382
+    },
+    "spurious_arg": {
+      "random": 0.4773907299452148,
+      "exact_tool_match": 0.49999999999999994,
+      "schema_conformance": 0.9984813979915189,
+      "verbatim_arg_rate": 0.6611265601759038,
+      "composite_unweighted": 0.7878414833565839
+    },
+    "tool_rename": {
+      "random": 0.5349544072948329,
+      "exact_tool_match": 0.5075987841945289,
+      "schema_conformance": 0.4992401215805471,
+      "verbatim_arg_rate": 0.42325227963525835,
+      "composite_unweighted": 0.43465045592705165
+    }
+  },
+  "sources": [
+    "irrelevance",
+    "live_irrelevance",
+    "live_simple",
+    "simple"
+  ],
+  "drift_types": [
+    "arg_drop",
+    "arg_swap",
+    "gold",
+    "irrelevance_called",
+    "spurious_arg",
+    "tool_rename"
+  ]
+}
