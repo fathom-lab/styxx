@@ -58,7 +58,7 @@ def my_rag(question, *, context):
 
 Every call is cognometrically verified via `styxx.guardrail.check()` before the response reaches the caller. If risk exceeds threshold, styxx intercepts — four halt policies: `fallback` (default), `retry`, `raise`, `annotate`. Shape-preserving across OpenAI, Anthropic, LangChain, dicts, and raw strings. Sync + async. Zero config.
 
-**Cross-validated on 8 benchmarks** (v4.0.0 — 3-seed averaged, n=150/dataset, seeds [31, 47, 83]):
+**Cross-validated on 8 benchmarks** (v4.0.2 — 3-seed averaged, n=150/dataset, seeds [31, 47, 83]):
 
 | Dataset                 | v4 test AUC       | Notes |
 |-------------------------|-------------------|---|
@@ -344,7 +344,8 @@ Each is documented separately. None are required for the core vitals workflow ab
 | **site** | [fathom.darkflobi.com/styxx](https://fathom.darkflobi.com/styxx) |
 | **source** | [github.com/fathom-lab/styxx](https://github.com/fathom-lab/styxx) |
 | **research** | [github.com/fathom-lab/fathom](https://github.com/fathom-lab/fathom) |
-| **paper** | [doi.org/10.5281/zenodo.19504993](https://doi.org/10.5281/zenodo.19504993) |
+| **paper (v4)** | [doi.org/10.5281/zenodo.19703527](https://doi.org/10.5281/zenodo.19703527) — *Cognometry v0: 8-Benchmark Cross-Validated Hallucination Detection* |
+| **paper (v3)** | [doi.org/10.5281/zenodo.19504993](https://doi.org/10.5281/zenodo.19504993) — logprob-trajectory methodology |
 | **issues** | [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues) |
 
 Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — see [PATENTS.md](PATENTS.md).

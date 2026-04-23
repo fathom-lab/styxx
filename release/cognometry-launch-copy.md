@@ -1,4 +1,4 @@
-# cognometry launch copy — 2026-04-23 (v4.0.0)
+# cognometry launch copy — 2026-04-23 (v4.0.2)
 
 **Manifesto:** https://fathom.darkflobi.com/cognometry
 **Leaderboard:** https://fathom.darkflobi.com/cognometry/leaderboard
@@ -18,13 +18,13 @@
 
 ### Title (Show HN variant — if launching the package as the feature)
 
-    Show HN: Styxx v4.0.0 – hallucination detection cross-validated on 8 benchmarks
+    Show HN: Styxx v4.0.2 – hallucination detection cross-validated on 8 benchmarks
 
 ### Self-comment (paste after submission)
 
 > Author here.
 >
-> Styxx 4.0.0 is the first hallucination detector I'm aware of that's
+> Styxx 4.0.2 is the first hallucination detector I'm aware of that's
 > been cross-validated across 8 public benchmarks — HaluEval-QA/Dialog/
 > Summarization, TruthfulQA, and four HaluBench subsets (DROP, PubMedQA,
 > FinanceBench, RAGTruth). 3-seed averaged, n=150/dataset, pooled
@@ -78,7 +78,7 @@
 >
 > 🟢 https://fathom.darkflobi.com/cognometry
 
-> 2/ styxx 4.0.0 is the first hallucination detector cross-validated on
+> 2/ styxx 4.0.2 is the first hallucination detector cross-validated on
 > **8 public benchmarks** — 3-seed averaged, n=150/dataset:
 >
 > HaluEval-QA        AUC 0.998
@@ -124,7 +124,7 @@
 >
 > 🟢 https://fathom.darkflobi.com/cognometry
 > 🟢 https://github.com/fathom-lab/styxx
-> 🟢 https://pypi.org/project/styxx/4.0.0/
+> 🟢 https://pypi.org/project/styxx/4.0.2/
 
 ### Solo tweet (if not threading)
 
@@ -133,7 +133,7 @@
 > **cognometry** — the measurement of cognitive states in LLMs at
 > runtime. three laws, all cross-validated.
 >
-> styxx 4.0.0: hallucination detection on **8 benchmarks**
+> styxx 4.0.2: hallucination detection on **8 benchmarks**
 > (5/8 above AUC 0.65, two published failure modes).
 >
 > pip install styxx[nli]
@@ -152,7 +152,7 @@
 > *was the model refusing, confabulating, retrieving, or reasoning
 > when it wrote that?*
 >
-> Styxx 4.0.0 is the open-source instrument, cross-validated across
+> Styxx 4.0.2 is the open-source instrument, cross-validated across
 > **8 public hallucination benchmarks** — the first detector I'm
 > aware of at this breadth of cross-validation. Three laws on the
 > table, each with a cross-validated number:
@@ -169,7 +169,7 @@
 >
 > Manifesto: https://fathom.darkflobi.com/cognometry
 > Code: https://github.com/fathom-lab/styxx
-> PyPI: https://pypi.org/project/styxx/4.0.0/
+> PyPI: https://pypi.org/project/styxx/4.0.2/
 
 ---
 
