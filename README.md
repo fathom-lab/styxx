@@ -24,6 +24,8 @@
 [![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19703527)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
+### ▶&nbsp; [**Try it live — no install, runs in your browser**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
+
 **drop-in · fail-open · zero config · local-first**
 
 ```
