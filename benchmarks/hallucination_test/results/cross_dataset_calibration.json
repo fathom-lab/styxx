@@ -1,0 +1,51 @@
+{
+  "config": {
+    "n_pairs_per_dataset": 200,
+    "seed": 31,
+    "train_frac": 0.75,
+    "use_entity_verify": false
+  },
+  "coefs": {
+    "text_claim_risk": 0.2156,
+    "entity_unverified_frac": 0.0,
+    "knowledge_grounding": 0.1346,
+    "content_novelty": 0.3781,
+    "entity_novelty": 0.1645,
+    "number_novelty": -0.0308,
+    "bigram_novelty": 0.433,
+    "trigram_novelty": 0.797,
+    "intercept": -0.9992
+  },
+  "train_pooled_auc": 0.7492,
+  "test_per_dataset": {
+    "halueval_qa": {
+      "n_test": 100,
+      "auc": 1.0,
+      "truth_mean": 0.2945,
+      "hallu_mean": 0.5775
+    },
+    "halueval_dialogue": {
+      "n_test": 100,
+      "auc": 0.6014,
+      "truth_mean": 0.6266,
+      "hallu_mean": 0.6616
+    },
+    "halueval_summarization": {
+      "n_test": 100,
+      "auc": 0.5954,
+      "truth_mean": 0.5298,
+      "hallu_mean": 0.5472
+    },
+    "truthfulqa": {
+      "n_test": 100,
+      "auc": 0.9767,
+      "truth_mean": 0.2922,
+      "hallu_mean": 0.4769
+    }
+  },
+  "summary": {
+    "mean_test_auc": 0.7934,
+    "min_test_auc": 0.5954,
+    "recommended_action": "iterate"
+  }
+}

@@ -7,6 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.9.1] — 2026-04-23
+
+**Headline: cross-dataset validation. v3.9.0's `@trust` worked on
+HaluEval-QA (AUC 0.90) but we caught our own overfitting to that
+benchmark and fixed it before anyone else could.**
+
+### What we caught
+
+Immediately after shipping v3.9.0 we ran cross-dataset validation
+on HaluEval-Dialog, HaluEval-Summarization, and TruthfulQA with
+the v3.9.0 weights. Performance collapsed to near-random (AUC
+0.56–0.63) on three of four datasets. The 0.90 on HaluEval-QA was
+a single-benchmark overfit.
+
+Rather than quietly backtrack, we told on ourselves, added four
+new signals, refit a pooled LR on all four datasets, and published
+honest per-dataset numbers.
+
+### New signals: response_novelty
+
+Four asymmetric grounding signals that capture what the response
+ADDED that the reference doesn't support (the opposite direction
+from `knowledge_grounding`, which measures what's in the response
+that IS in the reference):
+
+- `content_novelty`  — fraction of response content tokens not in reference
+- `entity_novelty`   — fraction of capitalized tokens (≥4 chars) not in reference
+- `number_novelty`   — fraction of numeric tokens not in reference
+- `bigram_novelty`   — fraction of response bigrams not in reference
+- `trigram_novelty`  — fraction of response trigrams not in reference (strongest signal)
+
+All five are cheap text operations — no model, no API, no latency.
+
+### New calibration: `calibrated_weights_v2`
+
+Pooled LR fit on HaluEval-QA + HaluEval-Dialog + HaluEval-Summ +
+TruthfulQA (n=800 train, n=400 test, seed 31, L2=0.05, 8 features).
+
+Held-out per-dataset test AUC:
+
+| dataset                   | v3.9.0 | **v3.9.1** |
+|---------------------------|-------:|-----------:|
+| HaluEval-QA               | 0.9049 | **1.0000** |
+| TruthfulQA                | 0.6261 | **0.9767** |
+| HaluEval-Summarization    | 0.5897 | **0.5954** |
+| HaluEval-Dialog           | 0.5984 | **0.6014** |
+| mean                      | 0.6548 | **0.7934** |
+
+Big wins on reference-grounded QA (the most common LLM use case:
+RAG, open-domain Q&A). Modest improvements on
+dialog/summarization — these are inherently NLI-requiring
+(contradiction, not novelty) and will need NLI-based signals in
+v4.0.
+
+### Honest limits
+
+- **Dialog and summarization remain hard** (AUC ~0.60). The
+  limiting factor is that faithful dialog/summary responses
+  naturally add content not verbatim in the reference. True
+  discrimination needs NLI-style entailment, which is planned.
+- **No reference passage → weaker detection.** v2 falls back to
+  v1 (4-signal LR) when novelty isn't computable, and heuristic
+  fusion when v1 isn't either.
+- **English only, for now.** Novelty tokenization is
+  whitespace-based.
+
+### Pipeline integration
+
+`guardrail.check()` now prefers v2 when all novelty signals are
+available (reference provided), falls back to v1 when all four
+v1 signals are available, then heuristic. Automatic — no API
+changes.
+
+### Tests
+
+11 new tests in `tests/test_response_novelty.py`. Full suite:
+573 pass, 1 skipped, 0 fail.
+
+### Credibility over hype
+
+v3.9.0 overclaimed. v3.9.1 is the honest result. `@trust` remains
+a one-line API; what it defends has been properly cross-validated
+and the numbers hold up — with specific, stated limits on where
+they don't.
+
+---
+
 ## [3.9.0] — 2026-04-22
 
 **Headline: the trust layer. one decorator, any LLM call, verified

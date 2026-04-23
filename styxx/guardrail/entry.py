@@ -141,6 +141,16 @@ def check(
         from .knowledge_grounding import response_grounding_risk
         grounding_score = response_grounding_risk(claims, reference)
 
+    # 5c. Response-novelty signals (v3.9.1+) — asymmetric grounding
+    # signals that capture what the response ADDED that the reference
+    # doesn't support. Strong discriminator on reference-grounded QA
+    # (AUC 1.0 on HaluEval-QA, 0.97 on TruthfulQA pooled). Always
+    # computed when a reference is available — cheap text operations.
+    novelty = None
+    if reference:
+        from .response_novelty import response_novelty_signals
+        novelty = response_novelty_signals(response, reference)
+
     # 6. Fuse signals
     # Response-level text risk: mean of per-claim text risks
     if per_claim_text_risk:
@@ -159,19 +169,30 @@ def check(
         signals_dict["consensus_disagreement"] = consensus_score
     if grounding_score is not None:
         signals_dict["knowledge_grounding"] = grounding_score
+    if novelty is not None:
+        signals_dict.update(novelty)
 
-    # Prefer the learned LR calibration when all 4 core signals are
-    # present (HaluEval-trained; 0.90 test AUC). Fall back to the
-    # heuristic weighted-sum + piecewise linear map when signals are
-    # missing (e.g., no reference → grounding absent).
-    have_all_four = all(k in signals_dict for k in (
+    # Prefer the pooled v2 calibration when response_novelty is
+    # available (reference present + any grounding signal — the
+    # configuration we cross-validated to mean AUC 0.79 across 4
+    # datasets, with AUC 1.0 on HaluEval-QA and 0.97 on TruthfulQA).
+    # Fall back to v1 LR when all 4 v1 signals are present, or to
+    # the heuristic fusion otherwise.
+    have_v2 = all(k in signals_dict for k in (
+        "bigram_novelty", "trigram_novelty", "content_novelty",
+    ))
+    have_v1 = all(k in signals_dict for k in (
         "text_claim_risk", "entity_unverified_frac",
         "knowledge_grounding", "probe_confab",
     ))
-    if have_all_four:
+    if have_v2:
+        from .calibrated_weights_v2 import predict_proba_v2
+        calibrated_risk = predict_proba_v2(signals_dict)
+        raw_risk = calibrated_risk
+    elif have_v1:
         from .calibrated_weights import predict_proba
         calibrated_risk = predict_proba(signals_dict)
-        raw_risk = calibrated_risk   # for audit/debug
+        raw_risk = calibrated_risk
     else:
         raw_risk = fuse_signals(signals_dict)
         calibrated_risk = calibrate_piecewise_linear(raw_risk)
@@ -247,6 +268,12 @@ def check(
             name="consensus_disagreement",
             value=consensus_score,
         ))
+    if novelty is not None:
+        for name, val in novelty.items():
+            signal_readings.append(SignalReading(
+                name=name,
+                value=val,
+            ))
 
     return Verdict(
         prompt=prompt,
