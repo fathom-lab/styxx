@@ -1,4 +1,4 @@
-# v5.0 Amplify Kit — paste-ready copy for distribution
+# v5.1 Amplify Kit — paste-ready copy for distribution
 
 All four drafts land the same core message: **two instruments, ahead of every published competitor, no LLM required.** Adapt tone per channel.
 
@@ -8,7 +8,7 @@ All four drafts land the same core message: **two instruments, ahead of every pu
 
 **1/**
 ```
-shipped styxx v5.0 today: two calibrated cognometric instruments.
+shipped styxx v5.1 today: two calibrated cognometric instruments.
 
 0.998 AUC on HaluEval-QA (hallucination).
 0.976 AUC on GPT-4 refusals (XSTest, out-of-family held-out).
@@ -57,7 +57,7 @@ refusal: fathom.darkflobi.com/cognometry/refuse
 
 **6/**
 ```
-pip install styxx==5.0.0
+pip install styxx==5.1.0
 
 github: github.com/fathom-lab/styxx
 paper: doi.org/10.5281/zenodo.19703527
@@ -72,12 +72,12 @@ nothing crosses unseen.
 
 ## Reddit — r/MachineLearning or r/LocalLLaMA
 
-**Title:** `[R] styxx v5.0 — two calibrated detection instruments (hallucination AUC 0.998, refusal AUC 0.976 on GPT-4 held-out) — pure Python, no LLM required`
+**Title:** `[R] styxx v5.1 — two calibrated detection instruments (hallucination AUC 0.998, refusal AUC 0.976 on XSTest-v2 GPT-4 held-out) — pure Python, no LLM required`
 
 **Body:**
 
 ```
-Shipping v5.0 of styxx today. Two calibrated detection instruments
+Shipping v5.1 of styxx today. Two calibrated detection instruments
 running entirely in CPU Python, benchmarked against every published
 competitor I could find.
 
@@ -87,7 +87,7 @@ competitor I could find.
 - Cross-validated across 8 benchmarks, 3-seed averaged
 - 2 failure modes published openly (DROP AUC 0.42, FinanceBench 0.49)
 
-## Refusal (new in v5)
+## Refusal (new in v5.x)
 - XSTest AUC 0.976 on GPT-4 (held-out, trained on Llama-3.2-1B)
 - Mean cross-model AUC 0.794 across 5 families
 - 1 documented failure mode (Mistral-instruct, AUC 0.60 —
@@ -187,7 +187,7 @@ Flobi
 ## LinkedIn post (when ID verify clears)
 
 ```
-Shipping styxx v5.0 — the second cognometric instrument just landed.
+Shipping styxx v5.1 — the second cognometric instrument just landed (with honest competitive positioning).
 
 Hallucination detection:  AUC 0.998 on HaluEval-QA (8-benchmark cross-validated)
 Refusal detection:         AUC 0.976 on GPT-4 (XSTest, held-out, trained on Llama-3.2-1B)
@@ -224,7 +224,7 @@ github.com/fathom-lab/styxx — MIT.
 
 ## Hacker News — retry (previous was shadow-banned, 2nd-chance route worked last time)
 
-**Title:** `Show HN: Styxx v5 — calibrated hallucination + refusal detection, no LLM (beats Patronus Lynx-70B on HaluEval-QA with 9 floats)`
+**Title:** `Show HN: Styxx v5.1 — calibrated hallucination + refusal detection, no LLM (9 floats beat 440M HHEM on HaluEval-QA)`
 
 **URL:** `https://github.com/fathom-lab/styxx`
 
@@ -233,7 +233,7 @@ github.com/fathom-lab/styxx — MIT.
 ```
 Hi HN — author here.
 
-v5 shipped two calibrated detection instruments. Both run as
+v5.1 shipped two calibrated detection instruments. Both run as
 logistic regression over engineered text/novelty/grounding
 signals. No fine-tuning, no LLM inference, no GPU.
 
