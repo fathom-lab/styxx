@@ -149,6 +149,14 @@ v = refuse_check(
 
 `styxx[nli]` unlocks calibrated-v4 9-signal hallucination. `refuse_check()` ships with v1 calibrated weights and requires no extras.
 
+<p align="center">
+  <a href="https://fathom.darkflobi.com/cognometry/refuse?scenario=lecturing">
+    <img alt="refusal detector correctly classifies a Mistral-style lecturing refusal — normative_density +6.68 dominates, starts_with_sorry -2.59 negative (not apologetic), refuse_risk 99.8%" src="https://raw.githubusercontent.com/fathom-lab/styxx/main/release/playground-refuse-lecturing.png" width="720">
+  </a>
+  <br>
+  <sub><i>the refusal detector's signed-contribution view: a <strong>Mistral-style lecturing refusal</strong> gets caught at 99.8% risk even though the training data had zero lecturing examples. <code>normative_density</code> dominates (+6.68), <code>starts_with_sorry</code> contributes negatively (-2.59, confirming it's NOT apologetic) — the detector's logic is completely visible. <a href="https://fathom.darkflobi.com/cognometry/refuse">try the refusal playground</a>.</i></sub>
+</p>
+
 DROP (extractive-span reading comp) and FinanceBench (numeric arithmetic) are below chance because novelty + NLI signals are structurally blind to those error types. Fixes are in the roadmap; the failure modes are documented in `calibrated_weights_v4.CALIBRATION_NOTES`. Full writeup: [CHANGELOG.md](CHANGELOG.md#400--2026-04-23).
 
 **Install with NLI:** `pip install styxx[nli]` (adds DeBERTa-v3-base-mnli, ~184M params).
