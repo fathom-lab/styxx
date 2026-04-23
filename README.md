@@ -38,6 +38,14 @@
 
 </div>
 
+<p align="center">
+  <a href="https://fathom.darkflobi.com/cognometry/try?scenario=fabricated-number">
+    <img alt="styxx playground — paste a triplet, see the real detector flag it in ~5 seconds, no install" src="https://raw.githubusercontent.com/fathom-lab/styxx/main/release/playground-hero-fabricated-number.png" width="720">
+  </a>
+  <br>
+  <sub><i>paste a (question, response, reference) into <a href="https://fathom.darkflobi.com/cognometry/try">the playground</a> — the real detector runs in your browser via Pyodide, highlights the fabricated spans, and returns all 7 signals in ~5 seconds. no install, no api key, no backend.</i></sub>
+</p>
+
 ---
 
 ## New in v4.0: `@trust` — cross-validated on 8 benchmarks
