@@ -404,3 +404,172 @@ def _build_openai_shaped(logprobs: Any) -> Optional[_FakeResponse]:
         )
     except Exception:
         return None
+
+
+# ────────────────────────────────────────────────────────────────────
+# StyxxHallucinationGuard — the @trust equivalent for LangChain
+# ────────────────────────────────────────────────────────────────────
+#
+# The callback handler above is passive observation. This class is
+# active interception — wrap any LangChain Runnable and every output
+# gets cognometrically verified before the chain returns. Based on the
+# same 9-signal cross-validated detector that ships in @trust.
+#
+# Usage:
+#
+#     from langchain_openai import ChatOpenAI
+#     from langchain_core.runnables import RunnablePassthrough
+#     from styxx.adapters.langchain import StyxxHallucinationGuard
+#
+#     rag_chain = (
+#         {"context": retriever, "question": RunnablePassthrough()}
+#         | prompt
+#         | ChatOpenAI(model="gpt-4o")
+#         | StrOutputParser()
+#     )
+#
+#     guarded = StyxxHallucinationGuard(threshold=0.7).wrap(rag_chain)
+#     answer = guarded.invoke("who directed inception?",
+#                              config={"metadata": {
+#                                  "context": "Inception (2010) was..."
+#                              }})
+#     # If the model's response scored ≥ 0.7 risk, answer is the styxx
+#     # fallback text. Otherwise, pass-through.
+#
+# Works on any Runnable that produces a string or a dict with a
+# reference-y key (context / passage / etc — same auto-detect list
+# as @trust). Input metadata carries the grounding reference.
+# ────────────────────────────────────────────────────────────────────
+
+_REFERENCE_METADATA_KEYS = (
+    "reference", "context", "passage", "passages",
+    "docs", "documents", "source", "sources",
+    "knowledge", "grounding", "retrieved", "retrieval",
+)
+
+_DEFAULT_FALLBACK = (
+    "I'm not confident enough in my answer to give you one. "
+    "Please verify with a trusted source."
+)
+
+
+def _extract_reference(metadata: Optional[Dict[str, Any]]) -> Optional[str]:
+    if not metadata:
+        return None
+    for k in _REFERENCE_METADATA_KEYS:
+        v = metadata.get(k)
+        if isinstance(v, str) and v.strip():
+            return v
+        if isinstance(v, (list, tuple)) and all(
+            isinstance(x, str) for x in v
+        ) and v:
+            return "\n".join(v)
+    return None
+
+
+class StyxxHallucinationGuard:
+    """Wrap a LangChain Runnable with @trust-style hallucination gating.
+
+    Verifies the Runnable's output via styxx.guardrail.check() with
+    NLI + novelty signals, intercepts on high risk.
+
+    Parameters mirror @trust: threshold, on_halt, fallback, max_retries,
+    use_nli, use_entity_verify. See styxx.trust for details.
+
+    Cross-validated numbers (3-seed averaged, n=150/dataset):
+
+        HaluEval-QA           AUC 0.998
+        TruthfulQA            AUC 0.994
+        HaluBench-RAGTruth    AUC 0.807  (direct RAG faithfulness)
+        HaluBench-PubMedQA    AUC 0.719
+        HaluEval-Dialog       AUC 0.676
+        HaluEval-Summ         AUC 0.643
+        HaluBench-FinanceBench AUC 0.492  (published failure)
+        HaluBench-DROP        AUC 0.424  (published failure)
+
+    https://fathom.darkflobi.com/cognometry/failures documents the two
+    failure modes — avoid this guard for extractive-span reading-comp
+    or financial arithmetic.
+    """
+
+    def __init__(
+        self,
+        threshold: float = 0.7,
+        on_halt: str = "fallback",      # "fallback" | "raise" | "annotate"
+        fallback: str = _DEFAULT_FALLBACK,
+        max_retries: int = 2,
+        use_nli: Optional[bool] = None,  # None = auto-detect styxx[nli]
+        use_entity_verify: bool = False,
+    ):
+        if on_halt not in {"fallback", "raise", "annotate"}:
+            raise ValueError(
+                "on_halt must be one of: fallback, raise, annotate"
+            )
+        self._threshold = threshold
+        self._on_halt = on_halt
+        self._fallback = fallback
+        self._max_retries = max_retries
+        self._use_nli = use_nli
+        self._use_entity_verify = use_entity_verify
+
+    def wrap(self, runnable):
+        """Wrap a LangChain Runnable. Returns a Runnable with identical
+        input interface but gated output.
+        """
+        try:
+            from langchain_core.runnables import (
+                RunnableLambda, RunnablePassthrough,
+            )
+            from langchain_core.runnables.config import RunnableConfig
+        except ImportError as e:
+            raise ImportError(
+                "StyxxHallucinationGuard.wrap() requires langchain-core. "
+                "Install with: pip install langchain-core"
+            ) from e
+
+        guard = self  # closure over self for RunnableLambda
+
+        def _check(output, config=None):
+            from ..guardrail import check
+            metadata = (config or {}).get("metadata", {}) if config else {}
+            reference = _extract_reference(metadata)
+            prompt = metadata.get("prompt") or metadata.get("question", "")
+            response_text = (
+                output if isinstance(output, str)
+                else str(output.get("answer") if isinstance(output, dict)
+                         else output)
+            )
+            verdict = check(
+                prompt=str(prompt),
+                response=response_text,
+                reference=reference,
+                use_nli=guard._use_nli,
+                use_entity_verify=guard._use_entity_verify,
+            )
+            if verdict.risk < guard._threshold:
+                return output
+            if guard._on_halt == "raise":
+                raise RuntimeError(
+                    f"styxx hallucination risk {verdict.risk:.3f} "
+                    f"exceeded threshold {guard._threshold:.2f}"
+                )
+            if guard._on_halt == "annotate":
+                return {
+                    "output": output,
+                    "styxx_risk": verdict.risk,
+                    "styxx_action": verdict.action,
+                    "styxx_halted": True,
+                }
+            # fallback
+            if isinstance(output, dict):
+                out = dict(output)
+                out["answer"] = guard._fallback
+                return out
+            return guard._fallback
+
+        checker = RunnableLambda(_check)
+        # Compose: run the original runnable, then apply the check
+        return runnable | checker
+
+
+__all__ = ["StyxxCallbackHandler", "StyxxHallucinationGuard"]
