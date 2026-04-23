@@ -11,9 +11,9 @@
            · · · nothing crosses unseen · · ·
 ```
 
-### cognitive vitals for llm agents
+### Cognitive vitals for LLM agents
 
-*one line of python to detect hallucination, refusal, and adversarial drift —*
+*One line of Python to detect hallucination, refusal, and adversarial drift —*
 *in real time, from signals already on the token stream.*
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
@@ -26,7 +26,7 @@
 **drop-in · fail-open · zero config · local-first**
 
 ```
-   your app ──▶ @trust ──▶ llm ──▶ styxx.guardrail ──▶ response
+   your app ──▶ @trust ──▶ LLM ──▶ styxx.guardrail ──▶ response
                                          │
                                    (if risky)
                                          ▼
@@ -242,7 +242,7 @@ Full details: [docs/anthropic-support.md](docs/anthropic-support.md) ·
 
 ---
 
-## Typescript / JavaScript
+## TypeScript / JavaScript
 
 ```bash
 npm install @fathom_lab/styxx
@@ -283,12 +283,12 @@ Every `openai.OpenAI()` call is transparently wrapped. Vitals land on every resp
 
 | Install | Drop-in for |
 |---|---|
-| `pip install styxx[openai]` | openai python SDK |
-| `pip install styxx[anthropic]` | anthropic SDK (text-level) |
-| `pip install styxx[langchain]` | langchain callback handler |
-| `pip install styxx[crewai]` | crewai agent injection |
-| `pip install styxx[langsmith]` | vitals as langsmith trace metadata |
-| `pip install styxx[langfuse]` | vitals as langfuse numeric scores |
+| `pip install styxx[openai]` | OpenAI Python SDK |
+| `pip install styxx[anthropic]` | Anthropic SDK (text-level) |
+| `pip install styxx[langchain]` | LangChain callback handler |
+| `pip install styxx[crewai]` | CrewAI agent injection |
+| `pip install styxx[langsmith]` | Vitals as LangSmith trace metadata |
+| `pip install styxx[langfuse]` | Vitals as Langfuse numeric scores |
 
 Full compatibility matrix: [docs/COMPATIBILITY.md](https://github.com/fathom-lab/styxx/blob/main/docs/COMPATIBILITY.md).
 
