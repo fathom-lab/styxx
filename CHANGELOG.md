@@ -7,6 +7,81 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [4.0.1] — 2026-04-23
+
+**Headline: `@trust` is now effortless. Zero config, zero sharp edges.**
+
+Three UX fixes that turn first-contact from "why is every response
+being flagged?" into "it just works":
+
+### Zero-config reference auto-detect
+
+`@trust` now auto-detects reference passages from any of these
+kwarg names on the wrapped function: `context`, `reference`,
+`references`, `passage`, `passages`, `docs`, `documents`, `source`,
+`sources`, `knowledge`, `grounding`, `retrieved`, `retrieval`.
+
+```python
+@trust
+def my_rag(question, *, context):   # no more reference_arg=...
+    return openai.chat.completions.create(...)
+```
+
+Before: users had to write `@trust(reference_arg="context")` or
+the detector would silently run text-only and over-halt. Now it's
+automatic. `reference_arg=` is still honored when explicit; only
+kwargs the function actually declares are picked up, so framework
+pass-throughs don't cause false positives.
+
+List/tuple of passages are also recognized and joined with newline.
+
+### Auto-enable NLI when `styxx[nli]` is installed
+
+`use_nli` default changed from `False` to `None` (auto). When
+`torch` + `transformers` are importable, NLI is on by default. When
+they aren't, it stays off. `use_nli=True` / `use_nli=False` are
+still honored explicitly.
+
+This means `pip install styxx[nli]` now matters: you get the v4
+9-signal pipeline automatically rather than needing to pass
+`use_nli=True` everywhere.
+
+### Adaptive threshold
+
+`@trust` previously halted at a flat `threshold=0.7`. When no
+reference was provided (text-heuristic path), any confident factual
+claim scored risk ~0.98 and triggered a halt — first-run demos
+returned the fallback on correct answers.
+
+Fix: when the user didn't override `threshold` (i.e., the default
+0.7 is in effect) AND only the text-heuristic path is firing, the
+effective threshold is bumped to 0.9. Calibrated paths (v2, v4,
+tier-1) keep 0.7. Explicit user thresholds — any non-default value
+— are always respected.
+
+### Smart retry: best-of-N
+
+`on_halt="retry"` now tracks the lowest-risk response across all
+retry attempts. When retries exhaust and no attempt cleared the
+threshold, the fallback still fires (same behavior), but the
+internal state now reflects the genuinely-best candidate — which
+matters for `on_halt="annotate"` users inspecting `attempts` and
+for future features that might use the best candidate differently.
+
+### Tests
+
+Full suite: 573 pass. `test_trust.py` existing suite unchanged and
+green; new behaviors are backward-compatible.
+
+### What's NOT changed
+
+- `@trust()` defaults: `threshold=0.7`, `on_halt="fallback"`,
+  `max_retries=2`, `fallback="I'm not confident..."`. Same as 4.0.0.
+- 8-benchmark calibrated weights v4: identical. No retraining.
+- API surface: only additions (zero new required args, no renames).
+
+---
+
 ## [4.0.0] — 2026-04-23
 
 **Headline: cross-validated on 8 benchmarks. The first honest

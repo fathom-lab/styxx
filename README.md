@@ -39,19 +39,21 @@
 
 ## New in v4.0: `@trust` — cross-validated on 8 benchmarks
 
-`pip install styxx` + one decorator is all it takes to stop hallucinations from reaching users.
+`pip install styxx[nli]` + one decorator. Zero config.
 
 ```python
 from styxx import trust
 import openai
 
 @trust
-def my_rag(question: str) -> str:
+def my_rag(question, *, context):
     return openai.chat.completions.create(
         model="gpt-4o",
-        messages=[{"role": "user", "content": question}],
+        messages=[{"role": "user", "content": f"{context}\n\n{question}"}],
     )
 ```
+
+`@trust` auto-detects `context` (or `reference`, `passage`, `docs`, `source`, `knowledge`, ...) as the grounding passage. Auto-enables NLI if `styxx[nli]` is installed. Calibrated thresholds adapt to which signals fire. No configuration required.
 
 Every call is cognometrically verified via `styxx.guardrail.check()` before the response reaches the caller. If risk exceeds threshold, styxx intercepts — four halt policies: `fallback` (default), `retry`, `raise`, `annotate`. Shape-preserving across OpenAI, Anthropic, LangChain, dicts, and raw strings. Sync + async. Zero config.
 

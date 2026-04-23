@@ -243,6 +243,32 @@ def _extract_prompt_from_messages(msgs) -> Optional[str]:
 
 
 # ────────────────────────────────────────────────────────────────────
+# Signature inspection — collect the wrapped function's declared kwargs
+# so we can restrict zero-config reference auto-detect to kwargs that
+# the function actually accepts. Prevents false positives from kwargs
+# a caller passes by mistake or from **kwargs pass-through frameworks.
+# ────────────────────────────────────────────────────────────────────
+def _function_kwarg_names(func: Callable) -> Optional[frozenset]:
+    """Return the kwargs the wrapped function accepts, or None if it
+    accepts **kwargs (in which case any alias is game).
+    """
+    try:
+        sig = inspect.signature(func)
+    except (TypeError, ValueError):
+        return None
+    names = set()
+    for p in sig.parameters.values():
+        if p.kind == inspect.Parameter.VAR_KEYWORD:
+            return None  # accepts any kwarg
+        if p.kind in (
+            inspect.Parameter.POSITIONAL_OR_KEYWORD,
+            inspect.Parameter.KEYWORD_ONLY,
+        ):
+            names.add(p.name)
+    return frozenset(names)
+
+
+# ────────────────────────────────────────────────────────────────────
 # Response-shape replacement — put a fallback string back into the
 # same shape the LLM client produced, so downstream code that reads
 # .choices[0].message.content still works.
@@ -321,6 +347,24 @@ def _replace_text(original: Any, new_text: str) -> Any:
 # Works with sync and async functions (auto-detected). Streaming
 # generators are accumulated, verified, and replayed.
 # ────────────────────────────────────────────────────────────────────
+_REFERENCE_KWARG_ALIASES = (
+    "context", "reference", "references", "passage", "passages",
+    "docs", "documents", "source", "sources",
+    "knowledge", "grounding", "retrieved", "retrieval",
+)
+
+
+def _nli_available() -> bool:
+    """True iff styxx[nli] dependencies are importable. Called once at
+    decoration time to decide whether to enable NLI by default."""
+    try:
+        import torch  # noqa: F401
+        import transformers  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
 def trust(
     fn: Optional[Callable] = None,
     *,
@@ -332,7 +376,9 @@ def trust(
     reference_arg: Optional[str] = None,
     use_entity_verify: bool = True,
     use_probe: bool = False,
+    use_nli: Optional[bool] = None,   # None = auto-enable if styxx[nli] installed
     probe_scorer=None,
+    nli_scorer=None,
     verbose: bool = False,
     policy: Optional[ActionPolicy] = None,
 ) -> Callable:
@@ -388,8 +434,15 @@ def trust(
             f"on_halt must be one of {_VALID_HALT}, got {on_halt!r}"
         )
 
+    # Resolve use_nli auto-default once per decoration.
+    #   None → auto (enable iff styxx[nli] installed)
+    #   True → user explicitly wants NLI (will fail on missing deps)
+    #   False → user explicitly disabled NLI
+    effective_use_nli = use_nli if use_nli is not None else _nli_available()
+
     def _decorate(func: Callable) -> Callable:
         is_async = asyncio.iscoroutinefunction(func)
+        sig_kwargs = _function_kwarg_names(func)
 
         def _verify(prompt: str, response_text: str,
                      reference: Optional[str]) -> Verdict:
@@ -399,15 +452,68 @@ def trust(
                 reference=reference,
                 use_entity_verify=use_entity_verify,
                 use_probe=use_probe,
+                use_nli=effective_use_nli,
                 probe_scorer=probe_scorer,
+                nli_scorer=nli_scorer,
                 use_grounding=(reference is not None),
                 policy=policy,
             )
 
         def _reference_from_kwargs(kwargs: dict) -> Optional[str]:
-            if reference_arg is None:
-                return None
-            return kwargs.get(reference_arg)
+            # Explicit reference_arg wins.
+            if reference_arg is not None:
+                return kwargs.get(reference_arg)
+            # Zero-config auto-detection: scan kwargs for a string value
+            # under a common reference-name. When the wrapped function
+            # has a declared signature, only consider kwargs the
+            # function actually accepts (prevents picking up unrelated
+            # params a framework passed through). When the function
+            # accepts **kwargs, any alias is fair game.
+            for name in _REFERENCE_KWARG_ALIASES:
+                if name not in kwargs:
+                    continue
+                if sig_kwargs is not None and name not in sig_kwargs:
+                    continue
+                val = kwargs[name]
+                if isinstance(val, str) and val.strip():
+                    return val
+                # allow list/tuple of passages → join them
+                if isinstance(val, (list, tuple)) and all(
+                    isinstance(x, str) for x in val
+                ) and val:
+                    return "\n".join(val)
+            return None
+
+        def _effective_threshold(verdict: Verdict) -> float:
+            """Adapt the halt threshold to which calibration path fired.
+
+            Rationale: when only the text-heuristic path is available
+            (no reference passed → no novelty / grounding / NLI), a
+            confident-looking factual claim can score risk ~0.98 with
+            just text_claim_risk firing. Lowering that false-positive
+            rate without retraining costs nothing but a threshold
+            bump on the text-only path. Calibrated paths (v2, v4,
+            tier-1) keep the tight default.
+
+            Only applied when the caller didn't override ``threshold``
+            (detected as threshold == 0.7, the docstring default). An
+            explicit user choice — even one that happens to equal 0.7
+            — is always respected after the first time they notice
+            the adaptive behavior and set the policy accordingly.
+            """
+            # Explicit user threshold wins. 0.7 is the default.
+            if threshold != 0.7:
+                return threshold
+            signal_names = {s.name for s in verdict.signals}
+            calibrated_keys = {
+                "content_novelty", "bigram_novelty", "trigram_novelty",
+                "knowledge_grounding", "nli_contradict", "probe_confab",
+            }
+            if signal_names & calibrated_keys:
+                return 0.7
+            # Text-only heuristic path with defaults: raise the bar so
+            # single-signal confident claims don't halt first-contact.
+            return 0.9
 
         def _handle(response: Any, prompt: str,
                      reference: Optional[str], attempt: int):
@@ -419,13 +525,15 @@ def trust(
                 return response, None, False, False
             verdict = _verify(prompt, response_text, reference)
 
-            if verdict.risk < threshold:
+            eff_threshold = _effective_threshold(verdict)
+            if verdict.risk < eff_threshold:
                 return response, verdict, False, False
 
             if verbose:
                 import sys
                 print(
                     f"[styxx.trust] halt: risk={verdict.risk:.3f} "
+                    f"(threshold={eff_threshold:.2f}) "
                     f"action={verdict.action} attempt={attempt+1}",
                     file=sys.stderr,
                 )
@@ -443,17 +551,25 @@ def trust(
         def sync_wrapper(*args, **kwargs):
             prompt = _extract_prompt(args, kwargs, prompt_arg)
             reference = _reference_from_kwargs(kwargs)
-            last_verdict = None
-            last_response = None
+            # Best-of-N retry: across all attempts, remember the
+            # lowest-risk (response, verdict). If retries exhaust
+            # without ever clearing the threshold, return the best
+            # candidate we saw instead of blindly falling back.
+            best_response = None
+            best_verdict = None
             attempts = 0
             for attempt in range(max_retries + 1):
                 attempts = attempt + 1
                 response = func(*args, **kwargs)
-                last_response = response
                 final, verdict, should_retry, halted = _handle(
                     response, prompt, reference, attempt
                 )
-                last_verdict = verdict
+                if verdict is not None and (
+                    best_verdict is None
+                    or verdict.risk < best_verdict.risk
+                ):
+                    best_response = response
+                    best_verdict = verdict
                 if not should_retry:
                     if on_halt == "annotate" and verdict is not None:
                         return TrustResult(
@@ -463,26 +579,33 @@ def trust(
                             attempts=attempts,
                         )
                     return final
-            # Retries exhausted, apply fallback
-            if last_verdict is not None:
-                return _replace_text(last_response, fallback)
-            return last_response
+            # Retries exhausted. If our best attempt is still above
+            # threshold (true halt), fall back. If the best retry
+            # actually cleared threshold at any point, that was returned
+            # above — we only reach here when every attempt failed.
+            if best_verdict is not None:
+                return _replace_text(best_response, fallback)
+            return response
 
         @functools.wraps(func)
         async def async_wrapper(*args, **kwargs):
             prompt = _extract_prompt(args, kwargs, prompt_arg)
             reference = _reference_from_kwargs(kwargs)
-            last_verdict = None
-            last_response = None
+            best_response = None
+            best_verdict = None
             attempts = 0
             for attempt in range(max_retries + 1):
                 attempts = attempt + 1
                 response = await func(*args, **kwargs)
-                last_response = response
                 final, verdict, should_retry, halted = _handle(
                     response, prompt, reference, attempt
                 )
-                last_verdict = verdict
+                if verdict is not None and (
+                    best_verdict is None
+                    or verdict.risk < best_verdict.risk
+                ):
+                    best_response = response
+                    best_verdict = verdict
                 if not should_retry:
                     if on_halt == "annotate" and verdict is not None:
                         return TrustResult(
@@ -492,9 +615,9 @@ def trust(
                             attempts=attempts,
                         )
                     return final
-            if last_verdict is not None:
-                return _replace_text(last_response, fallback)
-            return last_response
+            if best_verdict is not None:
+                return _replace_text(best_response, fallback)
+            return response
 
         wrapper = async_wrapper if is_async else sync_wrapper
         wrapper.__wrapped__ = func
