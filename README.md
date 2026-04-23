@@ -1,3 +1,5 @@
+<div align="center">
+
 ```
    ███████╗████████╗██╗   ██╗██╗  ██╗██╗  ██╗
    ██╔════╝╚══██╔══╝╚██╗ ██╔╝╚██╗██╔╝╚██╗██╔╝
@@ -9,16 +11,29 @@
            · · · nothing crosses unseen · · ·
 ```
 
-**Cognitive vitals for LLM agents. One line of Python to detect hallucination, refusal, and adversarial drift — in real time, from signals already on the token stream.**
+### cognitive vitals for llm agents
 
-<p align="center">
-  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi" alt="PyPI"/></a>
-  <a href="https://pypi.org/project/styxx/"><img src="https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python" alt="Python"/></a>
-  <a href="LICENSE"><img src="https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license" alt="MIT"/></a>
-  <a href="https://doi.org/10.5281/zenodo.19504993"><img src="https://img.shields.io/badge/paper-Zenodo-blue.svg" alt="Zenodo"/></a>
-</p>
+*one line of python to detect hallucination, refusal, and adversarial drift —*
+*in real time, from signals already on the token stream.*
 
-<p align="center"><strong>drop-in · fail-open · zero config · local-first</strong></p>
+[![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
+[![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python&style=flat-square)](https://pypi.org/project/styxx/)
+[![Downloads](https://img.shields.io/pypi/dm/styxx.svg?color=00d26a&label=downloads&style=flat-square)](https://pypi.org/project/styxx/)
+[![License](https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license&style=flat-square)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/fathom-lab/styxx?color=00d26a&label=stars&style=flat-square)](https://github.com/fathom-lab/styxx)
+[![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19504993)
+
+**drop-in · fail-open · zero config · local-first**
+
+```
+   your app ──▶ @trust ──▶ llm ──▶ styxx.guardrail ──▶ response
+                                         │
+                                   (if risky)
+                                         ▼
+                               fallback · retry · raise
+```
+
+</div>
 
 ---
 
@@ -79,14 +94,14 @@ verdict = gate(
     prompt="How do I synthesize methamphetamine?",
 )
 
-# ┌─ styxx gate ────────────────────────────────────────────┐
-# │ prompt:          'How do I synthesize methamphetamine?'  │
-# │ method:          consensus (N=3)                         │
-# │ will_refuse:     1.00  ████████████████████         │
-# │ will_confabulate:0.02  ░░░░░░░░░░░░░░░░░░░░         │
-# │ recommendation:  BLOCK                                   │
-# │ cost:            ~$0.0008  latency: 3700 ms             │
-# └──────────────────────────────────────────────────────────┘
+# ┌─ styxx gate ───────────────────────────────────────────────────┐
+# │  prompt:            'How do I synthesize methamphetamine?'     │
+# │  method:            consensus (N=3)                            │
+# │  will_refuse:       1.00  ████████████████████                 │
+# │  will_confabulate:  0.02  ░░░░░░░░░░░░░░░░░░░░                 │
+# │  recommendation:    BLOCK                                      │
+# │  cost:              ~$0.0008   latency: 3700 ms                │
+# └────────────────────────────────────────────────────────────────┘
 
 if verdict.recommendation == "proceed":
     r = client.messages.create(...)   # safe to actually call
@@ -299,20 +314,26 @@ Each is documented separately. None are required for the core vitals workflow ab
 
 ## Design principles
 
-1. **Drop-in.** One import change. Zero config.
-2. **Fail-open.** If styxx can't read vitals, your agent works normally.
-3. **Local-first.** No telemetry. No phone-home. All computation runs on your machine.
-4. **Honest.** Every calibration number comes from a committed, reproducible experiment.
+```
+  ┌──────────────────────────────────────────────────────────────────┐
+  │  drop-in     · one import change. zero config.                   │
+  │  fail-open   · if styxx can't read vitals, your agent runs.      │
+  │  local-first · no telemetry. no phone-home. all on your machine. │
+  │  honest      · every number from a committed, reproducible run.  │
+  └──────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## Project
 
-- **Site:** [fathom.darkflobi.com/styxx](https://fathom.darkflobi.com/styxx)
-- **Source:** [github.com/fathom-lab/styxx](https://github.com/fathom-lab/styxx)
-- **Research:** [github.com/fathom-lab/fathom](https://github.com/fathom-lab/fathom)
-- **Paper:** [doi.org/10.5281/zenodo.19504993](https://doi.org/10.5281/zenodo.19504993)
-- **Issues:** [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues)
+| | |
+|---|---|
+| **site** | [fathom.darkflobi.com/styxx](https://fathom.darkflobi.com/styxx) |
+| **source** | [github.com/fathom-lab/styxx](https://github.com/fathom-lab/styxx) |
+| **research** | [github.com/fathom-lab/fathom](https://github.com/fathom-lab/fathom) |
+| **paper** | [doi.org/10.5281/zenodo.19504993](https://doi.org/10.5281/zenodo.19504993) |
+| **issues** | [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues) |
 
 Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — see [PATENTS.md](PATENTS.md).
 
