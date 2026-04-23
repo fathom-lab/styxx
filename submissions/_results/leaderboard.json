@@ -1,0 +1,36 @@
+{
+  "updated_at": "2026-04-23T13:00:00Z",
+  "entries": [
+    {
+      "system_name": "styxx-v4.0.2",
+      "author": "Fathom Lab",
+      "contact": "https://github.com/fathom-lab/styxx",
+      "license": "MIT (code) + CC-BY-4.0 (weights)",
+      "references": [
+        "https://doi.org/10.5281/zenodo.19703527",
+        "https://github.com/fathom-lab/styxx",
+        "https://fathom.darkflobi.com/cognometry"
+      ],
+      "declared_failure_modes": [
+        "halubench_drop",
+        "halubench_finance"
+      ],
+      "seeds": [31, 47, 83],
+      "n_per_dataset": 150,
+      "per_dataset": {
+        "halueval_qa":            {"mean": 0.9984, "std": 0.0007},
+        "truthfulqa":             {"mean": 0.9938, "std": 0.0063},
+        "halubench_ragtruth":     {"mean": 0.8066, "std": 0.0433},
+        "halubench_pubmed":       {"mean": 0.7193, "std": 0.0507},
+        "halueval_dialogue":      {"mean": 0.6763, "std": 0.0367},
+        "halueval_summarization": {"mean": 0.6427, "std": 0.0599},
+        "halubench_finance":      {"mean": 0.4917, "std": 0.0259},
+        "halubench_drop":         {"mean": 0.4238, "std": 0.0796}
+      },
+      "overall_mean_auc": 0.7191,
+      "datasets_above_0_65": 5,
+      "submitted_at": "2026-04-23T12:00:00Z",
+      "submission_file": "submissions/styxx.py"
+    }
+  ]
+}
