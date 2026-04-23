@@ -846,6 +846,16 @@ class Vitals:
         return round(max(0.0, min(1.0, score)), 3)
 
     @property
+    def trust(self) -> float:
+        """Backwards-compat alias for `trust_score` (fixes issue #7).
+
+        v3.5.0 renamed `trust` -> `trust_score`. This alias restores
+        the old attribute so existing code written against earlier
+        versions doesn't break with AttributeError.
+        """
+        return self.trust_score
+
+    @property
     def gate(self) -> str:
         """Default gate status computed from phase 4.
 

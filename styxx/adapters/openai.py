@@ -61,15 +61,27 @@ class OpenAIWithVitals:
     """
 
     def __init__(self, *args, **kwargs):
+        # Fix for issue #5 (v3.5.0 recursion): if styxx.hook_openai() is
+        # active, `openai.OpenAI` has been monkey-patched to return
+        # OpenAIWithVitals — calling it from inside __init__ recurses
+        # infinitely. Prefer the stashed original class when available.
+        _OpenAI = None
         try:
-            from openai import OpenAI as _OpenAI
-        except ImportError as e:
-            raise ImportError(
-                "styxx.OpenAI requires openai-python.\n"
-                "  Install with:  pip install openai\n"
-                "  Or install styxx with the extra:  pip install styxx[openai]\n"
-                f"  Underlying error: {e}"
-            ) from e
+            from ..hooks import _ORIGINAL_OPENAI, _HOOK_ACTIVE
+            if _HOOK_ACTIVE and _ORIGINAL_OPENAI is not None:
+                _OpenAI = _ORIGINAL_OPENAI
+        except ImportError:
+            pass  # hooks module unavailable, fall through
+        if _OpenAI is None:
+            try:
+                from openai import OpenAI as _OpenAI
+            except ImportError as e:
+                raise ImportError(
+                    "styxx.OpenAI requires openai-python.\n"
+                    "  Install with:  pip install openai\n"
+                    "  Or install styxx with the extra:  pip install styxx[openai]\n"
+                    f"  Underlying error: {e}"
+                ) from e
         self._client = _OpenAI(*args, **kwargs)
         # Respect the STYXX_DISABLED kill switch: if set, skip the
         # runtime entirely and make this wrapper a pure pass-through.
@@ -186,6 +198,11 @@ def _attach_vitals(response: Any, vitals: Optional[Vitals]) -> None:
             object.__setattr__(response, "vitals", vitals)
         except Exception:
             pass
+
+
+# Public alias for backwards compat with v3.5.0 callers (fixes issue #6).
+# styxx.gate.py imports this name; some downstream integrations do too.
+attach_vitals_to_response = _attach_vitals
 
 
 def _extract_trajectories_from_response(
