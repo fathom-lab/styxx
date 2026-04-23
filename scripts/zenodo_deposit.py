@@ -141,7 +141,7 @@ METADATA = {
                 "scheme": "url",
             },
             {
-                "identifier": "https://huggingface.co/datasets/truthful_qa",
+                "identifier": "https://huggingface.co/datasets/truthfulqa/truthful_qa",
                 "relation": "references",
                 "resource_type": "dataset",
                 "scheme": "url",

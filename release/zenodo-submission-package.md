@@ -32,7 +32,7 @@ the DOI on stdout.
 - software: https://pypi.org/project/styxx/4.0.1/
 - dataset: https://huggingface.co/datasets/PatronusAI/HaluBench
 - dataset: https://huggingface.co/datasets/pminervini/HaluEval
-- dataset: https://huggingface.co/datasets/truthful_qa
+- dataset: https://huggingface.co/datasets/truthfulqa/truthful_qa
 - model:   https://huggingface.co/MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
 
 ## Where the DOI is cited

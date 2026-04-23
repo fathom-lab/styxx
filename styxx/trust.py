@@ -511,9 +511,16 @@ def trust(
             }
             if signal_names & calibrated_keys:
                 return 0.7
-            # Text-only heuristic path with defaults: raise the bar so
-            # single-signal confident claims don't halt first-contact.
-            return 0.9
+            # Text-only heuristic path with defaults: the text signal
+            # alone is a weak, noisy discriminator — piecewise
+            # calibration maps text_claim_risk=1.0 to raw risk ~0.98
+            # which is structurally indistinguishable across clean
+            # factual claims and confabulations without a reference
+            # to disambiguate. Honest position: when @trust has no
+            # reference, it cannot meaningfully verify, so it passes
+            # through rather than halting on noise. Users who want
+            # strict text-only gating set threshold= explicitly.
+            return 0.99
 
         def _handle(response: Any, prompt: str,
                      reference: Optional[str], attempt: int):
