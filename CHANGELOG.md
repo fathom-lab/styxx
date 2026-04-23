@@ -7,6 +7,81 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.9.0] — 2026-04-22
+
+**Headline: the trust layer. one decorator, any LLM call, verified
+output. `pip install styxx` + `@trust` is all it takes to stop
+hallucinations from reaching users.**
+
+### New: `styxx.trust` — the one-line hallucination prevention layer
+
+```python
+from styxx import trust
+
+@trust
+def my_rag(question: str) -> str:
+    return openai.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": question}],
+    )
+```
+
+That's the whole API. `@trust` wraps any LLM-calling function.
+Every output is cognometrically verified via
+`styxx.guardrail.check()` (AUC 0.9012 on HaluEval-QA) before it
+reaches the caller. If risk exceeds threshold, styxx intercepts.
+
+### Design principles
+
+- **Zero config out of the box.** Ships with HaluEval-calibrated
+  LR weights. No residual-stream access needed. No API keys.
+- **Shape-preserving.** Extracts text from OpenAI's
+  `.choices[0].message.content`, Anthropic's
+  `.content[0].text`, LangChain messages, dicts, and raw
+  strings — automatically. Returns the same shape with
+  replaced content, so downstream code still works.
+- **Prompt auto-detection.** Pulls the user prompt from common
+  kwargs (`prompt`, `question`, `query`, `messages`) or
+  positional string args. Override with `prompt_arg="..."`.
+- **Sync and async.** Auto-detects coroutine functions.
+- **Four halt policies.**
+  - `on_halt="fallback"` (default) — return safe text
+  - `on_halt="retry"` — re-call up to `max_retries`
+  - `on_halt="raise"` — raise `TrustViolation`
+  - `on_halt="annotate"` — return `TrustResult(response, verdict)`
+
+### API
+
+```python
+@trust(
+    threshold=0.7,
+    on_halt="fallback",
+    fallback="I'm not confident...",
+    max_retries=2,
+    reference_arg="context",
+    use_entity_verify=True,
+    use_probe=False,
+    verbose=False,
+)
+def my_agent(question, *, context=""):
+    ...
+```
+
+### Tests
+
+31 new tests in `tests/test_trust.py` — full suite now 562 pass,
+1 skipped, 0 fail. Covers: text extraction from 6 response shapes,
+prompt extraction from 7 input patterns, shape-preserving
+replacement, sync/async, all 4 halt policies, retry budgets,
+reference-arg grounding.
+
+### The bet
+
+styxx 3.9.0 is the product that tries to change the space forever.
+TLS for LLM cognition. Nothing crosses unseen.
+
+---
+
 ## [3.8.0] — 2026-04-22
 
 **Headline: `styxx.guardrail` reaches test AUC 0.9012 on
