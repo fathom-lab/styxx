@@ -40,5 +40,16 @@ from __future__ import annotations
 
 from .types import Verdict, Span, SignalReading  # noqa: F401
 from .entry import check  # noqa: F401
+# Second cognometric instrument (v5.0): text-only refusal detector.
+# Cross-validated law II: trained on JBB/Llama-1B, XSTest/GPT-4 AUC 0.976,
+# mean cross-model AUC 0.794 across 5 model families, n=2,250 held-out.
+from .refusal import refuse_check, RefusalVerdict  # noqa: F401
 
-__all__ = ["check", "Verdict", "Span", "SignalReading"]
+__all__ = [
+    "check",
+    "Verdict",
+    "Span",
+    "SignalReading",
+    "refuse_check",
+    "RefusalVerdict",
+]
