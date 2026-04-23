@@ -532,7 +532,7 @@ class TestPublicAPI:
         assert hasattr(styxx, "COGDYN_VERSION")
 
     def test_version_is_3_x(self):
-        assert styxx.__version__.startswith(("3.", "4."))
+        assert styxx.__version__.startswith(("3.", "4.", "5."))
 
     def test_end_to_end_via_public_api(self):
         A = _stable_random_A(seed=42)
