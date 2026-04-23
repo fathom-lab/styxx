@@ -25,10 +25,10 @@ from typing import Dict, List, Optional
 
 
 DEFAULT_WEIGHTS = {
-    "text_claim_risk": 0.15,
-    "entity_unverified_frac": 0.20,
-    "knowledge_grounding": 0.50,        # strongest signal when available
-    "probe_confab": 0.10,               # OOD for HaluEval-QA; low weight
+    "text_claim_risk": 0.10,
+    "entity_unverified_frac": 0.15,
+    "knowledge_grounding": 0.35,
+    "probe_confab": 0.45,               # in-distribution probe dominates
     "consensus_disagreement": 0.30,
 }
 

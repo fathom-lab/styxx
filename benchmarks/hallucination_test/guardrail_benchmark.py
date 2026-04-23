@@ -42,6 +42,8 @@ def main():
                     default=False)
     ap.add_argument("--probe", action="store_true", default=False,
                     help="enable residual-probe signal (Llama-1B confab)")
+    ap.add_argument("--probe_task", default="confab_behavioral",
+                    help="probe task (atlas key) to use")
     ap.add_argument("--out_file", default=str(
         ROOT / "benchmarks" / "hallucination_test" /
         "results" / "guardrail_benchmark.json"))
@@ -53,9 +55,9 @@ def main():
 
     probe_scorer = None
     if args.probe:
-        print("  loading probe scorer (Llama-1B confab_behavioral) ...")
+        print(f"  loading probe scorer (Llama-1B {args.probe_task}) ...")
         from styxx.guardrail.probe_signal import ProbeScorer
-        probe_scorer = ProbeScorer()
+        probe_scorer = ProbeScorer(probe_task=args.probe_task)
         print(f"  probe layer {probe_scorer.layer}, "
               f"AUC {probe_scorer.probe.auc_validation}")
 
