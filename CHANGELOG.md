@@ -7,6 +7,148 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [4.0.0rc1] — 2026-04-23
+
+**Headline: NLI v4.0 preview. The ninth signal — entailment-based
+contradiction — lifts HaluEval-Dialog from AUC 0.61 → 0.73 and
+produces the first honest number above chance on dialog hallucination
+detection at this benchmark scale.**
+
+This is a **release candidate**. The 8-dataset cross-validation
+(FEVER, FactCC, XSum-Faithful, PHD-A) lands in the v4.0.0 final.
+Install it to preview the signal; pin `4.0.0rc1` explicitly if you
+want reproducibility across the rc→final transition.
+
+### Added — `styxx.guardrail.nli_signal`
+
+A lazy-loaded NLI contradiction scorer. Wraps
+`MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli` (~184M params; trained
+on MNLI + FEVER + ANLI-R3) and exposes:
+
+```python
+from styxx.guardrail.nli_signal import (
+    nli_contradiction_score, NLIScorer, get_default_scorer,
+)
+
+# Convenience (singleton, fail-open)
+p = nli_contradiction_score(
+    reference="Hamlet was written by William Shakespeare.",
+    response="Hamlet was written by Dickens.",
+)
+# p ≈ 0.95
+```
+
+Thread-safe, CPU or CUDA. Fails open on any error (empty input,
+model-load failure, transformers missing). No new required
+dependency — torch+transformers only needed when `use_nli=True`.
+
+### Added — `guardrail.check(use_nli=..., nli_scorer=...)`
+
+```python
+from styxx.guardrail import check
+
+verdict = check(
+    prompt="Who wrote Hamlet?",
+    response="Hamlet was written by Dickens.",
+    reference="Hamlet was written by William Shakespeare.",
+    use_nli=True,      # opt-in
+)
+```
+
+When `use_nli=True` and a reference passage is available, the
+pipeline adds a `nli_contradict ∈ [0,1]` signal and routes the
+verdict through the v3 calibrated LR (9 signals). Otherwise falls
+back gracefully to v2 (8 signals) or v1 (4 signals).
+
+Pass a pre-loaded `NLIScorer` via `nli_scorer=` to amortize the
+one-time model load across many calls.
+
+### Added — `styxx.guardrail.calibrated_weights_v3`
+
+9-feature pooled LR, 3-seed averaged over seeds [31, 47, 83].
+`predict_proba_v3(signals)` is the drop-in replacement for v2's
+`predict_proba_v2`.
+
+### Measured numbers (3-seed mean ± std, n=200/dataset, seed set [31,47,83])
+
+| Dataset               | v3.9.1 (v2) | **v4.0.0rc1 (v3)** | Δ     |
+|-----------------------|-------------|--------------------:|------:|
+| HaluEval-QA           | 1.000       | **0.996 ± 0.002**   | -0.004|
+| TruthfulQA            | 0.977       | **0.995 ± 0.004**   | +0.018|
+| HaluEval-Dialog       | 0.605       | **0.729 ± 0.042**   | **+0.123** |
+| HaluEval-Summarization| 0.636       | **0.665 ± 0.029**   | +0.028|
+| **mean**              | **0.805**   | **0.846**           | **+0.041** |
+
+Honest read: dialog is the big win (+0.123 absolute, single-seed
+max 0.788). Summarization is real but smaller (+0.028). QA loses
+a noise-level 0.004 — the two near-perfect classifiers are
+indistinguishable within the noise floor.
+
+### Signal weights (3-seed averaged LR coefficients)
+
+```
+text_claim_risk:        0.1751
+entity_unverified_frac: 0.0000  (signal fires too rarely to matter here)
+knowledge_grounding:    0.1231
+content_novelty:        0.3368
+entity_novelty:         0.1353
+number_novelty:         0.0333
+bigram_novelty:         0.4104
+trigram_novelty:        0.7727
+nli_contradict:         0.8784  ← strongest single signal
+intercept:             -1.1257
+```
+
+NLI and trigram-novelty are complementary, not redundant: novelty
+catches "response added content not in reference"; NLI catches
+"response asserts what reference denies." Dialog and summarization
+errors are dominated by the latter, which explains the gain pattern.
+
+### New install extra
+
+```bash
+pip install styxx[nli]
+```
+
+Installs `torch>=2.0` + `transformers>=4.35`. Downloads the DeBERTa
+checkpoint on first call (~1GB on disk, ~700MB RAM).
+
+### New benchmark
+
+`benchmarks/hallucination_test/cross_dataset_multi_seed.py` runs the
+full pooled calibration across multiple seeds with and without NLI,
+saves per-seed results + averaged coefficients to
+`results/multi_seed_calibration.json`. Regenerates the numbers above.
+
+### Tests
+
+17 new tests in `tests/test_nli_signal.py`: v3 weight structure,
+monotonicity, fail-open behavior, `check()` integration with mock
+scorer, preservation under missing signals. Full suite: 573 pass,
+1 skipped, 0 fail.
+
+### Honest limits
+
+- Summarization is still at AUC 0.66 — real signal but not
+  production-grade. The residual gap is structural: summaries
+  paraphrase faithfully, which NLI only partially captures.
+- Single-seed dialog ranges [0.574, 0.788] — high variance. Average
+  is what ships; users at low N may see closer to single-seed
+  performance.
+- NLI adds latency: ~150–400 ms per pair on CPU, ~10–30 ms on CUDA.
+  Most deployments should pre-warm `get_default_scorer()._load()`.
+- **No FEVER / FactCC / XSum yet.** The strong claim
+  ("cross-validated on 8 benchmarks") ships with v4.0.0 final.
+
+### What ships next (v4.0.0 final)
+
+- Cross-validation on FEVER-dev + FactCC + XSum-Faithful + PHD-A
+- Any coefficient refit required after the 8-dataset fit
+- Paper: *Cognometry v0: cross-validated hallucination detection on
+  8 benchmarks*. Zenodo deposit.
+
+---
+
 ## [3.9.1] — 2026-04-23
 
 **Headline: cross-dataset validation. v3.9.0's `@trust` worked on

@@ -504,7 +504,9 @@ def test_anthropic_factory_raises_clear_error_without_sdk():
 # ══════════════════════════════════════════════════════════════════
 
 def test_version_is_current():
-    assert styxx.__version__.startswith(("0.", "1.", "2.", "3."))
+    assert styxx.__version__.startswith(
+        ("0.", "1.", "2.", "3.", "4.")
+    )
 
 
 def test_all_new_exports_exist():

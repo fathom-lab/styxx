@@ -35,6 +35,7 @@ from styxx.guardrail.text_signals import (
 )
 from styxx.guardrail.knowledge_grounding import response_grounding_risk
 from styxx.guardrail.response_novelty import response_novelty_signals
+from styxx.guardrail.nli_signal import NLIScorer
 
 
 # ─────────── dataset loaders (copy of cross_dataset_benchmark) ───────────
@@ -120,10 +121,9 @@ def load_truthfulqa(n, seed):
 # ─────────── signal extraction ───────────
 
 def extract_signals(prompt, response, reference,
-                     entity_cache=None, use_entity_verify=True):
-    """Return (text_claim_risk, entity_unverified_frac,
-    knowledge_grounding). Three signals. probe_confab skipped
-    (requires loaded HF model)."""
+                     entity_cache=None, use_entity_verify=True,
+                     nli_scorer=None):
+    """Return full signal vector for pooled LR."""
     # text signal
     claims = decompose(response)
     text_resp = compute_text_signal(response, prompt)
@@ -159,8 +159,18 @@ def extract_signals(prompt, response, reference,
     else:
         ground = 0.5
 
-    # response-novelty signals (3 asymmetric grounding signals)
+    # response-novelty signals
     nov = response_novelty_signals(response, reference or "")
+
+    # NLI contradiction
+    nli_contradict = 0.0
+    if nli_scorer is not None and reference:
+        try:
+            nli_contradict = nli_scorer.score(
+                premise=reference, hypothesis=response,
+            )
+        except Exception:
+            nli_contradict = 0.0
 
     return [
         text_risk,
@@ -171,6 +181,7 @@ def extract_signals(prompt, response, reference,
         nov["number_novelty"],
         nov["bigram_novelty"],
         nov["trigram_novelty"],
+        nli_contradict,
     ]
 
 
@@ -243,6 +254,8 @@ def main():
     ap.add_argument("--train_frac", type=float, default=0.75)
     ap.add_argument("--no_entity", action="store_true",
                     help="Skip entity verify (fast but weaker)")
+    ap.add_argument("--nli", action="store_true",
+                    help="Include NLI contradiction signal")
     ap.add_argument(
         "--out_file",
         default=str(ROOT / "benchmarks" / "hallucination_test" /
@@ -255,7 +268,15 @@ def main():
     print(f"  seed = {args.seed}")
     print(f"  train_frac = {args.train_frac}")
     print(f"  use_entity_verify = {not args.no_entity}")
+    print(f"  use_nli = {args.nli}")
     print()
+
+    nli_scorer = None
+    if args.nli:
+        print("loading NLI scorer (deberta-v3-base-mnli-fever-anli)...")
+        nli_scorer = NLIScorer()
+        nli_scorer._load()
+        print(f"  loaded on {nli_scorer._device}")
 
     loaders = [
         ("halueval_qa",
@@ -287,11 +308,13 @@ def main():
                     row["prompt"], row["response_truth"],
                     row["reference"], ent_cache,
                     use_entity_verify=not args.no_entity,
+                    nli_scorer=nli_scorer,
                 )
                 sig_hallu = extract_signals(
                     row["prompt"], row["response_hallu"],
                     row["reference"], ent_cache,
                     use_entity_verify=not args.no_entity,
+                    nli_scorer=nli_scorer,
                 )
                 X.append(sig_truth)
                 y.append(0)
@@ -335,6 +358,7 @@ def main():
         "knowledge_grounding",
         "content_novelty", "entity_novelty", "number_novelty",
         "bigram_novelty", "trigram_novelty",
+        "nli_contradict",
     ]
     for name, wi in zip(feat_names, w):
         print(f"  {name:<28s}: {wi:+.4f}")
@@ -362,6 +386,7 @@ def main():
             "number_novelty": round(w[5], 4),
             "bigram_novelty": round(w[6], 4),
             "trigram_novelty": round(w[7], 4),
+            "nli_contradict": round(w[8], 4) if len(w) > 8 else 0.0,
             "intercept": round(b, 4),
         },
         "train_pooled_auc": round(train_auc, 4),

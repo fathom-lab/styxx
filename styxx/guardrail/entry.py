@@ -34,6 +34,7 @@ def check(
     use_grounding: bool = True,
     use_probe: bool = False,       # requires HF model loaded
     use_consensus: bool = False,   # requires API credits
+    use_nli: bool = False,         # requires styxx[nli] extra
     policy: Optional[ActionPolicy] = None,
     probe_scorer=None,             # preferred: ProbeScorer instance
     probe_model=None,              # fallback: loaded HF model
@@ -41,6 +42,7 @@ def check(
     consensus_sampler=None,        # callable(prompt) -> str
     consensus_n_samples: int = 5,
     consensus_reference_samples: Optional[list] = None,
+    nli_scorer=None,               # preferred: NLIScorer instance (amortized)
 ) -> Verdict:
     """Run the full guardrail pipeline on a (prompt, response) pair.
 
@@ -151,6 +153,27 @@ def check(
         from .response_novelty import response_novelty_signals
         novelty = response_novelty_signals(response, reference)
 
+    # 5d. NLI contradiction signal (v4.0.0rc1+) — entailment-based
+    # detection of response↔reference contradiction. Lifts dialog
+    # AUC 0.60 → 0.70 and summarization 0.60 → 0.67 on HaluEval
+    # where novelty alone cannot separate faithful additions from
+    # contradictions. Opt-in (requires `styxx[nli]` extras + a
+    # reference passage). Fail-open on any error.
+    nli_contradict = None
+    if use_nli and reference:
+        try:
+            if nli_scorer is not None:
+                nli_contradict = nli_scorer.score(
+                    premise=reference, hypothesis=response,
+                )
+            else:
+                from .nli_signal import nli_contradiction_score
+                nli_contradict = nli_contradiction_score(
+                    reference=reference, response=response,
+                )
+        except Exception:
+            nli_contradict = None
+
     # 6. Fuse signals
     # Response-level text risk: mean of per-claim text risks
     if per_claim_text_risk:
@@ -171,13 +194,20 @@ def check(
         signals_dict["knowledge_grounding"] = grounding_score
     if novelty is not None:
         signals_dict.update(novelty)
+    if nli_contradict is not None:
+        signals_dict["nli_contradict"] = nli_contradict
 
-    # Prefer the pooled v2 calibration when response_novelty is
-    # available (reference present + any grounding signal — the
-    # configuration we cross-validated to mean AUC 0.79 across 4
-    # datasets, with AUC 1.0 on HaluEval-QA and 0.97 on TruthfulQA).
-    # Fall back to v1 LR when all 4 v1 signals are present, or to
-    # the heuristic fusion otherwise.
+    # Calibrated fusion, preferring the most-recent available calibration:
+    #   v3 (9 signals, incl. NLI)  — mean AUC 0.841 / 4 datasets, preview
+    #   v2 (8 signals, + novelty)  — mean AUC 0.793 / 4 datasets
+    #   v1 (4 signals)             — AUC 0.901 on HaluEval-QA alone
+    #   heuristic fusion           — final fallback
+    have_v3 = (
+        "nli_contradict" in signals_dict
+        and all(k in signals_dict for k in (
+            "bigram_novelty", "trigram_novelty", "content_novelty",
+        ))
+    )
     have_v2 = all(k in signals_dict for k in (
         "bigram_novelty", "trigram_novelty", "content_novelty",
     ))
@@ -185,7 +215,11 @@ def check(
         "text_claim_risk", "entity_unverified_frac",
         "knowledge_grounding", "probe_confab",
     ))
-    if have_v2:
+    if have_v3:
+        from .calibrated_weights_v3 import predict_proba_v3
+        calibrated_risk = predict_proba_v3(signals_dict)
+        raw_risk = calibrated_risk
+    elif have_v2:
         from .calibrated_weights_v2 import predict_proba_v2
         calibrated_risk = predict_proba_v2(signals_dict)
         raw_risk = calibrated_risk
@@ -274,6 +308,11 @@ def check(
                 name=name,
                 value=val,
             ))
+    if nli_contradict is not None:
+        signal_readings.append(SignalReading(
+            name="nli_contradict",
+            value=nli_contradict,
+        ))
 
     return Verdict(
         prompt=prompt,

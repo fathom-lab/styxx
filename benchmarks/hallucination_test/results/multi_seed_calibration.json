@@ -1,0 +1,370 @@
+{
+  "no_nli": {
+    "n": 200,
+    "seeds": [
+      31,
+      47,
+      83
+    ],
+    "per_dataset": {
+      "halueval_qa": {
+        "mean": 1.0,
+        "std": 0.0,
+        "seeds": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "halueval_dialogue": {
+        "mean": 0.6054,
+        "std": 0.027417269496918695,
+        "seeds": [
+          0.6014,
+          0.6408,
+          0.574
+        ]
+      },
+      "halueval_summarization": {
+        "mean": 0.6361666666666667,
+        "std": 0.03626516541010424,
+        "seeds": [
+          0.5954,
+          0.6835,
+          0.6296
+        ]
+      },
+      "truthfulqa": {
+        "mean": 0.9770666666666666,
+        "std": 0.0025849994627122064,
+        "seeds": [
+          0.9767,
+          0.9741,
+          0.9804
+        ]
+      }
+    },
+    "overall_mean": 0.8046583333333334,
+    "averaged_coefs": {
+      "text_claim_risk": 0.209,
+      "entity_unverified_frac": 0.0,
+      "knowledge_grounding": 0.134,
+      "content_novelty": 0.3679,
+      "entity_novelty": 0.1806,
+      "number_novelty": 0.0372,
+      "bigram_novelty": 0.4079,
+      "trigram_novelty": 0.7944,
+      "nli_contradict": 0.0,
+      "intercept": -0.9706
+    },
+    "per_seed": [
+      {
+        "seed": 31,
+        "coefs": {
+          "text_claim_risk": 0.2156,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.1346,
+          "content_novelty": 0.3781,
+          "entity_novelty": 0.1645,
+          "number_novelty": -0.0308,
+          "bigram_novelty": 0.433,
+          "trigram_novelty": 0.797,
+          "nli_contradict": 0.0,
+          "intercept": -0.9992
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 1.0,
+            "truth_mean": 0.2945,
+            "hallu_mean": 0.5775
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.6014,
+            "truth_mean": 0.6266,
+            "hallu_mean": 0.6616
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.5954,
+            "truth_mean": 0.5298,
+            "hallu_mean": 0.5472
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9767,
+            "truth_mean": 0.2922,
+            "hallu_mean": 0.4769
+          }
+        }
+      },
+      {
+        "seed": 47,
+        "coefs": {
+          "text_claim_risk": 0.1961,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.1298,
+          "content_novelty": 0.3377,
+          "entity_novelty": 0.1617,
+          "number_novelty": 0.0438,
+          "bigram_novelty": 0.3859,
+          "trigram_novelty": 0.8036,
+          "nli_contradict": 0.0,
+          "intercept": -0.9093
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 1.0,
+            "truth_mean": 0.3169,
+            "hallu_mean": 0.5752
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.6408,
+            "truth_mean": 0.6293,
+            "hallu_mean": 0.6756
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.6835,
+            "truth_mean": 0.5213,
+            "hallu_mean": 0.5634
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9741,
+            "truth_mean": 0.3096,
+            "hallu_mean": 0.5067
+          }
+        }
+      },
+      {
+        "seed": 83,
+        "coefs": {
+          "text_claim_risk": 0.2154,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.1376,
+          "content_novelty": 0.388,
+          "entity_novelty": 0.2155,
+          "number_novelty": 0.0987,
+          "bigram_novelty": 0.4048,
+          "trigram_novelty": 0.7827,
+          "nli_contradict": 0.0,
+          "intercept": -1.0034
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 1.0,
+            "truth_mean": 0.2969,
+            "hallu_mean": 0.5854
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.574,
+            "truth_mean": 0.6272,
+            "hallu_mean": 0.653
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.6296,
+            "truth_mean": 0.525,
+            "hallu_mean": 0.5536
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9804,
+            "truth_mean": 0.284,
+            "hallu_mean": 0.4802
+          }
+        }
+      }
+    ]
+  },
+  "with_nli": {
+    "n": 200,
+    "seeds": [
+      31,
+      47,
+      83
+    ],
+    "per_dataset": {
+      "halueval_qa": {
+        "mean": 0.9962666666666666,
+        "std": 0.002174600857373367,
+        "seeds": [
+          0.9976,
+          0.9932,
+          0.998
+        ]
+      },
+      "halueval_dialogue": {
+        "mean": 0.7288333333333333,
+        "std": 0.04183812721536292,
+        "seeds": [
+          0.6989,
+          0.788,
+          0.6996
+        ]
+      },
+      "halueval_summarization": {
+        "mean": 0.6645666666666666,
+        "std": 0.029234036479571027,
+        "seeds": [
+          0.627,
+          0.6983,
+          0.6684
+        ]
+      },
+      "truthfulqa": {
+        "mean": 0.9951666666666666,
+        "std": 0.004059830319387999,
+        "seeds": [
+          0.9895,
+          0.9972,
+          0.9988
+        ]
+      }
+    },
+    "overall_mean": 0.8462083333333333,
+    "averaged_coefs": {
+      "text_claim_risk": 0.1751,
+      "entity_unverified_frac": 0.0,
+      "knowledge_grounding": 0.1231,
+      "content_novelty": 0.3368,
+      "entity_novelty": 0.1353,
+      "number_novelty": 0.0333,
+      "bigram_novelty": 0.4104,
+      "trigram_novelty": 0.7727,
+      "nli_contradict": 0.8784,
+      "intercept": -1.1257
+    },
+    "per_seed": [
+      {
+        "seed": 31,
+        "coefs": {
+          "text_claim_risk": 0.1807,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.1253,
+          "content_novelty": 0.3508,
+          "entity_novelty": 0.1171,
+          "number_novelty": -0.028,
+          "bigram_novelty": 0.429,
+          "trigram_novelty": 0.7751,
+          "nli_contradict": 0.8974,
+          "intercept": -1.1623
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 0.9976,
+            "truth_mean": 0.277,
+            "hallu_mean": 0.6058
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.6989,
+            "truth_mean": 0.6013,
+            "hallu_mean": 0.6789
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.627,
+            "truth_mean": 0.4875,
+            "hallu_mean": 0.5268
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9895,
+            "truth_mean": 0.2678,
+            "hallu_mean": 0.5542
+          }
+        }
+      },
+      {
+        "seed": 47,
+        "coefs": {
+          "text_claim_risk": 0.1555,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.121,
+          "content_novelty": 0.3054,
+          "entity_novelty": 0.1138,
+          "number_novelty": 0.0428,
+          "bigram_novelty": 0.3924,
+          "trigram_novelty": 0.7806,
+          "nli_contradict": 0.8898,
+          "intercept": -1.0658
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 0.9932,
+            "truth_mean": 0.2995,
+            "hallu_mean": 0.5956
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.788,
+            "truth_mean": 0.5959,
+            "hallu_mean": 0.7091
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.6983,
+            "truth_mean": 0.4777,
+            "hallu_mean": 0.5333
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9972,
+            "truth_mean": 0.2791,
+            "hallu_mean": 0.5835
+          }
+        }
+      },
+      {
+        "seed": 83,
+        "coefs": {
+          "text_claim_risk": 0.1892,
+          "entity_unverified_frac": 0.0,
+          "knowledge_grounding": 0.123,
+          "content_novelty": 0.3542,
+          "entity_novelty": 0.1749,
+          "number_novelty": 0.0852,
+          "bigram_novelty": 0.4098,
+          "trigram_novelty": 0.7625,
+          "nli_contradict": 0.848,
+          "intercept": -1.1489
+        },
+        "test_per_dataset": {
+          "halueval_qa": {
+            "n_test": 100,
+            "auc": 0.998,
+            "truth_mean": 0.2809,
+            "hallu_mean": 0.6145
+          },
+          "halueval_dialogue": {
+            "n_test": 100,
+            "auc": 0.6996,
+            "truth_mean": 0.6086,
+            "hallu_mean": 0.671
+          },
+          "halueval_summarization": {
+            "n_test": 100,
+            "auc": 0.6684,
+            "truth_mean": 0.493,
+            "hallu_mean": 0.5367
+          },
+          "truthfulqa": {
+            "n_test": 100,
+            "auc": 0.9988,
+            "truth_mean": 0.2585,
+            "hallu_mean": 0.5963
+          }
+        }
+      }
+    ]
+  }
+}

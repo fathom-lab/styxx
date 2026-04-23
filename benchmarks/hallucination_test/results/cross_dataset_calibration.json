@@ -1,51 +1,52 @@
 {
   "config": {
     "n_pairs_per_dataset": 200,
-    "seed": 31,
+    "seed": 83,
     "train_frac": 0.75,
     "use_entity_verify": false
   },
   "coefs": {
-    "text_claim_risk": 0.2156,
+    "text_claim_risk": 0.1892,
     "entity_unverified_frac": 0.0,
-    "knowledge_grounding": 0.1346,
-    "content_novelty": 0.3781,
-    "entity_novelty": 0.1645,
-    "number_novelty": -0.0308,
-    "bigram_novelty": 0.433,
-    "trigram_novelty": 0.797,
-    "intercept": -0.9992
+    "knowledge_grounding": 0.123,
+    "content_novelty": 0.3542,
+    "entity_novelty": 0.1749,
+    "number_novelty": 0.0852,
+    "bigram_novelty": 0.4098,
+    "trigram_novelty": 0.7625,
+    "nli_contradict": 0.848,
+    "intercept": -1.1489
   },
-  "train_pooled_auc": 0.7492,
+  "train_pooled_auc": 0.8173,
   "test_per_dataset": {
     "halueval_qa": {
       "n_test": 100,
-      "auc": 1.0,
-      "truth_mean": 0.2945,
-      "hallu_mean": 0.5775
+      "auc": 0.998,
+      "truth_mean": 0.2809,
+      "hallu_mean": 0.6145
     },
     "halueval_dialogue": {
       "n_test": 100,
-      "auc": 0.6014,
-      "truth_mean": 0.6266,
-      "hallu_mean": 0.6616
+      "auc": 0.6996,
+      "truth_mean": 0.6086,
+      "hallu_mean": 0.671
     },
     "halueval_summarization": {
       "n_test": 100,
-      "auc": 0.5954,
-      "truth_mean": 0.5298,
-      "hallu_mean": 0.5472
+      "auc": 0.6684,
+      "truth_mean": 0.493,
+      "hallu_mean": 0.5367
     },
     "truthfulqa": {
       "n_test": 100,
-      "auc": 0.9767,
-      "truth_mean": 0.2922,
-      "hallu_mean": 0.4769
+      "auc": 0.9988,
+      "truth_mean": 0.2585,
+      "hallu_mean": 0.5963
     }
   },
   "summary": {
-    "mean_test_auc": 0.7934,
-    "min_test_auc": 0.5954,
+    "mean_test_auc": 0.8412,
+    "min_test_auc": 0.6684,
     "recommended_action": "iterate"
   }
 }
