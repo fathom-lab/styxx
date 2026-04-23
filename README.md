@@ -22,9 +22,52 @@
 
 ---
 
-## New in v3.4.0: `styxx.gate()` — pre-flight cognitive verdict
+## New in v3.9: `@trust` — one decorator, verified output
 
-One function. Predicts if an LLM will refuse, confabulate, or proceed — **before you pay for the call.**
+`pip install styxx` + one decorator is all it takes to stop hallucinations from reaching users.
+
+```python
+from styxx import trust
+import openai
+
+@trust
+def my_rag(question: str) -> str:
+    return openai.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": question}],
+    )
+```
+
+Every call is cognometrically verified via `styxx.guardrail.check()` before the response reaches the caller. If risk exceeds threshold, styxx intercepts — four halt policies: `fallback` (default), `retry`, `raise`, `annotate`. Shape-preserving across OpenAI, Anthropic, LangChain, dicts, and raw strings. Sync + async. Zero config.
+
+**Cross-dataset validated** (v3.9.1 — pooled LR, n=800 train / n=400 test, seed 31):
+
+| dataset                 | test AUC      |
+|-------------------------|--------------:|
+| HaluEval-QA             | **1.000**     |
+| TruthfulQA              | **0.977**     |
+| HaluEval-Summarization  | 0.595         |
+| HaluEval-Dialog         | 0.601         |
+
+Reference-grounded QA is effectively solved. Dialog and summarization are inherently NLI-requiring — v4.0 ships NLI-based signals. Honest per-dataset limits in [CHANGELOG.md](CHANGELOG.md#391--2026-04-23).
+
+---
+
+## Also in styxx 3.x
+
+| API | What it does | Shipped |
+|---|---|---|
+| `styxx.gate(...)` | Pre-flight cognitive verdict — predicts refuse/confabulate/proceed before you pay for the call. Anthropic + OpenAI + HuggingFace. | v3.4 |
+| `styxx.guardrail.check(...)` | Multi-signal hallucination pipeline behind `@trust`. Calibrated LR over text, entity, grounding, probe signals. | v3.7–3.9 |
+| `styxx.generate_safe(...)` | Real-time self-halting generation — stops mid-stream on rising risk. | v3.8 |
+| `styxx.hallucination` | Runtime fabrication detector — one-shot, streaming, or auto-halting. Behavioral-label confab probe (AUC 0.800 @ layer 11). | v3.5 |
+| `styxx.steer` + `styxx.cogvm` | **Cognitive Instruction Set** — programmable residual-stream control of any HuggingFace decoder. Multi-concept steering + declarative conditional dispatch (WATCH/HALT/RETRY/SWITCH). Causal: refuse@unsafe 97% → 17% at α=3.0 on Llama-3.2-1B. | v3.5 |
+
+Research results live in `papers/`: cognitive instruction set, universal cognitive basis (cross-vendor direction transfer), gradient-free capability amplification (+7pp MC1 on TruthfulQA), cognitive monitoring without logprobs.
+
+---
+
+## `styxx.gate()` — pre-flight cognitive verdict
 
 ```python
 from styxx import gate
@@ -49,7 +92,7 @@ if verdict.recommendation == "proceed":
     r = client.messages.create(...)   # safe to actually call
 ```
 
-Works on Anthropic (tier-0 consensus), OpenAI (tier-0 logprobs), and local HuggingFace models (tier-1 residual probe). Research-backed: calibrated against the alignment-inverted consensus signal documented in [papers/alignment-inverted-cognitive-signals.md](papers/alignment-inverted-cognitive-signals.md).
+Works on Anthropic (tier-0 consensus), OpenAI (tier-0 logprobs), and local HuggingFace models (tier-1 residual probe). Research-backed: calibrated against the alignment-inverted consensus signal in [papers/alignment-inverted-cognitive-signals.md](papers/alignment-inverted-cognitive-signals.md).
 
 **CLI:**
 ```bash
@@ -141,10 +184,10 @@ Peer-reviewable paper: [zenodo.19504993](https://doi.org/10.5281/zenodo.19504993
 
 ---
 
-## Anthropic / Claude (v3.4.0, new)
+## Anthropic / Claude
 
 Anthropic's Messages API does not expose per-token logprobs, so tier-0
-vitals are not computable directly. v3.4.0 ships three complementary
+vitals are not computable directly. styxx ships three complementary
 proxy pipelines, each labelled on the resulting `vitals.mode`:
 
 ```python
@@ -244,6 +287,7 @@ styxx ships additional capabilities for teams that need more than pass/fail:
 - **`styxx.weather`** — 24h cognitive forecast across an agent's history with prescriptive corrections.
 - **`styxx.Thought`** — portable `.fathom` cognition type. Read from one model, write to another. Substrate-independent by construction.
 - **`styxx.dynamics`** — linear-Gaussian cognitive dynamics model. Predict, simulate, and control trajectories offline.
+- **`styxx.residual_probe`** — cross-vendor probe atlas (29 probes, 6 vendors, 7 concepts). Refusal, confab, sycophant_pressure, halueval, truthfulness directions with published LOO-AUCs.
 - **Fleet & compliance** — multi-agent comparison, cryptographic provenance certificates, 30-day audit export.
 
 Each is documented separately. None are required for the core vitals workflow above.
