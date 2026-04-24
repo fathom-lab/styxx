@@ -52,3 +52,17 @@ tmp/
 *.env
 .env
 
+# ── Release archives (published to Zenodo, not tracked) ──
+release/*.zip
+# historical bundle staging dirs (published to Zenodo)
+release/v3.5.0-bundle/
+release/v3.8.0-bundle/
+release/v3.9.0-bundle/
+release/v3.9.1-bundle/
+
+# ── LaTeX build artifacts ────────────────────────────────
+*.aux
+*.log
+*.synctex.gz
+*.out
+*.toc
