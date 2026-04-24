@@ -490,7 +490,7 @@ def test_dreamer_by_category(temp_audit_log):
 
 def test_version_is_current():
     assert styxx.__version__.startswith(
-        ("0.", "1.", "2.", "3.", "4.", "5.")
+        ("0.", "1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.")
     )
 
 

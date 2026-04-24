@@ -554,8 +554,10 @@ class TestPublicAPI:
         assert hasattr(styxx, "FATHOM_VERSION")
 
     def test_version_is_3_or_later(self):
-        # Future-proof: any 3.x, 4.x, or 5.x release counts
-        assert styxx.__version__.startswith(("3.", "4.", "5."))
+        # Future-proof: any 3.x or later release counts
+        assert styxx.__version__.startswith(
+            ("3.", "4.", "5.", "6.", "7.", "8.", "9.")
+        )
 
 
 # ══════════════════════════════════════════════════════════════════
