@@ -184,15 +184,31 @@ chance. Above it, the class is solved in one step.
 
 This is the **inverse of emergent capabilities** in generative LLMs:
 as classifier capacity scales, *detectability* emerges in discrete
-jumps, not smooth curves. If the pattern generalizes across
-cognometric instruments (hallucination, refusal, #4…#N), it becomes
-a general property of the discipline — every instrument has a
-minimum feature count below which specific failure classes are
-structurally undetectable. Feature count is not a dial. It is a
-threshold.
+jumps, not smooth curves.
 
-Reproducer: `scripts/drift_feature_scaling.py`. Three minutes of
-CPU. No API. No LLM.
+**Update 2026-04-24 — the pattern replicates on refusal.** We re-ran
+the same top-K ablation on the v1 refusal detector (cognometric
+instrument #2, 18 features, JBB-Llama-1B n=80). Refusal phase-
+transitions at K=1: `starts_with_sorry` alone takes AUC from 0.500
+(chance) to **0.969** in a single feature. Two independent
+instruments, two independent datasets, two independent feature bases
+— same qualitative pattern. Writeup:
+`papers/refusal_phase_transitions.md`. Reproducer:
+`scripts/refusal_feature_scaling.py`.
+
+The critical K differs by instrument (refusal K=1, drift K=2 for
+arg_drop, K=6 for arg_swap under v6.0). That difference is itself a
+calibration fingerprint: lower K = more mechanism-concentrated
+signal; higher K = more diffuse. Phase transitions appear to be a
+property of the **cognometric measurement setup** (calibrated LR
+over engineered text features), not a property of any specific
+failure mode. Every instrument has a minimum feature count below
+which specific failure classes are structurally undetectable.
+Feature count is not a dial. It is a threshold.
+
+Reproducer (drift): `scripts/drift_feature_scaling.py`. Three minutes
+of CPU. No API. No LLM. Reproducer (refusal):
+`scripts/refusal_feature_scaling.py`. 30 seconds of CPU.
 
 ---
 
