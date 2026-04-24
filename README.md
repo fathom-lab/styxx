@@ -11,10 +11,10 @@
            · · · nothing crosses unseen · · ·
 ```
 
-### Cognitive vitals for LLM agents
+### Cognitive observability for LLM agents
 
-*One line of Python to detect hallucination, refusal, and adversarial drift —*
-*in real time, from signals already on the token stream.*
+*py-spy for LLM reasoning. One decorator · seven fault kinds · per-step localization.*
+*langsmith tells you the trace broke — styxx tells you why.*
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
 [![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python&style=flat-square)](https://pypi.org/project/styxx/)
@@ -24,15 +24,40 @@
 [![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19703527)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
-# `0.998 HaluEval · 0.976 XSTest · 0.916 BFCL · No LLM.`
+# `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
+
+### v6.2.0 · `styxx.profile` — py-spy for LLM reasoning
+
+```python
+import styxx
+
+@styxx.profile
+def my_agent(task):
+    return run_langchain(task)
+
+result, p = my_agent("summarize this contract")
+print(p.summary)
+# profile 'my_agent': 7 steps, 4.3s total
+#   [drift]    step=3 sev=0.89 · category='tool_arg_drift'
+#   [confab]   step=4 sev=0.92 · category='confab'
+#   [sycophant] step=5 sev=0.78 · sycophantic tone
+
+p.to_html("run.html")      # self-contained flamegraph
+p.to_langsmith()           # drop into client.create_run(...)
+p.to_datadog()             # apm-shape spans
+```
+
+**Seven failure modes caught in-line, no fine-tuning, no extra model:**
+drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
 
 ### Three calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
-- 🟢 **Tool-call drift detection (NEW v6)** — BFCL v3 **0.916** 5-fold CV (beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
+- 🟢 **Tool-call drift detection** — BFCL v3 **0.943** 5-fold CV (v6.1 retrained, beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
 
-### ▶&nbsp; [**Try it live — no install, runs in your browser**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
+### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
+### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
 
 **drop-in · fail-open · zero config · local-first**
 
