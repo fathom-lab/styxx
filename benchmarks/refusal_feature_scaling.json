@@ -1,0 +1,449 @@
+{
+  "methodology": "refusal feature scaling \u2014 18-feature top-K + random-subsets, 5-fold CV seed=0",
+  "instrument": "refusal (cognometric instrument #2)",
+  "dataset": "JBB-Llama-1B (n=80)",
+  "n_samples": 80,
+  "class_balance_no_refuse_refuse": [
+    29,
+    51
+  ],
+  "n_features": 18,
+  "feature_names": [
+    "refusal_density",
+    "hedge_density",
+    "confidence_density",
+    "uncertainty_density",
+    "entity_density",
+    "claim_density",
+    "reasoning_marker_density",
+    "sentence_length_mean",
+    "unique_ratio",
+    "disclaimer_density",
+    "safety_flag_density",
+    "redirect_density",
+    "normative_density",
+    "short_response",
+    "starts_with_sorry",
+    "starts_with_i_cant",
+    "starts_with_normative",
+    "log_word_count"
+  ],
+  "full_model_auc": 0.9959432048681541,
+  "full_model_importance": [
+    {
+      "rank": 1,
+      "feature": "starts_with_sorry",
+      "coef": 2.1026538338044096
+    },
+    {
+      "rank": 2,
+      "feature": "refusal_density",
+      "coef": 1.43501492370152
+    },
+    {
+      "rank": 3,
+      "feature": "disclaimer_density",
+      "coef": 0.48224254861594545
+    },
+    {
+      "rank": 4,
+      "feature": "normative_density",
+      "coef": 0.44912092465968184
+    },
+    {
+      "rank": 5,
+      "feature": "sentence_length_mean",
+      "coef": 0.31697989397597126
+    },
+    {
+      "rank": 6,
+      "feature": "unique_ratio",
+      "coef": 0.2930506424771707
+    },
+    {
+      "rank": 7,
+      "feature": "safety_flag_density",
+      "coef": 0.25376258764770454
+    },
+    {
+      "rank": 8,
+      "feature": "log_word_count",
+      "coef": 0.20176094161675967
+    },
+    {
+      "rank": 9,
+      "feature": "claim_density",
+      "coef": 0.11529925602648503
+    },
+    {
+      "rank": 10,
+      "feature": "entity_density",
+      "coef": -0.07143815557775784
+    },
+    {
+      "rank": 11,
+      "feature": "confidence_density",
+      "coef": -0.017570219115752905
+    },
+    {
+      "rank": 12,
+      "feature": "hedge_density",
+      "coef": -0.017385516183560455
+    },
+    {
+      "rank": 13,
+      "feature": "uncertainty_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 14,
+      "feature": "reasoning_marker_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 15,
+      "feature": "redirect_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 16,
+      "feature": "short_response",
+      "coef": 0.0
+    },
+    {
+      "rank": 17,
+      "feature": "starts_with_i_cant",
+      "coef": 0.0
+    },
+    {
+      "rank": 18,
+      "feature": "starts_with_normative",
+      "coef": 0.0
+    }
+  ],
+  "top_k": [
+    {
+      "K": 0,
+      "auc": 0.5,
+      "added": null,
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 1,
+      "auc": 0.9685598377281949,
+      "added": "starts_with_sorry",
+      "delta_from_prev": 0.4685598377281949,
+      "phase_transition": true
+    },
+    {
+      "K": 2,
+      "auc": 0.9817444219066938,
+      "added": "refusal_density",
+      "delta_from_prev": 0.013184584178498882,
+      "phase_transition": false
+    },
+    {
+      "K": 3,
+      "auc": 0.9986477349560514,
+      "added": "disclaimer_density",
+      "delta_from_prev": 0.01690331304935766,
+      "phase_transition": false
+    },
+    {
+      "K": 4,
+      "auc": 0.9986477349560514,
+      "added": "normative_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 5,
+      "auc": 0.9986477349560514,
+      "added": "sentence_length_mean",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 6,
+      "auc": 0.9986477349560514,
+      "added": "unique_ratio",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 7,
+      "auc": 0.9986477349560514,
+      "added": "safety_flag_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 8,
+      "auc": 0.9972954699121027,
+      "added": "log_word_count",
+      "delta_from_prev": -0.0013522650439486972,
+      "phase_transition": false
+    },
+    {
+      "K": 9,
+      "auc": 0.9972954699121027,
+      "added": "claim_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 10,
+      "auc": 0.9959432048681541,
+      "added": "entity_density",
+      "delta_from_prev": -0.0013522650439485862,
+      "phase_transition": false
+    },
+    {
+      "K": 11,
+      "auc": 0.9959432048681541,
+      "added": "confidence_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 12,
+      "auc": 0.9959432048681541,
+      "added": "hedge_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 13,
+      "auc": 0.9959432048681541,
+      "added": "uncertainty_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 14,
+      "auc": 0.9959432048681541,
+      "added": "reasoning_marker_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 15,
+      "auc": 0.9959432048681541,
+      "added": "redirect_density",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 16,
+      "auc": 0.9959432048681541,
+      "added": "short_response",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 17,
+      "auc": 0.9959432048681541,
+      "added": "starts_with_i_cant",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 18,
+      "auc": 0.9959432048681541,
+      "added": "starts_with_normative",
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    }
+  ],
+  "random_subsets": [
+    {
+      "K": 1,
+      "random_aucs": [
+        0.3749154834347532,
+        0.5,
+        0.3749154834347532
+      ],
+      "random_mean": 0.41661032228983547,
+      "random_std": 0.05896540658981802
+    },
+    {
+      "K": 2,
+      "random_aucs": [
+        0.49830966869506427,
+        0.6791751183231913,
+        0.5179175118323192
+      ],
+      "random_mean": 0.5651340996168582,
+      "random_std": 0.08103551624157339
+    },
+    {
+      "K": 3,
+      "random_aucs": [
+        0.9300202839756592,
+        0.9820824881676808,
+        0.5912778904665315
+      ],
+      "random_mean": 0.8344602208699571,
+      "random_std": 0.17326444651969355
+    },
+    {
+      "K": 4,
+      "random_aucs": [
+        0.5878972278566599,
+        0.5912778904665315,
+        0.5
+      ],
+      "random_mean": 0.5597250394410638,
+      "random_std": 0.0422545261646443
+    },
+    {
+      "K": 5,
+      "random_aucs": [
+        0.9688979039891819,
+        0.7447599729546991,
+        0.6974306964164976
+      ],
+      "random_mean": 0.8036961911201262,
+      "random_std": 0.1184024762003448
+    },
+    {
+      "K": 6,
+      "random_aucs": [
+        0.9858012170385395,
+        0.5902636916835698,
+        0.716024340770791
+      ],
+      "random_mean": 0.7640297498309668,
+      "random_std": 0.16500681393053526
+    },
+    {
+      "K": 7,
+      "random_aucs": [
+        0.9858012170385395,
+        0.6196754563894523,
+        0.993238674780257
+      ],
+      "random_mean": 0.8662384494027496,
+      "random_std": 0.17437280194489702
+    },
+    {
+      "K": 8,
+      "random_aucs": [
+        0.9546991210277215,
+        0.9803921568627451,
+        0.7221095334685598
+      ],
+      "random_mean": 0.885733603786342,
+      "random_std": 0.11617418047375784
+    },
+    {
+      "K": 9,
+      "random_aucs": [
+        0.9317106152805951,
+        0.577079107505071,
+        0.7410412440838403
+      ],
+      "random_mean": 0.7499436556231688,
+      "random_std": 0.14491449496213754
+    },
+    {
+      "K": 10,
+      "random_aucs": [
+        0.5949966193373901,
+        0.7315753887762002,
+        0.9803921568627451
+      ],
+      "random_mean": 0.7689880549921119,
+      "random_std": 0.1595456272902347
+    },
+    {
+      "K": 11,
+      "random_aucs": [
+        0.9824205544286679,
+        0.7565922920892496,
+        0.7194050033806627
+      ],
+      "random_mean": 0.8194726166328601,
+      "random_std": 0.1162174583393958
+    },
+    {
+      "K": 12,
+      "random_aucs": [
+        0.9972954699121027,
+        0.9283299526707234,
+        0.9918864097363084
+      ],
+      "random_mean": 0.9725039441063782,
+      "random_std": 0.03131368840740758
+    },
+    {
+      "K": 13,
+      "random_aucs": [
+        0.9972954699121027,
+        0.9966193373901284,
+        0.9783637592968222
+      ],
+      "random_mean": 0.9907595221996844,
+      "random_std": 0.008769473273988582
+    },
+    {
+      "K": 14,
+      "random_aucs": [
+        0.9830966869506423,
+        0.9837728194726166,
+        0.9959432048681541
+      ],
+      "random_mean": 0.9876042370971376,
+      "random_std": 0.005902997905660923
+    },
+    {
+      "K": 15,
+      "random_aucs": [
+        0.9986477349560514,
+        0.9972954699121027,
+        0.997971602434077
+      ],
+      "random_mean": 0.997971602434077,
+      "random_std": 0.0005520598924460962
+    },
+    {
+      "K": 16,
+      "random_aucs": [
+        0.9959432048681541,
+        0.9959432048681541,
+        0.9918864097363084
+      ],
+      "random_mean": 0.9945909398242055,
+      "random_std": 0.0019123915650751397
+    },
+    {
+      "K": 17,
+      "random_aucs": [
+        0.9959432048681541,
+        0.9959432048681541,
+        0.9959432048681541
+      ],
+      "random_mean": 0.9959432048681541,
+      "random_std": 0.0
+    },
+    {
+      "K": 18,
+      "random_aucs": [
+        0.9959432048681541,
+        0.9959432048681541,
+        0.9959432048681541
+      ],
+      "random_mean": 0.9959432048681541,
+      "random_std": 0.0
+    }
+  ],
+  "phase_transition_threshold": 0.1,
+  "phase_transitions_found": [
+    {
+      "K": 1,
+      "added": "starts_with_sorry",
+      "delta": 0.4685598377281949
+    }
+  ]
+}
