@@ -1,0 +1,425 @@
+{
+  "methodology": "Refusal cross-model phase-transition \u2014 train LR top-K features on JBB-Llama-1B (n=80), eval on XSTest v2 per model family (n=~450 each). top-K ordering from full-18-feature coef ranking (seed=0, class_weight=balanced).",
+  "train_dataset": "JBB-Llama-1B n=80",
+  "test_dataset": "natolambert/xstest-v2-copy",
+  "n_features": 18,
+  "feature_names": [
+    "refusal_density",
+    "hedge_density",
+    "confidence_density",
+    "uncertainty_density",
+    "entity_density",
+    "claim_density",
+    "reasoning_marker_density",
+    "sentence_length_mean",
+    "unique_ratio",
+    "disclaimer_density",
+    "safety_flag_density",
+    "redirect_density",
+    "normative_density",
+    "short_response",
+    "starts_with_sorry",
+    "starts_with_i_cant",
+    "starts_with_normative",
+    "log_word_count"
+  ],
+  "full_model_ranking": [
+    {
+      "rank": 1,
+      "feature": "starts_with_sorry",
+      "coef": 2.1026538338044096
+    },
+    {
+      "rank": 2,
+      "feature": "refusal_density",
+      "coef": 1.43501492370152
+    },
+    {
+      "rank": 3,
+      "feature": "disclaimer_density",
+      "coef": 0.48224254861594545
+    },
+    {
+      "rank": 4,
+      "feature": "normative_density",
+      "coef": 0.44912092465968184
+    },
+    {
+      "rank": 5,
+      "feature": "sentence_length_mean",
+      "coef": 0.31697989397597126
+    },
+    {
+      "rank": 6,
+      "feature": "unique_ratio",
+      "coef": 0.2930506424771707
+    },
+    {
+      "rank": 7,
+      "feature": "safety_flag_density",
+      "coef": 0.25376258764770454
+    },
+    {
+      "rank": 8,
+      "feature": "log_word_count",
+      "coef": 0.20176094161675967
+    },
+    {
+      "rank": 9,
+      "feature": "claim_density",
+      "coef": 0.11529925602648503
+    },
+    {
+      "rank": 10,
+      "feature": "entity_density",
+      "coef": -0.07143815557775784
+    },
+    {
+      "rank": 11,
+      "feature": "confidence_density",
+      "coef": -0.017570219115752905
+    },
+    {
+      "rank": 12,
+      "feature": "hedge_density",
+      "coef": -0.017385516183560455
+    },
+    {
+      "rank": 13,
+      "feature": "uncertainty_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 14,
+      "feature": "reasoning_marker_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 15,
+      "feature": "redirect_density",
+      "coef": 0.0
+    },
+    {
+      "rank": 16,
+      "feature": "short_response",
+      "coef": 0.0
+    },
+    {
+      "rank": 17,
+      "feature": "starts_with_i_cant",
+      "coef": 0.0
+    },
+    {
+      "rank": 18,
+      "feature": "starts_with_normative",
+      "coef": 0.0
+    }
+  ],
+  "splits": {
+    "gpt4": {
+      "n": 450,
+      "refuse": 220,
+      "no_refuse": 230
+    },
+    "llama2new": {
+      "n": 450,
+      "refuse": 274,
+      "no_refuse": 176
+    },
+    "llama2orig": {
+      "n": 450,
+      "refuse": 349,
+      "no_refuse": 101
+    },
+    "mistralguard": {
+      "n": 450,
+      "refuse": 240,
+      "no_refuse": 210
+    },
+    "mistralinstruct": {
+      "n": 450,
+      "refuse": 76,
+      "no_refuse": 374
+    }
+  },
+  "top_k_sweep": [
+    {
+      "K": 0,
+      "added": null,
+      "aucs": {
+        "gpt4": 0.5,
+        "llama2new": 0.5,
+        "llama2orig": 0.5,
+        "mistralguard": 0.5,
+        "mistralinstruct": 0.5
+      }
+    },
+    {
+      "K": 1,
+      "added": "starts_with_sorry",
+      "aucs": {
+        "gpt4": 0.91600790513834,
+        "llama2new": 0.5,
+        "llama2orig": 0.501432664756447,
+        "mistralguard": 0.6249999999999999,
+        "mistralinstruct": 0.5183999437095412
+      }
+    },
+    {
+      "K": 2,
+      "added": "refusal_density",
+      "aucs": {
+        "gpt4": 0.9540316205533598,
+        "llama2new": 0.9066336264100863,
+        "llama2orig": 0.916096910550654,
+        "mistralguard": 0.7479960317460317,
+        "mistralinstruct": 0.6821524064171123
+      }
+    },
+    {
+      "K": 3,
+      "added": "disclaimer_density",
+      "aucs": {
+        "gpt4": 0.9846442687747037,
+        "llama2new": 0.8239984240212344,
+        "llama2orig": 0.6848279383812306,
+        "mistralguard": 0.7783531746031747,
+        "mistralinstruct": 0.690384886011821
+      }
+    },
+    {
+      "K": 4,
+      "added": "normative_density",
+      "aucs": {
+        "gpt4": 0.9844960474308301,
+        "llama2new": 0.8286434140676842,
+        "llama2orig": 0.6986297483616557,
+        "mistralguard": 0.787093253968254,
+        "mistralinstruct": 0.6999718547706164
+      }
+    },
+    {
+      "K": 5,
+      "added": "sentence_length_mean",
+      "aucs": {
+        "gpt4": 0.9845355731225297,
+        "llama2new": 0.8405876741871267,
+        "llama2orig": 0.722360918040228,
+        "mistralguard": 0.8154761904761905,
+        "mistralinstruct": 0.78660638896707
+      }
+    },
+    {
+      "K": 6,
+      "added": "unique_ratio",
+      "aucs": {
+        "gpt4": 0.982806324110672,
+        "llama2new": 0.7855839416058394,
+        "llama2orig": 0.6790547249567365,
+        "mistralguard": 0.7972023809523809,
+        "mistralinstruct": 0.7212742752603433
+      }
+    },
+    {
+      "K": 7,
+      "added": "safety_flag_density",
+      "aucs": {
+        "gpt4": 0.9831620553359683,
+        "llama2new": 0.8044127405441274,
+        "llama2orig": 0.7042185593917557,
+        "mistralguard": 0.8112301587301587,
+        "mistralinstruct": 0.7323036870250492
+      }
+    },
+    {
+      "K": 8,
+      "added": "log_word_count",
+      "aucs": {
+        "gpt4": 0.9636758893280633,
+        "llama2new": 0.8664980092899801,
+        "llama2orig": 0.7564753610031492,
+        "mistralguard": 0.7503968253968254,
+        "mistralinstruct": 0.5840486912468337
+      }
+    },
+    {
+      "K": 9,
+      "added": "claim_density",
+      "aucs": {
+        "gpt4": 0.9693675889328063,
+        "llama2new": 0.8719102521566026,
+        "llama2orig": 0.7644472183608045,
+        "mistralguard": 0.7776984126984128,
+        "mistralinstruct": 0.6077786377708978
+      }
+    },
+    {
+      "K": 10,
+      "added": "entity_density",
+      "aucs": {
+        "gpt4": 0.9665415019762845,
+        "llama2new": 0.876824817518248,
+        "llama2orig": 0.767936679054725,
+        "mistralguard": 0.7686111111111111,
+        "mistralinstruct": 0.5989480720517872
+      }
+    },
+    {
+      "K": 11,
+      "added": "confidence_density",
+      "aucs": {
+        "gpt4": 0.9659683794466404,
+        "llama2new": 0.8763686131386862,
+        "llama2orig": 0.7675962438650741,
+        "mistralguard": 0.766329365079365,
+        "mistralinstruct": 0.5969075429214749
+      }
+    },
+    {
+      "K": 12,
+      "added": "hedge_density",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 13,
+      "added": "uncertainty_density",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 14,
+      "added": "reasoning_marker_density",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 15,
+      "added": "redirect_density",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 16,
+      "added": "short_response",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 17,
+      "added": "starts_with_i_cant",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    },
+    {
+      "K": 18,
+      "added": "starts_with_normative",
+      "aucs": {
+        "gpt4": 0.9662450592885375,
+        "llama2new": 0.8756428334439282,
+        "llama2orig": 0.7670572214814605,
+        "mistralguard": 0.7666468253968254,
+        "mistralinstruct": 0.5972945398254996
+      }
+    }
+  ],
+  "phase_transitions_per_split": {
+    "gpt4": [
+      {
+        "K": 1,
+        "added": "starts_with_sorry",
+        "from_auc": 0.5,
+        "to_auc": 0.91600790513834,
+        "delta": 0.41600790513833996
+      }
+    ],
+    "llama2new": [
+      {
+        "K": 2,
+        "added": "refusal_density",
+        "from_auc": 0.5,
+        "to_auc": 0.9066336264100863,
+        "delta": 0.40663362641008627
+      }
+    ],
+    "llama2orig": [
+      {
+        "K": 2,
+        "added": "refusal_density",
+        "from_auc": 0.501432664756447,
+        "to_auc": 0.916096910550654,
+        "delta": 0.414664245794207
+      },
+      {
+        "K": 3,
+        "added": "disclaimer_density",
+        "from_auc": 0.916096910550654,
+        "to_auc": 0.6848279383812306,
+        "delta": -0.23126897216942344
+      }
+    ],
+    "mistralguard": [
+      {
+        "K": 1,
+        "added": "starts_with_sorry",
+        "from_auc": 0.5,
+        "to_auc": 0.6249999999999999,
+        "delta": 0.12499999999999989
+      },
+      {
+        "K": 2,
+        "added": "refusal_density",
+        "from_auc": 0.6249999999999999,
+        "to_auc": 0.7479960317460317,
+        "delta": 0.1229960317460318
+      }
+    ],
+    "mistralinstruct": [
+      {
+        "K": 2,
+        "added": "refusal_density",
+        "from_auc": 0.5183999437095412,
+        "to_auc": 0.6821524064171123,
+        "delta": 0.16375246270757104
+      },
+      {
+        "K": 8,
+        "added": "log_word_count",
+        "from_auc": 0.7323036870250492,
+        "to_auc": 0.5840486912468337,
+        "delta": -0.14825499577821555
+      }
+    ]
+  },
+  "phase_transition_threshold": 0.1
+}
