@@ -186,7 +186,7 @@ This is the **inverse of emergent capabilities** in generative LLMs:
 as classifier capacity scales, *detectability* emerges in discrete
 jumps, not smooth curves.
 
-**Update 2026-04-24 — the pattern replicates on refusal.** We re-ran
+**Update 2026-04-24a — the pattern replicates on refusal.** We re-ran
 the same top-K ablation on the v1 refusal detector (cognometric
 instrument #2, 18 features, JBB-Llama-1B n=80). Refusal phase-
 transitions at K=1: `starts_with_sorry` alone takes AUC from 0.500
@@ -196,15 +196,40 @@ instruments, two independent datasets, two independent feature bases
 `papers/refusal_phase_transitions.md`. Reproducer:
 `scripts/refusal_feature_scaling.py`.
 
+**Update 2026-04-24b — the critical feature shifts per substrate.**
+We extended the refusal ablation out of sample to XSTest v2
+completions from 5 model families (GPT-4, Llama-2 × 2, Mistral-Guard,
+Mistral-Instruct; n=~450 each). Phase transitions appear in all 5
+families, but the critical K and critical feature shift by substrate:
+
+  - **GPT-4** jumps at K=1 on `starts_with_sorry` (0.500 → 0.916).
+    The apologetic substrate.
+  - **Llama-2-new/orig + Mistral-Instruct** jump at K=2 on
+    `refusal_density` — `starts_with_sorry` alone does nothing.
+  - **Mistral-Guard** has a two-step transition (K=1 and K=2, both at
+    ≥0.12 delta) — gradual rather than sharp.
+
+A second uncomfortable finding: **adding features can DEGRADE
+per-substrate AUC**. On Llama-2-orig, K=3 (`disclaimer_density`)
+drops AUC from 0.916 to 0.685. On Mistral-Instruct, K=8
+(`log_word_count`) drops 0.732 to 0.584. Some features encode
+training-distribution assumptions that break elsewhere. "More
+features is better" does not survive distribution shift.
+
+Writeup: `papers/refusal_cross_model_phase_transitions.md`.
+Reproducer: `scripts/refusal_cross_model_feature_scaling.py`.
+
 The critical K differs by instrument (refusal K=1, drift K=2 for
-arg_drop, K=6 for arg_swap under v6.0). That difference is itself a
-calibration fingerprint: lower K = more mechanism-concentrated
+arg_drop, K=6 for arg_swap under v6.0) AND per substrate (GPT-4 K=1
+vs Llama K=2 on the same refusal detector). That difference is itself
+a calibration fingerprint: lower K = more mechanism-concentrated
 signal; higher K = more diffuse. Phase transitions appear to be a
 property of the **cognometric measurement setup** (calibrated LR
 over engineered text features), not a property of any specific
 failure mode. Every instrument has a minimum feature count below
 which specific failure classes are structurally undetectable.
-Feature count is not a dial. It is a threshold.
+Feature count is not a dial. It is a threshold — and the threshold
+location is substrate-specific.
 
 Reproducer (drift): `scripts/drift_feature_scaling.py`. Three minutes
 of CPU. No API. No LLM. Reproducer (refusal):
