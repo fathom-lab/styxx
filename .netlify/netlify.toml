@@ -335,6 +335,90 @@ force = false
 [redirects.headers]
 
 [[redirects]]
+from = "/cognometry"
+to = "/cognometry.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/cognometry.html"
+to = "/cognometry.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/manifesto"
+to = "/cognometry.html"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/cognometry/leaderboard"
+to = "/cognometry-leaderboard.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/leaderboard"
+to = "/cognometry-leaderboard.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/cognometry/failures"
+to = "/cognometry-failures.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/failures"
+to = "/cognometry-failures.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
 from = "/styxx"
 to = "/styxx.html"
 status = 200.0
