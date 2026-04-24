@@ -1,0 +1,17 @@
+{
+  "action": "new_version_published",
+  "new_id": 19746096,
+  "new_doi": "10.5281/zenodo.19746096",
+  "new_doi_url": "https://doi.org/10.5281/zenodo.19746096",
+  "concept_doi": "10.5281/zenodo.19703526",
+  "concept_doi_url": "https://doi.org/10.5281/zenodo.19703526",
+  "record_url": "https://zenodo.org/records/19746096",
+  "concept_url": "https://zenodo.org/records/19703526",
+  "title": "Cognometric Fingerprint Specification v1.0 \u2014 Open Reference for Measuring AI Cognition",
+  "version": "spec-v1.0",
+  "files": [
+    "cognometric-fingerprint-spec-v1.0.md",
+    "foundations-of-cognometric-engineering-v0.1.md",
+    "fingerprint_seed-bench_reference.json"
+  ]
+}
