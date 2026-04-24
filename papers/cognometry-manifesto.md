@@ -196,6 +196,18 @@ instruments, two independent datasets, two independent feature bases
 `papers/refusal_phase_transitions.md`. Reproducer:
 `scripts/refusal_feature_scaling.py`.
 
+**Update 2026-04-24c — 3/3 cognometric instruments phase-transition.**
+We closed the third leg: the hallucination detector (v4, 9 features)
+phase-transitions at K=1 on HaluEval-QA (n=300 paired). Critical
+feature: `trigram_novelty` — trigrams in the response absent from the
+reference passage. Single feature: AUC 0.500 → **0.9947** (Δ +0.495).
+All three cognometric instruments we have shipped — hallucination,
+refusal, and tool-call drift — show phase-transition structure under
+the same measurement protocol. Writeup: §4.4 of
+`papers/cognometry_methodology_v7.md`. Reproducer:
+`scripts/hallucination_feature_scaling.py` (~20 seconds CPU once the
+NLI model is cached).
+
 **Update 2026-04-24b — the critical feature shifts per substrate.**
 We extended the refusal ablation out of sample to XSTest v2
 completions from 5 model families (GPT-4, Llama-2 × 2, Mistral-Guard,
