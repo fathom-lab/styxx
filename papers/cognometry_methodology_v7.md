@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Calibrated safety detectors for large language models are published as single AUC numbers. We show in three independent ablations — a 22-feature tool-call drift detector on BFCL v3 (n=3700), an 18-feature refusal detector on JBB-Llama-1B (n=80), and the same refusal detector evaluated out-of-sample on XSTest v2 completions from five model families (n=~450 per family) — that these detectors do not improve smoothly with feature count. They phase-transition: one or two features flip detection from chance to near-perfect, and the critical feature and critical K shift by failure class and by substrate. Adding features beyond the critical K can actively *degrade* performance on specific substrates. A single AUC number therefore cannot distinguish a detector that phase-transitions cleanly at K=1 from one that depends on a diffuse set of seven features, even when their reported headline AUCs are identical; nor can it signal that a detector's dominant feature does not exist in the target substrate's text distribution. We propose the **calibration fingerprint** — a seven-field descriptor (n_features, baseline_auc, critical_K, critical_feature, delta_auc_at_K, substrate_K_variance, negative_lift) — as the minimum reporting standard for calibrated cognometric instruments. We publish an initial atlas of 11 fingerprints across three instruments and five substrates, with reproducer scripts that execute in ≤ 3 minutes on CPU, and invite other labs to publish their fingerprints against the same format.
+Calibrated safety detectors for large language models are published as single AUC numbers. We show in three independent ablations — a 22-feature tool-call drift detector on BFCL v3 (n=3700), an 18-feature refusal detector on JBB-Llama-1B (n=80), and the same refusal detector evaluated out-of-sample on XSTest v2 completions from five model families (n=~450 per family) — that these detectors do not improve smoothly with feature count. They phase-transition: one or two features flip detection from chance to near-perfect, and the critical feature and critical K shift by failure class and by substrate. Adding features beyond the critical K can actively *degrade* performance on specific substrates. A single AUC number therefore cannot distinguish a detector that phase-transitions cleanly at K=1 from one that depends on a diffuse set of seven features, even when their reported headline AUCs are identical; nor can it signal that a detector's dominant feature does not exist in the target substrate's text distribution. We propose the **calibration fingerprint** — a seven-field descriptor (n_features, baseline_auc, critical_K, critical_feature, delta_auc_at_K, substrate_K_variance, negative_lift) — as the minimum reporting standard for calibrated cognometric instruments. We publish an initial atlas of 11 fingerprints across three instruments and five substrates, with reproducer scripts that execute in $\leq$ 3 minutes on CPU, and invite other labs to publish their fingerprints against the same format.
 
 **Keywords:** cognometry, calibrated detectors, phase transitions, feature scaling, cross-substrate generalization, LLM safety evaluation.
 
@@ -57,16 +57,16 @@ For a calibrated detector with N features and a committed feature importance ran
 
 We then define:
 
-- **Critical K (K\*)**: the smallest K such that AUC(K) ≥ θ, where θ is an instrument-appropriate threshold (typically 0.80).
-- **Critical feature (f\*)**: the feature added at K\*.
-- **Delta AUC at K\*** (ΔAUC\*): AUC(K\*) − AUC(K\*−1).
-- **Negative lift**: any K where AUC(K) ≤ AUC(K−1) − 0.10 on some substrate.
+- **Critical K** (K\*): the smallest K such that AUC(K) $\geq$ $\theta$, where $\theta$ is an instrument-appropriate threshold (typically 0.80).
+- **Critical feature** (f\*): the feature added at K\*.
+- **Delta AUC at K\*** ($\Delta$AUC\*): AUC(K\*) - AUC(K\*-1).
+- **Negative lift**: any K where AUC(K) $\leq$ AUC(K-1) - 0.10 on some substrate.
 
-For cross-substrate evaluation (training on one distribution, evaluating on multiple held-out substrates), these quantities are recorded per substrate, yielding **substrate_K_variance** = var{K\*ₛ : s ∈ substrates}.
+For cross-substrate evaluation (training on one distribution, evaluating on multiple held-out substrates), these quantities are recorded per substrate, yielding **substrate_K_variance** = var{K*$_s$ : s $\in$ substrates}.
 
 A random-feature null is computed by sampling K features uniformly at random with three seeds, providing an expected-AUC baseline for any K that is not a principled top-K selection.
 
-Reproducer implementations (≤ 3 minutes CPU each):
+Reproducer implementations ($\leq$ 3 minutes CPU each):
 - `scripts/drift_feature_scaling.py` [2026-04-23]
 - `scripts/refusal_feature_scaling.py` [this work]
 - `scripts/refusal_cross_model_feature_scaling.py` [this work]
@@ -79,7 +79,7 @@ Reproducer implementations (≤ 3 minutes CPU each):
 
 On the BFCL v3 drift dataset (n=3,700), the 22-feature drift detector phase-transitions at different K per failure class [drift_phase_transitions.md, 2026-04-23]:
 
-| failure class | K\* | f\* | ΔAUC\* | from | to |
+| failure class | K* | f\* | $\Delta$AUC\* | from | to |
 |---|---|---|---|---|---|
 | arg_drop | 2 | `arg_count_zscore` | +0.497 | 0.501 | 0.998 |
 | spurious_arg | 1 | `spurious_arg_frac` | +0.499 | 0.500 | 0.999 |
@@ -93,31 +93,31 @@ Two per-failure-class transitions for irrelevance_called indicate multi-step mec
 
 On JBB-Llama-1B (n=80), the 18-feature refusal detector phase-transitions at K=1 [refusal_phase_transitions.md, this work]:
 
-| K | added | AUC (5-fold CV) | Δ |
+| K | added | AUC (5-fold CV) | $\Delta$ |
 |---|---|---|---|
 | 0 | — | 0.500 (chance) | — |
 | 1 | `starts_with_sorry` | **0.969** | **+0.469** |
 | 2 | `refusal_density` | 0.982 | +0.013 |
 | 3 | `disclaimer_density` | 0.999 | +0.017 |
-| 4..18 | ... | 0.996–0.999 | ≤ 0.001 |
+| 4..18 | ... | 0.996–0.999 | $\leq$ 0.001 |
 
 Random-feature null at K=1 averages 0.42 AUC (worse than chance, as the unweighted single random feature is often sub-chance on this class balance). At K=12 the random-feature baseline first matches the top-K=1 value. The critical feature concentrates mechanism; the remainder is refinement.
 
-### 4.3. Refusal detector × 5 substrates — cross-model phase transitions
+### 4.3. Refusal detector $\times$ 5 substrates — cross-model phase transitions
 
-Training on JBB-Llama-1B with top-K features only, evaluating on XSTest v2 completions from five held-out model families (n≈450 per family) [refusal_cross_model_phase_transitions.md, this work]:
+Training on JBB-Llama-1B with top-K features only, evaluating on XSTest v2 completions from five held-out model families (n=~450 per family) [refusal_cross_model_phase_transitions.md, this work]:
 
-| substrate | K\* (θ=0.80) | f\* | ΔAUC\* | final AUC | negative lift |
+| substrate | K* ($\theta$=0.80) | f\* | $\Delta$AUC\* | final AUC | negative lift |
 |---|---|---|---|---|---|
 | GPT-4 | 1 | `starts_with_sorry` | +0.416 | 0.966 | none |
 | Llama-2-new | 2 | `refusal_density` | +0.407 | 0.876 | none |
-| Llama-2-orig | 2 | `refusal_density` | +0.415 | 0.767 | **K=3 `+disclaimer_density`: −0.23** |
+| Llama-2-orig | 2 | `refusal_density` | +0.415 | 0.767 | **K=3 `+disclaimer_density`: -0.23** |
 | Mistral-Guard | 5 (gradual) | `sentence_length_mean` | +0.028 (two-step at K=1,2) | 0.767 | none |
-| Mistral-Instruct | — (plateau) | — | — | 0.597 (class-imbalanced) | **K=8 `+log_word_count`: −0.15** |
+| Mistral-Instruct | — (plateau) | — | — | 0.597 (class-imbalanced) | **K=8 `+log_word_count`: -0.15** |
 
 Four observations:
 
-1. **Every substrate that crossed the 0.80 threshold did so at K ∈ {1, 2, 5}.** None crossed at an intermediate K. The phase-transition pattern is preserved across substrates even when the underlying instrument was trained on a different distribution.
+1. **Every substrate that crossed the 0.80 threshold did so at K $\in$ {1, 2, 5}.** None crossed at an intermediate K. The phase-transition pattern is preserved across substrates even when the underlying instrument was trained on a different distribution.
 
 2. **The critical feature shifts by substrate.** GPT-4 completions trigger on the apologetic surface marker (`starts_with_sorry`); Llama-2 and Mistral-Instruct do not have this marker reliably and require the more general `refusal_density`. The recipe is substrate-universal; the feature identity is not.
 
@@ -135,11 +135,11 @@ Given the above, we propose the following as a minimum reporting standard for ca
 instrument         str     e.g. "refusal-v1"
 n_features         int     size of the feature space
 baseline_auc       float   full-N model AUC (current practice)
-critical_K         int     smallest K s.t. AUC(K) ≥ θ (θ = 0.80 default)
+critical_K         int     smallest K s.t. AUC(K) $\geq$ $\theta$ ($\theta$ = 0.80 default)
 critical_feature   str     the feature added at critical_K
-delta_auc_at_K     float   AUC(K*) − AUC(K*−1)
+delta_auc_at_K     float   AUC(K*) - AUC(K*-1)
 substrate_K_var    dict    {substrate: critical_K}, if held-out data exists
-negative_lift      list    [(K, feature, delta_auc)] where delta ≤ −0.10
+negative_lift      list    [(K, feature, delta_auc)] where delta $\leq$ -0.10
                            on at least one substrate
 ```
 
@@ -147,18 +147,18 @@ The fingerprint is additive to AUC, not a replacement. Each field is extractable
 
 **What the fingerprint encodes.** Four operational properties become explicit:
 
-- **Mechanism sparsity** (via K\*): lower K\* = more concentrated signal = more interpretable but more brittle.
+- **Mechanism sparsity** (via K*): lower K* = more concentrated signal = more interpretable but more brittle.
 - **Substrate compatibility** (via substrate_K_var): lower variance = more portable; higher variance = substrate-specific failure modes.
 - **Feature redundancy** (via negative_lift): features that hurt on some substrate indicate distributional assumptions that do not transfer.
-- **Headroom** (via baseline_auc − AUC(K\*)): small gap = detector has plateaued at critical K; additional features are refinement.
+- **Headroom** (via baseline_auc - AUC(K*)): small gap = detector has plateaued at critical K; additional features are refinement.
 
 ---
 
-## 6. Atlas v0 — 11 fingerprints across 3 instruments × 5 substrates
+## 6. Atlas v0 — 11 fingerprints across 3 instruments $\times$ 5 substrates
 
 Compiled via `scripts/build_fingerprint_atlas.py` from the three 2026-04-24 ablation runs [benchmarks/cognometry_fingerprint_atlas_v0.json]:
 
-| instrument | substrate | class | K\* | f\* | ΔAUC\* | final | neg-lift |
+| instrument | substrate | class | K* | f\* | $\Delta$AUC\* | final | neg-lift |
 |---|---|---|---|---|---|---|---|
 | drift-v1 | in-sample | overall pooled | 3 | `n_available_tools` | +0.034 | 0.924 | — |
 | drift-v1 | in-sample | arg_drop | 2 | `arg_count_zscore` | +0.497 | 0.999 | — |
@@ -186,7 +186,7 @@ The atlas is distributed as:
 
 Three cognometric instruments, three independent failure surfaces, two independent feature bases, one dataset apiece — yet every instrument produces a phase transition at small K. This is striking enough to warrant elevation from "observation about drift" [drift_phase_transitions.md] to "claim about the measurement methodology" [this paper]. Phase transitions are not a property of any particular failure mode; they are a property of the calibrated-LR-over-text-features *recipe*. Instruments that do not phase-transition — if they exist — would be informative counter-evidence. We have not yet observed one.
 
-The substrate-shift result is the more uncomfortable finding. The refusal detector's recipe — "weight 18 text features via LR" — works on every XSTest substrate we tested. The critical *feature* does not transfer. GPT-4 is the apologetic substrate; Llama-2 and Mistral-Instruct are the denser-refusal-marker substrates. A detector engineer who read only the in-sample K=1 result would deploy with false confidence; the cross-substrate K\* tells the honest portability story.
+The substrate-shift result is the more uncomfortable finding. The refusal detector's recipe — "weight 18 text features via LR" — works on every XSTest substrate we tested. The critical *feature* does not transfer. GPT-4 is the apologetic substrate; Llama-2 and Mistral-Instruct are the denser-refusal-marker substrates. A detector engineer who read only the in-sample K=1 result would deploy with false confidence; the cross-substrate K* tells the honest portability story.
 
 Negative-lift on two substrates is the most actionable signal. `disclaimer_density` is genuinely predictive on Llama-1B (ranks 3rd in |coef|); it encodes a distribution-specific signal that does not hold on Llama-2-orig, where its addition costs 0.23 AUC. This is not a bug in the feature — it is a feature that is *correct for one substrate and wrong for another*. Reporting AUC 0.92 for the 2-feature model and 0.69 for the 3-feature model as "alternatives" would be misleading; reporting the fingerprint makes the substrate dependence explicit.
 
@@ -204,17 +204,17 @@ The v0 atlas has n=11 fingerprints from one research group. The questions we can
 2. Do **substrate_K_variance** values cluster by model family lineage? Do GPT-family substrates share fingerprints distinct from Llama-family substrates?
 3. Do different **feature-engineering philosophies** (e.g., n-gram features vs semantic features vs embedding distances) produce differently-shaped fingerprints for the same instrument?
 
-A cross-lab fingerprint atlas at n ≈ 50-100 detectors would allow empirical answers.
+A cross-lab fingerprint atlas at n~50-100 detectors would allow empirical answers.
 
 ---
 
 ## 8. Limitations
 
-- **Threshold choice.** Critical K\* depends on the chosen θ (we use 0.80). The fingerprint is invariant under θ-choice as long as θ is reported; our default is conventional, not principled.
+- **Threshold choice.** Critical K* depends on the chosen $\theta$ (we use 0.80). The fingerprint is invariant under $\theta$-choice as long as $\theta$ is reported; our default is conventional, not principled.
 - **LR-specific.** Our critical-K extraction uses |coef| as the feature ranking. Non-linear detectors (boosted trees, neural classifiers) need SHAP-based or permutation-based rankings; the fingerprint concept transfers but the extraction differs.
 - **Small n per experiment.** Refusal training uses n=80 (JBB-Llama-1B). Fingerprints may stabilize with larger n; we do not characterize the n-dependence.
-- **Single seed for cross-model.** Our cross-model ablation uses seed=0 for reproducibility with the in-sample result. A 3-seed version would confirm the K\* shifts per substrate are not seed-sensitive artifacts.
-- **Single substrate family per experiment.** We have refusal fingerprints for 5 substrates (XSTest completions) but not hallucination or drift fingerprints for non-training substrates. The next round will extend atlas to all three instruments × 5+ substrates.
+- **Single seed for cross-model.** Our cross-model ablation uses seed=0 for reproducibility with the in-sample result. A 3-seed version would confirm the K* shifts per substrate are not seed-sensitive artifacts.
+- **Single substrate family per experiment.** We have refusal fingerprints for 5 substrates (XSTest completions) but not hallucination or drift fingerprints for non-training substrates. The next round will extend atlas to all three instruments $\times$ 5+ substrates.
 
 ---
 
@@ -232,7 +232,7 @@ A cross-lab fingerprint atlas at n ≈ 50-100 detectors would allow empirical an
 
 ## 10. Conclusion
 
-Calibrated safety detectors have been reported, shipped, and deployed in the research literature and in commercial systems as single AUC numbers. We show that these numbers obscure a recurring phase-transition structure where one or two critical features dominate detection and the identity of those features shifts by substrate. We propose the calibration fingerprint as a seven-field compact descriptor that captures this structure, release an initial atlas of 11 fingerprints across 3 instruments × 5 substrates, and invite other labs to publish their fingerprints in the same format. The cost of adoption is one ablation run per detector, once. The benefit is substrate-conditional deployment risk becoming visible before a production failure makes it so.
+Calibrated safety detectors have been reported, shipped, and deployed in the research literature and in commercial systems as single AUC numbers. We show that these numbers obscure a recurring phase-transition structure where one or two critical features dominate detection and the identity of those features shifts by substrate. We propose the calibration fingerprint as a seven-field compact descriptor that captures this structure, release an initial atlas of 11 fingerprints across 3 instruments $\times$ 5 substrates, and invite other labs to publish their fingerprints in the same format. The cost of adoption is one ablation run per detector, once. The benefit is substrate-conditional deployment risk becoming visible before a production failure makes it so.
 
 Cognometry as a discipline is young enough that its measurement standards are still contested. We claim the calibration fingerprint as a minimum standard and ask the community to refute it.
 
