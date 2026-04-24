@@ -4,9 +4,9 @@
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 11,
-  "n_instruments": 2,
-  "n_substrates": 7,
+  "n_fingerprints": 12,
+  "n_instruments": 3,
+  "n_substrates": 8,
   "fingerprints": [
     {
       "instrument": "drift-v1",
@@ -254,6 +254,19 @@
       "substrate_n": 450,
       "substrate_class_balance_refuse": 76,
       "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest mistralinstruct completions."
+    },
+    {
+      "instrument": "hallucination-v4",
+      "substrate": "HaluEval-QA",
+      "failure_class": "hallu vs truth",
+      "n_features": 9,
+      "baseline_auc": 1.0,
+      "critical_K": 1,
+      "critical_feature": "trigram_novelty",
+      "delta_auc_at_K": 0.4947,
+      "final_auc_at_N": 1.0,
+      "negative_lift": [],
+      "notes": "5-fold CV, n=300, paired (truth, hallu)"
     }
   ]
 }

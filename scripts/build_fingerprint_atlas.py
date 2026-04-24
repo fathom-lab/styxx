@@ -35,6 +35,7 @@ REPO = Path(__file__).resolve().parents[1]
 DRIFT_PT_JSON = REPO / "benchmarks" / "drift_feature_scaling.json"
 REFUSAL_PT_JSON = REPO / "benchmarks" / "refusal_feature_scaling.json"
 REFUSAL_CROSS_JSON = REPO / "benchmarks" / "refusal_cross_model_feature_scaling.json"
+HALLU_PT_JSON = REPO / "benchmarks" / "hallucination_feature_scaling.json"
 
 OUT_JSON = REPO / "benchmarks" / "cognometry_fingerprint_atlas_v0.json"
 
@@ -167,6 +168,29 @@ def build_refusal_in_sample_fingerprint():
     }
 
 
+def build_hallucination_fingerprints():
+    d = json.loads(HALLU_PT_JSON.read_text(encoding="utf-8"))
+    top_k = d["top_k"]
+    aucs = [row["auc"] for row in top_k]
+    names = [row["added"] for row in top_k if row["added"]]
+    crit_k = find_critical_k(aucs)
+    return [{
+        "instrument": "hallucination-v4",
+        "substrate": d["dataset"],
+        "failure_class": "hallu vs truth",
+        "n_features": d["n_features"],
+        "baseline_auc": d["full_model_auc"],
+        "critical_K": crit_k,
+        "critical_feature": names[crit_k - 1] if crit_k else None,
+        "delta_auc_at_K": (
+            round(aucs[crit_k] - aucs[crit_k - 1], 4) if crit_k else None
+        ),
+        "final_auc_at_N": d["full_model_auc"],
+        "negative_lift": find_negative_lift(aucs, names),
+        "notes": f"5-fold CV, n={d['n_samples']}, paired (truth, hallu)",
+    }]
+
+
 def build_refusal_cross_model_fingerprints():
     d = json.loads(REFUSAL_CROSS_JSON.read_text(encoding="utf-8"))
     sweep = d["top_k_sweep"]
@@ -225,6 +249,13 @@ def main():
         atlas_entries.extend(cross_fps)
     else:
         print(f"  refusal cross-model: SKIP (missing {REFUSAL_CROSS_JSON.name})")
+
+    if HALLU_PT_JSON.exists():
+        hallu_fps = build_hallucination_fingerprints()
+        print(f"  hallucination:       {len(hallu_fps)} fingerprint(s)")
+        atlas_entries.extend(hallu_fps)
+    else:
+        print(f"  hallucination:       SKIP (missing {HALLU_PT_JSON.name})")
 
     # Summary
     print()

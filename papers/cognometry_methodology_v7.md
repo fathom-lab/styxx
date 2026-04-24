@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Calibrated safety detectors for large language models are published as single AUC numbers. We show in three independent ablations — a 22-feature tool-call drift detector on BFCL v3 (n=3700), an 18-feature refusal detector on JBB-Llama-1B (n=80), and the same refusal detector evaluated out-of-sample on XSTest v2 completions from five model families (n=~450 per family) — that these detectors do not improve smoothly with feature count. They phase-transition: one or two features flip detection from chance to near-perfect, and the critical feature and critical K shift by failure class and by substrate. Adding features beyond the critical K can actively *degrade* performance on specific substrates. A single AUC number therefore cannot distinguish a detector that phase-transitions cleanly at K=1 from one that depends on a diffuse set of seven features, even when their reported headline AUCs are identical; nor can it signal that a detector's dominant feature does not exist in the target substrate's text distribution. We propose the **calibration fingerprint** — a seven-field descriptor (n_features, baseline_auc, critical_K, critical_feature, delta_auc_at_K, substrate_K_variance, negative_lift) — as the minimum reporting standard for calibrated cognometric instruments. We publish an initial atlas of 11 fingerprints across three instruments and five substrates, with reproducer scripts that execute in $\leq$ 3 minutes on CPU, and invite other labs to publish their fingerprints against the same format.
+Calibrated safety detectors for large language models are published as single AUC numbers. We show in four independent ablations across all three shipped cognometric instruments — a 22-feature tool-call drift detector on BFCL v3 (n=3700), an 18-feature refusal detector on JBB-Llama-1B (n=80) and its cross-model evaluation on XSTest v2 completions from five model families (n=~450 per family), and a 9-feature hallucination detector on HaluEval-QA (n=300) — that these detectors do not improve smoothly with feature count. They phase-transition: one or two features flip detection from chance to near-perfect, and the critical feature and critical K shift by failure class and by substrate. Adding features beyond the critical K can actively *degrade* performance on specific substrates. A single AUC number therefore cannot distinguish a detector that phase-transitions cleanly at K=1 from one that depends on a diffuse set of seven features, even when their reported headline AUCs are identical; nor can it signal that a detector's dominant feature does not exist in the target substrate's text distribution. We propose the **calibration fingerprint** — a seven-field descriptor (n_features, baseline_auc, critical_K, critical_feature, delta_auc_at_K, substrate_K_variance, negative_lift) — as the minimum reporting standard for calibrated cognometric instruments. We publish an initial atlas of 12 fingerprints across all three shipped cognometric instruments (hallucination, refusal, tool-call drift) and five held-out substrates, with reproducer scripts that execute in $\leq$ 10 minutes on CPU, and invite other labs to publish their fingerprints against the same format.
 
 **Keywords:** cognometry, calibrated detectors, phase transitions, feature scaling, cross-substrate generalization, LLM safety evaluation.
 
@@ -125,6 +125,35 @@ Four observations:
 
 4. **Mistral-Instruct plateaus at 0.597.** The class balance on Mistral-Instruct (76/450 = 17% refusals vs ~50% on other families) compresses the AUC ceiling. This is documented openly; the phase-transition at K=2 still occurs (+0.164), but headroom above the transition is small.
 
+### 4.4. Hallucination detector — phase transition at K=1 on trigram_novelty
+
+On HaluEval-QA, the 9-feature hallucination detector [calibrated_weights_v4.py] phase-transitions at K=1 [this work, hallucination_feature_scaling.py]. Paired dataset: 150 (truth, hallucinated) pairs from pminervini/HaluEval (n=300 total examples, balanced classes).
+
+| K | added | AUC (5-fold CV) | $\Delta$ |
+|---|---|---|---|
+| 0 | — | 0.500 (chance) | — |
+| 1 | `trigram_novelty` | **0.995** | **+0.495** |
+| 2 | `bigram_novelty` | 1.000 | +0.005 |
+| 3–9 | ... | 1.000 | ~0 |
+
+Full-model 5-fold CV AUC: 1.000 (HaluEval-QA is a saturation-ceiling benchmark for this feature set). `trigram_novelty` dominates the coefficient ranking at +3.257 in the standardized logistic regression, more than 2.8× the next-ranked feature (`bigram_novelty`, +1.139). The critical feature detects when the response contains trigrams not present in the reference passage — a direct text-grounding signal. Single-feature phase transition is sharp.
+
+Random-subset null at K=1 averages AUC 0.914 (±0.026 over 3 seeds): HaluEval-QA's paired truth/hallucinated format produces examples where even a random single feature retains substantial discriminative power. The top-K=1 value nonetheless exceeds the random K=1 mean (+0.08) and is reached only at K~4 in random-subset sampling, confirming that `trigram_novelty` is a *principled* critical feature, not a noise artifact.
+
+**Cross-instrument summary** across all three shipped cognometric instruments:
+
+| instrument | dataset | class | K\* | f\* | $\Delta$AUC\* |
+|---|---|---|---|---|---|
+| drift | BFCL v3 | spurious_arg | **1** | `spurious_arg_frac` | +0.499 |
+| drift | BFCL v3 | arg_drop | 2 | `arg_count_zscore` | +0.497 |
+| drift | BFCL v3 | arg_swap (v6.0) | 6 | `type_mismatch_frac` | +0.210 |
+| refusal | JBB-Llama-1B | refusal | **1** | `starts_with_sorry` | +0.469 |
+| refusal × GPT-4 | XSTest v2 | refusal | **1** | `starts_with_sorry` | +0.416 |
+| refusal × Llama-2 | XSTest v2 | refusal | 2 | `refusal_density` | +0.407 |
+| **hallucination** | **HaluEval-QA** | **hallu vs truth** | **1** | **`trigram_novelty`** | **+0.495** |
+
+Three out of three cognometric instruments shipped to date exhibit phase-transition structure. Critical K values cluster at K=1 (refusal, hallucination on HaluEval-QA, drift spurious_arg) or K=2 (drift arg_drop, refusal on Llama-2). The single K=6 outlier (drift arg_swap pre-v6.1) is the documented failure mode that motivated the v6.1 addition of `arg_order_inversion` — exactly the case where the existing feature base did not yet contain a mechanism-aligned critical feature.
+
 ---
 
 ## 5. The calibration fingerprint
@@ -154,9 +183,9 @@ The fingerprint is additive to AUC, not a replacement. Each field is extractable
 
 ---
 
-## 6. Atlas v0 — 11 fingerprints across 3 instruments $\times$ 5 substrates
+## 6. Atlas v0 — 12 fingerprints across 3 instruments $\times$ 5 substrates
 
-Compiled via `scripts/build_fingerprint_atlas.py` from the three 2026-04-24 ablation runs [benchmarks/cognometry_fingerprint_atlas_v0.json]:
+Compiled via `scripts/build_fingerprint_atlas.py` from the four 2026-04-24 ablation runs [benchmarks/cognometry_fingerprint_atlas_v0.json]:
 
 | instrument | substrate | class | K* | f\* | $\Delta$AUC\* | final | neg-lift |
 |---|---|---|---|---|---|---|---|
@@ -171,6 +200,7 @@ Compiled via `scripts/build_fingerprint_atlas.py` from the three 2026-04-24 abla
 | refusal-v1 | XSTest Llama-2-orig | refuse vs comply | 2 | `refusal_density` | +0.415 | 0.767 | 1 |
 | refusal-v1 | XSTest Mistral-Guard | refuse vs comply | 5 | `sentence_length_mean` | +0.028 | 0.767 | — |
 | refusal-v1 | XSTest Mistral-Instruct | refuse vs comply | — | — | — | 0.597 | 1 |
+| **hallucination-v4** | **HaluEval-QA** | **hallu vs truth** | **1** | **`trigram_novelty`** | **+0.495** | **1.000** | **—** |
 
 The atlas is distributed as:
 

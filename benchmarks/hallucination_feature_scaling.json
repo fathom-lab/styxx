@@ -1,0 +1,244 @@
+{
+  "methodology": "hallucination v4 feature-scaling, HaluEval-QA, 5-fold CV seed=0",
+  "instrument": "hallucination-v4",
+  "dataset": "HaluEval-QA",
+  "n_samples": 300,
+  "class_balance": [
+    150,
+    150
+  ],
+  "n_features": 9,
+  "feature_names": [
+    "text_claim_risk",
+    "entity_unverified_frac",
+    "knowledge_grounding",
+    "content_novelty",
+    "entity_novelty",
+    "number_novelty",
+    "bigram_novelty",
+    "trigram_novelty",
+    "nli_contradict"
+  ],
+  "full_model_importance": [
+    {
+      "rank": 1,
+      "feature": "trigram_novelty",
+      "coef": 3.2565931012748095
+    },
+    {
+      "rank": 2,
+      "feature": "bigram_novelty",
+      "coef": 1.1385121368291968
+    },
+    {
+      "rank": 3,
+      "feature": "content_novelty",
+      "coef": 1.074483152810793
+    },
+    {
+      "rank": 4,
+      "feature": "knowledge_grounding",
+      "coef": 0.7842855430673281
+    },
+    {
+      "rank": 5,
+      "feature": "nli_contradict",
+      "coef": 0.7436059048196692
+    },
+    {
+      "rank": 6,
+      "feature": "entity_novelty",
+      "coef": 0.7405848937279768
+    },
+    {
+      "rank": 7,
+      "feature": "text_claim_risk",
+      "coef": 0.7197786648910897
+    },
+    {
+      "rank": 8,
+      "feature": "number_novelty",
+      "coef": 0.17022764493734766
+    },
+    {
+      "rank": 9,
+      "feature": "entity_unverified_frac",
+      "coef": 0.0
+    }
+  ],
+  "full_model_auc": 1.0,
+  "top_k": [
+    {
+      "K": 0,
+      "added": null,
+      "auc": 0.5,
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 1,
+      "added": "trigram_novelty",
+      "auc": 0.9946666666666667,
+      "delta_from_prev": 0.4946666666666667,
+      "phase_transition": true
+    },
+    {
+      "K": 2,
+      "added": "bigram_novelty",
+      "auc": 1.0,
+      "delta_from_prev": 0.005333333333333301,
+      "phase_transition": false
+    },
+    {
+      "K": 3,
+      "added": "content_novelty",
+      "auc": 0.9999111111111111,
+      "delta_from_prev": -8.88888888889161e-05,
+      "phase_transition": false
+    },
+    {
+      "K": 4,
+      "added": "knowledge_grounding",
+      "auc": 0.9999555555555556,
+      "delta_from_prev": 4.4444444444513564e-05,
+      "phase_transition": false
+    },
+    {
+      "K": 5,
+      "added": "nli_contradict",
+      "auc": 0.9998666666666667,
+      "delta_from_prev": -8.88888888889161e-05,
+      "phase_transition": false
+    },
+    {
+      "K": 6,
+      "added": "entity_novelty",
+      "auc": 1.0,
+      "delta_from_prev": 0.00013333333333331865,
+      "phase_transition": false
+    },
+    {
+      "K": 7,
+      "added": "text_claim_risk",
+      "auc": 1.0,
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 8,
+      "added": "number_novelty",
+      "auc": 1.0,
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    },
+    {
+      "K": 9,
+      "added": "entity_unverified_frac",
+      "auc": 1.0,
+      "delta_from_prev": 0.0,
+      "phase_transition": false
+    }
+  ],
+  "random_subsets": [
+    {
+      "K": 1,
+      "random_aucs": [
+        0.8956444444444445,
+        0.9507777777777777,
+        0.8956444444444445
+      ],
+      "random_mean": 0.9140222222222222,
+      "random_std": 0.025990102579612175
+    },
+    {
+      "K": 2,
+      "random_aucs": [
+        0.9624222222222222,
+        0.5446666666666667,
+        1.0
+      ],
+      "random_mean": 0.8356962962962964,
+      "random_std": 0.20636005158855808
+    },
+    {
+      "K": 3,
+      "random_aucs": [
+        0.7435111111111111,
+        1.0,
+        0.9752888888888888
+      ],
+      "random_mean": 0.9062666666666667,
+      "random_std": 0.11552687393339715
+    },
+    {
+      "K": 4,
+      "random_aucs": [
+        0.9414666666666667,
+        0.9998222222222223,
+        1.0
+      ],
+      "random_mean": 0.9804296296296297,
+      "random_std": 0.027551070921405654
+    },
+    {
+      "K": 5,
+      "random_aucs": [
+        0.9997333333333333,
+        1.0,
+        0.9993333333333333
+      ],
+      "random_mean": 0.999688888888889,
+      "random_std": 0.0002739739556875219
+    },
+    {
+      "K": 6,
+      "random_aucs": [
+        0.9997777777777778,
+        0.9997777777777778,
+        1.0
+      ],
+      "random_mean": 0.9998518518518518,
+      "random_std": 0.00010475656017579072
+    },
+    {
+      "K": 7,
+      "random_aucs": [
+        0.9998222222222223,
+        0.9999111111111111,
+        0.9997333333333333
+      ],
+      "random_mean": 0.9998222222222223,
+      "random_std": 7.257747386026454e-05
+    },
+    {
+      "K": 8,
+      "random_aucs": [
+        1.0,
+        0.9998666666666667,
+        0.9999111111111111
+      ],
+      "random_mean": 0.9999259259259259,
+      "random_std": 5.5431961285537064e-05
+    },
+    {
+      "K": 9,
+      "random_aucs": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "random_mean": 1.0,
+      "random_std": 0.0
+    }
+  ],
+  "phase_transitions_found": [
+    {
+      "K": 1,
+      "added": "trigram_novelty",
+      "auc": 0.9946666666666667,
+      "delta_from_prev": 0.4946666666666667,
+      "phase_transition": true
+    }
+  ],
+  "phase_transition_threshold": 0.1
+}
