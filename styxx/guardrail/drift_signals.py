@@ -3,7 +3,7 @@
 Tool-call drift signals — text-only features for `drift_check()`.
 
 Pure Python, no external dependencies beyond stdlib regex and math.
-Pyodide-safe. Extracts 22 features per (prompt, functions, tool_call)
+Pyodide-safe. Extracts 23 features per (prompt, functions, tool_call)
 triplet.
 
 See `calibrated_weights_drift_v1.py` for the research methodology
@@ -40,12 +40,65 @@ def _content_tokens(text: str) -> List[str]:
     return [t for t in _tokens(text) if t not in STOPWORDS and len(t) > 1]
 
 
+def _value_first_position(value: Any, prompt_tokens: List[str]) -> Any:
+    """Index of earliest prompt token that is a member of value's tokens.
+    Returns None if the value contributes no matchable tokens."""
+    vtoks = set(_tokens(str(value)))
+    if not vtoks:
+        return None
+    for i, tok in enumerate(prompt_tokens):
+        if tok in vtoks:
+            return i
+    return None
+
+
+def _arg_order_inversion_rate(
+    prompt_tokens: List[str],
+    schema_props: Dict[str, Any],
+    call_args: Dict[str, Any],
+) -> float:
+    """Fraction of argument-pairs where the schema's declared order of
+    arg keys disagrees with the prompt-order of their call values.
+
+    Targets arg_swap drift: when the model produces the right arg names
+    but assigns wrong values across slots. In a well-formed call, a
+    value whose slot comes first in the schema should also appear
+    earlier in the prompt; arg_swap inverts that.
+    """
+    if len(call_args) < 2 or not schema_props:
+        return 0.0
+    schema_order = {k: i for i, k in enumerate(schema_props.keys())}
+
+    positions: Dict[str, int] = {}
+    for k, v in call_args.items():
+        if k not in schema_order:
+            continue
+        p = _value_first_position(v, prompt_tokens)
+        if p is not None:
+            positions[k] = p
+    if len(positions) < 2:
+        return 0.0
+
+    keys = list(positions.keys())
+    inv = 0
+    total = 0
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            ki, kj = keys[i], keys[j]
+            s_before = schema_order[ki] < schema_order[kj]
+            p_before = positions[ki] < positions[kj]
+            total += 1
+            if s_before != p_before:
+                inv += 1
+    return inv / total if total else 0.0
+
+
 def extract_drift_features(
     prompt: str,
     functions: List[Dict[str, Any]],
     tool_call: Dict[str, Any],
 ) -> Dict[str, float]:
-    """Compute the 22-feature drift vector.
+    """Compute the 23-feature drift vector.
 
     Args:
         prompt: the user's natural-language request (or concatenated
@@ -107,7 +160,7 @@ def extract_drift_features(
     else:
         f_arg_verbatim_rate = 0.0
 
-    # -------- Group B: schema conformance (6) --------
+    # -------- Group B: schema conformance (7) --------
     schema = next(
         (fn for fn in functions if fn.get("name") == tool_call.get("name")),
         None,
@@ -119,6 +172,7 @@ def extract_drift_features(
         f_type_mismatch_frac = 1.0
         f_arg_count_zscore = 0.0
         f_required_count = 0.0
+        f_arg_order_inversion = 0.0
     else:
         f_tool_in_schema = 1.0
         props = (schema.get("parameters") or {}).get("properties") or {}
@@ -166,6 +220,10 @@ def extract_drift_features(
             / max(1.0, math.sqrt(max(1, len(spec_args))))
         )
         f_required_count = float(len(req_args))
+
+        f_arg_order_inversion = _arg_order_inversion_rate(
+            _tokens(prompt), props, call_args,
+        )
 
     # -------- Group C: lexical drift (4) --------
     if call_args:
@@ -220,6 +278,7 @@ def extract_drift_features(
         "type_mismatch_frac":     f_type_mismatch_frac,
         "arg_count_zscore":       f_arg_count_zscore,
         "required_count":         f_required_count,
+        "arg_order_inversion":    f_arg_order_inversion,
         "placeholder_frac":       f_placeholder_frac,
         "tool_name_len":          f_tool_name_len,
         "tool_in_any_schema":     f_tool_in_any_schema,

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "6.0.0"
-description = "nothing crosses unseen. three calibrated cognometric instruments: hallucination (AUC 0.998 HaluEval-QA), refusal (AUC 0.976 XSTest-GPT-4), and tool-call drift (AUC 0.916 BFCL v3). Pure Python, no LLM required."
+version = "6.1.0"
+description = "nothing crosses unseen. three calibrated cognometric instruments: hallucination (AUC 0.998 HaluEval-QA), refusal (AUC 0.976 XSTest-GPT-4), and tool-call drift (AUC 0.943 BFCL v3, v6.1 retrained). Pure Python, no LLM required."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [

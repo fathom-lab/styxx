@@ -40,8 +40,8 @@ Core API:
 Methodology:
     Trained on BFCL v3 (Berkeley Function Calling Leaderboard, Patil
     et al.), n=3,700 labeled triplets (658 no-drift gold + 3,042 drift
-    via mutation + irrelevance-called). 5-fold stratified CV AUC 0.916
-    +/- 0.004 (pooled 0.916).
+    via mutation + irrelevance-called). 5-fold stratified CV AUC 0.943
+    +/- 0.009 (pooled 0.943). [v6.0 baseline: 0.916 +/- 0.004.]
 
     Outperforms the only published text-adjacent baseline (Healy et al.
     2026, arXiv:2601.05214, AUC 0.716-0.721 with hidden-state features
@@ -51,10 +51,11 @@ Methodology:
     See `calibrated_weights_drift_v1.CALIBRATION_NOTES` for the
     per-drift-type AUC table and documented failure modes.
 
-Documented failure mode: arg_swap (AUC 0.66). Semantically-wrong-but-
-syntactically-valid argument value swaps are not caught by the current
-feature set. Fix targeted for v2 via embedding-based arg-value
-similarity checks.
+Documented failure mode (partially fixed in v6.1): arg_swap at 0.76
+(up from 0.66 in v6.0 via the new `arg_order_inversion` feature).
+Remaining gap for cases where swapped values share prompt positions or
+one value is missing from prompt. Full fix targeted for v3 via
+embedding-based arg-value semantic fit per slot.
 """
 from __future__ import annotations
 
@@ -85,7 +86,7 @@ class DriftVerdict:
         drifts:          bool — drift_risk >= threshold
         threshold:       decision threshold used
         weights_variant: calibrated-weights version id ("v1")
-        features:        dict of all 22 raw features
+        features:        dict of all 23 raw features
         top_signals:     top-3 contributing features as
                          [(name, raw_value, scaled_contribution), ...]
     """

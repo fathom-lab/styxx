@@ -7,6 +7,101 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.1.0] — 2026-04-24
+
+**Headline: tool-call drift detector retrained — overall AUC 0.916 → 0.943,
+arg_swap failure mode partially fixed (0.664 → 0.755) via a new
+positional-inversion feature.**
+
+PyPI: https://pypi.org/project/styxx/6.1.0/
+
+### `arg_order_inversion` — 23rd feature
+
+The v6.0 drift detector had one documented failure mode: `arg_swap`
+(AUC 0.664), where a model produces the right argument names but
+assigns wrong values across slots. None of the 22 v6.0 features
+could separate this case from gold calls — all schema checks pass,
+all prompt-overlap features pass.
+
+The new feature — `arg_order_inversion` — measures whether the
+positional order of call-values in the prompt matches the schema's
+declared argument-key order. A correct call tends to have value
+positions monotonically increasing with schema index; arg_swap
+inverts that.
+
+Formally, for each argument pair `(ki, kj)` where both call values
+have a detectable first-appearance position in the prompt tokens:
+```
+schema says:  schema_order[ki] < schema_order[kj]
+prompt says:  prompt_pos(call_args[ki]) < prompt_pos(call_args[kj])
+inverted if the two disagree.
+```
+`arg_order_inversion = inversions / eligible_pairs ∈ [0, 1]`.
+
+Signal validation on BFCL v3 n=3,700 (no training involved):
+
+```
+drift_type             n   mean   cov>0
+gold                 658  0.166  24.2%
+arg_swap             604  0.415  53.3%    <-- +0.249 over gold
+arg_drop             657  0.094  11.4%
+spurious_arg         658  0.166  24.2%
+irrelevance_called  1122  0.567  58.4%
+```
+
+### 5-fold CV results (same n=3,700, same protocol)
+
+| metric                   | v6.0 (22-feat) | v6.1 (23-feat) | delta   |
+|--------------------------|----------------|----------------|---------|
+| Pooled AUC               | 0.9148         | **0.9425**     | +0.028  |
+| Mean fold AUC (± std)    | 0.9151 ± 0.004 | **0.9430 ± 0.009** | +0.028 |
+| **arg_swap** (vs gold)   | **0.664**      | **0.755**      | **+0.091** |
+| irrelevance_called       | 0.957          | 0.980          | +0.023  |
+| arg_drop                 | 0.998          | 0.997          | ~flat   |
+| spurious_arg             | 0.997          | 0.997          | ~flat   |
+| simple (pooled)          | 0.902          | 0.930          | +0.028  |
+| live_simple (pooled)     | 0.872          | 0.904          | +0.032  |
+
+No regressions. `arg_order_inversion` lands at #6 by coefficient
+magnitude (+1.154 scaled), top-3 on arg_swap cases at inference.
+
+### Remaining failure modes
+
+arg_swap at 0.755 is a partial fix, not a full one. The feature is
+a surface-level positional heuristic — it fails when:
+- both swapped values share the same prompt position (numerical
+  ambiguity, e.g. `"divide 5 by 5"`)
+- one value is missing from the prompt (synthesized by the model)
+- the schema's declared order doesn't match the prompt's natural
+  order (baseline inversion rate on gold ~0.17)
+
+Full arg_swap fix is scoped for v3 via embedding-based per-slot
+semantic fit.
+
+### Files changed
+
+- `styxx/guardrail/drift_signals.py` — 22 → 23 features, added
+  `_arg_order_inversion_rate` helper.
+- `styxx/guardrail/calibrated_weights_drift_v1.py` — fully retrained
+  coefficients, scaler mean/scale, intercept, AUC tables.
+- `styxx/guardrail/drift.py` — docstring update with new numbers.
+- `scripts/drift_calibrated_v1.py` — new trainer (mirrors v0,
+  adds the feature to Group B).
+- `scripts/drift_feature_probe_arg_order.py` — signal-strength
+  probe used to justify the retrain.
+- `benchmarks/drift_calibrated_v1.json` — full v1 artifact.
+- `tests/test_drift_v1.py` — assertions bumped to 23-feature,
+  v1 artifact path.
+
+### Compatibility
+
+Same public API (`styxx.guardrail.drift_check()` unchanged).
+Scores shift: expect drift_risk to move by up to ±0.1 on borderline
+cases relative to v6.0. Decision boundary (`drifts = drift_risk >=
+0.5`) is stable on the held-out test set.
+
+---
+
 ## [6.0.0] — 2026-04-23
 
 **Headline: cognometric instrument #3 — tool-call drift — ships as the

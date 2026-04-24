@@ -171,14 +171,15 @@ def test_drift_custom_threshold():
 
 def test_weights_feature_order():
     from styxx.guardrail.calibrated_weights_drift_v1 import FEATURE_NAMES
-    # Must match the 22-feature order used in training + extractor
+    # Must match the 23-feature order used in v6.1 training + extractor
     expected_prefix = [
         "tool_in_prompt", "tool_parts_in_prompt", "overlap_jaccard",
         "prompt_coverage", "arg_verbatim_rate",
     ]
     assert FEATURE_NAMES[:5] == expected_prefix
     assert "spurious_arg_frac" in FEATURE_NAMES
-    assert len(FEATURE_NAMES) == 22
+    assert "arg_order_inversion" in FEATURE_NAMES  # v6.1 arg_swap fix
+    assert len(FEATURE_NAMES) == 23
 
 
 def test_weights_dominant_feature_is_spurious_arg():
@@ -201,7 +202,7 @@ def test_weights_match_research_json():
     )
     repo = Path(__file__).resolve().parents[1]
     research = json.loads(
-        (repo / "benchmarks" / "drift_calibrated_v0.json").read_text(encoding="utf-8")
+        (repo / "benchmarks" / "drift_calibrated_v1.json").read_text(encoding="utf-8")
     )
     for i, name in enumerate(FEATURE_NAMES):
         expected = round(research["coefficients"][name], 4)
@@ -216,7 +217,11 @@ def test_calibration_notes_document_auc_and_failures():
     from styxx.guardrail.calibrated_weights_drift_v1 import CALIBRATION_NOTES
     assert "v1" in CALIBRATION_NOTES["version"]
     assert CALIBRATION_NOTES["cv_mean_auc"] > 0.90
-    assert "arg_swap" in CALIBRATION_NOTES["documented_failure_modes"]
+    # v6.1 partially fixed arg_swap (0.66 -> 0.76); now tracked as arg_swap_partial
+    assert any(
+        "arg_swap" in m
+        for m in CALIBRATION_NOTES["documented_failure_modes"]
+    )
     assert "closest_published_baseline" in CALIBRATION_NOTES
     # Healy et al. baseline cited
     baseline = CALIBRATION_NOTES["closest_published_baseline"]
@@ -230,8 +235,9 @@ def test_calibration_notes_per_drift_type_aucs_sensible():
     assert HELD_OUT_AUC_PER_DRIFT_TYPE["spurious_arg"] > 0.99
     # irrelevance_called should be > 0.9 (big gain over null baseline's 0.56)
     assert HELD_OUT_AUC_PER_DRIFT_TYPE["irrelevance_called"] > 0.9
-    # arg_swap is the documented failure — AUC should be in [0.5, 0.75]
-    assert 0.5 < HELD_OUT_AUC_PER_DRIFT_TYPE["arg_swap"] < 0.8
+    # arg_swap was the v6.0 failure mode; v6.1 lifts it to ~0.76 via
+    # arg_order_inversion. Not yet on par with other instruments.
+    assert 0.7 < HELD_OUT_AUC_PER_DRIFT_TYPE["arg_swap"] < 0.85
 
 
 def test_predict_proba_drift_signature():

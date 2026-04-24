@@ -164,23 +164,24 @@ v = refuse_check(
 
 ### Tool-call drift — instrument #3
 
-Catches when an LLM agent's stated intent doesn't match the tool call it actually made. Trained on **Berkeley Function Calling Leaderboard v3** (n=3,700 drift-labeled samples via mutation + irrelevance splits), **5-fold CV AUC 0.916 ± 0.004**.
+Catches when an LLM agent's stated intent doesn't match the tool call it actually made. Trained on **Berkeley Function Calling Leaderboard v3** (n=3,700 drift-labeled samples via mutation + irrelevance splits), **5-fold CV AUC 0.943 ± 0.009** (v6.1 retrain).
 
-The only published comparable baseline — [Healy et al. 2026 (arXiv:2601.05214)](https://arxiv.org/abs/2601.05214) reports AUC 0.72 on Glaive using **hidden-state features**. Styxx hits 0.916 on BFCL v3 **text-only**, works on any closed model (OpenAI, Anthropic, Gemini) with zero internal access.
+The only published comparable baseline — [Healy et al. 2026 (arXiv:2601.05214)](https://arxiv.org/abs/2601.05214) reports AUC 0.72 on Glaive using **hidden-state features**. Styxx hits 0.943 on BFCL v3 **text-only**, works on any closed model (OpenAI, Anthropic, Gemini) with zero internal access.
 
 | detector | BFCL v3 drift AUC | method |
 |---|---|---|
-| **styxx drift v1** | **0.916 ± 0.004** | 22-feature calibrated LR |
+| **styxx drift v1 (v6.1)** | **0.943 ± 0.009** | 23-feature calibrated LR |
+| styxx drift v1 (v6.0) | 0.916 ± 0.004 | 22-feature calibrated LR |
 | Healy et al. 2026 | 0.72 (Glaive, different dataset) | MLP on hidden states |
 
-Per-drift-type held-out AUC:
+Per-drift-type held-out AUC (v6.1):
 
 | drift class | AUC | notes |
 |---|---|---|
 | spurious_arg (model hallucinates extra args) | **0.997** | clean capture |
-| arg_drop (model misses required field) | **0.998** | clean capture |
-| irrelevance_called (model calls when should refuse) | **0.957** | +0.40 over null baseline |
-| arg_swap (semantically wrong values, valid schema) | 0.664 | **documented failure mode** |
+| arg_drop (model misses required field) | **0.997** | clean capture |
+| irrelevance_called (model calls when should refuse) | **0.980** | +0.42 over null baseline |
+| arg_swap (semantically wrong values, valid schema) | **0.755** | v6.1 partial fix (from 0.664 in v6.0) via `arg_order_inversion` |
 
 ```python
 from styxx.guardrail import drift_check
