@@ -1,17 +1,25 @@
 {
   "action": "new_version_published",
-  "new_id": 19746096,
-  "new_doi": "10.5281/zenodo.19746096",
-  "new_doi_url": "https://doi.org/10.5281/zenodo.19746096",
-  "concept_doi": "10.5281/zenodo.19703526",
-  "concept_doi_url": "https://doi.org/10.5281/zenodo.19703526",
-  "record_url": "https://zenodo.org/records/19746096",
-  "concept_url": "https://zenodo.org/records/19703526",
-  "title": "Cognometric Fingerprint Specification v1.0 \u2014 Open Reference for Measuring AI Cognition",
-  "version": "spec-v1.0",
-  "files": [
-    "cognometric-fingerprint-spec-v1.0.md",
-    "foundations-of-cognometric-engineering-v0.1.md",
-    "fingerprint_seed-bench_reference.json"
-  ]
+  "concept_recid": "19326174",
+  "concept_doi": "10.5281/zenodo.19326174",
+  "new_deposition_id": 19746215,
+  "new_doi": "10.5281/zenodo.19746215",
+  "new_doi_url": "https://doi.org/10.5281/zenodo.19746215",
+  "record_url": "https://zenodo.org/record/19746215",
+  "previous_latest": {
+    "id": 19702475,
+    "doi": "10.5281/zenodo.19702475",
+    "title": "Fathom v19 / styxx v3.9.1: Cross-Dataset Validated Hallucination Prevention via the Trust Layer",
+    "version": "v19"
+  },
+  "this_version": {
+    "version": "spec-v1.0",
+    "title": "Fathom v20 / styxx v6.2.0: Cognometric Fingerprint Specification v1.0 \u2014 Open Reference for Measuring AI Cognition",
+    "uploaded_files": [
+      "cognometric-fingerprint-spec-v1.0.md",
+      "foundations-of-cognometric-engineering-v0.1.md",
+      "fingerprint_seed-bench_reference.json"
+    ]
+  },
+  "timestamp": "2026-04-24T21:53:17Z"
 }

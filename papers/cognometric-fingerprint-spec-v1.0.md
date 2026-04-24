@@ -2,7 +2,7 @@
 
 **Version 1.0 · Fathom Lab · 2026-04-24**
 
-**DOI:** [10.5281/zenodo.19746096](https://doi.org/10.5281/zenodo.19746096) · **Concept DOI (always latest):** [10.5281/zenodo.19703526](https://doi.org/10.5281/zenodo.19703526)
+**DOI:** [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215) · **Concept DOI (always latest):** [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174)
 **Status:** Reference Document (Stable)
 **License:** CC-BY-4.0 (the specification itself). Reference implementation: MIT.
 **Editors:** Flobi, Fathom Lab. Contributions welcome via `github.com/fathom-lab/spec`.
@@ -735,8 +735,8 @@ attribution.
 ## 11. References
 
 [1] Fathom Lab. "Cognometric Fingerprint Specification v1.0."
-Zenodo, 2026-04-24. DOI: [10.5281/zenodo.19746096](https://doi.org/10.5281/zenodo.19746096).
-Concept DOI (always latest): [10.5281/zenodo.19703526](https://doi.org/10.5281/zenodo.19703526).
+Zenodo, 2026-04-24. DOI: [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215).
+Concept DOI (always latest): [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174).
 
 [1a] Fathom Lab. "Phase Transitions as Calibration Fingerprints." Zenodo,
 2026. DOI: 10.5281/zenodo.19703527

@@ -34,7 +34,7 @@ SPEC_MD = REPO / "papers" / "cognometric-fingerprint-spec-v1.0.md"
 FOUNDATIONS_MD = REPO / "papers" / "foundations-of-cognometric-engineering-v0.1.md"
 FINGERPRINT_JSON = REPO / "scratch" / "fingerprint_seed-bench_reference.json"
 
-CONCEPT_RECID = "19703526"
+CONCEPT_RECID = "19326174"  # Fathom main concept chain (v19 was previous latest)
 
 
 def load_token() -> str:
@@ -163,11 +163,11 @@ def main() -> None:
     print(f"\nstep 6: updating metadata")
     metadata = {
         "metadata": {
-            "title": "Cognometric Fingerprint Specification v1.0 — Open Reference for Measuring AI Cognition",
+            "title": "Fathom v20 / styxx v6.2.0: Cognometric Fingerprint Specification v1.0 — Open Reference for Measuring AI Cognition",
             "upload_type": "publication",
             "publication_type": "workingpaper",
             "description": (
-                "<p>The first open reference specification for measuring, classifying, and "
+                "<p><b>Fathom v20 · styxx v6.2.0</b> — the first open reference specification for measuring, classifying, and "
                 "comparing the cognitive state of a language model during generation. "
                 "Defines three orthogonal measurement axes — K (reasoning depth), C (coherence/commitment), "
                 "and D (dissociation/drift) — a canonical taxonomy of seven fault kinds, and the "
@@ -210,7 +210,7 @@ def main() -> None:
                 "fathom lab"
             ],
             "license": "CC-BY-4.0",
-            "version": "spec-v1.0",
+            "version": "v20",
             "related_identifiers": [
                 {
                     "relation": "isNewVersionOf",
