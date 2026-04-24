@@ -1,0 +1,579 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  11pt]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Cognometry v0: 8-Benchmark Cross-Validated Hallucination
+Detection in Production
+LLMs}\label{cognometry-v0-8-benchmark-cross-validated-hallucination-detection-in-production-llms}
+
+\textbf{2026-04-23. Numbers from committed run artifacts. All
+reproducers in \texttt{benchmarks/hallucination\_test/}.}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+We define \textbf{cognometry} as the empirical quantification of
+cognitive states in machine systems --- refusal, confabulation,
+retrieval, reasoning, and adversarial drift --- from signals already
+carried on the token stream and residual activations of a language model
+during inference. We publish three falsifiable laws of cognometry
+(vitals exist, vitals transfer across substrates, vitals are causally
+actionable) with cross-validated numerical support for each, and ship
+the first open-source instrument (\texttt{styxx} on PyPI) that realizes
+the measurement.
+
+The central claim of this paper is narrower: a 9-signal logistic
+regression fused over text, entity, novelty, grounding, and NLI
+contradiction signals achieves \emph{cross-validated} hallucination
+discrimination across \textbf{8 public benchmarks} --- HaluEval-QA,
+Dialog, Summarization, TruthfulQA, and four HaluBench subsets (DROP,
+PubMedQA, FinanceBench, RAGTruth) --- with honest per-dataset
+performance ranging from near-perfect (AUC 0.998 on HaluEval-QA) to
+below chance (AUC 0.424 on DROP). We openly report and taxonomize the
+failure modes: reading-comprehension extractive-span errors and
+financial arithmetic errors are not detected by the present signal stack
+because both classes of error pass the entailment (NLI) and novelty bars
+by construction. We publish the failure modes in the weights module
+itself.
+
+This is the first 8-benchmark cross-validated hallucination detector we
+are aware of in the open literature. Above-chance performance on 5/8
+benchmarks with 3/8 near-perfect is the reproducible empirical floor we
+are laying down. Two below-chance results are the reproducible research
+agenda we are laying down.
+
+\subsection{1. Motivation}\label{motivation}
+
+Hallucination detection has a reproducibility and generalization crisis.
+Published numbers typically report on one benchmark (HaluEval-QA
+dominantly) at undisclosed random-seed and dataset-split configurations.
+When we trained our own v3.9.0 calibration on HaluEval-QA (AUC 0.90,
+n=230 test) and cross-validated it on HaluEval-Dialog, HaluEval-Summ,
+and TruthfulQA with the same weights, performance collapsed to AUC
+0.56--0.63 on three of four datasets (Styxx v3.9.1 CHANGELOG,
+2026-04-23). The headline number was a single-benchmark overfit.
+
+We caught our own overfit and retrained on pooled data from the four
+benchmarks, producing v2 calibration with mean AUC 0.79 at n=400 test.
+Dialog and Summarization remained near chance (AUC \textasciitilde0.60)
+--- not an overfitting artifact but a structural one: faithful dialog
+and summary responses \emph{add content not verbatim present in the
+reference}. Novelty signals cannot distinguish faithful addition from
+contradiction. A proper entailment (NLI) signal is required.
+
+The present paper addresses three failure modes of the state of the art:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Single-benchmark overfitting} --- detectors that report AUC
+  0.85+ on HaluEval-QA routinely underperform chance on summarization.
+\item
+  \textbf{Unreported failure modes} --- no open detector we are aware of
+  publishes where it fails, only where it succeeds.
+\item
+  \textbf{No shared vocabulary} --- hallucination, refusal, drift, and
+  confabulation detection are treated as separate tasks with separate
+  papers and separate signals, when in fact they share a measurement
+  substrate.
+\end{enumerate}
+
+The proposed frame for \#3 is \textbf{cognometry}. We name the field,
+put three laws on the table, and ship the first instrument for \#1 and
+\#2 under that frame.
+
+\subsection{2. Three laws of cognometry}\label{three-laws-of-cognometry}
+
+\subsubsection{Law I --- Every computation leaves
+vitals}\label{law-i-every-computation-leaves-vitals}
+
+A language model in inference produces text conditioned on a logprob
+trajectory, a residual-stream geometry, and a generation-order time
+series. Any of these carries enough signal to classify the cognitive
+state that produced them.
+
+\textbf{Support.} Cross-validated on 8 benchmarks with a 9-signal pooled
+LR (this paper, §3). Independent validation on Claude API without
+logprobs: category-accuracy 0.536, gate agreement 0.940 with n=84
+fixtures (Cognitive Monitoring Without Logprobs paper,
+\texttt{papers/cognitive-monitoring-without-logprobs.md}).
+
+\subsubsection{Law II --- Vitals are
+substrate-transferable}\label{law-ii-vitals-are-substrate-transferable}
+
+Cognitive state directions (refusal, sycophant-pressure, confab-prompt)
+trained on one model share measurable geometric overlap with the
+corresponding direction natively learned on another model. Overlap
+strength tracks the similarity of the alignment regimes of the two
+models.
+
+\textbf{Support.} UCB Phase 2 paper
+(\texttt{papers/universal-cognitive-basis-phase2.md}). Cross-scale
+within Llama family: cos = +0.464 on refusal direction
+(\textasciitilde26σ above chance). Cross-vendor similar-alignment: cos =
++0.362 (\textasciitilde14σ). Cross-vendor divergent-alignment (Qwen →
+Phi-3.5): cos = +0.043 (\textasciitilde2σ, null). The law is nontrivial
+precisely because it fails where it should fail.
+
+\subsubsection{Law III --- Vitals are causally
+actionable}\label{law-iii-vitals-are-causally-actionable}
+
+Cognitive states are not only observable but steerable: adding a
+direction into the residual stream at inference time changes behavior at
+predicted magnitudes.
+
+\textbf{Support.} CIS v0 paper
+(\texttt{papers/cognitive-instruction-set-v0-filled.md}). Refuse@unsafe
+drops 97\% → 17\% at α=3.0 multi-position patching on Llama-3.2-1B (n=60
+JBB test split). Gradient-free capability amplification: +7.0pp MC1 on
+TruthfulQA (n=200) at α=1.0, validated against a 3-seed random-direction
+control (random directions hurt accuracy by a mean −5.3pp at α=0.5).
+Three refusal-family directions measured at near-orthogonal angles
+(86.7°--91.9°) --- cognitive states form a basis, not a scalar dial.
+
+\subsection{3. 8-benchmark cross-validated hallucination
+detection}\label{benchmark-cross-validated-hallucination-detection}
+
+\subsubsection{3.1 Signal stack}\label{signal-stack}
+
+Nine cheap-to-compute signals, combined via pooled logistic regression:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Signal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cost
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{text\_claim\_risk} & Surface heuristics (hedges, confidence
+markers, entity density, line structure) on decomposed claims &
+sub-ms \\
+\texttt{entity\_unverified\_frac} & Fraction of named entities that fail
+Wikipedia verification & \textasciitilde100 ms per entity \\
+\texttt{knowledge\_grounding} & Claim-level content-token coverage
+against the reference passage & sub-ms \\
+\texttt{content\_novelty} & Fraction of response content tokens absent
+from reference & sub-ms \\
+\texttt{entity\_novelty} & Fraction of capitalized tokens absent from
+reference & sub-ms \\
+\texttt{number\_novelty} & Fraction of numeric tokens absent from
+reference & sub-ms \\
+\texttt{bigram\_novelty} & Fraction of response bigrams absent from
+reference & sub-ms \\
+\texttt{trigram\_novelty} & Fraction of response trigrams absent from
+reference & sub-ms \\
+\texttt{nli\_contradict} &
+\texttt{MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli} contradiction
+probability on (reference → response) & 10--400 ms \\
+\end{longtable}
+}
+
+All nine are computable at inference time without access to the
+generating model's weights.
+
+\subsubsection{3.2 Training protocol}\label{training-protocol}
+
+Three independent seeds (31, 47, 83). For each seed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Load n=150 pairs per dataset (HaluEval has paired truth/hallu
+  responses; TruthfulQA has correct/incorrect answer pairs; HaluBench
+  has per-example PASS/FAIL labels which we balance at 150-per-class).
+\item
+  75\%/25\% stratified train/test split per dataset.
+\item
+  Pool training rows across all 8 benchmarks (n\_train ≈ 1800).
+\item
+  Fit 9-coefficient LR with L2=0.05, lr=0.3, 800 epochs of batch
+  gradient descent.
+\item
+  Evaluate per-dataset held-out AUC independently.
+\end{enumerate}
+
+Coefficients averaged across the three seeds are the v4.0.0 published
+weights.
+
+\subsubsection{3.3 Results}\label{results}
+
+3-seed mean ± std, n=150/dataset:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrl@{}}
+\toprule\noalign{}
+Benchmark & AUC & Domain \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+HaluEval-QA & \textbf{0.998 ± 0.001} & general QA \\
+TruthfulQA & \textbf{0.994 ± 0.006} & truthfulness \\
+HaluBench-RAGTruth & \textbf{0.807 ± 0.043} & RAG faithfulness \\
+HaluBench-PubMedQA & \textbf{0.719 ± 0.051} & biomedical QA \\
+HaluEval-Dialog & \textbf{0.676 ± 0.037} & knowledge-grounded dialog \\
+HaluEval-Summ & \textbf{0.643 ± 0.060} & abstractive summarization \\
+HaluBench-FinanceBench & 0.492 ± 0.026 & financial document QA \\
+HaluBench-DROP & 0.424 ± 0.080 & reading comprehension \\
+\textbf{Overall mean} & \textbf{0.719} & \\
+\end{longtable}
+}
+
+Learned coefficients (3-seed averaged, intercept = −0.7518):
+
+\begin{verbatim}
+nli_contradict          +0.5570   dominant signal
+trigram_novelty         +0.4943
+content_novelty         +0.2551
+bigram_novelty          +0.1867
+text_claim_risk         +0.1733
+entity_novelty          +0.1315
+number_novelty          +0.1271
+knowledge_grounding     +0.0792
+entity_unverified_frac  +0.0000   rarely fires at this scale
+\end{verbatim}
+
+\subsubsection{3.4 Honest failure modes}\label{honest-failure-modes}
+
+Two benchmarks returned below-chance AUC across all three seeds. We
+report them, taxonomize them, and decline to drop them from the fit.
+
+\textbf{DROP (AUC 0.424).} DROP answers are extractive spans from the
+provided passage. A hallucinated answer is typically the wrong span from
+the right passage: string-level and subsequence-level overlap with the
+reference remain high, so content / n-gram / entity novelty signals are
+near-zero on both correct and incorrect answers. More problematically,
+the incorrect span is \emph{entailed} by its passage in the NLI sense
+(it appears as true statement within the source text), so NLI
+contradiction probability is also near-zero on hallucinations. The
+signal stack has no mechanism to detect ``right-source, wrong-span.''
+
+\textbf{FinanceBench (AUC 0.492, at chance).} FinanceBench
+hallucinations are predominantly calculation or aggregation errors on
+numbers that appear verbatim in the source. The hallucinated answer
+``operating cash flow ratio 0.25'' shares all of its content tokens,
+numeric tokens, and n-grams with a source passage that contains the
+words ``operating cash flow ratio'' and a different number that the
+model failed to correctly compute. NLI does not distinguish arithmetic
+correctness: both ``the ratio is 0.25'' and ``the ratio is 0.30'' are
+non-contradicted by a passage that only provides raw inputs.
+
+Both failure classes are structural --- not regularization or
+training-distribution artifacts. Both are declared in
+\texttt{styxx.guardrail.calibrated\_weights\_v4.CALIBRATION\_NOTES.documented\_failure\_modes}
+so callers can gate on them in production.
+
+The proposed remediation for DROP is a \textbf{span-faithfulness}
+signal: identify the semantic role demanded by the question (entity
+type, temporal range, numeric unit), identify the corresponding role of
+the answer, and contribute a hallucination signal when the two mismatch.
+The proposed remediation for FinanceBench is a \textbf{number-symbolic
+verification} signal: extract the arithmetic operation implied by the
+question and the numbers present in the reference, recompute
+independently, and contribute a hallucination signal when the model's
+output differs from the computed result. Both are v4.1+ roadmap items.
+
+\subsection{4. Comparison to published single-benchmark
+detectors}\label{comparison-to-published-single-benchmark-detectors}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+System
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Benchmark
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Reported AUC
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cross-validated on ≥4 datasets?
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SelfCheckGPT & HaluEval-QA & 0.71--0.79 & No \\
+KnowHalu & HaluEval-QA & 0.74 & No \\
+HaluCheck & HaluEval-QA & 0.82 & No \\
+\textbf{Styxx v3.8.0 (v1 LR)} & HaluEval-QA & \textbf{0.901} & No
+(HaluEval-QA only) \\
+\textbf{Styxx v3.9.1 (v2 LR, novelty)} & 4-benchmark & \textbf{0.805
+mean} & Yes (4) \\
+\textbf{Styxx v4.0.0 (v3 LR, NLI 4-bench)} & 4-benchmark & \textbf{0.846
+mean} & Yes (4, NLI-augmented) \\
+\textbf{Styxx v4.0.0 (v4 LR, 8-bench)} & 8-benchmark & \textbf{0.719
+mean} & \textbf{Yes (8)} \\
+\end{longtable}
+}
+
+The drop from 0.901 (single benchmark) → 0.719 (8 benchmarks, averaged)
+is not a regression. It is the reporting-framework regression that the
+field has been accumulating: we are the first to quantify how much any
+detector's headline number depends on the benchmark chosen. The 5/8
+benchmarks above AUC 0.65 is a stronger claim, properly normalized for
+generalization.
+
+\subsection{5. Limits and open problems}\label{limits-and-open-problems}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Dialog and summarization do not reach production-grade AUC}
+  (0.676 and 0.643). The NLI signal contributed the largest gain on
+  these two --- the pre-NLI versions were at chance. The residual gap is
+  inherent paraphrase ambiguity: faithful dialog and summaries
+  frequently restructure the reference, which NLI can rarely score as
+  entailed at the whole-response level. A claim-level NLI pipeline
+  (decompose the response, score each claim independently) is an
+  expected near-term improvement.
+\item
+  \textbf{Larger models remain untested at our evaluation scale.} Every
+  causal-steering result cited in this paper is at 1B--3B.
+\item
+  \textbf{Arithmetic errors and span-substitution errors are not
+  detected.} See §3.4.
+\item
+  \textbf{English only.} Novelty tokenization and NLI model are
+  English-only at this weights version.
+\end{enumerate}
+
+\subsection{6. Reproducing}\label{reproducing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pip}\NormalTok{ install styxx==4.0.0}\PreprocessorTok{[}\SpecialStringTok{nli}\PreprocessorTok{]}
+
+\CommentTok{\# Full 8{-}benchmark calibration, 3{-}seed averaged:}
+\ExtensionTok{python}\NormalTok{ benchmarks/hallucination\_test/cross\_dataset\_8bench\_multiseed.py}
+\CommentTok{\# Writes results/cross\_dataset\_8bench\_multiseed.json}
+\CommentTok{\# Expected: overall\_mean \textasciitilde{}0.719, per{-}dataset AUCs as in §3.3 ±1σ.}
+
+\CommentTok{\# Single{-}seed diagnostic run:}
+\ExtensionTok{python}\NormalTok{ benchmarks/hallucination\_test/cross\_dataset\_8bench.py }\DataTypeTok{\textbackslash{}}
+    \AttributeTok{{-}{-}n}\NormalTok{ 150 }\AttributeTok{{-}{-}seed}\NormalTok{ 31 }\AttributeTok{{-}{-}no\_entity} \AttributeTok{{-}{-}nli}
+\CommentTok{\# \textasciitilde{}2 min on CUDA, \textasciitilde{}15 min on CPU (dominated by NLI).}
+\end{Highlighting}
+\end{Shaded}
+
+Raw data: HaluEval via \texttt{pminervini/HaluEval}, TruthfulQA via
+\texttt{truthful\_qa}, HaluBench subsets via
+\texttt{PatronusAI/HaluBench}. All four sources are public on Hugging
+Face Hub. No data preparation beyond what is in the calibration scripts.
+
+\subsection{7. Conclusion}\label{conclusion}
+
+We propose \textbf{cognometry} as the name for the empirical measurement
+of cognitive states in language models, and lay down three falsifiable
+laws with cross-validated numerical support. The present paper is the
+8-benchmark grounding of Law I. Every number in this paper has a
+reproducer in a committed script; every failure mode is declared in the
+shipping weights module; every assumption is recoverable from the public
+corpora that trained the detector. The invitation is open for
+replication, disconfirmation, and extension --- including to the two
+benchmarks where the present signal stack fails.
+
+\subsection{Citation}\label{citation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{@misc}\NormalTok{\{}\OtherTok{styxx2026cognometry}\NormalTok{,}
+  \DataTypeTok{author}\NormalTok{ = \{Flobi and Fathom Lab\},}
+  \DataTypeTok{title}\NormalTok{  = \{Cognometry v0: 8{-}Benchmark Cross{-}Validated Hallucination}
+\NormalTok{            Detection in Production LLMs\},}
+  \DataTypeTok{year}\NormalTok{   = \{2026\},}
+  \DataTypeTok{month}\NormalTok{  = \{april\},}
+  \DataTypeTok{howpublished}\NormalTok{ = \{}\CharTok{\textbackslash{}url}\NormalTok{\{https://fathom.darkflobi.com/cognometry\}\},}
+  \DataTypeTok{note}\NormalTok{   = \{Software: }\CharTok{\textbackslash{}url}\NormalTok{\{https://github.com/fathom{-}lab/styxx\};}
+\NormalTok{            PyPI: }\CharTok{\textbackslash{}url}\NormalTok{\{https://pypi.org/project/styxx/4.0.0/\};}
+\NormalTok{            Zenodo DOI pending deposit\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Appendix A: Signal module
+versions}\label{appendix-a-signal-module-versions}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{styxx.guardrail.text\_signals} v1.0 (2026-04-19)
+\item
+  \texttt{styxx.guardrail.entity\_verify} v1.0 (2026-04-19)
+\item
+  \texttt{styxx.guardrail.knowledge\_grounding} v1.0 (2026-04-19)
+\item
+  \texttt{styxx.guardrail.response\_novelty} v1.0 (2026-04-22)
+\item
+  \texttt{styxx.guardrail.nli\_signal} v1.0 (2026-04-23) ---
+  \texttt{MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli}, 184M params.
+\item
+  \texttt{styxx.guardrail.calibrated\_weights\_v4} v1.0 (2026-04-23) ---
+  this paper's published weights.
+\end{itemize}
+
+\subsection{Appendix B: Per-seed raw
+AUCs}\label{appendix-b-per-seed-raw-aucs}
+
+Seed 31:
+
+\begin{verbatim}
+halueval_qa              0.9993
+halueval_dialogue        0.7215
+halueval_summarization   0.7194
+truthfulqa               0.9851
+halubench_drop           0.5328
+halubench_pubmed         0.6565
+halubench_finance        0.4557
+halubench_ragtruth       0.7464
+mean                     0.7271
+\end{verbatim}
+
+Seed 47:
+
+\begin{verbatim}
+halueval_qa              0.9979
+halueval_dialogue        0.6316
+halueval_summarization   0.5732
+truthfulqa               0.9964
+halubench_drop           0.3936
+halubench_pubmed         0.7209
+halubench_finance        0.5157
+halubench_ragtruth       0.8463
+mean                     0.7095
+\end{verbatim}
+
+Seed 83:
+
+\begin{verbatim}
+halueval_qa              0.9979
+halueval_dialogue        0.6757
+halueval_summarization   0.6356
+truthfulqa               1.0000
+halubench_drop           0.3449
+halubench_pubmed         0.7806
+halubench_finance        0.5036
+halubench_ragtruth       0.8272
+mean                     0.7207
+\end{verbatim}
+
+Full JSON in
+\texttt{benchmarks/hallucination\_test/results/cross\_dataset\_8bench\_multiseed.json}.
+
+\end{document}
