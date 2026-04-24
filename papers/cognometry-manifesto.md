@@ -273,6 +273,43 @@ paper from the cognometry hub at
 
 ---
 
+## A proposed standard — calibration fingerprints
+
+Single AUC numbers are not enough. Every cognometric instrument we
+have tested phase-transitions: one or two features flip detection
+from chance to near-perfect, and the critical K differs across
+failure classes and substrates. Two detectors with identical
+reported AUC can have opposite phase-transition profiles and thus
+opposite deployment risk. Consumers cannot tell them apart from
+AUC alone.
+
+We propose the **calibration fingerprint** — a 7-field descriptor
+published alongside every calibrated safety detector:
+
+```
+  instrument         e.g. "refusal-v1"
+  n_features         size of the feature space
+  baseline_auc       full-model AUC (what labs report today)
+  critical_K         smallest K where AUC crosses threshold
+  critical_feature   which feature enters at K*
+  delta_auc_at_K     AUC[K*] - AUC[K*-1]
+  substrate_K_var    per-substrate critical K, if held-out data exists
+  negative_lift      (K, feature) pairs whose addition decreased AUC
+                     on at least one substrate
+```
+
+Every field is trivially extractable from a feature-scaling ablation
+any calibrated detector must already be capable of. The cost is one
+ablation run per detector, once.
+
+v0 atlas published: 11 fingerprints across 3 instruments × 5 substrates
+in `benchmarks/cognometry_fingerprint_atlas_v0.json`. Methodology +
+discussion in `papers/calibration_fingerprints_v0.md`. We invite other
+labs with calibrated safety detectors to publish their fingerprints
+against our format.
+
+---
+
 ## What we commit to
 
 - **Every number has a reproducer.** If a number appears in a
@@ -280,6 +317,9 @@ paper from the cognometry hub at
   data with `random_state=0`, we don't ship it.
 - **Failure modes are declared openly.** In the weights module
   itself. Not appendix, not footnote, not PR-friendly rewrites.
+- **Every detector ships a calibration fingerprint.** Single AUC
+  numbers do not survive under distribution shift. Published
+  fingerprints do.
 - **No gated claims.** Every detector we publish is MIT-licensed,
   pip-installable, CPU-runnable, and runs in your browser via
   Pyodide within six weeks of release.

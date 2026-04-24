@@ -1,0 +1,259 @@
+{
+  "version": "v0",
+  "date": "2026-04-24",
+  "methodology": "papers/calibration_fingerprints_v0.md",
+  "critical_auc_threshold": 0.8,
+  "negative_lift_delta_threshold": -0.1,
+  "n_fingerprints": 11,
+  "n_instruments": 2,
+  "n_substrates": 7,
+  "fingerprints": [
+    {
+      "instrument": "drift-v1",
+      "substrate": "in-sample",
+      "failure_class": "overall (pooled)",
+      "n_features": 22,
+      "baseline_auc": 0.9239,
+      "critical_K": 3,
+      "critical_feature": "n_available_tools",
+      "delta_auc_at_K": 0.034,
+      "final_auc_at_N": 0.9239,
+      "negative_lift": [],
+      "notes": "drift v6.0 22-feature, CV top-K (n_K_points=13)"
+    },
+    {
+      "instrument": "drift-v1",
+      "substrate": "in-sample",
+      "failure_class": "arg_drop",
+      "n_features": 22,
+      "baseline_auc": null,
+      "critical_K": 2,
+      "critical_feature": "arg_count_zscore",
+      "delta_auc_at_K": 0.4973,
+      "final_auc_at_N": 0.9985,
+      "negative_lift": [],
+      "additional_transitions": [],
+      "notes": "derived from pre-computed phase_transitions list; 1 transition(s) in this class"
+    },
+    {
+      "instrument": "drift-v1",
+      "substrate": "in-sample",
+      "failure_class": "irrelevance_called",
+      "n_features": 22,
+      "baseline_auc": null,
+      "critical_K": 2,
+      "critical_feature": "arg_count_zscore",
+      "delta_auc_at_K": 0.2186,
+      "final_auc_at_N": 0.7046,
+      "negative_lift": [],
+      "additional_transitions": [
+        {
+          "from_k": 8,
+          "to_k": 10,
+          "delta": 0.1339
+        }
+      ],
+      "notes": "derived from pre-computed phase_transitions list; 2 transition(s) in this class"
+    },
+    {
+      "instrument": "drift-v1",
+      "substrate": "in-sample",
+      "failure_class": "tool_rename",
+      "n_features": 22,
+      "baseline_auc": null,
+      "critical_K": 2,
+      "critical_feature": "arg_count_zscore",
+      "delta_auc_at_K": 0.2006,
+      "final_auc_at_N": 0.8997,
+      "negative_lift": [],
+      "additional_transitions": [
+        {
+          "from_k": 5,
+          "to_k": 6,
+          "delta": 0.1003
+        }
+      ],
+      "notes": "derived from pre-computed phase_transitions list; 2 transition(s) in this class"
+    },
+    {
+      "instrument": "drift-v1",
+      "substrate": "in-sample",
+      "failure_class": "arg_swap",
+      "n_features": 22,
+      "baseline_auc": null,
+      "critical_K": 6,
+      "critical_feature": "type_mismatch_frac",
+      "delta_auc_at_K": 0.2097,
+      "final_auc_at_N": 0.6909,
+      "negative_lift": [],
+      "additional_transitions": [],
+      "notes": "derived from pre-computed phase_transitions list; 1 transition(s) in this class"
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "in-sample (JBB-Llama-1B)",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.9959432048681541,
+      "critical_K": 1,
+      "critical_feature": "starts_with_sorry",
+      "delta_auc_at_K": 0.4686,
+      "final_auc_at_N": 0.9959432048681541,
+      "negative_lift": [],
+      "notes": "5-fold CV, n=80"
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "gpt4",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.9662450592885375,
+      "critical_K": 1,
+      "critical_feature": "starts_with_sorry",
+      "delta_auc_at_K": 0.416,
+      "final_auc_at_N": 0.9662450592885375,
+      "negative_lift": [],
+      "phase_transitions_documented": [
+        {
+          "K": 1,
+          "added": "starts_with_sorry",
+          "from_auc": 0.5,
+          "to_auc": 0.91600790513834,
+          "delta": 0.41600790513833996
+        }
+      ],
+      "substrate_n": 450,
+      "substrate_class_balance_refuse": 220,
+      "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest gpt4 completions."
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "llama2new",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.8756428334439282,
+      "critical_K": 2,
+      "critical_feature": "refusal_density",
+      "delta_auc_at_K": 0.4066,
+      "final_auc_at_N": 0.8756428334439282,
+      "negative_lift": [],
+      "phase_transitions_documented": [
+        {
+          "K": 2,
+          "added": "refusal_density",
+          "from_auc": 0.5,
+          "to_auc": 0.9066336264100863,
+          "delta": 0.40663362641008627
+        }
+      ],
+      "substrate_n": 450,
+      "substrate_class_balance_refuse": 274,
+      "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest llama2new completions."
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "llama2orig",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.7670572214814605,
+      "critical_K": 2,
+      "critical_feature": "refusal_density",
+      "delta_auc_at_K": 0.4147,
+      "final_auc_at_N": 0.7670572214814605,
+      "negative_lift": [
+        {
+          "K": 3,
+          "feature": "disclaimer_density",
+          "delta": -0.2313
+        }
+      ],
+      "phase_transitions_documented": [
+        {
+          "K": 2,
+          "added": "refusal_density",
+          "from_auc": 0.501432664756447,
+          "to_auc": 0.916096910550654,
+          "delta": 0.414664245794207
+        },
+        {
+          "K": 3,
+          "added": "disclaimer_density",
+          "from_auc": 0.916096910550654,
+          "to_auc": 0.6848279383812306,
+          "delta": -0.23126897216942344
+        }
+      ],
+      "substrate_n": 450,
+      "substrate_class_balance_refuse": 349,
+      "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest llama2orig completions."
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "mistralguard",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.7666468253968254,
+      "critical_K": 5,
+      "critical_feature": "sentence_length_mean",
+      "delta_auc_at_K": 0.0284,
+      "final_auc_at_N": 0.7666468253968254,
+      "negative_lift": [],
+      "phase_transitions_documented": [
+        {
+          "K": 1,
+          "added": "starts_with_sorry",
+          "from_auc": 0.5,
+          "to_auc": 0.6249999999999999,
+          "delta": 0.12499999999999989
+        },
+        {
+          "K": 2,
+          "added": "refusal_density",
+          "from_auc": 0.6249999999999999,
+          "to_auc": 0.7479960317460317,
+          "delta": 0.1229960317460318
+        }
+      ],
+      "substrate_n": 450,
+      "substrate_class_balance_refuse": 240,
+      "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest mistralguard completions."
+    },
+    {
+      "instrument": "refusal-v1",
+      "substrate": "mistralinstruct",
+      "failure_class": "refusal vs comply",
+      "n_features": 18,
+      "baseline_auc": 0.5972945398254996,
+      "critical_K": null,
+      "critical_feature": null,
+      "delta_auc_at_K": null,
+      "final_auc_at_N": 0.5972945398254996,
+      "negative_lift": [
+        {
+          "K": 8,
+          "feature": "log_word_count",
+          "delta": -0.1483
+        }
+      ],
+      "phase_transitions_documented": [
+        {
+          "K": 2,
+          "added": "refusal_density",
+          "from_auc": 0.5183999437095412,
+          "to_auc": 0.6821524064171123,
+          "delta": 0.16375246270757104
+        },
+        {
+          "K": 8,
+          "added": "log_word_count",
+          "from_auc": 0.7323036870250492,
+          "to_auc": 0.5840486912468337,
+          "delta": -0.14825499577821555
+        }
+      ],
+      "substrate_n": 450,
+      "substrate_class_balance_refuse": 76,
+      "notes": "Out-of-sample. Train on JBB-Llama-1B, evaluate on XSTest mistralinstruct completions."
+    }
+  ]
+}
