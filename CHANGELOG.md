@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.2.0] — 2026-04-24
+
+**Headline: `styxx.profile` — py-spy for LLM reasoning. Decorate any
+agent function, see where cognition failed before the output did.
+Drift, confabulation, refusal, sycophancy, phase-transition, low-trust
+and incoherence are all localized to specific steps with severity
+scores.**
+
+PyPI: https://pypi.org/project/styxx/6.2.0/
+
+### The cognitive profiler
+
+`styxx.profile` is the first tool that tells you **why** an agent
+failed, not just **that** it failed. LangSmith shows traces;
+Datadog shows metrics; Profiler shows cognition.
+
+```python
+import styxx
+
+@styxx.profile
+def my_agent(task):
+    return run_langchain_agent(task)
+
+result, p = my_agent("summarize this contract")
+print(p.summary)
+# profile 'my_agent': 7 steps, 4.32s total
+#   2 fault(s):
+#     · [drift] step=3 sev=0.87 · category='arg_swap' at confidence 0.87
+#     · [phase_transition] step=6 sev=0.50 · category shift: reasoning → confab
+
+p.to_html("run.html")      # flamegraph — K/C/D timeseries per step
+p.to_json("run.json")      # LangSmith / Datadog-compatible export
+```
+
+### Three API shapes
+
+1. **Decorator** — `@styxx.profile` → returns `(result, profile)`
+2. **Context manager** — `with styxx.profile(name="sql_agent") as p:`
+3. **Manual recording** — `styxx.profile_session()` + `.record(response, label=...)` for custom adapters
+
+### Seven fault kinds detected
+
+| kind | triggers when |
+|---|---|
+| `drift` | category ∈ {arg_swap, tool_arg_drift, tool_confab, drift} with confidence > 0.5 |
+| `confabulation` | category ∈ {confab, hallucination, fabrication} with confidence > 0.5 |
+| `refusal` | category ∈ {refuse, refusal} with confidence > 0.8 (strong refusals only) |
+| `sycophant` | category ∈ {sycophant, sycophancy} with confidence > 0.5 |
+| `low_trust` | trust_score < 0.30 |
+| `incoherence` | cross-phase coherence < 0.30 |
+| `phase_transition` | adjacent steps have differing dominant categories |
+
+### Three export formats
+
+- **HTML flamegraph** — self-contained, no external assets, darkflobi-brand aesthetic. Screenshot-ready.
+- **LangSmith trace** — `p.to_langsmith()` → drop into the LangSmith client's `create_run` API.
+- **Datadog spans** — `p.to_datadog()` → `{"spans": [...]}` ready for the Datadog APM agent.
+
+### Under the hood
+
+Uses existing `Vitals`, `WatchSession`, and the canonical `analytics.write_audit` tap —
+every vitals-creating path feeds the active profile automatically. No monkey-patching
+of user code. Falls open on every path — missing openai SDK, unknown response shape,
+no logprobs — the profile collects whatever signal it can, always returns a result.
+
+### Files
+
+- `styxx/profile.py` — `CognitiveProfile`, `ProfileStep`, `Fault`, `profile()`, `profile_session()`
+- `styxx/_profile_html.py` — self-contained HTML flamegraph renderer
+
+---
+
 ## [6.1.0] — 2026-04-24
 
 **Headline: tool-call drift detector retrained — overall AUC 0.916 → 0.943,
