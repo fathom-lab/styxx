@@ -2,9 +2,10 @@
 
 **Context:** their paper "Internal Representations as Indicators of
 Hallucinations in Agent Tool Selection" is cited by name as the
-closest comparable baseline in styxx v6.0. Their framing (hidden-state
-MLP) vs ours (22 text-only features): 0.72 → 0.916 AUC on different
-but comparable tool-calling drift benchmarks.
+closest comparable baseline in styxx v6.0 / v6.1. Their framing
+(hidden-state MLP) vs ours (23 text-only features after v6.1 retrain):
+0.72 → 0.943 AUC on different but comparable tool-calling drift
+benchmarks.
 
 **Authors:**
 - Kait Healy
@@ -37,19 +38,27 @@ Subject: Cognometry v6 cites your hallucination-in-tool-selection paper
 Hi Kait, Jing, Bharathi, Visakh,
 
 I wanted to flag that your arXiv:2601.05214 paper is cited by name
-in the v6.0.0 release of styxx (a cognometric detector suite I
-maintain) as the closest comparable baseline for tool-call drift
-detection. We replicated the framing with a 22-feature text-only
-logistic regression on BFCL v3 and landed AUC 0.916 — your 0.72
-on Glaive with hidden-state MLP was what told us the task was
-non-trivial and worth a text-only ablation.
+in the v6.0 / v6.1 release of styxx (a cognometric detector suite
+I maintain) as the closest comparable baseline for tool-call drift
+detection. We replicated the framing with a 23-feature text-only
+logistic regression on BFCL v3 and landed AUC 0.943 (v6.1 retrain;
+v6.0 was 0.916 with 22 features) — your 0.72 on Glaive with
+hidden-state MLP was what told us the task was non-trivial and
+worth a text-only ablation.
+
+One v6.1-specific note: we'd documented an arg_swap failure (AUC
+0.66) in v6.0 — cases where the model produces right arg names
+but wrong values per slot. v6.1 adds a positional-inversion
+feature that lifts arg_swap to 0.76. Curious whether your
+hidden-state features pick that up cleaner — would be a natural
+head-to-head.
 
 If you're open to it, I'd love your read on the reproducer
-(scripts/drift_calibrated_v0.py, runs in 3 min CPU) and the
-follow-up phase-transition ablation we just shipped today
-(scripts/drift_feature_scaling.py) — particularly curious whether
-your hidden-state features exhibit the same per-failure-class
-critical-threshold behaviour we see in text features.
+(scripts/drift_calibrated_v1.py, runs in ~3 min CPU) and the
+phase-transition ablation (scripts/drift_feature_scaling.py) —
+particularly curious whether your hidden-state features exhibit
+the same per-failure-class critical-threshold behaviour we see
+in text features.
 
 Repo: https://github.com/fathom-lab/styxx
 Paper: https://doi.org/10.5281/zenodo.19703527
@@ -72,7 +81,7 @@ Fathom Lab
 ```
 hat tip to @[handle]/[handle] — your arxiv:2601.05214 framing
 is what told us tool-call drift was worth a text-only ablation.
-styxx v6 landed 0.916 on BFCL v3 vs your 0.72 on Glaive with
+styxx v6.1 landed 0.943 on BFCL v3 vs your 0.72 on Glaive with
 hidden states.
 
 cross-benchmark comparison would be fun. shared split?

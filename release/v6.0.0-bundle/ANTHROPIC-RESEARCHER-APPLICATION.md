@@ -61,16 +61,17 @@ published two peer-reviewable papers on Zenodo: Cognometry v0
 Measurement Instruments for Transformer Internals (DOI
 10.5281/zenodo.19504993).
 
-Our v6.0.0 release shipped three calibrated cognometric
+Our v6.1.0 release ships three calibrated cognometric
 instruments: hallucination (0.998 AUC on HaluEval-QA, 8-benchmark
 cross-validated), refusal (0.976 AUC on XSTest-v2 GPT-4
-held-out), and tool-call drift (0.916 AUC on BFCL v3 text-only,
+held-out), and tool-call drift (0.943 AUC on BFCL v3 text-only,
 beating the only published hidden-state baseline at 0.72). All
 three run sub-millisecond on CPU, work on any closed-model API
 with no internal access, and publish committed reproducers for
-every number. Two documented failure modes (DROP, FinanceBench)
-are listed openly alongside the successes with structural fix
-paths.
+every number. Documented failure modes (DROP and FinanceBench on
+hallucination; arg_swap partial on drift, 0.66 → 0.76 via the
+v6.1 positional-inversion feature) are listed openly alongside
+the successes with structural fix paths.
 
 Recent work: head-to-head vs Vectara HHEM-2.1-Open (+0.23 AUC,
 330× faster). Merged PRs to awesome-hallucination-detection.

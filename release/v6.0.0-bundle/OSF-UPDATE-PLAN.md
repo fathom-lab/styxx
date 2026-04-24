@@ -66,10 +66,10 @@ Log in to https://osf.io/wtkzg/ in a browser, then:
 
 1. **Description** — replace v3.x preamble with:
    > Pre-registered replications and reproducer bundles for the styxx
-   > cognometric instrument family. Current release: **v6.0.0 —
+   > cognometric instrument family. Current release: **v6.1.0 —
    > three calibrated instruments** (hallucination 0.998 AUC
    > HaluEval-QA; refusal 0.976 AUC XSTest GPT-4; tool-call drift
-   > 0.916 AUC BFCL v3).
+   > 0.943 AUC BFCL v3, v6.1 retrain).
 2. **Wiki** — if present, bump version references.
 3. **Related works** — add link to Zenodo 19703527 and the new child
    node from step (2).

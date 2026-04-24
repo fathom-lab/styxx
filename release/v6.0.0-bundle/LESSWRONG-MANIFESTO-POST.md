@@ -80,7 +80,7 @@ them against failure.**
 |---|---|---|
 | Hallucination (HaluEval-QA) | **0.998** | Vectara HHEM-2.1-Open: 0.764 *(+0.23, 330× faster)* |
 | Refusal (XSTest-v2 GPT-4 held-out) | **0.976** | ShieldGemma-27B: 0.893; Llama-Guard-3-8B: 0.975 |
-| Tool-call drift (BFCL v3) | **0.916 ± 0.004** | Healy et al. 2026 hidden-state MLP: 0.72 |
+| Tool-call drift (BFCL v3) | **0.943 ± 0.009** | Healy et al. 2026 hidden-state MLP: 0.72 |
 
 For the drift case specifically: we do it text-only. Works on any
 closed-model API. No hidden states required.
@@ -168,7 +168,7 @@ we just published a manifesto arguing cognometry is a real
 discipline — the measurement of transient cognitive state in
 LLMs — and shipped 3 calibrated text-only detectors to prove it
 
-0.998 / 0.976 / 0.916 AUC
+0.998 / 0.976 / 0.943 AUC
 3 head-to-heads
 0 LLM inference
 

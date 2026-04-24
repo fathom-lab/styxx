@@ -11,7 +11,7 @@ account with history).
 ## Submission A — "Show HN" frame
 
 **Title:**
-> Show HN: Styxx – text-only tool-call drift detector, 0.916 AUC,
+> Show HN: Styxx – text-only tool-call drift detector, 0.943 AUC,
 > beats hidden-state baseline
 
 **URL:**
@@ -31,7 +31,7 @@ account with history).
 ```
 Hey HN — maintainer of styxx here. Quick context:
 
-This is the v6.0.0 release of our open-source cognometric instrument
+This is the v6.1.0 release of our open-source cognometric instrument
 suite. "Cognometric" = calibrated measurement of LLM cognitive states
 via text features. No LLM inference required at detection time.
 
@@ -42,9 +42,11 @@ Three instruments shipped:
   - refusal: 0.976 AUC on XSTest GPT-4 held-out, 18 features, trained
     on Llama-1B (cross-substrate universality empirically confirmed
     — law II of cognometry in our paper)
-  - tool-call drift: 0.916 AUC on BFCL v3 5-fold CV, 22 text-only
+  - tool-call drift: 0.943 AUC on BFCL v3 5-fold CV, 23 text-only
     features, beats Healy et al. 2026 hidden-state baseline (0.72)
-    while being black-box compatible (works on any closed model)
+    while being black-box compatible (works on any closed model).
+    v6.1 retrain lifts the documented arg_swap failure mode 0.66 ->
+    0.76 via a positional-inversion feature (arg_order_inversion).
 
 All three share the same calibrated-LR methodology. Three instruments
 is the minimum triangulation point where "it works" stops being a
@@ -101,7 +103,7 @@ https://doi.org/10.5281/zenodo.19703527
 Keep in a text buffer while submitting so you can fire fast:
 
 ```
-Title: Show HN: Styxx – text-only tool-call drift detector, 0.916 AUC, beats hidden-state baseline
+Title: Show HN: Styxx – text-only tool-call drift detector, 0.943 AUC, beats hidden-state baseline
 URL:   https://github.com/fathom-lab/styxx
 ```
 
