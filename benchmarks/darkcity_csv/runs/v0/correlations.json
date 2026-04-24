@@ -1,0 +1,607 @@
+{
+  "n": 2000,
+  "n_tests": 66,
+  "bonferroni_alpha": 0.0007575757575757576,
+  "per_outcome": {
+    "depth_score": [
+      {
+        "feature": "n_words",
+        "r": 0.13676891507961303,
+        "p": 6.767687837931633e-10,
+        "n": 2000,
+        "ci95_lo": 0.09349847827623606,
+        "ci95_hi": 0.17952365596304917,
+        "passes_bonferroni": true
+      },
+      {
+        "feature": "n_lines",
+        "r": 0.13210097763561668,
+        "p": 2.5693198658829265e-09,
+        "n": 2000,
+        "ci95_lo": 0.08878411435718152,
+        "ci95_hi": 0.17491910989272558,
+        "passes_bonferroni": true
+      },
+      {
+        "feature": "mean_line_length",
+        "r": -0.11724873533459981,
+        "p": 1.3110102869419832e-07,
+        "n": 2000,
+        "ci95_lo": -0.16025609279557404,
+        "ci95_hi": -0.07379705437375453,
+        "passes_bonferroni": true
+      },
+      {
+        "feature": "line_density",
+        "r": 0.11698100533258496,
+        "p": 1.4012647417195398e-07,
+        "n": 2000,
+        "ci95_lo": 0.07352707408061107,
+        "ci95_hi": 0.15999159953489753,
+        "passes_bonferroni": true
+      },
+      {
+        "feature": "unique_ratio",
+        "r": -0.08869446908325818,
+        "p": 6.884570240120126e-05,
+        "n": 2000,
+        "ci95_lo": -0.13201219655948815,
+        "ci95_hi": -0.0450386265193488,
+        "passes_bonferroni": true
+      },
+      {
+        "feature": "n_sentences",
+        "r": 0.06277803275608428,
+        "p": 0.004928644451815303,
+        "n": 2000,
+        "ci95_lo": 0.018999378835310783,
+        "ci95_hi": 0.10631642337287853,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hedge_density",
+        "r": -0.05911779864757662,
+        "p": 0.008117672567687235,
+        "n": 2000,
+        "ci95_lo": -0.1026826615261639,
+        "ci95_hi": -0.015326579714411565,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "uncertainty_density",
+        "r": 0.054470922568938825,
+        "p": 0.014751803958673515,
+        "n": 2000,
+        "ci95_lo": 0.010665453473479473,
+        "ci95_hi": 0.09806771776578625,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "confidence_density",
+        "r": -0.034813533610977415,
+        "p": 0.1194529732904656,
+        "n": 2000,
+        "ci95_lo": -0.07852464508334918,
+        "ci95_hi": 0.009031180140782394,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_mean",
+        "r": 0.032609729948061196,
+        "p": 0.14473094544856593,
+        "n": 2000,
+        "ci95_lo": -0.011237264628326409,
+        "ci95_hi": 0.07633156109810729,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "claim_density",
+        "r": -0.029631357268300892,
+        "p": 0.18514671283386486,
+        "n": 2000,
+        "ci95_lo": -0.07336700338951362,
+        "ci95_hi": 0.014218041684945282,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal_density",
+        "r": -0.02409727571388603,
+        "p": 0.28128515646154373,
+        "n": 2000,
+        "ci95_lo": -0.06785653821261625,
+        "ci95_hi": 0.019754522119177314,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "creative",
+        "r": -0.015851016774756813,
+        "p": 0.4785643445587091,
+        "n": 2000,
+        "ci95_lo": -0.05964051362876468,
+        "ci95_hi": 0.027999369189644234,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning",
+        "r": 0.014753493846175423,
+        "p": 0.5095502849535394,
+        "n": 2000,
+        "ci95_lo": -0.02909625450706219,
+        "ci95_hi": 0.058546567144941254,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "retrieval",
+        "r": 0.010735256801335859,
+        "p": 0.6313107146975596,
+        "n": 2000,
+        "ci95_lo": -0.03311125623412442,
+        "ci95_hi": 0.05454052648938459,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "entity_density",
+        "r": 0.009135130977562059,
+        "p": 0.6830180595199296,
+        "n": 2000,
+        "ci95_lo": -0.034709699818596784,
+        "ci95_hi": 0.05294486477090711,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "margin",
+        "r": -0.00886806139031478,
+        "p": 0.691803324719686,
+        "n": 2000,
+        "ci95_lo": -0.05267851847901816,
+        "ci95_hi": 0.03497646678834546,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hallucination",
+        "r": 0.007876680174071017,
+        "p": 0.7247703203205507,
+        "n": 2000,
+        "ci95_lo": -0.035966670026438614,
+        "ci95_hi": 0.05168976766960406,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "adversarial",
+        "r": 0.00535541466494406,
+        "p": 0.8108070005215091,
+        "n": 2000,
+        "ci95_lo": -0.03848455190925506,
+        "ci95_hi": 0.0491748047110508,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning_marker_density",
+        "r": 0.0025663317381444508,
+        "p": 0.908672749851664,
+        "n": 2000,
+        "ci95_lo": -0.041269243407668445,
+        "ci95_hi": 0.04639204632881424,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_std",
+        "r": 0.002132025138591172,
+        "p": 0.9240768651838744,
+        "n": 2000,
+        "ci95_lo": -0.0417028049190236,
+        "ci95_hi": 0.045958663350253635,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal",
+        "r": -0.0019310525060269844,
+        "p": 0.9312150099891877,
+        "n": 2000,
+        "ci95_lo": -0.04575811253377758,
+        "ci95_hi": 0.04190342717980423,
+        "passes_bonferroni": false
+      }
+    ],
+    "styxx_inflow_5min": [
+      {
+        "feature": "margin",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_words",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_sentences",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_lines",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hedge_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "confidence_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "uncertainty_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "entity_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "claim_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning_marker_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_mean",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_std",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "unique_ratio",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "line_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "mean_line_length",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "retrieval",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "creative",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "adversarial",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hallucination",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      }
+    ],
+    "styxx_outflow_5min": [
+      {
+        "feature": "margin",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_words",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_sentences",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "n_lines",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hedge_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "confidence_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "uncertainty_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "entity_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "claim_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning_marker_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_mean",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "sentence_length_std",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "unique_ratio",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "line_density",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "mean_line_length",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "retrieval",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "reasoning",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "refusal",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "creative",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "adversarial",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      },
+      {
+        "feature": "hallucination",
+        "r": 0.0,
+        "p": 1.0,
+        "n": 2000,
+        "ci95_lo": -0.04383093298675319,
+        "ci95_hi": 0.04383093298675319,
+        "passes_bonferroni": false
+      }
+    ]
+  }
+}
