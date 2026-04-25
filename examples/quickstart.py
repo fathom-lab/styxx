@@ -54,6 +54,15 @@ def offline_demo() -> None:
 
 if __name__ == "__main__":
     if os.environ.get("OPENAI_API_KEY"):
-        live_demo()
+        try:
+            live_demo()
+        except ImportError as e:
+            # openai SDK isn't installed even though the key is set.
+            # Don't crash the hello-world — fall through to the offline
+            # trajectory so the user still sees a vitals card on first run.
+            print(f"openai SDK not installed: {e}")
+            print("Falling back to offline trajectory demo.")
+            print("To see the live path:  pip install styxx[openai]\n")
+            offline_demo()
     else:
         offline_demo()
