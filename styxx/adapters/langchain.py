@@ -96,6 +96,25 @@ class StyxxCallbackHandler:
         # Store the base class for isinstance checks if needed
         self._base_cls = BaseCallbackHandler
 
+        # Langchain's callback manager probes every handler for these
+        # attributes (they would normally come from inheriting
+        # BaseCallbackHandler). We don't subclass at module-load time
+        # because that would force langchain to be importable. Instead
+        # we set the attributes directly with their documented defaults
+        # so the manager's `getattr(handler, "ignore_chain", ...)` calls
+        # find them. As of langchain-core 1.x this list is the canonical
+        # set; if langchain adds more they default to False via getattr's
+        # default kwarg in the manager itself, but we set them explicitly
+        # for forward-compat clarity.
+        self.raise_error = False
+        self.ignore_llm = False
+        self.ignore_chain = False
+        self.ignore_agent = False
+        self.ignore_retriever = False
+        self.ignore_chat_model = False
+        self.ignore_custom_event = False
+        self.run_inline = False
+
         # State
         self._vitals_history: List[Optional[Vitals]] = []
         self._last_vitals: Optional[Vitals] = None
@@ -192,6 +211,16 @@ class StyxxCallbackHandler:
         """Called for each new token in streaming. No-op for styxx
         in the callback handler path (streaming vitals are handled
         by the reflex session if needed)."""
+        pass
+
+    def on_chat_model_start(
+        self, serialized: Dict[str, Any], messages: Any,
+        *, run_id: Optional[UUID] = None, **kwargs: Any,
+    ) -> None:
+        """Chat-model-specific start hook. Langchain's callback manager
+        invokes this for ChatOpenAI and similar; if we don't implement
+        it, we get noisy "no attribute" warnings even though on_llm_end
+        still fires correctly. No-op behavior matches on_llm_start."""
         pass
 
     def on_chain_start(
