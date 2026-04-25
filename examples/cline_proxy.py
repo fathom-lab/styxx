@@ -107,6 +107,111 @@ async def list_fingerprints(limit: int = 50):
     }
 
 
+async def _proxy_streaming(body_bytes, headers_in, model, last_user_msg_excerpt, started):
+    """Forward upstream SSE chunks to the client unbuffered; accumulate
+    text deltas in parallel for end-of-stream cognometric profiling."""
+    async def stream_gen():
+        response_text_parts = []
+        upstream_status = None
+        upstream_err_buf = bytearray()
+
+        async with httpx.AsyncClient(timeout=600.0) as client:
+            async with client.stream(
+                "POST",
+                f"{ANTHROPIC_BASE}/v1/messages",
+                content=body_bytes,
+                headers=headers_in,
+            ) as upstream:
+                upstream_status = upstream.status_code
+                async for chunk in upstream.aiter_bytes():
+                    # Forward chunk to client immediately — no buffering.
+                    yield chunk
+
+                    if upstream_status >= 400:
+                        # Capture the error body for the log entry; don't
+                        # try to parse as SSE.
+                        upstream_err_buf += chunk
+                        continue
+
+                    # Parse SSE chunks for content_block_delta text events
+                    # so we can accumulate the response text for vitals.
+                    try:
+                        for line in chunk.decode("utf-8", errors="replace").splitlines():
+                            if not line.startswith("data: "):
+                                continue
+                            payload = line[6:].strip()
+                            if not payload or payload == "[DONE]":
+                                continue
+                            try:
+                                evt = json.loads(payload)
+                            except Exception:
+                                continue
+                            if evt.get("type") == "content_block_delta":
+                                delta = evt.get("delta") or {}
+                                if delta.get("type") == "text_delta":
+                                    response_text_parts.append(delta.get("text", ""))
+                    except Exception:
+                        pass
+
+        # Stream finished — compute vitals + log
+        duration_s = time.time() - started
+        if upstream_status >= 400:
+            try:
+                err_json = json.loads(bytes(upstream_err_buf))
+                upstream_err = (err_json.get("error", {}).get("message") or "")[:300]
+            except Exception:
+                upstream_err = bytes(upstream_err_buf).decode("utf-8", errors="replace")[:300]
+            record = {
+                "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "duration_s": round(duration_s, 3),
+                "model": model,
+                "user_excerpt": last_user_msg_excerpt,
+                "upstream_status": upstream_status,
+                "upstream_error": upstream_err,
+                "stream": True,
+                "styxx": {"error": f"upstream {upstream_status} — vitals not computed"},
+                "spec_doi": "10.5281/zenodo.19746215",
+                "implementation": f"styxx v{styxx.__version__}",
+            }
+        else:
+            response_text = "".join(response_text_parts)
+            try:
+                vitals = styxx.observe({"text": response_text})
+                if vitals is not None:
+                    cog = {
+                        "category": vitals.category,
+                        "confidence": float(vitals.confidence) if vitals.confidence is not None else None,
+                        "trust": float(vitals.trust_score) if vitals.trust_score is not None else None,
+                        "gate": vitals.gate,
+                        "coherence": float(vitals.coherence) if vitals.coherence is not None else None,
+                    }
+                else:
+                    cog = {"error": "no vitals"}
+            except Exception as e:
+                cog = {"error": str(e)}
+            record = {
+                "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "duration_s": round(duration_s, 3),
+                "model": model,
+                "user_excerpt": last_user_msg_excerpt,
+                "response_len": len(response_text),
+                "response_excerpt": response_text[:500],
+                "stream": True,
+                "styxx": cog,
+                "spec_doi": "10.5281/zenodo.19746215",
+                "implementation": f"styxx v{styxx.__version__}",
+            }
+            log.info(f"{model:<30}  cat={cog.get('category','?'):<12}  trust={cog.get('trust','?')}  {duration_s:.2f}s  [stream]")
+
+        try:
+            with LOG_FILE.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(record) + "\n")
+        except Exception as e:
+            log.warning(f"log write failed: {e}")
+
+    return StreamingResponse(stream_gen(), media_type="text/event-stream")
+
+
 @app.post("/v1/messages")
 async def messages(request: Request):
     """Proxy Anthropic Messages API and attach a cognometric fingerprint."""
@@ -122,6 +227,7 @@ async def messages(request: Request):
     try:
         body_json = json.loads(body_bytes)
         model = body_json.get("model", "?")
+        is_streaming = bool(body_json.get("stream", False))
         last_user_msg = next(
             (m["content"] for m in reversed(body_json.get("messages", []))
              if m.get("role") == "user"), "")
@@ -130,9 +236,18 @@ async def messages(request: Request):
                                       if isinstance(b, dict))
         last_user_msg_excerpt = (str(last_user_msg) or "")[:300]
     except Exception:
-        body_json = {}; model = "?"; last_user_msg_excerpt = ""
+        body_json = {}; model = "?"; last_user_msg_excerpt = ""; is_streaming = False
 
-    # Forward to Anthropic
+    # Streaming path: cline almost always sends stream=true so the typewriter
+    # effect works in the IDE. We must forward chunks as they arrive (don't
+    # buffer); accumulate the text deltas in parallel for the end-of-stream
+    # cognometric profile.
+    if is_streaming:
+        return await _proxy_streaming(
+            body_bytes, headers_in, model, last_user_msg_excerpt, started,
+        )
+
+    # Non-streaming path
     async with httpx.AsyncClient(timeout=600.0) as client:
         upstream = await client.post(
             f"{ANTHROPIC_BASE}/v1/messages",
@@ -146,9 +261,37 @@ async def messages(request: Request):
     upstream_headers = dict(upstream.headers)
     duration_s = time.time() - started
 
-    # If non-200, pass through transparently
+    # If non-200, pass through transparently — but still log the call so
+    # tail -f shows the user that the proxy is intercepting (most common
+    # failure mode is a mistyped/expired anthropic key → 401, and the user
+    # needs visible signal that the proxy is alive).
     if upstream_status >= 400:
         log.warning(f"upstream {upstream_status} on model={model}")
+        # Try to extract the upstream error message for the log entry
+        upstream_err = ""
+        try:
+            err_json = json.loads(raw)
+            upstream_err = (err_json.get("error", {}).get("message")
+                            or err_json.get("message")
+                            or "")[:300]
+        except Exception:
+            upstream_err = raw.decode("utf-8", errors="replace")[:300]
+        record = {
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "duration_s": round(duration_s, 3),
+            "model": model,
+            "user_excerpt": last_user_msg_excerpt,
+            "upstream_status": upstream_status,
+            "upstream_error": upstream_err,
+            "styxx": {"error": f"upstream {upstream_status} — vitals not computed"},
+            "spec_doi": "10.5281/zenodo.19746215",
+            "implementation": f"styxx v{styxx.__version__}",
+        }
+        try:
+            with LOG_FILE.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(record) + "\n")
+        except Exception as e:
+            log.warning(f"log write failed: {e}")
         return Response(
             content=raw,
             status_code=upstream_status,
