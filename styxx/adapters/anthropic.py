@@ -224,9 +224,25 @@ class _MessagesShim:
         if self._mode == "companion":
             response = self._inner.create(*args, **kwargs)
             try:
+                from ..watch import _extract_text_content
                 from ..anthropic_hack import companion as _comp
+                from ..anthropic_hack import text_features as _tf
                 result = _comp.classify_prompt(prompt_text or "")
-                _attach_vitals(response, result.get("vitals"))
+                if result.get("available") and result.get("vitals"):
+                    _attach_vitals(response, result["vitals"])
+                else:
+                    # Companion requested but unavailable (e.g. no torch).
+                    # Fall back to text-heuristic so the caller gets a real
+                    # reading instead of silent vitals=None, with a clear
+                    # mode label explaining the fallback.
+                    text = _extract_text_content(response) or ""
+                    vitals = _tf.build_vitals(text)
+                    try:
+                        reason = result.get("mode", "companion-unavailable")
+                        vitals.mode = f"text-heuristic ({reason})"  # type: ignore
+                    except Exception:
+                        pass
+                    _attach_vitals(response, vitals)
             except Exception:
                 _attach_vitals(response, None)
             return response

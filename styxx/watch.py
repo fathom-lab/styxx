@@ -667,10 +667,19 @@ def _classify_from_text(text: str, runtime: Any) -> "Vitals":
         probs=probs,
     )
 
-    return Vitals(
+    v = Vitals(
         phase1_pre=reading,
         phase2_early=None,
         phase3_mid=None,
         phase4_late=reading,  # copy to phase4 so gate logic works
         tier_active=-1,  # -1 = text fallback (not tier 0/1/2/3)
     )
+    # Match the labelling convention from
+    # styxx.anthropic_hack.text_features.build_vitals so callers can
+    # branch on vitals.mode regardless of which entry point produced
+    # the reading.
+    try:
+        v.mode = "text-heuristic"  # type: ignore[attr-defined]
+    except Exception:
+        pass
+    return v
