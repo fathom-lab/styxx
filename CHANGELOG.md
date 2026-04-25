@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [6.2.1] — Unreleased
+## [6.2.1] — 2026-04-25
 
 **Headline: dogfood pass against live LLMs surfaced 4 small bugs and 1 documentation gap. Every advertised API now produces what the README promises on `pip install styxx`.**
 
