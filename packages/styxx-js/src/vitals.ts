@@ -113,6 +113,35 @@ export class Vitals {
     return `${p.predicted_category}:${p.confidence.toFixed(2)}`;
   }
 
+  /** Predicted category from the latest available phase reading.
+   *  Matches the Python Vitals.category convention. README docs use this. */
+  get classification(): Category {
+    return (this.phase4_late ?? this.phase1_pre).predicted_category;
+  }
+
+  /** Alias for `classification` — matches Python Vitals.category. */
+  get category(): Category {
+    return this.classification;
+  }
+
+  /** Confidence of the latest-phase prediction (0..1).
+   *  Matches Python Vitals.confidence convention. */
+  get confidence(): number {
+    return (this.phase4_late ?? this.phase1_pre).confidence;
+  }
+
+  /** Trust score from the latest available phase reading.
+   *  Matches Python Vitals.trust_score (returned as `trust` in the
+   *  README's TypeScript example, which uses both names). */
+  get trust(): number {
+    // Trust is computed as a function of (1 - hallucination_prob) on the
+    // most-late phase. For now we approximate with confidence on
+    // non-hallucination predictions and (1 - confidence) on hallucinations.
+    const p = this.phase4_late ?? this.phase1_pre;
+    if (p.predicted_category === "hallucination") return 1 - p.confidence;
+    return p.confidence;
+  }
+
   /** Gate status from phase 4 prediction. */
   get gate(): Gate {
     if (!this.phase4_late) return "pending";
