@@ -605,6 +605,44 @@ def profile(func_or_name=None, *, auto_hook: bool = True):
         auto_hook: If True (default) and the openai SDK is present,
             styxx.hook_openai() is installed automatically so all
             ``openai.OpenAI()`` clients get Vitals attached.
+
+    Auto-hook caveat (important):
+
+        The hook patches ``openai.OpenAI`` (the module attribute). It
+        only catches *new* OpenAI client instances constructed AFTER
+        the profile context begins, AND only when the user's code
+        accesses the class via a live module lookup. The two patterns
+        that work::
+
+            # Pattern A — module-level import (catches the hook)
+            import openai
+            @styxx.profile
+            def my_agent(task):
+                client = openai.OpenAI()        # patched at this point
+                return client.chat.completions.create(...).choices[0]...
+
+            # Pattern B — use styxx.OpenAI directly (always wrapped)
+            from styxx import OpenAI
+            @styxx.profile
+            def my_agent(task):
+                client = OpenAI()
+                return client.chat.completions.create(...).choices[0]...
+
+        The pattern that does NOT work::
+
+            from openai import OpenAI            # local binding to class
+            client = OpenAI()                    # constructed BEFORE profile
+
+            @styxx.profile
+            def my_agent(task):
+                return client.chat.completions.create(...)
+                # → 0 steps observed: client wasn't hooked
+
+        For agent frameworks that construct their own LLM clients
+        (LangChain, CrewAI, AutoGen), use ``styxx.observe(response)``
+        or ``styxx.profile_session(...).record(response)`` to attach
+        Vitals manually if the framework's import pattern bypasses
+        the hook.
     """
     # (1) @styxx.profile — bare decorator
     if callable(func_or_name):
