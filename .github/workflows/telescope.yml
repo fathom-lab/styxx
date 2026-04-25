@@ -1,0 +1,68 @@
+name: cognitive-telescope
+
+# Runs the Cognitive Telescope daily at 14:00 UTC (morning US / afternoon EU).
+# Publishes a Spec-v1.0-conformant fingerprint per frontier model, commits to
+# a `telescope/` directory in this repo, and (optional) mirrors to the
+# darkflobi-industries repo for the public scoreboard.
+#
+# Requires the following secrets to be set on the repo:
+#   TELESCOPE_OPENAI_KEY      (openai api key — scoped to chat completions)
+#   TELESCOPE_ANTHROPIC_KEY   (anthropic api key — scoped to messages)
+#   TELESCOPE_HF_KEY          (huggingface inference api key — free tier ok)
+#
+# Budget: roughly 3 model-runs × 10 prompts per day = 30 calls.
+# With gpt-4o-mini + claude-haiku-4-5 + hf-inference-free: well under $5/month.
+
+on:
+  schedule:
+    - cron: '0 14 * * *'   # 14:00 UTC daily
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'dry-run (no API calls)'
+        required: false
+        default: 'false'
+
+jobs:
+  telescope:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: install styxx
+        run: |
+          python -m pip install --upgrade pip
+          pip install -U styxx
+
+      - name: run telescope
+        env:
+          TELESCOPE_OPENAI_KEY:    ${{ secrets.TELESCOPE_OPENAI_KEY }}
+          TELESCOPE_ANTHROPIC_KEY: ${{ secrets.TELESCOPE_ANTHROPIC_KEY }}
+          TELESCOPE_HF_KEY:        ${{ secrets.TELESCOPE_HF_KEY }}
+          TELESCOPE_OUT_DIR:       ./telescope
+        run: |
+          mkdir -p telescope
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/telescope_run.py --dry-run
+          else
+            python scripts/telescope_run.py
+          fi
+
+      - name: commit daily snapshot
+        run: |
+          git config user.name "cognitive-telescope"
+          git config user.email "telescope@fathom.darkflobi.com"
+          git add telescope/
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "telescope: $(date -u +%Y-%m-%d) daily snapshot"
+            git push
+          fi

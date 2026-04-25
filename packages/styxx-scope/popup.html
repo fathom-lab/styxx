@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>styxx scope</title>
+<style>
+  body { margin: 0; padding: 18px 20px; width: 300px; background: #0a0609; color: #c6bdc1;
+         font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.55; }
+  h1 { font-size: 14px; color: #ff0033; margin: 0 0 14px; letter-spacing: 0.12em;
+       text-transform: uppercase; font-weight: 700; }
+  p { margin: 8px 0; }
+  a { color: #ff0033; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0;
+         border-bottom: 1px solid #2a1218; font-size: 11px; }
+  .row:last-child { border-bottom: none; }
+  .lbl { color: #6a5a60; }
+  .val { color: #ede6e8; }
+  .footer { margin-top: 14px; padding-top: 12px; border-top: 1px solid #2a1218;
+            color: #6a5a60; font-size: 10px; text-align: center; }
+</style>
+</head>
+<body>
+  <h1>styxx scope</h1>
+  <p><span style="color:#ede6e8">cognitive vitals</span> next to every AI chatbot response.</p>
+  <div style="margin:14px 0">
+    <div class="row"><span class="lbl">version</span><span class="val">0.1.0</span></div>
+    <div class="row"><span class="lbl">spec</span><span class="val">v1.0</span></div>
+    <div class="row"><span class="lbl">pipeline</span><span class="val">tier 3 · text-only</span></div>
+    <div class="row"><span class="lbl">works on</span><span class="val">chatgpt · claude · gemini · grok</span></div>
+  </div>
+  <p style="margin-top:14px"><strong style="color:#ede6e8">what the badge shows:</strong></p>
+  <p><span style="color:#ede6e8">K</span> — reasoning depth proxy<br>
+     <span style="color:#ede6e8">C</span> — coherence<br>
+     <span style="color:#ede6e8">D</span> — dissociation (red = high)<br>
+     <span style="color:#ede6e8">trust</span> — aggregate, penalty-adjusted</p>
+  <p style="margin-top:14px"><strong style="color:#ede6e8">limits.</strong>
+     tier 3 text-only readout. accuracy is substantially lower than the logprob pipeline.
+     treat as a hint, not a verdict.</p>
+  <div class="footer">
+    <a href="https://fathom.darkflobi.com/spec" target="_blank">spec v1.0</a> ·
+    <a href="https://github.com/fathom-lab/styxx" target="_blank">github</a> ·
+    <a href="https://pypi.org/project/styxx/" target="_blank">pypi</a><br>
+    nothing crosses unseen.
+  </div>
+</body>
+</html>

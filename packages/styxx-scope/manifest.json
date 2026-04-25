@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "styxx scope — cognitive vitals for AI chatbots",
+  "version": "0.1.0",
+  "description": "See when ChatGPT, Claude, or Gemini is confabulating, refusing, or drifting. A cognometric readout next to every response, powered by the Cognometric Fingerprint Specification v1.0.",
+  "homepage_url": "https://fathom.darkflobi.com/spec",
+  "author": "Fathom Lab",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "styxx scope"
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://bard.google.com/*",
+    "https://grok.com/*",
+    "https://x.com/i/grok*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://bard.google.com/*",
+        "https://grok.com/*",
+        "https://x.com/i/grok*"
+      ],
+      "js": ["classifier.js", "content.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+/* styxx-scope badge — renders cognometric vitals next to LLM responses. */
+
+.styxx-badge {
+  font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+
+  margin: 10px 0 18px 0 !important;
+  padding: 8px 12px !important;
+  background: #0a0609 !important;
+  border: 1px solid #2a1218 !important;
+  border-left: 3px solid #ff0033 !important;
+  color: #c6bdc1 !important;
+
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+
+  max-width: 640px !important;
+  box-sizing: border-box !important;
+}
+
+.styxx-badge .sx-head {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.styxx-badge .sx-brand {
+  color: #ff0033 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+}
+
+.styxx-badge .sx-cat {
+  display: inline-block !important;
+  padding: 1px 7px !important;
+  border: 1px solid #3b1a22 !important;
+  border-radius: 2px !important;
+  font-size: 10px !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.styxx-badge .sx-trust {
+  font-weight: 500 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.styxx-badge .sx-axes {
+  display: inline-flex !important;
+  gap: 14px !important;
+}
+
+.styxx-badge .sx-axis {
+  color: #c6bdc1 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.styxx-badge .sx-axis i {
+  display: inline-block !important;
+  color: #6a5a60 !important;
+  font-style: normal !important;
+  font-size: 10px !important;
+  margin-right: 4px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+}
+
+.styxx-badge .sx-faults {
+  display: inline-flex !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+.styxx-badge .sx-fault {
+  display: inline-block !important;
+  font-size: 10px !important;
+  padding: 1px 6px !important;
+  border-radius: 2px !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.04em !important;
+  font-weight: 500 !important;
+}
+
+.styxx-badge .sx-foot {
+  color: #6a5a60 !important;
+  font-size: 10px !important;
+  margin-left: auto !important;
+}
+
+.styxx-badge .sx-foot a {
+  color: #ff0033 !important;
+  text-decoration: none !important;
+}
+.styxx-badge .sx-foot a:hover {
+  text-decoration: underline !important;
+}
