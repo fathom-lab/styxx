@@ -573,7 +573,7 @@ def _profile_ctx(name: str = "agent", *, auto_hook: bool = True):
         p.finish()
 
 
-def profile(func_or_name=None, *, auto_hook: bool = True):
+def profile(func_or_name=None, *, name=None, auto_hook: bool = True):
     """Decorate a function, or enter a context manager, to profile cognition.
 
     Three call styles are supported:
@@ -587,9 +587,10 @@ def profile(func_or_name=None, *, auto_hook: bool = True):
 
         output, p = my_agent("...")
 
-    2. Parameterized decorator — explicit name::
+    2. Parameterized decorator — explicit name (positional or keyword)::
 
-        @styxx.profile(name="sql_agent")
+        @styxx.profile("sql_agent")        # positional
+        @styxx.profile(name="sql_agent")   # keyword (equivalent)
         def my_agent(task):
             ...
 
@@ -644,10 +645,10 @@ def profile(func_or_name=None, *, auto_hook: bool = True):
         Vitals manually if the framework's import pattern bypasses
         the hook.
     """
-    # (1) @styxx.profile — bare decorator
+    # (1) @styxx.profile — bare decorator (callable passed in positionally)
     if callable(func_or_name):
         fn = func_or_name
-        agent_name = getattr(fn, "__name__", "agent")
+        agent_name = name or getattr(fn, "__name__", "agent")
 
         @functools.wraps(fn)
         def wrapped(*args, **kwargs):
@@ -657,25 +658,46 @@ def profile(func_or_name=None, *, auto_hook: bool = True):
 
         return wrapped
 
-    # (2) @styxx.profile(name=...) OR styxx.profile(name=...) context-manager
-    resolved_name = func_or_name if isinstance(func_or_name, str) else "agent"
+    # (2) Parametric decorator + context manager — name supplied as
+    # positional string OR via name= kwarg. Both branches resolve to the
+    # same `resolved_name`.
+    resolved_name = (
+        func_or_name if isinstance(func_or_name, str)
+        else (name if isinstance(name, str) else "agent")
+    )
 
-    if isinstance(func_or_name, str):
-        # Parametric decorator: return a decorator factory.
-        def decorator(fn: F) -> F:
-            @functools.wraps(fn)
-            def wrapped(*args, **kwargs):
-                with _profile_ctx(name=resolved_name, auto_hook=auto_hook) as p:
-                    result = fn(*args, **kwargs)
-                return result, p
-            return wrapped  # type: ignore[return-value]
-        # Also usable as a context manager when someone writes
-        # ``with styxx.profile("name") as p`` — return a context manager
-        # by default; the decorator case is handled in the branch above
-        # when the argument is a callable. To support BOTH ergonomics,
-        # we return an object that is both a context manager AND
-        # callable. For simplicity in v0.1 we just return the CM.
-        return _profile_ctx(name=resolved_name, auto_hook=auto_hook)
+    if isinstance(func_or_name, str) or isinstance(name, str):
+        # @styxx.profile("name") OR @styxx.profile(name="...") OR
+        # styxx.profile(name="...") as context manager.
+        # We can't tell apart "decorator factory" vs "context manager use"
+        # without seeing the next call, so we return a context manager
+        # here — and if the user calls it on a function (decorator usage),
+        # we adapt at call-time. Simplest correct approach: return a
+        # CM. If used as a decorator, that's a separate code path:
+        #   @styxx.profile(name="x")   → user intends decorator
+        # which we handle by checking whether the result is being called
+        # on a callable inside a __call__ wrapper.
+        cm = _profile_ctx(name=resolved_name, auto_hook=auto_hook)
+
+        # Adapter: object that is BOTH a context manager AND a decorator
+        # factory. If used as `with styxx.profile(name=...) as p:`, the
+        # CM protocol on `cm` works. If used as `@styxx.profile(name=...)`,
+        # Python calls __call__(fn) on the returned object — we handle
+        # that by wrapping fn.
+        class _ProfileResult:
+            def __enter__(self_inner):
+                return cm.__enter__()
+            def __exit__(self_inner, *exc):
+                return cm.__exit__(*exc)
+            def __call__(self_inner, fn):
+                @functools.wraps(fn)
+                def wrapped(*args, **kwargs):
+                    with _profile_ctx(name=resolved_name, auto_hook=auto_hook) as p:
+                        result = fn(*args, **kwargs)
+                    return result, p
+                return wrapped
+
+        return _ProfileResult()
 
     # (3) no arg — bare context manager: styxx.profile()
     return _profile_ctx(name=resolved_name, auto_hook=auto_hook)

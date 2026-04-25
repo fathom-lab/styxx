@@ -44,7 +44,24 @@ class OpenAIWithVitals:
     Instantiate exactly the same way you'd instantiate openai.OpenAI.
     All arguments pass through. The wrapper adds .vitals to every
     response it can read; when it can't, the response returns
-    unchanged.
+    unchanged with ``.vitals = None``.
+
+    When .vitals is None (legitimate cases — not bugs):
+
+      * The response is a pure tool-call (no text content). Tool calls
+        are deterministic schema selection; there's no token-level
+        reasoning trajectory to measure. Use ``styxx.guardrail.drift_check``
+        to evaluate tool-call drift directly:
+
+            v = drift_check(prompt=user_msg, functions=tools, tool_call=...)
+
+      * The model doesn't expose logprobs (e.g. some openrouter models,
+        custom proxies). Re-run with logprobs=True or use the Tier-3
+        text-only mode via ``styxx.observe(response_text)``.
+
+      * The response was generated with stream=True. Streaming bypasses
+        the trajectory extraction; collect the full text and call
+        ``styxx.observe(text)`` after.
 
     Example:
         from styxx import OpenAI
