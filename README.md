@@ -33,17 +33,29 @@
 
 ```python
 import styxx
+from styxx import OpenAI   # any LLM-using function works inside @profile —
+                            # raw openai, langchain, crewai, autogen, custom
 
 @styxx.profile
 def my_agent(task):
-    return run_langchain(task)
+    client = OpenAI()
+    r = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": task}],
+        logprobs=True, top_logprobs=5,
+    )
+    return r.choices[0].message.content
 
 result, p = my_agent("summarize this contract")
 print(p.summary)
-# profile 'my_agent': 7 steps, 4.3s total
-#   [drift]    step=3 sev=0.89 · category='tool_arg_drift'
-#   [confab]   step=4 sev=0.92 · category='confab'
-#   [sycophant] step=5 sev=0.78 · sycophantic tone
+# this single-step example produces:
+#   profile 'my_agent': 1 step, 1.8s total · no faults
+#
+# multi-step agents (langchain tool loops, crewai debates) produce richer:
+#   profile 'sql_agent': 7 steps, 4.3s total
+#     [drift]     step=3 sev=0.89 · category='tool_arg_drift'
+#     [confab]    step=4 sev=0.92 · category='confab'
+#     [sycophant] step=5 sev=0.78 · sycophantic tone
 
 p.to_html("run.html")      # self-contained flamegraph
 p.to_langsmith()           # drop into client.create_run(...)

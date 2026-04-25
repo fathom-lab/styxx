@@ -565,6 +565,11 @@ class Vitals:
             "abort_reason": self.abort_reason,
             "coherence":    self.coherence,
             "transition_vectors": self.transition_vectors,
+            # mode is set dynamically on the Vitals instance by the
+            # adapter pipelines (text-heuristic / consensus / hybrid+...)
+            # — include it so analytics/datadog/langsmith exports keep
+            # the tier indicator instead of dropping it silently.
+            "mode": getattr(self, "mode", None),
         }
 
     @property
