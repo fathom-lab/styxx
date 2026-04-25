@@ -68,3 +68,4 @@ release/v3.9.1-bundle/
 *.toc
 telescope/*.json
 telescope/timeseries.jsonl
+packages/styxx-scope-*.zip

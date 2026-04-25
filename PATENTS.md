@@ -73,9 +73,22 @@ the provisional filings above at meaningful scale, contact:
 **heyzoos123@gmail.com** to discuss a license.
 
 We expect to convert the three provisional filings into full utility
-patents between March and May 2027 (12 months from initial filing).
-A commercial licensing program will be announced alongside the
-first utility filing.
+patents (or PCT applications) **before April 2, 2027** — the latest
+12-month deadline from the three filings. A commercial licensing
+program will be announced alongside the first utility filing.
+
+**Methodology subsequently formalized in:**
+- *Cognometric Fingerprint Specification v1.0* — Fathom v20 — doi:[10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215). The specification incorporates and references the methods covered by all three provisionals.
+- *Cognometric Fingerprint Specification v1.0 — Robustness Supplement* — Fathom v22 — doi:[10.5281/zenodo.19761194](https://doi.org/10.5281/zenodo.19761194). Empirical adversarial-robustness audit of the Tier-3 reference implementation.
+- *styxx v6.2.0 reference Python implementation* — software DOI [10.5281/zenodo.19758619](https://doi.org/10.5281/zenodo.19758619).
+
+The published specification and the patent claims are deliberately
+distinct: the spec defines the *vocabulary* and *measurement procedure*
+under CC-BY-4.0; the patents protect the *measurement architecture*
+(probe-direction calibration, attribution-weighted layer averaging,
+expression-computation dissociation measurement, multi-axis cognitive
+governor runtime). Implementing the spec for non-commercial purposes
+does not require a patent license.
 
 ## Research citations
 

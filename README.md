@@ -21,7 +21,10 @@
 [![Downloads](https://img.shields.io/pypi/dm/styxx.svg?color=00d26a&label=downloads&style=flat-square)](https://pypi.org/project/styxx/)
 [![License](https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license&style=flat-square)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/fathom-lab/styxx?color=00d26a&label=stars&style=flat-square)](https://github.com/fathom-lab/styxx)
-[![Zenodo](https://img.shields.io/badge/paper-Zenodo-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19703527)
+[![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
+[![Software](https://img.shields.io/badge/software_v6.2.0-10.5281%2Fzenodo.19758619-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19758619)
+[![Robustness](https://img.shields.io/badge/robustness_v22-10.5281%2Fzenodo.19761194-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19761194)
+[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
 # `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
@@ -504,14 +507,28 @@ Each is documented separately. None are required for the core vitals workflow ab
 
 | | |
 |---|---|
-| **site** | [fathom.darkflobi.com/styxx](https://fathom.darkflobi.com/styxx) |
+| **site** | [fathom.darkflobi.com](https://fathom.darkflobi.com) |
+| **profile docs** | [fathom.darkflobi.com/profile](https://fathom.darkflobi.com/profile) — Cognitive Profiler reference |
+| **spec page** | [fathom.darkflobi.com/spec](https://fathom.darkflobi.com/spec) — Spec v1.0 landing |
 | **source** | [github.com/fathom-lab/styxx](https://github.com/fathom-lab/styxx) |
 | **research** | [github.com/fathom-lab/fathom](https://github.com/fathom-lab/fathom) |
-| **paper (v4)** | [doi.org/10.5281/zenodo.19703527](https://doi.org/10.5281/zenodo.19703527) — *Cognometry v0: 8-Benchmark Cross-Validated Hallucination Detection* |
-| **paper (v3)** | [doi.org/10.5281/zenodo.19504993](https://doi.org/10.5281/zenodo.19504993) — logprob-trajectory methodology |
 | **issues** | [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues) |
 
-Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — see [PATENTS.md](PATENTS.md).
+### Citation chain (Zenodo)
+
+| Fathom version | DOI | What |
+|---|---|---|
+| **concept** (always-latest) | [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174) | The stable identifier — resolves to whatever the most recent version is. |
+| **v22** (2026-04-25) | [`10.5281/zenodo.19761194`](https://doi.org/10.5281/zenodo.19761194) | Spec v1.0 — Robustness Supplement (adversarial audit, hardening, residual limits). |
+| **v20** (2026-04-24) | [`10.5281/zenodo.19746215`](https://doi.org/10.5281/zenodo.19746215) | Cognometric Fingerprint Specification v1.0 — the foundational reference. |
+| **software** (separate concept) | [`10.5281/zenodo.19758619`](https://doi.org/10.5281/zenodo.19758619) | styxx v6.2.0 — reference Python implementation source archive. |
+| **v19 / styxx v3.9.1** | [`10.5281/zenodo.19702475`](https://doi.org/10.5281/zenodo.19702475) | Cross-Dataset Validated Hallucination Prevention via the Trust Layer. |
+| **paper (v4)** | [`10.5281/zenodo.19703527`](https://doi.org/10.5281/zenodo.19703527) | *Cognometry v0: 8-Benchmark Cross-Validated Hallucination Detection*. |
+| **paper (v3)** | [`10.5281/zenodo.19504993`](https://doi.org/10.5281/zenodo.19504993) | Logprob-trajectory methodology. |
+
+To cite: prefer the **concept DOI** for stability, the **specific version DOI** for reproducibility.
+
+Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — see [PATENTS.md](PATENTS.md). Conversion deadline: April 2027.
 
 ---
 

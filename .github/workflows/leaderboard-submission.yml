@@ -1,0 +1,124 @@
+name: leaderboard submission
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'submissions/*.py'
+      - '!submissions/_template_detector.py'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  run-submission:
+    if: ${{ startsWith(github.event.pull_request.title, '[submission]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout PR (safe — read-only head)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install styxx + NLI stack
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[nli]"
+
+      - name: Install submission dependencies (if any)
+        run: |
+          if [ -f submissions/requirements-submission.txt ]; then
+            pip install -r submissions/requirements-submission.txt
+          else
+            echo "no submission-specific requirements"
+          fi
+
+      - name: Identify the submission file changed in this PR
+        id: find
+        run: |
+          # List python files added in submissions/ that are NOT the template
+          git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+          diff=$(git diff --name-only --diff-filter=A \
+                  origin/${{ github.event.pull_request.base.ref }}...HEAD \
+                  -- 'submissions/*.py' ':!submissions/_template_detector.py' || true)
+          if [ -z "$diff" ]; then
+            # fall back to modified
+            diff=$(git diff --name-only \
+                    origin/${{ github.event.pull_request.base.ref }}...HEAD \
+                    -- 'submissions/*.py' ':!submissions/_template_detector.py' || true)
+          fi
+          echo "files found: $diff"
+          if [ -z "$diff" ]; then
+            echo "no submission file found in PR changes" >&2
+            exit 1
+          fi
+          # First candidate
+          submission=$(echo "$diff" | head -n 1)
+          echo "submission=$submission" >> "$GITHUB_OUTPUT"
+
+      - name: Run submission against 8 benchmarks
+        env:
+          HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+          PYTHONIOENCODING: "utf-8"
+        run: |
+          python scripts/run_submission.py \
+            "${{ steps.find.outputs.submission }}"
+
+      - name: Summarize results in PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const resultsDir = 'submissions/_results';
+            if (!fs.existsSync(resultsDir)) {
+              core.setFailed('no results produced');
+              return;
+            }
+            // Find the newest JSON file (not leaderboard.json)
+            const files = fs.readdirSync(resultsDir)
+              .filter(f => f.endsWith('.json') && f !== 'leaderboard.json')
+              .map(f => ({ f, mtime: fs.statSync(path.join(resultsDir, f)).mtimeMs }))
+              .sort((a, b) => b.mtime - a.mtime);
+            if (files.length === 0) {
+              core.setFailed('no result JSON');
+              return;
+            }
+            const result = JSON.parse(fs.readFileSync(
+              path.join(resultsDir, files[0].f), 'utf-8',
+            ));
+            const rows = Object.entries(result.per_dataset)
+              .map(([k, v]) => `  ${k.padEnd(28)} AUC ${v.mean.toFixed(4)} ± ${v.std.toFixed(4)}`)
+              .join('\n');
+            const declared = result.declared_failure_modes.join(', ') || '—';
+            const body = [
+              `### cognometry leaderboard — submission run`,
+              ``,
+              `**System:** \`${result.system_name}\` · **Author:** ${result.author}`,
+              `**Overall mean AUC:** ${result.overall_mean_auc}  ·  **Above 0.65:** ${result.datasets_above_0_65}/8`,
+              `**Declared failure modes:** ${declared}`,
+              ``,
+              '```',
+              rows,
+              '```',
+              ``,
+              `Raw results: \`submissions/_results/${files[0].f}\``,
+              ``,
+              `If these numbers reproduce under a separate run + your declared failure modes match observed below-chance datasets, a maintainer will merge this PR and the leaderboard updates automatically.`,
+            ].join('\n');
+
+            const { owner, repo } = context.repo;
+            await github.rest.issues.createComment({
+              owner, repo,
+              issue_number: context.issue.number,
+              body,
+            });

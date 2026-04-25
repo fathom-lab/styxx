@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "styxx"
 version = "6.2.0"
-description = "nothing crosses unseen. three calibrated cognometric instruments: hallucination (AUC 0.998 HaluEval-QA), refusal (AUC 0.976 XSTest-GPT-4), and tool-call drift (AUC 0.943 BFCL v3, v6.1 retrained). Pure Python, no LLM required."
+description = "Cognitive observability for LLM agents. @styxx.profile decorator returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3). Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
@@ -18,14 +18,20 @@ requires-python = ">=3.9"
 keywords = [
     "llm",
     "agent",
+    "agent-observability",
     "cognitive",
-    "vitals",
-    "monitor",
+    "cognitive-profiler",
+    "cognometric-fingerprint",
+    "hallucination-detection",
+    "refusal-detection",
+    "tool-call-drift",
+    "sycophancy-detection",
     "interpretability",
-    "hallucination",
+    "ai-safety",
+    "langsmith",
+    "datadog",
     "fathom",
-    "sae",
-    "cognitive-state",
+    "spec-v1.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
