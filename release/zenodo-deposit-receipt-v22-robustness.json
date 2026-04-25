@@ -1,0 +1,14 @@
+{
+  "doi": "10.5281/zenodo.19761194",
+  "doi_url": "https://doi.org/10.5281/zenodo.19761194",
+  "concept_doi": "10.5281/zenodo.19326174",
+  "record_url": "https://zenodo.org/records/19761194",
+  "version": "v22",
+  "title": "Fathom v22 / styxx v6.2.0: Cognometric Fingerprint Specification v1.0 \u2014 Robustness Supplement (v0.1)",
+  "files": [
+    "_test_adversarial.js",
+    "spec-v1.0-robustness-supplement.md",
+    "_adversarial_report.json"
+  ],
+  "timestamp": "2026-04-25T11:34:26Z"
+}
