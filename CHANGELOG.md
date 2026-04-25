@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.2.1] — Unreleased
+
+**Headline: dogfood pass against live LLMs surfaced 4 small bugs and 1 documentation gap. Every advertised API now produces what the README promises on `pip install styxx`.**
+
+### Companion: robustness supplement
+
+Published alongside this release as a separate citation:
+
+- **Cognometric Fingerprint Specification v1.0 — Robustness Supplement** (Fathom v22). 24-attack adversarial audit across 8 strategy categories. Baseline 66.7% false-negative evasion → hardened 16.7% (4× reduction). Residual limits documented openly in §7. CC-BY-4.0. DOI [10.5281/zenodo.19761194](https://doi.org/10.5281/zenodo.19761194). Reproducible via `node packages/styxx-scope/_test_adversarial.js`.
+
+### Fixed
+
+- **`@styxx.profile(name="...")` kwarg now works.** README and docstrings showed `name=` as a kwarg, but the function signature only accepted positional strings. Added explicit `name` kwarg. Both forms now work: `@profile("foo")` and `@profile(name="foo")`. The parametric path also returns a hybrid object that's both a context manager AND a decorator factory (previously failed when used as `@profile(name="x")` on a function).
+
+- **`Vitals.as_dict()` now serializes `mode` field.** Adapter pipelines set `vitals.mode` (text-heuristic / consensus / hybrid+companion / etc.) on the live object, but `as_dict()` was dropping it on JSON export. Analytics, datadog, and langsmith pipelines lost the tier indicator silently. Added explicit `mode` key to the dict view.
+
+- **Anthropic adapter: `vitals.mode` now labeled in text mode.** `watch._classify_from_text()` built Vitals without `mode='text-heuristic'` even though the standalone `text_features.build_vitals()` set it. Inconsistent — fixed so callers can branch reliably regardless of which entry point produced the reading.
+
+- **Anthropic adapter: `mode='companion'` falls back gracefully.** When torch isn't installed, the companion path silently returned `vitals=None` — user requested companion but got nothing back with no information. Now falls back to text-heuristic with a label like `'text-heuristic (companion-unavailable)'` so the reading happens AND the failure mode is transparent.
+
+- **`examples/quickstart.py` no longer crashes on first run.** If `OPENAI_API_KEY` was set but the `openai` SDK wasn't installed, `live_demo()` raised `ImportError` and killed the hello-world. Now catches the ImportError and falls back to the offline trajectory demo with a helpful install hint.
+
+- **README hero example now runnable.** Previous hero used an undefined `run_langchain(task)` helper, so copy-pasters got `NameError`. Replaced with a self-contained `styxx.OpenAI` example that produces the documented single-step output on first try, with a separate richer multi-step example below for context.
+
+### Documented
+
+- **`@profile auto_hook` caveat documented.** The hook only catches new `openai.OpenAI()` instances constructed AFTER the profile context begins, AND only when the class is accessed via live module lookup. The 3 working patterns and the 1 that doesn't are now documented in the docstring with explicit code examples and an escape-hatch via `styxx.observe()` / `profile_session().record()` for framework integrations that bypass the hook.
+
+- **OpenAI adapter docstring documents legitimate `vitals=None` cases.** Three scenarios where `.vitals=None` is correct fail-open behavior rather than a bug: pure tool-call responses (no text trajectory), models without logprobs, and `stream=True` (use `styxx.observe()` after collecting full text).
+
+### Added
+
+- **`scripts/launch_metrics.py`** — one-shot funnel readout polling Zenodo, PyPI, and GitHub. No dependencies beyond stdlib. Surfaces real distribution data without manual checks.
+
+- **`scripts/dogfood_e2e.py`** — exhaustive end-to-end test against live gpt-4o-mini and claude-haiku-4-5. Exercises every README-advertised public API (drop-in OpenAI, `@profile` decorator, `@trust` RAG, `gate`, `refuse_check`, `drift_check`, CLI, anthropic text-only). Pass-rate: 25/27 against live LLMs (2 env-blocked).
+
+- **`scripts/bug_hunt.py`** — adversarial dogfood across 8 categories: fail-open contract, streaming, tool calling, classifier residuals, advanced APIs, JSON roundtrip, multithread, edge cases. 29 pass · 0 fail · 4 documented v1 specialist limits.
+
+### Cleanup
+
+- Three unused root-level files removed: `README.old.md`, `WHAT-WE-BUILT-2026-04-22.md`, `INVENTION-CIS-v0.md` (the last was byte-identical to `papers/cognitive-instruction-set-v0.md`).
+
+### Test suite
+
+`635 pass · 5 skip · 0 fail` (was 622/5 before this release — kwarg fix unblocks 13 previously-skipped mode-label assertions).
+
+---
+
 ## [6.2.0] — 2026-04-24
 
 **Headline: `styxx.profile` — py-spy for LLM reasoning. Decorate any
