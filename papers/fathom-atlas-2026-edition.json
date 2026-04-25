@@ -1,0 +1,1439 @@
+{
+  "atlas_version": "2026-edition-v0.1",
+  "spec_version": "cognometric-fingerprint-v1.0",
+  "spec_doi": "10.5281/zenodo.19746215",
+  "methodology_doc": "fathom-atlas-2026-methodology.md",
+  "n_models": 38,
+  "vendors": [
+    "01ai",
+    "alibaba",
+    "anthropic",
+    "deepseek",
+    "google",
+    "meta",
+    "microsoft",
+    "mistral",
+    "openai",
+    "xai"
+  ],
+  "release_eras": [
+    "2023-q1",
+    "2023-q4",
+    "2024-q1",
+    "2024-q2",
+    "2024-q3",
+    "2024-q4",
+    "2025-q1",
+    "2025-q3",
+    "2025-q4",
+    "2026-q1"
+  ],
+  "models": [
+    {
+      "name": "GPT-5",
+      "vendor": "openai",
+      "release_era": "2025-q4",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2025-q4",
+      "axes": {
+        "K": 1.765,
+        "C": 1.0,
+        "D": 0.127,
+        "K_relative": 1.706
+      },
+      "trust": 0.9441,
+      "fault_rates": {
+        "confabulation": 0.09,
+        "drift": 0.007,
+        "refusal": 0.03,
+        "sycophant": 0.043,
+        "phase_transition": 0.3,
+        "low_trust": 0.0528,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.928,
+        "gsm8k": 0.97,
+        "humaneval": 0.972,
+        "bfcl": 0.893,
+        "halueval_truth": 0.91,
+        "truthfulqa": 0.785,
+        "xstest_unsafe_ref": 0.97,
+        "mtbench": 0.954
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-4-opus",
+      "vendor": "anthropic",
+      "release_era": "2025-q4",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2025-q4",
+      "axes": {
+        "K": 1.754,
+        "C": 1.0,
+        "D": 0.115,
+        "K_relative": 1.696
+      },
+      "trust": 0.9444,
+      "fault_rates": {
+        "confabulation": 0.068,
+        "drift": 0.008,
+        "refusal": 0.03,
+        "sycophant": 0.0414,
+        "phase_transition": 0.3,
+        "low_trust": 0.0528,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.918,
+        "gsm8k": 0.974,
+        "humaneval": 0.954,
+        "bfcl": 0.892,
+        "halueval_truth": 0.932,
+        "truthfulqa": 0.793,
+        "xstest_unsafe_ref": 0.97,
+        "mtbench": 0.946
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-3.7-sonnet",
+      "vendor": "anthropic",
+      "release_era": "2025-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2025-q1",
+      "axes": {
+        "K": 1.722,
+        "C": 0.999,
+        "D": 0.139,
+        "K_relative": 1.665
+      },
+      "trust": 0.9404,
+      "fault_rates": {
+        "confabulation": 0.086,
+        "drift": 0.03,
+        "refusal": 0.04,
+        "sycophant": 0.0476,
+        "phase_transition": 0.3,
+        "low_trust": 0.053,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.901,
+        "gsm8k": 0.97,
+        "humaneval": 0.928,
+        "bfcl": 0.87,
+        "halueval_truth": 0.914,
+        "truthfulqa": 0.762,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.918
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Gemini-2.5-pro",
+      "vendor": "google",
+      "release_era": "2025-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "google/2025-q3",
+      "axes": {
+        "K": 1.697,
+        "C": 0.984,
+        "D": 0.171,
+        "K_relative": 1.641
+      },
+      "trust": 0.935,
+      "fault_rates": {
+        "confabulation": 0.118,
+        "drift": 0.064,
+        "refusal": 0.06,
+        "sycophant": 0.0518,
+        "phase_transition": 0.3,
+        "low_trust": 0.0532,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.898,
+        "gsm8k": 0.962,
+        "humaneval": 0.918,
+        "bfcl": 0.836,
+        "halueval_truth": 0.882,
+        "truthfulqa": 0.741,
+        "xstest_unsafe_ref": 0.94,
+        "mtbench": 0.917
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "DeepSeek-R1",
+      "vendor": "deepseek",
+      "release_era": "2025-q1",
+      "open_weight": true,
+      "size_b": 671.0,
+      "lineage": "deepseek/2025-q1",
+      "axes": {
+        "K": 1.697,
+        "C": 0.977,
+        "D": 0.195,
+        "K_relative": 1.641
+      },
+      "trust": 0.9325,
+      "fault_rates": {
+        "confabulation": 0.134,
+        "drift": 0.106,
+        "refusal": 0.12,
+        "sycophant": 0.0536,
+        "phase_transition": 0.3,
+        "low_trust": 0.0534,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.908,
+        "gsm8k": 0.971,
+        "humaneval": 0.944,
+        "bfcl": 0.794,
+        "halueval_truth": 0.866,
+        "truthfulqa": 0.732,
+        "xstest_unsafe_ref": 0.88,
+        "mtbench": 0.918
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "o3-mini",
+      "vendor": "openai",
+      "release_era": "2025-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2025-q1",
+      "axes": {
+        "K": 1.695,
+        "C": 0.938,
+        "D": 0.187,
+        "K_relative": 1.639
+      },
+      "trust": 0.9311,
+      "fault_rates": {
+        "confabulation": 0.134,
+        "drift": 0.058,
+        "refusal": 0.05,
+        "sycophant": 0.062,
+        "phase_transition": 0.3,
+        "low_trust": 0.0534,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.87,
+        "gsm8k": 0.955,
+        "humaneval": 0.955,
+        "bfcl": 0.842,
+        "halueval_truth": 0.866,
+        "truthfulqa": 0.69,
+        "xstest_unsafe_ref": 0.95,
+        "mtbench": 0.901
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "o1",
+      "vendor": "openai",
+      "release_era": "2024-q4",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2024-q4",
+      "axes": {
+        "K": 1.69,
+        "C": 0.994,
+        "D": 0.185,
+        "K_relative": 1.634
+      },
+      "trust": 0.9338,
+      "fault_rates": {
+        "confabulation": 0.114,
+        "drift": 0.119,
+        "refusal": 0.04,
+        "sycophant": 0.0504,
+        "phase_transition": 0.3,
+        "low_trust": 0.0533,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.912,
+        "gsm8k": 0.962,
+        "humaneval": 0.946,
+        "bfcl": 0.781,
+        "halueval_truth": 0.886,
+        "truthfulqa": 0.748,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.928
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-3.5-sonnet",
+      "vendor": "anthropic",
+      "release_era": "2024-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2024-q3",
+      "axes": {
+        "K": 1.69,
+        "C": 0.986,
+        "D": 0.156,
+        "K_relative": 1.634
+      },
+      "trust": 0.936,
+      "fault_rates": {
+        "confabulation": 0.09,
+        "drift": 0.069,
+        "refusal": 0.04,
+        "sycophant": 0.0498,
+        "phase_transition": 0.3,
+        "low_trust": 0.0532,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.886,
+        "gsm8k": 0.964,
+        "humaneval": 0.92,
+        "bfcl": 0.831,
+        "halueval_truth": 0.91,
+        "truthfulqa": 0.751,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.907
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "GPT-4o",
+      "vendor": "openai",
+      "release_era": "2024-q2",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2024-q2",
+      "axes": {
+        "K": 1.669,
+        "C": 0.959,
+        "D": 0.186,
+        "K_relative": 1.614
+      },
+      "trust": 0.9303,
+      "fault_rates": {
+        "confabulation": 0.12,
+        "drift": 0.088,
+        "refusal": 0.05,
+        "sycophant": 0.0574,
+        "phase_transition": 0.3,
+        "low_trust": 0.0535,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.886,
+        "gsm8k": 0.953,
+        "humaneval": 0.902,
+        "bfcl": 0.812,
+        "halueval_truth": 0.88,
+        "truthfulqa": 0.713,
+        "xstest_unsafe_ref": 0.95,
+        "mtbench": 0.91
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "o1-preview",
+      "vendor": "openai",
+      "release_era": "2024-q4",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2024-q4",
+      "axes": {
+        "K": 1.667,
+        "C": 0.984,
+        "D": 0.2,
+        "K_relative": 1.612
+      },
+      "trust": 0.9301,
+      "fault_rates": {
+        "confabulation": 0.13,
+        "drift": 0.136,
+        "refusal": 0.04,
+        "sycophant": 0.0524,
+        "phase_transition": 0.3,
+        "low_trust": 0.0535,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.908,
+        "gsm8k": 0.95,
+        "humaneval": 0.929,
+        "bfcl": 0.764,
+        "halueval_truth": 0.87,
+        "truthfulqa": 0.738,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.922
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Llama-3.1-405B",
+      "vendor": "meta",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 405.0,
+      "lineage": "meta/2024-q3",
+      "axes": {
+        "K": 1.66,
+        "C": 0.956,
+        "D": 0.201,
+        "K_relative": 1.605
+      },
+      "trust": 0.9279,
+      "fault_rates": {
+        "confabulation": 0.136,
+        "drift": 0.106,
+        "refusal": 0.09,
+        "sycophant": 0.0584,
+        "phase_transition": 0.3,
+        "low_trust": 0.0536,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.886,
+        "gsm8k": 0.961,
+        "humaneval": 0.892,
+        "bfcl": 0.794,
+        "halueval_truth": 0.864,
+        "truthfulqa": 0.708,
+        "xstest_unsafe_ref": 0.91,
+        "mtbench": 0.91
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-4-haiku-4-5",
+      "vendor": "anthropic",
+      "release_era": "2026-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2026-q1",
+      "axes": {
+        "K": 1.64,
+        "C": 0.943,
+        "D": 0.182,
+        "K_relative": 1.586
+      },
+      "trust": 0.9276,
+      "fault_rates": {
+        "confabulation": 0.114,
+        "drift": 0.085,
+        "refusal": 0.04,
+        "sycophant": 0.057,
+        "phase_transition": 0.3,
+        "low_trust": 0.0536,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.852,
+        "gsm8k": 0.946,
+        "humaneval": 0.882,
+        "bfcl": 0.815,
+        "halueval_truth": 0.886,
+        "truthfulqa": 0.715,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.872
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Qwen-3-72B",
+      "vendor": "alibaba",
+      "release_era": "2025-q1",
+      "open_weight": true,
+      "size_b": 72.0,
+      "lineage": "alibaba/2025-q1",
+      "axes": {
+        "K": 1.638,
+        "C": 0.946,
+        "D": 0.221,
+        "K_relative": 1.584
+      },
+      "trust": 0.9235,
+      "fault_rates": {
+        "confabulation": 0.148,
+        "drift": 0.14,
+        "refusal": 0.13,
+        "sycophant": 0.0608,
+        "phase_transition": 0.3,
+        "low_trust": 0.0538,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.876,
+        "gsm8k": 0.952,
+        "humaneval": 0.902,
+        "bfcl": 0.76,
+        "halueval_truth": 0.852,
+        "truthfulqa": 0.696,
+        "xstest_unsafe_ref": 0.87,
+        "mtbench": 0.908
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Gemini-2.5-flash",
+      "vendor": "google",
+      "release_era": "2025-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "google/2025-q3",
+      "axes": {
+        "K": 1.636,
+        "C": 0.953,
+        "D": 0.197,
+        "K_relative": 1.581
+      },
+      "trust": 0.9261,
+      "fault_rates": {
+        "confabulation": 0.136,
+        "drift": 0.098,
+        "refusal": 0.07,
+        "sycophant": 0.057,
+        "phase_transition": 0.3,
+        "low_trust": 0.0537,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.852,
+        "gsm8k": 0.941,
+        "humaneval": 0.892,
+        "bfcl": 0.802,
+        "halueval_truth": 0.864,
+        "truthfulqa": 0.715,
+        "xstest_unsafe_ref": 0.93,
+        "mtbench": 0.892
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "DeepSeek-V3",
+      "vendor": "deepseek",
+      "release_era": "2024-q4",
+      "open_weight": true,
+      "size_b": 671.0,
+      "lineage": "deepseek/2024-q4",
+      "axes": {
+        "K": 1.632,
+        "C": 0.931,
+        "D": 0.229,
+        "K_relative": 1.578
+      },
+      "trust": 0.9213,
+      "fault_rates": {
+        "confabulation": 0.154,
+        "drift": 0.148,
+        "refusal": 0.12,
+        "sycophant": 0.0628,
+        "phase_transition": 0.3,
+        "low_trust": 0.0539,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.881,
+        "gsm8k": 0.949,
+        "humaneval": 0.892,
+        "bfcl": 0.752,
+        "halueval_truth": 0.846,
+        "truthfulqa": 0.686,
+        "xstest_unsafe_ref": 0.88,
+        "mtbench": 0.892
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "GPT-4-turbo",
+      "vendor": "openai",
+      "release_era": "2024-q2",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2024-q2",
+      "axes": {
+        "K": 1.62,
+        "C": 0.962,
+        "D": 0.198,
+        "K_relative": 1.566
+      },
+      "trust": 0.9253,
+      "fault_rates": {
+        "confabulation": 0.136,
+        "drift": 0.105,
+        "refusal": 0.05,
+        "sycophant": 0.056,
+        "phase_transition": 0.3,
+        "low_trust": 0.0537,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.864,
+        "gsm8k": 0.916,
+        "humaneval": 0.872,
+        "bfcl": 0.795,
+        "halueval_truth": 0.864,
+        "truthfulqa": 0.72,
+        "xstest_unsafe_ref": 0.95,
+        "mtbench": 0.905
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Grok-3",
+      "vendor": "xai",
+      "release_era": "2025-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "xai/2025-q1",
+      "axes": {
+        "K": 1.614,
+        "C": 0.88,
+        "D": 0.265,
+        "K_relative": 1.56
+      },
+      "trust": 0.9124,
+      "fault_rates": {
+        "confabulation": 0.198,
+        "drift": 0.152,
+        "refusal": 0.21,
+        "sycophant": 0.0744,
+        "phase_transition": 0.3,
+        "low_trust": 0.0544,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.866,
+        "gsm8k": 0.937,
+        "humaneval": 0.886,
+        "bfcl": 0.748,
+        "halueval_truth": 0.802,
+        "truthfulqa": 0.628,
+        "xstest_unsafe_ref": 0.79,
+        "mtbench": 0.882
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-3-opus",
+      "vendor": "anthropic",
+      "release_era": "2024-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2024-q1",
+      "axes": {
+        "K": 1.612,
+        "C": 0.968,
+        "D": 0.19,
+        "K_relative": 1.559
+      },
+      "trust": 0.9258,
+      "fault_rates": {
+        "confabulation": 0.11,
+        "drift": 0.141,
+        "refusal": 0.04,
+        "sycophant": 0.052,
+        "phase_transition": 0.3,
+        "low_trust": 0.0537,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.868,
+        "gsm8k": 0.95,
+        "humaneval": 0.849,
+        "bfcl": 0.759,
+        "halueval_truth": 0.89,
+        "truthfulqa": 0.74,
+        "xstest_unsafe_ref": 0.96,
+        "mtbench": 0.886
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Qwen-2.5-72B",
+      "vendor": "alibaba",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 72.0,
+      "lineage": "alibaba/2024-q3",
+      "axes": {
+        "K": 1.612,
+        "C": 0.926,
+        "D": 0.239,
+        "K_relative": 1.558
+      },
+      "trust": 0.918,
+      "fault_rates": {
+        "confabulation": 0.162,
+        "drift": 0.162,
+        "refusal": 0.14,
+        "sycophant": 0.0646,
+        "phase_transition": 0.3,
+        "low_trust": 0.0541,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.862,
+        "gsm8k": 0.944,
+        "humaneval": 0.89,
+        "bfcl": 0.738,
+        "halueval_truth": 0.838,
+        "truthfulqa": 0.677,
+        "xstest_unsafe_ref": 0.86,
+        "mtbench": 0.896
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Gemini-2.0-flash",
+      "vendor": "google",
+      "release_era": "2025-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "google/2025-q1",
+      "axes": {
+        "K": 1.601,
+        "C": 0.927,
+        "D": 0.213,
+        "K_relative": 1.548
+      },
+      "trust": 0.9201,
+      "fault_rates": {
+        "confabulation": 0.144,
+        "drift": 0.12,
+        "refusal": 0.08,
+        "sycophant": 0.0614,
+        "phase_transition": 0.3,
+        "low_trust": 0.054,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.84,
+        "gsm8k": 0.927,
+        "humaneval": 0.864,
+        "bfcl": 0.78,
+        "halueval_truth": 0.856,
+        "truthfulqa": 0.693,
+        "xstest_unsafe_ref": 0.92,
+        "mtbench": 0.873
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Llama-3.3-70B",
+      "vendor": "meta",
+      "release_era": "2024-q4",
+      "open_weight": true,
+      "size_b": 70.0,
+      "lineage": "meta/2024-q4",
+      "axes": {
+        "K": 1.592,
+        "C": 0.93,
+        "D": 0.227,
+        "K_relative": 1.539
+      },
+      "trust": 0.9178,
+      "fault_rates": {
+        "confabulation": 0.148,
+        "drift": 0.152,
+        "refusal": 0.1,
+        "sycophant": 0.063,
+        "phase_transition": 0.3,
+        "low_trust": 0.0541,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.86,
+        "gsm8k": 0.929,
+        "humaneval": 0.846,
+        "bfcl": 0.748,
+        "halueval_truth": 0.852,
+        "truthfulqa": 0.685,
+        "xstest_unsafe_ref": 0.9,
+        "mtbench": 0.892
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Gemini-1.5-pro",
+      "vendor": "google",
+      "release_era": "2024-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "google/2024-q3",
+      "axes": {
+        "K": 1.588,
+        "C": 0.932,
+        "D": 0.227,
+        "K_relative": 1.535
+      },
+      "trust": 0.9177,
+      "fault_rates": {
+        "confabulation": 0.155,
+        "drift": 0.144,
+        "refusal": 0.08,
+        "sycophant": 0.0616,
+        "phase_transition": 0.3,
+        "low_trust": 0.0541,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.857,
+        "gsm8k": 0.92,
+        "humaneval": 0.842,
+        "bfcl": 0.756,
+        "halueval_truth": 0.845,
+        "truthfulqa": 0.692,
+        "xstest_unsafe_ref": 0.92,
+        "mtbench": 0.886
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Phi-4",
+      "vendor": "microsoft",
+      "release_era": "2024-q4",
+      "open_weight": true,
+      "size_b": 14.0,
+      "lineage": "microsoft/2024-q4",
+      "axes": {
+        "K": 1.548,
+        "C": 0.892,
+        "D": 0.27,
+        "K_relative": 1.497
+      },
+      "trust": 0.906,
+      "fault_rates": {
+        "confabulation": 0.185,
+        "drift": 0.206,
+        "refusal": 0.11,
+        "sycophant": 0.0696,
+        "phase_transition": 0.3,
+        "low_trust": 0.0547,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.844,
+        "gsm8k": 0.926,
+        "humaneval": 0.825,
+        "bfcl": 0.694,
+        "halueval_truth": 0.815,
+        "truthfulqa": 0.652,
+        "xstest_unsafe_ref": 0.89,
+        "mtbench": 0.864
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "GPT-4o-mini",
+      "vendor": "openai",
+      "release_era": "2024-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2024-q3",
+      "axes": {
+        "K": 1.542,
+        "C": 0.864,
+        "D": 0.25,
+        "K_relative": 1.491
+      },
+      "trust": 0.9061,
+      "fault_rates": {
+        "confabulation": 0.16,
+        "drift": 0.17,
+        "refusal": 0.07,
+        "sycophant": 0.072,
+        "phase_transition": 0.3,
+        "low_trust": 0.0547,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.82,
+        "gsm8k": 0.87,
+        "humaneval": 0.87,
+        "bfcl": 0.73,
+        "halueval_truth": 0.84,
+        "truthfulqa": 0.64,
+        "xstest_unsafe_ref": 0.93,
+        "mtbench": 0.823
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Mistral-Large",
+      "vendor": "mistral",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 123.0,
+      "lineage": "mistral/2024-q3",
+      "axes": {
+        "K": 1.539,
+        "C": 0.91,
+        "D": 0.25,
+        "K_relative": 1.488
+      },
+      "trust": 0.9089,
+      "fault_rates": {
+        "confabulation": 0.168,
+        "drift": 0.18,
+        "refusal": 0.12,
+        "sycophant": 0.0664,
+        "phase_transition": 0.3,
+        "low_trust": 0.0546,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.84,
+        "gsm8k": 0.89,
+        "humaneval": 0.82,
+        "bfcl": 0.72,
+        "halueval_truth": 0.832,
+        "truthfulqa": 0.668,
+        "xstest_unsafe_ref": 0.88,
+        "mtbench": 0.876
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Llama-3.1-70B",
+      "vendor": "meta",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 70.0,
+      "lineage": "meta/2024-q3",
+      "axes": {
+        "K": 1.53,
+        "C": 0.906,
+        "D": 0.258,
+        "K_relative": 1.479
+      },
+      "trust": 0.9067,
+      "fault_rates": {
+        "confabulation": 0.177,
+        "drift": 0.185,
+        "refusal": 0.11,
+        "sycophant": 0.068,
+        "phase_transition": 0.3,
+        "low_trust": 0.0547,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.834,
+        "gsm8k": 0.895,
+        "humaneval": 0.804,
+        "bfcl": 0.715,
+        "halueval_truth": 0.823,
+        "truthfulqa": 0.66,
+        "xstest_unsafe_ref": 0.89,
+        "mtbench": 0.881
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-3-sonnet",
+      "vendor": "anthropic",
+      "release_era": "2024-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2024-q1",
+      "axes": {
+        "K": 1.471,
+        "C": 0.915,
+        "D": 0.234,
+        "K_relative": 1.422
+      },
+      "trust": 0.9044,
+      "fault_rates": {
+        "confabulation": 0.13,
+        "drift": 0.227,
+        "refusal": 0.05,
+        "sycophant": 0.06,
+        "phase_transition": 0.3,
+        "low_trust": 0.0548,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.79,
+        "gsm8k": 0.923,
+        "humaneval": 0.73,
+        "bfcl": 0.673,
+        "halueval_truth": 0.87,
+        "truthfulqa": 0.7,
+        "xstest_unsafe_ref": 0.95,
+        "mtbench": 0.838
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Gemini-1.5-flash",
+      "vendor": "google",
+      "release_era": "2024-q3",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "google/2024-q3",
+      "axes": {
+        "K": 1.443,
+        "C": 0.854,
+        "D": 0.29,
+        "K_relative": 1.395
+      },
+      "trust": 0.889,
+      "fault_rates": {
+        "confabulation": 0.188,
+        "drift": 0.24,
+        "refusal": 0.09,
+        "sycophant": 0.076,
+        "phase_transition": 0.3,
+        "low_trust": 0.0556,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.788,
+        "gsm8k": 0.866,
+        "humaneval": 0.747,
+        "bfcl": 0.66,
+        "halueval_truth": 0.812,
+        "truthfulqa": 0.62,
+        "xstest_unsafe_ref": 0.91,
+        "mtbench": 0.835
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Qwen-3-7B",
+      "vendor": "alibaba",
+      "release_era": "2025-q1",
+      "open_weight": true,
+      "size_b": 7.0,
+      "lineage": "alibaba/2025-q1",
+      "axes": {
+        "K": 1.441,
+        "C": 0.845,
+        "D": 0.309,
+        "K_relative": 1.393
+      },
+      "trust": 0.885,
+      "fault_rates": {
+        "confabulation": 0.212,
+        "drift": 0.26,
+        "refusal": 0.16,
+        "sycophant": 0.0776,
+        "phase_transition": 0.3,
+        "low_trust": 0.0558,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.755,
+        "gsm8k": 0.872,
+        "humaneval": 0.808,
+        "bfcl": 0.64,
+        "halueval_truth": 0.788,
+        "truthfulqa": 0.612,
+        "xstest_unsafe_ref": 0.84,
+        "mtbench": 0.828
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Mixtral-8x22B",
+      "vendor": "mistral",
+      "release_era": "2024-q2",
+      "open_weight": true,
+      "size_b": 141.0,
+      "lineage": "mistral/2024-q2",
+      "axes": {
+        "K": 1.421,
+        "C": 0.851,
+        "D": 0.299,
+        "K_relative": 1.373
+      },
+      "trust": 0.8847,
+      "fault_rates": {
+        "confabulation": 0.198,
+        "drift": 0.248,
+        "refusal": 0.14,
+        "sycophant": 0.0776,
+        "phase_transition": 0.3,
+        "low_trust": 0.0558,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.778,
+        "gsm8k": 0.828,
+        "humaneval": 0.76,
+        "bfcl": 0.652,
+        "halueval_truth": 0.802,
+        "truthfulqa": 0.612,
+        "xstest_unsafe_ref": 0.86,
+        "mtbench": 0.844
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Claude-3-haiku",
+      "vendor": "anthropic",
+      "release_era": "2024-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "anthropic/2024-q1",
+      "axes": {
+        "K": 1.417,
+        "C": 0.868,
+        "D": 0.278,
+        "K_relative": 1.37
+      },
+      "trust": 0.8888,
+      "fault_rates": {
+        "confabulation": 0.16,
+        "drift": 0.282,
+        "refusal": 0.06,
+        "sycophant": 0.07,
+        "phase_transition": 0.3,
+        "low_trust": 0.0556,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.752,
+        "gsm8k": 0.889,
+        "humaneval": 0.756,
+        "bfcl": 0.618,
+        "halueval_truth": 0.84,
+        "truthfulqa": 0.65,
+        "xstest_unsafe_ref": 0.94,
+        "mtbench": 0.815
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Qwen-2.5-7B",
+      "vendor": "alibaba",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 7.0,
+      "lineage": "alibaba/2024-q3",
+      "axes": {
+        "K": 1.401,
+        "C": 0.827,
+        "D": 0.33,
+        "K_relative": 1.355
+      },
+      "trust": 0.8753,
+      "fault_rates": {
+        "confabulation": 0.232,
+        "drift": 0.284,
+        "refusal": 0.17,
+        "sycophant": 0.0804,
+        "phase_transition": 0.3,
+        "low_trust": 0.0562,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.736,
+        "gsm8k": 0.851,
+        "humaneval": 0.788,
+        "bfcl": 0.616,
+        "halueval_truth": 0.768,
+        "truthfulqa": 0.598,
+        "xstest_unsafe_ref": 0.83,
+        "mtbench": 0.812
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Yi-34B",
+      "vendor": "01ai",
+      "release_era": "2023-q4",
+      "open_weight": true,
+      "size_b": 34.0,
+      "lineage": "01ai/2023-q4",
+      "axes": {
+        "K": 1.356,
+        "C": 0.793,
+        "D": 0.359,
+        "K_relative": 1.311
+      },
+      "trust": 0.861,
+      "fault_rates": {
+        "confabulation": 0.252,
+        "drift": 0.32,
+        "refusal": 0.16,
+        "sycophant": 0.0872,
+        "phase_transition": 0.3,
+        "low_trust": 0.0569,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.762,
+        "gsm8k": 0.802,
+        "humaneval": 0.735,
+        "bfcl": 0.58,
+        "halueval_truth": 0.748,
+        "truthfulqa": 0.564,
+        "xstest_unsafe_ref": 0.84,
+        "mtbench": 0.798
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Phi-3.5-mini",
+      "vendor": "microsoft",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 3.8,
+      "lineage": "microsoft/2024-q3",
+      "axes": {
+        "K": 1.26,
+        "C": 0.812,
+        "D": 0.37,
+        "K_relative": 1.218
+      },
+      "trust": 0.8464,
+      "fault_rates": {
+        "confabulation": 0.255,
+        "drift": 0.378,
+        "refusal": 0.12,
+        "sycophant": 0.083,
+        "phase_transition": 0.3,
+        "low_trust": 0.0577,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.694,
+        "gsm8k": 0.823,
+        "humaneval": 0.628,
+        "bfcl": 0.522,
+        "halueval_truth": 0.745,
+        "truthfulqa": 0.585,
+        "xstest_unsafe_ref": 0.88,
+        "mtbench": 0.802
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Llama-3.1-8B",
+      "vendor": "meta",
+      "release_era": "2024-q3",
+      "open_weight": true,
+      "size_b": 8.0,
+      "lineage": "meta/2024-q3",
+      "axes": {
+        "K": 1.231,
+        "C": 0.773,
+        "D": 0.372,
+        "K_relative": 1.19
+      },
+      "trust": 0.8371,
+      "fault_rates": {
+        "confabulation": 0.255,
+        "drift": 0.34,
+        "refusal": 0.14,
+        "sycophant": 0.092,
+        "phase_transition": 0.3,
+        "low_trust": 0.0581,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.692,
+        "gsm8k": 0.763,
+        "humaneval": 0.58,
+        "bfcl": 0.56,
+        "halueval_truth": 0.745,
+        "truthfulqa": 0.54,
+        "xstest_unsafe_ref": 0.86,
+        "mtbench": 0.798
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Llama-3.2-3B",
+      "vendor": "meta",
+      "release_era": "2024-q4",
+      "open_weight": true,
+      "size_b": 3.0,
+      "lineage": "meta/2024-q4",
+      "axes": {
+        "K": 1.15,
+        "C": 0.736,
+        "D": 0.41,
+        "K_relative": 1.112
+      },
+      "trust": 0.8105,
+      "fault_rates": {
+        "confabulation": 0.288,
+        "drift": 0.39,
+        "refusal": 0.15,
+        "sycophant": 0.098,
+        "phase_transition": 0.3,
+        "low_trust": 0.0595,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.633,
+        "gsm8k": 0.764,
+        "humaneval": 0.515,
+        "bfcl": 0.51,
+        "halueval_truth": 0.712,
+        "truthfulqa": 0.51,
+        "xstest_unsafe_ref": 0.85,
+        "mtbench": 0.77
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "GPT-3.5-turbo",
+      "vendor": "openai",
+      "release_era": "2023-q1",
+      "open_weight": false,
+      "size_b": null,
+      "lineage": "openai/2023-q1",
+      "axes": {
+        "K": 1.137,
+        "C": 0.708,
+        "D": 0.379,
+        "K_relative": 1.1
+      },
+      "trust": 0.812,
+      "fault_rates": {
+        "confabulation": 0.27,
+        "drift": 0.28,
+        "refusal": 0.14,
+        "sycophant": 0.106,
+        "phase_transition": 0.3,
+        "low_trust": 0.0594,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.7,
+        "gsm8k": 0.575,
+        "humaneval": 0.48,
+        "bfcl": 0.62,
+        "halueval_truth": 0.73,
+        "truthfulqa": 0.47,
+        "xstest_unsafe_ref": 0.86,
+        "mtbench": 0.793
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    },
+    {
+      "name": "Mistral-7B-Instruct",
+      "vendor": "mistral",
+      "release_era": "2023-q4",
+      "open_weight": true,
+      "size_b": 7.0,
+      "lineage": "mistral/2023-q4",
+      "axes": {
+        "K": 0.974,
+        "C": 0.711,
+        "D": 0.424,
+        "K_relative": 0.942
+      },
+      "trust": 0.7688,
+      "fault_rates": {
+        "confabulation": 0.292,
+        "drift": 0.42,
+        "refusal": 0.18,
+        "sycophant": 0.1004,
+        "phase_transition": 0.3,
+        "low_trust": 0.0616,
+        "incoherence": 0.0
+      },
+      "uncertainty_sigma": 0.071,
+      "low_confidence": false,
+      "source_benchmarks": {
+        "mmlu": 0.625,
+        "gsm8k": 0.521,
+        "humaneval": 0.402,
+        "bfcl": 0.48,
+        "halueval_truth": 0.708,
+        "truthfulqa": 0.498,
+        "xstest_unsafe_ref": 0.82,
+        "mtbench": 0.73
+      },
+      "derivation_pipeline": "tier3-public-benchmark-derivation-v0.1"
+    }
+  ]
+}
