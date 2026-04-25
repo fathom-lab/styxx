@@ -51,7 +51,35 @@ Published alongside this release as a separate citation:
 
 ### Test suite
 
-`635 pass · 5 skip · 0 fail` (was 622/5 before this release — kwarg fix unblocks 13 previously-skipped mode-label assertions).
+`653 pass · 5 skip · 0 fail` (was 622/5 before this release — kwarg fix
+unblocks 13 previously-skipped mode-label assertions, and the autogen
+adapter test file (18 tests) was inadvertently excluded from earlier
+runs · re-included here for full coverage).
+
+### Dogfood evidence
+
+Verified end-to-end against live LLMs and synthetic data in this release:
+
+  · `@styxx.profile` on multi-step gpt-4o-mini agent — phase-transition
+    fault correctly flagged between steps
+  · `styxx.OpenAI` drop-in wrapper produces calibrated vitals on live calls
+  · `styxx.Anthropic` text-mode pipeline works on mocked Anthropic responses
+  · `styxx.gate()` fail-open contract holds with a deliberately-failing
+    client (returns permissive verdict, never raises)
+  · `styxx.reflex` self-interrupting generator — fault callbacks fire
+    correctly on confab-prone prompts; events accumulated; rewind logic
+    triggered when applicable
+  · `styxx.weather()` 24h forecast — operates over accumulated audit log,
+    produces structured WeatherReport with gate-pass-rate / mood / mean
+    coherence metrics
+  · `styxx.Thought` substrate-independent type — round-trip via
+    as_dict/from_dict preserves thought_id; distance(t,t)=0; certify()
+    produces CognitiveCertificate
+  · `styxx.dynamics.CognitiveDynamics` — full fit → predict → simulate →
+    save/load loop on synthetic 10-observation trajectory in 6-category
+    state space; .cogdyn binary serialization round-trips cleanly
+  · `StyxxCallbackHandler` (langchain adapter) — vitals computed on live
+    langchain 1.x agent: category=reasoning, gate=pass, trust=0.86
 
 ---
 
