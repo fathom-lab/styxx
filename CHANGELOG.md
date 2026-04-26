@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.7.0] — 2026-04-26
+
+**Headline: instrument #8 (overconfidence-register detection) — fifth instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 8-for-8 on cognometric instruments showing K=1 phase-transition signature, each with a different critical feature. Honest AUC: 0.7702 — the lowest in the v0 suite, shipped at this number rather than gamed.**
+
+### Added — eighth cognometric instrument: overconfidence register
+
+- **`from styxx.guardrail import overconf_check`** — calibrated overconfidence-register detector. Pure Python, no embeddings, Pyodide-safe. Sibling to deception (instrument #6) and hallucination (#1): hallucination measures fabrication-prone phrasing; deception measures rhetorical-signature register; overconfidence measures epistemic-commitment register. **NOT a truth detector.**
+
+  ```python
+  v = overconf_check(prompt, response)
+  v.overconf_risk    # calibrated probability in [0, 1]
+  v.shows_overconf   # bool against threshold (default 0.5)
+  v.top_signals      # 3 strongest signed contributions
+  ```
+
+  9 register features (certainty/hedge/evidence-marker densities, `epistemic_balance` = (cert - hedge) / (cert + hedge + 1), strong-assertion ratio, unhedged-claim ratio, mean sentence length, log word count, specific-number density). Trained on **n=200 paired (calibrated, overconfident) responses** sampled from `gpt-4o-mini` under contrasting STANCE-level system prompts on 100 diverse questions across factual / quantitative / opinion / predictive / mechanism / contested-fact substrates. **5-fold CV mean AUC 0.7702 ± 0.0648**.
+
+- **Phase-transition signature replicates on instrument #8.** Critical_K=**1** on `mean_sentence_length` (Δ +0.2298) — a length confound: calibrated responses pack hedges + qualifications that increase sentence length. K=2 adds `epistemic_balance` (Δ +0.0295) — the lexical-register signal that was the design hypothesis. **8-for-8 on cognometric instruments showing K=1 phase transition** under the same measurement protocol, each with a different critical feature:
+
+  | instrument        | critical feature           | Δ AUC at K=1 |
+  | ----------------- | -------------------------- | ------------ |
+  | hallucination v4  | trigram_novelty            | +0.4947      |
+  | refusal v1        | starts_with_sorry          | +0.469       |
+  | drift v6.0        | (per-class K=1-2)          | +0.4973      |
+  | sycophancy v0     | superlative_density        | +0.4354      |
+  | conversation-loop | avg_pairwise_levenshtein   | +0.4995      |
+  | deception v0      | log_word_count             | +0.3738      |
+  | plan-action v0    | bigram_jaccard_overlap     | +0.3832      |
+  | overconfidence v0 | mean_sentence_length       | +0.2298      |
+
+- **Honest AUC disclosure.** AUC 0.7702 is the lowest in the v0 suite. We ship at this number rather than gaming the corpus. The signal is real (well above chance) but moderate — `gpt-4o-mini` does not always shift register on well-established factual questions ("How does GPS work?" produces a similar response under both stance prompts; the register shift is dramatic on contested questions and barely visible on settled ones). The K=1 length confound and the question-pool dependence are documented in [`calibrated_weights_overconfidence_v0.CALIBRATION_NOTES.honest_AUC_disclosure`](styxx/guardrail/calibrated_weights_overconfidence_v0.py).
+
+- **Corpus design discipline.** Stance-level system prompts only — NO lexical hints. The contrastive prompts contrast at the level of epistemic stance ("careful expert who scales certainty to evidence" vs. "confident speaker who never qualifies") and deliberately do NOT name certainty markers, hedge words, or any feature we measure. Carried forward from instrument #7 plan-action where the prompt-leakage failure mode was first identified and pinned by a regression test.
+
+- **Scope warning: NOT a truth detector.** Overconfidence here scores REGISTER (commitment markers, hedge density, evidence attribution), not factual correctness. A correct answer stated confidently will score as overconfident. An incorrect answer stated humbly will not. Pair with hallucination v4 (or NLI guardrail v3) for joint truth+register monitoring.
+
+- **Counter-intuitive empirical finding pinned by regression test:** `specific_number_density` coefficient is small NEGATIVE in the trained model. Design intuition was overconfident responses invent specific numbers; empirically, calibrated responses cite numbers more (with attribution). Pinned in `tests/test_overconfidence_v0.py::test_documented_specific_number_coef_is_negative`.
+
+- **Documented failure modes:**
+  1. K=1 = `mean_sentence_length` is a length confound, not a lexical-certainty feature
+  2. Question-pool dependence (high AUC on contested, low AUC on factual)
+  3. Single-source corpus (gpt-4o-mini only)
+  4. `specific_number_density` coefficient flipped opposite to design intuition
+  5. English-only feature vocabularies
+  6. Not a truth detector
+
+- **Calibration fingerprint** in `styxx.guardrail.calibrated_weights_overconfidence_v0.CALIBRATION_FINGERPRINT`. Atlas bumped to **v0.5**: 20 fingerprints across 8 instruments × 15 substrates.
+
+- **17 new unit tests** in `tests/test_overconfidence_v0.py`. Full pytest run: **735 passed, 1 skipped**.
+
+### Added — atlas v0.5
+
+- `benchmarks/cognometry_fingerprint_atlas_v0.json` → **v0.5**:
+  - 20 fingerprints (was 19)
+  - 8 instruments (was 7)
+  - 15 substrates (was 14)
+  - `v0_5_changelog` entry documents the 8-for-8 K=1 phase transition and the honest AUC disclosure.
+
+### Reproducer
+
+`scripts/overconfidence_train_v0.py` — seed-pinned, deterministic, resumable cache. `OPENAI_API_KEY=... python scripts/overconfidence_train_v0.py`.
+
+### Position-paper status
+
+**5 of 6 instruments called for in *Every Mind Leaves Vitals* now shipped** (sycophancy, conversation-loop, deception, plan-action, overconfidence). One remaining: **goal drift** (cross-session intent drift, distinct from the existing tool-call drift v1). Net: 8 of 9 calibrated cognometric instruments shipped.
+
+---
+
 ## [6.6.0] — 2026-04-26
 
 **Headline: instrument #7 (plan-action gap detection) — fourth instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 7-for-7 on cognometric instruments showing K=1 phase-transition signature, each with a different critical feature.**

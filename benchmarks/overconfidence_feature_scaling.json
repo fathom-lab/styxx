@@ -1,0 +1,65 @@
+{
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "mean_sentence_length",
+      "mean_auc": 0.7297500000000001,
+      "delta_from_prev": 0.22975000000000012
+    },
+    {
+      "K": 2,
+      "feature_added": "epistemic_balance",
+      "mean_auc": 0.75925,
+      "delta_from_prev": 0.02949999999999986
+    },
+    {
+      "K": 3,
+      "feature_added": "evidence_marker_density",
+      "mean_auc": 0.7645000000000001,
+      "delta_from_prev": 0.005250000000000088
+    },
+    {
+      "K": 4,
+      "feature_added": "log_word_count",
+      "mean_auc": 0.776,
+      "delta_from_prev": 0.011499999999999955
+    },
+    {
+      "K": 5,
+      "feature_added": "certainty_marker_density",
+      "mean_auc": 0.77525,
+      "delta_from_prev": -0.0007500000000000284
+    },
+    {
+      "K": 6,
+      "feature_added": "unhedged_claim_ratio",
+      "mean_auc": 0.77425,
+      "delta_from_prev": -0.0010000000000000009
+    },
+    {
+      "K": 7,
+      "feature_added": "hedge_density",
+      "mean_auc": 0.77275,
+      "delta_from_prev": -0.0014999999999999458
+    },
+    {
+      "K": 8,
+      "feature_added": "specific_number_density",
+      "mean_auc": 0.7707499999999999,
+      "delta_from_prev": -0.002000000000000113
+    },
+    {
+      "K": 9,
+      "feature_added": "strong_assertion_ratio",
+      "mean_auc": 0.77025,
+      "delta_from_prev": -0.0004999999999999449
+    }
+  ],
+  "critical": {
+    "K": 1,
+    "feature_added": "mean_sentence_length",
+    "mean_auc": 0.7297500000000001,
+    "delta_from_prev": 0.22975000000000012
+  },
+  "n_samples": 200
+}

@@ -89,6 +89,18 @@ from .deception import deception_check, DeceptionVerdict  # noqa: F401
 # on bigram_jaccard_overlap (delta +0.3832). 7-for-7 on cognometric
 # instruments showing K=1 phase transition under same protocol.
 from .plan_action import plan_action_check, PlanActionVerdict  # noqa: F401
+# Eighth cognometric instrument (v0): text-only overconfidence-register
+# detector. Fifth instrument shipped under the call from *Every Mind
+# Leaves Vitals*. Scores epistemic register (commitment, hedging,
+# sourcing) — NOT truth. Trained on n=200 paired (calibrated/
+# overconfident) responses from gpt-4o-mini under stance-level
+# system prompts (no lexical hints, per the discipline established
+# by instrument #7). 5-fold CV AUC 0.7702 ± 0.0648 — lowest in the
+# v0 suite. Shipped honestly at this AUC rather than gamed. Phase-
+# transition signature replicates: critical_K=1 on mean_sentence_length
+# (delta +0.2298). 8-for-8 on cognometric instruments showing K=1
+# phase transition under the same measurement protocol.
+from .overconfidence import overconf_check, OverconfidenceVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -107,4 +119,6 @@ __all__ = [
     "DeceptionVerdict",
     "plan_action_check",
     "PlanActionVerdict",
+    "overconf_check",
+    "OverconfidenceVerdict",
 ]

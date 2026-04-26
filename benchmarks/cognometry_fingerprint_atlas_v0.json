@@ -1,12 +1,18 @@
 {
-  "version": "v0.4",
+  "version": "v0.5",
   "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 19,
-  "n_instruments": 7,
-  "n_substrates": 14,
+  "n_fingerprints": 20,
+  "n_instruments": 8,
+  "n_substrates": 15,
+  "v0_5_changelog": [
+    "added overconfidence-v0 instrument (1 fingerprint, n=200 paired calibrated/overconfident responses from gpt-4o-mini under stance-level prompts on 100 diverse questions)",
+    "8-for-8 on cognometric instruments showing K=1 phase transition under same measurement protocol",
+    "honest AUC disclosure: 0.7702 ± 0.0648 — lowest in v0 suite. K=1 = mean_sentence_length is a length confound (calibrated responses pack hedges/qualifications, increasing sentence length). Lexical certainty features add secondary signal at K=2 (epistemic_balance, +0.03 AUC). Shipped at 0.77 honestly rather than gamed.",
+    "scope warning: NOT a truth detector. Scores epistemic REGISTER (commitment, hedging, sourcing). A confidently-stated correct answer scores as overconfident. Pair with hallucination v4 for joint truth+register monitoring."
+  ],
   "v0_4_changelog": [
     "added plan-action-v0 instrument (1 fingerprint, n=200 paired matched/mismatched plan-action pairs from gpt-4o-mini, cleaned-prompt corpus)",
     "7-for-7 on cognometric instruments showing K=1 phase transition under same measurement protocol",
@@ -402,6 +408,26 @@
       ],
       "substrate_n": 200,
       "notes": "5-fold CV, n=200 paired (matched, mismatched) plan-action pairs from gpt-4o-mini under contrasting system prompts on 100 diverse agent tasks (research, calculation, lookup, conversion). Sibling to drift (instrument #3): drift catches a malformed tool call against schema; plan-action gap catches when stated intent and emitted action diverge at the content level. CORPUS DESIGN: leaked-prompt version (allowing 'actually'/'instead' deviation markers in mismatched action) saturated AUC at 1.000 with K=1 = deviation_marker_density — pure artifact. Cleaned-prompt corpus (no deviation-marker hint) gives the honest AUC 0.9225 with K=1 = bigram_jaccard_overlap. 7-for-7 on cognometric instruments showing K=1 phase transition. v1 priority: real BFCL-multi-turn agent traces with annotated plan-action gaps + automatic plan/action segmentation from inline-CoT outputs."
+    },
+    {
+      "instrument": "overconfidence-v0",
+      "substrate": "synthetic_paired_gpt4omini_stance_prompts",
+      "failure_class": "epistemic register (commitment vs hedging)",
+      "n_features": 9,
+      "baseline_auc": 0.7702,
+      "critical_K": 1,
+      "critical_feature": "mean_sentence_length",
+      "delta_auc_at_K": 0.2298,
+      "final_auc_at_N": 0.7702,
+      "negative_lift": [
+        {"K": 5, "feature": "certainty_marker_density", "delta": -0.0008},
+        {"K": 6, "feature": "unhedged_claim_ratio", "delta": -0.001},
+        {"K": 7, "feature": "hedge_density", "delta": -0.0015},
+        {"K": 8, "feature": "specific_number_density", "delta": -0.002},
+        {"K": 9, "feature": "strong_assertion_ratio", "delta": -0.0005}
+      ],
+      "substrate_n": 200,
+      "notes": "5-fold CV, n=200 paired (calibrated, overconfident) responses from gpt-4o-mini under stance-level system prompts on 100 diverse questions across factual / quantitative / opinion / predictive / mechanism / contested-fact substrates. CORPUS DESIGN: stance-level prompts only — NO lexical hints. Carried forward from instrument #7 plan-action where prompt-leakage failure mode was first identified. NOT a truth detector — scores epistemic REGISTER (commitment, hedging, sourcing). K=1 critical feature is mean_sentence_length, a length confound: calibrated responses pack hedges/qualifications that increase sentence length. K=2 adds epistemic_balance (cert-hedge ratio) for +0.03 AUC, the lexical-register signal that was the design hypothesis. AUC 0.7702 is the LOWEST in the v0 suite — shipped honestly at this number rather than gamed. The signal is real (well above chance) but moderate; gpt-4o-mini does not always shift register on well-established factual questions. 8-for-8 on cognometric instruments showing K=1 phase transition. v1 priority: stratify per question-substrate, length-balanced corpus, TruthfulQA-with-register-labels."
     }
   ]
 }

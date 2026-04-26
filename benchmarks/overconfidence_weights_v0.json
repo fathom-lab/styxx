@@ -1,0 +1,119 @@
+{
+  "fold_aucs": [
+    0.70875,
+    0.8487499999999999,
+    0.7350000000000001,
+    0.71,
+    0.84875
+  ],
+  "mean_auc": 0.77025,
+  "std_auc": 0.06477557410011892,
+  "feature_names": [
+    "certainty_marker_density",
+    "hedge_density",
+    "epistemic_balance",
+    "specific_number_density",
+    "evidence_marker_density",
+    "strong_assertion_ratio",
+    "unhedged_claim_ratio",
+    "mean_sentence_length",
+    "log_word_count"
+  ],
+  "coefs": [
+    0.5942511210187936,
+    0.7250770567093577,
+    0.799032626928755,
+    -0.14514682521706032,
+    -0.36190709949500127,
+    -0.2937418061317521,
+    0.543062027138902,
+    -0.31128672949682995,
+    -0.5232111894315503
+  ],
+  "intercept": 0.06278139450777996,
+  "scaler_mean": [
+    0.002749750645580694,
+    0.0126506128512814,
+    -0.21200000000000002,
+    0.014275671719719036,
+    0.0013524714945345306,
+    0.044630952380952375,
+    0.7945357142857143,
+    19.69364285714287,
+    4.2167717897539765
+  ],
+  "scaler_scale": [
+    0.0077267217225992545,
+    0.016789434943490222,
+    0.3614214222268024,
+    0.020660005477493887,
+    0.004978447156507134,
+    0.10709734416930185,
+    0.25398834466045117,
+    4.38245856037986,
+    0.26208691654479566
+  ],
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "mean_sentence_length",
+      "mean_auc": 0.7297500000000001,
+      "delta_from_prev": 0.22975000000000012
+    },
+    {
+      "K": 2,
+      "feature_added": "epistemic_balance",
+      "mean_auc": 0.75925,
+      "delta_from_prev": 0.02949999999999986
+    },
+    {
+      "K": 3,
+      "feature_added": "evidence_marker_density",
+      "mean_auc": 0.7645000000000001,
+      "delta_from_prev": 0.005250000000000088
+    },
+    {
+      "K": 4,
+      "feature_added": "log_word_count",
+      "mean_auc": 0.776,
+      "delta_from_prev": 0.011499999999999955
+    },
+    {
+      "K": 5,
+      "feature_added": "certainty_marker_density",
+      "mean_auc": 0.77525,
+      "delta_from_prev": -0.0007500000000000284
+    },
+    {
+      "K": 6,
+      "feature_added": "unhedged_claim_ratio",
+      "mean_auc": 0.77425,
+      "delta_from_prev": -0.0010000000000000009
+    },
+    {
+      "K": 7,
+      "feature_added": "hedge_density",
+      "mean_auc": 0.77275,
+      "delta_from_prev": -0.0014999999999999458
+    },
+    {
+      "K": 8,
+      "feature_added": "specific_number_density",
+      "mean_auc": 0.7707499999999999,
+      "delta_from_prev": -0.002000000000000113
+    },
+    {
+      "K": 9,
+      "feature_added": "strong_assertion_ratio",
+      "mean_auc": 0.77025,
+      "delta_from_prev": -0.0004999999999999449
+    }
+  ],
+  "critical_K": 1,
+  "critical_feature": "mean_sentence_length",
+  "delta_auc_at_K": 0.22975000000000012,
+  "training_model": "gpt-4o-mini",
+  "n_samples": 200,
+  "n_questions": 100,
+  "seed": 0
+}
