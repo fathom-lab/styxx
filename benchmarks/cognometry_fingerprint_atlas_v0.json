@@ -1,12 +1,19 @@
 {
-  "version": "v0.5",
+  "version": "v0.6",
   "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 20,
-  "n_instruments": 8,
-  "n_substrates": 15,
+  "n_fingerprints": 21,
+  "n_instruments": 9,
+  "n_substrates": 16,
+  "v0_6_changelog": [
+    "added goal-drift-v0 instrument (1 fingerprint, n=200 paired anchored/drifted 5-turn sessions from gpt-4o-mini under stance-level prompts)",
+    "9-for-9 on cognometric instruments showing K=1 phase transition under same measurement protocol — the K=1 phase-transition prediction from *Every Mind Leaves Vitals* is now empirically held across the COMPLETE 9-instrument suite the position paper called for",
+    "each of the 9 instruments shows a DIFFERENT K=1 critical feature — goal-drift's is anchor_to_last_bigram_jaccard (Δ +0.4143)",
+    "AUC 0.9645 ± 0.0294. K=2 adds max_inter_turn_levenshtein (Δ +0.05)",
+    "documented failure mode: paraphrastic anchored sessions (lexically diverse but intent-preserved) can score above threshold — pinned by regression test"
+  ],
   "v0_5_changelog": [
     "added overconfidence-v0 instrument (1 fingerprint, n=200 paired calibrated/overconfident responses from gpt-4o-mini under stance-level prompts on 100 diverse questions)",
     "8-for-8 on cognometric instruments showing K=1 phase transition under same measurement protocol",
@@ -428,6 +435,24 @@
       ],
       "substrate_n": 200,
       "notes": "5-fold CV, n=200 paired (calibrated, overconfident) responses from gpt-4o-mini under stance-level system prompts on 100 diverse questions across factual / quantitative / opinion / predictive / mechanism / contested-fact substrates. CORPUS DESIGN: stance-level prompts only — NO lexical hints. Carried forward from instrument #7 plan-action where prompt-leakage failure mode was first identified. NOT a truth detector — scores epistemic REGISTER (commitment, hedging, sourcing). K=1 critical feature is mean_sentence_length, a length confound: calibrated responses pack hedges/qualifications that increase sentence length. K=2 adds epistemic_balance (cert-hedge ratio) for +0.03 AUC, the lexical-register signal that was the design hypothesis. AUC 0.7702 is the LOWEST in the v0 suite — shipped honestly at this number rather than gamed. The signal is real (well above chance) but moderate; gpt-4o-mini does not always shift register on well-established factual questions. 8-for-8 on cognometric instruments showing K=1 phase transition. v1 priority: stratify per question-substrate, length-balanced corpus, TruthfulQA-with-register-labels."
+    },
+    {
+      "instrument": "goal-drift-v0",
+      "substrate": "synthetic_paired_gpt4omini_stance_prompts_5turn",
+      "failure_class": "multi-turn intent migration / goal anchor dispersion",
+      "n_features": 9,
+      "baseline_auc": 0.9645,
+      "critical_K": 1,
+      "critical_feature": "anchor_to_last_bigram_jaccard",
+      "delta_auc_at_K": 0.4143,
+      "final_auc_at_N": 0.9645,
+      "negative_lift": [
+        {"K": 7, "feature": "anchor_to_last_entity_overlap", "delta": -0.002},
+        {"K": 8, "feature": "monotonic_drift_fraction", "delta": -0.0015},
+        {"K": 9, "feature": "anchor_recall_score", "delta": -0.003}
+      ],
+      "substrate_n": 200,
+      "notes": "5-fold CV, n=200 paired (anchored, drifted) 5-turn agent sessions from gpt-4o-mini under contrasting STANCE-level system prompts on 100 diverse goal statements (research, lookup, calculation, comparison). CORPUS DESIGN: stance-level prompts only — NO lexical hints. Drifted prompt explicitly says 'don't announce that you're getting off-track; just let the work shift' — same prompt-leakage avoidance carried forward from instruments #7 plan-action and #8 overconfidence. Sibling to conversation-loop (#5): both are multi-turn detectors; loop measures stagnation, goal drift measures dispersion. Distinct from drift v1 (#3): drift v1 is a per-call schema-mismatch detector; goal drift is multi-turn intent migration. K=1 critical feature is anchor_to_last_bigram_jaccard (direct cross-turn overlap goal anchor → final turn). 9-FOR-9 on cognometric instruments showing K=1 phase transition under same measurement protocol — the K=1 phase-transition prediction from *Every Mind Leaves Vitals* is now empirically held across the COMPLETE 9-instrument suite the position paper called for, across instrument families (single-turn lexical / cross-turn structural / lexical-style register / cross-section plan-action / multi-turn drift) and AUC bands (0.7702 - 0.9995). v1 priority: real long-horizon agent traces with annotated drift events; variable-length sessions; semantic-embedding overlap to fix paraphrastic-anchored failure mode."
     }
   ]
 }

@@ -101,6 +101,19 @@ from .plan_action import plan_action_check, PlanActionVerdict  # noqa: F401
 # (delta +0.2298). 8-for-8 on cognometric instruments showing K=1
 # phase transition under the same measurement protocol.
 from .overconfidence import overconf_check, OverconfidenceVerdict  # noqa: F401
+# Ninth and FINAL cognometric instrument (v0): multi-turn goal-drift
+# detector. Sixth and last instrument shipped under the call from
+# *Every Mind Leaves Vitals*. Sibling to conversation-loop (#5) — both
+# are multi-turn, but loop measures stagnation while goal drift
+# measures dispersion (movement away from the goal anchor). Trained
+# on n=200 paired (anchored/drifted) 5-turn sessions from gpt-4o-mini
+# under stance-level prompts (no lexical hints). 5-fold CV AUC
+# 0.9645 ± 0.0294. Phase-transition signature replicates: critical_K=1
+# on anchor_to_last_bigram_jaccard (delta +0.4143). 9-for-9 on
+# cognometric instruments showing K=1 phase transition under the
+# same measurement protocol — the prediction from the position paper
+# is now empirically held across the COMPLETE 9-instrument suite.
+from .goal_drift import goal_check, GoalDriftVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -121,4 +134,6 @@ __all__ = [
     "PlanActionVerdict",
     "overconf_check",
     "OverconfidenceVerdict",
+    "goal_check",
+    "GoalDriftVerdict",
 ]

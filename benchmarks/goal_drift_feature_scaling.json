@@ -1,0 +1,65 @@
+{
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "anchor_to_last_bigram_jaccard",
+      "mean_auc": 0.91425,
+      "delta_from_prev": 0.41425
+    },
+    {
+      "K": 2,
+      "feature_added": "max_inter_turn_levenshtein",
+      "mean_auc": 0.9672499999999999,
+      "delta_from_prev": 0.052999999999999936
+    },
+    {
+      "K": 3,
+      "feature_added": "log_total_words",
+      "mean_auc": 0.9695,
+      "delta_from_prev": 0.0022500000000000853
+    },
+    {
+      "K": 4,
+      "feature_added": "cumulative_anchor_drift",
+      "mean_auc": 0.9710000000000001,
+      "delta_from_prev": 0.0015000000000000568
+    },
+    {
+      "K": 5,
+      "feature_added": "mean_anchor_overlap",
+      "mean_auc": 0.9710000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 6,
+      "feature_added": "log_n_turns",
+      "mean_auc": 0.9710000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 7,
+      "feature_added": "anchor_to_last_entity_overlap",
+      "mean_auc": 0.969,
+      "delta_from_prev": -0.002000000000000113
+    },
+    {
+      "K": 8,
+      "feature_added": "monotonic_drift_fraction",
+      "mean_auc": 0.9675,
+      "delta_from_prev": -0.0014999999999999458
+    },
+    {
+      "K": 9,
+      "feature_added": "anchor_recall_score",
+      "mean_auc": 0.9644999999999999,
+      "delta_from_prev": -0.0030000000000001137
+    }
+  ],
+  "critical": {
+    "K": 1,
+    "feature_added": "anchor_to_last_bigram_jaccard",
+    "mean_auc": 0.91425,
+    "delta_from_prev": 0.41425
+  },
+  "n_samples": 200
+}
