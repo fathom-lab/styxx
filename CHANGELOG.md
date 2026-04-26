@@ -7,6 +7,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.6.0] — 2026-04-26
+
+**Headline: instrument #7 (plan-action gap detection) — fourth instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 7-for-7 on cognometric instruments showing K=1 phase-transition signature, each with a different critical feature.**
+
+### Added — seventh cognometric instrument: plan-action gap
+
+- **`from styxx.guardrail import plan_action_check`** — calibrated cross-section plan-action gap detector. Pure Python, no embeddings, Pyodide-safe. Sibling to drift (instrument #3): drift catches a malformed tool call against schema; plan-action gap catches when the agent's *stated intent* and *emitted action* diverge at the content level.
+
+  ```python
+  v = plan_action_check(plan, action)
+  v.gap_risk     # calibrated probability in [0, 1]
+  v.shows_gap    # bool against threshold (default 0.5)
+  v.top_signals  # 3 strongest cross-section features
+  ```
+
+  9 cross-section features (bigram/trigram Jaccard between plan and action, action-verb overlap, entity overlap, length ratio + diff, deviation-marker density, plan-only-content-word ratio, log total words). Trained on **n=200 paired (matched, mismatched) plan-action pairs** sampled from `gpt-4o-mini` under contrasting system prompts on 100 diverse agent tasks. **5-fold CV mean AUC 0.9225 ± 0.0322**.
+
+- **Phase-transition signature replicates on instrument #7.** Critical_K=**1** on `bigram_jaccard_overlap` (Δ +0.3832) — cross-section bigram overlap between plan and action. K=2 adds `log_total_words` (Δ +0.04). **7-for-7 on cognometric instruments showing K=1 phase transition** under the same measurement protocol, each with a different critical feature:
+
+  | instrument        | critical feature           | Δ AUC at K=1 |
+  | ----------------- | -------------------------- | ------------ |
+  | hallucination v4  | trigram_novelty            | +0.4947      |
+  | refusal v1        | starts_with_sorry          | +0.469       |
+  | drift v6.0        | (per-class K=1-2)          | +0.4973      |
+  | sycophancy v0     | superlative_density        | +0.4354      |
+  | conversation-loop | avg_pairwise_levenshtein   | +0.4995      |
+  | deception v0      | log_word_count             | +0.3738      |
+  | plan-action v0    | bigram_jaccard_overlap     | +0.3832      |
+
+- **Honest corpus disclosure.** An earlier corpus that allowed the mismatched system prompt to instruct the model to use deviation markers ("actually,"/"instead,") in the action saturated AUC at 1.000 with K=1 = `deviation_marker_density` — a pure prompt-leakage artifact, since we'd told the model exactly which lexical signature to produce. The cleaned corpus (no deviation-marker hint) gives the honest AUC 0.9225 with a real cross-section overlap signal at K=1. Both results are documented in `CALIBRATION_NOTES.corpus_design_warning`.
+
+- **Calibration fingerprint atlas v0.4.** Atlas now ships **19 fingerprints across 7 instruments × 14 substrates** (was 18/6/13).
+
+- **Documented failure modes** (in [`calibrated_weights_plan_action_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_plan_action_v0.py)):
+  1. Single-source corpus (gpt-4o-mini under prompt instruction); v1 priority is real BFCL-multi-turn agent traces with annotated gaps
+  2. **Symbolic-to-numerical false positive** — when plan describes symbolic computation ("compute A = πr²") and action shows numerical execution ("3.14159 × 7 × 7 = 153.94"), bigram overlap is naturally low even though the pair is semantically matched. Pinned by a regression test. v1 fix path is semantic embedding overlap.
+  3. Requires structured `(plan, action)` input — separate parsing step needed for inline-CoT outputs
+  4. Length features (`action_to_plan_length_ratio` + `action_minus_plan_word_count`) split the signal — small modeling redundancy
+  5. `verb_overlap_ratio` carries near-zero learned weight (small action-verb vocabulary)
+  6. English-only feature vocabularies
+
+### Added — reproducers
+
+- [`scripts/plan_action_train_v0.py`](scripts/plan_action_train_v0.py) — full pipeline (sample paired plan-action → parse PLAN:/ACTION: structure → featurize → train → ablate). Resumable cache in `benchmarks/data/plan_action/pairs_v0.jsonl`.
+
+### Files
+
+```
+styxx/guardrail/plan_action.py                       — runtime API (plan_action_check, PlanActionVerdict)
+styxx/guardrail/plan_action_signals.py                — 9 cross-section feature extractors
+styxx/guardrail/calibrated_weights_plan_action_v0.py  — weights + fingerprint + corpus_design_warning + failure modes
+benchmarks/data/plan_action/pairs_v0.jsonl            — 200 paired pairs (cached training data)
+benchmarks/plan_action_feature_scaling.json           — full ablation history
+benchmarks/plan_action_weights_v0.json                — paste-ready weights bundle
+tests/test_plan_action_v0.py                          — 15 unit tests, including documented-failure-mode regression checks
+```
+
+### Context
+
+Fourth instrument shipped under [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921)'s call for #4-#9 (sycophancy + conversation-loop + deception preceded — same day cycle). Less than 48 hours from the position paper landing to four instruments shipped under it, all replicating the K=1 phase-transition signature, each with a different critical feature. The structural prediction continues to hold across instrument families (single-turn lexical, cross-turn structural, lexical-style-deception, cross-section plan-action). 93/93 tests pass across all 7 instruments.
+
+---
+
 ## [6.5.0] — 2026-04-26
 
 **Headline: instrument #6 (deception-signature detection) — third instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 6-for-6 on cognometric instruments showing K=1 phase-transition signature. NOT a lie detector — see scope warning.**

@@ -65,14 +65,15 @@ p.to_datadog()             # apm-shape spans
 **Seven failure modes caught in-line, no fine-tuning, no extra model:**
 drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
 
-### Six calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+### Seven calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
 - 🟢 **Tool-call drift detection** — BFCL v3 **0.943** 5-fold CV (v6.1 retrained, beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
 - 🟢 **Sycophancy detection** — n=1200 paired (yielding/evidence) responses, 5-fold CV **0.972 ± 0.005**. K=1 phase transition on `superlative_density` (Δ +0.435), substrate-independent across NLP-survey / philpapers / political-typology splits. First instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921).
 - 🟢 **Conversation-loop detection** — cross-turn detector, n=200 paired (loop/progress) multi-turn conversations, 5-fold CV **0.9995 ± 0.001**. K=1 phase transition on `avg_pairwise_levenshtein` (Δ +0.500). Second instrument shipped under the *Every Mind Leaves Vitals* call.
-- 🟢 **Deception-signature detection** *(new — NOT A LIE DETECTOR)* — n=200 paired (honest/dishonest-instructed) responses, 5-fold CV **0.956 ± 0.024**. K=1 phase transition on `log_word_count` (Δ +0.374), K=2 adds `specificity_density`. **6-for-6 on cognometric instruments showing K=1 phase transition** under the same measurement protocol. Third instrument shipped under the *Every Mind Leaves Vitals* call. **Scope warning:** lexical-signature detector (vague-brevity vs. specific-elaboration), not ground-truth deception verification — see [`calibrated_weights_deception_v0.CALIBRATION_NOTES.scope_warning`](styxx/guardrail/calibrated_weights_deception_v0.py).
+- 🟢 **Deception-signature detection** *(NOT A LIE DETECTOR)* — n=200 paired (honest/dishonest-instructed) responses, 5-fold CV **0.956 ± 0.024**. K=1 phase transition on `log_word_count` (Δ +0.374), K=2 adds `specificity_density`. Third instrument shipped under the *Every Mind Leaves Vitals* call. **Scope warning:** lexical-signature detector (vague-brevity vs. specific-elaboration), not ground-truth deception verification — see [`calibrated_weights_deception_v0.CALIBRATION_NOTES.scope_warning`](styxx/guardrail/calibrated_weights_deception_v0.py).
+- 🟢 **Plan-action gap detection** *(new)* — cross-section detector, n=200 paired (matched/mismatched) plan-action pairs, 5-fold CV **0.9225 ± 0.032**. K=1 phase transition on `bigram_jaccard_overlap` (Δ +0.383). **7-for-7 on cognometric instruments showing K=1 phase transition** under the same measurement protocol. Fourth instrument shipped under the *Every Mind Leaves Vitals* call. Sibling to drift (#3) — drift catches a malformed tool call against schema; plan-action gap catches when stated intent and emitted action diverge at the content level.
 
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀

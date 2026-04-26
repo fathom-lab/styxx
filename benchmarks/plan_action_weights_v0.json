@@ -1,0 +1,119 @@
+{
+  "fold_aucs": [
+    0.875,
+    0.9575,
+    0.955,
+    0.9275,
+    0.8975
+  ],
+  "mean_auc": 0.9225,
+  "std_auc": 0.03221024681681282,
+  "feature_names": [
+    "bigram_jaccard_overlap",
+    "trigram_jaccard_overlap",
+    "verb_overlap_ratio",
+    "entity_overlap_ratio",
+    "action_to_plan_length_ratio",
+    "action_minus_plan_word_count",
+    "deviation_marker_density",
+    "plan_only_content_word_ratio",
+    "log_total_words"
+  ],
+  "coefs": [
+    -1.7131145251912157,
+    0.16691905240133995,
+    -0.00011309963124892875,
+    0.28469590044541876,
+    0.17481921395721536,
+    -0.1264539166712449,
+    0.7192642883964888,
+    0.6395054932207618,
+    -1.3633756635631777
+  ],
+  "intercept": -0.08613557573914829,
+  "scaler_mean": [
+    0.0830431009738796,
+    0.05302964173040592,
+    0.32166666666666666,
+    0.2884556761321468,
+    1.4874847690913717,
+    6.985,
+    0.001956610275689223,
+    0.6578737007696489,
+    3.6174351355534533
+  ],
+  "scaler_scale": [
+    0.09820531148898257,
+    0.08058546064296322,
+    0.4632344019080527,
+    0.38078228448120394,
+    0.9044992397386297,
+    15.53656252199952,
+    0.010525643420044752,
+    0.18505742475304574,
+    0.37691319740600654
+  ],
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "bigram_jaccard_overlap",
+      "mean_auc": 0.88325,
+      "delta_from_prev": 0.38325
+    },
+    {
+      "K": 2,
+      "feature_added": "log_total_words",
+      "mean_auc": 0.9247500000000001,
+      "delta_from_prev": 0.04150000000000009
+    },
+    {
+      "K": 3,
+      "feature_added": "deviation_marker_density",
+      "mean_auc": 0.92775,
+      "delta_from_prev": 0.0029999999999998916
+    },
+    {
+      "K": 4,
+      "feature_added": "plan_only_content_word_ratio",
+      "mean_auc": 0.9315000000000001,
+      "delta_from_prev": 0.003750000000000142
+    },
+    {
+      "K": 5,
+      "feature_added": "verb_overlap_ratio",
+      "mean_auc": 0.9295,
+      "delta_from_prev": -0.002000000000000113
+    },
+    {
+      "K": 6,
+      "feature_added": "action_to_plan_length_ratio",
+      "mean_auc": 0.9280000000000002,
+      "delta_from_prev": -0.0014999999999998348
+    },
+    {
+      "K": 7,
+      "feature_added": "trigram_jaccard_overlap",
+      "mean_auc": 0.9259999999999999,
+      "delta_from_prev": -0.002000000000000224
+    },
+    {
+      "K": 8,
+      "feature_added": "action_minus_plan_word_count",
+      "mean_auc": 0.925,
+      "delta_from_prev": -0.0009999999999998899
+    },
+    {
+      "K": 9,
+      "feature_added": "entity_overlap_ratio",
+      "mean_auc": 0.9225,
+      "delta_from_prev": -0.0025000000000000577
+    }
+  ],
+  "critical_K": 1,
+  "critical_feature": "bigram_jaccard_overlap",
+  "delta_auc_at_K": 0.38325,
+  "training_model": "gpt-4o-mini",
+  "n_samples": 200,
+  "n_tasks": 100,
+  "seed": 0
+}

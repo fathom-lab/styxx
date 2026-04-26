@@ -1,12 +1,17 @@
 {
-  "version": "v0.3",
+  "version": "v0.4",
   "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 18,
-  "n_instruments": 6,
-  "n_substrates": 13,
+  "n_fingerprints": 19,
+  "n_instruments": 7,
+  "n_substrates": 14,
+  "v0_4_changelog": [
+    "added plan-action-v0 instrument (1 fingerprint, n=200 paired matched/mismatched plan-action pairs from gpt-4o-mini, cleaned-prompt corpus)",
+    "7-for-7 on cognometric instruments showing K=1 phase transition under same measurement protocol",
+    "honest disclosure: leaked-prompt corpus saturated AUC at 1.000 with K=1 = deviation_marker_density (artifact); cleaned corpus AUC 0.9225 with K=1 = bigram_jaccard_overlap (real signal)"
+  ],
   "v0_3_changelog": [
     "added deception-v0 instrument (1 fingerprint, n=200 paired honest/dishonest responses from gpt-4o-mini)",
     "6-for-6 on cognometric instruments showing K=1 phase transition under same measurement protocol",
@@ -378,6 +383,25 @@
       ],
       "substrate_n": 200,
       "notes": "5-fold CV, n=200 paired (honest, dishonest) responses from gpt-4o-mini under contrasting system prompts on 100 diverse seed questions. **NOT a lie detector** — detects lexical signatures (vague-brevity vs specific-elaboration), not ground-truth deception. K=1 critical feature is log_word_count with NEG coefficient (short → predict dishonest; corpus artifact). K=2 adds specificity_density. 6-for-6 on cognometric instruments showing K=1 phase transition. AUC 0.04 lower than the prior five — deception is genuinely harder to detect from text alone; the gap is honest, not papered over. v1 priority: validate on TruthfulQA-with-factuality-labels."
+    },
+    {
+      "instrument": "plan-action-v0",
+      "substrate": "synthetic_paired_gpt4omini_clean_prompts",
+      "failure_class": "stated plan vs emitted action divergence",
+      "n_features": 9,
+      "baseline_auc": 0.9225,
+      "critical_K": 1,
+      "critical_feature": "bigram_jaccard_overlap",
+      "delta_auc_at_K": 0.3832,
+      "final_auc_at_N": 0.9225,
+      "negative_lift": [
+        {"K": 5, "feature": "verb_overlap_ratio", "delta": -0.002},
+        {"K": 6, "feature": "action_to_plan_length_ratio", "delta": -0.0015},
+        {"K": 7, "feature": "trigram_jaccard_overlap", "delta": -0.002},
+        {"K": 9, "feature": "entity_overlap_ratio", "delta": -0.0025}
+      ],
+      "substrate_n": 200,
+      "notes": "5-fold CV, n=200 paired (matched, mismatched) plan-action pairs from gpt-4o-mini under contrasting system prompts on 100 diverse agent tasks (research, calculation, lookup, conversion). Sibling to drift (instrument #3): drift catches a malformed tool call against schema; plan-action gap catches when stated intent and emitted action diverge at the content level. CORPUS DESIGN: leaked-prompt version (allowing 'actually'/'instead' deviation markers in mismatched action) saturated AUC at 1.000 with K=1 = deviation_marker_density — pure artifact. Cleaned-prompt corpus (no deviation-marker hint) gives the honest AUC 0.9225 with K=1 = bigram_jaccard_overlap. 7-for-7 on cognometric instruments showing K=1 phase transition. v1 priority: real BFCL-multi-turn agent traces with annotated plan-action gaps + automatic plan/action segmentation from inline-CoT outputs."
     }
   ]
 }

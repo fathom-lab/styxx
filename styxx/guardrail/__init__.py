@@ -78,6 +78,17 @@ from .conversation_loop import loop_check, LoopVerdict  # noqa: F401
 # the prior five — deception is genuinely harder to detect from text alone
 # than concrete failure modes; the gap is honest, not papered over.
 from .deception import deception_check, DeceptionVerdict  # noqa: F401
+# Seventh cognometric instrument (v0): cross-section plan-action gap
+# detector. Fourth instrument shipped under the call from *Every Mind
+# Leaves Vitals*. Sibling to drift (instrument #3) — drift catches a
+# malformed tool call against schema; plan-action gap catches when the
+# agent's stated intent and emitted action diverge at the content
+# level. Trained on n=200 paired (matched/mismatched) plan-action pairs
+# from gpt-4o-mini with cleaned (no leakage) prompts. 5-fold CV AUC
+# 0.9225 ± 0.0322. Phase-transition signature replicates: critical_K=1
+# on bigram_jaccard_overlap (delta +0.3832). 7-for-7 on cognometric
+# instruments showing K=1 phase transition under same protocol.
+from .plan_action import plan_action_check, PlanActionVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -94,4 +105,6 @@ __all__ = [
     "LoopVerdict",
     "deception_check",
     "DeceptionVerdict",
+    "plan_action_check",
+    "PlanActionVerdict",
 ]
