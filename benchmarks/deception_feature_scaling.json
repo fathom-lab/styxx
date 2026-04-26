@@ -1,0 +1,65 @@
+{
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "log_word_count",
+      "mean_auc": 0.87375,
+      "delta_from_prev": 0.37375
+    },
+    {
+      "K": 2,
+      "feature_added": "specificity_density",
+      "mean_auc": 0.95225,
+      "delta_from_prev": 0.07850000000000001
+    },
+    {
+      "K": 3,
+      "feature_added": "hedge_confidence_clash",
+      "mean_auc": 0.95475,
+      "delta_from_prev": 0.0024999999999999467
+    },
+    {
+      "K": 4,
+      "feature_added": "vagueness_density",
+      "mean_auc": 0.9549999999999998,
+      "delta_from_prev": 0.00024999999999986144
+    },
+    {
+      "K": 5,
+      "feature_added": "exclusive_word_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.002000000000000224
+    },
+    {
+      "K": 6,
+      "feature_added": "first_person_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 7,
+      "feature_added": "opinion_phrase_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 8,
+      "feature_added": "negation_density",
+      "mean_auc": 0.9564999999999999,
+      "delta_from_prev": -0.000500000000000167
+    },
+    {
+      "K": 9,
+      "feature_added": "cognitive_marker_density",
+      "mean_auc": 0.9560000000000001,
+      "delta_from_prev": -0.0004999999999998339
+    }
+  ],
+  "critical": {
+    "K": 1,
+    "feature_added": "log_word_count",
+    "mean_auc": 0.87375,
+    "delta_from_prev": 0.37375
+  },
+  "n_samples": 200
+}

@@ -1,12 +1,17 @@
 {
-  "version": "v0.2",
+  "version": "v0.3",
   "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 17,
-  "n_instruments": 5,
-  "n_substrates": 12,
+  "n_fingerprints": 18,
+  "n_instruments": 6,
+  "n_substrates": 13,
+  "v0_3_changelog": [
+    "added deception-v0 instrument (1 fingerprint, n=200 paired honest/dishonest responses from gpt-4o-mini)",
+    "6-for-6 on cognometric instruments showing K=1 phase transition under same measurement protocol",
+    "scope warning: 'deception-v0' is a lexical-signature detector, NOT a lie detector — see CALIBRATION_NOTES.scope_warning"
+  ],
   "v0_2_changelog": [
     "added conversation-loop-v0 instrument (1 fingerprint, n=200 paired conversations from gpt-4o-mini)",
     "5-for-5 on cognometric instruments showing K=1 phase transition under same measurement protocol"
@@ -356,6 +361,23 @@
       ],
       "substrate_n": 200,
       "notes": "5-fold CV, n=200 paired multi-turn conversations from gpt-4o-mini under contrasting (loop / progress) system prompts, 4 agent turns each. Featurization is cross-turn (n-gram overlap, pairwise Levenshtein, length variance, etc.). 5-for-5 on cognometric instruments showing K=1 phase transition. Single-source corpus — v1 priority is real BFCL-multi-turn traces with human labels."
+    },
+    {
+      "instrument": "deception-v0",
+      "substrate": "synthetic_paired_gpt4omini_honest_vs_dishonest",
+      "failure_class": "lexical signature of instructed-dishonesty (NOT a lie detector)",
+      "n_features": 9,
+      "baseline_auc": 0.9560,
+      "critical_K": 1,
+      "critical_feature": "log_word_count",
+      "delta_auc_at_K": 0.3738,
+      "final_auc_at_N": 0.9560,
+      "negative_lift": [
+        {"K": 8, "feature": "negation_density", "delta": -0.0005},
+        {"K": 9, "feature": "cognitive_marker_density", "delta": -0.0005}
+      ],
+      "substrate_n": 200,
+      "notes": "5-fold CV, n=200 paired (honest, dishonest) responses from gpt-4o-mini under contrasting system prompts on 100 diverse seed questions. **NOT a lie detector** — detects lexical signatures (vague-brevity vs specific-elaboration), not ground-truth deception. K=1 critical feature is log_word_count with NEG coefficient (short → predict dishonest; corpus artifact). K=2 adds specificity_density. 6-for-6 on cognometric instruments showing K=1 phase transition. AUC 0.04 lower than the prior five — deception is genuinely harder to detect from text alone; the gap is honest, not papered over. v1 priority: validate on TruthfulQA-with-factuality-labels."
     }
   ]
 }

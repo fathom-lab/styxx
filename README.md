@@ -65,13 +65,14 @@ p.to_datadog()             # apm-shape spans
 **Seven failure modes caught in-line, no fine-tuning, no extra model:**
 drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
 
-### Five calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+### Six calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
 - 🟢 **Tool-call drift detection** — BFCL v3 **0.943** 5-fold CV (v6.1 retrained, beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
 - 🟢 **Sycophancy detection** — n=1200 paired (yielding/evidence) responses, 5-fold CV **0.972 ± 0.005**. K=1 phase transition on `superlative_density` (Δ +0.435), substrate-independent across NLP-survey / philpapers / political-typology splits. First instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921).
-- 🟢 **Conversation-loop detection** *(new)* — cross-turn detector, n=200 paired (loop/progress) multi-turn conversations, 5-fold CV **0.9995 ± 0.001**. K=1 phase transition on `avg_pairwise_levenshtein` (Δ +0.500). **5-for-5 on cognometric instruments showing K=1 phase transition** under the same measurement protocol. Second instrument shipped under the *Every Mind Leaves Vitals* call.
+- 🟢 **Conversation-loop detection** — cross-turn detector, n=200 paired (loop/progress) multi-turn conversations, 5-fold CV **0.9995 ± 0.001**. K=1 phase transition on `avg_pairwise_levenshtein` (Δ +0.500). Second instrument shipped under the *Every Mind Leaves Vitals* call.
+- 🟢 **Deception-signature detection** *(new — NOT A LIE DETECTOR)* — n=200 paired (honest/dishonest-instructed) responses, 5-fold CV **0.956 ± 0.024**. K=1 phase transition on `log_word_count` (Δ +0.374), K=2 adds `specificity_density`. **6-for-6 on cognometric instruments showing K=1 phase transition** under the same measurement protocol. Third instrument shipped under the *Every Mind Leaves Vitals* call. **Scope warning:** lexical-signature detector (vague-brevity vs. specific-elaboration), not ground-truth deception verification — see [`calibrated_weights_deception_v0.CALIBRATION_NOTES.scope_warning`](styxx/guardrail/calibrated_weights_deception_v0.py).
 
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
@@ -298,6 +299,34 @@ v = loop_check(turns=[
 Single-turn inputs short-circuit to risk=0.0 (loops are by definition multi-turn). Failure modes declared in [`calibrated_weights_loop_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_loop_v0.py): single-source training corpus, counter-intuitive `distinct_word_ratio` coefficient sign (gpt-4o-mini under "rephrase" reaches for synonyms — a corpus quirk; v1 priority is real BFCL-multi-turn agent traces with human-labeled loops).
 
 Reproducer: [`scripts/loop_train_v0.py`](scripts/loop_train_v0.py) (seed=0, deterministic, resumable cache). Calibration fingerprint added to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json) (atlas v0.2: 17 fingerprints across 5 instruments).
+
+### Deception-signature detection — instrument #6
+
+> **Scope warning — read this before using:** This is **NOT a lie detector**. It is a calibrated detector of *lexical signatures of instruction-induced dishonesty* — the language patterns that emerge when an LLM is prompted to "tell the user what they want to hear" vs. "answer accurately." It does NOT access ground truth, NOT verify factual correctness, and produces confident false positives on careful qualified writing and confident false negatives on a confident lie with specifics. Use as a *signal* in agent-level monitoring; **do not** use as a verdict on humans, **do not** substitute for fact-checking.
+
+Trained on **n=200 paired responses** sampled from gpt-4o-mini under contrasting (*honest* / *dishonest*) system prompts on 100 diverse seed questions (factual / opinion / contested). 9 lexical features drawn from the Pennebaker / Newman / Hauch deception-linguistics tradition adapted for LLM output (specificity, first-person density, exclusive words, vagueness, negation, hedge-confidence clash, cognitive markers, opinion phrases, log word count). **5-fold CV mean AUC 0.9560 ± 0.0242**.
+
+The phase-transition signature replicates again: **K=1 critical feature `log_word_count`** (Δ +0.3738), K=2 adds `specificity_density` (Δ +0.079). Honest-instructed responses are systematically longer and more specific in this corpus; dishonest-instructed responses produce vague compact prose. **6-for-6 on cognometric instruments showing K=1 phase transition** under the same measurement protocol — each with a different critical feature.
+
+```python
+from styxx.guardrail import deception_check
+
+v = deception_check(
+    prompt="When was the Treaty of Versailles signed?",
+    response=(
+        "It was signed quite a while ago, after some significant "
+        "historical events. It had various consequences and is widely "
+        "regarded as a notable document."
+    ),
+)
+# v.deception_risk    = 1.000
+# v.shows_signature   = True
+# v.top_signals       = [('log_word_count', 3.18, +14.87), ...]
+```
+
+AUC 0.04 lower than the higher-AUC instruments in this stack — and honestly so. Deception is genuinely harder to detect from text alone than concrete failure modes (hallucination, refusal, drift). The gap is the price of taking on a harder problem; we disclose it rather than paper over it. v1 priorities: validate on TruthfulQA-with-factuality-labels, real NER for specificity, cross-model corpus, multilingual feature vocabularies.
+
+Reproducer: [`scripts/deception_train_v0.py`](scripts/deception_train_v0.py) (seed=0, deterministic, resumable cache). Calibration fingerprint added to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json) (atlas v0.3: 18 fingerprints across 6 instruments).
 
 <p align="center">
   <a href="https://fathom.darkflobi.com/cognometry/refuse?scenario=lecturing">

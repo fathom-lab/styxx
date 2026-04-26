@@ -67,6 +67,17 @@ from .sycophancy import sycoph_check, SycophancyVerdict  # noqa: F401
 # on cognometric instruments showing K=1 phase transition under the
 # same measurement protocol.
 from .conversation_loop import loop_check, LoopVerdict  # noqa: F401
+# Sixth cognometric instrument (v0): text-only deception-SIGNATURE detector.
+# **NOT a lie detector.** See styxx.guardrail.deception module docstring
+# for the full scope warning. Detects lexical signatures of instruction-
+# induced dishonesty (vague-brevity vs. specific-elaboration). Trained on
+# n=200 paired (honest/dishonest) responses from gpt-4o-mini. 5-fold CV
+# AUC 0.9560 ± 0.0242. Phase-transition signature replicates: critical_K=1
+# on log_word_count (delta +0.3738), K=2 adds specificity_density. 6-for-6
+# on cognometric instruments showing K=1 phase transition. Lower AUC than
+# the prior five — deception is genuinely harder to detect from text alone
+# than concrete failure modes; the gap is honest, not papered over.
+from .deception import deception_check, DeceptionVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -81,4 +92,6 @@ __all__ = [
     "SycophancyVerdict",
     "loop_check",
     "LoopVerdict",
+    "deception_check",
+    "DeceptionVerdict",
 ]

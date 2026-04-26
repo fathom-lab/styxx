@@ -1,0 +1,119 @@
+{
+  "fold_aucs": [
+    0.995,
+    0.9299999999999999,
+    0.9724999999999999,
+    0.9450000000000001,
+    0.9375
+  ],
+  "mean_auc": 0.9560000000000001,
+  "std_auc": 0.024217762076624665,
+  "feature_names": [
+    "specificity_density",
+    "first_person_density",
+    "exclusive_word_density",
+    "vagueness_density",
+    "negation_density",
+    "hedge_confidence_clash",
+    "cognitive_marker_density",
+    "opinion_phrase_density",
+    "log_word_count"
+  ],
+  "coefs": [
+    -2.3874392778387183,
+    -0.12577001449239558,
+    -0.2567836138578137,
+    0.41674059408874586,
+    -0.18291843996299145,
+    0.5128626598962529,
+    0.004777850235390903,
+    0.0,
+    -2.0892918176085837
+  ],
+  "intercept": -0.2567705634695443,
+  "scaler_mean": [
+    0.04773186665627047,
+    0.00011849315068493151,
+    0.005559882556820665,
+    0.016890300909514086,
+    0.0014743951821364067,
+    0.045,
+    0.0010095431510406664,
+    0.0,
+    4.438417601354617
+  ],
+  "scaler_scale": [
+    0.07552123167575697,
+    0.0011934076048821293,
+    0.008636593247788578,
+    0.01634058699106749,
+    0.004840322656819132,
+    0.20730412441627852,
+    0.0035014217750993855,
+    1.0,
+    0.1771199602520325
+  ],
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "log_word_count",
+      "mean_auc": 0.87375,
+      "delta_from_prev": 0.37375
+    },
+    {
+      "K": 2,
+      "feature_added": "specificity_density",
+      "mean_auc": 0.95225,
+      "delta_from_prev": 0.07850000000000001
+    },
+    {
+      "K": 3,
+      "feature_added": "hedge_confidence_clash",
+      "mean_auc": 0.95475,
+      "delta_from_prev": 0.0024999999999999467
+    },
+    {
+      "K": 4,
+      "feature_added": "vagueness_density",
+      "mean_auc": 0.9549999999999998,
+      "delta_from_prev": 0.00024999999999986144
+    },
+    {
+      "K": 5,
+      "feature_added": "exclusive_word_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.002000000000000224
+    },
+    {
+      "K": 6,
+      "feature_added": "first_person_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 7,
+      "feature_added": "opinion_phrase_density",
+      "mean_auc": 0.9570000000000001,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 8,
+      "feature_added": "negation_density",
+      "mean_auc": 0.9564999999999999,
+      "delta_from_prev": -0.000500000000000167
+    },
+    {
+      "K": 9,
+      "feature_added": "cognitive_marker_density",
+      "mean_auc": 0.9560000000000001,
+      "delta_from_prev": -0.0004999999999998339
+    }
+  ],
+  "critical_K": 1,
+  "critical_feature": "log_word_count",
+  "delta_auc_at_K": 0.37375,
+  "training_model": "gpt-4o-mini",
+  "n_samples": 200,
+  "n_questions": 100,
+  "seed": 0
+}

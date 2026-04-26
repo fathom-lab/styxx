@@ -7,6 +7,71 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.5.0] — 2026-04-26
+
+**Headline: instrument #6 (deception-signature detection) — third instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 6-for-6 on cognometric instruments showing K=1 phase-transition signature. NOT a lie detector — see scope warning.**
+
+### Added — sixth cognometric instrument: deception-signature
+
+> **Scope warning:** This is NOT a lie detector. It detects *lexical signatures of instruction-induced dishonesty* — patterns that emerge under prompt instruction to be vague vs. specific, not actual factual deception. False positives on qualified-honest writing; false negatives on confident lies with specifics. Use as a signal in agent monitoring, not as a verdict.
+
+- **`from styxx.guardrail import deception_check`** — calibrated text-only deception-signature detector. Pure Python, sub-millisecond on CPU, no model weights, Pyodide-safe.
+
+  ```python
+  v = deception_check(prompt, response)
+  v.deception_risk    # calibrated probability in [0, 1]
+  v.shows_signature   # bool against threshold (default 0.5)
+  v.top_signals       # 3 strongest features by signed contribution
+  ```
+
+  9 lexical features drawn from the Pennebaker / Newman / Hauch deception-linguistics tradition, adapted for LLM output (specificity, first-person density, exclusive words, vagueness, negation, hedge-confidence clash, cognitive markers, opinion phrases, log word count). Trained on **n=200 paired responses** sampled from `gpt-4o-mini` under contrasting (*honest* / *dishonest*) system prompts on 100 diverse seed questions (factual / opinion / contested). **5-fold CV mean AUC 0.9560 ± 0.0242**.
+
+- **Phase-transition signature replicates on instrument #6.** Critical_K=**1** on `log_word_count` (Δ +0.3738) — dishonest-instructed responses are systematically shorter and less specific in this corpus. K=2 adds `specificity_density` (Δ +0.079). **6-for-6 on cognometric instruments showing K=1 phase transition** under the same measurement protocol, each with a different critical feature:
+
+  | instrument        | critical feature          | Δ AUC at K=1 |
+  | ----------------- | ------------------------- | ------------ |
+  | hallucination v4  | trigram_novelty           | +0.4947      |
+  | refusal v1        | starts_with_sorry         | +0.469       |
+  | drift v6.0        | (per-class K=1-2)         | +0.4973      |
+  | sycophancy v0     | superlative_density       | +0.4354      |
+  | conversation-loop | avg_pairwise_levenshtein  | +0.4995      |
+  | deception v0      | log_word_count            | +0.3738      |
+
+- **Calibration fingerprint atlas v0.3.** Atlas now ships **18 fingerprints across 6 instruments × 13 substrates** (was 17/5/12).
+
+- **AUC 0.04 lower than the prior five — declared honestly.** Deception is genuinely harder to detect from text alone than concrete failure modes. We disclose the gap rather than paper over it.
+
+- **Documented failure modes** (in [`calibrated_weights_deception_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_deception_v0.py), with a prominent `scope_warning`):
+  1. **NOT a lie detector** — lexical signature ≠ ground-truth deception
+  2. Single-source corpus (gpt-4o-mini under prompt instruction)
+  3. `log_word_count` as critical feature is partly a corpus artifact — sign may invert on corpora where dishonest responses pad with bulk
+  4. `specificity_density` uses a regex proxy for named entities (v1 priority: real NER)
+  5. English-only feature vocabularies
+  6. `opinion_phrase_density` carries zero learned weight on this corpus
+  7. `negation_density` learned a *negative* coefficient (Newman's positive sign for human deception did not replicate on LLM output)
+
+### Added — reproducers
+
+- [`scripts/deception_train_v0.py`](scripts/deception_train_v0.py) — full pipeline (sample paired honest/dishonest → featurize → train → ablate). Resumable cache in `benchmarks/data/deception/responses_v0.jsonl`. Seed-pinned, deterministic.
+
+### Files
+
+```
+styxx/guardrail/deception.py                       — runtime API (deception_check, DeceptionVerdict)
+styxx/guardrail/deception_signals.py                — 9 lexical feature extractors
+styxx/guardrail/calibrated_weights_deception_v0.py  — weights + fingerprint + LOUD failure modes
+benchmarks/data/deception/responses_v0.jsonl        — 200 paired responses (cached training data)
+benchmarks/deception_feature_scaling.json           — full ablation history
+benchmarks/deception_weights_v0.json                — paste-ready weights bundle
+tests/test_deception_v0.py                          — 15 unit tests, including scope-warning + documented-failure-mode regression checks
+```
+
+### Context
+
+Third instrument shipped under [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921)'s call for #4-#9 (sycophancy, conversation-loop preceded — same day). Less than 48 hours from the position paper landing to three instruments shipped under it, all replicating the K=1 phase-transition signature on a different critical feature each time. The structural prediction continues to hold across instrument families (single-turn lexical / cross-turn structural / lexical-style-deception). 78/78 tests pass across all 5 calibrated text-only instruments.
+
+---
+
 ## [6.4.0] — 2026-04-26
 
 **Headline: instrument #5 (conversation-loop detection) — second instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 5-for-5 on cognometric instruments showing K=1 phase-transition signature under the same measurement protocol.**
