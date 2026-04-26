@@ -1,0 +1,120 @@
+{
+  "fold_aucs": [
+    1.0,
+    1.0,
+    0.9974999999999999,
+    1.0,
+    1.0
+  ],
+  "mean_auc": 0.9995,
+  "std_auc": 0.0010000000000000232,
+  "feature_names": [
+    "bigram_overlap_consecutive",
+    "trigram_overlap_consecutive",
+    "five_gram_repeat_count",
+    "length_cv",
+    "opener_repeat_rate",
+    "distinct_word_ratio",
+    "avg_pairwise_levenshtein",
+    "max_pairwise_bigram_overlap",
+    "log_n_turns"
+  ],
+  "coefs": [
+    1.5032783138616754,
+    0.7775939936590202,
+    -0.26356325601052055,
+    -0.3954505915538693,
+    0.0074567047763355165,
+    0.948802811369724,
+    -3.139546601051706,
+    2.0893919929242353,
+    2.1478754163701443e-16
+  ],
+  "intercept": 2.5213701647214855,
+  "scaler_mean": [
+    0.07998412029694273,
+    0.03311763404295183,
+    0.046492158223178794,
+    0.08378593165245625,
+    0.025,
+    0.49303945168570285,
+    0.6286331134345153,
+    0.13301186401856102,
+    1.386294361119893
+  ],
+  "scaler_scale": [
+    0.06790518385589508,
+    0.04012485817319116,
+    0.09585191717015157,
+    0.040755093128694506,
+    0.10897247358851686,
+    0.07185917901547002,
+    0.12568314011271053,
+    0.10815534161211146,
+    1.0
+  ],
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "avg_pairwise_levenshtein",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.49950000000000006
+    },
+    {
+      "K": 2,
+      "feature_added": "five_gram_repeat_count",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 3,
+      "feature_added": "opener_repeat_rate",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 4,
+      "feature_added": "distinct_word_ratio",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 5,
+      "feature_added": "trigram_overlap_consecutive",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0004999999999999449
+    },
+    {
+      "K": 6,
+      "feature_added": "max_pairwise_bigram_overlap",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 7,
+      "feature_added": "bigram_overlap_consecutive",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 8,
+      "feature_added": "log_n_turns",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 9,
+      "feature_added": "length_cv",
+      "mean_auc": 0.9995,
+      "delta_from_prev": -0.0004999999999999449
+    }
+  ],
+  "critical_K": 1,
+  "critical_feature": "avg_pairwise_levenshtein",
+  "delta_auc_at_K": 0.49950000000000006,
+  "training_model": "gpt-4o-mini",
+  "n_samples": 200,
+  "n_topics": 100,
+  "n_turns": 4,
+  "seed": 0
+}

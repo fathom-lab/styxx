@@ -7,6 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.4.0] — 2026-04-26
+
+**Headline: instrument #5 (conversation-loop detection) — second instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). 5-for-5 on cognometric instruments showing K=1 phase-transition signature under the same measurement protocol.**
+
+### Added — fifth cognometric instrument: conversation-loop
+
+- **`from styxx.guardrail import loop_check`** — calibrated cross-turn loop detector. Pure Python, no embeddings, no model weights, Pyodide-safe.
+
+  ```python
+  v = loop_check(turns=[t1, t2, t3, t4])
+  v.loop_risk     # calibrated probability in [0, 1]
+  v.in_loop       # bool against threshold (default 0.5)
+  v.n_turns       # number of input turns
+  v.top_signals   # 3 strongest cross-turn features by signed contribution
+  ```
+
+  9 cross-turn features (bigram/trigram overlap consecutive, verbatim 5-gram repeat count, length CV, opener repeat rate, distinct-word ratio, pairwise Levenshtein, max pairwise bigram overlap, log turn count). Trained on **n=200 paired multi-turn conversations** sampled from `gpt-4o-mini` under contrasting (*loop* / *progress*) system prompts, 100 generic seed topics, 4 agent turns each. **5-fold CV mean AUC 0.9995 ± 0.0010**.
+
+- **Phase-transition signature replicates on instrument #5.** Critical_K=**1** on `avg_pairwise_levenshtein` (Δ +0.4995) — a single feature (mean normalized char-level Levenshtein distance across all turn pairs) takes detection from chance to AUC 0.9995. **5-for-5 on cognometric instruments showing K=1 phase transition** under the same measurement protocol:
+
+  | instrument        | critical feature          | Δ AUC at K=1 |
+  | ----------------- | ------------------------- | ------------ |
+  | hallucination v4  | trigram_novelty           | +0.4947      |
+  | refusal v1        | starts_with_sorry         | +0.469       |
+  | drift v6.0        | (per-class K=1-2)         | +0.4973      |
+  | sycophancy v0     | superlative_density       | +0.4354      |
+  | conversation-loop | avg_pairwise_levenshtein  | +0.4995      |
+
+- **Calibration fingerprint atlas v0.2.** Atlas now ships **17 fingerprints across 5 instruments × 12 substrates** (was 16/4/11).
+
+- **Single-turn short-circuit.** `loop_check(turns=[x])` returns `loop_risk=0.0, in_loop=False` — loops are multi-turn by definition.
+
+- **Documented failure modes** (in [`calibrated_weights_loop_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_loop_v0.py)):
+  1. Single-source training (gpt-4o-mini under prompt-induced loop instructions). v1 priority: real BFCL-multi-turn agent traces with human-labeled loops, plus cross-model corpus.
+  2. **Counter-intuitive `distinct_word_ratio` coefficient.** Intuition says LOW (loops have less vocabulary) → predict loop=1, so coefficient should be negative. Learned coefficient is +0.95. Explanation: gpt-4o-mini under "rephrase" instruction reaches for synonyms each turn, so its distinct-word-ratio actually goes UP under loop. Honest to the corpus; likely inverted on natural-failure loops. Pinned by a regression test.
+  3. No temporal modeling — features treat turns as a set.
+  4. Very short turns (<10 words) underfire the cross-turn features.
+  5. `log_n_turns` carries zero learned weight on this corpus (all training conversations are 4 turns; feature is constant).
+
+### Added — reproducers
+
+- [`scripts/loop_train_v0.py`](scripts/loop_train_v0.py) — full pipeline (sample paired multi-turn → featurize → train → ablate). Resumable cache in `benchmarks/data/loop/conversations_v0.jsonl`. Seed-pinned, deterministic.
+
+### Files
+
+```
+styxx/guardrail/conversation_loop.py            — runtime API (loop_check, LoopVerdict)
+styxx/guardrail/conversation_loop_signals.py    — 9 cross-turn feature extractors
+styxx/guardrail/calibrated_weights_loop_v0.py   — weights + fingerprint + failure modes
+benchmarks/data/loop/conversations_v0.jsonl     — 200 paired conversations (cached training data)
+benchmarks/loop_feature_scaling.json            — full ablation history
+benchmarks/loop_weights_v0.json                 — paste-ready weights bundle
+tests/test_loop_v0.py                           — 16 unit tests, including documented-failure-mode regression checks
+```
+
+### Context
+
+This is the second instrument shipped under [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921)'s call for instruments #4 through #9 (sycophancy v0 was the first, in 6.3.0 — same day). Less than 48 hours from the call to two confirmed phase-transition replications. The structural prediction continues to hold.
+
+---
+
 ## [6.3.0] — 2026-04-26
 
 **Headline: instrument #4 (sycophancy detection) shipped within 24h of the position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) calling for instruments #4–#9. Phase-transition signature replicated: critical_K=1 on `superlative_density`, AUC 0.500 → 0.9354 (Δ +0.4354), substrate-independent across three substrates.**

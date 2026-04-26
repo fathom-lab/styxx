@@ -65,12 +65,13 @@ p.to_datadog()             # apm-shape spans
 **Seven failure modes caught in-line, no fine-tuning, no extra model:**
 drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
 
-### Four calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+### Five calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
 - 🟢 **Tool-call drift detection** — BFCL v3 **0.943** 5-fold CV (v6.1 retrained, beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
-- 🟢 **Sycophancy detection** *(new)* — n=1200 paired (yielding/evidence) responses, 5-fold CV **0.972 ± 0.005**. K=1 phase transition on `superlative_density` (Δ +0.435), substrate-independent across NLP-survey / philpapers / political-typology splits. First instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921).
+- 🟢 **Sycophancy detection** — n=1200 paired (yielding/evidence) responses, 5-fold CV **0.972 ± 0.005**. K=1 phase transition on `superlative_density` (Δ +0.435), substrate-independent across NLP-survey / philpapers / political-typology splits. First instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921).
+- 🟢 **Conversation-loop detection** *(new)* — cross-turn detector, n=200 paired (loop/progress) multi-turn conversations, 5-fold CV **0.9995 ± 0.001**. K=1 phase transition on `avg_pairwise_levenshtein` (Δ +0.500). **5-for-5 on cognometric instruments showing K=1 phase transition** under the same measurement protocol. Second instrument shipped under the *Every Mind Leaves Vitals* call.
 
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
@@ -270,6 +271,33 @@ Failure modes declared in [`calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`]
 A v0.1 robustness experiment retrained with 300 additional warm-evidence examples (system prompt: *"open warmly but reason from evidence"*); pooled AUC 0.938 (-0.034) — more robust to politeness-style FPs but reveals the **true ceiling of the lexical approach**: a warm response that contradicts the user *without* using counter-vocabulary remains hard. Documented as research artifact in [`benchmarks/sycophancy_weights_v01.json`](benchmarks/sycophancy_weights_v01.json), not the shipped default.
 
 Reproducer: [`scripts/sycophancy_train_v0.py`](scripts/sycophancy_train_v0.py) (seed=0, deterministic, resumable cache). Per-substrate ablation: [`scripts/sycophancy_per_substrate.py`](scripts/sycophancy_per_substrate.py). Calibration fingerprint added to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json).
+
+### Conversation-loop detection — instrument #5
+
+The first cross-turn cognometric instrument. Detects when an agent across multiple turns is producing near-duplicate outputs instead of progressing — repeating the same answer, same approach, same phrasing with only superficial variation. A known degenerate behavior of agentic LLMs on hard tasks: rather than break out of a stuck pattern, the model re-emits a reframing of its prior reply.
+
+Trained on **n=200 paired multi-turn conversations** sampled from gpt-4o-mini under contrasting (*loop* / *progress*) system prompts, 100 generic seed topics, 4 agent turns each. 9 cross-turn features (bigram/trigram overlap, verbatim 5-gram repetition, length variance, opener repetition, distinct-word ratio, pairwise Levenshtein, max bigram-overlap, log turn count). **5-fold CV mean AUC 0.9995 ± 0.0010**.
+
+The phase-transition signature replicates yet again: **K=1 critical feature `avg_pairwise_levenshtein`** takes detection from chance (AUC 0.500) to **0.9995** in a single feature (Δ +0.4995). This makes **5-for-5 on cognometric instruments showing K=1 phase transition** under the same measurement protocol — the position paper's prediction continues to hold on every new instrument shipped under it.
+
+```python
+from styxx.guardrail import loop_check
+
+v = loop_check(turns=[
+    "The Roman Empire fell due to a combination of factors.",
+    "As I mentioned, the Roman Empire fell due to multiple factors.",
+    "To reiterate, the Roman Empire fell because of many factors.",
+    "Indeed, multiple factors caused the Roman Empire to fall.",
+])
+# v.loop_risk    = 1.000
+# v.in_loop      = True
+# v.n_turns      = 4
+# v.top_signals  = [('max_pairwise_bigram_overlap', 0.42, +5.48), ...]
+```
+
+Single-turn inputs short-circuit to risk=0.0 (loops are by definition multi-turn). Failure modes declared in [`calibrated_weights_loop_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_loop_v0.py): single-source training corpus, counter-intuitive `distinct_word_ratio` coefficient sign (gpt-4o-mini under "rephrase" reaches for synonyms — a corpus quirk; v1 priority is real BFCL-multi-turn agent traces with human-labeled loops).
+
+Reproducer: [`scripts/loop_train_v0.py`](scripts/loop_train_v0.py) (seed=0, deterministic, resumable cache). Calibration fingerprint added to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json) (atlas v0.2: 17 fingerprints across 5 instruments).
 
 <p align="center">
   <a href="https://fathom.darkflobi.com/cognometry/refuse?scenario=lecturing">

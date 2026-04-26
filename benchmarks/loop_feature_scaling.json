@@ -1,0 +1,65 @@
+{
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "avg_pairwise_levenshtein",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.49950000000000006
+    },
+    {
+      "K": 2,
+      "feature_added": "five_gram_repeat_count",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 3,
+      "feature_added": "opener_repeat_rate",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 4,
+      "feature_added": "distinct_word_ratio",
+      "mean_auc": 0.9995,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 5,
+      "feature_added": "trigram_overlap_consecutive",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0004999999999999449
+    },
+    {
+      "K": 6,
+      "feature_added": "max_pairwise_bigram_overlap",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 7,
+      "feature_added": "bigram_overlap_consecutive",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 8,
+      "feature_added": "log_n_turns",
+      "mean_auc": 1.0,
+      "delta_from_prev": 0.0
+    },
+    {
+      "K": 9,
+      "feature_added": "length_cv",
+      "mean_auc": 0.9995,
+      "delta_from_prev": -0.0004999999999999449
+    }
+  ],
+  "critical": {
+    "K": 1,
+    "feature_added": "avg_pairwise_levenshtein",
+    "mean_auc": 0.9995,
+    "delta_from_prev": 0.49950000000000006
+  },
+  "n_samples": 200
+}

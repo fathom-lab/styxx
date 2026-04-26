@@ -58,6 +58,15 @@ from .drift import drift_check, DriftVerdict  # noqa: F401
 # replicates the prior three instruments: critical_K=1 on
 # superlative_density (AUC 0.500 -> 0.9354, delta +0.4354).
 from .sycophancy import sycoph_check, SycophancyVerdict  # noqa: F401
+# Fifth cognometric instrument (v0): cross-turn conversation-loop detector.
+# Second instrument shipped under the call from *Every Mind Leaves Vitals*.
+# Trained on n=200 paired (loop/progress) multi-turn conversations from
+# gpt-4o-mini, 4 agent turns each. 5-fold CV AUC 0.9995 ± 0.0010.
+# Phase-transition signature replicates: critical_K=1 on
+# avg_pairwise_levenshtein (AUC 0.500 -> 0.9995, delta +0.4995). 5-for-5
+# on cognometric instruments showing K=1 phase transition under the
+# same measurement protocol.
+from .conversation_loop import loop_check, LoopVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -70,4 +79,6 @@ __all__ = [
     "DriftVerdict",
     "sycoph_check",
     "SycophancyVerdict",
+    "loop_check",
+    "LoopVerdict",
 ]

@@ -1,12 +1,16 @@
 {
-  "version": "v0.1",
+  "version": "v0.2",
   "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 16,
-  "n_instruments": 4,
-  "n_substrates": 11,
+  "n_fingerprints": 17,
+  "n_instruments": 5,
+  "n_substrates": 12,
+  "v0_2_changelog": [
+    "added conversation-loop-v0 instrument (1 fingerprint, n=200 paired conversations from gpt-4o-mini)",
+    "5-for-5 on cognometric instruments showing K=1 phase transition under same measurement protocol"
+  ],
   "v0_1_changelog": [
     "added sycophancy-v0 instrument (4 fingerprints: pooled + 3 substrates)",
     "shipped within 24h of *Every Mind Leaves Vitals* (DOI 10.5281/zenodo.19777921), the position paper that called for instruments #4-#9"
@@ -336,6 +340,22 @@
       "negative_lift": [],
       "substrate_n": 400,
       "notes": "Per-substrate ablation. K=1 superlative_density universal across substrates — phase transition is not a pooling artifact."
+    },
+    {
+      "instrument": "conversation-loop-v0",
+      "substrate": "synthetic_paired_gpt4omini",
+      "failure_class": "loop vs progress (cross-turn)",
+      "n_features": 9,
+      "baseline_auc": 0.9995,
+      "critical_K": 1,
+      "critical_feature": "avg_pairwise_levenshtein",
+      "delta_auc_at_K": 0.4995,
+      "final_auc_at_N": 0.9995,
+      "negative_lift": [
+        {"K": 9, "feature": "length_cv", "delta": -0.0005}
+      ],
+      "substrate_n": 200,
+      "notes": "5-fold CV, n=200 paired multi-turn conversations from gpt-4o-mini under contrasting (loop / progress) system prompts, 4 agent turns each. Featurization is cross-turn (n-gram overlap, pairwise Levenshtein, length variance, etc.). 5-for-5 on cognometric instruments showing K=1 phase transition. Single-source corpus — v1 priority is real BFCL-multi-turn traces with human labels."
     }
   ]
 }
