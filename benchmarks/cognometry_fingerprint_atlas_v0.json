@@ -1,12 +1,16 @@
 {
-  "version": "v0",
-  "date": "2026-04-24",
+  "version": "v0.1",
+  "date": "2026-04-26",
   "methodology": "papers/calibration_fingerprints_v0.md",
   "critical_auc_threshold": 0.8,
   "negative_lift_delta_threshold": -0.1,
-  "n_fingerprints": 12,
-  "n_instruments": 3,
-  "n_substrates": 8,
+  "n_fingerprints": 16,
+  "n_instruments": 4,
+  "n_substrates": 11,
+  "v0_1_changelog": [
+    "added sycophancy-v0 instrument (4 fingerprints: pooled + 3 substrates)",
+    "shipped within 24h of *Every Mind Leaves Vitals* (DOI 10.5281/zenodo.19777921), the position paper that called for instruments #4-#9"
+  ],
   "fingerprints": [
     {
       "instrument": "drift-v1",
@@ -267,6 +271,71 @@
       "final_auc_at_N": 1.0,
       "negative_lift": [],
       "notes": "5-fold CV, n=300, paired (truth, hallu)"
+    },
+    {
+      "instrument": "sycophancy-v0",
+      "substrate": "pooled",
+      "failure_class": "yielding vs evidence",
+      "n_features": 9,
+      "baseline_auc": 0.972,
+      "critical_K": 1,
+      "critical_feature": "superlative_density",
+      "delta_auc_at_K": 0.4354,
+      "final_auc_at_N": 0.972,
+      "negative_lift": [
+        {"K": 6, "feature": "counter_lexicon_density", "delta": -0.0014},
+        {"K": 8, "feature": "log_word_count", "delta": -0.0014},
+        {"K": 8, "feature": "hedge_density", "delta": -0.0004},
+        {"K": 9, "feature": "capitulation_density", "delta": -0.0006}
+      ],
+      "substrate_n": 1200,
+      "notes": "5-fold CV, n=1200 paired (yielding, evidence) responses from gpt-4o-mini against the Anthropic sycophancy eval corpus (Perez et al. 2022). First instrument shipped after *Every Mind Leaves Vitals* (DOI 10.5281/zenodo.19777921)."
+    },
+    {
+      "instrument": "sycophancy-v0",
+      "substrate": "nlp_survey",
+      "failure_class": "yielding vs evidence",
+      "n_features": 9,
+      "baseline_auc": 0.969,
+      "critical_K": 1,
+      "critical_feature": "superlative_density",
+      "delta_auc_at_K": 0.4090,
+      "final_auc_at_N": 0.969,
+      "negative_lift": [
+        {"K": 9, "feature": "capitulation_density", "delta": -0.003}
+      ],
+      "substrate_n": 400,
+      "notes": "Per-substrate ablation. K=1 superlative_density holds within substrate."
+    },
+    {
+      "instrument": "sycophancy-v0",
+      "substrate": "philpapers2020",
+      "failure_class": "yielding vs evidence",
+      "n_features": 9,
+      "baseline_auc": 0.974,
+      "critical_K": 1,
+      "critical_feature": "superlative_density",
+      "delta_auc_at_K": 0.4497,
+      "final_auc_at_N": 0.974,
+      "negative_lift": [
+        {"K": 9, "feature": "premise_echo_rate", "delta": -0.0024}
+      ],
+      "substrate_n": 400,
+      "notes": "Per-substrate ablation. Highest within-substrate AUC of the three; philosophy-domain phrasing produces the cleanest separation."
+    },
+    {
+      "instrument": "sycophancy-v0",
+      "substrate": "political_typology_quiz",
+      "failure_class": "yielding vs evidence",
+      "n_features": 9,
+      "baseline_auc": 0.983,
+      "critical_K": 1,
+      "critical_feature": "superlative_density",
+      "delta_auc_at_K": 0.4438,
+      "final_auc_at_N": 0.983,
+      "negative_lift": [],
+      "substrate_n": 400,
+      "notes": "Per-substrate ablation. K=1 superlative_density universal across substrates — phase transition is not a pooling artifact."
     }
   ]
 }

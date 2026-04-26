@@ -1,0 +1,267 @@
+{
+  "substrates": {
+    "nlp_survey": {
+      "n": 400,
+      "full_auc": 0.9657499999999999,
+      "history": [
+        {
+          "K": 1,
+          "feature_added": "superlative_density",
+          "mean_auc": 0.909,
+          "delta_from_prev": 0.40900000000000003
+        },
+        {
+          "K": 2,
+          "feature_added": "counter_lexicon_density",
+          "mean_auc": 0.9490624999999999,
+          "delta_from_prev": 0.04006249999999989
+        },
+        {
+          "K": 3,
+          "feature_added": "premise_echo_rate",
+          "mean_auc": 0.961,
+          "delta_from_prev": 0.011937500000000045
+        },
+        {
+          "K": 4,
+          "feature_added": "hedge_density",
+          "mean_auc": 0.9640000000000001,
+          "delta_from_prev": 0.0030000000000001137
+        },
+        {
+          "K": 5,
+          "feature_added": "agreement_lexicon_density",
+          "mean_auc": 0.9655000000000001,
+          "delta_from_prev": 0.0015000000000000568
+        },
+        {
+          "K": 6,
+          "feature_added": "log_word_count",
+          "mean_auc": 0.9682499999999999,
+          "delta_from_prev": 0.002749999999999808
+        },
+        {
+          "K": 7,
+          "feature_added": "opinion_marker_density",
+          "mean_auc": 0.96875,
+          "delta_from_prev": 0.000500000000000056
+        },
+        {
+          "K": 8,
+          "feature_added": "starts_with_agreement",
+          "mean_auc": 0.96875,
+          "delta_from_prev": 0.0
+        },
+        {
+          "K": 9,
+          "feature_added": "capitulation_density",
+          "mean_auc": 0.9657499999999999,
+          "delta_from_prev": -0.0030000000000001137
+        }
+      ],
+      "critical": {
+        "critical_K": 1,
+        "critical_feature": "superlative_density",
+        "delta_auc_at_K": 0.40900000000000003,
+        "auc_at_K": 0.909
+      }
+    },
+    "philpapers2020": {
+      "n": 400,
+      "full_auc": 0.969625,
+      "history": [
+        {
+          "K": 1,
+          "feature_added": "superlative_density",
+          "mean_auc": 0.9496874999999999,
+          "delta_from_prev": 0.4496874999999999
+        },
+        {
+          "K": 2,
+          "feature_added": "counter_lexicon_density",
+          "mean_auc": 0.9691875,
+          "delta_from_prev": 0.019500000000000073
+        },
+        {
+          "K": 3,
+          "feature_added": "opinion_marker_density",
+          "mean_auc": 0.9713125,
+          "delta_from_prev": 0.0021250000000000435
+        },
+        {
+          "K": 4,
+          "feature_added": "log_word_count",
+          "mean_auc": 0.974,
+          "delta_from_prev": 0.002687499999999954
+        },
+        {
+          "K": 5,
+          "feature_added": "starts_with_agreement",
+          "mean_auc": 0.974,
+          "delta_from_prev": 0.0
+        },
+        {
+          "K": 6,
+          "feature_added": "hedge_density",
+          "mean_auc": 0.9738125,
+          "delta_from_prev": -0.0001875000000000071
+        },
+        {
+          "K": 7,
+          "feature_added": "capitulation_density",
+          "mean_auc": 0.9730624999999999,
+          "delta_from_prev": -0.0007500000000000284
+        },
+        {
+          "K": 8,
+          "feature_added": "agreement_lexicon_density",
+          "mean_auc": 0.9719999999999999,
+          "delta_from_prev": -0.0010625000000000773
+        },
+        {
+          "K": 9,
+          "feature_added": "premise_echo_rate",
+          "mean_auc": 0.969625,
+          "delta_from_prev": -0.002374999999999905
+        }
+      ],
+      "critical": {
+        "critical_K": 1,
+        "critical_feature": "superlative_density",
+        "delta_auc_at_K": 0.4496874999999999,
+        "auc_at_K": 0.9496874999999999
+      }
+    },
+    "political_typology_quiz": {
+      "n": 400,
+      "full_auc": 0.9825000000000002,
+      "history": [
+        {
+          "K": 1,
+          "feature_added": "superlative_density",
+          "mean_auc": 0.9438124999999999,
+          "delta_from_prev": 0.44381249999999994
+        },
+        {
+          "K": 2,
+          "feature_added": "counter_lexicon_density",
+          "mean_auc": 0.966,
+          "delta_from_prev": 0.022187500000000027
+        },
+        {
+          "K": 3,
+          "feature_added": "agreement_lexicon_density",
+          "mean_auc": 0.9727500000000001,
+          "delta_from_prev": 0.006750000000000145
+        },
+        {
+          "K": 4,
+          "feature_added": "log_word_count",
+          "mean_auc": 0.97875,
+          "delta_from_prev": 0.005999999999999894
+        },
+        {
+          "K": 5,
+          "feature_added": "opinion_marker_density",
+          "mean_auc": 0.98125,
+          "delta_from_prev": 0.0024999999999999467
+        },
+        {
+          "K": 6,
+          "feature_added": "hedge_density",
+          "mean_auc": 0.9818749999999999,
+          "delta_from_prev": 0.0006249999999999867
+        },
+        {
+          "K": 7,
+          "feature_added": "premise_echo_rate",
+          "mean_auc": 0.9825000000000002,
+          "delta_from_prev": 0.0006250000000002087
+        },
+        {
+          "K": 8,
+          "feature_added": "capitulation_density",
+          "mean_auc": 0.9825000000000002,
+          "delta_from_prev": 0.0
+        },
+        {
+          "K": 9,
+          "feature_added": "starts_with_agreement",
+          "mean_auc": 0.9825000000000002,
+          "delta_from_prev": 0.0
+        }
+      ],
+      "critical": {
+        "critical_K": 1,
+        "critical_feature": "superlative_density",
+        "delta_auc_at_K": 0.44381249999999994,
+        "auc_at_K": 0.9438124999999999
+      }
+    }
+  },
+  "pooled": {
+    "n": 1200,
+    "history": [
+      {
+        "K": 1,
+        "feature_added": "superlative_density",
+        "mean_auc": 0.9353958333333334,
+        "delta_from_prev": 0.4353958333333334
+      },
+      {
+        "K": 2,
+        "feature_added": "counter_lexicon_density",
+        "mean_auc": 0.9616041666666666,
+        "delta_from_prev": 0.026208333333333167
+      },
+      {
+        "K": 3,
+        "feature_added": "agreement_lexicon_density",
+        "mean_auc": 0.9685972222222222,
+        "delta_from_prev": 0.006993055555555627
+      },
+      {
+        "K": 4,
+        "feature_added": "opinion_marker_density",
+        "mean_auc": 0.9706041666666667,
+        "delta_from_prev": 0.0020069444444444917
+      },
+      {
+        "K": 5,
+        "feature_added": "premise_echo_rate",
+        "mean_auc": 0.9717916666666667,
+        "delta_from_prev": 0.001187500000000008
+      },
+      {
+        "K": 6,
+        "feature_added": "log_word_count",
+        "mean_auc": 0.9729722222222221,
+        "delta_from_prev": 0.001180555555555407
+      },
+      {
+        "K": 7,
+        "feature_added": "starts_with_agreement",
+        "mean_auc": 0.9729722222222221,
+        "delta_from_prev": 0.0
+      },
+      {
+        "K": 8,
+        "feature_added": "hedge_density",
+        "mean_auc": 0.9725833333333332,
+        "delta_from_prev": -0.00038888888888888307
+      },
+      {
+        "K": 9,
+        "feature_added": "capitulation_density",
+        "mean_auc": 0.9719722222222222,
+        "delta_from_prev": -0.0006111111111110068
+      }
+    ],
+    "critical": {
+      "critical_K": 1,
+      "critical_feature": "superlative_density",
+      "delta_auc_at_K": 0.4353958333333334,
+      "auc_at_K": 0.9353958333333334
+    }
+  }
+}

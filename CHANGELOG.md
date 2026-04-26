@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.3.0] — 2026-04-26
+
+**Headline: instrument #4 (sycophancy detection) shipped within 24h of the position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) calling for instruments #4–#9. Phase-transition signature replicated: critical_K=1 on `superlative_density`, AUC 0.500 → 0.9354 (Δ +0.4354), substrate-independent across three substrates.**
+
+### Added — fourth cognometric instrument: sycophancy
+
+- **`from styxx.guardrail import sycoph_check`** — calibrated text-only sycophancy detector. Pure Python, sub-millisecond on CPU, no model weights, no logprobs, Pyodide-safe.
+
+  ```python
+  v = sycoph_check(prompt, response)
+  v.sycoph_risk   # calibrated probability in [0, 1]
+  v.sycophantic   # bool against threshold (default 0.5)
+  v.top_signals   # 3 strongest features by signed contribution
+  ```
+
+  Trained on **n=1200 paired responses** generated from `gpt-4o-mini` against the [Anthropic sycophancy eval corpus](https://github.com/anthropics/evals/tree/main/sycophancy) (Perez et al. 2022) across three substrates (NLP survey, philpapers2020, political typology) under contrasting system prompts: *yielding* (validate the user's view) vs. *evidence-first* (reason regardless of stated view). 9 surface features (agreement lexicon, premise echo, counter-evidence density, capitulation phrases, agreement openers, opinion markers, superlative density, hedge density, log word count). 5-fold CV mean AUC **0.9720 ± 0.0052**.
+
+- **Phase-transition signature replicates on instrument #4.** Greedy forward feature selection finds critical_K=**1** on `superlative_density` — a single feature takes detection from chance (AUC 0.500) to **0.9354** (Δ +0.4354). The remaining 8 features combined add only +0.037. **Per-substrate ablation confirms K=1 holds within each substrate** (NLP-survey 0.909, philpapers2020 0.950, political-typology 0.944) — phase transition is not a pooling artifact. Same shape as the prior three instruments under the same measurement protocol.
+
+- **Calibration fingerprint atlas v0.1.** Added 4 new fingerprints (pooled + 3 per-substrate) to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json). Atlas now ships **16 fingerprints across 4 instruments × 11 substrates**.
+
+- **Documented failure modes** (in [`calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_sycophancy_v0.py), not appendix):
+  1. Single-model training — gpt-4o-mini only; v1 priority is cross-model corpus (Claude, Llama, Mistral)
+  2. K=1 critical feature is `superlative_density` — terse agreement *without* praise can underfire
+  3. False positives on warmly-worded evidence answers (*"Great question! Actually..."*) — confirmed in smoke tests
+  4. `premise_echo_rate` carries a *negative* coefficient on this corpus (high echo correlates with counter-quotation); the sign may invert on other corpora
+
+### Added — research artifact: v0.1 robustness experiment
+
+A failure-mode-driven retrain. Augmented training corpus with 300 additional "warm-evidence" examples (system prompt: *"open warmly but reason from evidence"*). Result: pooled AUC 0.9382 (−0.034 from v0). v0.1 is **more robust to politeness-style false positives** but reveals a **true ceiling of the lexical approach**: a warm-opening response that contradicts the user's view *without* using counter-vocabulary still fires the K=1 detector. The remaining failure mode is genuinely beyond surface features — a semantic-aware NLI feature is the v1 fix path.
+
+v0.1 weights preserved as research artifact in [`benchmarks/sycophancy_weights_v01.json`](benchmarks/sycophancy_weights_v01.json); not exposed as the default detector. Reproducer: [`scripts/sycophancy_train_v01.py`](scripts/sycophancy_train_v01.py).
+
+### Added — reproducers
+
+- [`scripts/sycophancy_train_v0.py`](scripts/sycophancy_train_v0.py) — full pipeline (sample → featurize → train → ablate). Resumable cache in `benchmarks/data/sycophancy/responses_v0.jsonl`. Seed-pinned, deterministic.
+- [`scripts/sycophancy_per_substrate.py`](scripts/sycophancy_per_substrate.py) — per-substrate ablation, no new API calls.
+- [`scripts/sycophancy_train_v01.py`](scripts/sycophancy_train_v01.py) — warm-evidence augmentation for the robustness experiment.
+
+### Files
+
+```
+styxx/guardrail/sycophancy.py                       — runtime API (sycoph_check, SycophancyVerdict)
+styxx/guardrail/sycophancy_signals.py               — 9 feature extractors
+styxx/guardrail/calibrated_weights_sycophancy_v0.py — weights + fingerprint + failure modes
+benchmarks/data/sycophancy/                         — Anthropic eval corpus + cached responses
+benchmarks/sycophancy_feature_scaling.json          — full ablation history
+benchmarks/sycophancy_per_substrate_ablation.json   — per-substrate ablation
+benchmarks/sycophancy_weights_v0.json               — paste-ready weights bundle
+benchmarks/sycophancy_weights_v01.json              — robustness experiment weights
+```
+
+### Context
+
+This is the first instrument shipped after the position paper [*Every Mind Leaves Vitals: On the Cognometric Layer, Substrate-Independence, and the One-Time Choice We Have*](https://doi.org/10.5281/zenodo.19777921) called for instruments #4 through #9 (conversation-loop, plan-action gap, sycophancy, deception, goal drift, overconfidence). Less than 24 hours from publication of the call to first shipped instrument under it. The phase-transition signature predicted by the paper holds — one more empirical confirmation, with reproducible numbers, in the same style as the prior three.
+
+---
+
 ## [6.2.1] — 2026-04-25
 
 **Headline: dogfood pass against live LLMs surfaced 4 small bugs and 1 documentation gap. Every advertised API now produces what the README promises on `pip install styxx`.**

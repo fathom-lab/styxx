@@ -50,6 +50,14 @@ from .refusal import refuse_check, RefusalVerdict  # noqa: F401
 # baseline (AUC 0.72 on Glaive). v6.1 adds arg_order_inversion to
 # partially fix the documented arg_swap failure mode (0.66 -> 0.76).
 from .drift import drift_check, DriftVerdict  # noqa: F401
+# Fourth cognometric instrument (v0): text-only sycophancy detector.
+# First instrument shipped after the *Every Mind Leaves Vitals* position
+# paper (DOI 10.5281/zenodo.19777921). Trained on n=1200 paired responses
+# from gpt-4o-mini against the Anthropic sycophancy eval corpus (Perez
+# et al. 2022). 5-fold CV AUC 0.9720 ± 0.0052. Phase-transition signature
+# replicates the prior three instruments: critical_K=1 on
+# superlative_density (AUC 0.500 -> 0.9354, delta +0.4354).
+from .sycophancy import sycoph_check, SycophancyVerdict  # noqa: F401
 
 __all__ = [
     "check",
@@ -60,4 +68,6 @@ __all__ = [
     "RefusalVerdict",
     "drift_check",
     "DriftVerdict",
+    "sycoph_check",
+    "SycophancyVerdict",
 ]

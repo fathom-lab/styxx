@@ -69,3 +69,20 @@ release/v3.9.1-bundle/
 telescope/*.json
 telescope/timeseries.jsonl
 packages/styxx-scope-*.zip
+
+# ── External corpora (fetchable, not redistributed) ──────
+# Anthropic sycophancy eval corpus (Perez et al. 2022) —
+# fetch via scripts/sycophancy_train_v0.py
+benchmarks/data/sycophancy/sycophancy_on_*.jsonl
+
+# ── Browser-session / X-posting debug artifacts ──────────
+# Personal-workflow tools coupled to local secrets paths
+release/cdp-*.png
+release/login-debug-*.png
+release/human-[1-9]-*.png
+release/bot-chrome-current.png
+release/x-article-composer-state.png
+scripts/post_emlv_*.py
+scripts/post_via_cdp.py
+scripts/refresh_x_cookies_and_post.py
+scripts/x_post_fathomlab.py

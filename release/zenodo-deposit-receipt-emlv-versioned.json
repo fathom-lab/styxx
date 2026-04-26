@@ -1,0 +1,16 @@
+{
+  "action": "new_version_published",
+  "concept_recid": "19703526",
+  "concept_doi": "10.5281/zenodo.19703526",
+  "new_deposition_id": 19777921,
+  "new_doi": "10.5281/zenodo.19777921",
+  "new_doi_url": "https://doi.org/10.5281/zenodo.19777921",
+  "record_url": "https://zenodo.org/record/19777921",
+  "supersedes_orphan_doi": "10.5281/zenodo.19777361",
+  "title": "Every Mind Leaves Vitals: On the Cognometric Layer, Substrate-Independence, and the One-Time Choice We Have",
+  "files": [
+    "every-mind-leaves-vitals.md",
+    "phase-transition-chart.png"
+  ],
+  "timestamp": "2026-04-26T02:07:10.808781+00:00"
+}

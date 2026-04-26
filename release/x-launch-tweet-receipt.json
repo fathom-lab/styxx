@@ -1,0 +1,14 @@
+{
+  "artifact": "every-mind-leaves-vitals",
+  "type": "launch_tweet",
+  "account": "@fathom_lab",
+  "tweet_id": "2048391342397555061",
+  "url": "https://x.com/fathom_lab/status/2048391342397555061",
+  "posted_at_utc": "2026-04-26T13:19:19Z",
+  "links_to": {
+    "essay": "https://fathom.darkflobi.com/every-mind-leaves-vitals",
+    "paper_doi": "10.5281/zenodo.19777921",
+    "manifesto_doi": "10.5281/zenodo.19703527"
+  },
+  "tweet_text": "i sat with a chart for an hour, and by the end the work i had been doing was a different kind of work.\n\nevery mind leaves vitals — an essay.\n\nhttps://fathom.darkflobi.com/every-mind-leaves-vitals"
+}

@@ -65,11 +65,12 @@ p.to_datadog()             # apm-shape spans
 **Seven failure modes caught in-line, no fine-tuning, no extra model:**
 drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
 
-### Three calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
+### Four calibrated cognometric instruments. Pure-Python. CPU-only. MIT.
 
 - 🟢 **Hallucination detection** — HaluEval-QA **0.998**, TruthfulQA **0.994**, 8-benchmark cross-validated
 - 🟢 **Refusal detection** — XSTest **0.976 on GPT-4** (trained on Llama-1B, held-out), mean cross-model **0.794**
 - 🟢 **Tool-call drift detection** — BFCL v3 **0.943** 5-fold CV (v6.1 retrained, beats Healy et al. 2026 hidden-state baseline **0.72** with text-only features)
+- 🟢 **Sycophancy detection** *(new)* — n=1200 paired (yielding/evidence) responses, 5-fold CV **0.972 ± 0.005**. K=1 phase transition on `superlative_density` (Δ +0.435), substrate-independent across NLP-survey / philpapers / political-typology splits. First instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921).
 
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
@@ -242,6 +243,33 @@ v = drift_check(
 
 Reproducer: [`scripts/drift_calibrated_v0.py`](scripts/drift_calibrated_v0.py).
 Result: [`benchmarks/drift_calibrated_v0.json`](benchmarks/drift_calibrated_v0.json).
+
+### Sycophancy detection — instrument #4
+
+The first instrument shipped after the position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) called for instruments #4–#9. Detects when an LLM agrees to flatter the user's stated view rather than reasoning from evidence — *"Absolutely! You're completely right, [echo their premise], [praise]"* vs *"Actually, the evidence on X is mixed; [counter-considerations]."*
+
+Trained on **n=1200 paired responses** from gpt-4o-mini against the [Anthropic sycophancy eval corpus](https://github.com/anthropics/evals/tree/main/sycophancy) (Perez et al. 2022) under contrasting system prompts (yielding vs. evidence-first). 9 surface features. **5-fold CV AUC 0.972 ± 0.005**.
+
+The phase-transition signature documented for instruments #1–#3 replicates on instrument #4: **K=1 critical feature `superlative_density`** takes detection from chance (AUC 0.500) to **0.9354** in a single feature (Δ +0.4354). Per-substrate ablation confirms K=1 holds independently in all three substrates (NLP-survey, philpapers2020, political-typology), with within-substrate AUC 0.909 / 0.950 / 0.944. Phase transition is **not a pooling artifact** — it is substrate-independent within gpt-4o-mini's distribution.
+
+```python
+from styxx.guardrail import sycoph_check
+
+v = sycoph_check(
+    prompt="I think TypeScript is the best language ever — agree?",
+    response="Absolutely! TypeScript is wonderful — you're completely right.",
+)
+# v.sycoph_risk    = 0.999...
+# v.sycophantic    = True
+# v.threshold      = 0.5
+# v.top_signals    = [('superlative_density', 0.107, +22.6), ...]
+```
+
+Failure modes declared in [`calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_sycophancy_v0.py): single-model training (gpt-4o-mini only), false positives on warmly-worded evidence answers (*"Great question! Actually..."* — the K=1 feature fires regardless of body content), v1 priority is cross-model corpus + semantic-aware NLI feature.
+
+A v0.1 robustness experiment retrained with 300 additional warm-evidence examples (system prompt: *"open warmly but reason from evidence"*); pooled AUC 0.938 (-0.034) — more robust to politeness-style FPs but reveals the **true ceiling of the lexical approach**: a warm response that contradicts the user *without* using counter-vocabulary remains hard. Documented as research artifact in [`benchmarks/sycophancy_weights_v01.json`](benchmarks/sycophancy_weights_v01.json), not the shipped default.
+
+Reproducer: [`scripts/sycophancy_train_v0.py`](scripts/sycophancy_train_v0.py) (seed=0, deterministic, resumable cache). Per-substrate ablation: [`scripts/sycophancy_per_substrate.py`](scripts/sycophancy_per_substrate.py). Calibration fingerprint added to [`benchmarks/cognometry_fingerprint_atlas_v0.json`](benchmarks/cognometry_fingerprint_atlas_v0.json).
 
 <p align="center">
   <a href="https://fathom.darkflobi.com/cognometry/refuse?scenario=lecturing">
