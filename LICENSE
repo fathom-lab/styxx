@@ -19,23 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-─────────────────────────────────────────────────────────────────────────────
-
-  NOTE ON SCOPE:
-
-  This MIT license covers the styxx code. It does NOT grant any license
-  under the following US provisional patent filings held by Fathom
-  Intelligence / Alexander Rodabaugh:
-
-    · US Provisional 64/020,489  (reasoning depth measurement)
-    · US Provisional 64/021,113  (alignment auditing + expression-computation
-                                   dissociation)
-    · US Provisional 64/026,964  (three-axis spectrometry + cognitive governor)
-
-  See PATENTS.md for the full patent notice.
-
-  The Fathom Cognitive Atlas v0.3 data artifact shipped with styxx
-  (styxx/centroids/atlas_v0.3.json) is licensed under CC-BY-4.0 and
-  is derived from the public atlas v0.3 release (Zenodo concept DOI
-  10.5281/zenodo.19502715).
