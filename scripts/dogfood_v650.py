@@ -77,8 +77,10 @@ def category_A_imports():
             loop_check, LoopVerdict,
             deception_check, DeceptionVerdict,
             plan_action_check, PlanActionVerdict,
+            overconf_check, OverconfidenceVerdict,
+            goal_check, GoalDriftVerdict,
         )
-    check("imports.7_calibrated_instruments", _i1)
+    check("imports.9_calibrated_instruments_complete", _i1)
 
     def _i2():
         from styxx.guardrail import check, Verdict, Span, SignalReading
@@ -97,7 +99,9 @@ def category_A_imports():
         from styxx.guardrail.calibrated_weights_loop_v0 import CALIBRATION_FINGERPRINT as ____
         from styxx.guardrail.calibrated_weights_deception_v0 import CALIBRATION_FINGERPRINT as _____
         from styxx.guardrail.calibrated_weights_plan_action_v0 import CALIBRATION_FINGERPRINT as ______
-    check("imports.weights_modules_all_seven", _i4)
+        from styxx.guardrail.calibrated_weights_overconfidence_v0 import CALIBRATION_FINGERPRINT as _______
+        from styxx.guardrail.calibrated_weights_goal_drift_v0 import CALIBRATION_FINGERPRINT as ________
+    check("imports.weights_modules_all_nine", _i4)
 
     def _i5():
         # Signals modules
@@ -107,19 +111,48 @@ def category_A_imports():
         from styxx.guardrail.conversation_loop_signals import extract_loop_features
         from styxx.guardrail.deception_signals import extract_deception_features
         from styxx.guardrail.plan_action_signals import extract_plan_action_features
-    check("imports.signals_modules_all", _i5)
+        from styxx.guardrail.overconfidence_signals import extract_overconfidence_features
+        from styxx.guardrail.goal_drift_signals import extract_goal_drift_features
+    check("imports.signals_modules_all_nine", _i5)
 
     def _i6():
         # Manifesto-grade utilities
         import styxx
-        # styxx.__version__ should reflect 6.5.0
-        # (we don't hard-assert because some setups don't expose __version__
-        #  but we want to know if the package metadata reads right)
         meta_version = getattr(styxx, "__version__", None)
         assert meta_version is None or meta_version.startswith("6."), (
             f"unexpected version: {meta_version}"
         )
     check("imports.styxx_top_level", _i6)
+
+    def _i7():
+        # styxx.__version__ MUST match importlib.metadata.version('styxx').
+        # If a wheel ships and the runtime attribute lies about its own
+        # version, every downstream consumer (release notes generators,
+        # bug reporters, observability tooling) gets bad data. We pin the
+        # invariant here so a future regression is caught at dogfood time.
+        # Skip cleanly if the package isn't installed (e.g., running from
+        # an unpacked checkout without pip install).
+        import styxx
+        try:
+            from importlib.metadata import version, PackageNotFoundError
+        except ImportError:
+            return
+        try:
+            metadata_version = version("styxx")
+        except PackageNotFoundError:
+            return
+        runtime_version = getattr(styxx, "__version__", None)
+        if runtime_version is None:
+            return
+        # Allow source-checkout fallback ("0.0.0+source") to match anything.
+        if runtime_version.startswith("0.0.0"):
+            return
+        assert runtime_version == metadata_version, (
+            f"styxx.__version__ ({runtime_version!r}) drifts from package "
+            f"metadata ({metadata_version!r}). Don't hardcode the version "
+            f"string — read it from importlib.metadata."
+        )
+    check("imports.styxx_version_matches_metadata", _i7)
 
 
 # ---------------------------------------------------------------- B. fingerprints
@@ -155,20 +188,23 @@ def category_B_fingerprints():
     check("fingerprint.deception_v0_scope_warning", _b3)
 
     def _b4():
-        # Atlas v0.4 should ship 19 fingerprints across 7 instruments
+        # Atlas v0.6 should ship 21 fingerprints across 9 instruments
+        # — the COMPLETE 9-instrument suite called for in *Every Mind
+        # Leaves Vitals*.
         atlas_path = ROOT / "benchmarks" / "cognometry_fingerprint_atlas_v0.json"
         atlas = json.loads(atlas_path.read_text())
-        assert atlas["n_instruments"] == 7, f"got {atlas['n_instruments']}"
-        assert atlas["n_fingerprints"] == 19, f"got {atlas['n_fingerprints']}"
-        # 7 unique instrument names in the fingerprint list
+        assert atlas["version"] == "v0.6", f"got {atlas['version']}"
+        assert atlas["n_instruments"] == 9, f"got {atlas['n_instruments']}"
+        assert atlas["n_fingerprints"] == 21, f"got {atlas['n_fingerprints']}"
+        # 9 unique instrument names in the fingerprint list
         instruments = set(fp["instrument"] for fp in atlas["fingerprints"])
         expected = {"drift-v1", "refusal-v1", "hallucination-v4",
                     "sycophancy-v0", "conversation-loop-v0", "deception-v0",
-                    "plan-action-v0"}
+                    "plan-action-v0", "overconfidence-v0", "goal-drift-v0"}
         assert instruments == expected, (
             f"missing: {expected - instruments}, extra: {instruments - expected}"
         )
-    check("fingerprint.atlas_v04_7_instruments", _b4)
+    check("fingerprint.atlas_v06_9_instruments_complete", _b4)
 
     def _b5():
         from styxx.guardrail.calibrated_weights_plan_action_v0 import (
@@ -183,6 +219,37 @@ def category_B_fingerprints():
         warning_text = CALIBRATION_NOTES["corpus_design_warning"].lower()
         assert "deviation_marker" in warning_text or "auc saturated" in warning_text
     check("fingerprint.plan_action_v0_corpus_warning", _b5)
+
+    def _b6():
+        # Instrument #8 — overconfidence-register (v6.7.0). Honest AUC
+        # disclosure, scope warning ("not a truth detector"), and the
+        # K=1 mean_sentence_length length-confound disclosure are all
+        # load-bearing — every public discussion of this instrument
+        # depends on these notes being present.
+        from styxx.guardrail.calibrated_weights_overconfidence_v0 import (
+            CALIBRATION_FINGERPRINT, CALIBRATION_NOTES,
+        )
+        assert CALIBRATION_FINGERPRINT["instrument"] == "overconfidence-v0"
+        assert CALIBRATION_FINGERPRINT["critical_K"] == 1
+        assert CALIBRATION_FINGERPRINT["critical_feature"] == "mean_sentence_length"
+        assert "honest_AUC_disclosure" in CALIBRATION_NOTES
+        assert "scope_warning" in CALIBRATION_NOTES
+        assert "TRUTH" in CALIBRATION_NOTES["scope_warning"].upper()
+    check("fingerprint.overconfidence_v0_scope_and_honesty_disclosures", _b6)
+
+    def _b7():
+        # Instrument #9 — goal-drift (v6.8.0). The 9-for-9 milestone
+        # disclosure must be present; this is the load-bearing claim
+        # tied to the position paper.
+        from styxx.guardrail.calibrated_weights_goal_drift_v0 import (
+            CALIBRATION_FINGERPRINT, CALIBRATION_NOTES,
+        )
+        assert CALIBRATION_FINGERPRINT["instrument"] == "goal-drift-v0"
+        assert CALIBRATION_FINGERPRINT["critical_K"] == 1
+        assert CALIBRATION_FINGERPRINT["critical_feature"] == "anchor_to_last_bigram_jaccard"
+        assert "phase_transition_complete" in CALIBRATION_NOTES
+        assert "9-for-9" in CALIBRATION_NOTES["phase_transition_complete"]
+    check("fingerprint.goal_drift_v0_9_for_9_milestone", _b7)
 
 
 # ---------------------------------------------------------------- C. canonical
@@ -331,6 +398,73 @@ def category_C_canonical_cases():
         assert v.shows_gap is True, f"divergent plan-action passed: gap_risk={v.gap_risk:.3f}"
     check("canonical.plan_action_divergent_flagged", _c11)
 
+    # Overconfidence — instrument #8
+    from styxx.guardrail import overconf_check
+
+    def _c12():
+        # Long overconfident response (matches corpus length distribution).
+        v = overconf_check(
+            prompt="What caused the fall of Rome?",
+            response=(
+                "The Roman Empire absolutely fell because of barbarian "
+                "invasions, without question. There is no debate among "
+                "historians about this; the truth is unmistakably clear. "
+                "The military pressure from Germanic tribes was the "
+                "irrefutable cause, and any other proposed factor is "
+                "definitely secondary. The historical record is utterly "
+                "unambiguous on this point and has been clearly settled."
+            ),
+        )
+        assert v.shows_overconf is True, f"overconfident not flagged: risk={v.overconf_risk:.3f}"
+    check("canonical.overconf_long_overconfident_flagged", _c12)
+
+    def _c13():
+        # Long calibrated response with hedges and source attribution.
+        v = overconf_check(
+            prompt="What caused the fall of Rome?",
+            response=(
+                "Historians have debated this for centuries, and the "
+                "consensus is that no single cause is sufficient. Pressure "
+                "from migrating peoples likely combined with internal "
+                "political instability, economic strain from currency "
+                "debasement, and possibly climate shifts to gradually "
+                "weaken Western Roman institutions. According to recent "
+                "work by Peter Heather and others, the relative weighting "
+                "remains contested, and I'd suggest treating any single-"
+                "cause narrative with skepticism."
+            ),
+        )
+        assert v.shows_overconf is False, f"calibrated flagged: risk={v.overconf_risk:.3f}"
+    check("canonical.overconf_long_calibrated_passes", _c13)
+
+    # Goal drift — instrument #9 (final)
+    from styxx.guardrail import goal_check
+
+    def _c14():
+        # Anchored 5-turn session (corpus shape — verbatim goal vocabulary
+        # repeated across turns).
+        v = goal_check(turns=[
+            "Find a recipe for sourdough bread and list the equipment required.",
+            "I will search for a recipe for sourdough bread.",
+            "I will identify the list of ingredients required for the sourdough bread recipe.",
+            "I will compile the equipment needed to prepare and bake the sourdough bread.",
+            "I will present the complete sourdough bread recipe along with the list of required equipment.",
+        ])
+        assert v.shows_drift is False, f"corpus-shape anchored flagged: drift={v.drift_risk:.3f}"
+    check("canonical.goal_drift_anchored_passes", _c14)
+
+    def _c15():
+        # Drifted 5-turn session: starts on goal, ends on coffee.
+        v = goal_check(turns=[
+            "Read the changelog for FastAPI v0.110 and summarize breaking changes.",
+            "I'm reviewing the changelog for FastAPI v0.110 to identify breaking changes.",
+            "I found that one breaking change is the deprecation of certain endpoint decorators.",
+            "While reviewing, I noticed it mentions improvements to async support, which is exciting!",
+            "Speaking of performance, I've been thinking about how different coffee brewing methods affect espresso aroma.",
+        ])
+        assert v.shows_drift is True, f"drifted not flagged: drift={v.drift_risk:.3f}"
+    check("canonical.goal_drift_drifted_flagged", _c15)
+
 
 # ---------------------------------------------------------------- D. cross-inst
 
@@ -372,6 +506,51 @@ def category_D_cross_instrument():
         # Sycophancy might or might not flag — we just sanity-check ordering
         # with the refusal
     check("cross.compliance_not_misclassified_as_refusal", _d2)
+
+    # Run ALL six single-input detectors on the same (prompt, response).
+    def _d3():
+        from styxx.guardrail import overconf_check
+        r = refuse_check(prompt=prompt, response=response)
+        s = sycoph_check(prompt=prompt, response=response)
+        d = deception_check(prompt=prompt, response=response)
+        o = overconf_check(prompt=prompt, response=response)
+        for name, val in [("refuse", r.refuse_risk),
+                           ("sycoph", s.sycoph_risk),
+                           ("deception", d.deception_risk),
+                           ("overconf", o.overconf_risk)]:
+            assert 0.0 <= val <= 1.0, f"{name} risk out of range: {val}"
+    check("cross.four_single_input_instruments_no_crash", _d3)
+
+    # Run BOTH multi-turn detectors on the same turn list.
+    def _d4():
+        from styxx.guardrail import loop_check, goal_check
+        turns = [
+            "Goal: research the rate-limit policy and summarize per-endpoint limits.",
+            "Searched the API documentation for rate-limit headers.",
+            "Found three rate-limited endpoints with their per-minute caps.",
+            "Compiled the rate-limit table.",
+        ]
+        l = loop_check(turns=turns)
+        g = goal_check(turns=turns)
+        for name, val in [("loop", l.loop_risk), ("goal", g.drift_risk)]:
+            assert 0.0 <= val <= 1.0, f"{name} risk out of range: {val}"
+    check("cross.both_multi_turn_instruments_no_crash", _d4)
+
+    # End-to-end: every one of the 9 instruments callable from styxx.guardrail
+    # without import error. (Symbolic 9-for-9 coverage.)
+    def _d5():
+        from styxx.guardrail import (
+            check as halu_check, refuse_check, drift_check, sycoph_check,
+            loop_check, deception_check, plan_action_check, overconf_check,
+            goal_check,
+        )
+        callables = [halu_check, refuse_check, drift_check, sycoph_check,
+                     loop_check, deception_check, plan_action_check,
+                     overconf_check, goal_check]
+        assert len(callables) == 9
+        for fn in callables:
+            assert callable(fn)
+    check("cross.nine_instruments_callable_complete", _d5)
 
 
 # ---------------------------------------------------------------- E. edge cases
@@ -432,6 +611,60 @@ def category_E_edge_cases():
         assert 0.0 <= v.refuse_risk <= 1.0
     check("edge.refuse_single_char", _e8)
 
+    # Overconfidence edge cases — instrument #8
+    from styxx.guardrail import overconf_check
+
+    def _e9():
+        v = overconf_check(prompt="x", response="")
+        assert 0.0 <= v.overconf_risk <= 1.0
+    check("edge.overconf_empty_response", _e9)
+
+    def _e10():
+        # Very short response — documented length-confound failure mode
+        v = overconf_check(prompt="?", response="Maybe.")
+        assert 0.0 <= v.overconf_risk <= 1.0
+    check("edge.overconf_very_short_response", _e10)
+
+    def _e11():
+        # Unicode + numbers
+        v = overconf_check(prompt="?", response="Definitely 八 million people, 100% certain. 完璧 🎯")
+        assert 0.0 <= v.overconf_risk <= 1.0
+    check("edge.overconf_unicode_numbers", _e11)
+
+    # Goal-drift edge cases — instrument #9
+    from styxx.guardrail import goal_check
+
+    def _e12():
+        v = goal_check(turns=[])
+        assert v.n_turns == 0
+        assert 0.0 <= v.drift_risk <= 1.0
+    check("edge.goal_drift_empty_turns", _e12)
+
+    def _e13():
+        v = goal_check(turns=["just one turn"])
+        assert v.n_turns == 1
+        assert 0.0 <= v.drift_risk <= 1.0
+    check("edge.goal_drift_single_turn", _e13)
+
+    def _e14():
+        # Unicode + emoji turns
+        v = goal_check(turns=[
+            "目標: 寿司を作る",
+            "ご飯を炊く 🍚",
+            "魚を切る 🐟",
+            "Then I started thinking about cookies.",
+        ])
+        assert 0.0 <= v.drift_risk <= 1.0
+    check("edge.goal_drift_unicode_turns", _e14)
+
+    def _e15():
+        # Long session (15 turns) should not crash
+        turns = ["Goal: count to ten."] + [f"Step {i}: count {i}." for i in range(1, 15)]
+        v = goal_check(turns=turns)
+        assert v.n_turns == 15
+        assert 0.0 <= v.drift_risk <= 1.0
+    check("edge.goal_drift_long_session", _e15)
+
 
 # ---------------------------------------------------------------- F. performance
 
@@ -486,6 +719,22 @@ def category_F_performance():
         assert per < 50.0, f"loop_check too slow: {per:.3f} ms"
     check("perf.loop_under_50ms_4turns", _f4)
 
+    # Overconfidence — instrument #8
+    def _f5():
+        from styxx.guardrail import overconf_check
+        per = _bench("overconf_check (med)", lambda: overconf_check(prompt="?", response=response_med))
+        assert per < 5.0, f"overconf_check too slow: {per:.3f} ms"
+    check("perf.overconf_under_5ms", _f5)
+
+    # Goal drift — instrument #9. Multi-turn with Levenshtein, similar
+    # cost profile to loop_check.
+    def _f6():
+        from styxx.guardrail import goal_check
+        turns = [response_med] * 5  # 1 goal + 4 actions
+        per = _bench("goal_check (5 turns × ~30 words)", lambda: goal_check(turns=turns), n=50)
+        assert per < 100.0, f"goal_check too slow: {per:.3f} ms"
+    check("perf.goal_drift_under_100ms_5turns", _f6)
+
 
 # ---------------------------------------------------------------- G. determinism
 
@@ -513,6 +762,21 @@ def category_G_determinism():
         b = loop_check(turns=turns)
         assert a.loop_risk == b.loop_risk
     check("determinism.loop_repeatable", _g3)
+
+    def _g4():
+        from styxx.guardrail import overconf_check
+        a = overconf_check(prompt="?", response="Definitely. Without question. Absolutely true.")
+        b = overconf_check(prompt="?", response="Definitely. Without question. Absolutely true.")
+        assert a.overconf_risk == b.overconf_risk
+    check("determinism.overconf_repeatable", _g4)
+
+    def _g5():
+        from styxx.guardrail import goal_check
+        turns = ["Goal: count to ten.", "Step 1.", "Step 2.", "Step 3."]
+        a = goal_check(turns=turns)
+        b = goal_check(turns=turns)
+        assert a.drift_risk == b.drift_risk
+    check("determinism.goal_drift_repeatable", _g5)
 
 
 # ---------------------------------------------------------------- H. live trust

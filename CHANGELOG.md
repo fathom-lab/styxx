@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.8.1] — 2026-04-26
+
+**Patch: fixes a long-standing version-attribute drift bug surfaced by post-9-of-9 dogfood, and adds the dogfood invariant that would have caught it.**
+
+### Fixed
+
+- **`styxx.__version__`** now reads from package metadata (`importlib.metadata.version('styxx')`) instead of a hardcoded literal, so it can never drift from the published wheel. The hardcoded value had been frozen at `"6.2.1"` across six minor releases (v6.2.0 → v6.8.0), causing every PyPI install to misreport its own version. Falls back to `"0.0.0+source"` for source-checkout environments without an installed package metadata. Caught by `scripts/dogfood_v650.py` running against a fresh isolated-venv install of v6.8.0.
+
+### Added
+
+- **Dogfood invariant `imports.styxx_version_matches_metadata`** in `scripts/dogfood_v650.py` — asserts that `styxx.__version__` equals `importlib.metadata.version('styxx')` whenever the package is installed. Prevents this class of drift from recurring silently.
+
+- **Dogfood coverage for instruments #8 + #9.** Extended `scripts/dogfood_v650.py` to exercise `overconf_check` and `goal_check` on imports, fingerprints, canonical paired cases, cross-instrument compatibility, edge cases (empty, unicode, very-short, long-session), performance, and determinism. Total dogfood checks: **65/65 green** against a fresh PyPI install. Atlas assertion bumped from v0.4 (7 instruments) to v0.6 (9 instruments).
+
+---
+
 ## [6.8.0] — 2026-04-26
 
 **Headline: instrument #9 (goal-drift detection) — sixth and FINAL instrument shipped under the call from [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921). The 9-instrument suite the position paper called for is now COMPLETE. 9-for-9 on cognometric instruments showing K=1 phase-transition signature, each with a different critical feature.**

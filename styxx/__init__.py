@@ -38,7 +38,20 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-__version__ = "6.2.1"
+# Read version from installed package metadata so the attribute can
+# never drift from the published wheel. Falls back to a literal for
+# environments where the package isn't installed (e.g. running directly
+# from a checkout without `pip install -e .`).
+try:
+    from importlib.metadata import version as _pkg_version, PackageNotFoundError as _PkgNotFound
+    try:
+        __version__ = _pkg_version("styxx")
+    except _PkgNotFound:
+        __version__ = "0.0.0+source"
+    del _pkg_version, _PkgNotFound
+except ImportError:  # pragma: no cover — Python < 3.8
+    __version__ = "0.0.0+source"
+
 __author__ = "flobi"
 __license__ = "MIT"
 __url__ = "https://fathom.darkflobi.com/styxx"
