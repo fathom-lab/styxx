@@ -1,0 +1,64 @@
+# Citation metadata for styxx — see https://citation-file-format.github.io/
+# GitHub renders a "Cite this repository" widget on the repo home page when
+# this file is present and valid.
+cff-version: 1.2.0
+message: "If you use styxx in research, please cite both the software and the position paper that motivates it."
+title: "styxx: a drop-in cognitive-vitals monitor and cognometric guardrail for LLM agents"
+authors:
+  - family-names: Rodabaugh
+    given-names: Alexander
+    affiliation: Fathom Intelligence
+type: software
+license: MIT
+repository-code: "https://github.com/fathom-lab/styxx"
+url: "https://fathom.darkflobi.com/cognometry"
+keywords:
+  - cognometry
+  - cognitive-fingerprint
+  - hallucination-detection
+  - refusal-detection
+  - tool-call-drift
+  - sycophancy-detection
+  - conversation-loop-detection
+  - deception-detection
+  - plan-action-gap
+  - overconfidence-register
+  - goal-drift
+  - llm-observability
+  - ai-safety
+
+# Concept DOI — always resolves to the latest software release
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19758619"
+    description: "styxx software (concept DOI — latest version)"
+
+# Preferred citation: the position paper that called for the
+# 9 instruments shipped in this repo.
+preferred-citation:
+  type: article
+  title: "Every Mind Leaves Vitals: A Position on Cognometric Observability"
+  authors:
+    - family-names: Rodabaugh
+      given-names: Alexander
+      affiliation: Fathom Intelligence
+  year: 2026
+  doi: "10.5281/zenodo.19777921"
+  url: "https://doi.org/10.5281/zenodo.19777921"
+
+# Related work
+references:
+  - type: article
+    title: "Cognometric Fingerprint Specification v1.0"
+    authors:
+      - family-names: Rodabaugh
+        given-names: Alexander
+    year: 2026
+    doi: "10.5281/zenodo.19746215"
+  - type: article
+    title: "Cognometric Fingerprint Specification v1.0 — Robustness Supplement"
+    authors:
+      - family-names: Rodabaugh
+        given-names: Alexander
+    year: 2026
+    doi: "10.5281/zenodo.19761194"

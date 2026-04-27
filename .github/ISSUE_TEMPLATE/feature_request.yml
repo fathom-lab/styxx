@@ -1,0 +1,40 @@
+name: 💡 Feature request / new instrument idea
+description: Suggest an instrument, an integration, or a v1 priority for an existing v0.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We track v1 priorities for every shipped instrument inside its
+        `calibrated_weights_*_v0.py` `CALIBRATION_NOTES.v1_roadmap` field.
+        If your suggestion fits there, naming the instrument helps us thread it.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: The cognitive failure mode you'd like styxx to catch, or the integration that would unblock you.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Sketch a proposal
+      description: |
+        Rough shape of the API or detector you have in mind. For new
+        instruments, name a candidate K=1 critical feature you'd expect
+        to dominate (we love being told we're wrong).
+      placeholder: |
+        New instrument: code-hallucination-v0
+        Inputs: (prompt, response_with_code)
+        Candidate K=1 feature: nonexistent_import_density
+        Hypothesis: imports that don't resolve carry most of the signal.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Prior art, related papers, datasets you'd want to calibrate on, etc.

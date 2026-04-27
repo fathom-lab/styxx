@@ -1,0 +1,87 @@
+name: 🐛 Bug report
+description: Something broke, gave wrong output, or didn't behave as the docs claimed.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing — bug reports are how we get better.
+        Run `pip show styxx | grep Version` and `python --version` and paste those below.
+
+  - type: input
+    id: styxx_version
+    attributes:
+      label: styxx version
+      placeholder: "6.8.2"
+    validations:
+      required: true
+
+  - type: input
+    id: python_version
+    attributes:
+      label: Python version
+      placeholder: "3.12.10"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface?
+      multiple: false
+      options:
+        - "@styxx.profile / hook_openai (runtime profiler)"
+        - "@trust decorator"
+        - "guardrail.check (hallucination)"
+        - "guardrail.refuse_check"
+        - "guardrail.drift_check (tool-call)"
+        - "guardrail.sycoph_check"
+        - "guardrail.loop_check (conversation-loop)"
+        - "guardrail.deception_check"
+        - "guardrail.plan_action_check"
+        - "guardrail.overconf_check"
+        - "guardrail.goal_check (goal-drift)"
+        - "CLI / cognometry leaderboard"
+        - "Other / not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproducer
+      description: |
+        Smallest amount of code that shows the bug. If the issue depends on
+        a specific input, paste the input verbatim — these are calibrated
+        text-only detectors, so the input is the bug report.
+      render: python
+      placeholder: |
+        from styxx.guardrail import overconf_check
+        v = overconf_check(prompt="...", response="...")
+        print(v.overconf_risk)  # got 0.992, expected ≤ 0.5
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: Paste the full traceback if there was one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: |
+        Anything else worth flagging — known failure modes (`CALIBRATION_NOTES`
+        in the relevant `calibrated_weights_*` module), workarounds you tried,
+        whether this used to work in a previous version.

@@ -626,7 +626,8 @@ Each is documented separately. None are required for the core vitals workflow ab
 | **concept** (always-latest) | [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174) | The stable identifier — resolves to whatever the most recent version is. |
 | **v22** (2026-04-25) | [`10.5281/zenodo.19761194`](https://doi.org/10.5281/zenodo.19761194) | Spec v1.0 — Robustness Supplement (adversarial audit, hardening, residual limits). |
 | **v20** (2026-04-24) | [`10.5281/zenodo.19746215`](https://doi.org/10.5281/zenodo.19746215) | Cognometric Fingerprint Specification v1.0 — the foundational reference. |
-| **software** (separate concept) | [`10.5281/zenodo.19758619`](https://doi.org/10.5281/zenodo.19758619) | styxx v6.2.0 — reference Python implementation source archive. |
+| **software** (separate concept) | [`10.5281/zenodo.19758619`](https://doi.org/10.5281/zenodo.19758619) | styxx — reference Python implementation source archive (concept DOI, always resolves to latest). |
+| **paper (current)** | [`10.5281/zenodo.19777921`](https://doi.org/10.5281/zenodo.19777921) | ***Every Mind Leaves Vitals*** — the position paper that called for the 9 calibrated cognometric instruments shipped here. |
 | **v19 / styxx v3.9.1** | [`10.5281/zenodo.19702475`](https://doi.org/10.5281/zenodo.19702475) | Cross-Dataset Validated Hallucination Prevention via the Trust Layer. |
 | **paper (v4)** | [`10.5281/zenodo.19703527`](https://doi.org/10.5281/zenodo.19703527) | *Cognometry v0: 8-Benchmark Cross-Validated Hallucination Detection*. |
 | **paper (v3)** | [`10.5281/zenodo.19504993`](https://doi.org/10.5281/zenodo.19504993) | Logprob-trajectory methodology. |
@@ -639,9 +640,13 @@ Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — se
 
 ## Support & community
 
-- **Questions / bug reports:** [GitHub Issues](https://github.com/fathom-lab/styxx/issues)
+- **Questions / bug reports:** [GitHub Issues](https://github.com/fathom-lab/styxx/issues) (issue templates wired — no blank box)
 - **Discussions:** [GitHub Discussions](https://github.com/fathom-lab/styxx/discussions)
 - **Security:** please report privately via the email in [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Star history
+
+[![Star History Chart](https://api.star-history.com/svg?repos=fathom-lab/styxx&type=Date)](https://star-history.com/#fathom-lab/styxx&Date)
 
 ## License
 

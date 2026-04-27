@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation & live playgrounds
+    url: https://fathom.darkflobi.com/cognometry
+    about: Try every instrument in your browser — no install required.
+  - name: 📄 Position paper — Every Mind Leaves Vitals
+    url: https://doi.org/10.5281/zenodo.19777921
+    about: The paper that called for the 9 instruments shipped here. Read this if you want to know why a feature exists.
+  - name: 📐 Cognometric Fingerprint Specification v1.0
+    url: https://doi.org/10.5281/zenodo.19746215
+    about: The measurement-procedure spec underlying the calibration_fingerprints atlas.
+  - name: 🧠 Already-documented failure mode?
+    url: https://github.com/fathom-lab/styxx/blob/main/styxx/guardrail
+    about: Each `calibrated_weights_*_v0.py` exposes `CALIBRATION_NOTES` with the failure modes we know about. Worth checking before filing.
