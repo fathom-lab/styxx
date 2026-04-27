@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [6.8.2] — 2026-04-27
+
+**Patch: fixes a silent-bypass bug in `@styxx.profile` and `hook_openai()` where callers using the most common import pattern got 0 cognitive steps captured. Surfaced by post-9-of-9 dogfood.**
+
+### Fixed
+
+- **`hook_openai()` now rebinds already-imported `OpenAI` references.** Previously the hook only patched `openai.OpenAI` (the module attribute). Any caller that did `from openai import OpenAI` *before* the hook ran (the default pattern in nearly every Python project) held an unhooked reference in their own module namespace, and `OpenAI()` constructions through that reference silently bypassed the hook. The visible symptom: `@styxx.profile` reported `CognitiveProfile(steps=0)` on real LLM calls, e.g.:
+
+  ```python
+  from openai import OpenAI       # ← bound BEFORE @styxx.profile imports
+
+  @styxx.profile
+  def my_agent(task):
+      client = OpenAI()           # ← bypass: still the unhooked class
+      return client.chat.completions.create(...)
+
+  result, p = my_agent("hi")
+  print(p.steps)                  # → 0   (pre-6.8.2 bug)
+  print(p.steps)                  # → 1+  (6.8.2 fixed)
+  ```
+
+  The fix walks `sys.modules` at hook-install time and rebinds any module-level attribute that points at the original `openai.OpenAI` to the hooked replacement. `unhook_openai()` does the symmetric restore. Excludes `openai.*` and `styxx.*` namespaces so the hook machinery itself isn't corrupted.
+
+- **`unhook_openai()` no longer probes `getattr(attr, "_styxx_hooked")`.** The previous implementation walked `sys.modules` and used `getattr` to detect hooked references — but `getattr` triggers lazy-import machinery on third-party modules (notably `torch._classes`), which would raise `RuntimeError` mid-iteration and break unrelated tests in the same process. Replaced with strict identity comparison against a stored module-level reference.
+
+### Added
+
+- **Regression tests** in `tests/test_power_ups.py`:
+  - `test_hook_openai_rebinds_already_imported_references` — synthesizes the failing import pattern in a fresh module, asserts the rebind works, asserts unhook restores cleanly
+  - `test_hook_openai_does_not_touch_styxx_internals` — pins the exclusion filter so the sweep can never corrupt `styxx.adapters.*` references
+
+### Doc
+
+- Updated `@styxx.profile` docstring to remove the now-outdated "does NOT work" caveat for `from openai import OpenAI`. The three patterns that work are explicitly listed; remaining edge cases (clients constructed before styxx is imported, user-defined `openai.OpenAI` subclasses) are noted.
+
+---
+
 ## [6.8.1] — 2026-04-26
 
 **Patch: fixes a long-standing version-attribute drift bug surfaced by post-9-of-9 dogfood, and adds the dogfood invariant that would have caught it.**

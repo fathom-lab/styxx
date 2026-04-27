@@ -607,37 +607,41 @@ def profile(func_or_name=None, *, name=None, auto_hook: bool = True):
             styxx.hook_openai() is installed automatically so all
             ``openai.OpenAI()`` clients get Vitals attached.
 
-    Auto-hook caveat (important):
+    Auto-hook coverage:
 
-        The hook patches ``openai.OpenAI`` (the module attribute). It
-        only catches *new* OpenAI client instances constructed AFTER
-        the profile context begins, AND only when the user's code
-        accesses the class via a live module lookup. The two patterns
-        that work::
+        ``hook_openai()`` patches ``openai.OpenAI`` and walks
+        ``sys.modules`` to rebind any module-level ``OpenAI`` reference
+        that already imported the unhooked class. All three of these
+        patterns work::
 
-            # Pattern A — module-level import (catches the hook)
+            # Pattern A — module-level import
             import openai
             @styxx.profile
             def my_agent(task):
-                client = openai.OpenAI()        # patched at this point
-                return client.chat.completions.create(...).choices[0]...
+                client = openai.OpenAI()        # hooked
+                return client.chat.completions.create(...)
 
-            # Pattern B — use styxx.OpenAI directly (always wrapped)
+            # Pattern B — explicit styxx.OpenAI wrapper
             from styxx import OpenAI
             @styxx.profile
             def my_agent(task):
                 client = OpenAI()
-                return client.chat.completions.create(...).choices[0]...
+                return client.chat.completions.create(...)
 
-        The pattern that does NOT work::
-
-            from openai import OpenAI            # local binding to class
-            client = OpenAI()                    # constructed BEFORE profile
-
+            # Pattern C — `from openai import OpenAI` at module level
+            from openai import OpenAI            # bound BEFORE profile
             @styxx.profile
             def my_agent(task):
+                client = OpenAI()                # also hooked (sys.modules sweep)
                 return client.chat.completions.create(...)
-                # → 0 steps observed: client wasn't hooked
+
+        Edge cases that still bypass the hook:
+
+        - Clients constructed BEFORE styxx is imported and stored in
+          a non-module namespace (a function-local closure variable
+          captured before the profile decorator was even imported).
+        - Direct subclasses of ``openai.OpenAI`` defined in user code,
+          since the subclass holds its own reference to the original.
 
         For agent frameworks that construct their own LLM clients
         (LangChain, CrewAI, AutoGen), use ``styxx.observe(response)``

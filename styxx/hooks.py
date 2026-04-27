@@ -39,8 +39,12 @@ from __future__ import annotations
 from typing import Any, Optional
 
 
-# State: store the original openai.OpenAI so we can restore it.
+# State: store the original openai.OpenAI so we can restore it. We
+# also remember the hooked replacement so unhook can identify it by
+# identity (avoids a `getattr(attr, "_styxx_hooked")` probe that
+# triggers lazy-import machinery in third-party modules like torch).
 _ORIGINAL_OPENAI: Any = None
+_HOOKED_OPENAI: Any = None
 _HOOK_ACTIVE: bool = False
 
 
@@ -69,7 +73,7 @@ def hook_openai() -> bool:
         )
         print(r.vitals.summary)                   # it's there
     """
-    global _ORIGINAL_OPENAI, _HOOK_ACTIVE
+    global _ORIGINAL_OPENAI, _HOOKED_OPENAI, _HOOK_ACTIVE
 
     if _HOOK_ACTIVE:
         return False
@@ -99,9 +103,40 @@ def hook_openai() -> bool:
     _OpenAI_hooked.__name__ = "OpenAI"
     _OpenAI_hooked.__qualname__ = "OpenAI"
     _OpenAI_hooked._styxx_hooked = True  # type: ignore[attr-defined]
+    _HOOKED_OPENAI = _OpenAI_hooked
 
     # Replace the class in the openai module
     _openai_mod.OpenAI = _OpenAI_hooked  # type: ignore[assignment]
+
+    # Walk sys.modules and rebind any module-level reference to the
+    # original OpenAI class. This catches the common `from openai
+    # import OpenAI` pattern where a caller has already bound the
+    # unhooked class in their own namespace before hook_openai() ran.
+    # Without this rewrite, that caller's `OpenAI()` constructions
+    # silently bypass the hook and `@styxx.profile` reports steps=0.
+    import sys as _sys
+    for mod_name, mod in list(_sys.modules.items()):
+        # Skip the openai package itself (already patched), this hooks
+        # module (don't rewrite our own references), and anything that
+        # isn't a real module object.
+        if mod is None or mod_name == "openai" or mod_name.startswith("openai."):
+            continue
+        if mod_name == __name__ or mod_name.startswith("styxx."):
+            continue
+        try:
+            mod_dict = getattr(mod, "__dict__", None)
+        except Exception:
+            continue
+        if mod_dict is None:
+            continue
+        for attr_name, attr_val in list(mod_dict.items()):
+            if attr_val is _ORIGINAL_OPENAI:
+                try:
+                    mod_dict[attr_name] = _OpenAI_hooked
+                except Exception:
+                    # Read-only namespace (some builtin modules) — skip.
+                    pass
+
     _HOOK_ACTIVE = True
     return True
 
@@ -112,7 +147,7 @@ def unhook_openai() -> bool:
     Returns True if an active hook was removed, False if no hook was
     installed.
     """
-    global _ORIGINAL_OPENAI, _HOOK_ACTIVE
+    global _ORIGINAL_OPENAI, _HOOKED_OPENAI, _HOOK_ACTIVE
 
     if not _HOOK_ACTIVE:
         return False
@@ -123,11 +158,40 @@ def unhook_openai() -> bool:
         # openai is gone — nothing to restore
         _HOOK_ACTIVE = False
         _ORIGINAL_OPENAI = None
+        _HOOKED_OPENAI = None
         return True
 
     if _ORIGINAL_OPENAI is not None:
         _openai_mod.OpenAI = _ORIGINAL_OPENAI  # type: ignore[assignment]
+
+        # Mirror of the rewrite in hook_openai(): walk sys.modules and
+        # restore any reference to the hooked class back to the original.
+        # Identity comparison only — never `getattr(attr, "_styxx_hooked")`
+        # because that triggers lazy-import machinery on third-party
+        # modules (notably torch._classes) and raises mid-iteration.
+        import sys as _sys
+        hooked = _HOOKED_OPENAI
+        if hooked is not None:
+            for mod_name, mod in list(_sys.modules.items()):
+                if mod is None or mod_name == "openai" or mod_name.startswith("openai."):
+                    continue
+                if mod_name == __name__ or mod_name.startswith("styxx."):
+                    continue
+                try:
+                    mod_dict = getattr(mod, "__dict__", None)
+                except Exception:
+                    continue
+                if mod_dict is None:
+                    continue
+                for attr_name, attr_val in list(mod_dict.items()):
+                    if attr_val is hooked:
+                        try:
+                            mod_dict[attr_name] = _ORIGINAL_OPENAI
+                        except Exception:
+                            pass
+
     _ORIGINAL_OPENAI = None
+    _HOOKED_OPENAI = None
     _HOOK_ACTIVE = False
     return True
 

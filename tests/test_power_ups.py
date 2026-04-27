@@ -193,6 +193,82 @@ def test_hook_openai_replaces_class():
     assert openai.OpenAI is original
 
 
+def test_hook_openai_rebinds_already_imported_references():
+    """Regression: a caller that did `from openai import OpenAI` BEFORE
+    hook_openai() ran should still get the hooked class. Pre-6.8.2 the
+    hook only patched openai.OpenAI itself; any module that had already
+    imported the class held an unhooked reference and silently bypassed
+    the hook (manifesting as @styxx.profile reporting 0 steps on real
+    LLM calls). The fix walks sys.modules and rebinds the reference.
+    """
+    try:
+        import openai
+    except ImportError:
+        pytest.skip("openai SDK not installed")
+
+    import sys, types
+    styxx.unhook_openai()  # clean state
+
+    # Synthesize the failing pattern: a fresh module that does
+    # `from openai import OpenAI` BEFORE the hook is installed.
+    fake_mod = types.ModuleType("_styxx_test_caller")
+    fake_mod.OpenAI = openai.OpenAI  # equivalent to `from openai import OpenAI`
+    sys.modules["_styxx_test_caller"] = fake_mod
+    try:
+        original = openai.OpenAI
+        assert fake_mod.OpenAI is original
+
+        # Install the hook AFTER the local import binding exists.
+        styxx.hook_openai()
+        try:
+            # The previously-bound OpenAI in the caller's namespace
+            # must now also be the hooked version.
+            assert fake_mod.OpenAI is not original, (
+                "sys.modules sweep failed — already-imported OpenAI "
+                "reference still points at the unhooked class"
+            )
+            assert getattr(fake_mod.OpenAI, "_styxx_hooked", False) is True
+        finally:
+            styxx.unhook_openai()
+
+        # And after unhook, the caller's reference should be restored.
+        assert fake_mod.OpenAI is original, (
+            "unhook_openai() didn't restore the rebound reference"
+        )
+    finally:
+        sys.modules.pop("_styxx_test_caller", None)
+
+
+def test_hook_openai_does_not_touch_styxx_internals():
+    """The sys.modules sweep must NOT rewrite styxx's own internal
+    references (otherwise we corrupt the hook machinery itself)."""
+    try:
+        import openai
+    except ImportError:
+        pytest.skip("openai SDK not installed")
+
+    styxx.unhook_openai()  # clean state
+    # styxx.adapters.openai imports openai internally; its references
+    # must survive the sweep so the hook keeps working.
+    from styxx.adapters import openai as adapter_mod
+    saved = dict(adapter_mod.__dict__)
+    styxx.hook_openai()
+    try:
+        # No styxx-namespaced module should have had its OpenAI references
+        # rewritten — sanity check by looking at the module's attribute set.
+        for k, v in saved.items():
+            current = adapter_mod.__dict__.get(k)
+            # Only assert for the OpenAI-flavored attribute names that
+            # could have been rewritten by an over-aggressive sweep.
+            if k == "OpenAI" or k == "_OpenAI":
+                assert current is v, (
+                    f"styxx.adapters.openai.{k} was rewritten by the hook "
+                    f"sweep — it must be excluded"
+                )
+    finally:
+        styxx.unhook_openai()
+
+
 # ══════════════════════════════════════════════════════════════════
 # explain (P4)
 # ══════════════════════════════════════════════════════════════════
