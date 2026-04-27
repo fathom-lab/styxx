@@ -13,7 +13,7 @@
 
 ### Cognitive observability for LLM agents
 
-*py-spy for LLM reasoning. One decorator · seven fault kinds · per-step localization.*
+*Nine calibrated cognometric instruments · 9-for-9 on K=1 phase transition · pure Python · no LLM required.*
 *langsmith tells you the trace broke — styxx tells you why.*
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
@@ -22,14 +22,17 @@
 [![License](https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license&style=flat-square)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/fathom-lab/styxx?color=00d26a&label=stars&style=flat-square)](https://github.com/fathom-lab/styxx)
 [![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
-[![Software](https://img.shields.io/badge/software_v6.2.0-10.5281%2Fzenodo.19758619-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19758619)
+[![Vitals](https://img.shields.io/badge/every_mind_leaves_vitals-10.5281%2Fzenodo.19777921-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19777921)
 [![Robustness](https://img.shields.io/badge/robustness_v22-10.5281%2Fzenodo.19761194-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19761194)
 [![Concept](https://img.shields.io/badge/concept_DOI-always--latest-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
 # `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
 
-### v6.2.0 · `styxx.profile` — py-spy for LLM reasoning
+> **April 26, 2026 — the call closed 9 for 9.**
+> The position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) predicted that each cognometric instrument would show a K=1 phase-transition signature — one feature carrying most of the detection weight. We built nine instruments, each on a different cognitive failure mode. Every one of them peaked at K=1 with a *different* critical feature. The prediction held all the way. → [jump to the 9-for-9 table](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit) · [live playgrounds](https://fathom.darkflobi.com/cognometry)
+
+### `@styxx.profile` — py-spy for LLM reasoning
 
 ```python
 import styxx
@@ -62,8 +65,10 @@ p.to_langsmith()           # drop into client.create_run(...)
 p.to_datadog()             # apm-shape spans
 ```
 
-**Seven failure modes caught in-line, no fine-tuning, no extra model:**
+**Seven runtime fault categories the `@styxx.profile` decorator surfaces in-line, no fine-tuning, no extra model:**
 drift · confabulation · refusal · sycophant · phase_transition · low_trust · incoherence
+
+*(distinct from the **nine calibrated cognometric instruments** below — those are dedicated text-only detectors with published AUCs, not the runtime profiler's per-step categorization.)*
 
 ### Nine calibrated cognometric instruments — the *Every Mind Leaves Vitals* call complete. Pure-Python. CPU-only. MIT.
 
