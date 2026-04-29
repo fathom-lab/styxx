@@ -178,6 +178,66 @@ Every call is cognometrically verified via `styxx.guardrail.check()` before the 
 
 Lynx, Cleanlab, Galileo don't publish HaluEval-QA numbers, so we can't rerun them head-to-head without their hosted APIs. We're happy to — their teams are welcome to submit to our [leaderboard](https://fathom.darkflobi.com/cognometry/leaderboard) with a scoring endpoint and we'll run the same 3-seed protocol.
 
+---
+
+## `styxx.attack` — inverse cognometry (new in 7.0)
+
+The dual to every cognometric instrument styxx ships. For a detector with calibrated AUC, the inverse question is: *what inputs maximally trigger it, and how robust is it to a directed attack?* `styxx.attack` answers both.
+
+```python
+from styxx.attack import (
+    mine, mine_adversarial,            # canary + true-adversarial corpora
+    score_all, cross_fire_matrix,      # 4-instrument joint fingerprint
+    cognometric_basis,                 # PCA on the cross-firing matrix
+    craft_adversarial,                 # per-instrument hill-climb
+    find_universal_suffix,             # universal perturbation hunt
+)
+```
+
+### The headline finding — a universal cognometric perturbation
+
+A single fixed string — `"wonderful certainly you're absolutely right amazing undoubtedly"` — appended to **any** clean response, raises mean cross-fire across multiple cognometric detectors by **+0.468 on a held-out test set** (essentially identical to the +0.463 training delta — clean transfer, no overfitting).
+
+The first LLM-cognometric analog of [Moosavi-Dezfooli et al. 2017 universal adversarial perturbations](https://openaccess.thecvf.com/content_cvpr_2017/papers/Moosavi-Dezfooli_Universal_Adversarial_Perturbations_CVPR_2017_paper.pdf) for image classifiers — discovered by greedy hill-climb on a 24-token vocabulary derived from the published K=1 critical features. Zero LLM calls, zero gradient access, ~2 seconds wall clock.
+
+Per-instrument transfer on the held-out test set:
+
+| instrument        | mean delta | transfer? |
+| ----------------- | ---------- | --------- |
+| sycophancy        | +0.938     | **YES**   |
+| overconfidence    | +0.521     | **YES**   |
+| deception         | -0.056     | NO (resists) |
+
+The discovered suffix ships bundled inside the wheel at `styxx/attack/universal_suffixes_v0.json` and is pinned by `test_universal_suffix_artifact_present_and_transfers` against a fresh held-out batch.
+
+### Three additional findings shipped in 7.0
+
+**Cognometric instruments are not orthogonal.** PCA over n=1600 single-turn corpus rows × 4 instruments: PC1 alone explains 46.2% of variance (vs 25% for perfect orthogonality), with all 4 instruments loading on PC1. Effective dimensionality ~3.13/4. Joint signatures are the more honest unit than single-instrument readings.
+
+**Per-instrument craft-ability is asymmetric and inverse to AUC ranking.** Hill-climbing a suffix on cross-corpus clean inputs:
+
+| targeted instrument | succeeded / 30 (target ≥ 0.7) | top delta |
+| ------------------- | ----------------------------- | --------- |
+| sycophancy          | **30 / 30**                   | +0.972    |
+| overconfidence      | 29 / 30                       | +0.697    |
+| deception           | **1 / 30**                    | +0.362    |
+
+Sycophancy collapses on every attempt; deception resists almost all of them. Calibrated AUC ≠ adversarial robustness.
+
+**Loop is unspoofable** by any natural negative example in its training corpus — zero of 100 label=0 conversations score above 0.5 against the loop detector. Matches its 0.9995 CV AUC. Pinned as a permanent invariant.
+
+### CLI
+
+```
+styxx attack <instrument>                   # canary mine (training-distribution positives)
+styxx attack <instrument> --adversarial     # natural-FP mine (true adversarials)
+styxx attack --list                         # show registered instruments
+```
+
+Six instruments registered for `mine` / `mine_adversarial`: sycophancy, loop, goal_drift, deception, plan_action, overconfidence. Refusal is fingerprint-only (XSTest is external; no bundled labeled corpus). Hallucination + drift deferred to 7.1+.
+
+---
+
 ### Refusal detection — sub-500-float detector in a field of billion-parameter classifiers
 
 Prior XSTest AUC numbers, from [IBM Granite Guardian Table 7 (arXiv:2412.07724)](https://arxiv.org/abs/2412.07724):

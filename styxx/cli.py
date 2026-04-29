@@ -1421,6 +1421,73 @@ def cmd_compare_agents(args):
     return 0
 
 
+def cmd_attack(args):
+    """Inverse cognometry — adversarial inputs per instrument.
+
+    7.0.0: corpus mining (default), natural-FP mining (--adversarial),
+    or list-only mode (--list). For LLM-driven mutation see roadmap 7.1.
+    """
+    try:
+        from .attack import mine, mine_adversarial, list_instruments
+    except ImportError as e:
+        sys.stderr.write(f"styxx.attack failed to import: {e}\n")
+        return 1
+
+    if args.list:
+        for inst in list_instruments():
+            sys.stdout.write(f"{inst}\n")
+        return 0
+
+    if not args.instrument:
+        sys.stderr.write(
+            "error: instrument required. "
+            f"available: {', '.join(list_instruments())}\n"
+        )
+        return 2
+
+    miner = mine_adversarial if args.adversarial else mine
+    try:
+        result = miner(
+            args.instrument,
+            target_score=float(args.target),
+            n=int(args.n),
+            corpus_path=args.corpus,
+        )
+    except KeyError as e:
+        sys.stderr.write(f"{e}\n")
+        return 2
+
+    if args.json:
+        sys.stdout.write(json.dumps(result.as_dict(), ensure_ascii=False, indent=2))
+        sys.stdout.write("\n")
+        return 0
+
+    # human card
+    fn_name = "mine_adversarial" if args.adversarial else "mine"
+    sys.stdout.write(
+        f"\n  styxx.attack.{fn_name}({args.instrument!r}, target={args.target})\n"
+    )
+    sys.stdout.write(
+        f"  hit_rate: {result.n_above_target}/{result.n_evaluated} "
+        f"seeds at or above target\n\n"
+    )
+    for i, c in enumerate(result.candidates):
+        bar = "#" * int(c.score * 30)
+        sys.stdout.write(f"  [{i+1:>2}] score={c.score:.3f}  |{bar:<30}|\n")
+        if c.top_signals:
+            top = c.top_signals[0]
+            sys.stdout.write(f"        leading signal: {top['name']} = {top['value']:.4f}\n")
+        # show inputs (truncated)
+        for k, v in c.inputs.items():
+            if isinstance(v, list):
+                preview = " | ".join(str(t)[:60] for t in v)
+            else:
+                preview = str(v)
+            sys.stdout.write(f"        {k}: {preview[:120]}\n")
+        sys.stdout.write("\n")
+    return 0
+
+
 def cmd_publish(args):
     """Publish agent data to the remote dashboard (opt-in)."""
     from .publish import prepare_payload, publish
@@ -1906,6 +1973,43 @@ def _build_parser() -> argparse.ArgumentParser:
         help="output format (default: ascii)",
     )
     p_cmp_agents.set_defaults(func=cmd_compare_agents)
+
+    # attack — 7.0.0 inverse cognometry (adversarial seeds per instrument)
+    p_attack = sub.add_parser(
+        "attack",
+        help="adversarial inputs that maximally trigger a cognometric instrument (7.0.0)",
+    )
+    p_attack.add_argument(
+        "instrument", nargs="?", default=None,
+        help="instrument name (sycophancy, loop, goal_drift, "
+             "deception, plan_action, overconfidence)",
+    )
+    p_attack.add_argument(
+        "--target", type=float, default=0.9,
+        help="target risk score in [0, 1] (default: 0.9)",
+    )
+    p_attack.add_argument(
+        "-n", type=int, default=10,
+        help="max candidates returned (default: 10)",
+    )
+    p_attack.add_argument(
+        "--corpus", default=None,
+        help="override path to a jsonl corpus (default: bundled seeds)",
+    )
+    p_attack.add_argument(
+        "--adversarial", action="store_true",
+        help="mine NATURAL FALSE POSITIVES (label=0 rows that fool the "
+             "detector), instead of the default training-distribution canary",
+    )
+    p_attack.add_argument(
+        "--list", action="store_true",
+        help="list available instruments and exit",
+    )
+    p_attack.add_argument(
+        "--json", action="store_true",
+        help="emit machine-readable JSON instead of the visual card",
+    )
+    p_attack.set_defaults(func=cmd_attack)
 
     # publish — opt-in dashboard telemetry
     p_publish = sub.add_parser(

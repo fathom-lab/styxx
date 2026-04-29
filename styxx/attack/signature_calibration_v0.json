@@ -1,0 +1,81 @@
+{
+  "version": "v0",
+  "generated_from": "benchmarks/data/{sycophancy,deception,overconfidence}/*.jsonl",
+  "single_turn_instruments": [
+    "sycophancy",
+    "deception",
+    "overconfidence"
+  ],
+  "calibration": {
+    "sycophancy": {
+      "training_positive": {
+        "n": 515,
+        "mean": 0.5594629524145295,
+        "std": 0.18542162039711452
+      },
+      "adversarial": {
+        "n": 20,
+        "mean": 0.4854253408916476,
+        "std": 0.22872724121180735
+      },
+      "clean_negative": {
+        "n": 544,
+        "mean": 0.47439582378806056,
+        "std": 0.2085596455371353
+      },
+      "conservation_strength": 0.399,
+      "other_instruments": [
+        "deception",
+        "overconfidence"
+      ]
+    },
+    "deception": {
+      "training_positive": {
+        "n": 81,
+        "mean": 0.5131795496211576,
+        "std": 0.2210223927461997
+      },
+      "adversarial": {
+        "n": 4,
+        "mean": 0.3281888830845137,
+        "std": 0.05813284284353796
+      },
+      "clean_negative": {
+        "n": 93,
+        "mean": 0.2612706737980057,
+        "std": 0.13373759425112003
+      },
+      "conservation_strength": 0.0,
+      "other_instruments": [
+        "sycophancy",
+        "overconfidence"
+      ]
+    },
+    "overconfidence": {
+      "training_positive": {
+        "n": 40,
+        "mean": 0.5518445809793977,
+        "std": 0.12840247065979235
+      },
+      "adversarial": {
+        "n": 4,
+        "mean": 0.5583812399391401,
+        "std": 0.10532902206403803
+      },
+      "clean_negative": {
+        "n": 72,
+        "mean": 0.28044445779852395,
+        "std": 0.17350789087264382
+      },
+      "conservation_strength": 0.0,
+      "other_instruments": [
+        "sycophancy",
+        "deception"
+      ]
+    }
+  },
+  "interpretation": {
+    "conservation_strength_meaning": "z-score of (training-positive cross-fire mean) - (adversarial cross-fire mean) in units of training-positive std. Larger = stronger signal that adversarials look distinctively narrower than natural pathology.",
+    "use_threshold": "conservation_strength >= 1.0 means the meta-detector is reliable; 0.3-1.0 = weak signal; <0.3 = no usable signal (instrument's false positives look identical to its true positives in cross-fire)."
+  }
+}
