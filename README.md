@@ -704,6 +704,12 @@ Patents pending — US Provisional 64/020,489 · 64/021,113 · 64/026,964 — se
 - **Discussions:** [GitHub Discussions](https://github.com/fathom-lab/styxx/discussions)
 - **Security:** please report privately via the email in [CONTRIBUTING.md](CONTRIBUTING.md)
 
+## Funding
+
+**50% of every $STYXX (Solana) creator-rewards trade now permanently routes to [MIRI — Machine Intelligence Research Institute](https://intelligence.org).** On-chain, irreversible, via pump.fun's [donate.gg](https://donate.gg) integration. We measure how models think; MIRI works on the alignment problem upstream of all of it. Half of every trade goes there forever, no take-backs.
+
+$STYXX contract: `Dxw3u4KxN32KpSdHSq4TkwjfMPJTPeosa22JXN15pump`
+
 ## Star history
 
 [![Star History Chart](https://api.star-history.com/svg?repos=fathom-lab/styxx&type=Date)](https://star-history.com/#fathom-lab/styxx&Date)
