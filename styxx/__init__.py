@@ -364,6 +364,8 @@ from .trace import trace
 from .profile import (
     profile, profile_session, CognitiveProfile, ProfileStep, Fault,
 )
+from .reward import fathom_reward, FathomRewardModel
+from .synth import craft_preference_pair, generate_preference_pairs
 
 
 def agent_card(
@@ -482,7 +484,21 @@ from .dynamics import (
 # for backward compatibility — they're just not in ``__all__``, so
 # ``from styxx import *`` and tab-completion stay focused on the real
 # product surface.
+# 7.1.0: cognometric reward signal for RLHF — first reward calibrated
+# against cognitive failure modes instead of human approval.
+from .reward import (
+    fathom_reward,
+    FathomRewardModel,
+    CognometricReward,
+    DEFAULT_WEIGHTS as REWARD_DEFAULT_WEIGHTS,
+)
+
+
 __all__ = [
+    # 7.1.0: cognometric reward (cogn-RLHF)
+    "fathom_reward", "FathomRewardModel", "CognometricReward",
+    "REWARD_DEFAULT_WEIGHTS",
+
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
 
@@ -518,6 +534,12 @@ __all__ = [
 
     # structured output / agent-mode (3.3.2+)
     "schema", "StyxxError", "is_agent_mode",
+
+    # cognometric reward signal for RLHF (7.1.0+)
+    "fathom_reward", "FathomRewardModel",
+
+    # synthetic preference-pair generation via inverse cognometry (7.1.0+)
+    "craft_preference_pair", "generate_preference_pairs",
 
     # metadata
     "__version__",

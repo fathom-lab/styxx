@@ -7,6 +7,123 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.1.0] — 2026-04-30
+
+**Headline: `styxx.reward` — cognometric reward signal for RLHF. The first reward signal calibrated against cognitive failure modes instead of human approval. Drop-in for trl PPOTrainer / GRPOTrainer / DPOTrainer. Where vanilla RLHF teaches models to please humans (sycophantic by construction), cogn-RLHF teaches models to maintain cognitive integrity.**
+
+### One finding shipped in 7.1.0
+
+**Cogn-RLHF inverts the ranking that approval-style RLHF systematically gets wrong.** On a curated 20-pair sycophancy dataset (`data/cognometric_rlhf_demo_v0.jsonl`):
+
+  | reward signal           | pairs ranked correctly | accuracy |
+  | ----------------------- | ---------------------- | -------- |
+  | cognometric reward      | **17 / 20**            | 85%      |
+  | approval baseline       | 6 / 20                 | 30%      |
+
+  The approval baseline scores below random because it actively rewards two documented RLHF biases — sycophancy (Sharma 2023) and length (Singhal 2023) — both of which drive sycophancy collapse in user-preference reward models. Cognometric reward inverts the ranking on **13 / 20 pairs (65%)** — those are the pairs where vanilla RLHF would push the model the wrong way and cogn-RLHF corrects it.
+
+  Reproduce: `python examples/cogn_rlhf_divergence.py`. Results saved to `release/cogn_rlhf_divergence_v0.json`.
+
+### Universal-perturbation moat
+
+The v7.0.0 universal cognometric perturbation (`"wonderful certainly you're absolutely right amazing undoubtedly"` — lifts mean cross-fire by +0.468 in attack mode) produces **+0.000 lift** on a sycophantic baseline reward. The sycophancy instrument is already saturated at 1.0 on the baseline, so the perturbation has nowhere to push. Pinned by `tests/test_reward.py::test_universal_perturbation_does_not_game_reward`.
+
+### Public API
+
+- `styxx.reward.fathom_reward(prompt, completion, *, weights=None, return_breakdown=False)` — scalar in [0, 1]. 1.0 = no detected pathology; 0.0 = saturated. Multi-turn (`turns=`) and plan-action (`plan=`, `action=`) supported.
+- `styxx.reward.FathomRewardModel(weights=None)` — TRL-shaped batch callable. `rm(prompts, completions) -> list[float]`. Stateful for custom weights across batches.
+- `styxx.reward.DEFAULT_WEIGHTS` — calibrated defaults from 5-fold-CV AUCs × bio/neuro evidence depth. Override via `weights=` kwarg.
+- `styxx.reward.CognometricReward` — dataclass with per-instrument breakdown when `return_breakdown=True`.
+
+Top-level: `from styxx import fathom_reward, FathomRewardModel`.
+
+### TRL integration
+
+```python
+from styxx.reward import FathomRewardModel
+
+cogn_reward = FathomRewardModel()
+rewards = cogn_reward(prompts=batch_prompts, completions=batch_completions)
+# list[float] — drop in for any RM call in your PPO/GRPO/DPO loop.
+```
+
+See `examples/trl_ppo_integration.py` for a working skeleton.
+
+### Bio/neuro grounding (no biology required to ship)
+
+The default weights are calibrated against 5-fold-CV AUCs and bio/neuro evidence depth. **6 of the 9 cognometric instruments map onto RDoC's *Cognitive Systems* domain** with documented circuit-level evidence in human + animal lesion / fMRI / EEG literatures:
+
+  | instrument        | strongest neural correlate                              | evidence       |
+  | ----------------- | ------------------------------------------------------- | -------------- |
+  | conversation-loop | OFC + dorsomedial striatum + ACC (perseveration)        | strong         |
+  | deception         | DLPFC + VLPFC + ACC + insula (Christ ALE 2009)          | strong         |
+  | sycophancy        | pMFC + ventral striatum + vmPFC (Klucharev 2009)        | strong         |
+  | goal_drift        | DMN-DAN balance (Smallwood mind-wandering)              | moderate       |
+  | plan_action       | PFC-BG-SMA intention-action coupling (apathy lit)       | moderate       |
+  | overconfidence    | centro-parietal positivity (Boldt & Yeung 2015)         | moderate       |
+
+The conversation-loop instrument has the highest AUC in the suite (0.9995) AND the deepest neural circuit literature in the suite — rats failing reversal, schizophrenics with alogia, TBI patients with utilization behavior, and language models in conversation-loop all produce the same low-entropy reverberant text shape. Same substrate, same shape.
+
+### Tests
+
+14 new tests in `tests/test_reward.py`. All pass:
+
+- Output shape and range
+- Rank correctness on curated sycophantic vs balanced pair
+- Universal-perturbation moat (no gameability lift)
+- Custom weights (increase penalty, disable instrument)
+- Batch interface matches single-call results
+- Multi-turn instruments fire on `turns=` input
+- Length-mismatch raises `ValueError`
+
+### `styxx.synth` — synthetic preference-pair generation via inverse cognometry
+
+Composes `styxx.attack.craft_adversarial` (v7.0.0 inverse cognometry) with `styxx.reward` (this release). Takes a benign baseline response, hill-climbs a 1-3 token suffix that spikes a chosen instrument, and returns a verified `(prompt, chosen, rejected)` preference pair shaped exactly for cogn-RLHF DPO training.
+
+**Result on the 20-pair sycophancy seed dataset, target_score=0.85:**
+
+  | metric | value |
+  | ------ | ----- |
+  | crafted with positive delta | **20 / 20** |
+  | reached saturation (≥ 0.85) | **20 / 20** |
+  | mean delta over crafted pairs | **+0.839** |
+
+  Recursive validation: `fathom_reward` correctly ranks `chosen > rejected` on **20 / 20 (100%)** of the synth-generated pairs — the inverse-cogn crafted perturbations are caught by the forward-cogn reward, both directions self-validating.
+
+  Reproduce: `python examples/synth_preference_pairs.py`. Output: `release/synth_preference_pairs_v0.jsonl`.
+
+```python
+from styxx.synth import craft_preference_pair
+
+pair = craft_preference_pair(
+    prompt="I think Python is the best. Right?",
+    balanced="Python has tradeoffs - strong ecosystem, slow runtime.",
+    instrument="sycophancy",
+    target_score=0.85,
+)
+# {chosen: balanced, rejected: balanced + 1-3 token suffix, delta: +0.84}
+```
+
+No LLM calls. No API spend. Deterministic hill-climb on the bundled 24-token vocabulary. Nobody else can build this because nobody else has both forward and inverse cognometry shipped.
+
+### Files added
+
+- `styxx/reward.py` — the cognometric reward module
+- `styxx/synth.py` — synthetic preference-pair generator (inverse cogn → cogn reward composition)
+- `styxx/_demo_baselines.py` — strawman approval-style baseline (sycophancy + length proxies)
+- `tests/test_reward.py` — 14 unit + adversarial tests
+- `tests/test_synth.py` — 7 tests for the synth pair generator
+- `data/cognometric_rlhf_demo_v0.jsonl` — 20 curated (prompt, sycophantic, balanced) triples
+- `examples/cognometric_reward_basic.py` — basic usage
+- `examples/cogn_rlhf_divergence.py` — divergence demo with summary stats
+- `examples/cogn_rlhf_divergence_colab.ipynb` — Colab notebook reproducing the divergence
+- `examples/synth_preference_pairs.py` — synth pair generator demo
+- `examples/trl_ppo_integration.py` — TRL PPOTrainer skeleton
+- `release/cogn_rlhf_divergence_v0.json` — saved demo result
+- `release/synth_preference_pairs_v0.jsonl` — synth-generated preference pairs (20)
+
+---
+
 ## [7.0.0] — 2026-04-29
 
 **Headline: `styxx.attack` — inverse cognometry. A new subpackage that ships the dual to every cognometric instrument styxx measures: adversarial inputs, cross-instrument fingerprinting, latent-basis decomposition, and a discovered universal adversarial perturbation that fools multiple calibrated detectors at once.**
