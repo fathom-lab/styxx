@@ -1,0 +1,14 @@
+{
+  "ts": "20260503_163857",
+  "ts_iso": "2026-05-03T20:38:57Z",
+  "n_prompts": 21,
+  "n_models_run": 0,
+  "leaderboard": [],
+  "model_records": [
+    {
+      "model": "gpt-5-mini",
+      "vendor": "openai",
+      "dry_run": true
+    }
+  ]
+}

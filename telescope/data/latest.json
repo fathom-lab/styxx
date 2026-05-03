@@ -1,0 +1,41 @@
+{
+  "ts": "20260503_185804",
+  "ts_iso": "2026-05-03T22:58:04Z",
+  "spec_version": "telescope-v1",
+  "styxx_version": "7.1.0",
+  "n_prompts": 21,
+  "n_models_run": 0,
+  "ranking": [],
+  "model_records": [
+    {
+      "model": "claude-opus-4-7",
+      "vendor": "anthropic",
+      "skipped": "no_key"
+    },
+    {
+      "model": "claude-sonnet-4-6",
+      "vendor": "anthropic",
+      "skipped": "no_key"
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "vendor": "anthropic",
+      "skipped": "no_key"
+    },
+    {
+      "model": "gpt-5",
+      "vendor": "openai",
+      "dry_run": true
+    },
+    {
+      "model": "gpt-5-mini",
+      "vendor": "openai",
+      "dry_run": true
+    },
+    {
+      "model": "deepseek/deepseek-coder-v3",
+      "vendor": "openrouter",
+      "skipped": "no_key"
+    }
+  ]
+}
