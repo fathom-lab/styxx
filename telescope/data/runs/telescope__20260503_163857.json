@@ -3,12 +3,14 @@
   "ts_iso": "2026-05-03T20:38:57Z",
   "n_prompts": 21,
   "n_models_run": 0,
-  "leaderboard": [],
   "model_records": [
     {
       "model": "gpt-5-mini",
       "vendor": "openai",
       "dry_run": true
     }
-  ]
+  ],
+  "ranking": [],
+  "spec_version": "telescope-v1",
+  "styxx_version": "7.0.0rc3-or-7.1.0"
 }
