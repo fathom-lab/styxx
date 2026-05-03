@@ -91,7 +91,7 @@ each daily full run, all 6 models × 21 prompts × ~500 output tokens:
 
 total full-suite: **~$3-5/day**. cheapest meaningful run (fast tier only): ~$0.20/day.
 
-## daily content cadence (once site /api/scoreboard is wired)
+## daily content cadence (once TELESCOPE_* secrets are set on the repo)
 
 1. **00:00 UTC** — runner fires via cron / scheduled task
 2. **00:05 UTC** — `latest.json` updated, committed back to repo
