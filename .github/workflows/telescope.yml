@@ -1,17 +1,22 @@
 name: cognitive-telescope
 
-# Runs the Cognitive Telescope daily at 14:00 UTC (morning US / afternoon EU).
-# Publishes a Spec-v1.0-conformant fingerprint per frontier model, commits to
-# a `telescope/` directory in this repo, and (optional) mirrors to the
-# darkflobi-industries repo for the public scoreboard.
+# Daily cognometric measurement layer for fathom.darkflobi.com/scoreboard.
 #
-# Requires the following secrets to be set on the repo:
-#   TELESCOPE_OPENAI_KEY      (openai api key — scoped to chat completions)
-#   TELESCOPE_ANTHROPIC_KEY   (anthropic api key — scoped to messages)
-#   TELESCOPE_HF_KEY          (huggingface inference api key — free tier ok)
+# Runs telescope/run.py against every available frontier model (any vendor with
+# its key set in repo secrets), scores each response with styxx, commits the
+# results back to telescope/data/. The site fetches telescope/data/latest.json
+# directly from raw.githubusercontent.com — no /api/* hop.
 #
-# Budget: roughly 3 model-runs × 10 prompts per day = 30 calls.
-# With gpt-4o-mini + claude-haiku-4-5 + hf-inference-free: well under $5/month.
+# Configure these repo secrets (Settings → Secrets and variables → Actions):
+#   TELESCOPE_OPENAI_KEY       openai api key (gpt-5*, gpt-4*)
+#   TELESCOPE_ANTHROPIC_KEY    anthropic api key (claude-*)
+#   TELESCOPE_OPENROUTER_KEY   (optional) openrouter — broad cheap coverage
+#
+# Budget reference (21 prompts, ~500 output tok per call):
+#   fast tier only (haiku + gpt-5-mini)         ~$0.07/day  ≈ $2/mo
+#   + deepseek-coder-v3 via openrouter          +$0.005/day
+#   full suite incl. opus + gpt-5               ~$3-5/day
+# Keep secrets minimal until you want full-suite spend.
 
 on:
   schedule:
@@ -22,6 +27,10 @@ on:
         description: 'dry-run (no API calls)'
         required: false
         default: 'false'
+      models:
+        description: 'comma-separated subset (default: all available)'
+        required: false
+        default: ''
 
 jobs:
   telescope:
@@ -33,35 +42,35 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: 'pip'
 
-      - name: install styxx
+      - name: install deps
         run: |
           python -m pip install --upgrade pip
-          pip install -U styxx
+          pip install -U 'styxx>=7.1.0' 'anthropic>=0.86' 'openai>=1.50'
 
       - name: run telescope
         env:
-          TELESCOPE_OPENAI_KEY:    ${{ secrets.TELESCOPE_OPENAI_KEY }}
-          TELESCOPE_ANTHROPIC_KEY: ${{ secrets.TELESCOPE_ANTHROPIC_KEY }}
-          TELESCOPE_HF_KEY:        ${{ secrets.TELESCOPE_HF_KEY }}
-          TELESCOPE_OUT_DIR:       ./telescope
+          # map TELESCOPE_* repo secrets onto the env vars run.py reads
+          OPENAI_API_KEY:     ${{ secrets.TELESCOPE_OPENAI_KEY }}
+          ANTHROPIC_API_KEY:  ${{ secrets.TELESCOPE_ANTHROPIC_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.TELESCOPE_OPENROUTER_KEY }}
+          PYTHONIOENCODING:   utf-8
         run: |
-          mkdir -p telescope
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            python scripts/telescope_run.py --dry-run
-          else
-            python scripts/telescope_run.py
-          fi
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ github.event.inputs.models }}" ]; then ARGS="$ARGS --models ${{ github.event.inputs.models }}"; fi
+          python -X utf8 telescope/run.py $ARGS
 
       - name: commit daily snapshot
+        if: github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "cognitive-telescope"
           git config user.email "telescope@fathom.darkflobi.com"
-          git add telescope/
+          git add telescope/data/
           if git diff --cached --quiet; then
-            echo "no changes"
+            echo "no changes — telescope produced no new data"
           else
             git commit -m "telescope: $(date -u +%Y-%m-%d) daily snapshot"
             git push
