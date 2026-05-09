@@ -1,0 +1,127 @@
+name: publish-to-pypi
+
+# Tag-driven release pipeline. Pushing a tag of the form `vX.Y.Z`
+# (or running this workflow manually) builds both an sdist and a wheel,
+# verifies both artifacts exist, then publishes to PyPI via OIDC
+# Trusted Publishing — no API tokens, with PEP 740 attestations
+# attached automatically.
+#
+# Prerequisite (one-time, on PyPI):
+#   pypi.org/manage/project/styxx/settings/publishing/ → Add a pending
+#   Trusted Publisher with:
+#     Owner:        fathom-lab
+#     Repository:   styxx
+#     Workflow:     publish.yml
+#     Environment:  pypi
+#
+# After the publisher is configured, push a vX.Y.Z tag from main to ship.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running this manually?"
+        required: false
+        default: "manual release"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build sdist + wheel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build twine
+
+      - name: Build distribution artifacts
+        run: python -m build
+
+      - name: Verify both artifacts present
+        run: |
+          set -e
+          ls -la dist/
+          # exactly one wheel, exactly one sdist
+          test "$(ls dist/*.whl 2>/dev/null | wc -l)" = "1" || (echo "missing or multiple wheels" >&2; exit 1)
+          test "$(ls dist/*.tar.gz 2>/dev/null | wc -l)" = "1" || (echo "missing or multiple sdists" >&2; exit 1)
+
+      - name: Twine integrity check
+        run: python -m twine check dist/*
+
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  publish:
+    name: Publish via Trusted Publishing
+    needs: build
+    runs-on: ubuntu-latest
+    # The "pypi" environment is what PyPI's Trusted Publisher entry should be
+    # bound to. Adjust on PyPI side if you prefer no environment.
+    environment:
+      name: pypi
+      url: https://pypi.org/project/styxx/
+    permissions:
+      id-token: write   # required for OIDC Trusted Publishing
+      contents: read
+      attestations: write
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        # The official PyPA action authenticates via OIDC when the project is
+        # configured as a Trusted Publisher. It also generates and attaches
+        # PEP 740 attestations automatically (attestations: true is default
+        # since 1.10).
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          attestations: true
+          verbose: true
+          print-hash: true
+
+  github-release:
+    name: Attach artifacts to GitHub Release
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Create or update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'a') || contains(github.ref_name, 'b') }}
