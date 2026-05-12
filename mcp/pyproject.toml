@@ -4,16 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx-mcp"
-version = "0.1.0"
-description = "Model Context Protocol (MCP) server exposing styxx cognitive-vitals tools to AI agents."
+version = "0.4.0"
+description = "MCP server: 12 cognometric tools — measurement (v0.2), adversarial robustness (v0.3), and semantic-grounding deception_v2 (v0.4 NLI, AUC 0.82 on TruthfulQA)."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Fathom Lab" }]
-keywords = ["mcp", "styxx", "llm", "vitals", "interpretability", "anthropic", "claude"]
+keywords = ["mcp", "styxx", "cognometric", "honesty", "sycophancy", "deception", "reflex-loop", "llm", "anthropic", "claude"]
 dependencies = [
     "mcp>=1.0.0",
-    "styxx>=3.4.0",
+    "styxx>=7.1.0",
 ]
 
 [project.urls]

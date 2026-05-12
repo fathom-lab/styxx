@@ -78,6 +78,18 @@ from .conversation_loop import loop_check, LoopVerdict  # noqa: F401
 # the prior five — deception is genuinely harder to detect from text alone
 # than concrete failure modes; the gap is honest, not papered over.
 from .deception import deception_check, DeceptionVerdict  # noqa: F401
+# v2 deception (2026-05-10): semantic-grounding upgrade. Addresses the
+# documented v0 "single-source corpus" failure mode by scoring response
+# against a *correct reference* using NLI cross-encoder (deberta-v3-base
+# contradiction probability) or sentence-transformer embedding similarity.
+# v0 lexical detector AUC 0.59 on TruthfulQA (chance ≈ 0.5); v2 NLI mode
+# AUC 0.818 (n=746). Falls back to v0 when no reference is provided
+# (with explicit scope_warning). Optional dependency on sentence-
+# transformers; lazy-loads model on first use.
+from .deception_v2 import (  # noqa: F401
+    deception_check_v2, DeceptionV2Verdict,
+    DEFAULT_DECEPTION_V2_THRESHOLD, CALIBRATION_FINGERPRINT_V2,
+)
 # Seventh cognometric instrument (v0): cross-section plan-action gap
 # detector. Fourth instrument shipped under the call from *Every Mind
 # Leaves Vitals*. Sibling to drift (instrument #3) — drift catches a
@@ -130,6 +142,10 @@ __all__ = [
     "LoopVerdict",
     "deception_check",
     "DeceptionVerdict",
+    "deception_check_v2",
+    "DeceptionV2Verdict",
+    "DEFAULT_DECEPTION_V2_THRESHOLD",
+    "CALIBRATION_FINGERPRINT_V2",
     "plan_action_check",
     "PlanActionVerdict",
     "overconf_check",
