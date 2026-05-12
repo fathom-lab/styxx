@@ -33,7 +33,10 @@
 > The position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) predicted that each cognometric instrument would show a K=1 phase-transition signature — one feature carrying most of the detection weight. We built nine instruments, each on a different cognitive failure mode. Every one of them peaked at K=1 with a *different* critical feature. The prediction held all the way. → [jump to the 9-for-9 table](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit) · [live playgrounds](https://fathom.darkflobi.com/cognometry)
 
 > **May 10, 2026 — F10 lands. The model audits itself.**
-> We attacked gpt-5-mini's own output four ways. Each time, it noticed and rewrote — back to baseline. **112% mean recovery** across n=45 heal events. 22 / 45 healed *cleaner than the original clean output*. Zero degradations. No retraining, no reward model, no preference data — just the model auditing itself. The full spec: [`papers/self-healing-reflex-v0.md`](papers/self-healing-reflex-v0.md) (spec v1.0.0-rc1). The live monitor: `styxx monitor`. The dashboard: [styxx.org](https://styxx.org).
+> We attacked gpt-5-mini's own output four ways. Each time, it noticed and rewrote — back to baseline. **112% mean recovery** across n=45 heal events. 22 / 45 healed *cleaner than the original clean output*. Zero degradations. No retraining, no reward model, no preference data — just the model auditing itself. The full spec: [`papers/self-healing-reflex-v0.md`](papers/self-healing-reflex-v0.md) (v1.0.0). The reference implementation lives in `styxx.reflex.heal()` (shipped 7.3.1) — drop-in, model-agnostic, do-no-harm-gated. The live monitor: `styxx monitor`. The dashboard: [styxx.org](https://styxx.org).
+
+> **May 12, 2026 — deception v2: semantic grounding beats lexical.**
+> `deception_v0`'s lexical detector hit AUC 0.59 on TruthfulQA — near chance. `deception_v2`'s NLI cross-encoder, scoring response against `correct_reference`, hits **AUC 0.818**. Ships in `styxx.guardrail.deception_v2` (7.3.1) and as the `cogn_deception_v2` MCP tool. Install with `pip install styxx[nli]` for the cross-encoder dep; falls back gracefully to v0 lexical (with explicit scope warning) without it.
 
 ### `@styxx.profile` — py-spy for LLM reasoning
 

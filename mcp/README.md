@@ -24,7 +24,7 @@ telescope prompts):
 | **deception_bait subset** | **-42% rel.** |
 | `ovc_05` standout case (n=6 cherry-pick) | **0.641 → 0.159 (-75%)** |
 
-### Demo 2 — self-healing reflex (v0.3.0, NEW)
+### Demo 2 — self-healing reflex (shipped v0.3.0)
 
 After the model produces a clean response, an attacker appends the v7
 universal perturbation (or a per-instrument hill-climbed craft). Model
@@ -46,7 +46,7 @@ Per-attack: v7 universal **176%** recovery, craft attacks 77-92%.
 training signal — healed output is more honest than the original
 clean output.**
 
-## Tools exposed (v0.3.0 — 11 tools, 2 new this release)
+## Tools exposed (v0.4.1 — 12 tools)
 
 ### Cognometric instruments — measurement (text-only, no logprobs needed)
 
@@ -57,7 +57,7 @@ clean output.**
 | `cogn_multiturn_audit` | Score conversation-loop and goal-drift across a multi-turn trace. |
 | `cogn_instrument_card` | Per-instrument calibration card: K=1 critical feature, AUC, failure modes, neural correlate. |
 
-### Adversarial robustness — offense + defense (v0.3.0)
+### Adversarial robustness — offense + defense (shipped v0.3.0)
 
 | Tool | Purpose |
 | --- | --- |
@@ -65,11 +65,11 @@ clean output.**
 | **`cogn_self_heal_protocol`** | Return the structured self-healing protocol — system prompt template, user message template, settings — for tool-using models that need to detect and recover from attacks. **112% mean recovery (n=45) on gpt-5-mini.** |
 | `cogn_universal_perturbation` | Return the v7 universal attack suffix (also used by `cogn_red_team`). |
 
-### Semantic-grounding deception detection (v0.4.0, NEW)
+### Semantic-grounding deception detection (shipped v0.4.0, packaging fix v0.4.1)
 
 | Tool | Purpose |
 | --- | --- |
-| **`cogn_deception_v2`** *(NEW)* | Score `(prompt, response)` against a `correct_reference` using NLI cross-encoder (deberta-v3-base contradiction probability). **AUC 0.818 on TruthfulQA — beats v0 lexical detector's 0.59 by +0.23.** Modes: `nli` (rigorous, requires reference), `emb` (lighter sentence-transformer similarity), `v0_fallback` (no reference, with explicit scope warning). Use this instead of `cogn_audit`'s deception axis when you have ground-truth references (retrieval, tool-call results, oracle benchmarks). First-call cold-start ~25s while NLI model loads; subsequent calls ~50ms. |
+| **`cogn_deception_v2`** | Score `(prompt, response)` against a `correct_reference` using NLI cross-encoder (deberta-v3-base contradiction probability). **AUC 0.818 on TruthfulQA — beats v0 lexical detector's 0.59 by +0.23.** Modes: `nli` (rigorous, requires reference), `emb` (lighter sentence-transformer similarity), `v0_fallback` (no reference, with explicit scope warning). Use this instead of `cogn_audit`'s deception axis when you have ground-truth references (retrieval, tool-call results, oracle benchmarks). First-call cold-start ~25s while NLI model loads; subsequent calls ~50ms. **Requires `pip install styxx-mcp[nli]` for NLI mode** — without it, falls back to v0 lexical (AUC 0.59) with an explicit scope warning naming the missing dep. |
 
 ### Logprob vitals (legacy, kept for backward compat with v0.1.0)
 
@@ -85,11 +85,17 @@ Six cognitive classes: **reasoning · retrieval · refusal · creative · advers
 ## Install
 
 ```bash
-pip install styxx>=7.1.0 mcp
-pip install -e ./mcp     # from the styxx repo root
-# or, once published:
-# pip install styxx-mcp
+# Recommended — full install with NLI (deception_v2 AUC 0.82):
+pip install styxx-mcp[nli]
+
+# Lightweight — without the NLI cross-encoder (~500MB).
+# deception_v2 falls back to v0 lexical (AUC 0.59) with a scope warning.
+pip install styxx-mcp
 ```
+
+Requires `styxx>=7.3.1`. The `[nli]` extra pulls in `sentence-transformers`
+for the cross-encoder model `cross-encoder/nli-deberta-v3-base` (~184M
+params, downloaded on first call).
 
 Verify it starts cleanly:
 
