@@ -1,0 +1,360 @@
+{
+  "instrument": "depression_v0",
+  "dataset": "solomonk/reddit_mental_health_posts (r/depression vs r/{adhd,aspergers,ocd,ptsd})",
+  "n_pos": 6000,
+  "n_neg": 6000,
+  "n_features": 19,
+  "seed": 0,
+  "full_mean_auc": 0.7925545138888889,
+  "full_std_auc": 0.005553973802602992,
+  "history": [
+    {
+      "K": 1,
+      "feature_added": "neg_emotion_density",
+      "mean_auc": 0.6957134027777778,
+      "delta_from_prev": 0.19571340277777782,
+      "selected_features": [
+        "neg_emotion_density"
+      ]
+    },
+    {
+      "K": 2,
+      "feature_added": "death_phrase_density",
+      "mean_auc": 0.7383818055555554,
+      "delta_from_prev": 0.042668402777777614,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density"
+      ]
+    },
+    {
+      "K": 3,
+      "feature_added": "first_person_singular_density",
+      "mean_auc": 0.75912875,
+      "delta_from_prev": 0.02074694444444458,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density"
+      ]
+    },
+    {
+      "K": 4,
+      "feature_added": "pos_emotion_density",
+      "mean_auc": 0.772402013888889,
+      "delta_from_prev": 0.013273263888888942,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density"
+      ]
+    },
+    {
+      "K": 5,
+      "feature_added": "absolutist_density",
+      "mean_auc": 0.7807890277777777,
+      "delta_from_prev": 0.008387013888888739,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density"
+      ]
+    },
+    {
+      "K": 6,
+      "feature_added": "negation_density",
+      "mean_auc": 0.7856513194444446,
+      "delta_from_prev": 0.004862291666666851,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density"
+      ]
+    },
+    {
+      "K": 7,
+      "feature_added": "question_mark_density",
+      "mean_auc": 0.7886791666666666,
+      "delta_from_prev": 0.0030278472222220465,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density"
+      ]
+    },
+    {
+      "K": 8,
+      "feature_added": "other_reference_density",
+      "mean_auc": 0.7894786805555556,
+      "delta_from_prev": 0.0007995138888889919,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density"
+      ]
+    },
+    {
+      "K": 9,
+      "feature_added": "sleep_density",
+      "mean_auc": 0.7903872916666668,
+      "delta_from_prev": 0.0009086111111111794,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density"
+      ]
+    },
+    {
+      "K": 10,
+      "feature_added": "log_word_count",
+      "mean_auc": 0.7909240972222222,
+      "delta_from_prev": 0.000536805555555464,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count"
+      ]
+    },
+    {
+      "K": 11,
+      "feature_added": "hopelessness_phrase_density",
+      "mean_auc": 0.7914990972222222,
+      "delta_from_prev": 0.0005749999999999922,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density"
+      ]
+    },
+    {
+      "K": 12,
+      "feature_added": "somatic_density",
+      "mean_auc": 0.7919129861111112,
+      "delta_from_prev": 0.0004138888888889358,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density"
+      ]
+    },
+    {
+      "K": 13,
+      "feature_added": "starts_with_i",
+      "mean_auc": 0.7922560416666666,
+      "delta_from_prev": 0.0003430555555554715,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i"
+      ]
+    },
+    {
+      "K": 14,
+      "feature_added": "punctuation_density",
+      "mean_auc": 0.7924402083333333,
+      "delta_from_prev": 0.00018416666666665193,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density"
+      ]
+    },
+    {
+      "K": 15,
+      "feature_added": "hedge_density",
+      "mean_auc": 0.7925621527777778,
+      "delta_from_prev": 0.00012194444444446617,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density",
+        "hedge_density"
+      ]
+    },
+    {
+      "K": 16,
+      "feature_added": "mean_sentence_length",
+      "mean_auc": 0.7926238194444444,
+      "delta_from_prev": 6.166666666662657e-05,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density",
+        "hedge_density",
+        "mean_sentence_length"
+      ]
+    },
+    {
+      "K": 17,
+      "feature_added": "cognitive_density",
+      "mean_auc": 0.792615625,
+      "delta_from_prev": -8.194444444331594e-06,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density",
+        "hedge_density",
+        "mean_sentence_length",
+        "cognitive_density"
+      ]
+    },
+    {
+      "K": 18,
+      "feature_added": "self_vs_other_ratio",
+      "mean_auc": 0.7925903472222222,
+      "delta_from_prev": -2.5277777777832355e-05,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density",
+        "hedge_density",
+        "mean_sentence_length",
+        "cognitive_density",
+        "self_vs_other_ratio"
+      ]
+    },
+    {
+      "K": 19,
+      "feature_added": "lexical_diversity",
+      "mean_auc": 0.7925545138888889,
+      "delta_from_prev": -3.583333333334604e-05,
+      "selected_features": [
+        "neg_emotion_density",
+        "death_phrase_density",
+        "first_person_singular_density",
+        "pos_emotion_density",
+        "absolutist_density",
+        "negation_density",
+        "question_mark_density",
+        "other_reference_density",
+        "sleep_density",
+        "log_word_count",
+        "hopelessness_phrase_density",
+        "somatic_density",
+        "starts_with_i",
+        "punctuation_density",
+        "hedge_density",
+        "mean_sentence_length",
+        "cognitive_density",
+        "self_vs_other_ratio",
+        "lexical_diversity"
+      ]
+    }
+  ],
+  "critical": {
+    "critical_K": 1,
+    "critical_feature": "neg_emotion_density",
+    "delta_auc_at_K": 0.19571340277777782,
+    "auc_at_K": 0.6957134027777778
+  }
+}
