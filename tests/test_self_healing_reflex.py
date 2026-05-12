@@ -24,6 +24,20 @@ import pytest
 from styxx.reflex import heal, should_heal, HealResult, HEAL_SYSTEM_PROMPT
 
 
+def test_dotted_path_from_paper_works():
+    """papers/self-healing-reflex-v0.md documents the call as
+    `styxx.reflex.heal(...)`. Because styxx/__init__.py rebinds
+    `styxx.reflex` to the legacy callable, the dotted path would
+    AttributeError without the compat shim. Regression-pin it here.
+    """
+    import styxx
+    assert callable(styxx.reflex), "legacy callable surface preserved"
+    assert callable(styxx.reflex.heal), "F10 paper's styxx.reflex.heal() call path"
+    assert styxx.reflex.HealResult is HealResult
+    assert callable(styxx.reflex.should_heal)
+    assert isinstance(styxx.reflex.HEAL_SYSTEM_PROMPT, str)
+
+
 # ── fixtures ─────────────────────────────────────────────────────────
 
 

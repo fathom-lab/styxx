@@ -67,6 +67,8 @@ release/v3.5.0-bundle/
 release/v3.8.0-bundle/
 release/v3.9.0-bundle/
 release/v3.9.1-bundle/
+release/v7.2.0-bundle/
+release/v7.3.0-bundle/
 
 # ── LaTeX build artifacts ────────────────────────────────
 *.aux

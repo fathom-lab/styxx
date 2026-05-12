@@ -259,6 +259,13 @@ from . import schema  # noqa: F401  (expose styxx.schema)
 from .watch import watch, observe, observe_raw, is_concerning, WatchSession
 from .gates import on_gate, remove_gate, clear_gates, list_gates
 from .reflex import reflex, rewind, abort, ReflexSession, ReflexSignal, RewindSignal, AbortSignal
+import sys as _sys
+_reflex_mod = _sys.modules["styxx.reflex"]
+reflex.heal = _reflex_mod.heal
+reflex.should_heal = _reflex_mod.should_heal
+reflex.HealResult = _reflex_mod.HealResult
+reflex.HEAL_SYSTEM_PROMPT = _reflex_mod.HEAL_SYSTEM_PROMPT
+del _sys, _reflex_mod
 from .guardian import guardian, GuardianSession, SteeringEvent
 from .weather import weather, WeatherReport
 from .dashboard import dashboard
