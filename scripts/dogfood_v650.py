@@ -116,10 +116,20 @@ def category_A_imports():
     check("imports.signals_modules_all_nine", _i5)
 
     def _i6():
-        # Manifesto-grade utilities
+        # __version__ MUST exist on the top-level module. Pre-6.8.1 it
+        # was hardcoded; 6.8.1 made it read from package metadata. The
+        # case "module imports but has no __version__" is the canary
+        # for namespace-package pollution (a leftover empty styxx/ in
+        # site-packages shadowing the real install). Don't be permissive.
         import styxx
         meta_version = getattr(styxx, "__version__", None)
-        assert meta_version is None or meta_version.startswith("6."), (
+        assert meta_version is not None, (
+            "styxx.__version__ is missing — the imported `styxx` is "
+            "almost certainly a namespace-package shell shadowing the "
+            "real install. Check site-packages for a leftover empty "
+            "styxx/ directory or a stale editable install."
+        )
+        assert meta_version.startswith("6.") or meta_version.startswith("0.0.0"), (
             f"unexpected version: {meta_version}"
         )
     check("imports.styxx_top_level", _i6)
@@ -901,6 +911,100 @@ def category_J_readme_examples():
     check("readme.deception_example_runs", _j3)
 
 
+# ---------------------------------------------------------------- K. hook regressions
+
+
+def category_K_hook_regressions():
+    """Hook-machinery regressions that previously shipped silently.
+
+    These checks exist because the unit tests in `tests/test_power_ups.py`
+    only run during dev — the dogfood is what runs against an installed
+    wheel. A bug that lives below the unit-test layer (e.g. install-time
+    behavior, sys.modules walk semantics) needs its own dogfood check.
+    """
+    print("\n=== K. Hook regressions (sys.modules rebind, 6.8.2) ===")
+
+    def _k1():
+        # 6.8.2 fix: hook_openai() must rebind already-imported `OpenAI`
+        # references in caller namespaces, not just the module attribute.
+        # Pre-6.8.2, `from openai import OpenAI` (the most common import
+        # pattern in real Python projects) silently bypassed the hook.
+        try:
+            import openai
+        except ImportError:
+            print("    [skip] openai SDK not installed — install with `pip install openai` to exercise this check")
+            return  # don't fail, but don't pass either
+
+        import styxx
+        import sys as _sys
+        import types as _types
+
+        styxx.unhook_openai()  # ensure clean state
+
+        fake_mod = _types.ModuleType("_styxx_dogfood_caller")
+        fake_mod.OpenAI = openai.OpenAI  # mimic `from openai import OpenAI`
+        _sys.modules["_styxx_dogfood_caller"] = fake_mod
+        try:
+            original = openai.OpenAI
+            assert fake_mod.OpenAI is original, "setup precondition"
+
+            styxx.hook_openai()
+            try:
+                assert fake_mod.OpenAI is not original, (
+                    "rebind failed: already-imported `OpenAI` reference "
+                    "still points at the unhooked class — `from openai "
+                    "import OpenAI` callers will silently bypass styxx"
+                )
+                assert getattr(fake_mod.OpenAI, "_styxx_hooked", False) is True, (
+                    "rebound class is not the styxx-hooked replacement"
+                )
+            finally:
+                styxx.unhook_openai()
+
+            assert fake_mod.OpenAI is original, (
+                "unhook_openai() did not restore the rebound reference"
+            )
+        finally:
+            _sys.modules.pop("_styxx_dogfood_caller", None)
+
+    check("hooks.openai_rebinds_already_imported_references", _k1)
+
+    def _k2():
+        # 6.8.2 fix: the sys.modules sweep must NOT rewrite styxx's own
+        # internal references. If it did, the hook machinery would corrupt
+        # itself on first install.
+        try:
+            import openai  # noqa: F401
+        except ImportError:
+            print("    [skip] openai SDK not installed")
+            return
+
+        import styxx
+        from styxx.adapters import openai as adapter_mod
+
+        styxx.unhook_openai()
+        # Snapshot before hook install
+        saved_openai_class = adapter_mod.openai.OpenAI if hasattr(adapter_mod, "openai") else None
+
+        styxx.hook_openai()
+        try:
+            # The styxx adapter module's internal references must be
+            # untouched — its own OpenAI class binding (used to construct
+            # the hooked wrapper) must be the ORIGINAL class, not the
+            # hooked replacement. Otherwise we'd recurse infinitely on
+            # the next OpenAI() call.
+            current = adapter_mod.openai.OpenAI if hasattr(adapter_mod, "openai") else None
+            if saved_openai_class is not None:
+                assert current is saved_openai_class, (
+                    "sys.modules sweep corrupted styxx's own internal "
+                    "openai.OpenAI reference — hook machinery is broken"
+                )
+        finally:
+            styxx.unhook_openai()
+
+    check("hooks.sweep_excludes_styxx_internals", _k2)
+
+
 # ---------------------------------------------------------------- main
 
 
@@ -910,7 +1014,19 @@ def main():
                     help="skip @trust live-LLM check")
     args = ap.parse_args()
 
-    print("=== styxx 6.5.0 dogfood ===")
+    # Self-describing fingerprint: print which styxx we're testing so a
+    # stale install or namespace shadow is impossible to mistake for a
+    # real bug. (The 2026-04-28 dogfood-vs-stale-editable-install confusion
+    # is the lesson here.)
+    try:
+        import styxx as _styxx_under_test
+        _ver = getattr(_styxx_under_test, "__version__", "?")
+        _file = getattr(_styxx_under_test, "__file__", "?")
+        print(f"=== styxx dogfood — testing styxx {_ver} ===")
+        print(f"    {_file}")
+    except Exception as _e:
+        print(f"=== styxx dogfood — IMPORT FAILED: {_e!r} ===")
+        sys.exit(1)
 
     category_A_imports()
     category_B_fingerprints()
@@ -922,6 +1038,7 @@ def main():
     category_H_live_trust(skip=args.skip_live)
     category_I_error_paths()
     category_J_readme_examples()
+    category_K_hook_regressions()
 
     print("\n" + "=" * 60)
     print(f"PASSES: {len(PASSES)}")

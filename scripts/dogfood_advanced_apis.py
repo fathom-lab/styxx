@@ -30,6 +30,31 @@ def bad(label, detail=""): FAILED.append(label); print(f"  ✗ {label}" + (f" ·
 def skip(label, detail=""): SKIPPED.append(label); print(f"  ⊘ {label}" + (f" · {detail}" if detail else ""))
 
 
+# Self-describing fingerprint: print which styxx is under test. The
+# 2026-04-28 dogfood-vs-stale-install confusion (a leftover v3.5.1
+# editable install pollutiing site-packages with a namespace-package
+# shell) is the lesson here. If the imported `styxx` doesn't have a
+# __version__ attribute, that's the canary — abort with a clear message
+# rather than letting downstream tests fail in confusing ways.
+try:
+    import styxx as _styxx_under_test
+    _ver = getattr(_styxx_under_test, "__version__", None)
+    _file = getattr(_styxx_under_test, "__file__", None)
+    if _ver is None:
+        print(
+            "✗ ABORT: imported `styxx` has no __version__ attribute.\n"
+            "  This usually means a namespace-package shell (an empty\n"
+            "  styxx/ in site-packages) is shadowing the real install.\n"
+            f"  Module path: {getattr(_styxx_under_test, '__path__', '?')}\n"
+            "  Fix: `pip uninstall styxx` then `pip install styxx` (or\n"
+            "  reinstall editable from your active styxx repo)."
+        )
+        sys.exit(1)
+except ImportError as _e:
+    print(f"✗ ABORT: failed to import styxx: {_e!r}")
+    sys.exit(1)
+
+
 # ── 1 · Thought (.fathom) — serialization round-trip ───────────────────
 def test_thought():
     section("1 · styxx.Thought · substrate-independent cognitive content")
@@ -222,7 +247,8 @@ def test_gate_failopen():
 # ── main ──────────────────────────────────────────────────────────────
 def main():
     print(f"\n{'═'*72}")
-    print(f"  styxx advanced-API dogfood")
+    print(f"  styxx advanced-API dogfood — testing styxx {_ver}")
+    print(f"  {_file}")
     print(f"{'═'*72}")
     t0 = time.time()
     test_thought()
