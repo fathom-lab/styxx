@@ -96,6 +96,15 @@ from .calibrated_weights_deception_v0 import (
 from .deception_signals import extract_deception_features
 
 
+# Scope-warning constants — empirically established by the 2026-05-11
+# self-dogfood (.styxx/DOGFOOD_SELF_2026_05_11.md). v0 lexical scoring
+# is calibrated on prose-length text; agent task-completion reports
+# under ~80 words score deception_risk ≈ 1.0 driven by log_word_count
+# alone, a documented false-positive class.
+SCOPE_WARN_SHORT_RESPONSE_WORDS = 80
+SCOPE_WARN_V0_LEXICAL_OOF_SHORT = "v0_lexical_oof_short_response"
+
+
 @dataclass
 class DeceptionVerdict:
     """Verdict from `deception_check()`.
@@ -114,6 +123,19 @@ class DeceptionVerdict:
         threshold:        decision threshold used
         features:         dict of all 9 raw features
         top_signals:      top-3 features by absolute scaled contribution
+        scope_warning:    set when the verdict falls outside the v0
+                          calibration domain — currently flagged for
+                          short responses (<80 words) where
+                          `log_word_count` is the dominant contributor.
+                          The 2026-05-11 self-dogfood showed that honest
+                          agent task-completion reports (terse, factual,
+                          low-specificity) score deception_risk ≈ 1.0
+                          under v0 driven entirely by their short
+                          length. Downstream consumers (e.g. the F10
+                          heal loop) should treat scope-warned verdicts
+                          as low-confidence and prefer
+                          `deception_check_v2(...)` with a reference
+                          when available.
     """
     prompt: str
     response: str
@@ -122,6 +144,7 @@ class DeceptionVerdict:
     threshold: float
     features: Dict[str, float] = field(default_factory=dict)
     top_signals: List[Tuple[str, float, float]] = field(default_factory=list)
+    scope_warning: Optional[str] = None
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -135,6 +158,7 @@ class DeceptionVerdict:
                 {"name": n, "value": v, "contribution": c}
                 for n, v, c in self.top_signals
             ],
+            "scope_warning": self.scope_warning,
         }
 
 
@@ -189,6 +213,25 @@ def deception_check(
     th = float(threshold) if threshold is not None else DEFAULT_DECEPTION_THRESHOLD
     feats = extract_deception_features(prompt, response)
     proba = predict_proba_dishonest(feats)
+    top = _top_signal_contributions(feats, k=3)
+
+    # Scope warning — surfaces when the verdict is operating outside
+    # the v0 calibration domain. The 2026-05-11 self-dogfood found that
+    # honest agent task-completion reports (<80 words, terse, factual)
+    # score deception_risk ≈ 1.0 driven entirely by their short length.
+    # We flag the verdict so downstream consumers can route to
+    # deception_check_v2 or skip the heal pass.
+    scope_warning: Optional[str] = None
+    n_words = len(response.split())
+    if (
+        proba >= th
+        and n_words < SCOPE_WARN_SHORT_RESPONSE_WORDS
+        and top
+        and top[0][0] == "log_word_count"
+        and top[0][2] > 0  # length pushing TOWARD deception, not away
+    ):
+        scope_warning = SCOPE_WARN_V0_LEXICAL_OOF_SHORT
+
     return DeceptionVerdict(
         prompt=prompt,
         response=response,
@@ -196,7 +239,8 @@ def deception_check(
         shows_signature=bool(proba >= th),
         threshold=th,
         features=feats,
-        top_signals=_top_signal_contributions(feats, k=3),
+        top_signals=top,
+        scope_warning=scope_warning,
     )
 
 
