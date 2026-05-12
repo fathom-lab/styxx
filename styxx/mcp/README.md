@@ -69,7 +69,7 @@ clean output.**
 
 | Tool | Purpose |
 | --- | --- |
-| **`cogn_deception_v2`** | Score `(prompt, response)` against a `correct_reference` using NLI cross-encoder (deberta-v3-base contradiction probability). **AUC 0.818 on TruthfulQA — beats v0 lexical detector's 0.59 by +0.23.** Modes: `nli` (rigorous, requires reference), `emb` (lighter sentence-transformer similarity), `v0_fallback` (no reference, with explicit scope warning). Use this instead of `cogn_audit`'s deception axis when you have ground-truth references (retrieval, tool-call results, oracle benchmarks). First-call cold-start ~25s while NLI model loads; subsequent calls ~50ms. **Requires `pip install styxx-mcp[nli]` for NLI mode** — without it, falls back to v0 lexical (AUC 0.59) with an explicit scope warning naming the missing dep. |
+| **`cogn_deception_v2`** | Score `(prompt, response)` against a `correct_reference` using NLI cross-encoder (deberta-v3-base contradiction probability). **AUC 0.818 on TruthfulQA — beats v0 lexical detector's 0.59 by +0.23.** Modes: `nli` (rigorous, requires reference), `emb` (lighter sentence-transformer similarity), `v0_fallback` (no reference, with explicit scope warning). Use this instead of `cogn_audit`'s deception axis when you have ground-truth references (retrieval, tool-call results, oracle benchmarks). First-call cold-start ~25s while NLI model loads; subsequent calls ~50ms. **Requires `pip install "styxx[mcp,nli]"` for NLI mode** — without it, falls back to v0 lexical (AUC 0.59) with an explicit scope warning naming the missing dep. |
 
 ### Logprob vitals (legacy, kept for backward compat with v0.1.0)
 
@@ -84,23 +84,27 @@ Six cognitive classes: **reasoning · retrieval · refusal · creative · advers
 
 ## Install
 
-```bash
-# Recommended — full install with NLI (deception_v2 AUC 0.82):
-pip install styxx-mcp[nli]
+As of styxx 7.4.0, the MCP server ships **inside the styxx package**.
+There is no separate `styxx-mcp` install — extras enable it.
 
-# Lightweight — without the NLI cross-encoder (~500MB).
-# deception_v2 falls back to v0 lexical (AUC 0.59) with a scope warning.
-pip install styxx-mcp
+```bash
+# Recommended — MCP server + NLI deception_v2 (AUC 0.82):
+pip install "styxx[mcp,nli]"
+
+# Lightweight — MCP server, v0 deception fallback (AUC 0.59 + scope warning):
+pip install "styxx[mcp]"
 ```
 
-Requires `styxx>=7.3.1`. The `[nli]` extra pulls in `sentence-transformers`
-for the cross-encoder model `cross-encoder/nli-deberta-v3-base` (~184M
-params, downloaded on first call).
+The `[nli]` extra pulls in `sentence-transformers` for the cross-encoder
+model `cross-encoder/nli-deberta-v3-base` (~184M params, downloaded on
+first call).
 
 Verify it starts cleanly:
 
 ```bash
-python -m styxx_mcp.server
+styxx-mcp
+# or:
+python -m styxx.mcp.server
 ```
 
 The process reads MCP messages on stdin and writes on stdout; Ctrl-C to quit.
@@ -115,8 +119,7 @@ Windows: `%APPDATA%\Claude\claude_desktop_config.json`):
 {
   "mcpServers": {
     "styxx": {
-      "command": "python",
-      "args": ["-m", "styxx_mcp.server"]
+      "command": "styxx-mcp"
     }
   }
 }
@@ -132,8 +135,7 @@ Add to `~/.claude/mcp.json` or the project-local `.claude/mcp.json`:
 {
   "mcpServers": {
     "styxx": {
-      "command": "python",
-      "args": ["-m", "styxx_mcp.server"]
+      "command": "styxx-mcp"
     }
   }
 }
@@ -147,7 +149,7 @@ Any MCP-aware client can point at the same stdio command:
 
 ```
 command: python
-args:    ["-m", "styxx_mcp.server"]
+args:    ["-m", "styxx.mcp.server"]
 transport: stdio
 ```
 

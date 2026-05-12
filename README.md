@@ -38,6 +38,9 @@
 > **May 12, 2026 — deception v2: semantic grounding beats lexical.**
 > `deception_v0`'s lexical detector hit AUC 0.59 on TruthfulQA — near chance. `deception_v2`'s NLI cross-encoder, scoring response against `correct_reference`, hits **AUC 0.818**. Ships in `styxx.guardrail.deception_v2` (7.3.1) and as the `cogn_deception_v2` MCP tool. Install with `pip install styxx[nli]` for the cross-encoder dep; falls back gracefully to v0 lexical (with explicit scope warning) without it.
 
+> **May 12, 2026 — MCP server moved in-tree (7.4.0).**
+> The `styxx-mcp` MCP server now ships as `styxx.mcp` inside the main styxx package. Install with `pip install "styxx[mcp]"` (or `"styxx[mcp,nli]"` for full deception_v2). 12 cognometric tools exposed over stdio to Claude Desktop / Claude Code / Cursor / Cline. Run via the `styxx-mcp` console script or `python -m styxx.mcp.server`. See [`styxx/mcp/README.md`](styxx/mcp/README.md) for client config.
+
 ### `@styxx.profile` — py-spy for LLM reasoning
 
 ```python

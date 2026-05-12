@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "7.3.1"
+version = "7.4.0"
 description = "Cognitive observability for LLM agents. @styxx.profile decorator returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3). Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
 readme = "README.md"
 license = { text = "MIT" }
@@ -83,6 +83,11 @@ nli = [
     "transformers>=4.35",
     "sentence-transformers>=2.2",
 ]
+# 7.4.0: integrated MCP server (was the separate styxx-mcp package).
+# Enables the `styxx-mcp` console script + python -m styxx.mcp.server.
+mcp = [
+    "mcp>=1.0.0",
+]
 # 4.0.3: Guardrails AI validator (HallucinationCheck) backed by styxx
 guardrails = ["guardrails-ai>=0.4"]
 # 4.0.3: LlamaIndex evaluator (StyxxHallucinationEvaluator) for RAG faithfulness
@@ -107,6 +112,7 @@ Documentation  = "https://fathom.darkflobi.com/styxx"
 
 [project.scripts]
 styxx = "styxx.cli:main"
+styxx-mcp = "styxx.mcp.server:main"
 
 [tool.setuptools]
 packages = [
@@ -114,6 +120,7 @@ packages = [
     "styxx.anthropic_hack", "styxx.residual_probe",
     "styxx.residual_probe.atlas", "styxx.guardrail",
     "styxx.attack", "styxx.attack.seeds",
+    "styxx.mcp",
 ]
 
 [tool.setuptools.package-data]
