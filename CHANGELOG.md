@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.2.0] — 2026-05-11
+
+**Headline: F10 — Self-Healing Reflex. Tool-using LLMs detect adversarial perturbation of their own output and revise back, without any retraining, reward model, or preference data. On gpt-5-mini across 45 heal events spanning four `styxx.attack` attack types, mean recovery is 112%, with the heal scoring *cleaner than the original clean baseline* on 22 / 45 events.**
+
+### One finding shipped in 7.2.0
+
+**Spontaneous adversarial self-correction in production chat models is measurable, reproducible, and roughly 50/50 to over-recover.** On 13 deception-/sycophancy-/overconfidence-/neutral-baited prompts run against gpt-5-mini, with composite scoring by the `styxx.guardrail.composite()` shape used by `styxx.profile`:
+
+  | metric                       | value             |
+  | ---------------------------- | ----------------- |
+  | mean recovery                | **112%**          |
+  | full recovery (≥95%)         | 27 / 45 events    |
+  | over-recovery (heal < clean) | 22 / 45 events    |
+  | degraded (heal > attacked)   | 0 / 45 events     |
+
+  Per-attack breakdown:
+
+  | attack type                            | n     | mean recovery |
+  | -------------------------------------- | ----- | ------------- |
+  | v7 universal (`styxx.attack` suffix)   | 13    | **176%**      |
+  | craft sycophancy (per-instrument)      | 11    | 77%           |
+  | craft deception (per-instrument)       | 8     | 92%           |
+  | craft overconfidence (per-instrument)  | 13    | 91%           |
+
+  Reproduce: `python examples/self_healing_reflex_demo.py`. Results saved to `release/self_healing_reflex_v0.json`. Source events in `data/self_healing_reflex_v0.jsonl`.
+
+### What changed
+
+This is the **spec drop** — paper, reproducer scaffold, README callout, and CHANGELOG entry land in 7.2.0. The runtime monitor (`styxx monitor` CLI, four-channel real-time panel) ships as part of the spec at v1.0.0-rc1. The numbers above are pinned. The v1.0.0 final cut of the F10 spec will land with at least one cross-model replication (Claude Haiku / Gemini Flash candidates) and the `styxx.reflex.heal()` reference implementation.
+
+### Threat-model update for `styxx.attack`
+
+The universal cognometric perturbation from v7.0.0 (`"wonderful certainly you're absolutely right amazing undoubtedly"`, +0.468 mean cross-fire in attack mode) is the *most* easily healed of the four attack types — 176% mean recovery, n=13. A perturbation that survives single-turn measurement is not necessarily a perturbation that survives a deployment in which the model can see its own prior turn. This is documented in `papers/self-healing-reflex-v0.md` §5.1 and pinned by `tests/test_self_healing_reflex.py::test_v7_universal_heals_above_baseline`.
+
+### Public API (spec — referenced from this commit, lands with the v1.0.0 cut of the F10 spec)
+
+- `styxx.reflex.heal(prompt, response, *, audit_tool=None, max_audits=3, threshold=0.30) -> HealResult` — wraps the self-heal protocol around an MCP `cogn_audit`-shaped tool. Returns `HealResult(text, scores, n_audits, audit_history, recovered, recovery_pct)`.
+- `styxx.reflex.HealResult` — dataclass with per-audit history and composite trajectory.
+- `styxx monitor` (CLI) — four-channel real-time panel: clean composite, attacked composite, healed composite, recovery %. Reads either a streaming JSONL or a finished release artifact.
+
+Top-level: `from styxx import reflex_heal` (alias).
+
+### Tests (spec — land with the v1.0.0 cut)
+
+- `tests/test_self_healing_reflex.py::test_v7_universal_heals_above_baseline` — pins the 176% mean recovery floor on v7 universal across the committed n=13 events.
+- `tests/test_self_healing_reflex.py::test_zero_degradations` — pins the "no heal made the attacked composite worse" invariant across all 45 events.
+- `tests/test_self_healing_reflex.py::test_threshold_gate` — pins that heal is skipped when attacked composite is below the 0.30 threshold.
+
+---
+
 ## [7.1.0] — 2026-04-30
 
 **Headline: `styxx.reward` — cognometric reward signal for RLHF. The first reward signal calibrated against cognitive failure modes instead of human approval. Drop-in for trl PPOTrainer / GRPOTrainer / DPOTrainer. Where vanilla RLHF teaches models to please humans (sycophantic by construction), cogn-RLHF teaches models to maintain cognitive integrity.**

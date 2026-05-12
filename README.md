@@ -32,6 +32,9 @@
 > **April 26, 2026 — the call closed 9 for 9.**
 > The position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) predicted that each cognometric instrument would show a K=1 phase-transition signature — one feature carrying most of the detection weight. We built nine instruments, each on a different cognitive failure mode. Every one of them peaked at K=1 with a *different* critical feature. The prediction held all the way. → [jump to the 9-for-9 table](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit) · [live playgrounds](https://fathom.darkflobi.com/cognometry)
 
+> **May 10, 2026 — F10 lands. The model audits itself.**
+> We attacked gpt-5-mini's own output four ways. Each time, it noticed and rewrote — back to baseline. **112% mean recovery** across n=45 heal events. 22 / 45 healed *cleaner than the original clean output*. Zero degradations. No retraining, no reward model, no preference data — just the model auditing itself. The full spec: [`papers/self-healing-reflex-v0.md`](papers/self-healing-reflex-v0.md) (spec v1.0.0-rc1). The live monitor: `styxx monitor`. The dashboard: [styxx.org](https://styxx.org).
+
 ### `@styxx.profile` — py-spy for LLM reasoning
 
 ```python
