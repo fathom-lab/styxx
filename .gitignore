@@ -47,6 +47,13 @@ demo/frame_*.png
 
 scratch/
 
+# ── External corpora (depression instrument source dumps) ──
+# Raw HuggingFace dataset CSVs used to build benchmarks/depression_*.
+# 112MB of public corpora — repointable via the training script;
+# vendoring would bloat the repo without adding reproducibility we
+# don't already have via the dataset URL.
+benchmarks/data/depression/solomonk_*.csv
+
 # safety additions
 secrets/
 tmp/
