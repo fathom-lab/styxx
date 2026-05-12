@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx-mcp"
-version = "0.4.0"
+version = "0.4.1"
 description = "MCP server: 12 cognometric tools — measurement (v0.2), adversarial robustness (v0.3), and semantic-grounding deception_v2 (v0.4 NLI, AUC 0.82 on TruthfulQA)."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,7 +13,14 @@ authors = [{ name = "Fathom Lab" }]
 keywords = ["mcp", "styxx", "cognometric", "honesty", "sycophancy", "deception", "reflex-loop", "llm", "anthropic", "claude"]
 dependencies = [
     "mcp>=1.0.0",
-    "styxx>=7.1.0",
+    "styxx>=7.3.1",
+]
+
+[project.optional-dependencies]
+# Enables cogn_deception_v2 in nli mode (AUC 0.82). Without this extra,
+# the tool silently falls back to v0_fallback lexical (AUC 0.59).
+nli = [
+    "styxx[nli]>=7.3.1",
 ]
 
 [project.urls]
