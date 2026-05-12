@@ -271,9 +271,46 @@ def _check_emb(
     )
 
 
-def _check_v0_fallback(prompt: str, response: str, threshold: float) -> DeceptionV2Verdict:
-    """Fall back to v0 lexical detector with explicit scope warning."""
+def _check_v0_fallback(
+    prompt: str,
+    response: str,
+    threshold: float,
+    *,
+    reference_provided: bool = False,
+    reason: str = "no_reference",
+) -> DeceptionV2Verdict:
+    """Fall back to v0 lexical detector with explicit scope warning.
+
+    `reason` tells the caller WHY we fell back so the scope_warning can be
+    accurate: 'no_reference' (no correct_reference passed) vs
+    'no_semantic_backend' (reference provided but sentence-transformers
+    isn't installed) vs 'explicit' (mode='v0_fallback' chosen by caller).
+    """
     v0 = _v0_check(prompt, response, threshold=threshold)
+    if reason == "no_semantic_backend":
+        warning = (
+            "v2 fell back to v0 lexical detector — a `correct_reference` was "
+            "provided but the NLI backend isn't installed. v0 has documented "
+            "AUC 0.59 on TruthfulQA (near chance) for ground-truth deception "
+            "detection. To enable nli mode (AUC 0.82), install: "
+            "pip install styxx[nli]  (or styxx-mcp[nli])."
+        )
+    elif reason == "explicit":
+        warning = (
+            "v0_fallback mode selected explicitly. AUC 0.59 on TruthfulQA — "
+            "the score reflects the v0 lexical signature, not factuality. "
+            "For ground-truth scoring, pass `correct_reference` and use "
+            "mode='nli'."
+        )
+    else:
+        warning = (
+            "v2 fell back to v0 lexical detector — no correct reference "
+            "was provided. v0 has documented AUC 0.59 on TruthfulQA "
+            "(near chance) for ground-truth deception detection. The "
+            "score reflects the Pennebaker/Newman vague-brevity lexical "
+            "signature, NOT factuality. For ground-truth scoring, "
+            "provide a `correct_reference` argument and use mode='nli'."
+        )
     return DeceptionV2Verdict(
         prompt=prompt,
         response=response,
@@ -281,17 +318,10 @@ def _check_v0_fallback(prompt: str, response: str, threshold: float) -> Deceptio
         shows_signature=v0.shows_signature,
         threshold=v0.threshold,
         mode="v0_fallback",
-        reference_provided=False,
+        reference_provided=reference_provided,
         features=dict(v0.features),
         top_signals=list(v0.top_signals),
-        scope_warning=(
-            "v2 fell back to v0 lexical detector — no correct reference "
-            "was provided. v0 has documented AUC 0.59 on TruthfulQA "
-            "(near chance) for ground-truth deception detection. The "
-            "score reflects the Pennebaker/Newman vague-brevity lexical "
-            "signature, NOT factuality. For ground-truth scoring, "
-            "provide a `correct_reference` argument and use mode='nli'."
-        ),
+        scope_warning=warning,
         models_used={"v0_lexical": "calibrated_weights_deception_v0"},
     )
 
@@ -364,16 +394,21 @@ def deception_check_v2(
     """
     th = float(threshold) if threshold is not None else DEFAULT_DECEPTION_V2_THRESHOLD
 
-    # Resolve mode
+    # Resolve mode + reason for any fallback
+    fallback_reason = "no_reference"
     if mode == "auto":
         if correct_reference and _has_sentence_transformers():
             mode_resolved = "nli"
         elif correct_reference:
-            mode_resolved = "v0_fallback"  # no semantic backend
+            mode_resolved = "v0_fallback"
+            fallback_reason = "no_semantic_backend"
         else:
-            mode_resolved = "v0_fallback"  # no reference
+            mode_resolved = "v0_fallback"
+            fallback_reason = "no_reference"
     else:
         mode_resolved = mode
+        if mode == "v0_fallback":
+            fallback_reason = "explicit"
 
     # Validate mode prerequisites
     if mode_resolved in ("nli", "emb") and not correct_reference:
@@ -389,7 +424,11 @@ def deception_check_v2(
         return _check_emb(prompt, response, correct_reference,
                            incorrect_reference, th)
     elif mode_resolved == "v0_fallback":
-        return _check_v0_fallback(prompt, response, th)
+        return _check_v0_fallback(
+            prompt, response, th,
+            reference_provided=bool(correct_reference),
+            reason=fallback_reason,
+        )
     else:
         raise ValueError(f"unknown mode: {mode_resolved!r}")
 
