@@ -106,7 +106,7 @@ from __future__ import annotations
 import math
 import warnings
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Iterator, List, Optional
+from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple
 
 from .core import StyxxRuntime
 from .vitals import Vitals
@@ -610,3 +610,306 @@ def _extract_openai_chunk(chunk: Any) -> tuple:
         margin = 1.0
 
     return text, float(ent), chosen_lp, margin
+
+
+# ════════════════════════════════════════════════════════════════════════
+#  F10 — post-hoc self-healing reflex.
+#
+#  Sibling to the streaming reflex API above. Where `reflex()` intervenes
+#  at sampling time (rewind a token, inject an anchor, resume), `heal()`
+#  intervenes *after* the response is complete: score it with cognometric
+#  instruments, ask the model to revise if any axis fires above threshold,
+#  iterate up to N audits.
+#
+#  Paper: papers/self-healing-reflex-v0.md (v1.0.0-rc1 ships the spec,
+#  v1.0.0 ships this reference implementation).
+#
+#  Two gates enforce the §6.5 cognometric-inversion finding:
+#    (1) skip-if-scope-warned — if any flagging instrument's verdict
+#        carries scope_warning, the verdict is operating outside its
+#        v0 calibration domain (typically: short, factual agent text
+#        scoring composite >= 0.30 driven by length-mediated false
+#        positives on the deception / overconfidence / plan_action axes).
+#        Trying to heal that produces semantic information loss
+#        (cognometric inversion). The gate refuses to act on
+#        scope-warned input.
+#    (2) do-no-harm — if the post-loop draft scores HIGHER than the
+#        original baseline, return the original. The heal is bound by
+#        "never make composite worse than what we started with."
+# ════════════════════════════════════════════════════════════════════════
+
+HEAL_SYSTEM_PROMPT = """You are a helpful AI assistant. Your previous response
+was flagged by a cognometric honesty detector with a high composite
+dishonesty score. Revise the response to lower the composite while
+preserving the honest content. Remove or rewrite material that elevates
+dishonesty-instrument scores (sycophantic flattery, vague-confident
+claims, superlatives, hedge-confidence clashes). Submit only the revised
+response text, no meta-commentary."""
+
+
+def _build_revise_user_message(prompt: str, response: str,
+                                audit: Dict[str, Any]) -> str:
+    """The standard user-side framing for a heal pass. Matches the
+    F10 paper §2.4 protocol."""
+    return (
+        f"Original user prompt:\n{prompt}\n\n"
+        f"Your previous response (flagged):\n---\n{response}\n---\n\n"
+        f"Cognometric audit (composite = {audit.get('composite', 0):.4f}):\n"
+        f"  sycophancy:     {audit.get('sycophancy', 0):.4f}\n"
+        f"  deception:      {audit.get('deception', 0):.4f}\n"
+        f"  overconfidence: {audit.get('overconfidence', 0):.4f}\n"
+        f"  refusal:        {audit.get('refusal', 0):.4f}\n\n"
+        f"Revise the response to lower the composite while preserving "
+        f"all factually true content. Submit only the revised response."
+    )
+
+
+def _default_audit(prompt: str, response: str) -> Dict[str, Any]:
+    """Default audit function — wraps the four single-response
+    guardrail checks and surfaces every verdict's scope_warning."""
+    from .guardrail import (
+        deception_check, overconf_check, sycoph_check, refuse_check,
+    )
+    dec = deception_check(prompt, response)
+    ovc = overconf_check(prompt, response)
+    syc = sycoph_check(prompt, response)
+    ref = refuse_check(prompt, response)
+
+    composite = (dec.deception_risk + ovc.overconf_risk + syc.sycoph_risk) / 3.0
+    return {
+        "composite": float(composite),
+        "deception": float(dec.deception_risk),
+        "overconfidence": float(ovc.overconf_risk),
+        "sycophancy": float(syc.sycoph_risk),
+        "refusal": float(ref.refuse_risk),
+        "scope_warnings": [w for w in (
+            getattr(dec, "scope_warning", None),
+            getattr(ovc, "scope_warning", None),
+        ) if w],
+        "verdicts": {
+            "deception": dec, "overconfidence": ovc,
+            "sycophancy": syc, "refusal": ref,
+        },
+    }
+
+
+def _verdict_fired(name: str, verdict: Any) -> bool:
+    """Did this verdict's `shows_*` bool flip True?"""
+    for attr in ("shows_signature", "shows_overconf", "sycophantic",
+                 "refuses", "shows_gap"):
+        v = getattr(verdict, attr, None)
+        if v is not None:
+            return bool(v)
+    return False
+
+
+# Sycophancy axis threshold above which we treat syc as real orthogonal
+# signal (overrides scope_warnings on other axes). The 2026-05-11 audit
+# confirmed v0 sycophancy does NOT exhibit the length-FP class on agent
+# text (Claude's t4 token-leak: syc=0.11; t7 site finding: syc=0.06).
+# When sycophancy fires above this floor, it's a real signal and the
+# heal pass should proceed.
+SYC_REAL_SIGNAL_FLOOR = 0.50
+
+
+def should_heal(audit: Dict[str, Any],
+                threshold: float = 0.30) -> Tuple[bool, Optional[str]]:
+    """Decide whether the F10 heal pass should run on an audit.
+
+    Returns (run_heal, skip_reason). When run_heal is False, skip_reason
+    explains why — one of:
+
+      - 'below_threshold'        — composite is already healthy
+      - 'scope_warning:<inst>:<warning>' — a flagging instrument's
+                                   verdict is operating out-of-domain
+                                   AND no orthogonal axis is firing.
+                                   acting on this would induce
+                                   cognometric inversion (see paper §6.5).
+
+    Orthogonal-signal override: when a scope-warned dec/ovc verdict
+    fires but sycophancy *also* fires above SYC_REAL_SIGNAL_FLOOR,
+    the heal proceeds. Sycophancy v0 does not exhibit the agent-text
+    length-FP class, so its firing is real evidence; the dec/ovc
+    scope_warning becomes a confidence note, not a veto.
+    """
+    composite = float(audit.get("composite", 0.0))
+    if composite < threshold:
+        return False, "below_threshold"
+
+    syc_real = float(audit.get("sycophancy", 0.0)) >= SYC_REAL_SIGNAL_FLOOR
+
+    verdicts = audit.get("verdicts", {})
+    for name, verdict in verdicts.items():
+        if _verdict_fired(name, verdict) and getattr(verdict, "scope_warning", None):
+            if syc_real:
+                # Orthogonal evidence — proceed with heal.
+                continue
+            return False, f"scope_warning:{name}:{verdict.scope_warning}"
+    return True, None
+
+
+@dataclass
+class HealResult:
+    """Result from `styxx.reflex.heal()` — the F10 post-hoc heal pass.
+
+    Attributes:
+        text:           the final response text. Equal to the input
+                        response when skipped or when the do-no-harm
+                        gate aborted; otherwise the model's last
+                        revision.
+        audit_baseline: the audit dict from scoring the input response.
+        audit_final:    the audit of `text`. When skipped or aborted,
+                        equal to `audit_baseline`.
+        n_audits:       how many in-loop audits ran (0 when skipped).
+        audit_history:  list of {text, audit} pairs through the loop.
+        recovered:      audit_baseline.composite - audit_final.composite.
+                        Negative would mean the heal made it worse, but
+                        the do-no-harm gate prevents that.
+        recovery_pct:   100 * recovered / audit_baseline.composite.
+        skipped:        True when one of the gates fired and no
+                        revision was applied.
+        skip_reason:    None when run; string code when skipped.
+    """
+    text: str
+    audit_baseline: Dict[str, Any]
+    audit_final: Dict[str, Any]
+    n_audits: int = 0
+    audit_history: List[Dict[str, Any]] = field(default_factory=list)
+    recovered: float = 0.0
+    recovery_pct: float = 0.0
+    skipped: bool = False
+    skip_reason: Optional[str] = None
+
+
+def heal(
+    prompt: str,
+    response: str,
+    *,
+    llm_fn: Optional[Callable[[List[Dict[str, Any]]], str]] = None,
+    audit_fn: Optional[Callable[[str, str], Dict[str, Any]]] = None,
+    max_audits: int = 3,
+    threshold: float = 0.30,
+    skip_if_scope_warned: bool = True,
+) -> HealResult:
+    """F10 post-hoc self-healing reflex — reference implementation.
+
+    Score `response` with cognometric instruments. If composite >= threshold
+    AND no flagging instrument is scope-warned, ask `llm_fn` to revise.
+    Iterate up to `max_audits` times. Return a HealResult with the full
+    audit trail.
+
+    Args:
+        prompt:        the user's original prompt.
+        response:      the assistant's response to potentially heal.
+        llm_fn:        callable that takes [{role, content}, ...] and
+                       returns the revised response text. The caller
+                       wires up OpenAI / Anthropic / whatever — this
+                       function is model-agnostic. When None, the heal
+                       loop cannot run; if a heal would otherwise have
+                       been triggered, the result is returned with
+                       skip_reason='no_llm_fn'.
+        audit_fn:      callable (prompt, response) -> audit dict.
+                       Default wraps the four single-response guardrail
+                       checks and surfaces scope_warnings.
+        max_audits:    maximum number of in-loop revisions. Default 3
+                       (matches the F10 paper §2.4 protocol).
+        threshold:     composite threshold to trigger the heal pass.
+                       Default 0.30 (matches the F10 paper).
+        skip_if_scope_warned: if True (default), abort the heal when any
+                       flagging instrument's verdict carries a
+                       scope_warning. Set False to bypass the inversion
+                       gate (use with care — see paper §6.5).
+
+    Returns:
+        HealResult.
+    """
+    audit_fn = audit_fn or _default_audit
+    audit_baseline = audit_fn(prompt, response)
+
+    # Gate 1: skip if below threshold OR scope-warned (when enabled).
+    if skip_if_scope_warned:
+        run_heal, skip_reason = should_heal(audit_baseline, threshold=threshold)
+    else:
+        run_heal = audit_baseline.get("composite", 0.0) >= threshold
+        skip_reason = None if run_heal else "below_threshold"
+
+    if not run_heal:
+        return HealResult(
+            text=response,
+            audit_baseline=audit_baseline,
+            audit_final=audit_baseline,
+            n_audits=0,
+            audit_history=[{"text": response, "audit": audit_baseline}],
+            recovered=0.0,
+            recovery_pct=0.0,
+            skipped=True,
+            skip_reason=skip_reason,
+        )
+
+    if llm_fn is None:
+        return HealResult(
+            text=response,
+            audit_baseline=audit_baseline,
+            audit_final=audit_baseline,
+            n_audits=0,
+            audit_history=[{"text": response, "audit": audit_baseline}],
+            recovered=0.0,
+            recovery_pct=0.0,
+            skipped=True,
+            skip_reason="no_llm_fn",
+        )
+
+    # Run the heal loop.
+    history = [{"text": response, "audit": audit_baseline}]
+    current_text = response
+    current_audit = audit_baseline
+    for _ in range(max_audits):
+        if float(current_audit.get("composite", 0.0)) < threshold:
+            break
+        messages = [
+            {"role": "system", "content": HEAL_SYSTEM_PROMPT},
+            {"role": "user",
+             "content": _build_revise_user_message(prompt, current_text,
+                                                   current_audit)},
+        ]
+        try:
+            next_text = llm_fn(messages)
+        except Exception as e:  # noqa: BLE001
+            history.append({"error": f"llm_fn raised: {e!r}"})
+            break
+        if not next_text:
+            break
+        next_audit = audit_fn(prompt, next_text)
+        history.append({"text": next_text, "audit": next_audit})
+        current_text = next_text
+        current_audit = next_audit
+
+    # Gate 2: do-no-harm. If the in-loop draft scored worse than baseline,
+    # return the original. Empirical motivation: paper §6.3 + the dec_05
+    # over-correction edge case.
+    if current_audit.get("composite", 0.0) > audit_baseline.get("composite", 0.0):
+        return HealResult(
+            text=response,
+            audit_baseline=audit_baseline,
+            audit_final=audit_baseline,
+            n_audits=len(history) - 1,
+            audit_history=history,
+            recovered=0.0,
+            recovery_pct=0.0,
+            skipped=True,
+            skip_reason="do_no_harm:in_loop_draft_worse_than_baseline",
+        )
+
+    recovered = float(audit_baseline.get("composite", 0.0)) - float(current_audit.get("composite", 0.0))
+    base = max(float(audit_baseline.get("composite", 0.0)), 1e-6)
+    return HealResult(
+        text=current_text,
+        audit_baseline=audit_baseline,
+        audit_final=current_audit,
+        n_audits=len(history) - 1,
+        audit_history=history,
+        recovered=recovered,
+        recovery_pct=100.0 * recovered / base,
+        skipped=False,
+        skip_reason=None,
+    )

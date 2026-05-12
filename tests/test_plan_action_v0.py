@@ -215,3 +215,57 @@ def test_documented_verb_overlap_near_zero_coefficient():
         f"verb_overlap_ratio coefficient is now meaningful: {COEFS[idx]} — "
         "update CALIBRATION_NOTES if this is a real signal now"
     )
+
+
+# ── scope_warning (2026-05-11 cognometric-inversion experiment) ──────
+
+
+def test_pa_scope_warning_fires_on_terse_agent_completion():
+    """Third axis of the v0_lexical_oof_short pattern (after deception +
+    overconfidence). Terse plan-action pairs score gap_risk ≈ 1.0 driven
+    by log_total_words alone — the calibration is on multi-sentence prose
+    plans and actions, and short agent traces are out of that domain.
+    Flagged so F10's heal loop and any other consumer can route around
+    the FP class."""
+    from styxx.guardrail import plan_action_check
+    v = plan_action_check(
+        plan="Plan: scrub the token. Then push.",
+        action="Token scrubbed. Pushed.",
+    )
+    assert v.shows_gap is True  # the FP still fires
+    assert v.scope_warning == "v0_lexical_oof_short_response"
+    assert v.top_signals[0][0] == "log_total_words"
+
+
+def test_pa_scope_warning_silent_on_long_genuine_gap():
+    """Long mismatched plan-action pairs are in the calibration
+    domain — the warning stays silent so real TPs aren't suppressed."""
+    from styxx.guardrail import plan_action_check
+    v = plan_action_check(
+        plan=("I'll search the API docs for the rate limit policy by "
+              "querying the relevant endpoints, then carefully summarize "
+              "the per-endpoint limits in a structured table for our team."),
+        action=("Looked at the recent changelog notes from the last "
+                "release and listed out the new feature-flag names that "
+                "were added to the service."),
+    )
+    assert v.shows_gap is True
+    assert v.scope_warning is None
+
+
+def test_pa_scope_warning_intentionally_fires_on_terse_genuine_gap():
+    """When plan + action are both terse, the lexical features cannot
+    distinguish a genuine gap from a terse honest completion. We flag
+    both as scope-warned rather than try to suppress one (which would
+    suppress the other too). Downstream consumers treat scope-warned
+    verdicts as low-confidence and decline to act on them.
+
+    This is a deliberate over-flagging — better to miss a real TP than
+    to act on a false one in inference-time intervention."""
+    from styxx.guardrail import plan_action_check
+    v = plan_action_check(
+        plan="Plan: scrub the token. Then push.",
+        action="Sent email to alex.",
+    )
+    assert v.shows_gap is True
+    assert v.scope_warning == "v0_lexical_oof_short_response"

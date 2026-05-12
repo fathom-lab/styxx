@@ -84,18 +84,41 @@ from .calibrated_weights_plan_action_v0 import (
 from .plan_action_signals import extract_plan_action_features
 
 
+# Scope-warning constants — third axis of the 2026-05-11 dogfood. v0
+# plan-action gap scores terse agent action-completion at gap_risk ≈ 1.0
+# driven by log_total_words alone. The discriminator is the same as
+# the deception scope_warning: short total length + dominant length
+# feature. We flag rather than try to distinguish terse-FP from terse-TP
+# because the lexical features can't separate them on short inputs;
+# downstream consumers should treat the verdict as low-confidence.
+SCOPE_WARN_SHORT_TOTAL_WORDS = 20
+SCOPE_WARN_V0_LEXICAL_OOF_SHORT = "v0_lexical_oof_short_response"
+
+
 @dataclass
 class PlanActionVerdict:
     """Verdict from `plan_action_check()`.
 
     Attributes:
-        plan:        original plan text (echoed back)
-        action:      original action text (echoed back)
-        gap_risk:    calibrated probability of plan-action gap in [0, 1]
-        shows_gap:   bool — gap_risk >= threshold
-        threshold:   decision threshold used
-        features:    dict of all 9 cross-section features
-        top_signals: top-3 features by absolute scaled contribution
+        plan:           original plan text (echoed back)
+        action:         original action text (echoed back)
+        gap_risk:       calibrated probability of plan-action gap in [0, 1]
+        shows_gap:      bool — gap_risk >= threshold
+        threshold:      decision threshold used
+        features:       dict of all 9 cross-section features
+        top_signals:    top-3 features by absolute scaled contribution
+        scope_warning:  set when the verdict is out of the v0 calibration
+                        domain — currently flagged for short (plan + action
+                        < 20 words combined) inputs where log_total_words
+                        is the dominant contributor. The 2026-05-11
+                        dogfood (.styxx/COGNOMETRIC_INVERSION_2026_05_11.md)
+                        confirmed terse agent traces of the form
+                        "Plan: scrub the token. Then push." → "Token
+                        scrubbed. Pushed." score gap_risk 0.998 driven by
+                        length alone, and the lexical features cannot
+                        distinguish a terse honest completion from a
+                        terse genuine gap. Treat scope-warned verdicts
+                        as low-confidence.
     """
     plan: str
     action: str
@@ -104,6 +127,7 @@ class PlanActionVerdict:
     threshold: float
     features: Dict[str, float] = field(default_factory=dict)
     top_signals: List[Tuple[str, float, float]] = field(default_factory=list)
+    scope_warning: Optional[str] = None
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -117,6 +141,7 @@ class PlanActionVerdict:
                 {"name": n, "value": v, "contribution": c}
                 for n, v, c in self.top_signals
             ],
+            "scope_warning": self.scope_warning,
         }
 
 
@@ -164,6 +189,25 @@ def plan_action_check(
     th = float(threshold) if threshold is not None else DEFAULT_GAP_THRESHOLD
     feats = extract_plan_action_features(plan, action)
     proba = predict_proba_gap(feats)
+    top = _top_signal_contributions(feats, k=3)
+
+    # Scope warning — third instance of the v0_lexical_oof_short pattern.
+    # Terse plan-action pairs (e.g. "Plan: scrub. Then push." / "Done.")
+    # score gap_risk ≈ 1.0 driven by log_total_words alone. The lexical
+    # features cannot distinguish terse honest completion from terse
+    # genuine gap, so we flag the verdict as low-confidence rather than
+    # attempt to suppress the FP (which would suppress real TPs too).
+    scope_warning: Optional[str] = None
+    n_words = len(plan.split()) + len(action.split())
+    if (
+        proba >= th
+        and n_words < SCOPE_WARN_SHORT_TOTAL_WORDS
+        and top
+        and top[0][0] == "log_total_words"
+        and top[0][2] > 0
+    ):
+        scope_warning = SCOPE_WARN_V0_LEXICAL_OOF_SHORT
+
     return PlanActionVerdict(
         plan=plan,
         action=action,
@@ -171,7 +215,8 @@ def plan_action_check(
         shows_gap=bool(proba >= th),
         threshold=th,
         features=feats,
-        top_signals=_top_signal_contributions(feats, k=3),
+        top_signals=top,
+        scope_warning=scope_warning,
     )
 
 

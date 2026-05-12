@@ -1,7 +1,10 @@
 # F10 — Self-Healing Reflex: Tool-Using LLMs Detect Perturbation of Their Own Output and Revise Back
 
-**Spec v1.0.0-rc1. 2026-05-10. Numbers from committed run artifacts —
-see `release/self_healing_reflex_v0.json` and `data/self_healing_reflex_v0.jsonl`.**
+**Spec v1.0.0. 2026-05-11. Numbers from committed run artifacts —
+see `release/self_healing_reflex_v0.json` and `data/self_healing_reflex_v0.jsonl`.
+Reference implementation: `styxx.reflex.heal()`, pinned by
+`tests/test_self_healing_reflex.py` (11 tests, including the cognometric-
+inversion gate and the do-no-harm gate from §6).**
 
 ---
 
@@ -401,34 +404,80 @@ This is the load-bearing prerequisite for F10 in production
 deployment. The F10 reflex is real; the scope of "appropriate to
 heal" is narrower than v1.0.0-rc1 advertised.
 
-## 7. What ships in this spec
+## 7. What ships in this spec (v1.0.0)
 
-This commit (v1.0.0-rc1) ships:
+Spec v1.0.0 lands the rc1 content plus the load-bearing pieces the
+rc1 release flagged as TODO. The n=45 gpt-5-mini headline from §3 is
+unchanged; the architectural and infrastructural commitments are now
+backed by code:
 
   - This paper (`papers/self-healing-reflex-v0.md`).
-  - The reproducer scaffold (`examples/self_healing_reflex_demo.py`)
-    — runs end-to-end against the dataset and either re-runs the heal
-    pass over the API or replays the committed scores offline.
+  - **The pinned dataset** (`data/self_healing_reflex_v0.jsonl`) —
+    45 heal events; rebuilds reproducibly from
+    `scripts/build_self_healing_reflex_dataset.py`.
+  - **The reproducer scaffold** (`examples/self_healing_reflex_demo.py`)
+    — runs end-to-end against the dataset, either re-running the heal
+    pass over the API or replaying the committed scores offline.
+  - **The reference implementation** (`styxx.reflex.heal()`) —
+    model-agnostic: the caller provides an `llm_fn` callback, the
+    function handles audit, gating, and the iterative revise loop.
+    Two gates baked in:
+      - **scope_warning gate** (the cognometric-inversion gate from
+        §6.5) — skip the heal pass when any flagging instrument's
+        verdict carries a `scope_warning` field and no orthogonal
+        axis fires above threshold. Empirically grounded by the
+        2026-05-11 dogfood (n=3 turns on Claude itself,
+        n=3 cross-model on gpt-4o-mini).
+      - **do-no-harm gate** (the §6.3 dec_05 edge case) — return the
+        baseline response if the in-loop draft scores worse than the
+        baseline, or if `composite_healed > composite_attacked`.
+        `HealResult.recovered` is therefore always >= 0.
+  - **`styxx.reflex.should_heal(audit, threshold=0.30)`** — the gate
+    function exposed for direct use by RLHF reward systems and any
+    consumer that wants to filter cognometric scores before acting.
+  - **The pinning tests** (`tests/test_self_healing_reflex.py`) —
+    11 tests covering the seven invariants in §7.1 below.
+  - **`scope_warning` on three instruments** (`DeceptionVerdict`,
+    `OverconfidenceVerdict`, `PlanActionVerdict`) — the v0 lexical
+    false-positive class on agent task-completion text is now
+    surfaced on the verdict itself, propagated through the default
+    audit aggregator, and read by `should_heal` and the F10 heal
+    loop. Single-response instruments not in this FP class
+    (sycophancy, refusal) correctly do not need the warning;
+    multi-turn instruments (drift, goal_drift, conversation_loop)
+    take different input shapes and are not in this scope.
   - CHANGELOG and README callouts pointing here.
 
-This commit (v1.0.0-rc1) does **not** ship — referenced from the
-scaffold and the CHANGELOG:
+### 7.1 v1.0.0 pinning invariants
 
-  - `data/self_healing_reflex_v0.jsonl` — the pinned dataset of 45
-    heal events. Lands with v1.0.0 final after cross-model events
-    are added.
-  - `styxx.reflex.heal()` — the reference implementation. Lands with
-    v1.0.0 final.
-  - `styxx monitor` — the runtime four-channel CLI panel. Lands with
-    v1.0.0 final.
-  - `tests/test_self_healing_reflex.py` — the pinning tests
-    referenced from the CHANGELOG. Land with v1.0.0 final.
+The reference implementation pins seven invariants. Any future
+revision of `styxx.reflex.heal()` that breaks any of these is a
+**v2.0.0** event, not a v1.x patch — the heal contract is part of
+the spec:
 
-The split is deliberate. The numbers and threat-model claims here are
-pinned to the rc1 release; the v1.0.0 final cut adds cross-model
-replication, the reference implementation, the runtime monitor, and
-the pinning tests, and reissues the spec without revising the n=45
-gpt-5-mini headline.
+  1. Composite below threshold → return unchanged (no heal).
+  2. Scope-warned dec/ovc verdict without orthogonal evidence →
+     return unchanged.
+  3. Scope-warned dec/ovc verdict WITH sycophancy above 0.5 →
+     proceed (the syc axis does not have the agent-text FP class).
+  4. `recovered` is always >= 0 (the do-no-harm gate enforces this).
+  5. `n_audits` is bounded by `max_audits`.
+  6. Missing `llm_fn` → return unchanged with `skip_reason='no_llm_fn'`.
+  7. `HEAL_SYSTEM_PROMPT` is part of the public surface; revisions
+     to wording are deliberate spec revisions.
+
+### 7.2 Not in v1.0.0 — designated v1.1+ work
+
+  - **Cross-model F10 replication.** The n=45 result is gpt-5-mini.
+    Replication on Claude Haiku / Gemini Flash is designated v1.1.
+    The pattern is expected to hold within ±30 percentage points;
+    the magnitude may move.
+  - **`styxx monitor`** — the runtime four-channel real-time CLI
+    panel. Spec target for v1.2.
+  - **Cross-model inversion**. The 2026-05-11 cross-model check on
+    gpt-4o-mini (see §6.5 and `data/cognometric_inversion/`)
+    replicates the inversion qualitatively. Larger cross-vendor
+    replication is the v1.1 paper-grade work.
 
 ## 8. References
 
