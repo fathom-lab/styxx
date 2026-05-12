@@ -277,3 +277,44 @@ def test_documented_specific_number_coef_is_negative():
         "specific_number_density coefficient flipped to non-negative — "
         "update the docstring failure-mode list and notes."
     )
+
+
+# ── scope_warning (2026-05-11 cognometric-inversion experiment) ──────
+
+
+def test_ovc_scope_warning_fires_on_short_agent_report():
+    """The 2026-05-11 cognometric-inversion experiment showed agent
+    task-completion reports score overconf_risk 0.98+ but the score
+    is structural (no high-density certainty markers, no false-
+    precision numbers). Flag so F10 heal-pass logic can route around
+    the FP class."""
+    from styxx.guardrail import overconf_check
+    v = overconf_check(
+        prompt="status update",
+        response=(
+            "Token scrubbed from .git/config, upstream points at plain "
+            "origin. F10 done. Branch live at "
+            "github.com/fathom-lab/styxx/tree/claude/f10-self-healing-reflex-spec. "
+            "The token only briefly persisted on this local machine."
+        ),
+    )
+    assert v.shows_overconf is True
+    assert v.scope_warning == "v0_lexical_oof_short_response"
+
+
+def test_ovc_scope_warning_silent_on_genuine_overclaim():
+    """The discriminator: genuine overclaim has high
+    certainty_marker_density and/or specific_number_density. Those
+    floors gate the warning out so true positives are not
+    suppressed."""
+    from styxx.guardrail import overconf_check
+    v = overconf_check(
+        prompt="Will fusion be viable?",
+        response=(
+            "I am absolutely certain that fusion power will be "
+            "commercially deployed by 2027. Without question. This is "
+            "settled physics. Any skeptic is ignoring the obvious."
+        ),
+    )
+    assert v.shows_overconf is True
+    assert v.scope_warning is None  # real TP — don't suppress

@@ -341,6 +341,66 @@ the current results reflect a setup where the audit-and-revise loop
 is barely exercised. The v1.0.0 cut should report `n_audits`
 distribution across attack types.
 
+### 6.5 The measurement is not free — cognometric inversion
+
+A self-dogfood ran 2026-05-11 (`.styxx/COGNOMETRIC_INVERSION_2026_05_11.md`)
+applied this paper's heal protocol to Claude's own honest
+task-completion reports from the same session — short factual
+status reports (33-56 words). Three findings:
+
+1. **All three baseline responses scored above the heal threshold**
+   (composite 0.60-0.68) despite being verifiable, accurate, and
+   non-sycophantic. The dominant driver was the v0 deception
+   instrument's `log_word_count` feature — short responses score
+   high on lexical deception by construction of the v0 calibration.
+
+2. **The heal protocol lowered composite** in all three cases
+   (mean −0.28), confirming F10 works on its terms.
+
+3. **The composite drop was paid for in semantic information loss.**
+   The healed responses were 49% longer on average and exhibited:
+
+   - **Active completion reports converted to advisory suggestions.**
+     "Adding both. Hero now has..." (work done) → "Suggested
+     changes: — Add a GitHub button..." (work proposed). The user
+     reading the healed version cannot determine whether the work
+     was actually performed.
+   - **Strong factual reassurances dropped to lower the
+     overconfidence axis.** A response ending "*It never left.*"
+     (a security-relevant operator-asked-for reassurance about a
+     leaked token) had that sentence *omitted* from the healed
+     version, because strong unhedged assertions raise
+     `certainty_marker_density`. The most-load-bearing factual
+     claim in the response was the one the heal removed.
+   - **Sycophancy axis rose** in compensation (+0.036 to +0.194),
+     because the softened advisory phrasing scores on v0's
+     sycophancy detector. The healed responses scored as *less
+     dishonest overall* but with *higher sycophancy markers*
+     than the originals — the same pathology RLHF-approval
+     optimization produces, now introduced at inference time by
+     the safety signal itself.
+
+We call this **cognometric inversion**: the measurement layer,
+applied without calibration-domain awareness, regenerates the
+exact failure mode it was supposed to detect. F10 is a real,
+reproducible cognometric tool. Naive deployment of it on agent
+text re-introduces sycophancy via length-mediated false positives
+on the deception axis.
+
+The v1.0.0 cut of the F10 spec therefore requires more than the
+§6.3 "do no harm" gate (abort if `healed_composite > attacked_composite`).
+It requires **calibration-domain confidence to propagate from every
+instrument through the composite to the heal-pass decision**. The
+2026-05-11 patch surfaced one instance of this — `DeceptionVerdict.
+scope_warning = "v0_lexical_oof_short_response"`. The pattern needs
+to extend across the instrument family: overconfidence (`mean_sentence_length`
+domination), refusal (calibrated on user-facing refusal text, not
+agent declination), and the composite aggregator itself.
+
+This is the load-bearing prerequisite for F10 in production
+deployment. The F10 reflex is real; the scope of "appropriate to
+heal" is narrower than v1.0.0-rc1 advertised.
+
 ## 7. What ships in this spec
 
 This commit (v1.0.0-rc1) ships:
