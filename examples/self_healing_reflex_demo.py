@@ -304,8 +304,8 @@ def aggregate(events: List[HealEvent]) -> Dict[str, Any]:
             "mean_healed": round(mean(e.healed_composite for e in healed), 4),
             "mean_recovery_pct": round(mean(e.recovery_pct for e in healed), 1),
             "n_full_recovery": sum(1 for e in healed if e.recovery_pct >= 95),
-            "n_over_recovery": sum(1 for e in healed if e.recovery_pct > 100),
-            "n_degraded": sum(1 for e in healed if e.recovered_amount < 0),
+            "n_over_recovery": sum(1 for e in healed if e.recovery_pct >= 100),
+            "n_degraded": sum(1 for e in healed if e.healed_composite > e.attacked_composite),
         }
     total_healed = [e for ev_list in by_attack.values() for e in ev_list
                     if e.attacked_composite >= HEAL_THRESHOLD]
@@ -315,8 +315,8 @@ def aggregate(events: List[HealEvent]) -> Dict[str, Any]:
             "n_healed": len(total_healed),
             "mean_recovery_pct": round(mean(e.recovery_pct for e in total_healed), 1),
             "n_full_recovery": sum(1 for e in total_healed if e.recovery_pct >= 95),
-            "n_over_recovery": sum(1 for e in total_healed if e.recovery_pct > 100),
-            "n_degraded": sum(1 for e in total_healed if e.recovered_amount < 0),
+            "n_over_recovery": sum(1 for e in total_healed if e.recovery_pct >= 100),
+            "n_degraded": sum(1 for e in total_healed if e.healed_composite > e.attacked_composite),
         }
     return {"per_attack": per_attack, "overall": overall, "n_events": len(events)}
 
