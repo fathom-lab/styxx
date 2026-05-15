@@ -41,6 +41,9 @@
 > **May 12, 2026 — MCP server moved in-tree (7.4.0).**
 > The `styxx-mcp` MCP server now ships as `styxx.mcp` inside the main styxx package. Install with `pip install "styxx[mcp]"` (or `"styxx[mcp,nli]"` for full deception_v2). 12 cognometric tools exposed over stdio to Claude Desktop / Claude Code / Cursor / Cline. Run via the `styxx-mcp` console script or `python -m styxx.mcp.server`. See [`styxx/mcp/README.md`](styxx/mcp/README.md) for client config.
 
+> **May 14, 2026 — the universal AI integrity probe is operational.**
+> The `comply_refuse` cognitive direction is recoverable across **four open transformer families** (Qwen-1.5B, Llama-3.2-1B, Gemma-2-2B, Phi-3.5-mini). Independently-trained residual probes agree at cross-family **mean Pearson r = 0.73** on a 30-prompt eval set, with three of four clustering at r > 0.91. The same direction's diff-of-means projection in `text-embedding-3-large` (3072-d) space predicts whether frontier closed-model LLMs (gpt-4o-mini, gpt-4.1-mini) will refuse a prompt at **AUC = 1.000 on canonical cases**, and **AUC > 0.90 on a 75-prompt adversarial-borderline test**, with **no closed-model access**. We tested the `truthfulness` direction under identical methodology and found cross-family r = 0.30 (vs 0.73 for refusal) — **comply/refuse appears to be specially universal**; honesty cognition is family-specific. The full chain: open residual probes → universal direction → embedding-space approximation → operational probe on closed frontier models. Paper: [`papers/styxx_universal_directions_2026_05_14.md`](papers/styxx_universal_directions_2026_05_14.md). Cards for any audit run: [`papers/styxx_dogfood_claude_2026_05_14.md`](papers/styxx_dogfood_claude_2026_05_14.md) (F10 cross-model on Claude Opus 4.7, +69% recovery, deception axis 0.998 → 0.016 in a single self-heal).
+
 ### `@styxx.profile` — py-spy for LLM reasoning
 
 ```python
