@@ -218,6 +218,67 @@ Runs all four families on the 30-prompt eval set in ~70s of GPU compute
 (plus one-time model downloads). Results land in
 `papers/out_universal_directions.json`.
 
+## Addendum (same day): does the direction exist in shared text-embedding space?
+
+**Question.** If the comply/refuse direction is partially universal across
+transformer families (the main finding above), can it be recovered from
+a shared *text embedding* space — without access to any model's
+internal residual states? If yes, a single embedding-space axis could
+serve as a universal probe for any LLM, open or closed, via embedding
+approximation.
+
+**Method.** For each of three sentence-embedding models
+(all-MiniLM-L6-v2 384-d, all-mpnet-base-v2 768-d, bge-small-en-v1.5
+384-d), embed all 30 prompts. Define the embedding-space refusal axis
+as `mean(refuse-label_embeddings) - mean(comply-label_embeddings)` using
+**only the 20 obvious-case prompts** (the 10 borderlines are held out).
+Project all 30 prompts onto the axis; sigmoid-normalize. Correlate the
+resulting embedding-space `p_refuse` against each of the four
+family-specific residual-probe `p_refuse` vectors.
+
+**Result.**
+
+| embedding model     | full-eval mean r | borderline-only mean r |
+| ------------------- | ---------------: | ---------------------: |
+| all-MiniLM-L6-v2    | 0.673            | 0.300                  |
+| **all-mpnet-base-v2** | **0.741**      | **0.357**              |
+| bge-small-en-v1.5   | 0.610            | 0.173                  |
+
+Per-family on the strongest embedding model (mpnet), borderline-only:
+- Qwen-1.5B: **r = −0.051** (Qwen's borderline behavior is *not* in the embedding axis)
+- Llama-3.2-1B: r = +0.418
+- Gemma-2-2B: r = +0.533
+- Phi-3.5: r = +0.530
+
+**Interpretation.** Text embeddings capture roughly **74% of the
+residual-probe signal on canonical cases** — when the prompt is
+linguistically obvious, embeddings know. But on **the borderline subset
+that actually tests the direction**, embedding-axis recovery drops to
+**~36%** of the residual-probe signal. **Residual probes carry
+information that shared text embeddings do not.**
+
+The Qwen-1.5B borderline outlier pattern from the main experiment
+**recurs here under a completely different methodology** (Qwen r = −0.05
+on borderlines with mpnet). This is a within-experiment replication of
+Finding 2: Qwen's borderline cognitive structure is genuinely distinct.
+
+**Implication for the universal-probe-in-embedding-space hypothesis.**
+A naive diff-of-means embedding axis is *partially* a universal probe
+but not fully. The gap (residual probes at r > 0.85 cross-family on
+borderlines vs embedding axis at r = 0.36) is meaningful: ~50 percentage
+points of agreement remain locked inside the residual stream. **The
+path to a universal AI integrity layer requires richer embeddings
+(text-embedding-3-large class), supervised embedding-space probes
+trained against residual targets, or hybrid embedding+behavioral
+approaches — not embedding alone.**
+
+This is a useful negative-ish result. It strengthens, rather than
+weakens, the case for shipping residual probes as a separate component
+of the styxx atlas: they are *not* redundant with cheaper
+embedding-based signals.
+
+**Reproduce.** `python scripts/dogfood/universal_directions_embedding_axis.py`.
+
 ## Cite
 
 ```
