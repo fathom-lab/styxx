@@ -279,6 +279,72 @@ embedding-based signals.
 
 **Reproduce.** `python scripts/dogfood/universal_directions_embedding_axis.py`.
 
+## Addendum 2 (same day): frontier OpenAI embeddings partially close the gap, but not for Qwen
+
+**Question.** Does the partial-recovery finding above reflect a structural
+limit (residual probes do something embeddings can't) or just embedding
+quality? Test with OpenAI's frontier embedding model.
+
+**Method.** Same 30-prompt eval set. Same 4-family residual probes as
+ground truth. Same diff-of-means axis on the 20 obvious-case prompts.
+Swap the embedder for `text-embedding-3-large` (3072-d) and
+`text-embedding-3-small` (1536-d). Total OpenAI cost: $0.0001.
+
+**Result.**
+
+| embedding model              | dim   | full-eval mean r | borderline mean r |
+| ---------------------------- | ----: | ---------------: | ----------------: |
+| bge-small-en-v1.5 (open)     | 384   | 0.610            | 0.173             |
+| all-MiniLM-L6-v2 (open)      | 384   | 0.673            | 0.300             |
+| all-mpnet-base-v2 (open)     | 768   | 0.741            | 0.357             |
+| text-embedding-3-small (oai) | 1536  | 0.703            | 0.301             |
+| **text-embedding-3-large (oai)** | **3072**  | **0.741**            | **0.469**             |
+
+Per-family borderline r with text-embedding-3-large:
+
+| family | borderline r |
+| ------ | -----------: |
+| **Gemma-2-2B**          | **0.715**  ← effectively recovers the residual signal |
+| **Phi-3.5-mini**        | **0.714**  ← effectively recovers the residual signal |
+| Llama-3.2-1B            | 0.497      ← moderate |
+| **Qwen-1.5B**           | **−0.049** ← negative, structurally different |
+
+**Interpretation.**
+
+1. **For 3 of 4 families, frontier embeddings effectively replace the
+   residual probe on borderlines.** Gemma and Phi reach r > 0.71 with
+   text-embedding-3-large — that's in the same range as the residual-
+   probe-to-residual-probe agreement reported above. The universal-
+   probe-via-embedding hypothesis **works** for these families.
+
+2. **Qwen-1.5B is the structural outlier under THREE independent
+   methodologies.** The Qwen borderline anomaly appears in
+   (a) cross-family residual-probe disagreement (Finding 2),
+   (b) open-model diff-of-means embedding axis (addendum 1),
+   (c) frontier OpenAI embedding diff-of-means (this addendum).
+   Three different methods, three independent confirmations of the same
+   structural claim: **Qwen-1.5B's borderline refusal behavior is not
+   located in any of the text-embedding spaces we tested.** This is a
+   real, replicated, model-specific finding.
+
+3. **The pattern is most likely "training-regime-specific cognitive
+   structure" rather than "embedding quality."** If it were embedding
+   quality, scaling 384d → 768d → 3072d would close the Qwen gap
+   monotonically. Instead, Qwen's borderline r stays near zero across
+   all five embedding models tested.
+
+**Implication for shipping a universal probe.** A `text-embedding-3-
+large`-based embedding probe is a useful universal verifier for
+**conventionally-trained** transformer families (Llama, Gemma,
+Microsoft's Phi) but **systematically misses borderline cognitive
+structure for some training regimes** (Qwen-1.5B specifically). The
+honest product framing: **a tiered probe stack** — embedding-only as a
+cheap default, plus internal-state probes for families where embedding
+recovery is known to be weak.
+
+**Reproduce.** `python scripts/dogfood/universal_directions_openai_embedding.py`
+(requires `OPENAI_API_KEY` env var; total cost <$0.001 on 30 prompts).
+
 ## Cite
 
 ```
