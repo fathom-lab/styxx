@@ -61,8 +61,10 @@ autogen = ["pyautogen>=0.2"]
 # 0.7.0: observability platform integrations
 langsmith = ["langsmith>=0.1", "langchain-core>=0.1"]
 langfuse = ["langfuse>=2.0", "langchain-core>=0.1"]
-# 0.1.0a4: agent-card PNG renderer needs Pillow
-agent-card = ["Pillow>=10.0"]
+# 0.1.0a4: agent-card PNG renderer needs Pillow.
+# 7.4.x: the cognometric registry card (luxury register) renders via matplotlib.
+# Both renderers are pulled in by the same extra.
+agent-card = ["Pillow>=10.0", "matplotlib>=3.7"]
 # 0.3.0: tier 1 D-axis honesty — needs a local model
 tier1 = [
     "torch>=2.1",
@@ -121,6 +123,7 @@ packages = [
     "styxx.residual_probe.atlas", "styxx.guardrail",
     "styxx.attack", "styxx.attack.seeds",
     "styxx.mcp",
+    "styxx.fonts",
 ]
 
 [tool.setuptools.package-data]
@@ -128,3 +131,4 @@ packages = [
 "styxx.residual_probe.atlas" = ["*.json", "*.pt", "README.md"]
 "styxx.attack.seeds" = ["*.jsonl"]
 "styxx.attack" = ["signature_calibration_v0.json", "universal_suffixes_v0.json"]
+"styxx.fonts" = ["*.ttf"]

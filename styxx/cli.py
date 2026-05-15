@@ -611,6 +611,58 @@ def cmd_agent_card(args):
     return 0
 
 
+def cmd_card(args):
+    """Render the cognometric registry card (the luxury register).
+
+    Reads a styxx audit JSON and writes a 1200x630 share-card PNG.
+    Requires matplotlib (`pip install 'styxx[agent-card]'`).
+    """
+    audit_path = Path(args.audit).expanduser()
+    if not audit_path.exists():
+        print(f"\n  audit not found: {audit_path}\n")
+        return 1
+
+    out_path = Path(args.out).expanduser() if args.out else (
+        Path.home() / ".styxx" / "cognometric-card.png"
+    )
+
+    try:
+        from .cognometric_card import CardData, render_card
+    except RuntimeError as e:
+        print(f"\n  {e}\n")
+        return 1
+
+    try:
+        data = CardData.from_audit_json(
+            audit_path, agent=args.agent, healed=bool(getattr(args, "healed", False))
+        )
+    except ValueError as e:
+        print(f"\n  {e}\n")
+        return 1
+    except RuntimeError as e:
+        print(f"\n  {e}\n")
+        return 1
+
+    try:
+        result = render_card(data, out_path)
+    except RuntimeError as e:
+        print(f"\n  cognometric card failed: {e}\n")
+        return 1
+
+    print()
+    print(f"  cognometric card rendered: {result}")
+    try:
+        size = result.stat().st_size
+        print(f"  size: {size:,} bytes (1200x630)")
+    except OSError:
+        pass
+    print(f"  bearer: {data.agent}  ·  composite {data.composite_mean:.3f}")
+    print(f"  observation: {'post-heal' if data.healed else 'field'} "
+          f"·  {data.n_turns} turn{'s' if data.n_turns != 1 else ''}")
+    print()
+    return 0
+
+
 def cmd_personality(args):
     """Render the personality profile over the last N days (0.1.0a3).
 
@@ -1792,6 +1844,29 @@ def _build_parser() -> argparse.ArgumentParser:
         help="don't auto-open the browser on serve start",
     )
     p_card.set_defaults(func=cmd_agent_card)
+
+    # card — 7.4.x cognometric registry card (luxury register)
+    p_cogcard = sub.add_parser(
+        "card",
+        help="render a luxury cognometric registry card from a styxx audit JSON",
+    )
+    p_cogcard.add_argument(
+        "--audit", type=str, required=True,
+        help="path to a styxx audit JSON (rows[].audit / scores / reflex.scores)",
+    )
+    p_cogcard.add_argument(
+        "--agent", type=str, default="",
+        help="agent / model name (default: read from JSON top-level 'model' field)",
+    )
+    p_cogcard.add_argument(
+        "--healed", action="store_true",
+        help="render the post-heal observation (reads healed_audit / reflex.scores)",
+    )
+    p_cogcard.add_argument(
+        "--out", type=str, default=None,
+        help="output PNG path (default: ~/.styxx/cognometric-card.png)",
+    )
+    p_cogcard.set_defaults(func=cmd_card)
 
     # dreamer — 0.1.0a3 what-if reflex replay
     p_dreamer = sub.add_parser(

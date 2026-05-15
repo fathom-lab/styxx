@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+### Added — `styxx card` (cognometric registry card)
+
+`styxx.cognometric_card` — a 1200×630 share-card renderer in the luxury register: champagne gold on warm bone over deep onyx, Source Serif 4 italic display, JetBrains Mono metadata. The composite numeral is the hero (~88pt serif italic gold), the bearer name is serif italic bone, and the four cognometric axes (sycophancy / deception / overconfidence / refusal) are rendered as hairline parchment gauges with serif-italic band captions (*pristine* / *stable* / *elevated* / *critical*). Each card carries a deterministic serial number derived from `(agent, ts)`.
+
+Reads any styxx audit JSON: `rows[].audit`, `rows[].{baseline_audit, healed_audit}`, `rows[].scores`, or `results[].{baseline, reflex}.scores`. Falls back to mean-of-axes when `composite` is absent.
+
+```bash
+styxx card --audit run.json --agent claude-opus-4-7 --out card.png
+styxx card --audit run.json --agent gpt-4o-mini --healed --out card-post-heal.png
+```
+
+```python
+from styxx.cognometric_card import CardData, render_card
+data = CardData.from_audit_json("run.json", agent="gpt-5-mini")
+render_card(data, "card.png")
+```
+
+The before/after pair on a single agent surfaces F10 `reflex.heal()` recovery directly in geometry — bar lengths shrink, the composite numeral drops, the "reflex" footer flips to *post-heal*.
+
+Fonts bundled under `styxx.fonts` (Source Serif 4 OFL, JetBrains Mono OFL, Inter OFL). Renderer requires `matplotlib≥3.7`, pulled by the `agent-card` extra (which now also pins matplotlib alongside the existing Pillow).
+
+---
+
 ## [7.2.0] — 2026-05-11
 
 **Headline: F10 — Self-Healing Reflex. Tool-using LLMs detect adversarial perturbation of their own output and revise back, without any retraining, reward model, or preference data. On gpt-5-mini across 45 heal events spanning four `styxx.attack` attack types, mean recovery is 112%, with the heal scoring *cleaner than the original clean baseline* on 22 / 45 events.**
