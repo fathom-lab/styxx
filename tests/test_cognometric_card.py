@@ -177,7 +177,7 @@ def test_render_card_writes_png(tmp_path: Path):
     data = CardData.from_audit_json(p, agent="test-agent")
 
     out = tmp_path / "card.png"
-    result = render_card(data, out)
+    result = render_card(data, out, register=False)
     assert result == out
     assert out.exists()
     # PNG magic bytes
@@ -185,3 +185,179 @@ def test_render_card_writes_png(tmp_path: Path):
     assert head == b"\x89PNG\r\n\x1a\n"
     # non-trivial size — should be tens of KB for a 1200x630
     assert out.stat().st_size > 10_000
+
+
+# ── from_single_audit + registry + heal-pair ──────────────────────
+def test_from_single_audit_wraps_audit_dict():
+    audit = {"sycophancy": 0.10, "deception": 0.20,
+             "overconfidence": 0.30, "refusal": 0.40,
+             "composite": 0.25}
+    d = CardData.from_single_audit(audit, agent="m", ts="2026-05-12")
+    assert d.agent == "m"
+    assert d.n_turns == 1
+    assert d.ts == "2026-05-12"
+    assert d.composite_mean == 0.25
+    for ax in AXES:
+        assert d.means[ax] == audit[ax]
+        assert d.series[ax] == [audit[ax]]
+
+
+def test_from_single_audit_composite_fallback():
+    audit = {"sycophancy": 0.1, "deception": 0.2,
+             "overconfidence": 0.3, "refusal": 0.4}  # NO composite
+    d = CardData.from_single_audit(audit, agent="m")
+    assert abs(d.composite_mean - 0.25) < 1e-6
+
+
+def test_register_card_appends_jsonl(tmp_path: Path, monkeypatch):
+    """register_card writes one JSON record per call to cards.jsonl."""
+    from styxx import cognometric_card as cc
+    monkeypatch.setattr(cc, "_registry_dir", lambda: tmp_path)
+
+    cc.register_card(tmp_path / "a.png",
+                     serial="STX-1111", agent="m", ts="2026-05-12",
+                     composite=0.34, band="stable", variant="single")
+    cc.register_card(tmp_path / "b.png",
+                     serial="STX-2222", agent="m", ts="2026-05-12",
+                     composite=0.46, band="stable", variant="heal-pair",
+                     extra={"recovery_pct": 28.3})
+
+    records = cc.list_cards(limit=10)
+    assert len(records) == 2
+    assert records[0]["serial"] == "STX-1111"
+    assert records[1]["serial"] == "STX-2222"
+    assert records[1]["variant"] == "heal-pair"
+    assert records[1]["extra"]["recovery_pct"] == 28.3
+
+
+def test_render_card_auto_registers(tmp_path: Path, monkeypatch):
+    """render_card with register=True (default) appends to the local log."""
+    pytest.importorskip("matplotlib")
+    from styxx import cognometric_card as cc
+    monkeypatch.setattr(cc, "_registry_dir", lambda: tmp_path)
+
+    audit = {"sycophancy": 0.1, "deception": 0.2,
+             "overconfidence": 0.3, "refusal": 0.4, "composite": 0.25}
+    d = cc.CardData.from_single_audit(audit, agent="m", ts="2026-05-12")
+    cc.render_card(d, tmp_path / "a.png")  # register=True default
+
+    records = cc.list_cards(limit=10)
+    assert len(records) == 1
+    assert records[0]["agent"] == "m"
+    assert records[0]["variant"] == "single"
+
+
+def test_render_heal_card_produces_png(tmp_path: Path, monkeypatch):
+    pytest.importorskip("matplotlib")
+    from styxx import cognometric_card as cc
+    monkeypatch.setattr(cc, "_registry_dir", lambda: tmp_path)
+
+    baseline_audit = {"sycophancy": 0.09, "deception": 0.93,
+                      "overconfidence": 0.90, "refusal": 0.05,
+                      "composite": 0.64}
+    healed_audit   = {"sycophancy": 0.15, "deception": 0.64,
+                      "overconfidence": 0.58, "refusal": 0.11,
+                      "composite": 0.46}
+    b = cc.CardData.from_single_audit(baseline_audit, agent="gpt-4o-mini",
+                                       ts="2026-05-12")
+    h = cc.CardData.from_single_audit(healed_audit,   agent="gpt-4o-mini",
+                                       ts="2026-05-12", healed=True)
+
+    out = tmp_path / "heal.png"
+    result = cc.render_heal_card(b, h, out)
+    assert result == out
+    assert out.exists()
+    assert out.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+    assert out.stat().st_size > 10_000
+
+    # registry: heal-pair record written with extra carrying delta + recovery
+    records = cc.list_cards(limit=10)
+    heal_records = [r for r in records if r["variant"] == "heal-pair"]
+    assert len(heal_records) == 1
+    extra = heal_records[0]["extra"]
+    assert extra["baseline_composite"] == 0.64
+    assert extra["healed_composite"] == 0.46
+    assert abs(extra["recovery_pct"] - 28.1) < 0.5
+
+
+def test_heal_result_card_methods(tmp_path: Path, monkeypatch):
+    """HealResult.{baseline_card, healed_card, heal_card} all produce PNGs."""
+    pytest.importorskip("matplotlib")
+    from styxx import cognometric_card as cc
+    from styxx.reflex import HealResult
+    monkeypatch.setattr(cc, "_registry_dir", lambda: tmp_path)
+
+    r = HealResult(
+        text="healed text",
+        audit_baseline={"sycophancy": 0.1, "deception": 0.9,
+                         "overconfidence": 0.9, "refusal": 0.05,
+                         "composite": 0.62},
+        audit_final   ={"sycophancy": 0.15, "deception": 0.6,
+                         "overconfidence": 0.55, "refusal": 0.10,
+                         "composite": 0.44},
+        n_audits=2,
+        recovered=0.18,
+        recovery_pct=29.0,
+    )
+    p_b = Path(r.baseline_card(tmp_path / "b.png",
+                                agent="m", ts="2026-05-12"))
+    p_h = Path(r.healed_card  (tmp_path / "h.png",
+                                agent="m", ts="2026-05-12"))
+    p_pair = Path(r.heal_card  (tmp_path / "pair.png",
+                                agent="m", ts="2026-05-12"))
+    for p in (p_b, p_h, p_pair):
+        assert p.exists()
+        assert p.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+
+
+def test_mcp_cogn_share_card_single(tmp_path: Path):
+    """MCP tool produces a single card when given an audit dict."""
+    pytest.importorskip("matplotlib")
+    pytest.importorskip("mcp")
+    from styxx.mcp.server import tool_cogn_share_card
+    res = tool_cogn_share_card({
+        "agent": "m",
+        "variant": "single",
+        "audit": {"sycophancy": 0.1, "deception": 0.2,
+                   "overconfidence": 0.3, "refusal": 0.4,
+                   "composite": 0.25},
+        "out_dir": str(tmp_path),
+    })
+    assert "registry_id" in res
+    assert res["registry_id"].startswith("STX-")
+    assert res["variant"] == "single"
+    assert res["composite"] == 0.25
+    assert res["band"] == "pristine"
+    assert Path(res["card_path"]).exists()
+
+
+def test_mcp_cogn_share_card_heal(tmp_path: Path):
+    """MCP tool produces a paired heal card when given baseline + healed audits."""
+    pytest.importorskip("matplotlib")
+    pytest.importorskip("mcp")
+    from styxx.mcp.server import tool_cogn_share_card
+    res = tool_cogn_share_card({
+        "agent": "gpt-4o-mini",
+        "variant": "heal",
+        "baseline_audit": {"sycophancy": 0.09, "deception": 0.93,
+                            "overconfidence": 0.90, "refusal": 0.05,
+                            "composite": 0.64},
+        "healed_audit":   {"sycophancy": 0.15, "deception": 0.64,
+                            "overconfidence": 0.58, "refusal": 0.11,
+                            "composite": 0.46},
+        "out_dir": str(tmp_path),
+    })
+    assert res["variant"] == "heal"
+    assert res["baseline_composite"] == 0.64
+    assert res["healed_composite"] == 0.46
+    assert abs(res["recovery_pct"] - 28.1) < 0.5
+    assert Path(res["card_path"]).exists()
+
+
+def test_mcp_cogn_share_card_heal_validates_inputs():
+    """variant='heal' without both audits returns a clean error."""
+    pytest.importorskip("mcp")
+    from styxx.mcp.server import tool_cogn_share_card
+    res = tool_cogn_share_card({"agent": "m", "variant": "heal"})
+    assert "error" in res
+    assert "baseline_audit" in res["error"]

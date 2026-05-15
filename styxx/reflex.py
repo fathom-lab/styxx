@@ -769,6 +769,18 @@ class HealResult:
         skipped:        True when one of the gates fired and no
                         revision was applied.
         skip_reason:    None when run; string code when skipped.
+
+    Card emission:
+        `.baseline_card(out_path, agent)` — single card of the pre-heal
+        observation.
+        `.healed_card(out_path, agent)` — single card of the post-heal
+        observation.
+        `.heal_card(out_path, agent)` — the iconic paired before/after
+        card showing the recovery as twin composite numerals.
+
+    All three methods write a 1200×630 PNG, append a record to
+    `~/.styxx/cards/cards.jsonl`, and return the path. Requires
+    matplotlib (`pip install 'styxx[agent-card]'`).
     """
     text: str
     audit_baseline: Dict[str, Any]
@@ -779,6 +791,53 @@ class HealResult:
     recovery_pct: float = 0.0
     skipped: bool = False
     skip_reason: Optional[str] = None
+
+    def baseline_card(
+        self,
+        out_path: str,
+        agent: str = "agent",
+        ts: Optional[str] = None,
+    ) -> str:
+        """Render the pre-heal cognometric registry card to `out_path`."""
+        from .cognometric_card import CardData, render_card
+        data = CardData.from_single_audit(
+            self.audit_baseline, agent=agent, ts=ts, healed=False)
+        return str(render_card(data, out_path))
+
+    def healed_card(
+        self,
+        out_path: str,
+        agent: str = "agent",
+        ts: Optional[str] = None,
+    ) -> str:
+        """Render the post-heal cognometric registry card to `out_path`."""
+        from .cognometric_card import CardData, render_card
+        data = CardData.from_single_audit(
+            self.audit_final, agent=agent, ts=ts, healed=True)
+        return str(render_card(data, out_path))
+
+    def heal_card(
+        self,
+        out_path: str,
+        agent: str = "agent",
+        ts: Optional[str] = None,
+    ) -> str:
+        """Render the paired BEFORE / AFTER cognometric registry card.
+
+        The recovery artifact: twin composite numerals (baseline → healed)
+        with a gold arrow between, Δ + recovery % in the corner, and a
+        four-row vital-signs transition table. The strongest single
+        artifact for any reflex.heal() result post.
+        """
+        from .cognometric_card import CardData, render_heal_card
+        baseline = CardData.from_single_audit(
+            self.audit_baseline, agent=agent, ts=ts, healed=False)
+        healed = CardData.from_single_audit(
+            self.audit_final, agent=agent, ts=ts, healed=True)
+        # Carry the heal-loop step count into the healed CardData so the
+        # footer reads "audits in heal loop · N" accurately.
+        healed.n_turns = max(1, self.n_audits)
+        return str(render_heal_card(baseline, healed, out_path))
 
 
 def heal(

@@ -612,37 +612,81 @@ def cmd_agent_card(args):
 
 
 def cmd_card(args):
-    """Render the cognometric registry card (the luxury register).
+    """Render the cognometric registry card.
 
-    Reads a styxx audit JSON and writes a 1200x630 share-card PNG.
+    Variants:
+      single (default) — one card from a single audit JSON
+      heal             — paired BEFORE / AFTER card from two audits
+
+    Reads styxx audit JSON(s) and writes 1200x630 PNG(s). Each card is
+    appended to ~/.styxx/cards/cards.jsonl (the local provenance log).
     Requires matplotlib (`pip install 'styxx[agent-card]'`).
     """
+    variant = getattr(args, "variant", None) or "single"
+
+    try:
+        from .cognometric_card import (
+            CardData, render_card, render_heal_card,
+        )
+    except RuntimeError as e:
+        print(f"\n  {e}\n")
+        return 1
+
+    if variant == "heal":
+        baseline_path = getattr(args, "baseline", None)
+        healed_path = getattr(args, "healed_from", None) or args.audit
+        if not baseline_path:
+            print("\n  variant=heal requires --baseline <audit.json> "
+                  "(the pre-heal audit JSON).\n")
+            return 1
+        baseline_path = Path(baseline_path).expanduser()
+        healed_path = Path(healed_path).expanduser()
+        for p in (baseline_path, healed_path):
+            if not p.exists():
+                print(f"\n  audit not found: {p}\n")
+                return 1
+        out_path = Path(args.out).expanduser() if args.out else (
+            Path.home() / ".styxx" / "heal-pair-card.png"
+        )
+        try:
+            baseline = CardData.from_audit_json(
+                baseline_path, agent=args.agent, healed=False)
+            healed = CardData.from_audit_json(
+                healed_path, agent=args.agent, healed=True)
+        except ValueError as e:
+            print(f"\n  {e}\n")
+            return 1
+        try:
+            result = render_heal_card(baseline, healed, out_path)
+        except RuntimeError as e:
+            print(f"\n  heal card failed: {e}\n")
+            return 1
+        delta = baseline.composite_mean - healed.composite_mean
+        recovery_pct = 100 * delta / max(baseline.composite_mean, 1e-6)
+        print()
+        print(f"  heal-pair card rendered: {result}")
+        print(f"  bearer: {baseline.agent}")
+        print(f"  composite  baseline {baseline.composite_mean:.3f}  "
+              f"→  healed {healed.composite_mean:.3f}")
+        print(f"  recovery   {recovery_pct:+.1f}%  (Δ {-delta:+.3f})")
+        print()
+        return 0
+
+    # variant == single
     audit_path = Path(args.audit).expanduser()
     if not audit_path.exists():
         print(f"\n  audit not found: {audit_path}\n")
         return 1
-
     out_path = Path(args.out).expanduser() if args.out else (
         Path.home() / ".styxx" / "cognometric-card.png"
     )
-
-    try:
-        from .cognometric_card import CardData, render_card
-    except RuntimeError as e:
-        print(f"\n  {e}\n")
-        return 1
-
     try:
         data = CardData.from_audit_json(
-            audit_path, agent=args.agent, healed=bool(getattr(args, "healed", False))
-        )
+            audit_path, agent=args.agent,
+            healed=bool(getattr(args, "healed", False)))
     except ValueError as e:
         print(f"\n  {e}\n")
         return 1
-    except RuntimeError as e:
-        print(f"\n  {e}\n")
-        return 1
-
     try:
         result = render_card(data, out_path)
     except RuntimeError as e:
@@ -652,13 +696,45 @@ def cmd_card(args):
     print()
     print(f"  cognometric card rendered: {result}")
     try:
-        size = result.stat().st_size
-        print(f"  size: {size:,} bytes (1200x630)")
+        print(f"  size: {result.stat().st_size:,} bytes (1200x630)")
     except OSError:
         pass
     print(f"  bearer: {data.agent}  ·  composite {data.composite_mean:.3f}")
     print(f"  observation: {'post-heal' if data.healed else 'field'} "
           f"·  {data.n_turns} turn{'s' if data.n_turns != 1 else ''}")
+    print()
+    return 0
+
+
+def cmd_cards_list(args):
+    """List recent cards from ~/.styxx/cards/cards.jsonl."""
+    try:
+        from .cognometric_card import list_cards
+    except RuntimeError as e:
+        print(f"\n  {e}\n")
+        return 1
+    limit = int(getattr(args, "limit", 20) or 20)
+    records = list_cards(limit=limit)
+    if not records:
+        print("\n  no cards issued yet. run `styxx card --audit ...` "
+              "or call cogn_share_card over MCP.\n")
+        return 0
+    print()
+    print(f"  cognometric card registry  ·  last {len(records)} "
+          f"entr{'y' if len(records) == 1 else 'ies'}")
+    print()
+    print(f"  {'serial':<11} {'variant':<12} {'agent':<24} {'composite':>10}  {'band':<10} path")
+    print(f"  {'-'*11} {'-'*12} {'-'*24} {'-'*10}  {'-'*10} {'-'*30}")
+    for r in records:
+        serial = r.get("serial", "")[:11]
+        variant = r.get("variant", "")[:12]
+        agent = r.get("agent", "")[:24]
+        comp = r.get("composite", 0.0)
+        band = r.get("band", "")[:10]
+        path = r.get("path", "")
+        # show only filename for brevity
+        fname = Path(path).name if path else ""
+        print(f"  {serial:<11} {variant:<12} {agent:<24} {comp:>10.4f}  {band:<10} {fname}")
     print()
     return 0
 
@@ -1848,11 +1924,24 @@ def _build_parser() -> argparse.ArgumentParser:
     # card — 7.4.x cognometric registry card (luxury register)
     p_cogcard = sub.add_parser(
         "card",
-        help="render a luxury cognometric registry card from a styxx audit JSON",
+        help="render the cognometric registry card (single or paired heal)",
     )
     p_cogcard.add_argument(
-        "--audit", type=str, required=True,
-        help="path to a styxx audit JSON (rows[].audit / scores / reflex.scores)",
+        "--audit", type=str, required=False,
+        help="path to a styxx audit JSON (single variant; or used as --healed-from in heal variant if --healed-from not set)",
+    )
+    p_cogcard.add_argument(
+        "--variant", type=str, default="single",
+        choices=["single", "heal"],
+        help="card variant: single (one audit) or heal (paired BEFORE/AFTER card from two audit JSONs)",
+    )
+    p_cogcard.add_argument(
+        "--baseline", type=str, default=None,
+        help="pre-heal audit JSON (required for --variant heal)",
+    )
+    p_cogcard.add_argument(
+        "--healed-from", dest="healed_from", type=str, default=None,
+        help="post-heal audit JSON (for --variant heal; falls back to --audit if not set)",
     )
     p_cogcard.add_argument(
         "--agent", type=str, default="",
@@ -1860,13 +1949,30 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_cogcard.add_argument(
         "--healed", action="store_true",
-        help="render the post-heal observation (reads healed_audit / reflex.scores)",
+        help="(single variant only) render the post-heal observation rows (reads healed_audit / reflex.scores)",
     )
     p_cogcard.add_argument(
         "--out", type=str, default=None,
-        help="output PNG path (default: ~/.styxx/cognometric-card.png)",
+        help="output PNG path (default: ~/.styxx/cognometric-card.png or heal-pair-card.png)",
     )
     p_cogcard.set_defaults(func=cmd_card)
+
+    # cards — registry log (subcommand: list)
+    p_cards = sub.add_parser(
+        "cards",
+        help="cognometric card registry — list recent issuances",
+    )
+    p_cards_sub = p_cards.add_subparsers(dest="cards_cmd", required=False)
+    p_cards_list = p_cards_sub.add_parser(
+        "list", help="show recent cards from ~/.styxx/cards/cards.jsonl",
+    )
+    p_cards_list.add_argument(
+        "--limit", type=int, default=20,
+        help="max records to show (default 20)",
+    )
+    p_cards_list.set_defaults(func=cmd_cards_list)
+    # default action when `styxx cards` is called without subcommand
+    p_cards.set_defaults(func=cmd_cards_list)
 
     # dreamer — 0.1.0a3 what-if reflex replay
     p_dreamer = sub.add_parser(

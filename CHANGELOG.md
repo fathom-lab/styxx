@@ -9,26 +9,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-### Added — `styxx card` (cognometric registry card)
+### Cognometric registry card — full product surface (was add-on, now integrated)
 
-`styxx.cognometric_card` — a 1200×630 share-card renderer in the luxury register: champagne gold on warm bone over deep onyx, Source Serif 4 italic display, JetBrains Mono metadata. The composite numeral is the hero (~88pt serif italic gold), the bearer name is serif italic bone, and the four cognometric axes (sycophancy / deception / overconfidence / refusal) are rendered as hairline parchment gauges with serif-italic band captions (*pristine* / *stable* / *elevated* / *critical*). Each card carries a deterministic serial number derived from `(agent, ts)`.
+The card is no longer a one-shot offline renderer. It's a first-class artifact of every audit, every heal, every MCP tool call.
 
-Reads any styxx audit JSON: `rows[].audit`, `rows[].{baseline_audit, healed_audit}`, `rows[].scores`, or `results[].{baseline, reflex}.scores`. Falls back to mean-of-axes when `composite` is absent.
+**`styxx.cognometric_card` — what shipped:**
 
-```bash
-styxx card --audit run.json --agent claude-opus-4-7 --out card.png
-styxx card --audit run.json --agent gpt-4o-mini --healed --out card-post-heal.png
-```
+The 1200×630 luxury share-card renderer (champagne gold + warm bone over deep aubergine, Source Serif 4 italic for display, JetBrains Mono for metadata). Composite numeral is the hero (~88pt serif italic gold). Four-axis vital-signs gauges with serif-italic band captions (*pristine* / *stable* / *elevated* / *critical*). Deterministic STX-NNNN serial per card.
 
 ```python
-from styxx.cognometric_card import CardData, render_card
+from styxx.cognometric_card import CardData, render_card, render_heal_card
+
+# any audit JSON shape (rows[].audit, baseline_audit/healed_audit, scores, etc.)
 data = CardData.from_audit_json("run.json", agent="gpt-5-mini")
 render_card(data, "card.png")
+
+# the paired BEFORE / AFTER recovery artifact
+baseline = CardData.from_single_audit(audit_a, agent="gpt-4o-mini")
+healed   = CardData.from_single_audit(audit_b, agent="gpt-4o-mini", healed=True)
+render_heal_card(baseline, healed, "heal-pair.png")
 ```
 
-The before/after pair on a single agent surfaces F10 `reflex.heal()` recovery directly in geometry — bar lengths shrink, the composite numeral drops, the "reflex" footer flips to *post-heal*.
+**Two variants:**
+- `single` — one card, four gauges, composite numeral (today's iteration)
+- `heal` — paired BEFORE / AFTER: twin composite numerals separated by a gold arrow, four-row vital-signs transition table, recovery % printed in gold
 
-Fonts bundled under `styxx.fonts` (Source Serif 4 OFL, JetBrains Mono OFL, Inter OFL). Renderer requires `matplotlib≥3.7`, pulled by the `agent-card` extra (which now also pins matplotlib alongside the existing Pillow).
+**Integration points:**
+
+1. **`reflex.HealResult.heal_card(out_path, agent)`** — `reflex.heal()` results now emit the iconic paired artifact directly. `.baseline_card(...)` and `.healed_card(...)` also available for single-card variants.
+
+2. **MCP tool `cogn_share_card`** — any MCP client (Claude Desktop, Cursor, Cline, an autonomous agent) can issue itself a registry card. Takes an `audit` dict (single variant) or `baseline_audit` + `healed_audit` (heal variant), returns `{registry_id, card_path, composite, band, ...}`.
+
+3. **Local provenance log** — every render appends a record to `~/.styxx/cards/cards.jsonl`: serial, agent, composite, band, variant, path, timestamp. For heal-pair cards: also baseline/healed/delta/recovery_pct under `extra`.
+
+4. **CLI subcommands:**
+   ```bash
+   styxx card --audit run.json --agent claude-opus-4-7 --out card.png
+   styxx card --variant heal --baseline pre.json --healed-from post.json \
+       --agent gpt-4o-mini --out heal-pair.png
+   styxx cards list --limit 20
+   ```
+
+**`CardData.from_single_audit(audit_dict, agent, ts=...)`** — new classmethod wraps any single audit dict (e.g. the output of `cogn_audit` MCP tool or `guardrail.composite()`) as a renderable. Bridges runtime scoring to the share-card register.
+
+**Fonts** bundled under `styxx.fonts/` (Source Serif 4 OFL, JetBrains Mono OFL, Inter OFL). Renderer requires `matplotlib≥3.7` (pulled by the `agent-card` extra).
+
+**Tests:** 18 tests in `tests/test_cognometric_card.py` (was 9) covering: four audit shapes, composite fallback, band thresholds, deterministic serials, single-audit wrapping, registry append + read, render_card auto-register, render_heal_card with extra metadata, HealResult.{baseline_card, healed_card, heal_card}, MCP tool both variants + input validation.
+
+### Project URLs
+
+`pyproject.toml` `[project.urls]` updated from `fathom.darkflobi.com` to the canonical destinations: `styxx-org.netlify.app` (Homepage + Documentation), `fathomlab-io.netlify.app` (Fathom Lab), `t.me/STYXX_COMM` (Telegram community).
 
 ---
 

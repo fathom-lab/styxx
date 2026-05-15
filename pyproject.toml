@@ -104,9 +104,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage       = "https://fathom.darkflobi.com/styxx"
-Documentation  = "https://fathom.darkflobi.com/styxx"
-"Fathom Lab"   = "https://fathom.darkflobi.com/"
+Homepage       = "https://styxx-org.netlify.app"
+Documentation  = "https://styxx-org.netlify.app"
+"Fathom Lab"   = "https://fathomlab-io.netlify.app"
+"Telegram"     = "https://t.me/STYXX_COMM"
 "Research Paper" = "https://doi.org/10.5281/zenodo.19326174"
 "@fathom_lab"  = "https://x.com/fathom_lab"
 "Source"       = "https://github.com/fathom-lab/styxx"

@@ -225,6 +225,57 @@ COGN_PROTOCOL_INPUT = {
     "properties": {},
 }
 
+COGN_SHARE_CARD_INPUT = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "agent": {
+            "type": "string",
+            "description": "Agent / model name to print as the bearer (e.g. 'gpt-5-mini').",
+        },
+        "variant": {
+            "type": "string",
+            "enum": ["single", "heal"],
+            "default": "single",
+            "description": (
+                "'single' renders one card from the supplied audit (or "
+                "computed from prompt+response). 'heal' renders the paired "
+                "BEFORE / AFTER card and requires baseline_audit + healed_audit."
+            ),
+        },
+        "audit": {
+            "type": "object",
+            "description": (
+                "An audit dict in the cogn_audit output shape (keys: "
+                "sycophancy, deception, overconfidence, refusal, composite). "
+                "Used by variant='single'. If absent, prompt+response are "
+                "scored on the fly."
+            ),
+        },
+        "baseline_audit": {
+            "type": "object",
+            "description": "Pre-heal audit dict (variant='heal').",
+        },
+        "healed_audit": {
+            "type": "object",
+            "description": "Post-heal audit dict (variant='heal').",
+        },
+        "prompt": {
+            "type": "string",
+            "description": "Used only when no audit dict is supplied (variant='single' fallback).",
+        },
+        "response": {
+            "type": "string",
+            "description": "Used only when no audit dict is supplied (variant='single' fallback).",
+        },
+        "out_dir": {
+            "type": "string",
+            "description": "Output directory. Defaults to ~/.styxx/cards/.",
+        },
+    },
+}
+
+
 COGN_DECEPTION_V2_INPUT = {
     "type": "object",
     "additionalProperties": False,
@@ -890,6 +941,84 @@ def tool_cogn_self_heal_protocol(args: Dict[str, Any]) -> Dict[str, Any]:
 server = Server("styxx-mcp")
 
 
+def tool_cogn_share_card(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Render a cognometric share card (single or paired heal) to PNG and
+    return its registry record. Writes to ~/.styxx/cards/{serial}.png and
+    appends to ~/.styxx/cards/cards.jsonl (the provenance log)."""
+    from pathlib import Path
+    try:
+        from styxx.cognometric_card import (
+            CardData, render_card, render_heal_card, _serial_number,
+            _registry_dir,
+        )
+    except ImportError as e:
+        return {"error": (
+            "matplotlib not installed. install with: pip install 'styxx[agent-card]'"
+        )}
+
+    variant = (args.get("variant") or "single").lower()
+    agent = str(args.get("agent") or "agent")
+    out_dir = Path(args.get("out_dir") or _registry_dir())
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    if variant == "heal":
+        b = args.get("baseline_audit")
+        h = args.get("healed_audit")
+        if not (isinstance(b, dict) and isinstance(h, dict)):
+            return {"error": "variant='heal' requires baseline_audit + healed_audit dicts"}
+        baseline = CardData.from_single_audit(b, agent=agent)
+        healed = CardData.from_single_audit(h, agent=agent, healed=True)
+        serial = _serial_number(agent, baseline.ts, salt="heal-pair")
+        out_path = out_dir / f"{serial}.png"
+        render_heal_card(baseline, healed, out_path)
+        return {
+            "registry_id": serial,
+            "card_path": str(out_path),
+            "variant": "heal",
+            "agent": agent,
+            "baseline_composite": round(baseline.composite_mean, 4),
+            "healed_composite": round(healed.composite_mean, 4),
+            "delta": round(baseline.composite_mean - healed.composite_mean, 4),
+            "recovery_pct": round(
+                100 * (baseline.composite_mean - healed.composite_mean) /
+                max(baseline.composite_mean, 1e-6),
+                1),
+        }
+
+    # variant == "single"
+    audit = args.get("audit")
+    if not isinstance(audit, dict):
+        # fall back: score (prompt, response) if provided
+        prompt = str(args.get("prompt") or "").strip()
+        response = str(args.get("response") or "").strip()
+        if not (prompt or response):
+            return {"error": (
+                "variant='single' needs either an audit dict, "
+                "or a (prompt, response) pair to score on the fly"
+            )}
+        scores = _cogn_score_all(prompt, response)
+        audit = {**scores, "composite": _cogn_composite(scores)}
+
+    data = CardData.from_single_audit(audit, agent=agent)
+    serial = _serial_number(agent, data.ts)
+    out_path = out_dir / f"{serial}.png"
+    render_card(data, out_path)
+    band = (
+        "pristine" if data.composite_mean < 0.30 else
+        "stable"   if data.composite_mean < 0.50 else
+        "elevated" if data.composite_mean < 0.75 else
+        "critical"
+    )
+    return {
+        "registry_id": serial,
+        "card_path": str(out_path),
+        "variant": "single",
+        "agent": agent,
+        "composite": round(data.composite_mean, 4),
+        "band": band,
+    }
+
+
 @server.list_tools()
 async def list_tools() -> List[Tool]:
     return [
@@ -1017,6 +1146,21 @@ async def list_tools() -> List[Tool]:
             ),
             inputSchema=COGN_DECEPTION_V2_INPUT,
         ),
+        Tool(
+            name="cogn_share_card",
+            description=(
+                "REGISTRY CARD. Render a 1200×630 cognometric share-card PNG "
+                "for your agent — twin gold composite numeral, four vital-"
+                "sign gauges, deterministic STX-NNNN serial — and register "
+                "it in ~/.styxx/cards/cards.jsonl (the local provenance log). "
+                "Two variants: 'single' (one audit) and 'heal' (paired "
+                "BEFORE / AFTER card from a reflex.heal result, with twin "
+                "composites + arrow + recovery % + per-axis transition "
+                "table — the iconic recovery artifact). Use after cogn_audit "
+                "or after cogn_self_heal_protocol to issue the artifact."
+            ),
+            inputSchema=COGN_SHARE_CARD_INPUT,
+        ),
     ]
 
 
@@ -1047,6 +1191,8 @@ async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
         result = tool_cogn_self_heal_protocol(arguments)
     elif name == "cogn_deception_v2":
         result = tool_cogn_deception_v2(arguments)
+    elif name == "cogn_share_card":
+        result = tool_cogn_share_card(arguments)
     else:
         result = {"error": f"unknown tool: {name}"}
     return [TextContent(type="text", text=json.dumps(result, indent=2))]
