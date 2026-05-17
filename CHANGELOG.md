@@ -9,6 +9,84 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [7.4.1] — 2026-05-17 — Honesty / Correctness Release
+
+This is a **correctness and honest-scoping release**, not a feature release.
+PyPI `styxx==7.4.0` shipped with a misleading composite (reference-less
+deception averaged into a "lower=more honest" mean → labelled honest
+text as elevated/critical). `7.4.1` fixes the composite, withdraws the
+"universal cross-vendor integrity layer" framing, documents the
+construct ceilings of the text-only instruments, and aligns README /
+CHANGELOG / docs to git history. **No new claims, no new DOI.**
+
+### Fixed
+- **Composite honesty (commit `0ad384e`).** `_cogn_score_all` no longer
+  averages in the reference-less (non-discriminative, saturated ~0.99)
+  deception axis. `COGN_COMPOSITE_KEYS = [sycophancy, overconfidence]`;
+  `COGN_COMPOSITE_KEYS_WITH_REFERENCE` re-adds deception when a
+  `correct_reference` is supplied. `cogn_audit` emits `deception_mode`
+  + an honest `composite_caveat`. Self-audit composite on n=16 honest
+  Claude turns: **0.650 → 0.481**; honest/self-correcting turns move
+  elevated/critical → stable. Full suite: **887 passed, 1 skipped**.
+- **Deception routing.** Reference-less requests fall through to
+  `deception_check_v0` (lexical signature, in-corpus AUC 0.956 but
+  **out-of-corpus 0.59 on TruthfulQA — near chance**, scope warning
+  surfaced). Supplying `correct_reference` routes to
+  `deception_check_v2` (NLI cross-encoder, AUC 0.82) and deception
+  re-enters the composite.
+
+### Changed (scope clarifications, withdrawn over-claims)
+- **README — "universal AI integrity probe" framing withdrawn.** The
+  May 14 "universal" headline overstated what was earned. Replaced
+  with the honest scoping: a label-free, same-family cognometric
+  transport whose reliability is governed by a measurable,
+  **vendor-agnostic corpus↔domain-overlap threshold**. Cross-vendor
+  universality is a documented **preregistration-killed** result
+  (confirmatory re-label with a vendor-robust refusal labeler:
+  min transported AUC 0.617 < 0.70 floor; worst cell is the same
+  corpus×foreign-space pairing for Anthropic as for OpenAI → the
+  barrier is corpus overlap, not vendor). See
+  `papers/styxx-status-consolidation-2026-05-17.md`.
+- **Overconfidence axis = stated-confidence register, not
+  overconfidence.** Preregistered text-only recalibration on n=100
+  claude-haiku-4-5 responses failed (held-out AUC 0.571 / 0.604 /
+  0.562 vs ≥0.70 floor; the `register × (1−correct)` candidate hit
+  1.000 — flagged as a circular oracle and *rejected*, not reported).
+  The refit *did* de-saturate the axis (range 0.21–0.96, sd 0.165 vs
+  the old 0.75–0.99) but every wrong response still scores
+  register ≥ 0.71 → construct ceiling, not a tuning miss. Next lever
+  (logprobs / entropy / model-internal confidence) is named and
+  explicitly out of scope. `COGN_UNDER_REVIEW` flag retained.
+- **Composite-honesty excludes reference-less deception by default.**
+  Documented in CHANGELOG and the MCP `cogn_audit` `composite_caveat`.
+- **Construct-ceiling note added to README.** Text-only instruments
+  are register / signature detectors — they read how text sounds, not
+  whether it is honest / calibrated / correct. Same shape confirmed
+  four ways this session (deception_v0, overconfidence,
+  cross-vendor universality, zero-paired transport).
+
+### Added
+- `tests/test_labeling.py` — suite-protects the vendor-robust refusal
+  labeler (fixture 22/22, OpenAI regression 60/60). 18 tests.
+- `papers/research-integrity-protocol.md` — codified rules (9
+  non-negotiable) that produced four committed preregistered
+  negatives + a caught circular oracle in a single session.
+- `papers/styxx-status-consolidation-2026-05-17.md` — the true map.
+
+### Permanent-record review
+The 5 permanent Zenodo DOIs (19703527 / 19777921 / 19746215 /
+19758619 / 19761194) depend on hallucination, refusal, tool-drift,
+K=1 phase-transition — **NOT** on the deception axis, the
+four-axis composite, overconfidence, or heal/recovery %. **No
+permanent record is contaminated** by the broken axes. Known
+uneditable erratum (recorded for honesty): tool-call-drift AUC is
+inconsistent across permanent records — **0.916** (EMLV 19777921)
+vs **0.943** (Spec v1.0 / software v6.2.0). The undeposited
+`self-healing-reflex-v0.md` (112% recovery) leans on the pre-fix
+composite and must be re-evaluated before any deposit.
+
+---
+
 ### Honest composite correction (self-audit driven, 2026-05-17)
 
 Pointing styxx at its own honest, self-correcting session output
