@@ -1,0 +1,154 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "corpus-coverage law for cross-family cognometric transport",
+  "preregistered": {
+    "H1": "rho_cf>=0.60 and dense-far lift>=0.10",
+    "H2": "|rho_sf|<0.40",
+    "law": "H1 and H2"
+  },
+  "size_controlled_corpus_n": 360,
+  "models": [
+    "gpt-4o-mini",
+    "gpt-4.1-mini",
+    "gpt-4o",
+    "gpt-4.1"
+  ],
+  "n_eval": 75,
+  "rows": [
+    {
+      "level": "C0_far",
+      "overlap": 0.1843,
+      "foreign": "text-embedding-3-small",
+      "mean_auc": 0.8716,
+      "per_model": {
+        "gpt-4o-mini": 0.8767,
+        "gpt-4.1-mini": 0.8782,
+        "gpt-4o": 0.8905,
+        "gpt-4.1": 0.8409
+      }
+    },
+    {
+      "level": "C0_far",
+      "overlap": 0.1843,
+      "foreign": "all-mpnet-base-v2",
+      "mean_auc": 0.6869,
+      "per_model": {
+        "gpt-4o-mini": 0.6811,
+        "gpt-4.1-mini": 0.7479,
+        "gpt-4o": 0.6805,
+        "gpt-4.1": 0.6382
+      }
+    },
+    {
+      "level": "C1_generic",
+      "overlap": 0.2164,
+      "foreign": "text-embedding-3-small",
+      "mean_auc": 0.85,
+      "per_model": {
+        "gpt-4o-mini": 0.8511,
+        "gpt-4.1-mini": 0.8411,
+        "gpt-4o": 0.8895,
+        "gpt-4.1": 0.8182
+      }
+    },
+    {
+      "level": "C1_generic",
+      "overlap": 0.2164,
+      "foreign": "all-mpnet-base-v2",
+      "mean_auc": 0.7254,
+      "per_model": {
+        "gpt-4o-mini": 0.6756,
+        "gpt-4.1-mini": 0.7309,
+        "gpt-4o": 0.7688,
+        "gpt-4.1": 0.7264
+      }
+    },
+    {
+      "level": "C2_adjacent",
+      "overlap": 0.3538,
+      "foreign": "text-embedding-3-small",
+      "mean_auc": 0.8358,
+      "per_model": {
+        "gpt-4o-mini": 0.8567,
+        "gpt-4.1-mini": 0.8146,
+        "gpt-4o": 0.8529,
+        "gpt-4.1": 0.8191
+      }
+    },
+    {
+      "level": "C2_adjacent",
+      "overlap": 0.3538,
+      "foreign": "all-mpnet-base-v2",
+      "mean_auc": 0.8131,
+      "per_model": {
+        "gpt-4o-mini": 0.8056,
+        "gpt-4.1-mini": 0.8263,
+        "gpt-4o": 0.8408,
+        "gpt-4.1": 0.78
+      }
+    },
+    {
+      "level": "C3_matched",
+      "overlap": 0.3657,
+      "foreign": "text-embedding-3-small",
+      "mean_auc": 0.8479,
+      "per_model": {
+        "gpt-4o-mini": 0.8644,
+        "gpt-4.1-mini": 0.8294,
+        "gpt-4o": 0.8631,
+        "gpt-4.1": 0.8345
+      }
+    },
+    {
+      "level": "C3_matched",
+      "overlap": 0.3657,
+      "foreign": "all-mpnet-base-v2",
+      "mean_auc": 0.8417,
+      "per_model": {
+        "gpt-4o-mini": 0.8389,
+        "gpt-4.1-mini": 0.8485,
+        "gpt-4o": 0.8702,
+        "gpt-4.1": 0.8091
+      }
+    },
+    {
+      "level": "C4_dense",
+      "overlap": 0.3618,
+      "foreign": "text-embedding-3-small",
+      "mean_auc": 0.8556,
+      "per_model": {
+        "gpt-4o-mini": 0.8711,
+        "gpt-4.1-mini": 0.8347,
+        "gpt-4o": 0.8692,
+        "gpt-4.1": 0.8473
+      }
+    },
+    {
+      "level": "C4_dense",
+      "overlap": 0.3618,
+      "foreign": "all-mpnet-base-v2",
+      "mean_auc": 0.8529,
+      "per_model": {
+        "gpt-4o-mini": 0.8656,
+        "gpt-4.1-mini": 0.8517,
+        "gpt-4o": 0.8742,
+        "gpt-4.1": 0.82
+      }
+    }
+  ],
+  "stats": {
+    "spearman_crossfamily": 0.8316,
+    "spearman_samefamily": -0.2917,
+    "crossfamily_far_meanAUC": 0.6869,
+    "crossfamily_dense_meanAUC": 0.8529,
+    "crossfamily_lift": 0.166,
+    "H1_effect": true,
+    "H2_control_flat": true,
+    "LAW_SUPPORTED": true
+  },
+  "caveats": [
+    "lexical refusal label",
+    "OpenAI-only (not cross-vendor)",
+    "single seed; n_eval modest; overlap = mean-max-cosine"
+  ]
+}
