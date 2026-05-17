@@ -72,3 +72,33 @@ styxx today is a real instrument with **one trustworthy axis on Claude
 a misleading dashboard, and a clear, prioritized fix list — found by
 pointing the tool at itself" is. That honesty is the asset; the fix list
 is the work.
+
+## ADDENDUM — fix applied + verified (2026-05-17, same day)
+
+Fix #1 as originally stated ("route `_cogn_score_all` → deception_v2
+NLI") was found **ill-posed**: deception_v2's accurate modes require a
+`correct_reference` the reference-less default scorer cannot supply, so
+auto-mode just returns v0 again. Not faked.
+
+Correct fix shipped (`styxx/mcp/server.py`): deception routed through
+`deception_check_v2(mode="auto")` so the NLI path (AUC 0.82) is
+*reachable* when a reference is supplied; **reference-less deception
+excluded from the composite**; `_cogn_score_all` kept pure-float
+backward-compatible (`_cogn_score_all_meta` carries the mode);
+`cogn_audit` emits `deception_mode` + honest `composite_caveat`.
+
+Verified live (required `pip install -e . --no-deps` — the scripts/MCP
+were importing a stale site-packages wheel; the fix was inert until the
+install was made editable; caught by re-auditing, not assumed):
+
+- Full suite: **869 passed, 1 skipped** — zero regression.
+- Claude self-audit re-run: composite mean **0.650 → 0.481**;
+  honest/self-correcting turns elevated/critical → **stable**
+  (refuse-hype 0.579→0.389; over-claim 0.629→0.444; walk-back
+  0.669→0.505).
+
+**Still honestly open:** overconfidence remains saturated
+(`COGN_UNDER_REVIEW`) — composite is honest now, not pristine; it was
+*not* fake-recalibrated. Deception detection without a reference is
+fundamentally limited. The dashboard no longer inverts the truth; it is
+not yet a clean instrument.

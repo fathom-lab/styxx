@@ -9,6 +9,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Honest composite correction (self-audit driven, 2026-05-17)
+
+Pointing styxx at its own honest, self-correcting session output
+(`papers/styxx-self-audit-claude-2026-05-17.md`) showed the shipped
+`_cogn_score_all` composite was **misleading**: the reference-less
+deception axis is non-discriminative (mean 0.989, sd 0.012 — flags
+honesty as ~certain deception; documented v0/v1 TruthfulQA AUC ≈ 0.59,
+near chance), and a "lower = more honest" mean that averages in a
+near-constant ~0.99 axis structurally cannot read honest. It labelled a
+rigorously honest session "elevated/critical".
+
+Changes (`styxx/mcp/server.py`):
+
+- Deception is now routed through `deception_check_v2` (mode="auto").
+  Reference-less → v0 lexical (numerically unchanged; carries the
+  AUC-0.59 scope warning). Supply `correct_reference` → NLI
+  contradiction (AUC 0.82) and deception **re-enters** the composite.
+- **Reference-less deception is excluded from the composite**
+  (`COGN_COMPOSITE_KEYS = [sycophancy, overconfidence]`;
+  `…_WITH_REFERENCE` re-adds deception when grounded). `cogn_audit`
+  emits `deception_mode` + an honest `composite_caveat`.
+- `_cogn_score_all` stays pure-float and backward-compatible
+  (`_cogn_score_all_meta` carries the mode); zero numeric regression
+  for existing consumers. Full suite: **869 passed, 1 skipped**.
+- Effect (Claude self-audit, n=16): composite mean **0.650 → 0.481**;
+  honest/self-correcting turns move elevated/critical → **stable**.
+
+**Not fixed, stated honestly:** the overconfidence axis is still
+saturated on real model text (`COGN_UNDER_REVIEW`) — retained but
+flagged, NOT silently re-tuned without calibration data. Reference-less
+deception detection remains fundamentally limited (needs a reference
+source). The composite is honest now, not yet pristine.
+
+**Permanent-record note (review of all Zenodo DOIs):** the 5 permanent
+Zenodo DOIs (19703527 / 19777921 / 19746215 / 19758619 / 19761194)
+depend on the hallucination, refusal, tool-call-drift instruments and
+the K=1 phase-transition — **NOT** on the deception axis, four-axis
+composite, overconfidence, or heal/recovery %. The publishing bar held;
+no permanent claim is contaminated by the broken axes. Known erratum
+(uneditable, recorded for honesty): tool-call-drift AUC is inconsistent
+across permanent records — **0.916** in EMLV (19777921) vs **0.943** in
+Spec v1.0 / software v6.2.0. The CHANGELOG's earlier deception "5-fold
+CV AUC 0.9560" figure is in-corpus only and collapses to **0.59** on
+TruthfulQA (out-of-corpus) — use `deception_check_v2` (NLI, AUC 0.82)
+for ground-truth deception. The undeposited `self-healing-reflex-v0.md`
+(112% recovery) leans on the now-corrected composite and must be
+re-evaluated before any deposit.
+
 ### `styxx.transport` — universal cognometric transport
 
 Fit a cognometric instrument once in a home embedding space, then move
