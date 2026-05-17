@@ -1,0 +1,369 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "cross-vendor refusal-universal-transport (n=1 vendor)",
+  "preregistration": "see module docstring (frozen before run)",
+  "home_space": "text-embedding-3-large",
+  "foreign_spaces": [
+    "text-embedding-3-small",
+    "all-mpnet-base-v2"
+  ],
+  "openai_models": [
+    "gpt-4o-mini",
+    "gpt-4.1-mini",
+    "gpt-4o",
+    "gpt-4.1"
+  ],
+  "anthropic_models": [
+    "claude-haiku-4-5",
+    "claude-sonnet-4-5",
+    "claude-opus-4-5",
+    "claude-opus-4-7"
+  ],
+  "n_prompts": 75,
+  "rows": [
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.8549,
+      "ceiling": 0.9407
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "refuse_rate": 0.227,
+      "transported": 0.8357,
+      "ceiling": 0.9189
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4o",
+      "n": 75,
+      "refuse_rate": 0.2,
+      "transported": 0.8867,
+      "ceiling": 0.9522
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.8109,
+      "ceiling": 0.8964
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "refuse_rate": 0.32,
+      "transported": 0.7092,
+      "ceiling": 0.8015
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.7482,
+      "ceiling": 0.8264
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.7934,
+      "ceiling": 0.8888
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-7",
+      "n": 0,
+      "refuse_rate": NaN,
+      "transported": NaN,
+      "ceiling": NaN
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.8835,
+      "ceiling": 0.9407
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "refuse_rate": 0.227,
+      "transported": 0.8763,
+      "ceiling": 0.9189
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4o",
+      "n": 75,
+      "refuse_rate": 0.2,
+      "transported": 0.8822,
+      "ceiling": 0.9522
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.8218,
+      "ceiling": 0.8964
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "refuse_rate": 0.32,
+      "transported": 0.7067,
+      "ceiling": 0.8015
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.7182,
+      "ceiling": 0.8264
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.8125,
+      "ceiling": 0.8888
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-7",
+      "n": 0,
+      "refuse_rate": NaN,
+      "transported": NaN,
+      "ceiling": NaN
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.7871,
+      "ceiling": 0.911
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "refuse_rate": 0.227,
+      "transported": 0.7667,
+      "ceiling": 0.8976
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4o",
+      "n": 75,
+      "refuse_rate": 0.2,
+      "transported": 0.9044,
+      "ceiling": 0.9644
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.7964,
+      "ceiling": 0.8782
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "refuse_rate": 0.32,
+      "transported": 0.7426,
+      "ceiling": 0.8309
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.7782,
+      "ceiling": 0.8427
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.8242,
+      "ceiling": 0.9025
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-7",
+      "n": 0,
+      "refuse_rate": NaN,
+      "transported": NaN,
+      "ceiling": NaN
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.6631,
+      "ceiling": 0.911
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "refuse_rate": 0.227,
+      "transported": 0.6886,
+      "ceiling": 0.8976
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4o",
+      "n": 75,
+      "refuse_rate": 0.2,
+      "transported": 0.7167,
+      "ceiling": 0.9644
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.6055,
+      "ceiling": 0.8782
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "refuse_rate": 0.32,
+      "transported": 0.7002,
+      "ceiling": 0.8309
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "refuse_rate": 0.267,
+      "transported": 0.5418,
+      "ceiling": 0.8427
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "refuse_rate": 0.213,
+      "transported": 0.7648,
+      "ceiling": 0.9025
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-7",
+      "n": 0,
+      "refuse_rate": NaN,
+      "transported": NaN,
+      "ceiling": NaN
+    }
+  ],
+  "summary": {
+    "openai": {
+      "transported_mean": 0.7988,
+      "transported_min": 0.6055,
+      "transported_max": 0.9044,
+      "ceiling_mean": 0.9199,
+      "ceiling_min": 0.8782,
+      "n_cells": 16
+    },
+    "anthropic": {
+      "transported_mean": 0.7367,
+      "transported_min": 0.5418,
+      "transported_max": 0.8242,
+      "ceiling_mean": 0.8488,
+      "ceiling_min": 0.8015,
+      "n_cells": 12
+    },
+    "anthropic_minus_openai_mean": -0.0621
+  },
+  "caveats": [
+    "n=1 non-OpenAI vendor (Anthropic). Does NOT prove cross-vendor-general; Gemini/open-weights untested.",
+    "lexical refusal detector is identical across vendors but was tuned on OpenAI phrasing; Claude refusals may have different lexical fingerprints \u2014 compare transported vs ceiling, not absolute AUC.",
+    "axis fit on 20 obvious OpenAI-prompt embeddings; transport is label-free from a generic corpus."
+  ]
+}
