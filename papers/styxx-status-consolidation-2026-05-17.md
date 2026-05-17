@@ -36,14 +36,28 @@ scoped to exactly what was measured.
 
 ## OPEN / PENDING
 
-- **Overconfidence axis saturated** — flagged `COGN_UNDER_REVIEW`,
-  honestly NOT fake-recalibrated. Needs labeled calibration data; a
-  real task, not a dogfood.
 - Reference-less deception detection is fundamentally limited (needs a
-  reference source — self-consistency / entity grounding).
+  reference source — self-consistency / entity grounding). Same
+  construct-ceiling shape as overconfidence below.
+- The identified-but-not-chased next lever for grounding (logprobs /
+  entropy / model-internal confidence). Deliberately out of scope —
+  a research direction for a fresh-context session, not a dogfood.
 
 ## CLOSED NEGATIVES (do not re-litigate as dogfoods)
 
+- **Overconfidence recalibration from text alone — preregistration-
+  failed** (recal run `7c36ed9`, H_null). claude-haiku-4-5, n=100,
+  held-out n=50, no lexical leakage. Real text-only candidates:
+  register-alone 0.571, register×len-penalty 0.604, register−hedge
+  0.562 — all fail the preregistered bar (held-out AUC ≥0.70 AND ≥0.10
+  lift). The `register×(1−correct)` candidate hit 1.000 — the SAME
+  circular oracle flagged before the run; caught, flagged, **rejected**
+  (not reported as a win). Real partial gain: the refit **de-saturated**
+  the axis (0.21–0.96, sd 0.165, vs the old 0.75–0.99) — modestly less
+  broken — but every wrong response still scores register ≥0.71: the
+  axis measures stated-confidence *register*, not overconfidence, and
+  no text-only transform bridges that. Construct ceiling, not a tuning
+  miss. Next lever = logprobs/entropy (out of scope; see OPEN).
 - **Cross-vendor "transport holds" — preregistration-KILLED**
   (confirmatory re-label run `b2675c4`, H_kill). With a fair
   vendor-robust label the OpenAI-tuned-label artifact closed only
@@ -95,6 +109,23 @@ specific "one universal map for all of AI" framing failed under
 preregistration. The product is the honesty: the boundaries are on the
 page, not sanded off. That asset is intact — and it is the only thing
 this session can truthfully sell.
+
+**The through-line (the real consolidated finding).** Every
+preregistered negative this session has the same shape: styxx's
+text-only/lexical instruments are *register / signature* detectors
+with a construct ceiling — they read how text sounds, not whether it
+is honest/calibrated/correct. Confirmed four ways: deception v0
+(needs a reference), overconfidence (needs correctness — text can't
+bridge it, `7c36ed9`), cross-vendor universality (the transport is
+fine; the corpus-overlap threshold governs it, vendor-agnostically),
+zero-paired transport (needs heavy machinery). What actually survived
+is precise: (1) the transport *mechanism* — geometric, same-family,
+governed by a measurable vendor-agnostic corpus↔overlap threshold;
+(2) sycophancy, the one self-audit axis that discriminated. Everything
+requiring *grounding* is closed-or-bounded, and the identified next
+lever (model-internal confidence: logprobs/entropy) is named, scoped
+out, not chased. That is not a downgrade — it is the true shape, and
+knowing it precisely is what a credible integrity layer is for.
 
 ## STATUS: GATE RESOLVED — CONSOLIDATE, DO NOT CHASE
 
