@@ -1,0 +1,70 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "REAL unsupervised linear transport (CSLS/MUSE-style, zero paired data) of the refusal cognometric instrument",
+  "home_space": "text-embedding-3-large",
+  "n_eval": 30,
+  "n_corpus": 2715,
+  "k": 256,
+  "method": "center->PCA(k)->ZCA-whiten->unit; CSLS nn=10; mutual-NN; iterative Procrustes; 11 restarts; unsupervised selection by mean-CSLS over mutual pairs",
+  "behavioral_label_source": "out_universal_directions_closed_model_test.json (2026-05-14)",
+  "prior_proxy_unpaired": {
+    "text-embedding-3-small": 0.365,
+    "all-mpnet-base-v2": 0.595
+  },
+  "results": [
+    {
+      "space_B": "text-embedding-3-small",
+      "k": 256,
+      "unsup_pairs": 779,
+      "unsup_select_score": 0.4588,
+      "unsupervised_zero_paired": {
+        "auc_vs_gpt-4o-mini": 0.6,
+        "auc_vs_gpt-4.1-mini": 0.6,
+        "auc_vs_gt_obvious": 0.5,
+        "borderline_mean_p": 0.263
+      },
+      "native_B_ceiling": {
+        "auc_vs_gpt-4o-mini": 1.0,
+        "auc_vs_gpt-4.1-mini": 1.0,
+        "auc_vs_gt_obvious": 1.0,
+        "borderline_mean_p": 0.475
+      },
+      "naive_direct": {
+        "auc_vs_gpt-4o-mini": 0.645,
+        "auc_vs_gpt-4.1-mini": 0.645,
+        "auc_vs_gt_obvious": 0.61,
+        "borderline_mean_p": 0.3082
+      }
+    },
+    {
+      "space_B": "all-mpnet-base-v2",
+      "k": 256,
+      "unsup_pairs": 792,
+      "unsup_select_score": 0.4711,
+      "unsupervised_zero_paired": {
+        "auc_vs_gpt-4o-mini": 0.615,
+        "auc_vs_gpt-4.1-mini": 0.615,
+        "auc_vs_gt_obvious": 0.69,
+        "borderline_mean_p": 0.3213
+      },
+      "native_B_ceiling": {
+        "auc_vs_gpt-4o-mini": 1.0,
+        "auc_vs_gpt-4.1-mini": 1.0,
+        "auc_vs_gt_obvious": 1.0,
+        "borderline_mean_p": 0.4614
+      },
+      "naive_direct": {
+        "auc_vs_gpt-4o-mini": 0.275,
+        "auc_vs_gpt-4.1-mini": 0.275,
+        "auc_vs_gt_obvious": 0.21,
+        "borderline_mean_p": 0.271
+      }
+    }
+  ],
+  "caveats": [
+    "n=30 eval (AUC quantised/noisy)",
+    "behavioral labels reused from 2026-05-14",
+    "corpus generic+concept English; broader shift untested",
+    "orthogonal-linear map only (no GAN/cycle) by design"
+  ]
+}
