@@ -1,0 +1,135 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "cross-instrument universal transport \u2014 one shared label-free map, full instrument suite",
+  "home": "text-embedding-3-large",
+  "method": "procrustes (shipped styxx.transport)",
+  "cap_per_class": 80,
+  "label_source": "styxx benchmarks/data condition labels",
+  "results": [
+    {
+      "foreign": "text-embedding-3-small",
+      "transport": "<TransportReport procrustes 1536->3072 n=420, k=256>",
+      "instruments": {
+        "refusal": {
+          "n_test": 10,
+          "ceiling": 1.0,
+          "naive": 0.56,
+          "transported": 0.92,
+          "retention": 0.92
+        },
+        "sycophancy": {
+          "n_test": 80,
+          "ceiling": 1.0,
+          "naive": 0.5238,
+          "transported": 0.9688,
+          "retention": 0.9688
+        },
+        "deception": {
+          "n_test": 80,
+          "ceiling": 0.6331,
+          "naive": 0.5375,
+          "transported": 0.58,
+          "retention": 0.9161
+        },
+        "overconfidence": {
+          "n_test": 80,
+          "ceiling": 0.4088,
+          "naive": 0.5212,
+          "transported": 0.4306,
+          "retention": 1.0535
+        },
+        "goal_drift": {
+          "n_test": 80,
+          "ceiling": 0.9306,
+          "naive": 0.6656,
+          "transported": 0.9444,
+          "retention": 1.0148
+        },
+        "plan_action": {
+          "n_test": 80,
+          "ceiling": 0.8094,
+          "naive": 0.4756,
+          "transported": 0.7312,
+          "retention": 0.9035
+        }
+      },
+      "signal_instruments": [
+        "goal_drift",
+        "plan_action",
+        "refusal",
+        "sycophancy"
+      ],
+      "no_native_signal_excluded": [
+        "deception",
+        "overconfidence"
+      ],
+      "mean_retention_signal_only": 0.9518,
+      "n_signal_ret_ge_085": 4
+    },
+    {
+      "foreign": "all-mpnet-base-v2",
+      "transport": "<TransportReport procrustes 768->3072 n=420, k=256>",
+      "instruments": {
+        "refusal": {
+          "n_test": 10,
+          "ceiling": 1.0,
+          "naive": 0.24,
+          "transported": 0.84,
+          "retention": 0.84
+        },
+        "sycophancy": {
+          "n_test": 80,
+          "ceiling": 0.9731,
+          "naive": 0.565,
+          "transported": 0.7269,
+          "retention": 0.7469
+        },
+        "deception": {
+          "n_test": 80,
+          "ceiling": 0.5206,
+          "naive": 0.4844,
+          "transported": 0.4481,
+          "retention": 0.8607
+        },
+        "overconfidence": {
+          "n_test": 80,
+          "ceiling": 0.5119,
+          "naive": 0.5331,
+          "transported": 0.6062,
+          "retention": 1.1844
+        },
+        "goal_drift": {
+          "n_test": 80,
+          "ceiling": 0.9631,
+          "naive": 0.5713,
+          "transported": 0.6925,
+          "retention": 0.719
+        },
+        "plan_action": {
+          "n_test": 80,
+          "ceiling": 0.8294,
+          "naive": 0.6963,
+          "transported": 0.7769,
+          "retention": 0.9367
+        }
+      },
+      "signal_instruments": [
+        "goal_drift",
+        "plan_action",
+        "refusal",
+        "sycophancy"
+      ],
+      "no_native_signal_excluded": [
+        "deception",
+        "overconfidence"
+      ],
+      "mean_retention_signal_only": 0.8106,
+      "n_signal_ret_ge_085": 1
+    }
+  ],
+  "caveats": [
+    "refusal n small (20 obvious prompts)",
+    "per-instrument n modest; benchmark condition labels are styxx-synthetic, not live frontier behavior",
+    "one generic corpus; single seed; directional not paper-final"
+  ]
+}

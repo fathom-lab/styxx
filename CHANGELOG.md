@@ -37,6 +37,13 @@ is a closed negative (two principled attempts failed, ~0.60 AUC,
 Methods: `procrustes` (orthogonal, best) and `ridge` (handles unequal
 dims). Instruments and transports are `save`/`load`-able.
 
+The map is **instrument-agnostic** (2026-05-17 cross-instrument
+dogfood): one shared label-free map carries refusal, sycophancy,
+goal-drift and plan-action — within-family mean retention 0.95 (4/4
+≥0.85 of native), cross-family broad (mean 0.81, all above naive).
+Limit is the instrument's own embedding-space signal, not the map
+(deception/overconfidence have none — excluded honestly).
+
 ### Cognometric registry card — full product surface (was add-on, now integrated)
 
 The card is no longer a one-shot offline renderer. It's a first-class artifact of every audit, every heal, every MCP tool call.
