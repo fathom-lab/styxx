@@ -25,17 +25,17 @@ scoped to exactly what was measured.
   (~0.31), not a clean law.** The 5-level "law" (Spearman +0.83)
   FAILED 12-level replication (control confounded, metric saturates).
   It is an operational guardrail, not a graded law. (walk-back:
-  `papers/corpus-coverage-law-fine-2026-05-17.md`)
+  `papers/corpus-coverage-law-fine-2026-05-17.md`) **Reinforced
+  2026-05-17:** the cross-vendor kill showed the residual crack lands
+  at the *same* corpus×foreign-space cell (mpnet×corpus_2) for
+  Anthropic as for OpenAI — the threshold is **vendor-agnostic**. This
+  is the one bounded result the whole session converges on.
 - **Instrument-agnostic transport holds only for instruments with
   native embedding signal** (refusal, sycophancy, goal_drift,
   plan_action). deception/overconfidence have none reference-less.
 
 ## OPEN / PENDING
 
-- **Cross-vendor (the gating question).** n=1 (Anthropic) CRACKED by
-  preregistered threshold; T/C ratio identical 0.868 → attributed to
-  the OpenAI-tuned label. **Unconfirmed.** The confirmatory re-label
-  run (vendor-robust labeler + judge) is the gate; in flight.
 - **Overconfidence axis saturated** — flagged `COGN_UNDER_REVIEW`,
   honestly NOT fake-recalibrated. Needs labeled calibration data; a
   real task, not a dogfood.
@@ -44,6 +44,14 @@ scoped to exactly what was measured.
 
 ## CLOSED NEGATIVES (do not re-litigate as dogfoods)
 
+- **Cross-vendor "transport holds" — preregistration-KILLED**
+  (confirmatory re-label run `b2675c4`, H_kill). With a fair
+  vendor-robust label the OpenAI-tuned-label artifact closed only
+  ~1.2 pts (Δceiling 0.071→0.059); min transported **0.617 < 0.70**
+  floor → still cracks. **Worst cell = the same mpnet×corpus_2
+  pairing that was worst for OpenAI** → the residual crack is the
+  vendor-AGNOSTIC corpus↔overlap threshold, NOT a vendor barrier.
+  Cross-vendor universality is closed; do not re-litigate it.
 - Zero-paired-data transport: failed by two principled methods (proxy
   + real CSLS/MUSE). Heavy separate research bet, not a dogfood.
 - Brick #1 (live behavior, non-refusal instruments): null — modern
@@ -64,26 +72,38 @@ scoped to exactly what was measured.
 
 ## HONEST PAPER SCOPE (what is claimable today)
 
-Same-family universal cognometric transport + the corpus↔domain overlap
-threshold + the documented boundaries (zero-paired closed; instrument-
-agnostic within-signal; composite-honesty fix). This is a real, novel
-methods contribution **only once** the cross-vendor confirmatory lands
-*and* a second vendor (Gemini/open-weights) is added. Until then: not
-paper-grade, **no Zenodo/OSF** (publishing bar holds).
+The honest, defensible claim is now narrower and *cleaner* than the
+ambition: **a label-free cognometric transport whose reliability is
+governed by a measurable, vendor-agnostic corpus↔domain-overlap
+threshold** — validated same-family; failing predictably (same cell,
+any vendor) below the threshold; with documented closed negatives
+(zero-paired; cross-vendor universality; instrument-agnostic only
+within-signal) and the composite-honesty fix. A "universal cross-vendor
+transport" claim is **not available — it is preregistration-killed.**
+This bounded result *could* be a real methods contribution, but it is
+**not paper-grade today** and **no Zenodo/OSF** (publishing bar holds);
+the kill removed the universality framing a paper would have led with.
 
 ## THE ORIGINAL GOAL, STATED HONESTLY
 
 "Integrity layer for ALL of AI": there is a real, validated instrument
-for same-vendor/same-family behavior, with honest bounds. **"ALL of AI"
-is not earned** — cross-vendor is one unconfirmed n=1 datapoint;
-Gemini and open-weights are untested; live non-refusal behavior is
-unmeasured. The product is the honesty: the boundaries are on the page,
-not sanded off. That is the asset, and it is intact.
+for same-family behavior, governed by an honest, vendor-agnostic
+threshold. **"ALL of AI" is not earned, and the cross-vendor-universality
+*path* to it is now a closed negative** — not merely untested.
+Gemini/open-weights/live-non-refusal remain unmeasured, but the
+specific "one universal map for all of AI" framing failed under
+preregistration. The product is the honesty: the boundaries are on the
+page, not sanded off. That asset is intact — and it is the only thing
+this session can truthfully sell.
 
-## NEXT DECISION GATE
+## STATUS: GATE RESOLVED — CONSOLIDATE, DO NOT CHASE
 
-darkflobi's confirmatory cross-vendor verdict. Confirmed → the
-external-validity sentence can be written (n=1) and a second vendor
-becomes the path to a paper. Killed → the "transport holds cross-vendor"
-reading is withdrawn and same-family stands alone. No new experiments
-until that gate resolves; more velocity here is motion, not progress.
+The confirmatory gate resolved: **H_kill.** There is no next experiment
+that rescues universality without re-litigating a preregistered
+negative — which this project does not do. The disciplined position is
+to accept the narrower true result (vendor-agnostic threshold-governed
+transport, honestly bounded) and stop. Any "one more run to make it
+universal" is the velocity-trap; the session's own record shows every
+such push produced a walk-back. Real next work, if any, is the heavy
+honest backlog (overconfidence recalibration with real data; a
+reference source for deception) — not another universality attempt.
