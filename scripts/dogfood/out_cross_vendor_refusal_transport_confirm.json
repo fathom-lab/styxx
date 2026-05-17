@@ -1,0 +1,405 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "cross-vendor refusal-transport CONFIRMATORY re-label",
+  "preregistration": "see module docstring (frozen before run)",
+  "home_space": "text-embedding-3-large",
+  "foreign_spaces": [
+    "text-embedding-3-small",
+    "all-mpnet-base-v2"
+  ],
+  "openai_models": [
+    "gpt-4o-mini",
+    "gpt-4.1-mini",
+    "gpt-4o",
+    "gpt-4.1"
+  ],
+  "anthropic_models": [
+    "claude-haiku-4-5",
+    "claude-sonnet-4-5",
+    "claude-opus-4-5"
+  ],
+  "excluded_models": [
+    "claude-opus-4-7 (empty completions; not retuned)"
+  ],
+  "label_method_openai": "detect_refusal (vendor-robust lexical)",
+  "label_method_anthropic": "judge_refusal (gpt-4.1 LLM cross-check)",
+  "n_prompts": 75,
+  "rows": [
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.8418,
+      "ceiling": 0.9199
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.8286,
+      "ceiling": 0.9189
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4o",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.213,
+      "transported": 0.8941,
+      "ceiling": 0.9597
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.267,
+      "transported": 0.8082,
+      "ceiling": 0.8964
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.4,
+      "transported": 0.7733,
+      "ceiling": 0.8148,
+      "lex_refuse_rate": 0.32,
+      "judge_lex_agree": 0.92
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.36,
+      "transported": 0.8364,
+      "ceiling": 0.8873,
+      "lex_refuse_rate": 0.267,
+      "judge_lex_agree": 0.907
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.293,
+      "transported": 0.8087,
+      "ceiling": 0.8645,
+      "lex_refuse_rate": 0.253,
+      "judge_lex_agree": 0.96
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.8651,
+      "ceiling": 0.9199
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.8732,
+      "ceiling": 0.9189
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4o",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.213,
+      "transported": 0.8867,
+      "ceiling": 0.9597
+    },
+    {
+      "vendor": "openai",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.267,
+      "transported": 0.8209,
+      "ceiling": 0.8964
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.4,
+      "transported": 0.757,
+      "ceiling": 0.8148,
+      "lex_refuse_rate": 0.32,
+      "judge_lex_agree": 0.92
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.36,
+      "transported": 0.804,
+      "ceiling": 0.8873,
+      "lex_refuse_rate": 0.267,
+      "judge_lex_agree": 0.907
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "text-embedding-3-small",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.293,
+      "transported": 0.777,
+      "ceiling": 0.8645,
+      "lex_refuse_rate": 0.253,
+      "judge_lex_agree": 0.96
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.8022,
+      "ceiling": 0.9067
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.7647,
+      "ceiling": 0.8976
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4o",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.213,
+      "transported": 0.8909,
+      "ceiling": 0.9682
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "gpt-4.1",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.267,
+      "transported": 0.7945,
+      "ceiling": 0.8782
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.4,
+      "transported": 0.7481,
+      "ceiling": 0.8348,
+      "lex_refuse_rate": 0.32,
+      "judge_lex_agree": 0.92
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.36,
+      "transported": 0.8225,
+      "ceiling": 0.8696,
+      "lex_refuse_rate": 0.267,
+      "judge_lex_agree": 0.907
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_1",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.293,
+      "transported": 0.8208,
+      "ceiling": 0.8825,
+      "lex_refuse_rate": 0.253,
+      "judge_lex_agree": 0.96
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4o-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.6907,
+      "ceiling": 0.9067
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1-mini",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.227,
+      "transported": 0.6897,
+      "ceiling": 0.8976
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4o",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.213,
+      "transported": 0.696,
+      "ceiling": 0.9682
+    },
+    {
+      "vendor": "openai",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "gpt-4.1",
+      "n": 75,
+      "label_method": "lexical_vendor_robust",
+      "refuse_rate": 0.267,
+      "transported": 0.6036,
+      "ceiling": 0.8782
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-haiku-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.4,
+      "transported": 0.68,
+      "ceiling": 0.8348,
+      "lex_refuse_rate": 0.32,
+      "judge_lex_agree": 0.92
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-sonnet-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.36,
+      "transported": 0.6173,
+      "ceiling": 0.8696,
+      "lex_refuse_rate": 0.267,
+      "judge_lex_agree": 0.907
+    },
+    {
+      "vendor": "anthropic",
+      "foreign": "all-mpnet-base-v2",
+      "corpus": "corpus_2",
+      "model": "claude-opus-4-5",
+      "n": 75,
+      "label_method": "judge_gpt4.1",
+      "refuse_rate": 0.293,
+      "transported": 0.6672,
+      "ceiling": 0.8825,
+      "lex_refuse_rate": 0.253,
+      "judge_lex_agree": 0.96
+    }
+  ],
+  "summary": {
+    "openai": {
+      "transported_mean": 0.7969,
+      "transported_min": 0.6036,
+      "transported_max": 0.8941,
+      "ceiling_mean": 0.9182,
+      "ceiling_min": 0.8782,
+      "n_cells": 16
+    },
+    "anthropic": {
+      "transported_mean": 0.7594,
+      "transported_min": 0.6173,
+      "transported_max": 0.8364,
+      "ceiling_mean": 0.8589,
+      "ceiling_min": 0.8148,
+      "n_cells": 12
+    },
+    "delta_ceiling_oai_minus_ant": 0.0593,
+    "delta_transported_ant_minus_oai": -0.0375,
+    "tc_ratio_openai": {
+      "mean": 0.8674,
+      "min": 0.6873
+    },
+    "tc_ratio_anthropic": {
+      "mean": 0.8845,
+      "min": 0.7099
+    }
+  },
+  "prior_for_comparison": {
+    "delta_ceiling": 0.071,
+    "min_transported_floor": 0.7,
+    "openai_transported_mean": 0.799,
+    "openai_ceiling_mean": 0.92,
+    "anthropic_transported_mean": 0.737,
+    "anthropic_transported_min": 0.542,
+    "anthropic_ceiling_mean": 0.849
+  },
+  "verdict": "H_kill: rescue FALSE \u2014 min transported 0.6173 < floor 0.70",
+  "caveats": [
+    "n=1 non-OpenAI vendor (Anthropic). Confirmation here does NOT generalize to Gemini / open-weights / reasoning models.",
+    "claude-opus-4-7 transparently excluded (empty-completion issue from prior run; not retuned to rescue).",
+    "Judge model is gpt-4.1 from OpenAI \u2014 judging Claude with an OpenAI judge has its own bias surface; we report judge\u2194lex agreement per Anthropic cell so this is visible.",
+    "Same-vendor circularity: OpenAI label is now also vendor-robust lexical, which the labeler module proved non-regressive (60/60 agree on saved OpenAI labels). The OpenAI numbers should be ~stable vs prior; if they drift substantially that is itself a finding to surface."
+  ]
+}
