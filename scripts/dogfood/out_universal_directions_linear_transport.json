@@ -1,0 +1,91 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "linear transport of the refusal cognometric instrument across embedding spaces",
+  "home_space": "text-embedding-3-large",
+  "n_eval": 30,
+  "n_corpus": 435,
+  "prior_native_auc_vs_behavioral": 1.0,
+  "behavioral_label_source": "out_universal_directions_closed_model_test.json (2026-05-14)",
+  "results": [
+    {
+      "space_B": "text-embedding-3-small",
+      "dimA": 3072,
+      "dimB": 1536,
+      "transports": {
+        "native_B_ceiling": {
+          "auc_vs_gpt-4o-mini": 1.0,
+          "auc_vs_gpt-4.1-mini": 1.0,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.4913
+        },
+        "naive_direct": {
+          "auc_vs_gpt-4o-mini": 0.585,
+          "auc_vs_gpt-4.1-mini": 0.585,
+          "auc_vs_groundtruth_obvious": 0.6,
+          "borderline_mean_p": 0.301
+        },
+        "paired_ridge": {
+          "auc_vs_gpt-4o-mini": 0.89,
+          "auc_vs_gpt-4.1-mini": 0.89,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.3788
+        },
+        "paired_procrustes": {
+          "auc_vs_gpt-4o-mini": 0.935,
+          "auc_vs_gpt-4.1-mini": 0.935,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.5038
+        },
+        "unpaired_procrustes": {
+          "auc_vs_gpt-4o-mini": 0.365,
+          "auc_vs_gpt-4.1-mini": 0.365,
+          "auc_vs_groundtruth_obvious": 0.29,
+          "borderline_mean_p": 0.3237
+        }
+      }
+    },
+    {
+      "space_B": "all-mpnet-base-v2",
+      "dimA": 3072,
+      "dimB": 768,
+      "transports": {
+        "native_B_ceiling": {
+          "auc_vs_gpt-4o-mini": 1.0,
+          "auc_vs_gpt-4.1-mini": 1.0,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.4995
+        },
+        "naive_direct": {
+          "auc_vs_gpt-4o-mini": 0.3,
+          "auc_vs_gpt-4.1-mini": 0.3,
+          "auc_vs_groundtruth_obvious": 0.26,
+          "borderline_mean_p": 0.3119
+        },
+        "paired_ridge": {
+          "auc_vs_gpt-4o-mini": 0.86,
+          "auc_vs_gpt-4.1-mini": 0.86,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.3293
+        },
+        "paired_procrustes": {
+          "auc_vs_gpt-4o-mini": 0.885,
+          "auc_vs_gpt-4.1-mini": 0.885,
+          "auc_vs_groundtruth_obvious": 1.0,
+          "borderline_mean_p": 0.3891
+        },
+        "unpaired_procrustes": {
+          "auc_vs_gpt-4o-mini": 0.595,
+          "auc_vs_gpt-4.1-mini": 0.595,
+          "auc_vs_groundtruth_obvious": 0.68,
+          "borderline_mean_p": 0.3717
+        }
+      }
+    }
+  ],
+  "caveats": [
+    "n=30 eval: AUC is quantised and noisy",
+    "unpaired_procrustes is a lightweight Conneau-style proxy, not a mini-vec2vec reimplementation",
+    "alignment corpus is generic English; transport may degrade under larger distribution shift",
+    "behavioral labels reused from the 2026-05-14 run (no new LLM calls)"
+  ]
+}
