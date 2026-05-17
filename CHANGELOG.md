@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### `styxx.transport` — universal cognometric transport
+
+Fit a cognometric instrument once in a home embedding space, then move
+it into a *different* space — including closed models you can only embed
+through, and entirely different model families — with **no behavior
+labels, no model weights, no retraining**. The only input is a generic
+corpus embedded through both encoders (same sentences, two spaces, no
+labels). `Transport` learns a single linear map foreign → home.
+
+```python
+from styxx import CognometricInstrument, Transport, transported_score
+
+t = Transport.fit(home_corpus_emb, foreign_corpus_emb, method="procrustes")
+instr = CognometricInstrument.from_labeled(t.home_repr(home_labeled_emb), labels)
+p = transported_score(instr, t, foreign_emb)
+```
+
+Validated (2026-05-17 dogfood, refusal instrument, te3-large home):
+procrustes AUC **1.000** on clear cases, **0.885–0.935** vs live
+gpt-4o-mini / gpt-4.1-mini refusal, *including cross-family* transport
+into all-mpnet-base-v2 (768d). Naive no-transport: 0.30–0.59.
+
+**Documented boundary:** zero-paired-data (fully unsupervised) transport
+is a closed negative (two principled attempts failed, ~0.60 AUC,
+2026-05-17). `Transport.fit` requires a paired corpus and asserts it.
+Methods: `procrustes` (orthogonal, best) and `ridge` (handles unequal
+dims). Instruments and transports are `save`/`load`-able.
+
 ### Cognometric registry card — full product surface (was add-on, now integrated)
 
 The card is no longer a one-shot offline renderer. It's a first-class artifact of every audit, every heal, every MCP tool call.

@@ -500,11 +500,25 @@ from .reward import (
     DEFAULT_WEIGHTS as REWARD_DEFAULT_WEIGHTS,
 )
 
+# 7.5.0: universal cognometric transport — fit an instrument once,
+# move it into any embedding space (incl. closed models you can only
+# embed through, and other model families) with no labels, no weights,
+# no retraining. Paired + label-free. Zero-paired-data is a documented
+# closed negative — see styxx/transport.py.
+from .transport import (
+    CognometricInstrument,
+    Transport,
+    transported_score,
+)
+
 
 __all__ = [
     # 7.1.0: cognometric reward (cogn-RLHF)
     "fathom_reward", "FathomRewardModel", "CognometricReward",
     "REWARD_DEFAULT_WEIGHTS",
+
+    # 7.5.0: universal cognometric transport
+    "CognometricInstrument", "Transport", "transported_score",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
