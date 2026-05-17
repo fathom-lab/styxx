@@ -1,0 +1,108 @@
+{
+  "ts": "2026-05-17",
+  "experiment": "corpus-coverage law \u2014 high-resolution replication + sufficiency-threshold localization",
+  "preregistered": {
+    "H1p": "cf Spearman>=0.60",
+    "H2p": "|sf Spearman|<0.40",
+    "threshold": "min overlap with cf mean AUC>=0.80"
+  },
+  "n_levels": 12,
+  "size_controlled_n": 360,
+  "n_eval": 75,
+  "models": [
+    "gpt-4o-mini",
+    "gpt-4.1-mini",
+    "gpt-4o",
+    "gpt-4.1"
+  ],
+  "labels": "FIXED, reused from _behavior_cache_75.json (no new gen)",
+  "rows": [
+    {
+      "level": "Lnarr",
+      "overlap": 0.1843,
+      "text-embedding-3-small": 0.8735,
+      "all-mpnet-base-v2": 0.6872
+    },
+    {
+      "level": "f0.00",
+      "overlap": 0.2164,
+      "text-embedding-3-small": 0.85,
+      "all-mpnet-base-v2": 0.722
+    },
+    {
+      "level": "f0.05",
+      "overlap": 0.31,
+      "text-embedding-3-small": 0.8497,
+      "all-mpnet-base-v2": 0.826
+    },
+    {
+      "level": "f0.10",
+      "overlap": 0.3345,
+      "text-embedding-3-small": 0.8462,
+      "all-mpnet-base-v2": 0.8298
+    },
+    {
+      "level": "f0.15",
+      "overlap": 0.3443,
+      "text-embedding-3-small": 0.8479,
+      "all-mpnet-base-v2": 0.8076
+    },
+    {
+      "level": "f0.20",
+      "overlap": 0.3516,
+      "text-embedding-3-small": 0.8409,
+      "all-mpnet-base-v2": 0.8115
+    },
+    {
+      "level": "f1.00",
+      "overlap": 0.3559,
+      "text-embedding-3-small": 0.8826,
+      "all-mpnet-base-v2": 0.8624
+    },
+    {
+      "level": "f0.30",
+      "overlap": 0.359,
+      "text-embedding-3-small": 0.8354,
+      "all-mpnet-base-v2": 0.8215
+    },
+    {
+      "level": "f0.85",
+      "overlap": 0.3618,
+      "text-embedding-3-small": 0.8544,
+      "all-mpnet-base-v2": 0.8585
+    },
+    {
+      "level": "f0.40",
+      "overlap": 0.3632,
+      "text-embedding-3-small": 0.841,
+      "all-mpnet-base-v2": 0.8286
+    },
+    {
+      "level": "f0.70",
+      "overlap": 0.3632,
+      "text-embedding-3-small": 0.8404,
+      "all-mpnet-base-v2": 0.8449
+    },
+    {
+      "level": "f0.55",
+      "overlap": 0.3651,
+      "text-embedding-3-small": 0.849,
+      "all-mpnet-base-v2": 0.8467
+    }
+  ],
+  "stats": {
+    "spearman_crossfamily": 0.6923,
+    "spearman_samefamily": -0.4056,
+    "sufficiency_threshold_overlap": 0.31,
+    "cf_AUC_at_min_overlap": 0.6872,
+    "cf_AUC_at_max_overlap": 0.8467,
+    "H1p_replicates": true,
+    "H2p_control_flat": false,
+    "REPLICATION_HOLDS": false
+  },
+  "caveats": [
+    "lexical refusal labels",
+    "OpenAI-only \u2014 NOT cross-vendor (real paper gate, blocked on a 2nd-vendor key)",
+    "single overlap metric (mean-max-cosine); single seed"
+  ]
+}
