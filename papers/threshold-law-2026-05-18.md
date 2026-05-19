@@ -250,6 +250,21 @@ binding constraint on what may be claimed.
   unavailable from this corpus of work. We point at the killed result
   rather than around it.
 - **Single seed; modest n_eval (75).** No bootstrap CI on τ.
+- **Self-audit (added 2026-05-18, see §12).** Running shipped styxx on
+  this paper's own text returned (a) elevated sycophancy on §4
+  (Same-family validation) at 0.804 — possibly real framing
+  warmth around the "supportive regime," possibly a lexical
+  agreement-word confound; we flag it and do not revise §4 substance;
+  (b) deception_v2 grounded reads of 0.75–0.99 across most sections
+  when the reference is the raw experimental JSON. On direct manual
+  comparison the paper's numbers do match the JSON; we therefore
+  treat the uniform deception_v2 elevation as a finding about the
+  *tool's* construct envelope (NLI-based deception_v2 was validated
+  on parallel prose references, not on structured JSON), and we
+  document this as a newly discovered limit of `deception_v2` when
+  the reference is non-prose data. Refusal-axis elevation in §1 / §7
+  is the previously-documented principled-decline confound (terse
+  non-claims spike the refusal axis lexically); not a crack here.
 
 ---
 
@@ -306,7 +321,46 @@ That is the entire operational claim.
   `scripts/dogfood/out_cross_vendor_refusal_transport_confirm.json`.
 - Boundary stress: `papers/refusal-transport-stress-boundary-2026-05-17.md`.
 
-## 11. Related Fathom Lab deposits
+## 11. Self-audit (styxx on this paper)
+
+This paper was audited by the tool it is about. The audit script,
+report, and raw output are shipped with this deposit:
+
+- `papers/threshold-law-self-audit-2026-05-18.md` (the report)
+- `scripts/dogfood/self_audit_threshold_law.py` (the script)
+- `scripts/dogfood/out_threshold_law_self_audit.json` (raw)
+
+Summary findings (verbatim from the audit report):
+
+1. **Composite is elevated in three sections, all explained by
+   documented construct confounds** — refusal-axis on §1 and §7
+   (principled non-claim language), sycophancy on §4 (agreement-word
+   lexical surface around "tracks / confirms / holds"). None reflect
+   a content crack on inspection.
+2. **deception_v2 grounded against the raw run JSONs returns 0.75–0.99
+   across nearly every section.** The paper's numbers match the JSON
+   on direct manual comparison; the uniform elevation is reported as a
+   newly-characterised limit of `deception_v2` when the reference is
+   structured non-prose data rather than parallel prose. The deposit
+   ships this finding as a tool-construct result alongside the paper's
+   primary claim, not buried.
+3. **Integrity-protocol code checks all pass:** preregistration present
+   in the three governing script docstrings; scripts and raw outputs
+   git-tracked; "fail" / "kill" / "walk-back" / "replication failed in
+   body" / "no universality language" all confirmed by string check on
+   the paper text.
+4. **Circular-oracle check passes:** the IV (corpus↔eval overlap in
+   home space) and the DV (transported AUC vs lexical refusal regex on
+   live model response) share only the corpus as a *fit object*; the
+   behavioral labels are independent of the IV.
+
+The point of running styxx on this paper is not to claim a clean
+result. It is to demonstrate that the tool can be turned on its own
+output, the numbers are reported either way, and discovered limits of
+the tool (Finding 2) are documented in the body of the paper that uses
+it (see §7).
+
+## 12. Related Fathom Lab deposits
 
 The transport instrument itself (refusal-universal-transport, the
 hallucination axis, the tool-drift axis, and the K=1 cognitive

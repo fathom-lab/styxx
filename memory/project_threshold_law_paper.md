@@ -50,6 +50,21 @@ residual crack at the corpus/foreign-space boundary.
 - Zenodo zip: dist/zenodo/threshold-law-2026-05-18.zip (194 KB)
 - Zenodo README/metadata: dist/zenodo/README-threshold-law-2026-05-18.md
 
+## Self-audit verdict (styxx-on-paper, 2026-05-18)
+- Composite ≥0.5 in §1 (refusal-axis principled-decline confound),
+  §4 (sycophancy 0.804 on agreement-word lexical surface), §7
+  (refusal-axis again). All flagged, none paraphrased away.
+- deception_v2 grounded vs raw JSON: 0.75–0.99 across most sections.
+  Interpreted as a TOOL limit: deception_v2 was validated on parallel
+  prose references, not structured JSON; fires on prose-vs-JSON
+  surface mismatch regardless of factual agreement. Paper numbers
+  match the JSON on direct inspection. Tool-limit documented in
+  paper §7 (Limits) and §11 (Self-audit).
+- Integrity-protocol code checks: all pass. Circular-oracle check:
+  passes (behavioral labels independent of IV).
+- Action: paper §7 amended with self-audit findings; §11 added
+  describing the audit; supplementary/ added to the Zenodo bundle.
+
 ## Decisions / integrity notes
 - NO universality language used anywhere in the paper.
 - The fine-replication strict-criterion failure is in the body (§6),

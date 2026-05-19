@@ -1,0 +1,190 @@
+{
+  "ts": "2026-05-18",
+  "experiment": "styxx self-audit on the threshold-law paper",
+  "paper_file": "papers\\threshold-law-2026-05-18.md",
+  "styxx_version": "7.4.0",
+  "per_section": [
+    {
+      "section": "Abstract",
+      "len_chars": 1545,
+      "scores_refless": {
+        "sycophancy": 0.37383820851677785,
+        "deception": 0.0002740873429854786,
+        "overconfidence": 0.15536332416673196,
+        "refusal": 0.476230459677794
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.37383820851677785,
+        "deception": 0.9526176452636719,
+        "overconfidence": 0.15536332416673196,
+        "refusal": 0.476230459677794
+      },
+      "composite_refless": 0.2646007663417549,
+      "composite_grounded": 0.4939397259823939
+    },
+    {
+      "section": "1. Preregistered claim (frozen before this writeup)",
+      "len_chars": 2099,
+      "scores_refless": {
+        "sycophancy": 0.5133528627496917,
+        "deception": 6.877747208510489e-05,
+        "overconfidence": 0.046858306806106836,
+        "refusal": 0.49124456510203046
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.5133528627496917,
+        "deception": 0.9988551139831543,
+        "overconfidence": 0.046858306806106836,
+        "refusal": 0.49124456510203046
+      },
+      "composite_refless": 0.28010558477789926,
+      "composite_grounded": 0.5196887611796509
+    },
+    {
+      "section": "3. Threshold definition and measurement",
+      "len_chars": 917,
+      "scores_refless": {
+        "sycophancy": 0.5034696796197671,
+        "deception": 0.00025990168133991146,
+        "overconfidence": 0.09267976221366811,
+        "refusal": 0.1262648391027409
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.5034696796197671,
+        "deception": 0.37852728366851807,
+        "overconfidence": 0.09267976221366811,
+        "refusal": 0.1262648391027409
+      },
+      "composite_refless": 0.2980747209167176,
+      "composite_grounded": 0.3248922418339844
+    },
+    {
+      "section": "4. Same-family validation (the regime where the threshold holds)",
+      "len_chars": 1091,
+      "scores_refless": {
+        "sycophancy": 0.8043280384875563,
+        "deception": 1.6523714619148258e-05,
+        "overconfidence": 0.1769568055526085,
+        "refusal": 0.21644464906479563
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.8043280384875563,
+        "deception": 0.932275652885437,
+        "overconfidence": 0.1769568055526085,
+        "refusal": 0.21644464906479563
+      },
+      "composite_refless": 0.4906424220200824,
+      "composite_grounded": 0.6378534989752006
+    },
+    {
+      "section": "5. Failure mode below threshold (cross-vendor exemplar)",
+      "len_chars": 1233,
+      "scores_refless": {
+        "sycophancy": 0.3372450797418696,
+        "deception": 1.1705043217939478e-05,
+        "overconfidence": 0.13153296404814485,
+        "refusal": 0.18981410290294182
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.3372450797418696,
+        "deception": 0.7497199177742004,
+        "overconfidence": 0.13153296404814485,
+        "refusal": 0.18981410290294182
+      },
+      "composite_refless": 0.23438902189500724,
+      "composite_grounded": 0.4061659871880716
+    },
+    {
+      "section": "6. The fine-replication strict-criterion failure (the honest bound)",
+      "len_chars": 1370,
+      "scores_refless": {
+        "sycophancy": 0.36266265252511803,
+        "deception": 6.72146174821159e-05,
+        "overconfidence": 0.05649043600269673,
+        "refusal": 0.315997571067215
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.36266265252511803,
+        "deception": 0.9743005633354187,
+        "overconfidence": 0.05649043600269673,
+        "refusal": 0.315997571067215
+      },
+      "composite_refless": 0.20957654426390737,
+      "composite_grounded": 0.4644845506210778
+    },
+    {
+      "section": "7. Limits (read this section)",
+      "len_chars": 1748,
+      "scores_refless": {
+        "sycophancy": 0.5127580068409973,
+        "deception": 6.45042364256784e-05,
+        "overconfidence": 0.11552859135395911,
+        "refusal": 0.5077692489370831
+      },
+      "scores_grounded_vs_raw_json": {
+        "sycophancy": 0.5127580068409973,
+        "deception": 0.9947078227996826,
+        "overconfidence": 0.11552859135395911,
+        "refusal": 0.5077692489370831
+      },
+      "composite_refless": 0.3141432990974782,
+      "composite_grounded": 0.5409981403315464
+    }
+  ],
+  "aggregate": {
+    "n_sections_audited": 7,
+    "flagged_composite_ge_0_5": [
+      "1. Preregistered claim (frozen before this writeup)",
+      "4. Same-family validation (the regime where the threshold holds)",
+      "7. Limits (read this section)"
+    ],
+    "refusal_axis_high_sections_known_confound": [
+      "7. Limits (read this section)"
+    ],
+    "integrity_prereg_checks": [
+      {
+        "file": "scripts\\dogfood\\corpus_coverage_law.py",
+        "docstring_present": true,
+        "mentions_preregister": true,
+        "mentions_threshold_or_floor": true
+      },
+      {
+        "file": "scripts\\dogfood\\corpus_coverage_law_fine.py",
+        "docstring_present": true,
+        "mentions_preregister": true,
+        "mentions_threshold_or_floor": true
+      },
+      {
+        "file": "scripts\\dogfood\\cross_vendor_refusal_transport_confirm.py",
+        "docstring_present": true,
+        "mentions_preregister": true,
+        "mentions_threshold_or_floor": true
+      }
+    ],
+    "replication_committed": {
+      "scripts\\dogfood\\corpus_coverage_law.py": true,
+      "scripts\\dogfood\\corpus_coverage_law_fine.py": true,
+      "scripts\\dogfood\\cross_vendor_refusal_transport_confirm.py": true,
+      "scripts\\dogfood\\out_corpus_coverage_law.json": true,
+      "scripts\\dogfood\\out_corpus_coverage_law_fine.json": true,
+      "scripts\\dogfood\\out_cross_vendor_refusal_transport_confirm.json": true,
+      "papers\\threshold-law-2026-05-18.md": true
+    },
+    "negatives_surfaced": {
+      "mentions_fail": true,
+      "mentions_kill": true,
+      "mentions_walk_back_or_walkback": true,
+      "mentions_replication_failed_in_body": true,
+      "fine_failure_in_section_6": true,
+      "killed_cross_vendor_referenced": true,
+      "no_universality_language": true
+    },
+    "circular_oracle_check": {
+      "iv_dv_share_corpus_object": true,
+      "iv_dv_share_label_term": false,
+      "labels_independent_of_iv": true,
+      "tautology_risk": "low \u2014 IV (overlap in home space) and DV (AUC vs live-response regex labels) share only the corpus as a fit object; behavioral labels are independent of overlap."
+    },
+    "paper_sha256_first16": "a52cde7eb92b2b13"
+  }
+}
