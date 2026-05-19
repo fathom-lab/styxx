@@ -1,7 +1,7 @@
 # project: threshold-law paper (2026-05-18)
 
 ## Status
-PAPER READY — DOI STAGED — SELF-AUDIT PASSED — AWAITING GO
+PUBLISHED — DOI 10.5281/zenodo.20278945 — live at https://zenodo.org/records/20278945 (2026-05-18)
 
 ## Self-audit verdict (2026-05-18, styxx 7.4.1 on its own paper)
 - All 8 headline numbers match raw JSON (max Δ 0.0044, tol 0.005).

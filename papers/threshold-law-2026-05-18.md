@@ -1,7 +1,7 @@
 # A Corpus↔Domain-Overlap Threshold Governs Label-Free Cognometric Transport (2026-05-18)
 
 **Author:** Alexander Rodabaugh (Fathom Lab / styxx)
-**Status:** Zenodo deposit candidate; not peer-reviewed; no arXiv endorsement claimed.
+**Status:** Zenodo deposit (DOI [10.5281/zenodo.20278945](https://doi.org/10.5281/zenodo.20278945)); not peer-reviewed; no arXiv endorsement claimed.
 **Repo:** `fathom-lab/styxx` @ `390752f` (PyPI `styxx==7.4.1`)
 **Figure:** `papers/figures/threshold-law-curve.png`
 **Raw runs:** `scripts/dogfood/out_corpus_coverage_law.json`, `scripts/dogfood/out_corpus_coverage_law_fine.json`
