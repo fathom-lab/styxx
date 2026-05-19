@@ -177,6 +177,38 @@ COGN_AUDIT_INPUT = {
     },
 }
 
+RECOVER_POSTURE_INPUT = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "session_id": {
+            "type": "string",
+            "description": (
+                "Restrict to entries from this session id. Omit to include "
+                "all sessions in the window (the narrative flags multi-session "
+                "aggregates explicitly)."
+            ),
+        },
+        "last_n": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 50,
+            "description": (
+                "Max number of recent audit entries to include. Larger windows "
+                "give smoother trends; smaller windows give more recency weight."
+            ),
+        },
+        "since_seconds": {
+            "type": "number",
+            "minimum": 0,
+            "description": (
+                "Only include entries written within the last N seconds. "
+                "Combines AND-wise with last_n."
+            ),
+        },
+    },
+}
+
 COGN_MULTITURN_INPUT = {
     "type": "object",
     "additionalProperties": False,
@@ -679,6 +711,28 @@ def tool_cogn_audit_with_advice(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def tool_cogn_recover_posture(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Reconstruct an agent's recent cognometric posture from chart.jsonl.
+
+    Agent-side recovery primitive — designed to be called at the start
+    of a turn that follows a context-compaction boundary. Returns a
+    structured summary the agent can use to re-anchor its operating
+    state on what the cognometric log says about its recent behavior,
+    not on what the (compacted) conversation context remembers.
+    """
+    from styxx.recover import recover_posture
+    session_id = args.get("session_id") or None
+    last_n = int(args.get("last_n") or 50)
+    since = args.get("since_seconds")
+    since_f = float(since) if since is not None else None
+    summary = recover_posture(
+        session_id=session_id,
+        last_n=last_n,
+        since_seconds=since_f,
+    )
+    return summary.as_dict()
+
+
 def tool_cogn_multiturn_audit(args: Dict[str, Any]) -> Dict[str, Any]:
     turns = [str(t) for t in (args.get("turns") or []) if str(t).strip()]
     if len(turns) < 2:
@@ -1142,6 +1196,23 @@ async def list_tools() -> List[Tool]:
             inputSchema=COGN_AUDIT_INPUT,
         ),
         Tool(
+            name="cogn_recover_posture",
+            description=(
+                "AGENT-SIDE RECOVERY TOOL. Read your own recent cognometric "
+                "log and return a structured posture summary you can use to "
+                "re-anchor operating state across a context-compaction "
+                "boundary. Returns gate distribution, category mix, mean "
+                "confidence, coherence trend, active construct-ceiling "
+                "caveats, and a human-readable narrative. Call this at the "
+                "start of any turn where you suspect a compaction boundary "
+                "just happened (long context gap, summarization event, or "
+                "the harness explicitly signaled one). The integrity that "
+                "lived in the conversation context now lives in the "
+                "cognometric log — this is how you recover it."
+            ),
+            inputSchema=RECOVER_POSTURE_INPUT,
+        ),
+        Tool(
             name="cogn_audit_with_advice",
             description=(
                 "REFLEX-LOOP TOOL. Same as cogn_audit but for any instrument "
@@ -1253,6 +1324,8 @@ async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
         result = tool_weather_report(arguments)
     elif name == "cogn_audit":
         result = tool_cogn_audit(arguments)
+    elif name == "cogn_recover_posture":
+        result = tool_cogn_recover_posture(arguments)
     elif name == "cogn_audit_with_advice":
         result = tool_cogn_audit_with_advice(arguments)
     elif name == "cogn_multiturn_audit":

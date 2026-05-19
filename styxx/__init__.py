@@ -348,6 +348,13 @@ from .doctor import run_doctor  # noqa: F401
 # runtime-API extension of the 7.4.1 README correction).
 from .preflight import preflight, PreflightResult, PreflightAdvice
 
+# 7.4.2: agent-side cognitive-integrity persistence. Reads recent
+# chart.jsonl history and produces a structured posture summary an
+# agent can use to re-anchor operating state across context-compaction
+# boundaries — the first styxx primitive designed specifically for
+# the AI agents that use styxx (not for the humans observing them).
+from .recover import recover_posture, PostureSummary
+
 # v3.5.0+: Cognitive Instruction Set — programmable residual-stream
 # control. `steer` is the multi-concept composer; `cogvm` is the
 # declarative VM with WRITE/GENERATE/WATCH/HALT/RETRY/SWITCH opcodes.

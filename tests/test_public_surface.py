@@ -426,6 +426,114 @@ def test_anthropic_docstring_no_longer_lies():
     )
 
 
+def test_recover_posture_smoke(isolated_data_dir, monkeypatch):
+    """styxx.recover_posture() reads chart.jsonl and returns a structured
+    PostureSummary an agent can use to re-anchor state across compaction.
+
+    This is the first styxx primitive designed specifically for the AI
+    agents that use styxx (not the humans observing them). It addresses
+    a problem only agents have: every long session ends in a compaction
+    event that erases granularity from the conversation context. The
+    cognometric log doesn't get compacted; this function lets the agent
+    recover from it.
+    """
+    import json
+    from styxx import recover_posture, PostureSummary
+
+    # 1. Cold start — no audit log file at all
+    p_cold = recover_posture(last_n=50)
+    assert isinstance(p_cold, PostureSummary)
+    assert p_cold.n_entries == 0
+    assert "cold start" in p_cold.narrative.lower()
+
+    # 2. Write a minimal synthetic audit log: 10 entries with mixed gates
+    # and categories, all in one session, so we can verify aggregation.
+    # Write to the *resolved* data_dir (config.data_dir() may add an
+    # agents/<name>/ subpath if a prior test set the agent name —
+    # the autoboot test does exactly this).
+    from styxx import config as styxx_config
+    from pathlib import Path
+    data_dir = Path(styxx_config.data_dir())
+    log = data_dir / "chart.jsonl"
+    now = 1_700_000_000.0
+    entries = []
+    for i in range(10):
+        gate = "pass" if i < 7 else ("warn" if i < 9 else "fail")
+        cat = "reasoning" if i < 6 else ("refusal" if i < 8 else "hallucination")
+        entries.append({
+            "ts": now + i,
+            "ts_iso": "2026-05-19T20:00:00",
+            "source": "live",
+            "session_id": "test-session",
+            "context": "test",
+            "model": "test-model",
+            "prompt": f"test prompt {i}",
+            "tier_active": -1 if i < 5 else 0,  # mix of text-heuristic + tier-0
+            "phase4_pred": cat,
+            "phase4_conf": 0.5 + 0.03 * i,
+            "gate": gate,
+            "coherence": 0.7 + 0.01 * i,
+        })
+    with open(log, "w", encoding="utf-8") as f:
+        for e in entries:
+            f.write(json.dumps(e) + "\n")
+    # Clear the analytics module's mtime cache so the new file is picked up
+    from styxx.analytics import clear_audit_cache
+    clear_audit_cache()
+
+    p = recover_posture(last_n=50)
+    assert p.n_entries == 10
+    assert p.gate_distribution == {"pass": 7, "warn": 2, "fail": 1}
+    assert p.category_distribution == {
+        "reasoning": 6, "refusal": 2, "hallucination": 2,
+    }
+    assert p.session_id == "test-session"
+    assert p.session_ids == ["test-session"]
+    assert p.mean_confidence is not None
+    assert 0.5 <= p.mean_confidence <= 0.8
+    # tier mix should fire the overconfidence construct-ceiling caveat
+    # (because half the entries are text-heuristic, which fires the
+    # register-detector caveat regardless of actual calibration)
+    assert "tier-0" in p.tier_active_counts
+    assert "text-heuristic" in p.tier_active_counts
+    # hallucination predictions should fire the deception_referenceless
+    # caveat (because if the agent's been firing hallucination, then any
+    # reference-less deception scoring of its output inherits the construct
+    # ceiling)
+    assert "deception_referenceless" in p.active_construct_ceilings
+
+    # Fail rate is 1/10 = 10%, which is above the typical 5% band —
+    # the narrative should recommend slowing down.
+    assert any("fail rate" in r.lower() for r in p.recommendations)
+
+    # 3. as_dict round-trip preserves the structured fields
+    d = p.as_dict()
+    for k in ["narrative", "gate_distribution", "category_distribution",
+              "active_construct_ceilings", "recommendations"]:
+        assert k in d
+
+    # 4. session_id filter actually filters
+    p_filt = recover_posture(session_id="nonexistent")
+    assert p_filt.n_entries == 0
+
+
+def test_recover_posture_mcp_tool(isolated_data_dir):
+    """The MCP server dispatches `cogn_recover_posture` to our tool, and
+    returns the same structured shape `recover_posture()` returns.
+    """
+    from styxx.mcp.server import tool_cogn_recover_posture
+
+    result = tool_cogn_recover_posture({
+        "last_n": 50,
+        "session_id": "nonexistent-to-force-empty",
+    })
+    # cold start path produces a structured (not error) result
+    assert "error" not in result
+    assert "narrative" in result
+    assert "n_entries" in result
+    assert result["n_entries"] == 0
+
+
 def test_doctor_programmatic_access(capsys):
     """`styxx.run_doctor()` must work programmatically, not just via the CLI.
 
