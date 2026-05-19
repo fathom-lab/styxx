@@ -334,6 +334,14 @@ from .verify import verify, Verdict
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
+# 7.4.2: install-time diagnostic accessible programmatically (the
+# `styxx doctor` CLI subcommand was the only entry point until now).
+# Exposed under the function's own name `run_doctor` so callers can do
+# `styxx.run_doctor()`; the `doctor` submodule itself (and all its
+# internals like `_check_*` and `Path`) remains reachable as
+# `from styxx import doctor`, matching the existing test-suite pattern.
+from .doctor import run_doctor  # noqa: F401
+
 # 7.4.2: one-liner pre-ship cognometric audit of a draft response. Wraps
 # the MCP `cogn_audit_with_advice` tool as a typed Python function and
 # surfaces construct-ceiling caveats inline (honest-scoping in code, the

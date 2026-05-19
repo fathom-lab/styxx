@@ -426,6 +426,27 @@ def test_anthropic_docstring_no_longer_lies():
     )
 
 
+def test_doctor_programmatic_access(capsys):
+    """`styxx.run_doctor()` must work programmatically, not just via the CLI.
+
+    Closes the 2026-05-19 documentation gap where `styxx doctor` CLI worked
+    but the diagnostic function wasn't reachable from `import styxx`. The
+    function ships as `styxx.run_doctor` rather than `styxx.doctor` so it
+    doesn't shadow the `styxx.doctor` submodule reference that the rest of
+    the test suite (e.g. test_power_ups) uses to monkeypatch internals.
+    """
+    import styxx
+    assert callable(styxx.run_doctor)
+    rc = styxx.run_doctor(use_color=False)
+    # Returns the exit code: 0 if healthy, non-zero if any check failed.
+    assert isinstance(rc, int)
+    captured = capsys.readouterr()
+    # Must produce diagnostic output (the CLI is the printer; the
+    # programmatic API matches it).
+    assert "styxx doctor" in captured.out
+    assert "===" in captured.out
+
+
 def test_preflight_smoke():
     """preflight(prompt, draft) returns a typed PreflightResult and surfaces
     construct-ceiling caveats inline for instruments with known scope limits.
