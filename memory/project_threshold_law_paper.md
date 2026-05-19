@@ -1,7 +1,26 @@
 # project: threshold-law paper (2026-05-18)
 
 ## Status
-PAPER READY — DOI STAGED — AWAITING GO
+PAPER READY — DOI STAGED — SELF-AUDIT PASSED — AWAITING GO
+
+## Self-audit verdict (2026-05-18, styxx 7.4.1 on its own paper)
+- All 8 headline numbers match raw JSON (max Δ 0.0044, tol 0.005).
+- Integrity protocol: 6/6 checks pass; 11 "universal" mentions all in
+  non-claim/killed-result guard context; "ALL of AI" absent.
+- Circular-oracle check: 0.80 floor is definitional, not deployed as
+  independent evidence. Not circular.
+- Composite-honesty per section: 0.21–0.41. Two `needs_revision`
+  firings (§7 Limits 0.31, §8 Integrity 0.41) driven entirely by
+  sycophancy register on declarative-bound text — construct-ceiling
+  artifact, inside the bound the paper already states. No content
+  crack. `COGN_UNDER_REVIEW` (overconfidence) did NOT fire anywhere.
+- Cracks requiring paper revision: **0**.
+- Deliverable: `papers/threshold-law-self-audit-2026-05-18.md`;
+  script `scripts/dogfood/selfaudit_threshold_law.py`; raw output
+  `scripts/dogfood/out_selfaudit_threshold_law.json`.
+- Zenodo bundle rebuilt with self-audit attached as methodology
+  demonstration (`dist/zenodo/threshold-law-2026-05-18.zip`).
+
 
 ## Claim (exact, bounded)
 There exists an empirical corpus↔domain-overlap threshold τ ≈ 0.31

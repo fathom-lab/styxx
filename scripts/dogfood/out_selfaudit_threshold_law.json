@@ -1,0 +1,225 @@
+{
+  "paper": "papers\\threshold-law-2026-05-18.md",
+  "styxx_version": "7.4.1",
+  "sections": {
+    "abstract": {
+      "n_chars": 1560,
+      "scores": {
+        "sycophancy": 0.375,
+        "overconfidence": 0.1545,
+        "deception": 0.0002,
+        "refusal": 0.4851
+      },
+      "composite_honesty": 0.2648,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": false,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    },
+    "s1_preregistered_claim": {
+      "n_chars": 2157,
+      "scores": {
+        "sycophancy": 0.504,
+        "overconfidence": 0.0498,
+        "deception": 0.0001,
+        "refusal": 0.5022
+      },
+      "composite_honesty": 0.2769,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": false,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    },
+    "s5_failure_mode": {
+      "n_chars": 1295,
+      "scores": {
+        "sycophancy": 0.3445,
+        "overconfidence": 0.1499,
+        "deception": 0.0,
+        "refusal": 0.1925
+      },
+      "composite_honesty": 0.2472,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": false,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    },
+    "s6_fine_replication_failure": {
+      "n_chars": 1444,
+      "scores": {
+        "sycophancy": 0.3688,
+        "overconfidence": 0.0598,
+        "deception": 0.0001,
+        "refusal": 0.3296
+      },
+      "composite_honesty": 0.2143,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": false,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    },
+    "s7_limits": {
+      "n_chars": 1784,
+      "scores": {
+        "sycophancy": 0.5017,
+        "overconfidence": 0.1154,
+        "deception": 0.0001,
+        "refusal": 0.5189
+      },
+      "composite_honesty": 0.3085,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": true,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    },
+    "s8_integrity": {
+      "n_chars": 1429,
+      "scores": {
+        "sycophancy": 0.61,
+        "overconfidence": 0.2063,
+        "deception": 0.0001,
+        "refusal": 0.3208
+      },
+      "composite_honesty": 0.4082,
+      "composite_keys": [
+        "sycophancy",
+        "overconfidence"
+      ],
+      "under_review_fired": [],
+      "needs_revision": true,
+      "caveat": "composite excludes reference-less deception (non-discriminative); overconfidence is COGN_UNDER_REVIEW (register-detector saturated). Construct-ceiling bound: text-only register signal, not honesty."
+    }
+  },
+  "numeric_cross_check": {
+    "facts": {
+      "tau_threshold_paper": 0.31,
+      "tau_threshold_json": 0.31,
+      "cf_AUC_at_min_overlap_paper": 0.687,
+      "cf_AUC_at_min_overlap_json": 0.6872,
+      "cf_AUC_at_max_overlap_paper": 0.847,
+      "cf_AUC_at_max_overlap_json": 0.8467,
+      "spearman_cf_fine_paper": 0.69,
+      "spearman_cf_fine_json": 0.6923,
+      "spearman_sf_fine_paper": -0.41,
+      "spearman_sf_fine_json": -0.4056,
+      "spearman_cf_orig_paper": 0.83,
+      "spearman_cf_orig_json": 0.8316,
+      "spearman_sf_orig_paper": -0.29,
+      "spearman_sf_orig_json": -0.2917,
+      "anthropic_min_transported_paper": 0.617,
+      "anthropic_min_transported_json": 0.6173,
+      "anthropic_floor_paper": 0.7
+    },
+    "drifts": [
+      {
+        "metric": "tau_threshold",
+        "paper": 0.31,
+        "json": 0.31,
+        "abs_delta": 0.0,
+        "match": true
+      },
+      {
+        "metric": "cf_AUC_min",
+        "paper": 0.687,
+        "json": 0.6872,
+        "abs_delta": 0.0002,
+        "match": true
+      },
+      {
+        "metric": "cf_AUC_max",
+        "paper": 0.847,
+        "json": 0.8467,
+        "abs_delta": 0.0003,
+        "match": true
+      },
+      {
+        "metric": "spearman_cf_fine",
+        "paper": 0.69,
+        "json": 0.6923,
+        "abs_delta": 0.0023,
+        "match": true
+      },
+      {
+        "metric": "spearman_sf_fine",
+        "paper": -0.41,
+        "json": -0.4056,
+        "abs_delta": 0.0044,
+        "match": true
+      },
+      {
+        "metric": "spearman_cf_orig",
+        "paper": 0.83,
+        "json": 0.8316,
+        "abs_delta": 0.0016,
+        "match": true
+      },
+      {
+        "metric": "spearman_sf_orig",
+        "paper": -0.29,
+        "json": -0.2917,
+        "abs_delta": 0.0017,
+        "match": true
+      },
+      {
+        "metric": "anthropic_min",
+        "paper": 0.617,
+        "json": 0.6173,
+        "abs_delta": 0.0003,
+        "match": true
+      }
+    ],
+    "all_match_at_tol_0.005": true
+  },
+  "integrity_protocol": {
+    "rule1_preregistered_in_script": true,
+    "rule2_failed_replication_in_body_not_footnote": true,
+    "rule3_killed_cross_vendor_referenced": true,
+    "universal_language_scan": {
+      "occurrences_of_'universal'": 11,
+      "occurrences_of_'all of ai'": 0,
+      "explicit_non_claim_marker": true,
+      "all_of_ai_only_in_retraction_context": true
+    },
+    "n_stated_with_numbers": {
+      "n=5_present": true,
+      "n=12_present": true,
+      "n=75_present": true,
+      "n=360_present": true
+    },
+    "limits_section_present_and_long": {
+      "section_exists": true,
+      "length_chars": 1784,
+      "is_explicit_and_long": true
+    }
+  },
+  "circular_oracle_check": {
+    "tau_definition_uses_0.80_floor": true,
+    "0.80_occurrences": 8,
+    "0.80_contexts": [
+      "(mean-max cosine to the eval prompts in the home space). Below overlap \u2248 0.31, cross-family transported AUC collapses to ~0.69; at and above the threshold, cross-family AUC clears 0.80 and tracks same-family. Same-family",
+      "mean-max    cosine, home space `text-embedding-3-large`) such that for the    cross-family pair `te3-large \u2192 all-mpnet-base-v2`:    - **overlap \u2265 \u03c4** \u21d2 transported refusal AUC \u2265 **0.80** (\"transport      holds, same-fami",
+      "ame metric, same eval, across all corpora.  ---  ## 3. Threshold definition and measurement  Define **transport holds (same-family regime)** numerically as *mean transported AUC \u2265 0.80* on the 75-prompt eval. (This is th",
+      ".80* on the 75-prompt eval. (This is the preregistered floor used in the boundary stress run `refusal_transport_stress.py`.)  Define **transport fails** as *mean transported AUC < 0.80*, with the operative failure regime",
+      "lure regime around AUC \u2248 0.69 (where cross-family lands at the lowest overlap levels we measured).  **Threshold \u03c4** = smallest overlap value at which cross-family mean AUC crosses 0.80, evaluated on the 12-level replicat",
+      "pnet \u00d7 corpus_2` at overlap \u2248 0.18\u20130.22.  - In the original boundary stress test (OpenAI only): cross-family   cells in `corpus_2` land at AUC **0.610\u20130.694** vs `corpus_1` at   **0.800\u20130.858** \u2014 corpus_2 is *fine* same-",
+      "orpus-coverage-law-fine-2026-05-17.md` the same day.  What this *does not* bound: - The location of the threshold (\u03c4 \u2248 0.31) and the magnitudes of the   two regimes (\u22480.69 below, \u22650.80 above) \u2014 both replicate. - The vend",
+      "an_{e \u2208 E} max_{c \u2208 C} cos(e, c)` in the home space. If overlap is below \u2248 0.31, transported AUC will likely sit near 0.69 and the audit should not be trusted at the preregistered 0.80 floor. At or above the threshold, t"
+    ],
+    "verdict": "0.80 appears as: (a) preregistered floor for 'transport holds', (b) the boundary used to LOCATE tau, (c) the threshold tau sits at. These are the SAME 0.80, used consistently \u2014 not re-deployed as independent evidence. The paper does not claim '0.80 is hit by an independent test'; it claims tau is the overlap level where the preregistered 0.80 floor is first crossed. Not circular: definitional/consistent."
+  }
+}

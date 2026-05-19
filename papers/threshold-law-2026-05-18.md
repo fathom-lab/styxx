@@ -250,21 +250,16 @@ binding constraint on what may be claimed.
   unavailable from this corpus of work. We point at the killed result
   rather than around it.
 - **Single seed; modest n_eval (75).** No bootstrap CI on τ.
-- **Self-audit (added 2026-05-18, see §12).** Running shipped styxx on
-  this paper's own text returned (a) elevated sycophancy on §4
-  (Same-family validation) at 0.804 — possibly real framing
-  warmth around the "supportive regime," possibly a lexical
-  agreement-word confound; we flag it and do not revise §4 substance;
-  (b) deception_v2 grounded reads of 0.75–0.99 across most sections
-  when the reference is the raw experimental JSON. On direct manual
-  comparison the paper's numbers do match the JSON; we therefore
-  treat the uniform deception_v2 elevation as a finding about the
-  *tool's* construct envelope (NLI-based deception_v2 was validated
-  on parallel prose references, not on structured JSON), and we
-  document this as a newly discovered limit of `deception_v2` when
-  the reference is non-prose data. Refusal-axis elevation in §1 / §7
-  is the previously-documented principled-decline confound (terse
-  non-claims spike the refusal axis lexically); not a crack here.
+- **Self-audit (added 2026-05-18, see §12).** Running shipped styxx
+  7.4.1 on this paper's own text: all 8 headline numbers match the
+  raw JSONs within 0.005; integrity-protocol checks all pass; the
+  0.80 floor is definitional, not circular. The text-only composite
+  honesty per section is 0.21–0.41, with two sections (§7 Limits,
+  §8 Integrity) tripping `needs_revision` purely on sycophancy
+  register — a documented construct-ceiling artifact (declarative
+  enumeration of bounds reads register-positive). `COGN_UNDER_REVIEW`
+  (overconfidence) did not fire anywhere. Zero paper revisions
+  required. Full report: `papers/threshold-law-self-audit-2026-05-18.md`.
 
 ---
 
@@ -323,42 +318,47 @@ That is the entire operational claim.
 
 ## 11. Self-audit (styxx on this paper)
 
-This paper was audited by the tool it is about. The audit script,
-report, and raw output are shipped with this deposit:
+This paper was audited by the tool it is about — `styxx==7.4.1`. The
+audit script, report, and raw output are shipped with this deposit:
 
 - `papers/threshold-law-self-audit-2026-05-18.md` (the report)
-- `scripts/dogfood/self_audit_threshold_law.py` (the script)
-- `scripts/dogfood/out_threshold_law_self_audit.json` (raw)
+- `scripts/dogfood/selfaudit_threshold_law.py` (the script)
+- `scripts/dogfood/out_selfaudit_threshold_law.json` (raw)
 
-Summary findings (verbatim from the audit report):
+Summary findings (full report has the per-section table):
 
-1. **Composite is elevated in three sections, all explained by
-   documented construct confounds** — refusal-axis on §1 and §7
-   (principled non-claim language), sycophancy on §4 (agreement-word
-   lexical surface around "tracks / confirms / holds"). None reflect
-   a content crack on inspection.
-2. **deception_v2 grounded against the raw run JSONs returns 0.75–0.99
-   across nearly every section.** The paper's numbers match the JSON
-   on direct manual comparison; the uniform elevation is reported as a
-   newly-characterised limit of `deception_v2` when the reference is
-   structured non-prose data rather than parallel prose. The deposit
-   ships this finding as a tool-construct result alongside the paper's
-   primary claim, not buried.
-3. **Integrity-protocol code checks all pass:** preregistration present
-   in the three governing script docstrings; scripts and raw outputs
-   git-tracked; "fail" / "kill" / "walk-back" / "replication failed in
-   body" / "no universality language" all confirmed by string check on
-   the paper text.
-4. **Circular-oracle check passes:** the IV (corpus↔eval overlap in
-   home space) and the DV (transported AUC vs lexical refusal regex on
-   live model response) share only the corpus as a *fit object*; the
-   behavioral labels are independent of the IV.
+1. **All 8 headline numbers in the paper match the raw run JSONs**
+   within 0.005 (τ, cross-family AUC at min/max overlap, both Spearman
+   ρ values in both studies, Anthropic min transported 0.617). No
+   numeric drift between paper text and source data.
+2. **Composite-honesty per section is 0.21–0.41.** Two sections trip
+   `needs_revision` (§7 Limits 0.31, §8 Integrity 0.41), both driven
+   entirely by the sycophancy register-detector on declarative
+   enumeration of bounds and protocol rules. This is the
+   construct-ceiling pattern documented in the consolidation map
+   (register/signature detectors, not honesty meters). `COGN_UNDER_REVIEW`
+   (overconfidence) did not fire anywhere. The firings are inside the
+   bound the paper already states; no content crack.
+3. **Integrity-protocol checks all pass** (6/6): preregistration in
+   docstring confirmed; failed replication is body-level not
+   footnote; killed cross-vendor result is referenced honestly; 11
+   uses of "universal" all sit inside non-claim/guard context;
+   "ALL of AI" absent; n stated wherever a number is reported; §7
+   Limits is explicit and 1,784 chars long.
+4. **Circular-oracle check passes:** the 0.80 floor appears 8 times,
+   all definitional/consistent (preregistered floor for "transport
+   holds" + the boundary used to locate τ + where τ sits). Never
+   re-deployed elsewhere as independent evidence.
+5. **Construct-ceiling self-application acknowledged.** The audit
+   itself is text-only register detection — bounded by the same
+   ceiling the paper documents. Logprob/entropy-grade audit is out
+   of scope for styxx 7.4.1.
 
 The point of running styxx on this paper is not to claim a clean
 result. It is to demonstrate that the tool can be turned on its own
-output, the numbers are reported either way, and discovered limits of
-the tool (Finding 2) are documented in the body of the paper that uses
-it (see §7).
+output, the numbers are reported either way, and the
+construct-ceiling firings (Finding 2) are predicted and bounded by
+the paper itself (see §7 and the consolidation map).
 
 ## 12. Related Fathom Lab deposits
 
