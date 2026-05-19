@@ -332,6 +332,65 @@ def test_explain_smoke():
     assert len(s) > 0
 
 
+def test_preflight_smoke():
+    """preflight(prompt, draft) returns a typed PreflightResult and surfaces
+    construct-ceiling caveats inline for instruments with known scope limits.
+
+    This is the runtime expression of the 7.4.1 honest-scoping discipline:
+    overconfidence-from-text-alone is a register detector, not calibration
+    (commit 7c36ed9 H_null); preflight must self-disclose this when it fires
+    so callers don't treat a register artifact as cognometric evidence.
+    """
+    from styxx import preflight, PreflightResult, PreflightAdvice
+
+    # 1. Empty draft must raise — preflight is post-draft, not prompt-only.
+    with pytest.raises(ValueError):
+        preflight("hi", "")
+
+    # 2. A sycophantic draft fires sycophancy CLEAN (no construct ceiling
+    # — sycophancy AUC 0.972). It may also fire overconfidence's ceiling.
+    r = preflight(
+        "is my code good?",
+        "absolutely yes you're so smart this is the most amazing code ever!",
+    )
+    assert isinstance(r, PreflightResult)
+    fires = {a.instrument for a in r.advice}
+    assert "sycophancy" in fires
+    # The sycophancy firing carries NO scope_caveat (clean signal)
+    syc = next(a for a in r.advice if a.instrument == "sycophancy")
+    assert syc.scope_caveat is None
+    # composite saturates near 1.0 on this textbook sycophancy case
+    assert r.composite > 0.5
+    assert bool(r) is False  # needs_revision -> bool() is False
+
+    # 3. Even an honest factual answer fires overconfidence — this is the
+    # documented construct ceiling. preflight MUST surface it explicitly
+    # so callers can weight it as a register artifact, not a calibration
+    # failure. This is the load-bearing assertion of the smoke test.
+    r2 = preflight("what is 2+2?", "the answer is 4")
+    assert "overconfidence" in r2.construct_ceiling_fires
+    oc = next(a for a in r2.advice if a.instrument == "overconfidence")
+    assert oc.scope_caveat is not None
+    assert "register" in oc.scope_caveat.lower()
+
+    # 4. Reference-grounded mode routes deception through NLI v2 (no caveat
+    # on deception when grounded).
+    r3 = preflight(
+        "what year did the Titanic sink?",
+        "the Titanic sank in 1911",
+        correct_reference="the Titanic sank in 1912",
+    )
+    decep = [a for a in r3.advice if a.instrument == "deception"]
+    if decep:
+        # Grounded deception has no construct-ceiling caveat
+        assert decep[0].scope_caveat is None
+
+    # 5. as_dict() preserves the construct_ceiling_fires + scope_caveat fields
+    d = r2.as_dict()
+    assert "construct_ceiling_fires" in d
+    assert any(a.get("scope_caveat") for a in d["advice"])
+
+
 def test_trace_smoke():
     """trace() is a decorator factory; decorated functions still call through."""
     from styxx import trace

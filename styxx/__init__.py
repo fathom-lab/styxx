@@ -321,6 +321,12 @@ from .verify import verify, Verdict
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
+# 7.4.2: one-liner pre-ship cognometric audit of a draft response. Wraps
+# the MCP `cogn_audit_with_advice` tool as a typed Python function and
+# surfaces construct-ceiling caveats inline (honest-scoping in code, the
+# runtime-API extension of the 7.4.1 README correction).
+from .preflight import preflight, PreflightResult, PreflightAdvice
+
 # v3.5.0+: Cognitive Instruction Set — programmable residual-stream
 # control. `steer` is the multi-concept composer; `cogvm` is the
 # declarative VM with WRITE/GENERATE/WATCH/HALT/RETRY/SWITCH opcodes.
