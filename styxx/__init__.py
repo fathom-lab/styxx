@@ -128,33 +128,46 @@ def Raw(*args, **kwargs):
 
 
 def Anthropic(*args, **kwargs):
-    """Honest pass-through wrapper around anthropic.Anthropic.
+    """Drop-in pass-through wrapper around anthropic.Anthropic with
+    text-heuristic vitals by default.
 
     Usage:
         # Before: from anthropic import Anthropic
         from styxx import Anthropic
-        client = Anthropic()
+        client = Anthropic()                       # mode='text' (default)
         r = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=1024,
             messages=[{"role": "user", "content": "..."}],
         )
-        print(r.content[0].text)   # normal anthropic response
-        print(r.vitals)            # always None (see below)
+        print(r.content[0].text)                   # normal anthropic response
+        print(r.vitals.phase4_late.predicted_category)
+                                                   # e.g. 'reasoning'
+        print(r.vitals.mode)                       # 'text-heuristic'
 
-    IMPORTANT — .vitals is None on every Anthropic call.
-    Anthropic's Messages API does not expose per-token logprobs
-    (no logprobs=True / top_logprobs=k parameter), so tier 0 styxx
-    vitals cannot be computed from the response. This wrapper
-    exists so styxx.Anthropic is a valid import path, and so a
-    one-time warning explains the situation at first use.
+    Five modes (passed as ``mode=...``):
 
-    Workarounds if you need vitals on Claude inference:
-      - route through an OpenAI-compatible gateway (OpenRouter)
-        and use styxx.OpenAI(base_url=...)
-      - use styxx.Raw with a pre-captured logprob trajectory
-      - wait for styxx v0.2 tier 1 (d-axis honesty from residual
-        stream — does not need logprobs)
+      - 'text' (default): text-heuristic vitals from
+        styxx.watch._classify_from_text (tier=-1).
+      - 'off': vitals=None on every call.
+      - 'consensus': N-sample ensemble for logprob-equivalent signal
+        (cost: N×). Configure via ``ensemble_n=`` / ``ensemble_temperature=``.
+      - 'companion': open-model classifier routes the prompt
+        (requires torch + a local companion model).
+      - 'hybrid': text-heuristic baseline + companion overlay.
+
+    Tier-0 logprob-based vitals are not available on the Anthropic
+    Messages API (no `logprobs=True` parameter exists). The four
+    non-'off' modes above are the honest workarounds. For full tier-0
+    fidelity on Claude inference, route through an OpenAI-compatible
+    gateway exposing logprobs (e.g. OpenRouter) via
+    styxx.OpenAI(base_url=...).
+
+    The default mode's text-heuristic inherits the 7.4.1-documented
+    construct ceilings on register-detector axes (overconfidence,
+    reference-less deception); when you post-process the response
+    through styxx.preflight(...), those caveats surface inline via
+    PreflightResult.construct_ceiling_fires.
     """
     from .adapters.anthropic import AnthropicWithVitals
     return AnthropicWithVitals(*args, **kwargs)

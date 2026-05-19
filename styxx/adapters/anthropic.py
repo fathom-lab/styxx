@@ -1,51 +1,77 @@
 # -*- coding: utf-8 -*-
 """
-styxx.adapters.anthropic — honest pass-through wrapper for Anthropic.
+styxx.adapters.anthropic — drop-in pass-through wrapper for Anthropic with
+text-heuristic vitals by default.
 
     Replace:
         from anthropic import Anthropic
     with:
         from styxx import Anthropic
 
-The wrapper exists so that styxx.Anthropic is a valid import path
-alongside styxx.OpenAI. It is a **pass-through** — every call runs
-unchanged through the underlying anthropic SDK, and every response
-gains a `.vitals` attribute set to `None`.
+What you actually get (corrected 2026-05-19)
+────────────────────────────────────────────
+This adapter wraps the anthropic SDK as a fail-open pass-through and
+attaches a `.vitals` attribute to every response. **Contrary to the
+historical docstring**, the default mode produces real text-heuristic
+vitals — not `None` — on every Anthropic call. Five modes are
+supported via `styxx.Anthropic(mode=...)`:
 
-Why .vitals is None on every anthropic call
-───────────────────────────────────────────
-styxx tier 0 reads an agent's cognitive state from the **per-token
-logprob distribution** (entropy, logprob, top-2 margin). This is
-the signal validated by the Fathom Cognitive Atlas v0.3 across 6
-model families.
+  - mode="text" (default):  text-heuristic vitals via
+    `styxx.watch._classify_from_text`. Returns a `Vitals` with
+    `tier_active=-1`, `mode="text-heuristic"`, real category +
+    confidence prediction, both phase1_pre and phase4_late populated.
+    Lower fidelity than tier-0 logprob-based vitals (subject to the
+    register-detector construct ceilings the 7.4.1 release documented),
+    but a real reading that flows into the audit log and gates.
 
-As of 2026-04, the Anthropic Messages API does not expose per-token
-logprobs. There is no `logprobs=True` / `top_logprobs=k` parameter on
-`client.messages.create`. The response contains the generated text,
-usage counters, and a `stop_reason`, but no information about the
-probability distribution the model was sampling from at each step.
+  - mode="off":  `vitals=None` on every call. The one-time warning at
+    first use explains why; useful when you explicitly want a no-op
+    pass-through.
 
-This is an **upstream data limitation**, not a styxx bug. Without
-access to the logprob stream, tier 0 vitals are mathematically not
-computable. So this adapter does the only honest thing: it wraps the
-anthropic SDK as a pass-through, attaches `.vitals = None` so client
-code can branch on availability, and prints a one-time warning at
-first use explaining the situation.
+  - mode="consensus":  N-sample ensemble (default N=5). Re-runs the
+    call N-1 additional times at `ensemble_temperature` and computes
+    empirical per-token entropy + agreement from the resulting
+    samples. Cost: N× tokens per call. The closest reconstruction of
+    logprob-equivalent signal available without API support.
 
-Paths forward for users who NEED vitals on Claude-family inference
-───────────────────────────────────────────────────────────────────
+  - mode="companion":  Routes the prompt through an open-weight
+    classifier (`styxx.anthropic_hack.companion`) and attaches its
+    Vitals reading. Falls back to text-heuristic if the companion is
+    unavailable (e.g. no torch).
+
+  - mode="hybrid":  Text-heuristic baseline + companion overlay when
+    available. Best of both, with `vitals.mode` labeled so callers
+    can distinguish the source.
+
+Why tier 0 (the logprob path) is not available on Anthropic
+───────────────────────────────────────────────────────────
+styxx tier 0 reads cognitive state from the **per-token logprob
+distribution** (entropy, logprob, top-2 margin), the signal validated
+by the Fathom Cognitive Atlas v0.3 across 6 model families. As of
+2026-04, the Anthropic Messages API does not expose per-token
+logprobs — no `logprobs=True` / `top_logprobs=k` parameter on
+`client.messages.create`. This is an upstream data limitation, not
+a styxx bug. The modes above are the four honest workarounds.
+
+Construct ceilings of the text-heuristic path
+─────────────────────────────────────────────
+Default mode "text" inherits the 7.4.1-documented construct ceilings:
+text-only overconfidence reads stated-confidence register (NOT
+calibration); reference-less deception is non-discriminative on real
+model output (AUC 0.59 on TruthfulQA, see commit `0ad384e`). When you
+post-process the Anthropic response through `styxx.preflight(...)`,
+those caveats are surfaced inline via `PreflightAdvice.scope_caveat`
+and `PreflightResult.construct_ceiling_fires`.
+
+If you genuinely need tier-0 logprob-based signal on Claude inference
+─────────────────────────────────────────────────────────────────────
 1) Route through an OpenAI-compatible gateway that exposes logprobs
    for Claude models (e.g. OpenRouter). Use `styxx.OpenAI(base_url=...)`
    against the gateway instead of `styxx.Anthropic` directly.
-
-2) If you have hidden-state access (self-hosting a model with weight
-   access), wait for styxx v0.2 tier 1. Tier 1 reads the d-axis
-   honesty signature directly from the residual stream rather than
-   from logprobs, and works on any model you can run forward passes
-   through. Tier 1 does not require per-token logprob distributions.
-
-3) Capture whatever signal you can from your own pipeline and feed
-   it to `styxx.Raw(entropy=..., logprob=..., top2_margin=...)`.
+2) Use `styxx.Raw(entropy=..., logprob=..., top2_margin=...)` if you
+   have a pre-captured logprob trajectory from your own pipeline.
+3) For self-hosted weights, the tier-1 residual-stream path
+   (`styxx.residual_probe`) does not require logprobs.
 
 Fail-open contract
 ──────────────────
@@ -55,14 +81,17 @@ client. Calling code that doesn't look at `.vitals` sees a normal
 anthropic response.
 
     from styxx import Anthropic
-    client = Anthropic()
+    client = Anthropic()                                  # mode="text" (default)
     r = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1024,
         messages=[{"role": "user", "content": "why is the sky blue?"}],
     )
-    print(r.content[0].text)     # normal anthropic response, works
-    print(r.vitals)              # None, with a one-time warning
+    print(r.content[0].text)         # normal anthropic response
+    print(r.vitals.phase4_late.predicted_category)
+                                     # e.g. "reasoning" / "retrieval" / ...
+    print(r.vitals.mode)             # "text-heuristic"
+    print(r.vitals.tier_active)      # -1 (text fallback)
 """
 
 from __future__ import annotations
@@ -84,28 +113,32 @@ def _warn_once() -> None:
         return
     _WARNED_ONCE = True
     warnings.warn(
-        "styxx.Anthropic: tier 0 vitals are not available on Anthropic's "
-        "Messages API because it does not expose per-token logprobs "
-        "(no `logprobs=True` / `top_logprobs=k` parameter exists). "
-        "Every response from styxx.Anthropic will have .vitals = None. "
-        "Workarounds: route Claude through an OpenAI-compatible gateway "
-        "with logprobs enabled (e.g. OpenRouter) and use styxx.OpenAI, "
-        "OR use styxx.Raw with a pre-captured logprob trajectory, OR "
-        "wait for styxx v0.2 tier 1 (d-axis honesty from residual stream "
-        "— does not need logprobs). Details: "
-        "https://fathom.darkflobi.com/styxx#install",
+        "styxx.Anthropic(mode='off'): you've selected the no-op pass-through "
+        "mode. Responses will have .vitals=None on every call. The default "
+        "mode='text' produces real text-heuristic vitals (tier=-1, "
+        "mode='text-heuristic'); mode='consensus' produces N-sample ensemble "
+        "vitals; mode='companion' / 'hybrid' route through an open-model "
+        "classifier. Tier-0 logprob-based vitals are not available on the "
+        "Anthropic Messages API (no logprobs=True parameter exists); route "
+        "Claude through an OpenAI-compatible gateway with logprobs enabled "
+        "(e.g. OpenRouter) via styxx.OpenAI(base_url=...) if you need that "
+        "signal. Details: https://fathom.darkflobi.com/styxx#install",
         RuntimeWarning,
         stacklevel=2,
     )
 
 
 class AnthropicWithVitals:
-    """Fathomlab styxx pass-through wrapper around anthropic.Anthropic.
+    """Fathom Lab styxx pass-through wrapper around anthropic.Anthropic.
 
-    Instantiate exactly the same way you'd instantiate anthropic.Anthropic.
-    All arguments pass through unchanged. Every response gains a
-    `.vitals` attribute set to `None` (tier 0 is not available on
-    Anthropic — see module docstring for why).
+    Instantiate exactly the same way you'd instantiate anthropic.Anthropic;
+    all positional/keyword arguments pass through unchanged. Every response
+    gains a `.vitals` attribute. The shape of those vitals depends on the
+    `mode=` argument (default `"text"` — text-heuristic vitals; see module
+    docstring for the full mode table). Tier-0 logprob-based vitals are not
+    available on the Anthropic Messages API; the default mode's
+    text-heuristic reading inherits the 7.4.1-documented construct ceilings
+    on register-detector axes.
     """
 
     def __init__(self, *args, mode: str = "text",

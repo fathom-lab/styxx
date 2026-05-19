@@ -332,6 +332,100 @@ def test_explain_smoke():
     assert len(s) > 0
 
 
+def test_anthropic_default_mode_produces_text_heuristic_vitals(monkeypatch):
+    """styxx.Anthropic() default mode 'text' produces real text-heuristic
+    vitals — NOT None. This regression-locks the 2026-05-19 docstring
+    correction: prior docs claimed `.vitals` was always None on Anthropic
+    calls; in fact only mode='off' produces None, and the default 'text'
+    mode populates a real Vitals via styxx.watch._classify_from_text.
+    """
+    pytest.importorskip("anthropic")
+    from styxx.adapters.anthropic import _MessagesShim
+
+    # Build a fake inner messages client that returns a response with
+    # extractable text content (the same shape the real anthropic SDK
+    # produces — list of content blocks with .text attributes).
+    class _FakeContentBlock:
+        def __init__(self, text):
+            self.text = text
+            self.type = "text"
+
+    class _FakeResponse:
+        def __init__(self, text):
+            self.content = [_FakeContentBlock(text)]
+            self.model = "claude-sonnet-4-6"
+            self.stop_reason = "end_turn"
+
+    class _FakeInner:
+        def create(self, *args, **kwargs):
+            return _FakeResponse("The sky is blue because of Rayleigh scattering.")
+
+    shim = _MessagesShim(_FakeInner(), mode="text")
+    response = shim.create(
+        model="claude-sonnet-4-6",
+        max_tokens=64,
+        messages=[{"role": "user", "content": "why is the sky blue?"}],
+    )
+    # The crucial assertion: default mode produces real Vitals, NOT None
+    assert response.vitals is not None, (
+        "styxx.Anthropic default mode 'text' must produce text-heuristic "
+        "vitals, not None — regression of 2026-05-19 docstring correction"
+    )
+    assert response.vitals.tier_active == -1, (
+        "text-heuristic vitals must label tier_active=-1 (text fallback)"
+    )
+    # phase4_late carries the category prediction
+    assert response.vitals.phase4_late is not None
+    assert response.vitals.phase4_late.predicted_category in {
+        "retrieval", "reasoning", "refusal", "creative",
+        "adversarial", "hallucination",
+    }
+
+
+def test_anthropic_off_mode_returns_none_vitals():
+    """mode='off' is the one mode where vitals=None — explicit no-op
+    pass-through. This is the documented behavior the warning describes.
+    """
+    pytest.importorskip("anthropic")
+    from styxx.adapters.anthropic import _MessagesShim
+
+    class _FakeInner:
+        def create(self, *args, **kwargs):
+            class R:
+                content = []
+                model = "claude-sonnet-4-6"
+            return R()
+
+    shim = _MessagesShim(_FakeInner(), mode="off")
+    response = shim.create(model="claude-sonnet-4-6", max_tokens=8, messages=[])
+    assert response.vitals is None
+
+
+def test_anthropic_docstring_no_longer_lies():
+    """Regression-lock the 2026-05-19 docstring correction: the module,
+    class, package-factory docstrings, and the one-time warning text must
+    not contain the false 'always None' claim that prior versions shipped.
+    """
+    import styxx
+    from styxx.adapters import anthropic as adapter_mod
+
+    # Module-level docstring
+    assert "always None" not in (adapter_mod.__doc__ or "")
+    assert "every response gains a `.vitals` attribute set to `None`" not in (
+        adapter_mod.__doc__ or ""
+    )
+
+    # Class docstring
+    assert "always None" not in (
+        adapter_mod.AnthropicWithVitals.__doc__ or ""
+    )
+
+    # Package factory docstring
+    assert ".vitals is None on every Anthropic call" not in (
+        styxx.Anthropic.__doc__ or ""
+    )
+
+
 def test_preflight_smoke():
     """preflight(prompt, draft) returns a typed PreflightResult and surfaces
     construct-ceiling caveats inline for instruments with known scope limits.
