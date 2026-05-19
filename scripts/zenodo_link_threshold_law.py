@@ -31,14 +31,18 @@ r.raise_for_status()
 
 # Related identifiers: link to the Fathom DOI chain + styxx repo + GitHub commit
 related = [
-    # Fathom series — references (this is methodology lineage, not a continuation)
-    {"identifier": "10.5281/zenodo.19609853", "relation": "references",
+    # styxx main Zenodo — direct predecessor (this deposit supplements that tool line)
+    {"identifier": "10.5281/zenodo.20130041", "relation": "isSupplementTo",
      "resource_type": "publication-workingpaper",
      "scheme": "doi"},
-    {"identifier": "10.5281/zenodo.19502710", "relation": "references",
+    # Fathom methodology references (lineage, not continuation)
+    {"identifier": "10.5281/zenodo.19777921", "relation": "references",
      "resource_type": "publication-workingpaper",
      "scheme": "doi"},
-    {"identifier": "10.5281/zenodo.19468271", "relation": "references",
+    {"identifier": "10.5281/zenodo.19758619", "relation": "references",
+     "resource_type": "publication-workingpaper",
+     "scheme": "doi"},
+    {"identifier": "10.5281/zenodo.19502716", "relation": "references",
      "resource_type": "publication-workingpaper",
      "scheme": "doi"},
     # styxx tool + commit pin
@@ -60,21 +64,26 @@ meta["related_identifiers"] = related
 
 # Also strengthen description footer with the lineage
 extra_lineage = (
-    "<hr><p><strong>Lineage:</strong> this deposit is methodologically "
-    "downstream of the Fathom working-paper series "
-    "(<a href=\"https://doi.org/10.5281/zenodo.19609853\">10.5281/zenodo.19609853</a>, "
-    "<a href=\"https://doi.org/10.5281/zenodo.19502710\">10.5281/zenodo.19502710</a>, "
-    "<a href=\"https://doi.org/10.5281/zenodo.19468271\">10.5281/zenodo.19468271</a>) "
-    "and is a supplement to the <code>styxx</code> tool "
+    "<hr><p><strong>Lineage:</strong> this deposit supplements "
+    "<a href=\"https://doi.org/10.5281/zenodo.20130041\">Fathom v23 / styxx v7.2.0</a> "
+    "and is methodologically downstream of the Fathom Cognometric series "
+    "(<a href=\"https://doi.org/10.5281/zenodo.19777921\">Every Mind Leaves Vitals</a>, "
+    "<a href=\"https://doi.org/10.5281/zenodo.19758619\">styxx v6.2.0 ref impl</a>, "
+    "<a href=\"https://doi.org/10.5281/zenodo.19502716\">Fathom Cognitive Atlas v0.3</a>). "
+    "It is a supplement to the <code>styxx</code> tool "
     "(<a href=\"https://github.com/fathom-lab/styxx\">repo</a>, "
     "<a href=\"https://pypi.org/project/styxx/7.4.1/\">PyPI 7.4.1</a>, "
-    "commit <code>58a1d98</code>). It is not a continuation of the Fathom "
-    "depth/geometry line; it is a separate, narrower empirical finding "
-    "about label-free cognometric transport, audited by the same "
-    "research-integrity protocol.</p>"
+    "commit <code>58a1d98</code>). It is not a continuation of the depth/"
+    "geometry line; it is a narrower empirical finding about label-free "
+    "cognometric transport, audited by the same research-integrity protocol.</p>"
 )
-if "Lineage:" not in meta.get("description", ""):
-    meta["description"] = meta["description"] + extra_lineage
+# strip any prior (wrong) lineage block before reapplying
+import re as _re
+meta["description"] = _re.sub(
+    r"<hr><p><strong>Lineage:</strong>.*?</p>", "",
+    meta.get("description", ""), flags=_re.DOTALL
+)
+meta["description"] = meta["description"] + extra_lineage
 
 print("[3/5] PUTting updated metadata...")
 r = s.put(f"{BASE}/deposit/depositions/{DEP_ID}",
