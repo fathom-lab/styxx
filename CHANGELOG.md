@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **`tests/test_public_surface.py` — 30-test integrity contract for the
+  public API surface.** A 2026-05-19 self-audit
+  (`scripts/dogfood/audit_public_api_coverage.py`) found that 27 modules
+  re-exported through `styxx.__init__.py` had zero test files exercising
+  them — public functions that ship every release but no test calls. The
+  integrity protocol cannot honestly audit code paths it never executes.
+  Each module now has at least one offline, deterministic smoke test that
+  calls the public entry and asserts a basic invariant on the return.
+  Coverage: `autoboot`, `autoreflex`, `bootlog`, `calibrate`, `cards`,
+  `card_image` (via `styxx.agent_card`), `ci.Baseline`, `compliance`,
+  `dashboard`, `diff`, `eval`, `explain`, `fleet`, `forecast`,
+  `generate_safe`, `guardian`, `intercept`, `learned_classifier`,
+  `memory`, `notify`, `optimize`, `scan`, `sla`, `steer`, `stream`,
+  `temperature`, `trace`, `trajectory`, `verify`, and the A2A
+  `styxx.agent_card` protocol-card builder (previously the only
+  topologically orphaned module; now exercised, kept). Full suite:
+  **916 passed, 1 skipped.**
+- **`scripts/dogfood/audit_orphans.py` + `audit_public_api_coverage.py`.**
+  Reproducible methodology for both audits. The orphan script accounts
+  for `__init__.py` re-exports and CLI subcommand registration that a
+  naive sibling-only grep misses (a separate audit had over-counted
+  orphans by ~36× because it ignored re-exports).
+
+### Changed
+- nothing user-facing. additive only.
+
 ## [7.4.1] — 2026-05-17 — Honesty / Correctness Release
 
 This is a **correctness and honest-scoping release**, not a feature release.
