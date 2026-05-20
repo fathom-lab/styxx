@@ -277,3 +277,35 @@ commit `7265770`).
   confirms methodology validity per §7's three questions.
 
 **Next concrete step:** commit `scripts/phase_coherence_pilot.py` per §8.
+
+
+---
+
+## Corrigenda
+
+**2026-05-20 02:00 EDT — §4 alignment clarification (msg_id 34850, 34861)**
+
+§4 specifies pulse-traces are "aligned by `msg_id` ordering (sender-interleaved, not timestamp-resampled — conversations are turn-discrete)."
+
+The operational rule used by the scoring code is: extract the composite scalar from each agent's per-agent `chart.jsonl` in `msg_id`-sorted order, then pair by ordinal position within each agent's trace (kth composite of A with kth composite of B). If trace lengths differ, truncate to the shorter.
+
+Rationale: `chart.jsonl` is per-agent (one log per styxx-instrumented process) and does not carry a cross-agent message-pairing key. Ordinal-within-agent pairing is the implementation of "sender-interleaved, turn-discrete" alignment specified in §4.
+
+This corrigendum clarifies — does not modify — the §4 operational definition. The §10 lock remains binding on §1–§10 above.
+
+**2026-05-20 02:00 EDT — §2 schema field-name clarification (msg_id 34850)**
+
+The §2 `PulseSample` dataclass specifies in-memory field names (`timestamp`, `composite`, `scores`, `needs_revision`, `construct_ceiling_fires`). The underlying `chart.jsonl` writer (`styxx/analytics.py` commit c9d847d) serializes these as `cogn_*`-prefixed names:
+
+| PulseSample field         | chart.jsonl field                |
+|---------------------------|----------------------------------|
+| `timestamp`               | `ts`                             |
+| `composite`               | `cogn_composite`                 |
+| `scores`                  | `cogn_scores`                    |
+| `needs_revision`          | `cogn_needs_revision`            |
+| `construct_ceiling_fires` | `cogn_construct_ceiling_fires`   |
+| `msg_id`                  | `msg_id` (set by middleware)     |
+
+The scoring code (`scripts/phase_coherence_pilot.py`) reads the serialized names and constructs `PulseSample` objects with the dataclass names. The §2 contract is the in-memory schema; the serialization mapping is a loader-implementation detail recorded here for provenance.
+
+This corrigendum clarifies — does not modify — the §2 input contract.
