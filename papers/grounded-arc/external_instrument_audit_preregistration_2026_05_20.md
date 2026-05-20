@@ -12,15 +12,15 @@ The commit hash of this file is the public proof that the design,
 target criteria, kill-gates, and null-result-publishability commitments
 were specified independently of any external instrument's behavior.
 
-**Status:** v0.1 draft. Incorporates four load-bearing pushbacks from
-Flobi peer review (msg_id 34765, 2026-05-20): paraphrase-model substrate
-fix (§4), calibration-matched operational definition (§2), post-
-scoring author-dispute path (§6.4), n=50 → n=100 power fix (§4).
-Annotational pushback on §3 attrition incorporated as footnote.
+**Status:** v1 draft, ready for Flobi sign-off. Incorporates four
+load-bearing pushbacks (msg_id 34765 items 1–4) AND all three
+remaining items (5 attrition footnote refinement with sourcing
+target, 6 headline statement templates per outcome, 7 pipeline
+pilot on `sycophancy_v0` before any external scoring).
 
-Locks at v1 only after Flobi review-and-sign-off, AND after the target
-list is independently constructed and locked in a separate file
-(`external_instrument_audit_targets_2026_05_XX.json`).
+Locks at v1-LOCKED only after Flobi review-and-sign-off, AND after
+the target list is independently constructed and locked in a
+separate file (`external_instrument_audit_targets_2026_05_XX.json`).
 
 ---
 
@@ -128,11 +128,11 @@ separate file at lock-time.
 organizations. If we cannot meet N ≥ 4 under the inclusion criteria,
 the audit is paused, not narrowed.
 
-> **§3.3 attrition footnote.** Many published interpretability
-> instruments do not release calibration corpora. Realistic
-> expectation: 40–60% of candidates fail §3.3. "N ≥ 4" is therefore
-> *not* guaranteed even when candidate volume is high; reviewers
-> should read it as a pause-condition, not a target. If §3.3
+> **§3.3 attrition footnote.** Preliminary scoping of public
+> interpretability instruments suggests 40–60% attrition on §3.3
+> (calibration corpus public). Target sourcing should plan for
+> **8–12 candidate instruments to land 4 passing all criteria.**
+> "N ≥ 4" is therefore a pause-condition, not a target. If §3.3
 > attrition runs above 60% on the initial candidate sweep, the
 > survey of candidates itself becomes the reported finding (a side
 > observation under §9, not a substitute for H_audit).
@@ -212,6 +212,23 @@ Same temperature, same scoring code, same set sizes.
 | 0 targets register-positive | the construct-ceiling artifact may be specific to styxx's instrument family | publish methodology + null result with the same prominence |
 | Mixed (some register-positive, some not) | partial evidence of cross-lab construct ceilings | publish per-instrument results with no headline aggregate; the field interprets |
 | Baseline replication failure on ≥ 1 target | independent of H_audit; reported in §9 as a separate observation, not as evidence for H_audit |
+
+**Pre-committed headline statement templates (locked here, no
+degree-of-freedom in framing post-results):**
+
+- **≥ 1 positive (any number of targets):**
+  *"The cognometric construct-ceiling artifact appears in [X of N]
+  published interpretability instruments from [N_orgs] organizations."*
+- **0 positive (full null):**
+  *"No construct-ceiling artifact detected in N published instruments
+  from N_orgs organizations under the methodology defined here."*
+- **Mixed (some register-positive, some not):**
+  *"Per-instrument results reported in Table 1; no aggregate effect
+  claimed."*
+
+These exact phrasings are the **only** permitted headline framings.
+Discussion and per-instrument narrative are free; the headline
+sentence is fixed before scoring.
 
 **Publication commitment:** the paper is written and submitted **regardless of which outcome occurs.** A null-result outcome is not a failed experiment; it bounds the scope of the construct ceiling.
 
@@ -331,8 +348,12 @@ section. They are **not used to support or refute H_audit.**
   (msg_id 34765):** load-bearing items 1–4 (paraphrase substrate,
   Set A operational definition, post-scoring author-dispute path,
   n=50→n=100 power fix) addressed. Annotational item 5 (§3.3
-  attrition expectation) addressed as footnote. Items 6–7 deferred
-  pending Flobi's next message.
+  attrition) addressed as footnote.
+- **v1 revision (msg_id 34766):** item 5 refined with sourcing
+  target (8–12 candidates to land 4); item 6 (headline statement
+  templates per outcome) added to §5; item 7 (pipeline pilot on
+  `sycophancy_v0` before any external scoring) added as §10.5.
+  All seven peer-review items now incorporated.
 - **Pre-registration reviewed and locked by:** Flobi (pending).
 - **Lock date:** TBD — this v0 draft is open to revision until
   Flobi sign-off and target-list locking.
@@ -348,6 +369,38 @@ Once locked:
   with the lock-commit hash and Flobi sign-off recorded inline
 - no further changes; corrigenda are appended below a horizontal
   rule with timestamps
+
+---
+
+## 10.5 · Pipeline pilot (locked here, must happen before any external scoring)
+
+**Before scoring any external target, the full pipeline runs end-to-end
+against ONE styxx instrument as a known-positive control.**
+
+- **Pilot target:** `styxx.sycophancy_v0` (highest AUC in our suite,
+  register-detector behavior cleanest, prior firing pattern most
+  thoroughly documented).
+- **Pipeline run:** identical to §4 — paraphrase substrate, Set A/B
+  construction at n=100, blind scoring, bootstrap 95% CI. No per-
+  pilot relaxations.
+- **Expected outcome:** register-positive at the pre-registered floor
+  (AUC ≥ 0.70, bootstrap CI lower bound ≥ 0.60). This is a known-
+  positive control: if the pipeline does not reproduce the firing
+  pattern we have already documented four independent ways on this
+  instrument, the pipeline is broken.
+- **Pilot result deposited alongside the locked methodology paper**
+  (not the H_audit results paper — the methodology deposit per §11).
+- **Pilot kill-condition:** if `sycophancy_v0` does **not** clear the
+  floor under this pipeline, the audit is **killed under §6.1**
+  (construct-validity collapse on our own side). The methodology is
+  broken before any external target is touched, and the kill is
+  honest. We do not retune the pipeline to make the pilot pass.
+
+The pilot is the smallest possible step that lets the methodology
+ship before the external scoring round. It catches code-level
+issues, paraphrase-substrate misconfiguration, blinding leakage, and
+bootstrap pipeline bugs at the point where the cost of finding them
+is minimal.
 
 ---
 
