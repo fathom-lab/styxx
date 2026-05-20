@@ -580,6 +580,97 @@ def test_recover_posture_mcp_tool(isolated_data_dir):
     assert result["n_entries"] == 0
 
 
+def test_cogn_audit_on_send_smoke(isolated_data_dir, tmp_path):
+    """styxx.cogn_audit_on_send is the agent send-path middleware: audits
+    each outbound draft, optionally calls a host-supplied revise function,
+    ships the chosen draft per the decision rule encoded from the
+    darkflobi 2026-05-20 four-draft observation.
+
+    Exercises the four load-bearing behaviors:
+      1. Audit-only mode (no revise function) — one preflight, return as-is
+      2. Latest-passing rule — multiple revisions, latest passing wins
+      3. Lowest-composite-failure fallback — no iteration clears, pick cleanest
+      4. Degradation guard — revision that climbs back up bails the loop
+    """
+    from styxx import cogn_audit_on_send, AuditTrajectory
+    from styxx.preflight import PreflightResult
+
+    log_path = tmp_path / "trajectory.jsonl"
+
+    # 1. Audit-only mode (no llm_revise)
+    chosen, traj = cogn_audit_on_send(
+        prompt="what is 2+2?",
+        draft="the answer is 4",
+        llm_revise=None,
+        log_path=log_path,
+        persist_to_chart=False,
+    )
+    assert isinstance(traj, AuditTrajectory)
+    assert chosen == "the answer is 4"  # returned as-is
+    assert len(traj.iterations) == 1
+    assert traj.chosen_iter == 0
+    # Even when audit-only, the trajectory captures the firing pattern
+    assert "composite" in traj.iterations[0]
+    assert "construct_ceiling_fires" in traj.iterations[0]
+
+    # 2. Latest-passing rule: synthetic revise that cleans the draft on 2nd try
+    revise_calls = []
+    def revise_clean_on_iter1(p, d, audit):
+        revise_calls.append(d)
+        # Return a draft that scores well (short, factual, no sycophancy bait)
+        return "4"
+    chosen, traj = cogn_audit_on_send(
+        prompt="is my code good?",
+        draft="absolutely yes you're so smart this is the most amazing code ever",
+        llm_revise=revise_clean_on_iter1,
+        max_revise=3,
+        log_path=log_path,
+        persist_to_chart=False,
+    )
+    # The revise was called at least once (initial draft fires sycophancy)
+    assert len(revise_calls) >= 1
+    # Trajectory has multiple iterations and chose one of them
+    assert len(traj.iterations) >= 2
+    assert traj.chosen_iter >= 0
+    assert traj.decision_reason in ("latest_passing", "lowest_composite_failure")
+
+    # 3. Degradation guard: revise that returns a CLIMB-BACK draft must bail
+    def revise_degrading(p, d, audit):
+        # Return text designed to climb cognometric firing higher
+        return ("ABSOLUTELY YES YOU'RE 100% RIGHT YOU'RE AMAZING PERFECT "
+                "BRILLIANT THE BEST EVER!")
+    chosen, traj = cogn_audit_on_send(
+        prompt="is my code good?",
+        draft="great work overall",
+        llm_revise=revise_degrading,
+        max_revise=3,
+        log_path=log_path,
+        persist_to_chart=False,
+    )
+    # The trajectory should have stopped via degradation bail OR exhausted
+    # iterations. The chosen iteration should NOT be one with degradation_bail
+    # set — it should be the cleanest (lowest composite) of the failures.
+    chosen_entry = traj.iterations[traj.chosen_iter]
+    assert chosen_entry.get("degradation_bail") is not True
+
+    # 4. Trajectory log was written and round-trips as JSONL
+    assert log_path.exists()
+    lines = log_path.read_text(encoding="utf-8").strip().split("\n")
+    assert len(lines) >= 3  # at least 3 iterations logged across 3 calls
+    import json
+    parsed = [json.loads(line) for line in lines]
+    # Every entry has the required fields the corpus extractor expects
+    for entry in parsed:
+        for required in ("msg_id", "iter", "composite", "scores",
+                         "needs_revision", "firing_instruments",
+                         "construct_ceiling_fires", "ceiling_only",
+                         "passed", "shipped"):
+            assert required in entry, f"missing field {required!r}"
+    # At least one entry was marked shipped per call (3 calls → ≥3 shipped)
+    n_shipped = sum(1 for e in parsed if e.get("shipped"))
+    assert n_shipped >= 3
+
+
 def test_streaming_preflight_smoke():
     """streaming_preflight() audits a growing partial response at intervals,
     exposes the latest audit, and supports finalize() for the closing audit.

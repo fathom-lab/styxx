@@ -363,6 +363,16 @@ from .streaming_preflight import (
     streaming_preflight, StreamingPreflightSession,
 )
 
+# 7.4.3+: cognometric self-audit middleware for agent send-paths.
+# Plugs into a host runtime's pre-send hook: audits each outbound draft,
+# optionally calls the host's revise function on cognometric firings,
+# returns the chosen draft to ship per the latest-passing /
+# lowest-composite-failure / degradation-guard decision rule.
+# Reference implementation of the F10 reflex loop applied to
+# in-production agent output. Host supplies llm_revise; this module
+# never calls an LLM itself.
+from .middleware import cogn_audit_on_send, AuditTrajectory, ReviseFn
+
 # v3.5.0+: Cognitive Instruction Set — programmable residual-stream
 # control. `steer` is the multi-concept composer; `cogvm` is the
 # declarative VM with WRITE/GENERATE/WATCH/HALT/RETRY/SWITCH opcodes.
