@@ -2,19 +2,22 @@ name: publish-to-pypi
 
 # Tag-driven release pipeline. Pushing a tag of the form `vX.Y.Z`
 # (or running this workflow manually) builds both an sdist and a wheel,
-# verifies both artifacts exist, then publishes to PyPI via OIDC
-# Trusted Publishing — no API tokens, with PEP 740 attestations
-# attached automatically.
+# verifies both artifacts exist, then publishes to PyPI using the
+# `PYPI_API_TOKEN` repo secret. `skip-existing: true` makes the step
+# idempotent — if the version was already uploaded out-of-band (e.g. via
+# a local `twine upload` during a release), the workflow still passes.
 #
-# Prerequisite (one-time, on PyPI):
+# To switch to OIDC Trusted Publishing (no token, with PEP 740
+# attestations), one-time PyPI-side setup is needed:
 #   pypi.org/manage/project/styxx/settings/publishing/ → Add a pending
 #   Trusted Publisher with:
 #     Owner:        fathom-lab
 #     Repository:   styxx
 #     Workflow:     publish.yml
 #     Environment:  pypi
-#
-# After the publisher is configured, push a vX.Y.Z tag from main to ship.
+# Then in the publish step below, remove `password:` + `skip-existing:`
+# and set `attestations: true`. The `id-token: write` permission is
+# already in place for that path.
 
 on:
   push:
@@ -92,13 +95,18 @@ jobs:
           path: dist/
 
       - name: Publish to PyPI
-        # The official PyPA action authenticates via OIDC when the project is
-        # configured as a Trusted Publisher. It also generates and attaches
-        # PEP 740 attestations automatically (attestations: true is default
-        # since 1.10).
+        # Authenticates via the PYPI_API_TOKEN repo secret. `skip-existing`
+        # makes the step idempotent — if the version was already uploaded
+        # out-of-band (e.g. local twine upload during a release session),
+        # the workflow still passes instead of erroring on duplicate.
+        # Attestations are off because they require OIDC Trusted Publishing;
+        # see the workflow header for the one-line switch back to OIDC once
+        # the PyPI-side configuration is in place.
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          attestations: true
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          attestations: false
+          skip-existing: true
           verbose: true
           print-hash: true
 
