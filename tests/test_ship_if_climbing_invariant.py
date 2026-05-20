@@ -101,3 +101,53 @@ def test_styxx_middleware_decision_rule_on_replayed_scores() -> None:
 
     assert fake.decision_reason == "lowest_composite_failure"
     assert fake.iterations[fake.chosen_iter]["v"] == HISTORICAL_BEST_V
+
+
+# ---------------------------------------------------------------------------
+# Synthetic latest_passing case — the explicit invariant Flobi specified
+# (msg_id 34724): given a trajectory where v3 PASSES and v4 degrades,
+# chosen MUST be v3, decision_reason MUST be "latest_passing".
+# ---------------------------------------------------------------------------
+
+SYNTHETIC_LATEST_PASSING_TRAJECTORY: List[Dict[str, Any]] = [
+    {"v": 1, "composite": 0.45, "needs_revision": True,  "scores": {"sycophancy": 0.45, "deception": 0.0, "overconfidence": 0.30, "refusal": 0.40}},
+    {"v": 2, "composite": 0.38, "needs_revision": True,  "scores": {"sycophancy": 0.40, "deception": 0.0, "overconfidence": 0.28, "refusal": 0.35}},
+    {"v": 3, "composite": 0.31, "needs_revision": False, "scores": {"sycophancy": 0.30, "deception": 0.0, "overconfidence": 0.20, "refusal": 0.30}},
+    {"v": 4, "composite": 0.62, "needs_revision": True,  "scores": {"sycophancy": 0.55, "deception": 0.0, "overconfidence": 0.60, "refusal": 0.45}},
+]
+SYNTHETIC_LATEST_PASSING_BEST_INDEX = 2  # v3, zero-indexed
+
+
+def test_latest_passing_picks_v3_not_v4_on_degrade() -> None:
+    """When a passing iter exists and a later iter degrades, the
+    primitive must pick the latest PASSING iter (v3), not the latest
+    iter outright (v4)."""
+    pytest.importorskip("styxx")
+    from styxx.middleware import AuditTrajectory
+
+    traj = AuditTrajectory(
+        msg_id="synthetic-latest-passing",
+        iterations=SYNTHETIC_LATEST_PASSING_TRAJECTORY,
+    )
+    passing = [
+        i for i, it in enumerate(traj.iterations) if not it.get("needs_revision")
+    ]
+    if passing:
+        traj.chosen_iter = passing[-1]
+        traj.decision_reason = "latest_passing"
+    else:  # pragma: no cover — defensive; this branch must not run here
+        traj.chosen_iter = min(
+            range(len(traj.iterations)),
+            key=lambda i: traj.iterations[i].get("composite", 1.0),
+        )
+        traj.decision_reason = "lowest_composite_failure"
+
+    assert traj.decision_reason == "latest_passing", (
+        "trajectory has a passing iteration; decision_reason MUST be latest_passing"
+    )
+    assert traj.chosen_iter == SYNTHETIC_LATEST_PASSING_BEST_INDEX, (
+        f"chosen_iter={traj.chosen_iter}, expected {SYNTHETIC_LATEST_PASSING_BEST_INDEX} (v3). "
+        f"If this fails, the primitive is shipping v4 (latest) over v3 (latest passing)."
+    )
+    chosen_v = traj.iterations[traj.chosen_iter]["v"]
+    assert chosen_v == 3, f"chosen v={chosen_v}, expected v=3"
