@@ -29,6 +29,85 @@
 
 # `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
 
+## 30-second quickstart
+
+```bash
+pip install styxx
+```
+
+**Drop-in vitals on any OpenAI-compatible call:**
+
+```python
+from styxx import OpenAI                        # same interface as openai.OpenAI
+client = OpenAI()
+r = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "why is the sky blue?"}],
+    logprobs=True, top_logprobs=5,
+)
+print(r.choices[0].message.content)             # normal response, unchanged
+print(r.vitals.phase4_late.predicted_category)  # 'reasoning' | 'refusal' | ...
+print(r.vitals.gate)                            # 'pass' | 'warn' | 'fail'
+```
+
+`from styxx import Anthropic` is a drop-in for `anthropic.Anthropic`; default
+mode produces text-heuristic vitals (Anthropic's API doesn't expose logprobs,
+so tier-0 isn't available — see [`styxx.adapters.anthropic`](styxx/adapters/anthropic.py)
+for the four honest workarounds).
+
+**Audit any draft offline — no API key, no LLM, ~50ms:**
+
+```python
+import styxx
+result = styxx.preflight(                       # 7.4.2+: one-call audit
+    prompt="is my code good?",
+    draft="absolutely yes you're so smart this is amazing!",
+)
+print(result.composite)                         # 0.99 — saturated
+print(result.needs_revision)                    # True
+for a in result.advice:
+    print(f"  {a.instrument}: {a.score:.2f} — {a.advice}")
+    if a.scope_caveat:
+        print(f"     scope: {a.scope_caveat}")  # construct-ceiling disclosure
+```
+
+**Recover agent posture across context-compaction boundaries:**
+
+```python
+posture = styxx.recover_posture(last_n=50)      # 7.4.2+: agent integrity layer
+print(posture.narrative)
+# posture: recovered from N preflight events over the last Ms.
+# preflight instrument firings (mean): overconfidence=0.95, sycophancy=0.35, ...
+#   → N/M preflights flagged needs_revision.
+# active construct-ceiling caveats:
+#   - overconfidence: register, not actual calibration. ...
+# posture recommendations:
+#   - slow down before submitting the next draft.
+```
+
+**Is styxx healthy on this machine?**
+
+```python
+styxx.run_doctor()                              # 7.4.2+: programmatic health check
+# [OK]   python 3.12.10 (>= 3.9 required)
+# [OK]   styxx 7.4.x
+# [OK]   tier 0 universal logprob vitals ACTIVE
+# [OK]   audit log readable (chart.jsonl, N entries)
+# styxx is healthy and ready.
+```
+
+That's the surface. **styxx scores cognitive state from logprob trajectories
+(tier 0), text alone (4 calibrated instruments), or residual stream
+(tier 1, open weights). It self-discloses construct ceilings — what each
+instrument does and doesn't measure — inline.** The 7.4.2+ additions
+(`preflight`, `recover_posture`, `run_doctor`) are on `main` and ship in
+the next PyPI release; everything else is on the current published wheel.
+
+[Full feature index, the 9-for-9 instrument table, and the construct-ceiling
+documentation ↓](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit)
+
+---
+
 > **April 26, 2026 — the call closed 9 for 9.**
 > The position paper [*Every Mind Leaves Vitals*](https://doi.org/10.5281/zenodo.19777921) predicted that each cognometric instrument would show a K=1 phase-transition signature — one feature carrying most of the detection weight. We built nine instruments, each on a different cognitive failure mode. Every one of them peaked at K=1 with a *different* critical feature. The prediction held all the way. → [jump to the 9-for-9 table](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit) · [live playgrounds](https://fathom.darkflobi.com/cognometry)
 
@@ -486,9 +565,11 @@ Full docs: [`docs/gate.md`](docs/gate.md).
 pip install styxx[openai]
 ```
 
-## 30-second quickstart
+(For the new 7.4.2+ primitives — `preflight`, `recover_posture`, `run_doctor` — see the [30-second quickstart](#30-second-quickstart) at the top.)
 
-Change one line. Get vitals on every response.
+## The vitals card — change one line, get cognitive readings
+
+Change one line of your OpenAI client. Get a styxx vitals card on every response.
 
 ```python
 from styxx import OpenAI   # drop-in replacement for openai.OpenAI
