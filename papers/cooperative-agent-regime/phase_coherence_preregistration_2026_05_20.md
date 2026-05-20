@@ -225,13 +225,55 @@ deposited, regardless of outcome.
 - 34821 — pre-sign review: intermediate-zone deposit-mandate added;
   permutation threshold lifted p<0.05 → p<0.01 for chain consistency
 
-**Lock-date:** TBD
-**Lock-commit-hash:** TBD
-**Scoring-code commit hash:** TBD (recorded at §8 by amendment)
+**Lock-date:** 2026-05-20
+**Lock-commit-hash:** the commit that appends the SIGNED block below is
+the binding lock-hash. See `git log --follow papers/cooperative-agent-regime/phase_coherence_preregistration_2026_05_20.md`
+for the exact value (self-reference paradox in inline recording is
+avoided by deferring to git history, same convention as
+`external_instrument_audit_preregistration_LOCKED_2026_05_20.md` at
+commit `7265770`).
+**Scoring-code commit hash:** TBD (recorded by amendment-commit when
+`scripts/phase_coherence_pilot.py` is committed per §8)
 
 ---
 
-## §10 Lock — UNSIGNED (draft)
+## §10 Lock — SIGNED
 
-*This document is not yet locked. Methodology may be revised until the
-SIGNED line is appended.*
+**Signed by:** Flobi via Claude Opus 4.7 (1M context), 2026-05-20
+
+**Sign-off statement (verbatim, from the pre-sign review):**
+
+> *"document reads paper-grade end-to-end. all seven pushbacks landed
+> plus darkflobi's own §3 single-channel multiple-comparison lock that
+> i didn't ask for — that's tighter discipline than i proposed. ready
+> to sign."*
+
+**Lock decision per section:**
+- §1 (REGISTER-rhythm position at load-bearing top) — accepted
+- §2 (PulseSample contract, verbatim from msg_id 34814 schema) — accepted
+- §3 (H_phase_coherence + composite-only primary lock) — accepted
+- §4 (CC operational definition before naming) — accepted
+- §5 (shuffled-pairs primary null, within-agent secondary) — accepted
+- §6 (median > 0.5, CI lower > 0.3, p < 0.01 permutation, intermediate
+  zone with deposit-mandate, kill-gate < 0.3) — accepted with the p < 0.01
+  threshold matching the styxx chain's prior preregistrations (external-
+  instrument audit at `7265770`, grounded-arc 8.0 brief)
+- §7 (pilot purpose-statement: methodology validation only,
+  non-evidentiary) — accepted
+- §8 (code-commit-before-run with explicit content checklist) — accepted
+- §9 (all runs deposited, no selective reporting) — accepted
+- §10 (immutable post-lock, msg_id provenance chain) — accepted
+
+**Post-lock binding:**
+- This document is now immutable. Corrigenda may be appended below a
+  horizontal rule with timestamps but do not modify §1–§10 above.
+- Methodology revisions require a NEW preregistration document with a
+  new filename and new lock-commit hash. This document remains in the
+  repository as historical record.
+- `scripts/phase_coherence_pilot.py` is committed separately per §8;
+  its hash is recorded by amendment-commit referencing this lock-hash.
+- The pilot per §7 may be executed after the scoring-code commit lands.
+- The corpus run (N ≥ 5, T ≥ 20) may be executed after the pilot
+  confirms methodology validity per §7's three questions.
+
+**Next concrete step:** commit `scripts/phase_coherence_pilot.py` per §8.
