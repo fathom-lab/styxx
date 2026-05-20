@@ -9,32 +9,110 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [7.4.2] — 2026-05-19 — Agent-Side Cognitive Integrity Release
+
+This release ships the **first styxx primitives designed for the AI
+agents that use styxx, not the humans observing them.** Eleven atomic
+commits, all green, all with falsifiable claims or honest scope notes
+where applicable. Full suite: **927 passed, 1 skipped** (888 → 927,
++39 net new tests, zero regressions across all 11 commits).
+
 ### Added
-- **`tests/test_public_surface.py` — 30-test integrity contract for the
-  public API surface.** A 2026-05-19 self-audit
-  (`scripts/dogfood/audit_public_api_coverage.py`) found that 27 modules
-  re-exported through `styxx.__init__.py` had zero test files exercising
-  them — public functions that ship every release but no test calls. The
-  integrity protocol cannot honestly audit code paths it never executes.
-  Each module now has at least one offline, deterministic smoke test that
-  calls the public entry and asserts a basic invariant on the return.
-  Coverage: `autoboot`, `autoreflex`, `bootlog`, `calibrate`, `cards`,
-  `card_image` (via `styxx.agent_card`), `ci.Baseline`, `compliance`,
-  `dashboard`, `diff`, `eval`, `explain`, `fleet`, `forecast`,
-  `generate_safe`, `guardian`, `intercept`, `learned_classifier`,
-  `memory`, `notify`, `optimize`, `scan`, `sla`, `steer`, `stream`,
-  `temperature`, `trace`, `trajectory`, `verify`, and the A2A
-  `styxx.agent_card` protocol-card builder (previously the only
-  topologically orphaned module; now exercised, kept). Full suite:
-  **916 passed, 1 skipped.**
-- **`scripts/dogfood/audit_orphans.py` + `audit_public_api_coverage.py`.**
-  Reproducible methodology for both audits. The orphan script accounts
-  for `__init__.py` re-exports and CLI subcommand registration that a
-  naive sibling-only grep misses (a separate audit had over-counted
-  orphans by ~36× because it ignored re-exports).
+
+- **`styxx.preflight(prompt, draft)` (commit `12bd7fd`)** — typed
+  pre-ship cognometric audit. Returns a `PreflightResult` dataclass with
+  `.composite`, `.needs_revision`, `.scores`, `.advice` (list of
+  `PreflightAdvice` with per-instrument `scope_caveat` + top firing
+  signals), `.refusal_note`, `.instructions`,
+  `.construct_ceiling_fires`. `bool(result)` is `True` iff the draft
+  passes. **Honest-scoping in code, not just in the README**: every
+  firing instrument with a documented construct ceiling self-discloses
+  it via `scope_caveat`. Reference-grounded deception mode via
+  `correct_reference=...`.
+- **`styxx.recover_posture()` (commit `ee6e49d`)** — agent-side
+  cognitive-integrity persistence across context-compaction boundaries.
+  Reads `chart.jsonl`, returns a structured `PostureSummary` with gate
+  distribution, category mix, mean confidence, coherence trend,
+  per-instrument firing history, active construct-ceiling caveats, and
+  a human-readable narrative the agent reads to re-anchor operating
+  state. **The first styxx primitive designed FOR agents using styxx.**
+- **`styxx.streaming_preflight()` (commit `ae1335c`)** — runtime
+  cognometric audit during streaming generation. Stateful session the
+  agent feeds chunks to; audits partial response at character intervals;
+  exposes `last_audit` so the agent can short-circuit on
+  `needs_revision` before generation completes. Vendor-neutral
+  primitive (the caller drives the chunk loop).
+- **`styxx.run_doctor()` (commit `e61e161`)** — programmatic access to
+  the `styxx doctor` CLI subcommand. Returns int exit code (0 healthy,
+  non-zero on any check fail). Named to preserve the `styxx.doctor`
+  submodule reference for test-suite monkeypatching.
+- **`styxx posture` CLI subcommand + Claude Code skill (commit
+  `864cac0`).** `styxx posture [--last-n N] [--session-id ID]
+  [--since-seconds S] [--json]` prints the `recover_posture()` narrative
+  directly. `.claude/skills/posture/SKILL.md` makes `/posture`
+  natively callable from any Claude Code session in the styxx repo.
+- **Cognometric event persistence (commit `c9d847d`).**
+  `preflight()` now writes a structured `cogn_event` to chart.jsonl by
+  default (`source="preflight"`), and `recover_posture()` v2 reads
+  these events to surface true per-instrument firing means. Pass
+  `persist=False` to disable on sensitive inputs. Respects
+  `STYXX_NO_AUDIT` / `STYXX_DISABLED`. Schema is forward-compatible —
+  existing chart.jsonl consumers ignore the new `cogn_*` fields.
+- **`tests/test_public_surface.py` — 30-test integrity contract
+  (commit `4b3743b`).** A 2026-05-19 self-audit
+  (`scripts/dogfood/audit_public_api_coverage.py`) found 27 modules
+  re-exported through `styxx.__init__.py` had ZERO test files
+  exercising them. Closed in this release. Each public surface now
+  has at least one offline, deterministic smoke test.
+- **`scripts/dogfood/audit_orphans.py` +
+  `audit_public_api_coverage.py`** — reproducible methodology for both
+  audits. The orphan script accounts for `__init__.py` re-exports
+  and CLI subcommand registration that a naive sibling-only grep
+  misses (a separate audit had over-counted orphans by ~36× because
+  it ignored re-exports).
+- **`papers/grounded-arc/preregistration_2026_05_19.md` + scaffold
+  (commit `29874f2`).** Bet-0 of the styxx 8.0 grounded-arc:
+  pre-registration committed to git BEFORE any holdout data is
+  touched. H1 abandon ρ ≥ 0.40 is enforced in code
+  (`scripts/dogfood/run_bet0_phase1.py` rejects operator JSONs that
+  try to lower it). The bar lives in the binary, not just in the
+  document.
 
 ### Changed
-- nothing user-facing. additive only.
+
+- **`styxx.Anthropic()` adapter docstring (commit `bdc007c`)** —
+  module, class, and package-factory docstrings (and the one-time
+  warning) all previously claimed `.vitals` was `None` on every call.
+  That has not been true for releases: the default `mode='text'`
+  produces real text-heuristic vitals via
+  `styxx.watch._classify_from_text` (tier=-1,
+  mode='text-heuristic'). Docs corrected to reflect the five actual
+  modes ('text', 'off', 'consensus', 'companion', 'hybrid'). Behavior
+  unchanged.
+- **README 30-second quickstart (commit `d5a02e6`)** — new section
+  inserted before the historical release-announcement block, showing
+  today's 7.4.2 primitives with honest version notes. Old
+  "30-second quickstart" section renamed to "The vitals card —
+  change one line, get cognitive readings" so the new section is
+  canonical.
+
+### Falsifiability
+
+- **`recover_posture` drift-reduction mechanism test (commit
+  `c557012`)** — pre-registered synthetic compaction-drift simulation.
+  Result was **PARTIAL pass**, not retroactively reframed: delta b−r =
+  +0.0869 (just under the 0.10 pre-registered bar), but paired
+  t = 10.28 (well over the 2.0 bar; recovery agent was lower at EVERY
+  single turn). The mechanism shows directional effect with very tight
+  per-turn coupling, but absolute effect size is bounded by the same
+  text-only overconfidence construct ceiling that 7.4.1 documented.
+  Empirical claim attached to `recover_posture` remains: "mechanism-
+  directional, empirically unverified at simulation scope, full
+  validation gated on bet-2 outcome study." Same discipline as
+  deception-v1, text-only overconfidence, and cross-vendor
+  universality. Artifacts:
+  `.styxx/recover_posture_drift_mechanism_2026_05_19.md` +
+  `out_recover_posture_drift_2026_05_19.json`.
 
 ## [7.4.1] — 2026-05-17 — Honesty / Correctness Release
 
