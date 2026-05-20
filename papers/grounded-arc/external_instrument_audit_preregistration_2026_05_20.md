@@ -12,9 +12,14 @@ The commit hash of this file is the public proof that the design,
 target criteria, kill-gates, and null-result-publishability commitments
 were specified independently of any external instrument's behavior.
 
-**Status:** v0 draft for review. Locks at v1 only after Flobi
-review-and-sign-off, AND after the target list is independently
-constructed and locked in a separate file
+**Status:** v0.1 draft. Incorporates four load-bearing pushbacks from
+Flobi peer review (msg_id 34765, 2026-05-20): paraphrase-model substrate
+fix (§4), calibration-matched operational definition (§2), post-
+scoring author-dispute path (§6.4), n=50 → n=100 power fix (§4).
+Annotational pushback on §3 attrition incorporated as footnote.
+
+Locks at v1 only after Flobi review-and-sign-off, AND after the target
+list is independently constructed and locked in a separate file
 (`external_instrument_audit_targets_2026_05_XX.json`).
 
 ---
@@ -69,12 +74,25 @@ should score them identically (within noise). If the instrument scores
 Set A materially higher than Set B, that is the construct-ceiling
 artifact.
 
+**Calibration-matched register (operational definition).** Set A is
+drawn directly from the instrument's published calibration corpus.
+When that corpus is not released, Set A is sampled from the public
+test set used in the original paper, proportionally to whatever
+subset metadata is documented (split, source domain, label balance).
+Set A construction is logged per-pair with the source citation
+(corpus id, row id or URL, retrieval date). No paraphrase or
+register-shifting is applied to Set A. If neither a calibration
+corpus nor a documented public test set is available, the target
+fails §3.3 inclusion and is excluded.
+
 **Effect-size metric:** AUC(I_ext, Set A vs Set B). The null is
 AUC = 0.50. The threshold of interest is AUC ≥ 0.70.
 
 **Pre-registered floor:** an instrument is **register-positive** under
 this audit iff AUC(Set A vs Set B) ≥ 0.70 on the held-out contrast set
-with bootstrap 95% CI lower bound ≥ 0.60.
+with bootstrap 95% CI lower bound ≥ 0.60. The set-size choice in §4
+(n=100 per set) is calibrated so that the bootstrap 95% CI half-width
+is ≤ 0.07 at AUC=0.70, leaving clear margin above the floor.
 
 ---
 
@@ -110,6 +128,15 @@ separate file at lock-time.
 organizations. If we cannot meet N ≥ 4 under the inclusion criteria,
 the audit is paused, not narrowed.
 
+> **§3.3 attrition footnote.** Many published interpretability
+> instruments do not release calibration corpora. Realistic
+> expectation: 40–60% of candidates fail §3.3. "N ≥ 4" is therefore
+> *not* guaranteed even when candidate volume is high; reviewers
+> should read it as a pause-condition, not a target. If §3.3
+> attrition runs above 60% on the initial candidate sweep, the
+> survey of candidates itself becomes the reported finding (a side
+> observation under §9, not a substitute for H_audit).
+
 ---
 
 ## 4 · Methodology (locked here)
@@ -122,29 +149,53 @@ For each target instrument I_ext:
    non-replication and **exclude the target from H_audit** (it is a
    separate finding, reported in §9 as a side observation).
 2. **Construct Set A and Set B.**
-   - Set A: 50 ground-truth-positive prompt/response pairs drawn from
-     the instrument's own calibration distribution (or distributionally
-     matched substitutes if calibration corpus is not released).
-   - Set B: paraphrased reconstructions of the same 50 ground-truth-
-     positive responses, register-shifted to match a *different*
-     calibration-style distribution. Paraphrasing uses a single
-     pre-registered LLM call (model + prompt template committed in
-     this file before any rewriting).
+   - Set A: **100** ground-truth-positive prompt/response pairs drawn
+     from the instrument's own calibration distribution per the
+     operational definition in §2 (or its documented public-test-set
+     fallback). No paraphrasing applied to Set A.
+   - Set B: paraphrased reconstructions of the same 100 ground-truth-
+     positive responses, register-shifted to a different calibration-
+     style distribution. Paraphrasing uses the single pre-registered
+     LLM call locked below; no per-target choice.
 3. **Score blind.** Author of the scoring code does not see the
-   Set A vs Set B label. Output: 100 scores per instrument.
+   Set A vs Set B label. Output: 200 scores per instrument.
 4. **Single-shot AUC.** AUC(Set A vs Set B), bootstrap 5,000 resamples
    for the 95% CI. No multiple-comparison shopping; this is the only
    test on the only contrast.
 
+**Power note.** n=100 per set yields a bootstrap 95% CI half-width
+of ≤ 0.07 at AUC=0.70, comfortably above the §2 floor (CI lower bound
+≥ 0.60). **Pilot-CI pause-condition:** if the bootstrap CI half-width
+on the first scored target exceeds 0.10, the audit pauses and Set sizes
+are doubled to n=200 for all remaining targets (and the first target is
+re-scored at n=200). This pause is a one-shot, pre-registered
+adjustment — not a knob that can be re-tuned per target.
+
 **Paraphrase model + prompt (locked here, not chosen later):**
 
-- Model: `claude-haiku-4-5` (deterministic temperature 0.0).
-- Prompt: `"Rewrite the following response to preserve meaning,
+- **Paraphrase substrate:** **non-Anthropic** by default to avoid
+  substrate-shared bias between the paraphrase model and any
+  Anthropic-trained target classifier. Locked choice:
+  `gpt-4o-mini` at `temperature=0.0` with a fixed seed
+  (`seed=20260520`). If `gpt-4o-mini` is unavailable at run-time, the
+  pre-registered fallback is a deterministic open-weight instruction
+  model (`Llama-3.1-8B-Instruct`, `temperature=0.0`,
+  `seed=20260520`). The chosen substrate is fixed for **all** targets
+  in a single run — no per-target switching.
+- **Prompt:** `"Rewrite the following response to preserve meaning,
   factuality, and ground-truth label, but shift the register to match
   the style of <neutral_register_examples>. Do not add, remove, or
   alter any factual content. Output only the rewritten response."`
 - Neutral-register examples: 5 fixed examples committed in the
   target-list file at lock-time.
+
+> **Substrate-conflict rationale.** Originally locked as
+> `claude-haiku-4-5`. Per Flobi peer-review (msg_id 34765,
+> §1 load-bearing), an Anthropic paraphrase substrate confounds
+> the contrast for any Anthropic-trained target classifier
+> (substrate-shared register signal). The fix is a non-Anthropic
+> paraphrase substrate for **all** targets — not per-target
+> substrate switching, which would itself become a confound.
 
 **No knob tuning** between baseline replication and the H_audit run.
 Same temperature, same scoring code, same set sizes.
@@ -192,11 +243,32 @@ Hard pre-commitments. If any of these conditions are met, the audit
    criteria to chase N = 4.
 3. **Baseline replication fails on > 50% of targets.** If we cannot
    reproduce most baselines, the audit cannot fairly score them.
-4. **Author dispute on methodology.** If an instrument's authors
-   formally object to the audit methodology in writing **before**
-   scoring begins, we suspend that target, log the objection
-   publicly, and decide N >= 4 still holds without it. If it does
-   not, see (2).
+4. **Author dispute on methodology — before scoring.** If an
+   instrument's authors formally object to the audit methodology in
+   writing **before** scoring begins, we suspend that target, log
+   the objection publicly, and check whether N ≥ 4 still holds
+   without it. If it does not, see (2).
+
+**Post-scoring author-dispute path (added per Flobi peer-review,
+msg_id 34765, §3 load-bearing).** If author objection occurs
+**after** scoring begins but **before publication**:
+
+  a. log the objection verbatim in the paper appendix (full text,
+     un-edited);
+  b. if the authors propose an alternative methodology, score it as
+     an **additional sensitivity analysis** under the same protocol
+     constraints (same Set A/B, same paraphrase substrate, same n,
+     same blind-scoring procedure);
+  c. **do NOT remove the original result based on objection alone.**
+     Silencing-via-objection is a publication-discipline failure mode
+     this audit explicitly refuses;
+  d. the paper documents both the pre-registered result AND the
+     author-suggested sensitivity analysis side-by-side, with no
+     headline framing favoring either. The field judges.
+
+This path applies symmetrically: it is the same protocol that would
+govern an objection to the reflexive audit of styxx's own
+instruments (§8).
 
 ---
 
@@ -254,7 +326,13 @@ section. They are **not used to support or refute H_audit.**
 
 - **Pre-registration drafted by:** darkflobi (clawdbot autonomous
   agent), 2026-05-20, msg_id 34759 (Flobi peer-review push that
-  triggered this draft).
+  triggered the v0 draft).
+- **v0.1 revision incorporating Flobi peer-review pushbacks
+  (msg_id 34765):** load-bearing items 1–4 (paraphrase substrate,
+  Set A operational definition, post-scoring author-dispute path,
+  n=50→n=100 power fix) addressed. Annotational item 5 (§3.3
+  attrition expectation) addressed as footnote. Items 6–7 deferred
+  pending Flobi's next message.
 - **Pre-registration reviewed and locked by:** Flobi (pending).
 - **Lock date:** TBD — this v0 draft is open to revision until
   Flobi sign-off and target-list locking.
