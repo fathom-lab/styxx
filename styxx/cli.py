@@ -544,6 +544,32 @@ def cmd_doctor(args):
     return run_doctor()
 
 
+def cmd_posture(args):
+    """Print recent cognometric posture summary (7.4.2).
+
+    The CLI face of ``styxx.recover_posture()``. Reads the audit log,
+    builds a structured PostureSummary, and prints the narrative.
+    Useful inside an agent session (call via ``!styxx posture`` from
+    Claude Code) or as the first command in any new agent session to
+    re-anchor on what the cognometric log says about recent state.
+
+    --json prints the structured dict instead of the narrative for
+    machine-readable consumption.
+    """
+    from .recover import recover_posture
+    posture = recover_posture(
+        session_id=args.session_id or None,
+        last_n=int(args.last_n or 50),
+        since_seconds=(float(args.since_seconds)
+                       if args.since_seconds else None),
+    )
+    if args.json:
+        print(json.dumps(posture.as_dict(), indent=2))
+    else:
+        print(posture.narrative)
+    return 0
+
+
 def cmd_agent_card(args):
     """Render a shareable agent personality PNG (0.1.0a4).
 
@@ -1846,6 +1872,33 @@ def _build_parser() -> argparse.ArgumentParser:
         help="run install-time diagnostic health check",
     )
     p_doctor.set_defaults(func=cmd_doctor)
+
+    # posture — 7.4.2 agent-side recovery primitive
+    p_posture = sub.add_parser(
+        "posture",
+        help=(
+            "print recent cognometric posture summary — call this at the "
+            "start of any agent session that follows a context-compaction "
+            "boundary to re-anchor on what chart.jsonl says about your state"
+        ),
+    )
+    p_posture.add_argument(
+        "--last-n", type=int, default=50,
+        help="max number of recent audit entries to include (default 50)",
+    )
+    p_posture.add_argument(
+        "--session-id", type=str, default=None,
+        help="restrict to entries from this session id",
+    )
+    p_posture.add_argument(
+        "--since-seconds", type=float, default=None,
+        help="only include entries within the last N seconds",
+    )
+    p_posture.add_argument(
+        "--json", action="store_true",
+        help="print structured PostureSummary as JSON instead of narrative",
+    )
+    p_posture.set_defaults(func=cmd_posture)
 
     # personality — 0.1.0a3 + 0.2.0 format flag
     p_personality = sub.add_parser(

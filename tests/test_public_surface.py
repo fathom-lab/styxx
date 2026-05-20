@@ -580,6 +580,33 @@ def test_recover_posture_mcp_tool(isolated_data_dir):
     assert result["n_entries"] == 0
 
 
+def test_posture_cli_subcommand(isolated_data_dir, capsys):
+    """`styxx posture` CLI subcommand prints the recover_posture narrative.
+
+    Regression-locks the 7.4.2 CLI surface: agents inside Claude Code (and
+    any other terminal) can run `styxx posture` (or `python -m styxx posture`)
+    to get the same posture summary as the python `recover_posture()` call.
+    The Claude Code skill at .claude/skills/posture/SKILL.md wraps this CLI.
+    """
+    from styxx.cli import main
+
+    # Empty-log path — cold start should still produce sane output
+    rc = main(["posture", "--last-n", "10"])
+    assert rc == 0
+    captured = capsys.readouterr()
+    assert "posture:" in captured.out
+    assert "cold start" in captured.out.lower()
+
+    # --json flag produces structured output
+    rc = main(["posture", "--last-n", "10", "--json"])
+    assert rc == 0
+    captured = capsys.readouterr()
+    import json
+    parsed = json.loads(captured.out)
+    assert "narrative" in parsed
+    assert "n_entries" in parsed
+
+
 def test_doctor_programmatic_access(capsys):
     """`styxx.run_doctor()` must work programmatically, not just via the CLI.
 
