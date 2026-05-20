@@ -232,8 +232,16 @@ for the exact value (self-reference paradox in inline recording is
 avoided by deferring to git history, same convention as
 `external_instrument_audit_preregistration_LOCKED_2026_05_20.md` at
 commit `7265770`).
-**Scoring-code commit hash:** TBD (recorded by amendment-commit when
-`scripts/phase_coherence_pilot.py` is committed per §8)
+**Scoring-code commit hash:** `23b7912` (recorded by amendment 2026-05-20;
+this commit applies the three peer-review fixes from msg_id 34850 — loader
+schema renamed to `cogn_*`-prefixed field-reads, `permutation_pvalue`
+bootstrapping null-medians at corpus N, per-agent chart-path architecture).
+Loader was verified against `~/.styxx/chart.jsonl` on the maintainer's
+machine BEFORE this amendment landed — 17 PulseSamples populated cleanly
+with all four cognometric instrument scores, `needs_revision`, and
+`construct_ceiling_fires` fields. §7 question 1 ("does the scoring code
+run end-to-end on real chart.jsonl?") is therefore answered YES at the
+methodology-validation pilot scope, before any cross-agent corpus collection.
 
 ---
 
