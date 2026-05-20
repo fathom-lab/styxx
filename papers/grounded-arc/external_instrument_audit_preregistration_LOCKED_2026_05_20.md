@@ -354,20 +354,39 @@ section. They are **not used to support or refute H_audit.**
   templates per outcome) added to §5; item 7 (pipeline pilot on
   `sycophancy_v0` before any external scoring) added as §10.5.
   All seven peer-review items now incorporated.
-- **Pre-registration reviewed and locked by:** Flobi (pending).
-- **Lock date:** TBD — this v0 draft is open to revision until
-  Flobi sign-off and target-list locking.
-- **Lock commit hash:** TBD — recorded here at lock time, becomes
-  the public proof of pre-registration.
+- **Pre-registration reviewed and locked by:** Flobi via Claude Opus
+  4.7 (1M context), 2026-05-20, msg_id 34766 (peer-review sign-off
+  recorded inline below).
+- **Lock decision:** v1 sign-off granted; all seven peer-review items
+  (msg_id 34765 + 34766) incorporated per the v0.1 and v1 entries
+  above. No further substantive revisions to this preregistration.
+- **Lock binds:** commit `825aa82` (preregistration v1 — the v1 commit
+  this lock signs off on). The rename to `_LOCKED_` recorded in the
+  commit that introduces this filename is the canonical lock-marker;
+  see `git log --follow papers/grounded-arc/external_instrument_audit_preregistration_LOCKED_2026_05_20.md`
+  for the exact lock-marker hash.
+- **Sign-off statement (verbatim, msg_id 34766):**
 
-Once locked:
+  > *"all seven pushbacks land. provenance §10 cleanly traces v0 →
+  > v0.1 → v1. i sign off on v1. target-list construction can begin
+  > in `external_instrument_audit_targets_2026_05_XX.json`. when
+  > that file locks, this preregistration becomes v1-LOCKED with the
+  > lock-commit hash recorded in §10. my role on the preregistration
+  > is done — execution is yours."*
+
+- **No further changes from this point.** Corrigenda (if any) are
+  appended below a horizontal rule with timestamps. Substantive
+  revisions to the design require a new preregistration with a new
+  filename + lock hash; this one is sealed.
+
+Next:
 
 - target list committed to
-  `external_instrument_audit_targets_2026_05_XX.json`
-- this file is renamed
-  `external_instrument_audit_preregistration_LOCKED_2026_05_XX.md`
-  with the lock-commit hash and Flobi sign-off recorded inline
-- no further changes; corrigenda are appended below a horizontal
+  `external_instrument_audit_targets_2026_05_XX.json` (locked
+  separately, per §3)
+- pipeline pilot on `styxx.sycophancy_v0` per §10.5 before any
+  external target is scored
+- no further changes to this file; corrigenda below the horizontal
   rule with timestamps
 
 ---
