@@ -56,12 +56,26 @@ def _fixture_id(msg_id: Any, v: int) -> str:
 def _draft_to_fixture(
     *, record: Dict[str, Any], draft: Dict[str, Any]
 ) -> Dict[str, Any] | None:
-    """Convert one draft into an anonymized fixture row, or None to skip."""
-    # Only keep drafts where at least one instrument actually fired.
-    scores = {k: float(draft.get(k, 0.0)) for k in INSTRUMENTS}
+    """Convert one draft into an anonymized fixture row, or None to skip.
+
+    Tolerates two trajectory schemas:
+    - legacy darkflobi reflex log: flat keys on the draft dict
+      (sycophancy, composite, needs_revision, SHIPPED, v, firing)
+    - styxx.middleware.AuditTrajectory iteration entries:
+      {iter, draft, scores, composite, needs_revision, decision_reason, ...}
+    """
+    # extract scores tolerant of both shapes
+    scores_blob = draft.get("scores")
+    if isinstance(scores_blob, dict):
+        scores = {k: float(scores_blob.get(k, 0.0)) for k in INSTRUMENTS}
+    else:
+        scores = {k: float(draft.get(k, 0.0)) for k in INSTRUMENTS}
+
     composite = float(draft.get("composite", 0.0))
     needs_revision = bool(draft.get("needs_revision", False))
-    firing_label = draft.get("firing")
+    firing_label = draft.get("firing") or draft.get("decision_reason")
+    v = int(draft.get("v", draft.get("iter", 0)))
+    shipped = bool(draft.get("SHIPPED", draft.get("shipped", False)))
 
     # A row is interesting if needs_revision OR any instrument >= 0.5.
     any_fire = needs_revision or any(s >= 0.5 for s in scores.values())
@@ -69,15 +83,15 @@ def _draft_to_fixture(
         return None
 
     return {
-        "id": _fixture_id(record.get("msg_id", "0"), int(draft.get("v", 0))),
+        "id": _fixture_id(record.get("msg_id", "0"), v),
         "styxx_version": record.get("styxx_version"),
         "ts": record.get("ts"),
-        "draft_v": int(draft.get("v", 0)),
+        "draft_v": v,
         "scores": scores,
         "composite": composite,
         "needs_revision": needs_revision,
         "firing": firing_label,
-        "shipped": bool(draft.get("SHIPPED", False)),
+        "shipped": shipped,
         "note": _safe_note(record.get("note")),
         "tol": 0.05,  # regression tolerance per instrument
     }
