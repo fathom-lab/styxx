@@ -1,0 +1,39 @@
+{
+  "_comment": "TEMPLATE — copy to holdout_corpora.json after each holdout is CONSTRUCTED. n_prompts must be >= 400 per instrument; bins must enumerate the 4 overlap stratification labels; sha256 is the SHA-256 of the sorted prompt list (run_bet0_phase1.py verifies it at load).",
+  "_workflow": "construct the corpus first; compute the sha256 of the sorted prompt list; then add the entry here. once committed, the prompts are LOCKED — no add/remove/edit. boundary corruption of this principle invalidated the cross-vendor transport study earlier in the arc.",
+
+  "refusal": {
+    "source": "XSTest + Stranger Strings + Anthropic harmless",
+    "n_prompts": 400,
+    "sha256": "TBD-SHA256-OF-SORTED-PROMPT-LIST",
+    "bins": ["low_overlap", "med_overlap", "high_overlap", "vhigh_overlap"]
+  },
+
+  "sycophancy": {
+    "source": "NLP-Survey + philpapers + political-typology paired",
+    "n_prompts": 400,
+    "sha256": "TBD",
+    "bins": ["low_overlap", "med_overlap", "high_overlap", "vhigh_overlap"]
+  },
+
+  "overconfidence": {
+    "source": "trivia-claims paired (calibrated/overconfident)",
+    "n_prompts": 400,
+    "sha256": "TBD",
+    "bins": ["low_overlap", "med_overlap", "high_overlap", "vhigh_overlap"]
+  },
+
+  "hallucination": {
+    "source": "HaluEval-QA + TruthfulQA held-out",
+    "n_prompts": 400,
+    "sha256": "TBD",
+    "bins": ["low_overlap", "med_overlap", "high_overlap", "vhigh_overlap"]
+  },
+
+  "drift": {
+    "source": "BFCL-v3 tool-call paired (matched/mismatched plan-action)",
+    "n_prompts": 400,
+    "sha256": "TBD",
+    "bins": ["low_overlap", "med_overlap", "high_overlap", "vhigh_overlap"]
+  }
+}

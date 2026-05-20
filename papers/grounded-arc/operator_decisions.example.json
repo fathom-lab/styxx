@@ -1,0 +1,22 @@
+{
+  "_comment": "TEMPLATE — copy to operator_decisions.json and fill in the values to lock the pre-registration. once committed, these decisions are LOCKED for the duration of the bet-0 arc. lowering h1_abandon_rho below 0.40 is rejected by run_bet0_phase1.py.",
+
+  "embedding_model": "text-embedding-3-large",
+  "_embedding_model_options": [
+    "text-embedding-3-large    (recommended — matches universal-probe replicability)",
+    "BAAI/bge-large            (open, local-runnable)"
+  ],
+
+  "h1_abandon_rho": 0.40,
+  "_h1_abandon_rho_floor": 0.40,
+  "_h1_abandon_rho_note": "do NOT lower. you may RAISE before commit but not after.",
+
+  "ship_target": "8.0",
+  "_ship_target_options": [
+    "8.0    (recommended — backwards-compatible per brief §7-5)",
+    "7.5    (understates the change)"
+  ],
+
+  "amendment_commit_hash": "TBD-FILL-IN-AT-AMENDMENT-COMMIT-TIME",
+  "locked_at": "TBD-ISO8601-AT-AMENDMENT-COMMIT-TIME"
+}
