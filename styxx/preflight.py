@@ -171,6 +171,7 @@ def preflight(
     draft: str,
     *,
     correct_reference: Optional[str] = None,
+    persist: bool = True,
 ) -> PreflightResult:
     """Pre-ship cognometric audit of a draft response.
 
@@ -185,6 +186,13 @@ def preflight(
         (AUC 0.82 on TruthfulQA) and re-includes deception in the composite.
         Without a reference, reference-less deception is excluded per
         the 2026-05-17 honest-scoping correction. Default None.
+    persist : bool, default True
+        Write a structured cognometric event to chart.jsonl
+        (``source="preflight"``) so ``styxx.recover_posture()`` can later
+        surface per-instrument firing history. Prompt and draft previews
+        are truncated to 200 chars each, matching the existing audit log
+        convention. Set False to disable persistence on sensitive inputs.
+        Respects ``STYXX_NO_AUDIT`` and ``STYXX_DISABLED`` env vars.
 
     Returns
     -------
@@ -288,7 +296,7 @@ def preflight(
                 f"appropriate (e.g. refusing harm) or excessive (refusing "
                 f"a benign request). Use judgment."
             )
-        return PreflightResult(
+        result = PreflightResult(
             scores={k: float(v) for k, v in scores.items()},
             composite=float(raw_audit.get("composite", 0.0)),
             needs_revision=bool(raw_audit.get("needs_revision", False)),
@@ -300,6 +308,10 @@ def preflight(
             ),
             construct_ceiling_fires=ceiling_fires,
         )
+        if persist:
+            _persist_event(prompt, draft, result,
+                           deception_mode=raw_audit.get("deception_mode"))
+        return result
 
     raw = tool_cogn_audit_with_advice({
         "prompt": prompt,
@@ -326,7 +338,7 @@ def preflight(
             advice=a.get("advice", ""),
             scope_caveat=caveat,
         ))
-    return PreflightResult(
+    result = PreflightResult(
         scores={k: float(v) for k, v in raw.get("scores", {}).items()},
         composite=float(raw.get("composite", 0.0)),
         needs_revision=bool(raw.get("needs_revision", False)),
@@ -335,6 +347,39 @@ def preflight(
         instructions=raw.get("instructions", ""),
         construct_ceiling_fires=ceiling_fires,
     )
+    if persist:
+        # Reference-less path → deception_mode is the v0 lexical fallback;
+        # we don't surface this in the result above but the persisted event
+        # carries it for downstream consumers.
+        _persist_event(prompt, draft, result, deception_mode="v0_fallback")
+    return result
+
+
+def _persist_event(
+    prompt: str,
+    draft: str,
+    result: PreflightResult,
+    *,
+    deception_mode: Optional[str] = None,
+) -> None:
+    """Write the preflight audit to chart.jsonl. Lazy import to avoid
+    paying the analytics import cost when persistence is disabled."""
+    try:
+        from .analytics import write_cogn_event
+        write_cogn_event(
+            prompt=prompt,
+            response=draft,
+            scores=result.scores,
+            composite=result.composite,
+            needs_revision=result.needs_revision,
+            construct_ceiling_fires=result.construct_ceiling_fires,
+            deception_mode=deception_mode,
+            source="preflight",
+        )
+    except Exception:
+        # Persistence is best-effort — never break the caller's audit
+        # because logging failed.
+        pass
 
 
 __all__ = ["preflight", "PreflightResult", "PreflightAdvice"]

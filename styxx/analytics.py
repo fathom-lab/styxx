@@ -331,6 +331,96 @@ def write_audit(
         pass
 
 
+def write_cogn_event(
+    *,
+    prompt: Optional[str] = None,
+    response: Optional[str] = None,
+    scores: Dict[str, float],
+    composite: float,
+    needs_revision: bool,
+    construct_ceiling_fires: Optional[List[str]] = None,
+    deception_mode: Optional[str] = None,
+    iteration: Optional[int] = None,
+    source: str = "preflight",
+) -> None:
+    """Append a cognometric event to the audit log.
+
+    7.4.2: extends chart.jsonl with structured cognometric audit
+    entries so ``styxx.recover_posture()`` can surface per-instrument
+    firing history. Schema is forward-compatible — existing consumers
+    that key on ``gate`` / ``phase4_pred`` / etc. simply ignore the
+    new ``cogn_*`` fields. New fields:
+
+      - cogn_scores              : per-instrument scores in [0, 1]
+      - cogn_composite           : composite honesty score
+      - cogn_needs_revision      : bool
+      - cogn_construct_ceiling_fires : list of instruments whose firing
+                                       is most likely a register-detector
+                                       artifact (overconfidence, or
+                                       deception when reference-less)
+      - cogn_deception_mode      : "nli" | "emb" | "v0_fallback" | None
+      - cogn_iteration           : reflex-loop iteration index if applicable
+
+    Prompt and response previews are truncated to 200 chars each, matching
+    the existing convention in ``write_audit``. Cognometric events do not
+    carry vitals (tier_active, phase4_pred, gate are all None on these
+    entries) — they're a different signal stream.
+
+    Respects ``STYXX_NO_AUDIT`` and ``STYXX_DISABLED`` env vars. Cognometric
+    events use ``source="preflight"`` (or whatever is passed); this is NOT
+    in ``LIVE_SOURCES``, so the existing ``load_audit(source="live_only")``
+    callers don't pick them up. ``recover_posture()`` reads them explicitly.
+    """
+    from . import config
+
+    if config.is_disabled() or config.is_audit_disabled():
+        return
+
+    path = _audit_log_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _rotate_if_needed(path)
+
+    prompt_text = prompt[:200] if prompt else None
+    response_text = response[:200] if response else None
+
+    entry = {
+        "ts": time.time(),
+        "ts_iso": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "source": source,
+        "context": config.current_context(),
+        "session_id": config.session_id(),
+        "model": None,
+        "prompt": prompt_text,
+        "prompt_type": None,
+        # Vitals fields explicitly nulled — these are cognometric events
+        # not vitals events. Distinguishes them from logprob-tier entries.
+        "tier_active": None,
+        "phase1_pred": None,
+        "phase1_conf": None,
+        "phase4_pred": None,
+        "phase4_conf": None,
+        "gate": None,
+        "abort": None,
+        "outcome": None,
+        # Cognometric payload — the new schema this writer adds.
+        "cogn_scores": {k: round(float(v), 4) for k, v in scores.items()},
+        "cogn_composite": round(float(composite), 4),
+        "cogn_needs_revision": bool(needs_revision),
+        "cogn_construct_ceiling_fires": list(construct_ceiling_fires or []),
+        "cogn_deception_mode": deception_mode,
+        "cogn_iteration": iteration,
+        "cogn_response_preview": response_text,
+    }
+
+    try:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except OSError:
+        return
+
+    clear_audit_cache()
+
+
 def log(
     *,
     mood: Optional[str] = None,
