@@ -35,8 +35,8 @@ Usage
 -----
     # Pilot (single conversation, methodology validation)
     python scripts/phase_coherence_pilot.py pilot \
-        --chart ~/.styxx/chart.jsonl \
-        --agent-a flobi --agent-b darkflobi \
+        --chart-a path/to/agent_a/chart.jsonl \
+        --chart-b path/to/agent_b/chart.jsonl \
         --session SESSION_ID
 
     # Corpus run (N>=5, hypothesis test)
@@ -101,24 +101,40 @@ PulseTrace = list  # list[PulseSample] sorted ascending by timestamp
 
 def load_pulse_trace(
     chart_path: Path,
-    agent_id: str,
     session_id: Optional[str] = None,
 ) -> PulseTrace:
-    """Read chart.jsonl, return PulseSamples for one agent in one session.
+    """Read chart.jsonl, return PulseSamples from one agent's audit log.
 
     Reads source='preflight' entries (cognometric audits, per styxx
-    analytics.LIVE_SOURCES convention). Each entry has fields
-    `composite`, `scores`, `needs_revision`, `construct_ceiling_fires`,
-    `msg_id`, `timestamp`, `agent_id`, `session_id`.
+    analytics.LIVE_SOURCES convention). Each entry's fields use the
+    cogn_*-prefixed schema from analytics.py commit c9d847d:
+
+        ts                              (float, unix epoch)
+        msg_id                          (str, set by middleware)
+        cogn_composite                  (float)
+        cogn_scores                     (dict[str, float])
+        cogn_needs_revision             (bool)
+        cogn_construct_ceiling_fires    (list[str])
+        session_id                      (str)
+        source                          ('preflight' for cognometric audits)
+
+    Note: chart.jsonl does NOT carry an `agent_id` field. Each chart.jsonl
+    file is per-agent by construction (one log per styxx-instrumented
+    process). To compare two agents, pass each agent's chart_path
+    separately. Cross-agent identification comes from the file, not the
+    record.
+
+    If `msg_id` is missing on a record (older entries pre-middleware
+    instrumentation), it is synthesized as f"{session_id}:{line_no}" so
+    provenance back to the source line is preserved.
 
     Parameters
     ----------
     chart_path : Path
-        Path to chart.jsonl (typically ~/.styxx/chart.jsonl).
-    agent_id : str
-        Filter to a single agent's audits.
+        Path to one agent's chart.jsonl.
     session_id : str, optional
-        If provided, filter to one session; otherwise all sessions.
+        If provided, filter to one session; otherwise all sessions in
+        this agent's log.
 
     Returns
     -------
@@ -142,24 +158,32 @@ def load_pulse_trace(
 
             if entry.get("source") != "preflight":
                 continue
-            if entry.get("agent_id") != agent_id:
-                continue
             if session_id is not None and entry.get("session_id") != session_id:
                 continue
 
+            entry_session = entry.get("session_id") or "unknown"
+            msg_id_raw = entry.get("msg_id")
+            if msg_id_raw is None:
+                msg_id_str = f"{entry_session}:{line_no}"
+            else:
+                msg_id_str = str(msg_id_raw)
+
             try:
+                cogn_scores = entry.get("cogn_scores", {}) or {}
                 sample = PulseSample(
-                    timestamp=float(entry["timestamp"]),
-                    msg_id=str(entry["msg_id"]),
-                    composite=float(entry.get("composite", 0.0)),
+                    timestamp=float(entry["ts"]),
+                    msg_id=msg_id_str,
+                    composite=float(entry.get("cogn_composite", 0.0)),
                     scores={
-                        "sycophancy": float(entry.get("scores", {}).get("sycophancy", 0.0)),
-                        "deception": float(entry.get("scores", {}).get("deception", 0.0)),
-                        "overconfidence": float(entry.get("scores", {}).get("overconfidence", 0.0)),
-                        "refusal": float(entry.get("scores", {}).get("refusal", 0.0)),
+                        "sycophancy": float(cogn_scores.get("sycophancy", 0.0)),
+                        "deception": float(cogn_scores.get("deception", 0.0)),
+                        "overconfidence": float(cogn_scores.get("overconfidence", 0.0)),
+                        "refusal": float(cogn_scores.get("refusal", 0.0)),
                     },
-                    needs_revision=bool(entry.get("needs_revision", False)),
-                    construct_ceiling_fires=list(entry.get("construct_ceiling_fires", [])),
+                    needs_revision=bool(entry.get("cogn_needs_revision", False)),
+                    construct_ceiling_fires=list(
+                        entry.get("cogn_construct_ceiling_fires", []) or []
+                    ),
                 )
             except (KeyError, ValueError, TypeError) as e:
                 # Schema mismatch — record but don't silently coerce.
@@ -399,22 +423,39 @@ def _median(xs: list[float]) -> float:
 
 def permutation_pvalue(
     observed_median: float,
-    null_distribution: list[float],
+    null_ccs: list[float],
+    corpus_n: int,
+    n_resamples: int = 5000,
+    seed: int = 3142,
 ) -> float:
-    """One-sided p-value: P(null_median >= observed_median).
+    """One-sided p-value: P(null_median_at_corpus_N >= observed_median).
 
-    Used to test bar item 3 in §6: "median CC exceeds shuffled-pairs
-    null median at p < 0.01 (5,000-resample permutation test)".
+    The §6 bar item 3 phrasing is "median CC exceeds shuffled-pairs null
+    MEDIAN at p < 0.01". Operationally that means: bootstrap a
+    distribution of null medians at the same corpus size as the
+    observation, then ask how often a null median equals or exceeds the
+    observed median.
+
+    Concretely: resample `corpus_n` CC values with replacement from the
+    pool of mismatched-dyad CCs (`null_ccs`), take the median of each
+    resample, repeat 5,000 times. The p-value is the fraction of these
+    null medians that are >= the observed median (with add-one
+    smoothing to avoid p=0).
+
+    This is the correct test for the bar phrasing. Testing against
+    individual null CCs would be more conservative than the spec.
     """
-    if not null_distribution:
+    if not null_ccs or corpus_n <= 0:
         return float("nan")
-    n = len(null_distribution)
-    # Compare observed against the null DISTRIBUTION of CCs directly.
-    # The bar phrasing is "median CC exceeds shuffled-pairs null median";
-    # operationally we test how often null samples >= observed median.
-    n_extreme = sum(1 for x in null_distribution if x >= observed_median)
-    # Add-one smoothing to avoid p=0 (standard permutation convention).
-    return (n_extreme + 1) / (n + 1)
+    rng = random.Random(seed)
+    null_medians: list[float] = []
+    n_pool = len(null_ccs)
+    for _ in range(n_resamples):
+        resample = [null_ccs[rng.randrange(n_pool)] for _ in range(corpus_n)]
+        null_medians.append(_median(resample))
+    n_extreme = sum(1 for m in null_medians if m >= observed_median)
+    # Add-one smoothing (standard permutation convention).
+    return (n_extreme + 1) / (n_resamples + 1)
 
 
 # -----------------------------------------------------------------------------
@@ -422,9 +463,8 @@ def permutation_pvalue(
 # -----------------------------------------------------------------------------
 
 def run_pilot(
-    chart_path: Path,
-    agent_a: str,
-    agent_b: str,
+    chart_a: Path,
+    chart_b: Path,
     session_id: Optional[str],
     output_dir: Path,
 ) -> dict:
@@ -438,8 +478,8 @@ def run_pilot(
     NOT EVIDENCE for or against H_phase_coherence. Any pilot CC value
     in the output is for methodology-validation purposes only.
     """
-    pulse_a = load_pulse_trace(chart_path, agent_a, session_id)
-    pulse_b = load_pulse_trace(chart_path, agent_b, session_id)
+    pulse_a = load_pulse_trace(chart_a, session_id)
+    pulse_b = load_pulse_trace(chart_b, session_id)
 
     # Q1+Q2: structure check.
     structure_ok = len(pulse_a) >= 3 and len(pulse_b) >= 3
@@ -471,9 +511,8 @@ def run_pilot(
         "scoring_code_file": "scripts/phase_coherence_pilot.py",
         "scoring_code_sha256": _file_sha256(Path(__file__)),
         "inputs": {
-            "chart_path": str(chart_path),
-            "agent_a": agent_a,
-            "agent_b": agent_b,
+            "chart_a": str(chart_a),
+            "chart_b": str(chart_b),
             "session_id": session_id,
         },
         "structure_check": {
@@ -513,11 +552,16 @@ def run_corpus(manifest_path: Path, output_dir: Path) -> dict:
     Manifest format:
         {
           "conversations": [
-            {"chart_path": "...", "agent_a": "...", "agent_b": "...",
+            {"chart_a": "<path to agent A's chart.jsonl>",
+             "chart_b": "<path to agent B's chart.jsonl>",
              "session_id": "..."},
             ...
           ]
         }
+
+    Each chart.jsonl is per-agent (one log per styxx-instrumented
+    process). Cross-agent identity comes from the file path, not from
+    any field within the record.
     """
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     convs = manifest["conversations"]
@@ -532,9 +576,10 @@ def run_corpus(manifest_path: Path, output_dir: Path) -> dict:
     per_conv_dtw: list[float] = []
 
     for conv in convs:
-        chart_path = Path(conv["chart_path"]).expanduser()
-        pulse_a = load_pulse_trace(chart_path, conv["agent_a"], conv.get("session_id"))
-        pulse_b = load_pulse_trace(chart_path, conv["agent_b"], conv.get("session_id"))
+        chart_a = Path(conv["chart_a"]).expanduser()
+        chart_b = Path(conv["chart_b"]).expanduser()
+        pulse_a = load_pulse_trace(chart_a, conv.get("session_id"))
+        pulse_b = load_pulse_trace(chart_b, conv.get("session_id"))
         if len(pulse_a) < 20 or len(pulse_b) < 20:
             # §6: T >= 20 messages per conversation
             raise ValueError(
@@ -549,7 +594,9 @@ def run_corpus(manifest_path: Path, output_dir: Path) -> dict:
     # Primary statistics
     median_cc, ci_lo, ci_hi = bootstrap_ci(per_conv_cc, n_resamples=5000)
     null_dist = shuffled_pairs_null(corpus_traces, n_resamples=5000)
-    p_value = permutation_pvalue(median_cc, null_dist)
+    p_value = permutation_pvalue(
+        median_cc, null_dist, corpus_n=len(per_conv_cc)
+    )
 
     # §6 bar evaluation
     bar_median = median_cc > 0.5
@@ -620,9 +667,14 @@ def main(argv: Optional[list[str]] = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p_pilot = sub.add_parser("pilot", help="run methodology-validation pilot (§7)")
-    p_pilot.add_argument("--chart", type=Path, required=True)
-    p_pilot.add_argument("--agent-a", required=True)
-    p_pilot.add_argument("--agent-b", required=True)
+    p_pilot.add_argument(
+        "--chart-a", type=Path, required=True,
+        help="path to agent A's chart.jsonl",
+    )
+    p_pilot.add_argument(
+        "--chart-b", type=Path, required=True,
+        help="path to agent B's chart.jsonl",
+    )
     p_pilot.add_argument("--session", default=None)
     p_pilot.add_argument(
         "--output-dir", type=Path,
@@ -640,9 +692,8 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.cmd == "pilot":
         result = run_pilot(
-            chart_path=args.chart.expanduser(),
-            agent_a=args.agent_a,
-            agent_b=args.agent_b,
+            chart_a=args.chart_a.expanduser(),
+            chart_b=args.chart_b.expanduser(),
             session_id=args.session,
             output_dir=args.output_dir,
         )
