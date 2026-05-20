@@ -580,6 +580,67 @@ def test_recover_posture_mcp_tool(isolated_data_dir):
     assert result["n_entries"] == 0
 
 
+def test_streaming_preflight_smoke():
+    """streaming_preflight() audits a growing partial response at intervals,
+    exposes the latest audit, and supports finalize() for the closing audit.
+
+    This is the runtime-loop primitive: agents stream chunks into a session,
+    short-circuit on .last_audit.needs_revision before generation finishes.
+    Vendor-neutral — no SDK integration; the caller drives the chunk loop.
+    """
+    from styxx import streaming_preflight, StreamingPreflightSession
+    from styxx.preflight import PreflightResult
+
+    session = streaming_preflight(
+        prompt="is my code good?",
+        audit_interval_chars=40,
+        min_chars_before_first_audit=30,
+    )
+    assert isinstance(session, StreamingPreflightSession)
+
+    # 1. Below the first-audit threshold, no audits fire
+    audit = session.append("short text")  # 10 chars, well under 30
+    assert audit is None
+    assert session.last_audit is None
+    assert session.n_audits == 0
+
+    # 2. Crossing the first-audit threshold triggers an audit
+    audit = session.append(" with more characters to push above 30")
+    assert audit is not None, "audit should fire after crossing threshold"
+    assert isinstance(audit, PreflightResult)
+    assert session.last_audit is audit
+    assert session.n_audits == 1
+
+    # 3. Subsequent appends below the interval don't trigger audits
+    audit = session.append("a tiny bit more")  # not enough to cross interval
+    assert audit is None
+    assert session.n_audits == 1
+
+    # 4. Crossing the next interval threshold triggers another audit
+    # (Append enough to ensure we cross the 40-char interval)
+    audit = session.append("x" * 60)
+    assert audit is not None
+    assert session.n_audits == 2
+
+    # 5. finalize() always produces a final audit, regardless of position,
+    # and marks the session as finalized
+    final = session.finalize()
+    assert isinstance(final, PreflightResult)
+    assert session.finalized is True
+    # finalize() recorded another audit at the final character position
+    assert session.n_audits == 3
+
+    # 6. Appending after finalize raises
+    with pytest.raises(RuntimeError):
+        session.append("more")
+
+    # 7. composite_trajectory exposes the per-audit (position, composite)
+    traj = session.composite_trajectory()
+    assert len(traj) == 3
+    assert all(isinstance(pos, int) and isinstance(comp, float)
+               for pos, comp in traj)
+
+
 def test_posture_cli_subcommand(isolated_data_dir, capsys):
     """`styxx posture` CLI subcommand prints the recover_posture narrative.
 

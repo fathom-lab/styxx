@@ -355,6 +355,14 @@ from .preflight import preflight, PreflightResult, PreflightAdvice
 # the AI agents that use styxx (not for the humans observing them).
 from .recover import recover_posture, PostureSummary
 
+# 7.4.2: runtime cognometric audit during streaming generation. Stateful
+# session the agent feeds chunks to; audits partial response periodically;
+# exposes the latest audit so the agent can short-circuit on
+# needs_revision before generation completes. Vendor-neutral.
+from .streaming_preflight import (
+    streaming_preflight, StreamingPreflightSession,
+)
+
 # v3.5.0+: Cognitive Instruction Set — programmable residual-stream
 # control. `steer` is the multi-concept composer; `cogvm` is the
 # declarative VM with WRITE/GENERATE/WATCH/HALT/RETRY/SWITCH opcodes.
