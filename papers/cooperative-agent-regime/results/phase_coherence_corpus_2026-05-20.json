@@ -1,0 +1,36 @@
+{
+  "kind": "corpus",
+  "preregistration_lock_hash": "3473523",
+  "scoring_code_file": "scripts/phase_coherence_pilot.py",
+  "scoring_code_sha256": "110665c46ad5d7fd8933624b8953c6f39ac4d936a5af7667198af50319d29adc",
+  "n_conversations": 5,
+  "per_conversation_cc": [
+    0.11119685984944974,
+    0.15425834410706915,
+    0.19958126912291696,
+    -0.03351678936708571,
+    -0.05791706206048164
+  ],
+  "per_conversation_dtw": [
+    0.8064788762979382,
+    0.8732439495600628,
+    0.8009222191846828,
+    0.8705989848659974,
+    0.8474488112988802
+  ],
+  "median_cc": 0.11119685984944974,
+  "bootstrap_ci_95": [
+    -0.05791706206048164,
+    0.19958126912291696
+  ],
+  "shuffled_pairs_null_size": 5000,
+  "permutation_pvalue": 0.15456908618276344,
+  "bar_evaluation": {
+    "median_gt_0.5": false,
+    "ci_lower_gt_0.3": false,
+    "p_lt_0.01": false,
+    "all_bar_items_pass": false
+  },
+  "kill_gate_triggered": true,
+  "outcome": "CLOSED_NEGATIVE"
+}
