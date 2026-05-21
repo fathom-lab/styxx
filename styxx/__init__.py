@@ -363,6 +363,18 @@ from .streaming_preflight import (
     streaming_preflight, StreamingPreflightSession,
 )
 
+# 7.4.3+: phase-coherence measurement between two agents' pulse-traces.
+# Implements the locked operational definition (Pearson r at lag 0 on
+# z-scored composite series) from the preregistration at commit 3473523,
+# plus exploratory companions (lag-sweep, per-axis CC, Hilbert PLV).
+# The primary CC is numerically identical to scripts/phase_coherence_pilot.py
+# at commit 23b7912. See styxx/coherence.py for the contract.
+from .coherence import (
+    pulse_coherence, primary_coherence, lag_sweep, per_axis_coherence,
+    plv_hilbert, load_pulse_trace as load_coherence_trace,
+    CoherenceResult, PulseSample, PulseTrace,
+)
+
 # 7.4.3+: cognometric self-audit middleware for agent send-paths.
 # Plugs into a host runtime's pre-send hook: audits each outbound draft,
 # optionally calls the host's revise function on cognometric firings,
