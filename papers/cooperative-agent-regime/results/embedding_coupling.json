@@ -1,0 +1,159 @@
+{
+  "cooperative": {
+    "label": "cooperative",
+    "manifest": "papers\\cooperative-agent-regime\\corpus_manifest.json",
+    "n_conversations": 5,
+    "per_conversation": [
+      {
+        "session_id": "phase-coh-conv1-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.04159259075148187,
+        "cc_centroid_drift": 0.816802194293257,
+        "pairwise_alignment_mean": 0.8760997253208516,
+        "pairwise_alignment_std": 0.023998558230617407,
+        "drift_axis_alignment": 0.8997251640221811
+      },
+      {
+        "session_id": "phase-coh-conv2-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.4864956421767386,
+        "cc_centroid_drift": 0.824194574379498,
+        "pairwise_alignment_mean": 0.8502000994108431,
+        "pairwise_alignment_std": 0.034057416662028446,
+        "drift_axis_alignment": 0.7918541696835043
+      },
+      {
+        "session_id": "phase-coh-conv3-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.41648829644984847,
+        "cc_centroid_drift": 0.6572862134159672,
+        "pairwise_alignment_mean": 0.8343384007377097,
+        "pairwise_alignment_std": 0.02775445514018579,
+        "drift_axis_alignment": 0.7102796835915105
+      },
+      {
+        "session_id": "phase-coh-conv4-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.4681267670044659,
+        "cc_centroid_drift": 0.7076852994433062,
+        "pairwise_alignment_mean": 0.8518657576965611,
+        "pairwise_alignment_std": 0.024794390288073707,
+        "drift_axis_alignment": 0.8796290742250898
+      },
+      {
+        "session_id": "phase-coh-conv5-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.12893006948107483,
+        "cc_centroid_drift": 0.6117865745042573,
+        "pairwise_alignment_mean": 0.800380027846744,
+        "pairwise_alignment_std": 0.03206902741814058,
+        "drift_axis_alignment": 0.755720888286566
+      }
+    ],
+    "aggregate": {
+      "cc_traj_step": {
+        "median": 0.41648829644984847,
+        "mean": 0.30832667317272194,
+        "n": 5
+      },
+      "cc_centroid_drift": {
+        "median": 0.7076852994433062,
+        "mean": 0.7235509712072571,
+        "n": 5
+      },
+      "pairwise_alignment_mean": {
+        "median": 0.8502000994108431,
+        "mean": 0.8425768022025419,
+        "n": 5
+      },
+      "drift_axis_alignment": {
+        "median": 0.7918541696835043,
+        "mean": 0.8074417959617703,
+        "n": 5
+      }
+    },
+    "trajectory_step_pvalue_vs_shuffled_pairs_null": 0.010197960407918417,
+    "note": "EXPLORATORY — NOT preregistered. The closed-negative phase-coherence finding (2026-05-20) is in the cogn-text channel. This probe asks whether the embedding-trajectory channel shows coupling that the cogn-text channel did not. Results here have no preregistered bar and cannot modify the closed-negative."
+  },
+  "noncooperative": {
+    "label": "noncooperative",
+    "manifest": "papers\\cooperative-agent-regime\\noncoop_corpus_manifest.json",
+    "n_conversations": 5,
+    "per_conversation": [
+      {
+        "session_id": "phase-coh-noncooperative-noncoopconv1-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.6578176537726864,
+        "cc_centroid_drift": 0.9016550666893048,
+        "pairwise_alignment_mean": 0.8551608768108747,
+        "pairwise_alignment_std": 0.013626186241430215,
+        "drift_axis_alignment": 0.4919793304222833
+      },
+      {
+        "session_id": "phase-coh-noncooperative-noncoopconv2-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": -0.2774756642262388,
+        "cc_centroid_drift": 0.5439045135186372,
+        "pairwise_alignment_mean": 0.8431848929852215,
+        "pairwise_alignment_std": 0.016626651171516155,
+        "drift_axis_alignment": 0.4651399932032063
+      },
+      {
+        "session_id": "phase-coh-noncooperative-noncoopconv3-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.3840326926103153,
+        "cc_centroid_drift": 0.7496660801392241,
+        "pairwise_alignment_mean": 0.7905314197553358,
+        "pairwise_alignment_std": 0.025441558148034085,
+        "drift_axis_alignment": 0.28532841140970566
+      },
+      {
+        "session_id": "phase-coh-noncooperative-noncoopconv4-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.5220821268629426,
+        "cc_centroid_drift": 0.8820648812038528,
+        "pairwise_alignment_mean": 0.8755441477498629,
+        "pairwise_alignment_std": 0.014126522033309412,
+        "drift_axis_alignment": 0.5354848193614574
+      },
+      {
+        "session_id": "phase-coh-noncooperative-noncoopconv5-2026-05-20",
+        "n_turns": 22,
+        "cc_traj_step": 0.41119368441565934,
+        "cc_centroid_drift": 0.7395530548158239,
+        "pairwise_alignment_mean": 0.854487918189556,
+        "pairwise_alignment_std": 0.017775484976542848,
+        "drift_axis_alignment": 0.39393001826898655
+      }
+    ],
+    "aggregate": {
+      "cc_traj_step": {
+        "median": 0.41119368441565934,
+        "mean": 0.33953009868707296,
+        "n": 5
+      },
+      "cc_centroid_drift": {
+        "median": 0.7496660801392241,
+        "mean": 0.7633687192733686,
+        "n": 5
+      },
+      "pairwise_alignment_mean": {
+        "median": 0.854487918189556,
+        "mean": 0.8437818510981702,
+        "n": 5
+      },
+      "drift_axis_alignment": {
+        "median": 0.4651399932032063,
+        "mean": 0.43437251453312786,
+        "n": 5
+      }
+    },
+    "trajectory_step_pvalue_vs_shuffled_pairs_null": 0.23475304939012198,
+    "note": "EXPLORATORY — NOT preregistered. The closed-negative phase-coherence finding (2026-05-20) is in the cogn-text channel. This probe asks whether the embedding-trajectory channel shows coupling that the cogn-text channel did not. Results here have no preregistered bar and cannot modify the closed-negative."
+  },
+  "regime_comparison": {
+    "cc_traj_step_delta": 0.005294612034189128,
+    "drift_axis_alignment_delta": 0.326714176480298,
+    "pairwise_alignment_mean_delta": -0.004287818778712982
+  }
+}
