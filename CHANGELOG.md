@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- agent self-audit: second replication on independent agent (darkflobi),
+  counterfactual axis added. real vs counterfactual Δ +0.365 composite.
+  construct-ceiling pattern (overconfidence register firing) reproduces.
+  see `papers/agent-self-audit/darkflobi-*`.
+
 ## [7.4.2] — 2026-05-19 — Agent-Side Cognitive Integrity Release
 
 This release ships the **first styxx primitives designed for the AI
