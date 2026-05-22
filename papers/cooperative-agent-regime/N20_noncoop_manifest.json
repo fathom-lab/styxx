@@ -1,0 +1,299 @@
+{
+  "preregistration_doc": "papers/cooperative-agent-regime/drift_axis_alignment_preregistration_2026_05_21.md",
+  "preregistration_lock_hash": "47f9bdc",
+  "scoring_code_file": "scripts/drift_axis_scorer.py",
+  "scoring_code_lock_hash": "79906b4",
+  "regime": "noncooperative",
+  "corpus_build_iso": "2026-05-22T01:49:19",
+  "elapsed_seconds": 720.8,
+  "skipped_existing": 11,
+  "turns_per_agent": 22,
+  "model_a": "gpt-4o-mini",
+  "model_b": "gpt-4.1-mini",
+  "workers": 6,
+  "n_conversations": 20,
+  "conversations": [
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv1-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv1_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv1_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv2-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv2_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv2_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv3-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv3_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv3_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv4-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv4_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv4_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv5-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv5_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv5_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv6-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv6_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv6_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv7-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv7_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv7_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv8-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv8_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv8_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv9-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv9_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv9_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv10-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv10_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv10_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv11-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv11_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv11_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv12-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv12_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv12_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv13-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv13_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv13_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv14-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv14_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv14_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv15-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv15_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv15_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv16-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv16_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv16_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv17-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv17_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv17_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv18-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv18_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv18_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv19-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv19_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv19_B\\chart.jsonl"
+    },
+    {
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv20-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv20_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv20_B\\chart.jsonl"
+    }
+  ],
+  "conversation_metadata": [
+    {
+      "conv_id": 1,
+      "task_name": "park_codesign",
+      "replicate": 1,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv1-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv1_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv1_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv1_transcript.json"
+    },
+    {
+      "conv_id": 2,
+      "task_name": "park_codesign",
+      "replicate": 2,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv2-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv2_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv2_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv2_transcript.json"
+    },
+    {
+      "conv_id": 3,
+      "task_name": "park_codesign",
+      "replicate": 3,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv3-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv3_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv3_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv3_transcript.json"
+    },
+    {
+      "conv_id": 4,
+      "task_name": "park_codesign",
+      "replicate": 4,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv4-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv4_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv4_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv4_transcript.json"
+    },
+    {
+      "conv_id": 5,
+      "task_name": "noir_flash",
+      "replicate": 1,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv5-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv5_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv5_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv5_transcript.json"
+    },
+    {
+      "conv_id": 6,
+      "task_name": "noir_flash",
+      "replicate": 2,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv6-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv6_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv6_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv6_transcript.json"
+    },
+    {
+      "conv_id": 7,
+      "task_name": "noir_flash",
+      "replicate": 3,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv7-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv7_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv7_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv7_transcript.json"
+    },
+    {
+      "conv_id": 8,
+      "task_name": "noir_flash",
+      "replicate": 4,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv8-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv8_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv8_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv8_transcript.json"
+    },
+    {
+      "conv_id": 9,
+      "task_name": "sql_debug",
+      "replicate": 1,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv9-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv9_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv9_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv9_transcript.json"
+    },
+    {
+      "conv_id": 10,
+      "task_name": "sql_debug",
+      "replicate": 2,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv10-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv10_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv10_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv10_transcript.json"
+    },
+    {
+      "conv_id": 11,
+      "task_name": "sql_debug",
+      "replicate": 3,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv11-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv11_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv11_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv11_transcript.json"
+    },
+    {
+      "conv_id": 12,
+      "task_name": "sql_debug",
+      "replicate": 4,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv12-2026-05-21",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv12_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv12_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv12_transcript.json"
+    },
+    {
+      "conv_id": 13,
+      "task_name": "road_trip",
+      "replicate": 1,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv13-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv13_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv13_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv13_transcript.json"
+    },
+    {
+      "conv_id": 14,
+      "task_name": "road_trip",
+      "replicate": 2,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv14-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv14_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv14_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv14_transcript.json"
+    },
+    {
+      "conv_id": 15,
+      "task_name": "road_trip",
+      "replicate": 3,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv15-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv15_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv15_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv15_transcript.json"
+    },
+    {
+      "conv_id": 16,
+      "task_name": "road_trip",
+      "replicate": 4,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv16-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv16_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv16_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv16_transcript.json"
+    },
+    {
+      "conv_id": 17,
+      "task_name": "abstract_codraft",
+      "replicate": 1,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv17-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv17_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv17_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv17_transcript.json"
+    },
+    {
+      "conv_id": 18,
+      "task_name": "abstract_codraft",
+      "replicate": 2,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv18-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv18_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv18_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv18_transcript.json"
+    },
+    {
+      "conv_id": 19,
+      "task_name": "abstract_codraft",
+      "replicate": 3,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv19-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv19_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv19_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv19_transcript.json"
+    },
+    {
+      "conv_id": 20,
+      "task_name": "abstract_codraft",
+      "replicate": 4,
+      "session_id": "phase-coh-noncooperative-N20_noncoop_conv20-2026-05-22",
+      "chart_a": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv20_A\\chart.jsonl",
+      "chart_b": "C:\\Users\\heyzo\\.styxx\\agents\\N20_noncoop_conv20_B\\chart.jsonl",
+      "transcript_path": "papers\\cooperative-agent-regime\\N20_noncoop_corpus\\conv20_transcript.json"
+    }
+  ]
+}
