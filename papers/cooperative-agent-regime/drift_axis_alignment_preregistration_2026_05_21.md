@@ -230,3 +230,21 @@ for the exact value.
 **Next concrete step:** record `scripts/drift_axis_scorer.py` hash
 (79906b4) in §8 by amendment-commit referencing this lock-hash, then
 execute corpus collection.
+
+
+---
+
+## Corrigenda
+
+**2026-05-21 22:08 EDT — §8 scoring-code hash amendment (per §10 SIGNED block's binding next step)**
+
+Lock-hash `47f9bdc` (the §10 SIGN commit on branch `drift-axis-prereg-lock-2026-05-21`) binds this document immutable. This corrigendum records the binding scoring-code commit hash per the §8 code-commit-before-run requirement:
+
+- `scripts/drift_axis_scorer.py` lock-hash: `79906b4` (committed BEFORE the §10 lock per §8 binding)
+- Parity tests at `614a580` (6/6 pass — verified pre-lock)
+- N=20+20 corpus collector + analyzer + paper scaffolding lock-hash: `2d8b33d` (committed BEFORE the §10 lock as Phase 1 prep; NOT part of the locked scoring code — those are corpus-generation and reporting tools that call the locked scorer without modifying it)
+- BGE smoke pilot (§7 question 1+2 validation) deposited at `papers/cooperative-agent-regime/results/drift_axis_bge_smoke.json`: OpenAI median DAA +0.7925, BGE median +0.7702, |diff| 0.022, Spearman ρ +0.700 — both providers in the same DAA regime on the N=5 exploratory data
+
+This corrigendum clarifies — does not modify — the §8 and §10 contracts. The §10 lock on §1–§10 above remains binding.
+
+The corpus run (N=20+20) is now authorized to execute per §10's post-lock binding.
