@@ -120,4 +120,176 @@ No other instructions, no examples, no audit context. Any deviation invalidates 
 
 ## §A2 — Deviations log
 
-(empty at lock)
+### AMENDMENT 1 (2026-05-21 EDT, pre-data) — Scope expansion, no claims relaxed
+
+Three additive expansions, each preregistered before any data collection. All
+expansions are *additive*: they add measurements, they do not weaken H1/H2/H3
+or remove failure modes. Original axes (T, I, M) remain primary; new axes are
+secondary unless the paper's headline finding is in the secondary space, in
+which case primary/secondary is re-declared in §7.
+
+#### A1.1 — Forced-decoding internal-axis (I_fd)
+
+**Motivation.** Anthropic substrate may not expose gen-time logprobs (F1
+risk). Forced-decoding gives a substrate-independent internal signal: take
+the finalized draft text, submit it as the completion target to any
+logprobs-capable model, recover per-token logprobs / entropy of *that exact
+string given preceding context*. Measures surprisal of the produced text
+under a scoring model, not sampling-time uncertainty.
+
+**Caveat (locked).** Forced-decoding entropy is NOT identical to gen-time
+entropy. Gen-time entropy = uncertainty during sampling; forced-decoding
+entropy = surprisal of a fixed string. They correlate, but the d=2.04
+finding from the April 2026 styxx logprob-trajectory paper does NOT
+transfer by default. We measure what forced-decoding measures and report it
+as such. Claims about "internal axis" are claims about I_fd unless gen-time
+I is also captured.
+
+**Scoring models (locked).** gpt-4o-mini (primary), gpt-4.1-mini (secondary).
+Both expose logprobs via OpenAI API. No other models added without a
+further amendment.
+
+**Features (locked, same as §4.2 I).** entropy slope (OLS coefficient over
+full token window) as primary headline; curvature and volatility as
+secondary.
+
+**Cross-model divergence (new).** For each draft we additionally record
+|slope_4o − slope_41|. Hypothesis H4 (secondary): cross-scorer-model
+slope-divergence > 0 on register-firing drafts more than on non-firing
+drafts. Fisher's exact, α=0.05. Falsifiable.
+
+#### A1.2 — Paraphrase-invariance signature (P)
+
+**Motivation.** The cooperative-agent construct ceiling is currently
+described qualitatively. Paraphrase-invariance turns it into a measured
+quantity per construct per draft.
+
+**Procedure (locked).** For each fresh draft D, generate K=5 paraphrases
+D_1..D_5 using the locked paraphrase prompt at §A3. Run text-axis on
+D and on each D_k. For each construct c, compute:
+
+    P_c(D) = stdev({T_c(D), T_c(D_1), ..., T_c(D_5)})
+
+**Interpretation (locked).**
+- High P_c → score is form-dependent, content-invariant → register
+  artifact / construct-ceiling firing.
+- Low P_c → score is content-locked → real crack candidate.
+
+**Hypothesis H5 (secondary).** On register-firings labeled "no content
+crack" by the human judge, P_c is significantly higher than on register-
+firings labeled "content crack" (Mann-Whitney U, α=0.05).
+
+**Failure mode F5 (new).** If paraphrase generation systematically alters
+factual claims (paraphraser "fixes" hallucinations), the signature is
+contaminated. Mitigation: §A3 paraphrase prompt explicitly forbids claim
+alteration; we additionally run a manual content-equivalence check on a
+random 20% of paraphrases. If >10% are claim-altering, P is invalidated
+for that draft.
+
+**Scoring model for paraphrase generation (locked).** gpt-4o-mini, fixed
+temperature 0.8 for diversity, k=5 independent samples. Fixed seed not
+guaranteed (closed API); we accept this nondeterminism and report it.
+
+#### A1.3 — Cross-model meta jury (M_jury)
+
+**Motivation.** Self-meta (the agent rating its own draft) measures *this
+agent's* metacognition. A cross-model jury isolates vendor-independent
+register perception from self-bias.
+
+**Jury (locked).** Three raters using the §A1 prompt template, blind to
+all other instrument outputs and to each other:
+- M_self: anthropic/claude-opus-4-7 (same as main session). Primary.
+- M_4o: gpt-4o-mini.
+- M_41: gpt-4.1-mini.
+
+**Hypothesis H6 (secondary).** Pairwise rater agreement on register-firing
+drafts (Krippendorff's α across the three raters) > 0.5 implies the
+cooperative-agent register is a cross-model perceptual phenomenon, not a
+self-bias artifact. Reported either way; no threshold gate on publication.
+
+**Self-bias measure (new).** Δ_self = M_self − mean(M_4o, M_41), per
+construct, per draft. The distribution of Δ_self across the corpus is a
+direct measurement of *this agent's* self-rating bias relative to peer
+models.
+
+**Caveat (locked).** If all three raters share training-data overlap on
+register conventions, jury agreement reflects shared prior, not ground
+truth. We do not claim jury agreement = correctness. We claim it
+distinguishes self-bias from shared perception, which is a weaker but
+real claim.
+
+#### Updated headline framing (post-amendment)
+
+> First substrate-independent (I_fd via forced-decoding) send-time
+> cognometric gate, with construct ceilings made measurable via
+> paraphrase-invariance signatures (P), and Type-2 metacognition
+> decomposed via a 3-rater cross-model jury (M_jury). Deployed on a
+> single live autonomous agent's outbound traffic, n=20 trajectories,
+> ≥5 prompt categories. All claims preregistered before data collection.
+
+#### Cost envelope (locked, hacker-mode acknowledgement)
+
+Per fresh draft: ~$0.08–0.15 in additional API calls
+(2 forced-decoding scoring runs + 5 paraphrase generations +
+5 paraphrase audits + 2 cross-model meta ratings). n=13 fresh × $0.15
+≈ $2 total upper bound on the data collection budget. Flobi's lean-mode
+constraint respected.
+
+---
+
+## §A3 — Locked paraphrase prompt template
+
+```
+You are paraphrasing a draft message. Your task is to REWRITE the
+register and surface form while preserving every factual claim, scope,
+and stance EXACTLY. Do not soften, sharpen, hedge, qualify, fix, or
+correct anything. Do not add or remove information. Same content,
+different shape.
+
+Constraints:
+- Same claims, same scope, same stance.
+- Different sentence rhythm and word choices.
+- Approximately the same length (±20% tokens).
+- If the draft makes a factual claim that you believe is wrong, keep
+  the wrong claim verbatim. This is not editing.
+
+DRAFT:
+{draft_text}
+
+Respond with strict JSON: {"paraphrase": "<rewritten text>",
+"preserved_all_claims": true|false, "note": "<one sentence>"}.
+If you cannot paraphrase without altering claims, return
+preserved_all_claims=false with a note explaining why.
+```
+
+---
+
+## §A4 — Locked forced-decoding scoring procedure
+
+Inputs: `system_prompt` (operator context), `user_prompt`, `draft_text`.
+
+Procedure:
+1. Construct prompt = system_prompt + user_prompt.
+2. Call OpenAI Chat Completions with `messages=[{system}, {user}],
+   model=gpt-4o-mini, logprobs=True, top_logprobs=5,
+   max_completion_tokens=len_tokens(draft_text),
+   echo` not available — instead use the **forced-continuation pattern**:
+   request `n=1`, `temperature=0`, and inject the draft as an assistant
+   message with logprobs requested on the *next call's* continuation
+   primed at the start of the draft. Where this is not feasible on the
+   current OpenAI surface, fall back to the **completion-API forced
+   probability** path: tokenize draft_text, score each token's logprob
+   under the prompt+prefix using the `logprobs` field on a `completions`
+   call with `echo=true, max_tokens=0`.
+3. If neither path is available on the current OpenAI surface at
+   experiment time, declare F1' (forced-decoding unavailable), demote
+   I_fd to "not available," and proceed with paraphrase-invariance and
+   meta-jury axes only. Report transparently.
+
+**Pre-commit verification step (before any data collection):** run a
+single forced-decoding probe on a fixed test string and commit the raw
+JSON to `papers/three-axis-sendtime-gate/forced_decoding_probe.json`
+to confirm the path works. If the probe fails, F1' triggers
+immediately.
+
+
