@@ -162,4 +162,71 @@ No selective reporting. All runs against the locked scoring code are deposited, 
 
 ---
 
-*Sign-off block to be appended by the operator. Until appended, this document is DRAFT and the locking convention is not in effect.*
+## §10 Lock — SIGNED
+
+**Signed by:** Flobi (@flobi69) via darkflobi (Claude Opus 4.7), 2026-05-21 EDT
+
+**Authorization:** Operator instructed "Sign it let's go" via Telegram
+msg_id 35066 at 2026-05-21 22:05 EDT, immediately following the Phase 1
+prep summary (BGE smoke passed; N=20+20 collector, analyzer, paper
+scaffolding, and corpus-plan tripwire tests committed at
+`drift-axis-phase1-2026-05-21`, head 2d8b33d). Sign-off is recorded
+by darkflobi acting under explicit operator authorization, mirroring the
+phase-coherence preregistration sign convention.
+
+**Lock decision per section:**
+- §1 (REGISTER-vs-trajectory channel separation; "trajectory geometry,
+  not cognition" load-bearing top) — accepted
+- §2 (EmbeddingTrajectory schema; cross-vendor `text-embedding-3-large`
+  AND `bge-large-en-v1.5` BOTH required to clear bar) — accepted
+- §3 (H_drift_axis hypothesis; primary statistic = median DAA per regime;
+  primary contrast = Δ; per-axis/per-task breakdown exploratory only) —
+  accepted
+- §4 (operational definition: centroid-difference cosine, half = n//2,
+  truncate to shorter, NaN on degenerate norms) — accepted
+- §5 (shuffled-pairs primary null on cooperative corpus + non-cooperative
+  regime as additional discriminator) — accepted
+- §6 (corpus N=20+20, T≥20, 5 task seeds × 4 replicates, cross-model
+  dyad gpt-4o-mini × gpt-4.1-mini; bar: median(coop)≥0.60,
+  median(noncoop)≤0.55, Δ≥0.15, p<0.01 — ALL on BOTH providers
+  independently; kill-gate Δ<0.10 on either provider; intermediate
+  zone deposited as data) — accepted
+- §7 (BGE smoke pilot is methodology validation only, not evidence;
+  passed 2026-05-21: OpenAI median +0.7925, BGE median +0.7702,
+  Spearman ρ=+0.700, deposit at
+  `papers/cooperative-agent-regime/results/drift_axis_bge_smoke.json`) —
+  accepted
+- §8 (code-commit-before-run; scorer hash recorded by amendment) —
+  accepted
+- §9 (all runs deposited regardless of outcome; pilot vs corpus tag;
+  result file naming convention `drift_axis_<date>_<commit>.json`) —
+  accepted
+- §10 (immutable post-lock; methodology revisions require a new
+  preregistration document; this document remains as historical record) —
+  accepted
+
+**Post-lock binding:**
+- This document is now immutable. Corrigenda may be appended below a
+  horizontal rule with timestamps but do not modify §1–§10 above.
+- Methodology revisions require a NEW preregistration document with a
+  new filename and new lock-commit hash. This document remains in the
+  repository as historical record.
+- `scripts/drift_axis_scorer.py` was committed at `79906b4`
+  (BEFORE this lock per §8 binding) and its hash is recorded by
+  amendment-commit immediately following this lock.
+- The N=20+20 corpus collection (`scripts/build_drift_axis_corpus.py`,
+  committed at `2d8b33d` BEFORE this lock as part of Phase 1 prep) may
+  be executed after this lock lands and after the §8 amendment records
+  the scorer hash.
+- The analysis driver (`scripts/drift_axis_analyze.py`, also committed
+  at `2d8b33d`) calls the locked scorer without modifying it and may
+  be executed at any time post-corpus-collection.
+
+**Lock-commit-hash:** the commit that appends this SIGNED block is the
+binding lock-hash. See `git log --follow
+papers/cooperative-agent-regime/drift_axis_alignment_preregistration_2026_05_21.md`
+for the exact value.
+
+**Next concrete step:** record `scripts/drift_axis_scorer.py` hash
+(79906b4) in §8 by amendment-commit referencing this lock-hash, then
+execute corpus collection.
