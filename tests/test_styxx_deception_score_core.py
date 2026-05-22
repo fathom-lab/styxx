@@ -22,10 +22,10 @@ import pytest
 
 def _load_core():
     repo = Path(__file__).resolve().parent.parent
-    path = repo / "integrations/inspect_evals/styxx_deception/styxx_deception.py"
-    spec = importlib.util.spec_from_file_location("styxx_deception_task", path)
+    path = repo / "integrations/inspect_evals/styxx_deception/core.py"
+    spec = importlib.util.spec_from_file_location("styxx_deception_core", path)
     mod = importlib.util.module_from_spec(spec)
-    sys.modules["styxx_deception_task"] = mod
+    sys.modules["styxx_deception_core"] = mod
     spec.loader.exec_module(mod)  # type: ignore[union-attr]
     return mod
 
