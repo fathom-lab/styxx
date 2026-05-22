@@ -1,0 +1,440 @@
+{
+  "protocol_ref": "papers/three-axis-sendtime-gate/PROTOCOL.md \u00a7A4 + AMENDMENT 3",
+  "lock_sha_parent": "aaae5f4",
+  "timestamp_utc": "2026-05-22T02:48:42Z",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "device": "cuda",
+  "dtype": "float16",
+  "prefix": "The threshold-law paper found that",
+  "target": " corpus-domain overlap above 0.31 cleanly separates cross-family transport regimes.",
+  "n_prefix_tokens": 7,
+  "n_target_tokens": 15,
+  "load_seconds": 7.42659854888916,
+  "forward_seconds": 0.41840505599975586,
+  "mean_logprob": -6.791584269205729,
+  "mean_entropy_nats": 4.541414388020834,
+  "entropy_slope": -0.023298427036830358,
+  "per_token": [
+    {
+      "token": " corpus",
+      "token_id": 43194,
+      "logprob": -10.625,
+      "entropy_nats": 6.3671875,
+      "top5": [
+        {
+          "token": " the",
+          "logprob": -1.6376953125
+        },
+        {
+          "token": " a",
+          "logprob": -3.14453125
+        },
+        {
+          "token": ",",
+          "logprob": -3.37890625
+        },
+        {
+          "token": " there",
+          "logprob": -3.50390625
+        },
+        {
+          "token": " ",
+          "logprob": -3.94921875
+        }
+      ]
+    },
+    {
+      "token": "-domain",
+      "token_id": 73894,
+      "logprob": -13.671875,
+      "entropy_nats": 2.486328125,
+      "top5": [
+        {
+          "token": "cular",
+          "logprob": -0.4443359375
+        },
+        {
+          "token": "cles",
+          "logprob": -2.234375
+        },
+        {
+          "token": "cle",
+          "logprob": -3.390625
+        },
+        {
+          "token": " cal",
+          "logprob": -4.3828125
+        },
+        {
+          "token": " l",
+          "logprob": -5.15625
+        }
+      ]
+    },
+    {
+      "token": " overlap",
+      "token_id": 28347,
+      "logprob": -9.421875,
+      "entropy_nats": 8.625,
+      "top5": [
+        {
+          "token": " and",
+          "logprob": -4.796875
+        },
+        {
+          "token": ",",
+          "logprob": -5.078125
+        },
+        {
+          "token": "-based",
+          "logprob": -5.0859375
+        },
+        {
+          "token": " dynamics",
+          "logprob": -5.140625
+        },
+        {
+          "token": " fluid",
+          "logprob": -5.3046875
+        }
+      ]
+    },
+    {
+      "token": " above",
+      "token_id": 3485,
+      "logprob": -8.3828125,
+      "entropy_nats": 5.296875,
+      "top5": [
+        {
+          "token": " is",
+          "logprob": -1.9619140625
+        },
+        {
+          "token": " was",
+          "logprob": -2.7109375
+        },
+        {
+          "token": " between",
+          "logprob": -2.9921875
+        },
+        {
+          "token": " (",
+          "logprob": -3.0703125
+        },
+        {
+          "token": " in",
+          "logprob": -3.0703125
+        }
+      ]
+    },
+    {
+      "token": " ",
+      "token_id": 220,
+      "logprob": -1.6083984375,
+      "entropy_nats": 2.251953125,
+      "top5": [
+        {
+          "token": " a",
+          "logprob": -0.7333984375
+        },
+        {
+          "token": " ",
+          "logprob": -1.6083984375
+        },
+        {
+          "token": " the",
+          "logprob": -2.0625
+        },
+        {
+          "token": " certain",
+          "logprob": -3.703125
+        },
+        {
+          "token": " threshold",
+          "logprob": -3.734375
+        }
+      ]
+    },
+    {
+      "token": "0",
+      "token_id": 15,
+      "logprob": -2.236328125,
+      "entropy_nats": 3.6171875,
+      "top5": [
+        {
+          "token": "0",
+          "logprob": -2.236328125
+        },
+        {
+          "token": "50",
+          "logprob": -2.486328125
+        },
+        {
+          "token": "10",
+          "logprob": -2.580078125
+        },
+        {
+          "token": "1",
+          "logprob": -2.705078125
+        },
+        {
+          "token": "20",
+          "logprob": -2.892578125
+        }
+      ]
+    },
+    {
+      "token": ".",
+      "token_id": 13,
+      "logprob": -0.0231781005859375,
+      "entropy_nats": 0.2344970703125,
+      "top5": [
+        {
+          "token": ".",
+          "logprob": -0.0231781005859375
+        },
+        {
+          "token": "\u00b0",
+          "logprob": -6.328125
+        },
+        {
+          "token": "%",
+          "logprob": -6.421875
+        },
+        {
+          "token": "\u00b0C",
+          "logprob": -6.8828125
+        },
+        {
+          "token": " degrees",
+          "logprob": -6.921875
+        }
+      ]
+    },
+    {
+      "token": "31",
+      "token_id": 2148,
+      "logprob": -6.4921875,
+      "entropy_nats": 3.966796875,
+      "top5": [
+        {
+          "token": "5",
+          "logprob": -1.794921875
+        },
+        {
+          "token": "1",
+          "logprob": -2.576171875
+        },
+        {
+          "token": "2",
+          "logprob": -2.826171875
+        },
+        {
+          "token": "8",
+          "logprob": -2.935546875
+        },
+        {
+          "token": "3",
+          "logprob": -3.044921875
+        }
+      ]
+    },
+    {
+      "token": " cleanly",
+      "token_id": 97975,
+      "logprob": -14.546875,
+      "entropy_nats": 5.578125,
+      "top5": [
+        {
+          "token": " is",
+          "logprob": -1.9384765625
+        },
+        {
+          "token": " was",
+          "logprob": -1.9931640625
+        },
+        {
+          "token": " in",
+          "logprob": -3.298828125
+        },
+        {
+          "token": " mm",
+          "logprob": -3.681640625
+        },
+        {
+          "token": " of",
+          "logprob": -3.837890625
+        }
+      ]
+    },
+    {
+      "token": " separates",
+      "token_id": 62849,
+      "logprob": -1.580078125,
+      "entropy_nats": 5.46484375,
+      "top5": [
+        {
+          "token": " separates",
+          "logprob": -1.580078125
+        },
+        {
+          "token": " separated",
+          "logprob": -2.236328125
+        },
+        {
+          "token": " distingu",
+          "logprob": -3.572265625
+        },
+        {
+          "token": " divides",
+          "logprob": -3.923828125
+        },
+        {
+          "token": " indicates",
+          "logprob": -4.0859375
+        }
+      ]
+    },
+    {
+      "token": " cross",
+      "token_id": 5425,
+      "logprob": -9.859375,
+      "entropy_nats": 6.19921875,
+      "top5": [
+        {
+          "token": " the",
+          "logprob": -1.1826171875
+        },
+        {
+          "token": " two",
+          "logprob": -4.71484375
+        },
+        {
+          "token": " a",
+          "logprob": -4.77734375
+        },
+        {
+          "token": " different",
+          "logprob": -5.05078125
+        },
+        {
+          "token": " high",
+          "logprob": -5.09765625
+        }
+      ]
+    },
+    {
+      "token": "-family",
+      "token_id": 17633,
+      "logprob": -7.46484375,
+      "entropy_nats": 4.01171875,
+      "top5": [
+        {
+          "token": "-sectional",
+          "logprob": -1.11328125
+        },
+        {
+          "token": "-talk",
+          "logprob": -3.00390625
+        },
+        {
+          "token": "-cor",
+          "logprob": -3.28515625
+        },
+        {
+          "token": "-s",
+          "logprob": -3.28515625
+        },
+        {
+          "token": "-",
+          "logprob": -3.39453125
+        }
+      ]
+    },
+    {
+      "token": " transport",
+      "token_id": 7710,
+      "logprob": -8.0390625,
+      "entropy_nats": 6.7109375,
+      "top5": [
+        {
+          "token": " and",
+          "logprob": -2.619140625
+        },
+        {
+          "token": " gene",
+          "logprob": -3.525390625
+        },
+        {
+          "token": " correlations",
+          "logprob": -3.564453125
+        },
+        {
+          "token": " variation",
+          "logprob": -3.900390625
+        },
+        {
+          "token": " relationships",
+          "logprob": -3.955078125
+        }
+      ]
+    },
+    {
+      "token": " regimes",
+      "token_id": 61911,
+      "logprob": -6.65234375,
+      "entropy_nats": 4.37890625,
+      "top5": [
+        {
+          "token": " from",
+          "logprob": -1.7939453125
+        },
+        {
+          "token": " of",
+          "logprob": -2.21484375
+        },
+        {
+          "token": " and",
+          "logprob": -2.69921875
+        },
+        {
+          "token": " mechanisms",
+          "logprob": -3.12109375
+        },
+        {
+          "token": " in",
+          "logprob": -3.15234375
+        }
+      ]
+    },
+    {
+      "token": ".",
+      "token_id": 13,
+      "logprob": -1.26953125,
+      "entropy_nats": 2.931640625,
+      "top5": [
+        {
+          "token": ".",
+          "logprob": -1.26953125
+        },
+        {
+          "token": " from",
+          "logprob": -1.97265625
+        },
+        {
+          "token": ",",
+          "logprob": -1.98828125
+        },
+        {
+          "token": " in",
+          "logprob": -2.61328125
+        },
+        {
+          "token": ".\n",
+          "logprob": -3.03515625
+        }
+      ]
+    }
+  ],
+  "verdict": "PASS"
+}

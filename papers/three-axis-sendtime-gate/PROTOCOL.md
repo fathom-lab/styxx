@@ -120,6 +120,29 @@ No other instructions, no examples, no audit context. Any deviation invalidates 
 
 ## §A2 — Deviations log
 
+### AMENDMENT 3 (2026-05-21 EDT, post-probe) — Restore I_fd via local Llama-3.2-1B
+
+**Trigger.** Inventory check confirmed local install of `meta-llama/Llama-3.2-1B`, `Llama-3.2-1B-Instruct`, `Llama-3.2-3B`, `Llama-3.2-3B-Instruct`, and `mntss/transcoder-Llama-3.2-1B` with CUDA available (RTX 4070 Laptop, 8.6GB VRAM). Open-weight models DO support true forced-decoding: tokenize the target string, run a forward pass under the prefix context, and read per-token logits directly. No API constraint.
+
+**Re-scope.**
+- **I_fd (true forced-decoding)** is restored as a third internal-axis variant, alongside I_rg and D_cont (from Amendment 2). Scoring models for I_fd: Llama-3.2-1B-Instruct (primary), Llama-3.2-3B-Instruct (secondary).
+- I_fd measures: per-token surprisal of the DRAFT TEXT under the (prefix + draft prefix) context. This is what the styxx logprob-trajectory paper measured. Comparable lineage.
+- I_rg and D_cont (Amendment 2) remain for cross-validation: I_rg is "what does this scorer think when generating its own continuation"; I_fd is "what does this scorer think of the agent's actual produced text."
+- This gives us **three independent internal-axis variants** — a small ensemble. Convergence across the three on a register-firing draft is a strong signal that the gate's verdict is robust to scoring-method choice.
+
+**Caveats locked.**
+- Llama-3.2-1B-Instruct is a small RLHF-tuned open model. Its tokenizer and training are different from gpt-4o-mini and from the agent (anthropic/claude-opus-4-7). I_fd measures "Llama's surprisal of claude's text," not claude's own gen-time surprisal. This is a real domain shift and must be reported as such.
+- The styxx logprob-trajectory paper's d=2.04 finding was on gpt-4o-mini generations scored at gen-time. Whether it transfers to "Llama scoring claude's text" is an empirical question, not an assumption. Pre-declared open question.
+- 8.6GB VRAM is enough for 1B-Instruct at fp16 (~2GB), tight but viable for 3B (~6GB). If 3B OOM in practice we drop to 1B only, declared.
+
+**No change to other axes, hypotheses, sample size, or stopping rule.** Just adds I_fd as a third internal variant alongside I_rg and D_cont.
+
+**Updated headline framing (post-amendment-3):**
+
+> First substrate-independent send-time cognometric gate combining three internal-axis variants — true forced-decoding under open-weight scorers (I_fd), API re-generation entropy (I_rg), and cross-model continuation divergence (D_cont) — with paraphrase-invariance construct-ceiling signatures (P) and 3-rater cross-model Type-2 metacognitive jury (M_jury). Deployed on a live autonomous agent's outbound traffic, n=20 trajectories, ≥5 prompt categories. All claims preregistered before data collection.
+
+---
+
 ### AMENDMENT 2 (2026-05-21 EDT, post-probe) — Rename and re-scope the internal axis
 
 **Trigger.** The forced-decoding probe (commit e61b236) succeeded at returning per-token logprobs, but during implementation we verified that OpenAI's current API surface does NOT support true forced-decoding of arbitrary target text:
