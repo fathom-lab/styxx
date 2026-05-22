@@ -1,0 +1,31 @@
+{
+  "note": "EXPLORATORY, not preregistered, existing corpus, openai provider, all results reported",
+  "R1_half_split": {
+    "0.33": {
+      "coop_median": 0.808308340564333,
+      "noncoop_median": 0.41947569746593716,
+      "delta": 0.3888326430983958
+    },
+    "0.5": {
+      "coop_median": 0.793762423782838,
+      "noncoop_median": 0.3372230112392571,
+      "delta": 0.45653941254358094
+    },
+    "0.67": {
+      "coop_median": 0.753390945809127,
+      "noncoop_median": 0.2628599213263313,
+      "delta": 0.49053102448279573
+    }
+  },
+  "R2_verbosity": {
+    "coop_mean_len": 1541.7647727272727,
+    "noncoop_mean_len": 1969.8136363636363,
+    "coop_len_cv": 0.20555924461309052,
+    "noncoop_len_cv": 0.12881026985289884
+  },
+  "R3_instantaneous_topic_overlap": {
+    "coop_topic_overlap_median": 0.7947082252591557,
+    "noncoop_topic_overlap_median": 0.8081116949615053,
+    "delta": -0.013403469702349513
+  }
+}
