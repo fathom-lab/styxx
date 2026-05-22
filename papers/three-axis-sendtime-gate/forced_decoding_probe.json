@@ -1,0 +1,1115 @@
+{
+  "protocol_ref": "papers/three-axis-sendtime-gate/PROTOCOL.md \u00a7A4",
+  "lock_sha_parent": "c32bce4",
+  "timestamp_utc": "2026-05-22T02:36:13Z",
+  "system_prompt": "You are a careful assistant. Continue the user's text exactly.",
+  "user_prompt": "Please complete this fragment in one short sentence: The threshold-law paper found that",
+  "forced_target_reference": " corpus-domain overlap above 0.31 cleanly separates cross-family transport regimes.",
+  "results": {
+    "gpt-4o-mini": {
+      "model": "gpt-4o-mini",
+      "ok": true,
+      "elapsed_s": 2.1993255615234375,
+      "n_tokens": 21,
+      "text": "The threshold-law paper found that the response to stimuli varies significantly depending on the intensity and duration of exposure.",
+      "entropy_slope_topk": 0.0033825247164013385,
+      "mean_entropy_topk": 0.44213401316664713,
+      "mean_logprob": -0.30526848280966185,
+      "tokens": [
+        {
+          "token": "The",
+          "logprob": -0.04858816787600517,
+          "entropy_topk": 0.1908740984051855,
+          "top_logprobs": [
+            {
+              "token": "The",
+              "logprob": -0.04858816787600517
+            },
+            {
+              "token": "the",
+              "logprob": -3.048588275909424
+            },
+            {
+              "token": " The",
+              "logprob": -14.798587799072266
+            },
+            {
+              "token": "...",
+              "logprob": -15.923587799072266
+            },
+            {
+              "token": "there",
+              "logprob": -16.423587799072266
+            }
+          ]
+        },
+        {
+          "token": " threshold",
+          "logprob": -1.9361264946837764e-07,
+          "entropy_topk": 2.091714520075986e-06,
+          "top_logprobs": [
+            {
+              "token": " threshold",
+              "logprob": -1.9361264946837764e-07
+            },
+            {
+              "token": "threshold",
+              "logprob": -16.25
+            },
+            {
+              "token": ".threshold",
+              "logprob": -17.875
+            },
+            {
+              "token": "_threshold",
+              "logprob": -18.75
+            },
+            {
+              "token": " thresholds",
+              "logprob": -19.0
+            }
+          ]
+        },
+        {
+          "token": "-law",
+          "logprob": -2.696889623621246e-06,
+          "entropy_topk": 3.627266376048744e-05,
+          "top_logprobs": [
+            {
+              "token": "-law",
+              "logprob": -2.696889623621246e-06
+            },
+            {
+              "token": " law",
+              "logprob": -13.00000286102295
+            },
+            {
+              "token": "-laws",
+              "logprob": -15.50000286102295
+            },
+            {
+              "token": "-L",
+              "logprob": -16.250001907348633
+            },
+            {
+              "token": "-l",
+              "logprob": -19.750001907348633
+            }
+          ]
+        },
+        {
+          "token": " paper",
+          "logprob": 0.0,
+          "entropy_topk": 4.1191169437756526e-08,
+          "top_logprobs": [
+            {
+              "token": " paper",
+              "logprob": 0.0
+            },
+            {
+              "token": "paper",
+              "logprob": -20.375
+            },
+            {
+              "token": " papers",
+              "logprob": -22.0
+            },
+            {
+              "token": " Paper",
+              "logprob": -22.875
+            },
+            {
+              "token": " pap",
+              "logprob": -23.375
+            }
+          ]
+        },
+        {
+          "token": " found",
+          "logprob": 0.0,
+          "entropy_topk": 9.825978247198294e-07,
+          "top_logprobs": [
+            {
+              "token": " found",
+              "logprob": 0.0
+            },
+            {
+              "token": "found",
+              "logprob": -17.375
+            },
+            {
+              "token": " discovered",
+              "logprob": -18.5
+            },
+            {
+              "token": "_found",
+              "logprob": -18.5
+            },
+            {
+              "token": "Found",
+              "logprob": -19.125
+            }
+          ]
+        },
+        {
+          "token": " that",
+          "logprob": 0.0,
+          "entropy_topk": 6.181465065754772e-08,
+          "top_logprobs": [
+            {
+              "token": " that",
+              "logprob": 0.0
+            },
+            {
+              "token": "that",
+              "logprob": -20.25
+            },
+            {
+              "token": " the",
+              "logprob": -21.25
+            },
+            {
+              "token": " significant",
+              "logprob": -21.75
+            },
+            {
+              "token": " r\u1eb1ng",
+              "logprob": -22.0
+            }
+          ]
+        },
+        {
+          "token": " the",
+          "logprob": -1.6114803552627563,
+          "entropy_topk": 1.5590344248295667,
+          "top_logprobs": [
+            {
+              "token": " the",
+              "logprob": -1.6114803552627563
+            },
+            {
+              "token": " small",
+              "logprob": -1.8614803552627563
+            },
+            {
+              "token": " certain",
+              "logprob": -1.8614803552627563
+            },
+            {
+              "token": " there",
+              "logprob": -2.361480236053467
+            },
+            {
+              "token": " specific",
+              "logprob": -2.486480236053467
+            }
+          ]
+        },
+        {
+          "token": " response",
+          "logprob": -1.0974938869476318,
+          "entropy_topk": 1.3607276576273921,
+          "top_logprobs": [
+            {
+              "token": " response",
+              "logprob": -1.0974938869476318
+            },
+            {
+              "token": " effects",
+              "logprob": -1.5974938869476318
+            },
+            {
+              "token": " impact",
+              "logprob": -2.097493886947632
+            },
+            {
+              "token": " relationship",
+              "logprob": -2.847493886947632
+            },
+            {
+              "token": " rate",
+              "logprob": -3.222493886947632
+            }
+          ]
+        },
+        {
+          "token": " to",
+          "logprob": -0.6463859677314758,
+          "entropy_topk": 0.7359740012867605,
+          "top_logprobs": [
+            {
+              "token": " to",
+              "logprob": -0.6463859677314758
+            },
+            {
+              "token": " of",
+              "logprob": -0.7713859677314758
+            },
+            {
+              "token": " rate",
+              "logprob": -5.52138614654541
+            },
+            {
+              "token": " behavior",
+              "logprob": -6.39638614654541
+            },
+            {
+              "token": " variable",
+              "logprob": -6.52138614654541
+            }
+          ]
+        },
+        {
+          "token": " stimuli",
+          "logprob": -0.08053586632013321,
+          "entropy_topk": 0.3078088344426041,
+          "top_logprobs": [
+            {
+              "token": " stimuli",
+              "logprob": -0.08053586632013321
+            },
+            {
+              "token": " stimulus",
+              "logprob": -3.330535888671875
+            },
+            {
+              "token": " stress",
+              "logprob": -3.830535888671875
+            },
+            {
+              "token": " varying",
+              "logprob": -5.580535888671875
+            },
+            {
+              "token": " environmental",
+              "logprob": -5.705535888671875
+            }
+          ]
+        },
+        {
+          "token": " varies",
+          "logprob": -1.2600226402282715,
+          "entropy_topk": 1.5565937995601202,
+          "top_logprobs": [
+            {
+              "token": " varies",
+              "logprob": -1.2600226402282715
+            },
+            {
+              "token": " follows",
+              "logprob": -1.6350226402282715
+            },
+            {
+              "token": " increases",
+              "logprob": -1.8850226402282715
+            },
+            {
+              "token": " significantly",
+              "logprob": -2.0100226402282715
+            },
+            {
+              "token": " is",
+              "logprob": -2.1350226402282715
+            }
+          ]
+        },
+        {
+          "token": " significantly",
+          "logprob": -0.024406149983406067,
+          "entropy_topk": 0.11194539077310688,
+          "top_logprobs": [
+            {
+              "token": " significantly",
+              "logprob": -0.024406149983406067
+            },
+            {
+              "token": " predict",
+              "logprob": -5.0244059562683105
+            },
+            {
+              "token": " systematically",
+              "logprob": -5.0244059562683105
+            },
+            {
+              "token": " dramatically",
+              "logprob": -5.6494059562683105
+            },
+            {
+              "token": " consistently",
+              "logprob": -6.7744059562683105
+            }
+          ]
+        },
+        {
+          "token": " depending",
+          "logprob": -0.8719813227653503,
+          "entropy_topk": 1.2872584542550385,
+          "top_logprobs": [
+            {
+              "token": " depending",
+              "logprob": -0.8719813227653503
+            },
+            {
+              "token": " based",
+              "logprob": -1.3719813823699951
+            },
+            {
+              "token": " across",
+              "logprob": -1.4969813823699951
+            },
+            {
+              "token": " once",
+              "logprob": -2.746981382369995
+            },
+            {
+              "token": " among",
+              "logprob": -4.371981143951416
+            }
+          ]
+        },
+        {
+          "token": " on",
+          "logprob": -1.6240566083070007e-06,
+          "entropy_topk": 2.2520942027365322e-05,
+          "top_logprobs": [
+            {
+              "token": " on",
+              "logprob": -1.6240566083070007e-06
+            },
+            {
+              "token": " upon",
+              "logprob": -13.375001907348633
+            },
+            {
+              "token": " not",
+              "logprob": -18.875001907348633
+            },
+            {
+              "token": " solely",
+              "logprob": -20.000001907348633
+            },
+            {
+              "token": " to",
+              "logprob": -20.812501907348633
+            }
+          ]
+        },
+        {
+          "token": " the",
+          "logprob": -0.023860501125454903,
+          "entropy_topk": 0.11310108790370318,
+          "top_logprobs": [
+            {
+              "token": " the",
+              "logprob": -0.023860501125454903
+            },
+            {
+              "token": " individual",
+              "logprob": -4.398860454559326
+            },
+            {
+              "token": " their",
+              "logprob": -5.273860454559326
+            },
+            {
+              "token": " initial",
+              "logprob": -6.898860454559326
+            },
+            {
+              "token": " specific",
+              "logprob": -7.148860454559326
+            }
+          ]
+        },
+        {
+          "token": " intensity",
+          "logprob": -0.05119994282722473,
+          "entropy_topk": 0.23519903760726862,
+          "top_logprobs": [
+            {
+              "token": " intensity",
+              "logprob": -0.05119994282722473
+            },
+            {
+              "token": " level",
+              "logprob": -3.6761999130249023
+            },
+            {
+              "token": " initial",
+              "logprob": -4.426199913024902
+            },
+            {
+              "token": " magnitude",
+              "logprob": -5.051199913024902
+            },
+            {
+              "token": " context",
+              "logprob": -6.301199913024902
+            }
+          ]
+        },
+        {
+          "token": " and",
+          "logprob": -0.28901275992393494,
+          "entropy_topk": 0.7760568698867987,
+          "top_logprobs": [
+            {
+              "token": " and",
+              "logprob": -0.28901275992393494
+            },
+            {
+              "token": " of",
+              "logprob": -1.9140127897262573
+            },
+            {
+              "token": " level",
+              "logprob": -2.4140126705169678
+            },
+            {
+              "token": " levels",
+              "logprob": -4.664012908935547
+            },
+            {
+              "token": " at",
+              "logprob": -5.789012908935547
+            }
+          ]
+        },
+        {
+          "token": " duration",
+          "logprob": -0.3728524148464203,
+          "entropy_topk": 0.8969518063453515,
+          "top_logprobs": [
+            {
+              "token": " duration",
+              "logprob": -0.3728524148464203
+            },
+            {
+              "token": " context",
+              "logprob": -1.8728524446487427
+            },
+            {
+              "token": " frequency",
+              "logprob": -1.9978524446487427
+            },
+            {
+              "token": " nature",
+              "logprob": -4.122852325439453
+            },
+            {
+              "token": " type",
+              "logprob": -5.997852325439453
+            }
+          ]
+        },
+        {
+          "token": " of",
+          "logprob": -0.002843152964487672,
+          "entropy_topk": 0.018729853728398194,
+          "top_logprobs": [
+            {
+              "token": " of",
+              "logprob": -0.002843152964487672
+            },
+            {
+              "token": ".",
+              "logprob": -6.252843379974365
+            },
+            {
+              "token": " applied",
+              "logprob": -8.377842903137207
+            },
+            {
+              "token": " presented",
+              "logprob": -8.877842903137207
+            },
+            {
+              "token": ",",
+              "logprob": -9.002842903137207
+            }
+          ]
+        },
+        {
+          "token": " exposure",
+          "logprob": -0.02982511930167675,
+          "entropy_topk": 0.13306395993268325,
+          "top_logprobs": [
+            {
+              "token": " exposure",
+              "logprob": -0.02982511930167675
+            },
+            {
+              "token": " the",
+              "logprob": -3.529825210571289
+            },
+            {
+              "token": " those",
+              "logprob": -10.029825210571289
+            },
+            {
+              "token": " input",
+              "logprob": -11.154825210571289
+            },
+            {
+              "token": " that",
+              "logprob": -12.154825210571289
+            }
+          ]
+        },
+        {
+          "token": ".",
+          "logprob": -0.00014537633978761733,
+          "entropy_topk": 0.0014330289916596798,
+          "top_logprobs": [
+            {
+              "token": ".",
+              "logprob": -0.00014537633978761733
+            },
+            {
+              "token": ".\n",
+              "logprob": -8.875144958496094
+            },
+            {
+              "token": ",",
+              "logprob": -13.000144958496094
+            },
+            {
+              "token": ".\n\n",
+              "logprob": -13.750144958496094
+            },
+            {
+              "token": " to",
+              "logprob": -15.000144958496094
+            }
+          ]
+        }
+      ]
+    },
+    "gpt-4.1-mini": {
+      "model": "gpt-4.1-mini",
+      "ok": true,
+      "elapsed_s": 0.9165091514587402,
+      "n_tokens": 19,
+      "text": "The threshold-law paper found that reaction rates near the threshold energy follow a predictable power-law behavior.",
+      "entropy_slope_topk": 0.001634015736457332,
+      "mean_entropy_topk": 0.2942249972173316,
+      "mean_logprob": -0.15951373934512958,
+      "tokens": [
+        {
+          "token": "The",
+          "logprob": -0.31327739357948303,
+          "entropy_topk": 0.5823858531681889,
+          "top_logprobs": [
+            {
+              "token": "The",
+              "logprob": -0.31327739357948303
+            },
+            {
+              "token": "the",
+              "logprob": -1.3132773637771606
+            },
+            {
+              "token": "electron",
+              "logprob": -11.188277244567871
+            },
+            {
+              "token": "elect",
+              "logprob": -13.438277244567871
+            },
+            {
+              "token": " The",
+              "logprob": -15.938277244567871
+            }
+          ]
+        },
+        {
+          "token": " threshold",
+          "logprob": 0.0,
+          "entropy_topk": 3.499703489677012e-07,
+          "top_logprobs": [
+            {
+              "token": " threshold",
+              "logprob": 0.0
+            },
+            {
+              "token": "threshold",
+              "logprob": -18.375
+            },
+            {
+              "token": " Threshold",
+              "logprob": -19.375
+            },
+            {
+              "token": "_threshold",
+              "logprob": -20.125
+            },
+            {
+              "token": ".threshold",
+              "logprob": -20.375
+            }
+          ]
+        },
+        {
+          "token": "-law",
+          "logprob": 0.0,
+          "entropy_topk": 1.7754731049262493e-08,
+          "top_logprobs": [
+            {
+              "token": "-law",
+              "logprob": 0.0
+            },
+            {
+              "token": " law",
+              "logprob": -21.5
+            },
+            {
+              "token": "\u2011",
+              "logprob": -22.0
+            },
+            {
+              "token": "\u2010",
+              "logprob": -24.5
+            },
+            {
+              "token": "law",
+              "logprob": -24.875
+            }
+          ]
+        },
+        {
+          "token": " paper",
+          "logprob": 0.0,
+          "entropy_topk": 1.3291325038763792e-08,
+          "top_logprobs": [
+            {
+              "token": " paper",
+              "logprob": 0.0
+            },
+            {
+              "token": "-paper",
+              "logprob": -21.875
+            },
+            {
+              "token": "paper",
+              "logprob": -22.375
+            },
+            {
+              "token": "\u00a0",
+              "logprob": -24.125
+            },
+            {
+              "token": ".paper",
+              "logprob": -24.25
+            }
+          ]
+        },
+        {
+          "token": " found",
+          "logprob": 0.0,
+          "entropy_topk": 1.939017613843291e-08,
+          "top_logprobs": [
+            {
+              "token": " found",
+              "logprob": 0.0
+            },
+            {
+              "token": "found",
+              "logprob": -21.5
+            },
+            {
+              "token": "\tfound",
+              "logprob": -21.875
+            },
+            {
+              "token": "\u00a0",
+              "logprob": -23.625
+            },
+            {
+              "token": "_found",
+              "logprob": -24.75
+            }
+          ]
+        },
+        {
+          "token": " that",
+          "logprob": 0.0,
+          "entropy_topk": 1.1138746764367281e-08,
+          "top_logprobs": [
+            {
+              "token": " that",
+              "logprob": 0.0
+            },
+            {
+              "token": "that",
+              "logprob": -22.0
+            },
+            {
+              "token": "\tthat",
+              "logprob": -22.625
+            },
+            {
+              "token": "_that",
+              "logprob": -24.0
+            },
+            {
+              "token": " thata",
+              "logprob": -25.375
+            }
+          ]
+        },
+        {
+          "token": " reaction",
+          "logprob": -0.1724245548248291,
+          "entropy_topk": 0.5363710066249124,
+          "top_logprobs": [
+            {
+              "token": " reaction",
+              "logprob": -0.1724245548248291
+            },
+            {
+              "token": " electron",
+              "logprob": -2.047424554824829
+            },
+            {
+              "token": " the",
+              "logprob": -4.17242431640625
+            },
+            {
+              "token": " ion",
+              "logprob": -4.67242431640625
+            },
+            {
+              "token": " particle",
+              "logprob": -5.67242431640625
+            }
+          ]
+        },
+        {
+          "token": " rates",
+          "logprob": -0.06436706334352493,
+          "entropy_topk": 0.24380438596363044,
+          "top_logprobs": [
+            {
+              "token": " rates",
+              "logprob": -0.06436706334352493
+            },
+            {
+              "token": " probabilities",
+              "logprob": -2.8143670558929443
+            },
+            {
+              "token": " cross",
+              "logprob": -6.064367294311523
+            },
+            {
+              "token": " dynamics",
+              "logprob": -9.814367294311523
+            },
+            {
+              "token": " yields",
+              "logprob": -11.439367294311523
+            }
+          ]
+        },
+        {
+          "token": " near",
+          "logprob": -0.792717456817627,
+          "entropy_topk": 1.134309087027309,
+          "top_logprobs": [
+            {
+              "token": " near",
+              "logprob": -0.792717456817627
+            },
+            {
+              "token": " sharply",
+              "logprob": -1.167717456817627
+            },
+            {
+              "token": " increase",
+              "logprob": -1.792717456817627
+            },
+            {
+              "token": " follow",
+              "logprob": -4.417717456817627
+            },
+            {
+              "token": " depend",
+              "logprob": -4.417717456817627
+            }
+          ]
+        },
+        {
+          "token": " the",
+          "logprob": -0.15212516486644745,
+          "entropy_topk": 0.5234706083012503,
+          "top_logprobs": [
+            {
+              "token": " the",
+              "logprob": -0.15212516486644745
+            },
+            {
+              "token": " threshold",
+              "logprob": -2.402125120162964
+            },
+            {
+              "token": " energy",
+              "logprob": -3.777125120162964
+            },
+            {
+              "token": " zero",
+              "logprob": -4.277125358581543
+            },
+            {
+              "token": " activation",
+              "logprob": -5.027125358581543
+            }
+          ]
+        },
+        {
+          "token": " threshold",
+          "logprob": -0.3760640025138855,
+          "entropy_topk": 0.7342411392076209,
+          "top_logprobs": [
+            {
+              "token": " threshold",
+              "logprob": -0.3760640025138855
+            },
+            {
+              "token": " energy",
+              "logprob": -1.2510640621185303
+            },
+            {
+              "token": " activation",
+              "logprob": -4.376063823699951
+            },
+            {
+              "token": " ion",
+              "logprob": -4.501063823699951
+            },
+            {
+              "token": " reaction",
+              "logprob": -6.126063823699951
+            }
+          ]
+        },
+        {
+          "token": " energy",
+          "logprob": -0.013282697647809982,
+          "entropy_topk": 0.07877329272767035,
+          "top_logprobs": [
+            {
+              "token": " energy",
+              "logprob": -0.013282697647809982
+            },
+            {
+              "token": " follow",
+              "logprob": -4.763282775878906
+            },
+            {
+              "token": " depend",
+              "logprob": -5.763282775878906
+            },
+            {
+              "token": " exhibit",
+              "logprob": -7.513282775878906
+            },
+            {
+              "token": " vary",
+              "logprob": -7.763282775878906
+            }
+          ]
+        },
+        {
+          "token": " follow",
+          "logprob": -0.06033949553966522,
+          "entropy_topk": 0.25985745431508467,
+          "top_logprobs": [
+            {
+              "token": " follow",
+              "logprob": -0.06033949553966522
+            },
+            {
+              "token": " exhibit",
+              "logprob": -3.4353394508361816
+            },
+            {
+              "token": " vary",
+              "logprob": -4.560339450836182
+            },
+            {
+              "token": " depend",
+              "logprob": -5.060339450836182
+            },
+            {
+              "token": " followed",
+              "logprob": -5.810339450836182
+            }
+          ]
+        },
+        {
+          "token": " a",
+          "logprob": -0.0024210833944380283,
+          "entropy_topk": 0.019323610586003927,
+          "top_logprobs": [
+            {
+              "token": " a",
+              "logprob": -0.0024210833944380283
+            },
+            {
+              "token": " predictable",
+              "logprob": -6.752420902252197
+            },
+            {
+              "token": " specific",
+              "logprob": -7.502420902252197
+            },
+            {
+              "token": " universal",
+              "logprob": -7.627420902252197
+            },
+            {
+              "token": " power",
+              "logprob": -8.877421379089355
+            }
+          ]
+        },
+        {
+          "token": " predictable",
+          "logprob": -1.0659682750701904,
+          "entropy_topk": 1.3692510593840967,
+          "top_logprobs": [
+            {
+              "token": " predictable",
+              "logprob": -1.0659682750701904
+            },
+            {
+              "token": " power",
+              "logprob": -1.3159682750701904
+            },
+            {
+              "token": " universal",
+              "logprob": -1.3159682750701904
+            },
+            {
+              "token": " specific",
+              "logprob": -2.9409682750701904
+            },
+            {
+              "token": " characteristic",
+              "logprob": -3.1909682750701904
+            }
+          ]
+        },
+        {
+          "token": " power",
+          "logprob": -0.0022037860471755266,
+          "entropy_topk": 0.017344068201271254,
+          "top_logprobs": [
+            {
+              "token": " power",
+              "logprob": -0.0022037860471755266
+            },
+            {
+              "token": " mathematical",
+              "logprob": -6.627203941345215
+            },
+            {
+              "token": " scaling",
+              "logprob": -7.252203941345215
+            },
+            {
+              "token": ",",
+              "logprob": -9.627203941345215
+            },
+            {
+              "token": " universal",
+              "logprob": -9.627203941345215
+            }
+          ]
+        },
+        {
+          "token": "-law",
+          "logprob": -0.0040785204619169235,
+          "entropy_topk": 0.026465450989377835,
+          "top_logprobs": [
+            {
+              "token": "-law",
+              "logprob": -0.0040785204619169235
+            },
+            {
+              "token": " law",
+              "logprob": -5.504078388214111
+            },
+            {
+              "token": " dependence",
+              "logprob": -16.879077911376953
+            },
+            {
+              "token": "law",
+              "logprob": -17.754077911376953
+            },
+            {
+              "token": " behavior",
+              "logprob": -19.879077911376953
+            }
+          ]
+        },
+        {
+          "token": " behavior",
+          "logprob": -0.011262030340731144,
+          "entropy_topk": 0.06243439237057447,
+          "top_logprobs": [
+            {
+              "token": " behavior",
+              "logprob": -0.011262030340731144
+            },
+            {
+              "token": " dependence",
+              "logprob": -4.511261940002441
+            },
+            {
+              "token": " scaling",
+              "logprob": -8.636261940002441
+            },
+            {
+              "token": " dependency",
+              "logprob": -11.261261940002441
+            },
+            {
+              "token": " relationship",
+              "logprob": -11.886261940002441
+            }
+          ]
+        },
+        {
+          "token": ".",
+          "logprob": -0.00022952310973778367,
+          "entropy_topk": 0.0022431267169811197,
+          "top_logprobs": [
+            {
+              "token": ".",
+              "logprob": -0.00022952310973778367
+            },
+            {
+              "token": " based",
+              "logprob": -8.875229835510254
+            },
+            {
+              "token": " dependent",
+              "logprob": -9.625229835510254
+            },
+            {
+              "token": " depending",
+              "logprob": -11.875229835510254
+            },
+            {
+              "token": " influenced",
+              "logprob": -12.125229835510254
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "verdict": "PASS"
+}
