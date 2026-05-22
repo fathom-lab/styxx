@@ -120,6 +120,49 @@ No other instructions, no examples, no audit context. Any deviation invalidates 
 
 ## §A2 — Deviations log
 
+### AMENDMENT 2 (2026-05-21 EDT, post-probe) — Rename and re-scope the internal axis
+
+**Trigger.** The forced-decoding probe (commit e61b236) succeeded at returning per-token logprobs, but during implementation we verified that OpenAI's current API surface does NOT support true forced-decoding of arbitrary target text:
+- Chat Completions: `logprobs=True` captures logprobs of free generation, not of a target string.
+- Legacy Completions: `echo=True` and `logprobs=5` are mutually exclusive per OpenAI's API (BadRequestError confirmed 2026-05-21).
+- No other OpenAI endpoint exposes per-token logprobs of arbitrary fixed text.
+
+Calling the probe path "forced-decoding" would be inaccurate.
+
+**Rename.** What we actually capture is **re-generation entropy (I_rg)**: per-token logprobs/entropy of a model's own deterministic (T=0) re-production of a continuation given the same operator+user context as the draft. It is a different signal from forced-decoding with different interpretation.
+
+**What I_rg measures.**
+- Given the same (system_prompt, user_prompt) context, generate at T=0 with the scoring model and capture logprobs.
+- If the scoring model is the same as the drafting model and the context is identical, the regenerated tokens are approximately the draft tokens (deterministic decoding). Logprobs ≈ logprobs of the draft path.
+- If the scoring model differs from the drafting model, the regenerated tokens are *that scorer's preferred continuation given the same prompt*. The logprob trajectory measures the scorer's own uncertainty on its own preferred answer, not on the draft.
+
+**Reinterpretation of secondary hypotheses.**
+- **I_rg** primary feature remains entropy slope, now interpreted as: rate of change in the scoring model's per-token uncertainty during its own deterministic continuation under the draft's context.
+- **H4 (cross-scorer slope-divergence)** is now: divergence in scoring models' OWN trajectory entropy slopes given the same context. Still falsifiable, still secondary. The interpretation shifts: it measures cross-model disagreement about *how to continue the prompt*, not cross-model surprisal of the draft.
+
+**New axis: cross-model continuation divergence (D_cont).**
+- For each draft D produced by the agent on context C, regenerate at T=0 with each scoring model M_i. Let D_i = M_i's continuation under C.
+- Compute Levenshtein-token-distance and embedding cosine between D and each D_i.
+- Hypothesis H7 (secondary, new): on register-firing drafts labeled "no content crack", D_cont (mean distance from D to D_i across scoring models) is **lower** than on register-firing drafts labeled "real content crack." Interpretation: if peer models would produce similar text given the same prompt, the register firing is more likely a shared-prior register effect than a content fabrication. Mann-Whitney U, α=0.05.
+- This is actually the more interesting signal than I_rg slope, and it is genuinely substrate-independent.
+
+**What was lost.** The "first substrate-independent forced-decoding internal axis" framing is gone. We do not have forced-decoding on the OpenAI surface. We have *re-generation entropy* and *continuation divergence*. Both are still substrate-independent in the sense that they work on any agent's outbound text without needing access to the agent's gen-time logprobs.
+
+**What survives.**
+- Substrate independence: ✅ (we score any agent's text with a third-party scorer)
+- Real falsifiable internal signal: ✅ (entropy slope, continuation divergence)
+- Cross-model jury for meta-axis: ✅ (unchanged)
+- Paraphrase-invariance signature: ✅ (unchanged)
+- The headline framing in the §A1 amendment: needs update.
+
+**Updated headline framing (post-amendment-2):**
+
+> First substrate-independent send-time cognometric gate that scores an agent's outbound text using third-party scorers' re-generation behavior — without requiring access to the agent's own gen-time logprobs. Combines text-axis (styxx cogn_audit), re-generation entropy (I_rg), cross-model continuation divergence (D_cont), paraphrase-invariance signature (P), and 3-rater cross-model Type-2 jury (M_jury). Deployed on a live autonomous agent's outbound traffic, n=20 trajectories, ≥5 prompt categories. All claims preregistered before data collection.
+
+This is more honest, slightly less catchy, and probably more defensible in review.
+
+---
+
 ### AMENDMENT 1 (2026-05-21 EDT, pre-data) — Scope expansion, no claims relaxed
 
 Three additive expansions, each preregistered before any data collection. All
