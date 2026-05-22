@@ -372,6 +372,57 @@ def pulse_coherence(
     )
 
 
+# ──────────────────────────────────────────────────────────────────
+# Inter-agent coherence — EMBEDDING-TRAJECTORY channel (drift-axis)
+# ──────────────────────────────────────────────────────────────────
+#
+# This is a different channel from pulse_coherence (which reads the
+# cogn-composite register series, lag-0 Pearson r — that channel
+# closed-negative). This reads the GEOMETRY of two agents' per-turn
+# response embeddings: do their overall trajectory directions in latent
+# space point the same way?
+#
+# Numerically identical to scripts/drift_axis_scorer.py::drift_axis_alignment,
+# locked at commit 79906b4 (§8 of drift_axis_alignment_preregistration_2026_05_21).
+# Parity is enforced by tests/test_embedding_trajectory_parity.py — if this
+# diverges from the locked scorer, the tool no longer computes the quantity
+# the preregistration scored, and the test fails.
+
+
+def embedding_trajectory_alignment(embs_a, embs_b) -> float:
+    """Drift-axis alignment between two agents' per-turn embedding trajectories.
+
+    Given two (n, d) arrays of per-turn response embeddings (kth-of-A paired
+    with kth-of-B, truncated to shorter), returns the cosine between each
+    agent's first-half-to-second-half centroid-drift vector. Range [-1, +1].
+
+    MEASUREMENT, NOT INTERPRETATION. In a preregistered N=20+20 corpus
+    (deposit fa24373) cooperative dyads scored ~0.79 vs ~0.40 for adversarial,
+    p < 0.001, both embedding families, independently reproduced. BUT whether
+    that difference reflects *cooperation* or merely *topic convergence* is
+    pending the preregistered topic-control 2x2 (topic_control_preregistration_
+    2026_05_22). Until that clears, report this as "embedding-trajectory
+    alignment," not "cognitive coupling." See drift_axis_threats_to_validity.md.
+
+    Inputs are expected L2-normalized (the embedding providers normalize).
+    Requires numpy.
+    """
+    import numpy as np
+    a = np.asarray(embs_a, dtype=float)
+    b = np.asarray(embs_b, dtype=float)
+    n = min(a.shape[0], b.shape[0])
+    if n < 4:
+        return float("nan")
+    half = n // 2
+    a_dir = a[half:n].mean(0) - a[:half].mean(0)
+    b_dir = b[half:n].mean(0) - b[:half].mean(0)
+    a_norm = np.linalg.norm(a_dir)
+    b_norm = np.linalg.norm(b_dir)
+    if a_norm < 1e-12 or b_norm < 1e-12:
+        return float("nan")
+    return float((a_dir / a_norm) @ (b_dir / b_norm))
+
+
 __all__ = [
     "PulseSample",
     "PulseTrace",
@@ -383,4 +434,5 @@ __all__ = [
     "per_axis_coherence",
     "plv_hilbert",
     "pulse_coherence",
+    "embedding_trajectory_alignment",
 ]

@@ -373,6 +373,7 @@ from .coherence import (
     pulse_coherence, primary_coherence, lag_sweep, per_axis_coherence,
     plv_hilbert, load_pulse_trace as load_coherence_trace,
     CoherenceResult, PulseSample, PulseTrace,
+    embedding_trajectory_alignment,
 )
 
 # 7.4.3+: cognometric self-audit middleware for agent send-paths.
