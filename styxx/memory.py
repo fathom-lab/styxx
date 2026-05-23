@@ -207,6 +207,43 @@ def remember(
     return mem
 
 
+def _load_all_memories() -> List[Memory]:
+    """Load and parse every memory from the JSONL store.
+
+    Shared by recall() and memories(); each then applies its own
+    filtering / sorting. Returns [] if the store is missing or
+    unreadable; malformed lines are skipped.
+    """
+    path = _memory_path()
+    if not path.exists():
+        return []
+    mems: List[Memory] = []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    e = json.loads(line)
+                    mems.append(Memory(
+                        text=e.get("text", ""),
+                        context=e.get("context"),
+                        trust_score=float(e.get("trust_score", 0.7)),
+                        gate=e.get("gate", "pending"),
+                        confidence=float(e.get("confidence", 0)),
+                        category=e.get("category", "unknown"),
+                        session_id=e.get("session_id"),
+                        ts=float(e.get("ts", 0)),
+                        ts_iso=e.get("ts_iso", ""),
+                    ))
+                except (json.JSONDecodeError, ValueError):
+                    continue
+    except OSError:
+        return []
+    return mems
+
+
 def recall(
     query: str,
     *,
@@ -233,36 +270,7 @@ def recall(
         for r in results:
             print(f"trust={r.memory.trust_score:.2f}: {r.memory.text}")
     """
-    path = _memory_path()
-    if not path.exists():
-        return []
-
-    # Load all memories
-    memories: List[Memory] = []
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    e = json.loads(line)
-                    memories.append(Memory(
-                        text=e.get("text", ""),
-                        context=e.get("context"),
-                        trust_score=float(e.get("trust_score", 0.7)),
-                        gate=e.get("gate", "pending"),
-                        confidence=float(e.get("confidence", 0)),
-                        category=e.get("category", "unknown"),
-                        session_id=e.get("session_id"),
-                        ts=float(e.get("ts", 0)),
-                        ts_iso=e.get("ts_iso", ""),
-                    ))
-                except (json.JSONDecodeError, ValueError):
-                    continue
-    except OSError:
-        return []
-
+    memories = _load_all_memories()
     if not memories:
         return []
 
@@ -323,34 +331,7 @@ def memories(
     Returns:
         List of Memory objects, newest first.
     """
-    path = _memory_path()
-    if not path.exists():
-        return []
-
-    all_mems: List[Memory] = []
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    e = json.loads(line)
-                    all_mems.append(Memory(
-                        text=e.get("text", ""),
-                        context=e.get("context"),
-                        trust_score=float(e.get("trust_score", 0.7)),
-                        gate=e.get("gate", "pending"),
-                        confidence=float(e.get("confidence", 0)),
-                        category=e.get("category", "unknown"),
-                        session_id=e.get("session_id"),
-                        ts=float(e.get("ts", 0)),
-                        ts_iso=e.get("ts_iso", ""),
-                    ))
-                except (json.JSONDecodeError, ValueError):
-                    continue
-    except OSError:
-        return []
+    all_mems = _load_all_memories()
 
     # Filter
     if context:

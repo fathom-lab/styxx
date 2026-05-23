@@ -1270,25 +1270,31 @@ def fingerprint(
     entries = load_audit(last_n=last_n, session_id=session_id)
     if not entries:
         return None
+    return _fingerprint_from_entries(entries)
+
+
+def _fingerprint_from_entries(entries: List[dict]) -> "Fingerprint":
+    """Build a Fingerprint from an already-loaded, non-empty entry list.
+
+    Single source of truth for the Counter / rate-vector / mean-confidence
+    computation, shared by fingerprint(), reflect(), and weather() (which
+    previously each re-implemented it inline — the weather copies even
+    diverged, hardcoding mean_conf=0). Callers own the empty /
+    minimum-sample guard.
+    """
+    n = len(entries)
     p1_c = Counter(e.get("phase1_pred") for e in entries)
     p4_c = Counter(e.get("phase4_pred") for e in entries)
     gate_c = Counter((e.get("gate") or "pending") for e in entries)
-
-    n = len(entries)
-    p1_vec = tuple(p1_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
-    p4_vec = tuple(p4_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
-    gate_vec = tuple(gate_c.get(g, 0) / n for g in _GATE_ORDER)
-
     p1_conf_sum = sum(float(e.get("phase1_conf") or 0) for e in entries)
     p4_conf_sum = sum(float(e.get("phase4_conf") or 0) for e in entries)
-
     return Fingerprint(
         n_samples=n,
-        phase1_vec=p1_vec,
-        phase4_vec=p4_vec,
+        phase1_vec=tuple(p1_c.get(cat, 0) / n for cat in _CATEGORY_ORDER),
+        phase4_vec=tuple(p4_c.get(cat, 0) / n for cat in _CATEGORY_ORDER),
         phase1_mean_conf=p1_conf_sum / n,
         phase4_mean_conf=p4_conf_sum / n,
-        gate_vec=gate_vec,
+        gate_vec=tuple(gate_c.get(g, 0) / n for g in _GATE_ORDER),
     )
 
 
@@ -1765,24 +1771,7 @@ def reflect(
         cutoff = time.time() - now_days * 86400
         older_entries = [e for e in base_entries if e.get("ts", 0) < cutoff]
         if len(older_entries) >= 5:
-            # Temporarily compute a fingerprint from older entries
-            p1_c = Counter(e.get("phase1_pred") for e in older_entries)
-            p4_c = Counter(e.get("phase4_pred") for e in older_entries)
-            gate_c = Counter((e.get("gate") or "pending") for e in older_entries)
-            n = len(older_entries)
-            p1_vec = tuple(p1_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
-            p4_vec = tuple(p4_c.get(cat, 0) / n for cat in _CATEGORY_ORDER)
-            gate_vec = tuple(gate_c.get(g, 0) / n for g in _GATE_ORDER)
-            p1_conf_sum = sum(float(e.get("phase1_conf") or 0) for e in older_entries)
-            p4_conf_sum = sum(float(e.get("phase4_conf") or 0) for e in older_entries)
-            fp_base = Fingerprint(
-                n_samples=n,
-                phase1_vec=p1_vec,
-                phase4_vec=p4_vec,
-                phase1_mean_conf=p1_conf_sum / n,
-                phase4_mean_conf=p4_conf_sum / n,
-                gate_vec=gate_vec,
-            )
+            fp_base = _fingerprint_from_entries(older_entries)
 
     if fp_now is None or fp_base is None:
         drift_cosine = 1.0

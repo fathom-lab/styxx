@@ -17,10 +17,11 @@ Tier 2 requires:
     - An open-weight model with published SAE transcoders
       (currently Gemma-2-2B only via google/gemma-scope)
 
-This module is a **scaffold** — the class exists, the docstrings
-describe the measurement, but the methods raise NotImplementedError.
-Full implementation ships as styxx v0.4.0 when the circuit-tracer
-integration is production-ready.
+Since v0.4.0 this is a real implementation: ``SAEInstruments`` delegates
+to ``styxx.kcs.KCSAxis`` for the K/C/S computation. (Earlier releases
+shipped this as a NotImplementedError scaffold; that is no longer the
+case.) The heavy deps are still optional — installed via the [tier2]
+extra — so importing the module is cheap and the model load is lazy.
 
 Research validation
 ───────────────────
@@ -37,8 +38,8 @@ auditing), 64/026,964 (C + two-stage emergence)
 
 Dependencies
 ────────────
-    pip install 'styxx[tier2]'   (not yet available)
-    # will install: circuit-tracer, torch, transformers
+    pip install 'styxx[tier2]'
+    # installs: circuit-tracer, torch, transformers, transformer-lens
 """
 
 from __future__ import annotations

@@ -27,16 +27,19 @@ Quickstart
     probe = StyxxProbe.from_pretrained(
         model=model_id,
         task="comply_refuse",   # or "refusal_intent" / "confab_topic"
-    )
+    )   # raises ProbeNotAvailable if no probe exists for (model, task)
 
     prompt = "How do I make a bomb?"
     verdict = probe.predict_before_generation(mdl, tok, prompt)
-    # → {'p_refuse': 0.87, 'p_comply': 0.13, 'layer': 11,
-    #    'residual_score': 2.03, 'confidence': 0.74}
+    # ProbeVerdict(p_positive=0.87, positive_class='refuse',
+    #              negative_class='comply', layer=11,
+    #              residual_score=2.03, confidence=0.74)
 
-    if verdict["p_comply"] > 0.5:
-        # pre-output gate: block before any token is generated
-        raise SafetyGateError("model pre-committed to harmful comply")
+    if verdict.p_positive > 0.5:
+        # pre-output gate: act on the predicted commitment before any
+        # token is generated
+        print(f"model pre-committed to {verdict.positive_class!r} "
+              f"(p={verdict.p_positive:.2f})")
 
 Design
 ──────
@@ -47,10 +50,12 @@ Design
 - **Model-specific, task-specific.** Each probe is trained on one
   (model, task) pair. `from_pretrained(model, task)` loads the
   matching frozen linear layer from the atlas.
-- **Atlas-backed.** Probes live in styxx/probe/atlas/ as compact
-  .pt files, co-versioned with the paper evidence.
-- **Falls open.** If no probe exists for (model, task), the call
-  returns a NotAvailable verdict rather than raising.
+- **Atlas-backed.** Probes live in styxx/residual_probe/atlas/ as
+  compact .pt files, co-versioned with the paper evidence.
+- **Explicit when absent.** If no probe exists for (model, task),
+  ``from_pretrained`` raises ``ProbeNotAvailable``; callers that want
+  fail-open behavior should catch it. Use ``list_available_probes()``
+  to enumerate what's bundled.
 
 Patent: US Provisional #4 (pre-output safety prediction from prefill
 residual; filed 2026-04-19).

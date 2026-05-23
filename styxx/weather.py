@@ -559,19 +559,9 @@ def weather(
     older = [e for e in yesterday_entries if e.get("ts", 0) < cutoff]
     drift_yesterday = 1.0
     drift_label_yesterday = "insufficient history"
-    from .analytics import _CATEGORY_ORDER as CO, _GATE_ORDER as GO
+    from .analytics import _fingerprint_from_entries
     if len(older) >= 10 and fp_now is not None:
-        p1_c = Counter(e.get("phase1_pred") for e in older)
-        p4_c = Counter(e.get("phase4_pred") for e in older)
-        gate_c = Counter((e.get("gate") or "pending") for e in older)
-        on = len(older)
-        fp_old = Fingerprint(
-            n_samples=on,
-            phase1_vec=tuple(p1_c.get(c, 0) / on for c in CO),
-            phase4_vec=tuple(p4_c.get(c, 0) / on for c in CO),
-            phase1_mean_conf=0, phase4_mean_conf=0,
-            gate_vec=tuple(gate_c.get(g, 0) / on for g in GO),
-        )
+        fp_old = _fingerprint_from_entries(older)
         drift_yesterday = fp_now.cosine_similarity(fp_old)
         d = 1.0 - drift_yesterday
         if d < 0.05:
@@ -587,17 +577,7 @@ def weather(
     drift_week = 1.0
     drift_label_week = "insufficient history"
     if len(week_older) >= 20 and fp_now is not None:
-        wn = len(week_older)
-        p1_c = Counter(e.get("phase1_pred") for e in week_older)
-        p4_c = Counter(e.get("phase4_pred") for e in week_older)
-        gate_c = Counter((e.get("gate") or "pending") for e in week_older)
-        fp_week = Fingerprint(
-            n_samples=wn,
-            phase1_vec=tuple(p1_c.get(c, 0) / wn for c in CO),
-            phase4_vec=tuple(p4_c.get(c, 0) / wn for c in CO),
-            phase1_mean_conf=0, phase4_mean_conf=0,
-            gate_vec=tuple(gate_c.get(g, 0) / wn for g in GO),
-        )
+        fp_week = _fingerprint_from_entries(week_older)
         drift_week = fp_now.cosine_similarity(fp_week)
         d = 1.0 - drift_week
         if d < 0.05:

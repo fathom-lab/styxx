@@ -86,6 +86,9 @@ class HorizonPoint:
     vs_chance: float         # accuracy / (1/6)
     per_category: Dict[str, float]  # per-category accuracy at this horizon
     predictions: List[Tuple[str, str, float]]  # (true, predicted, confidence)
+    # Fraction of trajectories where the forecaster's prediction agrees with
+    # the atlas phase4 classifier — the "gap" the docstring describes.
+    atlas_match_rate: float = 0.0
 
 
 @dataclass
@@ -469,6 +472,7 @@ def horizon_analysis(
             vs_chance=vs_chance,
             per_category=per_cat_acc,
             predictions=predictions,
+            atlas_match_rate=(atlas_match / n if n > 0 else 0.0),
         ))
 
     return HorizonAnalysis(

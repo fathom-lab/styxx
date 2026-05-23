@@ -7,11 +7,13 @@ v1 uses a simple weighted combination; a follow-up v2 will train
 isotonic regression on a labeled validation set (HaluEval dev)
 to produce properly calibrated probabilities.
 
-Current signal weights (heuristic, to be replaced by learned ones):
+Current signal weights (heuristic, to be replaced by learned ones —
+see DEFAULT_WEIGHTS below, which is the source of truth):
 
-  text_claim_risk       : 0.25
-  entity_unverified_frac: 0.35   (strongest signal we've measured)
-  probe_confab          : 0.30   (if present — only for open models)
+  text_claim_risk       : 0.10
+  entity_unverified_frac: 0.15
+  knowledge_grounding   : 0.35
+  probe_confab          : 0.45   (in-distribution probe dominates; open models)
   consensus_disagreement: 0.30   (if present — only if resampling enabled)
 
 Weights are renormalized over available signals. When a signal is
@@ -57,12 +59,14 @@ def calibrate_piecewise_linear(raw_risk: float,
     """Piecewise-linear calibration from raw [0,1] to calibrated [0,1].
 
     anchors: list of (raw, calibrated) pairs, sorted by raw.
-    Defaults tuned from HaluEval-QA baseline:
-      raw 0.0 → 0.02  (almost no risk at zero signal)
-      raw 0.3 → 0.25
-      raw 0.5 → 0.55
-      raw 0.7 → 0.82
-      raw 1.0 → 0.97
+    Defaults tuned from HaluEval-QA baseline (must match the anchor
+    list below):
+      raw 0.00 → 0.02  (almost no risk at zero signal)
+      raw 0.10 → 0.20  (right-answer center → annotate boundary)
+      raw 0.20 → 0.45  (mid → approaching retry)
+      raw 0.30 → 0.65  (halluc center → retry)
+      raw 0.50 → 0.85  (strong → halt)
+      raw 1.00 → 0.98
 
     This maps the typically-middling raw fused scores onto a more
     discriminable curve that matches observed labeled-data fractions.
