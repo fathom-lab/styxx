@@ -57,6 +57,11 @@ class CalibrationResult:
     n_incorrect: int = 0
     n_phases_adjusted: int = 0
     categories_shifted: Dict[str, float] = field(default_factory=dict)
+    # Categories seen with only legacy (pre-features_v2) audit data. These
+    # CANNOT be calibrated — the classifier reads shifted_centroids, which the
+    # legacy path can't produce from a scalar confidence signal — so they are
+    # reported here as skipped rather than counted as (no-op) shifts.
+    categories_skipped: Dict[str, float] = field(default_factory=dict)
     saved_to: Optional[str] = None
 
     def __repr__(self) -> str:
@@ -215,14 +220,13 @@ def calibrate(
                 result.categories_shifted[cat] = shift_magnitude
 
             elif cat in cat_legacy_weights and len(cat_legacy_weights[cat]) >= min_samples:
-                # Legacy path: confidence-inversion heuristic
+                # Legacy (pre-features_v2) data: only a scalar confidence signal
+                # is available, which cannot produce a z-space centroid shift —
+                # and the classifier only ever reads shifted_centroids. So this
+                # is recorded as skipped, NOT as a categories_shifted entry, to
+                # avoid reporting a personalization that has no effect.
                 mean_weight = sum(cat_legacy_weights[cat]) / len(cat_legacy_weights[cat])
-                adjustment_factor = mean_weight * learning_rate
-
-                if phase_name not in adjustments:
-                    adjustments[phase_name] = {}
-                adjustments[phase_name][cat] = round(adjustment_factor, 4)
-                result.categories_shifted[cat] = adjustment_factor
+                result.categories_skipped[cat] = round(mean_weight * learning_rate, 4)
 
     result.n_phases_adjusted = len(adjustments)
 

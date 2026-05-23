@@ -97,6 +97,8 @@ class Sentinel:
         on_streak: Optional[AlertCallback] = None,
         on_warn: Optional[AlertCallback] = None,
         on_confidence_drop: Optional[AlertCallback] = None,
+        on_forecast_risk: Optional[AlertCallback] = None,
+        on_coherence_collapse: Optional[AlertCallback] = None,
         on_any: Optional[AlertCallback] = None,
         window: int = 5,
         streak_threshold: int = 3,
@@ -107,6 +109,8 @@ class Sentinel:
         self.on_streak = on_streak
         self.on_warn = on_warn
         self.on_confidence_drop = on_confidence_drop
+        self.on_forecast_risk = on_forecast_risk
+        self.on_coherence_collapse = on_coherence_collapse
         self.on_any = on_any
         self.window = max(2, window)
         self.streak_threshold = max(2, streak_threshold)
@@ -253,6 +257,10 @@ class Sentinel:
                     self.on_warn(alert)
                 elif alert.kind == "confidence_drop" and self.on_confidence_drop:
                     self.on_confidence_drop(alert)
+                elif alert.kind == "forecast_risk" and self.on_forecast_risk:
+                    self.on_forecast_risk(alert)
+                elif alert.kind == "coherence_collapse" and self.on_coherence_collapse:
+                    self.on_coherence_collapse(alert)
             except Exception as e:
                 warnings.warn(
                     f"styxx sentinel callback raised: {type(e).__name__}: {e}",
@@ -285,6 +293,8 @@ def sentinel(
     on_streak: Optional[AlertCallback] = None,
     on_warn: Optional[AlertCallback] = None,
     on_confidence_drop: Optional[AlertCallback] = None,
+    on_forecast_risk: Optional[AlertCallback] = None,
+    on_coherence_collapse: Optional[AlertCallback] = None,
     on_any: Optional[AlertCallback] = None,
     window: int = 5,
     streak_threshold: int = 3,
@@ -318,6 +328,8 @@ def sentinel(
         on_streak=on_streak,
         on_warn=on_warn,
         on_confidence_drop=on_confidence_drop,
+        on_forecast_risk=on_forecast_risk,
+        on_coherence_collapse=on_coherence_collapse,
         on_any=on_any,
         window=window,
         streak_threshold=streak_threshold,

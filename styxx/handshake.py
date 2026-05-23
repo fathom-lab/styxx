@@ -78,6 +78,11 @@ class HandoffEnvelope:
             "sender_confidence": self.sender_confidence,
             "sender_category": self.sender_category,
             "sender_mood": self.sender_mood,
+            # 3.2.0 forecast + coherence — required for is_trusted() to survive
+            # the as_json()->from_json() round-trip (a critical / low-coherence
+            # sender would otherwise be reconstructed as trusted).
+            "sender_forecast_risk": self.sender_forecast_risk,
+            "sender_coherence": self.sender_coherence,
             "ts": self.ts,
             "ts_iso": self.ts_iso,
         }

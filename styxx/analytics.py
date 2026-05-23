@@ -1042,12 +1042,12 @@ def streak(*, session_id: Optional[str] = None) -> Optional[Streak]:
     """
     entries = load_audit(session_id=session_id)
     if not entries:
-        return Streak(category=None, length=0, started_at_idx=0)
+        return None  # documented contract; callers guard with `if s is not None`
     # Walk backwards from most recent
     last = entries[-1]
     cat = last.get("phase4_pred")
     if cat is None:
-        return Streak(category=None, length=0, started_at_idx=len(entries))
+        return None  # data exists but no current attractor → no streak
     n = 1
     for e in reversed(entries[:-1]):
         if e.get("phase4_pred") == cat:

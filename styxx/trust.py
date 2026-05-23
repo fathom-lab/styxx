@@ -558,25 +558,17 @@ def trust(
         def sync_wrapper(*args, **kwargs):
             prompt = _extract_prompt(args, kwargs, prompt_arg)
             reference = _reference_from_kwargs(kwargs)
-            # Best-of-N retry: across all attempts, remember the
-            # lowest-risk (response, verdict). If retries exhaust
-            # without ever clearing the threshold, return the best
-            # candidate we saw instead of blindly falling back.
-            best_response = None
-            best_verdict = None
-            attempts = 0
+            # Retry up to max_retries. A passing attempt returns immediately;
+            # on the final attempt _handle applies the configured fallback and
+            # returns should_retry=False, so exhaustion returns the fallback
+            # (the safe trust-layer default — see test_trust_retry_then_fallback).
+            response = None
             for attempt in range(max_retries + 1):
                 attempts = attempt + 1
                 response = func(*args, **kwargs)
                 final, verdict, should_retry, halted = _handle(
                     response, prompt, reference, attempt
                 )
-                if verdict is not None and (
-                    best_verdict is None
-                    or verdict.risk < best_verdict.risk
-                ):
-                    best_response = response
-                    best_verdict = verdict
                 if not should_retry:
                     if on_halt == "annotate" and verdict is not None:
                         return TrustResult(
@@ -586,33 +578,19 @@ def trust(
                             attempts=attempts,
                         )
                     return final
-            # Retries exhausted. If our best attempt is still above
-            # threshold (true halt), fall back. If the best retry
-            # actually cleared threshold at any point, that was returned
-            # above — we only reach here when every attempt failed.
-            if best_verdict is not None:
-                return _replace_text(best_response, fallback)
-            return response
+            return response  # defensive: only the degenerate empty-loop case
 
         @functools.wraps(func)
         async def async_wrapper(*args, **kwargs):
             prompt = _extract_prompt(args, kwargs, prompt_arg)
             reference = _reference_from_kwargs(kwargs)
-            best_response = None
-            best_verdict = None
-            attempts = 0
+            response = None
             for attempt in range(max_retries + 1):
                 attempts = attempt + 1
                 response = await func(*args, **kwargs)
                 final, verdict, should_retry, halted = _handle(
                     response, prompt, reference, attempt
                 )
-                if verdict is not None and (
-                    best_verdict is None
-                    or verdict.risk < best_verdict.risk
-                ):
-                    best_response = response
-                    best_verdict = verdict
                 if not should_retry:
                     if on_halt == "annotate" and verdict is not None:
                         return TrustResult(
@@ -622,9 +600,7 @@ def trust(
                             attempts=attempts,
                         )
                     return final
-            if best_verdict is not None:
-                return _replace_text(best_response, fallback)
-            return response
+            return response  # defensive: only the degenerate empty-loop case
 
         wrapper = async_wrapper if is_async else sync_wrapper
         wrapper.__wrapped__ = func
