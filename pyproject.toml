@@ -124,6 +124,7 @@ packages = [
     "styxx.residual_probe.atlas", "styxx.guardrail",
     "styxx.attack", "styxx.attack.seeds",
     "styxx.mcp",
+    "styxx.three_axis",
     "styxx.fonts",
 ]
 
