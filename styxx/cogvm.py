@@ -51,7 +51,6 @@ Example
 """
 from __future__ import annotations
 
-import math
 import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -214,7 +213,6 @@ def _install_hooks(model, profile: Dict[str, float],
     Returns (hook_handles, captures_by_layer). captures_by_layer is a
     dict {layer_idx: {"hidden": tensor}} updated each forward pass.
     """
-    import torch
 
     handles: List[Any] = []
     plans = _build_layer_plans(model, profile, model_name)
@@ -354,7 +352,7 @@ def _run_program(
         input_ids = tokenizer(
             prompt, return_tensors="pt"
         ).input_ids.to(device)
-    prefill_len = input_ids.shape[1]
+    input_ids.shape[1]
 
     retries_used = 0
     attempt_profile = dict(profile)
@@ -408,7 +406,6 @@ def _run_program(
                     probe_readings_last = readings
 
                     # Evaluate watches.
-                    fired = False
                     for w, pred_fn in compiled:
                         if not pred_fn(readings):
                             continue
@@ -426,15 +423,12 @@ def _run_program(
                                 + (f" [{w.action.note}]"
                                    if w.action.note else "")
                             )
-                            fired = True
                             break
                         if isinstance(w.action, RETRY):
                             retry_now = w.action
-                            fired = True
                             break
                         if isinstance(w.action, SWITCH):
                             switch_now = w.action
-                            fired = True
                             break
                         raise NotImplementedError(
                             f"unknown action: {type(w.action).__name__}")

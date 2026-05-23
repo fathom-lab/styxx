@@ -54,10 +54,10 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Sequence
+from typing import Callable, Dict, List, Optional, Sequence
 
-from .vitals import CATEGORIES, Vitals
-from .forecast import CognitiveForecaster, ForecastResult, ForecastGate
+from .vitals import Vitals
+from .forecast import CognitiveForecaster, ForecastResult
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -361,7 +361,7 @@ def simulate_intercept(
                 print(f"             -> {inv.action} at token {inv.token_position}: "
                       f"prevented {inv.forecast.predicted_category}")
         else:
-            print(f"  result:    clean generation, no intervention needed")
+            print("  result:    clean generation, no intervention needed")
 
     return report
 

@@ -16,7 +16,6 @@ styxx.optimize — auto-tune from audit data.
 
 from __future__ import annotations
 
-from typing import List, Optional
 
 
 def optimize(

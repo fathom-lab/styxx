@@ -29,13 +29,12 @@ Why logistic regression / TF-IDF:
 
 from __future__ import annotations
 
-import json
 import os
 import pickle
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 
 @dataclass

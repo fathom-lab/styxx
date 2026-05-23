@@ -39,7 +39,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, List, Optional, Sequence, Tuple
+from typing import Any, List, Optional, Tuple
 
 from .analytics import (
     Personality, personality, fingerprint, streak, mood,

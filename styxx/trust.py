@@ -41,7 +41,7 @@ import asyncio
 import functools
 import inspect
 from dataclasses import dataclass
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, Optional
 
 from .guardrail import check as _guardrail_check
 from .guardrail import Verdict

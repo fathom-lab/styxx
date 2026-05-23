@@ -51,7 +51,7 @@ directly — this module wraps that for the simple case.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, List, Optional, Union
+from typing import Any, List, Union
 
 DEFAULT_SAFE_RESPONSE = (
     "I don't have reliable information to answer that. I would need to "
@@ -181,7 +181,7 @@ def generate_safe(
     else:
         input_ids = tokenizer(prompt, return_tensors="pt"
                                ).input_ids.to(device)
-    prefill_len = input_ids.shape[1]
+    input_ids.shape[1]
 
     # Capture the last-token residual at probe layer on every forward pass
     captured = {"h": None}

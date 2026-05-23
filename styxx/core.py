@@ -20,13 +20,10 @@ from __future__ import annotations
 
 import importlib
 import importlib.util
-import time
-from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence
 
 from .vitals import (
     CATEGORIES,
-    PHASE_ORDER,
     PHASE_TOKEN_CUTOFFS,
     CentroidClassifier,
     PhaseReading,

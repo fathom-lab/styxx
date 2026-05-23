@@ -1150,7 +1150,7 @@ def dashboard(
     log_path = _audit_log_path()
     print(f"[styxx] cognitive display at http://localhost:{port}", file=sys.stderr)
     print(f"[styxx] watching {log_path}", file=sys.stderr)
-    print(f"[styxx] press ctrl+c to stop", file=sys.stderr)
+    print("[styxx] press ctrl+c to stop", file=sys.stderr)
 
     try:
         server.serve_forever()

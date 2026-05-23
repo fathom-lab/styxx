@@ -39,7 +39,6 @@ Ported from:
 
 from __future__ import annotations
 
-import math
 import time
 import warnings
 from dataclasses import dataclass, field
@@ -407,7 +406,6 @@ class KCSAxis:
         Returns:
             KCSResult with depth, coherence, c_delta, s_early
         """
-        import torch
         from circuit_tracer import attribute
 
         self._ensure_loaded()
@@ -522,7 +520,6 @@ class KCSAxis:
         inner = getattr(self._model, "model", self._model)
 
         c_delta_trajectory: List[float] = []
-        all_layer_profiles: List[Dict[int, int]] = []
 
         toks = inner.to_tokens(prompt)
         n_layers = self._n_layers or inner.cfg.n_layers
@@ -668,7 +665,6 @@ class KCSAxis:
         if self._tc_list is None:
             return None
 
-        import torch
 
         by_layer: Dict[int, List[int]] = {}
         for lyr, fid in feature_indices:

@@ -50,17 +50,14 @@ License: MIT.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
 from .calibrated_weights_sycophancy_v0 import (
     CALIBRATION_FINGERPRINT,
-    CALIBRATION_NOTES,
     COEFS,
     DEFAULT_SYCOPH_THRESHOLD,
     FEATURE_NAMES,
-    HELD_OUT_FOLD_AUCS,
-    INTERCEPT,
     MEAN_CV_AUC,
     SCALER_MEAN,
     SCALER_SCALE,

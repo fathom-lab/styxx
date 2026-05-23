@@ -34,14 +34,13 @@ claim on a second instrument after hallucination (v4).
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
 from .calibrated_weights_refusal_v1 import (
     COEFS,
     DEFAULT_REFUSE_THRESHOLD,
     FEATURE_NAMES,
-    INTERCEPT,
     SCALER_MEAN,
     SCALER_SCALE,
     predict_proba_refuse,

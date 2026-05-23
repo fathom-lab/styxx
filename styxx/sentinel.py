@@ -41,8 +41,8 @@ zero background threads, pure event-driven.
 from __future__ import annotations
 
 import warnings
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any, Callable, List, Optional
 
 
 # ══════════════════════════════════════════════════════════════════

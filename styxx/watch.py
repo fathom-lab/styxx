@@ -535,7 +535,6 @@ def _extract_openai_logprobs(response: Any) -> Optional[tuple]:
     lifted here so styxx.observe() works on raw openai responses
     that weren't created via styxx.OpenAI.
     """
-    import math
 
     try:
         choice = response.choices[0]

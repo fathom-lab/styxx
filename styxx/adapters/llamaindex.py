@@ -32,7 +32,7 @@ Requires: pip install styxx[nli] llama-index-core
 from __future__ import annotations
 
 import asyncio
-from typing import Any, List, Optional, Sequence
+from typing import Any, Optional, Sequence
 
 try:
     from llama_index.core.evaluation import BaseEvaluator, EvaluationResult

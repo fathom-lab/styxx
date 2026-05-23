@@ -81,12 +81,9 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from .calibrated_weights_deception_v0 import (
     CALIBRATION_FINGERPRINT,
-    CALIBRATION_NOTES,
     COEFS,
     DEFAULT_DECEPTION_THRESHOLD,
     FEATURE_NAMES,
-    HELD_OUT_FOLD_AUCS,
-    INTERCEPT,
     MEAN_CV_AUC,
     SCALER_MEAN,
     SCALER_SCALE,

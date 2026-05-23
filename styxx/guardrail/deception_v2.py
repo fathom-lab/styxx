@@ -55,7 +55,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
 # v0 fallback path — always available
-from .deception import DeceptionVerdict, deception_check as _v0_check
+from .deception import deception_check as _v0_check
 
 
 Mode = Literal["nli", "emb", "v0_fallback", "auto"]

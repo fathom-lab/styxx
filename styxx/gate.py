@@ -45,11 +45,10 @@ This module productizes that research as a callable API.
 """
 from __future__ import annotations
 
-import math
 import time
 import warnings
 from dataclasses import dataclass, asdict, field
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 
 # Public enum (as module-level strings; no enum class to keep the
@@ -320,9 +319,7 @@ def _gate_huggingface(
     """Tier-1 residual probe path. Returns an 'unavailable' verdict
     when the atlas probe for (model, task) is not shipped yet."""
     try:
-        from .residual_probe import (
-            StyxxProbe, ProbeNotAvailable, list_available_probes,
-        )
+        pass
     except Exception as e:
         return _fallback_text_heuristic(
             prompt, model, runtime=0.0,

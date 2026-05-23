@@ -47,12 +47,10 @@ from __future__ import annotations
 
 import http.server
 import os
-import socket
 import socketserver
 import threading
 import time
 from pathlib import Path
-from typing import Optional
 
 
 # The HTML page template. Styled to match the landing page aesthetic
@@ -342,7 +340,7 @@ def run_serve(
     print(f"  [styxx serve] running at {url}")
     print(f"  [styxx serve] agent: {agent_name}")
     print(f"  [styxx serve] re-renders every {refresh_seconds}s")
-    print(f"  [styxx serve] press ctrl+c to stop")
+    print("  [styxx serve] press ctrl+c to stop")
     print()
 
     if open_browser:

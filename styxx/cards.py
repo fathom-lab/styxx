@@ -24,15 +24,11 @@ caller decides what to do with the rendered output.
 
 from __future__ import annotations
 
-import math
 import os
 import sys
-from typing import Iterable, List, Optional, Sequence, Tuple
+from typing import List, Optional, Sequence, Tuple
 
 from .vitals import (
-    CATEGORIES,
-    PHASE_ORDER,
-    PHASE_TOKEN_CUTOFFS,
     PhaseReading,
     Vitals,
 )

@@ -22,8 +22,8 @@ import threading
 import time
 import urllib.request
 import warnings
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Union
+from dataclasses import dataclass
+from typing import Callable, List, Optional, Union
 
 
 @dataclass

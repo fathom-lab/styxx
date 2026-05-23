@@ -54,9 +54,8 @@ Usage
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any, Dict, Optional
 
 from .probe import StyxxProbe, ProbeNotAvailable
 
@@ -125,7 +124,6 @@ class InterveneProbe(StyxxProbe):
         before the dot product. Without this, matmul raises
         ``Expected all tensors to be on the same device`` and the
         caller's try/except swallows the hook into a no-op."""
-        import torch
         w = self.weight
         r = residual.detach().to(device=w.device, dtype=w.dtype).flatten()
         s = float((r @ w).item() + self.bias)

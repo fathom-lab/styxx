@@ -72,7 +72,6 @@ the underlying summary is correct regardless.
 from __future__ import annotations
 
 import statistics
-import time
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
@@ -273,7 +272,7 @@ def _build_narrative(s: "PostureSummary") -> str:
                          f"(slope = {s.coherence_trend:.3f}); re-anchor "
                          f"on the original task statement.")
         else:
-            lines.append(f"coherence trend: stable.")
+            lines.append("coherence trend: stable.")
 
     # Per-instrument firing history (v2 — only present when preflight
     # events are in the window)

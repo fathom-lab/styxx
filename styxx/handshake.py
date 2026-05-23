@@ -130,7 +130,6 @@ def handoff(
         # Send envelope.as_json() to agent B via your messaging layer
     """
     from . import config
-    from .analytics import load_audit, mood
 
     state = _get_sender_state()
 

@@ -134,3 +134,24 @@ packages = [
 "styxx.attack.seeds" = ["*.jsonl"]
 "styxx.attack" = ["signature_calibration_v0.json", "universal_suffixes_v0.json"]
 "styxx.fonts" = ["*.ttf"]
+
+[tool.ruff]
+# styxx supports Python >= 3.9. Pin the target so ruff never suggests (or its
+# --fix never introduces) syntax newer than 3.9 — notably pyupgrade rewrites
+# like `list[int]` / `X | None`, which fail at runtime on 3.9 without
+# `from __future__ import annotations`. pyupgrade (UP*) is therefore NOT in the
+# selected set below.
+target-version = "py39"
+
+[tool.ruff.lint]
+# Pyflakes (F) catches the real defects — undefined names, unused
+# imports/variables, redefinitions — and E9 catches syntax errors (e.g. the
+# f-string-backslash break that shipped on 3.9-3.11). Line length (E501),
+# import sorting (I), and stylistic rules are intentionally not enforced.
+select = ["F", "E9"]
+
+[tool.ruff.lint.per-file-ignores]
+# __init__.py intentionally imports the full backward-compat attribute surface
+# (most of those names are deliberately kept out of __all__). The two F811s
+# there are the documented stream / agent_name false-positives.
+"__init__.py" = ["F401", "F403", "F811"]

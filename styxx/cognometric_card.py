@@ -56,7 +56,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from statistics import mean
@@ -303,7 +303,6 @@ def render_card(
     `~/.styxx/cards/cards.jsonl` — the local provenance log.
     """
     try:
-        import numpy as np
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
@@ -516,7 +515,6 @@ def render_heal_card(
     one reflex.heal() call). The bearer name comes from `baseline.agent`.
     """
     try:
-        import numpy as np
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
@@ -602,7 +600,6 @@ def render_heal_card(
 
     # ── twin composite numerals
     pair_y_top = 0.715
-    pair_y_bot = 0.470
 
     # left: baseline
     left_cx = 0.235

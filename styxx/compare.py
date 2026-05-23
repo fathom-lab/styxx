@@ -22,9 +22,8 @@ aggregate statistics and percentile ranks.
 from __future__ import annotations
 
 import json
-import warnings
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 from .analytics import Fingerprint, _CATEGORY_ORDER
 

@@ -15,11 +15,14 @@ import hashlib
 import json
 import math
 import os
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
+
+if TYPE_CHECKING:  # forward-ref only; thought.py imports vitals, so a runtime
+    from .thought import Thought  # import here would be circular
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -464,7 +467,7 @@ class CentroidClassifier:
         if self._calibrator is not None and self._calibrator.is_fitted:
             cal_conf = self._calibrator.calibrate(nearest_d)
             if cal_conf is not None:
-                old_conf = probs[nearest]
+                probs[nearest]
                 probs[nearest] = cal_conf
                 remaining = 1.0 - cal_conf
                 other_total = sum(probs[c] for c in self.categories if c != nearest)

@@ -30,11 +30,11 @@ ensembling, alerting threshold design, and instrument-design roadmap.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 
-from .fingerprint import score_all, applicable_instruments
+from .fingerprint import score_all
 
 
 @dataclass

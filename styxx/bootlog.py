@@ -209,7 +209,7 @@ def boot(
 
     # ── Centroid load + sha verify ─────────────────────────────────
     centroids_path = _default_centroids_path()
-    p.boot_line(f"loading atlas v0.3 centroids",
+    p.boot_line("loading atlas v0.3 centroids",
                 f"{centroids_path.name}", color_code=color.CYAN)
     p.pause(0.05)
     try:

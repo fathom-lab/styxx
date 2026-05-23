@@ -21,7 +21,7 @@ from __future__ import annotations
 import time
 import urllib.parse
 import urllib.request
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 WIKI_SUMMARY_URL = "https://en.wikipedia.org/api/rest_v1/page/summary/{title}"
 

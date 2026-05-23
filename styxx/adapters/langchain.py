@@ -49,8 +49,7 @@ credits: xendro for the shape request, darkflobi for the build.
 
 from __future__ import annotations
 
-import warnings
-from typing import Any, Dict, List, Optional, Sequence, Union
+from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 from .. import config
@@ -546,10 +545,7 @@ class StyxxHallucinationGuard:
         input interface but gated output.
         """
         try:
-            from langchain_core.runnables import (
-                RunnableLambda, RunnablePassthrough,
-            )
-            from langchain_core.runnables.config import RunnableConfig
+            from langchain_core.runnables import RunnableLambda
         except ImportError as e:
             raise ImportError(
                 "StyxxHallucinationGuard.wrap() requires langchain-core. "

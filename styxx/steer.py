@@ -57,10 +57,9 @@ Design notes
 """
 from __future__ import annotations
 
-import math
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 from .residual_probe.intervene import InterveneProbe
 
@@ -115,7 +114,6 @@ def _build_layer_plans(
 ) -> Dict[int, _LayerPlan]:
     """Load each task's InterveneProbe, compute alpha * sign * unit_dir,
     group by layer, and return {layer_idx: composite_direction}."""
-    import torch
 
     device = next(model.parameters()).device
     dtype = next(model.parameters()).dtype

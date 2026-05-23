@@ -61,7 +61,10 @@ import json
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple
+
+if TYPE_CHECKING:  # resolve the forward-ref for type checkers / get_type_hints
+    from .preflight import PreflightResult  # without a runtime import (cheap)
 
 
 # Type alias — keeps host-side revise function vendor-neutral.

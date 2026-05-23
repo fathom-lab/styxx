@@ -46,7 +46,7 @@ from __future__ import annotations
 
 import math
 import re
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set
 
 
 _TOKEN_RE = re.compile(r"[A-Za-z]{2,}")  # 2+ alpha chars, lowercased downstream

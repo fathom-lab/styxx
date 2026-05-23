@@ -51,11 +51,9 @@ Safety:
 
 from __future__ import annotations
 
-import math
-import time
 import warnings
-from dataclasses import dataclass, field
-from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
+from dataclasses import dataclass
+from typing import Any, Dict, Iterator, List, Optional
 
 from . import config
 
@@ -153,7 +151,6 @@ class GuardianSession:
             return
         try:
             import torch
-            import torch.nn.functional as F
             from circuit_tracer import ReplacementModel
         except ImportError as e:
             raise ImportError(
@@ -258,7 +255,6 @@ class GuardianSession:
         session.events and the audit log.
         """
         import torch
-        import torch.nn.functional as F
 
         self._ensure_loaded()
         inner = self._inner

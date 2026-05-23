@@ -37,7 +37,7 @@ import time
 import urllib.request
 import urllib.error
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Optional
 
 
 # ══════════════════════════════════════════════════════════════════

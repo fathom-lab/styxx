@@ -20,8 +20,6 @@ from __future__ import annotations
 
 import json
 import sys
-import time
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from .kcs import (
@@ -85,13 +83,10 @@ def render_layer_profile(
         # Color by band
         if layer < early_b:
             bar_color = CYAN
-            band_label = ""
         elif layer < mid_b:
             bar_color = YELLOW
-            band_label = ""
         else:
             bar_color = ORANGE
-            band_label = ""
 
         bar = "\u2588" * bar_len
         count_str = str(count) if count > 0 else ""
@@ -224,8 +219,8 @@ def render_scan_card(
     k_val = f"{result.weighted_depth:.3f}"
     k_label = "WHERE computation happens"
     cal = MODEL_CALIBRATION.get(result.model_id, {})
-    k_ratio_val = cal.get("k_ratio")
-    k_ratio_str = f"  K/K\u2080 = {result.weighted_depth / (cal.get('surface_mean', result.weighted_depth) or 1):.4f}" if cal.get("surface_mean") else ""
+    cal.get("k_ratio")
+    f"  K/K\u2080 = {result.weighted_depth / (cal.get('surface_mean', result.weighted_depth) or 1):.4f}" if cal.get("surface_mean") else ""
 
     lines.append(c("  \u2502", RED) + f"  {c('K', BOLD + CYAN)}  {c('depth', CYAN)}        {c(k_val, WHITE + BOLD)}  {c(k_label, GRAY)}" + " " * max(0, w - 45 - len(k_val)) + c("\u2502", RED))
 

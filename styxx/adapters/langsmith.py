@@ -35,8 +35,7 @@ enrichment simply becomes a no-op. Fail-open on everything.
 
 from __future__ import annotations
 
-import warnings
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 from uuid import UUID
 
 from ..vitals import Vitals

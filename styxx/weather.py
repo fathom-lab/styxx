@@ -71,23 +71,17 @@ stream of observations the agent has been making about itself.
 
 from __future__ import annotations
 
-import math
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from .analytics import (
     load_audit,
     fingerprint,
-    personality,
     mood,
     streak,
-    Fingerprint,
-    Personality,
-    Streak,
     _CATEGORY_ORDER,
-    _GATE_ORDER,
 )
 
 
@@ -428,7 +422,7 @@ class WeatherReport:
             for i, p in enumerate(self.prescriptions[:5], 1):
                 # Word-wrap each prescription
                 prefix = f"{i}. "
-                remaining_w = W - len(prefix) - 2
+                W - len(prefix) - 2
                 p_words = p.split()
                 p_line = prefix
                 for word in p_words:
@@ -531,7 +525,7 @@ def weather(
     p4_counter = Counter(e.get("phase4_pred") for e in entries if e.get("phase4_pred"))
     p4_total = sum(p4_counter.values())
     hall_rate = p4_counter.get("hallucination", 0) / p4_total if p4_total > 0 else 0.0
-    refusal_rate = p4_counter.get("refusal", 0) / p4_total if p4_total > 0 else 0.0
+    p4_counter.get("refusal", 0) / p4_total if p4_total > 0 else 0.0
 
     confs = [float(e.get("phase4_conf") or 0) for e in entries]
     mean_conf = sum(confs) / len(confs) if confs else 0.0

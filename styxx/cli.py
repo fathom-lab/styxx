@@ -24,14 +24,13 @@ import time
 from pathlib import Path
 from typing import Optional, Sequence
 
-from . import __version__, __tagline__, config
+from . import __version__, __tagline__
 from .bootlog import boot
 from .cards import (
     Palette,
     color_enabled,
     render_vitals_card,
     render_vitals_compact,
-    sparkline,
     wrap,
 )
 from .core import StyxxRuntime, detect_tiers
@@ -99,10 +98,10 @@ def cmd_claim(args):
         return 1
 
     sys.stdout.write("\n")
-    sys.stdout.write(f"  registered.\n\n")
+    sys.stdout.write("  registered.\n\n")
     sys.stdout.write(f"    name         {res['name']}\n")
     sys.stdout.write(f"    feed         {res['url']}\n")
-    sys.stdout.write(f"    credentials  ~/.styxx/credentials.json\n\n")
+    sys.stdout.write("    credentials  ~/.styxx/credentials.json\n\n")
     sys.stdout.write("  next: enable streaming\n\n")
     sys.stdout.write("      import styxx\n")
     sys.stdout.write(f"      styxx.autoboot(agent_name=\"{res['name']}\", stream=True)\n\n")
@@ -247,8 +246,6 @@ def cmd_timeline(args):
 
 def cmd_ci_test(args):
     """Cognitive regression test (1.5.0)."""
-    import sys as _sys
-    from .ci import regression_test
 
     min_pass = float(getattr(args, "min_pass", 0.80))
 
@@ -266,7 +263,7 @@ def cmd_ci_test(args):
         print(f"[styxx ci] PASS: {report.gate_pass_rate*100:.0f}% pass, conf {report.mean_confidence:.2f}")
         return 0
     else:
-        print(f"[styxx ci] FAIL:")
+        print("[styxx ci] FAIL:")
         for v in report.violations:
             print(f"  ! {v}")
         return 1
@@ -362,8 +359,6 @@ def cmd_ci_baseline(args):
     """Save current state as CI baseline (1.5.0)."""
     from .ci import Baseline
     from .analytics import load_audit
-    from .probe import probe as _probe
-    import time
 
     entries = load_audit(last_n=50)
     n = len(entries)
@@ -471,7 +466,7 @@ def cmd_d_axis(args):
 
     print()
     print(wrap("  styxx d-axis", c.MATRIX, use_color)
-          + wrap(f"   tier 1 honesty trajectory", c.DIM, use_color))
+          + wrap("   tier 1 honesty trajectory", c.DIM, use_color))
     print(wrap("  " + "=" * 64, c.DIM, use_color))
     print(wrap(f"  prompt: {prompt[:60]}{'...' if len(prompt) > 60 else ''}", c.DIM, use_color))
     print()
@@ -891,7 +886,7 @@ def cmd_fingerprint(args):
             drift_color = c.RED
             drift_label = "significant drift"
 
-        print(wrap(f"  fingerprint comparison", c.MATRIX, use_color))
+        print(wrap("  fingerprint comparison", c.MATRIX, use_color))
         print(wrap("  " + "=" * 64, c.DIM, use_color))
         print(f"  session a ({args.session_a}) - {fp_a.n_samples} samples")
         print(f"  session b ({args.session_b}) - {fp_b.n_samples} samples")
@@ -1271,7 +1266,7 @@ def cmd_log_migrate_provenance(args):
     clear_audit_cache()
 
     print()
-    print(f"  provenance migration complete")
+    print("  provenance migration complete")
     print(f"  {migrated} entries labelled · {untouched} already had source")
     print(f"  file: {path}")
     print()

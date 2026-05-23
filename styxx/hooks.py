@@ -36,7 +36,7 @@ production by Fathom Lab customers".
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 
 # State: store the original openai.OpenAI so we can restore it. We

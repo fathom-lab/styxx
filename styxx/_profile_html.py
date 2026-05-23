@@ -14,7 +14,7 @@ import json
 from typing import TYPE_CHECKING, List, Optional, Tuple
 
 if TYPE_CHECKING:
-    from .profile import CognitiveProfile, Fault, ProfileStep
+    from .profile import CognitiveProfile
 
 
 # Color palette — matches fathom/styxx brand

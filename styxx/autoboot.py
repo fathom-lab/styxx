@@ -205,7 +205,7 @@ def autoboot(
     }
 
     # ── Load yesterday's fingerprint ────────────────────────
-    from .analytics import fingerprint, FingerprintDiff
+    from .analytics import fingerprint
 
     fp_today = fingerprint(last_n=500)
     fp_yesterday = _load_fingerprint(fp_dir, name, days_ago=1)

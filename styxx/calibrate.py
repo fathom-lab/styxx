@@ -39,13 +39,12 @@ into a personalized one.
 from __future__ import annotations
 
 import json
-import math
 import os
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import numpy as np
 
@@ -114,7 +113,6 @@ def calibrate(
     Returns:
         CalibrationResult with shift statistics.
     """
-    from .core import StyxxRuntime
     from .vitals import load_centroids
 
     result = CalibrationResult()

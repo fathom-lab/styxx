@@ -217,7 +217,7 @@ class StyxxProbe:
         import torch
 
         device = next(model.parameters()).device
-        dtype = next(model.parameters()).dtype
+        next(model.parameters()).dtype
 
         if apply_chat_template:
             inputs = tokenizer.apply_chat_template(

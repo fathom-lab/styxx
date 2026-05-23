@@ -78,12 +78,9 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from .calibrated_weights_goal_drift_v0 import (
     CALIBRATION_FINGERPRINT,
-    CALIBRATION_NOTES,
     COEFS,
     DEFAULT_DRIFT_THRESHOLD,
     FEATURE_NAMES,
-    HELD_OUT_FOLD_AUCS,
-    INTERCEPT,
     MEAN_CV_AUC,
     SCALER_MEAN,
     SCALER_SCALE,

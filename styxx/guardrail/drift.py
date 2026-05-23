@@ -66,7 +66,6 @@ from .calibrated_weights_drift_v1 import (
     COEFS,
     DEFAULT_DRIFT_THRESHOLD,
     FEATURE_NAMES,
-    INTERCEPT,
     SCALER_MEAN,
     SCALER_SCALE,
     predict_proba_drift,

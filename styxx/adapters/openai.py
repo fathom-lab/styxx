@@ -29,9 +29,8 @@ Known limitations:
 
 from __future__ import annotations
 
-import math
 import warnings
-from typing import Any, List, Optional, Sequence
+from typing import Any, List, Optional
 
 from .. import config
 from ..core import StyxxRuntime

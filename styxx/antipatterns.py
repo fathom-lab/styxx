@@ -24,11 +24,10 @@ forming again.
 
 from __future__ import annotations
 
-from collections import Counter
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List
 
-from .analytics import load_audit, _CATEGORY_ORDER
+from .analytics import load_audit
 
 
 @dataclass

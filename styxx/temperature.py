@@ -45,8 +45,7 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 
 from __future__ import annotations
 
-import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
@@ -433,7 +432,7 @@ def demo_temperature(verbose: bool = True) -> Dict[str, TruthMap]:
             print(f"  reasoning:     {reas_temp.aggregate_temp:>+.3f} (converging)")
             delta = hall_temp.aggregate_temp - reas_temp.aggregate_temp
             print(f"  delta:         {delta:>+.3f}")
-            print(f"  the signal:    confabulation heats up, recall cools down")
+            print("  the signal:    confabulation heats up, recall cools down")
         print()
         print("=" * 62)
 

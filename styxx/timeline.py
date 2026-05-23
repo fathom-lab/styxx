@@ -42,7 +42,7 @@ from __future__ import annotations
 import time
 from collections import Counter
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from .analytics import load_audit, _CATEGORY_ORDER
 

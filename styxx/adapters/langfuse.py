@@ -40,9 +40,7 @@ via .last_vitals). The agent never notices.
 
 from __future__ import annotations
 
-import os
-import warnings
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 from uuid import UUID
 
 from ..vitals import Vitals

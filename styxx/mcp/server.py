@@ -29,7 +29,6 @@ from __future__ import annotations
 
 import asyncio
 import json
-import math
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Optional
@@ -1082,7 +1081,7 @@ def tool_cogn_share_card(args: Dict[str, Any]) -> Dict[str, Any]:
             CardData, render_card, render_heal_card, _serial_number,
             _registry_dir,
         )
-    except ImportError as e:
+    except ImportError:
         return {"error": (
             "matplotlib not installed. install with: pip install 'styxx[agent-card]'"
         )}

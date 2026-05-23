@@ -103,7 +103,6 @@ backbone changes.
 
 from __future__ import annotations
 
-import math
 import warnings
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple

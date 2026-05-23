@@ -97,11 +97,10 @@ def _extract_entities(text: str) -> List[str]:
 def decompose(response: str) -> List[Claim]:
     """Split response into sentence-level claims with extracted metadata."""
     claims: List[Claim] = []
-    pos = 0
     for m in SENT_RE.finditer(response):
         sent = m.group(0).strip()
         if not sent:
-            pos = m.end()
+            m.end()
             continue
         start = m.start()
         end = m.end()
@@ -117,7 +116,6 @@ def decompose(response: str) -> List[Claim]:
             has_url=bool(URL_RE.search(sent)),
             has_identifier=bool(IDENTIFIER_RE.search(sent)),
         ))
-        pos = end
     return claims
 
 

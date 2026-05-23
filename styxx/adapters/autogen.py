@@ -48,7 +48,7 @@ limitations:
 from __future__ import annotations
 
 import warnings
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Optional
 
 
 class StyxxAutoGenHook:

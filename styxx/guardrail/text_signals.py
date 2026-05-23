@@ -23,9 +23,8 @@ calibrated risk score.
 """
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import List
 
 from .claim_decomposer import Claim, YEAR_RE, NUMBER_CLAIM_RE, QUOTED_RE
 from ..anthropic_hack.text_features import (

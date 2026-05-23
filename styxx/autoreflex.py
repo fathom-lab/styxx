@@ -88,8 +88,8 @@ from __future__ import annotations
 import re
 import threading
 import warnings
-from dataclasses import dataclass, field
-from typing import Any, Callable, List, Optional, Union
+from dataclasses import dataclass
+from typing import Callable, List, Optional, Union
 
 from .vitals import Vitals
 
@@ -455,7 +455,7 @@ def clear_autoreflex() -> int:
     """Remove all autoreflex rules. Returns the number removed."""
     with _RULES_LOCK:
         n = len(_RULES)
-        names = [r.name for r in _RULES]
+        [r.name for r in _RULES]
         _RULES.clear()
 
     # Clean up gate callbacks
