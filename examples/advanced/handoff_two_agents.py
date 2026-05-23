@@ -13,7 +13,10 @@ from __future__ import annotations
 import json
 import time
 
-from styxx import ProtocolEnvelope, Vitals
+# HandoffVitals is the styxx-handoff/1 protocol wire-snapshot (the 7-field
+# category/confidence/gate/trust/... payload). styxx.Vitals is the separate
+# classifier-output dataclass; this example wants the protocol one.
+from styxx import ProtocolEnvelope, HandoffVitals as Vitals
 
 
 # ---------------------------------------------------------------------------

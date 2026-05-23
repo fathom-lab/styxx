@@ -5,7 +5,7 @@ styxx.fleet — population-level analytics across agent namespaces.
     agents = styxx.list_agents()
     # ['xendro', 'customer-bot', 'research-agent']
 
-    comparison = styxx.compare_agents()
+    comparison = styxx.fleet.compare_agents()
     for agent in comparison:
         print(f"{agent.name}: pass={agent.gate_pass_rate*100:.0f}%, "
               f"conf={agent.mean_confidence:.2f}")
@@ -157,7 +157,7 @@ def compare_agents(
     Returns a list of AgentProfiles sorted by gate pass rate (best first).
 
     Usage:
-        for agent in styxx.compare_agents():
+        for agent in styxx.fleet.compare_agents():
             print(f"{agent.name}: {agent.gate_pass_rate*100:.0f}% pass")
     """
     agents = list_agents()

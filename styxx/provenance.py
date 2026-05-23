@@ -11,7 +11,7 @@ styxx.provenance — cognitive provenance certificates.
     output = {"text": response_text, "styxx_certificate": cert.as_dict()}
 
     # Verify later
-    result = styxx.verify(cert)
+    result = styxx.verify_certificate(cert)
     assert result.valid
 
 Every AI output should carry a signed attestation of the cognitive

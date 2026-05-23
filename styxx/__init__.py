@@ -284,19 +284,27 @@ from .weather import weather, WeatherReport
 from .dashboard import dashboard
 from .calibrate import calibrate, calibration_status, CalibrationResult
 from .fleet import (
-    list_agents, compare_agents, fleet_summary, best_agent_for,
+    list_agents, fleet_summary, best_agent_for,
     AgentProfile, FleetSummary,
 )
+# NOTE: fleet.compare_agents is intentionally NOT imported at the top level.
+# styxx.compare_agents is the population-percentile comparator from
+# .compare (see below); fleet's fleet-routing comparator stays reachable as
+# styxx.fleet.compare_agents.
 from .memory import (
     remember, recall, memories, memory_stats,
     Memory, RecallResult,
 )
 from .handoff import (
-    ProtocolEnvelope, Vitals, HandoffValidationError,
+    ProtocolEnvelope, Vitals as HandoffVitals, HandoffValidationError,
     PROTOCOL as HANDOFF_PROTOCOL,
     COGNITIVE_CLASSES,
     from_handshake_envelope, to_handshake_envelope,
 )
+# NOTE: handoff.Vitals (the 7-field protocol wire-snapshot) is aliased to
+# HandoffVitals so it does not clobber styxx.Vitals — the classifier-output
+# dataclass from .vitals (imported above) that r.vitals returns and that
+# __all__ advertises as the core data type.
 from .handshake import (
     handoff, receive,
     HandoffEnvelope,
@@ -311,7 +319,10 @@ from .gate import gate, GateVerdict  # v3.4.0: pre-flight cognitive verdict
 from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEvent
 from .optimize import optimize
 from .ci import regression_test, create_baseline, Baseline, RegressionResult
-from .provenance import certify, verify, CognitiveCertificate, VerificationResult
+from .provenance import certify, verify as verify_certificate, CognitiveCertificate, VerificationResult
+# NOTE: provenance.verify (certificate verifier → VerificationResult.valid) is
+# aliased to verify_certificate so it does not clobber styxx.verify — the
+# trust-layer response verifier (→ Verdict) from .verify (imported below).
 from .diff import compare_sessions, compare_windows, ComparisonDiff
 from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
@@ -436,7 +447,8 @@ from .trace import trace
 from .profile import (
     profile, profile_session, CognitiveProfile, ProfileStep, Fault,
 )
-from .reward import fathom_reward, FathomRewardModel
+# fathom_reward / FathomRewardModel are imported from .reward in the curated
+# 7.1.0 block below (with CognometricReward + REWARD_DEFAULT_WEIGHTS).
 from .synth import craft_preference_pair, generate_preference_pairs
 
 
@@ -613,7 +625,7 @@ __all__ = [
     "hook_openai", "unhook_openai",
 
     # compliance / verification
-    "certify", "compliance_report", "probe", "calibrate",
+    "certify", "verify_certificate", "compliance_report", "probe", "calibrate",
 
     # pre-flight verdict (3.4.0+)
     "gate", "GateVerdict",
