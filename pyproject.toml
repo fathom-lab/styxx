@@ -102,6 +102,23 @@ dev = [
     "ruff>=0.1",
     "jsonschema>=4.0",
 ]
+# 7.4.3: the test extra used by CI. dev (pytest/ruff/jsonschema) plus the
+# *light* optional stacks so the importorskip-gated tests actually run instead
+# of silently skipping: MCP server, anthropic/openai adapters, the matplotlib +
+# Pillow card renderers, and the langchain adapter. The heavy torch-based
+# stacks (tier1, tier2, nli) are deliberately excluded — those tests skip in
+# CI; run them locally with `pip install -e ".[test,nli]"`.
+test = [
+    "pytest>=7.0",
+    "ruff>=0.1",
+    "jsonschema>=4.0",
+    "mcp>=1.0.0",
+    "anthropic>=0.20",
+    "openai>=1.0",
+    "Pillow>=10.0",
+    "matplotlib>=3.7",
+    "langchain-core>=0.1",
+]
 
 [project.urls]
 Homepage       = "https://styxx-org.netlify.app"
