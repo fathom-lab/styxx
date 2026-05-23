@@ -30,6 +30,7 @@ from __future__ import annotations
 import asyncio
 import json
 import math
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Optional
 
@@ -1311,39 +1312,49 @@ async def list_tools() -> List[Tool]:
     ]
 
 
+# Tool name -> synchronous handler. Replaces a long elif-chain so dispatch,
+# error handling, and executor-offload are uniform across every tool.
+_TOOL_HANDLERS = {
+    "observe_response": tool_observe_response,
+    "verify_response": tool_verify_response,
+    "classify_trajectory": tool_classify_trajectory,
+    "weather_report": tool_weather_report,
+    "cogn_audit": tool_cogn_audit,
+    "cogn_recover_posture": tool_cogn_recover_posture,
+    "cogn_audit_with_advice": tool_cogn_audit_with_advice,
+    "cogn_multiturn_audit": tool_cogn_multiturn_audit,
+    "cogn_universal_perturbation": tool_cogn_universal_perturbation,
+    "cogn_instrument_card": tool_cogn_instrument_card,
+    "cogn_red_team": tool_cogn_red_team,
+    "cogn_self_heal_protocol": tool_cogn_self_heal_protocol,
+    "cogn_deception_v2": tool_cogn_deception_v2,
+    "cogn_share_card": tool_cogn_share_card,
+}
+
+# A single dedicated worker thread. The handlers are synchronous and some run
+# for seconds (cogn_red_team's hill-climb, the matplotlib card render, the NLI
+# model load); running them directly on the asyncio loop froze the entire
+# stdio server. Offloading keeps the loop responsive. max_workers=1 serializes
+# execution so we don't run matplotlib/torch concurrently across threads.
+_TOOL_EXECUTOR = ThreadPoolExecutor(max_workers=1, thread_name_prefix="styxx-mcp")
+
+
 @server.call_tool()
 async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
     arguments = arguments or {}
-    if name == "observe_response":
-        result = tool_observe_response(arguments)
-    elif name == "verify_response":
-        result = tool_verify_response(arguments)
-    elif name == "classify_trajectory":
-        result = tool_classify_trajectory(arguments)
-    elif name == "weather_report":
-        result = tool_weather_report(arguments)
-    elif name == "cogn_audit":
-        result = tool_cogn_audit(arguments)
-    elif name == "cogn_recover_posture":
-        result = tool_cogn_recover_posture(arguments)
-    elif name == "cogn_audit_with_advice":
-        result = tool_cogn_audit_with_advice(arguments)
-    elif name == "cogn_multiturn_audit":
-        result = tool_cogn_multiturn_audit(arguments)
-    elif name == "cogn_universal_perturbation":
-        result = tool_cogn_universal_perturbation(arguments)
-    elif name == "cogn_instrument_card":
-        result = tool_cogn_instrument_card(arguments)
-    elif name == "cogn_red_team":
-        result = tool_cogn_red_team(arguments)
-    elif name == "cogn_self_heal_protocol":
-        result = tool_cogn_self_heal_protocol(arguments)
-    elif name == "cogn_deception_v2":
-        result = tool_cogn_deception_v2(arguments)
-    elif name == "cogn_share_card":
-        result = tool_cogn_share_card(arguments)
+    handler = _TOOL_HANDLERS.get(name)
+    if handler is None:
+        result: Dict[str, Any] = {"error": f"unknown tool: {name}"}
     else:
-        result = {"error": f"unknown tool: {name}"}
+        try:
+            loop = asyncio.get_running_loop()
+            result = await loop.run_in_executor(_TOOL_EXECUTOR, handler, arguments)
+        except Exception as e:
+            # Uniform error envelope. Two handlers (cogn_recover_posture,
+            # cogn_share_card) previously let exceptions escape as a raw MCP
+            # protocol error instead of the {"error": ...} shape every other
+            # tool and the tool docstrings promise.
+            result = {"error": f"{type(e).__name__}: {e}"}
     return [TextContent(type="text", text=json.dumps(result, indent=2))]
 
 

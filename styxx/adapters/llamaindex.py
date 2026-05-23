@@ -173,18 +173,20 @@ class StyxxHallucinationEvaluator(BaseEvaluator):
         **kwargs: Any,
     ) -> EvaluationResult:
         """Synchronous convenience wrapper around aevaluate."""
+        # If we're already inside a running loop, asyncio.run() would raise a
+        # cryptic "cannot be called from a running event loop". Detect that and
+        # raise the actionable guidance instead. (The previous version raised
+        # this message then immediately swallowed it with `except RuntimeError:
+        # pass` and fell through to the cryptic error anyway.)
         try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                # We're inside an existing event loop — caller should
-                # use aevaluate directly. Best-effort: run in nested
-                # task via asyncio.run_coroutine_threadsafe.
-                raise RuntimeError(
-                    "evaluate() called from within a running event loop; "
-                    "await aevaluate() instead."
-                )
+            asyncio.get_running_loop()
         except RuntimeError:
-            pass
+            pass  # no running loop — safe to use asyncio.run below
+        else:
+            raise RuntimeError(
+                "evaluate() called from within a running event loop; "
+                "await aevaluate() instead."
+            )
         return asyncio.run(
             self.aevaluate(
                 query=query,

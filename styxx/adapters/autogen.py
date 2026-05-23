@@ -135,20 +135,21 @@ class StyxxAutoGenHook:
             return None
 
         try:
-            # register at the front of the reply chain so we see
-            # messages before other hooks might modify them.
-            # autogen's register_reply accepts:
-            #   reply_func, position (int), config, trigger
-            # position=0 means "first in chain"
+            # autogen ConversableAgent.register_reply signature is:
+            #   register_reply(trigger, reply_func, position=0, config=None, ...)
+            # trigger=None => fire for any sender; position=0 => front of the
+            # reply chain (observe before other hooks mutate the message).
+            # The previous call passed _styxx_reply_func as `trigger` and
+            # omitted reply_func, so the hook silently never registered.
             register_fn(
-                _styxx_reply_func,
+                None,                 # trigger: any sender
+                _styxx_reply_func,    # reply_func
                 position=0,
             )
         except TypeError:
-            # some autogen versions have a different register_reply
-            # signature. try the minimal call.
+            # autogen version with a different signature — try the minimal form.
             try:
-                register_fn(_styxx_reply_func)
+                register_fn(None, _styxx_reply_func)
             except Exception as exc:
                 warnings.warn(
                     f"styxx autogen hook: register_reply failed: "

@@ -22,27 +22,29 @@ This is the closed loop: predict → intervene → verify → learn.
 Usage:
     from styxx.intercept import CognitiveIntercept
 
-    # With OpenAI streaming
+    # During streaming: accumulate per-signal trajectories and check the
+    # partial trajectory every check_interval tokens; intervene on a
+    # forecast failure.
     intercept = CognitiveIntercept()
-    for chunk in intercept.stream(
-        client=client,
-        model="gpt-4o",
-        messages=[{"role": "user", "content": "..."}],
-    ):
-        print(chunk, end="", flush=True)
+    intervention = intercept.check_trajectory(trajectories, n_tokens=5)
+    if intervention:
+        ...  # rewind / re-anchor / resume per intervention.action
 
-    # After generation
-    print(intercept.report())
+    # After generation, finalize with the final vitals to build the report.
+    report = intercept.finalize(vitals)   # also available as intercept.report
+    print(report)
     # InterceptReport: 1 intervention at token 5
     #   forecast: hallucination (0.96 critical)
     #   action: rewind 5 tokens, anchor "let me reconsider — "
-    #   outcome: reasoning (0.87) coherence 0.94
-    #   learned: calibration updated
+
+    # Offline proof-of-concept on a recorded trajectory (no live API call):
+    from styxx.intercept import simulate_intercept
+    report = simulate_intercept(trajectories, label="hallucination")
 
     # Or as a gate on any vitals object
     from styxx.intercept import should_intercept
     if should_intercept(vitals):
-        # don't use this response — regenerate
+        ...  # don't use this response — regenerate
 
 Research: https://github.com/fathom-lab/fathom
 Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964

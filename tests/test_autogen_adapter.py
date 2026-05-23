@@ -38,7 +38,10 @@ class FakeAgent:
         self.name = name
         self._reply_funcs: list = []
 
-    def register_reply(self, reply_func, position=None):
+    def register_reply(self, trigger, reply_func, position=None):
+        # Matches the real autogen ConversableAgent.register_reply signature:
+        #   register_reply(trigger, reply_func, position=0, ...)
+        # (trigger first, then reply_func).
         if position is not None and position == 0:
             self._reply_funcs.insert(0, reply_func)
         else:
