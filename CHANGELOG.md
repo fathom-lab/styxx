@@ -15,6 +15,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   counterfactual axis added. real vs counterfactual Δ +0.365 composite.
   construct-ceiling pattern (overconfidence register firing) reproduces.
   see `papers/agent-self-audit/darkflobi-*`.
+- CI: a `tests` workflow running a Python 3.9-3.12 pytest matrix, an
+  import smoke over the top-level modules, and a wheel-packaging
+  verification job (asserts every subpackage + bundled data file ships).
+  Plus a `test` optional-dependency extra so the importorskip-gated tests
+  (MCP / anthropic / openai / card renderers / langchain) run in CI
+  instead of silently skipping.
+
+### Fixed
+
+- **Python 3.9-3.11 support.** `styxx scan` raised `SyntaxError` on
+  3.9-3.11 — a backslash inside an f-string expression (a 3.12-only
+  feature) — despite `requires-python = ">=3.9"`. Hoisted the glyphs into
+  module constants.
+- **Packaging.** `styxx.three_axis` (a real, tested subpackage) was missing
+  from the setuptools package list and would have been dropped from the next
+  wheel (`ModuleNotFoundError` for pip users). Now shipped.
+- **Wrong public exports.** `styxx.Vitals`, `styxx.compare_agents`, and
+  `styxx.verify` each resolved to the wrong implementation (a later import
+  clobbered the intended one) — `isinstance(r.vitals, styxx.Vitals)` was
+  False and the documented `styxx.verify(cert).valid` raised. The provenance
+  certificate verifier is now exported as `styxx.verify_certificate`.
+- **Inert detector.** `hallucination.detect_hallucination` never flagged,
+  halted, or retried: the consume loop gated on a hardcoded `will_flag=False`
+  and never applied its `threshold`. Now functional.
+- **Wrong / lost data.** compliance confidence-collapse events carried a
+  mismatched timestamp; `dynamics.forecast_horizon` injected a uniform action
+  instead of zero; `ProtocolEnvelope.new()` built envelopes that failed their
+  own `validate()`; `HandoffEnvelope.as_dict()` dropped the forecast-risk /
+  coherence fields `is_trusted()` relies on across serialization; `sentinel`
+  never delivered forecast-risk / coherence-collapse alerts to their
+  callbacks; `calibrate` reported legacy categories as personalized when they
+  had no effect; `analytics.streak()` returned a truthy stub instead of the
+  documented `None`.
+- **Integrations.** MCP tool handlers now run off the asyncio event loop and
+  return a uniform `{"error": …}` envelope; the LlamaIndex sync-loop guard and
+  the AutoGen `register_reply` calling convention were corrected; the `serve`
+  card render is now atomic (no torn reads on `/card.png`).
+
+### Changed
+
+- Synced drifted docstrings to the code (guardrail fusion weights/anchors,
+  residual_probe verdict API, sae scaffold note, `watch.is_concerning`,
+  `forecast` atlas-match) and surfaced `HorizonPoint.atlas_match_rate`.
+- De-duplicated the build-fingerprint-from-entries (5 sites) and memory-load
+  (2 sites) paths into shared helpers.
+- Added a `[tool.ruff]` config pinned to `target-version = "py39"` and cleared
+  ~250 lint findings (unused imports/variables, placeholder-less f-strings);
+  `ruff check styxx` is now clean.
+
+### Removed
+
+- Dead modules `styxx/cot_audit.py` and `styxx/hallucination_calibrate.py`
+  (zero references anywhere) and dead CLI flags (`ask --seed`,
+  `ci-test --baseline`).
 
 ## [7.4.2] — 2026-05-19 — Agent-Side Cognitive Integrity Release
 
