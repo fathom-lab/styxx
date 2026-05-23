@@ -321,9 +321,7 @@ def certify(
     )
 
     # Determine integrity level
-    if vitals is not None and gate == "pass" and trust > 0.7:
-        integrity = "verified"
-    elif vitals is not None and gate == "pass":
+    if vitals is not None and gate == "pass":
         integrity = "verified"
     elif vitals is not None and gate == "warn":
         integrity = "degraded"

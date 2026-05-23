@@ -840,9 +840,7 @@ class Thought:
         trust = round(max(0.0, min(1.0, trust)), 4)
 
         # Integrity label
-        if gate == "pass" and trust > 0.7:
-            integrity = "verified"
-        elif gate == "pass":
+        if gate == "pass":
             integrity = "verified"
         elif gate == "warn":
             integrity = "degraded"

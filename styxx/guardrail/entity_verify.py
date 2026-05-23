@@ -125,7 +125,7 @@ def verify_entities_batch(entities: List[str],
                            skip_common: bool = True) -> Dict[str, Dict]:
     """Verify a batch of entities. Returns entity → result dict."""
     common_words = {
-        "God", "Earth", "Moon", "Sun", "USA", "UK", "EU", "USA",
+        "God", "Earth", "Moon", "Sun", "USA", "UK", "EU",
         "Paris", "London", "Tokyo", "Berlin", "NYC",
     }
     results = {}

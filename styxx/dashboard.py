@@ -1010,9 +1010,6 @@ function fetchStatus() {
       const condEl = document.getElementById('s-condition');
       if (condEl) { condEl.textContent = status.condition || '--'; }
 
-      const moodEl = document.getElementById('s-mood');
-      if (moodEl) { moodEl.textContent = status.mood || '--'; }
-
       if (status.streak && status.streak !== '--') {
         document.getElementById('s-streak').textContent = status.streak;
       }

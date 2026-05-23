@@ -973,7 +973,7 @@ def weather(
                 prescriptions.append(
                     f"confidence varies by input type: {best_pt} prompts "
                     f"average {pt_means[best_pt]:.2f} but {worst_pt} prompts "
-                    f"average {pt_means[worst_pt]:.2f} ({spread:-.2f} gap). "
+                    f"average {pt_means[worst_pt]:.2f} ({spread:.2f} gap). "
                     f"your agent struggles more with {worst_pt} content — "
                     f"consider adding context or examples for {worst_pt} tasks."
                 )

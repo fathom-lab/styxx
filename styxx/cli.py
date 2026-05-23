@@ -250,7 +250,6 @@ def cmd_ci_test(args):
     import sys as _sys
     from .ci import regression_test
 
-    baseline_path = getattr(args, "baseline", None)
     min_pass = float(getattr(args, "min_pass", 0.80))
 
     # Without an agent_fn, test against audit history
@@ -1121,10 +1120,6 @@ def cmd_compare(args):
     ))
     print()
 
-    # Audit log every fixture too, so `styxx log tail` reflects the run
-    for r, kind in zip(rows, display_order):
-        pass  # rows already classified; audit happens in run_on_trajectories
-
     return 0
 
 
@@ -1698,7 +1693,6 @@ def _build_parser() -> argparse.ArgumentParser:
                        choices=["retrieval", "reasoning", "refusal",
                                 "creative", "adversarial", "hallucination"],
                        help="category of bundled atlas demo trajectory to read")
-    p_ask.add_argument("--seed", type=int, default=42)
     p_ask.set_defaults(func=cmd_ask)
 
     # compare — run all 6 atlas fixtures side-by-side
@@ -1761,7 +1755,6 @@ def _build_parser() -> argparse.ArgumentParser:
         "ci-test",
         help="cognitive regression test — fails if below thresholds",
     )
-    p_ci.add_argument("--baseline", type=str, default=None, help="path to baseline JSON")
     p_ci.add_argument("--min-pass", type=float, default=0.80, help="minimum pass rate (default: 0.80)")
     p_ci.add_argument("--min-conf", type=float, default=0.30, help="minimum confidence (default: 0.30)")
     p_ci.add_argument("--max-warn", type=float, default=0.25, help="maximum warn rate (default: 0.25)")
