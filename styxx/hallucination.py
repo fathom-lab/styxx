@@ -374,7 +374,9 @@ def detect_hallucination(
             risks.append(reading.risk)
             if reading.risk > max_risk:
                 max_risk = reading.risk
-            if reading.will_flag:
+            # _streamed yields will_flag=False by design ("caller decides
+            # threshold"); apply the threshold here so flag/halt/retry fire.
+            if reading.risk > threshold:
                 flagged.append(i)
                 if on_detect == "halt_and_flag":
                     halt_reason = (

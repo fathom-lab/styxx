@@ -296,9 +296,13 @@ def compliance_report(
     fail_count = sum(1 for g in gates if g == "fail")
     pass_rate = pass_count / n
 
-    # Confidence
-    confs = [float(e["phase4_conf"]) for e in entries
-             if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+    # Confidence. Track each retained confidence's original entry index so
+    # anomaly timestamps below map back to the correct entry — `confs` is a
+    # filtered subsequence of `entries` (nulls/zeros dropped), so a confs-space
+    # index does NOT line up with the same index into `entries`.
+    conf_pairs = [(idx, float(e["phase4_conf"])) for idx, e in enumerate(entries)
+                  if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+    confs = [c for _, c in conf_pairs]
     mean_conf = sum(confs) / len(confs) if confs else 0.0
 
     # Categories
@@ -357,8 +361,9 @@ def compliance_report(
         for i in range(window_size, len(confs)):
             window_mean = sum(confs[i-window_size:i]) / window_size
             if window_mean < 0.20:
-                # Find the timestamp
-                ts_idx = min(i, len(entries) - 1)
+                # Map the confs-space index of the last entry in the window
+                # back to its real index in `entries` for the timestamp.
+                ts_idx = conf_pairs[i - 1][0]
                 anomalies.append(AnomalyEvent(
                     timestamp=entries[ts_idx].get("ts_iso", ""),
                     event_type="confidence_collapse",

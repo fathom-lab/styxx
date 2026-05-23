@@ -470,11 +470,24 @@ class CognitiveDynamics:
         a fixed point. If >= 1, it may diverge.
         """
         self._check_fitted()
-        zero_action = state_to_thought(
-            np.zeros(N_CATEGORIES),  # will get renormalized to uniform
-            source_model="dynamics:zero_action",
-        )
-        return self.simulate(initial=initial, actions=[zero_action] * n_steps)
+        # True zero action: iterate s_{t+1} = A @ s_t with NO B·a term.
+        # We cannot route this through simulate(), because encoding a zero
+        # action as a Thought renormalizes the zero vector onto the simplex
+        # (-> uniform 1/N), which would inject a phantom B·(uniform/N) forcing
+        # term and contaminate the "natural drift" / convergence claim above.
+        # This mirrors predict() exactly, minus the action contribution, so
+        # each step is still simplex-projected like the rest of the API.
+        trajectory: List[Thought] = [initial]
+        current = initial
+        for _ in range(n_steps):
+            next_vec = self.A @ thought_to_state(current)
+            current = state_to_thought(
+                next_vec,
+                source_model="dynamics:forecast_horizon",
+                tags={"kind": "dynamics_forecast"},
+            )
+            trajectory.append(current)
+        return trajectory
 
     # ── Residual (held-out fit quality) ──────────────────────────
 

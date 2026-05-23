@@ -311,11 +311,16 @@ __all__ = [
 # Public alias + factory for docs/spec compatibility
 HandoffEnvelope = ProtocolEnvelope
 
-def _default_vitals():
-    from styxx.cli import _get_demo_trajectory
-    from styxx import Raw
-    e, l, t, _ = _get_demo_trajectory("reasoning")
-    return Raw().read(entropy=e, logprob=l, top2_margin=t)
+def _default_vitals() -> "Vitals":
+    """A neutral, valid protocol snapshot for envelopes built via .new()
+    without an explicit last_vitals.
+
+    Must be a handoff.Vitals (the wire snapshot) — the previous version
+    returned a runtime styxx.vitals.Vitals from Raw().read(...), which has a
+    different shape and made ProtocolEnvelope.new(...) fail its own
+    validate() ("last_vitals: malformed") and serialize a mismatched payload.
+    """
+    return Vitals(category="reasoning", confidence=0.8, gate="pass", trust=0.8)
 
 def _new_envelope(sender_id, receiver_id=None, task_context=None, last_vitals=None, thought=None, trust=None):
     return ProtocolEnvelope(
