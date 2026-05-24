@@ -47,7 +47,7 @@ jobs:
       - name: Import smoke (every top-level module must import on this version)
         run: |
           python -c "import styxx; print('styxx', styxx.__version__)"
-          python -c "import styxx.scan, styxx.three_axis"
+          python -c "import styxx.scan, styxx.three_axis, styxx.cognometrics"
           # styxx.mcp.server needs the mcp package (gated to py>=3.10); import it only when mcp is present.
           python -c "import importlib.util; m = importlib.import_module('styxx.mcp.server') if importlib.util.find_spec('mcp') else None; print('styxx.mcp.server', 'OK' if m else 'skipped (mcp absent on this python)')"
 
@@ -87,6 +87,7 @@ jobs:
               "styxx/three_axis/__init__.py",
               "styxx/guardrail/__init__.py",
               "styxx/adapters/__init__.py",
+              "styxx/cognometrics.py",
               "styxx/mcp/server.py",
               "styxx/residual_probe/probe.py",
           ]
@@ -106,9 +107,11 @@ jobs:
     # Guards against optional-dependency creep into core. A bare
     # `pip install styxx` (numpy only, no extras) must import AND run the core
     # public surface. This is the class of bug that shipped preflight()
-    # secretly requiring `mcp`: the audit logic lived in styxx.mcp.server, and
-    # every editable / [test] install already had mcp, so it passed locally and
-    # across the matrix until a truly minimal install was exercised.
+    # secretly requiring `mcp`: the audit logic used to live in
+    # styxx.mcp.server (it now lives in the mcp-free styxx.cognometrics; the
+    # server is a thin transport adapter), and every editable / [test] install
+    # already had mcp, so it passed locally and across the matrix until a truly
+    # minimal install was exercised.
     name: core-minimal (numpy-only install)
     runs-on: ubuntu-latest
     steps:
@@ -131,9 +134,12 @@ jobs:
           import importlib, styxx
 
           # Core modules must import with no optional dependency installed.
+          # styxx.mcp.server is included because the transport adapter must
+          # still import without the mcp SDK (it re-exports the core logic).
           for m in [
               "styxx.scan", "styxx.three_axis", "styxx.preflight",
-              "styxx.coherence", "styxx.attack", "styxx.mcp.server",
+              "styxx.cognometrics", "styxx.coherence", "styxx.attack",
+              "styxx.mcp.server",
           ]:
               importlib.import_module(m)
 
@@ -143,9 +149,16 @@ jobs:
           assert type(r).__name__ == "PreflightResult", r
           styxx.recover_posture(last_n=5)
 
-          # The cognometric tool-logic functions must import without the mcp SDK.
-          from styxx.mcp.server import tool_cogn_audit, tool_cogn_recover_posture
+          # The cognometric tool-logic now lives in the mcp-free core module;
+          # it AND the back-compat re-export through the transport adapter must
+          # import (and be the same objects) without the mcp SDK installed.
+          from styxx.cognometrics import tool_cogn_audit, tool_cogn_recover_posture
+          from styxx.mcp.server import (
+              tool_cogn_audit as _srv_audit,
+              tool_cogn_recover_posture as _srv_recover,
+          )
           assert callable(tool_cogn_audit) and callable(tool_cogn_recover_posture)
+          assert _srv_audit is tool_cogn_audit and _srv_recover is tool_cogn_recover_posture
 
           print("core-minimal: numpy-only surface imports and runs OK")
           PY

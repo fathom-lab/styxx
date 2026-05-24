@@ -106,3 +106,4 @@ papers/three-axis-sendtime-gate/_dogfood_tweet_results.jsonl
 scripts/dogfood/_behavior_cache_*.json
 scripts/dogfood/out_*_partial.json
 scripts/self_audit/_filter_mine.py
+papers/grounded-arc/_build/

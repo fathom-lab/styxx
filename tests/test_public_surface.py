@@ -546,9 +546,15 @@ def test_preflight_persists_to_chart_for_recovery(isolated_data_dir):
 
     # Three preflight events visible to recover_posture
     assert p.n_preflight_events == 3
-    # All three should have flagged needs_revision (sycophancy, overconfidence
-    # ceiling, and the ref-grounded deception case all fire)
-    assert p.n_needs_revision >= 2
+    # Honest gate (7.4.4): only TRUSTED axes trip needs_revision. The
+    # sycophantic draft fires (sycophancy is trusted, AUC 0.972). The clean
+    # factual draft ("the answer is 4") does NOT — it would only fire on
+    # overconfidence's construct ceiling, which no longer gates alone. The
+    # titanic deception case fires only when NLI-grounded (the `nli` extra
+    # is present): so n_needs_revision is 1 without it, 2 with it. The
+    # load-bearing point is that NOT all three fire — the clean factual
+    # line is correctly silent.
+    assert 1 <= p.n_needs_revision <= 2
     # Per-instrument firing history is now populated
     assert "sycophancy" in p.instrument_firings
     assert "overconfidence" in p.instrument_firings

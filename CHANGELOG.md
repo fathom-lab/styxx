@@ -7,7 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [7.4.4] — 2026-05-24 — Honest Revision Gate & mcp-free Core
+
+### Changed
+
+- **Cognometric tool-logic extracted to a core, mcp-free module.** The
+  cognometric audit instruments, the logprob-vitals tools, their helpers, and
+  the `COGN_*` constants moved out of `styxx.mcp.server` into a new
+  `styxx.cognometrics` module that imports only the standard library (and the
+  rest of `styxx`, lazily). `styxx.preflight` now imports the audit logic from
+  there directly instead of reaching up into the MCP transport layer — removing
+  the core→transport inversion behind the 7.4.3 "core `preflight()` required the
+  `mcp` SDK" fix (7.4.3 made the SDK import lazy as a stopgap; this is the clean
+  structural fix). `styxx.mcp.server` is now a thin transport adapter — the MCP
+  `Server` / `Tool` / `TextContent` wiring — and re-exports every moved name, so
+  existing `from styxx.mcp.server import tool_cogn_audit` / `_cogn_score_all`
+  (and the like) keep working unchanged. No public API change; the tool
+  contracts (names, signatures, dict-in/dict-out shapes) are identical. The
+  `core-minimal` CI job now also asserts `styxx.cognometrics` imports and runs
+  without the `mcp` SDK, and the wheel-packaging job asserts the module ships.
+
+### Fixed
+
+- **`needs_revision` alarm fatigue (honest gate).** A 2026-05-24 self-audit
+  scored six varied samples and `needs_revision` came back True on all six —
+  including a low-composite terse factual status line and the literal token
+  `"HEARTBEAT_OK"`. Cause was the GATE, not the instruments: it keyed off the
+  raw composite / per-instrument threshold, and overconfidence's text-only
+  construct ceiling saturates (~0.92-0.95) on any declarative phrasing —
+  inflating the composite past 0.30 and tripping the raw `> 0.60` clause on
+  plainly clean text. `_cogn_needs_revision` now intersects the historical
+  condition with a *trusted-axis corroboration* (`_cogn_gate_keys` = composite
+  keys minus `COGN_UNDER_REVIEW`), so a documented non-discriminative axis can
+  never raise the flag alone: not (a) reference-less deception (excluded unless
+  a `correct_reference` grounds it via NLI), nor (b) a construct-ceiling-only
+  overconfidence reading (commit 7c36ed9, H_null). The gate is strictly a
+  subset of the old condition — it can only suppress false alarms, never invent
+  one, so the pinned low-overconfidence "clean" fixtures are preserved. The
+  instruments are **not** re-tuned (text-only overconfidence recalibration is a
+  closed negative); overconfidence's firing is still scored and surfaced in
+  `construct_ceiling_fires` / `advice[*].scope_caveat`. Single source of truth
+  in `styxx.cognometrics`, used by both `preflight()` and the MCP audit tools.
 
 ## [7.4.3] — 2026-05-24 — Correctness & Clean-Install Release
 

@@ -105,11 +105,20 @@ class PreflightResult:
     """Typed return of `styxx.preflight(prompt, draft)`.
 
     The composite is a `[0, 1]`-valued cognometric risk score where lower
-    is more honest. `needs_revision` is True iff composite > 0.30 or any
-    composite-instrument scored > 0.60 — the same threshold the MCP tool
-    uses. `advice` only contains instruments that scored > 0.40; quiet
-    instruments are omitted to keep the structure focused on what's
-    actionable.
+    is more honest. `needs_revision` fires on the same basis the composite
+    is trusted on: the historical threshold (composite > 0.30 or any
+    composite-instrument > 0.60) **intersected with** a trusted-axis
+    corroboration, so a documented non-discriminative axis can never raise
+    the flag by itself. Concretely it will NOT fire solely on (a) the
+    reference-less deception axis (excluded unless a `correct_reference`
+    grounds it through NLI) or (b) a construct-ceiling-only overconfidence
+    reading (text-only register detector, commit 7c36ed9 H_null). Both are
+    still scored and surfaced — overconfidence's firing shows up in
+    `construct_ceiling_fires` and the matching `advice[*].scope_caveat` —
+    they just don't gate revision alone. This is the 2026-05-24 alarm-
+    fatigue fix; the underlying instruments are unchanged. `advice` only
+    contains instruments that scored > 0.40; quiet instruments are omitted
+    to keep the structure focused on what's actionable.
 
     `refusal_note` is populated when refusal > 0.60. Refusal is reported
     separately because it isn't always bad — refusing harm is correct.
@@ -251,8 +260,11 @@ def preflight(
             "for prompt-only risk forecasting, see the styxx 8.0 "
             "grounded-arc roadmap"
         )
-    # Lazy import — avoids paying mcp import cost on package import.
-    from .mcp.server import tool_cogn_audit_with_advice, tool_cogn_audit
+    # Import the cognometric audit logic from the mcp-free core module.
+    # (Before 7.4.4 this reached up into styxx.mcp.server — core depending on
+    # the transport layer, which is why a bare-core preflight() used to raise
+    # ModuleNotFoundError: mcp.) Kept lazy: no import-time cost, no cycle.
+    from .cognometrics import tool_cogn_audit_with_advice, tool_cogn_audit
 
     if correct_reference is not None:
         # Reference-grounded path uses cogn_audit (which routes deception
