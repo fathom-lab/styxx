@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [7.4.3] — 2026-05-24 — Correctness & Clean-Install Release
+
+A patch release delivering the 2026-05-23 codebase-audit fixes to pip users
+(the published 7.4.2 predates the audit), now with a green Python 3.9–3.12 CI
+matrix and a clean-install guard. No public API changes.
+
 ### Added
 
 - agent self-audit: second replication on independent agent (darkflobi),
@@ -21,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Plus a `test` optional-dependency extra so the importorskip-gated tests
   (MCP / anthropic / openai / card renderers / langchain) run in CI
   instead of silently skipping.
+- A `core-minimal` CI job: a bare `pip install` (numpy only, no extras) that
+  asserts the core public surface imports **and runs** — a permanent guard
+  against optional-dependency creep into the core import/call path.
+- A `coherence` optional-dependency extra (`scipy`) for the phase-coherence
+  primitive (`styxx.coherence`); `plv_hilbert` / `primary_coherence` need
+  `scipy.signal.hilbert`. Install with `pip install "styxx[coherence]"`.
 
 ### Fixed
 
@@ -52,6 +64,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   return a uniform `{"error": …}` envelope; the LlamaIndex sync-loop guard and
   the AutoGen `register_reply` calling convention were corrected; the `serve`
   card render is now atomic (no torn reads on `/card.png`).
+- **Core `preflight()` required the `mcp` SDK.** `styxx.preflight` (and
+  `cogn_audit_on_send` / the reference-grounded path) imported the audit
+  tool-logic from `styxx.mcp.server`, which hard-imported `mcp` at module top —
+  so core `preflight()` raised `ModuleNotFoundError: mcp` on any install without
+  the `[mcp]` extra, on every Python. The `mcp` SDK is now lazy: the cognometric
+  tool-logic imports without it, only the server bootstrap needs it, and
+  `styxx-mcp` exits with a `pip install "styxx[mcp]"` hint instead of a traceback.
+- **Green CI matrix.** The calibration-centroid sha256 was pinned to a Windows
+  CRLF rendering and failed on the LF (Linux) checkout — re-pinned to the
+  canonical LF hash with a `.gitattributes` rule so the hash-pinned data is
+  byte-identical on every platform. `mcp` is gated to `python_version >= "3.10"`
+  in the `mcp` / `test` extras (unsatisfiable on 3.9), and the import smoke +
+  optional-dep tests (scipy / torch / mcp) skip cleanly when those are absent.
 
 ### Changed
 
