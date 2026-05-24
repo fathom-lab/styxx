@@ -1,0 +1,46 @@
+{
+  "gpt-4o": {
+    "model": "gpt-4o",
+    "rho": 0.7461737205845115,
+    "p": 0.0,
+    "rho_refusal": 0.06639039135823042,
+    "n_refusal": 158,
+    "rho_compliance": 0.4600241825507096,
+    "n_compliance": 292,
+    "verdict": "CONFOUNDED",
+    "cross_family": false
+  },
+  "gpt-4.1-mini": {
+    "model": "gpt-4.1-mini",
+    "rho": 0.7391787028619664,
+    "p": 0.0,
+    "rho_refusal": 0.14827502103221904,
+    "n_refusal": 137,
+    "rho_compliance": 0.5055221314262313,
+    "n_compliance": 313,
+    "verdict": "CONFOUNDED",
+    "cross_family": false
+  },
+  "gpt-4.1": {
+    "model": "gpt-4.1",
+    "rho": 0.7501117801692196,
+    "p": 0.0,
+    "rho_refusal": -0.22317320220380685,
+    "n_refusal": 160,
+    "rho_compliance": 0.4395721050266129,
+    "n_compliance": 290,
+    "verdict": "CONFOUNDED",
+    "cross_family": false
+  },
+  "Qwen_Qwen2.5-1.5B-Instruct": {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "rho": 0.5782885725084347,
+    "p": 0.0,
+    "rho_refusal": 0.162926348992587,
+    "n_refusal": 278,
+    "rho_compliance": 0.2939486773123156,
+    "n_compliance": 172,
+    "verdict": "CONFOUNDED",
+    "cross_family": true
+  }
+}
