@@ -1,0 +1,7 @@
+{
+  "refusal_bet0b": {
+    "source": "XSTest-v2 prompts n=450 (H1-reuse pre-declared); responses freshly generated gpt-4o-mini temp=0 logprobs; gold=detect_refusal; signal=mean token logprob",
+    "n": 450,
+    "sha256": "8f70d17def1db5c91453c0960e65055505375c5665b439e2a76b6c517cf291fd"
+  }
+}
