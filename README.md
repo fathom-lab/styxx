@@ -99,9 +99,9 @@ styxx.run_doctor()                              # 7.4.2+: programmatic health ch
 That's the surface. **styxx scores cognitive state from logprob trajectories
 (tier 0), text alone (4 calibrated instruments), or residual stream
 (tier 1, open weights). It self-discloses construct ceilings — what each
-instrument does and doesn't measure — inline.** The 7.4.2+ additions
-(`preflight`, `recover_posture`, `run_doctor`) are on `main` and ship in
-the next PyPI release; everything else is on the current published wheel.
+instrument does and doesn't measure — inline.** `preflight`,
+`recover_posture`, and `run_doctor` (the 7.4.2+ agent-integrity primitives)
+now ship in the current published wheel — `pip install styxx` gets them.
 
 [Full feature index, the 9-for-9 instrument table, and the construct-ceiling
 documentation ↓](#nine-calibrated-cognometric-instruments--the-every-mind-leaves-vitals-call-complete-pure-python-cpu-only-mit)
