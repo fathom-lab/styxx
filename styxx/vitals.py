@@ -49,7 +49,7 @@ PHASE_ORDER = ["phase1_preflight", "phase2_early", "phase3_mid", "phase4_late"]
 # If this ever mismatches the actual file, styxx refuses to import —
 # it means the calibration data has been tampered with or corrupted.
 EXPECTED_CENTROIDS_SHA256 = (
-    "502313c2e7c160df205f24d5457bb57b8a5e1846ff4afe898db0f20d491d0beb"
+    "eda49b875fa7fe68a7307b2b77fea976ca6cce7719a783e13f5cf67a538b30f5"
 )
 
 

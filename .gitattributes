@@ -1,0 +1,6 @@
+# Hash-pinned calibration data: styxx/vitals.py pins these files' sha256
+# (EXPECTED_CENTROIDS_SHA256). They MUST be byte-identical on every platform,
+# so never apply EOL normalization — a Windows CRLF checkout would change the
+# bytes and break the hash (which is exactly what happened: the pin was a
+# CRLF-rendered hash, so the LF Linux CI checkout failed to verify).
+styxx/centroids/*.json -text
