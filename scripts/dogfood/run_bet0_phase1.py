@@ -298,27 +298,84 @@ def run_phase_1(*, decisions_path: Path, corpora_path: Path,
               "score instruments. exiting.")
         return 0
 
-    # ── 3. The actual run (placeholders — implement when reaching here) ──
-    # The structure below is the LOCKED-IN execution path. The
-    # implementations marked TODO are pure compute on already-locked
-    # corpora and decisions; nothing in them changes the experimental
-    # design. They are the parts that will land in the next session
-    # after operator decisions are filled in.
-    print("  [NOT IMPLEMENTED] Phase 1 execution body — fills in next session")
-    print(
-        "  the structure: for each instrument I,\n"
-        "    1. embed all holdout prompts via decisions.embedding_model\n"
-        "    2. compute k-NN distance to calibration corpus (k=10)\n"
-        "    3. apply threshold_law_validity() per prompt\n"
-        "    4. score each (prompt, response) with score_instrument(I)\n"
-        "    5. compute error = |score - gold|\n"
-        "    6. ρ = spearman_rho(validity, -error)\n"
-        "    7. p = permutation_p(validity, -error, n=H1_PERMUTATIONS)\n"
-        "  decision rule:\n"
-        f"    if ρ_refusal < {H1_BAR_RHO}: write H1_FAILED.md, return 1\n"
-        "    else: write H1_PASSED.md, return 0; continue to H2/H3/H4."
+    # ── 3. The actual run — uses the validated validity engine ─────
+    # (papers/grounded-arc/validity_engine.py, self-tested 2026-05-24).
+    # Pure compute on already-locked corpora + decisions; the experimental
+    # design is fixed above. Unreachable until corpora + calibration params
+    # are committed — the precondition gates above return 2 before here.
+    import importlib.util as _ilu
+    _ep = Path(__file__).resolve().parents[2] / "papers" / "grounded-arc" / "validity_engine.py"
+    _spec = _ilu.spec_from_file_location("validity_engine", _ep)
+    eng = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(eng)  # type: ignore[union-attr]
+
+    grounded = corpora_path.parent
+    cal_params_path = grounded / "calibration_params.json"
+    if not cal_params_path.exists():
+        print(f"  [PRECONDITION FAIL] validation-slice calibration not fit: {cal_params_path}")
+        print("  → fit α per instrument on the validation slice (τ locked at the")
+        print("    threshold-law paper value; τ_distance = 1 − 0.31 = 0.69) and")
+        print("    commit calibration_params.json — never fit α on the holdout.")
+        return 2
+    cal_params = json.loads(cal_params_path.read_text(encoding="utf-8"))
+
+    results: Dict[str, Dict[str, float]] = {}
+    for inst in INSTRUMENTS:
+        corpus = corpora[inst]
+        cal_prompts = [
+            ln for ln in (grounded / "calibration" / f"{inst}.txt")
+            .read_text(encoding="utf-8").splitlines() if ln.strip()
+        ]
+        hold = [
+            json.loads(ln) for ln in (grounded / "holdout" / f"{inst}.jsonl")
+            .read_text(encoding="utf-8").splitlines() if ln.strip()
+        ]
+        # Locked-hash verification — refuse to score a mutated holdout.
+        if not corpus.verify([h["prompt"] for h in hold]):
+            print(f"  [HASH MISMATCH] holdout[{inst}] != locked sha256 — refusing to run")
+            return 2
+        tau = float(cal_params[inst].get("tau", eng.TAU_DISTANCE))
+        alpha = float(cal_params[inst]["alpha"])
+        cal_emb = eng.embed(cal_prompts, decisions.embedding_model)
+        hold_emb = eng.embed([h["prompt"] for h in hold], decisions.embedding_model)
+        validities: List[float] = []
+        neg_err: List[float] = []
+        for item, q in zip(hold, hold_emb):
+            d = eng.knn_distance(q, cal_emb, k=10)
+            validities.append(eng.validity(d, tau=tau, alpha=alpha))
+            s = score_instrument(inst, item["prompt"], item["response"],
+                                 item.get("reference"))
+            neg_err.append(-abs(s - float(item["gold"])))
+        rho = spearman_rho(validities, neg_err)
+        p = permutation_p(validities, neg_err,
+                          n_permutations=H1_PERMUTATIONS, rng_seed=RNG_SEED)
+        results[inst] = {"rho": rho, "p": p, "n": float(len(hold))}
+        print(f"  ρ[{inst:>15}] = {rho:+.3f}  (p={p:.4f}, n={len(hold)})")
+
+    rho_ref = results[HEADLINE_INSTRUMENT]["rho"]
+    p_ref = results[HEADLINE_INSTRUMENT]["p"]
+    bar = decisions.h1_abandon_rho
+    cleared = rho_ref >= bar and p_ref < H1_BAR_P
+    summary = (
+        f"# H1 {'PASSED' if cleared else 'FAILED'}\n\n"
+        f"headline instrument: {HEADLINE_INSTRUMENT}\n"
+        f"rho = {rho_ref:+.4f} (bar {bar}); permutation p = {p_ref:.4f} "
+        f"(bar {H1_BAR_P})\n\nall instruments:\n"
+        + "\n".join(f"- {i}: rho={r['rho']:+.4f} p={r['p']:.4f} n={int(r['n'])}"
+                    for i, r in results.items())
+        + f"\n\nembedding_model: {decisions.embedding_model}\n"
+        f"amendment_commit: {decisions.amendment_commit_hash}\n"
     )
-    return 0
+    (grounded / ("H1_PASSED.md" if cleared else "H1_FAILED.md")).write_text(
+        summary, encoding="utf-8")
+    print()
+    if cleared:
+        print(f"  H1 CLEARED: ρ_{HEADLINE_INSTRUMENT}={rho_ref:+.3f} ≥ {bar} "
+              f"(p={p_ref:.4f}). → continue to H2/H3/H4.")
+        return 0
+    print(f"  H1 FAILED: ρ_{HEADLINE_INSTRUMENT}={rho_ref:+.3f} < {bar}. "
+          f"→ arc abandoned; closed-negative paper (H1_FAILED.md).")
+    return 1
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -337,7 +394,19 @@ def main(argv: Optional[List[str]] = None) -> int:
         "--dry-run", action="store_true",
         help="exit after precondition checks; do not embed or score",
     )
+    parser.add_argument(
+        "--self-test", action="store_true",
+        help="validate the validity engine on synthetic + real-embedding data "
+             "(touches NO holdout); proves the kill-gate machinery is runnable",
+    )
     args = parser.parse_args(argv)
+    if args.self_test:
+        import importlib.util as _ilu
+        _ep = Path(__file__).resolve().parents[2] / "papers" / "grounded-arc" / "validity_engine.py"
+        _spec = _ilu.spec_from_file_location("validity_engine", _ep)
+        _eng = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_eng)  # type: ignore[union-attr]
+        return _eng.self_test()
     return run_phase_1(
         decisions_path=Path(args.decisions),
         corpora_path=Path(args.corpora),
