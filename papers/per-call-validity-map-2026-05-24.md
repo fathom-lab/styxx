@@ -173,6 +173,11 @@ universal validity. Reference prototype: `papers/grounded-arc/overflag_validity.
   subset** of each instrument, not pooled across a near-perfect class.
 - **Single session.** These are first results; the map's green cell warrants
   independent replication before a product depends on it.
+- **The negative is substrate-specific.** H1d rules out *generation-confidence
+  (token logprobs)* as a validity substrate for hallucination — not all
+  model-internal signal. Hidden-state probes and self-consistency sampling are
+  untested and are the natural next substrate. This work does not claim
+  hallucination-validity is impossible, only that token logprobs cannot supply it.
 
 ## 9 · Implications
 
@@ -188,7 +193,8 @@ uncertainty is viable; universal self-trust from logprobs is not.
 
 ## 10 · Reproducibility
 
-Pre-registrations: `preregistration_2026_05_19.md` (`53269f6`),
+Pre-registrations (each committed before its data): `preregistration_2026_05_19.md`
+(`29874f2`; operator decisions amended/locked `53269f6`, holdout hashed `060ef7a`),
 `preregistration_bet0b_2026_05_24.md` (`5ef0dc2`),
 `preregistration_crossmodel_2026_05_24.md` (`e580964`),
 `preregistration_crossinstrument_2026_05_24.md` (`2c71aa0`). Holdout hashes,
