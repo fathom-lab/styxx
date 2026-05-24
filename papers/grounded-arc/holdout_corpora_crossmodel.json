@@ -16,5 +16,12 @@
     "n": 450,
     "sha256": "82e6bd157721f272cdcd5ffd901b5832e4a66b1083706c53fc266d416d37bd2a",
     "source": "XSTest gpt4 prompts; temp0 logprobs; gold detect_refusal"
+  },
+  "Qwen_Qwen2.5-1.5B-Instruct": {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "n": 450,
+    "sha256": "c7b2c339a8e343c206addc856fbd217341bd26b7272cc3cc86756b5c0c68efc7",
+    "cross_family": true,
+    "source": "XSTest gpt4 prompts; local greedy logprobs; gold detect_refusal"
   }
 }
