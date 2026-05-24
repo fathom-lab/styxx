@@ -1,0 +1,7 @@
+{
+  "embedding_model": "text-embedding-3-large",
+  "h1_abandon_rho": 0.4,
+  "ship_target": "8.0",
+  "amendment_commit_hash": "prereg-sha256:487caeda4b0255a7ea328114e2377be73701f19fc9e2f2520b1866d50c358d82",
+  "locked_at": "2026-05-24T16:47:33Z"
+}
