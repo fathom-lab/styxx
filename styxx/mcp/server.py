@@ -33,9 +33,23 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Optional
 
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp.types import TextContent, Tool
+# The MCP SDK is an optional transport dependency (the `mcp` extra, py>=3.10).
+# Import it lazily so this module's cognometric tool-logic functions — reused by
+# core styxx.preflight — stay importable without `mcp` installed. Only the server
+# bootstrap (main / _run / _build_server) actually needs the SDK.
+try:
+    from mcp.server import Server
+    from mcp.server.stdio import stdio_server
+    from mcp.types import TextContent, Tool
+
+    _HAS_MCP = True
+except ImportError:  # pragma: no cover - exercised by the core-minimal CI job
+    Server = None  # type: ignore[assignment,misc]
+    stdio_server = None  # type: ignore[assignment]
+    # Placeholders so the `-> List[Tool]` / `-> List[TextContent]` handler
+    # annotations still resolve at import time when mcp is absent.
+    TextContent = Tool = object  # type: ignore[assignment,misc]
+    _HAS_MCP = False
 
 try:
     import styxx
@@ -1068,7 +1082,9 @@ def tool_cogn_self_heal_protocol(args: Dict[str, Any]) -> Dict[str, Any]:
 # MCP wiring
 # ---------------------------------------------------------------------------
 
-server = Server("styxx-mcp")
+# The Server instance + handler registration are built lazily in _build_server()
+# (they require the mcp SDK). The handlers below are defined as plain functions
+# so this module imports without `mcp`.
 
 
 def tool_cogn_share_card(args: Dict[str, Any]) -> Dict[str, Any]:
@@ -1149,7 +1165,6 @@ def tool_cogn_share_card(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-@server.list_tools()
 async def list_tools() -> List[Tool]:
     return [
         Tool(
@@ -1338,7 +1353,6 @@ _TOOL_HANDLERS = {
 _TOOL_EXECUTOR = ThreadPoolExecutor(max_workers=1, thread_name_prefix="styxx-mcp")
 
 
-@server.call_tool()
 async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
     arguments = arguments or {}
     handler = _TOOL_HANDLERS.get(name)
@@ -1357,12 +1371,26 @@ async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
     return [TextContent(type="text", text=json.dumps(result, indent=2))]
 
 
+def _build_server() -> "Server":
+    """Instantiate the MCP server and register the handlers. Requires the mcp SDK."""
+    server = Server("styxx-mcp")
+    server.list_tools()(list_tools)
+    server.call_tool()(call_tool)
+    return server
+
+
 async def _run() -> None:
+    server = _build_server()
     async with stdio_server() as (read_stream, write_stream):
         await server.run(read_stream, write_stream, server.create_initialization_options())
 
 
 def main() -> None:
+    if not _HAS_MCP:
+        raise SystemExit(
+            "styxx MCP server requires the 'mcp' package (Python >= 3.10).\n"
+            "Install it with:  pip install 'styxx[mcp]'"
+        )
     asyncio.run(_run())
 
 

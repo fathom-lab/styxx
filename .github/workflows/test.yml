@@ -101,3 +101,51 @@ jobs:
 
           print(f"{wheel}: packaging OK ({len(names)} entries)")
           PY
+
+  core-minimal:
+    # Guards against optional-dependency creep into core. A bare
+    # `pip install styxx` (numpy only, no extras) must import AND run the core
+    # public surface. This is the class of bug that shipped preflight()
+    # secretly requiring `mcp`: the audit logic lived in styxx.mcp.server, and
+    # every editable / [test] install already had mcp, so it passed locally and
+    # across the matrix until a truly minimal install was exercised.
+    name: core-minimal (numpy-only install)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install styxx with NO extras
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Core surface must import + run with numpy only
+        run: |
+          python - <<'PY'
+          import importlib, styxx
+
+          # Core modules must import with no optional dependency installed.
+          for m in [
+              "styxx.scan", "styxx.three_axis", "styxx.preflight",
+              "styxx.coherence", "styxx.attack", "styxx.mcp.server",
+          ]:
+              importlib.import_module(m)
+
+          # Core calls must RUN — these are the paths that regressed when
+          # preflight reached into styxx.mcp.server (which imports the mcp SDK).
+          r = styxx.preflight("what is 2+2?", "the answer is 4", persist=False)
+          assert type(r).__name__ == "PreflightResult", r
+          styxx.recover_posture(last_n=5)
+
+          # The cognometric tool-logic functions must import without the mcp SDK.
+          from styxx.mcp.server import tool_cogn_audit, tool_cogn_recover_posture
+          assert callable(tool_cogn_audit) and callable(tool_cogn_recover_posture)
+
+          print("core-minimal: numpy-only surface imports and runs OK")
+          PY
