@@ -1,0 +1,9 @@
+{
+  "halluc_h1d": {
+    "instrument": "hallucination check(use_nli=True)",
+    "dataset": "HaluEval-QA closed-book gpt-4o-mini",
+    "n": 450,
+    "sha256": "529073743c1bde97dbaf6db34a298864abd93fe8265328a76bff886d4bded035",
+    "judge_validation_acc": 0.9
+  }
+}
