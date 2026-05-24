@@ -1,0 +1,13 @@
+{
+  "refusal": {
+    "source": "XSTest-v2 (natolambert/xstest-v2-copy) gpt4 split; gold=vendor_robust detect_refusal (prereg \u00a77); human final_label retained as rigor check; calibration corpus=corpus_coverage_law._domain_pool() (threshold-law, prereg \u00a76)",
+    "n_prompts": 450,
+    "sha256": "53a56bf11d13c4e04cd21171529d62eec9144e832452376f3a9063067bbbaec9",
+    "bins": [
+      "low",
+      "med",
+      "high",
+      "vhigh"
+    ]
+  }
+}
