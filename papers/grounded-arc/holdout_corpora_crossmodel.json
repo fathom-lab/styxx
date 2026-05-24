@@ -1,0 +1,20 @@
+{
+  "gpt-4o": {
+    "model": "gpt-4o",
+    "n": 450,
+    "sha256": "b8968ca7612a130adac593017cbdb9fd2ddccd7d0c74627f6c9afe8a545bfdb7",
+    "source": "XSTest gpt4 prompts; temp0 logprobs; gold detect_refusal"
+  },
+  "gpt-4.1-mini": {
+    "model": "gpt-4.1-mini",
+    "n": 450,
+    "sha256": "d39a15a4679228e138e344d229d171e39abb5c998ec649a78f96eedf36796b33",
+    "source": "XSTest gpt4 prompts; temp0 logprobs; gold detect_refusal"
+  },
+  "gpt-4.1": {
+    "model": "gpt-4.1",
+    "n": 450,
+    "sha256": "82e6bd157721f272cdcd5ffd901b5832e4a66b1083706c53fc266d416d37bd2a",
+    "source": "XSTest gpt4 prompts; temp0 logprobs; gold detect_refusal"
+  }
+}
