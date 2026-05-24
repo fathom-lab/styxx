@@ -47,7 +47,9 @@ jobs:
       - name: Import smoke (every top-level module must import on this version)
         run: |
           python -c "import styxx; print('styxx', styxx.__version__)"
-          python -c "import styxx.scan, styxx.three_axis, styxx.mcp.server"
+          python -c "import styxx.scan, styxx.three_axis"
+          # styxx.mcp.server needs the mcp package (gated to py>=3.10); import it only when mcp is present.
+          python -c "import importlib.util; m = importlib.import_module('styxx.mcp.server') if importlib.util.find_spec('mcp') else None; print('styxx.mcp.server', 'OK' if m else 'skipped (mcp absent on this python)')"
 
       - name: Run tests
         run: python -m pytest tests -q
