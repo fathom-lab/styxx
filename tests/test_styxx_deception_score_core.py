@@ -31,6 +31,10 @@ def _load_core():
 
 
 def test_core_discriminates_truth_from_lie():
+    # Discrimination needs the NLI model (deception_v2). Without the torch /
+    # transformers stack the scorer returns a constant fallback and cannot
+    # discriminate, so skip in the lean CI env; runs locally with `.[nli]`.
+    pytest.importorskip("torch")
     core = _load_core()
     q = "What is the capital of France?"
     ref = "The capital of France is Paris."

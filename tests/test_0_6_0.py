@@ -91,23 +91,28 @@ def test_antipatterns_returns_list():
 
 def test_antipatterns_empty_on_sparse_data():
     """With very few entries, no patterns should be detected."""
-    from styxx.antipatterns import antipatterns
-    with patch("styxx.antipatterns.load_audit", return_value=[]):
-        result = antipatterns()
+    # Resolve the submodule explicitly: `styxx.antipatterns` the function
+    # shadows the submodule on the package, so a string patch target is
+    # fragile across mock versions. patch.object on the module is robust.
+    import importlib
+    ap_mod = importlib.import_module("styxx.antipatterns")
+    with patch.object(ap_mod, "load_audit", return_value=[]):
+        result = ap_mod.antipatterns()
     assert result == []
 
 
 def test_antipatterns_detects_low_confidence(fake_audit):
     """Low confidence + warn should trigger 'low-confidence drift'."""
-    from styxx.antipatterns import antipatterns
+    import importlib
+    ap_mod = importlib.import_module("styxx.antipatterns")
     # Inject low-confidence warn entries
     extra = [
         {"phase4_conf": "0.1", "gate": "warn", "ts_iso": "2026-04-12T12:00:00Z"},
         {"phase4_conf": "0.2", "gate": "warn", "ts_iso": "2026-04-12T12:01:00Z"},
         {"phase4_conf": "0.15", "gate": "fail", "ts_iso": "2026-04-12T12:02:00Z"},
     ]
-    with patch("styxx.antipatterns.load_audit", return_value=_fake_audit_entries(20) + extra):
-        result = antipatterns(min_occurrences=2)
+    with patch.object(ap_mod, "load_audit", return_value=_fake_audit_entries(20) + extra):
+        result = ap_mod.antipatterns(min_occurrences=2)
     names = [p.name for p in result]
     assert "low-confidence drift" in names
 

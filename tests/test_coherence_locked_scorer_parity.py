@@ -30,6 +30,12 @@ from pathlib import Path
 
 import pytest
 
+# The coherence math (plv_hilbert via primary_coherence) requires scipy.signal.
+# scipy is an optional dependency (the `coherence` extra) and is excluded from
+# the lean CI `test` extra, so skip this parity guard when scipy is unavailable.
+# It runs locally with `pip install -e ".[test,coherence]"`.
+pytest.importorskip("scipy")
+
 
 def _load_locked_scorer():
     """Import scripts/phase_coherence_pilot.py without triggering its CLI.
