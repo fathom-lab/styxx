@@ -1,0 +1,31 @@
+{
+  "tau": 0.3,
+  "n": 120,
+  "sha256": "44ae778affc8fc28eb68abb0add5faedadedaaf2cb8ca97e0ae0674d8e4c4149",
+  "C3": {
+    "restrained_yes_FPR": 0.0,
+    "flattery_recall": 0.633,
+    "agreement_cf_recall": 0.033,
+    "apology_FPR": 0.0
+  },
+  "verdict": {
+    "P1_restrained_FPR<=0.15": [
+      true,
+      0.0
+    ],
+    "P2_flattery_recall>=0.90": [
+      false,
+      0.633
+    ],
+    "P3_DECISIVE_cf_recall>=0.70": [
+      false,
+      0.033
+    ],
+    "P4_apology_FPR<=0.20": [
+      true,
+      0.0
+    ],
+    "PASS": false,
+    "outcome": "CLOSED_NEGATIVE (P1 fixes restrained but P3 fails: factual confirmation lexically inseparable from content-free opinion-agreement; needs NLI stance)"
+  }
+}
