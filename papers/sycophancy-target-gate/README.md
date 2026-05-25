@@ -121,23 +121,54 @@ done autonomously.
     **decoupled-diagonal** (prompt FORM ≠ premise TRUTH) remains — measured small (models
     correct false premises); full truth-grounding is future work.
 
-## Commit map
+## The six pre-registered bets (at a glance)
+
+| # | bet | verdict | headline |
+|---|---|---|---|
+| 1 | self-vs-other gate (in-distribution) | **PASS** | self-apology FPR 0.36 → 0.06; flattery recall 1.00 |
+| 2 | cross-model replication (gpt-4o + gpt-3.5) | **PASS** | FPR 0.20 → 0.08; both models clear the bar |
+| — | word-boundary v0→v0.2 5-fold CV (offline) | validated | AUC 0.9720 → 0.9805 |
+| 3 | restrained-technical, response-side (C3) | closed negative | "Yes,[fact]" ≡ "Yes,[agreement]" — lexically inseparable |
+| 4 | prompt-opinion, lexical (C4) | closed negative | 47% opinion recall on varied phrasing — doesn't generalize |
+| 5 | **semantic subjectivity (C5)** | **PASS → shipped 7.6.0** | subjectivity acc 1.00 on fresh prompts (lexical 0.73) |
+| 6 | truth-grounded decoupled-diagonal (G) | frontier mapped, not shipped | dangerous half already covered (0.92); benign-half fix missed H1 by 1 |
+
+Two PyPI releases: **7.5.0** (self-vs-other gate + v0.2 word-boundary instrument)
+and **7.6.0** (opt-in semantic subjectivity tier). 3 pass · 2 closed negative ·
+1 near-miss. Every result behind a hashed, run-once holdout.
+
+## Links
+
+- PyPI: https://pypi.org/project/styxx/
+- Release 7.6.0: https://github.com/fathom-lab/styxx/releases/tag/v7.6.0
+- Release 7.5.0: https://github.com/fathom-lab/styxx/releases/tag/v7.5.0
+- This research trail (the receipts): https://github.com/fathom-lab/styxx/tree/main/papers/sycophancy-target-gate
+
+## Commit map (prereg → hash-lock → run-once, per bet)
 
 | stage | commit |
 |---|---|
-| diagnosis + prereg + frozen gate (before data) | `fce969b` |
-| in-distribution holdout hashed (before scoring) | `2b286d3` |
-| in-distribution kill-gate PASS (run once) | `76248d6` |
-| cross-model prereg + word-boundary CV | `88c81d4` |
-| cross-model holdout hashed (before scoring) | `45156e5` |
-| cross-model kill-gate PASS (run once) | `66bd3a3` |
-| **ship: cognometrics guard + tests** | `5414d80` |
+| bet 1 · prereg + frozen gate (before data) | `fce969b` |
+| bet 1 · in-dist holdout hashed | `2b286d3` |
+| bet 1 · in-dist kill-gate PASS | `76248d6` |
+| bet 2 · cross-model prereg + word-boundary CV | `88c81d4` |
+| bet 2 · cross-model holdout hashed | `45156e5` |
+| bet 2 · cross-model kill-gate PASS | `66bd3a3` |
+| ship · cognometrics self-directed guard + tests | `5414d80` |
+| hardening · adversarial + min() edge | `070e5a1` |
+| feat · sycophancy v0.2 word-boundary default | `bd700f3` |
+| **release · 7.5.0** (PyPI + tag + GH) | `cedfe2b` |
+| bet 3 · C3 prereg → lock → result (closed neg) | `54e91b9` → `b4f0a5a` → `70ac4bc` |
+| bet 4 · C4 prereg → lock → result (closed neg) | `689e4d1` → `0526739` → `b3ba35c` |
+| bet 5 · C5 prereg → lock → result (PASS) | `4e99ad0` → `863160a` → `bc6dd4a` |
+| feat · semantic subjectivity tier (opt-in) | `d5acf95` |
+| **release · 7.6.0** (PyPI + tag + GH) | `ea2c3c5` |
+| bet 6 · truth-ground prereg → lock → result | `aaef8ae` → `d02ffb0` → `8822f5e` |
 
 ## Files
 
-`DIAGNOSIS_2026_05_24.md` · `preregistration_2026_05_24.md` ·
-`preregistration_crossmodel_2026_05_24.md` · `FINDING_2026_05_24.md` ·
-`FINDING_crossmodel_2026_05_24.md` · `target_gate.py` (frozen experiment) ·
-`gen_holdout.py` / `gen_holdout_crossmodel.py` · `run_killgate.py` /
-`run_killgate_crossmodel.py` · `run_wordboundary_cv.py` · `results*.json` ·
-`holdout/` · `holdout_manifest*.json`.
+Per-bet `preregistration_*.md` · `FINDING_*.md` · frozen candidates
+(`target_gate*.py`, `self_directed_gate` + `semantic_subjectivity` shipped in
+`styxx/guardrail/`) · `gen_holdout_*.py` · `run_killgate_*.py` ·
+`run_wordboundary_cv.py` · `results*.json` · `holdout/` + `holdout_manifest*.json`
+(hashed corpora) · `ERRATUM_v0_2_2026_05_24.md` · `ANNOUNCEMENT.md`.
