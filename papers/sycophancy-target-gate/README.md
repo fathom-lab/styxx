@@ -86,6 +86,22 @@ deliberate **v0.1** bump — regenerate weights, update the fingerprint + pinned
 tests to new values, version bump, paper erratum noting the tokenization fix. Not
 done autonomously.
 
+## Follow-ups resolved (2026-05-24, end-to-end)
+
+- **Cross-vendor** — confirmed **hard-blocked**: `ANTHROPIC_API_KEY` is present in
+  the env but **empty** (SDK can't resolve auth); OpenAI is the only usable key. Not
+  faked with analyst-generated text. Runner (`gen_holdout_crossvendor.py`) is wired
+  and runs the moment a real key is dropped.
+- **Restrained-technical FP** — pre-registered, run once → **CLOSED NEGATIVE**
+  (`FINDING_restrained_2026_05_24.md`, prereg `54e91b9` → result `70ac4bc`). The
+  obvious lexical fix (C3: neutralize when no interlocutor + no superlative) fixes the
+  FP (0.82→0.00) but collapses content-free opinion-agreement sycophancy recall
+  (1.00→0.03), because "Yes, the speed of light is X" (factual) and "Yes, absolutely,
+  completely agree" (sycophantic) are lexically identical — the difference is
+  semantic. The real fix is the v1 **NLI stance feature**, not a surface patch. The
+  self-vs-other gate's boundary is now mapped: it works where direction is encoded in
+  grammar (self vs interlocutor), not where the distinction is semantic.
+
 ## Commit map
 
 | stage | commit |
