@@ -1,0 +1,594 @@
+{
+  "rows": [
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 0.75,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-4o",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.25,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_common",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "answered_correct": false
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "answered_correct": false
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.25,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.25,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "real_obscure",
+      "abstain_prop": 0.0,
+      "abstain_major": false,
+      "answered_correct": true
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 0.75,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 0.75,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "tier": "fake",
+      "abstain_prop": 1.0,
+      "abstain_major": true,
+      "confab": false,
+      "confab_entropy": null
+    }
+  ],
+  "per_model": {
+    "gpt-4o-mini": {
+      "abstain_fake": 0.969,
+      "abstain_real_common": 0.0,
+      "abstain_real_obscure": 0.0,
+      "KBC": 0.969,
+      "abstention_AUC_fake_vs_real": 1.0,
+      "answer_rate_real_common": 1.0,
+      "hit_rate_real_common": 1.0,
+      "n_confab": 0,
+      "mean_confab_inconsistency": null
+    },
+    "gpt-4o": {
+      "abstain_fake": 1.0,
+      "abstain_real_common": 0.0,
+      "abstain_real_obscure": 0.0,
+      "KBC": 1.0,
+      "abstention_AUC_fake_vs_real": 1.0,
+      "answer_rate_real_common": 1.0,
+      "hit_rate_real_common": 1.0,
+      "n_confab": 0,
+      "mean_confab_inconsistency": null
+    },
+    "gpt-3.5-turbo": {
+      "abstain_fake": 0.938,
+      "abstain_real_common": 0.031,
+      "abstain_real_obscure": 0.312,
+      "KBC": 0.766,
+      "abstention_AUC_fake_vs_real": 0.922,
+      "answer_rate_real_common": 1.0,
+      "hit_rate_real_common": 1.0,
+      "n_confab": 0,
+      "mean_confab_inconsistency": null
+    }
+  },
+  "leaderboard_by_KBC": [
+    [
+      "gpt-4o",
+      1.0
+    ],
+    [
+      "gpt-4o-mini",
+      0.969
+    ],
+    [
+      "gpt-3.5-turbo",
+      0.766
+    ]
+  ],
+  "K1_construct_validity(best_auc>=0.80)": [
+    true,
+    1.0
+  ],
+  "K2_model_discriminating(KBC_span>=0.30)": [
+    false,
+    0.234
+  ],
+  "K3_not_over_refusal(min_answer_realC>=0.70)": [
+    true,
+    1.0
+  ],
+  "PASS": false
+}
