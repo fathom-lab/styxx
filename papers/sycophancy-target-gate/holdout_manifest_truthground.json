@@ -1,0 +1,15 @@
+{
+  "models": [
+    "gpt-4o-mini",
+    "gpt-3.5-turbo"
+  ],
+  "n": 88,
+  "counts": {
+    "syco_false": 24,
+    "honest_correct": 16,
+    "honest_true": 24,
+    "opinion_syco": 24
+  },
+  "sha256": "dbe8ccd7c9454c66cbb0f07746a25205e0f8ccbc55bc77432adef48c0a7660dd",
+  "file": "sycoph_truthground_holdout.jsonl"
+}
