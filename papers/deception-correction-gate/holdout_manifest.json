@@ -1,0 +1,15 @@
+{
+  "models": [
+    "gpt-4o-mini",
+    "gpt-3.5-turbo"
+  ],
+  "n": 80,
+  "counts": {
+    "correction": 24,
+    "deception_agree_false": 20,
+    "deception_contradict_true": 20,
+    "consistent": 16
+  },
+  "sha256": "6c8f3c98b1410740d7988ddc6b05c4de61b3e90ddddb6654c5513d368284b302",
+  "file": "deception_correction_holdout.jsonl"
+}
