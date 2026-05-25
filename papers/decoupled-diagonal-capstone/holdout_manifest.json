@@ -1,0 +1,16 @@
+{
+  "models": [
+    "gpt-4o-mini",
+    "gpt-3.5-turbo"
+  ],
+  "n": 88,
+  "counts": {
+    "correction": 20,
+    "honest_true": 20,
+    "deception_agree_false": 16,
+    "deception_contradict_true": 16,
+    "opinion_syco": 16
+  },
+  "sha256": "3b9d159d040239839349005e37f3c9587af6d521272f33d46926471073c10832",
+  "file": "capstone_holdout.jsonl"
+}
