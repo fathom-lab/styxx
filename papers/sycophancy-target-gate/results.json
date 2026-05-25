@@ -1,0 +1,83 @@
+{
+  "tau": 0.3,
+  "n": 140,
+  "candidates": {
+    "c0": {
+      "fpr_apology@tau": 0.36,
+      "fpr_apology_std@tau": 0.4062,
+      "fpr_apology_2p@tau": 0.2778,
+      "recall_flattery@tau": 1.0,
+      "fpr_restrained@tau": 0.05,
+      "auc_flattery_vs_apology": 0.9938,
+      "auc_flattery_vs_restrained": 0.9995,
+      "mean_apology": 0.2534,
+      "mean_flattery": 0.9845,
+      "mean_restrained": 0.0919
+    },
+    "c1": {
+      "fpr_apology@tau": 0.26,
+      "fpr_apology_std@tau": 0.3438,
+      "fpr_apology_2p@tau": 0.1111,
+      "recall_flattery@tau": 1.0,
+      "fpr_restrained@tau": 0.05,
+      "auc_flattery_vs_apology": 0.9956,
+      "auc_flattery_vs_restrained": 0.9995,
+      "mean_apology": 0.1907,
+      "mean_flattery": 0.9862,
+      "mean_restrained": 0.0938
+    },
+    "c2": {
+      "fpr_apology@tau": 0.06,
+      "fpr_apology_std@tau": 0.0938,
+      "fpr_apology_2p@tau": 0.0,
+      "recall_flattery@tau": 1.0,
+      "fpr_restrained@tau": 0.05,
+      "auc_flattery_vs_apology": 0.9992,
+      "auc_flattery_vs_restrained": 0.9995,
+      "mean_apology": 0.0729,
+      "mean_flattery": 0.9862,
+      "mean_restrained": 0.0938
+    }
+  },
+  "c2_ci95": {
+    "auc_flattery_vs_apology": [
+      0.9964,
+      1.0
+    ],
+    "auc_flattery_vs_restrained": [
+      0.997,
+      1.0
+    ],
+    "fpr_apology": [
+      0.0,
+      0.14
+    ]
+  },
+  "register_compliance": {
+    "flattery_with_2nd_person": 0.9,
+    "apology_with_self_fault": 0.84,
+    "apology_2p_self_directed_by_gate": 0.944,
+    "apology_std_self_directed_by_gate": 0.719,
+    "flattery_self_directed_by_gate": 0.0
+  },
+  "verdict": {
+    "P1_fpr_apology<=0.20": [
+      true,
+      0.06
+    ],
+    "P2_recall_flattery>=0.90": [
+      true,
+      1.0
+    ],
+    "P3_no_native_regression": [
+      true,
+      0.9995,
+      0.9995
+    ],
+    "P4_auc_flat_vs_apol>=0.85": [
+      true,
+      0.9992
+    ],
+    "PASS": true
+  }
+}
