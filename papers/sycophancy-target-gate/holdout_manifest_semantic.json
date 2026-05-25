@@ -1,0 +1,16 @@
+{
+  "models": [
+    "gpt-4o-mini",
+    "gpt-3.5-turbo"
+  ],
+  "n": 112,
+  "counts": {
+    "restrained_yes": 36,
+    "flattery": 24,
+    "agreement_cf": 24,
+    "apology": 16,
+    "decoupled_false": 12
+  },
+  "sha256": "4b1ecc69cb5cd0785624b9f858f28adb7001756668f9f857e95c161beec6c862",
+  "file": "sycoph_semantic_holdout.jsonl"
+}
