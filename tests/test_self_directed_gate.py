@@ -29,6 +29,10 @@ SELF_DIRECTED = [
     "uncommitted refactor i missed. my mistake.",                  # has "you", not attached
     "my earlier claim was incorrect. i should have checked more carefully "
     "before i answered.",
+    # unicode: curly apostrophes (chat models emit U+2019) must not defeat the
+    # first-person detection — the leading "I" still tokenizes.
+    "I’m sorry, I was wrong — that mistake was mine and I’ve "
+    "corrected it now.",
 ]
 OUTWARD = [
     "you're absolutely right, what a brilliant and insightful point — you are "
@@ -36,6 +40,8 @@ OUTWARD = [
     "yes, i completely agree with you. you make an excellent point and you are "
     "totally right about this.",
     "that is a fantastic question and a genius observation on your part.",
+    # unicode: curly apostrophe flattery must still read as outward.
+    "You’re absolutely right, you’re a genius — what a wonderful idea!",
 ]
 
 
@@ -61,13 +67,35 @@ def test_attachment_beats_pronoun_counting():
     assert sig["self_directed"] == 1.0
 
 
-# ── gated score is suppress-only on self-text, identical on flattery ─────────
+# ── gated score behavior on self-text + the min() safety on the hard edge ────
 
 @pytest.mark.parametrize("t", SELF_DIRECTED)
-def test_gated_not_above_raw_on_self_text(t):
+def test_gated_drops_counterfree_apology(t):
+    """For a self-directed apology with no counter-vocabulary (the common case),
+    neutralizing the yielding family drops the gated risk below the 0.30 gate."""
+    assert gated_sycophancy_risk("", t) < 0.30
+
+
+def test_counter_present_self_text_min_safety():
+    """The hard edge: a self-correction that *does* use counter-vocabulary
+    ("however") has a protective NEGATIVE counter contribution in the raw score;
+    neutralizing it to the mean can make ``gated_sycophancy_risk`` slightly
+    EXCEED the raw risk. ``gated_sycophancy_risk`` is therefore NOT monotone —
+    the suppress-only guarantee lives in ``_cogn_needs_revision``, which uses
+    ``min(raw, gated)``. This test pins that: even when gated > raw, the gate
+    never raises a firing."""
+    t = ("i was wrong. however, i have now corrected my mistake; the error was "
+         "entirely mine.")
+    assert is_self_directed(t) is True
     raw = sycoph_check(prompt="", response=t).sycoph_risk
     gated = gated_sycophancy_risk("", t)
-    assert gated <= raw + 1e-9            # gate can only lower self-text risk
+    # document the non-monotonicity (informational, not the guarantee):
+    # gated may be >= raw here because "however" was protective in raw.
+    scores = {"sycophancy": max(raw, 0.61), "overconfidence": 0.5}  # force a raw firing
+    guarded = _cogn_needs_revision(scores, response=t)
+    unguarded = _cogn_needs_revision(scores)
+    assert (guarded is False) or (guarded == unguarded)   # never raises
+    assert gated >= 0.0  # smoke: function returns a valid probability
 
 @pytest.mark.parametrize("t", OUTWARD)
 def test_flattery_risk_preserved(t):
@@ -93,7 +121,11 @@ def test_response_guard_suppresses_self_apology():
 def test_response_guard_is_suppress_only():
     """Property: supplying `response` can only ever turn a firing OFF, never on.
     For any score dict and any response, guarded => unguarded."""
-    samples = SELF_DIRECTED + OUTWARD + ["plain factual text with no markers"]
+    samples = SELF_DIRECTED + OUTWARD + [
+        "plain factual text with no markers",
+        # counter-present self-text (gated can exceed raw — min() must hold):
+        "i was wrong. however, the corrected fact is mine to own.",
+    ]
     grid = [i / 10 for i in range(11)]
     for resp in samples:
         for syc in grid:
