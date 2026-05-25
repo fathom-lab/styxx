@@ -1,0 +1,200 @@
+[
+  {
+    "phase1_pre": {
+      "phase": "text_heuristic",
+      "n_tokens_used": 95,
+      "features": [],
+      "predicted_category": "reasoning",
+      "margin": 0.35800000000000004,
+      "distances": {
+        "retrieval": 4.465,
+        "reasoning": 2.675,
+        "refusal": 4.465,
+        "creative": 4.465,
+        "adversarial": 4.465,
+        "hallucination": 4.465
+      },
+      "probs": {
+        "retrieval": 0.10699999999999998,
+        "reasoning": 0.465,
+        "refusal": 0.10699999999999998,
+        "creative": 0.10699999999999998,
+        "adversarial": 0.10699999999999998,
+        "hallucination": 0.10699999999999998
+      },
+      "features_v2": null,
+      "d_honesty_mean": null,
+      "d_honesty_std": null,
+      "d_honesty_delta": null,
+      "k_depth": null,
+      "c_coherence": null,
+      "s_commitment": null,
+      "confidence": 0.465,
+      "top3": [
+        [
+          "reasoning",
+          0.465
+        ],
+        [
+          "retrieval",
+          0.10699999999999998
+        ],
+        [
+          "refusal",
+          0.10699999999999998
+        ]
+      ]
+    },
+    "phase2_early": null,
+    "phase3_mid": null,
+    "phase4_late": {
+      "phase": "text_heuristic",
+      "n_tokens_used": 95,
+      "features": [],
+      "predicted_category": "reasoning",
+      "margin": 0.35800000000000004,
+      "distances": {
+        "retrieval": 4.465,
+        "reasoning": 2.675,
+        "refusal": 4.465,
+        "creative": 4.465,
+        "adversarial": 4.465,
+        "hallucination": 4.465
+      },
+      "probs": {
+        "retrieval": 0.10699999999999998,
+        "reasoning": 0.465,
+        "refusal": 0.10699999999999998,
+        "creative": 0.10699999999999998,
+        "adversarial": 0.10699999999999998,
+        "hallucination": 0.10699999999999998
+      },
+      "features_v2": null,
+      "d_honesty_mean": null,
+      "d_honesty_std": null,
+      "d_honesty_delta": null,
+      "k_depth": null,
+      "c_coherence": null,
+      "s_commitment": null,
+      "confidence": 0.465,
+      "top3": [
+        [
+          "reasoning",
+          0.465
+        ],
+        [
+          "retrieval",
+          0.10699999999999998
+        ],
+        [
+          "refusal",
+          0.10699999999999998
+        ]
+      ]
+    },
+    "tier_active": -1,
+    "abort_reason": null,
+    "coherence": null,
+    "transition_vectors": null,
+    "mode": "text-heuristic"
+  },
+  {
+    "phase1_pre": {
+      "phase": "text_heuristic",
+      "n_tokens_used": 1,
+      "features": [],
+      "predicted_category": "reasoning",
+      "margin": 0.49599999999999994,
+      "distances": {
+        "retrieval": 4.58,
+        "reasoning": 2.1,
+        "refusal": 4.58,
+        "creative": 4.58,
+        "adversarial": 4.58,
+        "hallucination": 4.58
+      },
+      "probs": {
+        "retrieval": 0.084,
+        "reasoning": 0.58,
+        "refusal": 0.084,
+        "creative": 0.084,
+        "adversarial": 0.084,
+        "hallucination": 0.084
+      },
+      "features_v2": null,
+      "d_honesty_mean": null,
+      "d_honesty_std": null,
+      "d_honesty_delta": null,
+      "k_depth": null,
+      "c_coherence": null,
+      "s_commitment": null,
+      "confidence": 0.58,
+      "top3": [
+        [
+          "reasoning",
+          0.58
+        ],
+        [
+          "retrieval",
+          0.084
+        ],
+        [
+          "refusal",
+          0.084
+        ]
+      ]
+    },
+    "phase2_early": null,
+    "phase3_mid": null,
+    "phase4_late": {
+      "phase": "text_heuristic",
+      "n_tokens_used": 1,
+      "features": [],
+      "predicted_category": "reasoning",
+      "margin": 0.49599999999999994,
+      "distances": {
+        "retrieval": 4.58,
+        "reasoning": 2.1,
+        "refusal": 4.58,
+        "creative": 4.58,
+        "adversarial": 4.58,
+        "hallucination": 4.58
+      },
+      "probs": {
+        "retrieval": 0.084,
+        "reasoning": 0.58,
+        "refusal": 0.084,
+        "creative": 0.084,
+        "adversarial": 0.084,
+        "hallucination": 0.084
+      },
+      "features_v2": null,
+      "d_honesty_mean": null,
+      "d_honesty_std": null,
+      "d_honesty_delta": null,
+      "k_depth": null,
+      "c_coherence": null,
+      "s_commitment": null,
+      "confidence": 0.58,
+      "top3": [
+        [
+          "reasoning",
+          0.58
+        ],
+        [
+          "retrieval",
+          0.084
+        ],
+        [
+          "refusal",
+          0.084
+        ]
+      ]
+    },
+    "tier_active": -1,
+    "abort_reason": null,
+    "coherence": null,
+    "transition_vectors": null,
+    "mode": "text-heuristic"
+  }
+]
