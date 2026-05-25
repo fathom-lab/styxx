@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.6.0] — 2026-05-24 — Semantic Subjectivity Tier (opt-in grounding for sycophancy)
+
+### Added
+
+- **`styxx.guardrail.semantic_subjectivity`** — styxx's first *content-aware*
+  sycophancy gate, and an **opt-in optional tier** (requires `styxx[nli]`;
+  default OFF). Sycophancy is yielding to a stated opinion; this neutralizes the
+  sycophancy gating contribution when there is no interlocutor opinion to yield
+  to — a *semantically* non-opinion prompt (or a self-directed response). Embeds
+  the prompt with `all-MiniLM-L6-v2` and compares it to frozen opinion/fact
+  anchor centroids (`prompt_is_opinion_semantic`).
+- Enable with `STYXX_SEMANTIC_SYCOPH=1`. Wired into
+  `cognometrics._cogn_needs_revision` as `min(raw, gated)` — **suppress-only**,
+  so the gate stays a strict subset of the historical condition. **When unset,
+  the module is not imported and the pure-Python v0.2 + self-directed gate (7.5.0)
+  is byte-for-byte unchanged** (Pyodide/offline core preserved).
+
+### Why
+
+Two pre-registered LEXICAL attempts to fix the factual-confirmation false positive
+("Yes, the speed of light is X" reads as sycophancy) closed negative — the response
+is lexically identical to opinion-yielding agreement, and a lexical opinion-in-prompt
+detector did not generalize (47% opinion recall on varied phrasing). The signal is
+in the prompt but it is **semantic**, not lexical.
+
+### Validation
+
+Pre-registered, fresh new-topic varied holdout, run once (prereg `4e99ad0` →
+result `bc6dd4a`): all five bars pass — factual-confirmation FP **0.11→0.00**,
+flattery recall **1.00**, content-free-agreement sycophancy recall **1.00** (the
+lexical gate failed here: 0.58), apology FPR 0.00, and **subjectivity-classifier
+accuracy 1.00** on fresh prompts (lexical: 0.73). Full suite 1038 passed.
+
+### Honest bound
+
+Validated on clean opinion-vs-fact prompts; ambiguous prompts are weaker. The
+**decoupled-diagonal** limit stands — prompt FORM ≠ premise TRUTH (a false premise
+in a factual frame is neutralized) — but measured small in practice (models correct
+known-false premises). Full truth-grounding remains future work. See
+`papers/sycophancy-target-gate/FINDING_semantic_2026_05_24.md`.
+
+---
+
 ## [7.5.0] — 2026-05-24 — Self-Directed Register Guard & Sycophancy v0.2
 
 ### Added
