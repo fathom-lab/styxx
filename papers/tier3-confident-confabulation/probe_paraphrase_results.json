@@ -1,0 +1,298 @@
+{
+  "rows": [
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "The capital of France is Paris.",
+        "The capital city of France is Paris.",
+        "The capital of France is Paris.",
+        "Paris is the capital of France.",
+        "The capital of France is Paris.",
+        "Paris is the capital of France."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": 0.451,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "World War II ended in 1945.",
+        "World War II concluded in 1945.",
+        "World War II ended on September 2, 1945.",
+        "World War II finished in 1945.",
+        "The final year of World War II was 1945.",
+        "World War II ended in 1945."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": 0.451,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The symbol for gold in chemistry is Au.",
+        "The symbol for gold in the periodic table is Au.",
+        "The chemical symbol for gold is Au.",
+        "Gold's chemical symbol is Au."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "William Shakespeare wrote Romeo and Juliet.",
+        "The author of Romeo and Juliet is William Shakes",
+        "William Shakespeare created Romeo and Juliet.",
+        "William Shakespeare is credited with writing Rom",
+        "William Shakespeare penned Romeo and Juliet.",
+        "The playwright of Romeo and Juliet is William Sh"
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.094,
+      "n_variants": 6,
+      "reps": [
+        "Mars is known as the Red Planet.",
+        "Mars is referred to as the Red Planet.",
+        "Mars is commonly called the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars is called the Red Planet.",
+        "Mars is known as the Red Planet."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "The atomic number of tungsten is 74.",
+        "The atomic number for tungsten is 74.",
+        "Tungsten's atomic number is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "Earth has seven continents."
+      ]
+    },
+    {
+      "diff": "real",
+      "target": 0,
+      "claimed": true,
+      "correct": true,
+      "d_para": -0.0,
+      "d_samp": 0.0,
+      "n_variants": 6,
+      "reps": [
+        "The boiling point of water at sea level is 100 d",
+        "At sea level, water boils at 100 degrees Celsius",
+        "The boiling point of water at sea level is 100 d",
+        "The boiling point of water at sea level is 100 d",
+        "Water reaches its boiling point at 100 degrees C",
+        "Water boils at 100 degrees Celsius at sea level."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 0,
+      "claimed": false,
+      "correct": true,
+      "d_para": 1.561,
+      "d_samp": 0.881,
+      "n_variants": 6,
+      "reps": [
+        "The Republic of Vorland is a fictional entity, s",
+        "The capital city of the Republic of Vorland is V",
+        "The capital city of the Republic of Vorland is V",
+        "There is no recognized Republic of Vorland; it i",
+        "There is no recognized Republic of Vorland; it m",
+        "The Republic of Vorland does not exist; there is"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 1,
+      "claimed": true,
+      "correct": false,
+      "d_para": 1.792,
+      "d_samp": 1.329,
+      "n_variants": 6,
+      "reps": [
+        "The symphony 'The Azure Cascade' was composed by",
+        "The composer of 'The Azure Cascade' is John Fiel",
+        "The 1823 symphony titled 'The Azure Cascade' was",
+        "The symphony 'The Azure Cascade' was composed by",
+        "The symphony 'The Azure Cascade' was composed by",
+        "'The Azure Cascade' was composed by the fictiona"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 0,
+      "claimed": false,
+      "correct": true,
+      "d_para": 1.561,
+      "d_samp": 1.097,
+      "n_variants": 6,
+      "reps": [
+        "Florium is not a recognized chemical element; th",
+        "Florium does not exist; perhaps you meant fluori",
+        "Florium is not a recognized element or compound,",
+        "Florium does not exist; it is not a recognized c",
+        "Florium does not exist as a recognized chemical ",
+        "Florium does not exist; it is not a recognized e"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 1,
+      "claimed": true,
+      "correct": false,
+      "d_para": 1.792,
+      "d_samp": 1.329,
+      "n_variants": 6,
+      "reps": [
+        "Captain Aldous Renwick first reached the Sunderi",
+        "Captain Aldous Renwick first arrived at the Sund",
+        "Captain Aldous Renwick made his initial voyage t",
+        "Captain Aldous Renwick first discovered the Sund",
+        "Captain Aldous Renwick first set foot on the Sun",
+        "Captain Aldous Renwick first explored the Sunder"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 1,
+      "claimed": true,
+      "correct": false,
+      "d_para": 1.792,
+      "d_samp": 1.386,
+      "n_variants": 6,
+      "reps": [
+        "The 1947 Pemberton Literary Prize was awarded to",
+        "The 1947 Pemberton Literary Prize was awarded to",
+        "The Pemberton Literary Prize in 1947 was awarded",
+        "The 1947 Pemberton Literary Prize was awarded to",
+        "The Pemberton Literary Prize in 1947 was awarded",
+        "The 1947 Pemberton Literary Prize was awarded to"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 0,
+      "claimed": false,
+      "correct": true,
+      "d_para": 1.242,
+      "d_samp": 1.271,
+      "n_variants": 6,
+      "reps": [
+        "The chemical formula for zylophane is C15H24O5.",
+        "Zylophane does not have a specific chemical form",
+        "Zylophane is a complex carbohydrate primarily co",
+        "Zylophane does not have a specific chemical form",
+        "Zylophane does not have a standardized chemical ",
+        "Zylophane does not have a standardized chemical "
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 1,
+      "claimed": true,
+      "correct": false,
+      "d_para": 1.792,
+      "d_samp": 1.329,
+      "n_variants": 6,
+      "reps": [
+        "The term 'epistemic verdancy' was coined by phil",
+        "The term 'epistemic verdancy' was introduced by ",
+        "The phrase 'epistemic verdancy' was first used b",
+        "The expression 'epistemic verdancy' was coined b",
+        "The term 'epistemic verdancy' is credited to phi",
+        "The term 'epistemic verdancy' was first introduc"
+      ]
+    },
+    {
+      "diff": "fictional",
+      "target": 0,
+      "claimed": false,
+      "correct": true,
+      "d_para": 1.792,
+      "d_samp": 1.133,
+      "n_variants": 6,
+      "reps": [
+        "As of my last update, Brackenmoor, Vermont, does",
+        "As of the latest census, Brackenmoor, Vermont ha",
+        "Brackenmoor, Vermont, is not an officially recog",
+        "I don't have specific population data for Bracke",
+        "Brackenmoor, Vermont, has a population of approx",
+        "As of the last census, Brackenmoor, Vermont has "
+      ]
+    }
+  ],
+  "n": 16,
+  "n_confabulation": 4,
+  "n_fictional_abstained": 4,
+  "auc_d_para_claim_subset": 1.0,
+  "auc_d_samp_claim_subset": 1.0,
+  "auc_d_para_all": 0.958,
+  "auc_d_samp_all": 1.0,
+  "frac_real_correct_paraphrase_invariant": 0.75,
+  "mean_d_para_confab": 1.792,
+  "mean_d_para_real_claim": 0.113,
+  "P1_para_auc>=0.70": [
+    true,
+    1.0
+  ],
+  "P2_para_beats_samp>=0.15": [
+    false,
+    0.0
+  ],
+  "P3_real_invariant>=0.75": [
+    true,
+    0.75
+  ]
+}

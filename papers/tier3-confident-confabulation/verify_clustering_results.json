@@ -1,0 +1,236 @@
+{
+  "rows": [
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "The capital of France is Paris.",
+        "The capital of France is Paris.",
+        "The capital of France is Paris.",
+        "The capital of France is Paris.",
+        "The capital of France is Paris.",
+        "The capital of France is Paris."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "William Shakespeare wrote Romeo and Juliet.",
+        "William Shakespeare wrote Romeo and Juliet.",
+        "William Shakespeare wrote Romeo and Juliet.",
+        "William Shakespeare wrote Romeo and Juliet.",
+        "William Shakespeare wrote Romeo and Juliet.",
+        "William Shakespeare wrote Romeo and Juliet."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth.",
+        "There are seven continents on Earth."
+      ]
+    },
+    {
+      "diff": "real",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "The boiling point of water at sea level is 100 degrees Celsius.",
+        "The boiling point of water at sea level is 100 degrees Celsius.",
+        "The boiling point of water at sea level is 100 degrees Celsius.",
+        "The boiling point of water at sea level is 100 degrees Celsius.",
+        "The boiling point of water at sea level is 100 degrees Celsius.",
+        "The boiling point of water at sea level is 100 degrees Celsius."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": -0.0,
+      "answers": [
+        "The Republic of Vorland does not exist; thus, it has no capital city.",
+        "The Republic of Vorland does not exist; therefore, it has no capital city.",
+        "The Republic of Vorland does not exist; therefore, it has no capital city.",
+        "The Republic of Vorland does not exist; therefore, it does not have a capital city.",
+        "The Republic of Vorland is not a recognized country, so it does not have a capital city.",
+        "The Republic of Vorland is a fictional entity and does not have an actual capital city."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": false,
+      "ent_cosine": 0.451,
+      "ent_nli": 1.561,
+      "answers": [
+        "The composer of the 1823 symphony \"The Azure Cascade\" is not known; it may not be a recognized or established work.",
+        "'The Azure Cascade' was composed by William Henry Ainsworth.",
+        "The composer of the 1823 symphony 'The Azure Cascade' is not widely recognized, and it appears to be a fictional or obscure work.",
+        "The composer of 'The Azure Cascade' is unknown and it is not widely recognized in the classical canon.",
+        "The 1823 symphony 'The Azure Cascade' was composed by Jean-Baptiste Lully.",
+        "The 1823 symphony 'The Azure Cascade' was composed by William Henry Fry."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": 1.792,
+      "answers": [
+        "Florium is a fictional element and does not have a boiling point.",
+        "Florium is not a recognized element and does not have a boiling point.",
+        "Florium is not an officially recognized element, so it does not have a boiling point.",
+        "There is no element named \"florium\"; you may be referring to \"francium,\" which has an estimated boiling point of around 670 \u00b0C.",
+        "Florium does not exist; it is not a recognized element.",
+        "Florium is not a recognized element; it may be a typographical error or fictional."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": false,
+      "ent_cosine": -0.0,
+      "ent_nli": 1.792,
+      "answers": [
+        "Captain Aldous Renwick first reached the Sundering Isles in 1842.",
+        "Captain Aldous Renwick first reached the Sundering Isles in 1723.",
+        "Captain Aldous Renwick first reached the Sundering Isles in 1745.",
+        "Captain Aldous Renwick first reached the Sundering Isles in 1912.",
+        "Captain Aldous Renwick first reached the Sundering Isles in 1883.",
+        "Captain Aldous Renwick first reached the Sundering Isles in 1754."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": false,
+      "ent_cosine": -0.0,
+      "ent_nli": 1.792,
+      "answers": [
+        "The 1947 Pemberton Literary Prize was awarded to John L. Lewis.",
+        "The 1947 Pemberton Literary Prize was awarded to William Faulkner.",
+        "The 1947 Pemberton Literary Prize was awarded to poet John S. M. Ward.",
+        "The 1947 Pemberton Literary Prize was awarded to William Carlos Williams.",
+        "The 1947 Pemberton Literary Prize was awarded to the poet T. S. Eliot.",
+        "The 1947 Pemberton Literary Prize was awarded to Robert H. McGrath."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": true,
+      "ent_cosine": 0.637,
+      "ent_nli": 0.868,
+      "answers": [
+        "The chemical formula for zylophane is C12H20O10.",
+        "Zylophane does not have a widely recognized chemical formula, as it is not a standard chemical compound.",
+        "Zylophane does not have a universally recognized chemical formula as it is not a standard chemical compound.",
+        "The chemical formula for zylophane is C17H18O9.",
+        "Zylophane does not have a widely recognized chemical formula, as it is not a standard chemical compound.",
+        "Zylophane does not have a widely recognized chemical formula, as it is not a standard chemical compound."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": false,
+      "ent_cosine": -0.0,
+      "ent_nli": 1.792,
+      "answers": [
+        "The term 'epistemic verdancy' was coined by philosopher William Alston.",
+        "The term 'epistemic verdancy' was coined by philosopher James A. Harris.",
+        "The term 'epistemic verdancy' was coined by philosopher Jos\u00e9 Medina.",
+        "The term 'epistemic verdancy' was coined by philosopher David J. Chalmers.",
+        "The term 'epistemic verdancy' was coined by philosopher David W. G. Smith.",
+        "The term 'epistemic verdancy' was coined by philosopher T. E. M. McNally."
+      ]
+    },
+    {
+      "diff": "fictional",
+      "correct": true,
+      "ent_cosine": -0.0,
+      "ent_nli": 1.33,
+      "answers": [
+        "I don't have the current population of Brackenmoor, Vermont, as it may not be a widely recognized location or may not have recorded data.",
+        "As of October 2023, Brackenmoor, Vermont does not exist; it may be fictional or incorrectly named.",
+        "I couldn't find any information on a town called Brackenmoor, Vermont, suggesting it may not exist or be too small to have data available.",
+        "I\u2019m sorry, but I don\u2019t have information on a town named Brackenmoor, Vermont, as it may not be widely recognized or could be fictional.",
+        "I don't have specific data on the population of Brackenmoor, Vermont, as it may not be widely reported or may not exist.",
+        "Brackenmoor, Vermont does not exist; it is not a recognized town or location."
+      ]
+    }
+  ],
+  "n": 16,
+  "n_incorrect": 4,
+  "auc_cosine_entropy": 0.573,
+  "auc_nli_entropy": 0.948,
+  "mean_cosine_ent_confab": 0.113,
+  "mean_cosine_ent_correct": 0.053,
+  "mean_nli_ent_confab": 1.734,
+  "mean_nli_ent_correct": 0.333
+}
