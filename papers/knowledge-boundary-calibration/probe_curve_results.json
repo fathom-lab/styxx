@@ -1,0 +1,402 @@
+{
+  "rows": [
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "What is the capital of France?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "What is the chemical symbol for gold?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "Who wrote Romeo and Juliet?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "What planet is known as the Red Planet?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "What is the atomic number of tungsten?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L0_real_common",
+      "q": "In what year did World War II end?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "Who won the Nobel Prize in Literature in 193",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "What is the name of the deepest point in the",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "Who directed the 1971 film The French Connec",
+      "abstain_prop": 0.0,
+      "inconsistency": 0.5
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "Who composed the opera La Wally?",
+      "abstain_prop": 0.0,
+      "inconsistency": 0.5
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "Who was the 13th President of the United Sta",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L1_real_obscure",
+      "q": "In what year did the mathematician Evariste ",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "What is the capital city of the Republic of ",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "In what year did Captain Aldous Renwick firs",
+      "abstain_prop": 0.0,
+      "inconsistency": 0.5
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "Who won the 1947 Pemberton Literary Prize?",
+      "abstain_prop": 0.0,
+      "inconsistency": 1.609
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "Who composed the 1823 symphony 'The Azure Ca",
+      "abstain_prop": 0.6,
+      "inconsistency": 1.332
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "Which philosopher coined the term 'epistemic",
+      "abstain_prop": 0.0,
+      "inconsistency": 1.609
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L2_plausible_fake",
+      "q": "What is the capital of the province of Westm",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.609
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "What is the capital of the Kingdom of Glorpt",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.673
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "What is the atomic number of the element zib",
+      "abstain_prop": 1.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "Who is the current ruler of the planet Wexla",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.055
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "What is the boiling point of the substance f",
+      "abstain_prop": 1.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "In what year did the Zentavian Empire collap",
+      "abstain_prop": 0.0,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o-mini",
+      "level": "L3_absurd_fake",
+      "q": "Who invented the quarnsate machine?",
+      "abstain_prop": 0.6,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "What is the capital of France?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "What is the chemical symbol for gold?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "Who wrote Romeo and Juliet?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "What planet is known as the Red Planet?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "What is the atomic number of tungsten?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L0_real_common",
+      "q": "In what year did World War II end?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "Who won the Nobel Prize in Literature in 193",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "What is the name of the deepest point in the",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "Who directed the 1971 film The French Connec",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "Who composed the opera La Wally?",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "Who was the 13th President of the United Sta",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L1_real_obscure",
+      "q": "In what year did the mathematician Evariste ",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "What is the capital city of the Republic of ",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "In what year did Captain Aldous Renwick firs",
+      "abstain_prop": 0.0,
+      "inconsistency": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "Who won the 1947 Pemberton Literary Prize?",
+      "abstain_prop": 0.2,
+      "inconsistency": 1.332
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "Who composed the 1823 symphony 'The Azure Ca",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.673
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "Which philosopher coined the term 'epistemic",
+      "abstain_prop": 0.4,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L2_plausible_fake",
+      "q": "What is the capital of the province of Westm",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.332
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "What is the capital of the Kingdom of Glorpt",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.5
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "What is the atomic number of the element zib",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.5
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "Who is the current ruler of the planet Wexla",
+      "abstain_prop": 1.0,
+      "inconsistency": 0.95
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "What is the boiling point of the substance f",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.055
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "In what year did the Zentavian Empire collap",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.332
+    },
+    {
+      "model": "gpt-4o",
+      "level": "L3_absurd_fake",
+      "q": "Who invented the quarnsate machine?",
+      "abstain_prop": 1.0,
+      "inconsistency": 1.332
+    }
+  ],
+  "curves": {
+    "gpt-4o-mini": {
+      "L0_real_common": {
+        "abstain_rate": 0.0,
+        "mean_inconsistency_answered": 0.0,
+        "n_answered": 6
+      },
+      "L1_real_obscure": {
+        "abstain_rate": 0.0,
+        "mean_inconsistency_answered": 0.167,
+        "n_answered": 6
+      },
+      "L2_plausible_fake": {
+        "abstain_rate": 0.433,
+        "mean_inconsistency_answered": 1.24,
+        "n_answered": 3
+      },
+      "L3_absurd_fake": {
+        "abstain_rate": 0.767,
+        "mean_inconsistency_answered": 0.95,
+        "n_answered": 1
+      }
+    },
+    "gpt-4o": {
+      "L0_real_common": {
+        "abstain_rate": 0.0,
+        "mean_inconsistency_answered": 0.0,
+        "n_answered": 6
+      },
+      "L1_real_obscure": {
+        "abstain_rate": 0.0,
+        "mean_inconsistency_answered": 0.0,
+        "n_answered": 6
+      },
+      "L2_plausible_fake": {
+        "abstain_rate": 0.6,
+        "mean_inconsistency_answered": 0.761,
+        "n_answered": 3
+      },
+      "L3_absurd_fake": {
+        "abstain_rate": 1.0,
+        "mean_inconsistency_answered": null,
+        "n_answered": 0
+      }
+    }
+  },
+  "gpt4o_abstain_curve": [
+    0.0,
+    0.0,
+    0.6,
+    1.0
+  ],
+  "gpt4o_threshold_level": "L2_plausible_fake",
+  "B1_monotonic": true,
+  "B2_threshold_at_fake": true,
+  "B3_confident_confab_zone": [
+    true,
+    [
+      "gpt-4o-mini:L2_plausible_fake"
+    ]
+  ],
+  "PASS": true
+}
