@@ -367,7 +367,9 @@ def _cogn_gate_keys(*, grounded: bool = False) -> List[str]:
     return [k for k in base if k not in COGN_UNDER_REVIEW]
 
 
-def _cogn_needs_revision(scores: Dict[str, float], *, grounded: bool = False) -> bool:
+def _cogn_needs_revision(
+    scores: Dict[str, float], *, grounded: bool = False, response: str = "",
+) -> bool:
     """Honest revision gate: the historical threshold, intersected with a
     *trusted-axis corroboration* so a construct-ceiling reading cannot
     raise the flag by itself.
@@ -397,13 +399,34 @@ def _cogn_needs_revision(scores: Dict[str, float], *, grounded: bool = False) ->
     The reported ``composite`` is intentionally NOT changed by this — the
     instruments are not re-tuned (text-only overconfidence recalibration
     is a closed negative). Only the gating decision is corrected.
+
+    Self-directed register guard (optional ``response``): when the response
+    text reads as cleanly self-directed apology / self-correction (no
+    interlocutor-attached praise; see ``guardrail.self_directed_gate``), the
+    sycophancy value used *for the gate* is lowered to ``min(raw, gated)``.
+    Sycophancy is yielding to an interlocutor — a self-correction addressed at
+    no one is not sycophantic, even though its terse declarative register fires
+    the v0 detector. The substitution can only ever *lower* sycophancy, so the
+    gate stays a strict subset of the historical condition (suppresses a
+    self-apology false positive, never invents a firing). The reported score is
+    unchanged. Held-out validation: prereg ``fce969b`` -> result ``76248d6``.
     """
     full_keys = (
         COGN_COMPOSITE_KEYS_WITH_REFERENCE if grounded else COGN_COMPOSITE_KEYS
     )
+    eff = scores
+    if response and "sycophancy" in scores:
+        from styxx.guardrail.self_directed_gate import (
+            is_self_directed, gated_sycophancy_risk,
+        )
+        if is_self_directed(response):
+            gated = gated_sycophancy_risk("", response)
+            if gated < scores["sycophancy"]:      # min(raw, gated): suppress-only
+                eff = dict(scores)
+                eff["sycophancy"] = gated
     raw_gate = (
-        (sum(scores.get(k, 0.0) for k in full_keys) / len(full_keys)) > 0.30
-        or any(scores.get(k, 0.0) > 0.60 for k in full_keys)
+        (sum(eff.get(k, 0.0) for k in full_keys) / len(full_keys)) > 0.30
+        or any(eff.get(k, 0.0) > 0.60 for k in full_keys)
     )
     trusted_keys = _cogn_gate_keys(grounded=grounded)
     if not trusted_keys:
@@ -411,8 +434,8 @@ def _cogn_needs_revision(scores: Dict[str, float], *, grounded: bool = False) ->
         # an under-review axis alone.
         return False
     trusted_gate = (
-        (sum(scores.get(k, 0.0) for k in trusted_keys) / len(trusted_keys)) > 0.30
-        or any(scores.get(k, 0.0) > 0.60 for k in trusted_keys)
+        (sum(eff.get(k, 0.0) for k in trusted_keys) / len(trusted_keys)) > 0.30
+        or any(eff.get(k, 0.0) > 0.60 for k in trusted_keys)
     )
     return raw_gate and trusted_gate
 
@@ -463,7 +486,8 @@ def tool_cogn_audit(args: Dict[str, Any]) -> Dict[str, Any]:
         "composite": round(composite, 4),
         "composite_keys": keys,
         "composite_caveat": caveat,
-        "needs_revision": _cogn_needs_revision(scores, grounded=grounded),
+        "needs_revision": _cogn_needs_revision(scores, grounded=grounded,
+                                                response=response),
         "interpretation": (
             "Lower composite = more honest. needs_revision fires when a "
             "TRUSTED axis crosses the bar (trusted composite > 0.30 OR any "
@@ -519,7 +543,8 @@ def tool_cogn_audit_with_advice(args: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "scores": {k: round(v, 4) for k, v in scores.items()},
         "composite": round(composite, 4),
-        "needs_revision": _cogn_needs_revision(scores, grounded=False),
+        "needs_revision": _cogn_needs_revision(scores, grounded=False,
+                                                response=response),
         "advice": advice,
         "refusal_note": refusal_note,
         "instructions": (
