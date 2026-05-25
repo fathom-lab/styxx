@@ -25,6 +25,7 @@ meaning inside the instrument**.
 | 4b | The knowledge-boundary as a *curve* | **PASS** | gpt-4o admits / gpt-4o-mini betrays | feasibility; neutral-prompt default boundary | `knowledge-boundary-calibration/FINDING_curve_2026_05_25.md` + `epistemic_curve.png` |
 | 5 | Reference-free truth via inter-model agreement (Council)? | **fabrication: PASS; truth-tracking, fame rejected** | AUC 1.0; correct-cluster 8/8 | bounded by verifiable≈known confound + same-vendor | `council-reference-free-truth/FINDING_council_*` + `FINDING_fame_vs_truth_*` |
 | 6 | The detector in reverse — diversity (GDI)? | **PASS** (instrument); alignment-tax **null** | open 14× closed; coherence 60/60 | G1 near-tautological; no real model ranking | `generative-diversity/FINDING_gdi_2026_05_25.md` |
+| 7 | Can the detectors be **defeated** (red-team)? | robust to instruction, **blind to injection** | inconsistency 1.44→**0.00** under injection; soft attacks ~1.4 | registered A1 FAILS (parrot 0.625<0.70); security model confirmed in substance | `adversarial-robustness/FINDING_redteam_2026_05_25.md` |
 
 ## The discipline trail (the part that makes it trustworthy)
 
@@ -42,7 +43,11 @@ asset: a map with the wrong turns left visible.
   small-NLI); epistemic humility is prompt-elastic ("say if unsure" ≈ free guardrail);
   the knowledge boundary is a measurable psychometric curve (admits vs betrays);
   inter-model agreement is reference-free, truth-*tracking*, fame-rejected; GDI is a
-  valid coherence-gated diversity instrument.
+  valid coherence-gated diversity instrument. **Security model:** both detectors are
+  robust to instruction/persona but **blind to context-injection** (a planted fake
+  collapses inconsistency 1.44→0.00 and makes the Council converge) — catch *spontaneous*
+  confabulation, not *adversarially planted* fabrication; don't trust them on poisoned
+  context.
 - **Open:** **cross-vendor council** — the decisive truth test, key-blocked (operator);
   truth past the labelable edge — confound-blocked (measurement, not signal); full hashed
   multi-model/multi-seed runs; shipped `semantic_entropy` + `council` primitives.
