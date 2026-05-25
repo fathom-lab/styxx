@@ -4,6 +4,15 @@
 models (`gpt-4o-mini`, `gpt-4o`, `gpt-3.5-turbo`, `gpt-4.1-mini`). **Verdict: PASS**
 (C1 ∧ C2) — strong — with a sharp boundary drawn on what it does and does not establish.
 
+> **UPDATE (`FINDING_fame_vs_truth_2026_05_25.md`):** the fame-vs-truth follow-up
+> **rejected the fame hypothesis** — agreement stays perfect *and correct* on
+> documented-obscure facts most humans don't know (capital of Burkina Faso,
+> einsteinium=99), collapsing only on fakes. So this is **truth-tracking, not
+> fame-tracking**. The honest limit moved: "truth" is earned across all *labelable*
+> knowledge, and withheld only past the verifiable≈documented≈known confound (the genuine
+> model-knowledge edge) and cross-vendor. Read both findings together; the line below is
+> superseded by that refinement.
+
 ## Result (agreement = largest cross-model equivalence cluster ÷ council size)
 
 | tier | mean agreement (judge) | mean agreement (cosine) |

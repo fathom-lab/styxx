@@ -20,7 +20,7 @@ three ways, none trusting self-report:
 |---|---|---|---|
 | **intra-model inconsistency** | across N samples of one model | a model invents a *different* fact each sample → semantic entropy detects confabulation, AUC 0.88–0.95 cross-model | PASS (feasibility, 3 models) |
 | **abstention** | answer vs "I don't know," against *controlled* fake entities | abstain-on-fake / answer-on-real = knows its boundary; but **prompt-elastic** (one clause: 0%→97% abstention) | construct-valid; prompt-bound |
-| **inter-model agreement** | across independent models | models converge on real, scatter on fake → reference-free fabrication detection, AUC 1.0 | PASS (consensus, not yet truth) |
+| **inter-model agreement** | across independent models | converge on real, scatter on fake, AUC 1.0; fame hypothesis **rejected** (perfect+correct on human-obscure facts) → truth-*tracking* over shared knowledge | PASS; bounded by verifiable≈known confound + same-vendor |
 
 ## The unifying picture (the psychometric curve makes it visual)
 
@@ -59,9 +59,13 @@ NLI-also-FPs → threshold sensitivity), each by honoring a bar over momentum.
   cross-model; the clustering step is characterized; epistemic humility is prompt-elastic
   (and "say if unsure" is a near-free guardrail); reference-free *fabrication* detection
   works via inter-model agreement.
-- **Open:** reference-free **truth** (vs *consensus/fame*) — needs an ultra-rare-real
-  tier; **cross-vendor** councils; **full hashed runs**; a shipped `semantic_entropy` /
-  `council` primitive. These are the pre-registerable next bets.
+- **Refined (fame-vs-truth ran):** inter-model agreement is **truth-tracking, not
+  fame-tracking** — perfect *and correct* on documented-obscure facts most humans don't
+  know; only fabrication breaks it. "Truth" is earned across all *labelable* knowledge.
+- **Open:** truth *past the labelable edge* — confound-blocked (verifiable≈documented≈
+  known), a limit of measurement not signal; **cross-vendor** councils (the real threat
+  to "shared knowledge ≠ OpenAI-consensus", key-blocked); **full hashed runs**; a shipped
+  `semantic_entropy` / `council` primitive. The pre-registerable next bets.
 
 **The line that holds:** a model's knowledge boundary is dark to its own self-report but
 *bright to divergence* — across its samples, and across its peers. That is the session's

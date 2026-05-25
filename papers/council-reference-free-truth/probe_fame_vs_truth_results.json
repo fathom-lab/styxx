@@ -1,0 +1,238 @@
+{
+  "rows": [
+    {
+      "tier": "R0_common",
+      "q": "What is the capital of France?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R0_common",
+      "q": "What is the chemical symbol for gold?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R0_common",
+      "q": "Who wrote Romeo and Juliet?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 0,
+      "correct_cluster": false
+    },
+    {
+      "tier": "R0_common",
+      "q": "What planet is known as the Red Planet?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 1,
+      "correct_cluster": false
+    },
+    {
+      "tier": "R0_common",
+      "q": "What is the atomic number of tungsten?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R0_common",
+      "q": "In what year did World War II end?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "Who won the Nobel Prize in Literature in 193",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 3,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "What is the deepest point in the Mediterrane",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 1,
+      "correct_cluster": false
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "Who directed the 1971 film The French Connec",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 0,
+      "correct_cluster": false
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "Who composed the opera La Wally?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 0,
+      "correct_cluster": false
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "Who was the 13th President of the United Sta",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 2,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R1_obscure",
+      "q": "In what year did the mathematician Evariste ",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Burkina Faso?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Bhutan?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Kyrgyzstan?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Eritrea?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 3,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Brunei?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the atomic number of einsteinium?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the atomic number of technetium?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the currency of Bhutan?",
+      "agree": 1.0,
+      "n_abstain": 0,
+      "n_correct": 4,
+      "correct_cluster": true
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital city of the Republic of ",
+      "agree": 0.25,
+      "n_abstain": 3
+    },
+    {
+      "tier": "fake",
+      "q": "In what year did Captain Aldous Renwick firs",
+      "agree": 0.25,
+      "n_abstain": 0
+    },
+    {
+      "tier": "fake",
+      "q": "Who won the 1947 Pemberton Literary Prize?",
+      "agree": 0.25,
+      "n_abstain": 0
+    },
+    {
+      "tier": "fake",
+      "q": "Who composed the 1823 symphony 'The Azure Ca",
+      "agree": 0.25,
+      "n_abstain": 2
+    },
+    {
+      "tier": "fake",
+      "q": "Which philosopher coined the term 'epistemic",
+      "agree": 0.25,
+      "n_abstain": 2
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital of the province of Westm",
+      "agree": 0.25,
+      "n_abstain": 3
+    },
+    {
+      "tier": "fake",
+      "q": "Who was awarded the 1962 Hartwell Medal for ",
+      "agree": 0.25,
+      "n_abstain": 1
+    },
+    {
+      "tier": "fake",
+      "q": "Who wrote the 1932 novel 'The Glass Sentinel",
+      "agree": 0.25,
+      "n_abstain": 1
+    }
+  ],
+  "council": [
+    "gpt-4o-mini",
+    "gpt-4o",
+    "gpt-3.5-turbo",
+    "gpt-4.1-mini"
+  ],
+  "agreement_vs_rarity_curve": {
+    "R0_common": 1.0,
+    "R1_obscure": 1.0,
+    "R2_ultrarare": 1.0,
+    "fake": 0.25
+  },
+  "auc_R2_vs_fake": 1.0,
+  "agree_R2_ultrarare": 1.0,
+  "agree_fake": 0.25,
+  "frac_R2_with_correct_cluster": 1.0,
+  "T1_truth_not_fame(R2>=0.70 & R2-fake>=0.30)": [
+    true,
+    1.0,
+    0.75
+  ],
+  "T2_correct_cluster_persists(>=0.75)": [
+    true,
+    1.0
+  ],
+  "PASS": true
+}
