@@ -1,11 +1,16 @@
-# Public correction — draft (the previous thread was wrong)
+# The corrected story — draft (the original thread was deleted 2026-05-25)
 
-**Why this exists:** the posted thread claimed semantic entropy fails on confident
-confabulation (AUC 0.55, "the lie is a flatline"). That was a cosine-clustering
-artifact, caught the same day. The honest move is a visible correction, not a quiet
-delete — being publicly right about being wrong *is* the styxx thesis. Post as a
-quote-tweet of the original thread root (keeps the receipt visible) or as a reply
-chain under tweet 9.
+**Status:** the original (wrong) thread was **deleted** by the operator, so no live
+correction is required. This is kept as (a) the internal record and (b) a ready-to-post
+*fresh* telling of the correct result, if we choose to. It is NOT framed as "correction
+to our last thread" anymore — it stands alone.
+
+**Accuracy note (read before posting):** an early version of this draft said "cosine
+can't, use NLI." A threshold sweep (`analyze_clustering_threshold.py`) showed that was
+itself an overclaim — the real culprit was the *too-lenient 0.70 threshold*; cosine
+recovers to AUC 0.93 at 0.95, NLI (threshold-free) reaches 0.95. The robust claim is
+"semantic entropy detects confident confabulation at AUC 0.93–0.95; our 0.55 was a
+threshold artifact." Tweets below reflect that.
 
 **Receipts link:**
 https://github.com/fathom-lab/styxx/blob/main/papers/tier3-confident-confabulation/FINDING_corrected_2026_05_25.md
@@ -39,9 +44,9 @@ six samples, six different years. cosine sees ~0.97 similarity → "same answer"
 
 **4/**
 ```
-cluster by entailment instead — which splits those six years apart — and semantic entropy separates confabulation from fact at AUC 0.95, not 0.55.
+the bug was our clustering threshold: we merged answers that were only ~70% similar, which swallowed the different lies into "one answer."
 
-the lever works. confident error is INCONSISTENT, and across-sample divergence catches it.
+tighten the threshold (or cluster by entailment, the proper method) and semantic entropy separates fact from confabulation at AUC 0.93–0.95, not 0.55. the lever works. confident error is INCONSISTENT.
 ```
 
 **5/**
@@ -55,8 +60,8 @@ https://github.com/fathom-lab/styxx/blob/main/papers/tier3-confident-confabulati
 ## Single-tweet version (if you'd rather not re-thread)
 
 ```
-correction: our semantic-entropy thread was wrong. the "AUC 0.55, the lie is a flatline" result was a cosine-clustering artifact — the model tells a *different* lie each sample (Renwick: 1842/1723/1912…), and cosine masked it as "same."
+turns out semantic entropy DOES catch confident confabulation — we just clustered wrong at first. the model tells a *different* lie each sample (Renwick: 1842/1723/1912…); our 0.70 similarity threshold merged them into "one answer" → fake null.
 
-cluster by entailment and it's AUC 0.95. the lever works. receipts:
+fix the threshold (or use entailment): AUC 0.93–0.95. confident error is inconsistent. receipts:
 https://github.com/fathom-lab/styxx/blob/main/papers/tier3-confident-confabulation/FINDING_corrected_2026_05_25.md
 ```

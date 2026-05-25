@@ -69,9 +69,11 @@ entropy** across N samples (Farquhar-Nature-2024: confabulation is *unstable*, s
 divergence flags it). A first pass using a **cosine-similarity** clustering proxy
 returned AUC 0.55 and we briefly (wrongly) recorded a negative — but that was a
 clustering artifact: the model tells a *different* lie each sample ("Renwick reached
-in 1842 / 1723 / 1912…"), and cosine lumps the near-identical sentence templates as
-"the same." Re-clustered by **bidirectional NLI entailment** (the actual
-semantic-entropy method) on identical samples, **AUC = 0.95** — the lever WORKS.
+in 1842 / 1723 / 1912…"), and the conventional 0.70 cosine threshold lumps the
+template-sharing lies (pairwise cosine 0.70–0.93) as "the same." A threshold sweep on
+identical samples recovers **AUC 0.93 by cosine 0.95** and **0.95 with NLI entailment**
+(threshold-free) — robust across any cutoff ≥0.8. The lever WORKS; the 0.55 was a
+too-lenient-threshold artifact, not a property of confident error.
 Confident confabulation is *inconsistent*, not stable; single-response confidence
 misses it (closed) but across-sample semantic divergence catches it. This is the
 first partial Tier-3 crossing in the program. Caveats: gpt-4o-mini only, n=4
