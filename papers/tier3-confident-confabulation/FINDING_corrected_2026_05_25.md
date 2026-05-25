@@ -110,6 +110,10 @@ gate de-circularized to distinct surface forms) characterized the clustering ste
 cleanest** (AUC 1.0, zero FP) but **not necessary** (pre-registered necessity claim
 FAILED); the **0.70 threshold (AUC 0.69) and nli-deberta (noisy, FP 0.37) are the
 traps**. The divergence signal itself is robust (every sane method ≥0.87). A
-`semantic_entropy` primitive is now designable — default cosine@0.90, opt-in LLM-judge —
-pending only a full hashed multi-model run (gpt-4o-mini only so far; cross-vendor
-key-blocked).
+`semantic_entropy` primitive is now designable — default cosine@0.90, opt-in LLM-judge.
+**Cross-model feasibility PASS (`FINDING_multimodel_2026_05_25.md`):** the mechanism
+generalizes — gpt-4o-mini and gpt-3.5-turbo confabulate *inconsistently* (entropy 7–9×
+correct; cosine@0.90 AUC 0.89–0.92), and gpt-4o mostly *abstains* (62.5%) instead of
+confabulating. No consistent-confabulation floor appeared. Still feasibility-grade
+(22 items, N=6, OpenAI-only, single run); a full hashed/cross-vendor run remains the
+formal pre-ship step.

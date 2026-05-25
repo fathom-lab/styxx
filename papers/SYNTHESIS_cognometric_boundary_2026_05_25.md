@@ -73,7 +73,13 @@ in 1842 / 1723 / 1912…"), and the conventional 0.70 cosine threshold lumps the
 template-sharing lies (pairwise cosine 0.70–0.93) as "the same." A threshold sweep on
 identical samples recovers **AUC 0.93 by cosine 0.95** and **0.95 with NLI entailment**
 (threshold-free) — robust across any cutoff ≥0.8. The lever WORKS; the 0.55 was a
-too-lenient-threshold artifact, not a property of confident error.
+too-lenient-threshold artifact, not a property of confident error. **Cross-model
+(feasibility): the mechanism generalizes** — gpt-4o-mini and gpt-3.5-turbo confabulate
+*inconsistently* (cosine@0.90 AUC 0.89–0.92, entropy 7–9× correct), while gpt-4o mostly
+*abstains* (62.5%) instead of inventing. No consistent-confabulation floor appeared. So
+Tier 3's confident-confabulation case is a genuine *partial crossing*, not dark: the
+model's confidence hides the error from single-response signals, but its inconsistency
+exposes it across samples — and the strongest model increasingly just declines.
 Confident confabulation is *inconsistent*, not stable; single-response confidence
 misses it (closed) but across-sample semantic divergence catches it. This is the
 first partial Tier-3 crossing in the program. Caveats: gpt-4o-mini only, n=4
