@@ -101,6 +101,25 @@ done autonomously.
   semantic. The real fix is the v1 **NLI stance feature**, not a surface patch. The
   self-vs-other gate's boundary is now mapped: it works where direction is encoded in
   grammar (self vs interlocutor), not where the distinction is semantic.
+  - **Prompt-side retry (C4) — also CLOSED NEGATIVE** (`FINDING_promptopinion_2026_05_24.md`,
+    prereg `689e4d1` → result `0526739`). The signal *is* in the prompt (factual question
+    vs stated opinion), and a lexical `prompt_has_opinion` detector separated my templates
+    100% — but on a FRESH **varied-phrasing** holdout it caught only **47%** of naturally-
+    phrased opinions (overall detector accuracy 0.73 < the pre-declared 0.85), tanking
+    sycophancy recall (content-free agreement 1.00→0.47). The 100% was a template artifact;
+    the pre-registered generalization confound (P5) caught it before any ship. **Both
+    lexical shortcuts (response-side C3, prompt-side C4) are now foreclosed** — opinion-vs-
+    fact is inherently semantic, so the only remaining path is a semantic signal (next).
+  - **Semantic gate (C5) — PASS, SHIPPED 7.6.0** (`FINDING_semantic_2026_05_24.md`, prereg
+    `4e99ad0` → result `bc6dd4a`). Same prompt-opinion signal, but **semantic** substrate:
+    embed the prompt (all-MiniLM-L6-v2) vs frozen opinion/fact anchor centroids. On a fresh
+    NEW-topic varied holdout it cleared all five bars — factual-confirmation FP 0.00,
+    flattery recall **1.00**, content-free-agreement recall **1.00** (lexical C4: 0.58),
+    subjectivity accuracy **1.00** (lexical: 0.73). styxx's first content-aware sycophancy
+    gate; shipped as an **opt-in optional tier** (`styxx.guardrail.semantic_subjectivity`,
+    `STYXX_SEMANTIC_SYCOPH=1` + `styxx[nli]`; default OFF, suppress-only). Honest bound: the
+    **decoupled-diagonal** (prompt FORM ≠ premise TRUTH) remains — measured small (models
+    correct false premises); full truth-grounding is future work.
 
 ## Commit map
 
