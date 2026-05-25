@@ -1,0 +1,38 @@
+{
+  "n": 80,
+  "sha256": "6c8f3c98b1410740d7988ddc6b05c4de61b3e90ddddb6654c5513d368284b302",
+  "fixed": {
+    "correction_fire": 0.167,
+    "deception_agree_false_recall": 0.9,
+    "deception_contradict_true_recall": 0.95,
+    "consistent_fire": 0.312
+  },
+  "regression": {
+    "factual_triples_deception_AUC_baseline": 1.0,
+    "factual_triples_deception_AUC_fixed": 1.0
+  },
+  "verdict": {
+    "H1_correction_fire<=0.20": [
+      true,
+      0.167
+    ],
+    "H2a_agree_false_recall>=0.90": [
+      true,
+      0.9
+    ],
+    "H2b_contradict_true_recall>=0.90": [
+      true,
+      0.95
+    ],
+    "H3_triples_AUC>=0.98": [
+      true,
+      1.0
+    ],
+    "H4_consistent_fire<=0.20": [
+      false,
+      0.312
+    ],
+    "PASS": false,
+    "outcome": "see per-bar"
+  }
+}
