@@ -1,0 +1,342 @@
+{
+  "rows": [
+    {
+      "tier": "real_common",
+      "q": "What is the capital of France?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "The capital of France is Paris.",
+        "The capital of France is Paris.",
+        "Paris.",
+        "The capital of France is Paris."
+      ]
+    },
+    {
+      "tier": "real_common",
+      "q": "What is the chemical symbol for gold?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 1.0,
+      "votes": [
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au.",
+        "The chemical symbol for gold is Au."
+      ]
+    },
+    {
+      "tier": "real_common",
+      "q": "Who wrote Romeo and Juliet?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "William Shakespeare wrote Romeo and Juli",
+        "William Shakespeare wrote Romeo and Juli",
+        "William Shakespeare.",
+        "William Shakespeare wrote Romeo and Juli"
+      ]
+    },
+    {
+      "tier": "real_common",
+      "q": "What planet is known as the Red Planet?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "Mars is known as the Red Planet.",
+        "Mars is known as the Red Planet.",
+        "Mars.",
+        "Mars is known as the Red Planet."
+      ]
+    },
+    {
+      "tier": "real_common",
+      "q": "What is the atomic number of tungsten?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 1.0,
+      "votes": [
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74.",
+        "The atomic number of tungsten is 74."
+      ]
+    },
+    {
+      "tier": "real_common",
+      "q": "In what year did World War II end?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 1.0,
+      "votes": [
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945.",
+        "World War II ended in 1945."
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who won the Nobel Prize in Literature in 1938?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 1.0,
+      "votes": [
+        "Pearl S. Buck won the Nobel Prize in Lit",
+        "The Nobel Prize in Literature in 1938 wa",
+        "Pearl S. Buck won the Nobel Prize in Lit",
+        "The Nobel Prize in Literature in 1938 wa"
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "What is the name of the deepest point in the M",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.5,
+      "votes": [
+        "The deepest point in the Mediterranean S",
+        "Calypso Deep.",
+        "The Calypso Deep.",
+        "The deepest point in the Mediterranean S"
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who directed the 1971 film The French Connecti",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "William Friedkin directed the 1971 film ",
+        "William Friedkin directed the 1971 film ",
+        "William Friedkin.",
+        "William Friedkin directed the 1971 film "
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who composed the opera La Wally?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "La Wally was composed by Alfredo Catalan",
+        "Alfredo Catalani composed the opera La W",
+        "Alfredo Catalani.",
+        "Alfredo Catalani composed the opera La W"
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who was the 13th President of the United State",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "The 13th President of the United States ",
+        "Millard Fillmore was the 13th President ",
+        "Millard Fillmore.",
+        "Millard Fillmore was the 13th President "
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "In what year did the mathematician Evariste Ga",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 1.0,
+      "votes": [
+        "Evariste Galois died in 1832.",
+        "\u00c9variste Galois died in the year 1832.",
+        "Evariste Galois died in 1832.",
+        "\u00c9variste Galois died in 1832."
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "What is the SI unit of magnetic flux?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "The SI unit of magnetic flux is the webe",
+        "The SI unit of magnetic flux is the webe",
+        "Weber (Wb).",
+        "The SI unit of magnetic flux is the webe"
+      ]
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who painted the Arnolfini Portrait?",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 1.0,
+      "agree_cos": 0.75,
+      "votes": [
+        "The Arnolfini Portrait was painted by Ja",
+        "Jan van Eyck painted the Arnolfini Portr",
+        "Jan van Eyck.",
+        "Jan van Eyck painted the Arnolfini Portr"
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital city of the Republic of Vo",
+      "n_abstain": 3,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "There is no recognized Republic of Vorla",
+        "There is no country named the Republic o",
+        "The capital city of the Republic of Vorl",
+        "There is no country called the Republic "
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "In what year did Captain Aldous Renwick first ",
+      "n_abstain": 0,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.5,
+      "votes": [
+        "Captain Aldous Renwick first reached the",
+        "Captain Aldous Renwick first reached the",
+        "Captain Aldous Renwick first reached the",
+        "Captain Aldous Renwick first reached the"
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "Who won the 1947 Pemberton Literary Prize?",
+      "n_abstain": 1,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "The 1947 Pemberton Literary Prize was aw",
+        "Pauline Holdstock won the 1947 Pemberton",
+        "The winner of the 1947 Pemberton Literar",
+        "There is no record of the 1947 Pemberton"
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "Who composed the 1823 symphony 'The Azure Casc",
+      "n_abstain": 3,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "The composer of the 1823 symphony 'The A",
+        "There is no known symphony titled 'The A",
+        "Cl\u00e9ment Janequin.",
+        "There is no known 1823 symphony titled \""
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "Which philosopher coined the term 'epistemic v",
+      "n_abstain": 1,
+      "n_votes": 4,
+      "agree_judge": 0.5,
+      "agree_cos": 0.5,
+      "votes": [
+        "The term 'epistemic verdancy' was coined",
+        "The term 'epistemic verdancy' does not a",
+        "No philosopher has been identified as co",
+        "No philosopher is known to have coined t"
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital of the province of Westmar",
+      "n_abstain": 3,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "There is no province of Westmark; it is ",
+        "Westmark is a fictional location and doe",
+        "The capital of the province of Westmark ",
+        "Westmark does not have an official capit"
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "Who was awarded the 1962 Hartwell Medal for ph",
+      "n_abstain": 1,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "The 1962 Hartwell Medal for physics was ",
+        "There is no record of a \"Hartwell Medal\"",
+        "M. J. Crowe was awarded the 1962 Hartwel",
+        "The 1962 Hartwell Medal for physics was "
+      ]
+    },
+    {
+      "tier": "fake",
+      "q": "Who wrote the 1932 novel 'The Glass Sentinel'?",
+      "n_abstain": 2,
+      "n_votes": 4,
+      "agree_judge": 0.25,
+      "agree_cos": 0.25,
+      "votes": [
+        "The 1932 novel 'The Glass Sentinel' was ",
+        "There is no known 1932 novel titled 'The",
+        "Lisanne Norman.",
+        "I could not find any information about a"
+      ]
+    }
+  ],
+  "council": [
+    "gpt-4o-mini",
+    "gpt-4o",
+    "gpt-3.5-turbo",
+    "gpt-4.1-mini"
+  ],
+  "n_models": 4,
+  "by_judge_clustering": {
+    "C1_real_vs_fake": 1.0,
+    "C2_obscure_vs_fake": 1.0,
+    "mean_real_common": 1.0,
+    "mean_real_obscure": 1.0,
+    "mean_fake": 0.281
+  },
+  "by_cosine_clustering": {
+    "C1_real_vs_fake": 0.991,
+    "C2_obscure_vs_fake": 0.984,
+    "mean_real_common": 0.875,
+    "mean_real_obscure": 0.781,
+    "mean_fake": 0.312
+  },
+  "C1_truth_signal(>=0.75)": [
+    true,
+    1.0
+  ],
+  "C2_obscure_real_vs_fake(>=0.70)": [
+    true,
+    1.0
+  ],
+  "PASS": true
+}
