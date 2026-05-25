@@ -1,0 +1,460 @@
+{
+  "rows": [
+    {
+      "cls": "C1",
+      "q": "What is the capital of France?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "What is the chemical symbol for gold?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "In what year did World War II end?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "Who wrote Romeo and Juliet?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "What planet is known as the Red Planet?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "What is the atomic number of tungsten?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "How many continents are there on Earth?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C1",
+      "q": "What is the boiling point of water at sea level ",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "Why does the sky appear blue during the day?",
+      "n_abstain": 0,
+      "enli": 1.561,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": 0.637,
+        "0.95": 0.868,
+        "0.97": 0.868
+      },
+      "mean_pair_cos": 0.939,
+      "n_entail_ref": 3,
+      "correct": false,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "What causes the four seasons on Earth?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": 0.693
+      },
+      "mean_pair_cos": 0.985,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "Why do dropped objects fall toward the ground?",
+      "n_abstain": 0,
+      "enli": 0.451,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 0.451,
+        "0.97": 0.451
+      },
+      "mean_pair_cos": 0.967,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "Why does ice float on liquid water?",
+      "n_abstain": 0,
+      "enli": 1.242,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 0.451,
+        "0.97": 0.868
+      },
+      "mean_pair_cos": 0.955,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "Why do we see lightning before we hear thunder?",
+      "n_abstain": 0,
+      "enli": -0.0,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 1.0,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "What causes ocean tides?",
+      "n_abstain": 0,
+      "enli": 0.868,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0,
+        "0.97": -0.0
+      },
+      "mean_pair_cos": 0.99,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "How do vaccines protect the body from disease?",
+      "n_abstain": 0,
+      "enli": 0.868,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": 0.637,
+        "0.95": 0.868,
+        "0.97": 0.868
+      },
+      "mean_pair_cos": 0.941,
+      "n_entail_ref": 6,
+      "correct": true,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C2",
+      "q": "Why does a cut apple turn brown?",
+      "n_abstain": 0,
+      "enli": 1.33,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 1.011,
+        "0.97": 1.33
+      },
+      "mean_pair_cos": 0.935,
+      "n_entail_ref": 4,
+      "correct": false,
+      "target": 0,
+      "valid_c2": false
+    },
+    {
+      "cls": "C3",
+      "q": "In what year did Captain Aldous Renwick first re",
+      "n_abstain": 0,
+      "enli": 1.792,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 0.451,
+        "0.97": 1.561
+      },
+      "mean_pair_cos": 0.945,
+      "claimed": true,
+      "target": 1
+    },
+    {
+      "cls": "C3",
+      "q": "Who won the 1947 Pemberton Literary Prize?",
+      "n_abstain": 0,
+      "enli": 1.792,
+      "ecos": {
+        "0.7": 1.561,
+        "0.8": 1.792,
+        "0.9": 1.792,
+        "0.95": 1.792,
+        "0.97": 1.792
+      },
+      "mean_pair_cos": 0.655,
+      "claimed": true,
+      "target": 1
+    },
+    {
+      "cls": "C3",
+      "q": "Which philosopher coined the term 'epistemic ver",
+      "n_abstain": 0,
+      "enli": 1.561,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": 0.868,
+        "0.9": 1.561,
+        "0.95": 1.561,
+        "0.97": 1.561
+      },
+      "mean_pair_cos": 0.814,
+      "claimed": true,
+      "target": 1
+    },
+    {
+      "cls": "C3",
+      "q": "Who composed the 1823 symphony 'The Azure Cascad",
+      "n_abstain": 5,
+      "enli": 1.792,
+      "ecos": {
+        "0.7": 1.011,
+        "0.8": 1.561,
+        "0.9": 1.792,
+        "0.95": 1.792,
+        "0.97": 1.792
+      },
+      "mean_pair_cos": 0.696,
+      "claimed": false,
+      "target": 0
+    },
+    {
+      "cls": "C3",
+      "q": "In what year did the explorer Sir Edmund Voss di",
+      "n_abstain": 5,
+      "enli": 0.868,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": 0.451,
+        "0.95": 0.868,
+        "0.97": 0.868
+      },
+      "mean_pair_cos": 0.936,
+      "claimed": false,
+      "target": 0
+    },
+    {
+      "cls": "C3",
+      "q": "Who was awarded the 1962 Hartwell Medal for phys",
+      "n_abstain": 0,
+      "enli": 1.561,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": 1.33,
+        "0.9": 1.561,
+        "0.95": 1.561,
+        "0.97": 1.561
+      },
+      "mean_pair_cos": 0.781,
+      "claimed": true,
+      "target": 1
+    },
+    {
+      "cls": "C3",
+      "q": "What is the capital of the province of Westmark?",
+      "n_abstain": 5,
+      "enli": 1.561,
+      "ecos": {
+        "0.7": 0.451,
+        "0.8": 1.242,
+        "0.9": 1.561,
+        "0.95": 1.561,
+        "0.97": 1.792
+      },
+      "mean_pair_cos": 0.726,
+      "claimed": false,
+      "target": 0
+    },
+    {
+      "cls": "C3",
+      "q": "Who wrote the 1932 novel 'The Glass Sentinel'?",
+      "n_abstain": 0,
+      "enli": 1.792,
+      "ecos": {
+        "0.7": 0.451,
+        "0.8": 1.561,
+        "0.9": 1.792,
+        "0.95": 1.792,
+        "0.97": 1.792
+      },
+      "mean_pair_cos": 0.754,
+      "claimed": true,
+      "target": 1
+    }
+  ],
+  "VOID": true,
+  "n_C1": 8,
+  "n_C2_valid": 0,
+  "n_C3_confab": 5,
+  "auc_nli": 1.0,
+  "auc_cosine_by_threshold": {
+    "0.7": 0.7,
+    "0.8": 0.9,
+    "0.9": 0.9,
+    "0.95": 1.0,
+    "0.97": 1.0
+  },
+  "best_cosine_threshold": 0.95,
+  "auc_best_cosine": 1.0,
+  "nli_minus_best_cosine": 0.0,
+  "mean_entropy": {
+    "cos95_C2valid": null,
+    "cos95_C3confab": 1.431,
+    "nli_C2valid": null,
+    "nli_C3confab": 1.7,
+    "nli_C1": 0.0
+  },
+  "F1_nli_beats_cosine>=0.10": [
+    false,
+    0.0
+  ],
+  "F2_cosine_FPs_on_C2_nli_doesnt": [
+    false,
+    {
+      "cos95_C2/C3": null,
+      "nli_C2/C3": null
+    }
+  ],
+  "C2_all_diagnostic": {
+    "n": 8,
+    "mean_pairwise_cos": 0.964,
+    "mean_nli_entropy": 0.79,
+    "mean_cos95_entropy": 0.456,
+    "n_nli_false_positive(enli>0.5)": 5
+  }
+}

@@ -93,7 +93,16 @@ specifically an artifact of the conventional 0.70 threshold.
 ## Next (pre-registration required, not done yet)
 
 Full run-once: more items, ≥3 models (OpenAI family — cross-vendor still key-blocked),
-N≥10, entailment clustering, a pre-registered AUC bar, hashed holdout. Plus a designed
-treatment of the abstain/confabulate flip-flop FP. Then — if it holds — a styxx
-`semantic_entropy` primitive (opt-in, grounded tier, `styxx[nli]`), shipped with the
-cosine-proxy trap documented so nobody re-introduces it.
+N≥10, a pre-registered AUC bar, hashed holdout. Plus a designed treatment of the
+abstain/confabulate flip-flop FP.
+
+**Update — the clustering step is itself unresolved.** A focused follow-up
+(`FINDING_focused_2026_05_25.md`) tried to test whether NLI-entailment clustering beats
+cosine when *correct* answers are paraphrased. It VOIDed (the model answers near-
+verbatim even on "why/how" questions, so the condition didn't arise), but it surfaced
+that **NLI false-positives on free-form correct answers** — `nli-deberta-base` flagged
+5/8 correct explanations (entropy 0.79 vs cosine@0.95's 0.46). So "use NLI" is **not**
+established; cosine@~0.9–0.95 was at least as robust in every condition tested. Any
+`semantic_entropy` primitive is **not validated** yet; the divergence signal is sound,
+but the clustering choice (and a non-noisy equivalence judge) is the open problem to
+settle before shipping.
