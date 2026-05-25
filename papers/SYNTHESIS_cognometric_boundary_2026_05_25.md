@@ -63,19 +63,22 @@ correction/lie is indistinguishable by form, and the grounding signal (NLI) itse
 gets confused by surface form (leading "No"). Tier 3 is where styxx's frontier
 genuinely sits, and it is not crossed.
 
-**New (2026-05-25): the across-sample substrate fails too.** A pre-registered probe
-tested the one untried Tier-3 lever — **semantic entropy** across N samples (the
-SelfCheck / Farquhar-Nature-2024 idea: confabulation is *unstable*, so divergence
-flags it even when each sample is high-logprob). On `gpt-4o-mini` baited with
-fictional/unanswerable entities it returns **AUC 0.55 ≈ chance** (T1 ≥ 0.70 FAIL).
-The reason is mechanistically clean and worse than a tie: the model's confident
-confabulations are **consistent** across samples (it invents the *same* fact six
-times, semantic entropy ≈ 0), while the honest abstentions are *diverse* (phrased many
-ways, high entropy). So semantic entropy is **anti-correlated with correctness in the
-confabulation regime** — it would flag the honest answers and clear the confident lies.
-Confident error is stable, not just confident. Both substrates (single-response
-confidence AND across-sample divergence) now closed; Tier 3 stays open.
-(`papers/tier3-confident-confabulation/FINDING_2026_05_25.md`.)
+**Update (2026-05-25): the across-sample substrate partly CROSSES — Tier 3 is not as
+dark as the rest of this doc claims.** A pre-registered probe tested **semantic
+entropy** across N samples (Farquhar-Nature-2024: confabulation is *unstable*, so
+divergence flags it). A first pass using a **cosine-similarity** clustering proxy
+returned AUC 0.55 and we briefly (wrongly) recorded a negative — but that was a
+clustering artifact: the model tells a *different* lie each sample ("Renwick reached
+in 1842 / 1723 / 1912…"), and cosine lumps the near-identical sentence templates as
+"the same." Re-clustered by **bidirectional NLI entailment** (the actual
+semantic-entropy method) on identical samples, **AUC = 0.95** — the lever WORKS.
+Confident confabulation is *inconsistent*, not stable; single-response confidence
+misses it (closed) but across-sample semantic divergence catches it. This is the
+first partial Tier-3 crossing in the program. Caveats: gpt-4o-mini only, n=4
+confabulations, and a real false-positive mode where the model flip-flops between
+abstaining and confabulating (florium/zylophane). See
+`papers/tier3-confident-confabulation/verify_clustering.py` +
+`FINDING_corrected_2026_05_25.md`.
 
 ## The meta-confirmation (the instrument on its builder)
 
@@ -113,11 +116,14 @@ differentiator.
   overconfidence-calibration AUC ≥0.70 held-out). None has in 6+ months; every
   attempt closed negative — but one clean win would break the "text = form only"
   line.
-- A grounded signal that flags **confident confabulation** (Tier-3) at ρ≥0.40. The
-  grounded-arc program looked and found ρ≈0 within-hallucinated; the semantic-entropy
-  across-sample probe looked and found AUC 0.55 ≈ chance (confabulation is *stable*,
-  not divergent). A positive result on either substrate would collapse Tier 3 into
-  Tier 2.
+- A grounded signal that flags **confident confabulation** (Tier-3). Single-response
+  confidence is closed (grounded-arc ρ≈0 within-hallucinated). But the across-sample
+  substrate **partly crosses**: semantic entropy with NLI-entailment clustering hits
+  AUC 0.95 on gpt-4o-mini (the model confabulates *inconsistently*). This is the
+  falsification landing — Tier 3 is not uniformly dark; across-sample semantic
+  divergence is a working partial lever (n small, one model, FP on abstain/confabulate
+  flip-flop). The remaining dark cases: confabulations a model produces *consistently*,
+  and single-response detection.
 
 Until then, the boundary holds, and it is the honest shape of the whole enterprise:
 **form is cheap, truth needs grounding, and confident error is still dark.**
