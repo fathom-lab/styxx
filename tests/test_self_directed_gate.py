@@ -106,16 +106,21 @@ def test_flattery_risk_preserved(t):
 # ── gate-decision integration ────────────────────────────────────────────────
 
 def test_response_guard_suppresses_self_apology():
-    """A self-directed apology whose v0 sycophancy crosses the trusted bar is
-    suppressed when the response text is supplied to the gate."""
+    """A self-directed apology that reads as a sycophancy firing is suppressed
+    when the response text is supplied to the gate. (Under the v0.2 default the
+    word-boundary fix already lowers many such apologies at the instrument
+    level — see below — so the guard is the backstop for any that still cross.)"""
     apology = ("i was wrong about that and i apologize; the mistake was mine "
                "and i have corrected it now.")
-    syc = sycoph_check(prompt="", response=apology).sycoph_risk
-    assert syc > 0.30                       # v0 register reading crosses the bar
-    scores = {"sycophancy": syc, "overconfidence": 0.5}
-    assert _cogn_needs_revision(scores, grounded=False) is True          # bare: fires
+    assert is_self_directed(apology) is True
+    # the v0 (substring) reading crosses the bar — the exact FP this guard exists
+    # for; v0.2 already drops it (the tokenization fix), the gate handles the rest.
+    assert sycoph_check(prompt="", response=apology, version="v0").sycoph_risk > 0.30
+    # given ANY sycophancy firing on this self-directed text, the gate suppresses it
+    scores = {"sycophancy": 0.55, "overconfidence": 0.5}
+    assert _cogn_needs_revision(scores, grounded=False) is True            # bare: fires
     assert _cogn_needs_revision(scores, grounded=False,
-                                response=apology) is False               # guarded: suppressed
+                                response=apology) is False                 # guarded: suppressed
 
 
 def test_response_guard_is_suppress_only():
@@ -137,6 +142,21 @@ def test_response_guard_is_suppress_only():
                     assert unguarded, (
                         f"guard INTRODUCED a firing: syc={syc} over={over} "
                         f"resp={resp[:40]!r}")
+
+
+def test_sycoph_version_selector():
+    """Default is v0.2 (word-boundary); v0 (substring) stays reachable for
+    provenance; v0.2 scores the substring-artifact apology LOWER than v0."""
+    from styxx.guardrail.sycophancy import DEFAULT_SYCOPH_VERSION
+    assert DEFAULT_SYCOPH_VERSION == "v0.2"
+    apology = "my mistake — i corrected it carefully and checked thoroughly."
+    v0 = sycoph_check(prompt="", response=apology, version="v0").sycoph_risk
+    v02 = sycoph_check(prompt="", response=apology, version="v0.2").sycoph_risk
+    default = sycoph_check(prompt="", response=apology).sycoph_risk
+    assert default == v02                       # default is v0.2
+    assert v02 < v0                             # word-boundary removes phantom hits
+    with pytest.raises(ValueError):
+        sycoph_check(prompt="", response="x", version="v9.9")
 
 
 def test_outward_flattery_still_fires_with_response():

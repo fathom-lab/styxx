@@ -53,18 +53,28 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
-from .calibrated_weights_sycophancy_v0 import (
-    CALIBRATION_FINGERPRINT,
-    COEFS,
-    DEFAULT_SYCOPH_THRESHOLD,
-    FEATURE_NAMES,
-    MEAN_CV_AUC,
-    SCALER_MEAN,
-    SCALER_SCALE,
-    STD_CV_AUC,
-    predict_proba_sycophantic,
+from . import calibrated_weights_sycophancy_v0 as _w_v0
+from . import calibrated_weights_sycophancy_v0_2 as _w_v0_2
+from .sycophancy_signals import (
+    extract_sycophancy_features,
+    extract_sycophancy_features_v0_2,
 )
-from .sycophancy_signals import extract_sycophancy_features
+
+# version -> (weights module, feature extractor). v0.2 (word-boundary,
+# tokenization-corrected) is the default; v0 (substring) is preserved for
+# provenance with the DOI'd paper. See calibrated_weights_sycophancy_v0_2.
+_VERSIONS = {
+    "v0":   (_w_v0,   extract_sycophancy_features),
+    "v0.2": (_w_v0_2, extract_sycophancy_features_v0_2),
+}
+DEFAULT_SYCOPH_VERSION = "v0.2"
+
+# Backward-compatible module-level exports reflect the DEFAULT version.
+FEATURE_NAMES = _w_v0_2.FEATURE_NAMES
+DEFAULT_SYCOPH_THRESHOLD = _w_v0_2.DEFAULT_SYCOPH_THRESHOLD
+MEAN_CV_AUC = _w_v0_2.MEAN_CV_AUC
+STD_CV_AUC = _w_v0_2.STD_CV_AUC
+CALIBRATION_FINGERPRINT = _w_v0_2.CALIBRATION_FINGERPRINT
 
 
 @dataclass
@@ -104,14 +114,15 @@ class SycophancyVerdict:
         }
 
 
-def _top_signal_contributions(features: Dict[str, float], k: int = 3) -> List[Tuple[str, float, float]]:
-    """Top-k features by absolute scaled contribution to the logit."""
+def _top_signal_contributions(features: Dict[str, float], w, k: int = 3) -> List[Tuple[str, float, float]]:
+    """Top-k features by absolute scaled contribution to the logit, under the
+    weights module ``w`` (v0 or v0.2)."""
     contribs = []
-    for i, name in enumerate(FEATURE_NAMES):
+    for i, name in enumerate(w.FEATURE_NAMES):
         raw = float(features.get(name, 0.0))
-        scale = SCALER_SCALE[i] if SCALER_SCALE[i] > 0 else 1.0
-        scaled = (raw - SCALER_MEAN[i]) / scale
-        contribution = scaled * COEFS[i]
+        scale = w.SCALER_SCALE[i] if w.SCALER_SCALE[i] > 0 else 1.0
+        scaled = (raw - w.SCALER_MEAN[i]) / scale
+        contribution = scaled * w.COEFS[i]
         contribs.append((name, raw, contribution))
     contribs.sort(key=lambda t: abs(t[2]), reverse=True)
     return contribs[:k]
@@ -121,6 +132,7 @@ def sycoph_check(
     prompt: str,
     response: str,
     threshold: Optional[float] = None,
+    version: str = DEFAULT_SYCOPH_VERSION,
 ) -> SycophancyVerdict:
     """Calibrated sycophancy verdict for a (prompt, response) pair.
 
@@ -144,9 +156,15 @@ def sycoph_check(
         >>> v.top_signals[0][0]   # leading signal
         'superlative_density'
     """
-    th = float(threshold) if threshold is not None else DEFAULT_SYCOPH_THRESHOLD
-    feats = extract_sycophancy_features(prompt, response)
-    proba = predict_proba_sycophantic(feats)
+    try:
+        w, extractor = _VERSIONS[version]
+    except KeyError:
+        raise ValueError(
+            f"unknown sycophancy version {version!r}; choose from {sorted(_VERSIONS)}"
+        )
+    th = float(threshold) if threshold is not None else w.DEFAULT_SYCOPH_THRESHOLD
+    feats = extractor(prompt, response)
+    proba = w.predict_proba_sycophantic(feats)
     return SycophancyVerdict(
         prompt=prompt,
         response=response,
@@ -154,7 +172,7 @@ def sycoph_check(
         sycophantic=bool(proba >= th),
         threshold=th,
         features=feats,
-        top_signals=_top_signal_contributions(feats, k=3),
+        top_signals=_top_signal_contributions(feats, w, k=3),
     )
 
 

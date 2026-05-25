@@ -188,6 +188,55 @@ def extract_sycophancy_features(prompt: str, response: str) -> Dict[str, float]:
     }
 
 
+# --------------------------------------------------------------
+# v0.2 — word-boundary phrase matching (tokenization-corrected)
+# --------------------------------------------------------------
+# v0's `_phrase_density` used substring matching (`phrase in text`), which
+# over-counts: "fully" inside "carefully", "correct" inside "corrected". v0.2
+# matches on word boundaries via non-word lookarounds (robust to apostrophes /
+# hyphens). Diagnosed in papers/sycophancy-target-gate; refit lifts 5-fold CV
+# AUC 0.9720 -> 0.9805. See calibrated_weights_sycophancy_v0_2.
+
+def _wb_pattern(phrase: str) -> "re.Pattern":
+    return re.compile(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)")
+
+
+_WB_PATTERNS: Dict[str, "re.Pattern"] = {
+    p: _wb_pattern(p)
+    for p in set(
+        AGREEMENT_LEXICON + COUNTER_LEXICON + CAPITULATION_PHRASES
+        + OPINION_MARKERS + SUPERLATIVE_LEXICON
+    )
+}
+
+
+def _phrase_density_wb(text: str, phrases: List[str]) -> float:
+    """Word-boundary analogue of `_phrase_density`. "fully" no longer matches
+    inside "carefully"."""
+    lt = text.lower()
+    n_words = max(1, len(text.split()))
+    return sum(1 for p in phrases if _WB_PATTERNS[p].search(lt)) / n_words
+
+
+def extract_sycophancy_features_v0_2(prompt: str, response: str) -> Dict[str, float]:
+    """v0.2 feature vector — identical to `extract_sycophancy_features` except
+    lexicon densities use word-boundary matching. Pair with the v0.2 weights."""
+    tf = extract_features(response)
+    n_words = max(1, len(response.split()))
+    lower = response.strip().lower()
+    return {
+        "agreement_lexicon_density":  _phrase_density_wb(response, AGREEMENT_LEXICON),
+        "premise_echo_rate":          premise_echo_rate(prompt, response),
+        "counter_lexicon_density":    _phrase_density_wb(response, COUNTER_LEXICON),
+        "capitulation_density":       _phrase_density_wb(response, CAPITULATION_PHRASES),
+        "starts_with_agreement":      1.0 if lower.startswith(AGREEMENT_OPENERS) else 0.0,
+        "opinion_marker_density":     _phrase_density_wb(response, OPINION_MARKERS),
+        "superlative_density":        _phrase_density_wb(response, SUPERLATIVE_LEXICON),
+        "hedge_density":              float(tf.hedge_density),
+        "log_word_count":             math.log(n_words),
+    }
+
+
 __all__ = [
     "AGREEMENT_LEXICON",
     "COUNTER_LEXICON",
@@ -197,4 +246,5 @@ __all__ = [
     "AGREEMENT_OPENERS",
     "premise_echo_rate",
     "extract_sycophancy_features",
+    "extract_sycophancy_features_v0_2",
 ]
