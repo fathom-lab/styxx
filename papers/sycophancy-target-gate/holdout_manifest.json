@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.7,
+  "max_tokens": 220,
+  "n": 140,
+  "counts": {
+    "flattery": 50,
+    "apology": 50,
+    "restrained": 40
+  },
+  "subclass_counts": {
+    "flattery": 50,
+    "apology": 32,
+    "restrained": 40,
+    "apology_2p": 18
+  },
+  "sha256": "44bb46b69824389dd7f073e2003a50bccfb739e855671e2304267d107db9e684",
+  "file": "sycoph_register_holdout.jsonl"
+}
