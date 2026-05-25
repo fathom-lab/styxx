@@ -1,0 +1,266 @@
+{
+  "rows": [
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Give me a startup idea.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Write the first line of a novel.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Suggest a name for a coffee shop.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Propose a research question about th",
+      "gdi": 1.561
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Invent a name for a new color.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Suggest a topic for a short story.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Give me an idea for a weekend projec",
+      "gdi": 1.561
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "open",
+      "prompt": "Name a fictional planet.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "closed",
+      "prompt": "What is 2+2?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "closed",
+      "prompt": "What is the capital of France?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "closed",
+      "prompt": "What is the chemical symbol for gold",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "kind": "closed",
+      "prompt": "How many days are in a week?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Give me a startup idea.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Write the first line of a novel.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Suggest a name for a coffee shop.",
+      "gdi": 1.33
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Propose a research question about th",
+      "gdi": 1.33
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Invent a name for a new color.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Suggest a topic for a short story.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Give me an idea for a weekend projec",
+      "gdi": 1.33
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "open",
+      "prompt": "Name a fictional planet.",
+      "gdi": 1.561
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "closed",
+      "prompt": "What is 2+2?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "closed",
+      "prompt": "What is the capital of France?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "closed",
+      "prompt": "What is the chemical symbol for gold",
+      "gdi": 0.451
+    },
+    {
+      "model": "gpt-4o",
+      "kind": "closed",
+      "prompt": "How many days are in a week?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Give me a startup idea.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Write the first line of a novel.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Suggest a name for a coffee shop.",
+      "gdi": 1.011
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Propose a research question about th",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Invent a name for a new color.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Suggest a topic for a short story.",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Give me an idea for a weekend projec",
+      "gdi": 1.792
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "open",
+      "prompt": "Name a fictional planet.",
+      "gdi": 0.637
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "closed",
+      "prompt": "What is 2+2?",
+      "gdi": -0.0
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "closed",
+      "prompt": "What is the capital of France?",
+      "gdi": 0.451
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "closed",
+      "prompt": "What is the chemical symbol for gold",
+      "gdi": 0.451
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "kind": "closed",
+      "prompt": "How many days are in a week?",
+      "gdi": -0.0
+    }
+  ],
+  "models": [
+    "gpt-4o-mini",
+    "gpt-4o",
+    "gpt-3.5-turbo"
+  ],
+  "mean_gdi_open": 1.625,
+  "mean_gdi_closed": 0.113,
+  "auc_open_vs_closed": 1.0,
+  "diversity_leaderboard_open": [
+    [
+      "gpt-4o-mini",
+      1.734
+    ],
+    [
+      "gpt-4o",
+      1.59
+    ],
+    [
+      "gpt-3.5-turbo",
+      1.55
+    ]
+  ],
+  "temp_sweep_gpt4o_mini": {
+    "0.5": 1.146,
+    "1.0": 1.521,
+    "1.5": 1.792
+  },
+  "coherence_rate_open": 1.0,
+  "n_coherence_checked": 60,
+  "G1_open>=2x_closed": [
+    true,
+    14.41
+  ],
+  "G2_temp_monotonic": [
+    true,
+    [
+      1.146,
+      1.521,
+      1.792
+    ]
+  ],
+  "G3_coherence>=0.85": [
+    true,
+    1.0
+  ],
+  "PASS": true
+}
