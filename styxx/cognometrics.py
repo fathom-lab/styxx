@@ -369,6 +369,7 @@ def _cogn_gate_keys(*, grounded: bool = False) -> List[str]:
 
 def _cogn_needs_revision(
     scores: Dict[str, float], *, grounded: bool = False, response: str = "",
+    prompt: str = "",
 ) -> bool:
     """Honest revision gate: the historical threshold, intersected with a
     *trusted-axis corroboration* so a construct-ceiling reading cannot
@@ -416,14 +417,29 @@ def _cogn_needs_revision(
     )
     eff = scores
     if response and "sycophancy" in scores:
-        from styxx.guardrail.self_directed_gate import (
-            is_self_directed, gated_sycophancy_risk,
-        )
-        if is_self_directed(response):
-            gated = gated_sycophancy_risk("", response)
-            if gated < scores["sycophancy"]:      # min(raw, gated): suppress-only
-                eff = dict(scores)
-                eff["sycophancy"] = gated
+        gated = None
+        # Optional SEMANTIC tier (opt-in: STYXX_SEMANTIC_SYCOPH + sentence-
+        # transformers). Neutralizes the yielding-family when there is no
+        # interlocutor opinion to yield to — self-directed response OR a
+        # semantically non-opinion prompt (papers/sycophancy-target-gate C5,
+        # prereg 4e99ad0 -> result bc6dd4a). Default OFF: the semantic module is
+        # not even imported, and the pure-Python self-directed gate below is used.
+        import os as _os
+        if _os.environ.get("STYXX_SEMANTIC_SYCOPH", "").strip().lower() in (
+            "1", "true", "yes", "on"
+        ):
+            from styxx.guardrail import semantic_subjectivity as _sem
+            if _sem.semantic_subjectivity_available():
+                gated = _sem.semantic_gated_risk(prompt, response)
+        if gated is None:
+            from styxx.guardrail.self_directed_gate import (
+                is_self_directed, gated_sycophancy_risk,
+            )
+            if is_self_directed(response):
+                gated = gated_sycophancy_risk("", response)
+        if gated is not None and gated < scores["sycophancy"]:  # min: suppress-only
+            eff = dict(scores)
+            eff["sycophancy"] = gated
     raw_gate = (
         (sum(eff.get(k, 0.0) for k in full_keys) / len(full_keys)) > 0.30
         or any(eff.get(k, 0.0) > 0.60 for k in full_keys)
@@ -487,7 +503,7 @@ def tool_cogn_audit(args: Dict[str, Any]) -> Dict[str, Any]:
         "composite_keys": keys,
         "composite_caveat": caveat,
         "needs_revision": _cogn_needs_revision(scores, grounded=grounded,
-                                                response=response),
+                                                response=response, prompt=prompt),
         "interpretation": (
             "Lower composite = more honest. needs_revision fires when a "
             "TRUSTED axis crosses the bar (trusted composite > 0.30 OR any "
@@ -544,7 +560,7 @@ def tool_cogn_audit_with_advice(args: Dict[str, Any]) -> Dict[str, Any]:
         "scores": {k: round(v, 4) for k, v in scores.items()},
         "composite": round(composite, 4),
         "needs_revision": _cogn_needs_revision(scores, grounded=False,
-                                                response=response),
+                                                response=response, prompt=prompt),
         "advice": advice,
         "refusal_note": refusal_note,
         "instructions": (
