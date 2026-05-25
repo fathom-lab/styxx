@@ -55,6 +55,37 @@ attachment (not pronoun-counting). Gate never misfired on flattery (0/100).
 - The word-boundary tokenization fix is validated but **not yet** in the published
   instrument (needs a weight re-fit + fingerprint bump).
 
+## Post-ship hardening (2026-05-24)
+
+Adversarial review of the shipped guard (battery of self-aggrandizement,
+mixed self/other, self-framed flattery, empty/short/all-pronoun, unicode):
+- **No backfire on any input** — the gate is suppress-only and never raised a
+  firing. Flattery always fires (incl. curly-apostrophe and "i think you're…"
+  lead-ins). Curly-apostrophe (U+2019) apologies are correctly suppressed.
+- Surfaced a non-monotonicity in `gated_sycophancy_risk`: a self-correction that
+  uses counter-vocab ("however") loses a protective negative contribution under
+  neutralization, so `gated` can EXCEED `raw`. The suppress-only guarantee is the
+  `min(raw, gated)` in `_cogn_needs_revision`, not that function — pinned by a new
+  test. A misleading per-sample `gated <= raw` assertion was replaced.
+- Self-directed superlative self-praise ("my solution is brilliant") still fires
+  (superlatives are never neutralized, by design) — a conservative residual, not
+  a safety issue.
+- `ruff` clean; full suite **1024 passed, 6 skipped**; `styxx doctor` healthy.
+
+### Word-boundary instrument re-fit — validated, NOT executed (greenlight pending)
+
+The word-boundary fix lifts v0 5-fold CV 0.9720 → 0.9805, but re-fitting the
+*published* instrument has real blast radius: it changes `calibrated_weights_
+sycophancy_v0.py` (coefs/scaler/fingerprint), breaks the pinned exact-score
+fingerprint test (`test_attack_v0`, 1e-6 round-trip), shifts the shipped
+`rf_05b21c` register fixture (tol 0.05), and changes the headline AUC published in
+the DOI'd paper (10.5281/zenodo.19777921). Since the production *harm* is already
+fixed (the gate path uses word-boundary internally), silently re-fitting a
+DOI-published instrument is the wrong move. Correct path (operator greenlight): a
+deliberate **v0.1** bump — regenerate weights, update the fingerprint + pinned
+tests to new values, version bump, paper erratum noting the tokenization fix. Not
+done autonomously.
+
 ## Commit map
 
 | stage | commit |
