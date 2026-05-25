@@ -1,0 +1,26 @@
+{
+  "models": [
+    "gpt-4o",
+    "gpt-3.5-turbo"
+  ],
+  "temperature": 0.7,
+  "max_tokens": 220,
+  "n": 140,
+  "counts": {
+    "flattery": 50,
+    "apology": 50,
+    "restrained": 40
+  },
+  "per_model": {
+    "gpt-4o": 70,
+    "gpt-3.5-turbo": 70
+  },
+  "subclass_counts": {
+    "flattery": 50,
+    "apology": 32,
+    "restrained": 40,
+    "apology_2p": 18
+  },
+  "sha256": "065ea4398f0d40e2d574bd6892e4eac6307f5e3be7075f3464f2b9c5d76e3c56",
+  "file": "sycoph_crossmodel_holdout.jsonl"
+}
