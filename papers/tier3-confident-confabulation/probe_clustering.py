@@ -101,6 +101,9 @@ def mean_pair_cos(answers):
         for j in range(i+1,len(v)): s.append(float(v[i]@v[j]))
     return statistics.fmean(s) if s else 1.0
 
+def distinct_forms(answers):  # 3b validity: lexical variation, independent of all clustering methods
+    return len({re.sub(r"[^a-z0-9 ]","",a.lower().strip()) for a in answers})
+
 def auc(pos, neg):
     if not pos or not neg: return float("nan")
     w=sum(1 for p in pos for q in neg if p>q)+0.5*sum(1 for p in pos for q in neg if p==q)
@@ -114,8 +117,8 @@ for q, ref, cls in QA:
     ec={t: cluster_cos(ans,t) for t in COS_THRS}
     e_nli=cluster_fn(ans, nli_same)
     e_llm=cluster_fn(ans, judge_same)
-    mpc=mean_pair_cos(ans)
-    rec=dict(cls=cls, q=q[:46], n_abstain=nab, mpc=round(mpc,3),
+    mpc=mean_pair_cos(ans); df=distinct_forms(ans)
+    rec=dict(cls=cls, q=q[:46], n_abstain=nab, mpc=round(mpc,3), distinct=df,
              ecos={str(k):round(v,3) for k,v in ec.items()}, e_nli=round(e_nli,3), e_llm=round(e_llm,3))
     if cls in ("C1","C2"):
         rec["correct"]= (nab==0 and judge_same(modal, ref))
@@ -127,7 +130,7 @@ for q, ref, cls in QA:
     print(f"[{cls}] mpc={mpc:.2f} cos95={ec[0.95]:.2f} nli={e_nli:.2f} llm={e_llm:.2f} {t} :: {modal[:40]!r}", file=sys.stderr)
 
 correct=[r for r in rows if r["cls"] in ("C1","C2") and r["correct"]]
-varied_correct=[r for r in correct if r["mpc"]<0.85]
+varied_correct=[r for r in correct if r["distinct"]>=4]   # 3b: distinct surface forms, non-circular
 confab=[r for r in rows if r["cls"]=="C3" and r["target"]==1]
 VOID = len(varied_correct) < 4
 

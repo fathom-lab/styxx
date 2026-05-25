@@ -102,7 +102,14 @@ cosine when *correct* answers are paraphrased. It VOIDed (the model answers near
 verbatim even on "why/how" questions, so the condition didn't arise), but it surfaced
 that **NLI false-positives on free-form correct answers** — `nli-deberta-base` flagged
 5/8 correct explanations (entropy 0.79 vs cosine@0.95's 0.46). So "use NLI" is **not**
-established; cosine@~0.9–0.95 was at least as robust in every condition tested. Any
-`semantic_entropy` primitive is **not validated** yet; the divergence signal is sound,
-but the clustering choice (and a non-noisy equivalence judge) is the open problem to
-settle before shipping.
+established; cosine@~0.9–0.95 was at least as robust in every condition tested.
+
+**Resolved (`FINDING_clustering_2026_05_25.md`):** a forced-paraphrase run (validity
+gate de-circularized to distinct surface forms) characterized the clustering step.
+**Tuned cosine@0.90 suffices** (AUC 0.973, modest false-positives); the **LLM-judge is
+cleanest** (AUC 1.0, zero FP) but **not necessary** (pre-registered necessity claim
+FAILED); the **0.70 threshold (AUC 0.69) and nli-deberta (noisy, FP 0.37) are the
+traps**. The divergence signal itself is robust (every sane method ≥0.87). A
+`semantic_entropy` primitive is now designable — default cosine@0.90, opt-in LLM-judge —
+pending only a full hashed multi-model run (gpt-4o-mini only so far; cross-vendor
+key-blocked).

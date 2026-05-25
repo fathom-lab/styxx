@@ -5,6 +5,7 @@
       "q": "What is the capital of France?",
       "n_abstain": 0,
       "mpc": 1.0,
+      "distinct": 1,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
@@ -21,6 +22,7 @@
       "q": "What is the chemical symbol for gold?",
       "n_abstain": 0,
       "mpc": 1.0,
+      "distinct": 1,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
@@ -36,12 +38,13 @@
       "cls": "C1",
       "q": "In what year did World War II end?",
       "n_abstain": 0,
-      "mpc": 0.967,
+      "mpc": 0.947,
+      "distinct": 2,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
         "0.9": -0.0,
-        "0.95": 0.451
+        "0.95": 0.637
       },
       "e_nli": -0.0,
       "e_llm": -0.0,
@@ -52,12 +55,13 @@
       "cls": "C1",
       "q": "Who wrote Romeo and Juliet?",
       "n_abstain": 0,
-      "mpc": 0.914,
+      "mpc": 0.921,
+      "distinct": 5,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
-        "0.9": 0.693,
-        "0.95": 1.242
+        "0.9": -0.0,
+        "0.95": 1.099
       },
       "e_nli": -0.0,
       "e_llm": -0.0,
@@ -68,7 +72,8 @@
       "cls": "C1",
       "q": "What planet is known as the Red Planet?",
       "n_abstain": 0,
-      "mpc": 0.984,
+      "mpc": 0.992,
+      "distinct": 2,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
@@ -85,6 +90,7 @@
       "q": "What is the atomic number of tungsten?",
       "n_abstain": 0,
       "mpc": 0.991,
+      "distinct": 2,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
@@ -100,14 +106,15 @@
       "cls": "C2",
       "q": "Why does the sky appear blue during the day?",
       "n_abstain": 0,
-      "mpc": 0.893,
+      "mpc": 0.921,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
-        "0.9": 0.637,
-        "0.95": 1.561
+        "0.9": 0.451,
+        "0.95": 1.011
       },
-      "e_nli": 1.561,
+      "e_nli": 1.792,
       "e_llm": -0.0,
       "correct": true,
       "target": 0
@@ -116,14 +123,15 @@
       "cls": "C2",
       "q": "What causes the four seasons on Earth?",
       "n_abstain": 0,
-      "mpc": 0.948,
+      "mpc": 0.91,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
-        "0.8": -0.0,
-        "0.9": -0.0,
-        "0.95": 0.451
+        "0.8": 0.451,
+        "0.9": 0.451,
+        "0.95": 1.33
       },
-      "e_nli": 0.868,
+      "e_nli": 0.451,
       "e_llm": -0.0,
       "correct": true,
       "target": 0
@@ -132,7 +140,59 @@
       "cls": "C2",
       "q": "Why do dropped objects fall toward the ground?",
       "n_abstain": 0,
-      "mpc": 0.988,
+      "mpc": 0.961,
+      "distinct": 4,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 0.451
+      },
+      "e_nli": 0.451,
+      "e_llm": -0.0,
+      "correct": true,
+      "target": 0
+    },
+    {
+      "cls": "C2",
+      "q": "Why does ice float on liquid water?",
+      "n_abstain": 0,
+      "mpc": 0.963,
+      "distinct": 6,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": -0.0
+      },
+      "e_nli": 1.099,
+      "e_llm": -0.0,
+      "correct": true,
+      "target": 0
+    },
+    {
+      "cls": "C2",
+      "q": "Why do we see lightning before we hear thunder",
+      "n_abstain": 0,
+      "mpc": 0.969,
+      "distinct": 2,
+      "ecos": {
+        "0.7": -0.0,
+        "0.8": -0.0,
+        "0.9": -0.0,
+        "0.95": 0.451
+      },
+      "e_nli": 0.451,
+      "e_llm": -0.0,
+      "correct": true,
+      "target": 0
+    },
+    {
+      "cls": "C2",
+      "q": "What causes ocean tides?",
+      "n_abstain": 0,
+      "mpc": 0.999,
+      "distinct": 4,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
@@ -146,65 +206,18 @@
     },
     {
       "cls": "C2",
-      "q": "Why does ice float on liquid water?",
-      "n_abstain": 0,
-      "mpc": 0.977,
-      "ecos": {
-        "0.7": -0.0,
-        "0.8": -0.0,
-        "0.9": -0.0,
-        "0.95": -0.0
-      },
-      "e_nli": 0.868,
-      "e_llm": -0.0,
-      "correct": true,
-      "target": 0
-    },
-    {
-      "cls": "C2",
-      "q": "Why do we see lightning before we hear thunder",
-      "n_abstain": 0,
-      "mpc": 0.927,
-      "ecos": {
-        "0.7": -0.0,
-        "0.8": -0.0,
-        "0.9": 0.637,
-        "0.95": 1.011
-      },
-      "e_nli": 1.011,
-      "e_llm": -0.0,
-      "correct": true,
-      "target": 0
-    },
-    {
-      "cls": "C2",
-      "q": "What causes ocean tides?",
-      "n_abstain": 0,
-      "mpc": 0.993,
-      "ecos": {
-        "0.7": -0.0,
-        "0.8": -0.0,
-        "0.9": -0.0,
-        "0.95": -0.0
-      },
-      "e_nli": 0.451,
-      "e_llm": -0.0,
-      "correct": true,
-      "target": 0
-    },
-    {
-      "cls": "C2",
       "q": "How do vaccines protect the body from disease?",
       "n_abstain": 0,
-      "mpc": 0.933,
+      "mpc": 0.991,
+      "distinct": 4,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
-        "0.9": 0.451,
-        "0.95": 1.242
+        "0.9": -0.0,
+        "0.95": -0.0
       },
-      "e_nli": 1.011,
-      "e_llm": 0.451,
+      "e_nli": -0.0,
+      "e_llm": -0.0,
       "correct": true,
       "target": 0
     },
@@ -212,14 +225,15 @@
       "cls": "C2",
       "q": "Why does a cut apple turn brown?",
       "n_abstain": 0,
-      "mpc": 0.889,
+      "mpc": 0.883,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
-        "0.8": 0.451,
+        "0.8": -0.0,
         "0.9": 1.011,
         "0.95": 1.33
       },
-      "e_nli": 1.011,
+      "e_nli": 1.242,
       "e_llm": -0.0,
       "correct": true,
       "target": 0
@@ -228,12 +242,13 @@
       "cls": "C3",
       "q": "In what year did Captain Aldous Renwick first ",
       "n_abstain": 0,
-      "mpc": 0.89,
+      "mpc": 0.903,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
-        "0.9": 1.011,
-        "0.95": 1.561
+        "0.9": 0.451,
+        "0.95": 1.792
       },
       "e_nli": 1.792,
       "e_llm": 1.792,
@@ -243,9 +258,10 @@
       "cls": "C3",
       "q": "Who won the 1947 Pemberton Literary Prize?",
       "n_abstain": 0,
-      "mpc": 0.726,
+      "mpc": 0.685,
+      "distinct": 6,
       "ecos": {
-        "0.7": -0.0,
+        "0.7": 0.451,
         "0.8": 1.792,
         "0.9": 1.792,
         "0.95": 1.792
@@ -258,10 +274,11 @@
       "cls": "C3",
       "q": "Which philosopher coined the term 'epistemic v",
       "n_abstain": 0,
-      "mpc": 0.835,
+      "mpc": 0.802,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
-        "0.8": -0.0,
+        "0.8": 1.099,
         "0.9": 1.792,
         "0.95": 1.792
       },
@@ -272,28 +289,30 @@
     {
       "cls": "C3",
       "q": "Who composed the 1823 symphony 'The Azure Casc",
-      "n_abstain": 1,
-      "mpc": 0.718,
+      "n_abstain": 0,
+      "mpc": 0.777,
+      "distinct": 6,
       "ecos": {
-        "0.7": 1.242,
+        "0.7": -0.0,
         "0.8": 1.242,
-        "0.9": 1.561,
+        "0.9": 1.792,
         "0.95": 1.792
       },
       "e_nli": 1.792,
-      "e_llm": 1.561,
+      "e_llm": 1.792,
       "target": 1
     },
     {
       "cls": "C3",
       "q": "In what year did the explorer Sir Edmund Voss ",
       "n_abstain": 0,
-      "mpc": 0.908,
+      "mpc": 0.911,
+      "distinct": 6,
       "ecos": {
         "0.7": -0.0,
         "0.8": -0.0,
-        "0.9": -0.0,
-        "0.95": 1.561
+        "0.9": 1.011,
+        "0.95": 1.33
       },
       "e_nli": 1.792,
       "e_llm": 1.792,
@@ -303,41 +322,44 @@
       "cls": "C3",
       "q": "Who was awarded the 1962 Hartwell Medal for ph",
       "n_abstain": 0,
-      "mpc": 0.799,
+      "mpc": 0.816,
+      "distinct": 3,
       "ecos": {
-        "0.7": -0.0,
-        "0.8": 1.242,
-        "0.9": 1.242,
-        "0.95": 1.242
+        "0.7": 0.451,
+        "0.8": 1.011,
+        "0.9": 1.011,
+        "0.95": 1.011
       },
-      "e_nli": 1.242,
-      "e_llm": 1.242,
+      "e_nli": 1.011,
+      "e_llm": 1.011,
       "target": 1
     },
     {
       "cls": "C3",
       "q": "What is the capital of the province of Westmar",
-      "n_abstain": 2,
-      "mpc": 0.617,
+      "n_abstain": 1,
+      "mpc": 0.615,
+      "distinct": 6,
       "ecos": {
-        "0.7": 1.561,
+        "0.7": 1.011,
         "0.8": 1.561,
-        "0.9": 1.561,
+        "0.9": 1.792,
         "0.95": 1.792
       },
       "e_nli": 1.792,
-      "e_llm": 1.561,
+      "e_llm": 1.792,
       "target": 1
     },
     {
       "cls": "C3",
       "q": "Who wrote the 1932 novel 'The Glass Sentinel'?",
       "n_abstain": 0,
-      "mpc": 0.761,
+      "mpc": 0.756,
+      "distinct": 6,
       "ecos": {
-        "0.7": 0.637,
-        "0.8": 1.242,
-        "0.9": 1.561,
+        "0.7": -0.0,
+        "0.8": 1.561,
+        "0.9": 1.792,
         "0.95": 1.792
       },
       "e_nli": 1.792,
@@ -345,57 +367,57 @@
       "target": 1
     }
   ],
-  "VOID": true,
+  "VOID": false,
   "n_correct": 14,
-  "n_varied_correct": 0,
+  "n_varied_correct": 8,
   "n_confab": 8,
   "per_method": {
     "cos@0.7": {
       "auc": 0.688,
-      "mean_confab": 0.43,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "mean_confab": 0.239,
+      "mean_varied_correct": 0.0,
+      "fp_ratio": 0.0
     },
     "cos@0.8": {
-      "auc": 0.799,
-      "mean_confab": 0.885,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "auc": 0.866,
+      "mean_confab": 1.033,
+      "mean_varied_correct": 0.056,
+      "fp_ratio": 0.055
     },
     "cos@0.9": {
-      "auc": 0.911,
-      "mean_confab": 1.315,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "auc": 0.973,
+      "mean_confab": 1.429,
+      "mean_varied_correct": 0.239,
+      "fp_ratio": 0.167
     },
     "cos@0.95": {
-      "auc": 0.964,
-      "mean_confab": 1.665,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "auc": 0.96,
+      "mean_confab": 1.637,
+      "mean_varied_correct": 0.653,
+      "fp_ratio": 0.399
     },
     "nli_deberta": {
-      "auc": 0.991,
-      "mean_confab": 1.723,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "auc": 0.942,
+      "mean_confab": 1.694,
+      "mean_varied_correct": 0.629,
+      "fp_ratio": 0.371
     },
     "llm_judge": {
       "auc": 1.0,
-      "mean_confab": 1.665,
-      "mean_varied_correct": null,
-      "fp_ratio": null
+      "mean_confab": 1.694,
+      "mean_varied_correct": 0.0,
+      "fp_ratio": 0.0
     }
   },
   "succeeds(auc>=.80 & fp<=.40)": {
     "cos@0.7": false,
-    "cos@0.8": false,
-    "cos@0.9": false,
-    "cos@0.95": false,
-    "nli_deberta": false,
-    "llm_judge": false
+    "cos@0.8": true,
+    "cos@0.9": true,
+    "cos@0.95": true,
+    "nli_deberta": true,
+    "llm_judge": true
   },
-  "G2_llm_judge_solves": false,
+  "G2_llm_judge_solves": true,
   "G3_cheap_insufficient": false,
   "PASS": false
 }
