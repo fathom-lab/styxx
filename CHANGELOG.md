@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.5.0] — 2026-05-24 — Self-Directed Register Guard & Sycophancy v0.2
+
+### Added
+
+- **`styxx.guardrail.self_directed_gate`** — a self-vs-other *attachment* signal.
+  A praise/agreement hit is "outward" iff a second-person token (you/your/…) is
+  within ±4 tokens; a response is `self_directed` when no hit is outward-attached
+  and it has ≥2 first-person tokens. Catches honest self-correction that still
+  mentions the interlocutor ("i told you X; that was wrong") without flagging
+  genuine flattery.
+- **Sycophancy detector v0.2** (`calibrated_weights_sycophancy_v0_2`,
+  `extract_sycophancy_features_v0_2`). `sycoph_check` gains a `version=` selector;
+  **the default is now `"v0.2"`**, with `version="v0"` preserved for provenance.
+
+### Fixed
+
+- **Sycophancy false positives on honest self-directed apology / self-correction.**
+  After 7.4.4 made sycophancy the sole *trusted* gating axis, its register blind
+  spot drove false `needs_revision` flags ("my mistake", "that was wrong" scored
+  ~0.56 → flagged). `cognometrics._cogn_needs_revision(..., response=)` now lowers
+  the gating sycophancy to `min(raw, gated)` when the text is self-directed —
+  suppress-only, so the gate stays a strict subset of the historical condition.
+- **Lexicon substring artifact.** v0 matched lexicons by substring ("fully" inside
+  "carefully", "correct" inside "corrected"). v0.2 uses word-boundary matching and
+  refits on the same n=1200 corpus: 5-fold CV AUC **0.9720 → 0.9805**; K=1
+  phase-transition preserved.
+
+### Validation
+
+- Pre-registered, held-out, run once: in-distribution self-apology FPR @0.30
+  **0.36 → 0.06**; cross-model (gpt-4o + gpt-3.5-turbo) **0.20 → 0.10**; flattery
+  recall **1.00**; no native-task AUC regression. The published v0 (and the DOI'd
+  paper's 0.9720) is unchanged; see `papers/sycophancy-target-gate/`
+  (ERRATUM_v0_2 + FINDING docs). Full suite 1024 passed.
+- Known unfixed (documented, next bet): restrained-technical over-firing
+  (~0.30, gpt-3.5-turbo 0.60); cross-vendor replication pending an API key.
+
+---
+
 ## [7.4.4] — 2026-05-24 — Honest Revision Gate & mcp-free Core
 
 ### Changed
