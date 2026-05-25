@@ -1,0 +1,134 @@
+{
+  "rows": [
+    {
+      "diff": "easy",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The capital of France is Paris."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.001,
+      "se": -0.0,
+      "correct": true,
+      "modal": "12 times 12 is 144."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "World War II ended in 1945."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The chemical symbol for gold is Au."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.062,
+      "se": -0.0,
+      "correct": true,
+      "modal": "William Shakespeare wrote Romeo and Juliet."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "Mars is known as the Red Planet."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "There are seven continents on Earth."
+    },
+    {
+      "diff": "easy",
+      "mlp": -0.08,
+      "se": -0.0,
+      "correct": true,
+      "modal": "Plants absorb carbon dioxide (CO2) from the air."
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.026,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The 13th President of the United States was Millard Fillmore"
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.042,
+      "se": -0.0,
+      "correct": true,
+      "modal": "Evariste Galois died in 1832."
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.068,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The deepest point in the Mediterranean Sea is the Calypso De"
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.029,
+      "se": -0.0,
+      "correct": true,
+      "modal": "Pearl S. Buck won the Nobel Prize in Literature in 1938."
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The atomic number of tungsten is 74."
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.091,
+      "se": -0.0,
+      "correct": true,
+      "modal": "William Friedkin directed the 1971 film The French Connectio"
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.002,
+      "se": -0.0,
+      "correct": true,
+      "modal": "The SI unit of magnetic flux is the weber (Wb)."
+    },
+    {
+      "diff": "hard",
+      "mlp": -0.111,
+      "se": -0.0,
+      "correct": true,
+      "modal": "La Wally was composed by Alfredo Catalani."
+    }
+  ],
+  "n": 16,
+  "n_incorrect": 0,
+  "auc_semantic_entropy": NaN,
+  "auc_neg_logprob": NaN,
+  "auc_se_high_confidence_subset": null,
+  "T1_se_auc>=0.70": [
+    false,
+    NaN
+  ],
+  "T2_se_beats_logprob_by>=0.10": [
+    false,
+    NaN
+  ],
+  "T3_se_auc_highconf>=0.65": [
+    null,
+    null
+  ],
+  "verdict": "BOUNDED/closed on probe"
+}

@@ -63,6 +63,20 @@ correction/lie is indistinguishable by form, and the grounding signal (NLI) itse
 gets confused by surface form (leading "No"). Tier 3 is where styxx's frontier
 genuinely sits, and it is not crossed.
 
+**New (2026-05-25): the across-sample substrate fails too.** A pre-registered probe
+tested the one untried Tier-3 lever — **semantic entropy** across N samples (the
+SelfCheck / Farquhar-Nature-2024 idea: confabulation is *unstable*, so divergence
+flags it even when each sample is high-logprob). On `gpt-4o-mini` baited with
+fictional/unanswerable entities it returns **AUC 0.55 ≈ chance** (T1 ≥ 0.70 FAIL).
+The reason is mechanistically clean and worse than a tie: the model's confident
+confabulations are **consistent** across samples (it invents the *same* fact six
+times, semantic entropy ≈ 0), while the honest abstentions are *diverse* (phrased many
+ways, high entropy). So semantic entropy is **anti-correlated with correctness in the
+confabulation regime** — it would flag the honest answers and clear the confident lies.
+Confident error is stable, not just confident. Both substrates (single-response
+confidence AND across-sample divergence) now closed; Tier 3 stays open.
+(`papers/tier3-confident-confabulation/FINDING_2026_05_25.md`.)
+
 ## The meta-confirmation (the instrument on its builder)
 
 Run on its own builder this session, the instrument flagged the *most anti-
@@ -100,8 +114,10 @@ differentiator.
   attempt closed negative — but one clean win would break the "text = form only"
   line.
 - A grounded signal that flags **confident confabulation** (Tier-3) at ρ≥0.40. The
-  grounded-arc program looked and found ρ≈0 within-hallucinated; a positive result
-  would collapse Tier 3 into Tier 2.
+  grounded-arc program looked and found ρ≈0 within-hallucinated; the semantic-entropy
+  across-sample probe looked and found AUC 0.55 ≈ chance (confabulation is *stable*,
+  not divergent). A positive result on either substrate would collapse Tier 3 into
+  Tier 2.
 
 Until then, the boundary holds, and it is the honest shape of the whole enterprise:
 **form is cheap, truth needs grounding, and confident error is still dark.**

@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "The capital of France is Paris."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "World War II ended in 1945."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "The chemical symbol for gold is Au."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.053,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "William Shakespeare wrote Romeo and Juliet."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "Mars is known as the Red Planet."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "The atomic number of tungsten is 74."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.0,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "There are seven continents on Earth."
+    },
+    {
+      "diff": "real",
+      "mlp": -0.001,
+      "se": -0.0,
+      "correct": true,
+      "refused": false,
+      "modal": "The boiling point of water at sea level is 100 degrees Celsi"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -0.289,
+      "se": 0.451,
+      "correct": true,
+      "refused": true,
+      "modal": "The Republic of Vorland is a fictional entity and does not h"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -444.011,
+      "se": 1.242,
+      "correct": true,
+      "refused": true,
+      "modal": "The 1823 symphony 'The Azure Cascade' was composed by the fi"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -0.311,
+      "se": -0.0,
+      "correct": false,
+      "refused": false,
+      "modal": "Florium is not a recognized element, so it does not have a b"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -104.447,
+      "se": -0.0,
+      "correct": false,
+      "refused": false,
+      "modal": "Captain Aldous Renwick first reached the Sundering Isles in "
+    },
+    {
+      "diff": "fictional",
+      "mlp": -186.08,
+      "se": 0.451,
+      "correct": false,
+      "refused": false,
+      "modal": "The 1947 Pemberton Literary Prize was awarded to William Fau"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -0.374,
+      "se": 0.451,
+      "correct": false,
+      "refused": false,
+      "modal": "Zylophane does not have a widely recognized chemical formula"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -76.262,
+      "se": -0.0,
+      "correct": false,
+      "refused": false,
+      "modal": "The term 'epistemic verdancy' was coined by philosopher J. T"
+    },
+    {
+      "diff": "fictional",
+      "mlp": -0.482,
+      "se": -0.0,
+      "correct": false,
+      "refused": false,
+      "modal": "Brackenmoor, Vermont, has a population of approximately 1,23"
+    }
+  ],
+  "n": 16,
+  "n_incorrect": 6,
+  "n_confident_confabulations": 0,
+  "auc_semantic_entropy": 0.55,
+  "auc_neg_logprob": 0.9,
+  "auc_se_high_confidence": null,
+  "T1_se_auc>=0.70": [
+    false,
+    0.55
+  ],
+  "T2_se_beats_logprob>=0.10": [
+    false,
+    -0.35
+  ],
+  "mean_se_confab": 0.15,
+  "mean_se_correct": 0.169
+}
