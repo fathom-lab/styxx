@@ -588,6 +588,18 @@ from .transport import (
     transported_score,
 )
 
+# 7.7.0: divergence primitives — the confident-confabulation (across-sample) and
+# reference-free fabrication (across-model) signals from the 2026-05-25
+# behavioral-knowledge-boundary arc (papers/). semantic_entropy: a model invents a
+# different fact each sample when confabulating → high entropy. council_agreement:
+# independent models converge on the real, scatter on the fake → reference-free.
+# Validated clustering is embedding-cosine (`styxx[nli]`); both are INJECTION-BLIND
+# (SECURITY MODEL in styxx/divergence.py — they catch a model's OWN spontaneous
+# confabulation, not adversarially planted fabrication; don't trust on poisoned
+# context). Feasibility-grade evidence; measurement primitives, caller maps to a
+# decision.
+from .divergence import semantic_entropy, council_agreement, divergence_available
+
 
 __all__ = [
     # 7.1.0: cognometric reward (cogn-RLHF)
@@ -596,6 +608,9 @@ __all__ = [
 
     # 7.5.0: universal cognometric transport
     "CognometricInstrument", "Transport", "transported_score",
+
+    # 7.7.0: divergence primitives (confident confabulation + reference-free fabrication)
+    "semantic_entropy", "council_agreement",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",

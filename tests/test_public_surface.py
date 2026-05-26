@@ -961,3 +961,17 @@ def test_optimize_smoke(isolated_data_dir, monkeypatch):
     monkeypatch.setattr(analytics, "load_audit", lambda last_n=500: [])
     result = optimize(apply=False, last_n=100)
     assert isinstance(result, list)
+
+
+def test_divergence_smoke():
+    """7.7.0 divergence primitives: semantic_entropy + council_agreement are
+    pure functions over lists of strings (deterministic via same_fn — no model
+    download). semantic_entropy ~0 on consistent samples, high on divergent;
+    council_agreement 1.0 on convergent, low on scattered."""
+    import math
+    from styxx import semantic_entropy, council_agreement
+    eq = lambda a, b: a == b
+    assert semantic_entropy(["a", "a", "a"], same_fn=eq) == 0.0
+    assert semantic_entropy(["a", "b", "c"], same_fn=eq) == pytest.approx(math.log(3), abs=1e-9)
+    assert council_agreement(["x", "x", "x", "x"], same_fn=eq) == 1.0
+    assert council_agreement(["a", "b", "c", "d"], same_fn=eq) == pytest.approx(0.25)

@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.0] — 2026-05-25 — Divergence Primitives (confident confabulation + reference-free fabrication)
+
+### Added
+
+- **`styxx.semantic_entropy(samples)`** — across-SAMPLE divergence of one model's
+  answers to the same prompt. High = the model invents a *different* fact each sample
+  (confident confabulation); ~0 = consistent (it knows the answer, or abstains
+  consistently). Catches what single-response confidence (logprob) provably misses —
+  the model is confident *and* inconsistent when confabulating. Pure function over a
+  list of strings.
+- **`styxx.council_agreement(answers)`** — across-MODEL agreement (one answer per
+  independent model). High = convergence (real / shared knowledge); low = each model
+  invents differently (fabrication). **Reference-free** — the council is the grounding.
+- Both: validated clustering backend is embedding-cosine > 0.90 (`styxx[nli]`); a
+  dependency-free lexical fallback exists but is **not** the validated signal; pass a
+  custom `same_fn` (e.g. an LLM equivalence judge) for the lowest paraphrase-false-
+  positive clustering. `divergence_available()` reports backend presence. See
+  `styxx/divergence.py`.
+
+### Why
+
+Both rest on one mechanism: a fact is a shared attractor (convergent), a fabrication has
+none (divergent). A model's self-report is dark exactly when it's wrong; divergence —
+across its samples and across its peers — is bright.
+
+### Validation (FEASIBILITY-GRADE — not a production validation)
+
+Pre-registered, run-once (`papers/tier3-confident-confabulation`,
+`papers/council-reference-free-truth`): `semantic_entropy` AUC 0.88–0.95 separating
+confident confabulation from correct answers, cross-model (gpt-4o-mini / gpt-4o /
+gpt-3.5-turbo); `council_agreement` AUC ~1.0 real-vs-fake, **truth-tracking** (the fame
+hypothesis was rejected). Small n, OpenAI-only, single runs — these are **measurement
+primitives**; mapping a score to a binary decision is left to the caller.
+
+### Security model (red-team — `papers/adversarial-robustness`)
+
+Both signals are **robust to instruction/persona attacks but BLIND to context-injection.**
+A fabrication planted in the prompt (RAG poisoning, poisoned tool output, untrusted
+context) collapses divergence to ~0 and is read as "consistent / agreed = real." They
+detect the model's *own* spontaneous confabulation, **not** adversarially planted
+fabrication — do not run them on potentially-poisoned context to flag injected
+falsehoods.
+
+### Honesty note
+
+This arc included **four documented self-corrections** (a public claim retracted, then
+two over-claimed mechanisms walked back, all by honoring a pre-registered bar over
+momentum) — the full map, wrong turns left visible, is in
+`papers/INDEX_behavioral_knowledge_boundary_2026_05_25.md`.
+
+---
+
 ## [7.6.0] — 2026-05-24 — Semantic Subjectivity Tier (opt-in grounding for sycophancy)
 
 ### Added

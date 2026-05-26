@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Burkina Faso?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.8,
+      "openai_entropy": 0.562,
+      "claude": "The capital of Burkina Faso is Ouagadougou."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Bhutan?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.8,
+      "openai_entropy": 0.562,
+      "claude": "The capital of Bhutan is Thimphu."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Kyrgyzstan?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.8,
+      "openai_entropy": 0.562,
+      "claude": "The capital of Kyrgyzstan is Bishkek."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Eritrea?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.8,
+      "openai_entropy": 0.562,
+      "claude": "The capital of Eritrea is Asmara."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the capital of Brunei?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.8,
+      "openai_entropy": 0.562,
+      "claude": "The capital of Brunei is Bandar Seri Begawan."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the atomic number of einsteinium",
+      "agree_openai": 1.0,
+      "agree_with_claude": 1.0,
+      "openai_entropy": -0.0,
+      "claude": "Einsteinium has atomic number 99."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the atomic number of technetium?",
+      "agree_openai": 1.0,
+      "agree_with_claude": 1.0,
+      "openai_entropy": -0.0,
+      "claude": "Technetium has atomic number 43."
+    },
+    {
+      "tier": "R2_ultrarare",
+      "q": "What is the currency of Bhutan?",
+      "agree_openai": 0.75,
+      "agree_with_claude": 0.6,
+      "openai_entropy": 0.562,
+      "claude": "The currency of Bhutan is the ngultrum."
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital city of the Republic",
+      "agree_openai": 0.25,
+      "agree_with_claude": 0.2,
+      "openai_entropy": 1.386,
+      "claude": "I'm not aware of any country called the Republic"
+    },
+    {
+      "tier": "fake",
+      "q": "In what year did Captain Aldous Renwick ",
+      "agree_openai": 1.0,
+      "agree_with_claude": 0.8,
+      "openai_entropy": -0.0,
+      "claude": "I have no record of a Captain Aldous Renwick or "
+    },
+    {
+      "tier": "fake",
+      "q": "Who won the 1947 Pemberton Literary Priz",
+      "agree_openai": 0.25,
+      "agree_with_claude": 0.2,
+      "openai_entropy": 1.386,
+      "claude": "I'm not aware of a Pemberton Literary Prize and "
+    },
+    {
+      "tier": "fake",
+      "q": "Who composed the 1823 symphony 'The Azur",
+      "agree_openai": 0.5,
+      "agree_with_claude": 0.4,
+      "openai_entropy": 1.04,
+      "claude": "I have no record of an 1823 symphony called 'The"
+    },
+    {
+      "tier": "fake",
+      "q": "Which philosopher coined the term 'epist",
+      "agree_openai": 0.5,
+      "agree_with_claude": 0.4,
+      "openai_entropy": 1.04,
+      "claude": "I'm not aware of an established term 'epistemic "
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital of the province of W",
+      "agree_openai": 0.25,
+      "agree_with_claude": 0.2,
+      "openai_entropy": 1.386,
+      "claude": "I don't know of a real province called Westmark;"
+    },
+    {
+      "tier": "fake",
+      "q": "Who was awarded the 1962 Hartwell Medal ",
+      "agree_openai": 0.25,
+      "agree_with_claude": 0.2,
+      "openai_entropy": 1.386,
+      "claude": "I'm not aware of a Hartwell Medal for physics."
+    },
+    {
+      "tier": "fake",
+      "q": "Who wrote the 1932 novel 'The Glass Sent",
+      "agree_openai": 0.25,
+      "agree_with_claude": 0.2,
+      "openai_entropy": 1.386,
+      "claude": "I have no record of a 1932 novel called 'The Gla"
+    }
+  ],
+  "council_openai": [
+    "gpt-4o-mini",
+    "gpt-4o",
+    "gpt-3.5-turbo",
+    "gpt-4.1-mini"
+  ],
+  "plus_voice": "claude (this agent, cross-vendor)",
+  "R2_ultrarare": {
+    "agree_openai_only": 0.812,
+    "agree_with_claude": 0.825
+  },
+  "fake": {
+    "agree_openai_only": 0.406,
+    "agree_with_claude": 0.325,
+    "openai_internal_entropy": 1.126
+  }
+}
