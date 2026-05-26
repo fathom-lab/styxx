@@ -29,8 +29,12 @@ single pre-registered runs; see papers/):
     (e.g. the Anthropic API), NOT beating logprob where available
     (papers/benchmark-validation/FINDING_triviaqa_2026_05_25.md).
   - council_agreement: AUC ~1.0 real-vs-fake; truth-TRACKING (the fame hypothesis
-    was rejected — agreement stays perfect on documented-obscure facts), bounded
-    by a verifiable≈known confound and same-vendor lineage.
+    was rejected — agreement stays perfect on documented-obscure facts);
+    **CROSS-VENDOR VALIDATED** (OpenAI + Alibaba/Qwen + Google/Gemma; AUC 0.917,
+    0/8 shared fabrications across vendors — and cross-vendor *beat* same-vendor by
+    breaking within-vendor correlated confabulation). Remaining bound: the
+    verifiable≈known confound + small-open-model knowledge coverage; use abstention
+    *rate* alongside agreement (a council that mostly abstains is flagging a fake).
 
 SECURITY MODEL (red-team, papers/adversarial-robustness/):
   Both signals are ROBUST to instruction/persona attacks but BLIND to
@@ -252,9 +256,10 @@ def council_agreement(
     each model invented something different (likely fabricated). No reference
     needed — the council is the grounding.
 
-    Validated as *truth-tracking*, not fame-tracking (agreement stays perfect on
-    documented-obscure facts), bounded by the verifiable≈known confound and
-    same-vendor lineage; see the module docstring + papers/. Filter out
+    Validated as *truth-tracking*, not fame-tracking, and **cross-vendor** (OpenAI +
+    Alibaba/Qwen + Google/Gemma: AUC 0.917, no fabrication shared across vendors —
+    it even beat same-vendor by breaking correlated confabulation); see papers/.
+    Filter out
     abstentions/refusals first if you want agreement on a *substantive* answer
     (a council that agrees only by all saying "no such thing" is detecting
     fakeness, not converging on a fact).

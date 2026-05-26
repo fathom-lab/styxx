@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.2] — 2026-05-25 — Cross-vendor validation of council_agreement (the biggest caveat, resolved)
+
+### Changed
+
+- **`council_agreement` is now validated CROSS-VENDOR.** A three-vendor council —
+  OpenAI (`gpt-4o-mini`, `gpt-4o`) + Alibaba (`Qwen2.5-3B-Instruct`, local) + Google
+  (`gemma-2-2b-it`, local) — separates real from fabricated **reference-free at AUC 0.917**,
+  with **0/8 fabrications shared across vendors**. This resolves the same-vendor-lineage
+  caveat the primitive has carried since 7.7.0: agreement tracks **truth, not
+  OpenAI-family consensus.** (Real-common agreement 1.00, real-obscure 0.83, fake 0.41.)
+- **Cross-vendor BEAT same-vendor.** On 2 of 8 fakes both OpenAI models produced the
+  *same* fabrication (within-vendor correlated confabulation); the Qwen/Gemma voices did
+  not share it, so the cross-vendor council (0.917) scored *higher* than the OpenAI-only
+  subset (0.875). More vendors ⇒ more robust to shared-training confabulation, not less.
+- Docstring caveat updated + a usage note: complement agreement with **abstention rate**
+  — a council that mostly abstains is itself flagging a fake, and substantive-agreement
+  over a single non-abstaining vote is meaningless (the one metric edge observed).
+
+### Why
+
+The cross-vendor test was the arc's single biggest open caveat ("is agreement truth, or
+just OpenAI-consensus?"). It needed **no API key** — local open-weights models from
+different vendors answered it decisively. Docstring-only change (no API/behavior change);
+receipts: `papers/cross-vendor-council/FINDING_crossvendor_2026_05_25.md`.
+
+---
+
 ## [7.7.1] — 2026-05-25 — TriviaQA validation + honest correction of a 7.7.0 overclaim
 
 ### Changed

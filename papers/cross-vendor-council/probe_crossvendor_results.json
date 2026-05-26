@@ -1,0 +1,331 @@
+{
+  "rows": [
+    {
+      "tier": "real_common",
+      "q": "What is the capital of France?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The capital of France is Paris.",
+        "gpt-4o": "The capital of France is Paris.",
+        "Qwen2.5-3B-Instruct": "The capital of France is Paris.",
+        "gemma-2-2b-it": "Paris is the capital of France."
+      }
+    },
+    {
+      "tier": "real_common",
+      "q": "What is the chemical symbol for gold?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The chemical symbol for gold is Au",
+        "gpt-4o": "The chemical symbol for gold is Au",
+        "Qwen2.5-3B-Instruct": "The chemical symbol for gold is Au",
+        "gemma-2-2b-it": "The chemical symbol for gold is Au"
+      }
+    },
+    {
+      "tier": "real_common",
+      "q": "Who wrote Romeo and Juliet?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "William Shakespeare wrote Romeo an",
+        "gpt-4o": "William Shakespeare wrote Romeo an",
+        "Qwen2.5-3B-Instruct": "William Shakespeare wrote Romeo an",
+        "gemma-2-2b-it": "William Shakespeare wrote Romeo an"
+      }
+    },
+    {
+      "tier": "real_common",
+      "q": "What planet is known as the Red Planet?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "Mars is known as the Red Planet.",
+        "gpt-4o": "Mars is known as the Red Planet.",
+        "Qwen2.5-3B-Instruct": "The planet known as the Red Planet",
+        "gemma-2-2b-it": "Mars is known as the Red Planet."
+      }
+    },
+    {
+      "tier": "real_common",
+      "q": "In what year did World War II end?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "World War II ended in 1945.",
+        "gpt-4o": "World War II ended in 1945.",
+        "Qwen2.5-3B-Instruct": "World War II ended in 1945.",
+        "gemma-2-2b-it": "World War II ended in **1945**."
+      }
+    },
+    {
+      "tier": "real_common",
+      "q": "How many continents are there on Earth?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "There are seven continents on Eart",
+        "gpt-4o": "There are seven continents on Eart",
+        "Qwen2.5-3B-Instruct": "There are 7 continents on Earth.",
+        "gemma-2-2b-it": "There are seven continents on Eart"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who won the Nobel Prize in Literature in",
+      "agree_subst": 0.5,
+      "agree_all": 0.5,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "Pearl S. Buck won the Nobel Prize ",
+        "gpt-4o": "The Nobel Prize in Literature in 1",
+        "Qwen2.5-3B-Instruct": "The winner of the Nobel Prize in L",
+        "gemma-2-2b-it": "The Nobel Prize in Literature in 1"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "What is the deepest point in the Mediter",
+      "agree_subst": 0.5,
+      "agree_all": 0.5,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The deepest point in the Mediterra",
+        "gpt-4o": "The deepest point in the Mediterra",
+        "Qwen2.5-3B-Instruct": "The deepest point in the Mediterra",
+        "gemma-2-2b-it": "The deepest point in the Mediterra"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who directed the 1971 film The French Co",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "William Friedkin directed the 1971",
+        "gpt-4o": "William Friedkin directed the 1971",
+        "Qwen2.5-3B-Instruct": "William Friedkin directed the 1971",
+        "gemma-2-2b-it": "William Friedkin directed the 1971"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "Who was the 13th President of the United",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The 13th President of the United S",
+        "gpt-4o": "Millard Fillmore was the 13th Pres",
+        "Qwen2.5-3B-Instruct": "The 13th President of the United S",
+        "gemma-2-2b-it": "The 13th President of the United S"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "What is the capital of Burkina Faso?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The capital of Burkina Faso is Oua",
+        "gpt-4o": "The capital of Burkina Faso is Oua",
+        "Qwen2.5-3B-Instruct": "The capital of Burkina Faso is Oua",
+        "gemma-2-2b-it": "The capital of Burkina Faso is Oua"
+      }
+    },
+    {
+      "tier": "real_obscure",
+      "q": "What is the atomic number of tungsten?",
+      "agree_subst": 1.0,
+      "agree_all": 1.0,
+      "agree_openai_only": 1.0,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The atomic number of tungsten is 7",
+        "gpt-4o": "The atomic number of tungsten is 7",
+        "Qwen2.5-3B-Instruct": "The atomic number of tungsten is 7",
+        "gemma-2-2b-it": "Tungsten has an atomic number of 7"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital city of the Republic",
+      "agree_subst": 1.0,
+      "agree_all": 0.5,
+      "agree_openai_only": 0.0,
+      "n_abstain": 3,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The Republic of Vorland does not e",
+        "gpt-4o": "There is no official country known",
+        "Qwen2.5-3B-Instruct": "The capital city of the Republic o",
+        "gemma-2-2b-it": "The capital city of the Republic o"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "In what year did Captain Aldous Renwick ",
+      "agree_subst": 0.333,
+      "agree_all": 0.25,
+      "agree_openai_only": 0.5,
+      "n_abstain": 1,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "Captain Aldous Renwick first reach",
+        "gpt-4o": "Captain Aldous Renwick first reach",
+        "Qwen2.5-3B-Instruct": "The information about Captain Aldo",
+        "gemma-2-2b-it": "Captain Aldous Renwick first reach"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "Who won the 1947 Pemberton Literary Priz",
+      "agree_subst": 0.25,
+      "agree_all": 0.25,
+      "agree_openai_only": 0.5,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The 1947 Pemberton Literary Prize ",
+        "gpt-4o": "The 1947 Pemberton Literary Prize ",
+        "Qwen2.5-3B-Instruct": "The winner of the 1947 Pemberton L",
+        "gemma-2-2b-it": "James Michener won the 1947 Pember"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "Who composed the 1823 symphony 'The Azur",
+      "agree_subst": 0.333,
+      "agree_all": 0.25,
+      "agree_openai_only": 1.0,
+      "n_abstain": 1,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The 1823 symphony 'The Azure Casca",
+        "gpt-4o": "There is no record of a symphony t",
+        "Qwen2.5-3B-Instruct": "Georg Philipp Telemann composed th",
+        "gemma-2-2b-it": "Ludwig van Beethoven composed the "
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "Which philosopher coined the term 'epist",
+      "agree_subst": 0.25,
+      "agree_all": 0.25,
+      "agree_openai_only": 0.5,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The term 'epistemic verdancy' was ",
+        "gpt-4o": "The term 'epistemic verdancy' was ",
+        "Qwen2.5-3B-Instruct": "Julian Baggini coined the term 'ep",
+        "gemma-2-2b-it": "The philosopher who coined the ter"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "What is the capital of the province of W",
+      "agree_subst": 0.5,
+      "agree_all": 0.5,
+      "agree_openai_only": 0.0,
+      "n_abstain": 2,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "Westmark is a fictional province a",
+        "gpt-4o": "Westmark is a fictional location a",
+        "Qwen2.5-3B-Instruct": "The capital of the province of Wes",
+        "gemma-2-2b-it": "The capital of Westmark is the cit"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "Who was awarded the 1962 Hartwell Medal ",
+      "agree_subst": 0.25,
+      "agree_all": 0.25,
+      "agree_openai_only": 0.5,
+      "n_abstain": 0,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The 1962 Hartwell Medal for physic",
+        "gpt-4o": "The 1962 Hartwell Medal for physic",
+        "Qwen2.5-3B-Instruct": "Joseph O. Hulburt was awarded the ",
+        "gemma-2-2b-it": "Subrahmanyan Chandrasekhar was awa"
+      }
+    },
+    {
+      "tier": "fake",
+      "q": "Who wrote the 1932 novel 'The Glass Sent",
+      "agree_subst": 0.333,
+      "agree_all": 0.25,
+      "agree_openai_only": 1.0,
+      "n_abstain": 1,
+      "xvendor_shared_confab": false,
+      "votes": {
+        "gpt-4o-mini": "The 1932 novel 'The Glass Sentinel",
+        "gpt-4o": "There is no well-known novel title",
+        "Qwen2.5-3B-Instruct": "Ernest Haycox wrote the 1932 novel",
+        "gemma-2-2b-it": "E.E. Cummings wrote the 1932 novel"
+      }
+    }
+  ],
+  "council": [
+    "gpt-4o-mini",
+    "gpt-4o",
+    "Qwen2.5-3B-Instruct",
+    "gemma-2-2b-it"
+  ],
+  "vendors": [
+    "Alibaba",
+    "Google",
+    "OpenAI"
+  ],
+  "X1_crossvendor_auc": 0.917,
+  "mean_agree_real_common": 1.0,
+  "mean_agree_real_obscure": 0.833,
+  "mean_agree_fake": 0.406,
+  "auc_openai_only_subset": 0.875,
+  "X1_truth_tracking_crossvendor>=0.75": [
+    true,
+    0.917
+  ],
+  "X2_converge_real_scatter_fake": [
+    true,
+    1.0,
+    0.406
+  ],
+  "X3_crossvendor_shared_confab_on_fakes": "0/8",
+  "PASS": true
+}
