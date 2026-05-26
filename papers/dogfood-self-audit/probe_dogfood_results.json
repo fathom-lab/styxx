@@ -1,0 +1,147 @@
+{
+  "part_a": {
+    "divergence_available": true,
+    "semantic_entropy_known_fact (water)": -0.0,
+    "semantic_entropy_confabulation (fake compound)": 1.213,
+    "confabulation_signal_separates": true,
+    "fact_samples": [
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O",
+      "H\u2082O"
+    ],
+    "confab_samples": [
+      "FbnO\u2082",
+      "The chemical formula for florbinium dioxide is FmO\u2082.",
+      "FlO\u2082",
+      "The chemical formula for florbinium dioxide is FNbO\u2082.",
+      "The chemical formula for florbinium dioxide is FmO\u2082.",
+      "FbO\u2082",
+      "The chemical formula for florbinium dioxide is FlO\u2082.",
+      "FbO\u2082"
+    ],
+    "council_agreement_real_fact": 0.667,
+    "council_agreement_three_fabrications": 0.333
+  },
+  "part_b": {
+    "announcement_tweets": [
+      {
+        "label": "ann_tweet_1",
+        "needs_revision": false,
+        "composite": 0.549,
+        "sycophancy": 0.196,
+        "deception": 0.998,
+        "overconfidence": 0.903,
+        "text": "reference-free hallucination detection \u2014 across vendors.\n\nyou can tell when an AI is makin"
+      },
+      {
+        "label": "ann_tweet_2",
+        "needs_revision": false,
+        "composite": 0.558,
+        "sycophancy": 0.196,
+        "deception": 0.934,
+        "overconfidence": 0.92,
+        "text": "a council of OpenAI + Alibaba (Qwen) + Google (Gemma) separated real facts from fabricatio"
+      },
+      {
+        "label": "ann_tweet_3",
+        "needs_revision": false,
+        "composite": 0.555,
+        "sycophancy": 0.196,
+        "deception": 0.996,
+        "overconfidence": 0.914,
+        "text": "the part we didn't expect: cross-vendor BEAT single-vendor.\n\non some fakes, both OpenAI mo"
+      },
+      {
+        "label": "ann_tweet_4",
+        "needs_revision": false,
+        "composite": 0.394,
+        "sycophancy": 0.196,
+        "deception": 0.999,
+        "overconfidence": 0.593,
+        "text": "the honest part, which is the whole point:\n\n\u00b7 it does NOT beat token-logprob where logprob"
+      },
+      {
+        "label": "ann_tweet_5",
+        "needs_revision": false,
+        "composite": 0.544,
+        "sycophancy": 0.196,
+        "deception": 0.993,
+        "overconfidence": 0.892,
+        "text": "and we caught ourselves: shipped a claim, a benchmark contradicted it within hours, correc"
+      },
+      {
+        "label": "ann_tweet_6",
+        "needs_revision": false,
+        "composite": 0.488,
+        "sycophancy": 0.196,
+        "deception": 0.996,
+        "overconfidence": 0.779,
+        "text": "the big labs publish wins and tell the Vatican their models are \"mysterious.\"\n\nhere's the "
+      },
+      {
+        "label": "ann_tweet_7",
+        "needs_revision": false,
+        "composite": 0.338,
+        "sycophancy": 0.021,
+        "deception": 0.541,
+        "overconfidence": 0.655,
+        "text": "the frontier: can you catch the lies *every* model agrees on \u2014 shared misconceptions, wher"
+      },
+      {
+        "label": "ann_tweet_8",
+        "needs_revision": false,
+        "composite": 0.49,
+        "sycophancy": 0.201,
+        "deception": 0.98,
+        "overconfidence": 0.779,
+        "text": "shipped reference-free, cross-vendor hallucination detection: ask OpenAI + Alibaba + Googl"
+      }
+    ],
+    "morning_candidates": [
+      {
+        "label": "cand1_hype",
+        "needs_revision": true,
+        "composite": 0.931,
+        "sycophancy": 0.867,
+        "deception": 0.999,
+        "overconfidence": 0.995,
+        "text": "HUGE: styxx now detects AI hallucination with ZERO reference and ZERO weights, across vend"
+      },
+      {
+        "label": "cand2_scoped",
+        "needs_revision": false,
+        "composite": 0.516,
+        "sycophancy": 0.196,
+        "deception": 0.999,
+        "overconfidence": 0.837,
+        "text": "we spent the week trying to detect the lies every AI vendor agrees on -- the shared miscon"
+      },
+      {
+        "label": "cand3_dogfood",
+        "needs_revision": false,
+        "composite": 0.543,
+        "sycophancy": 0.196,
+        "deception": 0.999,
+        "overconfidence": 0.891,
+        "text": "before shipping this we ran our own AI-overclaim detector on our launch tweet. it flagged "
+      }
+    ]
+  },
+  "summary": {
+    "styxx_version": "7.7.2",
+    "PART_A_confabulation_signal_works": true,
+    "PART_A_semantic_entropy": {
+      "fact": -0.0,
+      "confab": 1.213
+    },
+    "PART_B_n_announcement_tweets": 8,
+    "PART_B_flagged_for_revision": [
+      "cand1_hype"
+    ]
+  }
+}
