@@ -38,7 +38,7 @@ footnote.
 | 8 | Diversity index (detector-in-reverse); alignment-tax **null** | open 14× closed, coherence-gated | PROVEN + NEGATIVE |
 | 9 | **Security model:** detectors are injection-blind (robust to instruction, not to context-injection) | red-team | FLOOR (deployment boundary) |
 | 10 | Consensus answer layer: calibrated **abstention** works; accuracy-boost does **not** (weak members drag) | TriviaQA, Δ 0.253 abstention / −0.051 accuracy | PROVEN (abstention) + NEGATIVE (accuracy) |
-| 11 | **Consensus hallucination** — the lies all vendors agree on — via perturbation-fragility | the dark-matter swing | **PENDING (result fills on completion)** |
+| 11 | **Consensus hallucination** via perturbation-fragility — catches *fragile* shared misconceptions (0 false-positives on truth), misses *stubborn* ones | n=10/14, AUC **0.70** (at bar), recall 40%, truth-flip 0% | **FIRST + FLOOR (marginal, tiny-n)** |
 
 ## The negatives are the moat (the asymmetric method)
 
@@ -63,8 +63,17 @@ The collective blind spots of the *entire* model generation — facts every vend
 confidently agrees on but gets wrong — are visible only cross-vendor (which only a neutral
 party builds) and are systemically important (a shared misconception propagates to every
 agent on any model). Detecting them reference-free is the dark-matter swing (#11). A
-working detector is a first; a proven floor is a boundary the field can cite. **Result
-pending; this section completes when the gate resolves — and not before.**
+working detector is a first; a proven floor is a boundary the field can cite. **The gate
+has resolved — a first *and* a floor.** Perturbation-fragility (a real fact survives a
+neutral "reconsider" challenge; a misconception may not) **does** flag *fragile* shared
+misconceptions with **zero false-positives on truth** (0/14 truths flipped; flips
+self-correct 3/4) — a reference-free signal where divergence, confidence, and agreement
+all go blind. **But recall is 40%**: the 60% it misses are the *stubborn* misconceptions
+that resist reflection — the most dangerous ones. At **n=10**, AUC exactly on the 0.70
+bar: a *suggestive first signal*, not a validated result. The honest landing: **the dark
+matter is *partly* visible, and its dangerous core is proven (by this method) to stay
+dark.** A candle in the cave; most of the cave is still black — and both are the
+contribution.
 
 ## Reproducibility
 
