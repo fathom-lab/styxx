@@ -8,8 +8,9 @@ arc (papers/tier3-confident-confabulation, papers/council-reference-free-truth):
     semantic_entropy(samples)   — ACROSS-SAMPLE divergence of ONE model's answers
         to the same prompt. High = the model invents a different fact each sample
         = confident confabulation. Low = consistent (it knows the answer, or
-        abstains consistently). Single-response confidence (logprob) misses this;
-        across-sample divergence catches it.
+        abstains consistently). Its niche is logprob-LESS settings: on TriviaQA it
+        matched the literature (AUC 0.785) but did NOT beat single-response logprob
+        (0.817) there — a sampling-only signal, not a logprob-beater (see Evidence).
 
     council_agreement(answers)  — ACROSS-MODEL agreement, one answer per
         independent model. High = models converge (real / shared knowledge);
@@ -21,7 +22,12 @@ fabrication has none (divergent).
 Evidence (FEASIBILITY-GRADE — NOT production-validated; small n, OpenAI-only,
 single pre-registered runs; see papers/):
   - semantic_entropy: AUC 0.88–0.95 separating confident confabulation from
-    correct answers, cross-model (gpt-4o-mini / gpt-4o / gpt-3.5-turbo).
+    correct answers, cross-model (gpt-4o-mini / gpt-4o / gpt-3.5-turbo); and
+    VALIDATED on TriviaQA (n=150, judge clustering) at AUC 0.785 — in the
+    ~0.75–0.79 semantic-entropy literature band. IMPORTANT: on TriviaQA
+    single-response logprob beat it (0.817), so its niche is logprob-LESS settings
+    (e.g. the Anthropic API), NOT beating logprob where available
+    (papers/benchmark-validation/FINDING_triviaqa_2026_05_25.md).
   - council_agreement: AUC ~1.0 real-vs-fake; truth-TRACKING (the fame hypothesis
     was rejected — agreement stays perfect on documented-obscure facts), bounded
     by a verifiable≈known confound and same-vendor lineage.
@@ -197,8 +203,9 @@ def semantic_entropy(
     (temperature > 0) by meaning, then take Shannon entropy over the cluster
     proportions. **High** entropy = the model invents a *different* fact each
     sample (confident confabulation); **~0** = consistent (it knows the answer,
-    or consistently abstains). This catches what single-response confidence
-    (logprob) misses, because confabulation is confident *and* inconsistent.
+    or consistently abstains). Validated on TriviaQA at AUC 0.785 (matches the
+    literature) — but it did **not** beat single-response logprob there (0.817),
+    so use it where logprobs are unavailable, not as a logprob replacement.
 
     Requires temperature > 0 when sampling (at temperature 0 the model is
     near-deterministic → entropy ~0 regardless of truth). See the module

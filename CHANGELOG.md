@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.1] — 2026-05-25 — TriviaQA validation + honest correction of a 7.7.0 overclaim
+
+### Changed
+
+- **Validated `semantic_entropy` on a public benchmark.** TriviaQA `rc.nocontext`
+  (n=150 hashed holdout, gpt-4o-mini, judge clustering): **AUC 0.785**, inside the
+  ~0.75–0.79 semantic-entropy literature band, with clean separation (mean entropy
+  **0.56** incorrect vs **0.06** correct). The signal generalized off the
+  feasibility-grade fictional-entity set to real data — that part is now validated, not
+  feasibility-grade.
+- **Corrected a 7.7.0 overclaim (the reason for this patch).** 7.7.0's docstring/CHANGELOG
+  said semantic_entropy "catches what single-response confidence (logprob) *provably
+  misses*." On TriviaQA, single-response **logprob beat it (AUC 0.817 vs 0.785)**. That
+  line over-generalized a *narrow* grounded-arc result (logprob's within-hallucinated
+  reliability ranking is ρ≈0) into an across-item claim it does not support. Docstrings
+  repositioned: `semantic_entropy` is a **sampling-based hallucination signal whose niche
+  is logprob-LESS settings** (e.g. the Anthropic Messages API, which exposes no token
+  logprobs) — **not** a replacement for, and it does not beat, logprob where logprobs are
+  available.
+- Reconfirmed the cosine default (0.727) trails judge clustering (0.785); use `same_fn`
+  for the real signal.
+
+### Why
+
+The benchmark did its job within hours of the 7.7.0 release: it validated the detector
+*and* caught an overclaim in the shipped wheel. No API or behavior change — a docstring +
+CHANGELOG honesty patch backed by `papers/benchmark-validation/FINDING_triviaqa_2026_05_25.md`.
+Correcting fast, in public, is the point.
+
+---
+
 ## [7.7.0] — 2026-05-25 — Divergence Primitives (confident confabulation + reference-free fabrication)
 
 ### Added
@@ -14,9 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **`styxx.semantic_entropy(samples)`** — across-SAMPLE divergence of one model's
   answers to the same prompt. High = the model invents a *different* fact each sample
   (confident confabulation); ~0 = consistent (it knows the answer, or abstains
-  consistently). Catches what single-response confidence (logprob) provably misses —
-  the model is confident *and* inconsistent when confabulating. Pure function over a
-  list of strings.
+  consistently). The model is confident *and* inconsistent when confabulating. Pure
+  function over a list of strings. **(7.7.1 corrects an over-strong logprob comparison
+  that originally followed this line — on TriviaQA logprob actually beat it; see the
+  7.7.1 entry above.)**
 - **`styxx.council_agreement(answers)`** — across-MODEL agreement (one answer per
   independent model). High = convergence (real / shared knowledge); low = each model
   invents differently (fabrication). **Reference-free** — the council is the grounding.

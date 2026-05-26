@@ -1,0 +1,1071 @@
+{
+  "rows": [
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1544,
+      "modal": "Johann Sebastian Bach composed both the \"Christmas"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0282,
+      "modal": "Johann Sebastian Bach composed both the \"Christmas"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0182,
+      "modal": "Eritrean separatists fought for independence from "
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0994,
+      "modal": "Eritrean separatists fought for independence from "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0867,
+      "modal": "Ladon the dragon was killed by Heracles while guar"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0919,
+      "modal": "Ladon the dragon was killed by Heracles while guar"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1956,
+      "modal": "The final stage of a hair perming process is the n"
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.2909,
+      "modal": "The final stage of a hair perming process is rinsi"
+    },
+    {
+      "correct": false,
+      "se_judge": 1.609,
+      "se_cosine": 1.609,
+      "neg_logprob": 0.5671,
+      "modal": "The sausage usually sold in a flat circular coil i"
+    },
+    {
+      "correct": false,
+      "se_judge": 1.332,
+      "se_cosine": 1.332,
+      "neg_logprob": 0.2824,
+      "modal": "Cajun andouille sausage is typically sold in a fla"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0604,
+      "modal": "The largest island off the west coast of North Ame"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0189,
+      "modal": "Luigi."
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1091,
+      "modal": "Luigi."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1188,
+      "modal": "There are 9 imperial gallons in a firkin."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1073,
+      "modal": "Hufflepuff."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0478,
+      "modal": "The fourth house is Hufflepuff."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0426,
+      "modal": "Judy Holliday won the Oscar for Best Actress for h"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0199,
+      "modal": "Judy Holliday won the Oscar for Best Actress for h"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.95,
+      "se_cosine": 0.95,
+      "neg_logprob": 0.2411,
+      "modal": "The three days before Ascension Day are called the"
+    },
+    {
+      "correct": false,
+      "se_judge": 1.055,
+      "se_cosine": 1.055,
+      "neg_logprob": 0.2404,
+      "modal": "The three days before Ascension Day are known as t"
+    },
+    {
+      "correct": false,
+      "se_judge": 0.673,
+      "se_cosine": 0.95,
+      "neg_logprob": 0.0988,
+      "modal": "The Beatles' animated film \"Yellow Submarine\" was "
+    },
+    {
+      "correct": false,
+      "se_judge": 0.95,
+      "se_cosine": 0.95,
+      "neg_logprob": 0.1459,
+      "modal": "The Beatles' animated film \"Yellow Submarine\" was "
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.2046,
+      "modal": "Ellis Island."
+    },
+    {
+      "correct": true,
+      "se_judge": 0.673,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.0992,
+      "modal": "New York's immigrant inspection station was locate"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1555,
+      "modal": "Nestl\u00e9's headquarters is in Switzerland."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1739,
+      "modal": "Nestl\u00e9's headquarters is in Switzerland."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1519,
+      "modal": "Sir Isaac Newton."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.4019,
+      "modal": "Isaac Newton."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.0978,
+      "modal": "The Kentucky Derby is the oldest, continuously hel"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0886,
+      "modal": "The order Coleoptera, or beetles, contains the mos"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0656,
+      "modal": "The cartoon cat that is always chasing Tweety Pie "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.0866,
+      "modal": "The cartoon cat that is always chasing Tweety Pie "
+    },
+    {
+      "correct": false,
+      "se_judge": 0.95,
+      "se_cosine": 1.332,
+      "neg_logprob": 87.187,
+      "modal": "As of October 2023, \"50\" by Adele has spent the mo"
+    },
+    {
+      "correct": false,
+      "se_judge": 0.95,
+      "se_cosine": 1.332,
+      "neg_logprob": 71.685,
+      "modal": "The album \"The Dark Side of the Moon\" by Pink Floy"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0008,
+      "modal": "Jesus supposedly walked on the Sea of Galilee."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1063,
+      "modal": "The actress who played 'Valeria' in the film \"Carr"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1518,
+      "modal": "The actress who played 'Valeria' in the film Carry"
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.165,
+      "modal": "A garboard is a range of planks on the bottom edge"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.2396,
+      "modal": "A garboard is a range of planks on the hull of a s"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1391,
+      "modal": "Paul Allen is the local rich boy responsible for f"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.166,
+      "modal": "Paul Allen is responsible for founding the Science"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0359,
+      "modal": "The \"Anvil Chorus\" is found in the opera \"Il Trova"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1465,
+      "modal": "The \"Anvil Chorus\" is found in the opera \"Il Trova"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0004,
+      "modal": "The film is \"Trainspotting.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0004,
+      "modal": "The film is \"Trainspotting.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0146,
+      "modal": "Primula veris is the Latin name for the cowslip."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0998,
+      "modal": "Primula veris is the Latin name for the cowslip."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.005,
+      "modal": "Denisov and Dolokhov appear in \"War and Peace\" by "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0051,
+      "modal": "Denisov and Dolokhov appear in \"War and Peace\" by "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0047,
+      "modal": "The quote \"All that glisters is not gold\" appears "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0554,
+      "modal": "The quote \"All that glisters is not gold\" appears "
+    },
+    {
+      "correct": false,
+      "se_judge": 0.673,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.2349,
+      "modal": "In January 1957, Russell Endean became the first b"
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1626,
+      "modal": "Russell Endean became the first batsman to be dism"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.063,
+      "modal": "John Huston directed the 1941 film 'The Maltese Fa"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0241,
+      "modal": "John Huston directed the 1941 film \u2018The Maltese Fa"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.001,
+      "modal": "The state capital of Alabama is Montgomery."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.001,
+      "modal": "The state capital of Alabama is Montgomery."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0012,
+      "modal": "Lancelot Gobbo is the servant of Shylock in \"The M"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0009,
+      "modal": "Lancelot Gobbo is the servant of Shylock in \"The M"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1647,
+      "modal": "Martha's Vineyard is in the state of Massachusetts"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1803,
+      "modal": "Martha's Vineyard is in the state of Massachusetts"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.95,
+      "neg_logprob": 0.691,
+      "modal": "The town in Berkshire that was the site of two Civ"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.2671,
+      "modal": "W G Grace primarily played for Gloucestershire Cou"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1046,
+      "modal": "W G Grace played most of his career for Gloucester"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0797,
+      "modal": "'Eureka', the National Children's Museum is in Hal"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1833,
+      "modal": "'Eureka', the National Children's Museum is in Hal"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0654,
+      "modal": "Bathsheba was the mother of King Solomon."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0057,
+      "modal": "Bathsheba was the mother of King Solomon."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0003,
+      "modal": "Pearmain is a variety of apple."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0003,
+      "modal": "Pearmain is a variety of apple."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0108,
+      "modal": "Ecuador shares a border with Colombia."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1055,
+      "modal": "Ecuador shares a border with Colombia."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0384,
+      "modal": "The actual kitchen used by Julia Child is on perma"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1087,
+      "modal": "The actual kitchen used by Julia Child is on perma"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1204,
+      "modal": "The super-tanker that ran aground near Milford Hav"
+    },
+    {
+      "correct": false,
+      "se_judge": 0.673,
+      "se_cosine": 1.332,
+      "neg_logprob": 0.1898,
+      "modal": "The super-tanker that ran aground near Milford Hav"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0417,
+      "modal": "Hatters Mild and Unicorn Bitter are made by the Ro"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0509,
+      "modal": "Never give a sucker an even break."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0372,
+      "modal": "The first DJ on Radio 1 in 1967 was Tony Blackburn"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0073,
+      "modal": "The first DJ on Radio 1 in 1967 was Tony Blackburn"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0282,
+      "modal": "The English League Cup was first contested in the "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0854,
+      "modal": "A person from Dundee is specifically called a \"Dun"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1524,
+      "modal": "A person from Dundee is specifically called a \"Dun"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.673,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.0904,
+      "modal": "Ed Stafford became the first person to walk the en"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1338,
+      "modal": "The Amazon River."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0814,
+      "modal": "The film is \"Full Metal Jacket.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0456,
+      "modal": "The film is \"Full Metal Jacket.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0225,
+      "modal": "CNN was founded in 1980."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0225,
+      "modal": "CNN was founded in 1980."
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 1.055,
+      "neg_logprob": 0.1932,
+      "modal": "The last words were spoken by Johann Wolfgang von "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.2107,
+      "modal": "Dennis Tito paid $20 million to be the first touri"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1536,
+      "modal": "Dennis Tito paid $20 million to be the first touri"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.673,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1539,
+      "modal": "Lucky Charms."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0963,
+      "modal": "Quicksilver is another name for mercury."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0138,
+      "modal": "Quicksilver is another name for mercury."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1897,
+      "modal": "The more common name of the \"simple plurality\" sys"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0631,
+      "modal": "The more common name of the \"simple plurality\" sys"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.224,
+      "modal": "The flag with three equal vertical stripes of red,"
+    },
+    {
+      "correct": true,
+      "se_judge": 0.95,
+      "se_cosine": 0.95,
+      "neg_logprob": 0.1673,
+      "modal": "The Grand Union Canal."
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0488,
+      "modal": "Catherine of Aragon's first husband was Arthur, Pr"
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.05,
+      "modal": "Catherine of Aragon's first husband was Arthur, Pr"
+    },
+    {
+      "correct": false,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.157,
+      "modal": "Brazil is the biggest country entirely in the Sout"
+    },
+    {
+      "correct": false,
+      "se_judge": 0.673,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.2243,
+      "modal": "Brazil is the biggest country entirely in the Sout"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.017,
+      "modal": "Vertical integration."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0203,
+      "modal": "Vertical integration."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1516,
+      "modal": "The estuary is called the Gironde estuary."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.2024,
+      "modal": "The name of the estuary is the Gironde estuary."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1056,
+      "modal": "Hadrian's Wall lies near the boundary of Scotland "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0133,
+      "modal": "Hadrian's Wall lies near the boundary of Scotland "
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.207,
+      "modal": "Photovoltaic refers to solar energy technology."
+    },
+    {
+      "correct": false,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0881,
+      "modal": "Photovoltaic refers to technology in solar energy."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0007,
+      "modal": "Halloween is celebrated on October 31st."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0537,
+      "modal": "Guy Pearce links the films Memento and The Time Ma"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.0669,
+      "modal": "Guy Pearce links the films Memento and The Time Ma"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1203,
+      "modal": "Gertrude."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1207,
+      "modal": "Gertrude."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0738,
+      "modal": "The Himalayan garden shrub first brought to the UK"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0715,
+      "modal": "The Himalayan garden shrub first brought to the UK"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1566,
+      "modal": "Pulsar."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0355,
+      "modal": "The British submarine that sank the General Belgra"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0145,
+      "modal": "The British submarine that sank the General Belgra"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0435,
+      "modal": "The small fifth claw on the side of a dog's foot i"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 1.055,
+      "neg_logprob": 0.1942,
+      "modal": "Route 66."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 1.332,
+      "neg_logprob": 0.2599,
+      "modal": "Route 66."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1687,
+      "modal": "Roger Moore played James Bond in the most movies, "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.2126,
+      "modal": "Roger Moore played James Bond in the most movies, "
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0023,
+      "modal": "The first episode of Minder took place in 1979."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0022,
+      "modal": "The first episode of Minder took place in 1979."
+    },
+    {
+      "correct": false,
+      "se_judge": 0.5,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.5488,
+      "modal": "The commercial claimed that a specific cleaning pr"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.1343,
+      "modal": "King Lear's youngest daughter is Cordelia."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.139,
+      "modal": "King Lear's youngest daughter is Cordelia."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0442,
+      "modal": "Philopobia is the fear of love."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0322,
+      "modal": "Philopobia is the fear of love."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0545,
+      "modal": "Akira Yoshizawa elevated origami into an art form."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0466,
+      "modal": "Akira Yoshizawa elevated origami into an art form."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0048,
+      "modal": "Rita Coolidge sang the title song for the Bond fil"
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1078,
+      "modal": "Duncan Jones."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 1.055,
+      "neg_logprob": 0.1607,
+      "modal": "Duncan Jones."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0783,
+      "modal": "Olympus Mons is on Mars."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0174,
+      "modal": "Olympus Mons is on Mars."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1254,
+      "modal": "Aberdeen is known as the \"Granite City.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1175,
+      "modal": "Aberdeen is known as the \"Granite City.\""
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0001,
+      "modal": "Celadon is a shade of green."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0001,
+      "modal": "Celadon is a shade of green."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0,
+      "modal": "Taphophobia is the fear of being buried alive."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 0.0,
+      "modal": "Taphophobia is the fear of being buried alive."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": -0.0,
+      "neg_logprob": 100.1559,
+      "modal": "In Roman times, a publican was a tax collector."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.5,
+      "neg_logprob": 0.1534,
+      "modal": "Discretion is the better part of valor."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.1408,
+      "modal": "In a church or cathedral."
+    },
+    {
+      "correct": true,
+      "se_judge": -0.0,
+      "se_cosine": 0.673,
+      "neg_logprob": 0.3297,
+      "modal": "You would find a nave or an apse in a church or ca"
+    }
+  ],
+  "n": 150,
+  "n_incorrect": 19,
+  "base_error_rate": 0.127,
+  "auc_se_judge": 0.785,
+  "auc_se_cosine": 0.727,
+  "auc_neg_logprob": 0.817,
+  "B1_judge_auc>=0.75": [
+    true,
+    0.785
+  ],
+  "B2_judge_beats_logprob>=0.05": [
+    false,
+    -0.032
+  ],
+  "PASS": false,
+  "mean_se_judge_incorrect": 0.555,
+  "mean_se_judge_correct": 0.057
+}
