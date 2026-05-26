@@ -39,6 +39,7 @@ footnote.
 | 9 | **Security model:** detectors are injection-blind (robust to instruction, not to context-injection) | red-team | FLOOR (deployment boundary) |
 | 10 | Consensus answer layer: calibrated **abstention** works; accuracy-boost does **not** (weak members drag) | TriviaQA, Δ 0.253 abstention / −0.051 accuracy | PROVEN (abstention) + NEGATIVE (accuracy) |
 | 11 | **Consensus hallucination** via perturbation-fragility — catches *fragile* shared misconceptions (0 false-positives on truth), misses *stubborn* ones | n=10/14, AUC **0.70** (at bar), recall 40%, truth-flip 0% | **FIRST + FLOOR (marginal, tiny-n)** |
+| 12 | The *sharper* swing (CVPD): continuous **cross-vendor agreement-fracture** under challenge is a **worse** detector than the binary flip — because misconception correction is **coordinated** (vendors move to truth together, preserving agreement), so Δagreement is blind to it | n=25/25, AUC **0.52**, fracture-recall 0.12, **lift −0.32**; flip replicates at **0.44** | **NEGATIVE + FLOOR (mechanism falsified, n=25)** |
 
 ## The negatives are the moat (the asymmetric method)
 
@@ -74,6 +75,21 @@ bar: a *suggestive first signal*, not a validated result. The honest landing: **
 matter is *partly* visible, and its dangerous core is proven (by this method) to stay
 dark.** A candle in the cave; most of the cave is still black — and both are the
 contribution.
+
+We then took a **sharper swing** at that dark core (#12, CVPD), and it is the cleanest
+negative in the report. Instead of asking whether the *majority answer* flips, CVPD
+measured the continuous **drop in cross-vendor agreement** under the same challenge,
+betting that a shared misconception would *fracture* — one vendor defecting, re-exposing
+divergence. Pre-registered, run once at **n=25/25**, it **fails decisively** (AUC 0.52 ≈
+chance; fracture-recall 0.12) and, more tellingly, is **worse than the binary flip it tried
+to beat (lift −0.32)**. The data falsifies the mechanism: **9 of 11 misconception
+corrections preserved agreement** — vendors move toward truth *together*, in lockstep, so
+agreement-fracture is structurally blind to exactly the corrections the simpler signal
+catches. Correction of a shared misconception is **coordinated, not fractured.** The same
+run **replicated** the first swing's signal (flip-recall 0.44 at n=25 vs 0.40 at n=10), so
+the candle is robust — but the lesson for the field is now mapped, not guessed: *don't chase
+cross-vendor agreement-fracture for consensus hallucination; the dangerous myth-class core
+stays dark, and the cleanest reference-free signal for the fragile shell is the cruder one.*
 
 ## Reproducibility
 
