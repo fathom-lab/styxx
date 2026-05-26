@@ -1,0 +1,1525 @@
+{
+  "rows": [
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.333,
+      "abstain": true
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": false,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": false,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": false,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 1.0,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": false
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    },
+    {
+      "correct": {
+        "gpt-4o-mini": true,
+        "Qwen2.5-3B-Instruct": true,
+        "gemma-2-2b-it": true
+      },
+      "consensus_correct": true,
+      "agreement": 0.667,
+      "abstain": false
+    }
+  ],
+  "n": 150,
+  "tau": 0.66,
+  "coverage_answered": 0.7867,
+  "per_model_accuracy": {
+    "gpt-4o-mini": 0.8867,
+    "Qwen2.5-3B-Instruct": 0.5267,
+    "gemma-2-2b-it": 0.6533
+  },
+  "best_member": "gpt-4o-mini",
+  "consensus_acc_on_answered": 0.8898,
+  "best_member_acc_on_answered": 0.9407,
+  "best_member_acc_on_abstained": 0.6875,
+  "T1_consensus_beats_best>=0.05": [
+    false,
+    -0.0508
+  ],
+  "T2_abstention_calibrated>=0.20": [
+    true,
+    0.2532
+  ],
+  "PASS": false
+}
