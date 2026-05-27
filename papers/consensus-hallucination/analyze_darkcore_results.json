@@ -1,0 +1,43 @@
+{
+  "n_total": 35,
+  "n_detected": 16,
+  "n_dark": 19,
+  "by_category": {
+    "factual-error": {
+      "detected": 10,
+      "dark": 10,
+      "n": 20,
+      "rate": 0.5
+    },
+    "pseudoscience/supernatural": {
+      "detected": 5,
+      "dark": 3,
+      "n": 8,
+      "rate": 0.62
+    },
+    "folklore/legend": {
+      "detected": 0,
+      "dark": 5,
+      "n": 5,
+      "rate": 0.0
+    },
+    "self-referential": {
+      "detected": 1,
+      "dark": 1,
+      "n": 2,
+      "rate": 0.5
+    }
+  },
+  "dark_core_categories": {
+    "factual-error": 10,
+    "pseudoscience/supernatural": 3,
+    "folklore/legend": 5,
+    "self-referential": 1
+  },
+  "detected_categories": {
+    "factual-error": 10,
+    "pseudoscience/supernatural": 5,
+    "folklore/legend": 0,
+    "self-referential": 1
+  }
+}
