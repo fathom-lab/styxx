@@ -48,10 +48,14 @@ def test_leaderboard_bundled_in_package_data():
 
 
 def test_leaderboard_cli_invocation_via_module():
-    """End-to-end: python -m styxx leaderboard runs successfully."""
+    """End-to-end: python -m styxx leaderboard runs successfully.
+
+    Forces utf-8 encoding on the subprocess pipe (cp1252 default on Windows
+    can't decode non-ASCII glyphs like ⚠️ that we use in the leaderboard
+    artifact-flag annotation)."""
     proc = subprocess.run(
         [sys.executable, "-m", "styxx", "leaderboard", "--rows-only"],
-        capture_output=True, text=True, timeout=30,
+        capture_output=True, text=True, timeout=30, encoding="utf-8",
     )
     assert proc.returncode == 0, f"stderr: {proc.stderr}"
     assert "Baseline-001" in proc.stdout

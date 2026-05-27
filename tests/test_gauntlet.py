@@ -187,23 +187,43 @@ def test_perfect_oracle_passes_all_classification_bars():
 # Detection gauntlet — failing + passing baselines
 # ──────────────────────────────────────────────────────────────────────
 
-def test_zero_detector_fails_both_detection_bars():
+def test_zero_detector_fails_all_detection_bars():
+    """7.7.8: detection task now has 3 bars (D1, D2, D3 length-control)."""
     sub = Submission(name="zero-detector", method=_zero_baseline_detect, task="detection")
     r = run_detection_gauntlet(sub, _bench())
     assert r.error is None
     assert r.overall_pass is False
     assert r.n_passed == 0
+    assert r.n_total_bars == 3
     # constant scores → AUC = 0.5
     assert abs(r.metrics["D1_misconception_AUC"] - 0.5) < 1e-9
     assert abs(r.metrics["D2_folklore_AUC"] - 0.5) < 1e-9
 
 
+def test_length_oracle_passes_D1_D2_but_fails_D3():
+    """The D3 length-control bar: a detector whose score IS length must fail D3
+    (delta = 0 by construction). Regression test against re-introducing the
+    Baseline-007 benchmark-artifact exploit."""
+    from styxx.gauntlet import _length_oracle_detect
+    sub = Submission(name="length-oracle", method=_length_oracle_detect, task="detection")
+    r = run_detection_gauntlet(sub, _bench())
+    assert r.error is None
+    # D1 + D2 may pass because length correlates with class, but D3 must fail
+    assert r.bar_results["D3_length_control_delta"] is False
+    assert r.overall_pass is False
+    # And the delta should be exactly 0 (or very close) because the detector IS the length oracle
+    assert abs(r.metrics["D1_minus_length_AUC"]) < 1e-6
+    assert abs(r.metrics["D2_minus_length_AUC"]) < 1e-6
+
+
 def test_perfect_oracle_passes_all_detection_bars():
+    """A perfect detector (reads true label) must pass all 3 bars, including
+    D3 length-control (since it gets perfect AUC while the length oracle
+    is below 1.0, the delta is comfortably above 0.10)."""
     bench = _bench()
     def oracle_detect(question: str, response: str) -> dict:
         for rec in bench["records"]:
             if rec["question"] == question:
-                # high score for misconception class, low for truth
                 return {"score": 0.0 if rec["class"] == "truth" else 1.0}
         return {"score": 0.5}
 
@@ -211,9 +231,11 @@ def test_perfect_oracle_passes_all_detection_bars():
     r = run_detection_gauntlet(sub, bench)
     assert r.error is None
     assert r.overall_pass is True
-    assert r.n_passed == 2
+    assert r.n_passed == 3  # 7.7.8: 3 bars now (D1, D2, D3)
     assert r.metrics["D1_misconception_AUC"] >= 0.99
     assert r.metrics["D2_folklore_AUC"] >= 0.99
+    # D3 must pass: perfect AUC (1.0) minus length-oracle AUC (~0.79) >> 0.10
+    assert r.bar_results["D3_length_control_delta"] is True
 
 
 # ──────────────────────────────────────────────────────────────────────

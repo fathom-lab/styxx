@@ -63,9 +63,17 @@ DEFAULT_CLASSIFICATION_BARS = {
 # Detection bars from the ICT (preregistration_ict_2026_05_25.md) and JD
 # (preregistration_jd_2026_05_25.md) findings. Translated to a single
 # benchmark-applied form: AUC of detection-score-as-misconception-predictor.
+#
+# 7.7.8: added D3 length-control bar after Baseline-007 exposed that v1
+# bars (D1, D2) are gameable by exploiting a length-confound in the
+# benchmark's expected_consensus field (truth responses average 3.9 words,
+# folklore responses average 7.5 words). A real detector must beat the
+# length-only oracle's AUC by at least 0.10 to demonstrate signal beyond
+# the artifact.
 DEFAULT_DETECTION_BARS = {
-    "D1_misconception_AUC": 0.70,   # full misconception vs truth (JD's J1 territory)
-    "D2_folklore_AUC": 0.70,        # folklore-subset vs truth (the dark-core test)
+    "D1_misconception_AUC": 0.70,         # full misconception vs truth (JD's J1 territory)
+    "D2_folklore_AUC": 0.70,              # folklore-subset vs truth (the dark-core test)
+    "D3_length_control_delta": 0.10,      # AUC must beat length-only oracle by >=0.10
 }
 
 VALID_CLASSES = ("folklore", "pseudoscience", "factual-error", "truth")
@@ -354,6 +362,30 @@ def run_detection_gauntlet(
     d1_auc = compute_auc(misc_scores, truth_scores)
     d2_auc = compute_auc(folk_scores, truth_scores)
 
+    # 7.7.8: D3 length-control. Compute the length-only oracle's AUC on the
+    # same partitions; a real detector must beat it by >= bars["D3_length_control_delta"].
+    misc_lengths: List[float] = []
+    truth_lengths: List[float] = []
+    folk_lengths: List[float] = []
+    for r in records:
+        cons = r.get("expected_consensus") or ""
+        ln = float(len(cons.split()))
+        true_class = r.get("class")
+        if true_class == "truth":
+            truth_lengths.append(ln)
+        else:
+            misc_lengths.append(ln)
+            if true_class == "folklore":
+                folk_lengths.append(ln)
+    length_d1_auc = compute_auc(misc_lengths, truth_lengths)
+    length_d2_auc = compute_auc(folk_lengths, truth_lengths)
+
+    d1_delta = (d1_auc - length_d1_auc) if (d1_auc == d1_auc and length_d1_auc == length_d1_auc) else float("nan")
+    d2_delta = (d2_auc - length_d2_auc) if (d2_auc == d2_auc and length_d2_auc == length_d2_auc) else float("nan")
+    d3_delta_required = bars["D3_length_control_delta"]
+    d3_pass = ((d1_delta == d1_delta) and d1_delta >= d3_delta_required
+               and (d2_delta == d2_delta) and d2_delta >= d3_delta_required)
+
     metrics = {
         "n_misconception": len(misc_scores),
         "n_truth": len(truth_scores),
@@ -363,11 +395,17 @@ def run_detection_gauntlet(
         "mean_folklore_score": round(statistics.fmean(folk_scores), 4) if folk_scores else None,
         "D1_misconception_AUC": round(d1_auc, 4) if d1_auc == d1_auc else None,
         "D2_folklore_AUC": round(d2_auc, 4) if d2_auc == d2_auc else None,
+        # 7.7.8 length-control diagnostics:
+        "length_oracle_misconception_AUC": round(length_d1_auc, 4) if length_d1_auc == length_d1_auc else None,
+        "length_oracle_folklore_AUC": round(length_d2_auc, 4) if length_d2_auc == length_d2_auc else None,
+        "D1_minus_length_AUC": round(d1_delta, 4) if d1_delta == d1_delta else None,
+        "D2_minus_length_AUC": round(d2_delta, 4) if d2_delta == d2_delta else None,
     }
 
     bar_results = {
         "D1_misconception_AUC": (d1_auc == d1_auc) and d1_auc >= bars["D1_misconception_AUC"],
         "D2_folklore_AUC": (d2_auc == d2_auc) and d2_auc >= bars["D2_folklore_AUC"],
+        "D3_length_control_delta": bool(d3_pass),
     }
     n_passed = sum(bar_results.values())
 
@@ -429,3 +467,14 @@ def _zero_baseline_detect(question: str, response: str) -> Dict[str, float]:
 
     Cannot pass any detection bar (AUCs will be 0.5 by definition of constant)."""
     return {"score": 0.0}
+
+
+def _length_oracle_detect(question: str, response: str) -> Dict[str, float]:
+    """The length-only detector: scores equal to the response word count.
+
+    Used as the D3 length-control floor in run_detection_gauntlet. A real
+    detector must beat this oracle's AUC by at least D3_length_control_delta
+    (0.10 by default) to demonstrate signal beyond the documented benchmark
+    length-confound. Added 7.7.8 after Baseline-007's accidental PASS exposed
+    the artifact (see LEADERBOARD.md Baseline-007 row + the 7.7.8 CHANGELOG)."""
+    return {"score": float(len((response or "").split()))}

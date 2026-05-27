@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.8] — 2026-05-27 — gauntlet detection-bar v2: D3 length-control bar fixes the artifact Baseline-007 exposed
+
+### Fixed
+
+- **The gauntlet's detection bars (D1, D2) were length-gameable.** Baseline-007, a 30-line token-overlap heuristic submitted as a sanity check, accidentally hit PASS=true on the v1 bars (D1=0.864, D2=0.922). Investigation: the benchmark's `expected_consensus` field is length-confounded by class — truth responses average 3.9 words ("Paris", "206"), folklore responses average 7.5 words (full council restatements). A detector measuring length alone scores AUC=0.79 on misconception-vs-truth and AUC=0.80 on folklore-vs-truth. **Any submission could game the bars by exploiting this artifact.**
+
+### Added — D3 length-control bar
+
+- **`D3_length_control_delta` ≥ 0.10** — a real detector must beat the length-only oracle's AUC by at least 0.10 on *both* the misconception-vs-truth (D1 partition) and folklore-vs-truth (D2 partition) splits.
+- `styxx.gauntlet._length_oracle_detect` — the new length-only oracle used as the D3 floor. Returns `{"score": len(response.split())}`.
+- `run_detection_gauntlet` now computes 4 additional metrics inline:
+  - `length_oracle_misconception_AUC` (the floor on the D1 partition)
+  - `length_oracle_folklore_AUC` (the floor on the D2 partition)
+  - `D1_minus_length_AUC` (the submitter's signal-above-floor on D1)
+  - `D2_minus_length_AUC` (the submitter's signal-above-floor on D2)
+
+### Bar set update
+
+Detection task now has **3 bars** (D1, D2, D3). PASS requires all three. Classification task is unchanged (still K1, K2, K3).
+
+### Regression test
+
+`test_length_oracle_passes_D1_D2_but_fails_D3` — added as a regression guard. The length oracle (whose score IS length) trivially passes D1+D2 because its AUC equals the length-confound AUC, but D3 fails by construction (delta = 0). Catches any future attempt to weaken or remove D3.
+
+### Re-scoring existing submissions under v2 bars
+
+Baseline-007 token-overlap detector, under the new bars:
+- D1 = 0.864 (passes ≥0.70)
+- D2 = 0.922 (passes ≥0.70)
+- D1 − length = 0.074 (FAILS ≥0.10)
+- D2 − length = 0.117 (passes ≥0.10)
+- **D3 fails because D1 delta is insufficient. Overall: 2/3 — NOT a PASS.**
+
+The "first PASS on detection" gets correctly downgraded to "2/3 with the length-confound caught."
+
+### How this finding fits the project pattern
+
+This is the **sixth in-session falsification** today. The gauntlet was built to surface exactly this kind of issue: a real submission unearthed a real benchmark / bar validity weakness; the discipline pattern caught it; the fix ships in the next patch. The discovery chain — Baseline-007 unexpected PASS → length-confound diagnosis → D3 bar definition → tests + verification → patch release — happened in the same session as the original gauntlet shipped. **The system caught its own flaw.**
+
+### Why patch (not minor)
+
+The change is additive (new D3 bar; D1 and D2 unchanged). External submissions that PASSed D1+D2 alone are not retroactively invalidated, just re-scored as 2/3 instead of 2/2. Classification bars (K1/K2/K3) are unaffected. No public API breakage. Full suite: **1084 passed, 8 skipped**.
+
+---
+
 ## [7.7.7] — 2026-05-27 — `styxx leaderboard` CLI + concrete reference baselines + CI auto-verification
 
 ### Added
