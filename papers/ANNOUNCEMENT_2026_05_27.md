@@ -21,7 +21,7 @@ here's what we did do — and why the absence of those claims is the substance �
 
 **2/**
 ```
-seven independent pre-registered methods tested on the same hypothesis: the consensus-hallucination "dark core."
+seven pre-registered methods, one hypothesis (the consensus-hallucination "dark core"):
 
 perturbation-fragility. agreement-fracture. justification-divergence. neutral injection. authoritative injection. text classification. folklore-stratified rerun.
 
@@ -32,11 +32,9 @@ all seven closed-negative.
 
 **3/**
 ```
-the synthesis was written 2 days before half of them ran. bimodal prediction, in writing, committed.
+the synthesis predicted bimodally in writing 2 days before half of them ran.
 
-every bar was locked + pushed to public origin BEFORE its probe fired.
-
-verify the order from `git log --oneline papers/consensus-hallucination/`.
+every bar was locked + pushed to public origin BEFORE its probe fired. verify from the git log.
 
 the data resolved on the load-bearing-floor branch.
 ```
@@ -45,7 +43,7 @@ the data resolved on the load-bearing-floor branch.
 
 **4/**
 ```
-the dark core's defining signature, found on JD (justification-divergence): stubborn cultural priors have the MOST convergent justifications, not the least.
+the dark core's signature, from JD: stubborn cultural priors have the MOST convergent justifications, not the least.
 
 three vendors share the wrong fact AND the supporting story.
 
@@ -60,7 +58,7 @@ mean JD = 0.022.
 ```
 we falsified four of our own claims in-session.
 
-the "C1 register-law ≤0.20" bar. the set_session propagation observation. two probe auto-verdict labels.
+the C1 register-law bar. the set_session observation. two probe auto-verdict labels.
 
 all four recorded in place with strikethrough + "FALSIFIED" marks. not rewritten.
 
@@ -84,9 +82,9 @@ composite 0.358 → 0.174 — same session, same agent, same product.
 ```
 the benchmark is shipped.
 
-darkcore_benchmark_2026_05_27.json — 108 labeled records, 4 classes (folklore, pseudoscience, factual-error, truth).
+darkcore_benchmark.json — 108 labeled records, 4 classes (folklore, pseudoscience, factual-error, truth).
 
-the empirical floor (seven method-failures) is baked in as the bar future routing approaches need to beat.
+the empirical floor (seven method-failures) is baked in as the bar.
 
 beat us. or replicate the floor.
 ```
