@@ -41,14 +41,17 @@ External submissions must use **the same benchmark JSON** as the baseline. No co
 
 Bars locked at `preregistration_darkcore_classifier_2026_05_27.md` (commit `646dcb0`).
 
-### Detection (2 bars; PASS = both)
+### Detection (3 bars in 7.7.8+; PASS = all three)
 
 | bar | threshold | description |
 |---|---|---|
 | **D1** misconception AUC | ≥ 0.70 | Mann-Whitney AUC, misconception scores vs truth scores |
 | **D2** folklore AUC | ≥ 0.70 | Mann-Whitney AUC, folklore-subset scores vs truth scores (the dark-core test) |
+| **D3** length-control delta | ≥ 0.10 | (added 7.7.8) detector AUC must beat the length-only oracle's AUC by ≥0.10 on BOTH partitions. Required because the benchmark's `expected_consensus` is length-confounded by class (truth ~3.9w, folklore ~7.5w), so the length oracle alone scores AUC ~0.79–0.80. A real detector clears D3 by demonstrating signal *above* the length artifact, not just *with* it. Without D3 in place, the bars were trivially gameable — see Baseline-007 row below. |
 
-Bars derived from the seven-method findings in `papers/consensus-hallucination/`. Detection-style methods are scored against the same labeled benchmark as classification; the "response" passed to `detect()` is the council's expected_consensus (the misconception for non-truth records, the truth for truth records).
+Bars derived from the seven-method findings in `papers/consensus-hallucination/` + the 7.7.8 D3 bar added after Baseline-007's accidental v1 PASS exposed the length artifact. The D3 threshold (0.10) is a judgment call — chosen so that a real detector needs AUC ≥ length_oracle_AUC + 0.10 (~0.90 effective floor) to demonstrate signal beyond the artifact. Open to revision based on submission outcomes; the discipline pattern says revise it when the data argues for it.
+
+Detection-style methods are scored against the same labeled benchmark as classification; the "response" passed to `detect()` is the council's `expected_consensus` (the misconception for non-truth records, the truth for truth records).
 
 ---
 
