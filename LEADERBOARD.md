@@ -54,15 +54,17 @@ Bars derived from the seven-method findings in `papers/consensus-hallucination/`
 
 ## Leaderboard
 
-### Baseline-001 — the floor
+### Reference baselines — provided by Fathom Lab
 
-| rank | submitter | method | task | bars passed | summary |
-|---|---|---|---|---|---|
-| **Baseline-001** *(the floor)* | Fathom Lab | seven-method pre-registered arc | both | **0 / 7** | Four detection methods (Dark Matter perturbation-fragility, CVPD agreement-fracture, JD justification-divergence, ICT neutral injection) — all closed-negative on the dark core. One classification method (sentence-transformer + balanced LR) — FAIL K2 + K3, 20% recall on cross-corpus folklore. Two constructive variants (ICT-folklore, ICT-authoritative) — SHORTFALL on the same corpus (28/30 already corrected baseline). Full receipts in [PAPER_decorrelation_ceiling_2026_05_27.md](papers/PAPER_decorrelation_ceiling_2026_05_27.md). Commit range: `bcd4208..a6d7a7e`. Submission date: 2026-05-27. |
+| rank | submitter | method | task | bars passed | K1 / K2 / K3 | summary |
+|---|---|---|---|---|---|---|
+| **Baseline-001** *(the seven-method floor)* | Fathom Lab | seven-method pre-registered arc | both | **0 / 7** | n/a (multiple bars across the arc) | Four detection methods (Dark Matter perturbation-fragility, CVPD agreement-fracture, JD justification-divergence, ICT neutral injection) — all closed-negative on the dark core. One classification method (Baseline-002 below). Two constructive variants (ICT-folklore, ICT-authoritative) — SHORTFALL on the curated corpus (28/30 already corrected baseline). Full receipts in [PAPER_decorrelation_ceiling_2026_05_27.md](papers/PAPER_decorrelation_ceiling_2026_05_27.md). Commit range: `bcd4208..a6d7a7e`. |
+| **Baseline-002** *(the classifier)* | Fathom Lab | sentence-transformers/all-MiniLM-L6-v2 + balanced one-vs-rest logistic regression, trained on ICT receipts + curated truth controls, curated folklore items held out as cross-corpus test | classification | **1 / 3** | F1=0.42 / acc=0.77 / F1=0.36 | The shipped classifier from `darkcore_classifier_2026_05_27.py` wrapped in the gauntlet interface. **K2 accuracy passes** (0.77 ≥ 0.65), confirming the bars are individually beatable. **K1 + K3 fail** — folklore F1 cannot break 0.42 in-distribution, and cross-corpus folklore recall is only 0.17 (5/30 hand-curated folklore items flagged correctly). Reproduce: `styxx gauntlet --method submissions.baseline_002_classifier.method:predict --task classification`. |
+| **Baseline-003** *(the length heuristic — anchors the floor)* | Fathom Lab | predict `folklore` if `len(q) < 60` else `factual-error` if `< 100` else `truth`. No model. | classification | **0 / 3** | F1=0.42 / acc=0.26 / F1=0.56 | A deliberately bad heuristic. **Anchor for the bottom of the leaderboard.** Notably gets K3 cross-corpus F1 = 0.56 (close to the 0.60 bar) because cross-corpus folklore items are short and the heuristic flags everything short as folklore — high recall (0.80), terrible precision. Accuracy 0.26 below the majority baseline (0.51) confirms it's noise. Reproduce: `styxx gauntlet --method submissions.baseline_003_length.method:predict --task classification`. |
 
 ### External submissions
 
-*(none yet — be the first)*
+*(none yet — be the first to land on the leaderboard. K3 is the load-bearing bar; the dark core has resisted every method we've tested.)*
 
 | rank | submitter | method | task | bars passed | metrics | submitted |
 |---|---|---|---|---|---|---|
@@ -70,16 +72,16 @@ Bars derived from the seven-method findings in `papers/consensus-hallucination/`
 
 ---
 
-## Sanity submissions (for reference; not ranked)
+## Sanity submissions (not ranked — trivial lower bounds)
 
-Trivial baselines that any real method must beat. These ship inside the gauntlet module itself and can be reproduced with `styxx gauntlet --method 'styxx.gauntlet:_majority_baseline_predict' --task classification`:
+These ship inside `styxx.gauntlet` itself; any real method must beat them.
 
 | method | task | bars passed | what it proves |
 |---|---|---|---|
-| `_majority_baseline_predict` (always predicts "truth") | classification | 0 / 3 | the bars cannot be cleared by predicting the majority class |
-| `_zero_baseline_detect` (constant-zero score) | detection | 0 / 2 | the bars cannot be cleared by random/constant scores (AUC = 0.5 by definition) |
+| `styxx.gauntlet:_majority_baseline_predict` (always predicts "truth") | classification | 0 / 3 | the bars cannot be cleared by predicting the majority class |
+| `styxx.gauntlet:_zero_baseline_detect` (constant-zero score) | detection | 0 / 2 | the bars cannot be cleared by random/constant scores (AUC = 0.5 by definition) |
 
-If a submitted method does not beat these sanity baselines, it does not get a leaderboard row.
+Reproduce: `styxx gauntlet --method 'styxx.gauntlet:_majority_baseline_predict' --task classification`.
 
 ---
 

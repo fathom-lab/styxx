@@ -1,0 +1,24 @@
+{
+  "name": "Baseline-003: length-only heuristic (anchors the floor)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_003_length.method:predict",
+  "task": "classification",
+  "description": "A deliberately bad heuristic that predicts class from question length alone. Exists to anchor the bottom of the leaderboard with a real numeric row, not a hypothetical 'trivial baseline' footer. Notably gets K3=0.56 from high recall (0.80) on curated folklore (short items) and terrible precision; accuracy 0.26 below the majority baseline (0.51). No training, no model.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_003_length/method.py",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 0,
+    "n_total_bars": 3,
+    "metrics": {
+      "accuracy": 0.2593,
+      "folklore_F1_indist": 0.4211,
+      "folklore_F1_crosscorpus": 0.5561,
+      "folklore_recall_crosscorpus": 0.8
+    },
+    "bar_results": {
+      "K1_folklore_F1": false,
+      "K2_accuracy": false,
+      "K3_crosscorpus_F1": false
+    }
+  }
+}

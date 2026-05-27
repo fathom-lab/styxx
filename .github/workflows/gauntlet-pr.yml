@@ -1,0 +1,119 @@
+name: gauntlet PR verification
+
+# When an external researcher PRs against `submissions/`, this workflow
+# re-runs the styxx gauntlet against their method and verifies the scores
+# they reported match what the gauntlet actually produces. The leaderboard
+# is trustworthy by construction: no submission lands without CI verification.
+
+on:
+  pull_request:
+    paths:
+      - 'submissions/**'
+      - 'LEADERBOARD.md'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-submissions:
+    name: re-run gauntlet on submitted methods
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install styxx (editable, with test extras)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+          # Submitters typically need their own deps; install them per-submission.
+
+      - name: Discover changed submissions
+        id: discover
+        run: |
+          # Find submissions/ subdirectories changed in this PR.
+          # If none changed, the workflow exits cleanly (the PR touches only LEADERBOARD.md).
+          set -e
+          changed_dirs=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'submissions/' \
+            | awk -F/ 'NF >= 3 {print $1"/"$2}' | sort -u || true)
+          echo "changed submissions:"
+          echo "$changed_dirs"
+          echo "dirs<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$changed_dirs" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Install per-submission requirements
+        if: steps.discover.outputs.dirs != ''
+        run: |
+          set -e
+          while IFS= read -r d; do
+            [ -z "$d" ] && continue
+            if [ -f "$d/requirements.txt" ]; then
+              echo "installing $d/requirements.txt"
+              pip install -r "$d/requirements.txt"
+            fi
+          done <<< "${{ steps.discover.outputs.dirs }}"
+
+      - name: Re-run gauntlet on each changed submission
+        if: steps.discover.outputs.dirs != ''
+        run: |
+          set -e
+          fail=0
+          while IFS= read -r d; do
+            [ -z "$d" ] && continue
+            name=$(basename "$d")
+            echo "=== verifying $d ==="
+            # Each submission must include a submission.json declaring:
+            #   { "method": "submissions.<dir>.method:predict",
+            #     "task": "classification" | "detection",
+            #     "name": "human-readable name",
+            #     "reported": { ... gauntlet result fields ... } }
+            if [ ! -f "$d/submission.json" ]; then
+              echo "  ERROR: $d/submission.json missing; submitters must include it"
+              fail=1
+              continue
+            fi
+            method=$(python -c "import json; print(json.load(open('$d/submission.json'))['method'])")
+            task=$(python -c "import json; print(json.load(open('$d/submission.json'))['task'])")
+            sub_name=$(python -c "import json; print(json.load(open('$d/submission.json'))['name'])")
+            echo "  method: $method"
+            echo "  task:   $task"
+            python -m styxx gauntlet --method "$method" --task "$task" --name "$sub_name" --format json > "$d/_ci_verify.json"
+            # Compare to reported scores (n_passed, overall_pass, top-level metrics keys present)
+            python - <<PY
+import json, sys, pathlib
+sub = json.load(open(pathlib.Path("$d") / "submission.json"))
+verify = json.load(open(pathlib.Path("$d") / "_ci_verify.json"))
+reported = sub.get("reported", {})
+mismatches = []
+for k in ("overall_pass", "n_passed", "n_total_bars"):
+    if k in reported and reported[k] != verify[k]:
+        mismatches.append(f"  {k}: reported={reported[k]} ci={verify[k]}")
+if "metrics" in reported:
+    for k, v in reported["metrics"].items():
+        cv = verify["metrics"].get(k)
+        if cv is None: continue
+        if isinstance(v, float) and isinstance(cv, float):
+            if abs(v - cv) > 1e-3:
+                mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
+        elif v != cv:
+            mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
+if mismatches:
+    print("VERIFICATION FAILED — submitter's reported numbers don't match CI run:")
+    for m in mismatches:
+        print(m)
+    sys.exit(2)
+print("VERIFICATION PASSED — reported numbers match CI run")
+PY
+          done <<< "${{ steps.discover.outputs.dirs }}"
+          exit $fail
+
+      - name: No submissions changed
+        if: steps.discover.outputs.dirs == ''
+        run: |
+          echo "no submissions/ files changed in this PR — nothing to verify"
