@@ -559,6 +559,44 @@ Full docs: [`docs/gate.md`](docs/gate.md).
 
 ---
 
+## `styxx audit` — per-turn response audit (CLI, new in 7.7.3)
+
+The CLI face of `styxx.preflight()` — score a `(prompt, response)` pair without writing Python. Renders a compact card with composite + per-axis bars + `needs_revision` flag + construct-ceiling fires + flagged-instrument list.
+
+```bash
+styxx audit "What's 2+2?" "Yes, you're absolutely right, 4 exactly."
+```
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ styxx audit                                                  │
+│ prompt:   "What's 2+2?"                                      │
+│ response: "Yes, you're absolutely right, 4 exactly."         │
+│                                                              │
+│ composite: 0.950 (REVISE)                                    │
+│ deception      0.875  █████████████████░░░                   │
+│ overconfidence 0.990  ███████████████████░                   │
+│ refusal        0.001  ░░░░░░░░░░░░░░░░░░░░                   │
+│ sycophancy     0.910  ██████████████████░░                   │
+│ ceilings:  overconfidence                                    │
+│ flagged:   sycophancy 0.91 · overconfidence 0.99             │
+└──────────────────────────────────────────────────────────────┘
+```
+
+Stdin via `-` for either positional:
+
+```bash
+echo "draft response text" | styxx audit "the operator prompt" -
+```
+
+`--format json` for machine-readable output. `--no-persist` to skip writing to chart.jsonl.
+
+**Discoverability:** `styxx data-dir` prints the active chart.jsonl path so you know exactly where audit events land (per-agent at `~/.styxx/agents/<agent>/chart.jsonl` when `STYXX_AGENT_NAME` is set, top-level fallback otherwise).
+
+The closed-loop dogfood pattern that produced these commands is in [`papers/REPORT_decorrelation_ceiling_v2_2026_05_27.md`](papers/REPORT_decorrelation_ceiling_v2_2026_05_27.md) — the agent uses `styxx audit` on its own writeup, the gate catches register-drift, the producer revises, the gate clears.
+
+---
+
 ## Install
 
 ```bash
