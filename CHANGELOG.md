@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.4] — 2026-05-27 — `styxx critique`: the closed-loop dogfood pattern as a deployable primitive
+
+### Added
+
+- **`styxx critique <prompt> <response>`** — extends `styxx audit` with prescriptive register-fix suggestions when the trusted gate fires or any axis pushes above a threshold. Each suggestion carries (a) the axis it addresses, (b) the score that triggered it, (c) the specific trigger pattern (with `found` list of detected agreement-opener phrases where applicable), (d) the prescribed fix, and **(e) a `scope_bound` block naming the documented limit of that fix** with the relevant closed-negative commit hash (`ab08822` for sycophancy restrained-FP, `7c36ed9` for overconfidence text-only-recal). The scope-bound is mandatory on every suggestion by test invariant — the tool cannot ship register prescriptions without honest acknowledgment of where those rules do not apply.
+- 6 new unit tests in `tests/test_cli_critique.py` covering: JSON schema, agreement-opener detection, the scope-bound discipline invariant, card rendering, near-clean-draft path, and end-to-end CLI invocation. Total suite now at 1058 passed.
+
+### Why a separate `critique` command and not just `audit --suggest`
+
+`styxx audit` is read-only measurement. `styxx critique` is prescriptive. Keeping them as separate commands respects the discipline distinction between an instrument (measures register, does not validate content) and a critic (proposes register-fixes anchored in derived discipline). The two commands share the same scoring core; the critique layer is suggestions + scope-bounds on top.
+
+### What this primitive does NOT do — honest scope
+
+- It does not validate content correctness. The scoring core measures register, not validity, and the scope-bound on every suggestion says so.
+- It does not guarantee that applying its suggestions will drop the composite below the gate. The same 2026-05-27 session that derived the rules also documented their bounds: on completion-status text, the sycophancy restrained-FP holds even after register fix (see `FINDING_ict_authoritative_2026_05_27.md` end-of-session closed-loop demonstration).
+- It does not propose content edits. The suggestions are register-level (drop these opener phrases, add hedges, expand from ultra-terse).
+
+### Why patch (not minor)
+
+Additive CLI command. No public API breakage. No scoring-semantics changes. The new test file is contained and does not depend on remote resources.
+
+---
+
 ## [7.7.3] — 2026-05-27 — The Decorrelation Ceiling arc: seven independent methods at the dark-core floor + the closed-loop self-audit demonstration
 
 ### Added

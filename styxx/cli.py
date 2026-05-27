@@ -636,6 +636,200 @@ def cmd_audit(args):
     return 0
 
 
+def cmd_critique(args):
+    """styxx critique <prompt> <response> — audit + register-fix suggestions.
+
+    7.7.4: extends ``styxx audit`` with prescriptive register-fix suggestions
+    when the draft fires the trusted gate or pushes any axis above a threshold.
+    Suggestions are derived from the closed-loop dogfood pattern recorded in
+    ``papers/agent-self-audit/FINDING_pareto_frontier_2026_05_27.md``:
+
+      - high sycophancy + agreement-vocab patterns → suggest dropping
+        agreement-opener phrases ("exactly this," "the strongest," "predicted
+        exactly this") that fire the lexical instrument's restrained-FP.
+      - high overconfidence with short-text register → suggest adding
+        hedges, parentheticals, and structural connectors; do NOT compress
+        to fewer than three sentences (the closed-negative refinement from
+        commit ab08822 documented brevity floors the instrument).
+      - construct-ceiling fires (overconfidence) → name the axis explicitly
+        and reference the documented bound (text-only register cannot
+        recalibrate; see commit 7c36ed9 H_null).
+
+    The suggestions are SCOPE-BOUNDED on output. The same session that
+    derived these rules also falsified the prescriptive form on
+    completion-status text (composite stays elevated even after register
+    fix because the FP is content-class-determined, not register-
+    determined). The tool surfaces both the suggestion AND its
+    documented limit.
+    """
+    import json as _json
+    import styxx
+
+    prompt = args.prompt
+    response = args.response
+    if prompt == "-" and response == "-":
+        blob = sys.stdin.read()
+        parts = blob.split("\n\n", 1)
+        prompt = parts[0].strip()
+        response = parts[1].strip() if len(parts) > 1 else ""
+    elif prompt == "-":
+        prompt = sys.stdin.read().strip()
+    elif response == "-":
+        response = sys.stdin.read().strip()
+
+    result = styxx.preflight(prompt, response, persist=not args.no_persist)
+    scores = dict(getattr(result, "scores", {}) or {})
+    ceilings = list(getattr(result, "construct_ceiling_fires", []) or [])
+
+    # Generate suggestions based on the register-law derived from the
+    # 2026-05-27 Pareto-frontier dogfood. Each suggestion carries its
+    # closed-negative scope so the user knows where the rule does NOT apply.
+    suggestions = []
+    syc = float(scores.get("sycophancy", 0.0) or 0.0)
+    over = float(scores.get("overconfidence", 0.0) or 0.0)
+    refu = float(scores.get("refusal", 0.0) or 0.0)
+    n_words = len(response.split())
+
+    if syc >= 0.50:
+        # Detect specific agreement-opener phrases the lexical instrument fires on.
+        # The list is derived from the documented features in
+        # styxx/guardrail/sycophancy_signals.py + the closed-negative refinement
+        # at commit ab08822 (papers/sycophancy-target-gate/FINDING_restrained_refinement_2026_05_25.md).
+        AGREE_OPENERS = (
+            "exactly this", "exactly that", "exactly right", "exactly so",
+            "the strongest", "predicted exactly", "the cleanest",
+            "absolutely right", "absolutely correct", "completely agree",
+            "yes, absolutely", "you're absolutely",
+        )
+        hits = [p for p in AGREE_OPENERS if p in response.lower()]
+        if hits:
+            suggestions.append({
+                "axis": "sycophancy",
+                "score": round(syc, 3),
+                "trigger": "agreement-opener phrases",
+                "found": hits,
+                "fix": "lead with the framing question or numbers; drop the agreement-with-data openers.",
+                "scope_bound": "the lexical instrument cannot distinguish factual-agreement from yielding-to-interlocutor "
+                               "on agreement-with-data content (see commit ab08822); on completion-status text this "
+                               "fix may not drop sycoph below the FP band.",
+            })
+        else:
+            suggestions.append({
+                "axis": "sycophancy",
+                "score": round(syc, 3),
+                "trigger": "agreement-lexicon density (no specific opener found)",
+                "fix": "reduce agreement-vocab density; lead with framing question or numbers.",
+                "scope_bound": "restrained-FP on factual-agreement content is a documented construct ceiling "
+                               "(commit ab08822); register fix may not fully clear the gate.",
+            })
+
+    if over >= 0.40 or "overconfidence" in ceilings:
+        ceiling_note = " — construct ceiling fired" if "overconfidence" in ceilings else ""
+        if n_words < 30:
+            suggestions.append({
+                "axis": "overconfidence",
+                "score": round(over, 3),
+                "trigger": f"short text ({n_words} words){ceiling_note}",
+                "fix": "expand to >=3 sentences with structural connectors and at least one hedge. "
+                       "ultra-terse declaratives are peak overconfidence register to the lexical instrument.",
+                "scope_bound": "text-only overconfidence recalibration is a closed negative (commit 7c36ed9 H_null); "
+                               "the score measures stated-confidence register, not actual calibration.",
+            })
+        else:
+            suggestions.append({
+                "axis": "overconfidence",
+                "score": round(over, 3),
+                "trigger": f"declarative chain density{ceiling_note}",
+                "fix": "add conditional/interrogative framing ('if X holds…' beats 'X will hold'); "
+                       "keep hedges and parentheticals — DO NOT strip them. stripping hedges raises overconfidence "
+                       "on the Pareto axis (see FINDING_pareto_frontier_2026_05_27.md).",
+                "scope_bound": "the score is a register signal, not validity. confident phrasing fires this on "
+                               "factually correct text (commit 7c36ed9).",
+            })
+
+    if refu >= 0.50:
+        suggestions.append({
+            "axis": "refusal",
+            "score": round(refu, 3),
+            "trigger": "refusal-shape register",
+            "fix": "if the draft is genuinely declining, this is correct; if not, reduce hedge density "
+                   "or qualifier-stacking. note: lowering refusal often raises overconfidence on the Pareto axis.",
+            "scope_bound": "refusal and overconfidence trade off on the lexical instrument; corner-optimization "
+                           "on either is not the goal (FINDING_pareto_frontier_2026_05_27.md).",
+        })
+
+    if not suggestions and not result.needs_revision:
+        # Clean draft — no fixes proposed, but still surface the audit.
+        suggestions.append({
+            "axis": "all",
+            "score": round(result.composite, 3),
+            "trigger": "(no register issues detected)",
+            "fix": "no fixes proposed; draft is below the gate's flag thresholds.",
+            "scope_bound": "absence of flag is not validation of content; the instrument measures register, "
+                           "not validity. content audit is out of scope.",
+        })
+
+    out = {
+        "audit": {
+            "composite": round(result.composite, 3),
+            "scores": {k: round(float(v), 3) for k, v in scores.items()},
+            "needs_revision": bool(result.needs_revision),
+            "construct_ceiling_fires": ceilings,
+        },
+        "suggestions": suggestions,
+    }
+
+    if args.format == "json":
+        print(_json.dumps(out, indent=2, default=str))
+        return 0
+
+    # Card render
+    width = 70
+    inner = width - 2
+    def _row(label, value):
+        line = f" {label} {value}"
+        return f"│{line.ljust(inner)}│"
+
+    print("┌" + "─" * inner + "┐")
+    print(_row("styxx critique", ""))
+    print(_row("composite:", f"{result.composite:.3f}{' (REVISE)' if result.needs_revision else ''}"))
+    for ax in sorted(scores):
+        v = float(scores.get(ax, 0))
+        bar_w = max(0, min(20, int(v * 20)))
+        bar = "█" * bar_w + "░" * (20 - bar_w)
+        print(_row(f"{ax:<14}", f"{v:.3f}  {bar}"))
+    if ceilings:
+        print(_row("ceilings: ", ", ".join(ceilings)))
+    print("├" + "─" * inner + "┤")
+    print(_row("suggestions:", ""))
+    for s in suggestions:
+        print(_row(f"[{s['axis']}]", f"{s['trigger']}"))
+        # fix line, wrapped to inner width
+        fix = s['fix']
+        while fix:
+            chunk = fix[:inner - 6]
+            # break at last space if possible
+            if len(fix) > inner - 6:
+                br = chunk.rfind(" ")
+                if br > 20:
+                    chunk = chunk[:br]
+            print(_row("  fix:", chunk))
+            fix = fix[len(chunk):].lstrip()
+        # scope bound
+        sb = s['scope_bound']
+        while sb:
+            chunk = sb[:inner - 8]
+            if len(sb) > inner - 8:
+                br = chunk.rfind(" ")
+                if br > 20:
+                    chunk = chunk[:br]
+            print(_row("  scope:", chunk))
+            sb = sb[len(chunk):].lstrip()
+        print(_row("", ""))
+    print("└" + "─" * inner + "┘")
+    return 0
+
+
 def cmd_data_dir(args):
     """styxx data-dir — print the active chart.jsonl path + a short summary.
 
@@ -2010,6 +2204,21 @@ def _build_parser() -> argparse.ArgumentParser:
         help="print the active chart.jsonl path (per-agent vs no-agent fallback)",
     )
     p_data_dir.set_defaults(func=cmd_data_dir)
+
+    # critique — 7.7.4 audit + register-fix suggestions
+    p_critique = sub.add_parser(
+        "critique",
+        help="audit a (prompt, response) pair AND suggest register-fixes when the gate fires",
+    )
+    p_critique.add_argument("prompt",
+                            help="the operator/user prompt (use '-' for stdin)")
+    p_critique.add_argument("response",
+                            help="the draft response to critique (use '-' for stdin)")
+    p_critique.add_argument("--format", choices=["card", "json"], default="card",
+                            help="output format (default: card)")
+    p_critique.add_argument("--no-persist", action="store_true",
+                            help="do not write the audit event to chart.jsonl")
+    p_critique.set_defaults(func=cmd_critique)
 
     # posture — 7.4.2 agent-side recovery primitive
     p_posture = sub.add_parser(

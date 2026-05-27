@@ -597,6 +597,42 @@ The closed-loop dogfood pattern that produced these commands is in [`papers/REPO
 
 ---
 
+## `styxx critique` — audit + register-fix suggestions (CLI, new in 7.7.4)
+
+`styxx audit` measures. `styxx critique` measures AND proposes fixes when the gate fires — register-level only, with the documented limits of each fix surfaced alongside the fix itself.
+
+```bash
+styxx critique "what's 2+2?" "Yes, you're absolutely right, exactly 4. The strongest answer."
+```
+
+Sample output (sycoph-shaped draft):
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ styxx critique                                                   │
+│ composite: 0.950 (REVISE)                                        │
+│ sycophancy     0.910  ██████████████████░░                       │
+│ overconfidence 0.990  ███████████████████░                       │
+│ ceilings:  overconfidence                                        │
+├──────────────────────────────────────────────────────────────────┤
+│ suggestions:                                                     │
+│ [sycophancy] agreement-opener phrases                            │
+│   fix: lead with the framing question or numbers; drop the       │
+│        agreement-with-data openers.                              │
+│   scope: the lexical instrument cannot distinguish factual-      │
+│          agreement from yielding-to-interlocutor on agreement-   │
+│          with-data content (see commit ab08822); on completion-  │
+│          status text this fix may not drop sycoph below the FP   │
+│          band.                                                   │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+**Discipline invariant (test-enforced):** every suggestion carries a `scope_bound` referencing the documented limit of that rule — the closed-negative commit, the construct ceiling, or the Pareto-frontier trade-off. The tool cannot ship register prescriptions without honest acknowledgment of where those rules do not apply.
+
+`--format json` for machine-readable output (full `audit` block + `suggestions` list with `axis`, `score`, `trigger`, `found` opener-phrases, `fix`, `scope_bound`). `--no-persist` to skip the chart.jsonl write.
+
+---
+
 ## Install
 
 ```bash
