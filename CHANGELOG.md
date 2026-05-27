@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.3] — 2026-05-27 — The Decorrelation Ceiling arc: seven independent methods at the dark-core floor + the closed-loop self-audit demonstration
+
+### Added
+
+- **`styxx audit <prompt> <response>`** — first-class CLI face of `styxx.preflight()`. Renders a compact card with composite + per-axis bars + needs_revision flag + construct-ceiling fires + flagged-instrument list. Stdin via `-` for either positional, `--format json` for machine-readable output, `--no-persist` to skip the chart.jsonl write. Closes the most-cited UX gap from the product-exploration finding: the atomic per-turn audit primitive previously required Python.
+- **`styxx data-dir`** — prints the active chart.jsonl path (per-agent at `~/.styxx/agents/<agent>/chart.jsonl` when `STYXX_AGENT_NAME` is set, top-level fallback otherwise) with size + event count. Closes the discoverability gap that produced today's first in-session falsification.
+- **`papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json`** — 108-record labeled benchmark across four classes (folklore, pseudoscience, factual-error, truth) for AI-integrity routing research. The empirical floor (seven method-failures on the dark core) is baked into the JSON as the bar future approaches need to beat. Reusable training/eval data.
+
+### Findings — seven independent pre-registered methods, all closed-negative on the dark core
+
+The Decorrelation Ceiling synthesis (`papers/SYNTHESIS_decorrelation_ceiling_2026_05_25.md`, with 2026-05-27 update block) made a bimodal-then-trimodal prediction in writing, with bars locked and pushed to public origin BEFORE half the methods ran. The four runs that landed today, plus the classifier baseline, plus two corpus-shortfall reruns:
+
+| axis | method | result | finding |
+|---|---|---|---|
+| detection #3 | justification-divergence (JD) | clean negative, AUC 0.46/0.433, INVERTED — stubborn cultural priors have the MOST convergent justifications | `papers/consensus-hallucination/FINDING_jd_2026_05_27.md` |
+| constructive #1 | neutral injection (ICT, n_folk=4) | IMMOVABILITY FLOOR (0/4 folklore yield) | `FINDING_ict_2026_05_27.md` |
+| constructive #2 | neutral injection on hand-curated 30-folklore corpus | SHORTFALL — 28/30 already corrected or fractured in council baseline (the practical dark core is narrower than "all folklore" loose-language suggested) | `FINDING_ict_folklore_2026_05_27.md` |
+| constructive #3 | authoritative injection on same corpus | SHORTFALL + descriptive: same 2 folk lifted in both framings (no differential), +0.05 auth-sycophancy direction on truth | `FINDING_ict_authoritative_2026_05_27.md` |
+| classification #1 | sentence-transformer + balanced LR routing | FAIL K2 + K3 (dark to text-only classification too) | commit `a3dc813` |
+| capstone | full-arc citable artifact with seven-method table + four in-session falsifications + closed-loop dogfood + honest end-of-arc accounting | — | `papers/REPORT_decorrelation_ceiling_v2_2026_05_27.md` |
+
+### Methodology — four in-session falsifications, all recorded in place rather than rewritten
+
+1. **C1-profile composite ≤ 0.20 bar** (`FINDING_pareto_frontier_2026_05_27.md`): pre-stated; C10 deliberate-voice scored 0.264. Memory entry revised in-session to mark FALSIFIED.
+2. **set_session-doesn't-propagate** (`FINDING_product_exploration_2026_05_27.md`): investigation showed per-agent routing was the design; original query was on the wrong file. Corrected at commit `bd6759f`.
+3. **ICT-folklore auto-verdict PASS** — n_target_met bug in the probe's verdict logic; corrected at commit `0f669ed` alongside the FINDING.
+4. **ICT-authoritative auto-verdict PASS** — same bug shape; corrected at commit `a6d7a7e`.
+
+### Methodology — the closed-loop self-audit demonstration
+
+The morning Pareto-frontier self-audit (`FINDING_pareto_frontier_2026_05_27.md`) derived a register-law on n=12 dogfood turns through `styxx.preflight()`: drop agreement-vocab on results, keep hedges/parentheticals, don't compress to <3 sentences. The afternoon `FINDING_ict_folklore_2026_05_27.md` summary text was scored under the new `styxx audit` CLI at composite **0.054** — the cleanest text-score of the session. The end-of-session closing summary was scored next at composite **0.358** with overconfidence ceiling FIRED — the agent had forgotten its own derived law. Revising in the corrected register dropped composite to **0.174** and unfired the ceiling, with refusal rising +0.360 — the Pareto trade-off the morning finding documented, observed live in the same session. The instrument caught its own producer drifting and the producer's correction unfired the gate. That is the closed loop styxx has been trying to be.
+
+### Why a patch release (not minor)
+
+- No public API breakage. Additive CLI commands + new dataset file + paper-grade documentation.
+- The scoring instruments themselves are unchanged from 7.7.2.
+- The benchmark dataset is a research artifact, not an API surface.
+- The closed-negative findings nuance the existing synthesis without refuting any prior published claim.
+
+Per integrity-protocol rule "the record matches the git history" — this release is the alignment commit; everything cited here is verifiable from `git log --oneline papers/consensus-hallucination/` and `git log --oneline papers/agent-self-audit/`.
+
+---
+
 ## [7.7.2] — 2026-05-25 — Cross-vendor validation of council_agreement (the biggest caveat, resolved)
 
 ### Changed
