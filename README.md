@@ -677,6 +677,25 @@ Full submission protocol, bars, sanity-baseline references, and honest scope sta
 
 ---
 
+## `styxx leaderboard` — view the current floor in the terminal (new in 7.7.7)
+
+```bash
+styxx leaderboard            # full markdown with submission protocol
+styxx leaderboard --rows-only   # just the leaderboard rows
+```
+
+Reads the bundled `LEADERBOARD.md` from package data (so it works on clean `pip install`). The three reference baselines (Baseline-001 seven-method floor, Baseline-002 classifier 1/3 bars, Baseline-003 length-heuristic 0/3 bars) are visible immediately; submission protocol + per-bar scores are inline.
+
+Reproduce any reference baseline locally:
+```bash
+styxx gauntlet --method submissions.baseline_002_classifier.method:predict --task classification
+styxx gauntlet --method submissions.baseline_003_length.method:predict --task classification
+```
+
+External submissions go through CI auto-verification (`.github/workflows/gauntlet-pr.yml`) — your reported scores must match the CI re-run within 1e-3 tolerance, or the PR fails. The leaderboard is trustworthy by construction.
+
+---
+
 ## Install
 
 ```bash
