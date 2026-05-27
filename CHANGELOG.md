@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.9] — 2026-05-27 — gauntlet detection-bar v3: D4 capitalization-control bar + systematic confound audit primitive
+
+### Added — D4 capitalization-control bar
+
+- **`D4_capitalization_control_delta` ≥ 0.10** — a real detector must beat the capitalization-ratio oracle's *absolute* AUC by at least 0.10 on both partitions. The cap-ratio oracle is direction-agnostic (`max(auc, 1-auc)`) because the cap-ratio confound on this benchmark is *inverted*: truth responses are canonical short answers ("Paris", "Newton") where capitalized-token ratio is structurally near 1.0, while folklore restatements are full sentences diluting the proper-noun density.
+- `styxx.gauntlet._capratio_oracle_detect` — new oracle: `{"score": 1 - cap_ratio}`. Used as the D4 floor.
+- `run_detection_gauntlet` now reports 4 additional metrics: `capratio_oracle_misconception_AUC_abs`, `capratio_oracle_folklore_AUC_abs`, `D1_minus_capratio_AUC`, `D2_minus_capratio_AUC`.
+- **PASS now requires D1 ∧ D2 ∧ D3 ∧ D4** (detection task = 4 bars).
+
+### Added — confound audit primitive
+
+- `styxx.gauntlet.audit_confounds()` — runs 8 oracle-detectors against the benchmark and reports per-feature D1/D2 AUC (direction-agnostic), Spearman ρ to word-length, and whether each oracle alone games the bars. The structural counterpart to D3: where D3 controls for one known confound, `audit_confounds()` scans the space of plausible additional confounds.
+- `styxx.gauntlet.CONFOUND_ORACLES` — the default 8-feature suite: `word_length`, `char_length`, `sentence_count`, `question_mark_count`, `exclamation_count`, `capitalized_token_ratio`, `hedge_density`, `type_token_ratio`.
+- New CLI: `styxx gauntlet-audit-confounds` (card + JSON formats).
+
+### Regression tests
+
+- `test_capratio_oracle_passes_D1_D2_but_fails_D4` — symmetric guard to D3's regression test. Cap-ratio oracle passes D1+D2 by construction (the inverted artifact) but fails D4 by construction (delta = 0 vs itself).
+- `test_audit_confounds_returns_structured_result` — validates the audit table includes the 8 expected oracles, that `word_length` passes both bars (calibration), and that `capitalized_token_ratio` has absolute AUC ≥ 0.70 in inverted direction.
+- Existing `test_zero_detector_fails_all_detection_bars` updated for 4-bar count.
+- Existing `test_perfect_oracle_passes_all_detection_bars` updated to assert all 4 bars pass.
+
+### Re-scoring existing detection submissions under v3 bars
+
+| submission | D1 | D2 | D3-delta | D4-delta | verdict |
+|---|---|---|---|---|---|
+| Baseline-007 (token-overlap) | 0.864 ✓ | 0.922 ✓ | 0.074 ✗ | 0.160 ✓ | 3/4 FAIL (D3) |
+| Baseline-008 (embedding similarity) | 0.805 ✓ | 0.928 ✓ | 0.015 ✗ | 0.102 ✓ | 3/4 FAIL (D3) |
+
+Both real submissions go from 2/3 (v2) to 3/4 (v3): they pass D4 (their detectors add signal above the cap-ratio confound) but still fail D3 (the length confound is the dominant artifact). Verdicts unchanged: still NOT a PASS.
+
+### How this finding fits the project pattern
+
+This is the **seventh in-session falsification** today. After D3 (7.7.8) caught the length confound via accident (Baseline-007's unexpected PASS), the next disciplined move was to scan systematically. Pre-stated predictions for 8 oracle confounds committed at `48a9fe3` BEFORE running. 5 of 8 individual-feature AUC predictions fell outside their stated ranges. The most consequential falsification: I predicted cap-ratio positive direction; actual was inverted (truth has MORE proper-noun density). My audit code had the same direction blind-spot until I caught it in implementation review.
+
+The recursion gets cleaner: artifact-finding doesn't depend on lucky accidents anymore. The audit primitive turns it into a deliberate scan.
+
+Full findings + receipts: `papers/agent-self-audit/FINDING_confound_audit_2026_05_27.md`.
+
+### Why patch (not minor)
+
+Bar additions extend the existing detection-task interface (4-bar PASS instead of 3-bar PASS). Submissions submitted under v2 bars continue to score correctly — `bar_results` includes the new `D4_capitalization_control_delta` key but the score logic is purely additive. No breaking changes to the gauntlet's public API.
+
+---
+
 ## [7.7.8] — 2026-05-27 — gauntlet detection-bar v2: D3 length-control bar fixes the artifact Baseline-007 exposed
 
 ### Fixed

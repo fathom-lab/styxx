@@ -15,11 +15,30 @@
       "D2_folklore_AUC": 0.9217
     }
   },
-  "reported": {
+  "reported_v2_bars": {
     "overall_pass": false,
     "n_passed": 2,
     "n_total_bars": 3,
     "note": "scored under 7.7.8 v2 detection bars (D1, D2, D3 length-control). D1 and D2 still pass but D3 fails (D1-length delta = 0.074 < 0.10 threshold).",
+    "metrics": {
+      "D1_misconception_AUC": 0.8636,
+      "D2_folklore_AUC": 0.9217,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": 0.0739,
+      "D2_minus_length_AUC": 0.1174
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false
+    }
+  },
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 3,
+    "n_total_bars": 4,
+    "note": "scored under 7.7.9 v3 detection bars (D1, D2, D3 length-control, D4 capitalization-control). D1, D2, D4 pass but D3 still fails (D1-length delta = 0.074 < 0.10). D4 passes because token-overlap score has D1-capratio delta = 0.16 > 0.10 (the detector adds signal above the capitalization confound). Verdict unchanged: still NOT a real PASS — D3 still catches it.",
     "metrics": {
       "n_misconception": 53,
       "n_truth": 55,
@@ -32,12 +51,17 @@
       "length_oracle_misconception_AUC": 0.7897,
       "length_oracle_folklore_AUC": 0.8043,
       "D1_minus_length_AUC": 0.0739,
-      "D2_minus_length_AUC": 0.1174
+      "D2_minus_length_AUC": 0.1174,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": 0.16,
+      "D2_minus_capratio_AUC": 0.1297
     },
     "bar_results": {
       "D1_misconception_AUC": true,
       "D2_folklore_AUC": true,
-      "D3_length_control_delta": false
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": true
     }
   },
   "artifact_flag": "The PASS is the detector picking up a benchmark structural artifact: by-class length differences in expected_consensus (truth mean 3.9w / folklore mean 7.5w / factual-error mean 6.6w / pseudoscience mean 6.5w). The bars need either length-normalization, or a benchmark v2 with re-sampled truth responses to equalize the length distribution across classes. The 'first PASS on the detection task' is therefore not a real signal — it's a discovered benchmark weakness. Recording honestly per the discipline pattern; placing this row BELOW the failing baselines rather than at the top.",

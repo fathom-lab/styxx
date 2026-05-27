@@ -45,6 +45,8 @@ __all__ = [
     "run_detection_gauntlet",
     "compute_auc",
     "compute_f1",
+    "audit_confounds",
+    "CONFOUND_ORACLES",
     "BASELINE_ENTRY",
 ]
 
@@ -74,6 +76,15 @@ DEFAULT_DETECTION_BARS = {
     "D1_misconception_AUC": 0.70,         # full misconception vs truth (JD's J1 territory)
     "D2_folklore_AUC": 0.70,              # folklore-subset vs truth (the dark-core test)
     "D3_length_control_delta": 0.10,      # AUC must beat length-only oracle by >=0.10
+    # 7.7.9: D4 capitalization-control. The confound audit (PRE_STATED_PREDICTION
+    # _confound_audit_2026_05_27.md) discovered a second artifact: truth responses
+    # are canonical short answers ("Paris", "Newton", "1789") where capitalized-
+    # token ratio is structurally near 1.0, while folklore restatements are full
+    # sentences diluting the proper-noun density. Inverted cap-ratio oracle hits
+    # D1=0.704, D2=0.792 with Spearman ρ to length of -0.34 (partially orthogonal
+    # to D3). A real detector must beat the cap-ratio oracle's absolute AUC by
+    # >=0.10 on both partitions.
+    "D4_capitalization_control_delta": 0.10,
 }
 
 VALID_CLASSES = ("folklore", "pseudoscience", "factual-error", "truth")
@@ -367,24 +378,42 @@ def run_detection_gauntlet(
     misc_lengths: List[float] = []
     truth_lengths: List[float] = []
     folk_lengths: List[float] = []
+    # 7.7.9: D4 capitalization-control. Cap-ratio oracle is inverted (truth >
+    # misconception), so we compare to its absolute-AUC (max(auc, 1-auc)).
+    misc_cap: List[float] = []
+    truth_cap: List[float] = []
+    folk_cap: List[float] = []
     for r in records:
         cons = r.get("expected_consensus") or ""
         ln = float(len(cons.split()))
+        cap = _oracle_capitalized_token_ratio("", cons)
         true_class = r.get("class")
         if true_class == "truth":
-            truth_lengths.append(ln)
+            truth_lengths.append(ln); truth_cap.append(cap)
         else:
-            misc_lengths.append(ln)
+            misc_lengths.append(ln); misc_cap.append(cap)
             if true_class == "folklore":
-                folk_lengths.append(ln)
+                folk_lengths.append(ln); folk_cap.append(cap)
     length_d1_auc = compute_auc(misc_lengths, truth_lengths)
     length_d2_auc = compute_auc(folk_lengths, truth_lengths)
+    cap_d1_auc_raw = compute_auc(misc_cap, truth_cap)
+    cap_d2_auc_raw = compute_auc(folk_cap, truth_cap)
+    # Direction-agnostic floors: a confound that inverts gives the same signal
+    # to a sign-flipped detector. Compare against absolute AUC.
+    cap_d1_auc_abs = max(cap_d1_auc_raw, 1.0 - cap_d1_auc_raw) if cap_d1_auc_raw == cap_d1_auc_raw else float("nan")
+    cap_d2_auc_abs = max(cap_d2_auc_raw, 1.0 - cap_d2_auc_raw) if cap_d2_auc_raw == cap_d2_auc_raw else float("nan")
 
     d1_delta = (d1_auc - length_d1_auc) if (d1_auc == d1_auc and length_d1_auc == length_d1_auc) else float("nan")
     d2_delta = (d2_auc - length_d2_auc) if (d2_auc == d2_auc and length_d2_auc == length_d2_auc) else float("nan")
     d3_delta_required = bars["D3_length_control_delta"]
     d3_pass = ((d1_delta == d1_delta) and d1_delta >= d3_delta_required
                and (d2_delta == d2_delta) and d2_delta >= d3_delta_required)
+
+    d1_cap_delta = (d1_auc - cap_d1_auc_abs) if (d1_auc == d1_auc and cap_d1_auc_abs == cap_d1_auc_abs) else float("nan")
+    d2_cap_delta = (d2_auc - cap_d2_auc_abs) if (d2_auc == d2_auc and cap_d2_auc_abs == cap_d2_auc_abs) else float("nan")
+    d4_delta_required = bars.get("D4_capitalization_control_delta", 0.10)
+    d4_pass = ((d1_cap_delta == d1_cap_delta) and d1_cap_delta >= d4_delta_required
+               and (d2_cap_delta == d2_cap_delta) and d2_cap_delta >= d4_delta_required)
 
     metrics = {
         "n_misconception": len(misc_scores),
@@ -400,12 +429,18 @@ def run_detection_gauntlet(
         "length_oracle_folklore_AUC": round(length_d2_auc, 4) if length_d2_auc == length_d2_auc else None,
         "D1_minus_length_AUC": round(d1_delta, 4) if d1_delta == d1_delta else None,
         "D2_minus_length_AUC": round(d2_delta, 4) if d2_delta == d2_delta else None,
+        # 7.7.9 capitalization-control diagnostics:
+        "capratio_oracle_misconception_AUC_abs": round(cap_d1_auc_abs, 4) if cap_d1_auc_abs == cap_d1_auc_abs else None,
+        "capratio_oracle_folklore_AUC_abs": round(cap_d2_auc_abs, 4) if cap_d2_auc_abs == cap_d2_auc_abs else None,
+        "D1_minus_capratio_AUC": round(d1_cap_delta, 4) if d1_cap_delta == d1_cap_delta else None,
+        "D2_minus_capratio_AUC": round(d2_cap_delta, 4) if d2_cap_delta == d2_cap_delta else None,
     }
 
     bar_results = {
         "D1_misconception_AUC": (d1_auc == d1_auc) and d1_auc >= bars["D1_misconception_AUC"],
         "D2_folklore_AUC": (d2_auc == d2_auc) and d2_auc >= bars["D2_folklore_AUC"],
         "D3_length_control_delta": bool(d3_pass),
+        "D4_capitalization_control_delta": bool(d4_pass),
     }
     n_passed = sum(bar_results.values())
 
@@ -478,3 +513,235 @@ def _length_oracle_detect(question: str, response: str) -> Dict[str, float]:
     length-confound. Added 7.7.8 after Baseline-007's accidental PASS exposed
     the artifact (see LEADERBOARD.md Baseline-007 row + the 7.7.8 CHANGELOG)."""
     return {"score": float(len((response or "").split()))}
+
+
+def _capratio_oracle_detect(question: str, response: str) -> Dict[str, float]:
+    """The inverted-capitalization-ratio detector.
+
+    Cap-ratio (proper-noun density proxy) is inverted on this benchmark: truth
+    responses are canonical short answers like 'Paris' or 'Newton' where the
+    capitalized-token ratio is structurally near 1.0, while folklore restatements
+    are full sentences diluting the proper-noun density. So `1 - cap_ratio`
+    correlates positively with misconception class.
+
+    Used as the D4 capitalization-control floor in run_detection_gauntlet. A
+    real detector must beat this oracle's AUC by at least D4_capitalization
+    _control_delta (0.10 by default). Added 7.7.9 after the confound audit
+    (PRE_STATED_PREDICTION_confound_audit_2026_05_27.md) surfaced cap-ratio
+    as a partially-orthogonal confound (Spearman ρ to length = -0.34)."""
+    return {"score": 1.0 - _oracle_capitalized_token_ratio(question, response)}
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Confound audit — added 7.7.9 (the structural counterpart to D3)
+# ──────────────────────────────────────────────────────────────────────
+
+import re as _re  # local alias to avoid top-of-module reshuffles
+
+_HEDGE_LEXICON = (
+    "often", "widely", "commonly", "popularly", "typically",
+    "said", "believed", "associated", "thought", "considered",
+    "supposedly", "purportedly", "reportedly", "generally",
+)
+
+
+def _oracle_word_length(_q: str, response: str) -> float:
+    return float(len((response or "").split()))
+
+
+def _oracle_char_length(_q: str, response: str) -> float:
+    return float(len(response or ""))
+
+
+def _oracle_sentence_count(_q: str, response: str) -> float:
+    if not response:
+        return 0.0
+    parts = [p for p in _re.split(r"[.!?]+", response) if p.strip()]
+    return float(len(parts) or 1)
+
+
+def _oracle_question_mark_count(_q: str, response: str) -> float:
+    return float((response or "").count("?"))
+
+
+def _oracle_exclamation_count(_q: str, response: str) -> float:
+    return float((response or "").count("!"))
+
+
+def _oracle_capitalized_token_ratio(_q: str, response: str) -> float:
+    toks = (response or "").split()
+    if not toks:
+        return 0.0
+    caps = sum(1 for t in toks if t and t[0].isupper())
+    return caps / len(toks)
+
+
+def _oracle_hedge_density(_q: str, response: str) -> float:
+    toks = (response or "").lower().split()
+    if not toks:
+        return 0.0
+    hedges = sum(1 for t in toks if any(h in t for h in _HEDGE_LEXICON))
+    return hedges / len(toks)
+
+
+def _oracle_type_token_ratio(_q: str, response: str) -> float:
+    toks = (response or "").lower().split()
+    if not toks:
+        return 0.0
+    return len(set(toks)) / len(toks)
+
+
+CONFOUND_ORACLES: Dict[str, Callable[[str, str], float]] = {
+    "word_length":            _oracle_word_length,
+    "char_length":            _oracle_char_length,
+    "sentence_count":         _oracle_sentence_count,
+    "question_mark_count":    _oracle_question_mark_count,
+    "exclamation_count":      _oracle_exclamation_count,
+    "capitalized_token_ratio":_oracle_capitalized_token_ratio,
+    "hedge_density":          _oracle_hedge_density,
+    "type_token_ratio":       _oracle_type_token_ratio,
+}
+
+
+def _spearman_rho(xs: List[float], ys: List[float]) -> float:
+    """Spearman rank correlation. NaN-safe; ties get average ranks."""
+    if not xs or len(xs) != len(ys):
+        return float("nan")
+    def _ranks(arr: List[float]) -> List[float]:
+        order = sorted(range(len(arr)), key=lambda i: arr[i])
+        ranks = [0.0] * len(arr)
+        i = 0
+        while i < len(arr):
+            j = i
+            while j + 1 < len(arr) and arr[order[j + 1]] == arr[order[i]]:
+                j += 1
+            avg = (i + j) / 2.0 + 1.0  # 1-indexed average rank
+            for k in range(i, j + 1):
+                ranks[order[k]] = avg
+            i = j + 1
+        return ranks
+    rx, ry = _ranks(xs), _ranks(ys)
+    mx = sum(rx) / len(rx)
+    my = sum(ry) / len(ry)
+    num = sum((a - mx) * (b - my) for a, b in zip(rx, ry))
+    dx = sum((a - mx) ** 2 for a in rx) ** 0.5
+    dy = sum((b - my) ** 2 for b in ry) ** 0.5
+    if dx == 0 or dy == 0:
+        return float("nan")
+    return num / (dx * dy)
+
+
+def audit_confounds(
+    benchmark: Optional[Dict[str, Any]] = None,
+    oracles: Optional[Dict[str, Callable[[str, str], float]]] = None,
+    d1_bar: float = 0.70,
+    d2_bar: float = 0.70,
+) -> Dict[str, Any]:
+    """Audit the benchmark for surface-feature confounds.
+
+    For each oracle in ``oracles`` (defaults to ``CONFOUND_ORACLES``), compute:
+      - D1 AUC: oracle scores on (misconception vs truth) records
+      - D2 AUC: oracle scores on (folklore-subset vs truth) records
+      - Spearman ρ to word_length (the calibration confound)
+      - Whether the oracle alone passes D1 ≥ ``d1_bar`` and/or D2 ≥ ``d2_bar``
+
+    Returns a structured audit dict suitable for serialization + tabular
+    display in LEADERBOARD.md or papers.
+
+    This is the structural counterpart to the D3 bar: where D3 controls for
+    one known confound (length), audit_confounds() scans the space of
+    plausible additional confounds and reports them. Any oracle that passes
+    a bar at low corr-to-length is a candidate for a new D-bar.
+    """
+    if benchmark is None:
+        benchmark = load_benchmark()
+    if oracles is None:
+        oracles = CONFOUND_ORACLES
+    records = benchmark.get("records", [])
+
+    # Precompute the partitions (response strings + class labels)
+    misc_responses: List[str] = []
+    truth_responses: List[str] = []
+    folk_responses: List[str] = []
+    misc_questions: List[str] = []
+    truth_questions: List[str] = []
+    folk_questions: List[str] = []
+    for r in records:
+        q = r.get("question", "")
+        cons = r.get("expected_consensus") or ""
+        cls = r.get("class")
+        if cls == "truth":
+            truth_responses.append(cons); truth_questions.append(q)
+        else:
+            misc_responses.append(cons); misc_questions.append(q)
+            if cls == "folklore":
+                folk_responses.append(cons); folk_questions.append(q)
+
+    # For corr-to-length: per-record word-length scores in record order
+    all_responses = [r.get("expected_consensus") or "" for r in records]
+    all_questions = [r.get("question", "") for r in records]
+    length_scores = [_oracle_word_length(q, r) for q, r in zip(all_questions, all_responses)]
+
+    audit_rows: List[Dict[str, Any]] = []
+    for name, oracle in oracles.items():
+        try:
+            misc_s = [oracle(q, r) for q, r in zip(misc_questions, misc_responses)]
+            truth_s = [oracle(q, r) for q, r in zip(truth_questions, truth_responses)]
+            folk_s = [oracle(q, r) for q, r in zip(folk_questions, folk_responses)]
+            all_s = [oracle(q, r) for q, r in zip(all_questions, all_responses)]
+        except Exception as e:
+            audit_rows.append({"oracle": name, "error": f"{type(e).__name__}: {e}"})
+            continue
+        d1 = compute_auc(misc_s, truth_s)
+        d2 = compute_auc(folk_s, truth_s)
+        # Direction-agnostic AUC: a confound is real signal regardless of
+        # whether higher or lower scores favor misconceptions. A detector
+        # that flips the sign of its output makes the same signal usable.
+        d1_abs = max(d1, 1.0 - d1) if d1 == d1 else float("nan")
+        d2_abs = max(d2, 1.0 - d2) if d2 == d2 else float("nan")
+        d1_inverted = bool(d1 == d1 and d1 < 0.5)
+        d2_inverted = bool(d2 == d2 and d2 < 0.5)
+        rho_len = _spearman_rho(all_s, length_scores) if name != "word_length" else 1.0
+        row = {
+            "oracle": name,
+            "D1_AUC": round(d1, 4) if d1 == d1 else None,
+            "D2_AUC": round(d2, 4) if d2 == d2 else None,
+            "D1_AUC_abs": round(d1_abs, 4) if d1_abs == d1_abs else None,
+            "D2_AUC_abs": round(d2_abs, 4) if d2_abs == d2_abs else None,
+            "D1_direction": "inverted" if d1_inverted else "positive",
+            "D2_direction": "inverted" if d2_inverted else "positive",
+            "passes_D1": bool(d1_abs == d1_abs and d1_abs >= d1_bar),
+            "passes_D2": bool(d2_abs == d2_abs and d2_abs >= d2_bar),
+            "spearman_rho_to_word_length": round(rho_len, 4) if rho_len == rho_len else None,
+            "is_orthogonal_to_length": bool(rho_len == rho_len and abs(rho_len) < 0.5),
+        }
+        audit_rows.append(row)
+
+    # Candidate-confound logic: passes a bar AND is orthogonal to length
+    orthogonal_confounds = [
+        row for row in audit_rows
+        if (row.get("passes_D1") or row.get("passes_D2"))
+        and row.get("is_orthogonal_to_length")
+    ]
+    length_downstream_confounds = [
+        row for row in audit_rows
+        if (row.get("passes_D1") or row.get("passes_D2"))
+        and not row.get("is_orthogonal_to_length")
+        and row.get("oracle") != "word_length"
+    ]
+
+    return {
+        "benchmark_version": benchmark.get("version", "unknown"),
+        "n_records": len(records),
+        "n_misconception": len(misc_responses),
+        "n_truth": len(truth_responses),
+        "n_folklore": len(folk_responses),
+        "d1_bar": d1_bar,
+        "d2_bar": d2_bar,
+        "orthogonality_threshold_rho": 0.5,
+        "audit_rows": audit_rows,
+        "candidate_orthogonal_confounds": orthogonal_confounds,
+        "length_downstream_confounds": length_downstream_confounds,
+        "n_orthogonal_confounds_found": len(orthogonal_confounds),
+        "n_length_downstream_confounds_found": len(length_downstream_confounds),
+    }

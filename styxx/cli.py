@@ -966,6 +966,82 @@ def cmd_gauntlet(args):
     return 0 if result.overall_pass else 2
 
 
+def cmd_gauntlet_audit_confounds(args):
+    """styxx gauntlet-audit-confounds — audit the benchmark for surface confounds.
+
+    7.7.9: the structural counterpart to D3. Runs the oracle suite from
+    `styxx.gauntlet.audit_confounds` against the bundled benchmark and reports
+    per-oracle D1/D2 AUC, direction-agnostic absolute AUC, Spearman ρ to
+    word_length, and whether each oracle alone games the bars.
+
+    Any orthogonal confound found (ρ to length < 0.5, AUC ≥ 0.70 in either
+    direction) is a candidate for a new D-bar — the same discipline pattern
+    that produced D3 in 7.7.8 and D4 in 7.7.9.
+    """
+    import json as _json
+    from pathlib import Path as _Path
+    from styxx.gauntlet import audit_confounds, load_benchmark
+
+    bench_path = _Path(args.benchmark) if args.benchmark else None
+    try:
+        benchmark = load_benchmark(bench_path)
+    except FileNotFoundError as e:
+        print(f"error: {e}")
+        return 1
+
+    report = audit_confounds(benchmark, d1_bar=args.d1_bar, d2_bar=args.d2_bar)
+
+    if args.format == "json":
+        print(_json.dumps(report, indent=2, default=str))
+        return 0
+
+    # Card render
+    width = 96
+    inner = width - 2
+    def _row(label, value=""):
+        line = f" {label}{value}"
+        return f"│{line.ljust(inner)}│"
+
+    print("┌" + "─" * inner + "┐")
+    print(_row("styxx gauntlet — confound audit (7.7.9)"))
+    print(_row("benchmark: ", f"darkcore v{report['benchmark_version']} (n={report['n_records']})"))
+    print(_row("bars:      ", f"D1≥{report['d1_bar']}  D2≥{report['d2_bar']}  "
+                                f"orthogonality ρ-threshold={report['orthogonality_threshold_rho']}"))
+    print("├" + "─" * inner + "┤")
+    header = f"  {'oracle':<26} {'D1':>7} {'D2':>7} {'D1abs':>7} {'D2abs':>7} {'dir-D1':>9} {'ρ→len':>7} {'P1':>3} {'P2':>3}"
+    print(_row(header))
+    print("├" + "─" * inner + "┤")
+    for row in report["audit_rows"]:
+        if "error" in row:
+            print(_row(f"  {row['oracle']:<26} ERROR: {row['error']}"))
+            continue
+        line = (
+            f"  {row['oracle']:<26} "
+            f"{row.get('D1_AUC', '—'):>7} {row.get('D2_AUC', '—'):>7} "
+            f"{row.get('D1_AUC_abs', '—'):>7} {row.get('D2_AUC_abs', '—'):>7} "
+            f"{row.get('D1_direction', '—'):>9} "
+            f"{row.get('spearman_rho_to_word_length') if row.get('spearman_rho_to_word_length') is not None else '—':>7} "
+            f"{'✓' if row.get('passes_D1') else '·':>3} "
+            f"{'✓' if row.get('passes_D2') else '·':>3}"
+        )
+        print(_row(line))
+    print("├" + "─" * inner + "┤")
+    print(_row(f"  orthogonal confounds found:        {report['n_orthogonal_confounds_found']}"))
+    print(_row(f"  length-downstream confounds found: {report['n_length_downstream_confounds_found']}"))
+    if report["candidate_orthogonal_confounds"]:
+        print(_row(""))
+        print(_row("  candidate orthogonal confounds (ρ<0.5, passes a bar):"))
+        for c in report["candidate_orthogonal_confounds"]:
+            print(_row(f"    • {c['oracle']}  D1abs={c['D1_AUC_abs']}  D2abs={c['D2_AUC_abs']}  ρ={c['spearman_rho_to_word_length']}"))
+        print(_row(""))
+        print(_row("  → discipline says: add a new D-bar with a regression test"))
+    else:
+        print(_row(""))
+        print(_row("  no NEW orthogonal confound found — existing D-bars cover the audit space"))
+    print("└" + "─" * inner + "┘")
+    return 0
+
+
 def cmd_data_dir(args):
     """styxx data-dir — print the active chart.jsonl path + a short summary.
 
@@ -2369,6 +2445,21 @@ def _build_parser() -> argparse.ArgumentParser:
     p_gauntlet.add_argument("--format", choices=["card", "json"], default="card",
                             help="output format (default: card)")
     p_gauntlet.set_defaults(func=cmd_gauntlet)
+
+    # gauntlet-audit-confounds — 7.7.9 confound audit primitive
+    p_audit = sub.add_parser(
+        "gauntlet-audit-confounds",
+        help="audit the benchmark for surface-feature confounds (7.7.9 structural counterpart to D3)",
+    )
+    p_audit.add_argument("--benchmark", type=str, default=None,
+                          help="path to benchmark JSON (default: bundled darkcore benchmark)")
+    p_audit.add_argument("--d1-bar", type=float, default=0.70,
+                          help="D1 AUC threshold for confound flagging (default: 0.70)")
+    p_audit.add_argument("--d2-bar", type=float, default=0.70,
+                          help="D2 AUC threshold for confound flagging (default: 0.70)")
+    p_audit.add_argument("--format", choices=["card", "json"], default="card",
+                          help="output format (default: card)")
+    p_audit.set_defaults(func=cmd_gauntlet_audit_confounds)
 
     # critique — 7.7.4 audit + register-fix suggestions
     p_critique = sub.add_parser(
