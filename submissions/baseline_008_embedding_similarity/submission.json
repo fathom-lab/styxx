@@ -1,0 +1,34 @@
+{
+  "name": "Baseline-008: embedding-similarity detector (sentence-transformer cosine)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_008_embedding_similarity.method:detect",
+  "task": "detection",
+  "description": "First non-trivial detection submission tested under v2 bars (D1+D2+D3). Scores cosine similarity between sentence-transformer (all-MiniLM-L6-v2) embeddings of (question, response). Higher similarity = more misconception-like under the hypothesis that misconception responses (full council restatements) share more semantic content with the question than terse truth responses.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_008_embedding_similarity/method.py",
+  "pre_stated_prediction": "submissions/baseline_008_embedding_similarity/PRE_STATED_PREDICTION.md committed at commit a05c8c1 BEFORE the gauntlet run. Predicted ~15-25% clear D3, ~60% pass D1+D2 fail D3, ~15% fail D1/D2. Actual outcome falls in the ~60% modal-prediction region.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 2,
+    "n_total_bars": 3,
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": 0.7999,
+      "mean_truth_score": 0.5709,
+      "mean_folklore_score": 0.8988,
+      "D1_misconception_AUC": 0.8051,
+      "D2_folklore_AUC": 0.9283,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": 0.0154,
+      "D2_minus_length_AUC": 0.1241
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false
+    }
+  },
+  "notes": "n=1 evidence that sentence-transformer cosine similarity is structurally equivalent to length on the D1 (broad misconception-vs-truth) partition (D1=0.805 vs length=0.790, delta 0.015 below D3's 0.10 threshold). On D2 (folklore-subset-vs-truth) the embedding adds 12.4 percentage points above length — real signal on that narrower axis but not enough to pass D3 jointly. The dark core stays dark to embedding-similarity detection at this corpus. A future submission with explicit length-residualization, specificity-detection, or NLI-with-answer-type-awareness might clear D3; the bar is doing its job by requiring genuinely-escape-the-artifact signal, not just smarter-encoded-length."
+}
