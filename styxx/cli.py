@@ -538,6 +538,134 @@ def cmd_doctor(args):
     return run_doctor()
 
 
+def cmd_audit(args):
+    """styxx audit <prompt> <response> — score a (prompt, response) pair.
+
+    7.7.3: CLI face of ``styxx.preflight()``. The atomic per-turn audit
+    primitive surfaced as a CLI command for the user-facing "score my draft
+    response" use case (previously Python-only). Reads the response against
+    the lexical cognometric instruments + the trusted-gate suppression,
+    prints a compact card with composite + axes + needs_revision flag +
+    construct-ceiling fires. Persists to the active chart.jsonl by default
+    (per-agent if STYXX_AGENT_NAME is set, top-level fallback otherwise).
+
+    Either or both of <prompt> and <response> may be ``-`` to read from
+    stdin (one stream; if both are ``-`` the input is split on the first
+    blank line, prompt first).
+
+    --json prints the structured dict instead of the card.
+    """
+    import json as _json
+    import styxx
+
+    prompt = args.prompt
+    response = args.response
+    if prompt == "-" and response == "-":
+        blob = sys.stdin.read()
+        parts = blob.split("\n\n", 1)
+        prompt = parts[0].strip()
+        response = parts[1].strip() if len(parts) > 1 else ""
+    elif prompt == "-":
+        prompt = sys.stdin.read().strip()
+    elif response == "-":
+        response = sys.stdin.read().strip()
+
+    result = styxx.preflight(
+        prompt,
+        response,
+        persist=not args.no_persist,
+    )
+
+    if args.format == "json":
+        as_dict = (result.as_dict() if hasattr(result, "as_dict")
+                   else {"composite": result.composite,
+                         "scores": dict(getattr(result, "scores", {}) or {}),
+                         "needs_revision": result.needs_revision,
+                         "construct_ceiling_fires":
+                             list(getattr(result, "construct_ceiling_fires", []) or [])})
+        print(_json.dumps(as_dict, indent=2, default=str))
+        return 0
+
+    # Compact card. Width matches the gate card so they read as a family.
+    width = 64
+    inner = width - 2  # account for the two │ borders
+    scores = dict(getattr(result, "scores", {}) or {})
+    ceilings = list(getattr(result, "construct_ceiling_fires", []) or [])
+    rev_tag = " (REVISE)" if result.needs_revision else ""
+
+    def _row(label, value):
+        line = f" {label} {value}"
+        return f"│{line.ljust(inner)}│"
+
+    print("┌" + "─" * inner + "┐")
+    print(_row("styxx audit", ""))
+    prompt_preview = (prompt[:40] + "...") if len(prompt) > 40 else prompt
+    resp_preview = (response[:40] + "...") if len(response) > 40 else response
+    print(_row("prompt:  ", repr(prompt_preview)))
+    print(_row("response:", repr(resp_preview.replace("\n", " "))))
+    print("│" + " " * inner + "│")
+    print(_row("composite:", f"{result.composite:.3f}{rev_tag}"))
+    for ax in sorted(scores):
+        v = float(scores.get(ax, 0.0))
+        bar_w = max(0, min(20, int(v * 20)))
+        bar = "█" * bar_w + "░" * (20 - bar_w)
+        print(_row(f"{ax:<14}", f"{v:.3f}  {bar}"))
+    if ceilings:
+        print(_row("ceilings: ", ", ".join(ceilings)))
+    advice = getattr(result, "advice", None)
+    if advice:
+        # advice is typically a list of PreflightAdvice dataclasses;
+        # render the top instrument names + scores compactly.
+        try:
+            parts = []
+            for a in advice:
+                inst = getattr(a, "instrument", None)
+                sc = getattr(a, "score", None)
+                if inst is not None and sc is not None:
+                    parts.append(f"{inst} {float(sc):.2f}")
+                else:
+                    parts.append(str(a))
+            advice_text = " · ".join(parts) if parts else str(advice)
+        except TypeError:
+            advice_text = str(advice)
+        advice_text = advice_text.replace("\n", " ")
+        if len(advice_text) > inner - 12:
+            advice_text = advice_text[:inner - 15] + "..."
+        print(_row("flagged:  ", advice_text))
+    print("└" + "─" * inner + "┘")
+    return 0
+
+
+def cmd_data_dir(args):
+    """styxx data-dir — print the active chart.jsonl path + a short summary.
+
+    7.7.3: small discoverability command. Per-agent routing
+    (``~/.styxx/agents/<agent>/chart.jsonl`` when ``STYXX_AGENT_NAME`` is
+    set, ``~/.styxx/chart.jsonl`` otherwise) is documented but easy to
+    miss when querying chart.jsonl directly. This prints the actual file
+    the agent is writing into so users don't query the wrong path.
+    """
+    from .analytics import _audit_log_path
+    path = _audit_log_path()
+    agent = os.environ.get("STYXX_AGENT_NAME")
+    print("styxx data directory:")
+    print(f"  agent name:  {agent or '(unset — using top-level fallback)'}")
+    print(f"  chart.jsonl: {path}")
+    print(f"  exists:      {path.exists()}")
+    if path.exists():
+        size = path.stat().st_size
+        n = 0
+        try:
+            with open(path, encoding="utf-8") as f:
+                for _ in f:
+                    n += 1
+        except OSError:
+            pass
+        print(f"  size:        {size:,} bytes")
+        print(f"  events:      {n:,}")
+    return 0
+
+
 def cmd_posture(args):
     """Print recent cognometric posture summary (7.4.2).
 
@@ -1860,6 +1988,28 @@ def _build_parser() -> argparse.ArgumentParser:
         help="run install-time diagnostic health check",
     )
     p_doctor.set_defaults(func=cmd_doctor)
+
+    # audit — 7.7.3 CLI face of preflight() (per-turn response scoring)
+    p_audit = sub.add_parser(
+        "audit",
+        help="score a (prompt, response) pair — CLI face of styxx.preflight()",
+    )
+    p_audit.add_argument("prompt",
+                         help="the operator/user prompt (use '-' for stdin)")
+    p_audit.add_argument("response",
+                         help="the draft response to score (use '-' for stdin)")
+    p_audit.add_argument("--format", choices=["card", "json"], default="card",
+                         help="output format (default: card)")
+    p_audit.add_argument("--no-persist", action="store_true",
+                         help="do not write the audit event to chart.jsonl")
+    p_audit.set_defaults(func=cmd_audit)
+
+    # data-dir — 7.7.3 small discoverability command
+    p_data_dir = sub.add_parser(
+        "data-dir",
+        help="print the active chart.jsonl path (per-agent vs no-agent fallback)",
+    )
+    p_data_dir.set_defaults(func=cmd_data_dir)
 
     # posture — 7.4.2 agent-side recovery primitive
     p_posture = sub.add_parser(
