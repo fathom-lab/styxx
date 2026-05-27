@@ -1,10 +1,69 @@
-# Announcement follow-up thread — styxx 7.7.7 + gauntlet + Zenodo DOI
+# Announcement follow-up — styxx 7.7.7 + gauntlet + Zenodo DOI
 
-**Channel:** @fathom_lab. Format: standalone or reply-thread off the 7.7.3 thread — both work. Voice: same as `ANNOUNCEMENT_2026_05_27.md` (lowercase, honest, scoped, no hype).
-
+**Channel:** @fathom_lab. Format: **single tweet** (operator already posted the 7.7.3 thread; this is the incremental update).
 **Permanent citation:** [10.5281/zenodo.20418532](https://doi.org/10.5281/zenodo.20418532)
 **Release:** https://github.com/fathom-lab/styxx/releases/tag/v7.7.7
 **Leaderboard:** https://github.com/fathom-lab/styxx/blob/main/LEADERBOARD.md
+
+---
+
+## The single tweet (copy-paste ready, 267 chars)
+
+```
+styxx 7.7.7 — DOI 10.5281/zenodo.20418532
+
+the seven-method empirical floor (from last week's thread) is now a pip-installable public challenge. CI verifies external submissions.
+
+pip install styxx==7.7.7
+styxx leaderboard --rows-only
+
+beat the floor or join it.
+```
+
+### Alternative (tighter, 256 chars) — if you want it punchier
+
+```
+styxx 7.7.7 — DOI 10.5281/zenodo.20418532
+
+the seven-method floor from last week's thread is now a pip-installable public challenge with CI-verified submissions.
+
+pip install styxx==7.7.7
+styxx leaderboard --rows-only
+
+beat the floor or join it.
+```
+
+### Alternative (URL form, 266 chars — for clickable DOI)
+
+```
+styxx 7.7.7 — now permanently citable: https://doi.org/10.5281/zenodo.20418532
+
+seven-method empirical floor is a pip-installable public challenge. CI verifies submissions.
+
+pip install styxx==7.7.7
+styxx leaderboard --rows-only
+
+beat the floor or join it.
+```
+
+The URL form gives readers a single click to the Zenodo page (citation, abstract, PDF/markdown of the paper). The plain-DOI form matches the @fathom_lab voice from the previous thread (tweet 6 of the 7.7.3 thread used plain DOI text).
+
+## Notes for operator
+
+- 280 chars X-effective; URL counts as 23.
+- The "beat the floor or join it" line is the explicit challenge frame from the original thread, preserved as the close.
+- **Reply context:** posting this as a reply to your *own* tweet 1 of the 7.7.3 thread links the chain visually for anyone scrolling the profile — that's the natural fit for "this is the update to last week's thread." Standalone post also works.
+- **Pinning:** if you want the Zenodo DOI surfaced to anyone landing on @fathom_lab (researchers most likely to cite), pin this tweet over the original 7.7.3 lead.
+
+## Optional visual asset
+
+`styxx leaderboard --rows-only` rendered to an image attachment would give visual weight to the challenge frame. Or `papers/agent-self-audit/cognometric-card-claude-2026-05-27.png` for the luxury-register card.
+
+## What this tweet does NOT do
+
+- Repeat the seven-method arc results from the 7.7.3 thread (anyone clicking back gets the full primer).
+- Promise reach, replication, or "phenomenal."
+- Use hype-class adjectives.
 
 ---
 
