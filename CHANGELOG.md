@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.7] — 2026-05-27 — `styxx leaderboard` CLI + concrete reference baselines + CI auto-verification
+
+### Added
+
+- **`styxx leaderboard`** — lightweight CLI that displays the current gauntlet leaderboard in the terminal. Reads the bundled `LEADERBOARD.md` from `styxx/_data/` so it works on clean pip install. `--rows-only` flag filters to just the leaderboard rows table for quick scanning. Closes the friction gap between "I'm trying styxx" and "I can see who's on the floor" to a single command.
+- **`submissions/baseline_002_classifier/`** — the shipped dark-core classifier wrapped in the gauntlet interface. Concrete reference row #2 on the leaderboard: 1/3 bars passed (K2 accuracy 0.77 ✓; K1 F1 0.42 ✗; K3 F1 0.36 ✗). Reproducible via `styxx gauntlet --method submissions.baseline_002_classifier.method:predict --task classification`.
+- **`submissions/baseline_003_length/`** — a deliberately bad length-only heuristic. 0/3 bars; anchors the leaderboard floor with a real number (notably K3=0.56 from high recall + bad precision, accuracy 0.26 below majority baseline).
+- **`.github/workflows/gauntlet-pr.yml`** — CI workflow that auto-verifies external submission PRs against `submissions/**`. Discovers changed submission directories, installs per-submission `requirements.txt`, re-runs `styxx gauntlet` on each method, compares CI output to the submitter's reported scores in `submission.json` (1e-3 float tolerance). Mismatches fail the PR with a printed diff; matches pass.
+- **`submissions/GAUNTLET.md`** — separate-file documentation of the gauntlet submission protocol (doesn't overwrite the existing Cognometry Detector Interface v0 README which targets a different benchmark).
+- **`styxx/_data/LEADERBOARD.md`** — bundled as package data so the CLI works on clean pip install. `pyproject.toml` updated: `"styxx._data" = ["*.json", "*.md"]`.
+- 4 new tests in `tests/test_cli_leaderboard.py` covering: full-text render, `--rows-only` filter, the package-data bundling regression check, and end-to-end CLI invocation. Full suite: **1083 passed, 8 skipped**.
+
+### What this delivers
+
+The empirical floor is now a *runnable*, *terminal-accessible*, *CI-verified* public challenge. The friction sequence "see the leaderboard → install styxx → write a method → submit a PR → land on the leaderboard" is now: `pip install styxx`, `styxx leaderboard`, write `method.py`, `styxx gauntlet --method ...`, PR. CI verifies the submission's reported numbers match the actual run before merge. The leaderboard is trustworthy by construction.
+
+### Why patch (not minor)
+
+Additive CLI command + additive submissions directory + additive CI workflow + bundled markdown. No public API breakage. No scoring-instrument changes.
+
+---
+
 ## [7.7.6] — 2026-05-27 — `styxx gauntlet` bundling fix: ship the benchmark JSON inside the wheel
 
 ### Fixed

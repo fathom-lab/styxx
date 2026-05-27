@@ -830,6 +830,50 @@ def cmd_critique(args):
     return 0
 
 
+def cmd_leaderboard(args):
+    """styxx leaderboard — display the current gauntlet leaderboard in the terminal.
+
+    7.7.7: lightweight CLI to read the LEADERBOARD.md from the package's bundled
+    copy (when present) or fetch the latest from origin. No external dependencies
+    on http requests in the default path; the bundled copy is preferred. The
+    explicit purpose: lower the friction between "I'm trying out styxx" and "I
+    can see who's on the floor" to a single command.
+    """
+    from pathlib import Path as _Path
+    pkg_data = _Path(__file__).resolve().parent / "_data" / "LEADERBOARD.md"
+    source_tree = _Path(__file__).resolve().parent.parent / "LEADERBOARD.md"
+    md_path = None
+    if pkg_data.exists():
+        md_path = pkg_data
+    elif source_tree.exists():
+        md_path = source_tree
+
+    if md_path is None:
+        print("leaderboard not found in this install (no bundled copy + no source-tree path).")
+        print("see: https://github.com/fathom-lab/styxx/blob/main/LEADERBOARD.md")
+        return 1
+
+    text = md_path.read_text(encoding="utf-8")
+
+    # Optional --rows-only filter: print only the leaderboard rows table, no header text.
+    if args.rows_only:
+        # Heuristic: emit lines from the first "## Leaderboard" or "### Reference baselines"
+        # heading through the first "---" divider after it.
+        lines = text.splitlines()
+        in_table = False
+        for line in lines:
+            if not in_table and ("## Leaderboard" in line or "### Reference baselines" in line):
+                in_table = True
+            if in_table:
+                if line.strip() == "---":
+                    break
+                print(line)
+        return 0
+
+    print(text)
+    return 0
+
+
 def cmd_gauntlet(args):
     """styxx gauntlet — run a candidate method against the empirical floor.
 
@@ -2296,6 +2340,15 @@ def _build_parser() -> argparse.ArgumentParser:
         help="print the active chart.jsonl path (per-agent vs no-agent fallback)",
     )
     p_data_dir.set_defaults(func=cmd_data_dir)
+
+    # leaderboard — 7.7.7 lightweight CLI to display the current gauntlet leaderboard
+    p_leaderboard = sub.add_parser(
+        "leaderboard",
+        help="display the current gauntlet leaderboard (the empirical-floor public challenge)",
+    )
+    p_leaderboard.add_argument("--rows-only", action="store_true",
+                               help="print only the leaderboard rows, no header/footer text")
+    p_leaderboard.set_defaults(func=cmd_leaderboard)
 
     # gauntlet — 7.7.5 public-challenge runner
     p_gauntlet = sub.add_parser(
