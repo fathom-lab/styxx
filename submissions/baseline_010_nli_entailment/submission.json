@@ -1,0 +1,53 @@
+{
+  "name": "Baseline-010: NLI-based answer-form entailment detector (cross-encoder/nli-deberta-v3-base) — total fail in predicted direction, second-axis null result",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_010_nli_entailment.method:detect",
+  "task": "detection",
+  "description": "The disciplined follow-up to Baseline-009's failure: ADD a genuinely length-independent signal (NLI entailment from response to question) instead of subtracting length variance from a length-correlated signal. Pre-stated hypothesis (committed BEFORE the run at acc159a): folklore restatements entail the question's affirmative form; truth answers don't. Frame: R-as-premise, Q-as-hypothesis, entailment probability as score. Model: cross-encoder/nli-deberta-v3-base via sentence-transformers.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_010_nli_entailment/method.py",
+  "pre_stated_prediction": "submissions/baseline_010_nli_entailment/PRE_STATED_PREDICTION.md committed at commit acc159a BEFORE the gauntlet run. Predicted distribution: ~15% PASS, ~25% 3/4, ~40% 1/4-2/4, ~20% 0/4. Actual outcome (0/4) fell in the 20% 'total fail' region. The hypothesis direction was also wrong: entailment ranks truth higher than misconception, opposite of the predicted folklore-restatement-entails-question pattern.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 0,
+    "n_total_bars": 4,
+    "note": "0/4. AUCs are below 0.50 (D1=0.412, D2=0.382), meaning truth responses ranked slightly higher entailment than misconception responses — opposite the predicted direction. Even the inverted absolute AUC (|AUC-0.5|+0.5) is below the 0.70 bar: D1_abs=0.588, D2_abs=0.618. Cross-encoder NLI on factual-restatement detection doesn't transfer from MNLI training. The mean entailment probability across all classes (0.126-0.140) is tightly clustered near zero, indicating the model finds essentially nothing in the response that strongly entails the question — for either direction of misconception.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": 0.1401,
+      "mean_truth_score": 0.1329,
+      "mean_folklore_score": 0.126,
+      "D1_misconception_AUC": 0.412,
+      "D2_folklore_AUC": 0.3824,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": -0.3777,
+      "D2_minus_length_AUC": -0.4219,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": -0.2916,
+      "D2_minus_capratio_AUC": -0.4096
+    },
+    "bar_results": {
+      "D1_misconception_AUC": false,
+      "D2_folklore_AUC": false,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "actual_outcome": "0/4 — total fail",
+    "outcome_probability_assigned": 0.20,
+    "outcome_band": "20% 'NLI signal isn't there' band — validated",
+    "hypothesis_direction_calibration": "FALSIFIED — predicted folklore restatements would entail the question; actual was inverted (truth slightly higher entailment than folklore). Even with sign-flip, |AUC-0.5| in [0.088, 0.118] is far below the 0.20 needed for AUC ≥ 0.70.",
+    "D1_predicted_range": [0.55, 0.78],
+    "D1_actual": 0.412,
+    "D1_calibration": "outside predicted range — direction was wrong",
+    "D2_predicted_range": [0.65, 0.85],
+    "D2_actual": 0.3824,
+    "D2_calibration": "outside predicted range — direction was wrong",
+    "honest_note": "The 20% total-fail probability was the lowest of my pre-stated bands. Landing here doesn't mean the prior was poorly calibrated, but the direction-of-effect miss (predicted folklore-entails-question, actual truth-entails-question-slightly) is a falsification of the underlying mechanism hypothesis. Same shape as the cap-ratio direction-miss from FINDING_confound_audit_2026_05_27.md — direction-of-effect predictions are systematically harder than magnitude predictions on this domain."
+  },
+  "notes": "n=1 evidence that pre-trained cross-encoder NLI on (response, question) pairs does not surface usable signal for misconception detection on this benchmark. The mean entailment probability is tightly clustered near 0.13 across all classes, suggesting the cross-encoder rarely judges responses as entailing questions — neither truth answers nor folklore restatements register as 'entailing' the question textually. The direction-of-effect prediction was also wrong: truth ranks slightly higher than folklore (opposite of hypothesized). The seven-method floor + the dark core remain intact. Genuinely new orthogonal signal (cross-vendor consensus disagreement, perplexity-against-prior, knowledge-graph lookup) is needed — all operator-territory at present. Baseline-011 may be the place to attempt one of those."
+}
