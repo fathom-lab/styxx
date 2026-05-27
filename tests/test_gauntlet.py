@@ -84,6 +84,24 @@ def test_load_benchmark_missing_path_raises():
         load_benchmark(Path("/nonexistent/benchmark.json"))
 
 
+def test_load_benchmark_package_data_exists():
+    """Regression test for the 7.7.5 → 7.7.6 bundling fix.
+
+    The benchmark must be available from the package's _data dir, not just
+    from the source-tree papers/ path. Without this, `pip install styxx`
+    users get FileNotFoundError when running `styxx gauntlet`."""
+    pkg_data = Path(__file__).resolve().parent.parent / "styxx" / "_data" / "darkcore_benchmark_2026_05_27.json"
+    assert pkg_data.exists(), (
+        "package-data benchmark missing — clean pip install would fail. "
+        "Run: cp papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json "
+        "styxx/_data/ to fix."
+    )
+    # And the loader must successfully resolve to it.
+    b = load_benchmark()
+    assert b.get("name") == "darkcore_benchmark"
+    assert b.get("n_records") > 0
+
+
 def test_resolve_method_loads_callable():
     fn = resolve_method("styxx.gauntlet:_majority_baseline_predict")
     assert fn is _majority_baseline_predict

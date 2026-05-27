@@ -110,18 +110,38 @@ class GauntletResult:
 # ──────────────────────────────────────────────────────────────────────
 
 def load_benchmark(path: Optional[Path] = None) -> Dict[str, Any]:
-    """Load the dark-core benchmark JSON. Defaults to the shipped 2026-05-27 version."""
-    if path is None:
-        path = Path(__file__).resolve().parent.parent / "papers" / "consensus-hallucination" / "darkcore_benchmark_2026_05_27.json"
-    if not path.exists():
-        # Try the installed-package path (when running from pip install rather than source).
-        # The benchmark JSON is shipped as a data file; if not present, raise a clear error.
-        raise FileNotFoundError(
-            f"benchmark not found at {path}. To use the bundled darkcore benchmark, install "
-            f"from a styxx source tree or pass --benchmark <path> to a JSON in the same schema "
-            f"as papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json."
-        )
-    return json.loads(path.read_text(encoding="utf-8"))
+    """Load the dark-core benchmark JSON. Defaults to the bundled 2026-05-27 version.
+
+    Resolution order:
+      1. Explicit `path` argument (if provided).
+      2. ``styxx/_data/darkcore_benchmark_2026_05_27.json`` — shipped as package data
+         in the installed wheel (7.7.6+).
+      3. ``papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json`` —
+         the source-tree path, present when running from a styxx git checkout.
+    """
+    if path is not None:
+        if not path.exists():
+            raise FileNotFoundError(f"benchmark not found at {path}")
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    # 1. Bundled package data (installed wheel)
+    pkg_data = Path(__file__).resolve().parent / "_data" / "darkcore_benchmark_2026_05_27.json"
+    if pkg_data.exists():
+        return json.loads(pkg_data.read_text(encoding="utf-8"))
+
+    # 2. Source-tree fallback (git checkout)
+    source_tree = (Path(__file__).resolve().parent.parent
+                   / "papers" / "consensus-hallucination"
+                   / "darkcore_benchmark_2026_05_27.json")
+    if source_tree.exists():
+        return json.loads(source_tree.read_text(encoding="utf-8"))
+
+    raise FileNotFoundError(
+        f"benchmark not found. Looked at:\n"
+        f"  - {pkg_data} (package data — should be present in a pip install)\n"
+        f"  - {source_tree} (source tree — present when running from a git checkout)\n"
+        f"Pass --benchmark <path> to point at a custom benchmark JSON in the same schema."
+    )
 
 
 def resolve_method(spec: str) -> Callable[..., Any]:

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.6] — 2026-05-27 — `styxx gauntlet` bundling fix: ship the benchmark JSON inside the wheel
+
+### Fixed
+
+- **`styxx gauntlet` was broken on clean `pip install`.** 7.7.5 shipped the runner code and CLI but the labeled benchmark (`darkcore_benchmark_2026_05_27.json`) lived only in `papers/consensus-hallucination/` in the source tree — not in the wheel's package data. Users running `pip install styxx==7.7.5 && styxx gauntlet --method ...` hit `FileNotFoundError`. Caught by the 7.7.5 clean-env verification step; fixed here.
+
+### Added
+
+- **`styxx/_data/darkcore_benchmark_2026_05_27.json`** — the benchmark JSON, copied into the package's `_data` directory and registered as package data in `pyproject.toml`. The wheel now ships the benchmark; `load_benchmark()` resolves to it first when running from a pip install.
+- Resolution order in `styxx.gauntlet.load_benchmark()`: (1) explicit `path` argument if provided, (2) bundled package data at `styxx/_data/darkcore_benchmark_2026_05_27.json` (present in installed wheel), (3) source-tree fallback at `papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json` (present in git checkout). The same benchmark, sourced from whichever location is available.
+
+### Why patch (not bug-fix-version-suffix)
+
+The previous release's gauntlet command was non-functional on clean install. A patch release is the minimum needed to make the 7.7.5 feature actually work for users; we'd rather ship the fix as 7.7.6 within an hour of finding the bug than leave 7.7.5 broken on PyPI for users who pip-install it. The discipline pattern is: catch your own regressions before users do, and ship the fix immediately when you do catch them.
+
+This is the **fifth in-session falsification** today: the 7.7.5 release was marked "verified" but the verification missed the clean-install path. Recorded honestly; not retroactively cleaned.
+
+---
+
 ## [7.7.5] — 2026-05-27 — `styxx gauntlet`: the empirical floor as a public challenge with deployable tooling
 
 ### Added
