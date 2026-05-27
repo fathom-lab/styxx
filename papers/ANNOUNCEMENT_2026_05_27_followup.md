@@ -36,11 +36,11 @@ styxx gauntlet --method <module:attr>
 ```
 styxx leaderboard — see the current floor from the terminal.
 
-the board has 4 concrete reference rows already:
-• Baseline-001 (the seven-method floor)
-• Baseline-002 (our classifier, 1/3 bars)
-• Baseline-003 (length heuristic, 0/3 — anchors the bottom)
-• Baseline-004 (random class, ~chance)
+the board has 4 concrete reference rows:
+• Baseline-001: the seven-method floor
+• Baseline-002: our classifier (1/3 bars)
+• Baseline-003: length heuristic (0/3, anchor)
+• Baseline-004: random class (chance)
 ```
 
 ---
@@ -49,11 +49,11 @@ the board has 4 concrete reference rows already:
 ```
 the submission protocol is on origin.
 
-fork → write a method.py → run styxx gauntlet → open a PR.
+fork → method.py → styxx gauntlet → PR.
 
-CI re-runs your method against the bundled benchmark, compares scores to what you reported (1e-3 float tolerance). mismatches fail the PR.
+CI re-runs your method against the bundled benchmark and compares to your reported scores (1e-3 tolerance). mismatches fail the PR.
 
-the leaderboard is trustworthy by construction.
+trustworthy by construction.
 ```
 
 ---
@@ -62,7 +62,7 @@ the leaderboard is trustworthy by construction.
 ```
 styxx critique — audit + register-fix suggestions, every suggestion carries a mandatory scope_bound naming its documented limit.
 
-the tool can't ship a register rule without acknowledging where that rule doesn't apply. test-enforced. the discipline pattern as code.
+the tool can't ship a register rule without acknowledging where it doesn't apply. test-enforced. the discipline pattern as code.
 ```
 
 ---
@@ -74,9 +74,9 @@ the work is now permanently citable.
 zenodo DOI: 10.5281/zenodo.20418532
 concept (always-latest): 10.5281/zenodo.19326174
 
-v24 in the chain. predecessor v23 (10.5281/zenodo.20130041) is preserved.
+v24 in the chain. predecessor v23 preserved.
 
-the credibility compounds across versions, not within any one.
+credibility compounds across versions, not within one.
 ```
 
 ---
@@ -85,15 +85,15 @@ the credibility compounds across versions, not within any one.
 ```
 the bar:
 
-K1 folklore F1 ≥ 0.70 (in-distribution)
+K1 folklore F1 ≥ 0.70 (in-dist)
 K2 4-way accuracy ≥ 0.65
-K3 cross-corpus folklore F1 ≥ 0.60 (the load-bearing test)
+K3 cross-corpus folklore F1 ≥ 0.60 (load-bearing)
 
-clean install in 60 seconds:
+clean install:
 pip install styxx==7.7.7
 styxx leaderboard --rows-only
 
-submit your method. the synthesis gets revised if you beat us.
+submit your method. synthesis gets revised if you beat us.
 ```
 
 ---
