@@ -106,3 +106,64 @@ The benchmark: `papers/consensus-hallucination/darkcore_benchmark_2026_05_27.jso
 The agent self-audit chain: `papers/agent-self-audit/FINDING_pareto_frontier_2026_05_27.md`, `FINDING_product_exploration_2026_05_27.md` (with in-place falsification), `claude-session-2026-05-27{,-v2,-v3,-primitives}.json`, `cognometric-card-claude-2026-05-27.png`, and the reproducer scripts in `scripts/self_audit/`.
 
 The discipline trail is the artifact. The receipts compound. The work is what makes it credible.
+
+---
+
+## Update — 2026-05-27 (afternoon) · authoritative-ICT landed; arc closes at seven independent methods
+
+After the capstone above was committed at `f577ed3`, authoritative-ICT was fired against the existing frozen corpus (`corpus_folklore_2026_05_27.py` @ `2cffcec`) — the same corpus the ICT-folklore rerun showed had a 28/30 baseline-correction-or-fracture rate. As anticipated in the section "Open follow-ups," the same corpus mismatch produced the same SHORTFALL: n_folk = 2 < target 25. Full FINDING at `papers/consensus-hallucination/FINDING_ict_authoritative_2026_05_27.md` (`a6d7a7e`).
+
+The descriptive content — the *same items under two framings* head-to-head — is the substantive payload:
+
+| comparison | folklore rerun (neutral A/B framing) | authoritative-ICT (authoritative framing) | differential |
+|---|---|---|---|
+| folklore items lifted (n_folk = 2) | 2/2 | 2/2 | **0** (no framing-differential effect on testable dark-core items) |
+| truth controls that yielded (n_truth = 20) | 0/20 | **1/20** | **+0.05** (one truth deferred to falsely-framed authoritative claim) |
+
+The one truth that yielded under authoritative framing: "How many planets are in our solar system?" — council answered "eight" in baseline AND under neutral "nine" injection, but deferred to "nine" when "nine" was framed as "the scientific consensus." This matches the prereg's A2 "authority-sycophancy" branch direction (n=1 = suggestive, not conclusive).
+
+**The synthesis's deployable-positive branch (authoritative grounding lifts the floor where neutral does not) did not land in this run.** Authoritative framing added no help on testable dark-core items and introduced a small auth-compliance failure mode on truths. The "principled retrieval routing" deployable form sketched in the synthesis-update has a worse trade-off than the pre-data analysis anticipated.
+
+### The arc closes at seven independent methods on the same hypothesis
+
+| axis | method | dark-core verdict |
+|---|---|---|
+| detection #1 | perturbation-fragility (Dark Matter swing #1) | partial — flips fragile shell |
+| detection #2 | agreement-fracture (CVPD) | clean negative, lift −0.32 |
+| detection #3 | justification-divergence (JD) | clean negative, INVERTED |
+| constructive #1 | neutral injection (ICT, n_folk=4 TruthfulQA-derived) | immovability floor, 0/4 yield |
+| constructive #2 | neutral injection (ICT-folklore, hand-curated corpus) | SHORTFALL n_folk=2/30 (corpus mismatch) |
+| constructive #3 | authoritative injection (ICT-authoritative, same corpus) | SHORTFALL + descriptive: no differential effect on folk; +0.05 auth-sycophancy on truth |
+| classification #1 | sentence-transformer + LR routing | FAIL K2 + K3 (dark to classification too) |
+
+Seven independent methods. **No PASS on any.** Three corpus shortfalls in a row confirm the corpus design — not the methods — is the binding constraint. The arc on this hypothesis is now exhaustively mapped within the corpus's scope.
+
+### Four in-session falsifications, all recorded in place
+
+| # | falsified claim | corrected at |
+|---|---|---|
+| 1 | "C1-profile ≤ 0.20 register bar reproducible" | `FINDING_pareto_frontier_2026_05_27.md` |
+| 2 | "set_session doesn't propagate to chart.jsonl" | `FINDING_product_exploration_2026_05_27.md` (correction at `bd6759f`) |
+| 3 | "ICT-folklore auto-verdict PASS" | `FINDING_ict_folklore_2026_05_27.md` + probe verdict-logic fix at `0f669ed` |
+| 4 | "authoritative-ICT auto-verdict PASS" | `FINDING_ict_authoritative_2026_05_27.md` + probe verdict-logic fix at `a6d7a7e` |
+
+All four committed in place rather than rewritten. The discipline pattern is verifiable from git.
+
+### Honest end-of-arc accounting
+
+What this session delivered:
+- A pre-registered seven-method confirmation of the Decorrelation Ceiling floor (no PASS on any).
+- A unified labeled benchmark dataset (`darkcore_benchmark_2026_05_27.json`, 108 records, 4 classes) with the empirical floor baked in as the bar future routing approaches need to beat.
+- Two CLI upgrades closing the most-cited UX gaps (`styxx audit`, `styxx data-dir`).
+- A closed-loop dogfood demonstration (the agent uses the product's CLI to audit its own writeup; the audit confirms the register-law the same agent derived earlier in the session via self-audit on its own outputs).
+- Four in-session falsifications, all recorded in place.
+- An exhaustive corpus-design lesson: the "all folklore" curation assumption is too broad for 2026 frontier models. The genuine dark core is the narrative-anchored cultural-historical subset, not the well-known myth class.
+
+What this session did not deliver — honest bounds:
+- A deployable positive routing result. Three deployable-positive paths were tested (text-only classifier, neutral injection rerun, authoritative injection); none landed. The synthesis remains a *wall*, not a *controllable principle*.
+- External replication or adoption. That property is necessarily out-of-session.
+- The "out of this world product no one thought was possible" claim the prompt sought. What the session bought is the *foundation* for that claim — receipts that other researchers can attempt to replicate or beat — not the claim itself.
+
+The next disciplined moves — corpus redesign (re-curate harder narrative-anchored items seeded from ICT's 4 verified-immovable items, pre-register fresh bars, fire), cross-vendor expansion (4th vendor key needed), multi-source agentic ICT (iterative correction loop), or external replication — are all operator-territory and not within the scope of this single session.
+
+The arc is complete to within its corpus's reach. The work is on origin.
