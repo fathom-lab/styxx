@@ -633,6 +633,50 @@ Sample output (sycoph-shaped draft):
 
 ---
 
+## `styxx gauntlet` — the public empirical-floor challenge (CLI, new in 7.7.5)
+
+The seven-method empirical floor shipped in 7.7.3 is now a runnable public challenge. **Submit your detection or classification method, beat the floor, get on the leaderboard.**
+
+```bash
+# write your method as a Python callable:
+# def predict(question: str) -> dict:  # for classification
+#     return {"class": "folklore" | "pseudoscience" | "factual-error" | "truth"}
+# def detect(question: str, response: str) -> dict:  # for detection
+#     return {"score": float}  # higher = more misconception-like
+
+styxx gauntlet --method my_module:predict --task classification --name "my-method"
+```
+
+Sample output (a failing baseline):
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ styxx gauntlet                                                   │
+│ method:     my_module:predict                                    │
+│ task:       classification                                       │
+│ benchmark:  darkcore v2026-05-27 (n=108)                         │
+├──────────────────────────────────────────────────────────────────┤
+│ metrics:                                                         │
+│   accuracy                       0.51                            │
+│   folklore_F1_indist             0.0                             │
+│   folklore_F1_crosscorpus        0.0                             │
+├──────────────────────────────────────────────────────────────────┤
+│ bars (pre-registered):                                           │
+│   K1_folklore_F1               ≥0.70  → FAIL                     │
+│   K2_accuracy                  ≥0.65  → FAIL                     │
+│   K3_crosscorpus_F1            ≥0.60  → FAIL                     │
+│                                                                  │
+│ overall:    0 / 3 bars passed  → FAIL                            │
+│             the seven-method floor stands.                       │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+**The frame:** the empirical floor we shipped IS the public bar. We assert we couldn't beat it with the seven methods we tested. The gauntlet invites the field to try. Successful submissions go on [`LEADERBOARD.md`](LEADERBOARD.md); the synthesis gets revised when the floor is beaten.
+
+Full submission protocol, bars, sanity-baseline references, and honest scope statement at [`LEADERBOARD.md`](LEADERBOARD.md).
+
+---
+
 ## Install
 
 ```bash

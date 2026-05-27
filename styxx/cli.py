@@ -830,6 +830,98 @@ def cmd_critique(args):
     return 0
 
 
+def cmd_gauntlet(args):
+    """styxx gauntlet — run a candidate method against the empirical floor.
+
+    7.7.5: the public-challenge runner. Loads any user-supplied detection or
+    classification method, runs it against the labeled benchmark
+    (``papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json``),
+    scores it against pre-registered bars, and prints a structured result.
+
+    The bars are the same closed-negative bars from the seven-method floor
+    paper (`PAPER_decorrelation_ceiling_2026_05_27.md`). We assert we
+    couldn't beat them with the seven methods we tested. The gauntlet
+    invites external researchers to try.
+
+    Method spec format: ``module:attr``, e.g. ``my_module:predict`` or
+    ``my_pkg.sub:detect``. The module must be importable.
+
+    Task = "classification" → method signature: ``predict(question) -> {"class": "..."}``.
+    Task = "detection" → method signature: ``detect(question, response) -> {"score": float}``.
+    """
+    import json as _json
+    from pathlib import Path as _Path
+    from styxx.gauntlet import (
+        load_benchmark, resolve_method, Submission,
+        run_classification_gauntlet, run_detection_gauntlet,
+    )
+
+    try:
+        method = resolve_method(args.method)
+    except (ValueError, AttributeError, TypeError, ImportError) as e:
+        print(f"error resolving method {args.method!r}: {e}")
+        return 1
+
+    bench_path = _Path(args.benchmark) if args.benchmark else None
+    try:
+        benchmark = load_benchmark(bench_path)
+    except FileNotFoundError as e:
+        print(f"error: {e}")
+        return 1
+
+    name = args.name or args.method
+    submission = Submission(name=name, method=method, task=args.task,
+                            module_spec=args.method, notes=args.notes or "")
+
+    if args.task == "classification":
+        result = run_classification_gauntlet(submission, benchmark)
+    elif args.task == "detection":
+        result = run_detection_gauntlet(submission, benchmark)
+    else:
+        print(f"error: unknown task {args.task!r}; choose classification or detection")
+        return 1
+
+    if args.format == "json":
+        print(_json.dumps(result.as_dict(), indent=2, default=str))
+        return 0 if result.overall_pass else 2
+
+    # Card render
+    width = 70
+    inner = width - 2
+    def _row(label, value):
+        line = f" {label} {value}"
+        return f"│{line.ljust(inner)}│"
+
+    print("┌" + "─" * inner + "┐")
+    print(_row("styxx gauntlet", ""))
+    print(_row("method:    ", submission.module_spec))
+    print(_row("name:      ", submission.name))
+    print(_row("task:      ", result.task))
+    print(_row("benchmark: ", f"darkcore v{result.benchmark_version} (n={result.n_items})"))
+    if result.error:
+        print(_row("ERROR:     ", result.error))
+    else:
+        print("├" + "─" * inner + "┤")
+        print(_row("metrics:", ""))
+        for k, v in result.metrics.items():
+            print(_row(f"  {k:<30}", str(v)))
+        print("├" + "─" * inner + "┤")
+        print(_row("bars (pre-registered):", ""))
+        for bar_name, passed in result.bar_results.items():
+            bar_val = result.bars.get(bar_name)
+            mark = "PASS" if passed else "FAIL"
+            print(_row(f"  {bar_name:<28}", f"≥{bar_val:.2f}  → {mark}"))
+        print(_row("", ""))
+        print(_row("overall:   ", f"{result.n_passed} / {result.n_total_bars} bars passed"
+                                  f"  → {'PASS' if result.overall_pass else 'FAIL'}"))
+        if not result.overall_pass:
+            print(_row("", "the seven-method floor stands."))
+        else:
+            print(_row("", "you beat the floor. submit a PR to LEADERBOARD.md."))
+    print("└" + "─" * inner + "┘")
+    return 0 if result.overall_pass else 2
+
+
 def cmd_data_dir(args):
     """styxx data-dir — print the active chart.jsonl path + a short summary.
 
@@ -2204,6 +2296,26 @@ def _build_parser() -> argparse.ArgumentParser:
         help="print the active chart.jsonl path (per-agent vs no-agent fallback)",
     )
     p_data_dir.set_defaults(func=cmd_data_dir)
+
+    # gauntlet — 7.7.5 public-challenge runner
+    p_gauntlet = sub.add_parser(
+        "gauntlet",
+        help="run a candidate method against the empirical floor (the public challenge runner)",
+    )
+    p_gauntlet.add_argument("--method", required=True,
+                            help="method spec: 'module:attr' (e.g. 'my_module:predict')")
+    p_gauntlet.add_argument("--task", choices=["classification", "detection"],
+                            default="classification",
+                            help="task mode (default: classification)")
+    p_gauntlet.add_argument("--benchmark", type=str, default=None,
+                            help="path to benchmark JSON (default: bundled darkcore benchmark)")
+    p_gauntlet.add_argument("--name", type=str, default=None,
+                            help="human-readable submission name (default: method spec)")
+    p_gauntlet.add_argument("--notes", type=str, default="",
+                            help="optional notes about the submission")
+    p_gauntlet.add_argument("--format", choices=["card", "json"], default="card",
+                            help="output format (default: card)")
+    p_gauntlet.set_defaults(func=cmd_gauntlet)
 
     # critique — 7.7.4 audit + register-fix suggestions
     p_critique = sub.add_parser(

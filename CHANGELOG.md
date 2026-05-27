@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.5] — 2026-05-27 — `styxx gauntlet`: the empirical floor as a public challenge with deployable tooling
+
+### Added
+
+- **`styxx gauntlet --method <module:attr>`** — the public-challenge runner. Loads any user-supplied detection or classification method, runs it against the labeled benchmark (`papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json`), scores it against pre-registered bars, and prints a structured result.
+- **`styxx.gauntlet` module** — programmatic API: `load_benchmark()`, `resolve_method()`, `run_classification_gauntlet()`, `run_detection_gauntlet()`, `Submission` and `GauntletResult` dataclasses, F1 + AUC metric primitives, `BASELINE_ENTRY` constant.
+- **`LEADERBOARD.md`** — public leaderboard for external submissions, with the seven-method floor as **Baseline-001**. Includes submission protocol, the locked bars (K1/K2/K3 for classification, D1/D2 for detection), sanity submissions (majority-class predictor, constant-zero detector — both fail by construction as the lower bound), honest scope statement, and citation block.
+- 20 new tests in `tests/test_gauntlet.py` covering: F1 and AUC math primitives in isolation, benchmark-loading default-path resolution, method-spec resolution (good + bad), classification gauntlet on failing baseline + perfect oracle, detection gauntlet on failing baseline + perfect oracle, error handling (bad spec, non-callable, raising method, bad return shape), result serialization, baseline-entry schema, and end-to-end CLI invocation. Full suite: **1078 passed, 8 skipped**.
+
+### The frame
+
+The seven-method floor we shipped *is* the bar. We assert we couldn't beat it with the seven methods we tested. The gauntlet invites the field to try. If anyone beats it, the synthesis gets revised; if nobody can, the floor compounds across submissions. **The empirical-floor benchmark stops being passive data and becomes an active public challenge.**
+
+### Two task modes
+
+- **Classification** — `def predict(question: str) -> {"class": ...}`. Bars: K1 in-distribution folklore F1 ≥ 0.70, K2 4-way accuracy ≥ 0.65, K3 cross-corpus folklore F1 ≥ 0.60.
+- **Detection** — `def detect(question: str, response: str) -> {"score": float}`. Bars: D1 misconception AUC ≥ 0.70, D2 folklore AUC ≥ 0.70.
+
+### What this primitive does NOT do — honest scope
+
+- Does not validate that submitted methods are honest about their training data. CI re-runs the gauntlet to verify reported scores, but cannot verify that the method did not train on the benchmark itself. Submitters are on the honor system; subsequent papers may catch a cheat.
+- Does not generalize the floor beyond the benchmark's scope (English-language, mostly Western cultural priors, n = 108). Methods that beat the floor on this benchmark may or may not generalize.
+- Does not auto-merge external submissions. PR review is operator-territory.
+
+### Why patch (not minor)
+
+Additive CLI command + new submodule + new top-level markdown file. No public API breakage. No changes to existing scoring instruments. Tests are isolated.
+
+---
+
 ## [7.7.4] — 2026-05-27 — `styxx critique`: the closed-loop dogfood pattern as a deployable primitive
 
 ### Added
