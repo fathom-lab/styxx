@@ -89,3 +89,111 @@ decorrelated competing answer into the challenge and the folklore-class dark ite
 become detectable, while needing no injection for the pseudoscience class.** If that holds,
 the Ceiling is not just a boundary but a controller. Until then: the floor has a shape, the
 shape has a name, and the name predicts the escape.
+
+---
+
+## Update — 2026-05-27 · JD and ICT have landed; the prediction resolved on the immovability branch
+
+This synthesis was written 2026-05-25 with two of its four predicted swings still pre-registered
+and unrun. As of 2026-05-27, both have landed. The original document above is preserved as-is —
+its claims were made before the data arrived. This update records what the four-method
+arc actually produced, with all four pre-registrations on public origin before their runs.
+
+### What landed
+
+**JD (justification-divergence) — `FINDING_jd_2026_05_27.md` (`2121cc9`).** The third reference-free
+swing, on the WHY axis rather than the WHAT axis. The hypothesis: misconceptions are memorized
+associations without transferable structure, so the council should rationalize them differently
+when asked why — high JD. Truths should be re-derived from shared structure — low JD. Bars locked
+before data at J1 AUC ≥ 0.75 (full pool) and J2 AUC ≥ 0.70 (stubborn-misconception subset vs truths).
+**Result: AUC 0.46 and 0.433 — both bars failed in the INVERTED direction.** Mean JD: truth 0.067 >
+misconception 0.040 > stubborn-misconception **0.022**. The stubborn cultural prior produces the
+*most* convergent justifications — three vendors converge on the wrong fact AND on the same
+supporting story. Five stubborn items hit JD = 0 (Walt Disney's body, "let them eat cake", wait-
+after-eating-to-swim, peaches in Georgia, "I am not a crook"). By contrast the highest-JD truths
+(0.333) are basic capitals — multiple equally-valid underlying reasons, vendors give different
+ones. The dark core has the *least* divergent justifications precisely because its sole
+representation is a complete story, not just a wrong answer.
+
+**ICT (injected-competitor test, the constructive swing) — `FINDING_ict_2026_05_27.md` (`64fa229`).**
+The make-or-break test the original synthesis named: hand the council a single decorrelated
+competing answer and see whether the floor lifts. Bars locked before data at I1 folklore yield-to-
+injected-truth ≥ 0.50, I2 truth yield-to-injected-falsehood ≤ 0.25 AND asymmetry ≥ 0.30. Run once,
+no re-rolling, after JD freed the GPU. **Result: I1 = 0.00 (0 of 4 folklore items yielded to the
+injected truth).** Truth control resists cleanly (yield 0.04, 1 / 25). The per-category yield
+gradient runs exactly as this synthesis predicted: folklore 0.00 < pseudoscience 0.167 < factual-
+error 0.231; truth 0.04. The probe's auto-verdict label says "sycophancy-inconclusive" but by
+inspection that is wrong (truths did not yield); the actual signature is the **immovability floor**
+branch of this synthesis's own bimodal prediction.
+
+### What this resolves
+
+The synthesis above made a bimodal prediction (`§ Honest scope`, last paragraph): if ICT passed,
+the Ceiling was a controller — grounding lifts the floor, the dark core is liftable in principle.
+If ICT failed via I1, the floor was load-bearing — *handed* the truth, the shared prior would not
+move, and the Ceiling was a wall not a controller. **The data resolved on the second branch.** The
+four-method confirmation now reads:
+
+| swing | axis | dark-core result | committed in |
+|---|---|---|---|
+| #1 Dark Matter | perturbation-fragility | partial (fragile shell only) | `FINDING_darkmatter_2026_05_25.md` |
+| #2 CVPD | agreement-fracture under challenge | clean negative, lift −0.32 | `FINDING_cvpd_2026_05_25.md` |
+| #3 JD | justification-divergence (the WHY axis) | clean negative, inverted (stubborn core most convergent) | `FINDING_jd_2026_05_27.md` |
+| **#4 ICT** | **constructive injection of competitor** | **clean negative, folklore yield 0.00** | `FINDING_ict_2026_05_27.md` |
+
+Three independent reference-free methods cannot see the floor; the one constructive method
+cannot crack it. The synthesis's central claim — *reference-free divergence detects an error
+iff a decorrelated competing representation is available, and the systemically dangerous errors
+are the sole-representation cultural priors that have none* — now has four pre-registered
+receipts. The bimodal prediction itself is what bought the credibility: the synthesis claimed
+this combination of outcomes would mean the floor was load-bearing, and the synthesis was
+written before half the receipts existed.
+
+### What the floor being load-bearing means (and does not mean)
+
+**It does not mean grounding is useless.** Retrieval-augmented generation works in plenty of
+domains; the ICT result is about *minimal* injection (a single competitor in a neutral A/B
+frame) on *folklore-class cultural priors*. The relevant distinction is between *available*
+grounding (an alternative representation is presented) and *authoritative* grounding (the
+alternative is framed as scientifically established or socially sanctioned). ICT tested the
+former. The latter is a different question and a different prereg.
+
+**It does not mean text-only register detection is useless.** The closed negatives on
+overconfidence text-only recalibration and the sycophancy restrained-FP cover specific
+single-axis failures; those instruments still flag many real failure modes and are calibrated.
+The Ceiling names where the *family* of reference-free divergence cannot reach, not where every
+text instrument fails.
+
+**It does mean two things sharply.** First, the systemically dangerous shared-cultural-prior
+errors — the ones that propagate identically across every agent on every vendor — are *not*
+liftable by adding more reference-free instruments to the stack. No amount of divergence
+sophistication crosses that floor; the four methods tested cover the natural axes (answer
+divergence, fragility, fracture, justification, constructive injection). Second, the "principled
+RAG router" framing this synthesis sketched as the deployable form — styxx routing questions
+to grounding based on detected dark-core membership — has a higher bar to clear than it did
+before ICT. If hand-picked truth injection cannot move folklore, retrieval-fetched competitors
+are unlikely to either. The router is not ruled out (authoritative framing, multi-source
+retrieval, agentic verification loops are all untested) but its prior is materially lower.
+
+### Open and worth pursuing
+
+- **n_folklore ≥ 25 follow-up.** ICT's headline I1 = 0.00 rests on 4 folklore items. Qualitatively
+  unambiguous; statistically thin. A folklore-stratified TruthfulQA-extended corpus (or hand-
+  curated cultural-prior items: lucky charms, "wait to swim," ugly-duckling-to-swan, sneeze-myths,
+  full-moon-behavior, alcohol-and-warmth) at n ≥ 25 with the same neutral injection protocol
+  would convert the small-subset signal into a CI result. Feasibility data, not a new principle.
+- **Authoritative-framing variant.** ICT used neutral "two answers are in circulation" framing.
+  An authoritative variant ("scientific consensus is X; the folk belief is Y") tests a different
+  axis — does the floor lift under *socially-marked-as-correct* grounding, even if it does not
+  lift under *available-as-alternative* grounding? Pre-registerable, distinct from ICT.
+- **Multi-source / agentic ICT.** Single-injected competitor vs multi-source presentation vs
+  an interactive correction loop. The Ceiling may have layers; ICT tested the thinnest.
+
+### Honest provenance
+
+This update is dated 2026-05-27 and references the four FINDING markdowns and their
+pre-registrations. The text above the `---` divider is the 2026-05-25 synthesis as committed at
+`e335773` and pushed at `bcd4208`, unchanged. The receipts are reproducible:
+`probe_darkmatter_results.json`, `probe_cvpd_results.json`, `probe_jd_results.json`, and
+`probe_ict_results.json`, each generated by the corresponding probe script under the locked
+prereg.
