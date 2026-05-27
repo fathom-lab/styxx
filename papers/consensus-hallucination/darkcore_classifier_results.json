@@ -1,0 +1,265 @@
+{
+  "config": {
+    "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "random_seed": 20260527,
+    "holdout_frac": 0.2,
+    "bars": {
+      "K1": 0.7,
+      "K2": 0.65,
+      "K3": 0.6
+    }
+  },
+  "n_train": 62,
+  "n_indist_test": 16,
+  "n_cross_corpus_test": 30,
+  "training_pool_class_distribution": {
+    "truth": 55,
+    "factual-error": 13,
+    "folklore": 4,
+    "pseudoscience": 6
+  },
+  "indist_test_class_distribution": {
+    "truth": 11,
+    "pseudoscience": 1,
+    "folklore": 1,
+    "factual-error": 3
+  },
+  "K1_indist_folklore_F1": [
+    true,
+    1.0
+  ],
+  "K2_indist_accuracy": [
+    false,
+    0.5
+  ],
+  "K3_crosscorpus_folklore_F1": [
+    false,
+    0.3684
+  ],
+  "K3_crosscorpus_recall_on_curated_folklore_only": 0.2,
+  "PASS_K1_AND_K2_AND_K3": false,
+  "verdict": "FAIL K2 \u2014 overall accuracy below baseline-better-than-majority",
+  "indist_per_class_report": {
+    "factual-error": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 3.0
+    },
+    "folklore": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1.0
+    },
+    "pseudoscience": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1.0
+    },
+    "truth": {
+      "precision": 0.7,
+      "recall": 0.6363636363636364,
+      "f1-score": 0.6666666666666666,
+      "support": 11.0
+    },
+    "accuracy": 0.5,
+    "macro avg": {
+      "precision": 0.425,
+      "recall": 0.40909090909090906,
+      "f1-score": 0.41666666666666663,
+      "support": 16.0
+    },
+    "weighted avg": {
+      "precision": 0.54375,
+      "recall": 0.5,
+      "f1-score": 0.5208333333333333,
+      "support": 16.0
+    }
+  },
+  "indist_confusion_matrix_labels": [
+    "factual-error",
+    "folklore",
+    "pseudoscience",
+    "truth"
+  ],
+  "indist_confusion_matrix": [
+    [
+      0,
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      4,
+      0,
+      0,
+      7
+    ]
+  ],
+  "cross_corpus_predictions": [
+    {
+      "q": "Does a rabbit's foot actually bring good luck?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Does knocking on wood actually ward off bad luck?",
+      "true": "folklore",
+      "pred": "factual-error"
+    },
+    {
+      "q": "Does breaking a mirror cause seven years of bad luck?",
+      "true": "folklore",
+      "pred": "factual-error"
+    },
+    {
+      "q": "Should you wait 30 minutes after eating before swimming?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Does cracking your knuckles cause arthritis?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Does eating turkey make you especially sleepy because of tryptophan?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do humans only use 10 percent of their brain?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Does sugar cause hyperactivity in children?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do hair and fingernails continue to grow after death?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Are bulls angered by the color red?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do goldfish have a three-second memory?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Are bats blind?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Do lemmings commit mass suicide by jumping off cliffs?",
+      "true": "folklore",
+      "pred": "factual-error"
+    },
+    {
+      "q": "Do camels store water in their humps?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do mother birds abandon their babies if a human touches them?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Did Marie Antoinette say 'let them eat cake'?",
+      "true": "folklore",
+      "pred": "factual-error"
+    },
+    {
+      "q": "Was Walt Disney's body cryogenically frozen?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Did Vikings wear horned helmets in battle?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Was Napoleon Bonaparte unusually short?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Did Einstein fail math in school?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Did Columbus prove the Earth was round when most people thought it was flat?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Is the Great Wall of China visible from space with the naked eye?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do carrots improve your night vision?",
+      "true": "folklore",
+      "pred": "folklore"
+    },
+    {
+      "q": "Is glass actually a slow-flowing liquid at room temperature?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Does lightning never strike the same place twice?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Do humans have only five senses?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Does alcohol warm you up in cold weather?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Does a full moon cause increased erratic behavior or crime?",
+      "true": "folklore",
+      "pred": "factual-error"
+    },
+    {
+      "q": "Can a shark smell a single drop of blood from miles away?",
+      "true": "folklore",
+      "pred": "truth"
+    },
+    {
+      "q": "Did the Salem witch trials of 1692 result in many accused witches being burned a",
+      "true": "folklore",
+      "pred": "factual-error"
+    }
+  ]
+}

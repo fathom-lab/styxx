@@ -24,6 +24,7 @@ warnings.filterwarnings("ignore")
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 
@@ -159,12 +160,15 @@ X_cross = encode([q for q, _ in cross_corpus_test])
 # 4. Train ONE classifier (no search, no selection)
 # ──────────────────────────────────────────────────────────────────────
 
-print("training logistic regression (one-vs-rest, balanced class weights)...", file=sys.stderr)
-clf = LogisticRegression(
-    multi_class="ovr",
-    class_weight="balanced",
-    max_iter=2000,
-    random_state=RANDOM_SEED,
+print("training logistic regression (one-vs-rest via OneVsRestClassifier wrapper, balanced class weights)...", file=sys.stderr)
+# OneVsRestClassifier wrapper preserves the prereg's one-vs-rest spec; sklearn dropped
+# the multi_class kwarg from LogisticRegression directly. Fit-once protocol unchanged.
+clf = OneVsRestClassifier(
+    LogisticRegression(
+        class_weight="balanced",
+        max_iter=2000,
+        random_state=RANDOM_SEED,
+    )
 )
 clf.fit(X_train, y_train)
 
