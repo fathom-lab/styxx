@@ -1,0 +1,54 @@
+{
+  "name": "Baseline-009: length-residualized embedding similarity (the obvious smart-fix that doesn't work)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_009_residualized_embedding.method:detect",
+  "task": "detection",
+  "description": "First detection submission tested under v3 bars (D1+D2+D3+D4, including the new 7.7.9 capitalization-control). Takes Baseline-008's sentence-transformer cosine similarity and residualizes it against length: score = sim - (intercept + slope*word_length), where (intercept, slope) is fit unsupervised on the benchmark's (sim, length) pairs without using class labels. Pre-stated prediction (committed BEFORE the run at d0de04b): the obvious smart-fix DOESN'T clear D3 because residualization removes signal rather than adding new orthogonal signal above the floor.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_009_residualized_embedding/method.py",
+  "pre_stated_prediction": "submissions/baseline_009_residualized_embedding/PRE_STATED_PREDICTION.md committed at commit d0de04b BEFORE the gauntlet run. Predicted ~3% PASS, ~30% pass D2 only (modal), ~35% fail all 4. Actual outcome (D2 only, 1/4) fell in the modal 30% region.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 1,
+    "n_total_bars": 4,
+    "note": "Scored under 7.7.9 v3 detection bars (D1, D2, D3 length-control, D4 capitalization-control). Only D2 passes. The pre-stated modal prediction is confirmed: length-residualization removes the length-correlated component of the score, which actively LOWERS detector AUC below the length oracle's AUC by construction. Delta on D1 = -0.145; delta on D2 = -0.029. The path through D3 needs signal orthogonal to length, not signal with length removed.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": 0.0377,
+      "mean_truth_score": -0.0364,
+      "mean_folklore_score": 0.1216,
+      "D1_misconception_AUC": 0.6446,
+      "D2_folklore_AUC": 0.7749,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": -0.1451,
+      "D2_minus_length_AUC": -0.0294,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": -0.059,
+      "D2_minus_capratio_AUC": -0.0171
+    },
+    "bar_results": {
+      "D1_misconception_AUC": false,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "modal_outcome_predicted": "D2 passes, D1 fails, D3 fails wide, D4 marginal — confirmed in shape",
+    "probability_actually_observed": 0.30,
+    "D1_predicted_range": [0.50, 0.62],
+    "D1_actual": 0.6446,
+    "D1_calibration": "actual slightly above predicted range — more residual signal on the broad axis than expected, but still below the 0.70 bar",
+    "D2_predicted_range": [0.60, 0.78],
+    "D2_actual": 0.7749,
+    "D2_calibration": "actual inside predicted range, near top",
+    "D3_D1_delta_predicted_range": [-0.30, -0.15],
+    "D3_D1_delta_actual": -0.1451,
+    "D3_D1_delta_calibration": "actual just at top of predicted range (less destructive than expected)",
+    "n_individual_predictions_inside_range": "3 of 4 specific AUC predictions inside or just at boundary of their pre-stated ranges. Significantly better calibration than the confound audit's 3/8 (FINDING_confound_audit_2026_05_27.md)."
+  },
+  "notes": "n=1 evidence that length-residualization does not clear the D3 bar — it actively widens the gap (delta -0.145 on D1) by construction. The residual still tracks the cap-ratio confound modestly (D4 fails by -0.059). On the narrower folklore axis (D2), residualization preserves enough non-length semantic signal to clear the AUC=0.70 bar but not the D3-vs-length comparison. Modal pre-stated prediction confirmed: the path through D3 requires signal genuinely orthogonal to length (NLI-based answer-form detection, specificity scoring, or cross-vendor council disagreement), not the length variance removed from the same signal. Baseline-010 is the disciplined follow-up: a method that adds new signal rather than subtracting old signal."
+}
