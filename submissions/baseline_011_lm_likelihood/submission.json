@@ -1,0 +1,58 @@
+{
+  "name": "Baseline-011: gpt2 per-token log-probability detector (the closest any submission has come to PASS — 3/4 with D2 length-delta just 0.007 from clearing D3)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_011_lm_likelihood.method:detect",
+  "task": "detection",
+  "description": "Mean per-token log-probability of response tokens under gpt2 (124M, HuggingFace standard checkpoint), with prefix 'Question: {q}\\nAnswer: '. The hypothesis being tested: misconception responses are the *common-belief* version of a topic — folklore restatements are exactly the kind of text a language model trained on web data would predict. Truth responses (canonical answers that contradict common belief) are MORE surprising. Per-token mean is length-normalized by construction.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_011_lm_likelihood/method.py",
+  "pre_stated_prediction": "submissions/baseline_011_lm_likelihood/PRE_STATED_PREDICTION.md committed at commit 879e4ab BEFORE the gauntlet run. Predicted distribution: ~12% PASS, ~15% 'pass D1+D2+D4 fail D3', ~30% D2 only or D2+D4, ~20% 1/4, ~23% 0/4. Actual outcome (3/4 = pass D1+D2+D4 fail D3) fell in the 15% 'pass D1+D2+D4 fail D3' band — validated. Direction-of-effect CONFIRMED: misconception responses scored higher mean log-prob than truth responses (mean misc = -2.40, mean truth = -4.70). Magnitude predictions were SYSTEMATICALLY too pessimistic: D1 actual 0.811 was above predicted range 0.55-0.72; D2 actual 0.897 was above predicted range 0.58-0.78.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 3,
+    "n_total_bars": 4,
+    "note": "3/4 bars passed. D1 (0.811), D2 (0.897), D4 (cap-deltas 0.108 / 0.105) all PASS. D3 fails: D1-length delta = 0.022 (below 0.10), D2-length delta = 0.093 (just 0.007 below 0.10). The closest any submission has come to PASS under v3 bars. The signal direction is confirmed: misconception responses are LM-typical (higher mean log-prob); truth responses are LM-surprising (lower). The near-miss on D2 (0.093 vs 0.10 threshold) suggests that a stronger LM than gpt2-124M (e.g., Llama-3-8B, Phi-3, Qwen-3-7B) might push the D2-length-delta over 0.10. The D1-length-delta gap is larger (0.078 short), so D3 on the broad axis may be harder to clear regardless of LM size.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": -2.3988,
+      "mean_truth_score": -4.7037,
+      "mean_folklore_score": -1.8994,
+      "D1_misconception_AUC": 0.8113,
+      "D2_folklore_AUC": 0.8973,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": 0.0216,
+      "D2_minus_length_AUC": 0.093,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": 0.1077,
+      "D2_minus_capratio_AUC": 0.1053
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": true
+    }
+  },
+  "prediction_calibration": {
+    "outcome_band": "predicted 15% 'pass D1+D2+D4 fail D3' — confirmed",
+    "outcome_probability_assigned": 0.15,
+    "direction_calibration": "CONFIRMED — predicted misconception scores higher mean log-prob than truth; actual confirmed (-2.40 vs -4.70). First direction-of-effect prediction this session that held.",
+    "D1_predicted_range": [0.55, 0.72],
+    "D1_actual": 0.8113,
+    "D1_calibration": "ABOVE predicted range — magnitude was systematically underpredicted; the LM-typicality signal is stronger than I thought",
+    "D2_predicted_range": [0.58, 0.78],
+    "D2_actual": 0.8973,
+    "D2_calibration": "ABOVE predicted range — same as D1, magnitude underestimated",
+    "D3_D1_delta_predicted_range": [-0.20, 0.15],
+    "D3_D1_delta_actual": 0.0216,
+    "D3_D1_delta_calibration": "INSIDE range; closer to bottom than I expected because magnitude was higher (D1 itself was 0.81, length was 0.79, so net delta is small even though both AUCs are high)",
+    "D3_D2_delta_predicted_range": [-0.15, 0.20],
+    "D3_D2_delta_actual": 0.093,
+    "D3_D2_delta_calibration": "INSIDE range, 0.007 below the 0.10 threshold — tantalizingly close",
+    "honest_note": "This is the ninth in-session falsification of the 2026-05-27 arc: my magnitude predictions for D1 and D2 were both underestimated by 0.10-0.13 AUC points. Outcome band was correct, but the underlying signal is stronger than I credited. The bigger lesson: AUC-magnitude predictions should account for the possibility that a chosen signal is genuinely effective even if novel. The discipline lesson is to widen predicted ranges for novel signal axes."
+  },
+  "notes": "Baseline-011 is the highest-performing detection submission to date under v3 bars. The near-miss on D2 (length-delta 0.093, threshold 0.10) is the clearest signal yet that the LM-typicality axis is the path through the dark core's confounds. The frontier follow-up is now well-defined: re-run the same method with a stronger LM (Phi-3-mini, Llama-3-8B-Instruct, or Qwen-2.5-7B-Instruct) and pre-state a prediction about whether the larger LM clears D3. The hypothesis would be: yes, because the signal at gpt2-124M is already strong on D2 and a larger model should produce sharper per-token log-prob discrimination. The D1 axis (broad misconception vs truth, includes factual-error + pseudoscience) may remain hard regardless because those classes have less LM-typicality signature than folklore."
+}
