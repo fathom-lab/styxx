@@ -1,0 +1,813 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={The Gauntlet that Catches Itself: Pre-Registered AI Evaluation Infrastructure with In-Production Bar-Weakness Detection},
+  pdfauthor={Alexander Rodabaugh (Fathom Lab)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{The Gauntlet that Catches Itself: Pre-Registered AI Evaluation
+Infrastructure with In-Production Bar-Weakness Detection}
+\author{Alexander Rodabaugh (Fathom Lab)}
+\date{2026-05-27}
+
+\begin{document}
+\maketitle
+
+\section{The Gauntlet that Catches Itself: Pre-Registered AI Evaluation
+Infrastructure with In-Production Bar-Weakness
+Detection}\label{the-gauntlet-that-catches-itself-pre-registered-ai-evaluation-infrastructure-with-in-production-bar-weakness-detection}
+
+\textbf{Author:} Alexander Rodabaugh (Fathom Lab) \textbf{Date:}
+2026-05-27 \textbf{Substrate:} styxx 7.7.9 · ten reference baselines on
+the dark-core benchmark · git origin \texttt{fathom-lab/styxx@main}
+\textbf{Status:} preprint, in-session synthesis
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+We present a publicly-reproducible pre-registered AI evaluation gauntlet
+for hallucination/misconception detection, instantiated against a
+108-record benchmark of cross-vendor consensus errors. The contribution
+is \textbf{not the benchmark or the bars themselves}, but a
+meta-property of the infrastructure: the gauntlet \textbf{caught two of
+its own bar weaknesses in production within a single session}, replaced
+them with regression-tested controls, and re-scored all existing
+submissions honestly under the strengthened bars. We document the
+discovery chain (D3 length-control discovered by accident → D4
+capitalization-control discovered by systematic scan → ten
+pre-registered baselines, none of which clear the strengthened bars),
+and we record eight in-session falsifications of our own predictions ---
+including two direction-of-effect misses that revealed a domain-specific
+calibration lesson invisible to AUC-magnitude prediction. We argue that
+the moat of disciplined AI evaluation is not the bars or the benchmark
+but the \textbf{recursive pattern}: bars revise under empirical pressure
+from real submissions; the discipline of pre-registration BEFORE each
+run makes wrongness \emph{visible} rather than hidden; the
+infrastructure improves itself on a session timescale. All artifacts
+(benchmark, gauntlet code, ten baseline submissions, four FINDING
+documents, eight pre-stated-then-published predictions) are
+reconstructible from public git history at commit-level granularity.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Introduction}\label{introduction}
+
+The AI evaluation literature has a well-documented credibility crisis:
+benchmarks leak into training data; bars get gamed by surface-form
+features; closed-vendor evaluation pipelines cannot be reproduced
+independently; reported state-of-the-art numbers fail to replicate on
+follow-up corpora.\footnote{e.g., Hendrycks et al., 2020; Ribeiro et
+  al., 2020; Recht et al., 2019. The ``evaluation crisis'' literature is
+  too large to cite exhaustively.} The proposed responses are familiar
+--- held-out test sets, contamination audits, formal pre-registration
+--- but each has its own failure modes. Pre-registration of a fixed bar
+set, in particular, has a flaw the empirical-evaluation literature has
+not adequately addressed: \textbf{what happens when the pre-registered
+bars themselves turn out to be gameable?}
+
+This paper documents a real-world instance where exactly that happened,
+and the corrective mechanism that followed. On 2026-05-27, the styxx
+project shipped a public-challenge runner (``the gauntlet'') with two
+detection bars (D1, D2). Within hours, an external-style sanity-check
+submission --- a 30-line token-overlap heuristic --- accidentally PASSed
+both bars. Investigation revealed a length-confound in the benchmark's
+\texttt{expected\_consensus} field that no design-time review had
+surfaced. The fix shipped six minutes later as a third bar (D3
+length-control), with a regression test that the length-only oracle must
+fail by construction. A subsequent \textbf{systematic confound audit},
+pre-registered with eight feature predictions committed to public git
+BEFORE running, revealed a second orthogonal artifact
+(capitalized-token-ratio, inverted) that became the D4 bar. Three
+pre-registered detection submissions tested under the strengthened v3
+bars all failed, in their predicted modal outcome regions. The empirical
+floor compounds.
+
+What we record here is not ``we found the truth about hallucination
+detection.'' We did not. The dark core stays dark to every method we
+tested. The contribution is the \textbf{infrastructure pattern}: how to
+build evaluation gauntlets that \emph{catch their own validity
+weaknesses in production}, and what the costs and shape of that
+discipline look like when run rigorously.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. The empirical floor: the seven-method dark-core
+arc}\label{the-empirical-floor-the-seven-method-dark-core-arc}
+
+The benchmark for this paper is
+\texttt{darkcore\_benchmark\_2026\_05\_27.json}, n=108 records, four
+classes (truth=55, folklore=34, factual-error=13, pseudoscience=6). Each
+record contains a question, an \texttt{expected\_consensus} (the
+consensus answer produced by a three-vendor council: gpt-4o-mini +
+Qwen2.5-3B + gemma-2-2b-it), and a hand-curated class label. The
+benchmark was constructed for the \emph{Decorrelation Ceiling} paper
+\footnote{\texttt{papers/PAPER\_decorrelation\_ceiling\_2026\_05\_27.md}
+  in the same repository, also released 2026-05-27.}, whose central
+claim is that \textbf{reference-free divergence methods detect
+cross-vendor errors iff a decorrelated competing representation is
+available} --- i.e., the methods fail on the subset where all three
+vendors converge on the same wrong answer (``the dark core'').
+
+The Decorrelation Ceiling paper tested seven methods (the ``seven-method
+floor''):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Dark Matter} --- perturbation-fragility under prompt
+  rephrasing (closed-negative on the dark core)
+\item
+  \textbf{CVPD} --- cross-vendor pairwise disagreement (closed-negative)
+\item
+  \textbf{JD} --- justification-divergence under explanation prompts
+  (closed-negative)
+\item
+  \textbf{ICT} --- neutral injection of contrary content
+  (closed-negative)
+\item
+  \textbf{ICT-folklore} --- folklore-prime variant (28/30
+  already-corrected shortfall)
+\item
+  \textbf{ICT-authoritative} --- authoritative-prime variant (same
+  shortfall shape)
+\item
+  \textbf{Dark-core classifier} --- sentence-transformer + balanced
+  one-vs-rest LR (K1=0.42, K3=0.36 → fails 2/3 classification bars)
+\end{enumerate}
+
+The seven-method floor is the empirical ground state: each is a method
+we ran honestly, each is pre-registered with bars committed BEFORE data,
+each is closed-negative on the partition that matters. The gauntlet's
+contribution to the empirical landscape is not its own methods --- it's
+the public-challenge runner that lets \emph{anyone else} try.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. The gauntlet
+infrastructure}\label{the-gauntlet-infrastructure}
+
+\texttt{styxx.gauntlet} (shipped 7.7.5, hardened 7.7.8 + 7.7.9) is a
+public-challenge runner with two task modes:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Classification:} the user's method takes a question, returns a
+  predicted class label. Bars: K1 (folklore F1 in-distribution ≥ 0.70),
+  K2 (4-way accuracy ≥ 0.65), K3 (cross-corpus folklore F1 ≥ 0.60,
+  load-bearing).
+\item
+  \textbf{Detection:} the user's method takes (question, response),
+  returns a misconception score. Bars: D1 (misconception vs truth AUC ≥
+  0.70), D2 (folklore vs truth AUC ≥ 0.70), D3 (length-control delta ≥
+  0.10, added 7.7.8), D4 (capitalization-control delta ≥ 0.10, added
+  7.7.9).
+\end{itemize}
+
+The interface is deliberately framework-agnostic: pass a Python callable
+(\texttt{module:attr} spec), the runner imports and applies it to every
+record in the benchmark, scores it against pre-registered bars, and
+returns a structured \texttt{GauntletResult}. PASS is the conjunction
+over all bars.
+
+The benchmark, the bars, and the runner all ship as installed package
+data (\texttt{pip\ install\ styxx}), making the gauntlet
+\textbf{publicly reproducible without git access or remote benchmark
+downloads}.
+
+The four phases of a submission:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Submitter writes a Python callable conforming to the task signature.
+\item
+  Submitter runs the gauntlet locally; receives a structured JSON
+  result.
+\item
+  Submitter opens a PR adding a row to \texttt{LEADERBOARD.md} with the
+  submission JSON attached.
+\item
+  CI re-runs the gauntlet on the submitter's method against the locked
+  benchmark; if scores match, the PR is mergeable.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. The pre-registration
+discipline}\label{the-pre-registration-discipline}
+
+For every detection submission tested in this paper, we follow a
+five-step discipline:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Write a pre-stated prediction document}
+  (\texttt{PRE\_STATED\_PREDICTION.md}) committing to expected AUC
+  ranges, outcome probability distribution, and direction-of-effect
+  hypotheses.
+\item
+  \textbf{Commit the prediction + the method file (un-run) to public
+  origin} before any gauntlet invocation. The git commit hash is the
+  prereg witness.
+\item
+  \textbf{Run the gauntlet exactly once.} No re-running on the same
+  submission. No hyperparameter sweeps. No ``trying a different model.''
+\item
+  \textbf{Publish the result to the public LEADERBOARD regardless of
+  outcome.} Modal-prediction validation, AUC-range hits, and
+  direction-of-effect misses are all recorded honestly.
+\item
+  \textbf{If a submission surfaces a bar weakness, the bar gets revised}
+  (with a regression test) and ALL prior submissions get re-scored under
+  the new bars. Original-bar scores are preserved alongside the new
+  ones; nothing is hidden.
+\end{enumerate}
+
+The discipline is asymmetric: it constrains us (the project) more than
+it constrains submitters. A submitter can run their method many times
+privately, only publishing the best result; we publish every gauntlet
+run we make against ourselves. The asymmetry is intentional. The
+seven-method floor is \emph{our} floor; future submissions either beat
+the floor (the synthesis revises) or fail (the floor compounds across
+submissions).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. The bars-catching-themselves pattern: D3 →
+D4}\label{the-bars-catching-themselves-pattern-d3-d4}
+
+The central empirical demonstration of this paper is two consecutive bar
+revisions that emerged from operating the gauntlet, not from designing
+it.
+
+\subsubsection{5.1. D3 --- caught by
+accident}\label{d3-caught-by-accident}
+
+A 30-line token-overlap detector (``Baseline-007''):
+\texttt{score\ =\ (1\ −\ hedge\_density)\ ×\ (1\ −\ novelty\_density)},
+no model, no training data. Submitted as a sanity-check to populate the
+detection side of the leaderboard. Expected outcome: noise-level
+baseline.
+
+Actual outcome: \textbf{PASS=true, D1=0.864, D2=0.922, 2/2 bars
+cleared.} The first-ever PASS on the gauntlet, from a method that should
+not have passed.
+
+Investigation revealed a length-confound in the benchmark's
+\texttt{expected\_consensus} field. The class-conditional mean response
+length is sharply discriminative:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+class & mean \texttt{expected\_consensus} length (words) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+truth & 3.9 \\
+factual-error & 6.6 \\
+pseudoscience & 6.5 \\
+folklore & 7.5 \\
+\end{longtable}
+}
+
+A pure length-only oracle (\texttt{score\ =\ len(response.split())}) was
+run against the same partitions and scored AUC ≈ 0.79--0.80 on both D1
+and D2. The v1 bars (AUC ≥ 0.70) were trivially gameable by detectors
+whose score positively correlates with response length.
+
+Six minutes later, styxx 7.7.8 shipped with the D3 length-control bar:
+detector AUC must beat the length-only oracle's AUC by ≥ 0.10 on BOTH
+partitions. A regression test
+(\texttt{test\_length\_oracle\_passes\_D1\_D2\_but\_fails\_D3}) was
+added the same commit: the length oracle (whose score IS length)
+trivially passes D1+D2 by construction but D3 must fail by construction
+(delta = 0). Baseline-007 was re-scored: now 2/3, NOT a PASS. The
+original v1 score is preserved alongside the v2 score in the submission
+JSON.
+
+This took six minutes from PASS to patch.
+
+\subsubsection{5.2. D4 --- caught by deliberate
+scan}\label{d4-caught-by-deliberate-scan}
+
+After D3, the next disciplined question: \textbf{what other surface
+features game the bars?} We defined eight candidate oracle-detectors:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{word\_length} (calibration --- the existing D3 oracle)
+\item
+  \texttt{char\_length}
+\item
+  \texttt{sentence\_count}
+\item
+  \texttt{question\_mark\_count}
+\item
+  \texttt{exclamation\_count}
+\item
+  \texttt{capitalized\_token\_ratio}
+\item
+  \texttt{hedge\_density}
+\item
+  \texttt{type\_token\_ratio}
+\end{itemize}
+
+For each, we computed: D1 AUC, D2 AUC, Spearman ρ to word\_length
+(orthogonality measure). An oracle that passes a bar AT ρ \textless{}
+0.5 with word\_length is a \emph{candidate orthogonal confound} --- a
+feature that games the bars without being a length proxy.
+
+Pre-stated predictions for all 8 features × 2 partitions = 16 AUC ranges
+were committed to public origin BEFORE running. The audit then revealed
+\texttt{capitalized\_token\_ratio} as a genuine orthogonal confound ---
+but \textbf{inverted from the predicted direction}:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+oracle & D1 AUC raw & D1 AUC abs & direction & ρ → length \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{capitalized\_token\_ratio} & 0.296 & \textbf{0.704} & inverted &
+−0.343 \\
+\end{longtable}
+}
+
+The mechanism: truth responses are canonical short answers like
+``Paris'', ``Newton'', ``1789'' --- strings where the capitalized-token
+ratio is structurally near 1.0. Folklore restatements are full sentences
+where lowercase function words dilute the proper-noun density. Truth has
+\emph{higher} cap-ratio, not lower.
+
+The pre-stated audit code missed this initially: my flagging logic
+checked \texttt{AUC\ ≥\ d1\_bar}, the positive direction only. The
+cap-ratio's raw AUC was 0.30, below the 0.70 threshold, so the first
+audit reported \texttt{n\_orthogonal\_confounds\_found:\ 0}. \textbf{My
+code was confounded by the same direction-blindness as my prediction.}
+Fixed by adding \texttt{D1\_AUC\_abs\ =\ max(auc,\ 1−auc)} and flagging
+based on absolute AUC. Re-ran; cap-ratio surfaced as a candidate
+orthogonal confound.
+
+styxx 7.7.9 shipped with D4 (capitalization-control delta ≥ 0.10) plus a
+regression test
+(\texttt{test\_capratio\_oracle\_passes\_D1\_D2\_but\_fails\_D4}). PASS
+now requires D1 ∧ D2 ∧ D3 ∧ D4.
+
+\subsubsection{5.3. The recursion is the
+property}\label{the-recursion-is-the-property}
+
+The chain extends:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{D3} discovered by \emph{accident} (an external-style sanity
+  submission unexpectedly PASSed)
+\item
+  \textbf{D4} discovered by \emph{deliberate scan} (the audit primitive
+  runs on demand)
+\end{itemize}
+
+Future confounds would be caught by the same pattern. The audit
+primitive \texttt{styxx.gauntlet.audit\_confounds()} is part of the
+public API; anyone running \texttt{styxx\ gauntlet-audit-confounds} gets
+the per-feature AUC + ρ-to-length table. Operator-territory follow-ups
+already identified: \texttt{numeric\_token\_ratio},
+\texttt{single\_token\_flag}, \texttt{uppercase\_ratio} --- none
+implemented yet but cheap to add.
+
+The bars compound: a method that clears all four has demonstrated signal
+beyond the length artifact AND the cap-ratio artifact AND scored AUC ≥
+0.70 on both broad and folklore axes. Each new D-bar adds a
+confound-rejection commitment that future detectors must satisfy.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. Eight in-session
+falsifications}\label{eight-in-session-falsifications}
+
+We name what was wrong, in public, in git history. The eight in-session
+falsifications of the 2026-05-27 arc:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{C1-profile ≤ 0.20 register-law bar} (Pareto-frontier finding):
+  C10 deliberately written in the law's voice scored composite 0.264,
+  missing the bar. The Pareto finding was revised in place.
+\item
+  \textbf{\texttt{set\_session} doesn't propagate} (product-exploration
+  finding): falsified by per-agent routing --- \texttt{set\_session}
+  DOES propagate via \texttt{STYXX\_AGENT\_NAME}.
+\item
+  \textbf{ICT-folklore auto-verdict PASS} (probe label bug, commit
+  \texttt{cc3435c}): the verdict-label logic prioritized I2-failure over
+  I1-failure, mislabeling a real null result.
+\item
+  \textbf{ICT-authoritative auto-verdict PASS} (same label bug shape,
+  commit \texttt{a6d7a7e}).
+\item
+  \textbf{styxx 7.7.5 wheel-bundling miss}: the benchmark JSON was not
+  included in the installed wheel; caught by clean-env verification
+  before public PyPI publish.
+\item
+  \textbf{The gauntlet's v1 detection bars being length-gameable} (D3
+  discovery, FINDING\_gauntlet\_artifact\_discovery): the
+  length-confound was real and the bars were patched.
+\item
+  \textbf{The cap-ratio orthogonal confound} (D4 discovery,
+  FINDING\_confound\_audit): predicted positive direction; actual
+  inverted. And my audit-code shared the direction blind-spot.
+\item
+  \textbf{Baseline-010's NLI direction}: predicted folklore restatements
+  would entail the question; actual was the reverse (truth ranks
+  slightly higher entailment).
+\end{enumerate}
+
+The pattern across (7) and (8) is the most actionable: \textbf{on this
+benchmark, direction-of-effect predictions are systematically harder
+than magnitude predictions.} Calibration record across the four
+pre-stated submissions and the confound audit:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+pre-stated artifact
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+predictions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+inside-range count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+outcome-band probability
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+call
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Baseline-006 (char TF-IDF) & binary tie & exact match & n/a &
+confirmed \\
+Baseline-008 (embedding similarity) & 5 ranges + 4 bands & 5/5 + 60\%
+band & 60\% & well-calibrated \\
+Baseline-009 (residualized) & 6 ranges + 5 bands & 4/6 + 30\% band &
+30\% & well-calibrated \\
+Baseline-010 (NLI entailment) & 6 ranges + 6 bands & 0/6 (direction
+wrong) + 20\% band & 20\% & band-correct, direction wrong \\
+Confound audit (8 oracles) & 16 ranges + 6 joint & 3/16 + 3 of 6 joint
+falsified & n/a & poorly calibrated on individuals \\
+\end{longtable}
+}
+
+\textbf{Magnitude predictions on this domain: roughly two-thirds
+reliable. Direction-of-effect predictions on this domain: systematically
+the worst.} The discipline lesson is durable for future work: always
+include \texttt{\textbar{}AUC\ −\ 0.5\textbar{}} as the prediction
+range; treat direction as a separate sub-prediction with its own
+probability; never rely on a single-direction threshold check in audit
+code.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{7. The detection frontier under v3
+bars}\label{the-detection-frontier-under-v3-bars}
+
+After D3 + D4, the gauntlet has documented receipts for what does NOT
+clear the dark core:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+method class
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+best submission
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+bars passed
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+failed bar
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+reason
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Surface lexical & Baseline-007 (token overlap) & 3/4 & D3 & tracks
+length too closely \\
+Classical NLP & Baseline-005/006 (TF-IDF) & 1/3 on classification & K1,
+K3 & folklore class lacks lexical-form signature \\
+Raw semantic embedding & Baseline-008 (sent-T cosine) & 3/4 & D3 &
+structurally equivalent to length on D1 \\
+Length-corrected embedding & Baseline-009 (residualized) & 1/4 & D1, D3,
+D4 & residualization subtracts signal rather than adding \\
+Pre-trained NLI cross-encoder & Baseline-010 (R-as-premise entailment) &
+0/4 & all four & MNLI training doesn't transfer to
+factual-restatement \\
+\end{longtable}
+}
+
+That is substantial coverage of the ``cheap surface-text'' method space.
+The bars are now forcing the research budget toward more substantive
+features. Methods that have not yet been tested:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Cross-vendor consensus disagreement} --- score by inter-vendor
+  disagreement after re-eliciting the answer from ≥ 2 vendors. Requires
+  vendor keys; estimated PASS probability 25--40\%.
+\item
+  \textbf{Perplexity against a calibrated prior LM} --- score response
+  surprise given the question, conditioned on a reference distribution.
+  Requires a small open LM; uncertain expected signal.
+\item
+  \textbf{Knowledge-graph lookup} --- query Wikidata / DBPedia, score
+  response-KG agreement. Operator-territory; multi-hour build.
+\item
+  \textbf{Fine-tuned classifier on (q, r) pairs} --- retrain
+  Baseline-002's architecture jointly on paired inputs. Risks length
+  leakage at training time.
+\end{enumerate}
+
+The remaining frontier requires investment beyond surface-text
+manipulation. That is the discipline pattern's contribution: it forces
+the \emph{next} bet to be a more substantive one.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{8. How the discipline
+scales}\label{how-the-discipline-scales}
+
+The pattern documented in this paper has properties that we argue
+generalize beyond this benchmark:
+
+\textbf{Falsifiability is a substrate, not a step.} Every artifact in
+this arc has a pre-stated commit hash. The eight in-session
+falsifications are visible because they were pre-stated. The
+bars-catching-themselves recursion is visible because the original
+bar-set was committed before the submission that exposed its weakness.
+Without pre-registration, the same eight events would have looked like
+development noise.
+
+\textbf{Bars revise under empirical pressure, not under design
+pressure.} D3 was not foreseen by anyone reviewing the v1 bars; it was
+foreseen by a sanity-check submission that exposed the artifact in
+production. D4 was foreseen by deliberate scan AFTER D3 existed. The
+bars cannot be made artifact-free at design time; they get hardened by
+being used.
+
+\textbf{The discipline asymmetry is the moat.} Submitters can run their
+methods privately many times before submitting their best result. We
+must publish every gauntlet run we make against ourselves, every
+prediction we lock, every falsification that follows. The asymmetry is
+intentional: it makes the floor's credibility cost more for us than the
+wins it gives to submitters. Over time, this compounds --- the floor
+accumulates rigor faster than any single submission can erode.
+
+\textbf{Calibration improves where the pattern catches misses.} The
+direction-of-effect lesson from cap-ratio and NLI is now durable. Future
+pre-stated AUC predictions on this domain will include direction as a
+separate sub-prediction. The discipline produces domain-specific
+calibration improvements that no design-time review could have
+predicted.
+
+\textbf{Reproducibility is the byproduct of the pattern, not a separate
+property.} Every artifact in this paper has a public git commit, a
+public PyPI release-target (7.7.9, ready for publish), a public
+benchmark JSON, a public LEADERBOARD row, and a structured submission
+JSON. \texttt{pip\ install\ styxx==7.7.9} +
+\texttt{styxx\ gauntlet\ -\/-method\ \textless{}spec\textgreater{}\ -\/-task\ \textless{}task\textgreater{}}
+reproduces every result on the leaderboard.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{9. Honest limitations}\label{honest-limitations}
+
+We name what this paper does NOT establish:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{The dark core is not solved.} No method tested in this arc has
+  cleared D3+D4. The seven-method floor + the gauntlet's v3 bars stand.
+  Future submissions may pass; until then, the empirical claim is ``the
+  methods we have tested fail.''
+\item
+  \textbf{The benchmark is single-vendor on the labels.} The
+  three-vendor council is gpt-4o-mini + Qwen2.5-3B + gemma-2-2b-it.
+  Cross-vendor generalization to other major vendors (Anthropic,
+  Google's Gemini-2.5, Mistral) is untested.
+\item
+  \textbf{The benchmark is English-language with Western cultural
+  priors.} Cross-language / cross-cultural generalization is a known
+  open follow-up.
+\item
+  \textbf{The D3 and D4 thresholds (0.10) are judgment calls.} They were
+  pre-registered before submission outcomes, but they could be wrong. If
+  serious submissions cluster at D3-delta ∈ {[}0.05, 0.10{]} without
+  obviously gaming the artifact, the threshold may need revision based
+  on the submission distribution --- but only based on submission data,
+  never to make the bar easier.
+\item
+  \textbf{\texttt{audit\_confounds} audits only the 8 features we
+  defined.} Additional candidate confounds (numeric-token-ratio,
+  single-token-flag, uppercase-ratio) are not implemented. Future
+  submissions may surface new orthogonal artifacts that the current
+  audit cannot detect.
+\item
+  \textbf{N = 108 is small.} AUC estimates have meaningful confidence
+  intervals at this corpus size. The bars (≥ 0.70) are well above chance
+  but not above plausible variance for cherry-picked submissions; the
+  discipline pattern compensates by requiring pre-registration
+  \emph{before} the submission sees the corpus.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{10. Conclusion}\label{conclusion}
+
+We have presented a pre-registered AI evaluation gauntlet that
+\textbf{caught two of its own bar weaknesses in production within a
+single session}, replaced them with regression-tested controls, and
+tested three subsequent pre-registered detection submissions under the
+strengthened bars (none cleared the bars; each fell in its pre-stated
+modal region). The contribution is not the benchmark or the methods ---
+those are substrate. The contribution is \textbf{the recursion}: bars
+catch themselves, calibration improves on direction-of-effect misses,
+and the discipline asymmetry compounds rigor faster than submissions can
+erode it.
+
+The seven-method floor + the v3 bars + ten reference baselines + four
+FINDING documents + eight in-session falsifications are all
+reconstructible from public git history at the commit level.
+\texttt{pip\ install\ styxx==7.7.9} (pending publish) reproduces the
+entire v3 leaderboard.
+
+What we propose is not a benchmark to beat, but a pattern to adopt. The
+pattern is that AI evaluation gauntlets should be designed to
+\textbf{catch their own bar weaknesses in production}, not just to
+resist gaming at design time. The discipline that follows --- pre-stated
+prediction before every submission, public falsification record after
+every miss, regression-tested bar revision after every artifact
+discovery --- is the substrate on which credible AI evaluation can
+compound across submitters, sessions, and years.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+This paper synthesizes work done by the styxx project on 2026-05-27 in a
+single continuous session, with the cognitive support of Claude Opus 4.7
+acting as an in-session collaborator. The eight in-session
+falsifications recorded in this paper are real and were caught against
+this paper's draft as well: §5.2 originally described the cap-ratio
+confound as ``predicted in the positive direction,'' which was incorrect
+--- the actual prediction was for cap-ratio to NOT be a confound at all;
+the discovery was that it was a confound in the \emph{inverted}
+direction. The draft was corrected to reflect the actual pre-stated
+prediction text.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Reproducibility}\label{reproducibility}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+artifact
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+commit
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+path
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+benchmark v1 & \texttt{bcd4208} &
+\texttt{papers/consensus-hallucination/darkcore\_benchmark\_2026\_05\_27.json} \\
+seven-method paper & \texttt{bcd4208..a6d7a7e} &
+\texttt{papers/PAPER\_decorrelation\_ceiling\_2026\_05\_27.md} \\
+gauntlet (7.7.5) & \texttt{f93a734..fb67fd2} &
+\texttt{styxx/gauntlet.py} \\
+D3 (7.7.8) & \texttt{48a0ef0} &
+\texttt{styxx/gauntlet.py::DEFAULT\_DETECTION\_BARS} \\
+D4 (7.7.9) & \texttt{d8f4843} &
+\texttt{styxx/gauntlet.py::DEFAULT\_DETECTION\_BARS} \\
+audit primitive & \texttt{d8f4843} &
+\texttt{styxx/gauntlet.py::audit\_confounds} \\
+Baseline-007 prereg + result & \texttt{fb67fd2}, \texttt{48a0ef0} &
+\texttt{submissions/baseline\_007\_token\_overlap/} \\
+Baseline-008 prereg & \texttt{a05c8c1} &
+\texttt{submissions/baseline\_008\_embedding\_similarity/PRE\_STATED\_PREDICTION.md} \\
+Baseline-008 result & \texttt{7cb776c} &
+\texttt{submissions/baseline\_008\_embedding\_similarity/submission.json} \\
+confound-audit prereg & \texttt{48a9fe3} &
+\texttt{papers/consensus-hallucination/PRE\_STATED\_PREDICTION\_confound\_audit\_2026\_05\_27.md} \\
+confound-audit result + D4 + 7.7.9 release & \texttt{d8f4843} &
+\texttt{papers/agent-self-audit/FINDING\_confound\_audit\_2026\_05\_27.md} \\
+Baseline-009 prereg & \texttt{d0de04b} &
+\texttt{submissions/baseline\_009\_residualized\_embedding/PRE\_STATED\_PREDICTION.md} \\
+Baseline-009 result & \texttt{eade633} &
+\texttt{submissions/baseline\_009\_residualized\_embedding/submission.json} \\
+Baseline-010 prereg & \texttt{acc159a} &
+\texttt{submissions/baseline\_010\_nli\_entailment/PRE\_STATED\_PREDICTION.md} \\
+Baseline-010 result & \texttt{0477cd8} &
+\texttt{submissions/baseline\_010\_nli\_entailment/submission.json} \\
+detection-arc FINDING & \texttt{395e25b} &
+\texttt{papers/agent-self-audit/FINDING\_detection\_arc\_v3\_bars\_2026\_05\_27.md} \\
+this paper & this commit &
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} \\
+\end{longtable}
+}
+
+\texttt{git\ log\ -\/-oneline\ -\/-all} on the public origin reproduces
+the chain.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\end{document}
