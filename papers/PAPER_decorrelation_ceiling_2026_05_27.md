@@ -1,7 +1,7 @@
 # The Decorrelation Ceiling: a seven-method empirical floor on reference-free detection of cross-vendor consensus hallucination
 
 > **Author:** Alexander Rodabaugh, Fathom Lab · *with assistance from Claude Opus 4.7 (1M context), Anthropic, under the styxx project discipline pattern.*
-> **Status:** v1.0 draft — pre-arxiv. The styxx project repo: `github.com/fathom-lab/styxx`. Release: `v7.7.3`. Concept DOI: `10.5281/zenodo.19326174` (release-specific DOI may follow; manual curation).
+> **Status:** v1.0 draft — pre-arxiv. The styxx project repo: `github.com/fathom-lab/styxx`. Release: `v7.7.7`. Concept DOI: [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174). Release-specific DOI for this work: [**`10.5281/zenodo.20418532`**](https://doi.org/10.5281/zenodo.20418532) (v24 in the concept chain, published 2026-05-27).
 > **Date:** 2026-05-27 · **License:** CC-BY-4.0 (this paper) / MIT (styxx code).
 > **Reads alongside:** the field-facing capstone (`REPORT_decorrelation_ceiling_v2_2026_05_27.md`), the synthesis with its 2026-05-27 update block (`SYNTHESIS_decorrelation_ceiling_2026_05_25.md`), and the seven pre-registration + probe + finding chains in `papers/consensus-hallucination/`. Everything cited is verifiable from `git log fathom-lab/styxx main`.
 
@@ -269,7 +269,7 @@ styxx 7.7.3, fathom-lab/styxx git main commit XXXXXXX, 2026-05-27.
 github.com/fathom-lab/styxx/blob/main/papers/PAPER_decorrelation_ceiling_2026_05_27.md
 ```
 
-The styxx project carries Zenodo concept DOI `10.5281/zenodo.19326174`; release-specific deposits are manually curated and may or may not be available for v7.7.3 by the time you read this.
+The styxx project carries Zenodo concept DOI [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174). The release-specific DOI for this paper and the v7.7.7 deposit is **[`10.5281/zenodo.20418532`](https://doi.org/10.5281/zenodo.20418532)** (v24 in the concept chain, published 2026-05-27). Cite either; the concept DOI resolves to the latest, the release DOI is permanent.
 
 ---
 
