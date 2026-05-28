@@ -30,22 +30,25 @@
 </head>
 <body>
   <h1>styxx · verify an attestation</h1>
-  <p class="sub">re-derive the portable content address of a styxx attestation, in your browser.
+  <p class="sub">re-derive the portable content address of a styxx attestation — or check a
+  transparency-log inclusion / consistency proof — in your browser.
   no install, no network, no styxx — a bundled, zero-dependency verifier does the math locally.
   you are not trusting styxx; you are checking it.</p>
 
-  <textarea id="art" placeholder="paste an attestation or chain JSON here…"></textarea>
+  <textarea id="art" placeholder="paste an attestation, a chain, or a transparency-log proof (inclusion / consistency) JSON here…"></textarea>
   <div class="row">
-    <input id="head" type="text" placeholder="optional: expected chain head (catches a re-sealed chain)">
+    <input id="head" type="text" placeholder="optional: expected chain head — or, for a consistency proof, the witnessed earlier root">
     <button id="go">verify</button>
   </div>
   <div id="badge"></div>
   <pre id="out">awaiting input…</pre>
 
   <footer>
-    structure only: the portable digest + the merkle chain. claim verdicts (need the repo) and
-    cognometric vitals (need styxx's instruments) are reported NOT CHECKED, never asserted.
-    a fully re-sealed chain passes structure and is caught only against an external expected head.
+    structure only: the portable digest + the merkle chain + transparency-log proofs.
+    claim verdicts (need the repo) and cognometric vitals (need styxx's instruments) are reported
+    NOT CHECKED, never asserted. a fully re-sealed chain passes structure and is caught only against
+    an external expected head; a consistency proof detects a rewritten/suppressed past entry only
+    against a witnessed earlier root (paste it above). equivocation needs tree-head gossip, as in CT.
     spec: docs/attestation-content-address.md · verifier: web/styxx_verify.js
   </footer>
 
@@ -61,8 +64,10 @@
       const r = styxxVerify.verify(artifact, head);
       out.className = r.ok ? "ok" : "fail";
       out.textContent = r.lines.join("\n");
+      const kind = (artifact && (artifact.kind === "inclusion" || artifact.kind === "consistency"))
+        ? "PROOF VERIFIED" : "PORTABLE INTEGRITY OK";
       badge.innerHTML = r.ok
-        ? '<span class="badge ok">PORTABLE INTEGRITY OK</span>'
+        ? '<span class="badge ok">' + kind + '</span>'
         : '<span class="badge fail">FAIL</span>';
     });
   </script>

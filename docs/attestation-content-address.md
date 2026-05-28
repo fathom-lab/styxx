@@ -125,6 +125,51 @@ over a fuzz corpus of finite doubles and the 4 real artifact shapes
 diverges under the legacy scheme. NaN/Inf are not permitted; keys are assumed
 ASCII (the styxx artifact domain).
 
+## 7. Cognometric Transparency Log (RFC 6962) — no silent suppression
+
+A receipt proves what it says; it cannot prove that **nothing was suppressed**.
+The transparency log closes that gap the way Certificate Transparency does: an
+append-only Merkle log over attestation digests, with two checkable proofs.
+
+**Leaves.** Each leaf entry is an attestation's `digest.portable.value` (a hex
+string), so the log inherits the cross-language content address.
+
+**Hashing (string-tagged domain separation).** A documented deviation from RFC
+6962's 0x00/0x01 byte tags — ASCII string tags so the pure-JS string SHA-256
+works unchanged across languages. Functionally equivalent; a styxx log is NOT
+submittable to a CT log and vice versa.
+
+```
+leaf_hash(entry)      = SHA-256("styxx-tlog-leaf:" + entry)            # hex
+node_hash(left,right) = SHA-256("styxx-tlog-node:" + left + ":" + right)  # left,right hex
+```
+
+**Merkle Tree Hash** (RFC 6962 §2.1): `MTH({}) = SHA-256("")`,
+`MTH({d}) = leaf_hash(d)`, and for n>1 with k = largest power of two < n,
+`MTH(D) = node_hash(MTH(D[0:k]), MTH(D[k:n]))`.
+
+**Inclusion proof** — `{leaf_index, tree_size, leaf_hash, audit_path, root}`
+proves "entry i is in the log whose root is R" (audit path; RFC 6962 §2.1.1).
+
+**Consistency proof** — `{first_size, second_size, first_root, second_root,
+proof}` proves the size-n log is an append-only extension of the earlier size-m
+log (RFC 6962 §2.1.2): no past leaf was edited, deleted, reordered, or
+truncated. Verify against a **witnessed earlier root** to detect a rewrite of
+history.
+
+**Tree head** — `{tlog_version, log_id, size, root, timestamp, digest}`,
+content-addressed by `digest` (sha256 over the canonical core). NOT
+cryptographically signed: signing/witnessing/gossip is the equivocation-defeating
+layer and is **out of scope** (honest boundary). Append-only-ness is proven only
+relative to a tree head a verifier has witnessed.
+
+**Reference reimplementations.** `styxx.transparency` (Python) and
+`web/styxx_verify.js` (`leafHash` / `nodeHash` / `merkleTreeHash` /
+`verifyInclusion` / `verifyConsistency`, plus `verify()` auto-dispatch on
+`kind`). The two agree byte-for-byte on the root and on every inclusion +
+consistency proof over the real log (`tests/test_transparency.py`), and the
+browser page (`web/verify.html`) verifies a pasted proof client-side.
+
 ## 5. Reference reimplementation
 
 `scripts/styxx_verify_standalone.py` — stdlib only, ~150 lines. Usage:

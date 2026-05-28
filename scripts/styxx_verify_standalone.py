@@ -16,6 +16,10 @@ What it verifies (structure only):
         genesis prev = "styxx-attestation-chain-v1"
         head = last link's chain_digest
   * optional: --expected-head anchors the chain so a re-sealed tamper is caught
+  * transparency-log proofs (RFC 6962, string-tagged — docs §7): an inclusion
+        proof (kind="inclusion") or a consistency proof (kind="consistency");
+        --witnessed-root anchors a consistency proof so a rewritten/suppressed
+        past entry is caught
 
 What it does NOT verify (honest scope — needs styxx + the repo):
   * claim verdicts (need git + the pinned repo tree)
@@ -119,11 +123,118 @@ def verify_chain(artifact, out, expected_head=None):
     return ok
 
 
+# --- transparency log (RFC 6962, string-tagged) — see docs §7 --------------
+TLOG_LEAF_TAG = "styxx-tlog-leaf:"
+TLOG_NODE_TAG = "styxx-tlog-node:"
+
+
+def leaf_hash(entry):
+    return hashlib.sha256((TLOG_LEAF_TAG + entry).encode("utf-8")).hexdigest()
+
+
+def node_hash(left, right):
+    return hashlib.sha256((TLOG_NODE_TAG + left + ":" + right).encode("utf-8")).hexdigest()
+
+
+def merkle_tree_hash(leaves):
+    n = len(leaves)
+    if n == 0:
+        return hashlib.sha256(b"").hexdigest()
+    if n == 1:
+        return leaves[0]
+    k = 1
+    while (k << 1) < n:
+        k <<= 1
+    return node_hash(merkle_tree_hash(leaves[:k]), merkle_tree_hash(leaves[k:]))
+
+
+def _decomp_incl(index, size):
+    inner = (index ^ (size - 1)).bit_length()
+    border = bin(index >> inner).count("1")
+    return inner, border
+
+
+def _chain_inner(seed, proof, index):
+    for i, h in enumerate(proof):
+        seed = node_hash(seed, h) if (index >> i) & 1 == 0 else node_hash(h, seed)
+    return seed
+
+
+def _chain_inner_right(seed, proof, index):
+    for i, h in enumerate(proof):
+        if (index >> i) & 1 == 1:
+            seed = node_hash(h, seed)
+    return seed
+
+
+def _chain_border_right(seed, proof):
+    for h in proof:
+        seed = node_hash(h, seed)
+    return seed
+
+
+def verify_inclusion(proof, out, root=None):
+    index, size = proof.get("leaf_index"), proof.get("tree_size")
+    leaf, path = proof.get("leaf_hash"), proof.get("audit_path") or []
+    expected = root if root is not None else proof.get("root")
+    if expected is None or not (isinstance(index, int) and 0 <= index < size):
+        out.append("  inclusion: FAIL (malformed proof)")
+        return False
+    inner, border = _decomp_incl(index, size)
+    if len(path) != inner + border:
+        out.append("  inclusion: FAIL (wrong audit-path length)")
+        return False
+    res = _chain_border_right(_chain_inner(leaf, path[:inner], index), path[inner:])
+    ok = res == expected
+    out.append(f"  leaf {index} of {size}: inclusion {'OK' if ok else 'FAIL'}")
+    return ok
+
+
+def verify_consistency(proof, out, first_root=None):
+    size1, size2 = proof.get("first_size"), proof.get("second_size")
+    path = list(proof.get("proof") or [])
+    r1 = first_root if first_root is not None else proof.get("first_root")
+    r2 = proof.get("second_root")
+    if r1 is None or r2 is None or size1 > size2:
+        out.append("  consistency: FAIL (malformed proof)")
+        return False
+    if size1 == size2:
+        ok = r1 == r2 and not path
+    elif size1 == 0:
+        ok = not path
+    else:
+        inner, border = _decomp_incl(size1 - 1, size2)
+        shift = (size1 & -size1).bit_length() - 1
+        inner -= shift
+        if size1 == (1 << shift):
+            seed, start = r1, 0
+        elif path:
+            seed, start = path[0], 1
+        else:
+            out.append("  consistency: FAIL (empty proof)")
+            return False
+        if len(path) != start + inner + border:
+            out.append("  consistency: FAIL (wrong proof length)")
+            return False
+        path = path[start:]
+        mask = (size1 - 1) >> shift
+        h1 = _chain_border_right(_chain_inner_right(seed, path[:inner], mask), path[inner:])
+        h2 = _chain_border_right(_chain_inner(seed, path[:inner], mask), path[inner:])
+        ok = h1 == r1 and h2 == r2
+    out.append(f"  size {size1} -> {size2}: consistency {'OK' if ok else 'FAIL'}"
+               + ("" if ok else " — a past entry was edited/deleted/reordered"))
+    if first_root is None:
+        out.append("  witnessed first-root: NOT PROVIDED — pass --witnessed-root to detect a rewrite")
+    return ok
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description="Standalone styxx attestation verifier (no styxx import).")
-    p.add_argument("path", help="path to an attestation or chain JSON artifact")
+    p.add_argument("path", help="path to an attestation, chain, or transparency-log proof JSON")
     p.add_argument("--expected-head", default=None,
                    help="externally-anchored chain head; catches a re-sealed chain")
+    p.add_argument("--witnessed-root", default=None,
+                   help="witnessed earlier root for a consistency proof; catches a rewritten history")
     args = p.parse_args(argv)
 
     try:
@@ -134,8 +245,14 @@ def main(argv=None):
         return 2
 
     out = []
-    is_chain = "links" in artifact and "head_chain_digest" in artifact
-    if is_chain:
+    kind = artifact.get("kind")
+    if kind == "inclusion":
+        out.append("styxx transparency-log INCLUSION proof")
+        ok = verify_inclusion(artifact, out)
+    elif kind == "consistency":
+        out.append("styxx transparency-log CONSISTENCY proof (append-only check)")
+        ok = verify_consistency(artifact, out, first_root=args.witnessed_root)
+    elif "links" in artifact and "head_chain_digest" in artifact:
         out.append(f"styxx attestation CHAIN — {len(artifact.get('links') or [])} link(s)")
         ok = verify_chain(artifact, out, expected_head=args.expected_head)
     else:
@@ -143,7 +260,8 @@ def main(argv=None):
         ok = verify_attestation(artifact, out)
 
     print("\n".join(out))
-    print(f"\nstructural integrity: {'OK' if ok else 'FAIL'}")
+    label = "proof" if kind in ("inclusion", "consistency") else "structural integrity"
+    print(f"\n{label}: {'OK' if ok else 'FAIL'}")
     return 0 if ok else 1
 
 

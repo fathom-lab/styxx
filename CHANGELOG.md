@@ -58,6 +58,18 @@ node web/styxx_verify.js artifact.json [expectedHead]      # or open web/verify.
 
 - **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_portable_attestation.md` states K1 Python↔JS byte-for-byte agreement (decisive) / K2 legacy digest untouched / K3 JS catches tamper + no scope leak BEFORE the code was written. Thesis survived: 11 gate tests (`tests/test_portable_attestation.py`); Python↔Node agreed on 40,019/40,019 fuzz values and all 4 real shapes incl. the saturating case. Live receipt: `scripts/dogfood/portable_attestation_self_2026_05_28.json`.
 
+### Added — Cognometric Transparency Log (RFC 6962): no silent suppression
+
+- **`styxx.transparency`** — Certificate Transparency (RFC 6962) applied to styxx attestations. An append-only Merkle log whose leaves are attestation `digest.portable.value` hex strings, with **inclusion proofs** ("entry X is at index i in the log with root R") and **consistency proofs** ("the size-n log is an append-only extension of the witnessed size-m log — no past leaf edited, deleted, reordered, or truncated"). Closes the *completeness* gap the receipt arc could not: a receipt proves what it says, the log proves **nothing was suppressed** — relative to a witnessed tree head.
+
+- **`web/styxx_verify.js`** gains `leafHash` / `nodeHash` / `merkleTreeHash` / `verifyInclusion` / `verifyConsistency`, and `verify()` auto-dispatches on a proof's `kind`. **`web/verify.html`** now verifies a pasted inclusion/consistency proof client-side — paste a consistency proof + the witnessed earlier root and detect a rewritten/suppressed past entry, zero install.
+
+- **Documented deviation from RFC 6962:** ASCII string domain-separation tags (`styxx-tlog-leaf:` / `styxx-tlog-node:`) instead of the 0x00/0x01 byte tags, so the bundled pure-JS string SHA-256 works unchanged across languages. Functionally equivalent; a styxx log is not submittable to a CT log and vice versa.
+
+- **Honest boundary (pre-registered, not a kill).** Append-only-ness is proven only *relative to a witnessed tree head*. The data structure alone does not stop an operator who never publishes a tree head from equivocating (showing different logs to different parties) — that needs tree-head gossip/witnessing, exactly as in CT. Stated in the artifact and docs; the overclaim is refused.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_transparency_log.md` states K1 inclusion sound+complete / K2 consistency catches rewrite (decisive) / K3 cross-language agreement BEFORE the code was written. Thesis survived: 16 gate tests (`tests/test_transparency.py`); Python↔Node agree on the root and on every inclusion + consistency proof, and edit/delete/reorder/truncate of witnessed history are all caught. Live receipt over styxx's own HEAD: `scripts/dogfood/transparency_log_self_2026_05_28.json`.
+
 ---
 
 ## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation

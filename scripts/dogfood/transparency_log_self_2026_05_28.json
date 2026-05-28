@@ -1,0 +1,28 @@
+{
+  "dogfood": "cognometric transparency log \u2014 no silent suppression (verified in Node)",
+  "head_commit": "26d4041a08aa6c6caa9f51d006d3b698c2e93de1",
+  "node_version": "v24.13.0",
+  "js_verifier": "web\\styxx_verify.js",
+  "log_size": 8,
+  "root": "66e75f50acb797df1188180ef5cd92b476b92ff13258474dd63c04d7dc0cfdb6",
+  "witnessed_size_m": 5,
+  "witnessed_root": "4ed9fbc0730fc14c7bfe221f1bd3065e90df4ed2a7270bb502e3ad5285c98d51",
+  "witnessed_tree_head_digest": "7504056167cd3240fecd48514b1a5ec181cbd1d382b03d91bb7530522c33222d",
+  "K1_inclusion_sound_complete": true,
+  "K2_consistency_catches_rewrite": {
+    "genuine_append_passes": true,
+    "edit_caught": true,
+    "delete_caught": true,
+    "reorder_caught": true,
+    "truncate_caught": true
+  },
+  "K2_all": true,
+  "K3_cross_language": {
+    "node_root_eq_python": true,
+    "node_all_inclusions_ok": true,
+    "node_consistency_good_pass_bad_fail": true
+  },
+  "K3_all": true,
+  "P4_honest_boundary": "append-only-ness is proven RELATIVE to the witnessed tree head above; defeating equivocation by an operator who never publishes a head needs tree-head gossip/witnessing, exactly as in CT \u2014 out of scope, not claimed.",
+  "RESULT": "SURVIVED"
+}

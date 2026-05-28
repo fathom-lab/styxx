@@ -178,3 +178,38 @@ def test_P4_resealed_chain_needs_anchor(substrate):
     # Anchored to the original head: re-seal is caught.
     out2 = []
     assert SV.verify_chain(chain, out2, expected_head=good_head) is False
+
+
+# ---- transparency-log proofs: standalone reimpl agrees with styxx ----------
+
+def test_standalone_tlog_primitives_match_library():
+    from styxx import transparency as T
+    assert SV.leaf_hash("e0") == T.leaf_hash("e0")
+    assert SV.node_hash("a" * 64, "b" * 64) == T.node_hash("a" * 64, "b" * 64)
+    for n in (1, 2, 5, 13, 33):
+        leaves = [SV.leaf_hash(f"e{i}") for i in range(n)]
+        assert SV.merkle_tree_hash(leaves) == T.merkle_tree_hash(leaves)
+
+
+def test_standalone_verifies_inclusion_and_catches_tamper():
+    from styxx import transparency as T
+    log = T.TransparencyLog([f"e{i}" for i in range(20)])
+    for i in (0, 9, 19):
+        out = []
+        assert SV.verify_inclusion(log.inclusion_proof(i), out) is True
+    bad = dict(log.inclusion_proof(7), leaf_hash="0" * 64)
+    out = []
+    assert SV.verify_inclusion(bad, out) is False
+
+
+def test_standalone_consistency_catches_rewrite_against_witnessed_root():
+    from styxx import transparency as T
+    n, m = 23, 15
+    witnessed = T.TransparencyLog([f"e{i}" for i in range(m)]).root()
+    good = T.TransparencyLog([f"e{i}" for i in range(n)]).consistency_proof(m)
+    out = []
+    assert SV.verify_consistency(good, out, first_root=witnessed) is True
+    edited = T.TransparencyLog([f"e{i}" for i in range(n)])
+    edited.entries[3] = "TAMPERED"
+    out = []
+    assert SV.verify_consistency(edited.consistency_proof(m), out, first_root=witnessed) is False

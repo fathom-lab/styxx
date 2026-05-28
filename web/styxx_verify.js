@@ -120,6 +120,108 @@
   function portableDigest(artifact) { return sha256Hex(portablePayload(artifact)); }
   function chainDigest(prev, attDigest) { return sha256Hex(prev + "|" + attDigest); }
 
+  // ---- transparency log (RFC 6962, string-tagged) --------------------------
+  // Domain separation by ASCII string tags so the bundled string-SHA-256 works
+  // unchanged. Cross-validated byte-for-byte against styxx.transparency (Python)
+  // in tests/test_transparency.py.
+  const TLOG_LEAF_TAG = "styxx-tlog-leaf:";
+  const TLOG_NODE_TAG = "styxx-tlog-node:";
+  function leafHash(entry) { return sha256Hex(TLOG_LEAF_TAG + entry); }
+  function nodeHash(l, r) { return sha256Hex(TLOG_NODE_TAG + l + ":" + r); }
+  function merkleTreeHash(leaves) {
+    const n = leaves.length;
+    if (n === 0) return sha256Hex("");
+    if (n === 1) return leaves[0];
+    let k = 1;
+    while ((k << 1) < n) k <<= 1;
+    return nodeHash(merkleTreeHash(leaves.slice(0, k)), merkleTreeHash(leaves.slice(k)));
+  }
+  function bitLength(x) { let n = 0; while (x > 0) { x = Math.floor(x / 2); n++; } return n; }
+  function onesCount(x) { let n = 0; while (x > 0) { n += x & 1; x = Math.floor(x / 2); } return n; }
+  function trailingZeros(x) { let n = 0; while ((x & 1) === 0) { x = Math.floor(x / 2); n++; } return n; }
+  function decompIncl(index, size) {
+    const inner = bitLength(index ^ (size - 1));
+    const border = onesCount(Math.floor(index / Math.pow(2, inner)));
+    return [inner, border];
+  }
+  function chainInnerJ(seed, proof, index) {
+    for (let i = 0; i < proof.length; i++) {
+      seed = ((Math.floor(index / Math.pow(2, i)) & 1) === 0)
+        ? nodeHash(seed, proof[i]) : nodeHash(proof[i], seed);
+    }
+    return seed;
+  }
+  function chainInnerRightJ(seed, proof, index) {
+    for (let i = 0; i < proof.length; i++) {
+      if ((Math.floor(index / Math.pow(2, i)) & 1) === 1) seed = nodeHash(proof[i], seed);
+    }
+    return seed;
+  }
+  function chainBorderRightJ(seed, proof) {
+    for (let i = 0; i < proof.length; i++) seed = nodeHash(proof[i], seed);
+    return seed;
+  }
+  function verifyInclusion(proof, root) {
+    const index = proof.leaf_index, size = proof.tree_size;
+    const leaf = proof.leaf_hash, path = proof.audit_path || [];
+    const expected = root != null ? root : proof.root;
+    if (expected == null || !(index >= 0 && index < size)) return false;
+    const d = decompIncl(index, size), inner = d[0], border = d[1];
+    if (path.length !== inner + border) return false;
+    let res = chainInnerJ(leaf, path.slice(0, inner), index);
+    res = chainBorderRightJ(res, path.slice(inner));
+    return res === expected;
+  }
+  function verifyConsistency(proof, firstRoot, secondRoot) {
+    const size1 = proof.first_size, size2 = proof.second_size;
+    let path = (proof.proof || []).slice();
+    const r1 = firstRoot != null ? firstRoot : proof.first_root;
+    const r2 = secondRoot != null ? secondRoot : proof.second_root;
+    if (r1 == null || r2 == null) return false;
+    if (size1 > size2) return false;
+    if (size1 === size2) return r1 === r2 && path.length === 0;
+    if (size1 === 0) return path.length === 0;
+    const d = decompIncl(size1 - 1, size2);
+    let inner = d[0]; const border = d[1];
+    const shift = trailingZeros(size1);
+    inner -= shift;
+    let seed, start;
+    if (size1 === Math.pow(2, shift)) { seed = r1; start = 0; }
+    else { if (!path.length) return false; seed = path[0]; start = 1; }
+    if (path.length !== start + inner + border) return false;
+    path = path.slice(start);
+    const mask = Math.floor((size1 - 1) / Math.pow(2, shift));
+    let hash1 = chainInnerRightJ(seed, path.slice(0, inner), mask);
+    hash1 = chainBorderRightJ(hash1, path.slice(inner));
+    let hash2 = chainInnerJ(seed, path.slice(0, inner), mask);
+    hash2 = chainBorderRightJ(hash2, path.slice(inner));
+    return hash1 === r1 && hash2 === r2;
+  }
+  // verify a log proof object (inclusion or consistency); optional witnessed roots
+  function verifyLogProof(proof, witnessRoot, witnessSecondRoot) {
+    const lines = [];
+    let ok;
+    if (proof && proof.kind === "inclusion") {
+      ok = verifyInclusion(proof, witnessRoot);
+      lines.push("transparency-log INCLUSION proof");
+      lines.push("  leaf " + proof.leaf_index + " of " + proof.tree_size +
+                 " against root " + (proof.root || "").slice(0, 16) + "…");
+      lines.push("  inclusion: " + (ok ? "OK" : "FAIL"));
+    } else if (proof && proof.kind === "consistency") {
+      ok = verifyConsistency(proof, witnessRoot, witnessSecondRoot);
+      lines.push("transparency-log CONSISTENCY proof (append-only check)");
+      lines.push("  size " + proof.first_size + " -> " + proof.second_size);
+      lines.push("  consistency: " + (ok ? "OK" : "FAIL") +
+                 (ok ? " — no past entry was edited/deleted/reordered" : ""));
+      if (witnessRoot == null)
+        lines.push("  witnessed first-root: NOT PROVIDED — pass one to detect a rewrite");
+    } else {
+      lines.push("not a transparency-log proof (need kind=inclusion|consistency)");
+      ok = false;
+    }
+    return { ok: ok, lines: lines };
+  }
+
   function semanticNotice(artifact, lines) {
     if (Array.isArray(artifact.claims) && artifact.claims.length)
       lines.push("  semantic (claim verdicts): NOT CHECKED — needs styxx + repo");
@@ -180,6 +282,8 @@
 
   function verify(artifact, expectedHead) {
     const lines = [];
+    if (artifact && (artifact.kind === "inclusion" || artifact.kind === "consistency"))
+      return verifyLogProof(artifact, expectedHead || null);
     const isChain = artifact && artifact.links && artifact.head_chain_portable_digest !== undefined;
     let ok;
     if (isChain) {
@@ -212,6 +316,9 @@
     sha256Hex: sha256Hex, jcs: jcs, portableDigest: portableDigest,
     chainDigest: chainDigest, verify: verify,
     verifyAttestation: verifyAttestation, verifyChain: verifyChain,
+    leafHash: leafHash, nodeHash: nodeHash, merkleTreeHash: merkleTreeHash,
+    verifyInclusion: verifyInclusion, verifyConsistency: verifyConsistency,
+    verifyLogProof: verifyLogProof,
     CHAIN_GENESIS: CHAIN_GENESIS,
   };
 });

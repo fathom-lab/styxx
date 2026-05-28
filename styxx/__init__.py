@@ -349,6 +349,8 @@ from .agent_audit import extract_claims, ExtractionReport  # 7.7.10: prose->clai
 from . import attestation  # noqa: F401  # 7.7.11: Verifiable Cognometric Attestation
 from .attestation import attest, verify_attestation, Attestation, VerificationResult
 from .attestation import attest_chain, verify_chain, AttestationChain, ChainVerificationResult
+from . import transparency  # noqa: F401  # 7.7.12: Cognometric Transparency Log (RFC 6962)
+from .transparency import TransparencyLog
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
@@ -668,6 +670,7 @@ __all__ = [
     "agent_audit", "Claim", "AuditResult", "AgentClaimAuditor",
     "extract_claims", "ExtractionReport",
     "attestation", "attest", "verify_attestation", "Attestation", "VerificationResult",
+    "transparency", "TransparencyLog",
 
     # metadata
     "__version__",
