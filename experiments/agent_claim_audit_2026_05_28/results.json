@@ -1,0 +1,140 @@
+{
+  "n_claims": 13,
+  "n_pass": 13,
+  "n_fail": 0,
+  "n_error": 0,
+  "verdicts_by_id": {
+    "C1": "PASS",
+    "C2": "PASS",
+    "C3": "PASS",
+    "C4": "PASS",
+    "C5": "PASS",
+    "C6a": "PASS",
+    "C6b": "PASS",
+    "C7": "PASS",
+    "C8": "PASS",
+    "C9": "PASS",
+    "C10": "PASS",
+    "C11": "PASS",
+    "C12": "PASS"
+  },
+  "results": [
+    {
+      "id": "C1",
+      "text": "After commit 0e97598, pyproject.toml [project] version equals '7.7.10'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "pyproject.toml: version='7.7.10', expected='7.7.10'",
+      "error": ""
+    },
+    {
+      "id": "C2",
+      "text": "After commit 0e97598, 'critique_detector' is in styxx.__all__",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__all__ length=44; 'critique_detector' present",
+      "error": ""
+    },
+    {
+      "id": "C3",
+      "text": "After commit 0e97598, 'CritiqueDetector' is in styxx.__all__",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__all__ length=44; 'CritiqueDetector' present",
+      "error": ""
+    },
+    {
+      "id": "C4",
+      "text": "styxx/critique.py module docstring contains 'out-of-context critique'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx/critique.py: MATCH at offset 823\n'27.md \u00a710, \u00a711, \u00a711.5\\n\\nThe mechanism (corrected, v4 paper): out-of-context critique. When presented\\nwith a labeled candidate answer, the RLHF-t'",
+      "error": ""
+    },
+    {
+      "id": "C5",
+      "text": "styxx/critique.py module docstring does NOT contain v1 phrase 'Measured prevalence: 91.18%'",
+      "expected": false,
+      "actual": false,
+      "verdict": "PASS",
+      "evidence": "styxx/critique.py: no match\n''",
+      "error": ""
+    },
+    {
+      "id": "C6a",
+      "text": "Commit 0e97598 changes pyproject.toml version from 7.7.9 (removes that line)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "commit 0e97598 diff for pyproject.toml: MATCH\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -4,7 +4,7 @@ build-backend = \"setuptools.build_meta\"\n-version = \"7.7.9\"",
+      "error": ""
+    },
+    {
+      "id": "C6b",
+      "text": "Commit 0e97598 changes pyproject.toml version to 7.7.10 (adds that line)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "commit 0e97598 diff for pyproject.toml: MATCH\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -4,7 +4,7 @@ build-backend = \"setuptools.build_meta\"\n+version = \"7.7.10\"",
+      "error": ""
+    },
+    {
+      "id": "C7",
+      "text": "Commits ed663ca, c75cab4, 0e97598, 87ca52d are all on origin/main in that order",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): ed663ca@idx4, c75cab4@idx3, 0e97598@idx2, 87ca52d@idx1",
+      "error": ""
+    },
+    {
+      "id": "C8",
+      "text": "arxiv/recursive_discipline/main.pdf has exactly 14 pages",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "arxiv/recursive_discipline/main.pdf: pages=14, expected=14",
+      "error": ""
+    },
+    {
+      "id": "C9",
+      "text": "arxiv/recursive_discipline/main.pdf contains the section '13. The paper catches itself'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "page 12: '13. The paper catches itself: same-session self-falsification of v4\u2019s forward-looking claim \u00a711 of this paper closes with a deployment implication that includes'",
+      "error": ""
+    },
+    {
+      "id": "C10",
+      "text": "git tag v7.7.10 does NOT yet exist (operator-territory pending)",
+      "expected": false,
+      "actual": false,
+      "verdict": "PASS",
+      "evidence": "git tag -l v7.7.10 -> ''",
+      "error": ""
+    },
+    {
+      "id": "C11",
+      "text": "Paper v5 contains 'sixteen in-session falsifications' (no longer 'eight')",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 1868\n'ment, each pre-registered, each in git history. We record **sixteen in-session falsifications + two resolutions** including two of our own published FIND'",
+      "error": ""
+    },
+    {
+      "id": "C12",
+      "text": "papers/PAPER...md and arxiv/recursive_discipline/source.md are byte-identical (no drift)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md (47908B) vs arxiv/recursive_discipline/source.md (47908B): identical",
+      "error": ""
+    }
+  ]
+}
