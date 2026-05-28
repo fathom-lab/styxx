@@ -706,6 +706,92 @@ def cmd_audit_claims(args):
     return 0 if (n_fail == 0 and n_err == 0) else 1
 
 
+def cmd_attest(args):
+    """styxx attest <file> — emit a Verifiable Cognometric Attestation.
+
+    Builds a content-addressed artifact of an agent self-report: the extracted
+    checkable claims + their PASS/FAIL verdicts against the substrate, the
+    EU AI Act Article 15 clause mapping, the explicit uncovered-requirements
+    boundary, and a SHA-256 digest. Any third party can re-derive the verdicts
+    with ``styxx verify-attestation`` — trust the substrate, not the agent.
+
+    Exit 0 if the artifact was produced (regardless of pass/fail); 2 on input
+    error. Use verify-attestation for the gate semantics.
+    """
+    from .attestation import attest
+
+    src = Path(args.file)
+    if not src.is_file():
+        print(f"styxx attest: file not found: {src}", file=sys.stderr)
+        return 2
+    repo = Path(args.repo).resolve()
+    if not repo.exists():
+        print(f"styxx attest: repo not found: {repo}", file=sys.stderr)
+        return 2
+
+    att = attest(src.read_text(encoding="utf-8", errors="replace"), repo)
+    out_json = att.to_json()
+    if args.out:
+        Path(args.out).write_text(out_json, encoding="utf-8")
+        s = att.artifact["summary"]
+        print(f"styxx attest — wrote {args.out}")
+        print(f"  {s['passed']} passed, {s['failed']} failed, {s['errored']} errored "
+              f"(coverage {s['coverage']:.2f})")
+        print(f"  digest sha256:{att.digest}")
+        print(f"  verify with: styxx verify-attestation {args.out} --repo {args.repo}")
+    else:
+        print(out_json)
+    return 0
+
+
+def cmd_verify_attestation(args):
+    """styxx verify-attestation <file> — re-derive verdicts from the substrate.
+
+    Recomputes the SHA-256 digest (tamper-evidence) and re-runs every claim's
+    checker against the repo, comparing the re-derived verdict to the embedded
+    one. Never trusts the embedded verdict — this is what makes the artifact
+    agent-independent.
+
+    Exit 0 if the digest matches AND every embedded verdict reproduces; 1 if a
+    verdict mismatches, the digest is broken, or an unknown checker is named;
+    2 on input error.
+    """
+    from .attestation import verify_attestation
+
+    src = Path(args.file)
+    if not src.is_file():
+        print(f"styxx verify-attestation: file not found: {src}", file=sys.stderr)
+        return 2
+    repo = Path(args.repo).resolve()
+    if not repo.exists():
+        print(f"styxx verify-attestation: repo not found: {repo}", file=sys.stderr)
+        return 2
+
+    try:
+        artifact = json.loads(src.read_text(encoding="utf-8", errors="replace"))
+    except json.JSONDecodeError as e:
+        print(f"styxx verify-attestation: not valid JSON: {e}", file=sys.stderr)
+        return 2
+
+    res = verify_attestation(artifact, repo)
+    out = res.to_dict()
+    if args.json:
+        print(json.dumps(out, indent=2, default=str))
+    else:
+        print(f"styxx verify-attestation — {src}")
+        print(f"  digest: {'OK' if res.digest_ok else 'BROKEN (payload tampered)'}")
+        print(f"  reproduced {len(res.reproduced)} verdict(s) from substrate; "
+              f"{len(res.mismatches)} mismatch(es)")
+        for m in res.mismatches:
+            print(f"  [MISMATCH] {m['id']}: embedded={m['embedded_verdict']} "
+                  f"substrate={m['reproduced_verdict']}")
+        for u in res.unknown_checkers:
+            print(f"  [REFUSED] unknown checker not in allowlist: {u!r}")
+        print("  VERIFIED: " + ("OK — every verdict reproduces against the substrate"
+                                if res.ok else "FAILED — artifact disagrees with substrate"))
+    return 0 if res.ok else 1
+
+
 def cmd_critique(args):
     """styxx critique <prompt> <response> — audit + register-fix suggestions.
 
@@ -2290,6 +2376,26 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ac.add_argument("--repo", default=".", help="repo substrate to check against (default: .)")
     p_ac.add_argument("--json", action="store_true", help="emit JSON only")
     p_ac.set_defaults(func=cmd_audit_claims)
+
+    # attest — produce a content-addressed Verifiable Cognometric Attestation
+    p_att = sub.add_parser(
+        "attest",
+        help="emit a third-party-reproducible attestation of an agent self-report",
+    )
+    p_att.add_argument("file", help="path to the agent self-report (markdown/text)")
+    p_att.add_argument("--repo", default=".", help="repo substrate to check against (default: .)")
+    p_att.add_argument("--out", default=None, help="write the attestation JSON here (default: stdout)")
+    p_att.set_defaults(func=cmd_attest)
+
+    # verify-attestation — independently re-verify an attestation against substrate
+    p_va = sub.add_parser(
+        "verify-attestation",
+        help="re-derive an attestation's verdicts from the substrate (trust the math, not the agent)",
+    )
+    p_va.add_argument("file", help="path to a styxx attestation JSON")
+    p_va.add_argument("--repo", default=".", help="repo substrate to verify against (default: .)")
+    p_va.add_argument("--json", action="store_true", help="emit JSON only")
+    p_va.set_defaults(func=cmd_verify_attestation)
 
     # ask
     p_ask = sub.add_parser("ask", help="read vitals on a one-shot call")

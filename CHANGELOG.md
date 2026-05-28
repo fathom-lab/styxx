@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation
+
+### Added — agent-independent, third-party-reproducible honesty attestation
+
+- **`styxx.attestation.attest(report_text, repo)`** — produces a content-addressed artifact of an agent's self-report: the deterministically-extracted checkable claims, their PASS/FAIL verdicts against the substrate, the EU AI Act Article 15 clause mapping the evidence supports, the explicit uncovered-requirements boundary, and a SHA-256 digest over the canonical payload. The `generated_at` timestamp is the only volatile field and is deliberately excluded from the hash, so two runs on an identical substrate share a digest.
+
+- **`styxx.attestation.verify_attestation(artifact, repo)`** — re-derives every verdict by re-running each claim's checker against the substrate and comparing to the embedded verdict. It NEVER trusts the embedded verdict. A flipped verdict is caught *even when the attacker re-seals the digest* — the artifact is verifiable against ground truth, not against the agent's word. Checker names resolve against a read-only allowlist; an unknown name is refused, never executed.
+
+```python
+from styxx.attestation import attest, verify_attestation
+att = attest(open("agent_report.md").read(), repo=".")   # the agent attests
+res = verify_attestation(att, repo=".")                    # anyone re-verifies
+assert res.ok   # digest intact AND every verdict reproduces from the substrate
+```
+
+- **CLI: `styxx attest <file> [--out f.json]` + `styxx verify-attestation <file>`** — emit and independently re-verify. `verify-attestation` exits 0 only if the digest matches and every embedded verdict reproduces; 1 on a mismatch, broken digest, or unknown checker.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_verifiable_attestation.md` states the thesis, predictions (P1–P5), and a kill-gate (K1 determinism / K2 independent reproduction / K3 tamper-evidence) BEFORE the instrument was written. `tests/test_attestation.py` enforces the gate at CI time. Thesis survived: 10/10 gate tests pass, full suite 1155 passed.
+
+---
+
 ## [7.7.10] — 2026-05-28 — `critique_detector` public API + recursive-discipline paper v7 + `styxx.compliance.eu_ai_act` v0.1 (first open-source EU AI Act Article 15 measurement-methodology bridge)
 
 ### Added — `styxx.compliance` namespace + EU AI Act Article 15 bridge (v0.1)
