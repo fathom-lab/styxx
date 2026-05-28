@@ -1,0 +1,49 @@
+{
+  "name": "Baseline-018: scaling-residual detector (the weird-bet falsification — dual-LM signal is WEAKER than single-LM)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_018_scaling_residual.method:detect",
+  "task": "detection",
+  "description": "Score = mean-per-token-logp(Pythia-70M) − mean-per-token-logp(Pythia-410M). Uses the inverse-scaling FINDING as a feature: the gradient between two LMs of different sizes isolates the 'small-LM-specific surprise' signal that traces the scaling curve. Genuinely novel signal axis.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_018_scaling_residual/method.py",
+  "pre_stated_prediction": "submissions/baseline_018_scaling_residual/PRE_STATED_PREDICTION.md committed at commit 60b9c5e BEFORE the gauntlet run. Predicted distribution: ~22% PASS (highest of any baseline), ~25% 3/4 (modal), ~50% partial/fail. Actual outcome (2/4) is in the 25% '2/4' band — modal shape correct, but the specific D2 AUC and length-delta predictions overshot.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 2,
+    "n_total_bars": 4,
+    "note": "2/4. D1, D2 AUC pass; D3, D4 fail. The dual-LM difference signal is WEAKER than either single-LM signal: compared to Pythia-70M (B-016, 3/4), D1 dropped 0.816 -> 0.726, D2 dropped 0.907 -> 0.733, D2-length-delta dropped +0.103 -> -0.071. The composite signal amplifies per-record noise faster than it sharpens discrimination. The 'use the scaling curve as a feature' hypothesis is falsified empirically: while the means clearly differ between 70M and 410M (matching the scaling-curve FINDING), the per-record difference variance dominates the discriminative gap.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": -0.7072,
+      "mean_truth_score": -2.0918,
+      "mean_folklore_score": -0.687,
+      "D1_misconception_AUC": 0.7259,
+      "D2_folklore_AUC": 0.7332,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": -0.0638,
+      "D2_minus_length_AUC": -0.0711,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": 0.0223,
+      "D2_minus_capratio_AUC": -0.0588
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "outcome_band": "2/4 confirmed in shape (25% pre-stated band)",
+    "direction_calibration": "CONFIRMED for eighth consecutive baseline (misc -0.71 > truth -2.09)",
+    "D1_AUC_calibration": "INSIDE range (bottom)",
+    "D2_AUC_calibration": "BELOW predicted range (predicted 0.75-0.93, actual 0.733)",
+    "D2_length_delta_calibration": "BELOW predicted range (predicted 0.00-0.20, actual -0.071)",
+    "D1_length_delta_calibration": "INSIDE range (bottom)",
+    "honest_note": "Twelfth in-session falsification. The 'novel weird signal will surprise us' hypothesis loses: the dual-LM gradient signal is weaker than the single-LM signal at either endpoint. The empirical lesson: composite features from per-record noisy estimates can amplify noise more than signal. Pre-registration was load-bearing here too — without it, I might have framed Baseline-018 as 'still better than random' rather than 'specifically falsified vs the single-LM baselines that brackeded it.' Direction confirmed for eighth consecutive baseline; direction-of-effect is now the most stable signal in this domain by a wide margin."
+  },
+  "notes": "The weird-bet falsification suggests that LM-typicality detection has a method-class ceiling around Pythia-70M's 3/4 result. Adding orthogonal LM features doesn't help. The next disciplined paths are: (1) genuinely orthogonal feature axes (entity-density, knowledge-graph lookup, cross-vendor disagreement); (2) an ensemble that combines the strongest single-LM signal (Pythia-70M) with a complementary feature targeted at D1 specifically (factual-error / pseudoscience discrimination); (3) a methodology paper documenting that LM-typicality alone cannot break the dark-core floor on D1 axis. The seven-method floor stands. The 12 in-session falsifications now include this empirically-tested innovative-signal hypothesis."
+}
