@@ -1,0 +1,25 @@
+{
+  "name": "Baseline-005: TF-IDF + linear classifier",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_005_tfidf.method:predict",
+  "task": "classification",
+  "description": "Classical NLP baseline: word 1-2-gram TF-IDF features over the question text, balanced one-vs-rest logistic regression on top. No model weights to download (unlike Baseline-002's sentence-transformer), no GPU. Trains on the same corpus as Baseline-002 (ICT receipts + curated truth controls; curated folklore held out as cross-corpus test). Tests whether classical bag-of-tokens can pick up the dark-core signature in question text alone.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_005_tfidf/method.py",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 1,
+    "n_total_bars": 3,
+    "metrics": {
+      "accuracy": 0.7407,
+      "folklore_F1_indist": 0.3,
+      "folklore_F1_crosscorpus": 0.2222,
+      "folklore_recall_crosscorpus": 0.0667
+    },
+    "bar_results": {
+      "K1_folklore_F1": false,
+      "K2_accuracy": true,
+      "K3_crosscorpus_F1": false
+    }
+  },
+  "notes": "Genuinely worse than Baseline-002 (sentence-transformer + LR) on every folklore-axis metric — K1 0.30 vs 0.42, K3 0.22 vs 0.36, cross-corpus recall 0.067 vs 0.167. Suggests classical bag-of-tokens lacks the semantic abstraction needed to pick up folklore signatures, while embedding-based methods get at least a partial signal. K2 accuracy passes only because the truth class boundary is linguistically obvious (truth questions tend to have specific named entities; folklore questions don't follow a single lexical pattern)."
+}

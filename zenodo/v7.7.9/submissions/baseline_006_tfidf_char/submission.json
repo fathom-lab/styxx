@@ -1,0 +1,26 @@
+{
+  "name": "Baseline-006: char-level TF-IDF + linear classifier",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_006_tfidf_char.method:predict",
+  "task": "classification",
+  "description": "Char n-gram TF-IDF (analyzer=char_wb, ngram_range=(3,5)) + balanced one-vs-rest LR. Identical training corpus + classifier head to Baseline-005; only the vectorizer's analyzer differs. Tests whether sub-word lexical features pick up the folklore signature where word-level cannot.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_006_tfidf_char/method.py",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 1,
+    "n_total_bars": 3,
+    "metrics": {
+      "accuracy": 0.7407,
+      "folklore_F1_indist": 0.3,
+      "folklore_F1_crosscorpus": 0.2222,
+      "folklore_recall_crosscorpus": 0.0667
+    },
+    "bar_results": {
+      "K1_folklore_F1": false,
+      "K2_accuracy": true,
+      "K3_crosscorpus_F1": false
+    }
+  },
+  "pre_stated_prediction": "submissions/baseline_006_tfidf_char/PRE_STATED_PREDICTION.md committed BEFORE gauntlet run, at commit 19bdb8c. Predicted: K3 < 0.30 AND recall < 0.17 = n=2 confirmation. Actual: K3 = 0.222, recall = 0.067 — falls cleanly in the n=2 confirmation region.",
+  "notes": "Exact-metric tie with Baseline-005 (word-level TF-IDF): same K1 0.30, same K2 0.74, same K3 0.22, same recall 0.067. This goes beyond 'char-level loses to embeddings' — char-level produces an IDENTICAL prediction pattern to word-level on this benchmark. n=2 evidence: classical bag-of-tokens cannot pick up the dark-core signature at any lexical granularity. The signal lives in semantic-similarity space, not in surface-form n-grams of any width."
+}

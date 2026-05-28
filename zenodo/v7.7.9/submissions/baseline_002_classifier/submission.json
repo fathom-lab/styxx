@@ -1,0 +1,24 @@
+{
+  "name": "Baseline-002: darkcore classifier (sentence-transformer + balanced LR)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_002_classifier.method:predict",
+  "task": "classification",
+  "description": "The shipped dark-core classifier from papers/consensus-hallucination/darkcore_classifier_2026_05_27.py (commit a3dc813), wrapped in the gauntlet interface. Trained on ICT receipts + curated truth controls; curated folklore items are held out as the cross-corpus test set. Embedding: sentence-transformers/all-MiniLM-L6-v2. Head: balanced one-vs-rest logistic regression.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/papers/consensus-hallucination/darkcore_classifier_2026_05_27.py",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 1,
+    "n_total_bars": 3,
+    "metrics": {
+      "accuracy": 0.7685,
+      "folklore_F1_indist": 0.4186,
+      "folklore_F1_crosscorpus": 0.359,
+      "folklore_recall_crosscorpus": 0.1667
+    },
+    "bar_results": {
+      "K1_folklore_F1": false,
+      "K2_accuracy": true,
+      "K3_crosscorpus_F1": false
+    }
+  }
+}

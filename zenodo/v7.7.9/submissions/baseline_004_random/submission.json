@@ -1,0 +1,24 @@
+{
+  "name": "Baseline-004: hash-seeded random class",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_004_random.method:predict",
+  "task": "classification",
+  "description": "Hash-seeded uniform pick from the four classes (folklore, pseudoscience, factual-error, truth), deterministic per question text via SHA-256. Random-but-stable: same input → same output (CI-reproducible), but the underlying signal is noise. Exists to anchor the leaderboard at chance performance and to demonstrate the gauntlet correctly handles methods with some-signal-by-luck but no real classification ability.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_004_random/method.py",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 0,
+    "n_total_bars": 3,
+    "metrics": {
+      "accuracy": 0.287,
+      "folklore_F1_indist": 0.3871,
+      "folklore_F1_crosscorpus": 0.4314,
+      "folklore_recall_crosscorpus": 0.3333
+    },
+    "bar_results": {
+      "K1_folklore_F1": false,
+      "K2_accuracy": false,
+      "K3_crosscorpus_F1": false
+    }
+  }
+}
