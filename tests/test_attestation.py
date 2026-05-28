@@ -438,3 +438,117 @@ def test_K3_per_link_reproduction_preserved(substrate):
     assert res.links_ok is True       # Merkle structure is intact
     assert res.ok is False            # but the substrate disagrees
     assert res.per_link[0]["attestation_ok"] is False
+
+
+# ===========================================================================
+# Cognometric vitals — verifiable, re-derivable, tamper-evident instrument
+# scores. Prereg: scripts/dogfood/PREREG_cognometric_attestation.md
+# ===========================================================================
+
+# A self-report whose register is loud (flattery + unhedged assertion) so the
+# instruments produce clearly non-zero scores to verify against.
+VITALS_PROMPT = "Review the repo and report the version."
+VITALS_REPORT = (
+    'The version is 1.2.3. You are absolutely right — I carefully verified '
+    'this and it is definitely, certainly correct.'
+)
+
+
+def test_vitals_embedded_and_reproduce(substrate):
+    att = attest(VITALS_REPORT, substrate, prompt=VITALS_PROMPT, vitals=True)
+    art = att.artifact
+    assert "vitals" in art
+    v = art["vitals"]
+    assert v["tier"] == "text-heuristic"
+    assert v["instrument"] == "styxx.attack.score_all"
+    assert v["scores"]  # at least one relational axis fired
+    # the honest scope is machine-readable and present
+    assert "register" in v["measures"].lower()
+    assert "not ground-truth honesty" in v["measures"].lower()
+    res = verify_attestation(att, substrate)
+    assert res.ok is True
+    assert res.vitals_present is True
+    assert res.vitals_ok is True
+
+
+def test_vitals_requires_prompt():
+    """The instruments are relational; vitals on a referent-free monologue are
+    undefined, not zero — attest must refuse rather than fabricate them."""
+    with pytest.raises(ValueError):
+        attest(VITALS_REPORT, ".", vitals=True)  # no prompt
+
+
+def test_K1_vitals_determinism(substrate):
+    a = attest(VITALS_REPORT, substrate, prompt=VITALS_PROMPT, vitals=True)
+    b = attest(VITALS_REPORT, substrate, prompt=VITALS_PROMPT, vitals=True)
+    assert a.digest == b.digest
+    assert a.artifact["vitals"]["scores"] == b.artifact["vitals"]["scores"]
+
+
+def test_K2_resealed_vitals_tamper_is_caught(substrate):
+    """THE DECISIVE BAR. Flip an embedded score AND re-seal the digest. The
+    digest check passes — but verify re-derives the score from the recorded
+    (prompt, response) and catches the tamper. Trust the substrate, not the
+    artifact."""
+    from styxx.attestation import _compute_digest
+
+    att = attest(VITALS_REPORT, substrate, prompt=VITALS_PROMPT, vitals=True)
+    tampered = copy.deepcopy(att.artifact)
+    axis = next(iter(tampered["vitals"]["scores"]))
+    original = tampered["vitals"]["scores"][axis]
+    tampered["vitals"]["scores"][axis] = 0.0 if original > 0.5 else 1.0
+    tampered["digest"]["value"] = _compute_digest(tampered)  # re-seal
+
+    res = verify_attestation(tampered, substrate)
+    assert res.digest_ok is True       # the re-seal fooled the digest
+    assert res.vitals_ok is False      # but recomputation caught the score
+    assert res.ok is False
+    assert any(m["axis"] == axis for m in res.vitals_mismatches)
+
+
+def test_K2_editing_response_text_diverges_scores(substrate):
+    """Editing the recorded response to change its register (without updating
+    the embedded scores) is caught: the scores no longer re-derive from the
+    text. Re-seal the digest to prove it's recomputation, not the hash."""
+    from styxx.attestation import _compute_digest
+
+    att = attest(VITALS_REPORT, substrate, prompt=VITALS_PROMPT, vitals=True)
+    tampered = copy.deepcopy(att.artifact)
+    tampered["vitals"]["response"] = "The version is 1.2.3."  # neutral register
+    tampered["digest"]["value"] = _compute_digest(tampered)
+
+    res = verify_attestation(tampered, substrate)
+    assert res.digest_ok is True
+    assert res.ok is False
+    assert res.vitals_mismatches  # at least one axis diverged
+
+
+def test_K3_chain_vitals_reproduction_preserved(substrate):
+    """Vitals flow through a chain and reproduce per link; a per-link score
+    tamper (fully re-sealed) makes the chain not ok even with intact links."""
+    from styxx.attestation import _CHAIN_GENESIS, _chain_digest, _compute_digest
+
+    ch = attest_chain(
+        [('The version is 1.2.3.', None, VITALS_PROMPT)],
+        substrate, vitals=True,
+    )
+    # baseline: clean chain verifies and the link carries vitals
+    base = verify_chain(ch, substrate)
+    assert base.ok is True
+    assert "vitals" in ch.artifact["links"][0]["attestation"]
+
+    tampered = copy.deepcopy(ch.artifact)
+    att = tampered["links"][0]["attestation"]
+    axis = next(iter(att["vitals"]["scores"]))
+    att["vitals"]["scores"][axis] = 0.0
+    att["digest"]["value"] = _compute_digest(att)
+    new_att_digest = att["digest"]["value"]
+    tampered["links"][0]["attestation_digest"] = new_att_digest
+    cd = _chain_digest(_CHAIN_GENESIS, new_att_digest)
+    tampered["links"][0]["chain_digest"] = cd
+    tampered["head_chain_digest"] = cd
+
+    res = verify_chain(tampered, substrate)
+    assert res.links_ok is True        # Merkle structure intact
+    assert res.ok is False             # but the vitals don't re-derive
+    assert res.per_link[0]["attestation_ok"] is False

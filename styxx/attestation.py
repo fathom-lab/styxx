@@ -105,11 +105,25 @@ class VerificationResult:
     reproduced: list[dict[str, Any]] = field(default_factory=list)
     mismatches: list[dict[str, Any]] = field(default_factory=list)
     unknown_checkers: list[str] = field(default_factory=list)
+    # Vitals reproduction (only populated when the artifact embeds vitals).
+    vitals_present: bool = False
+    vitals_mismatches: list[dict[str, Any]] = field(default_factory=list)
+
+    @property
+    def vitals_ok(self) -> bool:
+        """True iff no embedded vitals score diverged from its re-derivation."""
+        return not self.vitals_mismatches
 
     @property
     def ok(self) -> bool:
-        """True iff the digest matched AND every embedded verdict reproduced."""
-        return self.digest_ok and not self.mismatches and not self.unknown_checkers
+        """True iff digest matched AND every embedded verdict AND every embedded
+        cognometric score reproduced from the substrate."""
+        return (
+            self.digest_ok
+            and not self.mismatches
+            and not self.unknown_checkers
+            and not self.vitals_mismatches
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -119,6 +133,9 @@ class VerificationResult:
             "n_mismatches": len(self.mismatches),
             "mismatches": self.mismatches,
             "unknown_checkers": self.unknown_checkers,
+            "vitals_present": self.vitals_present,
+            "vitals_ok": self.vitals_ok,
+            "vitals_mismatches": self.vitals_mismatches,
         }
 
 
@@ -233,12 +250,69 @@ def _uncovered_boundary() -> list[dict[str, str]]:
     ]
 
 
+# ---------------------------------------------------------------------------
+# Cognometric vitals. The text-heuristic instruments are a pure function of
+# (prompt, response) — no network, no randomness — so the scores are content-
+# addressable and reproducible. They are RELATIONAL: score_all(response=...)
+# alone returns {} (sycophancy/overconfidence/deception/refusal are undefined
+# without a prompt). We therefore record the prompt the report responds to as
+# part of the attested substrate, and verify re-derives the scores from it.
+# ---------------------------------------------------------------------------
+
+# Stored scores are rounded to this many decimals so the content address is
+# stable across platforms; tamper differences dwarf this precision.
+_VITALS_PRECISION = 12
+
+# Per-axis honest scope. These are register (textual surface) measurements, NOT
+# ground-truth honesty — styxx's validated construct ceiling. Reference-less
+# deception in particular saturates on benign text and is register-only.
+_VITALS_CAVEATS = {
+    "sycophancy": "register: agreement/flattery surface features vs the prompt; not a measure of whether the response is true.",
+    "overconfidence": "register: assertive/hedge-free surface features; not a measure of calibration against ground truth (validated construct ceiling).",
+    "deception": "register only, REFERENCE-LESS: saturates on benign text; not a deception finding without a grounding reference.",
+    "refusal": "register: textual refusal-pattern features.",
+}
+
+
+def _round_scores(scores: dict[str, float]) -> dict[str, float]:
+    return {k: round(float(v), _VITALS_PRECISION) for k, v in sorted(scores.items())}
+
+
+def _compute_vitals(prompt: str, response: str) -> dict[str, Any]:
+    """Deterministic text-heuristic cognometric vitals for (prompt, response).
+
+    Pure function of the two texts (no network, no randomness). The prompt and
+    response are recorded so a third party re-derives the scores rather than
+    trusting them.
+    """
+    from .attack import score_all
+
+    scores = _round_scores(score_all(prompt=prompt, response=response))
+    return {
+        "tier": "text-heuristic",
+        "instrument": "styxx.attack.score_all",
+        "styxx_version": _STYXX_VERSION,
+        "prompt": prompt,
+        "response": response,
+        "scores": scores,
+        "measures": (
+            "register (textual surface features), NOT ground-truth honesty or "
+            "correctness. These are re-derivable from the recorded (prompt, "
+            "response); they do not prove the report is true."
+        ),
+        "caveats": {k: _VITALS_CAVEATS[k] for k in scores if k in _VITALS_CAVEATS},
+        "axes_undefined_without_prompt": True,
+    }
+
+
 def attest(
     report_text: str,
     repo_path: str | Path,
     *,
     id_prefix: str = "A",
     ref: str | None = None,
+    prompt: str | None = None,
+    vitals: bool = False,
 ) -> Attestation:
     """Produce a Verifiable Cognometric Attestation for an agent self-report.
 
@@ -251,6 +325,13 @@ def attest(
             ``git archive`` — and the resolved SHA is recorded so the
             attestation becomes immutable as-of-date provenance. When ``None``
             (default), the live working tree is used.
+        prompt: the task/instruction the report responds to. Required when
+            ``vitals=True`` (the cognometric instruments are relational —
+            undefined without a prompt).
+        vitals: when True, embed the deterministic text-heuristic cognometric
+            vitals (``styxx.attack.score_all``) of the (prompt, report) pair,
+            re-derivable by :func:`verify_attestation`. Measures REGISTER, not
+            ground-truth honesty (see the embedded ``vitals.measures``).
 
     Returns:
         An :class:`Attestation` whose ``.artifact`` is a JSON-serializable,
@@ -258,6 +339,11 @@ def attest(
         extracted claim's checker against the substrate — the same mechanical
         audit any third party reproduces via :func:`verify_attestation`.
     """
+    if vitals and prompt is None:
+        raise ValueError(
+            "vitals=True requires a prompt: the cognometric instruments are "
+            "relational and undefined for a referent-free monologue."
+        )
     repo = Path(repo_path).resolve()
     report = extract_claims(report_text, id_prefix=id_prefix)
     with _substrate(repo, ref) as (audit_path, commit_sha):
@@ -323,6 +409,9 @@ def attest(
             ),
         },
     }
+    if vitals:
+        artifact["vitals"] = _compute_vitals(prompt, report_text)
+
     artifact["digest"] = {"alg": "sha256", "value": _compute_digest(artifact)}
     return Attestation(artifact=artifact)
 
@@ -420,11 +509,40 @@ def verify_attestation(
     finally:
         cm.__exit__(None, None, None)
 
+    # Cognometric vitals: re-derive the scores from the recorded (prompt,
+    # response) and compare. A re-sealed-digest score tamper is caught here
+    # because the score is recomputed from the substrate text, never trusted.
+    vitals_present = "vitals" in art
+    vitals_mismatches: list[dict[str, Any]] = []
+    if vitals_present:
+        v = art["vitals"]
+        embedded = v.get("scores", {})
+        try:
+            rederived = _compute_vitals(v.get("prompt", ""), v.get("response", ""))["scores"]
+        except Exception as e:  # pragma: no cover - scorer import/parse failure
+            vitals_mismatches.append({"axis": "*", "error": f"{type(e).__name__}: {e}"})
+            rederived = {}
+        else:
+            axes = set(embedded) | set(rederived)
+            for axis in sorted(axes):
+                emb = embedded.get(axis)
+                red = rederived.get(axis)
+                diverged = (
+                    emb is None or red is None
+                    or abs(float(emb) - float(red)) > 1e-9
+                )
+                if diverged:
+                    vitals_mismatches.append(
+                        {"axis": axis, "embedded": emb, "rederived": red}
+                    )
+
     return VerificationResult(
         digest_ok=digest_ok,
         reproduced=reproduced,
         mismatches=mismatches,
         unknown_checkers=unknown,
+        vitals_present=vitals_present,
+        vitals_mismatches=vitals_mismatches,
     )
 
 
@@ -499,18 +617,23 @@ def _link_chain(att_digests: list[str]) -> list[str]:
 
 
 def attest_chain(
-    items: list[tuple[str, str | None]],
+    items: list[tuple[str, str | None]] | list[tuple[str, str | None, str | None]],
     repo_path: str | Path,
     *,
     id_prefix: str = "A",
+    vitals: bool = False,
 ) -> AttestationChain:
     """Produce a Merkle-linked chain of attestations over an ordered sequence.
 
     Args:
-        items: ordered ``(report_text, ref)`` pairs. ``ref`` pins each link's
-            substrate to a commit (or ``None`` for the live working tree).
+        items: ordered links. Each is ``(report_text, ref)`` or, to carry
+            cognometric vitals, ``(report_text, ref, prompt)``. ``ref`` pins the
+            link's substrate to a commit (or ``None`` for the live working tree).
         repo_path: the substrate git repository.
         id_prefix: claim-id prefix; each link gets ``f"{id_prefix}{seq}"``.
+        vitals: when True, embed the re-derivable cognometric vitals on each
+            link. Every item must then supply a 3rd element ``prompt`` (the
+            instruments are relational); a missing prompt raises ``ValueError``.
 
     Returns:
         An :class:`AttestationChain`. Each link stores its full attestation
@@ -519,10 +642,20 @@ def attest_chain(
         insertion / deletion / reorder is detectable by :func:`verify_chain`.
     """
     repo = Path(repo_path).resolve()
-    attestations = [
-        attest(report, repo, id_prefix=f"{id_prefix}{i}", ref=ref)
-        for i, (report, ref) in enumerate(items)
-    ]
+
+    def _unpack(item: tuple) -> tuple[str, str | None, str | None]:
+        if len(item) == 3:
+            return item[0], item[1], item[2]
+        report, ref = item
+        return report, ref, None
+
+    attestations = []
+    for i, item in enumerate(items):
+        report, ref, prompt = _unpack(item)
+        attestations.append(
+            attest(report, repo, id_prefix=f"{id_prefix}{i}", ref=ref,
+                   prompt=prompt, vitals=vitals)
+        )
     att_digests = [a.digest for a in attestations]
     chain = _link_chain(att_digests)
 

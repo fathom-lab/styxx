@@ -730,8 +730,13 @@ def cmd_attest(args):
         return 2
 
     ref = getattr(args, "ref", None)
+    vitals = getattr(args, "vitals", False)
+    prompt = getattr(args, "prompt", None)
     try:
-        att = attest(src.read_text(encoding="utf-8", errors="replace"), repo, ref=ref)
+        att = attest(
+            src.read_text(encoding="utf-8", errors="replace"), repo,
+            ref=ref, prompt=prompt, vitals=vitals,
+        )
     except ValueError as e:
         print(f"styxx attest: {e}", file=sys.stderr)
         return 2
@@ -743,6 +748,10 @@ def cmd_attest(args):
         print(f"styxx attest — wrote {args.out}")
         if ref:
             print(f"  pinned to commit {sub_c[:12]} (ref {ref})")
+        if vitals and "vitals" in att.artifact:
+            scores = att.artifact["vitals"]["scores"]
+            pretty = ", ".join(f"{k}={v:.3f}" for k, v in scores.items())
+            print(f"  vitals (register, not honesty): {pretty}")
         print(f"  {s['passed']} passed, {s['failed']} failed, {s['errored']} errored "
               f"(coverage {s['coverage']:.2f})")
         print(f"  digest sha256:{att.digest}")
@@ -795,6 +804,12 @@ def cmd_verify_attestation(args):
                   f"substrate={m['reproduced_verdict']}")
         for u in res.unknown_checkers:
             print(f"  [REFUSED] unknown checker not in allowlist: {u!r}")
+        if res.vitals_present:
+            print(f"  vitals (register): "
+                  f"{'OK — scores re-derive from recorded text' if res.vitals_ok else 'TAMPERED'}")
+            for vm in res.vitals_mismatches:
+                print(f"  [VITALS MISMATCH] {vm.get('axis')}: "
+                      f"embedded={vm.get('embedded')} rederived={vm.get('rederived')}")
         print("  VERIFIED: " + ("OK — every verdict reproduces against the substrate"
                                 if res.ok else "FAILED — artifact disagrees with substrate"))
     return 0 if res.ok else 1
@@ -2396,6 +2411,11 @@ def _build_parser() -> argparse.ArgumentParser:
                        help="pin the substrate to a git ref/commit/tag — verify the claims "
                             "against the repo tree AT THAT COMMIT (immutable as-of-date provenance)")
     p_att.add_argument("--out", default=None, help="write the attestation JSON here (default: stdout)")
+    p_att.add_argument("--vitals", action="store_true",
+                       help="embed re-derivable cognometric vitals (register, NOT honesty); "
+                            "requires --prompt (the instruments are relational)")
+    p_att.add_argument("--prompt", default=None,
+                       help="the task/instruction the report responds to (required with --vitals)")
     p_att.set_defaults(func=cmd_attest)
 
     # verify-attestation — independently re-verify an attestation against substrate

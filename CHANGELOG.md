@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.12] — 2026-05-28 — cognometric vitals in the attestation (verifiable, re-derivable, tamper-evident)
+
+### Added — verifiable cognometric vitals
+
+- **`attest(report, repo, *, prompt=..., vitals=True)`** — embeds the deterministic text-heuristic cognometric vitals (`styxx.attack.score_all`) of the report into the content-addressed artifact. The instruments are RELATIONAL, so the prompt the report responds to is recorded as part of the attested substrate; `vitals=True` without a prompt raises (the scores are undefined for a referent-free monologue, not zero).
+
+- **`verify_attestation`** re-derives every score from the recorded (prompt, response) and compares. A flipped score is caught **even when the attacker re-seals the digest** — `digest_ok` can be true while `vitals_ok` is false — because the score is recomputed from the substrate text, never trusted from the artifact. Same trust-the-substrate-not-the-agent guarantee the factual claims already have, now on the instrument scores. Vitals flow through `attest_chain` (`(report, ref, prompt)` items) into a tamper-evident vitals trend.
+
+- **Honest scope, machine-readable.** The artifact carries a `measures` field ("register … NOT ground-truth honesty") and per-axis caveats; reference-less `deception` is flagged register-only. This re-affirms styxx's validated construct ceiling — text-only scoring is a register detector, not a truth oracle — it does not re-litigate it. The dogfood is the proof: on a benign, truthful self-report the deception axis scores 0.9956, exactly as the embedded caveat warns, so the score cannot be honestly over-read.
+
+```python
+from styxx.attestation import attest, verify_attestation
+att = attest(report, repo=".", prompt=task, vitals=True)
+res = verify_attestation(att, repo=".")
+assert res.vitals_ok   # every score re-derives from the recorded (prompt, response)
+```
+
+- **CLI:** `styxx attest <file> --vitals --prompt "<task>"`; `verify-attestation` reports vitals reproduction.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_cognometric_attestation.md` states K1 determinism / K2 re-sealed-score-tamper caught (decisive) / K3 chain reproduction BEFORE the code was written. Thesis survived: 6 new gate tests (29/29 attestation total; full scoped suite 1174 passed). Live receipt: `scripts/dogfood/cognometric_attestation_self_2026_05_28.json`.
+
+---
+
 ## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation
 
 ### Added — agent-independent, third-party-reproducible honesty attestation
