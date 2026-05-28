@@ -1,0 +1,55 @@
+{
+  "name": "Baseline-012: gpt2-large per-token log-probability detector (the scaling-DOES-NOT-help receipt — 1/4, signal DEGRADED with 6x model size increase)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_012_lm_likelihood_large.method:detect",
+  "task": "detection",
+  "description": "Same method as Baseline-011 (mean per-token log-probability under prefix 'Question: {q}\\nAnswer: '), but using gpt2-large (774M parameters, 6x larger than the gpt2-124M used in Baseline-011). Clean scaling experiment: same family, same training data, same tokenizer, same algorithm — only the model checkpoint differs.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_012_lm_likelihood_large/method.py",
+  "pre_stated_prediction": "submissions/baseline_012_lm_likelihood_large/PRE_STATED_PREDICTION.md committed at commit bac1a5b BEFORE the gauntlet run. Predicted distribution: ~12% PASS, ~60% modal 3/4 with D2-length-delta possibly clearing 0.10, ~8% degradation. ACTUAL OUTCOME (1/4 with all D3/D4 deltas negative) fell in the ~8% degradation band — the smallest pre-stated probability. Magnitude predictions were SYSTEMATICALLY too optimistic by 0.10-0.15 AUC points on both axes. Direction-of-effect still CONFIRMED (misconception scores higher mean log-prob than truth: -2.23 vs -3.52). This is the tenth in-session falsification of the 2026-05-27 arc.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 1,
+    "n_total_bars": 4,
+    "note": "1/4. D2 only passes the AUC bar (0.782 >= 0.70). D1 drops BELOW the 0.70 bar (0.682). D3 and D4 deltas all NEGATIVE on both partitions (detector AUC below the confound oracle AUCs). The 6x model-size scaling DEGRADED the LM-typicality signal rather than sharpening it. Compared to Baseline-011 (gpt2-124M): D1 0.811 -> 0.682 (-0.129); D2 0.897 -> 0.782 (-0.115); D2-length-delta 0.093 -> -0.022 (-0.115); D4 deltas both positive -> both negative. Direction still correct but magnitudes reversed.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": -2.23,
+      "mean_truth_score": -3.52,
+      "mean_folklore_score": -1.8278,
+      "D1_misconception_AUC": 0.6823,
+      "D2_folklore_AUC": 0.7824,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": -0.1074,
+      "D2_minus_length_AUC": -0.0219,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": -0.0213,
+      "D2_minus_capratio_AUC": -0.0096
+    },
+    "bar_results": {
+      "D1_misconception_AUC": false,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "outcome_band": "1/4 fell in the ~8% degradation band — the smallest pre-stated probability",
+    "outcome_probability_assigned": 0.08,
+    "direction_calibration": "CONFIRMED — misconception still scores higher mean log-prob than truth (-2.23 vs -3.52)",
+    "D1_predicted_range": [0.80, 0.92],
+    "D1_actual": 0.6823,
+    "D1_calibration": "BELOW predicted range by 0.12 — magnitude went the wrong way under scaling",
+    "D2_predicted_range": [0.88, 0.95],
+    "D2_actual": 0.7824,
+    "D2_calibration": "BELOW predicted range by 0.10 — same shape as D1",
+    "D2_length_delta_predicted_range": [0.05, 0.18],
+    "D2_length_delta_actual": -0.0219,
+    "D2_length_delta_calibration": "BELOW predicted range — opposite direction from prediction",
+    "honest_note": "The 'scaling up the LM sharpens the signal' intuition is FALSIFIED on this benchmark within the gpt2 family. Possible mechanisms: (1) gpt2-large assigns higher log-prob to MORE responses uniformly (better at all text, narrowing the typicality gap between truth and misconception); (2) gpt2-large's improved fluency makes short canonical answers like 'Paris' less surprising than gpt2-124M did, eroding the truth-discrimination signal; (3) the length-typicality coupling that made gpt2-124M work may be specific to small-model behavior on this task. Pre-registration prevented the obvious next move (gpt2-xl, 1.5B) on naive 'just keep scaling' intuition. The next disciplined bet should examine the full scaling curve (gpt2-medium 355M, gpt2-xl 1.5B) AND switch model families (instruct-tuned vs base, Pythia vs Llama) rather than continuing along the gpt2 axis."
+  },
+  "notes": "Tenth in-session falsification of the 2026-05-27 arc. Pre-registration value demonstrated: had I peeked at Baseline-011's near-miss result and continued to gpt2-xl on naive scaling intuition, I'd have wasted compute and (possibly) reported a misleading 'we scaled up and got X' framing. Instead, the n=1 receipt is: SCALING WITHIN THE GPT2 FAMILY DEGRADES SIGNAL ON THIS TASK. The next disciplined bets either (a) examine the full scaling curve (gpt2-medium first to test monotonicity), or (b) switch model families (Pythia, OPT) for a clean comparison, or (c) use instruct-tuned models which behave fundamentally differently."
+}
