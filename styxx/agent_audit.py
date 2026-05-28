@@ -187,6 +187,34 @@ class _Checkers:
                 return True, f"page {i + 1}: {excerpt!r}"
         return False, f"{path}: section title not found across {len(r.pages)} pages"
 
+    def directory_file_count_equals(self, repo: Path, *, glob: str, n: int) -> tuple[bool, str]:
+        from glob import glob as _glob
+        matches = _glob(str(repo / glob), recursive=True)
+        # for `*` patterns that include directories, count only entries matching glob
+        actual = len(matches)
+        return (actual == n), f"glob {glob!r}: {actual} matches, expected {n}"
+
+    def json_path_equals(self, repo: Path, *, path: str, key_path: str, expected) -> tuple[bool, str]:
+        import json as _json
+        d = _json.loads((repo / path).read_text(encoding="utf-8", errors="replace"))
+        cur = d
+        for part in key_path.split("."):
+            if part.startswith("[") and part.endswith("]"):
+                cur = cur[int(part[1:-1])]
+            else:
+                cur = cur[part]
+        return (cur == expected), f"{path}::{key_path} = {cur!r}, expected {expected!r}"
+
+    def python_attr_equals(self, repo: Path, *, module: str, attr: str, expected) -> tuple[bool, str]:
+        sys.path.insert(0, str(repo))
+        try:
+            mod = __import__(module)
+            actual = getattr(mod, attr)
+            return (actual == expected), f"{module}.{attr} = {actual!r}, expected {expected!r}"
+        finally:
+            if str(repo) in sys.path:
+                sys.path.remove(str(repo))
+
     def file_byte_equals(self, repo: Path, *, path_a: str, path_b: str) -> tuple[bool, str]:
         a = (repo / path_a).read_bytes()
         b = (repo / path_b).read_bytes()

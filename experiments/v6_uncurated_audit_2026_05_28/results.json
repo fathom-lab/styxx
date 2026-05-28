@@ -1,0 +1,328 @@
+{
+  "n_claims": 35,
+  "n_pass": 33,
+  "n_fail": 2,
+  "n_error": 0,
+  "fail_ids": [
+    "N2",
+    "N4"
+  ],
+  "error_ids": [],
+  "results": [
+    {
+      "id": "N1",
+      "text": "v6 abstract contains 'ten FINDING documents'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 3940\n's (benchmark, gauntlet code, nineteen baseline submissions, ten FINDING documents, sixteen+four pre-stated-then-published predictions, the fi'",
+      "error": ""
+    },
+    {
+      "id": "N2",
+      "text": "actual FINDING_*.md count equals 10 (predicted FAIL \u2014 actual 13)",
+      "expected": true,
+      "actual": false,
+      "verdict": "FAIL",
+      "evidence": "glob 'papers/agent-self-audit/FINDING_*.md': 13 matches, expected 10",
+      "error": ""
+    },
+    {
+      "id": "N3",
+      "text": "v6 abstract contains 'nineteen reference baselines'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 364\n'instrumented recursion frame)\\n**Substrate:** styxx 7.7.10 \u00b7 nineteen reference baselines on the dark-core benchmark \u00b7 git origin `fathom-lab/styxx@m'",
+      "error": ""
+    },
+    {
+      "id": "N4",
+      "text": "actual submissions/baseline_*/ count equals 19 (predicted FAIL \u2014 actual 18)",
+      "expected": true,
+      "actual": false,
+      "verdict": "FAIL",
+      "evidence": "glob 'submissions/baseline_*': 18 matches, expected 19",
+      "error": ""
+    },
+    {
+      "id": "N5",
+      "text": "actual submissions/baseline_*/ count equals 18 (ground-truth check)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "glob 'submissions/baseline_*': 18 matches, expected 18",
+      "error": ""
+    },
+    {
+      "id": "N6",
+      "text": "v6 abstract contains '108-record benchmark'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 658\n'llucination/misconception detection, instantiated against a 108-record benchmark of cross-vendor consensus errors. The contribution has thre'",
+      "error": ""
+    },
+    {
+      "id": "N7",
+      "text": "darkcore_benchmark records list length is 108",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json::n_records = 108, expected 108",
+      "error": ""
+    },
+    {
+      "id": "N8",
+      "text": "v6 \u00a713 contains '1086 passed, 8 skipped' verbatim",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 41517\n'v3 measurement arc cited. The full test suite stayed green (1086 passed, 8 skipped); the dedicated public-surface tests stayed at 42/42; ruff '",
+      "error": ""
+    },
+    {
+      "id": "N9",
+      "text": "v6 paper contains '42/42'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 41587\n'd, 8 skipped); the dedicated public-surface tests stayed at 42/42; ruff stayed clean. This v5 of the paper reflects the post-'",
+      "error": ""
+    },
+    {
+      "id": "N10",
+      "text": "v6 contains '5.88%' (dark-core asymmetry rate)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 1567\n'ional NLI re-test (v2) put strict within-model asymmetry at 5.88% but suffered an 85% UNCLEAR rate; a third measurement (v3) '",
+      "error": ""
+    },
+    {
+      "id": "N11",
+      "text": "v6 contains '17.00%' (TruthfulQA asymmetry rate)",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "papers/PAPER_recursive_discipline_2026_05_27.md: MATCH at offset 1831\n'ted rates inside pre-stated bands: **5.88% on dark-core and 17.00% on TruthfulQA**. Three iterations of measurement, each pre-'",
+      "error": ""
+    },
+    {
+      "id": "N12a",
+      "text": "L5 results.json n_pass equals 13",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/agent_claim_audit_2026_05_28/results.json::n_pass = 13, expected 13",
+      "error": ""
+    },
+    {
+      "id": "N12b",
+      "text": "L5 results.json n_fail equals 0",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/agent_claim_audit_2026_05_28/results.json::n_fail = 0, expected 0",
+      "error": ""
+    },
+    {
+      "id": "N13a",
+      "text": "L6 results.json n_pass equals 18",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::n_pass = 18, expected 18",
+      "error": ""
+    },
+    {
+      "id": "N13b",
+      "text": "L6 results.json n_fail equals 0",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::n_fail = 0, expected 0",
+      "error": ""
+    },
+    {
+      "id": "N14",
+      "text": "L6 results.json killgate_paper_grade_fired is False",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::killgate_paper_grade_fired = False, expected False",
+      "error": ""
+    },
+    {
+      "id": "N15",
+      "text": "L6 results.json killgate_instrument_grade_fired is False",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::killgate_instrument_grade_fired = False, expected False",
+      "error": ""
+    },
+    {
+      "id": "N16",
+      "text": "L6 results.json: TRUE claim T1 observed_p_no == 0.0",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::results.[0].observed_p_no = 0.0, expected 0.0",
+      "error": ""
+    },
+    {
+      "id": "N17",
+      "text": "L6 results.json: FALSE control F1 observed_p_no == 1.0",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "experiments/critique_detector_on_paper_2026_05_28/results.json::results.[13].observed_p_no = 1.0, expected 1.0",
+      "error": ""
+    },
+    {
+      "id": "C1",
+      "text": "commit ed663ca exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): ed663ca@idx8",
+      "error": ""
+    },
+    {
+      "id": "C2",
+      "text": "commit 0e97598 exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 0e97598@idx6",
+      "error": ""
+    },
+    {
+      "id": "C3",
+      "text": "commit 87ca52d exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 87ca52d@idx5",
+      "error": ""
+    },
+    {
+      "id": "C4",
+      "text": "commit 1b82e27 exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 1b82e27@idx4",
+      "error": ""
+    },
+    {
+      "id": "C5",
+      "text": "commit 3c24b5e exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 3c24b5e@idx3",
+      "error": ""
+    },
+    {
+      "id": "C6",
+      "text": "commit a8fb1f3 exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): a8fb1f3@idx2",
+      "error": ""
+    },
+    {
+      "id": "C7",
+      "text": "commit 05adebf exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 05adebf@idx1",
+      "error": ""
+    },
+    {
+      "id": "C8",
+      "text": "commit 1ab0e22 (critique_detector public API) exists on origin/main",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "origin/main positions (older\u2192newer): 1ab0e22@idx15",
+      "error": ""
+    },
+    {
+      "id": "S1",
+      "text": "styxx.__version__ equals '7.7.10'",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__version__ = '7.7.10', expected '7.7.10'",
+      "error": ""
+    },
+    {
+      "id": "S2",
+      "text": "'critique_detector' in styxx.__all__",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__all__ length=48; 'critique_detector' present",
+      "error": ""
+    },
+    {
+      "id": "S3",
+      "text": "'agent_audit' in styxx.__all__",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__all__ length=48; 'agent_audit' present",
+      "error": ""
+    },
+    {
+      "id": "S4",
+      "text": "'AgentClaimAuditor' in styxx.__all__",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "styxx.__all__ length=48; 'AgentClaimAuditor' present",
+      "error": ""
+    },
+    {
+      "id": "S5",
+      "text": "git tag v7.7.10 does NOT exist (operator-territory)",
+      "expected": false,
+      "actual": false,
+      "verdict": "PASS",
+      "evidence": "git tag -l v7.7.10 -> ''",
+      "error": ""
+    },
+    {
+      "id": "P1",
+      "text": "v6 PDF main.pdf has 17 pages",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "arxiv/recursive_discipline/main.pdf: pages=17, expected=17",
+      "error": ""
+    },
+    {
+      "id": "P2",
+      "text": "v6 PDF contains '13. The paper catches itself' section header",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "page 12: '13. The paper catches itself: same-session self-falsification of v4\u2019s forward-looking claim \u00a711 of this paper closes with a deployment implication that includes'",
+      "error": ""
+    },
+    {
+      "id": "P3",
+      "text": "v6 PDF contains '14. The instrumented recursion frame' section header",
+      "expected": true,
+      "actual": true,
+      "verdict": "PASS",
+      "evidence": "page 13: '14. The instrumented recursion frame: two further layers (v6) \u00a713 caught a forward-lookingproseclaim by hand-checking the substrate. The next frame:instrument t'",
+      "error": ""
+    }
+  ]
+}

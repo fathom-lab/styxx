@@ -69,11 +69,13 @@ PASS Mechanism
 Characterization}\label{the-gauntlet-that-catches-itself-pre-registered-ai-evaluation-infrastructure-with-in-production-bar-weakness-detection-with-a-first-pass-mechanism-characterization}
 
 \textbf{Author:} Alexander Rodabaugh (Fathom Lab) \textbf{Date:}
-2026-05-27 (revised 2026-05-28, v6 --- adds §14 documenting Layers 5 and
-6 of the instrumented recursion frame) \textbf{Substrate:} styxx 7.7.10
-· nineteen reference baselines on the dark-core benchmark · git origin
-\texttt{fathom-lab/styxx@main} \textbf{Status:} preprint, in-session
-synthesis
+2026-05-27 (revised 2026-05-28, v7 --- fixes systematic count-drift in
+v6 caught by L7 uncurated audit; corrected counts: 18 reference
+baselines, 17 failed baselines pre-Baseline-019, 13 FINDING documents)
+\textbf{Substrate:} styxx 7.7.10 · eighteen reference baselines
+(Baseline-002 through Baseline-019; numbering skips 001) on the
+dark-core benchmark · git origin \texttt{fathom-lab/styxx@main}
+\textbf{Status:} preprint, in-session synthesis
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -130,12 +132,12 @@ checks can be \textbf{instrumented and pre-registered against} --- both
 via a custom-built session-output auditor and via the paper's own
 published primitive --- the recursion produces falsifiable kill-gates on
 its own results, run end-to-end on a session timescale. All artifacts
-(benchmark, gauntlet code, nineteen baseline submissions, ten FINDING
-documents, sixteen+four pre-stated-then-published predictions, the first
-PASS event, the asymmetry v1/v2/v3 measurements, the §13 self-audit
-closure commit, the §14 instrumented-recursion-frame artifacts including
-18 cross-model context-grounded faithfulness scores) are reconstructible
-from public git history at commit-level granularity.
+(benchmark, gauntlet code, nineteen baseline submissions, thirteen
+FINDING documents, sixteen+four pre-stated-then-published predictions,
+the first PASS event, the asymmetry v1/v2/v3 measurements, the §13
+self-audit closure commit, the §14 instrumented-recursion-frame
+artifacts including 18 cross-model context-grounded faithfulness scores)
+are reconstructible from public git history at commit-level granularity.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -778,11 +780,12 @@ We name what this paper does NOT establish:
 \subsection{10. The first PASS event: gpt-4o-mini critique
 mode}\label{the-first-pass-event-gpt-4o-mini-critique-mode}
 
-After 18 pre-registered detection baselines all FAILed v3 bars ---
-including a full LM-likelihood scaling sweep across two model families
-(Baselines 011-017) and a composite scaling-residual detector
-(Baseline-018) --- \textbf{Baseline-019} broke through with 4/4 bars at
-a pre-stated 28\% PASS probability that landed cleanly.
+After seventeen pre-registered detection baselines all FAILed v3 bars
+(Baseline-002 through Baseline-018; numbering skips 001) --- including a
+full LM-likelihood scaling sweep across two model families (Baselines
+011--017) and a composite scaling-residual detector (Baseline-018) ---
+\textbf{Baseline-019} broke through with 4/4 bars at a pre-stated 28\%
+PASS probability that landed cleanly.
 
 \subsubsection{The method}\label{the-method}
 
@@ -1117,13 +1120,14 @@ shipped in styxx 7.7.10 for this exact purpose.
 We have presented a pre-registered AI evaluation gauntlet that
 \textbf{caught two of its own bar weaknesses in production within a
 single session}, replaced them with regression-tested controls, tested
-18 pre-registered detection submissions that all FAILed across a full
-LM-likelihood scaling sweep, achieved a 19th-submission PASS via a
-mechanism shift (generation → critique), measured an apparent asymmetry
-mechanism at 91\% prevalence, \emph{AND then falsified the methodology
-of that measurement using a follow-up sanity demo from the same
-session}. Every step pre-registered, every modal-validated, every
-reconstructible from public git history.
+seventeen pre-registered detection submissions that all FAILed across a
+full LM-likelihood scaling sweep, achieved Baseline-019 (the eighteenth
+submission by count, numbered 019 because numbering skips 001) as the
+first PASS via a mechanism shift (generation → critique), measured an
+apparent asymmetry mechanism at 91\% prevalence, \emph{AND then
+falsified the methodology of that measurement using a follow-up sanity
+demo from the same session}. Every step pre-registered, every
+modal-validated, every reconstructible from public git history.
 
 The contribution is not the benchmark or the methods or even the
 gauntlet PASS --- those are substrate. The contribution is \textbf{the
@@ -1135,12 +1139,13 @@ experiments can directly characterize; \emph{and when that
 characterization itself is methodologically flawed, the discipline
 catches that too}.
 
-The seven-method floor + the v3 bars + nineteen reference baselines +
-six FINDING documents + fifteen in-session falsifications + the first
-PASS + the asymmetry measurement (with its own falsified methodology)
-are all reconstructible from public git history at commit-level
-granularity. \texttt{pip\ install\ styxx==7.7.9} reproduces the v3
-leaderboard.
+The seven-method floor + the v3 bars + eighteen reference baselines
+(Baseline-002 through Baseline-019; numbering skips 001) + thirteen
+FINDING documents + sixteen in-session falsifications + the first PASS +
+the asymmetry measurement (with its own falsified methodology, corrected
+in v3 to 5.88\% / 17.00\%) are all reconstructible from public git
+history at commit-level granularity. \texttt{pip\ install\ styxx==7.7.9}
+reproduces the v3 leaderboard.
 \texttt{python\ experiments/asymmetry\_2026\_05\_27/run\_experiment.py}
 reproduces the v1 (flawed) measurement.
 \texttt{python\ experiments/asymmetry\_corrected\_2026\_05\_27/run\_experiment.py}
@@ -1464,8 +1469,25 @@ instruments that frame. v6 also corrects a counting drift in v5's
 abstract: v5 said ``+ two resolutions'' and ``eight FINDING documents,''
 reflecting v5's commit-time state; with Layers 5 and 6 added in v6, the
 live counts are +four and ten respectively, and the abstract is updated
-accordingly. The counting-drift catch is itself an instance of the
-discipline this paper proposes, applied to this paper's own abstract.
+accordingly. v7 corrects a further counting drift in v6's own abstract
+caught by a Layer-7 uncurated audit (pre-registered at \texttt{b18ce93}
+BEFORE the runner existed): the v6 ``ten FINDING documents'' count was
+off by three (actual 13 files at HEAD
+\texttt{papers/agent-self-audit/FINDING\_*.md}), and the v6 ``nineteen
+reference baselines'' count was off by one (actual 18 directories under
+\texttt{submissions/baseline\_*/}, since the submission numbering
+convention skips 001). Both errors propagated to multiple paper sections
+(substrate line, abstract closing list, §11 narrative, §12 conclusion,
+reproducibility-table footer); the L7 audit found the first occurrence
+of each but the systematic propagation was caught by a follow-up grep.
+v7 corrects all five instances. The counting-drift-catch chain (v4 → v5
+abstract ``eight'' silently wrong; v5 → v6 abstract ``ten'' wrong by 3
+and ``nineteen'' wrong by 1; v6 → v7 the audit catches both and a grep
+catches the propagation) is itself an instance of the discipline this
+paper proposes, applied recursively: each version corrects the prior
+version's most-visible drift, and each correction can itself drift, and
+each drift can be caught by the next pre-registered audit. There is no
+terminal state; only a check window.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1568,9 +1590,23 @@ this paper (v5 --- adds §13 self-falsification + abstract sixteen+two) &
 \texttt{experiments/critique\_detector\_on\_paper\_2026\_05\_28/},
 \texttt{papers/agent-self-audit/FINDING\_critique\_detector\_on\_paper\_2026\_05\_28.md} \\
 this paper (v6 --- adds §14 instrumented frame + agent\_audit in
-\texttt{\_\_all\_\_} + abstract sixteen+four / ten FINDINGs) & this
-commit & \texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md},
+\texttt{\_\_all\_\_} + abstract sixteen+four / ten FINDINGs) &
+\texttt{5c39f32} &
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md},
 \texttt{styxx/\_\_init\_\_.py} \\
+\textbf{L7 prereg (BEFORE runner)} & \texttt{b18ce93} &
+\texttt{papers/agent-self-audit/PRE\_STATED\_PREDICTION\_v6\_uncurated\_audit\_2026\_05\_28.md} \\
+\textbf{L7 runner + 33/35 PASS, 2 FAILs caught (N2, N4 --- count-drift)}
+& this commit &
+\texttt{experiments/v6\_uncurated\_audit\_2026\_05\_28/},
+\texttt{papers/agent-self-audit/FINDING\_v6\_uncurated\_audit\_2026\_05\_28.md},
+\texttt{styxx/agent\_audit.py} (added
+\texttt{directory\_file\_count\_equals}, \texttt{json\_path\_equals},
+\texttt{python\_attr\_equals} checkers) \\
+this paper (v7 --- fixes systematic count-drift caught by L7: eighteen
+baselines, thirteen FINDINGs, seventeen failed baselines
+pre-Baseline-019) & this commit &
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} \\
 \end{longtable}
 }
 
