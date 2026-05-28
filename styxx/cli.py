@@ -636,6 +636,76 @@ def cmd_audit(args):
     return 0
 
 
+def cmd_audit_claims(args):
+    """styxx audit-claims <file> — falsify an agent self-report against substrate.
+
+    Extracts deterministic, checkable claims (version pins, file-contains, git
+    tags, pdf page counts) from an agent's free-text self-report and mechanically
+    verifies each against the repo. Designed as a one-line CI merge gate:
+
+        styxx audit-claims pr_body.md --repo . || exit 1
+
+    Exit 0 if every extracted claim PASSes (or none were found); 1 if any claim
+    is contradicted by the substrate; 2 on input error. Free-form prose with no
+    checkable assertion is reported as uncovered, not failed — the gate fails on
+    lies it can check, not on claims it cannot extract.
+    """
+    from .agent_audit import extract_claims, AgentClaimAuditor
+
+    src = Path(args.file)
+    if not src.is_file():
+        print(f"styxx audit-claims: file not found: {src}", file=sys.stderr)
+        return 2
+    repo = Path(args.repo).resolve()
+    if not repo.exists():
+        print(f"styxx audit-claims: repo not found: {repo}", file=sys.stderr)
+        return 2
+
+    text = src.read_text(encoding="utf-8", errors="replace")
+    rep = extract_claims(text)
+    results = AgentClaimAuditor(repo_path=repo).run(rep.claims)
+    n_pass = sum(1 for r in results if r.verdict == "PASS")
+    n_fail = sum(1 for r in results if r.verdict == "FAIL")
+    n_err = sum(1 for r in results if r.verdict == "ERROR")
+
+    summary = {
+        "styxx_audit_claims": {
+            "file": str(src),
+            "repo": str(repo),
+            "sentences_total": rep.sentences_total,
+            "sentences_matched": rep.sentences_matched,
+            "coverage": round(rep.coverage, 4),
+            "claims_extracted": len(results),
+            "passed": n_pass,
+            "failed": n_fail,
+            "errored": n_err,
+            "gate": "PASS" if (n_fail == 0 and n_err == 0) else "FAIL",
+            "results": [r.to_dict() for r in results],
+        }
+    }
+
+    if args.json:
+        print(json.dumps(summary, indent=2, default=str))
+    else:
+        print(f"styxx audit-claims — {src}")
+        print(f"  extracted {len(results)} checkable claim(s) from "
+              f"{rep.sentences_total} sentence(s) "
+              f"(coverage {rep.coverage:.2f}); free-form prose not checked")
+        for r in results:
+            mark = {"PASS": "PASS", "FAIL": "FAIL", "ERROR": "ERR "}[r.verdict]
+            print(f"  [{mark}] {r.text!r}")
+            line = (r.evidence.splitlines()[0] if r.evidence else r.error)
+            print(f"         {line}")
+        if not results:
+            print("  (no checkable claims found — nothing to falsify)")
+        print(f"  -> {n_pass} passed, {n_fail} failed, {n_err} errored")
+        print("  GATE: " + ("PASS" if (n_fail == 0 and n_err == 0) else
+                            "FAIL — self-report contradicts substrate"))
+        print("JSON:" + json.dumps(summary, default=str))
+
+    return 0 if (n_fail == 0 and n_err == 0) else 1
+
+
 def cmd_critique(args):
     """styxx critique <prompt> <response> — audit + register-fix suggestions.
 
@@ -2210,6 +2280,16 @@ def _build_parser() -> argparse.ArgumentParser:
     p_init.add_argument("--speed", type=float,
                         help="boot-log timing multiplier (0=instant, 1=normal, 2=slower)")
     p_init.set_defaults(func=cmd_init)
+
+    # audit-claims — falsify an agent self-report against substrate (CI gate)
+    p_ac = sub.add_parser(
+        "audit-claims",
+        help="falsify an agent self-report against the repo (CI merge gate)",
+    )
+    p_ac.add_argument("file", help="path to the agent self-report (markdown/text)")
+    p_ac.add_argument("--repo", default=".", help="repo substrate to check against (default: .)")
+    p_ac.add_argument("--json", action="store_true", help="emit JSON only")
+    p_ac.set_defaults(func=cmd_audit_claims)
 
     # ask
     p_ask = sub.add_parser("ask", help="read vitals on a one-shot call")

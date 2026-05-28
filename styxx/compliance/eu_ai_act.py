@@ -11,9 +11,10 @@ USAGE:
     # Look up which styxx primitives produce evidence for a clause:
     m = cite("Article 15.1(a)")
     print(m.requirement_text)
-    print(m.styxx_primitives)
-    print(m.construct_ceilings)
-    print(m.reproducibility_receipts)
+    for p in m.styxx_primitives:
+        print(p.primitive, p.calibrated_metric)
+        print(p.construct_ceiling)        # honest failure mode
+        print(p.receipt_commit, p.receipt_doc)  # reproducibility receipt
 
     # Full coverage table (all mapped clauses):
     for row in coverage_table():
@@ -113,11 +114,14 @@ _AGENT_AUDIT = PrimitiveCoverage(
         "JSON paths, Python attributes, PDF pages, directory counts."
     ),
     construct_ceiling=(
-        "First-occurrence-only by default — caught initial drift but missed "
-        "systematic propagation to 4 additional places where the same "
-        "off-by-one appeared. Richer multi-occurrence checker is methodology "
-        "future work, not v0.1. Limited to substrate-checkable claims; "
-        "does not score interpretive, causal, or generalization claims."
+        "Single-site checkers are first-occurrence-only: they verify one "
+        "location and stop, so systematic propagation drift (an off-by-one "
+        "repeated across N places) is missed UNLESS the operator adds a "
+        "value_consistent_across_paths claim, which scans every match across a "
+        "glob, surfaces all divergent sites, and fails loudly on zero matches "
+        "(no vacuous PASS). Multi-occurrence checking is opt-in per claim, not "
+        "automatic. Limited to substrate-checkable claims; does not score "
+        "interpretive, causal, or generalization claims."
     ),
     receipt_commit="3c24b5e",
     receipt_doc="papers/agent-self-audit/FINDING_agent_claim_audit_2026_05_28.md",

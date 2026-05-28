@@ -42,6 +42,21 @@ The pre-7.7.10 single-file `styxx/compliance.py` (v1.3.0 API: `AnomalyEvent`, `C
 
 - **`styxx.agent_audit`, `Claim`, `AuditResult`, `AgentClaimAuditor`** — public API for the substrate-grounded session-output verifier. Read-only, offline, no external services. Nine registered checkers covering git diffs, branch commit chains, git tags, file substrings, Python attributes, package versions, PDF page counts, PDF section presence, file byte-equality. Three additional checkers added in the L7 commit: `directory_file_count_equals`, `json_path_equals`, `python_attr_equals`.
 
+### Added — agent self-report falsification: paste-and-audit gate
+
+The hand-fed verifier becomes a one-line merge gate. Two new checkers close the documented "first-occurrence-only" construct ceiling, and `extract_claims` removes the requirement to hand-author `Claim` objects.
+
+- **`checkers.value_consistent_across_paths(repo, *, glob, pattern, expected, group=1)`** — scans **every** match of `pattern` across all files matching `glob`, FAILs if any captured value diverges from `expected`, and surfaces all divergent sites with file + line. Fails loudly on zero occurrences (no vacuous `all()`-over-empty-set PASS). Oracle-backed: you supply the canonical value.
+- **`checkers.value_internally_consistent(repo, *, path, pattern, group=1)`** — oracle-free triage flagger: asserts all captures **within one file** agree with each other; zero/one occurrence is trivially consistent; divergence FAILs listing the distinct values + line numbers. Catches a document that contradicts itself with zero configuration.
+- **`styxx.extract_claims(text, *, id_prefix="X") -> ExtractionReport`** and **`styxx.ExtractionReport`** — deterministic, non-LLM claim extraction from free-text agent self-reports via a closed regex template set (version pins, git tags, file-contains assertions, PDF page counts). Honest boundary: extraction ≠ verification — only claims matching a template are checkable; unmatched prose is reported as uncovered, never silently passed.
+- **`styxx audit-claims <report.md> --repo <path> [--json]`** — CLI merge gate. Extracts claims from an agent's self-report, audits each against repository substrate, prints a human summary plus a grep-able `JSON:` line. Exit codes: `0` all claims PASS (or none extractable), `1` at least one claim contradicted by substrate, `2` input error. Drop-in CI usage: `styxx audit-claims pr_body.md --repo . || exit 1`.
+
+```bash
+styxx audit-claims pr_body.md --repo .   # 0 pass / 1 lie caught / 2 input error
+```
+
+A ready-to-use GitHub Action lives at `.github/workflows/audit-claims.yml`.
+
 ### Why patch (not minor)
 
 `critique_detector`, `agent_audit`, `compliance` are all pure additions; default install + import behavior is byte-identical to 7.7.9 for any client that does not import them. The paper revisions are documentation-only. The compliance package conversion preserves every pre-7.7.10 import path. No public-surface breakage.

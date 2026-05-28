@@ -40,7 +40,10 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-__all__ = ["Claim", "AuditResult", "AgentClaimAuditor", "checkers"]
+__all__ = [
+    "Claim", "AuditResult", "AgentClaimAuditor", "checkers",
+    "extract_claims", "ExtractionReport", "CLAIM_TEMPLATES",
+]
 
 
 @dataclass
@@ -215,6 +218,95 @@ class _Checkers:
             if str(repo) in sys.path:
                 sys.path.remove(str(repo))
 
+    def value_consistent_across_paths(
+        self, repo: Path, *, glob: str, pattern: str, expected: str, group: int = 1,
+    ) -> tuple[bool, str]:
+        """Assert EVERY regex capture of ``pattern`` across ``glob`` equals ``expected``.
+
+        Closes the first-occurrence-only construct ceiling: where the
+        single-site checkers verify one location and stop, this scans every
+        file matching ``glob``, extracts every occurrence of ``pattern``
+        (capture ``group``), and FAILs if any occurrence diverges from
+        ``expected`` — surfacing the systematic propagation drift that a
+        first-occurrence check silently misses.
+
+        Zero occurrences FAILs loudly: ``all()`` over an empty set is
+        vacuously True, which would let a typo'd pattern pass. A claim that a
+        value appears consistently is not satisfied when it appears nowhere.
+        """
+        from glob import glob as _glob
+
+        rx = re.compile(pattern)
+        want = str(expected)
+        matches = sorted(_glob(str(repo / glob), recursive=True))
+        occurrences = 0
+        divergent: list[str] = []
+        for fp in matches:
+            p = Path(fp)
+            if not p.is_file():
+                continue
+            text = p.read_text(encoding="utf-8", errors="replace")
+            rel = p.relative_to(repo).as_posix() if p.is_relative_to(repo) else fp
+            for m in rx.finditer(text):
+                occurrences += 1
+                got = m.group(group)
+                if got != want:
+                    line = text.count("\n", 0, m.start()) + 1
+                    divergent.append(f"{rel}:{line} -> {got!r}")
+        if occurrences == 0:
+            return False, (
+                f"glob {glob!r} pattern {pattern!r}: ZERO occurrences across "
+                f"{len(matches)} path(s) — fails loudly (no vacuous PASS)"
+            )
+        if divergent:
+            shown = "; ".join(divergent[:20])
+            more = f" (+{len(divergent) - 20} more)" if len(divergent) > 20 else ""
+            return False, (
+                f"{occurrences} occurrence(s); {len(divergent)} diverge from "
+                f"{want!r}: {shown}{more}"
+            )
+        return True, f"{occurrences} occurrence(s) across {len(matches)} path(s), all == {want!r}"
+
+    def value_internally_consistent(
+        self, repo: Path, *, path: str, pattern: str, group: int = 1,
+    ) -> tuple[bool, str]:
+        """Assert all captures of ``pattern`` WITHIN one file agree with each other.
+
+        Oracle-free: unlike value_consistent_across_paths (which needs the
+        canonical ``expected`` value), this asserts only that a document does
+        not contradict ITSELF. It is the automatic form of the L7 off-by-one
+        catch — a paper claiming "30 items" in four places and "28" in a fifth
+        FAILs with zero configuration. No expected value is supplied.
+
+        Triage semantics, not a gate: legitimate within-document variation
+        (e.g. a historical version reference alongside a current one) will also
+        FAIL, by design — the instrument flags candidates for review rather
+        than adjudicating intent. Zero or one occurrence is trivially
+        consistent (nothing contradicts), reported as PASS with the count.
+        """
+        rx = re.compile(pattern)
+        text = (repo / path).read_text(encoding="utf-8", errors="replace")
+        by_value: dict[str, list[int]] = {}
+        for m in rx.finditer(text):
+            val = m.group(group)
+            line = text.count("\n", 0, m.start()) + 1
+            by_value.setdefault(val, []).append(line)
+        total = sum(len(v) for v in by_value.values())
+        if total <= 1:
+            return True, f"{path}: {total} occurrence(s) of {pattern!r} — trivially consistent"
+        if len(by_value) == 1:
+            val, lines = next(iter(by_value.items()))
+            return True, f"{path}: {total} occurrence(s), all == {val!r} (lines {lines[:10]})"
+        parts = []
+        for val, lines in sorted(by_value.items(), key=lambda kv: -len(kv[1])):
+            shown = ",".join(str(n) for n in lines[:8])
+            more = f"+{len(lines) - 8}" if len(lines) > 8 else ""
+            parts.append(f"{val!r}@[{shown}{more}]")
+        return False, (
+            f"{path}: {len(by_value)} distinct values across {total} "
+            f"occurrence(s): " + "; ".join(parts)
+        )
+
     def file_byte_equals(self, repo: Path, *, path_a: str, path_b: str) -> tuple[bool, str]:
         a = (repo / path_a).read_bytes()
         b = (repo / path_b).read_bytes()
@@ -232,3 +324,166 @@ class _Checkers:
 
 
 checkers = _Checkers()
+
+
+# ---------------------------------------------------------------------------
+# Deterministic claim extraction: agent prose -> checkable Claim objects.
+#
+# This is the bridge from "verifier you must hand-feed" to "paste an agent's
+# self-report, get a falsification report". It is DELIBERATELY deterministic
+# (regex templates, no LLM): an LLM-based extractor would itself be an
+# untrustworthy agent self-report. The closed template set is the honest
+# boundary — free-form claims are out of scope and reported as uncovered.
+#
+# Extraction != verification. extract_claims only PROPOSES checkable claims;
+# AgentClaimAuditor.run still mechanically verifies each against substrate.
+# Imperfect recall is acceptable; mis-TYPING a claim is not (a wrong checker
+# binding yields a meaningless verdict), so templates bind args explicitly.
+# ---------------------------------------------------------------------------
+
+@dataclass
+class ExtractionReport:
+    """Result of extract_claims: the claims found plus honest coverage stats."""
+    claims: list[Claim]
+    sentences_total: int
+    sentences_matched: int
+
+    @property
+    def coverage(self) -> float:
+        """Fraction of sentences that produced at least one claim (honest recall proxy)."""
+        return (self.sentences_matched / self.sentences_total) if self.sentences_total else 0.0
+
+
+# A PEP440-ish version token: semver core plus optional pre/dev/post suffix, so
+# "3.1.0a1" / "1.2.0rc2" survive extraction intact rather than truncating to the
+# numeric core (which manufactures a false mismatch against the real version).
+_VER = r"\d+\.\d+\.\d+(?:(?:a|b|rc|\.?dev|\.?post)\d*)?"
+
+
+def _tmpl_version(m: re.Match) -> Claim:
+    v = m.group("v") or m.group("v2")  # two alternatives: "version is X" / "styxx==X"
+    return Claim(
+        id="", text=m.group(0).strip(),
+        checker=checkers.package_version_equals,
+        args={"path": "pyproject.toml", "version": v}, expected=True,
+    )
+
+
+def _tmpl_version_bump(m: re.Match) -> Claim:
+    # A bump line "X -> Y" / "X → Y" / "X to Y" claims the repo is now at the
+    # POST-state Y. Capturing the left side (the old version) is the dominant
+    # false-positive in retrospective commit-message audits.
+    return Claim(
+        id="", text=m.group(0).strip(),
+        checker=checkers.package_version_equals,
+        args={"path": "pyproject.toml", "version": m.group("vb")}, expected=True,
+    )
+
+
+def _tmpl_tag(m: re.Match) -> Claim:
+    t = m.group("t")
+    return Claim(
+        id="", text=m.group(0).strip(),
+        checker=checkers.git_tag_exists, args={"tag": t}, expected=True,
+    )
+
+
+def _tmpl_file_contains(m: re.Match) -> Claim:
+    return Claim(
+        id="", text=m.group(0).strip(),
+        checker=checkers.file_at_path_contains,
+        args={"path": m.group("path"), "substring": m.group("sub")}, expected=True,
+    )
+
+
+def _tmpl_pdf_pages(m: re.Match) -> Claim:
+    return Claim(
+        id="", text=m.group(0).strip(),
+        checker=checkers.pdf_page_count_equals,
+        args={"path": m.group("path"), "n": int(m.group("n"))}, expected=True,
+    )
+
+
+# Each template: (name, compiled regex with named groups, builder). Anchors are
+# tight enough that non-checkable prose ("the system is robust") matches nothing.
+CLAIM_TEMPLATES: list[tuple[str, "re.Pattern[str]", Callable[[re.Match], Claim]]] = [
+    (
+        # Bump line FIRST: "X -> Y" / "X to Y" claims the POST-state Y. Listed
+        # before version_pin so the migration arrow is consumed as a bump rather
+        # than leaking the left-hand (old) version as a state-claim.
+        "version_bump",
+        re.compile(
+            rf"\b{_VER}(?:\s*(?:->|→)\s*|\s+to\s+)[\"']?(?P<vb>{_VER})",
+            re.IGNORECASE,
+        ),
+        _tmpl_version_bump,
+    ),
+    (
+        # State-claim. Trailing guard rejects the left side of a migration
+        # ("version 7.7.9 -> ..." must not bind 7.7.9); the bump template above
+        # captures the post-state instead.
+        "version_pin",
+        re.compile(
+            rf"(?:\bversion\s+(?:is\s+now\s+|is\s+|=\s*|equals\s+)?[\"']?(?P<v>{_VER})"
+            rf"|styxx==(?P<v2>{_VER}))"
+            rf"(?!\s*(?:->|→|to\s+\d))",
+            re.IGNORECASE,
+        ),
+        _tmpl_version,
+    ),
+    (
+        "git_tag",
+        re.compile(r"\btag\s+[\"']?(?P<t>v?\d+\.\d+\.\d+)[\"']?\s+exists", re.IGNORECASE),
+        _tmpl_tag,
+    ),
+    (
+        "file_contains",
+        re.compile(
+            r"\b(?P<path>[\w./-]+\.[A-Za-z0-9]+)\s+contains\s+[\"'](?P<sub>[^\"']+)[\"']",
+        ),
+        _tmpl_file_contains,
+    ),
+    (
+        "pdf_pages",
+        re.compile(r"\b(?P<path>[\w./-]+\.pdf)\s+(?:has|is)\s+(?P<n>\d+)\s+pages?", re.IGNORECASE),
+        _tmpl_pdf_pages,
+    ),
+]
+
+
+def extract_claims(text: str, *, id_prefix: str = "X") -> ExtractionReport:
+    """Extract deterministic, checkable Claims from agent free-text.
+
+    Splits on sentence/line boundaries, applies each template in CLAIM_TEMPLATES,
+    and emits one Claim per match with the checker and args bound explicitly.
+    Claims are de-duplicated by (checker name, sorted args). IDs are assigned
+    ``{id_prefix}1``, ``{id_prefix}2``, ... in document order.
+
+    Returns an ExtractionReport with the claims plus honest coverage stats.
+    Sentences with no checkable assertion produce no claims (by design — the
+    closed template set IS the construct ceiling).
+    """
+    sentences = [s for s in re.split(r"(?<=[.!?])\s+|\n+", text) if s.strip()]
+    seen: set[tuple[str, tuple]] = set()
+    claims: list[Claim] = []
+    matched_sentences = 0
+    for s in sentences:
+        sentence_hit = False
+        for name, rx, builder in CLAIM_TEMPLATES:
+            for m in rx.finditer(s):
+                claim = builder(m)
+                key = (claim.checker.__name__, tuple(sorted(claim.args.items())))
+                if key in seen:
+                    continue
+                seen.add(key)
+                claims.append(claim)
+                sentence_hit = True
+        if sentence_hit:
+            matched_sentences += 1
+    for i, c in enumerate(claims, start=1):
+        c.id = f"{id_prefix}{i}"
+    return ExtractionReport(
+        claims=claims,
+        sentences_total=len(sentences),
+        sentences_matched=matched_sentences,
+    )

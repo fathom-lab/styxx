@@ -345,6 +345,7 @@ from .verify import verify, Verdict
 from .critique import critique_detector, CritiqueDetector  # 7.7.10: first-PASS detector
 from . import agent_audit  # noqa: F401  # 7.7.10: L5 instrument (FINDING_agent_claim_audit_2026_05_28.md)
 from .agent_audit import Claim, AuditResult, AgentClaimAuditor  # 7.7.10: L5 public surface
+from .agent_audit import extract_claims, ExtractionReport  # 7.7.10: prose->claim falsification
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
@@ -662,6 +663,7 @@ __all__ = [
 
     # 7.7.10: agent-claim auditor (L5 — substrate-grounded session-output check)
     "agent_audit", "Claim", "AuditResult", "AgentClaimAuditor",
+    "extract_claims", "ExtractionReport",
 
     # metadata
     "__version__",

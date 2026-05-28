@@ -726,7 +726,25 @@ for r in results:
     print(r.id, r.verdict, "->", r.evidence)
 ```
 
-Twelve registered checkers covering git diffs, branch commit chains, git tags, file substrings, Python attributes, package versions, PDF page counts, PDF section presence, file byte-equality, directory file counts, JSON key-path navigation, Python attribute equality. Read-only, offline, no external services. Built FOR AI agents (Layer 5 of the recursive-discipline arc — see paper §14).
+Fourteen registered checkers covering git diffs, branch commit chains, git tags, file substrings, Python attributes, package versions, PDF page counts, PDF section presence, file byte-equality, directory file counts, JSON key-path navigation, Python attribute equality, **multi-path value consistency** (`value_consistent_across_paths` — catches a claim that drifts across N sites; fails loudly on zero matches, no vacuous pass), and **oracle-free internal consistency** (`value_internally_consistent` — flags a document that contradicts *itself*, no expected value needed). Read-only, offline, no external services. Built FOR AI agents (Layer 5 of the recursive-discipline arc — see paper §14).
+
+### `styxx.extract_claims` + `styxx audit-claims` — falsify an agent's self-report
+
+The bridge from "verifier you must hand-feed" to "paste a self-report, get a falsification report." `extract_claims` turns agent free-text into checkable `Claim`s **deterministically** (regex templates, no LLM — an LLM extractor would itself be an untrustworthy self-report). The CLI wires it as a one-line CI merge gate:
+
+```bash
+styxx audit-claims pr_body.md --repo .   # exit 1 if the agent's prose contradicts the diff
+```
+
+```python
+from styxx import extract_claims
+from styxx.agent_audit import AgentClaimAuditor
+rep = extract_claims("Released version is 7.7.10. The file CHANGELOG.md contains \"shipped\".")
+results = AgentClaimAuditor(repo_path=".").run(rep.claims)   # each claim verified against substrate
+print(rep.coverage)   # honest fraction of sentences that were checkable
+```
+
+**Honest boundary:** the template set is closed (version pins, file-contains, git tags, PDF page counts), so coverage is partial and reported, not hidden. The value is that every claim it *does* surface is mechanically falsified — and the gate fails on lies it can check, not on claims it cannot extract. Dogfooded: run on this session's own self-report, it caught a real authoring error.
 
 ### `styxx.compliance.eu_ai_act` — first open-source EU AI Act Article 15 measurement bridge
 

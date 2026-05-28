@@ -1,0 +1,54 @@
+name: audit-claims
+
+# Falsifies the PR description against repository substrate. The agent (human or
+# AI) that opens a PR writes claims in the body — "bumped version to 7.7.10",
+# "CHANGELOG.md now contains the entry", "the paper is 7 pages". This gate
+# extracts every checkable claim with `styxx extract_claims` (deterministic, no
+# LLM) and audits each against the checked-out tree. A claim contradicted by the
+# substrate fails the merge. Prose with no checkable claim passes — the gate
+# fires on lies, not on the absence of claims.
+#
+# Exit-code contract (from `styxx audit-claims`):
+#   0  every extracted claim PASSed (or none were extractable)
+#   1  at least one claim contradicted by substrate
+#   2  input error (missing file/repo)
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-claims:
+    name: falsify PR self-report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install styxx
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Write PR body to a file
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # Use the env var (never interpolate untrusted body text into the
+          # shell) and tolerate an empty body — the gate passes on no claims.
+          printf '%s' "${PR_BODY:-}" > pr_body.md
+          echo "----- extracted PR body -----"
+          cat pr_body.md
+          echo "-----------------------------"
+
+      - name: Audit claims against substrate
+        run: styxx audit-claims pr_body.md --repo .
