@@ -1,0 +1,501 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{\texorpdfstring{A pre-registered, falsifiable
+measurement-methodology bridge from \texttt{styxx} primitives to NIST AI
+RMF 1.0 Measure-function subcategories
+(v0.1)}{A pre-registered, falsifiable measurement-methodology bridge from styxx primitives to NIST AI RMF 1.0 Measure-function subcategories (v0.1)}}\label{a-pre-registered-falsifiable-measurement-methodology-bridge-from-styxx-primitives-to-nist-ai-rmf-1.0-measure-function-subcategories-v0.1}
+
+\textbf{Author:} Alexander Rodabaugh (Fathom Lab) \textbf{Date:}
+2026-05-28 \textbf{Substrate:} styxx 7.7.10 in-development; companion to
+\texttt{papers/EU\_AI\_ACT\_COMPLIANCE\_2026.md} (EU AI Act bridge v0.1)
+and \texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md}
+(recursive-discipline methodology paper v7); module
+\texttt{styxx.compliance.nist\_ai\_rmf} ships in the same commit
+\textbf{Status:} v0.1 minimum-viable mapping. Companion to the EU AI Act
+bridge, applying the same methodology to a parallel jurisdictional
+regime (United States NIST AI RMF 1.0). Not legal advice; not a
+substitute for an organization's own NIST AI RMF implementation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+NIST AI 100-1 (the AI Risk Management Framework 1.0, January 2023)
+defines four core functions for AI risk management: Govern, Map,
+Measure, Manage. The Measure function is its analytical engine --- 22
+subcategories that evaluate AI systems against seven trustworthy
+characteristics (valid/reliable, safe, secure/resilient,
+accountable/transparent, explainable/interpretable, privacy-enhanced,
+fair/bias-mitigated). The RMF is voluntary in US federal contexts but is
+increasingly referenced by federal procurement, state-level legislation,
+and private-sector contracting. This paper introduces
+\texttt{styxx.compliance.nist\_ai\_rmf}, a parallel jurisdictional
+bridge to the EU AI Act compliance bridge introduced the same day. It
+maps styxx primitives to five Measure subcategories (MS-2.3, MS-2.4,
+MS-2.5, MS-2.6, MS-2.13) with calibrated metrics, construct ceilings,
+commit-level reproducibility receipts, and the same three kill-gates (A1
+specific subcategory citations, A2 construct ceilings disclosed, A3
+uncovered ≥ covered) enforced by tests. v0.1 explicitly enumerates six
+uncovered Measure subcategories (MS-2.7, MS-2.8, MS-2.9 partial,
+MS-2.10, MS-2.11, MS-2.12) with alternative-tool references. The bridge
+shares dataclasses with the EU AI Act bridge through
+\texttt{styxx.compliance.\_common}, signaling that the methodology
+pattern transfers across regulatory regimes. Not legal advice;
+independent review required for production deployment.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Background}\label{background}
+
+\subsubsection{1.1 NIST AI RMF 1.0 in
+context}\label{nist-ai-rmf-1.0-in-context}
+
+NIST AI 100-1, published January 2023, organizes AI risk management into
+four functions: \textbf{Govern} (organizational policies), \textbf{Map}
+(context establishment, risk identification), \textbf{Measure}
+(analytical evaluation), \textbf{Manage} (risk prioritization and
+response). The Measure function operationalizes the framework's
+analytical claims via 22 subcategories distributed across four
+categories (MS-1.x, MS-2.x, MS-3.x, MS-4.x). MS-2.x specifically
+addresses the seven trustworthy AI characteristics enumerated in NIST AI
+100-1 §4: valid and reliable; safe; secure and resilient; accountable
+and transparent; explainable and interpretable; privacy-enhanced; fair
+with harmful bias managed.
+
+The RMF is \textbf{voluntary} in US federal contexts. Its adoption is
+nevertheless meaningful: federal procurement contracts increasingly
+reference it, state legislatures (notably California, New York,
+Colorado) cite it in AI governance bills, and major US enterprises adopt
+it as a de-facto standard pending future statutory frameworks.
+
+\subsubsection{1.2 Why a parallel bridge}\label{why-a-parallel-bridge}
+
+The EU AI Act bridge (\texttt{papers/EU\_AI\_ACT\_COMPLIANCE\_2026.md})
+addressed one jurisdictional regime (Europe, mandatory, August 2026
+enforcement deadline). The NIST bridge addresses a parallel regime (US,
+voluntary, no fixed deadline) with a structurally different framework:
+NIST organizes by \emph{function} (Govern/Map/Measure/Manage) and
+\emph{trustworthy characteristics} (seven), where the EU AI Act
+organizes by \emph{article} and \emph{Annex III high-risk category}.
+Mapping styxx primitives to \emph{both} frameworks demonstrates that the
+underlying methodology --- pre-registration, construct ceilings,
+commit-level receipts, kill-gates A1/A2/A3 --- generalizes across
+regulatory regimes.
+
+The bridge is operationally useful: US organizations adopting NIST AI
+RMF for federal procurement or state-level AI governance can cite the
+same styxx primitives for Measure subcategories that EU operators cite
+for Article 15 sub-paragraphs. Cross-jurisdictional AI deployments
+benefit doubly.
+
+\subsubsection{1.3 What this paper IS, and is
+NOT}\label{what-this-paper-is-and-is-not}
+
+\textbf{IS:} a measurement methodology bridge from styxx primitives to
+NIST AI RMF Measure subcategories, with the same kill-gate discipline as
+the EU AI Act bridge. v0.1 ships under MIT alongside the underlying
+primitives. Pre-registered, falsifiable, open-source, commit-level
+reproducible.
+
+\textbf{IS NOT:} legal advice. A complete NIST AI RMF implementation
+(the RMF requires Govern, Map, Manage processes that styxx primitives do
+not address). An endorsement by NIST or any standards body. Sufficient
+on its own for any contractual or regulatory NIST RMF compliance claim
+--- operators must conduct independent legal and technical review.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. Methodology}\label{methodology}
+
+The NIST bridge inherits the methodology from the EU AI Act bridge (see
+\texttt{papers/EU\_AI\_ACT\_COMPLIANCE\_2026.md} §2 for the full design
+principles). Three structural differences:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Citation format}: clauses are \texttt{MS-N.N} (e.g.,
+  \texttt{MS-2.5}), not \texttt{Article\ N.N(x)}.
+\item
+  \textbf{Coverage scope}: only the Measure function's MS-2.x
+  subcategories. The Govern, Map, Manage functions are out of scope by
+  design (styxx is a measurement layer, not a governance/management
+  framework).
+\item
+  \textbf{Shared dataclasses}: \texttt{ComplianceMap},
+  \texttt{PrimitiveCoverage}, \texttt{UncoveredRequirement} are imported
+  from \texttt{styxx.compliance.\_common} and shared with the EU AI Act
+  bridge. Both bridges produce the same dataclass instances; only the
+  clause-citation format differs.
+\end{enumerate}
+
+The same three kill-gates apply: - \textbf{A1 (validity).} Every clause
+cites a specific Measure subcategory; regex
+\texttt{\^{}MS-\textbackslash{}d+\textbackslash{}.\textbackslash{}d+\$}.
+- \textbf{A2 (falsifiability).} Every
+\texttt{PrimitiveCoverage.construct\_ceiling} is non-empty and at least
+50 characters. - \textbf{A3 (boundary explicitness).}
+\texttt{len(uncovered\_requirements())\ \textgreater{}=\ len(coverage\_table())}.
+v0.1 ships 6 uncovered vs 5 covered.
+
+A1, A2, A3 are enforced at test time by
+\texttt{tests/test\_compliance\_nist\_ai\_rmf.py}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. The coverage table}\label{the-coverage-table}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Measure subcategory
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trustworthy characteristic
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+styxx primitives
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+MS-2.3 (performance demonstrated qualitatively/quantitatively, measures
+documented) & valid/reliable & \texttt{cognometric\_card},
+\texttt{critique\_detector}, \texttt{gauntlet\ +\ preflight} \\
+MS-2.4 (production monitoring of system functionality) & valid/reliable
+& \texttt{cognometric\_card}, \texttt{agent\_audit} \\
+MS-2.5 (valid and reliable; limitations of generalizability documented)
+& valid/reliable & \texttt{cognometric\_card},
+\texttt{critique\_detector}, \texttt{gauntlet\ +\ preflight} \\
+MS-2.6 (safety: real-time monitoring, fail-safe under knowledge-limit
+excursion) & safe & \texttt{cognometric\_card},
+\texttt{recover\_posture}, \texttt{agent\_audit} \\
+MS-2.13 (effectiveness of TEVV metrics and processes evaluated) & TEVV
+process effectiveness & \texttt{agent\_audit} \\
+\end{longtable}
+}
+
+\subsubsection{3.1 Why MS-2.5 is the most direct
+fit}\label{why-ms-2.5-is-the-most-direct-fit}
+
+MS-2.5 reads: \emph{``The AI system to be deployed is demonstrated to be
+valid and reliable. \textbf{Limitations of the generalizability beyond
+the conditions under which the technology was developed are
+documented}.''} (Emphasis added.) The bolded clause is the exact
+regulatory hook for styxx's construct-ceiling discipline. Every
+\texttt{PrimitiveCoverage.construct\_ceiling} field in the registry
+documents a published failure mode (e.g., logprob-validity works for
+refusal but fails for hallucination --- confident confabulation;
+sycophancy FPR 0.30 on restrained-tech responses). These are not buried
+caveats; they are first-class structured fields enforced by kill-gate
+A2.
+
+A NIST RMF Measure-function implementer documenting MS-2.5 can cite the
+styxx primitives + their construct ceilings as direct evidence of
+generalizability-limit documentation.
+
+\subsubsection{3.2 Why MS-2.13 is the recursive
+subcategory}\label{why-ms-2.13-is-the-recursive-subcategory}
+
+MS-2.13: \emph{``Effectiveness of the employed TEVV metrics and
+processes in the measure function are evaluated and documented.''} This
+is the meta-subcategory --- it asks whether the measurement methodology
+itself is effective.
+
+The styxx project's
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} v7
+documents six layers of self-falsification of the project's own
+measurement methodology, with pre-registered kill-gates and public
+commit-level receipts. \texttt{styxx.agent\_audit} is the specific
+instrument that operationalizes this for substrate-checkable claims
+(Layer 5 of the arc). The MS-2.13 mapping is unusually clean: the
+recursive-discipline paper IS the documentation MS-2.13 asks for.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. What this v0.1 does NOT
+cover}\label{what-this-v0.1-does-not-cover}
+
+Per kill-gate A3, this section is intentionally at least as long as §3.
+Six Measure subcategories are explicitly uncovered:
+
+\subsubsection{4.1 MS-2.7 (secure and
+resilient)}\label{ms-2.7-secure-and-resilient}
+
+styxx instruments observe agent cognition, not system security or
+resilience under adversarial conditions. Prompt-injection robustness is
+\emph{adjacent} (refusal-related instruments may flag some attempts) but
+security is not the primary scope.
+
+\textbf{Alternative:} Dedicated LLM security tools (Lakera Guard,
+Prompt-Armor, OWASP LLM Top 10 mitigations); standard
+application-security audit; penetration testing; red-teaming.
+
+\subsubsection{4.2 MS-2.8 (accountable and
+transparent)}\label{ms-2.8-accountable-and-transparent}
+
+styxx produces measurement evidence; it does not generate
+deployer-facing accountability documentation, decision-rationale
+interfaces, or governance artifacts that MS-2.8 implies.
+
+\textbf{Alternative:} Model card frameworks; capability-statement
+templates; deployer documentation processes; AI ethics review boards.
+
+\subsubsection{4.3 MS-2.9 (explainable and interpretable) --- partial
+gap}\label{ms-2.9-explainable-and-interpretable-partial-gap}
+
+styxx's construct-ceiling discipline contributes to interpretability by
+documenting WHEN each primitive fails, but does not generate
+per-decision feature attributions, counterfactual explanations, or
+per-input rationales that modern XAI methods provide.
+
+\textbf{Alternative:} Dedicated XAI libraries (SHAP, LIME, Captum,
+Inseq); mechanistic interpretability research methods; user studies.
+
+\subsubsection{4.4 MS-2.10
+(privacy-enhanced)}\label{ms-2.10-privacy-enhanced}
+
+styxx does not measure differential privacy guarantees, membership
+inference resistance, training-data memorization, or PII leakage
+detection. Cognometric instruments operate on outputs but not on privacy
+properties of those outputs.
+
+\textbf{Alternative:} Differential privacy auditing tools (Google's DP
+libraries); PII leakage scanners (Presidio, scrubadub); membership
+inference test suites.
+
+\subsubsection{4.5 MS-2.11 (fair with harmful bias
+managed)}\label{ms-2.11-fair-with-harmful-bias-managed}
+
+styxx primitives operate on per-step agent cognition signals; they do
+not measure population-level disparate impact, demographic outcome
+equalization, or training-data bias amplification across protected
+classes. Same gap as EU AI Act Article 15.4.
+
+\textbf{Alternative:} Fairness audit libraries (Fairlearn, AIF360);
+domain-specific impact assessment; demographic parity / equalized odds
+metrics.
+
+\subsubsection{4.6 MS-2.12 (environmental impact and
+sustainability)}\label{ms-2.12-environmental-impact-and-sustainability}
+
+styxx instruments operate at inference time on agent outputs; they do
+not measure training-energy consumption, inference-carbon footprint, or
+supply-chain environmental impact.
+
+\textbf{Alternative:} ML CO2 calculators (CodeCarbon, MLCO2);
+cloud-provider sustainability reports; supply-chain LCA tooling.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. Pre-registered falsification
+criteria}\label{pre-registered-falsification-criteria}
+
+Same five criteria as the EU AI Act bridge
+(\texttt{papers/EU\_AI\_ACT\_COMPLIANCE\_2026.md} §5), adapted to the
+NIST context:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{F1 (registry validity):} if any clause cites a Measure
+  subcategory that does not exist in NIST AI 100-1, this paper is
+  falsified.
+\item
+  \textbf{F2 (calibrated-metric reproducibility):} if any cited
+  AUC/accuracy number cannot be reproduced from the cited commit hash
+  within ±0.01, that \texttt{PrimitiveCoverage} is falsified.
+\item
+  \textbf{F3 (construct-ceiling discipline):} if a reviewer produces a
+  published failure mode of a styxx primitive that is NOT mentioned in
+  any \texttt{construct\_ceiling} field, that entry is falsified.
+\item
+  \textbf{F4 (boundary violation):} if a styxx primitive is later shown
+  to produce evidence for an MS subcategory in
+  \texttt{UNCOVERED\_MEASURE}, the mapping was scoped too narrowly.
+\item
+  \textbf{F5 (citation):} ≥1 independent citation (academic, federal
+  procurement reference, state-level legislative citation, or commercial
+  adoption note) by 2027-02-01 or methodology reassessed.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. Reproducibility appendix}\label{reproducibility-appendix}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+artifact
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+commit
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+path
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+this paper & this commit &
+\texttt{papers/NIST\_AI\_RMF\_BRIDGE\_2026.md} \\
+NIST bridge module & this commit &
+\texttt{styxx/compliance/nist\_ai\_rmf.py} \\
+shared dataclasses & this commit &
+\texttt{styxx/compliance/\_common.py} \\
+NIST tests (15) & this commit &
+\texttt{tests/test\_compliance\_nist\_ai\_rmf.py} \\
+companion EU AI Act paper & \texttt{f10cab0} &
+\texttt{papers/EU\_AI\_ACT\_COMPLIANCE\_2026.md} \\
+recursive-discipline paper v7 & \texttt{cf14c83} &
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} \\
+MS-2.13 receipt (agent\_audit instrument) & \texttt{3c24b5e} &
+\texttt{papers/agent-self-audit/FINDING\_agent\_claim\_audit\_2026\_05\_28.md} \\
+MS-2.5 / MS-2.3 receipt (Baseline-019 PASS) & \texttt{17fdd97} &
+\texttt{submissions/baseline\_019\_openai\_critique/submission.json} \\
+MS-2.5 / MS-2.6 receipt (cognometric instruments) & \texttt{cf14c83} &
+\texttt{submissions/\_results/leaderboard.json} \\
+\end{longtable}
+}
+
+NIST AI 100-1 official source:
+\url{https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf}.
+Measure-function subcategory text retrieved 2026-05-28 from
+\url{https://airc.nist.gov/airmf-resources/airmf/5-sec-core/}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{7. Limitations + scope of
+applicability}\label{limitations-scope-of-applicability}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Measure function only.} Govern, Map, Manage are out of scope.
+  A complete NIST AI RMF implementation requires all four functions.
+\item
+  \textbf{5 of 22 Measure subcategories covered.} MS-2.1, MS-2.2 (test
+  set documentation, human-subject evaluation) and MS-1.x, MS-3.x,
+  MS-4.x are out of scope for v0.1.
+\item
+  \textbf{Cross-jurisdictional, not cross-framework.} styxx primitives
+  that satisfy NIST MS-2.5 may not satisfy EU AI Act Article 15.1(a) ---
+  the citation evidence may overlap but the contractual claims differ.
+  Operators must conduct framework-specific conformity assessments.
+\item
+  \textbf{Voluntary regime.} NIST AI RMF is voluntary in US federal
+  contexts. The bridge provides evidence; uptake depends on operator's
+  chosen compliance posture.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{8. Conclusion}\label{conclusion}
+
+\texttt{styxx.compliance.nist\_ai\_rmf} v0.1 demonstrates that the EU AI
+Act bridge methodology transfers to a parallel jurisdictional regime
+with a different organizational structure. Both bridges share
+dataclasses, share the same kill-gate discipline, and reference the same
+underlying styxx primitives. v0.1 covers five MS-2.x Measure
+subcategories with five styxx primitives, enumerates six uncovered
+subcategories with alternative tool references, enforces structural
+integrity at test time, and pre-registers five falsification criteria.
+
+Cross-jurisdictional AI deployments --- increasingly common as US and EU
+operators serve the same downstream markets --- benefit from a single
+open-source measurement primitive set that maps to both regimes. The
+styxx.compliance namespace establishes that pattern.
+
+Not legal advice. Independent NIST AI RMF implementation review required
+for any production deployment.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+Written 2026-05-28 alongside \texttt{styxx.compliance.nist\_ai\_rmf}
+v0.1 in the same session as the companion EU AI Act bridge. Subcategory
+text retrieved from the NIST AIRC web resource on the same day. The
+recursive-discipline methodology of
+\texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} v7 informs
+the pre-registration kill-gates and the construct-ceiling discipline.
+
+This paper is offered to NIST AI RMF stakeholder communities, the AI
+Safety Institute Consortium (AISIC), federal procurement architects
+citing the RMF, state-level AI governance bill authors, and US
+enterprise compliance teams as an open-source measurement-methodology
+contribution. Comments, falsifications, and improvements are explicitly
+invited via the \texttt{fathom-lab/styxx} GitHub issue tracker.
+
+\end{document}

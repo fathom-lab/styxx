@@ -696,6 +696,52 @@ External submissions go through CI auto-verification (`.github/workflows/gauntle
 
 ---
 
+## New in 7.7.10 — `critique_detector`, `agent_audit`, `compliance.eu_ai_act`
+
+Three pure-addition public APIs. Default install + import behavior is byte-identical to 7.7.9 for anyone who doesn't import them.
+
+### `styxx.critique_detector` — first method to PASS the gauntlet's v3 bars
+
+```python
+from styxx import critique_detector
+det = critique_detector(model="gpt-4o-mini")  # requires OPENAI_API_KEY
+det("Is the Great Wall visible from space?", "Yes, with the naked eye.")  # ≈ 1.0
+det("Capital of France?", "Paris")                                          # ≈ 0.0
+```
+
+Returns `P(NO | critique prompt)`, range `[0, 1]`, higher = more misconception-like. The Baseline-019 first-PASS submission (4/4 v3 bars at AUC 0.95, pre-stated 28% probability) promoted to a public deployable primitive. Mechanism documented as **out-of-context critique** in the [recursive-discipline paper](papers/PAPER_recursive_discipline_2026_05_27.md) §11.5 (corrected from the v1 framing after in-session falsification).
+
+### `styxx.agent_audit` — substrate-grounded session-output auditor
+
+```python
+from styxx.agent_audit import Claim, AgentClaimAuditor, checkers
+auditor = AgentClaimAuditor(repo_path="/path/to/repo")
+results = auditor.run([
+    Claim(id="C1", text="version is 7.7.10",
+          checker=checkers.package_version_equals,
+          args={"path": "pyproject.toml", "version": "7.7.10"}, expected=True),
+    # ...
+])
+for r in results:
+    print(r.id, r.verdict, "->", r.evidence)
+```
+
+Twelve registered checkers covering git diffs, branch commit chains, git tags, file substrings, Python attributes, package versions, PDF page counts, PDF section presence, file byte-equality, directory file counts, JSON key-path navigation, Python attribute equality. Read-only, offline, no external services. Built FOR AI agents (Layer 5 of the recursive-discipline arc — see paper §14).
+
+### `styxx.compliance.eu_ai_act` — first open-source EU AI Act Article 15 measurement bridge
+
+```python
+from styxx.compliance import cite, coverage_table, uncovered_requirements
+m = cite("Article 15.1(a)")
+print(m.styxx_primitives)              # 3 primitives with calibrated metrics
+for u in uncovered_requirements():      # 7 EU AI Act clauses NOT covered
+    print(u.clause, "→", u.alternative) # honest boundary statement
+```
+
+The first publicly-known open-source measurement-methodology bridge mapping AI agent cognitive-observability primitives to specific EU AI Act Article 15 sub-paragraphs. Published 65 days before the **2 August 2026 high-risk system enforcement deadline**. Companion paper at [`papers/EU_AI_ACT_COMPLIANCE_2026.md`](papers/EU_AI_ACT_COMPLIANCE_2026.md), arXiv-ready bundle at [`arxiv/eu_ai_act_compliance/`](arxiv/eu_ai_act_compliance/), worked example at [`examples/eu_ai_act_compliance_example.py`](examples/eu_ai_act_compliance_example.py). **NOT legal advice.** Independent conformity review required for any production deployment.
+
+---
+
 ## Install
 
 ```bash

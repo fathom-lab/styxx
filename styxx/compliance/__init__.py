@@ -16,14 +16,26 @@ and limitations.
 """
 from __future__ import annotations
 
-# 7.7.10: EU AI Act Article 15 / Annex III compliance map (new in v0.1)
+# 7.7.10: framework-agnostic dataclasses (shared across jurisdictional bridges)
+from ._common import ComplianceMap, PrimitiveCoverage, UncoveredRequirement
+
+# 7.7.10: EU AI Act Article 15 / Annex III compliance map (new in v0.1).
+# The default top-level cite/coverage_table/uncovered_requirements bind to
+# the EU AI Act bridge for back-compat with the v0.1 release announcement;
+# call `styxx.compliance.eu_ai_act.cite()` or `styxx.compliance.nist_ai_rmf.cite()`
+# explicitly for jurisdictional clarity.
+from . import eu_ai_act  # noqa: F401
 from .eu_ai_act import (
-    ComplianceMap,
-    PrimitiveCoverage,
     cite,
     coverage_table,
     uncovered_requirements,
     ARTICLE_15_REGISTRY,
+)
+
+# 7.7.10: NIST AI RMF 1.0 Measure-function compliance map (new in v0.1)
+from . import nist_ai_rmf  # noqa: F401
+from .nist_ai_rmf import (
+    MEASURE_REGISTRY,
 )
 
 # Preserve legacy v1.3.0 public surface: AnomalyEvent, ComplianceReport,
@@ -36,13 +48,19 @@ from ._legacy import (  # noqa: F401
 )
 
 __all__ = [
-    # EU AI Act bridge (v0.1)
+    # shared dataclasses
     "ComplianceMap",
     "PrimitiveCoverage",
+    "UncoveredRequirement",
+    # EU AI Act bridge (default top-level binding)
+    "eu_ai_act",
     "cite",
     "coverage_table",
     "uncovered_requirements",
     "ARTICLE_15_REGISTRY",
+    # NIST AI RMF bridge
+    "nist_ai_rmf",
+    "MEASURE_REGISTRY",
     # legacy compliance API (preserved)
     "AnomalyEvent",
     "ComplianceReport",

@@ -7,7 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.7.10] — 2026-05-28 — `critique_detector` public API + recursive-discipline paper v4 (asymmetry-v3 measurement landed clean)
+## [7.7.10] — 2026-05-28 — `critique_detector` public API + recursive-discipline paper v7 + `styxx.compliance.eu_ai_act` v0.1 (first open-source EU AI Act Article 15 measurement-methodology bridge)
+
+### Added — `styxx.compliance` namespace + EU AI Act Article 15 bridge (v0.1)
+
+- **`styxx.compliance.eu_ai_act`** — the first publicly-known open-source measurement-methodology bridge mapping AI agent cognitive-observability primitives to specific EU AI Act Article 15 sub-paragraphs. v0.1 covers four clauses (15.1, 15.1(a), 15.3, 15.4) with five styxx primitives, explicitly enumerates seven uncovered EU AI Act requirements (Articles 9, 10, 12, 13, 14, 15 cybersecurity, 15.4 bias) with alternative-tool references, ships under MIT alongside the companion paper. Three pre-registered kill-gates are enforced by `tests/test_compliance_eu_ai_act.py` at CI time.
+
+```python
+from styxx.compliance import cite, coverage_table, uncovered_requirements
+m = cite("Article 15.1(a)")  # → ComplianceMap with primitives + receipts
+for u in uncovered_requirements():  # honest boundary statement
+    print(u.clause, "→", u.alternative)
+```
+
+- **`styxx.compliance.ComplianceMap`, `PrimitiveCoverage`, `cite()`, `coverage_table()`, `uncovered_requirements()`** — new public API.
+
+- **`papers/EU_AI_ACT_COMPLIANCE_2026.md`** (CC-BY 4.0, 7-page arXiv-ready) — companion paper offering this contribution under EU AI Act Article 15 paragraph 2's open invitation for stakeholder methodology development. NOT legal advice. Independent conformity review required for any production deployment.
+
+- **`arxiv/eu_ai_act_compliance/`** — operator-uploadable arXiv submission bundle (cs.CY primary, cs.AI cross-list) with paste-ready abstract, title, comments, license, and upload steps.
+
+- **`examples/eu_ai_act_compliance_example.py`** — worked example demonstrating `cite()`, `coverage_table()`, `uncovered_requirements()`, and a paste-ready Markdown excerpt renderer for Article 15.1(a) instructions-of-use accuracy sections.
+
+### Changed — `styxx.compliance.py` → `styxx.compliance/` package
+
+The pre-7.7.10 single-file `styxx/compliance.py` (v1.3.0 API: `AnomalyEvent`, `ComplianceReport`, `compliance_report`) is preserved verbatim at `styxx/compliance/_legacy.py` and re-exported via the new package `__init__.py`. **Backward compatibility is preserved**: every pre-7.7.10 import (`from styxx.compliance import compliance_report`, `styxx.compliance_report`, etc.) continues to work identically. The `tests/test_public_surface.py::test_compliance_smoke` test confirms this at every CI run.
+
+### Added — recursive-discipline paper v5/v6/v7 (after the initial v4 release)
+
+- **v5 §13 "The paper catches itself"** — same-session self-falsification of v4's own forward-looking claim about `styxx.critique_detector` being shipped. Three gaps closed in commit `0e97598`: version bump, `__all__` parity, docstring v4-framing.
+- **v6 §14 "The instrumented recursion frame"** — Layer 5 (`styxx.agent_audit` substrate-grounded session-output verifier, 13/13 PASS) + Layer 6 (`styxx.critique_detector` cross-model applied to the paper's own claims with negative controls, 18/18 PASS).
+- **v7 — uncurated L7 audit catches systematic count drift in v6**. Pre-registered at commit `b18ce93` BEFORE the runner existed; 2 pre-disclosed FAILs found exactly as predicted; follow-up grep caught the same drift propagated to 5 places in v6 that the audit didn't check. All fixed in v7. Acknowledgments paragraph now documents the v4→v5→v6→v7 count-correction chain.
+
+### Added — `styxx.agent_audit` instrument (Layer 5 substrate-grounded auditor)
+
+- **`styxx.agent_audit`, `Claim`, `AuditResult`, `AgentClaimAuditor`** — public API for the substrate-grounded session-output verifier. Read-only, offline, no external services. Nine registered checkers covering git diffs, branch commit chains, git tags, file substrings, Python attributes, package versions, PDF page counts, PDF section presence, file byte-equality. Three additional checkers added in the L7 commit: `directory_file_count_equals`, `json_path_equals`, `python_attr_equals`.
+
+### Why patch (not minor)
+
+`critique_detector`, `agent_audit`, `compliance` are all pure additions; default install + import behavior is byte-identical to 7.7.9 for any client that does not import them. The paper revisions are documentation-only. The compliance package conversion preserves every pre-7.7.10 import path. No public-surface breakage.
 
 ### Added — `styxx.critique_detector`
 
