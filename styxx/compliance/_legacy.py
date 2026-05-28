@@ -255,10 +255,10 @@ def compliance_report(
         report.save_json("compliance_audit.json")
         report.save_markdown("compliance_audit.md")
     """
-    from . import config
-    from .analytics import load_audit
-    from .antipatterns import antipatterns
-    from .weather import weather
+    from .. import config
+    from ..analytics import load_audit
+    from ..antipatterns import antipatterns
+    from ..weather import weather
 
     if agent_name is None:
         agent_name = config.agent_name()
