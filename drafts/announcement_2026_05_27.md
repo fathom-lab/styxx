@@ -1,82 +1,81 @@
-# Today's headline announcement — drafted 2026-05-27
+# Today's headline announcement — REVISED 2026-05-27 (post-mechanism-correction)
 
-Two versions: TG (long-form, ~2000 chars) and Twitter (single tight tweet, <280 chars + thread option).
+The session had a major in-session correction. Both v1 (cosine similarity, 91% claim) and v2 (directional NLI, 5.88% claim) asymmetry measurements had methodology flaws. The corrected mechanism for Baseline-019's PASS is "out-of-context critique" — gpt-4o-mini reliably rejects labeled-misconception text presented as a candidate. The detector still works; the explanation got narrower.
+
+The honest announcement should LEAD with this rather than hide it.
 
 ---
 
-## Telegram (long-form)
+## Telegram (long-form, ~2500 chars)
 
-**The gauntlet caught itself, broke its own floor, and named the mechanism — all in one session.**
+**The gauntlet caught itself twice — once on its own bars, then on its own FINDING.**
 
-styxx 7.7.9 shipped a public-challenge runner for cross-vendor consensus hallucination detection. Within hours, the bars caught two of their own weaknesses in production: D3 (length-control) discovered by accident when a sanity-check submission accidentally PASSed, D4 (capitalization-control) discovered by deliberate systematic confound audit. Both were fixed with regression-tested controls.
+styxx 7.7.9 shipped a public-challenge runner for misconception detection. Within one session, the discipline pattern produced three layers of catches:
 
-Then 18 pre-registered detection submissions all FAILed under the strengthened v3 bars. The full LM-likelihood scaling sweep (gpt2 124M→774M, Pythia 14M→410M) traced a clean inverse-scaling curve with a peak at Pythia-70M (3/4 best). Composite signals didn't help. Smaller LMs are better than bigger ones for this task — a real research finding.
+**Layer 1: bars caught the bars.** D3 length-control discovered when a token-overlap heuristic accidentally PASSed. D4 capitalization-control discovered by systematic confound audit. Both fixed with regression tests.
 
-Then Baseline-019 broke the floor.
+**Layer 2: the first real PASS.** After 18 pre-registered detection submissions all FAILed (including a full LM-likelihood scaling sweep showing inverse scaling within both gpt2 and Pythia families), Baseline-019 broke through: ask gpt-4o-mini in CRITIQUE mode "Is this answer factually correct? YES or NO." Score = P(NO). Result: 4/4 bars pass at pre-stated 28% probability. All six AUC-range predictions held.
 
-Method: ask gpt-4o-mini in CRITIQUE mode, "Is this answer factually correct? YES or NO." Score = P(NO).
+**Layer 3: FINDING caught the FINDING.** The published v1 mechanism claim — that the same RLHF-tuned LLM both *generates* the misconception AND *flags* it (91% prevalence) — was FALSIFIED IN-SESSION by a sanity demo of gpt-4o-mini in fresh generation mode. The model typically REFUTES well-known misconceptions in generation; the 91% rate was inflated by cosine similarity conflating topic with truth-value. A directional NLI re-test put the strict within-model asymmetry at 5.88% but had its own methodology limitations (85% NEUTRAL/AMBIGUOUS due to multi-sentence response NLI).
 
-Result: 4/4 bars pass. Pre-stated 28% PASS probability — landed. All six AUC-range predictions held inside their pre-stated ranges.
+Honest synthesis: true within-model asymmetry rate lies in [5.88%, 91.18%] — neither measurement precisely pins it down. The CORRECTED mechanism for Baseline-019's PASS is **out-of-context critique**: the model reliably rejects labeled-misconception text presented as a candidate, regardless of whether it would have generated that text itself. The PASS verdict is unchanged. The deployment value is unchanged. The mechanism description is narrower, more honest, more publishable.
 
-The mechanism: **the generation-vs-critique asymmetry of RLHF-tuned LLMs**. The same gpt-4o-mini that produces consensus misconceptions in generation mode correctly flags them in critique mode.
+15 in-session falsifications now — including two of our own published claims. The discipline pattern extends past gauntlet bars + benchmark confounds and into our own FINDINGs.
 
-Measured per-item: **91.18% of folklore items** show the asymmetry. The same model both generates and flags. The mechanism is now a quantified property of RLHF behavior, not just an inferred explanation.
-
-Today's session shipped:
-- styxx 7.7.9 on PyPI
-- Zenodo v25 at 10.5281/zenodo.20419662
-- Recursive-discipline preprint v2 (~5000 words, arXiv-ready)
+Today's shipped artifacts (all reconstructible from public git):
+- styxx 7.7.9 on PyPI (gauntlet runner, D3+D4 bars, audit primitive)
+- Zenodo v25 at DOI 10.5281/zenodo.20419662
+- Preprint v3 at papers/PAPER_recursive_discipline_2026_05_27.md (~5500 words, arXiv-ready)
 - 19 reference baselines on the public leaderboard
-- 13 in-session falsifications recorded in public git history
-- 6 paper-grade FINDING documents
+- 7 paper-grade FINDING documents
 - styxx.critique_detector as a deployable public API
-- The first real PASS on the gauntlet
-- Direct measurement of the underlying mechanism
+- self_correcting_generation.py demo
 
-```bash
-pip install styxx==7.7.9
-export OPENAI_API_KEY=sk-...
-from styxx import critique_detector
-det = critique_detector()
-det("Is the Great Wall visible from space?", "Yes, with the naked eye.")
-# → ~1.0 (model judges this incorrect — a known misconception)
-```
-
-The discipline pattern produced its first real PASS. The bars worked. The mechanism is characterized. The infrastructure improved itself on a single-session timescale.
+This is what disciplined AI eval looks like: not bigger claims, but harder-to-fake credibility. Every version of every claim is in git history. Nothing hidden.
 
 `github.com/fathom-lab/styxx`
 
 ---
 
-## Twitter (single tight version, ~280 chars)
+## Twitter (single tight version)
 
-styxx 7.7.9: pre-registered pre-stated AI eval gauntlet caught two of its own bar weaknesses in production, ran 18 failed detection baselines, then hit the first PASS via gpt-4o-mini in critique mode. The mechanism: generation-vs-critique asymmetry, 91% prevalence.
+styxx 7.7.9: pre-registered AI eval gauntlet caught its own bars (D3, D4), produced the first PASS via gpt-4o-mini critique mode (4/4 at pre-stated 28% prob), THEN falsified its own published mechanism FINDING in-session. The detector still works; the explanation got narrower. 15 falsifications in public git.
 
-10.5281/zenodo.20419662
+DOI 10.5281/zenodo.20419662
 
 ---
 
-## Twitter thread alternative (5 tweets)
+## Twitter thread (5 tweets, revised)
 
-**1/** today's session on the styxx gauntlet (pre-registered AI eval infra for misconception detection) produced its first real PASS — and the mechanism characterization came with it. n=19 baselines, n=13 in-session falsifications, n=1 paper draft. thread:
+**1/** today on the styxx gauntlet: three layers of in-session catches.
 
-**2/** Baseline-019 cleared all four v3 bars (D1+D2+D3+D4 on the dark-core benchmark) at a pre-stated 28% PASS probability that landed. method: ask gpt-4o-mini in CRITIQUE mode "Is this answer correct? YES/NO." score = P(NO). all 6 AUC ranges held inside pre-stated ranges.
+(1) bars caught themselves: D3 length-control after a token-overlap heuristic accidentally PASSed; D4 cap-control via systematic confound audit. both with regression tests.
 
-**3/** but here's the underlying property: the same RLHF-tuned LLM both GENERATES the consensus misconception AND FLAGS it as wrong in critique mode, on 91.18% of folklore items in our benchmark. it knows the answer; it just doesn't apply that knowledge in generation mode.
+**2/** (2) the first real PASS: after 18 pre-registered detection submissions all FAILed (including a full LM-scaling sweep showing INVERSE scaling within gpt2 + Pythia), Baseline-019 hit 4/4 — gpt-4o-mini in critique mode at pre-stated 28% probability. all 6 AUC ranges held.
 
-**4/** this is the *generation-vs-critique asymmetry* of RLHF-tuned LLMs. measured directly per-item. now a deployable safety primitive: route every generation output through a critique-mode check against the same model. one extra inference catches the misconception.
+**3/** (3) FINDING caught itself: the published v1 mechanism claim (91% within-model generation-vs-critique asymmetry) was falsified IN-SESSION by a sanity demo. gpt-4o-mini in fresh generation mode REFUTES well-known misconceptions; the 91% was inflated by cosine similarity conflating topic with truth.
 
-**5/** all 19 baselines, 13 falsifications, 6 FINDINGs, the preprint, and the first PASS event are reconstructible from public git history. pre-registered before each run. `pip install styxx==7.7.9` reproduces. zenodo doi: 10.5281/zenodo.20419662
+**4/** corrected mechanism: "out-of-context critique" — the model reliably rejects labeled-misconception text presented as a candidate, regardless of whether it would have generated that text itself. PASS verdict unchanged. deployment value unchanged. claim narrower & more honest.
+
+**5/** 15 in-session falsifications now, including TWO of our own published claims. discipline pattern extends past gauntlet bars + benchmark confounds and into our own FINDINGs. every version of every claim is in public git history. nothing hidden.
+
+DOI 10.5281/zenodo.20419662 · github.com/fathom-lab/styxx
 
 ---
 
 ## When to post
 
-- Wait for TruthfulQA cross-benchmark replication to land — if 91% asymmetry holds at n=200 on a public benchmark, the announcement scales up to "robust corpus-general phenomenon" instead of "single-benchmark observation."
-- If TruthfulQA also passes, the announcement becomes paper-grade headline. If it doesn't, the announcement is still strong but should add the "asymmetry partly benchmark-specific" caveat honestly.
+- **The corrected story is the headline.** Lead with "we caught ourselves, twice" rather than "we got a PASS." The honest framing is more credible AND more interesting than the original.
+- **All artifacts already on origin.** No more pushing needed. Operator can post any time.
 
 ## What NOT to claim
 
-- Do NOT claim this is "fully cross-vendor" — gpt-4o-mini was in the council. Honest framing: "within-vendor generation-vs-critique asymmetry, robust under the gauntlet's pre-registered bars."
-- Do NOT claim the misconceptions are SOLVED — the gauntlet PASS is a detection result, not a generation fix. Mitigation requires routing every output through a critique check.
-- Do NOT promise replication on every benchmark or model — that's the operator-territory follow-up work. The TruthfulQA result (pending) will be the first evidence.
+- Do NOT claim the 91% asymmetry rate (falsified)
+- Do NOT claim "the model both generates and flags the same misconception" (falsified)
+- DO claim the detector AUC 0.95 (real)
+- DO claim "first PASS via critique mode" (real)
+- DO claim 15 in-session falsifications including 2 of our own (the discipline win)
+
+## Optional fourth tweet variant: the discipline-pattern angle
+
+> what's actually shippable here isn't the PASS or the detector. it's the *recursion*: bars revise, FINDINGs revise, the infrastructure improves itself on a session timescale. that's the moat. every version is in git. every falsification is named.
