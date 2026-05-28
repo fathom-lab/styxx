@@ -1,0 +1,19 @@
+{
+  "dogfood": "portable (cross-language) attestation \u2014 verified in Node",
+  "generated_at": "2026-05-28T21:25:09.165497+00:00",
+  "head_commit": "b9d43ce9741107cc6978ae8de7aa8573424c8fc9",
+  "node_version": "v24.13.0",
+  "js_verifier": "web\\styxx_verify.js",
+  "python_portable_digest_plain": "6aea9f3285a39a5783060b938e4d14a169ba6d933064096cd19dea29e9528717",
+  "node_portable_digest_plain": "6aea9f3285a39a5783060b938e4d14a169ba6d933064096cd19dea29e9528717",
+  "K1_python_eq_node": {
+    "plain": true,
+    "vitals": true,
+    "saturating_coverage_1_0": true,
+    "chain_link0": true
+  },
+  "K1_all": true,
+  "K2_legacy_digest_unchanged": true,
+  "K3_node_catches_portable_tamper": true,
+  "saturating_token_present": true
+}

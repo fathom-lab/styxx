@@ -42,6 +42,22 @@ python scripts/styxx_verify_standalone.py chain.json --expected-head <hex>
 
 - **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_standalone_verifier.md` states K1 byte-for-byte cross-implementation digest agreement (decisive) / K2 tamper caught without styxx / K3 no scope leak BEFORE the code was written. Thesis survived: 10 cross-validation gate tests (`tests/test_standalone_verifier.py`) prove byte-identical agreement with the library over a 4-shape corpus. Live receipt: `scripts/dogfood/standalone_verifier_self_2026_05_28.json`.
 
+### Added — portable (cross-language) content address: verify in any language, in a browser
+
+- **`digest.portable`** — an additive, versioned second content address (alg `sha256-jcs`) over an RFC 8785 / ECMAScript-canonical payload, so the address reproduces **byte-for-byte in any language**. The legacy `digest.value` is left byte-identical — every 7.7.11 / 7.7.12 receipt already issued stays valid. Chains carry a parallel `attestation_portable_digest` per link + `head_chain_portable_digest`.
+
+- **`web/styxx_verify.js`** — a zero-dependency JavaScript verifier (bundled pure-JS SHA-256, no network) that re-derives `digest.portable` and the Merkle chain. Runs in Node and the browser. **`web/verify.html`** — paste an attestation, get a verdict, entirely client-side: verify a styxx receipt with zero install and zero trust.
+
+```
+node web/styxx_verify.js artifact.json [expectedHead]      # or open web/verify.html
+```
+
+- **Why it matters.** The standalone verifier removed the "trust styxx" dependency; the portable digest removes the "be Python" dependency. Measured: the same artifact hashed differently in Python (`9a734e78…`) and Node (`68859936…`) under the legacy scheme because a saturating score serializes as `1.0` vs `1`; the portable digest is identical on both.
+
+- **Honest scope.** Structure only — claim verdicts and vitals are reported `NOT CHECKED`; a re-sealed chain needs an external expected head. Specified for the styxx artifact domain (ASCII keys, finite doubles); a fully general JCS implementation is a superset.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_portable_attestation.md` states K1 Python↔JS byte-for-byte agreement (decisive) / K2 legacy digest untouched / K3 JS catches tamper + no scope leak BEFORE the code was written. Thesis survived: 11 gate tests (`tests/test_portable_attestation.py`); Python↔Node agreed on 40,019/40,019 fuzz values and all 4 real shapes incl. the saturating case. Live receipt: `scripts/dogfood/portable_attestation_self_2026_05_28.json`.
+
 ---
 
 ## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation

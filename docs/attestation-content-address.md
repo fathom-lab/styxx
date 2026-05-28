@@ -81,12 +81,49 @@ lowercase hex, so the separator is unambiguous.
 - **Semantic claims.** Claim verdicts depend on git + the pinned repo tree;
   vitals scores depend on styxx's scoring instruments. Neither is re-derivable
   by a stdlib-only verifier. They are reported `NOT CHECKED`.
-- **Cross-language portability.** The canonical payload uses Python's
+- **Cross-language portability.** The §2 canonical payload uses Python's
   `json.dumps` number repr (e.g. `1.0` → `"1.0"`, small floats → `e`-notation).
   An independent **Python** reimplementation agrees byte-for-byte. A
   cross-language verifier (JS/browser/Go) needs a canonical-number scheme such
-  as JCS (RFC 8785); that is future work. Until then, port in Python or
-  normalize numbers per RFC 8785 on both sides.
+  as JCS (RFC 8785). The **portable digest** (§6) supplies exactly this — verify
+  in any language.
+
+## 6. Portable content address (`digest.portable`) — verify in any language
+
+The legacy `digest.value` (§2) uses Python's json number repr and is not
+language-portable. `digest.portable` is an **additive, versioned** second
+address (alg `sha256-jcs`) computed over an RFC 8785 / JCS canonical form, so it
+reproduces byte-for-byte in any language. The legacy `digest.value` is left
+unchanged — every previously issued receipt stays valid.
+
+Portable canonical payload = the same `core` (artifact minus `generated_at` and
+`digest`), serialized by these JCS rules:
+
+- objects: keys sorted by code point (styxx keys are ASCII → identical to JS
+  UTF-16 sort), `{` + `"key":value` joined by `,` + `}`, no whitespace;
+- arrays: `[` + values joined by `,` + `]`;
+- strings: JSON-escaped (== `json.dumps(s, ensure_ascii=False)` ==
+  `JSON.stringify(s)` for the styxx domain);
+- `true` / `false` / `null` literally;
+- **numbers: ECMAScript `Number::toString` (RFC 8785 §3.2.2.3)** — exactly what
+  JavaScript's `String(n)` produces. Integers carry no `.0`; a saturating token
+  serializes as `1`, not `1.0`.
+
+```
+digest.portable.value = SHA-256( jcs(core).encode("utf-8") )   # lowercase hex
+```
+
+Chains carry an additive parallel portable address: each link has
+`attestation_portable_digest`, and `head_chain_portable_digest` rolls them with
+the SAME hex-only Merkle rule as §3 (already language-agnostic).
+
+**Reference reimplementations.** `styxx.attestation._compute_portable_digest`
+(Python) and `web/styxx_verify.js` (JavaScript, zero-dependency, runs in Node
+and the browser — open `web/verify.html` and paste). The two agree byte-for-byte
+over a fuzz corpus of finite doubles and the 4 real artifact shapes
+(`tests/test_portable_attestation.py`), including the saturating token that
+diverges under the legacy scheme. NaN/Inf are not permitted; keys are assumed
+ASCII (the styxx artifact domain).
 
 ## 5. Reference reimplementation
 

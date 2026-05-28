@@ -105,6 +105,10 @@ class VerificationResult:
     reproduced: list[dict[str, Any]] = field(default_factory=list)
     mismatches: list[dict[str, Any]] = field(default_factory=list)
     unknown_checkers: list[str] = field(default_factory=list)
+    # Portable (cross-language) digest. None when the artifact predates it
+    # (no digest.portable field); True/False once present.
+    portable_present: bool = False
+    portable_ok: bool = True
     # Vitals reproduction (only populated when the artifact embeds vitals).
     vitals_present: bool = False
     vitals_mismatches: list[dict[str, Any]] = field(default_factory=list)
@@ -120,6 +124,7 @@ class VerificationResult:
         cognometric score reproduced from the substrate."""
         return (
             self.digest_ok
+            and self.portable_ok
             and not self.mismatches
             and not self.unknown_checkers
             and not self.vitals_mismatches
@@ -129,6 +134,8 @@ class VerificationResult:
         return {
             "ok": self.ok,
             "digest_ok": self.digest_ok,
+            "portable_present": self.portable_present,
+            "portable_ok": self.portable_ok,
             "n_reproduced": len(self.reproduced),
             "n_mismatches": len(self.mismatches),
             "mismatches": self.mismatches,
@@ -153,6 +160,96 @@ def _canonical_payload(artifact: dict[str, Any]) -> str:
 
 def _compute_digest(artifact: dict[str, Any]) -> str:
     return hashlib.sha256(_canonical_payload(artifact).encode("utf-8")).hexdigest()
+
+
+# ---------------------------------------------------------------------------
+# Portable (cross-language) content address. The legacy digest above uses
+# Python's json number repr, which is not language-portable (e.g. Python emits a
+# saturating score as `1.0`, JavaScript as `1`). The portable digest below is an
+# ADDITIVE second address over an RFC 8785 / ECMAScript-canonical payload so the
+# content address reproduces byte-for-byte in any language (see
+# docs/attestation-content-address.md and web/styxx_verify.js). The legacy
+# `digest.value` is left untouched — already-issued receipts stay valid.
+# ---------------------------------------------------------------------------
+
+def _es_number_to_string(num: float) -> str:
+    """Serialize a finite double per ECMAScript Number::toString (RFC 8785).
+
+    This is what JavaScript's String(n) / JSON.stringify(n) produces, so the
+    portable canonical form is identical across languages.
+    """
+    if num != num or num in (float("inf"), float("-inf")):
+        raise ValueError("portable digest is defined for finite numbers only")
+    if num == 0:
+        return "0"
+    if num < 0:
+        return "-" + _es_number_to_string(-num)
+    # Python repr() yields the shortest round-tripping decimal; reformat its
+    # digits to the ECMAScript rules.
+    s = repr(num)
+    if "e" in s or "E" in s:
+        mant, _, exp_s = s.lower().partition("e")
+        exp = int(exp_s)
+    else:
+        mant, exp = s, 0
+    if "." in mant:
+        intp, frac = mant.split(".")
+    else:
+        intp, frac = mant, ""
+    digits = intp + frac
+    e = exp - len(frac)            # value == int(digits) * 10**e
+    digits = digits.lstrip("0") or "0"      # leading zeros don't change the int value
+    stripped = digits.rstrip("0") or "0"
+    e += len(digits) - len(stripped)        # trailing zeros do
+    digits = stripped
+    k = len(digits)
+    n = k + e                      # ECMAScript 'n': value == digits * 10**(n-k)
+    if k <= n <= 21:
+        return digits + "0" * (n - k)
+    if 0 < n <= 21:
+        return digits[:n] + "." + digits[n:]
+    if -6 < n <= 0:
+        return "0." + "0" * (-n) + digits
+    e_exp = n - 1
+    mantissa = digits[0] + ("." + digits[1:] if k > 1 else "")
+    return f"{mantissa}e{'+' if e_exp >= 0 else '-'}{abs(e_exp)}"
+
+
+def _jcs(obj: Any) -> str:
+    """RFC 8785 (JCS) canonical serialization, scoped to the styxx artifact
+    domain (ASCII keys, finite doubles, no NaN/Inf, no control chars in values).
+    """
+    if obj is True:
+        return "true"
+    if obj is False:
+        return "false"
+    if obj is None:
+        return "null"
+    if isinstance(obj, str):
+        return json.dumps(obj, ensure_ascii=False)
+    if isinstance(obj, int):
+        return str(obj)
+    if isinstance(obj, float):
+        return _es_number_to_string(obj)
+    if isinstance(obj, list):
+        return "[" + ",".join(_jcs(x) for x in obj) + "]"
+    if isinstance(obj, dict):
+        parts = (
+            json.dumps(k, ensure_ascii=False) + ":" + _jcs(v)
+            for k, v in sorted(obj.items(), key=lambda kv: kv[0])
+        )
+        return "{" + ",".join(parts) + "}"
+    raise TypeError(f"not JCS-serializable: {type(obj).__name__}")
+
+
+def _portable_canonical_payload(artifact: dict[str, Any]) -> str:
+    core = {k: v for k, v in artifact.items() if k not in ("generated_at", "digest")}
+    return _jcs(core)
+
+
+def _compute_portable_digest(artifact: dict[str, Any]) -> str:
+    payload = _portable_canonical_payload(artifact).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _head_commit(repo: Path) -> str:
@@ -412,7 +509,13 @@ def attest(
     if vitals:
         artifact["vitals"] = _compute_vitals(prompt, report_text)
 
-    artifact["digest"] = {"alg": "sha256", "value": _compute_digest(artifact)}
+    artifact["digest"] = {
+        "alg": "sha256",
+        "value": _compute_digest(artifact),
+        # Additive cross-language address (RFC 8785 numbers); legacy `value`
+        # above is unchanged. Verifiable in any language — see web/styxx_verify.js.
+        "portable": {"alg": "sha256-jcs", "value": _compute_portable_digest(artifact)},
+    }
     return Attestation(artifact=artifact)
 
 
@@ -443,6 +546,14 @@ def verify_attestation(
     digest_ok = (
         "digest" in art
         and art["digest"].get("value") == _compute_digest(art)
+    )
+
+    portable_node = (art.get("digest") or {}).get("portable")
+    portable_present = isinstance(portable_node, dict) and "value" in portable_node
+    portable_ok = (
+        portable_node.get("value") == _compute_portable_digest(art)
+        if portable_present
+        else True
     )
 
     substrate = art.get("substrate", {})
@@ -478,6 +589,7 @@ def verify_attestation(
         return VerificationResult(
             digest_ok=digest_ok, reproduced=reproduced,
             mismatches=mismatches, unknown_checkers=unknown,
+            portable_present=portable_present, portable_ok=portable_ok,
         )
 
     try:
@@ -541,6 +653,8 @@ def verify_attestation(
         reproduced=reproduced,
         mismatches=mismatches,
         unknown_checkers=unknown,
+        portable_present=portable_present,
+        portable_ok=portable_ok,
         vitals_present=vitals_present,
         vitals_mismatches=vitals_mismatches,
     )
@@ -658,12 +772,17 @@ def attest_chain(
         )
     att_digests = [a.digest for a in attestations]
     chain = _link_chain(att_digests)
+    # Additive portable chain: roll the cross-language attestation addresses with
+    # the SAME hex-only Merkle rule (the rule was already language-agnostic).
+    att_portable = [a.artifact["digest"]["portable"]["value"] for a in attestations]
+    chain_portable = _link_chain(att_portable)
 
     links = [
         {
             "seq": i,
             "attestation": a.artifact,
             "attestation_digest": att_digests[i],
+            "attestation_portable_digest": att_portable[i],
             "prev_chain_digest": (_CHAIN_GENESIS if i == 0 else chain[i - 1]),
             "chain_digest": chain[i],
         }
@@ -677,6 +796,7 @@ def attest_chain(
         "n_links": len(links),
         "links": links,
         "head_chain_digest": (chain[-1] if chain else _CHAIN_GENESIS),
+        "head_chain_portable_digest": (chain_portable[-1] if chain_portable else _CHAIN_GENESIS),
     }
     return AttestationChain(artifact=artifact)
 
