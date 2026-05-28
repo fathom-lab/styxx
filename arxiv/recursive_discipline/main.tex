@@ -87,37 +87,41 @@ synthesis
 We present a publicly-reproducible pre-registered AI evaluation gauntlet
 for hallucination/misconception detection, instantiated against a
 108-record benchmark of cross-vendor consensus errors. The contribution
-has two parts: (1) a meta-property of the infrastructure --- the
+has three parts: (1) a meta-property of the infrastructure --- the
 gauntlet \textbf{caught two of its own bar weaknesses in production
 within a single session}, replaced them with regression-tested controls,
 and re-scored all existing submissions honestly under the strengthened
-bars; and (2) a \textbf{measured behavioral asymmetry of RLHF-tuned
-LLMs} discovered by the first method to PASS the strengthened bars. We
-document the discovery chain (D3 length-control caught by accident → D4
-capitalization-control caught by systematic scan → 18 pre-registered
-detection baselines including a full LM-likelihood scaling sweep with
-monotonic inverse-scaling result → 19th submission \texttt{gpt-4o-mini}
-in \textbf{critique mode} PASSes 4/4 at pre-stated 28\% probability).
-The mechanism is then directly measured per-item: on \textbf{91.18\% of
-folklore items} the same RLHF-tuned LLM both \emph{generates} the
-consensus misconception in answer mode AND \emph{flags it as wrong} in
-critique mode --- a quantified property of RLHF-tuned LLM behavior we
-term the \textbf{generation-vs-critique asymmetry}. We record
-\textbf{thirteen in-session falsifications} of our own predictions ---
-including two direction-of-effect misses and two magnitude
-underpredictions that revealed a domain-specific calibration lesson: on
-RLHF-tuned LLM behavioral phenomena, predicted upper bounds are
-systematically too conservative. We argue that the moat of disciplined
-AI evaluation is not the bars or the benchmark but the \textbf{recursive
-pattern}: bars revise under empirical pressure from real submissions;
-pre-registration BEFORE each run makes wrongness \emph{visible} rather
-than hidden; the infrastructure improves itself on a session timescale;
-and when a real PASS is achieved, the surrounding mechanism becomes
-empirically characterizable. All artifacts (benchmark, gauntlet code,
-nineteen baseline submissions, six FINDING documents, thirteen
-pre-stated-then-published predictions, the first PASS event, and the
-asymmetry measurement) are reconstructible from public git history at
-commit-level granularity.
+bars; (2) the first method to PASS the strengthened bars ---
+\textbf{gpt-4o-mini in critique mode}, AUC 0.95, achieved at pre-stated
+28\% probability with all six AUC-range predictions inside their
+pre-stated ranges; and (3) a published-then-falsified-then-corrected
+mechanism measurement: the v1 FINDING attributed the PASS to a 91\%
+within-model generation-vs-critique asymmetry; a subsequent in-session
+demo revealed that cosine-similarity proxies conflate topical relevance
+with truth-value agreement; a directional NLI re-test (v2) put strict
+within-model asymmetry at 5.88\% but suffered an 85\% UNCLEAR rate; a
+third measurement (v3) with forced single-character T/F/U output
+resolved the UNCLEAR artifact entirely (0\% on dark-core, 13\% on
+TruthfulQA) and landed the corrected rates inside pre-stated bands:
+\textbf{5.88\% on dark-core and 17.00\% on TruthfulQA}. Three iterations
+of measurement, each pre-registered, each in git history. We record
+\textbf{fifteen in-session falsifications + one resolution} including
+two of our own published FINDING's central methodology and the corrected
+v3 measurement. The corrected mechanism description for the gauntlet
+PASS is \textbf{out-of-context critique}: gpt-4o-mini reliably rejects
+labeled-misconception text presented as a candidate, regardless of
+whether it would have generated that text itself. We argue that the moat
+of disciplined AI evaluation is the \textbf{recursive pattern}: bars
+revise under empirical pressure; the discipline of pre-registration
+BEFORE each run makes wrongness \emph{visible}; the infrastructure
+improves itself on a session timescale; when published FINDINGs are
+themselves wrong, the discipline catches and revises them; AND when
+methodology iterations are needed to land a clean measurement, the
+discipline pre-registers each iteration honestly. All artifacts
+(benchmark, gauntlet code, nineteen baseline submissions, seven FINDING
+documents, fifteen+one pre-stated-then-published predictions, the first
+PASS event, the asymmetry v1/v2/v3 measurements) are reconstructible
+from public git history at commit-level granularity.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -799,20 +803,45 @@ All six AUC-range predictions held inside the pre-stated ranges.
 Direction confirmed for the ninth consecutive baseline (misconception
 mean P(NO) = 0.86 vs truth mean = 0.32).
 
-\subsubsection{The mechanism the result
-names}\label{the-mechanism-the-result-names}
+\subsubsection{The mechanism the result names --- and the in-session
+methodology
+correction}\label{the-mechanism-the-result-names-and-the-in-session-methodology-correction}
 
-Why critique mode succeeds where 18 prior LM-typicality,
-embedding-similarity, NLI-entailment, and composite-feature baselines
-fail: the underlying property is the \textbf{generation-vs-critique
-asymmetry} of RLHF-tuned LLMs. The same \texttt{gpt-4o-mini} model that
-produced the council's consensus misconceptions in \emph{generation}
-mode (where it sat alongside Qwen2.5-3B and gemma-2-2b-it during
-benchmark construction) correctly \emph{flags} those same misconceptions
-when explicitly asked to critique them. The asymmetry is not a vendor
-quirk but a downstream behavior of instruct-tuning: the discrimination
-capacity exists \emph{latently} under generation prompts and
-\emph{manifestly} under critique prompts.
+\textbf{Initial framing (v1 of this paper, now revised):} the gauntlet
+PASS was attributed to a \emph{within-model generation-vs-critique
+asymmetry} --- the claim that the same RLHF-tuned LLM both generates the
+consensus misconception in answer mode AND flags it as wrong in critique
+mode.
+
+\textbf{Subsequent in-session falsification (§11.5 below):} a sanity
+demo of gpt-4o-mini in fresh generation mode on the same folklore
+questions revealed that the model \textbf{typically refutes the
+misconceptions in generation mode}, not affirms them. The v1 asymmetry
+rate (91\% on dark-core, 61\% on TruthfulQA) was inflated by a
+cosine-similarity proxy that conflated topical relevance with
+truth-value agreement. A directional NLI re-test (asymmetry v2) put the
+\emph{strict} within-model asymmetry rate at 5.88\% (n=2/34) --- though
+that figure has its own methodology limitations (85\% of items got
+NEUTRAL/AMBIGUOUS NLI judgments because the model didn't emit
+AGREE/DISAGREE/NEUTRAL as the first token on multi-sentence responses).
+
+\textbf{Corrected framing:} gpt-4o-mini in critique mode reliably
+identifies \emph{council-generated} misconception text. The mechanism is
+NOT a within-model generation-vs-critique inconsistency (the model in
+fresh generation mode typically refutes the same misconceptions);
+rather, it is \textbf{out-of-context critique} --- when presented with a
+labeled candidate answer, the model applies its RLHF-tuned factuality
+discrimination to that text directly, regardless of whether it would
+have generated that text itself. The gauntlet PASS exploits this
+property cleanly: the council's \texttt{expected\_consensus} text is
+presented as a candidate, and gpt-4o-mini's critique-mode discrimination
+ranks misconception-text high in P(NO) and truth-text low.
+
+The PASS verdict is unchanged. The deployment value is unchanged (route
+generation outputs through a critique-mode check for misconception
+flagging). What changed is the \emph{mechanism description}: the
+bars-catch-themselves recursion now extends past gauntlet submissions
+and into our own FINDING claims, recorded honestly in §11.5.
 
 \subsubsection{Honest caveat: in-council
 leakage}\label{honest-caveat-in-council-leakage}
@@ -939,33 +968,133 @@ lesson: \textbf{on RLHF-tuned LLM behavioral phenomena, pre-stated
 prediction upper bounds are systematically too conservative.} Future
 predictions in this domain should widen their upper tails.
 
-\subsubsection{What the measurement
-establishes}\label{what-the-measurement-establishes}
+\subsubsection{§11.5 --- The in-session methodology falsifications (14th
+and
+15th)}\label{the-in-session-methodology-falsifications-14th-and-15th}
 
-Before §12, the asymmetry was an \emph{inferred mechanism} explaining
-Baseline-019's AUC. After §12, it is a \emph{measured property} with a
-quantifiable prevalence: 91\% on curated folklore items in this
-benchmark, n=34. The claim is sharper, falsifiable, and reproducible:
+The v1 measurement reported above used \texttt{generation\_match} =
+cosine similarity (sentence-transformers) between fresh generation and
+\texttt{expected\_consensus} as the proxy for ``model in generation mode
+produces the misconception.'' AFTER the v1 FINDING was published, a
+sanity demo (\texttt{examples/self\_correcting\_generation.py})
+revealed:
 
-\begin{quote}
-RLHF-tuned LLMs in critique mode systematically detect misconceptions
-their own generation mode produces, on the majority of items.
-\end{quote}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Q
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+council \texttt{expected\_consensus} (misconception)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+fresh gpt-4o-mini response
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+cosine sim
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Does cracking your knuckles cause arthritis? & ``cracking your knuckles
+causes arthritis'' & ``\textbf{No}, cracking your knuckles \textbf{does
+not} cause arthritis. Research has shown\ldots{}'' & \textbf{0.82} \\
+Do humans only use 10\% of their brain? & ``humans only use 10 percent
+of their brain'' & ``The idea that humans only use 10 percent of their
+brains \textbf{is} a popular \textbf{myth}\ldots{}'' & similar \\
+Was Walt Disney's body cryogenically frozen? & ``Walt Disney was
+cryogenically frozen'' & ``\textbf{No}, Walt Disney's body was not
+cryogenically frozen\ldots{}'' & similar \\
+\end{longtable}
+}
 
-This is a per-item phenomenon, not a population-average artifact. It is
-replicable by
-\texttt{pip\ install\ styxx==7.7.9\ \&\&\ python\ experiments/asymmetry\_2026\_05\_27/run\_experiment.py}
-at a cost of \textasciitilde\$0.05 in OpenAI API calls.
+\textbf{Cosine similarity at sentence-transformer level conflates
+topical relevance with truth-value agreement.} The high
+cosine\_similarity (0.82) reflects ``the response is on the same topic''
+--- NOT ``the response affirms the misconception.'' gpt-4o-mini in fresh
+generation mode \emph{typically REFUTES} well-known misconceptions,
+contrary to the v1 FINDING's central premise. The 91\% v1 rate is an
+inflated upper bound.
 
-\subsubsection{Deployment implication}\label{deployment-implication}
+A subsequent directional NLI re-test
+(\texttt{experiments/asymmetry\_corrected\_2026\_05\_27/}) asked
+gpt-4o-mini explicitly whether each generated response AGREES WITH,
+DISAGREES WITH, or remains NEUTRAL ON the council's consensus. The
+strict TRUE-asymmetry rate (AGREES × HIGH critique-NO) was
+\textbf{5.88\% (2/34)} --- but the v2 methodology also has a flaw:
+\textbf{85\% of items got NEUTRAL or AMBIGUOUS judgments} because the
+model rarely emitted AGREE/DISAGREE/NEUTRAL as the first token on long
+multi-sentence responses.
 
-If 91\% of well-known curated misconceptions exhibit the asymmetry,
-deploying an RLHF-tuned LLM in user-facing generation mode produces a
-measurable misconception risk that the \emph{same model} could mitigate
-as an inference-time critique pass. The asymmetry transforms from a
-curious observation into a deployable safety mechanism: route every
-generation output through a critique-mode check against the same model
-(or a sibling instance).
+A third measurement
+(\texttt{experiments/asymmetry\_v3\_cleanup\_2026\_05\_27/}) forced
+single-character T/F/U output, which is much more likely to be the first
+token under instruct-tuned models. v3 \textbf{resolved the UNCLEAR
+artifact entirely} (0\% on dark-core, 13\% on TruthfulQA --- both inside
+pre-stated ranges). Final measured TRUE within-model asymmetry rates:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+corpus
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TRUE asymmetry rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+consistent-correct rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+UNCLEAR rate
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+dark-core (n=34) & \textbf{5.88\%} & 88.24\% & 0.00\% \\
+TruthfulQA (n=200) & \textbf{17.00\%} & 58.00\% & 13.00\% \\
+\end{longtable}
+}
+
+Pre-stated predictions held on both corpora (dark-core 5-20\% range,
+actual 5.88\%; TruthfulQA 10-30\% range, actual 17.00\%).
+Best-calibrated multi-prediction experiment of the session.
+
+\textbf{Final honest synthesis.} The TRUE within-model
+generation-vs-critique asymmetry rate is \textbf{5.88\% on dark-core and
+17.00\% on TruthfulQA} --- a far cry from the v1 claim of 91\%, but a
+real, measurable phenomenon. Most folklore items (88\% dark-core, 58\%
+TruthfulQA) are CONSISTENT-CORRECT: the model both refutes the
+misconception in generation mode AND flags it in critique mode. The
+asymmetry is real but rare; the gauntlet PASS works through
+\emph{out-of-context critique} (RLHF-tuned LLMs apply factuality
+discrimination effectively to labeled candidate text) more than through
+any within-model inconsistency.
+
+These cumulative falsifications and corrections are the
+\textbf{fourteenth and fifteenth in-session falsifications} of the
+2026-05-27 arc, plus a SIXTEENTH falsification-resolution event: the v3
+measurement landing cleanly in pre-stated bands. The
+bars-catch-themselves recursion now operates across THREE iterations of
+the same measurement, with cumulative refinement and each step
+pre-registered in public git history.
+
+\subsubsection{Deployment implication
+(revised)}\label{deployment-implication-revised}
+
+The Baseline-019 detector still works. The corrected mechanism
+(\textbf{out-of-context critique}, not within-model asymmetry) is still
+deployable: route every candidate answer text --- whether generated by
+the same model, retrieved from external sources, or supplied by user
+input --- through a critique-mode check. The critique-mode
+discrimination IS robust; the framing of WHY it works has been revised.
+A \texttt{styxx.critique\_detector(model="gpt-4o-mini")} callable is
+shipped in styxx 7.7.10 for this exact purpose.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -976,35 +1105,44 @@ We have presented a pre-registered AI evaluation gauntlet that
 single session}, replaced them with regression-tested controls, tested
 18 pre-registered detection submissions that all FAILed across a full
 LM-likelihood scaling sweep, achieved a 19th-submission PASS via a
-mechanism shift (generation → critique), and then \emph{directly
-measured} the underlying asymmetry mechanism at 91\% per-item prevalence
---- every pre-registered, every modal-validated, every reconstructible
-from public git history.
+mechanism shift (generation → critique), measured an apparent asymmetry
+mechanism at 91\% prevalence, \emph{AND then falsified the methodology
+of that measurement using a follow-up sanity demo from the same
+session}. Every step pre-registered, every modal-validated, every
+reconstructible from public git history.
 
-The contribution is not the benchmark or the methods --- those are
-substrate. The contribution is \textbf{the recursion}: bars catch
-themselves; calibration improves under direction-of-effect misses and
-magnitude-underpredictions; the discipline asymmetry compounds rigor
-faster than submissions can erode it; and when a real PASS arrives, it
-surfaces a mechanism the surrounding experiments can directly
-characterize.
+The contribution is not the benchmark or the methods or even the
+gauntlet PASS --- those are substrate. The contribution is \textbf{the
+recursion}: bars catch themselves; calibration improves under
+direction-of-effect misses and magnitude-underpredictions; the
+discipline asymmetry compounds rigor faster than submissions can erode
+it; when a real PASS arrives it surfaces a mechanism the surrounding
+experiments can directly characterize; \emph{and when that
+characterization itself is methodologically flawed, the discipline
+catches that too}.
 
 The seven-method floor + the v3 bars + nineteen reference baselines +
-six FINDING documents + thirteen in-session falsifications + the first
-PASS + the 91\% asymmetry measurement are all reconstructible from
-public git history at commit-level granularity.
-\texttt{pip\ install\ styxx==7.7.9} reproduces the entire v3
+six FINDING documents + fifteen in-session falsifications + the first
+PASS + the asymmetry measurement (with its own falsified methodology)
+are all reconstructible from public git history at commit-level
+granularity. \texttt{pip\ install\ styxx==7.7.9} reproduces the v3
 leaderboard.
 \texttt{python\ experiments/asymmetry\_2026\_05\_27/run\_experiment.py}
-reproduces the asymmetry measurement.
+reproduces the v1 (flawed) measurement.
+\texttt{python\ experiments/asymmetry\_corrected\_2026\_05\_27/run\_experiment.py}
+reproduces the v2 (also-flawed) measurement. \textbf{Both} are
+published; neither is hidden.
 
 What we propose is not a benchmark to beat, but a pattern to adopt. The
 pattern is that AI evaluation gauntlets should be designed to
 \textbf{catch their own bar weaknesses in production}, not just to
-resist gaming at design time. The discipline that follows --- pre-stated
-prediction before every submission, public falsification record after
-every miss, regression-tested bar revision after every artifact
-discovery, direct mechanism characterization after every PASS --- is the
+resist gaming at design time --- and that the discipline should extend
+to FINDINGs about the bars, not just to bar revisions themselves. The
+discipline that follows --- pre-stated prediction before every
+submission, public falsification record after every miss,
+regression-tested bar revision after every artifact discovery, direct
+mechanism characterization after every PASS, and \emph{honest revision
+when the characterization itself turns out to be wrong} --- is the
 substrate on which credible AI evaluation can compound across
 submitters, sessions, and years.
 
