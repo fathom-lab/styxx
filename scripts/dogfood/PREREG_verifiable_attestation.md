@@ -74,3 +74,31 @@ reframed) if ANY of:
 I commit to reporting whichever way it lands. K2 is the decisive bar: the
 entire claim ("verifiable, agent-independent") rests on verify reproducing the
 substrate verdict rather than reading the agent's word for it.
+
+## Results (run 2026-05-28, reported as-landed)
+
+- **K1 / P1 — determinism: HELD.** Two `attest()` runs on identical substrate
+  produce a byte-identical canonical payload and the same digest (`generated_at`
+  is the only volatile field, outside the hash). Gate test `K1` passes.
+- **K2 / P2 — independent reproduction: HELD (decisive).** A flipped embedded
+  verdict re-sealed with a fresh digest is still caught: `verify_attestation`
+  re-derives the verdict from the substrate (embedded=PASS, substrate=FAIL →
+  mismatch flagged). Verify never trusts the embedded verdict. Gate tests pass.
+- **K3 / P3 — tamper-evidence: HELD.** Mutating any hashed field (args,
+  expected, text, clause map) breaks the digest check. Gate tests pass.
+- **P4 — honest boundary: HELD.** The uncovered-requirements boundary is
+  non-empty and present in every artifact; no clause with an empty primitive
+  list is asserted as covered.
+- **P5 — self-dogfood round-trip: MODIFIED BY SUBSTRATE, reported honestly.**
+  The prediction stated 7/7 PASS attesting the 7.7.10 self-report. By run time
+  the substrate had been bumped to **7.7.11**, so the claim `version is 7.7.10`
+  now reads **FAIL** against the current repo — outcome **6/7 PASS, 1 FAIL**.
+  This is the instrument working, not failing: the verdict tracks the substrate,
+  not the report (the exact property P2 asserts). `verify_attestation`
+  independently reproduced all 7 verdicts (digest_ok, 0 mismatches). The frozen
+  receipt is `scripts/dogfood/attestation_self_2026_05_28.json`.
+
+**Verdict: thesis SURVIVED its kill-gate.** All three kill conditions held;
+10/10 gate tests pass; the live self-dogfood demonstrates substrate-grounding
+end to end. The P5 version-claim flip is recorded as-is rather than rewritten
+to match the original 7/7 prediction.

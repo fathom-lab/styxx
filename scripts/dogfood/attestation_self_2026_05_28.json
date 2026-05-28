@@ -1,0 +1,197 @@
+{
+  "claims": [
+    {
+      "actual": true,
+      "args": {
+        "path": "tests/test_agent_audit_extract_version_disambiguation.py",
+        "substring": "migration"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "tests/test_agent_audit_extract_version_disambiguation.py: MATCH at offset 387\n'T — `version_pin` grabbed the OLD version off the left of a migration\\narrow (\"7.7.9 -> 7.7.10\") and mis-typed it as a \"repo is at'",
+      "expected": true,
+      "id": "A1",
+      "text": "tests/test_agent_audit_extract_version_disambiguation.py contains \"migration\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": true,
+      "args": {
+        "path": "tests/test_agent_audit_extract_version_disambiguation.py",
+        "substring": "3.1.0a1"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "tests/test_agent_audit_extract_version_disambiguation.py: MATCH at offset 521\n'9\" state-claim,\\nand truncated PEP440 pre-release suffixes (\"3.1.0a1\" -> \"3.1.0\"). Both would\\nmis-fire the SHIPPED `styxx audit-'",
+      "expected": true,
+      "id": "A2",
+      "text": "tests/test_agent_audit_extract_version_disambiguation.py contains \"3.1.0a1\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": true,
+      "args": {
+        "path": "styxx/agent_audit.py",
+        "substring": "version_bump"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "styxx/agent_audit.py: MATCH at offset 16150\n'ject.toml\", \"version\": v}, expected=True,\\n    )\\n\\n\\ndef _tmpl_version_bump(m: re.Match) -> Claim:\\n    # A bump line \"X -> Y\" / \"X → Y\"'",
+      "expected": true,
+      "id": "A3",
+      "text": "styxx/agent_audit.py contains \"version_bump\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": true,
+      "args": {
+        "path": "styxx/agent_audit.py",
+        "substring": "_tmpl_version_bump"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "styxx/agent_audit.py: MATCH at offset 16144\n'\"pyproject.toml\", \"version\": v}, expected=True,\\n    )\\n\\n\\ndef _tmpl_version_bump(m: re.Match) -> Claim:\\n    # A bump line \"X -> Y\" / \"X → Y\"'",
+      "expected": true,
+      "id": "A4",
+      "text": "styxx/agent_audit.py contains \"_tmpl_version_bump\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": true,
+      "args": {
+        "path": "scripts/dogfood/longitudinal_self_report_audit.py",
+        "substring": "git archive"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "scripts/dogfood/longitudinal_self_report_audit.py: MATCH at offset 257\n' claim against the substrate AS IT EXISTED AT THAT COMMIT\\n(`git archive <sha>`), not against HEAD. Pre-registered at\\n``longitudinal'",
+      "expected": true,
+      "id": "A5",
+      "text": "scripts/dogfood/longitudinal_self_report_audit.py contains \"git archive\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": true,
+      "args": {
+        "path": "CHANGELOG.md",
+        "substring": "value_consistent_across_paths"
+      },
+      "checker": "file_at_path_contains",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "CHANGELOG.md: MATCH at offset 6748\n' requirement to hand-author `Claim` objects.\\n\\n- **`checkers.value_consistent_across_paths(repo, *, glob, pattern, expected, group=1)`** — scans **eve'",
+      "expected": true,
+      "id": "A6",
+      "text": "CHANGELOG.md contains \"value_consistent_across_paths\"",
+      "verdict": "PASS"
+    },
+    {
+      "actual": false,
+      "args": {
+        "path": "pyproject.toml",
+        "version": "7.7.10"
+      },
+      "checker": "package_version_equals",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "pyproject.toml: version='7.7.11', expected='7.7.10'",
+      "expected": true,
+      "id": "A7",
+      "text": "version is 7.7.10",
+      "verdict": "FAIL"
+    }
+  ],
+  "compliance": {
+    "disclaimer": "Substrate-checkable claims only. Not legal advice; not a substitute for an organization's own AI Act conformity assessment. Interpretive, causal, and generalization claims are out of scope (see uncovered_boundary).",
+    "evidence_clauses": [
+      "Article 15.1",
+      "Article 15.3"
+    ],
+    "framework": "EU AI Act Article 15 (styxx v0.1 measurement map)",
+    "uncovered_boundary": [
+      {
+        "alternative": "Fairness audit libraries (e.g., Fairlearn, AIF360) plus domain-specific impact assessment; legal review.",
+        "clause": "Article 15.4 (bias amplification)",
+        "reason": "styxx primitives operate on per-step agent cognition signals; they do not measure population-level disparate impact, demographic outcome equalization, or training-data bias amplification across protected classes."
+      },
+      {
+        "alternative": "Dedicated LLM security tools (e.g., Lakera Guard, Prompt-Armor, OWASP LLM Top 10 mitigations); standard application-security audit; penetration testing.",
+        "clause": "Article 15 (cybersecurity)",
+        "reason": "styxx instruments observe agent cognition, not network, host, or supply-chain security. Prompt-injection robustness is ADJACENT (refusal-related instruments may flag some injection attempts) but not the primary scope."
+      },
+      {
+        "alternative": "ISO/IEC 23894:2023 or NIST AI RMF 1.0 frameworks; QMS-style organizational processes.",
+        "clause": "Article 9 (risk management)",
+        "reason": "styxx provides MEASUREMENT evidence; it does not implement the risk-management lifecycle (identification, estimation, evaluation, mitigation, residual-risk acceptance) prescribed by Article 9."
+      },
+      {
+        "alternative": "Data documentation frameworks (Datasheets for Datasets, Data Statements); training-data audit tooling.",
+        "clause": "Article 10 (data governance)",
+        "reason": "styxx does not score training-data quality, provenance, labeling consistency, or representativeness. Cognometric instruments operate post-training on agent outputs."
+      },
+      {
+        "alternative": "Production observability platforms (OpenTelemetry, Langfuse, Arize, Datadog LLM Observability) for trace-level logging alongside styxx for cognition-level scoring.",
+        "clause": "Article 12 (record-keeping)",
+        "reason": "styxx writes per-step cognometric vitals but does not, by itself, satisfy Article 12's logging-traceability requirements end-to-end (event capture, retention, integrity)."
+      },
+      {
+        "alternative": "Model card frameworks; capability-statement templates; deployer documentation processes.",
+        "clause": "Article 13 (transparency and information to deployers)",
+        "reason": "styxx instruments produce evidence; they do not generate the deployer-facing instructions of use, capability statements, or output-explanation interfaces that Article 13 mandates."
+      },
+      {
+        "alternative": "Agent-platform-level oversight UI; interrupt and rollback primitives in the agent runtime; operator training programs.",
+        "clause": "Article 14 (human oversight)",
+        "reason": "styxx is a measurement layer; it does not implement the human-in-the-loop interfaces, stop-button affordances, or operator-control surfaces Article 14 requires."
+      }
+    ]
+  },
+  "digest": {
+    "alg": "sha256",
+    "value": "99b71f9703ffee93c3855b47a0f98292844b2e90b465f7c1aab419a9819eb5ac"
+  },
+  "generated_at": "2026-05-28T19:21:27.331118+00:00",
+  "styxx_attestation_version": "1.0",
+  "substrate": {
+    "head_commit": "ef897fa22613a32b7b1a83453898b58749acf05c",
+    "repo": "styxx"
+  },
+  "summary": {
+    "claims_extracted": 7,
+    "coverage": 0.4375,
+    "errored": 0,
+    "failed": 1,
+    "passed": 6,
+    "sentences_matched": 7,
+    "sentences_total": 16
+  },
+  "tool": {
+    "styxx_version": "7.7.11"
+  }
+}
