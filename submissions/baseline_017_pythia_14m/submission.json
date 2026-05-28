@@ -1,0 +1,46 @@
+{
+  "name": "Baseline-017: Pythia-14M — confirms Pythia-70M is the curve PEAK; signal degrades below 70M",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_017_pythia_14m.method:detect",
+  "task": "detection",
+  "description": "Same method as Baselines 011-016 but with EleutherAI/pythia-14m (14M params, 5x smaller than Baseline-016's 70M). Smallest LM tested. Tests whether the inverse-scaling curve continues past 70M.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_017_pythia_14m/method.py",
+  "pre_stated_prediction": "submissions/baseline_017_pythia_14m/PRE_STATED_PREDICTION.md committed at e4f6d78 BEFORE the gauntlet run. Predicted distribution: ~15% PASS, ~25% 3/4, ~25% 2/4 (modal), ~35% 1/4 or 0/4. Actual outcome 2/4 confirms the 25% '2/4' band — model still detects D2 axis but degrades on the confound-control bars.",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 2,
+    "n_total_bars": 4,
+    "note": "2/4. D1, D2 AUC pass. D3 fails because D1-length-delta = 0.014 (below 0.10) and D2-length-delta = 0.076 (below 0.10). D4 fails because D2-cap-delta = 0.088 (below 0.10) — D1-cap-delta = 0.100 is exactly at the bar but the conjunction requires BOTH partitions to clear. Compared to Baseline-016 (Pythia-70M, 3/4): every metric DROPPED — D1 (0.816 -> 0.804), D2 (0.907 -> 0.880), D2-length-delta (0.103 -> 0.076), D2-cap-delta (0.115 -> 0.088). Pythia-70M is the OPTIMUM. Going smaller hurts.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": -3.6054,
+      "mean_truth_score": -6.9016,
+      "mean_folklore_score": -2.968,
+      "D1_misconception_AUC": 0.8038,
+      "D2_folklore_AUC": 0.8802,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": 0.0141,
+      "D2_minus_length_AUC": 0.0759,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": 0.1002,
+      "D2_minus_capratio_AUC": 0.0882
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "outcome_band": "2/4 confirmed (25% modal pre-stated)",
+    "direction_calibration": "CONFIRMED for seventh consecutive baseline (misc -3.61 > truth -6.90)",
+    "all_AUC_ranges_held": true,
+    "honest_note": "The curve has a peak at Pythia-70M. Going both above (160M, 410M) and below (14M) degrades the signal. Pythia-70M is the empirical optimum for the LM-typicality detector on this benchmark. The seven-method floor still stands by ONE BAR (D3 on D1-partition); the Pythia-70M result was already the best achievable along this method-class axis."
+  },
+  "notes": "Pythia-14M is the smallest LM tested. Result 2/4 confirms Pythia-70M is the empirical optimum on the Pythia inverse-scaling curve. The four Pythia data points (14M, 70M, 160M, 410M) trace a peaked curve with the maximum at 70M. The gpt2 family didn't show a peak in our sweep (124M was the smallest tested; smaller gpt2 variants like distilgpt2 ~82M could test whether gpt2 also has a peak). The empirical claim is now: 'LM-typicality detection on this benchmark has an optimum near 70-124M parameters; both larger and smaller models perform worse.' The first PASS on the leaderboard remains out of reach via this method-class — D1-length-delta gap (0.026 at the optimum) is too large to close by further LM size tuning."
+}
