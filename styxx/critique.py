@@ -7,13 +7,20 @@ on the dark-core consensus-hallucination benchmark. See:
   - submissions/baseline_019_openai_critique/PRE_STATED_PREDICTION.md (commit fdcf92e)
   - submissions/baseline_019_openai_critique/submission.json (commit 17fdd97)
   - papers/agent-self-audit/FINDING_first_pass_2026_05_27.md (commit 0bc9b7b)
-  - papers/agent-self-audit/FINDING_generation_critique_asymmetry_2026_05_27.md (commit ac25398)
-  - papers/PAPER_recursive_discipline_2026_05_27.md §10, §11
+  - papers/agent-self-audit/FINDING_generation_critique_asymmetry_2026_05_27.md (commit ac25398, v1 — falsified)
+  - papers/agent-self-audit/FINDING_asymmetry_v3_measurement_2026_05_27.md (commit ed663ca, v3 — landed clean)
+  - papers/PAPER_recursive_discipline_2026_05_27.md §10, §11, §11.5
 
-The mechanism: RLHF-tuned LLMs exhibit a generation-vs-critique asymmetry —
-the same model that produces consensus misconceptions in generation mode
-correctly flags them in critique mode. Measured prevalence: 91.18% on the
-n=34 folklore subset of the dark-core benchmark.
+The mechanism (corrected, v4 paper): out-of-context critique. When presented
+with a labeled candidate answer, the RLHF-tuned LLM applies its factuality
+discrimination to that text directly, regardless of whether it would have
+generated that text itself. The detector does NOT require the model to have
+generated the misconception in fresh generation mode — most folklore items
+are consistent-correct (model refutes AND flags). The within-model asymmetry
+rate (model affirms in generation AND flags in critique) is 5.88% on dark-core
+(n=34) and 17.00% on TruthfulQA (n=200), measured via v3 single-character
+T/F/U NLI. The earlier v1 figure of 91.18% (via cosine-similarity proxy) was
+falsified in-session; see PAPER §11.5 for the full v1→v2→v3 measurement arc.
 
 Public API:
 
@@ -35,10 +42,10 @@ or a custom callable.
 Caveats:
   - The benchmark result used gpt-4o-mini, which was IN the original 3-vendor
     council that generated `expected_consensus`. The PASS verdict is real on
-    pre-registered bars but demonstrates within-vendor generation-vs-critique
-    asymmetry rather than pure cross-vendor signal. For pure cross-vendor
-    detection, use a different-vendor model (Claude, Gemini) when API access
-    is available.
+    pre-registered bars; the mechanism is out-of-context critique applied to
+    in-council candidate text. For cross-vendor robustness on adversarial or
+    novel-misconception text, use a different-vendor model (Claude, Gemini)
+    when API access is available.
   - The score is a probability, not a binary classification. Apply your own
     threshold based on use case (default reasonable threshold: 0.50).
 """

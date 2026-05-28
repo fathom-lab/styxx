@@ -655,6 +655,9 @@ __all__ = [
     # synthetic preference-pair generation via inverse cognometry (7.1.0+)
     "craft_preference_pair", "generate_preference_pairs",
 
+    # 7.7.10: critique-mode misconception detector (Baseline-019 first-PASS)
+    "critique_detector", "CritiqueDetector",
+
     # metadata
     "__version__",
 ]

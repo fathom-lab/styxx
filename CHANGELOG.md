@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.10] — 2026-05-28 — `critique_detector` public API + recursive-discipline paper v4 (asymmetry-v3 measurement landed clean)
+
+### Added — `styxx.critique_detector`
+
+- **`styxx.critique_detector(model="gpt-4o-mini", prompt_template=None, temperature=0.0)`** — the first method to PASS the gauntlet's v3 detection bars (D1+D2+D3+D4 on dark-core), promoted from `submissions/baseline_019_openai_critique/` to a public deployable primitive. Returns a callable `(question, response) → P(NO | critique prompt)` in `[0, 1]`. Higher = more misconception-like. Default backend `gpt-4o-mini` via OpenAI Chat Completions API; requires `OPENAI_API_KEY`. Pure addition; default install behavior unchanged.
+- **`styxx.CritiqueDetector`** — the underlying dataclass, exposed for subclassing (custom backends, prompt templates, sampling).
+
+```python
+from styxx import critique_detector
+det = critique_detector(model="gpt-4o-mini")
+det("Is the Great Wall visible from space?", "Yes, with the naked eye.")  # ≈ 1.0
+det("Capital of France?", "Paris")                                          # ≈ 0.0
+```
+
+### Added — recursive-discipline paper v4 + asymmetry-v3 measurement
+
+- **`papers/PAPER_recursive_discipline_2026_05_27.md` (v4)** + arXiv submission package rebuilt at `arxiv/recursive_discipline/`. The v3 single-character T/F/U NLI cleanup resolved the v2 NEUTRAL/AMBIGUOUS artifact (85% UNCLEAR → 0% on dark-core, 13% on TruthfulQA). Pre-stated predictions held on both corpora.
+- **`papers/agent-self-audit/FINDING_asymmetry_v3_measurement_2026_05_27.md`** — the final clean within-model generation-vs-critique asymmetry measurement: **5.88% on dark-core (n=34)** and **17.00% on TruthfulQA (n=200)**, both inside pre-stated bands. Best-calibrated multi-prediction experiment of the 2026-05-27 arc.
+- **`experiments/asymmetry_v3_cleanup_2026_05_27/results.json`** — reproducible v3 outputs.
+
+### Changed — corrected mechanism description
+
+- The Baseline-019 PASS mechanism is now described as **out-of-context critique** (RLHF-tuned LLM applies factuality discrimination to labeled candidate text) rather than within-model generation-vs-critique asymmetry. The PASS verdict (4/4 under v3 bars, AUC 0.95) is unchanged. The v1 asymmetry rate claim of 91% was an inflated upper bound from a cosine-similarity proxy; the v3 measurement put the true within-model asymmetry rate dramatically lower (5.88% / 17.00%). Most folklore items are **consistent-correct** (model refutes AND flags). Docstrings in `styxx/critique.py` updated to match.
+- **`styxx/_data/LEADERBOARD.md`** — mechanism row for Baseline-019 revised.
+
+### Why patch (not minor)
+
+`critique_detector` is a pure addition; default install + import behavior is byte-identical to 7.7.9. The paper revision is documentation-only. No public-surface breakage.
+
+### Zenodo
+
+- `zenodo/v7.7.9/` historical snapshot committed (matches the v7.7.7 pattern). The Zenodo v25 deposit (DOI 10.5281/zenodo.20419662) is frozen at the v7.7.9-as-tagged state, which predates the v1/v2/v3 asymmetry FINDING arc. A new deposit (concept DOI 10.5281/zenodo.19326174) will accompany this v7.7.10 release.
+
+---
+
 ## [7.7.9] — 2026-05-27 — gauntlet detection-bar v3: D4 capitalization-control bar + systematic confound audit primitive
 
 ### Added — D4 capitalization-control bar
