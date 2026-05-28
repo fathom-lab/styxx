@@ -87,6 +87,7 @@ jobs:
               "styxx/three_axis/__init__.py",
               "styxx/guardrail/__init__.py",
               "styxx/adapters/__init__.py",
+              "styxx/compliance/__init__.py",
               "styxx/cognometrics.py",
               "styxx/mcp/server.py",
               "styxx/residual_probe/probe.py",

@@ -147,6 +147,7 @@ packages = [
     "styxx.attack", "styxx.attack.seeds",
     "styxx.mcp",
     "styxx.three_axis",
+    "styxx.compliance",
     "styxx.fonts",
     "styxx._data",
 ]
