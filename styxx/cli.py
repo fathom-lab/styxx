@@ -729,12 +729,20 @@ def cmd_attest(args):
         print(f"styxx attest: repo not found: {repo}", file=sys.stderr)
         return 2
 
-    att = attest(src.read_text(encoding="utf-8", errors="replace"), repo)
+    ref = getattr(args, "ref", None)
+    try:
+        att = attest(src.read_text(encoding="utf-8", errors="replace"), repo, ref=ref)
+    except ValueError as e:
+        print(f"styxx attest: {e}", file=sys.stderr)
+        return 2
     out_json = att.to_json()
     if args.out:
         Path(args.out).write_text(out_json, encoding="utf-8")
         s = att.artifact["summary"]
+        sub_c = att.artifact["substrate"]["commit"]
         print(f"styxx attest — wrote {args.out}")
+        if ref:
+            print(f"  pinned to commit {sub_c[:12]} (ref {ref})")
         print(f"  {s['passed']} passed, {s['failed']} failed, {s['errored']} errored "
               f"(coverage {s['coverage']:.2f})")
         print(f"  digest sha256:{att.digest}")
@@ -2384,6 +2392,9 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_att.add_argument("file", help="path to the agent self-report (markdown/text)")
     p_att.add_argument("--repo", default=".", help="repo substrate to check against (default: .)")
+    p_att.add_argument("--ref", default=None,
+                       help="pin the substrate to a git ref/commit/tag — verify the claims "
+                            "against the repo tree AT THAT COMMIT (immutable as-of-date provenance)")
     p_att.add_argument("--out", default=None, help="write the attestation JSON here (default: stdout)")
     p_att.set_defaults(func=cmd_attest)
 

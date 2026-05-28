@@ -28,12 +28,19 @@ conformity assessment.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
+import re
+import shutil
 import subprocess
+import sys
+import tarfile
+import tempfile
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from .agent_audit import AgentClaimAuditor, Claim, checkers, extract_claims
 
@@ -136,6 +143,69 @@ def _head_commit(repo: Path) -> str:
         return "unknown"
 
 
+_SHA_RE = re.compile(r"^[0-9a-fA-F]{7,40}$")
+
+
+def _resolve_commit(repo: Path, ref: str) -> str:
+    """Resolve a ref to a full commit SHA. Raises on an unknown/invalid ref."""
+    r = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}"],
+        cwd=str(repo), capture_output=True, check=False,
+    )
+    sha = r.stdout.decode("utf-8", errors="replace").strip()
+    if not sha:
+        raise ValueError(f"unknown git ref in substrate: {ref!r}")
+    return sha
+
+
+@contextmanager
+def _materialized_tree(repo: Path, commit_sha: str) -> Iterator[Path]:
+    """Yield a throwaway dir holding the repo tree at ``commit_sha``.
+
+    Read-only: uses ``git archive`` (which never touches the working tree or the
+    ``.git`` worktree registry) and extracts the tar in-process. ``commit_sha``
+    is validated as a hex SHA before it reaches git, so an untrusted artifact
+    cannot smuggle an argument (e.g. ``--upload-pack``) through this path.
+    """
+    if not _SHA_RE.match(commit_sha):
+        raise ValueError(f"refusing non-hex commit in substrate: {commit_sha!r}")
+    r = subprocess.run(
+        ["git", "archive", "--format=tar", commit_sha],
+        cwd=str(repo), capture_output=True, check=False,
+    )
+    if r.returncode != 0:
+        msg = r.stderr.decode("utf-8", errors="replace").strip()
+        raise ValueError(f"git archive failed for {commit_sha[:12]}: {msg}")
+    tmp = Path(tempfile.mkdtemp(prefix="styxx_attest_"))
+    try:
+        with tarfile.open(fileobj=io.BytesIO(r.stdout), mode="r:") as tar:
+            # archive is our own hex-pinned git tree; the `data` filter (3.12+)
+            # is a belt-and-suspenders guard against path-escaping members and
+            # silences the 3.14 default-filter deprecation.
+            if sys.version_info >= (3, 12):
+                tar.extractall(tmp, filter="data")
+            else:
+                tar.extractall(tmp)  # noqa: S202 — trusted, hex-pinned git tree
+        yield tmp
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+@contextmanager
+def _substrate(repo: Path, ref: str | None) -> Iterator[tuple[Path, str]]:
+    """Yield ``(audit_path, commit_sha)`` for the substrate to audit against.
+
+    Unpinned (``ref is None``): the live working tree, paired with the current
+    HEAD sha. Pinned: a throwaway materialization of ``ref``'s commit.
+    """
+    if ref is None:
+        yield repo, _head_commit(repo)
+    else:
+        sha = _resolve_commit(repo, ref)
+        with _materialized_tree(repo, sha) as tree:
+            yield tree, sha
+
+
 def _clauses_for_primitive(primitive_prefix: str) -> list[str]:
     """Article 15 clauses whose styxx-primitive list includes this primitive."""
     from .compliance.eu_ai_act import ARTICLE_15_REGISTRY
@@ -161,6 +231,7 @@ def attest(
     repo_path: str | Path,
     *,
     id_prefix: str = "A",
+    ref: str | None = None,
 ) -> Attestation:
     """Produce a Verifiable Cognometric Attestation for an agent self-report.
 
@@ -168,6 +239,11 @@ def attest(
         report_text: the agent's free-text self-report (claims about substrate).
         repo_path: path to the substrate git repository the claims are about.
         id_prefix: claim-id prefix in the artifact (default "A").
+        ref: optional git ref (branch, tag, or SHA). When given, the claims are
+            verified against the repo tree AT THAT COMMIT — read-only, via
+            ``git archive`` — and the resolved SHA is recorded so the
+            attestation becomes immutable as-of-date provenance. When ``None``
+            (default), the live working tree is used.
 
     Returns:
         An :class:`Attestation` whose ``.artifact`` is a JSON-serializable,
@@ -177,7 +253,8 @@ def attest(
     """
     repo = Path(repo_path).resolve()
     report = extract_claims(report_text, id_prefix=id_prefix)
-    results = AgentClaimAuditor(repo).run(report.claims)
+    with _substrate(repo, ref) as (audit_path, commit_sha):
+        results = AgentClaimAuditor(audit_path).run(report.claims)
 
     # The audit is itself the `styxx.agent_audit` primitive; every audited
     # claim is evidence under the Article 15 clauses the compliance map already
@@ -212,7 +289,11 @@ def attest(
         "styxx_attestation_version": ATTESTATION_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "tool": {"styxx_version": _STYXX_VERSION},
-        "substrate": {"repo": repo.name, "head_commit": _head_commit(repo)},
+        "substrate": {
+            "repo": repo.name,
+            "commit": commit_sha,
+            "pinned_ref": ref,
+        },
         "claims": claim_entries,
         "summary": {
             "claims_extracted": len(report.claims),
@@ -254,6 +335,11 @@ def verify_attestation(
     A mismatch means the embedded verdict disagrees with what the substrate
     actually says (the agent — or a tamperer — misreported). An unknown
     checker name is refused, never executed.
+
+    If the attestation is commit-pinned, verification re-materializes the EXACT
+    recorded commit SHA (not the ref name, which could have moved) and
+    reproduces against that historical tree — so as-of-date provenance is
+    reproduced as-of that date, not against the repo's current state.
     """
     art = artifact.artifact if isinstance(artifact, Attestation) else artifact
     repo = Path(repo_path).resolve()
@@ -263,35 +349,69 @@ def verify_attestation(
         and art["digest"].get("value") == _compute_digest(art)
     )
 
-    auditor = AgentClaimAuditor(repo)
+    substrate = art.get("substrate", {})
+    pinned_ref = substrate.get("pinned_ref")
+    pinned_commit = substrate.get("commit")
+
     reproduced: list[dict[str, Any]] = []
     mismatches: list[dict[str, Any]] = []
     unknown: list[str] = []
 
-    for entry in art.get("claims", []):
-        name = entry.get("checker")
-        checker = _CHECKER_ALLOWLIST.get(name)
-        if checker is None:
-            unknown.append(name)
-            continue
-        claim = Claim(
-            id=entry["id"],
-            text=entry.get("text", ""),
-            checker=checker,
-            args=entry.get("args", {}),
-            expected=entry.get("expected", True),
-        )
-        (res,) = auditor.run([claim])
-        rec = {
-            "id": entry["id"],
-            "embedded_verdict": entry.get("verdict"),
-            "reproduced_verdict": res.verdict,
-            "evidence": res.evidence,
-            "error": res.error,
-        }
-        reproduced.append(rec)
-        if res.verdict != entry.get("verdict"):
+    @contextmanager
+    def _audit_path() -> Iterator[Path]:
+        if pinned_ref is None:
+            yield repo
+        else:
+            with _materialized_tree(repo, str(pinned_commit)) as tree:
+                yield tree
+
+    try:
+        cm = _audit_path()
+        audit_path = cm.__enter__()
+    except Exception as e:  # pinned commit missing / unresolvable in this repo
+        for entry in art.get("claims", []):
+            rec = {
+                "id": entry.get("id"),
+                "embedded_verdict": entry.get("verdict"),
+                "reproduced_verdict": "ERROR",
+                "evidence": "",
+                "error": f"cannot materialize pinned commit: {type(e).__name__}: {e}",
+            }
+            reproduced.append(rec)
             mismatches.append(rec)
+        return VerificationResult(
+            digest_ok=digest_ok, reproduced=reproduced,
+            mismatches=mismatches, unknown_checkers=unknown,
+        )
+
+    try:
+        auditor = AgentClaimAuditor(audit_path)
+        for entry in art.get("claims", []):
+            name = entry.get("checker")
+            checker = _CHECKER_ALLOWLIST.get(name)
+            if checker is None:
+                unknown.append(name)
+                continue
+            claim = Claim(
+                id=entry["id"],
+                text=entry.get("text", ""),
+                checker=checker,
+                args=entry.get("args", {}),
+                expected=entry.get("expected", True),
+            )
+            (res,) = auditor.run([claim])
+            rec = {
+                "id": entry["id"],
+                "embedded_verdict": entry.get("verdict"),
+                "reproduced_verdict": res.verdict,
+                "evidence": res.evidence,
+                "error": res.error,
+            }
+            reproduced.append(rec)
+            if res.verdict != entry.get("verdict"):
+                mismatches.append(rec)
+    finally:
+        cm.__exit__(None, None, None)
 
     return VerificationResult(
         digest_ok=digest_ok,

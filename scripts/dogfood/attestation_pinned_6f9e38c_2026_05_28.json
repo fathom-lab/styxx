@@ -1,0 +1,108 @@
+{
+  "claims": [
+    {
+      "actual": true,
+      "args": {
+        "path": "pyproject.toml",
+        "version": "7.7.10"
+      },
+      "checker": "package_version_equals",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "pyproject.toml: version='7.7.10', expected='7.7.10'",
+      "expected": true,
+      "id": "A1",
+      "text": "version is 7.7.10",
+      "verdict": "PASS"
+    },
+    {
+      "actual": false,
+      "args": {
+        "path": "pyproject.toml",
+        "version": "7.7.11"
+      },
+      "checker": "package_version_equals",
+      "clauses": [
+        "Article 15.1",
+        "Article 15.3"
+      ],
+      "error": "",
+      "evidence": "pyproject.toml: version='7.7.10', expected='7.7.11'",
+      "expected": true,
+      "id": "A2",
+      "text": "version is 7.7.11",
+      "verdict": "FAIL"
+    }
+  ],
+  "compliance": {
+    "disclaimer": "Substrate-checkable claims only. Not legal advice; not a substitute for an organization's own AI Act conformity assessment. Interpretive, causal, and generalization claims are out of scope (see uncovered_boundary).",
+    "evidence_clauses": [
+      "Article 15.1",
+      "Article 15.3"
+    ],
+    "framework": "EU AI Act Article 15 (styxx v0.1 measurement map)",
+    "uncovered_boundary": [
+      {
+        "alternative": "Fairness audit libraries (e.g., Fairlearn, AIF360) plus domain-specific impact assessment; legal review.",
+        "clause": "Article 15.4 (bias amplification)",
+        "reason": "styxx primitives operate on per-step agent cognition signals; they do not measure population-level disparate impact, demographic outcome equalization, or training-data bias amplification across protected classes."
+      },
+      {
+        "alternative": "Dedicated LLM security tools (e.g., Lakera Guard, Prompt-Armor, OWASP LLM Top 10 mitigations); standard application-security audit; penetration testing.",
+        "clause": "Article 15 (cybersecurity)",
+        "reason": "styxx instruments observe agent cognition, not network, host, or supply-chain security. Prompt-injection robustness is ADJACENT (refusal-related instruments may flag some injection attempts) but not the primary scope."
+      },
+      {
+        "alternative": "ISO/IEC 23894:2023 or NIST AI RMF 1.0 frameworks; QMS-style organizational processes.",
+        "clause": "Article 9 (risk management)",
+        "reason": "styxx provides MEASUREMENT evidence; it does not implement the risk-management lifecycle (identification, estimation, evaluation, mitigation, residual-risk acceptance) prescribed by Article 9."
+      },
+      {
+        "alternative": "Data documentation frameworks (Datasheets for Datasets, Data Statements); training-data audit tooling.",
+        "clause": "Article 10 (data governance)",
+        "reason": "styxx does not score training-data quality, provenance, labeling consistency, or representativeness. Cognometric instruments operate post-training on agent outputs."
+      },
+      {
+        "alternative": "Production observability platforms (OpenTelemetry, Langfuse, Arize, Datadog LLM Observability) for trace-level logging alongside styxx for cognition-level scoring.",
+        "clause": "Article 12 (record-keeping)",
+        "reason": "styxx writes per-step cognometric vitals but does not, by itself, satisfy Article 12's logging-traceability requirements end-to-end (event capture, retention, integrity)."
+      },
+      {
+        "alternative": "Model card frameworks; capability-statement templates; deployer documentation processes.",
+        "clause": "Article 13 (transparency and information to deployers)",
+        "reason": "styxx instruments produce evidence; they do not generate the deployer-facing instructions of use, capability statements, or output-explanation interfaces that Article 13 mandates."
+      },
+      {
+        "alternative": "Agent-platform-level oversight UI; interrupt and rollback primitives in the agent runtime; operator training programs.",
+        "clause": "Article 14 (human oversight)",
+        "reason": "styxx is a measurement layer; it does not implement the human-in-the-loop interfaces, stop-button affordances, or operator-control surfaces Article 14 requires."
+      }
+    ]
+  },
+  "digest": {
+    "alg": "sha256",
+    "value": "f8acb1f143d98a82fef9d81750c82fb04ca56671fe088fb6bb90058b490516bd"
+  },
+  "generated_at": "2026-05-28T19:57:04.773415+00:00",
+  "styxx_attestation_version": "1.0",
+  "substrate": {
+    "commit": "6f9e38ce669db001ce308df3ee42156b319e348a",
+    "pinned_ref": "6f9e38c",
+    "repo": "styxx"
+  },
+  "summary": {
+    "claims_extracted": 2,
+    "coverage": 1.0,
+    "errored": 0,
+    "failed": 1,
+    "passed": 1,
+    "sentences_matched": 2,
+    "sentences_total": 2
+  },
+  "tool": {
+    "styxx_version": "7.7.11"
+  }
+}

@@ -24,7 +24,17 @@ assert res.ok   # digest intact AND every verdict reproduces from the substrate
 
 - **CLI: `styxx attest <file> [--out f.json]` + `styxx verify-attestation <file>`** — emit and independently re-verify. `verify-attestation` exits 0 only if the digest matches and every embedded verdict reproduces; 1 on a mismatch, broken digest, or unknown checker.
 
-- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_verifiable_attestation.md` states the thesis, predictions (P1–P5), and a kill-gate (K1 determinism / K2 independent reproduction / K3 tamper-evidence) BEFORE the instrument was written. `tests/test_attestation.py` enforces the gate at CI time. Thesis survived: 10/10 gate tests pass, full suite 1155 passed.
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_verifiable_attestation.md` states the thesis, predictions (P1–P5), and a kill-gate (K1 determinism / K2 independent reproduction / K3 tamper-evidence) BEFORE the instrument was written. `tests/test_attestation.py` enforces the gate at CI time. Thesis survived: 10/10 gate tests pass.
+
+### Added — commit-pinned attestation (immutable as-of-date provenance)
+
+- **`attest(report, repo, ref=<commit|tag|branch>)`** — pins the substrate to a specific commit. The claims are verified against the repo tree *at that commit*, materialized read-only via `git archive` (the working tree and `.git` worktree registry are never touched), and the resolved SHA is recorded in the artifact. A claim attested true at a commit stays verifiably true at that commit forever, regardless of how the repo evolves afterward — the shape a regulator's "as-of-date" conformity evidence requires.
+
+- **`verify_attestation`** re-materializes the *exact recorded commit SHA* (not the ref name, which could have moved) and reproduces the verdicts against that historical tree. A commit-pinned commit SHA is validated as hex before it reaches git, so an untrusted artifact cannot smuggle a git argument; a pinned commit absent from the repo is reported as ERROR, never silently trusted.
+
+- **CLI:** `styxx attest <file> --ref <commit>`.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_commit_pinned_attestation.md` states K1 determinism / K2 historical isolation (decisive) / K3 false-at-ref caught / K4 read-only BEFORE the code was written. Thesis survived: 7 additional gate tests pass (17/17 total in `tests/test_attestation.py`).
 
 ---
 

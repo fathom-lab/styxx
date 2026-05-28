@@ -174,3 +174,128 @@ def test_unknown_checker_is_refused(substrate):
     res = verify_attestation(tampered, substrate)
     assert "os.system" in res.unknown_checkers
     assert res.ok is False
+
+
+# ===========================================================================
+# Commit-pinned attestation — the pre-registered kill-gate from
+# scripts/dogfood/PREREG_commit_pinned_attestation.md
+#
+#   K1 — determinism under pinning
+#   K2 — historical isolation (decisive): pin to an OLD commit yields the OLD
+#        verdict while the working tree has moved on; verify reproduces it
+#   K3 — false-at-ref is caught (current state does not retroactively rescue)
+#   K4 — read-only: the pin cycle never mutates the working tree or .git
+# ===========================================================================
+
+
+def _rev_parse(repo, ref):
+    out = subprocess.run(["git", "rev-parse", ref], cwd=str(repo),
+                         check=True, capture_output=True)
+    return out.stdout.decode().strip()
+
+
+@pytest.fixture
+def versioned_substrate(tmp_path):
+    """A repo with two commits: v1.0.0 then v2.0.0. Returns (repo, sha_v1)."""
+    repo = tmp_path / "versioned"
+    repo.mkdir()
+    pyproject = repo / "pyproject.toml"
+    pyproject.write_text('[project]\nname = "demo"\nversion = "1.0.0"\n',
+                         encoding="utf-8")
+    _git(repo, "init", "-q")
+    _git(repo, "config", "user.email", "t@t.t")
+    _git(repo, "config", "user.name", "t")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "v1")
+    sha_v1 = _rev_parse(repo, "HEAD")
+    # move the substrate on to 2.0.0
+    pyproject.write_text('[project]\nname = "demo"\nversion = "2.0.0"\n',
+                         encoding="utf-8")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "v2")
+    return repo, sha_v1
+
+
+def test_pin_records_ref_and_commit(versioned_substrate):
+    repo, sha_v1 = versioned_substrate
+    art = attest("The version is 1.0.0.", repo, ref=sha_v1).artifact
+    assert art["substrate"]["pinned_ref"] == sha_v1
+    assert art["substrate"]["commit"] == sha_v1
+
+
+def test_K1_pin_determinism(versioned_substrate):
+    repo, sha_v1 = versioned_substrate
+    a = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    b = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    assert a.digest == b.digest
+
+
+def test_K2_historical_isolation_decisive(versioned_substrate):
+    """Pin to the v1.0.0 commit: the claim PASSes even though the working tree
+    is now 2.0.0, while the unpinned attestation of the same claim FAILs."""
+    repo, sha_v1 = versioned_substrate
+    # sanity: the working tree really has moved on
+    assert 'version = "2.0.0"' in (repo / "pyproject.toml").read_text()
+
+    pinned = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    assert pinned.artifact["summary"]["passed"] == 1
+    assert pinned.artifact["summary"]["failed"] == 0
+
+    live = attest("The version is 1.0.0.", repo)  # working tree = 2.0.0
+    assert live.artifact["summary"]["failed"] == 1
+
+    # verify re-materializes the SAME commit and reproduces the pinned PASS
+    res = verify_attestation(pinned, repo)
+    assert res.digest_ok is True
+    assert res.ok is True
+    assert res.mismatches == []
+
+
+def test_K3_false_at_ref_is_caught(versioned_substrate):
+    """A claim that was FALSE at the pinned commit must FAIL — current truth
+    (2.0.0) does not retroactively rescue it."""
+    repo, sha_v1 = versioned_substrate
+    art = attest("The version is 2.0.0.", repo, ref=sha_v1).artifact
+    assert art["summary"]["failed"] == 1
+    assert art["summary"]["passed"] == 0
+
+
+def test_K4_pin_cycle_is_read_only(versioned_substrate):
+    repo, sha_v1 = versioned_substrate
+    before = subprocess.run(["git", "status", "--porcelain"], cwd=str(repo),
+                            check=True, capture_output=True).stdout
+    att = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    verify_attestation(att, repo)
+    after = subprocess.run(["git", "status", "--porcelain"], cwd=str(repo),
+                           check=True, capture_output=True).stdout
+    assert before == after
+    # no worktree was registered in .git
+    assert not (repo / ".git" / "worktrees").exists()
+
+
+def test_pinned_verify_errors_on_missing_commit(versioned_substrate):
+    """If the repo no longer contains the pinned commit, verification cannot
+    reproduce it — reported as ERROR/not-ok, never silently trusted."""
+    repo, sha_v1 = versioned_substrate
+    att = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    tampered = copy.deepcopy(att.artifact)
+    # a well-formed but absent commit sha
+    tampered["substrate"]["commit"] = "0" * 40
+    from styxx.attestation import _compute_digest
+    tampered["digest"]["value"] = _compute_digest(tampered)
+    res = verify_attestation(tampered, repo)
+    assert res.ok is False
+    assert all(r["reproduced_verdict"] == "ERROR" for r in res.reproduced)
+
+
+def test_pinned_verify_refuses_non_hex_commit(versioned_substrate):
+    """An untrusted artifact cannot smuggle a git argument through the pin."""
+    repo, sha_v1 = versioned_substrate
+    att = attest("The version is 1.0.0.", repo, ref=sha_v1)
+    tampered = copy.deepcopy(att.artifact)
+    tampered["substrate"]["commit"] = "--upload-pack=evil"
+    from styxx.attestation import _compute_digest
+    tampered["digest"]["value"] = _compute_digest(tampered)
+    res = verify_attestation(tampered, repo)
+    assert res.ok is False
+    assert all(r["reproduced_verdict"] == "ERROR" for r in res.reproduced)
