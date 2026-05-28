@@ -342,6 +342,7 @@ from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon
 from .intercept import CognitiveIntercept, should_intercept, simulate_intercept, InterceptReport
 from .temperature import measure_temperature, aggregate_temperature, TruthMap, demo_temperature
 from .verify import verify, Verdict
+from .critique import critique_detector, CritiqueDetector  # 7.7.10: first-PASS detector
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
