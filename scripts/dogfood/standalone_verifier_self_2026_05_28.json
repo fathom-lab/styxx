@@ -1,0 +1,25 @@
+{
+  "dogfood": "standalone (zero-styxx) verifier on a real styxx chain",
+  "generated_at": "2026-05-28T21:06:38.352779+00:00",
+  "head_commit": "5c8735bc117b7a7c93eb5a80c44e5688d3fb0993",
+  "standalone_path": "scripts\\styxx_verify_standalone.py",
+  "K3_standalone_imports": [
+    "argparse",
+    "hashlib",
+    "json",
+    "sys"
+  ],
+  "K3_no_styxx_import": true,
+  "K1_per_link_digest_agreement": [
+    {
+      "att_digest_agrees": true,
+      "chain_digest_agrees": true
+    }
+  ],
+  "K1_head_agrees": true,
+  "K1_all_digests_agree": true,
+  "K1_standalone_chain_ok_anchored": true,
+  "K2_flipped_digest_caught": true,
+  "P4_reseal_passes_structure": true,
+  "P4_reseal_caught_by_anchor": true
+}

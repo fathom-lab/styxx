@@ -28,6 +28,20 @@ assert res.vitals_ok   # every score re-derives from the recorded (prompt, respo
 
 - **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_cognometric_attestation.md` states K1 determinism / K2 re-sealed-score-tamper caught (decisive) / K3 chain reproduction BEFORE the code was written. Thesis survived: 6 new gate tests (29/29 attestation total; full scoped suite 1174 passed). Live receipt: `scripts/dogfood/cognometric_attestation_self_2026_05_28.json`.
 
+### Added — standalone, trust-minimized verifier (verify without trusting styxx)
+
+- **`scripts/styxx_verify_standalone.py`** — an independent, **stdlib-only** verifier (imports only `argparse`/`hashlib`/`json`/`sys`, **nothing from styxx**) that re-derives the content address of any styxx attestation or chain and checks its structural integrity (per-attestation digest + Merkle linkage + head). You don't have to trust — or install — styxx to verify a styxx receipt.
+
+- **`docs/attestation-content-address.md`** — the content-addressing spec v1.0 the verifier is the executable form of: canonical payload (`json.dumps(core, sort_keys=True, separators=(",",":"), ensure_ascii=False)` over the artifact minus `generated_at`/`digest`), `sha256` digest, and the chain rule (`sha256(f"{prev}|{att_digest}")`, genesis `styxx-attestation-chain-v1`).
+
+```
+python scripts/styxx_verify_standalone.py chain.json --expected-head <hex>
+```
+
+- **Honest scope.** Structure only. Claim verdicts (need the repo) and vitals scores (need styxx's instruments) are reported `NOT CHECKED`, never asserted. A fully re-sealed chain passes structure and is caught only against an external `--expected-head` anchor. Cross-LANGUAGE agreement is out of scope — Python's json number repr is not language-portable; JCS/RFC 8785 is the documented future-work path.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_standalone_verifier.md` states K1 byte-for-byte cross-implementation digest agreement (decisive) / K2 tamper caught without styxx / K3 no scope leak BEFORE the code was written. Thesis survived: 10 cross-validation gate tests (`tests/test_standalone_verifier.py`) prove byte-identical agreement with the library over a 4-shape corpus. Live receipt: `scripts/dogfood/standalone_verifier_self_2026_05_28.json`.
+
 ---
 
 ## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation
