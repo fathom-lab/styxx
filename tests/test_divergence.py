@@ -16,7 +16,8 @@ import warnings
 import pytest
 
 from styxx.divergence import (
-    semantic_entropy, council_agreement, divergence_available,
+    semantic_entropy, council_agreement, grounded_honesty, GroundedScore,
+    divergence_available,
 )
 from styxx.errors import StyxxError
 
@@ -78,6 +79,66 @@ def test_council_agreement_edges():
     assert council_agreement([], same_fn=_EQ) == 0.0       # empty -> no agreement
     assert council_agreement(["solo"], same_fn=_EQ) == 1.0  # single -> trivially agreed
     assert council_agreement([None, None, "z"], same_fn=_EQ) == 1.0  # None filtered
+
+
+# ─── grounded_honesty ──────────────────────────────────────────────
+
+def test_grounded_honesty_stable_true_claim_is_high():
+    # all samples agree with the claim -> stability 1, concordance 1 -> g 1
+    g = grounded_honesty(["Canberra"] * 5, "Canberra", same_fn=_EQ)
+    assert isinstance(g, GroundedScore)
+    assert g.grounded == pytest.approx(1.0)
+    assert g.stability == pytest.approx(1.0)
+    assert g.concordance == pytest.approx(1.0)
+    assert g.n_clusters == 1 and g.n_samples == 5
+
+
+def test_grounded_honesty_contradiction_is_low():
+    # stable belief is "Canberra"; the claim "Sydney" sits outside it ->
+    # stability high (one cluster) but concordance 0 -> g 0
+    g = grounded_honesty(["Canberra"] * 5, "Sydney", same_fn=_EQ)
+    assert g.stability == pytest.approx(1.0)
+    assert g.concordance == pytest.approx(0.0)
+    assert g.grounded == pytest.approx(0.0)
+
+
+def test_grounded_honesty_confabulation_low_stability():
+    # a different answer each sample -> stability ~0 -> g ~0 even if claim matches one
+    g = grounded_honesty(["a", "b", "c", "d", "e"], "a", same_fn=_EQ)
+    assert g.n_clusters == 5
+    assert g.stability == pytest.approx(0.0)
+    assert g.concordance == pytest.approx(0.2)  # one of five matches the claim
+    assert g.grounded == pytest.approx(0.0)
+
+
+def test_grounded_honesty_partial_mode():
+    # 4 of 5 say Canberra, 1 Sydney -> 2 clusters; claim Canberra
+    g = grounded_honesty(["Canberra", "Canberra", "Canberra", "Canberra", "Sydney"],
+                         "Canberra", same_fn=_EQ)
+    assert g.n_clusters == 2
+    assert g.stability == pytest.approx(1.0 - 1 / 4)   # 0.75
+    assert g.concordance == pytest.approx(0.8)
+    assert g.grounded == pytest.approx(0.75 * 0.8)
+
+
+def test_grounded_honesty_empty_is_zero():
+    g = grounded_honesty([], "anything", same_fn=_EQ)
+    assert g == GroundedScore(0.0, 0.0, 0.0, 0, 0)
+    assert g.grounded == 0.0
+
+
+def test_grounded_honesty_float_protocol():
+    # GroundedScore acts like its scalar score in comparisons
+    hi = grounded_honesty(["x"] * 4, "x", same_fn=_EQ)
+    lo = grounded_honesty(["x"] * 4, "y", same_fn=_EQ)
+    assert float(hi) > float(lo)
+    assert max([lo, hi], key=float) is hi
+
+
+def test_grounded_honesty_none_filtered():
+    g = grounded_honesty([None, "x", "x", None], "x", same_fn=_EQ)
+    assert g.n_samples == 2
+    assert g.grounded == pytest.approx(1.0)
 
 
 # ─── clustering backend / contract ─────────────────────────────────

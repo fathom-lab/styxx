@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.13] — 2026-05-28 — grounded honesty axis (the first construct-ceiling crack, as a primitive)
+
+### Added — `styxx.grounded_honesty` (factual self-claim honesty, sampling-grounded)
+
+- **`grounded_honesty(samples, claim, *, method=..., same_fn=...) -> GroundedScore`** — the first styxx honesty signal that tracks GROUND TRUTH rather than register. Grounds a stated factual self-claim against the model's OWN resampled belief distribution: `g = Stability × Concordance`. A TRUE claim is the stable sampling mode (both high); a FALSE claim is either a confabulation (low Stability) or a contradiction (claim outside the stable mode → low Concordance). Built on the shipped `styxx.divergence` clustering backends (`same_fn` LLM judge recommended; cosine default; lexical fallback). A pure measurement primitive — the caller supplies the resamples.
+
+- **Self-calibrating — `GroundedScore.stability` is a report-or-abstain gate.** In the pre-registered boundary hunt the grounded score separated true from false self-claims at AUC 0.97 on HIGH-stability items and collapsed to ~chance (0.44) on LOW-stability items: the signal flags exactly the items on which it should abstain. Trust `grounded` where `stability` is high; treat low-stability as "no stable belief → abstain".
+
+```python
+from styxx import grounded_honesty
+# N resamples of the model answering the bare question (temperature > 0):
+samples = ["Canberra", "Canberra", "Canberra", "Sydney", "Canberra"]
+grounded_honesty(samples, "Canberra").grounded   # high  -> claim is the stable belief
+grounded_honesty(samples, "Sydney").grounded      # low   -> contradiction
+```
+
+- **Honest scope, stated not hidden (FEASIBILITY-GRADE).** Single model (gpt-4o-mini), OpenAI-only, single pre-registered runs: grounded AUC 0.966 vs the text-only deception axis at 0.498 (chance) on register-matched factual self-claims. It grounds against the model's *belief*, so a confidently-WRONG belief yields a confidently-wrong verdict — and a same-vendor council does NOT fix this (cross-vendor is the open step). **Self-consistency, not a truth oracle; one axis (factual self-claims); INJECTION-BLIND** (inherits the divergence security model). Evidence + pre-registrations in `papers/grounded-honesty-axis/`. This does not claim the construct ceiling is broken in general.
+
+---
+
 ## [7.7.12] — 2026-05-28 — cognometric vitals in the attestation (verifiable, re-derivable, tamper-evident)
 
 ### Added — verifiable cognometric vitals

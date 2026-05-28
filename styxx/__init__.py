@@ -609,7 +609,15 @@ from .transport import (
 # confabulation, not adversarially planted fabrication; don't trust on poisoned
 # context). Feasibility-grade evidence; measurement primitives, caller maps to a
 # decision.
-from .divergence import semantic_entropy, council_agreement, divergence_available
+# 7.7.13: grounded_honesty — is a factual SELF-CLAIM honest? Grounds the claim
+# against the model's OWN resampled belief (g = Stability x Concordance), breaking
+# the text-only register ceiling on factual self-claims (AUC 0.97 vs 0.50) and
+# self-calibrating via `stability` (report-or-abstain). Single-model
+# self-consistency, NOT a truth oracle; INJECTION-BLIND (papers/grounded-honesty-axis/).
+from .divergence import (
+    semantic_entropy, council_agreement, grounded_honesty, GroundedScore,
+    divergence_available,
+)
 
 
 __all__ = [
@@ -622,6 +630,8 @@ __all__ = [
 
     # 7.7.0: divergence primitives (confident confabulation + reference-free fabrication)
     "semantic_entropy", "council_agreement",
+    # 7.7.13: grounded honesty axis (factual self-claim, sampling-grounded)
+    "grounded_honesty", "GroundedScore",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
