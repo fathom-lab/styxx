@@ -1,0 +1,282 @@
+{
+  "n_propositions": 18,
+  "n_pass": 18,
+  "n_fail": 0,
+  "n_true_fail": 0,
+  "n_false_fail": 0,
+  "n_in_band": 18,
+  "killgate_paper_grade_fired": false,
+  "killgate_instrument_grade_fired": false,
+  "results": [
+    {
+      "id": "T1",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The TRUE within-model asymmetry rate on the dark-core corpus was 5.88%.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T2",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The TRUE within-model asymmetry rate on the TruthfulQA subsample was 17.00%.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T3",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The dark-core corpus contained 34 items.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T4",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The TruthfulQA subsample contained 200 items.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T5",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The v3 measurement forced single-character T/F/U output.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.2
+      ],
+      "confidence": 0.85,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T6",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The UNCLEAR rate on dark-core under v3 was 0.00%.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T7",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The UNCLEAR rate on TruthfulQA under v3 was 13.00%.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T8",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The consistent-correct rate on dark-core was 88.24%.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T9",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "Pre-stated predictions held on both corpora.",
+      "predicted_p_no": 0.1,
+      "predicted_band": [
+        0.0,
+        0.25
+      ],
+      "confidence": 0.8,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T10",
+      "kind": "T",
+      "source_passage": "A",
+      "claim": "The v3 measurement was described as the best-calibrated multi-prediction experiment of the session.",
+      "predicted_p_no": 0.1,
+      "predicted_band": [
+        0.0,
+        0.25
+      ],
+      "confidence": 0.8,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T11",
+      "kind": "T",
+      "source_passage": "B",
+      "claim": "The \u00a711 deployment-implication sentence said styxx.critique_detector is shipped in styxx 7.7.10.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T12",
+      "kind": "T",
+      "source_passage": "B",
+      "claim": "At v4 commit time, pyproject.toml was still pinned to version = \"7.7.9\".",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "T13",
+      "kind": "T",
+      "source_passage": "B",
+      "claim": "All three gaps were closed in commit 0e97598.",
+      "predicted_p_no": 0.05,
+      "predicted_band": [
+        0.0,
+        0.15
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 0.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "F1",
+      "kind": "F",
+      "source_passage": "A",
+      "claim": "The TRUE within-model asymmetry rate on the dark-core corpus was 50%.",
+      "predicted_p_no": 0.95,
+      "predicted_band": [
+        0.8,
+        1.0
+      ],
+      "confidence": 0.85,
+      "observed_p_no": 1.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "F2",
+      "kind": "F",
+      "source_passage": "A",
+      "claim": "The dark-core corpus contained 1000 items.",
+      "predicted_p_no": 0.95,
+      "predicted_band": [
+        0.8,
+        1.0
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 1.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "F3",
+      "kind": "F",
+      "source_passage": "A",
+      "claim": "The v3 measurement used multiple-choice question scoring.",
+      "predicted_p_no": 0.95,
+      "predicted_band": [
+        0.8,
+        1.0
+      ],
+      "confidence": 0.85,
+      "observed_p_no": 1.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "F4",
+      "kind": "F",
+      "source_passage": "B",
+      "claim": "At v4 commit time, pyproject.toml was already at version = \"7.7.10\".",
+      "predicted_p_no": 0.95,
+      "predicted_band": [
+        0.8,
+        1.0
+      ],
+      "confidence": 0.9,
+      "observed_p_no": 1.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    },
+    {
+      "id": "F5",
+      "kind": "F",
+      "source_passage": "B",
+      "claim": "All three gaps remained open after commit 0e97598 and were closed later.",
+      "predicted_p_no": 0.95,
+      "predicted_band": [
+        0.8,
+        1.0
+      ],
+      "confidence": 0.85,
+      "observed_p_no": 1.0,
+      "verdict": "PASS",
+      "in_predicted_band": true
+    }
+  ]
+}
