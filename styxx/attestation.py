@@ -83,10 +83,31 @@ class Attestation:
     """The verifiable artifact. ``artifact`` is the JSON-serializable dict."""
 
     artifact: dict[str, Any]
+    # In-memory only (NEVER serialized into the artifact): when the attestation
+    # was produced with redactable=True, this carries the secret salt map needed
+    # to disclose individual fields later. The public artifact holds only the
+    # redactable ROOT under digest.redactable.
+    redaction: dict[str, Any] | None = None
 
     @property
     def digest(self) -> str:
         return self.artifact["digest"]["value"]
+
+    def disclose(self, pointers: list[str]) -> dict[str, Any]:
+        """Selectively disclose attested fields (by JSON-pointer) and prove they
+        are bound to digest.redactable.root, revealing nothing else.
+
+        Requires the attestation to have been produced with ``redactable=True``
+        (so the secret salts are in memory). See :mod:`styxx.redact`.
+        """
+        if self.redaction is None:
+            raise ValueError(
+                "this attestation is not redactable — produce it with "
+                "attest(..., redactable=True) to enable selective disclosure."
+            )
+        from . import redact
+        core = {k: v for k, v in self.artifact.items() if k not in ("generated_at", "digest")}
+        return redact.disclose(core, self.redaction, pointers)
 
     @property
     def passed(self) -> bool:
@@ -410,6 +431,7 @@ def attest(
     ref: str | None = None,
     prompt: str | None = None,
     vitals: bool = False,
+    redactable: bool = False,
 ) -> Attestation:
     """Produce a Verifiable Cognometric Attestation for an agent self-report.
 
@@ -516,7 +538,24 @@ def attest(
         # above is unchanged. Verifiable in any language — see web/styxx_verify.js.
         "portable": {"alg": "sha256-jcs", "value": _compute_portable_digest(artifact)},
     }
-    return Attestation(artifact=artifact)
+
+    redaction = None
+    if redactable:
+        # Additive salted-Merkle commitment over the attested fields, enabling
+        # later SELECTIVE DISCLOSURE. The public artifact carries only the root;
+        # the secret salts ride on the returned object. By design this makes the
+        # receipt non-deterministic (the salts ARE the confidentiality); the
+        # legacy + portable digests above are computed before this and unchanged.
+        from . import redact
+        core = {k: v for k, v in artifact.items() if k not in ("generated_at", "digest")}
+        redaction = redact.redactable_commit(core)
+        artifact["digest"]["redactable"] = {
+            "alg": redaction["alg"],
+            "version": redaction["version"],
+            "root": redaction["root"],
+            "tree_size": redaction["tree_size"],
+        }
+    return Attestation(artifact=artifact, redaction=redaction)
 
 
 def verify_attestation(

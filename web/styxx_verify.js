@@ -197,6 +197,40 @@
     hash2 = chainBorderRightJ(hash2, path.slice(inner));
     return hash1 === r1 && hash2 === r2;
   }
+  // ---- redactable attestation (selective disclosure) -----------------------
+  // Salted-Merkle field commitment; reveal chosen fields, hide the rest.
+  // Cross-validated against styxx.redact in tests/test_redact.py.
+  const REDACT_LEAF_TAG = "styxx-redact-leaf:";
+  const REDACT_NODE_TAG = "styxx-redact-node:";
+  function redactLeafHash(salt, pointer, value) {
+    return sha256Hex(REDACT_LEAF_TAG + salt + ":" + jcs(pointer) + ":" + jcs(value));
+  }
+  function redactNodeHash(l, r) { return sha256Hex(REDACT_NODE_TAG + l + ":" + r); }
+  function redactInclusion(index, size, leaf, path, root) {
+    if (!(index >= 0 && index < size)) return false;
+    const d = decompIncl(index, size), inner = d[0], border = d[1];
+    if (path.length !== inner + border) return false;
+    let seed = leaf;
+    for (let i = 0; i < inner; i++) {
+      seed = ((Math.floor(index / Math.pow(2, i)) & 1) === 0)
+        ? redactNodeHash(seed, path[i]) : redactNodeHash(path[i], seed);
+    }
+    for (let i = inner; i < path.length; i++) seed = redactNodeHash(path[i], seed);
+    return seed === root;
+  }
+  function verifyDisclosure(disclosure, root) {
+    const size = disclosure.tree_size;
+    const fields = disclosure.fields || [];
+    const expected = root != null ? root : disclosure.root;
+    if (expected == null || !(size >= 1)) return false;
+    for (let i = 0; i < fields.length; i++) {
+      const f = fields[i];
+      const leaf = redactLeafHash(f.salt, f.pointer, f.value);
+      if (!redactInclusion(f.leaf_index, size, leaf, f.audit_path || [], expected)) return false;
+    }
+    return true;
+  }
+
   // verify a log proof object (inclusion or consistency); optional witnessed roots
   function verifyLogProof(proof, witnessRoot, witnessSecondRoot) {
     const lines = [];
@@ -284,6 +318,18 @@
     const lines = [];
     if (artifact && (artifact.kind === "inclusion" || artifact.kind === "consistency"))
       return verifyLogProof(artifact, expectedHead || null);
+    if (artifact && artifact.kind === "disclosure") {
+      const ok = verifyDisclosure(artifact, expectedHead || null);
+      const fl = (artifact.fields || []);
+      lines.push("redactable attestation — SELECTIVE DISCLOSURE");
+      lines.push("  " + fl.length + " of " + artifact.tree_size + " field(s) disclosed against root " +
+                 (artifact.root || "").slice(0, 16) + "…");
+      for (let i = 0; i < fl.length; i++)
+        lines.push("    " + fl[i].pointer + " = " + jcs(fl[i].value));
+      lines.push("  disclosure: " + (ok ? "OK — each disclosed field is bound to the root" : "FAIL"));
+      lines.push("  undisclosed fields: HIDDEN (only their salted hashes appear as siblings)");
+      return { ok: ok, lines: lines };
+    }
     const isChain = artifact && artifact.links && artifact.head_chain_portable_digest !== undefined;
     let ok;
     if (isChain) {
@@ -319,6 +365,7 @@
     leafHash: leafHash, nodeHash: nodeHash, merkleTreeHash: merkleTreeHash,
     verifyInclusion: verifyInclusion, verifyConsistency: verifyConsistency,
     verifyLogProof: verifyLogProof,
+    redactLeafHash: redactLeafHash, verifyDisclosure: verifyDisclosure,
     CHAIN_GENESIS: CHAIN_GENESIS,
   };
 });

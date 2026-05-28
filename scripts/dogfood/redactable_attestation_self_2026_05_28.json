@@ -1,0 +1,29 @@
+{
+  "dogfood": "redactable cognometric attestation \u2014 disclose one fact, keep the rest private",
+  "head_commit": "7c214e041dbc7ca2441e02f562439a057058516d",
+  "node_version": "v24.13.0",
+  "js_verifier": "web\\styxx_verify.js",
+  "redactable_root": "3cab6b775216d1b795a72254eb14f6445c6ed51c6bdc04c7b98435f7bc80d3d5",
+  "tree_size_fields": 64,
+  "disclosed_pointers": [
+    "vitals/scores/sycophancy"
+  ],
+  "disclosed_sycophancy": 0.018848794119,
+  "K1_disclosure_sound": true,
+  "K2_confidentiality": {
+    "undisclosed_text_hidden": true,
+    "salt_load_bearing": true
+  },
+  "K3_additive_and_cross_language": {
+    "legacy_and_portable_unchanged": true,
+    "node_verifies": true,
+    "node_catches_tamper": true
+  },
+  "P4_composes_with_transparency_log": {
+    "redactable_root_included_in_log": true,
+    "append_only_passes": true,
+    "rewrite_of_history_caught": true
+  },
+  "honest_scope": "selective disclosure, NOT zero-knowledge \u2014 no predicate/range over a hidden value; a disclosed value is the COMMITTED value (commit-time/re-seal boundary, caught only via the transparency log + an external witness). leaks field count + disclosed pointers/values; hides everything undisclosed.",
+  "RESULT": "SURVIVED"
+}

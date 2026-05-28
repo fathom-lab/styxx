@@ -70,6 +70,20 @@ node web/styxx_verify.js artifact.json [expectedHead]      # or open web/verify.
 
 - **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_transparency_log.md` states K1 inclusion sound+complete / K2 consistency catches rewrite (decisive) / K3 cross-language agreement BEFORE the code was written. Thesis survived: 16 gate tests (`tests/test_transparency.py`); Python↔Node agree on the root and on every inclusion + consistency proof, and edit/delete/reorder/truncate of witnessed history are all caught. Live receipt over styxx's own HEAD: `scripts/dogfood/transparency_log_self_2026_05_28.json`.
 
+### Added — Redactable Cognometric Attestation (selective disclosure): disclose one fact, keep the rest private
+
+- **`styxx.redact`** + **`attest(..., redactable=True)`** — a salted Merkle commitment over the *individual fields* of an attestation. The public artifact gains `digest.redactable = {alg, version, root, tree_size}` — the per-leaf 256-bit salts stay the agent's secret and are never serialized. Closes the *confidentiality* gap: every prior proof forced you to publish the whole (prompt, response) to re-derive anything; now an agent can disclose a **chosen subset** of attested facts (one vitals score, one claim verdict) and prove each is exactly the value committed into the public root — while the rest of the response stays private.
+
+- **`Attestation.disclose(pointers)`** returns a `{kind:"disclosure", root, tree_size, fields:[{pointer, value, salt, leaf_index, audit_path}]}` revealing only the selected leaves (a pointer reveals itself and its descendants). **`verify_disclosure(disclosure, root=...)`** recomputes each salted leaf and checks its inclusion against the root — pass the public `digest.redactable.root` or a transparency-log leaf to bind to the append-only history.
+
+- **`web/styxx_verify.js`** gains `verifyDisclosure`, and `verify()` auto-dispatches on `kind === "disclosure"`. **`web/verify.html`** verifies a pasted disclosure client-side — confirm one disclosed fact is bound to the public root, zero install, zero styxx.
+
+- **The salt is load-bearing.** A low-entropy field (a verdict in {PASS,FAIL,ERROR}, a 0–1 score) would be brute-forceable from an unsalted leaf hash by anyone who knows the domain; the 256-bit per-leaf salt makes that infeasible. Additive: `digest.value` (legacy) and `digest.portable.value` are left byte-identical (both canonical forms exclude the whole `digest` key), so every prior receipt stays valid. Redactable mode is opt-in and, by design, non-deterministic — the salts *are* the confidentiality.
+
+- **Honest scope (refused overclaim).** This is selective DISCLOSURE, not zero-knowledge: no predicate/range over a HIDDEN value, and a disclosed value is trusted as the *committed* value (it inherits the commit-time / re-seal boundary, caught only via the transparency log + an external witness). A disclosure leaks the field **count** and the disclosed pointers + values; it hides every undisclosed pointer and value. Calling it a ZK range proof would be the overclaim; styxx will not.
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_redactable_attestation.md` states P1 disclosure sound / P2 confidentiality + salt load-bearing (decisive) / P3 additive legacy+portable untouched / P4 composes with the transparency log BEFORE the code was written. Thesis survived: 14 gate tests (`tests/test_redact.py`); Python↔Node agree on the root and on every disclosure, a tampered value / wrong salt / wrong root / swapped index all FAIL, the unsalted small-domain leaf is brute-forced while the salted one is not, and the redactable root verifies as a transparency-log leaf with a consistency proof against an external witness. Live receipt over styxx's own HEAD: `scripts/dogfood/redactable_attestation_self_2026_05_28.json`.
+
 ---
 
 ## [7.7.11] — 2026-05-28 — `styxx.attestation`: the Verifiable Cognometric Attestation

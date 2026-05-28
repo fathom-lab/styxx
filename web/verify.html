@@ -31,13 +31,13 @@
 <body>
   <h1>styxx · verify an attestation</h1>
   <p class="sub">re-derive the portable content address of a styxx attestation — or check a
-  transparency-log inclusion / consistency proof — in your browser.
+  transparency-log inclusion / consistency proof, or a redactable selective disclosure — in your browser.
   no install, no network, no styxx — a bundled, zero-dependency verifier does the math locally.
   you are not trusting styxx; you are checking it.</p>
 
-  <textarea id="art" placeholder="paste an attestation, a chain, or a transparency-log proof (inclusion / consistency) JSON here…"></textarea>
+  <textarea id="art" placeholder="paste an attestation, a chain, a transparency-log proof (inclusion / consistency), or a disclosure JSON here…"></textarea>
   <div class="row">
-    <input id="head" type="text" placeholder="optional: expected chain head — or, for a consistency proof, the witnessed earlier root">
+    <input id="head" type="text" placeholder="optional: expected chain head · consistency proof: witnessed earlier root · disclosure: the public digest.redactable.root">
     <button id="go">verify</button>
   </div>
   <div id="badge"></div>
@@ -49,6 +49,8 @@
     NOT CHECKED, never asserted. a fully re-sealed chain passes structure and is caught only against
     an external expected head; a consistency proof detects a rewritten/suppressed past entry only
     against a witnessed earlier root (paste it above). equivocation needs tree-head gossip, as in CT.
+    a disclosure reveals only the fields it lists, bound to the public redactable root (paste it above);
+    it is selective DISCLOSURE, not zero-knowledge — a disclosed value is the committed value.
     spec: docs/attestation-content-address.md · verifier: web/styxx_verify.js
   </footer>
 
@@ -65,7 +67,9 @@
       out.className = r.ok ? "ok" : "fail";
       out.textContent = r.lines.join("\n");
       const kind = (artifact && (artifact.kind === "inclusion" || artifact.kind === "consistency"))
-        ? "PROOF VERIFIED" : "PORTABLE INTEGRITY OK";
+        ? "PROOF VERIFIED"
+        : (artifact && artifact.kind === "disclosure")
+        ? "DISCLOSURE VERIFIED" : "PORTABLE INTEGRITY OK";
       badge.innerHTML = r.ok
         ? '<span class="badge ok">' + kind + '</span>'
         : '<span class="badge fail">FAIL</span>';

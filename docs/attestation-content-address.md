@@ -170,6 +170,67 @@ relative to a tree head a verifier has witnessed.
 consistency proof over the real log (`tests/test_transparency.py`), and the
 browser page (`web/verify.html`) verifies a pasted proof client-side.
 
+## 8. Redactable Cognometric Attestation (selective disclosure) — disclose one fact, keep the rest private
+
+Every proof above forces you to publish the underlying text to re-derive
+anything. A **redactable attestation** lets an agent disclose a CHOSEN SUBSET of
+attested fields and prove each is exactly the value committed into the public
+`digest.redactable.root`, while the rest of the response stays private. This is
+selective DISCLOSURE (like SD-JWT / redactable Merkle credentials), **not**
+zero-knowledge — see the honest boundary below.
+
+**Leaves.** Flatten the attestation core (the artifact minus `generated_at` /
+`digest`) to a canonical, pointer-sorted list of `(pointer, value)` scalar leaves
+(JSON-pointer paths `a/b/0/c`; values serialized with the same RFC 8785 / JCS
+rule as `digest.portable`). Each leaf gets a fresh **256-bit salt**.
+
+**Hashing (string-tagged domain separation).** Same ethos as the transparency
+log — ASCII string tags so the pure-JS string SHA-256 works across languages.
+
+```
+leaf_hash(salt,ptr,val) = SHA-256("styxx-redact-leaf:" + salt + ":" + jcs(ptr) + ":" + jcs(val))   # hex
+node_hash(left,right)   = SHA-256("styxx-redact-node:" + left + ":" + right)                          # left,right hex
+```
+
+The salted leaf hashes roll into the same RFC 6962-style Merkle Tree Hash (k =
+largest power of two < n); the root is published as `digest.redactable.root` with
+`{alg:"sha256-redact", version, tree_size}`. **The salts are secret and are never
+serialized into the public artifact.**
+
+**Disclosure** — `{kind:"disclosure", alg, version, tree_size, root, fields}`
+where each field is `{pointer, value, salt, leaf_index, audit_path}`. A pointer
+selects itself and every descendant. The verifier recomputes `leaf_hash` and
+checks its inclusion against the root (pass the public
+`digest.redactable.root`, or a transparency-log leaf, to bind to the
+append-only history). Undisclosed fields appear only as opaque sibling hashes.
+
+**The salt is load-bearing.** A low-entropy field (a verdict in
+{PASS,FAIL,ERROR}, a 0–1 score) is brute-forceable from an UNSALTED leaf hash by
+anyone who knows the domain; the 256-bit per-leaf salt makes that infeasible.
+Two commitments to the same object differ (fresh salts), so equal underlying
+values are unlinkable across receipts.
+
+**Additivity.** Adding `digest.redactable` leaves `digest.value` (legacy) and
+`digest.portable.value` byte-identical — both canonical payloads exclude the
+whole `digest` key — so every previously issued receipt stays valid. Redactable
+mode is opt-in (`attest(..., redactable=True)`) and, by design, non-deterministic
+(the salts are the confidentiality).
+
+**Honest boundary (refused overclaim).** This does NOT prove a *predicate*
+(range / threshold) over a HIDDEN value, and it does NOT re-derive scores — a
+disclosed value is trusted as the *committed* value, inheriting the commit-time /
+re-seal boundary caught only via the transparency log + an external witness. A
+disclosure leaks the field **count** (tree size) and the disclosed pointers +
+values; it hides every undisclosed pointer and value. Calling this a ZK range
+proof would be the overclaim; styxx will not.
+
+**Reference reimplementations.** `styxx.redact` (Python:
+`redactable_commit` / `disclose` / `verify_disclosure`) and `web/styxx_verify.js`
+(`verifyDisclosure`, plus `verify()` auto-dispatch on `kind === "disclosure"`).
+The two agree byte-for-byte on the root and on every disclosure
+(`tests/test_redact.py`), and `web/verify.html` verifies a pasted disclosure
+client-side.
+
 ## 5. Reference reimplementation
 
 `scripts/styxx_verify_standalone.py` — stdlib only, ~150 lines. Usage:
