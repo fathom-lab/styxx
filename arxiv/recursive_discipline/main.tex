@@ -69,8 +69,9 @@ PASS Mechanism
 Characterization}\label{the-gauntlet-that-catches-itself-pre-registered-ai-evaluation-infrastructure-with-in-production-bar-weakness-detection-with-a-first-pass-mechanism-characterization}
 
 \textbf{Author:} Alexander Rodabaugh (Fathom Lab) \textbf{Date:}
-2026-05-27 (revised 2026-05-28, v5) \textbf{Substrate:} styxx 7.7.10 ·
-nineteen reference baselines on the dark-core benchmark · git origin
+2026-05-27 (revised 2026-05-28, v6 --- adds §14 documenting Layers 5 and
+6 of the instrumented recursion frame) \textbf{Substrate:} styxx 7.7.10
+· nineteen reference baselines on the dark-core benchmark · git origin
 \texttt{fathom-lab/styxx@main} \textbf{Status:} preprint, in-session
 synthesis
 
@@ -99,31 +100,42 @@ resolved the UNCLEAR artifact entirely (0\% on dark-core, 13\% on
 TruthfulQA) and landed the corrected rates inside pre-stated bands:
 \textbf{5.88\% on dark-core and 17.00\% on TruthfulQA}. Three iterations
 of measurement, each pre-registered, each in git history. We record
-\textbf{sixteen in-session falsifications + two resolutions} including
+\textbf{sixteen in-session falsifications + four resolutions} including
 two of our own published FINDING's central methodology, the corrected v3
-measurement, and --- as documented in a new §13 added in v5 of this
-paper --- the same-session self-falsification of v4's own
-forward-looking claim that \texttt{styxx.critique\_detector} was already
-shipped (it was importable but missing from \texttt{\_\_all\_\_}, the
-package version was still \texttt{7.7.9}, and the public API docstring
-still carried the v1 falsified framing; all three closed in commit
-\texttt{0e97598} before v5). The corrected mechanism description for the
-gauntlet PASS is \textbf{out-of-context critique}: gpt-4o-mini reliably
-rejects labeled-misconception text presented as a candidate, regardless
-of whether it would have generated that text itself. We argue that the
-moat of disciplined AI evaluation is the \textbf{recursive pattern}:
-bars revise under empirical pressure; the discipline of pre-registration
+measurement, the same-session self-falsification of v4's own
+forward-looking claim about \texttt{styxx.critique\_detector}
+(documented in §13, closed in commit \texttt{0e97598}), and --- newly
+added in v6 --- two instrumented frames of the same discipline
+(documented in §14): a substrate-grounded auditor
+(\texttt{styxx.agent\_audit}, Layer 5) that verified 13/13
+pre-registered session-output claims against the substrate, and the
+paper's own published primitive (\texttt{styxx.critique\_detector},
+Layer 6) applied to 13 TRUE paraphrases plus 5 deliberate FALSE controls
+drawn from the paper's own §11.5 and §13 source passages, with both
+pre-stated kill-gates un-fired (18/18 PASS at threshold-0.50). The
+corrected mechanism description for the gauntlet PASS is
+\textbf{out-of-context critique}: gpt-4o-mini reliably rejects
+labeled-misconception text presented as a candidate, regardless of
+whether it would have generated that text itself. We argue that the moat
+of disciplined AI evaluation is the \textbf{recursive pattern}: bars
+revise under empirical pressure; the discipline of pre-registration
 BEFORE each run makes wrongness \emph{visible}; the infrastructure
 improves itself on a session timescale; when published FINDINGs are
 themselves wrong, the discipline catches and revises them; when
 methodology iterations are needed to land a clean measurement, the
-discipline pre-registers each iteration honestly; AND when the paper
-itself makes forward-looking claims about its own substrate, the same
-discipline catches and closes the gap. All artifacts (benchmark,
-gauntlet code, nineteen baseline submissions, eight FINDING documents,
-sixteen+two pre-stated-then-published predictions, the first PASS event,
-the asymmetry v1/v2/v3 measurements, the §13 self-audit closure commit)
-are reconstructible from public git history at commit-level granularity.
+discipline pre-registers each iteration honestly; when the paper itself
+makes forward-looking claims about its own substrate, the same
+discipline catches and closes the gap; AND when those claim-vs-substrate
+checks can be \textbf{instrumented and pre-registered against} --- both
+via a custom-built session-output auditor and via the paper's own
+published primitive --- the recursion produces falsifiable kill-gates on
+its own results, run end-to-end on a session timescale. All artifacts
+(benchmark, gauntlet code, nineteen baseline submissions, ten FINDING
+documents, sixteen+four pre-stated-then-published predictions, the first
+PASS event, the asymmetry v1/v2/v3 measurements, the §13 self-audit
+closure commit, the §14 instrumented-recursion-frame artifacts including
+18 cross-model context-grounded faithfulness scores) are reconstructible
+from public git history at commit-level granularity.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1253,6 +1265,188 @@ rather than appending it as a same-session §13.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
+\subsection{14. The instrumented recursion frame: two further layers
+(v6)}\label{the-instrumented-recursion-frame-two-further-layers-v6}
+
+§13 caught a forward-looking \emph{prose} claim by hand-checking the
+substrate. The next frame: \textbf{instrument} the discipline. Two
+layers were added in v6 of this paper, in the same session, each
+pre-registered before its instrument or its run existed, each shipping
+its own falsifiable kill-gate.
+
+\subsubsection{\texorpdfstring{§14.1 --- Layer 5:
+\texttt{styxx.agent\_audit} on the agent's own session-output
+claims}{§14.1 --- Layer 5: styxx.agent\_audit on the agent's own session-output claims}}\label{layer-5-styxx.agent_audit-on-the-agents-own-session-output-claims}
+
+\textbf{Pre-registration}
+(\texttt{papers/agent-self-audit/PRE\_STATED\_PREDICTION\_agent\_claim\_audit\_2026\_05\_28.md},
+committed at \texttt{1b82e27} BEFORE the instrument existed): 12 logical
+/ 13 atomic substrate-checkable claims extracted from the agent's
+session conversation, with pre-stated verdict + confidence per claim.
+Joint predicted outcome: 12/12 PASS at p=0.65, ≥ 11/12 at p=0.85, ≥
+10/12 at p=0.95. \textbf{Kill-gate:} ≥3 real failures = Layer 5
+self-falsification of the agent's session outputs (the seventeenth
+in-session falsification of the arc).
+
+\textbf{Instrument} (\texttt{styxx/agent\_audit.py}, \textasciitilde155
+LOC, committed at \texttt{3c24b5e} AFTER the prereg): a minimal
+substrate-grounded auditor with \texttt{Claim}, \texttt{AuditResult},
+and \texttt{AgentClaimAuditor} dataclasses plus nine registered checkers
+--- \texttt{git\_show\_diff\_contains},
+\texttt{git\_branch\_contains\_commit\_chain},
+\texttt{git\_tag\_exists}, \texttt{file\_at\_path\_contains},
+\texttt{python\_attr\_in\_iterable}, \texttt{package\_version\_equals},
+\texttt{pdf\_page\_count\_equals}, \texttt{pdf\_contains\_section},
+\texttt{file\_byte\_equals}. Read-only, offline, no external services.
+Exposed via \texttt{styxx.\_\_all\_\_} since v6 (\texttt{agent\_audit},
+\texttt{Claim}, \texttt{AuditResult}, \texttt{AgentClaimAuditor}).
+
+\textbf{Result
+(\texttt{experiments/agent\_claim\_audit\_2026\_05\_28/results.json}):}
+\textbf{13/13 PASS}, kill-gate un-fired. Modal pre-stated outcome (p ≈
+0.65). One sub-discovery worth honest noting: a casual mid-conversation
+agent statement \emph{not} formally pre-registered (``§13 lands on page
+13'') was approximately correct but slightly imprecise --- the section
+header lands on page 12 and the body continues onto page 13. This did
+not constitute an audit failure (C9 did not specify a page number) but
+is exactly the kind of imprecision the instrument would catch if asked
+to.
+
+\textbf{Honest gap (flagged in the L5 FINDING and addressed in §14.2):}
+Layer 5 ran with \textbf{zero negative controls}. A buggy
+``always-PASS'' instrument would have produced identical 13/13 PASS
+output. Layer 6 was designed specifically to include negative controls,
+partly closing this gap for a \emph{different} primitive on a
+\emph{different} claim type; the L5 instrument's own behavior on
+synthetic FAIL inputs remains a methodological note for any future
+re-application (rather than a published demonstration).
+
+\subsubsection{\texorpdfstring{§14.2 --- Layer 6:
+\texttt{styxx.critique\_detector} (the paper's own published primitive)
+on the paper's own
+claims}{§14.2 --- Layer 6: styxx.critique\_detector (the paper's own published primitive) on the paper's own claims}}\label{layer-6-styxx.critique_detector-the-papers-own-published-primitive-on-the-papers-own-claims}
+
+\textbf{Pre-registration}
+(\texttt{papers/agent-self-audit/PRE\_STATED\_PREDICTION\_critique\_detector\_on\_paper\_2026\_05\_28.md},
+committed at \texttt{a8fb1f3} BEFORE the runner existed): 13 TRUE
+paraphrases + 5 FALSE controls drawn from the paper's §11.5 (the v3
+measurement table) and §13 (the same-session self-falsification
+narrative). Each claim's predicted \texttt{P(NO)} band pre-stated with
+confidence. Two kill-gates:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Paper-grade:} any TRUE-claim
+  \texttt{P(NO)\ \textgreater{}\ 0.50} would mean either the agent
+  mis-paraphrased the paper (paper-grade error caught pre-arXiv) or
+  \texttt{critique\_detector} has a failure mode on long-context
+  faithfulness (paper-grade error about the published primitive's
+  scope).
+\item
+  \textbf{Instrument-grade:} any FALSE-control
+  \texttt{P(NO)\ \textless{}\ 0.50} would mean
+  \texttt{critique\_detector} failed to detect a deliberate fabrication
+  grounded against an in-prompt source passage --- a real failure mode
+  of the published primitive caught before downstream production use.
+\end{itemize}
+
+\textbf{Methodology.} A custom prompt template wraps the source passage
+inside the \texttt{\{question\}} field of
+\texttt{styxx.critique\_detector} so the model judges faithfulness of a
+candidate \texttt{\{response\}} (the claim) against the inline source.
+The judging model is \texttt{gpt-4o-mini} (OpenAI),
+\texttt{temperature=0}; the agent that authored the paper is Claude Opus
+4.7. This is cross-model in the strict sense (Anthropic-text-output →
+OpenAI-judgment) and cross-vendor.
+
+\textbf{Result
+(\texttt{experiments/critique\_detector\_on\_paper\_2026\_05\_28/results.json}):}
+\textbf{18/18 PASS at threshold-0.50, 18/18 inside pre-stated bands,
+both kill-gates un-fired.} Every TRUE paraphrase scored exactly
+\texttt{P(NO)\ =\ 0.0000}; every FALSE control scored exactly
+\texttt{P(NO)\ =\ 1.0000}. This is the \textbf{modal pre-stated outcome}
+(p ≈ 0.55).
+
+\textbf{Honest sub-discovery --- saturation.} The pre-stated
+\texttt{P(NO)} bands anticipated \emph{near}-saturated logprobs (≈ 0.05
+/ 0.95); the observed distribution is \textbf{fully} saturated (0.0000 /
+1.0000). Two non-exclusive interpretations are documented in the
+FINDING: (a) \texttt{gpt-4o-mini}'s first-token YES/NO logprob
+distribution is highly polarized on this prompt-and-task combination,
+with the losing token falling outside the top-10 logprobs window so its
+score defaults to \texttt{-20.0} and the softmax collapses to the
+boundary; (b) the propositions are too easy --- short source passage +
+direct paraphrases (TRUE) or blatant fabrications (FALSE) sit at the
+extremes of the difficulty distribution. A stronger Layer-6+ test would
+include semi-fabrications (e.g., a true number paired with a false claim
+about its sign or its referent) and longer or more ambiguous source
+passages. The saturation is documented honestly in the FINDING rather
+than smoothed away.
+
+\subsubsection{§14.3 --- What §14 adds and does not
+add}\label{what-14-adds-and-does-not-add}
+
+§13 closed a single forward-looking prose claim by hand. §14
+demonstrates the \textbf{same discipline made instrumental}:
+pre-registered against falsifiable kill-gates, run end-to-end, results
+saved as JSON, FINDINGs written, all on a session timescale. Layers 5
+and 6 are the \textbf{third and fourth resolution events} of the
+2026-05-27/28 arc.
+
+What §14 does \emph{not} claim:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Not} a generalization to other substrates, papers, primitives,
+  or sessions. Each instrument is bounded; each run is a single
+  empirical observation.
+\item
+  \textbf{Not} evidence that \texttt{critique\_detector} works on
+  full-paper-length context (the L6 source passages were short: one
+  table + one numbered list).
+\item
+  \textbf{Not} a replacement for human peer review or for cross-vendor
+  adversarial red-teaming.
+\item
+  \textbf{Not} a claim that 13/13 + 18/18 PASS rates would replicate
+  across other agents, models, or claim distributions.
+\end{itemize}
+
+What §14 \emph{does} claim, narrowly:
+
+\begin{itemize}
+\tightlist
+\item
+  The discipline §12 argued for can be \textbf{mechanized} for the
+  structured sub-class of claims that have substrate-checkable witnesses
+  or in-context-faithfulness witnesses.
+\item
+  A custom-built session-output auditor (\texttt{styxx.agent\_audit})
+  and the paper's own published primitive
+  (\texttt{styxx.critique\_detector}) can run end-to-end on a single
+  session, against pre-registered kill-gates, and surface honest
+  sub-discoveries (the §14.1 page-number imprecision; the §14.2 logprob
+  saturation) without softening the verdict.
+\item
+  The recursion now operates across six layers documented in this paper:
+  L0 bars catch confounds; L1 bars catch first PASS; L2 sanity demo
+  falsifies v1 91\% claim; L3 v3 measurement landing inside pre-stated
+  bands; L4 §13 closure of v4's forward-looking claim; L5 + L6
+  instrumented closure in this §14.
+\end{itemize}
+
+The check window for v5 → v6 was a single afternoon and four commits
+(\texttt{1b82e27} → \texttt{3c24b5e} → \texttt{a8fb1f3} →
+\texttt{05adebf}), all on \texttt{origin/main}, all pre-registered
+before the run. Any future revision to v7 documenting further layers
+would be subject to the same discipline: prereg before instrument,
+instrument before run, run before FINDING, FINDING before paper
+revision.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \subsection{Acknowledgments}\label{acknowledgments}
 
 This paper synthesizes work done by the styxx project on 2026-05-27 and
@@ -1265,7 +1459,13 @@ incorrect --- the actual prediction was for cap-ratio to NOT be a
 confound at all; the discovery was that it was a confound in the
 \emph{inverted} direction. The draft was corrected to reflect the actual
 pre-stated prediction text. v5's §13 is itself an example of the same
-draft-catches-itself discipline, applied at a coarser frame.
+draft-catches-itself discipline, applied at a coarser frame; v6's §14
+instruments that frame. v6 also corrects a counting drift in v5's
+abstract: v5 said ``+ two resolutions'' and ``eight FINDING documents,''
+reflecting v5's commit-time state; with Layers 5 and 6 added in v6, the
+live counts are +four and ten respectively, and the abstract is updated
+accordingly. The counting-drift catch is itself an instance of the
+discipline this paper proposes, applied to this paper's own abstract.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1353,8 +1553,24 @@ docstring v4-framing)} & \texttt{0e97598} & \texttt{pyproject.toml},
 \texttt{styxx/\_\_init\_\_.py}, \texttt{styxx/critique.py},
 \texttt{CHANGELOG.md} \\
 this paper (v5 --- adds §13 self-falsification + abstract sixteen+two) &
-this commit &
+\texttt{87ca52d} &
 \texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} \\
+\textbf{L5 prereg (BEFORE instrument)} & \texttt{1b82e27} &
+\texttt{papers/agent-self-audit/PRE\_STATED\_PREDICTION\_agent\_claim\_audit\_2026\_05\_28.md} \\
+\textbf{L5 instrument + 13/13 PASS run} & \texttt{3c24b5e} &
+\texttt{styxx/agent\_audit.py},
+\texttt{experiments/agent\_claim\_audit\_2026\_05\_28/},
+\texttt{papers/agent-self-audit/FINDING\_agent\_claim\_audit\_2026\_05\_28.md} \\
+\textbf{L6 prereg (BEFORE runner)} & \texttt{a8fb1f3} &
+\texttt{papers/agent-self-audit/PRE\_STATED\_PREDICTION\_critique\_detector\_on\_paper\_2026\_05\_28.md} \\
+\textbf{L6 runner + 18/18 PASS (cross-model, with negative controls)} &
+\texttt{05adebf} &
+\texttt{experiments/critique\_detector\_on\_paper\_2026\_05\_28/},
+\texttt{papers/agent-self-audit/FINDING\_critique\_detector\_on\_paper\_2026\_05\_28.md} \\
+this paper (v6 --- adds §14 instrumented frame + agent\_audit in
+\texttt{\_\_all\_\_} + abstract sixteen+four / ten FINDINGs) & this
+commit & \texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md},
+\texttt{styxx/\_\_init\_\_.py} \\
 \end{longtable}
 }
 
