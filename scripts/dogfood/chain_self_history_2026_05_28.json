@@ -1,0 +1,30 @@
+{
+  "dogfood": "attestation-chain over styxx own history (P4)",
+  "generated_at": "2026-05-28T20:22:39.573125+00:00",
+  "v7.7.10_commit": "e05d9ec46ae5a3d136e1414b9f8e9425695feb20",
+  "head_commit": "63f9da4a63ae317673fd9d9b796915c33df56a35",
+  "head_chain_digest": "47b1e751eeaff6bdade9e10ac1d14d36ced47f98e361221d2dc7ceaf9fe226f5",
+  "n_links": 2,
+  "link_verdicts": [
+    {
+      "seq": 0,
+      "claim": "version is 7.7.10",
+      "pinned_commit": "e05d9ec46ae5a3d136e1414b9f8e9425695feb20",
+      "verdict": "PASS"
+    },
+    {
+      "seq": 1,
+      "claim": "version is 7.7.11",
+      "pinned_commit": "63f9da4a63ae317673fd9d9b796915c33df56a35",
+      "verdict": "PASS"
+    }
+  ],
+  "verify_ok": true,
+  "verify_links_ok": true,
+  "verify_head_ok": true,
+  "K1_determinism_ok": true,
+  "K2_naive_reorder_caught": true,
+  "K2_reorder_broken_at": 0,
+  "commit_pin_flip_ok": true,
+  "commit_pin_flip_verdict_at_HEAD": "FAIL"
+}

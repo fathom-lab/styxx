@@ -36,6 +36,24 @@ assert res.ok   # digest intact AND every verdict reproduces from the substrate
 
 - **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_commit_pinned_attestation.md` states K1 determinism / K2 historical isolation (decisive) / K3 false-at-ref caught / K4 read-only BEFORE the code was written. Thesis survived: 7 additional gate tests pass (17/17 total in `tests/test_attestation.py`).
 
+### Added — attestation chains (tamper-evident, ordered provenance ledger)
+
+- **`styxx.attestation.attest_chain(items, repo)` + `verify_chain(chain, repo)`** — Merkle-link a sequence of (commit-pinned) attestations into a tamper-evident ledger. Each link carries its per-attestation SHA-256 digest plus a rolling chain digest (`chain[n] = sha256(chain[n-1] || att_digest[n])`), so the *order* of an agent's claim-trajectory is bound into a single `head_chain_digest` — not just a bag of independently-true files.
+
+- **Honest tamper model (stated, not hidden).** `verify_chain` re-runs full per-link attestation reproduction AND recomputes the rolling digests from scratch. A naive reorder, insertion, or deletion is caught outright (the head digest no longer matches). A *sophisticated* re-sealed mutation — every chain digest recomputed — is caught only when checked against an externally-anchored head supplied as `verify_chain(..., expected_head=...)`. With no external anchor, a re-sealed chain is internally consistent and not detectable by the chain alone: the ledger is **tamper-evident, not tamper-proof**, the same property the single attestation has. Per-link substrate reproduction always holds regardless.
+
+```python
+from styxx.attestation import attest_chain, verify_chain
+chain = attest_chain([
+    ("The version is 7.7.10.", "v7.7.10"),   # pinned, true as-of that commit
+    ("The version is 7.7.11.", None),         # pinned to HEAD
+], repo=".")
+res = verify_chain(chain, repo=".", expected_head=anchored_head)
+assert res.ok   # every link reproduces AND the order is intact
+```
+
+- **Pre-registered + kill-gated.** `scripts/dogfood/PREREG_attestation_chain.md` states K1 determinism / K2 order tamper-evidence (decisive, with the honest re-seal boundary) / K3 per-link reproduction preserved / P4 real-history round-trip BEFORE the code was written. Thesis survived: 6 additional gate tests pass (23/23 total in `tests/test_attestation.py`). Live real-history receipt: `scripts/dogfood/chain_self_history_2026_05_28.json`.
+
 ---
 
 ## [7.7.10] — 2026-05-28 — `critique_detector` public API + recursive-discipline paper v7 + `styxx.compliance.eu_ai_act` v0.1 (first open-source EU AI Act Article 15 measurement-methodology bridge)

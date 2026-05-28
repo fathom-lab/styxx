@@ -19,7 +19,13 @@ import subprocess
 
 import pytest
 
-from styxx.attestation import attest, verify_attestation, ATTESTATION_VERSION
+from styxx.attestation import (
+    ATTESTATION_VERSION,
+    attest,
+    attest_chain,
+    verify_attestation,
+    verify_chain,
+)
 
 
 def _git(repo, *args):
@@ -299,3 +305,136 @@ def test_pinned_verify_refuses_non_hex_commit(versioned_substrate):
     res = verify_attestation(tampered, repo)
     assert res.ok is False
     assert all(r["reproduced_verdict"] == "ERROR" for r in res.reproduced)
+
+
+# ===========================================================================
+# Attestation chain — pre-registered kill-gate from
+# scripts/dogfood/PREREG_attestation_chain.md
+#
+#   K1 — determinism of the head digest
+#   K2 — order is tamper-evident (naive caught outright; re-sealed caught
+#        against an anchored expected_head) [decisive]
+#   K3 — per-link reproduction preserved under composition
+#   P4 — real-history round-trip
+# ===========================================================================
+
+
+def _chain_reports():
+    return [
+        ('The version is 1.0.0.', None),
+        ('The file notes.md contains "receipt token".', None),
+    ]
+
+
+@pytest.fixture
+def chain_substrate(substrate):
+    # `substrate` (version 1.2.3, notes.md w/ receipt token) but we want a repo
+    # whose live tree satisfies both chain claims; build a tailored one.
+    return substrate
+
+
+def test_chain_builds_and_verifies(substrate):
+    ch = attest_chain(
+        [('The version is 1.2.3.', None),
+         ('The file notes.md contains "receipt token".', None)],
+        substrate,
+    )
+    assert ch.artifact["n_links"] == 2
+    res = verify_chain(ch, substrate)
+    assert res.ok is True
+    assert res.links_ok and res.head_ok
+    assert all(p["attestation_ok"] for p in res.per_link)
+
+
+def test_K1_chain_determinism(substrate):
+    items = [('The version is 1.2.3.', None)]
+    a = attest_chain(items, substrate)
+    b = attest_chain(items, substrate)
+    assert a.head == b.head
+
+
+def test_K2_naive_reorder_is_caught(substrate):
+    """Swap two links WITHOUT re-sealing — stored chain digests no longer match
+    the recomputed chain, so verify reports a broken link."""
+    ch = attest_chain(
+        [('The version is 1.2.3.', None),
+         ('The file notes.md contains "receipt token".', None)],
+        substrate,
+    )
+    tampered = copy.deepcopy(ch.artifact)
+    tampered["links"][0], tampered["links"][1] = (
+        tampered["links"][1], tampered["links"][0])
+    res = verify_chain(tampered, substrate)
+    assert res.ok is False
+    assert res.broken_at is not None
+
+
+def test_K2_resealed_reorder_caught_against_anchored_head(substrate):
+    """A sophisticated attacker re-seals the chain after reordering. The
+    internally-consistent chain passes a naive check, but the recomputed head
+    differs from the head anchored BEFORE the tamper."""
+    from styxx.attestation import _CHAIN_GENESIS, _chain_digest
+    ch = attest_chain(
+        [('The version is 1.2.3.', None),
+         ('The file notes.md contains "receipt token".', None)],
+        substrate,
+    )
+    anchored_head = ch.head  # published before tamper
+
+    tampered = copy.deepcopy(ch.artifact)
+    tampered["links"][0], tampered["links"][1] = (
+        tampered["links"][1], tampered["links"][0])
+    # fully re-seal the rolling chain over the reordered links
+    prev = _CHAIN_GENESIS
+    for link in tampered["links"]:
+        link["prev_chain_digest"] = prev
+        prev = _chain_digest(prev, link["attestation_digest"])
+        link["chain_digest"] = prev
+    tampered["head_chain_digest"] = prev
+
+    # naive verify (no anchor) is fooled — the chain is internally consistent
+    naive = verify_chain(tampered, substrate)
+    assert naive.links_ok is True
+    # but against the anchored head, the tamper is caught
+    anchored = verify_chain(tampered, substrate, expected_head=anchored_head)
+    assert anchored.ok is False
+    assert anchored.head_ok is False
+
+
+def test_K2_insert_forged_link_is_caught(substrate):
+    ch = attest_chain([('The version is 1.2.3.', None)], substrate)
+    forged = attest('The version is 1.2.3.', substrate)
+    tampered = copy.deepcopy(ch.artifact)
+    tampered["links"].append({
+        "seq": 1,
+        "attestation": forged.artifact,
+        "attestation_digest": forged.digest,
+        "prev_chain_digest": "deadbeef",
+        "chain_digest": "deadbeef",
+    })
+    res = verify_chain(tampered, substrate)
+    assert res.ok is False
+    assert res.broken_at == 1
+
+
+def test_K3_per_link_reproduction_preserved(substrate):
+    """If a link's embedded verdict no longer reproduces against the substrate,
+    the chain is not ok even though the Merkle links are intact."""
+    ch = attest_chain([('The version is 1.2.3.', None)], substrate)
+    tampered = copy.deepcopy(ch.artifact)
+    # flip the embedded verdict and re-seal BOTH the attestation digest and the
+    # chain so the Merkle structure stays internally consistent.
+    from styxx.attestation import _CHAIN_GENESIS, _chain_digest, _compute_digest
+    att = tampered["links"][0]["attestation"]
+    att["claims"][0]["verdict"] = "FAIL"  # truth is PASS
+    att["digest"]["value"] = _compute_digest(att)
+    new_att_digest = att["digest"]["value"]
+    tampered["links"][0]["attestation_digest"] = new_att_digest
+    cd = _chain_digest(_CHAIN_GENESIS, new_att_digest)
+    tampered["links"][0]["chain_digest"] = cd
+    tampered["head_chain_digest"] = cd
+
+    res = verify_chain(tampered, substrate)
+    assert res.links_ok is True       # Merkle structure is intact
+    assert res.ok is False            # but the substrate disagrees
+    assert res.per_link[0]["attestation_ok"] is False

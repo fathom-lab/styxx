@@ -348,6 +348,7 @@ from .agent_audit import Claim, AuditResult, AgentClaimAuditor  # 7.7.10: L5 pub
 from .agent_audit import extract_claims, ExtractionReport  # 7.7.10: prose->claim falsification
 from . import attestation  # noqa: F401  # 7.7.11: Verifiable Cognometric Attestation
 from .attestation import attest, verify_attestation, Attestation, VerificationResult
+from .attestation import attest_chain, verify_chain, AttestationChain, ChainVerificationResult
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
 
