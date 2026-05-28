@@ -55,19 +55,13 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={The Gauntlet that Catches Itself: Pre-Registered AI Evaluation Infrastructure with In-Production Bar-Weakness Detection{,} with a First PASS Mechanism Characterization},
-  pdfauthor={Alexander Rodabaugh (Fathom Lab)},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{The Gauntlet that Catches Itself: Pre-Registered AI Evaluation
-Infrastructure with In-Production Bar-Weakness Detection, with a First
-PASS Mechanism Characterization}
-\author{Alexander Rodabaugh (Fathom Lab)}
-\date{2026-05-27}
+\author{}
+\date{}
 
 \begin{document}
-\maketitle
 
 \section{The Gauntlet that Catches Itself: Pre-Registered AI Evaluation
 Infrastructure with In-Production Bar-Weakness Detection, with a First
@@ -75,8 +69,8 @@ PASS Mechanism
 Characterization}\label{the-gauntlet-that-catches-itself-pre-registered-ai-evaluation-infrastructure-with-in-production-bar-weakness-detection-with-a-first-pass-mechanism-characterization}
 
 \textbf{Author:} Alexander Rodabaugh (Fathom Lab) \textbf{Date:}
-2026-05-27 (revised) \textbf{Substrate:} styxx 7.7.9 · nineteen
-reference baselines on the dark-core benchmark · git origin
+2026-05-27 (revised 2026-05-28, v5) \textbf{Substrate:} styxx 7.7.10 ·
+nineteen reference baselines on the dark-core benchmark · git origin
 \texttt{fathom-lab/styxx@main} \textbf{Status:} preprint, in-session
 synthesis
 
@@ -105,23 +99,31 @@ resolved the UNCLEAR artifact entirely (0\% on dark-core, 13\% on
 TruthfulQA) and landed the corrected rates inside pre-stated bands:
 \textbf{5.88\% on dark-core and 17.00\% on TruthfulQA}. Three iterations
 of measurement, each pre-registered, each in git history. We record
-\textbf{fifteen in-session falsifications + one resolution} including
-two of our own published FINDING's central methodology and the corrected
-v3 measurement. The corrected mechanism description for the gauntlet
-PASS is \textbf{out-of-context critique}: gpt-4o-mini reliably rejects
-labeled-misconception text presented as a candidate, regardless of
-whether it would have generated that text itself. We argue that the moat
-of disciplined AI evaluation is the \textbf{recursive pattern}: bars
-revise under empirical pressure; the discipline of pre-registration
+\textbf{sixteen in-session falsifications + two resolutions} including
+two of our own published FINDING's central methodology, the corrected v3
+measurement, and --- as documented in a new §13 added in v5 of this
+paper --- the same-session self-falsification of v4's own
+forward-looking claim that \texttt{styxx.critique\_detector} was already
+shipped (it was importable but missing from \texttt{\_\_all\_\_}, the
+package version was still \texttt{7.7.9}, and the public API docstring
+still carried the v1 falsified framing; all three closed in commit
+\texttt{0e97598} before v5). The corrected mechanism description for the
+gauntlet PASS is \textbf{out-of-context critique}: gpt-4o-mini reliably
+rejects labeled-misconception text presented as a candidate, regardless
+of whether it would have generated that text itself. We argue that the
+moat of disciplined AI evaluation is the \textbf{recursive pattern}:
+bars revise under empirical pressure; the discipline of pre-registration
 BEFORE each run makes wrongness \emph{visible}; the infrastructure
 improves itself on a session timescale; when published FINDINGs are
-themselves wrong, the discipline catches and revises them; AND when
+themselves wrong, the discipline catches and revises them; when
 methodology iterations are needed to land a clean measurement, the
-discipline pre-registers each iteration honestly. All artifacts
-(benchmark, gauntlet code, nineteen baseline submissions, seven FINDING
-documents, fifteen+one pre-stated-then-published predictions, the first
-PASS event, the asymmetry v1/v2/v3 measurements) are reconstructible
-from public git history at commit-level granularity.
+discipline pre-registers each iteration honestly; AND when the paper
+itself makes forward-looking claims about its own substrate, the same
+discipline catches and closes the gap. All artifacts (benchmark,
+gauntlet code, nineteen baseline submissions, eight FINDING documents,
+sixteen+two pre-stated-then-published predictions, the first PASS event,
+the asymmetry v1/v2/v3 measurements, the §13 self-audit closure commit)
+are reconstructible from public git history at commit-level granularity.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1148,18 +1150,122 @@ submitters, sessions, and years.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
+\subsection{13. The paper catches itself: same-session
+self-falsification of v4's forward-looking
+claim}\label{the-paper-catches-itself-same-session-self-falsification-of-v4s-forward-looking-claim}
+
+§11 of this paper closes with a deployment implication that includes the
+following sentence:
+
+\begin{quote}
+A \texttt{styxx.critique\_detector(model="gpt-4o-mini")} callable is
+shipped in styxx 7.7.10 for this exact purpose.
+\end{quote}
+
+At the moment v4 of this paper was committed to the public origin
+(commit \texttt{ed663ca}, 2026-05-28), that sentence was a
+\textbf{forward-looking claim}, not a current fact. Same-session
+self-audit, performed before declaring the v4 release ready for
+downstream consumers, found three specific gaps between the claim and
+the actual public substrate:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Version skew.} \texttt{pyproject.toml} was still pinned to
+  \texttt{version\ =\ "7.7.9"}.
+  \texttt{python\ -c\ "import\ styxx;\ print(styxx.\_\_version\_\_)"} on
+  an editable install returned \texttt{7.7.9}. The ``shipped in 7.7.10''
+  version did not exist; no \texttt{v7.7.10} git tag, no PyPI release,
+  no metadata bump.
+\item
+  \textbf{\texttt{\_\_all\_\_} omission.} \texttt{styxx/critique.py} was
+  importable --- \texttt{from\ styxx\ import\ critique\_detector} worked
+  --- because \texttt{styxx/\_\_init\_\_.py} line 345 ran
+  \texttt{from\ .critique\ import\ critique\_detector,\ CritiqueDetector}.
+  But neither symbol appeared in \texttt{styxx.\_\_all\_\_} (which is
+  enforced by a custom \texttt{\_\_dir\_\_()} to filter the public
+  surface). Consequence: \texttt{dir(styxx)} did not surface either
+  name, \texttt{from\ styxx\ import\ *} did not include them, and any
+  documentation tool that enumerates the public surface via
+  \texttt{\_\_all\_\_} would not list them. The API was
+  \textbf{importable but not advertised} --- semi-shipped, not shipped.
+\item
+  \textbf{Docstring drift.} \texttt{styxx/critique.py}'s module
+  docstring was still on the \textbf{v1 falsified framing}, verbatim:
+  ``RLHF-tuned LLMs exhibit a generation-vs-critique asymmetry --- the
+  same model that produces consensus misconceptions in generation mode
+  correctly flags them in critique mode. Measured prevalence: 91.18\% on
+  the n=34 folklore subset of the dark-core benchmark.'' This is the
+  exact claim §11.5 of this paper corrected with the v3 measurement
+  (5.88\% on dark-core / 17.00\% on TruthfulQA). The paper's public
+  framing was updated; the public API documentation was not. A user
+  reading \texttt{help(styxx.critique\_detector)} after
+  \texttt{pip\ install\ styxx==7.7.10} would have received the falsified
+  framing.
+\end{enumerate}
+
+All three gaps were closed in commit \texttt{0e97598} (2026-05-28, same
+session as v4): \texttt{pyproject.toml} bumped to \texttt{7.7.10};
+\texttt{styxx/\_\_init\_\_.py} \texttt{\_\_all\_\_} extended with
+\texttt{{[}"critique\_detector",\ "CritiqueDetector"{]}};
+\texttt{styxx/critique.py} module docstring rewritten to the v4
+out-of-context-critique framing with the v3 measurement numbers and the
+v1/v2/v3 measurement arc cited. The full test suite stayed green (1086
+passed, 8 skipped); the dedicated public-surface tests stayed at 42/42;
+ruff stayed clean. This v5 of the paper reflects the
+post-\texttt{0e97598} state, in which the §11 deployment-implication
+sentence is now accurate to substrate, not just to intent.
+
+The recursion this paper has argued for --- bars catch themselves;
+FINDINGs catch themselves; mechanism descriptions catch themselves ---
+now operates on \textbf{the paper's own forward-looking claims about its
+substrate}. The v4 §11.5 sentence ``is shipped in 7.7.10'' was a
+checkable claim against the codebase at the moment of v4's commit; the
+discipline of running the check before declaring v4 ready surfaced three
+specific gaps. The check was not architecturally novel --- it was the
+same discipline §12 argues for, applied one frame up: instead of ``did
+the submission pass the bars?'', ``did the paper's claim about the
+substrate match the substrate?''. The answer at v4 commit time was no;
+at \texttt{0e97598} commit time, yes; at v5 (this revision), the gap and
+its closure are both public.
+
+This is the \textbf{sixteenth in-session falsification} of the
+2026-05-27/28 arc, plus the \textbf{second falsification-resolution
+event} (the first being the v3 measurement landing in §11.5). The
+pattern generalizes: any forward-looking claim a paper makes about its
+own substrate is a falsifiable prediction with a finite check window. If
+the discipline this paper proposes is real, the gap between the claim's
+commit and the check's commit should be small enough that the next
+reader receives the corrected state, not the in-flight one. For v4 → v5,
+that gap was a single afternoon's session and three commits
+(\texttt{ed663ca} → \texttt{c75cab4} → \texttt{0e97598}).
+
+We make no claim that this §13 generalizes beyond the specific substrate
+(a single-author research codebase under a single-session discipline).
+What we claim is narrower and verifiable: on \textbf{this} substrate, on
+\textbf{this} session, the discipline closed the loop one frame higher
+than it had ever closed before --- past the bars, past the FINDINGs,
+past the methodology iterations, onto the paper's own statements about
+its own released artifacts. Future papers in this series will
+pre-register the claim-vs-substrate audit as part of the paper itself,
+rather than appending it as a same-session §13.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \subsection{Acknowledgments}\label{acknowledgments}
 
-This paper synthesizes work done by the styxx project on 2026-05-27 in a
-single continuous session, with the cognitive support of Claude Opus 4.7
-acting as an in-session collaborator. The eight in-session
-falsifications recorded in this paper are real and were caught against
-this paper's draft as well: §5.2 originally described the cap-ratio
-confound as ``predicted in the positive direction,'' which was incorrect
---- the actual prediction was for cap-ratio to NOT be a confound at all;
-the discovery was that it was a confound in the \emph{inverted}
-direction. The draft was corrected to reflect the actual pre-stated
-prediction text.
+This paper synthesizes work done by the styxx project on 2026-05-27 and
+2026-05-28 in two continuous sessions, with the cognitive support of
+Claude Opus 4.7 acting as an in-session collaborator. The sixteen
+in-session falsifications recorded in this paper are real and were
+caught against this paper's draft as well: §5.2 originally described the
+cap-ratio confound as ``predicted in the positive direction,'' which was
+incorrect --- the actual prediction was for cap-ratio to NOT be a
+confound at all; the discovery was that it was a confound in the
+\emph{inverted} direction. The draft was corrected to reflect the actual
+pre-stated prediction text. v5's §13 is itself an example of the same
+draft-catches-itself discipline, applied at a coarser frame.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1230,9 +1336,24 @@ First-PASS FINDING & \texttt{0bc9b7b} &
 \textbf{Asymmetry experiment results (91.18\% prevalence)} &
 \texttt{ac25398} &
 \texttt{experiments/asymmetry\_2026\_05\_27/results.json} \\
-Asymmetry FINDING & \texttt{ac25398} &
+Asymmetry FINDING (v1, falsified) & \texttt{ac25398} &
 \texttt{papers/agent-self-audit/FINDING\_generation\_critique\_asymmetry\_2026\_05\_27.md} \\
-this paper (rev. with §10 + §11) & this commit &
+\textbf{Asymmetry v3 (single-char NLI cleanup) prereg} &
+\texttt{a631a5e} &
+\texttt{experiments/asymmetry\_v3\_cleanup\_2026\_05\_27/PRE\_STATED\_PREDICTION.md} \\
+\textbf{Asymmetry v3 results (5.88\% dark-core / 17.00\% TruthfulQA,
+landed pre-stated bands)} & \texttt{ed663ca} &
+\texttt{experiments/asymmetry\_v3\_cleanup\_2026\_05\_27/results.json} \\
+Asymmetry v3 FINDING & \texttt{ed663ca} &
+\texttt{papers/agent-self-audit/FINDING\_asymmetry\_v3\_measurement\_2026\_05\_27.md} \\
+critique\_detector public API (Baseline-019 promoted) & \texttt{1ab0e22}
+& \texttt{styxx/critique.py} \\
+\textbf{§13 self-audit closure (version bump + \texttt{\_\_all\_\_} +
+docstring v4-framing)} & \texttt{0e97598} & \texttt{pyproject.toml},
+\texttt{styxx/\_\_init\_\_.py}, \texttt{styxx/critique.py},
+\texttt{CHANGELOG.md} \\
+this paper (v5 --- adds §13 self-falsification + abstract sixteen+two) &
+this commit &
 \texttt{papers/PAPER\_recursive\_discipline\_2026\_05\_27.md} \\
 \end{longtable}
 }
