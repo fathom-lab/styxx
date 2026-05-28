@@ -85,31 +85,31 @@ jobs:
             echo "  task:   $task"
             python -m styxx gauntlet --method "$method" --task "$task" --name "$sub_name" --format json > "$d/_ci_verify.json"
             # Compare to reported scores (n_passed, overall_pass, top-level metrics keys present)
-            python - <<PY
-import json, sys, pathlib
-sub = json.load(open(pathlib.Path("$d") / "submission.json"))
-verify = json.load(open(pathlib.Path("$d") / "_ci_verify.json"))
-reported = sub.get("reported", {})
-mismatches = []
-for k in ("overall_pass", "n_passed", "n_total_bars"):
-    if k in reported and reported[k] != verify[k]:
-        mismatches.append(f"  {k}: reported={reported[k]} ci={verify[k]}")
-if "metrics" in reported:
-    for k, v in reported["metrics"].items():
-        cv = verify["metrics"].get(k)
-        if cv is None: continue
-        if isinstance(v, float) and isinstance(cv, float):
-            if abs(v - cv) > 1e-3:
-                mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
-        elif v != cv:
-            mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
-if mismatches:
-    print("VERIFICATION FAILED — submitter's reported numbers don't match CI run:")
-    for m in mismatches:
-        print(m)
-    sys.exit(2)
-print("VERIFICATION PASSED — reported numbers match CI run")
-PY
+          python - <<PY
+          import json, sys, pathlib
+          sub = json.load(open(pathlib.Path("$d") / "submission.json"))
+          verify = json.load(open(pathlib.Path("$d") / "_ci_verify.json"))
+          reported = sub.get("reported", {})
+          mismatches = []
+          for k in ("overall_pass", "n_passed", "n_total_bars"):
+              if k in reported and reported[k] != verify[k]:
+                  mismatches.append(f"  {k}: reported={reported[k]} ci={verify[k]}")
+          if "metrics" in reported:
+              for k, v in reported["metrics"].items():
+                  cv = verify["metrics"].get(k)
+                  if cv is None: continue
+                  if isinstance(v, float) and isinstance(cv, float):
+                      if abs(v - cv) > 1e-3:
+                          mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
+                  elif v != cv:
+                      mismatches.append(f"  metrics.{k}: reported={v} ci={cv}")
+          if mismatches:
+              print("VERIFICATION FAILED — submitter's reported numbers don't match CI run:")
+              for m in mismatches:
+                  print(m)
+              sys.exit(2)
+          print("VERIFICATION PASSED — reported numbers match CI run")
+          PY
           done <<< "${{ steps.discover.outputs.dirs }}"
           exit $fail
 
