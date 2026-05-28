@@ -1,0 +1,55 @@
+{
+  "name": "Baseline-014: Pythia-160M per-token log-probability (D2 axis CLEARS v3 confound controls — first time both D3 and D4 deltas pass on the folklore partition)",
+  "submitter": "Fathom Lab",
+  "method": "submissions.baseline_014_pythia_160m.method:detect",
+  "task": "detection",
+  "description": "Same method as Baselines 011-013 (mean per-token log-probability under prefix 'Question: {q}\\nAnswer: '), but using EleutherAI/pythia-160m (160M parameters, similar size to gpt2-124M, trained on The Pile rather than WebText, GPT-NeoX architecture). Family-specificity probe for the inverse-scaling result.",
+  "code_url": "https://github.com/fathom-lab/styxx/blob/main/submissions/baseline_014_pythia_160m/method.py",
+  "pre_stated_prediction": "submissions/baseline_014_pythia_160m/PRE_STATED_PREDICTION.md committed at commit 1812650 BEFORE the gauntlet run. Predicted distribution: ~8% PASS, ~25% 3/4 matching gpt2-124M, ~25% 2/4 D1+D2, ~22% partial, ~12% 0/4. Actual outcome (2/4 with D1+D2 passing AUC bars, D3+D4 failing only on D1 partition) is in the predicted 25% '2/4 D1+D2' band — confirmed in shape, but with the surprising-and-good finding that D2 partition CLEARS BOTH confound-control bars (D2-length-delta = 0.116, D2-cap-delta = 0.128 — both above the 0.10 threshold for the first time on any submission).",
+  "reported": {
+    "overall_pass": false,
+    "n_passed": 2,
+    "n_total_bars": 4,
+    "note": "2/4 overall, but the FIRST submission where the D2 (folklore) partition clears BOTH confound-control bars: D2-length-delta = 0.116 (above 0.10 threshold) AND D2-cap-delta = 0.128 (above 0.10 threshold). The seven-method floor PASS requires all 4 bars; since D3 and D4 each require BOTH partitions to clear their deltas, this submission still fails D3 + D4 because D1-length-delta (0.010) and D1-cap-delta (0.096) are below 0.10. But on the FOLKLORE subset, this is the strongest signal yet — genuinely orthogonal to both known artifacts. Family-specificity hypothesis from the scaling-curve FINDING is partially confirmed: changing from WebText (gpt2) to The Pile (Pythia) at the same size affects the metric distribution.",
+    "metrics": {
+      "n_misconception": 53,
+      "n_truth": 55,
+      "n_folklore": 34,
+      "mean_misconception_score": -2.3283,
+      "mean_truth_score": -4.2259,
+      "mean_folklore_score": -1.6618,
+      "D1_misconception_AUC": 0.7993,
+      "D2_folklore_AUC": 0.9203,
+      "length_oracle_misconception_AUC": 0.7897,
+      "length_oracle_folklore_AUC": 0.8043,
+      "D1_minus_length_AUC": 0.0096,
+      "D2_minus_length_AUC": 0.116,
+      "capratio_oracle_misconception_AUC_abs": 0.7036,
+      "capratio_oracle_folklore_AUC_abs": 0.792,
+      "D1_minus_capratio_AUC": 0.0957,
+      "D2_minus_capratio_AUC": 0.1283
+    },
+    "bar_results": {
+      "D1_misconception_AUC": true,
+      "D2_folklore_AUC": true,
+      "D3_length_control_delta": false,
+      "D4_capitalization_control_delta": false
+    }
+  },
+  "prediction_calibration": {
+    "outcome_band": "2/4 confirmed in shape (25% modal band)",
+    "outcome_probability_assigned": 0.25,
+    "direction_calibration": "CONFIRMED for fourth consecutive baseline (misc -2.33 > truth -4.23)",
+    "D1_predicted_range": [0.62, 0.82],
+    "D1_actual": 0.7993,
+    "D1_calibration": "INSIDE predicted range (top)",
+    "D2_predicted_range": [0.68, 0.90],
+    "D2_actual": 0.9203,
+    "D2_calibration": "JUST ABOVE predicted range — Pythia signal stronger than expected on folklore axis",
+    "D2_length_delta_predicted_range": [-0.10, 0.12],
+    "D2_length_delta_actual": 0.116,
+    "D2_length_delta_calibration": "INSIDE predicted range (top) — and passes the 0.10 threshold for the first time on any submission",
+    "honest_note": "The result is a fundamental win on the D2 axis even though overall verdict is 2/4. Pythia-160M demonstrates that signal genuinely orthogonal to length AND cap-ratio is achievable on the folklore subset of the dark core. The D1 axis remains the bottleneck — D1 partition's confound-control deltas (0.010 and 0.096) are below the 0.10 threshold. The hypothesis that D1 includes factual-error + pseudoscience classes which are NOT LM-typical the way folklore is now has empirical support: even with a different family (Pythia) at the same size, D1 length-delta stays near zero."
+  },
+  "notes": "This is the second n=1 win-on-D2 result in the session (the first was Baseline-011's near-miss at D2-length-delta = 0.093). Pythia-160M pushes D2 confound-deltas comfortably past 0.10 on BOTH length and cap-ratio. The seven-method floor remains intact (PASS requires both partitions to clear all bars), but the folklore subset of the dark core is demonstrably detectable with signal escaping the v3 bars. The next disciplined questions: (1) does Pythia scale the same way as gpt2 (i.e., does Pythia-410M also degrade)? (2) what would push the D1 partition over the threshold? — likely requires a signal that discriminates factual-error and pseudoscience from truth, which LM-typicality alone may not provide because both classes contain LM-typical fluent text."
+}
