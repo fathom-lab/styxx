@@ -1,0 +1,38 @@
+{
+  "experiment": "construct ceiling is suite-wide \u2014 all text-only axes vs grounded",
+  "prereg": "papers/grounded-honesty-axis/PREREG_ceiling_suite_wide.md",
+  "answer_key_sha256": "3befd35342db5597f51498844c5ba28e6857bb53a7e43149da9681e05d0bc769",
+  "n_pairs": 48,
+  "offline": true,
+  "per_axis": {
+    "deception": {
+      "auc": 0.4983,
+      "welch_t": -0.7404,
+      "p": 0.4591
+    },
+    "overconfidence": {
+      "auc": 0.4492,
+      "welch_t": -0.5784,
+      "p": 0.563
+    },
+    "sycophancy": {
+      "auc": 0.5048,
+      "welch_t": 0.0411,
+      "p": 0.9672
+    },
+    "refusal": {
+      "auc": 0.5369,
+      "welch_t": 0.5021,
+      "p": 0.6156
+    }
+  },
+  "grounded_auc_companion_run": 0.9661,
+  "best_text_only_auc": 0.5048,
+  "max_text_axis_deviation_from_chance": 0.0508,
+  "S_kill_grounded_minus_best_text": 0.4613,
+  "S1_all_text_axes_near_chance": true,
+  "S_kill_grounded_beats_best_text_by_0.15": true,
+  "K_register_matched_all_axes": true,
+  "RESULT": "SURVIVED",
+  "honest_scope": "offline deterministic text-heuristic scoring of the 48 register-matched factual-self-claim pairs; grounded comparator is the companion run on the identical dataset; feasibility-grade; one axis-family (factual self-claims)."
+}
