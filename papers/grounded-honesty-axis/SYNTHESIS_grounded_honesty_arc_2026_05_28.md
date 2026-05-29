@@ -296,12 +296,24 @@ honesty claims, the boundary map *is* the invention.
    would need a single-LAYER intervention — a separate pre-reg, not a re-tune. The "one open
    model" caveat is now downgraded: the install-shape + uncertainty-not-truth claims hold on two
    architectures; localization remains a deep-model result.
-3. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
+3. **Single-layer causal localization — DONE, REPORT_AS_LANDED (`FINDING_single_layer_localization_2026_05_29.md`).**
+   Per-layer single-layer (γ=0) knockdown sweep on BOTH models. Strict pre-reg gate (L2∧L3) fails
+   on both, to two understood confounds — but the core claims land. **The install is causally LATE
+   and DISTRIBUTED across a band, not one bottleneck layer:** Qwen shows a clean three-regime curve
+   (layers 0–1 generic destructiveness, 2–14 mid DEAD-ZONE mean 0.118, 15–27 install band peak 0.778
+   @ layer 21); the center layer removes only 0.444 (no single layer >0.78) — the direct causal
+   reason the **5-layer band** was needed to fully disinhibit. Localization is directionally
+   significant on both (install-center vs matched early control: Qwen 0.444 vs 0.000 p=0.004; Llama
+   0.943 vs 0.657 p=0.001, discordant 10:0). **First quantitative link between the descriptive and
+   causal lines:** the flip-median sits within **3 layers** of the causal install peak on both
+   (Qwen 24 vs 21; Llama 11 vs 14). Two confounds documented: generic layer-0 destructiveness
+   (corrupts the stream regardless — don't use raw argmax), and shallow-net saturation (16 layers →
+   any single ablation destructive → read localization from the discordant sign test + late-vs-mid
+   profile, not absolute Δ). Closes the I1 leg the band method couldn't test on Llama.
+4. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
-4. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
+5. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
    key (prefer `GEMINI_API_KEY`).
-5. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
-6. **Single-layer causal localization on shallow models** — the I1 contrast that 3-layer
-   knockdown can't run on a 16-layer net; a minimal-footprint pre-reg to localize Llama's install.
+6. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
 7. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
    claim above.
