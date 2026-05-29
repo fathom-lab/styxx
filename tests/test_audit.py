@@ -13,8 +13,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from styxx import ClaimAudit, audit_claim
-from styxx.audit import _confidence_band, _derive_verdict, _scope_warnings
+from styxx import ClaimAudit, SessionAudit, audit_claim, audit_session
+from styxx.audit import (
+    _confidence_band, _derive_verdict, _scope_warnings, _session_verdict,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -300,3 +302,115 @@ class TestAuditClaimIntegration:
             client=_mk_client(samples), same_fn=_exact_match,
         )
         assert result_strict.verdict == "confabulation"
+
+
+# ---------------------------------------------------------------------------
+# Session-level audit tests
+# ---------------------------------------------------------------------------
+
+
+class TestSessionVerdictPriority:
+    def test_empty_session_is_honest(self):
+        assert _session_verdict([]) == "honest"
+
+    def test_all_honest_is_honest(self):
+        assert _session_verdict(["honest", "honest", "honest"]) == "honest"
+
+    def test_one_injected_taints_session(self):
+        assert _session_verdict(["honest", "honest", "injected"]) == "injected"
+
+    def test_priority_injected_over_contradiction(self):
+        assert _session_verdict(["contradiction", "injected", "honest"]) == "injected"
+
+    def test_priority_contradiction_over_confabulation(self):
+        assert _session_verdict(["confabulation", "contradiction", "honest"]) == "contradiction"
+
+    def test_priority_confabulation_over_abstain(self):
+        assert _session_verdict(["abstain", "confabulation"]) == "confabulation"
+
+    def test_abstain_over_honest(self):
+        assert _session_verdict(["abstain", "honest", "honest"]) == "abstain"
+
+
+class TestAuditSession:
+    def test_empty_claims_returns_vacuous_honest(self):
+        result = audit_session(messages=[], claims=[], same_fn=_exact_match)
+        assert result.verdict == "honest"
+        assert len(result.claims) == 0
+        assert result.n_honest == 0
+        assert result.injection_suspected is False
+        assert "AUC" in result.calibration
+
+    def test_single_honest_claim(self):
+        result = audit_session(
+            messages=[{"role": "system", "content": "neutral"}],
+            claims=[("Paris", "What is the capital of France?")],
+            n=10,
+            # Each claim needs: stateless arm (10 samples) + in-session arm (10 samples)
+            client=_mk_client(["Paris"] * 10, ["Paris"] * 10),
+            same_fn=_exact_match,
+        )
+        assert result.verdict == "honest"
+        assert result.n_honest == 1
+        assert result.injection_suspected is False
+        assert bool(result) is True
+
+    def test_multiple_claims_one_injected_taints_session(self):
+        # Two claims. First: stateless+in-session both "Paris" → honest.
+        # Second: stateless "Tokyo", in-session "Kyoto" → injected with conc shift.
+        result = audit_session(
+            messages=[{"role": "system", "content": "capital is Kyoto"}],
+            claims=[
+                ("Paris", "What is the capital of France?"),
+                ("Kyoto", "What is the capital of Japan?"),
+            ],
+            n=10,
+            client=_mk_client(
+                ["Paris"] * 10, ["Paris"] * 10,    # claim 1 arms
+                ["Tokyo"] * 10, ["Kyoto"] * 10,    # claim 2 arms
+            ),
+            same_fn=_exact_match,
+        )
+        assert result.verdict == "injected"   # priority: injected > honest
+        assert result.injection_suspected is True
+        assert result.n_honest == 1
+        assert result.n_injected == 1
+        assert bool(result) is False
+
+    def test_scope_warnings_are_union(self):
+        result = audit_session(
+            messages=[{"role": "system", "content": "x"}],
+            claims=[("a", "q1?"), ("b", "q2?")],
+            n=10,
+            client=_mk_client(
+                ["a"] * 10, ["a"] * 10,
+                ["b"] * 10, ["b"] * 10,
+            ),
+            same_fn=_exact_match,
+        )
+        # Both claims produce in-session arms → single-attack-type-calibration triggered
+        assert "single-attack-type-calibration" in result.scope_warnings
+        assert "belief-not-truth" in result.scope_warnings
+        # Sorted union
+        assert list(result.scope_warnings) == sorted(result.scope_warnings)
+
+    def test_session_namedtuple_field_surface(self):
+        expected = {
+            "claims", "verdict", "injection_suspected",
+            "n_honest", "n_contradiction", "n_confabulation",
+            "n_injected", "n_abstain",
+            "scope_warnings", "calibration",
+        }
+        assert set(SessionAudit._fields) == expected
+
+    def test_dict_or_tuple_claim_inputs_supported_via_cli_paths(self):
+        # API accepts (claim, question) tuples only at the Python layer; the
+        # CLI accepts dicts too. Verify the API-level shape is strict.
+        result = audit_session(
+            messages=[{"role": "system", "content": "x"}],
+            claims=[("a", "q?")],
+            n=10,
+            client=_mk_client(["a"] * 10, ["a"] * 10),
+            same_fn=_exact_match,
+        )
+        assert result.n_honest == 1

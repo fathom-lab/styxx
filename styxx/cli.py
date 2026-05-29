@@ -706,6 +706,199 @@ def cmd_audit_claims(args):
     return 0 if (n_fail == 0 and n_err == 0) else 1
 
 
+def cmd_audit_claim(args):
+    """styxx audit-claim — productized single-call honesty audit (the spellchecker).
+
+    Runs the calibrated 7.7.13 audit stack (grounded_honesty + detect_context_injection)
+    on a stated factual self-claim. Drives N stateless resamples (and N in-session
+    resamples if --in-session-json is given) internally; returns a structured JSON
+    verdict on stdout.
+
+    Exit codes:
+        0  — verdict is "honest" (the only deploy-clean outcome)
+        1  — verdict is anything else (contradiction / confabulation / injected /
+              abstain). Operator gate semantics: a one-line CI check that fails
+              loudly on anything that isn't cleanly honest.
+        2  — input error (missing claim/question, malformed --in-session-json, etc.)
+    """
+    from .audit import audit_claim
+
+    claim = (args.claim or "").strip()
+    question = (args.question or "").strip()
+    if not claim:
+        print("styxx audit-claim: --claim must be non-empty", file=sys.stderr)
+        return 2
+    if not question:
+        print("styxx audit-claim: --question must be non-empty", file=sys.stderr)
+        return 2
+
+    in_session = None
+    if args.in_session_json:
+        in_path = Path(args.in_session_json)
+        if not in_path.exists():
+            print(f"styxx audit-claim: --in-session-json not found: {in_path}",
+                  file=sys.stderr)
+            return 2
+        try:
+            in_session = json.loads(in_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"styxx audit-claim: malformed --in-session-json: {e}",
+                  file=sys.stderr)
+            return 2
+        if not isinstance(in_session, list):
+            print("styxx audit-claim: --in-session-json must be a JSON array "
+                  "of {role, content} message objects", file=sys.stderr)
+            return 2
+
+    try:
+        result = audit_claim(
+            claim=claim,
+            question=question,
+            in_session_messages=in_session,
+            model=args.model,
+            judge_model=args.judge_model,
+            n=args.n,
+            temperature=args.temperature,
+        )
+    except Exception as e:
+        print(f"styxx audit-claim: audit failed: {e}", file=sys.stderr)
+        return 2
+
+    # Always emit a JSON line — operator-greppable + agent-parseable.
+    payload = {
+        "claim": result.claim,
+        "question": result.question,
+        "verdict": result.verdict,
+        "grounded": round(result.grounded, 4),
+        "stability": round(result.stability, 4),
+        "concordance_stateless": round(result.concordance_stateless, 4),
+        "concordance_in_session": (
+            None if result.concordance_in_session is None
+            else round(result.concordance_in_session, 4)
+        ),
+        "divergence": (None if result.divergence is None
+                       else round(result.divergence, 4)),
+        "injection_suspected": result.injection_suspected,
+        "confidence": result.confidence,
+        "scope_warnings": list(result.scope_warnings),
+        "calibration": result.calibration,
+        "n_clusters_stateless": result.n_clusters_stateless,
+        "n_clusters_in_session": result.n_clusters_in_session,
+    }
+    if args.with_samples:
+        payload["samples_stateless"] = list(result.samples_stateless)
+        if result.samples_in_session is not None:
+            payload["samples_in_session"] = list(result.samples_in_session)
+
+    if args.json:
+        print(json.dumps(payload, indent=2))
+    else:
+        print(f"verdict:                {result.verdict.upper()}")
+        print(f"grounded:               {result.grounded:.3f}")
+        print(f"stability:              {result.stability:.3f}  ({result.confidence})")
+        print(f"concordance_stateless:  {result.concordance_stateless:.3f}")
+        if result.concordance_in_session is not None:
+            print(f"concordance_in_session: {result.concordance_in_session:.3f}")
+            print(f"divergence:             {result.divergence:.3f}")
+            print(f"injection_suspected:    {result.injection_suspected}")
+        print(f"scope_warnings:         {list(result.scope_warnings)}")
+        print(f"calibration:            {result.calibration[:80]}...")
+        print("JSON:" + json.dumps(payload, default=str))
+
+    return 0 if result.verdict == "honest" else 1
+
+
+def cmd_audit_session(args):
+    """styxx audit-session — multi-claim session-level audit (CI gate-ready).
+
+    Runs audit_claim on every (claim, question) tuple from --claims-json against
+    the session context from --messages-json. Returns a SessionAudit JSON on
+    stdout with per-claim verdicts + session-level roll-up. Exit 1 if any claim
+    is non-honest (deploy-gate semantics).
+    """
+    from .audit import audit_session
+
+    msg_path = Path(args.messages_json)
+    if not msg_path.exists():
+        print(f"styxx audit-session: --messages-json not found: {msg_path}",
+              file=sys.stderr)
+        return 2
+    claims_path = Path(args.claims_json)
+    if not claims_path.exists():
+        print(f"styxx audit-session: --claims-json not found: {claims_path}",
+              file=sys.stderr)
+        return 2
+
+    try:
+        messages = json.loads(msg_path.read_text(encoding="utf-8"))
+        claims_raw = json.loads(claims_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"styxx audit-session: malformed JSON input: {e}", file=sys.stderr)
+        return 2
+
+    if not isinstance(messages, list) or not isinstance(claims_raw, list):
+        print("styxx audit-session: --messages-json and --claims-json must "
+              "both be JSON arrays", file=sys.stderr)
+        return 2
+
+    # Accept either ["claim", "question"] or {"claim":..., "question":...}.
+    claims: list[tuple[str, str]] = []
+    for item in claims_raw:
+        if isinstance(item, dict):
+            c = item.get("claim", "").strip()
+            q = item.get("question", "").strip()
+        elif isinstance(item, (list, tuple)) and len(item) >= 2:
+            c, q = str(item[0]).strip(), str(item[1]).strip()
+        else:
+            print(f"styxx audit-session: malformed claim entry: {item!r}",
+                  file=sys.stderr)
+            return 2
+        if not c or not q:
+            print(f"styxx audit-session: empty claim or question in: {item!r}",
+                  file=sys.stderr)
+            return 2
+        claims.append((c, q))
+
+    try:
+        session = audit_session(
+            messages=messages,
+            claims=claims,
+            model=args.model,
+            judge_model=args.judge_model,
+            n=args.n,
+            temperature=args.temperature,
+        )
+    except Exception as e:
+        print(f"styxx audit-session: audit failed: {e}", file=sys.stderr)
+        return 2
+
+    payload = {
+        "verdict": session.verdict,
+        "injection_suspected": session.injection_suspected,
+        "n_honest": session.n_honest,
+        "n_contradiction": session.n_contradiction,
+        "n_confabulation": session.n_confabulation,
+        "n_injected": session.n_injected,
+        "n_abstain": session.n_abstain,
+        "scope_warnings": list(session.scope_warnings),
+        "calibration": session.calibration,
+        "claims": [
+            {
+                "claim": r.claim, "question": r.question, "verdict": r.verdict,
+                "grounded": round(r.grounded, 4),
+                "stability": round(r.stability, 4),
+                "injection_suspected": r.injection_suspected,
+                "divergence": (None if r.divergence is None
+                               else round(r.divergence, 4)),
+                "confidence": r.confidence,
+            }
+            for r in session.claims
+        ],
+    }
+    print(json.dumps(payload, indent=2))
+    return 0 if session.verdict == "honest" else 1
+
+
 def cmd_attest(args):
     """styxx attest <file> — emit a Verifiable Cognometric Attestation.
 
@@ -2399,6 +2592,63 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ac.add_argument("--repo", default=".", help="repo substrate to check against (default: .)")
     p_ac.add_argument("--json", action="store_true", help="emit JSON only")
     p_ac.set_defaults(func=cmd_audit_claims)
+
+    # audit-claim — productized single-call honesty audit (7.7.13)
+    p_audit = sub.add_parser(
+        "audit-claim",
+        help="audit one factual self-claim against the model's belief (the spellchecker)",
+        description=(
+            "Productized single-call honesty audit: drives N stateless resamples "
+            "(and N in-session resamples if --in-session-json is given) via OpenAI, "
+            "scores both arms with the calibrated 7.7.13 stack (grounded_honesty + "
+            "detect_context_injection), and prints a structured JSON verdict. "
+            "Exit 0 iff verdict is 'honest'; exit 1 otherwise (deploy-gate semantics)."
+        ),
+    )
+    p_audit.add_argument("--claim", required=True,
+                         help="the factual self-claim under audit (e.g. 'Paris')")
+    p_audit.add_argument("--question", required=True,
+                         help="the underlying question (e.g. 'What is the capital of France?')")
+    p_audit.add_argument("--in-session-json", default=None,
+                         help="path to JSON array of {role, content} messages — "
+                              "enables the cross-context injection-detection arm")
+    p_audit.add_argument("--model", default="gpt-4o-mini",
+                         help="OpenAI model for resampling (default: gpt-4o-mini, "
+                              "matches v0.2 calibration vintage)")
+    p_audit.add_argument("--judge-model", default="gpt-4o-mini",
+                         help="OpenAI model for same-answer judge (default: gpt-4o-mini)")
+    p_audit.add_argument("--n", type=int, default=10,
+                         help="resamples per arm (default: 10; <8 triggers low-N warning)")
+    p_audit.add_argument("--temperature", type=float, default=1.0,
+                         help="resample temperature (default: 1.0)")
+    p_audit.add_argument("--json", action="store_true",
+                         help="emit JSON only (default: human-readable + JSON line)")
+    p_audit.add_argument("--with-samples", action="store_true",
+                         help="include raw samples in the JSON output (reproducibility)")
+    p_audit.set_defaults(func=cmd_audit_claim)
+
+    # audit-session — multi-claim session-level audit (7.7.13)
+    p_sess = sub.add_parser(
+        "audit-session",
+        help="audit a list of claims against one agent session — deploy gate",
+        description=(
+            "Multi-claim session-level audit: runs audit_claim on every "
+            "(claim, question) pair from --claims-json against the session "
+            "context from --messages-json. Returns a SessionAudit JSON with "
+            "per-claim verdicts + session roll-up. Exit 1 if ANY claim is "
+            "non-honest (load-bearing deploy-gate semantics)."
+        ),
+    )
+    p_sess.add_argument("--messages-json", required=True,
+                        help="path to JSON array of {role, content} agent session messages")
+    p_sess.add_argument("--claims-json", required=True,
+                        help="path to JSON array of {claim, question} entries (or "
+                             "[[claim, question], ...] tuples)")
+    p_sess.add_argument("--model", default="gpt-4o-mini")
+    p_sess.add_argument("--judge-model", default="gpt-4o-mini")
+    p_sess.add_argument("--n", type=int, default=10)
+    p_sess.add_argument("--temperature", type=float, default=1.0)
+    p_sess.set_defaults(func=cmd_audit_session)
 
     # attest — produce a content-addressed Verifiable Cognometric Attestation
     p_att = sub.add_parser(

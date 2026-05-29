@@ -93,7 +93,9 @@ from .divergence import (
 
 __all__ = [
     "ClaimAudit",
+    "SessionAudit",
     "audit_claim",
+    "audit_session",
 ]
 
 
@@ -518,4 +520,146 @@ def audit_claim(
         samples_in_session=samples_in_session,
         n_clusters_stateless=int(grounded.n_clusters),
         n_clusters_in_session=n_clusters_in_session,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Multi-claim session-level audit
+# ---------------------------------------------------------------------------
+
+
+class SessionAudit(NamedTuple):
+    """Roll-up of N :class:`ClaimAudit` results plus session-level signals.
+
+    Fields
+    ------
+    claims : tuple[ClaimAudit, ...]
+        Per-claim audit results in input order.
+    verdict : str
+        Session roll-up: ``"honest"`` iff EVERY claim's verdict is ``"honest"``;
+        ``"injected"`` iff ANY claim is flagged injected (load-bearing security
+        signal); otherwise the worst per-claim verdict in priority order
+        ``injected > contradiction > confabulation > abstain > honest``.
+    injection_suspected : bool
+        ``True`` iff any per-claim audit flagged injection. The session-level
+        kill signal: a single injection-suspected item taints the session.
+    n_honest : int
+    n_contradiction : int
+    n_confabulation : int
+    n_injected : int
+    n_abstain : int
+        Counts of each verdict across the session.
+    scope_warnings : tuple[str, ...]
+        Union of all per-claim scope warnings, deduplicated, sorted.
+    calibration : str
+        Same calibration string as :class:`ClaimAudit`.
+    """
+    claims: tuple[ClaimAudit, ...]
+    verdict: str
+    injection_suspected: bool
+    n_honest: int
+    n_contradiction: int
+    n_confabulation: int
+    n_injected: int
+    n_abstain: int
+    scope_warnings: tuple[str, ...]
+    calibration: str
+
+    def __bool__(self) -> bool:
+        """``True`` iff the session verdict is ``"honest"`` (every claim honest)."""
+        return self.verdict == "honest"
+
+
+_VERDICT_PRIORITY = ("injected", "contradiction", "confabulation", "abstain", "honest")
+
+
+def _session_verdict(verdicts: list[str]) -> str:
+    """Worst verdict in the priority order. ``"honest"`` only if all are honest."""
+    for v in _VERDICT_PRIORITY:
+        if v in verdicts:
+            return v
+    return "honest"   # vacuous (empty session)
+
+
+def audit_session(
+    messages: Sequence[dict],
+    claims: Sequence[tuple[str, str]],
+    *,
+    model: str = "gpt-4o-mini",
+    judge_model: str = "gpt-4o-mini",
+    n: int = 10,
+    temperature: float = 1.0,
+    honest_threshold: float = _DEFAULT_HONEST,
+    low_stability_threshold: float = _DEFAULT_LOW_STABILITY,
+    contradiction_threshold: float = _DEFAULT_CONTRADICTION,
+    injection_threshold: float = _DEFAULT_INJECTION,
+    client: Any = None,
+    same_fn: Optional[Callable[[str, str], bool]] = None,
+    api_key: Optional[str] = None,
+) -> SessionAudit:
+    """Audit N factual self-claims from one agent session.
+
+    Each ``(claim, question)`` tuple is passed to :func:`audit_claim` with
+    the same ``messages`` as ``in_session_messages`` — so the cross-context
+    divergence injection-detection arm runs on every claim. The session-level
+    roll-up flags injection-suspicion if ANY claim's audit fires the
+    divergence signal.
+
+    Args:
+        messages: the agent's session context (system + user/assistant turns).
+            Passed verbatim as ``in_session_messages`` to every per-claim audit.
+        claims: list of ``(claim, question)`` pairs to audit.
+        ... (all other arguments forwarded to :func:`audit_claim`).
+
+    Returns:
+        A :class:`SessionAudit` with the per-claim results and session-level
+        verdict + counts + warnings + calibration receipt.
+    """
+    if not claims:
+        return SessionAudit(
+            claims=tuple(),
+            verdict="honest",
+            injection_suspected=False,
+            n_honest=0, n_contradiction=0, n_confabulation=0,
+            n_injected=0, n_abstain=0,
+            scope_warnings=tuple(),
+            calibration=_CALIBRATION_2026_05_29,
+        )
+
+    results: list[ClaimAudit] = []
+    for claim_str, question in claims:
+        audit = audit_claim(
+            claim=claim_str,
+            question=question,
+            in_session_messages=list(messages),
+            model=model,
+            judge_model=judge_model,
+            n=n,
+            temperature=temperature,
+            honest_threshold=honest_threshold,
+            low_stability_threshold=low_stability_threshold,
+            contradiction_threshold=contradiction_threshold,
+            injection_threshold=injection_threshold,
+            client=client,
+            same_fn=same_fn,
+            api_key=api_key,
+        )
+        results.append(audit)
+
+    verdicts = [r.verdict for r in results]
+    session_verdict = _session_verdict(verdicts)
+    any_injected = any(r.injection_suspected for r in results)
+    warnings_union = sorted({w for r in results for w in r.scope_warnings})
+
+    return SessionAudit(
+        claims=tuple(results),
+        verdict=session_verdict,
+        injection_suspected=any_injected,
+        n_honest=verdicts.count("honest"),
+        n_contradiction=verdicts.count("contradiction"),
+        n_confabulation=verdicts.count("confabulation"),
+        n_injected=verdicts.count("injected"),
+        n_abstain=verdicts.count("abstain"),
+        scope_warnings=tuple(warnings_union),
+        calibration=_CALIBRATION_2026_05_29,
     )
