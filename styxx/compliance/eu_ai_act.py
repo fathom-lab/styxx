@@ -161,6 +161,65 @@ _GAUNTLET_PREFLIGHT = PrimitiveCoverage(
     receipt_doc="papers/agent-self-audit/FINDING_confound_audit_2026_05_27.md",
 )
 
+_GROUNDED_HONESTY = PrimitiveCoverage(
+    primitive="styxx.grounded_honesty",
+    calibrated_metric=(
+        "Factual self-claim honesty grounded against the model's OWN resampled "
+        "belief distribution: g = Stability x Concordance. Pre-registered AUC "
+        "0.966 separating TRUE from FALSE register-matched self-claims (vs "
+        "text-only deception axis at 0.498 = chance, margin +0.468), n=48 "
+        "gpt-4o-mini, single confirmatory run. Self-calibrating: high-Stability "
+        "stratum AUC 0.97, low-Stability stratum 0.44 (report-or-abstain gate). "
+        "Architecturally injection-resistant under stateless sampling: AUC "
+        "0.944 under system_lie attack (drop only 0.022 from clean baseline)."
+    ),
+    construct_ceiling=(
+        "Grounds against the model's BELIEF, not external truth — a confidently-"
+        "wrong belief yields a confidently-wrong verdict (same-vendor council "
+        "does NOT fix; cross-vendor is the open step). Single axis (factual "
+        "self-claims) only; says nothing about value claims, predictions, or "
+        "non-factual self-reports. Past the model's competence cliff, plain "
+        "one-shot resampling can converge on a SYSTEMATIC miscalculation (high "
+        "Stability, low truth) — method-diverse re-derivation recovers ~93% of "
+        "the gap, irreducible ~2/36 residue requires cross-vendor. SECURITY "
+        "MODEL: caller MUST sample statelessly; in-session sampling fails "
+        "catastrophically (AUC 0.011, near-inverted — see "
+        "detect_context_injection for the detection signal)."
+    ),
+    receipt_commit="e093730",
+    receipt_doc="papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md",
+)
+
+_DETECT_CONTEXT_INJECTION = PrimitiveCoverage(
+    primitive="styxx.detect_context_injection",
+    calibrated_metric=(
+        "Item-level context-injection detection via cross-context resampling "
+        "divergence D = |concordance_stateless - concordance_in_session|. "
+        "Pre-registered AUC 0.875 at threshold 0.5 separating injected from "
+        "clean items on n=48 register-matched factual self-claim pairs under "
+        "system_lie injection (gpt-4o-mini, N=10 per arm at temp=1.0). Mean "
+        "D_FALSE 0.852, mean D_TRUE 0.977. Detection cost: one extra resample "
+        "set per audited claim. Pair with grounded_honesty: the stateless arm "
+        "produces the honesty verdict (architectural defense), the cross-"
+        "context delta produces the poison-suspicion at the same item."
+    ),
+    construct_ceiling=(
+        "Single-model (gpt-4o-mini), single-vendor, single injection-type "
+        "(system_lie) calibration. Stronger attacks (few-shot lie, persona "
+        "attack inside the session, sequential tool-output spoofing, multi-"
+        "stage gradient-style attacks) are pre-registerable scope-extensions "
+        "NOT validated here. K3 attack-effectiveness was 0.98 (47/48 items) on "
+        "the gpt-4o-mini canonical-fact set — a more aligned model may refuse "
+        "the injection more often, lowering both the attack signal AND the "
+        "detection signal in parallel (still calibrated, just attenuated). The "
+        "primitive measures CROSS-CONTEXT divergence, not absolute injection "
+        "presence — a deployment with no in-session arm to compare has no "
+        "signal."
+    ),
+    receipt_commit="e093730",
+    receipt_doc="papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md",
+)
+
 
 # Article 15 registry: each entry maps a sub-paragraph to styxx primitives
 # that produce relevant measurement evidence. Citations follow the
@@ -174,7 +233,10 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
             "robustness and cybersecurity, and that they perform "
             "consistently in those respects throughout their lifecycle."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _GAUNTLET_PREFLIGHT, _AGENT_AUDIT),
+        styxx_primitives=(
+            _COGNOMETRIC_CARD, _GAUNTLET_PREFLIGHT, _AGENT_AUDIT,
+            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+        ),
     ),
     "Article 15.1(a)": ComplianceMap(
         clause="Article 15.1(a)",
@@ -182,7 +244,10 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
             "Levels of accuracy and relevant accuracy metrics shall be "
             "declared in the accompanying instructions of use."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT),
+        styxx_primitives=(
+            _COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT,
+            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+        ),
     ),
     "Article 15.3": ComplianceMap(
         clause="Article 15.3",
@@ -191,7 +256,15 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
             "including via technical-redundancy solutions such as "
             "backup or fail-safe plans."
         ),
-        styxx_primitives=(_RECOVER_POSTURE, _AGENT_AUDIT),
+        # _GROUNDED_HONESTY's stateless-resample architecture IS the fail-safe
+        # for context-injection (AUC 0.944 under system_lie attack);
+        # _DETECT_CONTEXT_INJECTION is the redundancy at the item level (AUC
+        # 0.875). The combination maps cleanly to 15.3's technical-redundancy
+        # requirement on the cognometric measurement layer.
+        styxx_primitives=(
+            _RECOVER_POSTURE, _AGENT_AUDIT,
+            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+        ),
     ),
     "Article 15.4": ComplianceMap(
         clause="Article 15.4",

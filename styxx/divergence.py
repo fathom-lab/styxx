@@ -44,13 +44,35 @@ single pre-registered runs; see papers/):
     verifiable≈known confound + small-open-model knowledge coverage; use abstention
     *rate* alongside agreement (a council that mostly abstains is flagging a fake).
 
-SECURITY MODEL (red-team, papers/adversarial-robustness/):
-  Both signals are ROBUST to instruction/persona attacks but BLIND to
-  CONTEXT-INJECTION. A fabrication planted in the prompt (RAG poisoning, poisoned
-  tool output, untrusted context) collapses divergence to ~0 and is read as
-  "consistent / agreed" = real. These detect the model's OWN spontaneous
-  confabulation, NOT adversarially planted fabrication. Do NOT rely on them to
-  flag injected falsehoods in potentially-poisoned context.
+SECURITY MODEL (red-team + 2026-05-29 injection-gap closure):
+  These are MEASUREMENT PRIMITIVES on pre-collected samples. They are validated
+  ROBUST to instruction/persona attacks at the model layer
+  (papers/adversarial-robustness/FINDING_redteam_2026_05_25.md). Their robustness
+  to CONTEXT-INJECTION (RAG poisoning, poisoned tool output, untrusted history)
+  depends entirely on how the CALLER COLLECTS the samples:
+
+  - **Stateless sampling** (the caller resamples in a fresh API call with a
+    neutral system message + the question only, NOT inheriting the agent's
+    session): SAFE BY CONSTRUCTION — the primitives operate on samples the
+    adversary cannot reach. Pre-registered AUC 0.944 on grounded_honesty under
+    system_lie injection (clean baseline 0.966 → only 0.022 drop under attack;
+    papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md).
+  - **In-session sampling** (the caller passes the agent's session context to
+    the resampler, so it inherits any injection): catastrophically blind. AUC
+    0.011 under system_lie injection — near-perfectly INVERTED (the lie scores
+    HIGHER than the truth on 47/48 items). DO NOT deploy in-session sampling.
+  - **Cross-context divergence** (run BOTH a stateless and an in-session sample
+    set, compare): :func:`detect_context_injection` is a deployable item-level
+    injection-detection primitive at threshold 0.5 (AUC 0.875, n=48). Pair with
+    :func:`grounded_honesty` to flag injection-suspicion while computing the
+    honesty verdict from the stateless arm.
+
+  Calibration is single-model (gpt-4o-mini), single-vendor (OpenAI), single
+  injection type (system_lie), feasibility-grade. Stronger attacks (few-shot
+  lie, persona attack, sequential tool-output spoofing, multi-stage) remain
+  scope-extensions for follow-up pre-registrations. These primitives detect
+  the model's OWN spontaneous confabulation; under poisoned context they detect
+  it only if the CALLER samples statelessly.
 
 Clustering backend (READ THIS — it has documented failure modes):
   Both functions cluster the answers by meaning. Three backends:
@@ -272,8 +294,11 @@ def council_agreement(
     (a council that agrees only by all saying "no such thing" is detecting
     fakeness, not converging on a fact).
 
-    **Injection-blind** (SECURITY MODEL, module docstring): a fake planted in a
-    shared context makes the whole council converge on it.
+    Injection robustness (calibrated 2026-05-29): a fake planted in a SHARED
+    context makes the whole council converge on it; the architectural defense is
+    to query each council member STATELESSLY. See the module SECURITY MODEL and
+    :func:`detect_context_injection` for the cross-context divergence detection
+    primitive that fires when the council was queried in-session.
 
     Parameters
     ----------
@@ -386,9 +411,16 @@ def grounded_honesty(
     (cross-vendor is the open step). NOT a universal honesty oracle; one axis
     (factual self-claims) only.
 
-    Security: inherits the divergence SECURITY MODEL — **injection-blind**. A
-    falsehood planted in the prompt collapses the sampling divergence and reads as
-    honest. Detects the model's OWN (in)consistency, not adversarially planted lies.
+    Security (calibrated 2026-05-29): the function is a measurement primitive on
+    pre-collected samples — robust IFF the CALLER resamples statelessly. Under
+    stateless resampling (neutral system message + bare question, no agent session
+    inheritance) the grounded_honesty AUC is **0.944 under system_lie injection**
+    vs the 0.966 clean baseline — drop only 0.022. Under in-session resampling
+    (resampler inherits the agent's poisoned context) the AUC collapses to
+    **0.011** — near-perfectly INVERTED. Pair with :func:`detect_context_injection`
+    on a SECOND sample set drawn under the agent's context to flag injection-
+    suspicion while reading the honesty verdict from the stateless arm.
+    See papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md.
 
     Parameters
     ----------
@@ -416,10 +448,170 @@ def grounded_honesty(
     return GroundedScore(stability * concordance, stability, concordance, n_clusters, n)
 
 
+class InjectionScore(NamedTuple):
+    """Result of :func:`detect_context_injection` — cross-context resampling
+    divergence as an item-level injection-detection signal.
+
+    Fields
+    ------
+    divergence : float
+        ``|concordance_stateless - concordance_in_session|`` in [0, 1]. Pre-
+        registered AUC 0.875 at threshold 0.5 separating injected from clean
+        items (n=48, gpt-4o-mini, system_lie injection;
+        FINDING_injection_gap_closure_2026_05_29.md).
+    suspected : bool
+        ``divergence > threshold`` (default 0.5). The calibrated injection-
+        suspicion flag.
+    concordance_stateless : float
+        Fraction of stateless samples semantically equivalent to the claim.
+    concordance_in_session : float
+        Fraction of in-session samples semantically equivalent to the claim.
+    n_clusters_stateless : int
+    n_clusters_in_session : int
+    n_stateless : int
+        Non-None stateless samples scored.
+    n_in_session : int
+        Non-None in-session samples scored.
+    """
+    divergence: float
+    suspected: bool
+    concordance_stateless: float
+    concordance_in_session: float
+    n_clusters_stateless: int
+    n_clusters_in_session: int
+    n_stateless: int
+    n_in_session: int
+
+    def __float__(self) -> float:  # so it compares/sorts like its scalar score
+        return self.divergence
+
+    def __bool__(self) -> bool:  # so it can be used as a boolean injection flag
+        return bool(self.suspected)
+
+
+def detect_context_injection(
+    samples_stateless: Sequence[str],
+    samples_in_session: Sequence[str],
+    claim: str,
+    *,
+    threshold: float = 0.5,
+    method: str = "auto",
+    cluster_threshold: Optional[float] = None,
+    same_fn: Optional[Callable[[str, str], bool]] = None,
+) -> InjectionScore:
+    """Detect context-injection by cross-context resampling divergence.
+
+    Given the SAME model answering the SAME underlying question under two
+    architectures — ``samples_stateless`` (resampled in a NEUTRAL context, e.g.
+    a fresh API call with a neutral system message and the bare question only)
+    and ``samples_in_session`` (resampled WITHIN the agent's potentially-
+    poisoned context) — compute each set's concordance with the stated ``claim``
+    and return the divergence
+
+        ``D = |concordance_stateless - concordance_in_session|``
+
+    Under context-injection (RAG poisoning, system_lie, poisoned tool output,
+    persona attack inside the session), the in-session resampler agrees with the
+    injected lie (high concordance with a FALSE claim) while the stateless
+    resampler holds the model's true belief (low concordance with a FALSE
+    claim) — D is high. Without injection, both resamplers agree on the model's
+    belief; D ≈ 0.
+
+    Recommended pairing with :func:`grounded_honesty`: compute the honesty
+    verdict from the stateless arm (architecturally injection-resistant — AUC
+    0.944 under system_lie attack) and flag injection-suspicion with this
+    primitive on the in-session arm. The two together give a verdict + a
+    poison-suspicion at the same item.
+
+    Calibration (FEASIBILITY-GRADE — single confirmatory pre-registered run):
+    n=48 register-matched factual self-claim pairs, gpt-4o-mini, N=10 resamples
+    per arm at temperature 1.0, system_lie injection. **AUC 0.875** at the
+    default threshold 0.5 (mean D_FALSE 0.852, mean D_TRUE 0.977; K3 attack
+    effective on 47/48 items). Receipt:
+    ``papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md``,
+    commit ``e093730``.
+
+    Honest scope: single-model, single-vendor, single-injection-type calibration;
+    stronger attacks (few-shot lie, persona attack, sequential tool-output
+    spoofing, multi-stage) are pre-registerable scope-extensions not validated
+    here. The architectural defense (stateless sampling at the caller layer) is
+    load-bearing — a deployment that uses in-session sampling without this
+    primitive will read injected lies as honest (AUC 0.011 inverted).
+
+    Parameters
+    ----------
+    samples_stateless : sequence of str
+        N independent samples drawn under a NEUTRAL resampler context. The
+        caller must guarantee this context does not inherit the agent's
+        (potentially-poisoned) session.
+    samples_in_session : sequence of str
+        N independent samples drawn WITHIN the agent's session context. The
+        whole point is that these may be corrupted by an adversary's injection
+        and serve as the comparison arm.
+    claim : str
+        The factual self-claim being scored.
+    threshold : float, optional
+        Divergence threshold above which ``suspected`` is True. Default 0.5,
+        the calibrated detection point from the FINDING.
+    method, cluster_threshold, same_fn : see :func:`semantic_entropy`.
+
+    Returns
+    -------
+    InjectionScore
+        Named tuple with the divergence, suspicion flag, per-arm concordances,
+        cluster counts, and sample counts.
+
+    Examples
+    --------
+    >>> # No injection: both resamplers agree the capital is "Paris"
+    >>> stateless = ["Paris"] * 10
+    >>> in_session = ["Paris"] * 10
+    >>> r = detect_context_injection(stateless, in_session, "Paris",
+    ...                              same_fn=lambda a, b: a == b)
+    >>> r.suspected, r.divergence
+    (False, 0.0)
+    >>> # Injection succeeds: in-session agrees with the lie, stateless holds truth
+    >>> stateless = ["Paris"] * 10
+    >>> in_session = ["Lyon"] * 10
+    >>> r = detect_context_injection(stateless, in_session, "Lyon",
+    ...                              same_fn=lambda a, b: a == b)
+    >>> r.suspected, r.divergence
+    (True, 1.0)
+    """
+    def _concordance(samples: Sequence[str]) -> tuple[float, int, int]:
+        vals = [s for s in samples if s is not None]
+        n = len(vals)
+        if n == 0:
+            return 0.0, 0, 0
+        assign = _cluster_assignments([claim, *vals], method, cluster_threshold, same_fn)
+        claim_cluster = assign[0]
+        sample_assign = assign[1:]
+        concordant = sum(1 for c in sample_assign if c == claim_cluster)
+        n_clusters = len(set(sample_assign)) if sample_assign else 0
+        return concordant / n, n_clusters, n
+
+    c_s, k_s, n_s = _concordance(samples_stateless)
+    c_i, k_i, n_i = _concordance(samples_in_session)
+
+    divergence = abs(c_s - c_i)
+    return InjectionScore(
+        divergence=divergence,
+        suspected=divergence > threshold,
+        concordance_stateless=c_s,
+        concordance_in_session=c_i,
+        n_clusters_stateless=k_s,
+        n_clusters_in_session=k_i,
+        n_stateless=n_s,
+        n_in_session=n_i,
+    )
+
+
 __all__ = [
     "semantic_entropy",
     "council_agreement",
     "grounded_honesty",
     "GroundedScore",
+    "detect_context_injection",
+    "InjectionScore",
     "divergence_available",
 ]

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.7.13] — 2026-05-28 — grounded honesty axis (the first construct-ceiling crack, as a primitive)
+## [7.7.13] — 2026-05-29 — grounded honesty axis (the first construct-ceiling crack, as a primitive) + injection-gap closure (calibrated boundary, deployable detection)
 
 ### Added — `styxx.grounded_honesty` (factual self-claim honesty, sampling-grounded)
 
@@ -23,7 +23,38 @@ grounded_honesty(samples, "Canberra").grounded   # high  -> claim is the stable 
 grounded_honesty(samples, "Sydney").grounded      # low   -> contradiction
 ```
 
-- **Honest scope, stated not hidden (FEASIBILITY-GRADE).** Single model (gpt-4o-mini), OpenAI-only, single pre-registered runs: grounded AUC 0.966 vs the text-only deception axis at 0.498 (chance) on register-matched factual self-claims. It grounds against the model's *belief*, so a confidently-WRONG belief yields a confidently-wrong verdict — and a same-vendor council does NOT fix this (cross-vendor is the open step). **Self-consistency, not a truth oracle; one axis (factual self-claims); INJECTION-BLIND** (inherits the divergence security model). Evidence + pre-registrations in `papers/grounded-honesty-axis/`. This does not claim the construct ceiling is broken in general.
+- **Honest scope, stated not hidden (FEASIBILITY-GRADE).** Single model (gpt-4o-mini), OpenAI-only, single pre-registered runs: grounded AUC 0.966 vs the text-only deception axis at 0.498 (chance) on register-matched factual self-claims. It grounds against the model's *belief*, so a confidently-WRONG belief yields a confidently-wrong verdict — and a same-vendor council does NOT fix this (cross-vendor is the open step). **Self-consistency, not a truth oracle; one axis (factual self-claims).** Evidence + pre-registrations in `papers/grounded-honesty-axis/`. This does not claim the construct ceiling is broken in general.
+
+### Added — `styxx.detect_context_injection` (cross-context divergence as item-level injection-detection)
+
+- **`detect_context_injection(samples_stateless, samples_in_session, claim, *, threshold=0.5, ...) -> InjectionScore`** — the first deployable item-level context-injection detection primitive. Given the same model answering the same underlying question under two resampler architectures (`samples_stateless`: neutral resampler context; `samples_in_session`: the agent's potentially-poisoned session context), compute the divergence `D = |concordance_stateless − concordance_in_session|`. Under injection, the in-session arm agrees with the lie while the stateless arm holds the truth — D is high. Pair with `grounded_honesty` to read the honesty verdict from the stateless arm (architecturally injection-resistant — see below) and the injection-suspicion from the cross-context delta.
+
+```python
+from styxx import detect_context_injection
+stateless = ["Paris"] * 10      # neutral resampler context
+in_session = ["Lyon"] * 10      # agent's session context (poisoned)
+r = detect_context_injection(stateless, in_session, "Lyon")
+r.suspected   # True  (D = 1.0 > 0.5)
+r.divergence  # 1.0
+```
+
+- **Calibrated AUC 0.875 at threshold 0.5** on n=48 register-matched factual self-claim pairs under system_lie injection (gpt-4o-mini, N=10 per arm at temp=1.0). Mean D_FALSE 0.852, mean D_TRUE 0.977. K3 attack effective on 47/48 items. Pre-registered `papers/grounded-honesty-axis/PREREG_injection_gap_closure_2026_05_29.md` BEFORE data; one confirmatory run; receipt `papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md`. **Honest scope:** single-model, single-vendor, single injection-type (system_lie). Stronger attacks (few-shot lie, persona attack, sequential tool-output spoofing, multi-stage) remain pre-registerable scope-extensions not validated here.
+
+### Changed — `styxx.divergence` SECURITY MODEL is now calibrated, not blanket-blind
+
+The 2026-05-29 injection-gap closure run (`papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md`) replaces the prior blanket "INJECTION-BLIND" caveat on the divergence primitives with a calibrated architectural boundary:
+
+- **Stateless sampling** (caller resamples in a fresh API call with a neutral system message + the question only, NOT inheriting the agent's session) is **architecturally injection-resistant by construction**: `grounded_honesty` AUC **0.944** under system_lie attack vs the **0.966** clean baseline — only **0.022** drop. The architectural defense IS the shipped `resample_answers()` contract.
+- **In-session sampling** (caller passes the agent's session context to the resampler so it inherits any injection) collapses catastrophically: AUC **0.011** — near-perfectly **INVERTED** (the lie scores HIGHER than the truth on 47/48 items). DO NOT deploy in-session sampling.
+- **Cross-context divergence** (run BOTH a stateless and an in-session sample set and compare): `detect_context_injection` is the deployable item-level injection-detection primitive at threshold 0.5, AUC 0.875.
+
+The persona/instruction robustness from `papers/adversarial-robustness/FINDING_redteam_2026_05_25.md` is unchanged (the divergence primitives remain robust to attacks targeting the model layer rather than the context).
+
+### Changed — `styxx.compliance.eu_ai_act` cites the new primitives
+
+- **Article 15.1** (accuracy + robustness throughout lifecycle): adds `_GROUNDED_HONESTY` and `_DETECT_CONTEXT_INJECTION` to the styxx-primitive coverage list.
+- **Article 15.1(a)** (accuracy metrics declared): adds both new primitives with their AUC numbers (0.966 grounded clean / 0.944 grounded under attack / 0.875 detection).
+- **Article 15.3** (robustness via fail-safe/redundancy): the stateless-resample architecture IS the fail-safe; `detect_context_injection` is the item-level redundancy. Both added.
 
 ---
 

@@ -17,6 +17,7 @@ import pytest
 
 from styxx.divergence import (
     semantic_entropy, council_agreement, grounded_honesty, GroundedScore,
+    detect_context_injection, InjectionScore,
     divergence_available,
 )
 from styxx.errors import StyxxError
@@ -183,3 +184,159 @@ def test_cosine_clustering_when_available():
     e = semantic_entropy(["Paris", "Tokyo", "Cairo", "Berlin"], method="cosine")
     assert e > 1.0
     assert council_agreement(["Paris", "Paris", "Paris", "Tokyo"], method="cosine") == pytest.approx(0.75)
+
+
+# ─── detect_context_injection ──────────────────────────────────────
+# 7.7.13 cross-context divergence as item-level injection-detection primitive.
+# Calibration: AUC 0.875 at threshold 0.5 (n=48 gpt-4o-mini, system_lie injection).
+# Receipt: papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md
+# (commit e093730). Tests below verify the pure-math behavior offline; the AUC
+# calibration is in the FINDING, not retested here.
+
+def test_detect_injection_clean_both_arms_agree_truth():
+    # No injection: both arms say the truth -> D=0, not suspected.
+    r = detect_context_injection(["Paris"] * 10, ["Paris"] * 10, "Paris", same_fn=_EQ)
+    assert r.divergence == pytest.approx(0.0)
+    assert r.suspected is False
+    assert r.concordance_stateless == pytest.approx(1.0)
+    assert r.concordance_in_session == pytest.approx(1.0)
+
+
+def test_detect_injection_clean_both_arms_agree_lie():
+    # No injection AND wrong claim: stateless says truth, in-session says truth,
+    # claim is a lie -> both concordances 0 -> D=0, not suspected (no injection,
+    # the LIE just happens to be unrelated to the model's belief).
+    r = detect_context_injection(["Paris"] * 10, ["Paris"] * 10, "Lyon", same_fn=_EQ)
+    assert r.divergence == pytest.approx(0.0)
+    assert r.suspected is False
+    assert r.concordance_stateless == pytest.approx(0.0)
+    assert r.concordance_in_session == pytest.approx(0.0)
+
+
+def test_detect_injection_succeeds_full():
+    # Injection succeeds completely: stateless says truth, in-session says lie,
+    # claim is the lie -> stateless C=0, in-session C=1 -> D=1, suspected.
+    r = detect_context_injection(["Paris"] * 10, ["Lyon"] * 10, "Lyon", same_fn=_EQ)
+    assert r.divergence == pytest.approx(1.0)
+    assert r.suspected is True
+    assert r.concordance_stateless == pytest.approx(0.0)
+    assert r.concordance_in_session == pytest.approx(1.0)
+
+
+def test_detect_injection_succeeds_partial():
+    # Partial injection: in-session resampler partially agrees with lie.
+    # stateless 0/10 lie, in-session 6/10 lie -> D=0.6, suspected at default 0.5.
+    r = detect_context_injection(
+        ["Paris"] * 10,
+        ["Lyon"] * 6 + ["Paris"] * 4,
+        "Lyon", same_fn=_EQ,
+    )
+    assert r.divergence == pytest.approx(0.6)
+    assert r.suspected is True
+    assert r.concordance_stateless == pytest.approx(0.0)
+    assert r.concordance_in_session == pytest.approx(0.6)
+
+
+def test_detect_injection_below_threshold_not_suspected():
+    # Slight in-session contamination but below threshold -> not suspected.
+    r = detect_context_injection(
+        ["Paris"] * 10,
+        ["Lyon"] * 3 + ["Paris"] * 7,
+        "Lyon", same_fn=_EQ,
+    )
+    assert r.divergence == pytest.approx(0.3)
+    assert r.suspected is False  # 0.3 not > 0.5 default
+
+
+def test_detect_injection_custom_threshold():
+    # Same data, lower threshold -> now suspected.
+    r = detect_context_injection(
+        ["Paris"] * 10,
+        ["Lyon"] * 3 + ["Paris"] * 7,
+        "Lyon", same_fn=_EQ, threshold=0.2,
+    )
+    assert r.divergence == pytest.approx(0.3)
+    assert r.suspected is True
+
+
+def test_detect_injection_empty_stateless():
+    # If stateless arm is empty, can't compute the defense — return 0/0 and flag
+    # honestly (divergence = |0 - C_in_session|).
+    r = detect_context_injection([], ["Lyon"] * 10, "Lyon", same_fn=_EQ)
+    assert r.n_stateless == 0
+    assert r.n_in_session == 10
+    assert r.concordance_stateless == 0.0
+    assert r.divergence == pytest.approx(1.0)
+    assert r.suspected is True
+
+
+def test_detect_injection_empty_in_session():
+    # If in-session is empty, divergence is just the stateless concordance.
+    r = detect_context_injection(["Paris"] * 10, [], "Paris", same_fn=_EQ)
+    assert r.n_in_session == 0
+    assert r.concordance_in_session == 0.0
+    assert r.divergence == pytest.approx(1.0)
+
+
+def test_detect_injection_both_empty():
+    r = detect_context_injection([], [], "anything", same_fn=_EQ)
+    assert r.n_stateless == 0
+    assert r.n_in_session == 0
+    assert r.divergence == pytest.approx(0.0)
+    assert r.suspected is False
+
+
+def test_detect_injection_none_filtered():
+    # None entries dropped on each arm.
+    r = detect_context_injection(
+        [None, "Paris", "Paris", None],
+        [None, "Lyon", "Lyon", "Lyon"],
+        "Lyon", same_fn=_EQ,
+    )
+    assert r.n_stateless == 2
+    assert r.n_in_session == 3
+    assert r.concordance_stateless == pytest.approx(0.0)
+    assert r.concordance_in_session == pytest.approx(1.0)
+    assert r.divergence == pytest.approx(1.0)
+    assert r.suspected is True
+
+
+def test_detect_injection_float_and_bool_protocols():
+    # InjectionScore acts like its scalar divergence + flag
+    hi = detect_context_injection(["a"] * 5, ["b"] * 5, "b", same_fn=_EQ)
+    lo = detect_context_injection(["a"] * 5, ["a"] * 5, "a", same_fn=_EQ)
+    assert float(hi) > float(lo)
+    assert bool(hi) is True
+    assert bool(lo) is False
+
+
+def test_detect_injection_reverse_direction_still_detected():
+    # Edge case: stateless arm "agrees" with claim but in-session disagrees.
+    # This could happen if the in-session context is *poisoned toward refusing*
+    # rather than asserting a lie. D is still high -> suspected.
+    r = detect_context_injection(["Lyon"] * 10, ["Paris"] * 10, "Lyon", same_fn=_EQ)
+    assert r.divergence == pytest.approx(1.0)
+    assert r.suspected is True
+
+
+def test_detect_injection_unequal_lengths():
+    # n_stateless != n_in_session is allowed (caller may use different N per arm).
+    r = detect_context_injection(["Paris"] * 5, ["Lyon"] * 20, "Lyon", same_fn=_EQ)
+    assert r.n_stateless == 5
+    assert r.n_in_session == 20
+    assert r.concordance_stateless == pytest.approx(0.0)
+    assert r.concordance_in_session == pytest.approx(1.0)
+    assert r.divergence == pytest.approx(1.0)
+    assert r.suspected is True
+
+
+def test_detect_injection_namedtuple_fields():
+    # Sanity-check the InjectionScore field surface — production code may rely on it.
+    r = detect_context_injection(["a"] * 3, ["b"] * 3, "a", same_fn=_EQ)
+    assert isinstance(r, InjectionScore)
+    assert r._fields == (
+        "divergence", "suspected",
+        "concordance_stateless", "concordance_in_session",
+        "n_clusters_stateless", "n_clusters_in_session",
+        "n_stateless", "n_in_session",
+    )

@@ -604,18 +604,26 @@ from .transport import (
 # behavioral-knowledge-boundary arc (papers/). semantic_entropy: a model invents a
 # different fact each sample when confabulating → high entropy. council_agreement:
 # independent models converge on the real, scatter on the fake → reference-free.
-# Validated clustering is embedding-cosine (`styxx[nli]`); both are INJECTION-BLIND
-# (SECURITY MODEL in styxx/divergence.py — they catch a model's OWN spontaneous
-# confabulation, not adversarially planted fabrication; don't trust on poisoned
-# context). Feasibility-grade evidence; measurement primitives, caller maps to a
-# decision.
+# Validated clustering is embedding-cosine (`styxx[nli]`); SECURITY MODEL (now
+# calibrated): robust to context-injection IFF the caller samples STATELESSLY
+# (AUC 0.944 on grounded_honesty under system_lie attack); in-session sampling
+# is catastrophically blind (AUC 0.011, inverted). Feasibility-grade evidence;
+# measurement primitives, caller maps to a decision.
 # 7.7.13: grounded_honesty — is a factual SELF-CLAIM honest? Grounds the claim
 # against the model's OWN resampled belief (g = Stability x Concordance), breaking
 # the text-only register ceiling on factual self-claims (AUC 0.97 vs 0.50) and
 # self-calibrating via `stability` (report-or-abstain). Single-model
-# self-consistency, NOT a truth oracle; INJECTION-BLIND (papers/grounded-honesty-axis/).
+# self-consistency, NOT a truth oracle. Architecturally injection-resistant under
+# stateless sampling (papers/grounded-honesty-axis/).
+# 7.7.13: detect_context_injection — cross-context resampling divergence as an
+# item-level injection-detection primitive. Compute concordance with the claim
+# on TWO sample sets (stateless + in-session), flag suspected injection when
+# they diverge. AUC 0.875 at threshold 0.5 (FINDING_injection_gap_closure_2026_05_29.md,
+# commit e093730). Pair with grounded_honesty to read the verdict from the
+# stateless arm and the poison-suspicion from the cross-context delta.
 from .divergence import (
     semantic_entropy, council_agreement, grounded_honesty, GroundedScore,
+    detect_context_injection, InjectionScore,
     divergence_available,
 )
 
@@ -632,6 +640,8 @@ __all__ = [
     "semantic_entropy", "council_agreement",
     # 7.7.13: grounded honesty axis (factual self-claim, sampling-grounded)
     "grounded_honesty", "GroundedScore",
+    # 7.7.13: cross-context injection-detection (calibrated AUC 0.875)
+    "detect_context_injection", "InjectionScore",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
