@@ -698,6 +698,33 @@ External submissions go through CI auto-verification (`.github/workflows/gauntle
 
 ## New in 7.7.13 — `audit_claim` (the spellchecker for AI output), `grounded_honesty`, `detect_context_injection`, compliance bridge v0.2, conformity declaration templates
 
+### `styxx audit-claim` + `styxx audit-session` — CLI surface (CI gate-ready)
+
+```bash
+# Single claim audit — exit 0 iff verdict is "honest"; exit 1 otherwise (deploy gate).
+$ python -m styxx audit-claim --claim "Paris" --question "What is the capital of France?"
+verdict:                HONEST
+grounded:               1.000
+stability:              1.000  (high)
+scope_warnings:         ['belief-not-truth', 'single-vendor-calibration']
+
+# Same call, but auditing under an agent's session context (enables injection detection).
+$ python -m styxx audit-claim --claim "Lyon" --question "What is the capital of France?" \
+    --in-session-json poisoned_session.json --json
+
+# Multi-claim session audit — one CI call gates an entire agent session.
+$ python -m styxx audit-session --messages-json session.json --claims-json claims.json
+{
+  "verdict": "injected",
+  "injection_suspected": true,
+  "n_honest": 1,
+  "n_injected": 2,
+  ...
+}
+```
+
+Both subcommands write a JSON payload (operator-greppable + agent-parseable) and exit with deploy-gate semantics. Use as a one-line CI merge gate or a runtime interceptor.
+
 ### `styxx.audit_claim` — single-call honesty audit (the productized turn)
 
 ```python
