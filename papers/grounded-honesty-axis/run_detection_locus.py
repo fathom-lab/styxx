@@ -85,6 +85,7 @@ def single_pass_signals(model, tok, prompt_text, realized_text):
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=len(SPECS))
+    ap.add_argument("--model", type=str, default=wb.MODEL_NAME)
     args = ap.parse_args(argv)
 
     confab_specs = SPECS[: args.n]
@@ -95,11 +96,11 @@ def main(argv=None) -> int:
     key_blob = json.dumps([(e, c) for _, c, e, _, _ in all_items], ensure_ascii=False)
     key_hash = hashlib.sha256(key_blob.encode("utf-8")).hexdigest()
     print(f"answer-key SHA-256 (pre-scoring): {key_hash}")
-    print(f"model={wb.MODEL_NAME} device={wb.DEVICE} N_resample={N_RESAMPLE} temp={TEMPERATURE}")
+    print(f"model={args.model} device={wb.DEVICE} N_resample={N_RESAMPLE} temp={TEMPERATURE}")
 
-    tok = AutoTokenizer.from_pretrained(wb.MODEL_NAME)
+    tok = AutoTokenizer.from_pretrained(args.model)
     model = AutoModelForCausalLM.from_pretrained(
-        wb.MODEL_NAME, torch_dtype=torch.float16).to(wb.DEVICE).eval()
+        args.model, torch_dtype=torch.float16).to(wb.DEVICE).eval()
     print("model loaded\n")
 
     SYS = "Answer with only the final number, nothing else."
@@ -159,7 +160,7 @@ def main(argv=None) -> int:
         "experiment": "detection locus — does the confab-detection signal live in single-pass internal state or cross-derivation resampling?",
         "prereg": "papers/grounded-honesty-axis/PREREG_detection_locus_2026_05_29.md",
         "answer_key_sha256_pre_scoring": key_hash,
-        "model": wb.MODEL_NAME, "device": wb.DEVICE,
+        "model": args.model, "device": wb.DEVICE,
         "n_resample": N_RESAMPLE, "temperature": TEMPERATURE,
         "core_signal": "resampling Stability (exact-integer, no judge) vs single-pass clean first-token entropy/margin, same items",
         "n_confab_usable": n_conf, "n_correct_usable": n_corr, "powered": powered,
@@ -179,7 +180,7 @@ def main(argv=None) -> int:
         "rows": rows,
         "B1": bool(b1), "B_contrast": bool(b_contrast), "RESULT": result,
         "honest_scope": (
-            "single open model Qwen2.5-1.5B-Instruct; arithmetic only; one confirmatory run; "
+            f"single open model {args.model}; arithmetic only; one confirmatory run; "
             "feasibility-grade; resampling N=10 at T=1.0 (validated grounding setting), Stability "
             "from exact distinct-integer counts (no judge); single-pass entropy/margin from clean "
             "logit-lens at the first answer token; ground truth in-code then hashed pre-scoring. "
@@ -190,7 +191,9 @@ def main(argv=None) -> int:
             "(same items) and is the load-bearing result. Does NOT touch the correctness bound: "
             "resampling DETECTS confabulation, it does not CORRECT it; detector flags abstain."),
     }
-    RECEIPT.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    out_path = RECEIPT if args.model == wb.MODEL_NAME else (
+        HERE / f"detection_locus_result_{args.model.split('/')[-1].replace('.', '_')}.json")
+    out_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("\n" + json.dumps({k: v for k, v in receipt.items() if k != "rows"}, indent=2))
     print(f"\nn_conf={n_conf} n_corr={n_corr} powered={powered}")
     print(f"B1={b1}(inst AUC={auc_inst:.3f}) ent AUC={auc_ent:.3f} (-margin) AUC={auc_margin:.3f} "

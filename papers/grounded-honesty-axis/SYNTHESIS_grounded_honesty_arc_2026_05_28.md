@@ -345,6 +345,14 @@ honesty claims, the boundary map *is* the invention.
    settings where internals aren't exposed — re-derivation is *sufficient everywhere, necessary
    only there*. Confound-robust because B_contrast holds difficulty fixed across detector types.
    Correctness bound untouched (all three DETECT, none CORRECT).
+   **CROSS-ARCHITECTURE (2026-05-29, REPORT_AS_LANDED, `FINDING_detection_locus_llama_2026_05_29.md`):**
+   the protocol replicated UNCHANGED on Llama-3.2-1B-Instruct (16 layers, same hashed key, n_conf=35
+   /n_corr=24 powered) — single-pass entropy AND margin BOTH separate confab from correct at AUC
+   **1.000**, matching resampling instability (1.000); B_contrast **0.000** FAILS again. Single-pass
+   confab legibility is **architecture-general** on small-model arithmetic, not a Qwen quirk — and
+   Llama's confabs are even LESS confident (margin 0.62 vs correct 6.48). "Confident confabulation"
+   is now refuted on two architectures of two families; the open confident-when-wrong regime is the
+   closed-model HALLUCINATION instrument, not any particular open architecture.
 6. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
 7. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
