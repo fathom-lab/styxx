@@ -248,9 +248,13 @@ the divergence security model — a planted lie in context reads as honest). **O
 axis-family** (factual/derived self-claims); says nothing about value claims,
 predictions, or non-factual self-reports. Method-diverse grounding is validated on
 **arithmetic and code-output tracing**; logic and multi-hop QA remain untested. The
-white-box substrate is shown on **one open model** with a **proxy** metric, and the
-depth↔correctness link is a *mode* effect, not a fixed-position truth read. Cross-vendor
-and canonical SAE confirmation remain blocked (second-vendor key; sae-lens/Gemma access).
+white-box substrate uses a **proxy** (logit-lens) metric, and the depth↔correctness link
+is a *mode* effect, not a fixed-position truth read. The mechanism's *shape* (late+tight
+graded install, dampening→uncertainty-not-truth) is now shown on **two architectures**
+(Qwen-1.5B + Llama-1B, band found by each model's own geometry); *causal localization* and
+*truth-specificity* are deep-model results (untestable on the shallow Llama net + its
+digit-merging tokenizer). Cross-vendor and canonical SAE confirmation remain blocked
+(second-vendor key; sae-lens/Gemma access).
 
 ## What is genuinely new here
 
@@ -278,10 +282,26 @@ honesty claims, the boundary map *is* the invention.
    keystone null — every lever we have moves confidence; only re-derivation moves correctness.
    Richer interventions (patching a derivation run, multi-token regeneration, SAE/multi-layer
    directions) remain open, but the core causal claim of the corrected mechanism is now closed.
-2. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
+2. **Second-model replication — DONE, REPORT_AS_LANDED (`FINDING_second_model_replication_2026_05_29.md`).**
+   First cross-architecture evidence: re-derived the install band from **Llama-3.2-1B-Instruct**'s
+   OWN flip geometry (depth-proportional rule that reproduces Qwen's exact bands at N=28; pilot
+   amendment after the fixed control saturated, documented before the confirmatory run). **The
+   mechanism SHAPE replicates** — install **late** (late-frac 0.647, median hidden-idx 11.5/17)
+   and **tight** (IQR 5.0); **graded** (dose-response ρ=1.0); dampening yields **UNCERTAINTY not
+   truth** (recovery **0.0**, entropy +1.86 nats, p≈0) — the abstention-not-correctness core is
+   the part that most cleanly crosses architectures. **Two legs UNTESTABLE (not failed) on this
+   model:** D1 truth-specificity (0 single-digit divergence positions — Llama-3 merges digits) and
+   I1 causal *localization* (any 3-layer knockdown destructive on a 16-layer net: f_t 0.943 vs
+   f_c 0.914, control saturates → late not separable from early). Localizing on a shallow model
+   would need a single-LAYER intervention — a separate pre-reg, not a re-tune. The "one open
+   model" caveat is now downgraded: the install-shape + uncertainty-not-truth claims hold on two
+   architectures; localization remains a deep-model result.
+3. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
-3. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
+4. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
    key (prefer `GEMINI_API_KEY`).
-4. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
-5. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
+5. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
+6. **Single-layer causal localization on shallow models** — the I1 contrast that 3-layer
+   knockdown can't run on a 16-layer net; a minimal-footprint pre-reg to localize Llama's install.
+7. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
    claim above.
