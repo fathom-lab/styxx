@@ -1,0 +1,38 @@
+{
+  "experiment": "white-box depth grounding \u2014 does attribution depth explain belief->truth?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_depth_grounding_whitebox.md",
+  "answer_key_sha256_pre_scoring": "ddccd8e46f7fdac04ff5bec6d63b6b98ab00b6f17074d94c4f81122e0b87964d",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "device": "cuda",
+  "n_items": 36,
+  "depth_metric": "SAE-free logit-lens DLA, attribution-weighted mean layer index",
+  "core_signal": "exact integer parse vs in-code-computed arithmetic truth (no judge)",
+  "precondition_competence_cliff": {
+    "n_oneshot_confab_hard": 27,
+    "met": true
+  },
+  "n_oneshot_confab_total": 32,
+  "W1_confab_depth_signature": {
+    "n_pairs": 32,
+    "cohens_d_paired": 2.4706,
+    "p": 0.0,
+    "sign": "confab_deeper"
+  },
+  "W2_depth_validity_auc": 0.442,
+  "W2_n_correct": 13,
+  "W2_n_wrong": 59,
+  "W3_recovered_depth_shift": {
+    "n_recovered": 5,
+    "shift_oneshot_minus_deriv": 1.8632,
+    "p": 0.00244
+  },
+  "K_length_intercept": -2.149,
+  "K_length_intercept_p": 0.0,
+  "K_ctrl_gap_p": 0.00073,
+  "W1": true,
+  "W2": false,
+  "W3": true,
+  "K": false,
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "single open model Qwen2.5-1.5B-Instruct, SAE-free logit-lens depth PROXY for the published SAE/IG metric, feasibility-grade, one confirmatory run; arithmetic ground truth computed in-code then hashed pre-scoring; exact-integer correctness (no judge). Next gates: canonical Gemma Scope SAE depth, second open model."
+}
