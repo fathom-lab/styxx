@@ -148,6 +148,7 @@ packages = [
     "styxx.mcp",
     "styxx.three_axis",
     "styxx.compliance",
+    "styxx.compliance.templates",
     "styxx.fonts",
     "styxx._data",
 ]
@@ -157,6 +158,7 @@ packages = [
 "styxx.residual_probe.atlas" = ["*.json", "*.pt", "README.md"]
 "styxx.attack.seeds" = ["*.jsonl"]
 "styxx.attack" = ["signature_calibration_v0.json", "universal_suffixes_v0.json"]
+"styxx.compliance.templates" = ["*.md"]
 "styxx.fonts" = ["*.ttf"]
 "styxx._data" = ["*.json", "*.md"]
 

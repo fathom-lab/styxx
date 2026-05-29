@@ -88,6 +88,12 @@ jobs:
               "styxx/guardrail/__init__.py",
               "styxx/adapters/__init__.py",
               "styxx/compliance/__init__.py",
+              "styxx/compliance/templates/__init__.py",
+              "styxx/compliance/templates/accuracy_declaration.md",
+              "styxx/compliance/templates/robustness_statement.md",
+              "styxx/compliance/templates/boundary_statement.md",
+              "styxx/compliance/templates/sycophancy_disclosure.md",
+              "styxx/compliance/templates/injection_resistance_disclosure.md",
               "styxx/cognometrics.py",
               "styxx/mcp/server.py",
               "styxx/residual_probe/probe.py",
@@ -97,7 +103,7 @@ jobs:
               raise SystemExit(f"wheel is missing: {missing}")
 
           # Bundled data files the runtime loads by path must ship too.
-          for ext in (".pt", ".json", ".ttf", ".jsonl"):
+          for ext in (".pt", ".json", ".ttf", ".jsonl", ".md"):
               if not any(n.endswith(ext) for n in names):
                   raise SystemExit(f"no {ext} data files in wheel")
 
