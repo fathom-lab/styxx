@@ -219,6 +219,17 @@ def main(argv=None) -> int:
     n_confab_hard = sum(1 for r in rows if r["subset"] != "ctrl_3x2" and not r["ok1"])
     precondition = n_confab_hard >= 3
 
+    # WM (secondary, PREREG_depth_within_mode_2026_05_29): does depth separate correct
+    # from confabulated WITHIN a fixed mode? Bar pre-stated, greedy-deterministic data.
+    deriv_cor = [r["depth2"] for r in rows if r["ok2"] and r["depth2"] == r["depth2"]]
+    deriv_wr = [r["depth2"] for r in rows if not r["ok2"] and r["depth2"] == r["depth2"]]
+    wm_deriv_auc = auc(deriv_cor, deriv_wr)
+    os_cor = [r["depth1"] for r in rows if r["ok1"] and r["depth1"] == r["depth1"]]
+    os_wr = [r["depth1"] for r in rows if not r["ok1"] and r["depth1"] == r["depth1"]]
+    wm_os_auc = auc(os_cor, os_wr)
+    wm_hypothesis = ("H_residual" if (wm_deriv_auc == wm_deriv_auc and
+                     (wm_deriv_auc >= 0.70 or wm_deriv_auc <= 0.30)) else "H_mode")
+
     receipt = {
         "experiment": "white-box depth grounding — does attribution depth explain belief->truth?",
         "prereg": "papers/grounded-honesty-axis/PREREG_depth_grounding_whitebox.md",
@@ -241,6 +252,16 @@ def main(argv=None) -> int:
         "K_length_intercept": round(k_int, 4) if k_int == k_int else None,
         "K_length_intercept_p": round(float(k_int_p), 5) if k_int_p == k_int_p else None,
         "K_ctrl_gap_p": round(float(k_ctrl_p), 5) if k_ctrl_p == k_ctrl_p else None,
+        "WM_within_mode": {
+            "prereg": "papers/grounded-honesty-axis/PREREG_depth_within_mode_2026_05_29.md",
+            "derivation_auc_correct_vs_confab": round(wm_deriv_auc, 4) if wm_deriv_auc == wm_deriv_auc else None,
+            "derivation_n_correct": len(deriv_cor), "derivation_n_wrong": len(deriv_wr),
+            "oneshot_auc_correct_vs_confab": round(wm_os_auc, 4) if wm_os_auc == wm_os_auc else None,
+            "oneshot_n_correct": len(os_cor), "oneshot_n_wrong": len(os_wr),
+            "hypothesis": wm_hypothesis,
+            "interpretation": ("depth carries within-mode truth signal" if wm_hypothesis == "H_residual"
+                               else "depth is a MODE indicator, blind to correctness within mode")},
+        "rows": rows,
         "W1": bool(w1), "W2": bool(w2), "W3": bool(w3), "K": bool(k),
         "RESULT": ("SURVIVED" if (w1 and w2 and w3 and k and precondition)
                    else ("UNINFORMATIVE_NO_CLIFF" if not precondition else "REPORT_AS_LANDED")),

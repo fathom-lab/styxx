@@ -90,6 +90,33 @@ one-shot confident confabulation is retrieval-mode (deep); method-diverse deriva
 construction-mode (shallow); recovering truth *is* the construction-ward shift, observed
 white-box for the first time.
 
+## Addendum (2026-05-29) — within-mode secondary analysis CONFIRMS depth = dial position
+
+The prereg named a next gate: "does depth separate right from wrong *holding mode
+fixed*?" Pre-registered separately (`PREREG_depth_within_mode_2026_05_29.md`) with the
+bar stated before computing the statistic; run as a secondary analysis on the same
+greedy-deterministic generations (re-run reproduces the answer-key hash and W1/W2/W3/K
+exactly). Two hypotheses pre-stated: **H_mode** (depth purely indexes generation mode,
+blind to correctness within a mode) vs **H_residual** (depth carries a within-mode truth
+signal). Bar: derivation-stratum AUC ≥0.70 or ≤0.30 ⇒ H_residual; in (0.30, 0.70) ⇒
+H_mode.
+
+**Result: H_mode, as predicted.** Within the method-diverse derivation stratum (the
+well-powered one: 9 correct vs 27 confabulated), depth separates correct from
+confabulated at **AUC 0.498 — chance.** Holding mode fixed, depth is blind to
+correctness. (Within one-shot, AUC 0.84 but only n=4 correct — under-powered,
+report-only, no claim drawn.)
+
+This is the decisive lock on the interpretation: **attribution depth is not a
+single-forward-pass confabulation detector.** It indexes *where on the
+construction↔retrieval axis* a generation sits, nothing more. There is no free white-box
+truth signal to read at a fixed dial position — which is exactly why truth is recovered
+by *moving* the dial construction-ward (W3), not by thresholding depth (W2, and now WM).
+The black-box belief→truth dial cannot be collapsed into a cheap one-pass read; the
+expensive resampling backend earns its cost. The remaining white-box frontier is
+therefore **causal** (steer the model construction-ward and test whether correctness
+improves), not a better observational classifier.
+
 ## Honest scope (pre-committed)
 
 Single open model (Qwen2.5-1.5B-Instruct); SAE-free logit-lens DLA is a **proxy** for
