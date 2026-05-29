@@ -328,10 +328,33 @@ honesty claims, the boundary map *is* the invention.
    entropy cannot tell confab from correct. The install is real, late, graded, and distributed, but
    it is *shared answer-commitment machinery*, not a confabulation-only signature. The disciplined
    value is killing the abstention-detector overclaim before it could be bet on.
-5. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
+5. **Detection locus — DONE, REPORT_AS_LANDED (pre-registered hypothesis FALSIFIED,
+   `FINDING_detection_locus_2026_05_29.md`).** Where does the confab-DETECTION signal live —
+   single-pass internal state, or cross-derivation resampling? On the same balanced set, three
+   detectors read from Qwen: resampling instability (N=10, T=1.0), clean first-token entropy, and
+   logit margin. **B1 HELD** — resampling instability is a near-perfect detector (AUC **0.980**;
+   confab 0.774 vs correct 0.014; modal resampled answer correct on 100% of correct, 0% of confab).
+   **But B_contrast FAILED** — single-pass clean entropy (AUC **0.924**) and margin (**0.915**)
+   separate confab from correct almost as well; resampling adds only **+0.056**, not the +0.20 the
+   "detection lives only in re-derivation" hypothesis required. **Confabulation is internally
+   legible in ONE forward pass on Qwen arithmetic** — the model is genuinely less confident
+   (entropy 0.234 vs 0.045, margin 6.6 vs 14.5) on items it confabulates. This REFUTES "confident
+   confabulation" *for this model/domain* — a boundary, not a contradiction (the earlier
+   confident-when-wrong observation was gpt-4o-mini *hallucination*, a different model+instrument).
+   Resampling stays marginally stronger and is the only signal available in closed-model/cross-vendor
+   settings where internals aren't exposed — re-derivation is *sufficient everywhere, necessary
+   only there*. Confound-robust because B_contrast holds difficulty fixed across detector types.
+   Correctness bound untouched (all three DETECT, none CORRECT).
+6. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
-6. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
+7. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
    key (prefer `GEMINI_API_KEY`).
-7. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
-8. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
+8. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
+9. **Link the lines: does the suppression-rhythm flip-geometry PREDICT the single-pass output
+   uncertainty?** The detection-locus run found an output-level uncertainty signature (clean
+   first-token entropy/margin) and the single-layer-localization run linked the *depth* rhythm
+   (flip layer) to the causal install peak — but the depth rhythm and the output-confidence signal
+   have NOT been directly linked. Natural next test: does a confab's flip-layer / suppression
+   sharpness predict its first-token entropy and resampling instability? (Unblocked on Qwen.)
+10. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
    claim above.
