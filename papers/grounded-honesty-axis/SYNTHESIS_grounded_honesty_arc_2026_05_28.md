@@ -351,10 +351,14 @@ honesty claims, the boundary map *is* the invention.
    key (prefer `GEMINI_API_KEY`).
 8. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
 9. **Link the lines: does the suppression-rhythm flip-geometry PREDICT the single-pass output
-   uncertainty?** The detection-locus run found an output-level uncertainty signature (clean
-   first-token entropy/margin) and the single-layer-localization run linked the *depth* rhythm
-   (flip layer) to the causal install peak — but the depth rhythm and the output-confidence signal
-   have NOT been directly linked. Natural next test: does a confab's flip-layer / suppression
-   sharpness predict its first-token entropy and resampling instability? (Unblocked on Qwen.)
+   uncertainty? — DONE, REPORT_AS_LANDED, predicted link FALSIFIED
+   (`FINDING_rhythm_uncertainty_link_2026_05_29.md`).** Within confabs (n_rhythm=31, powered), the
+   depth-rhythm features (`rel_flip`, overwrite `sharpness`) carry essentially zero information
+   about the output-uncertainty signature: U1 rel_flip→entropy ρ=−0.07, U2 rel_flip→instability
+   ρ=−0.05, U3 sharpness→entropy ρ=−0.26 (right direction, p=0.17, below bar). B_link FAIL. So the
+   internal overwrite-geometry and the surface confidence signal are **statistically independent**
+   — confabulation leaves at least TWO independent fingerprints (buried-geometry tell + surface
+   uncertainty tell) rather than one collapsible signal; you cannot read the internal mechanism off
+   the output confidence or vice versa. The arc does NOT collapse to a single number.
 10. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
    claim above.
