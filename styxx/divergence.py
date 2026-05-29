@@ -67,9 +67,23 @@ SECURITY MODEL (red-team + 2026-05-29 injection-gap closure):
     :func:`grounded_honesty` to flag injection-suspicion while computing the
     honesty verdict from the stateless arm.
 
-  Calibration is single-model (gpt-4o-mini), single-vendor (OpenAI), single
-  injection type (system_lie), feasibility-grade. Stronger attacks (few-shot
-  lie, persona attack, sequential tool-output spoofing, multi-stage) remain
+  Calibration is single-model (gpt-4o-mini), single-vendor (OpenAI),
+  feasibility-grade. As of 2026-05-29 the architectural property is calibrated
+  across TWO injection vectors with the same per-vector signature: system_lie
+  (G1 stateless AUC 0.944 / G2 in-session AUC 0.011 inverted / G3 cross-context
+  divergence AUC 0.875 / K3 attack-effective 0.98) and persona_lie identity-
+  framing (G1 0.955 / G2 0.174 inverted / G3 0.833 / K3 0.771;
+  papers/grounded-honesty-axis/FINDING_injection_attack_generalization_2026_05_29.md).
+  A third vector tested in the same run — fewshot_lie single-demonstration —
+  was identified as INEFFECTIVE on canonical facts at K3 = 0.063 (3/48 modal
+  flips, far below the 0.70 precondition): the model treats a single contrarian
+  Q->A demo as outlier and reverts to training-time priors → threat surface
+  NARROWED on canonical facts at this attack strength, NOT widened. The
+  architectural defense is *predicted* (by construction) to hold against
+  fewshot but is not *empirically* tested against an effective fewshot attack
+  in this run. Stronger variants (multi-shot fewshot with consistent planted
+  answer, jailbreak-grade persona framings, sequential tool-output spoofing,
+  multi-stage gradient-style attacks, cross-vendor variants) remain
   scope-extensions for follow-up pre-registrations. These primitives detect
   the model's OWN spontaneous confabulation; under poisoned context they detect
   it only if the CALLER samples statelessly.
@@ -523,20 +537,39 @@ def detect_context_injection(
     primitive on the in-session arm. The two together give a verdict + a
     poison-suspicion at the same item.
 
-    Calibration (FEASIBILITY-GRADE — single confirmatory pre-registered run):
+    Calibration (FEASIBILITY-GRADE — two confirmatory pre-registered runs):
     n=48 register-matched factual self-claim pairs, gpt-4o-mini, N=10 resamples
-    per arm at temperature 1.0, system_lie injection. **AUC 0.875** at the
-    default threshold 0.5 (mean D_FALSE 0.852, mean D_TRUE 0.977; K3 attack
-    effective on 47/48 items). Receipt:
-    ``papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md``,
-    commit ``e093730``.
+    per arm at temperature 1.0. Two injection vectors with the same per-vector
+    architectural signature:
 
-    Honest scope: single-model, single-vendor, single-injection-type calibration;
-    stronger attacks (few-shot lie, persona attack, sequential tool-output
-    spoofing, multi-stage) are pre-registerable scope-extensions not validated
-    here. The architectural defense (stateless sampling at the caller layer) is
-    load-bearing — a deployment that uses in-session sampling without this
-    primitive will read injected lies as honest (AUC 0.011 inverted).
+      - **system_lie** (canonical): **AUC 0.875** at threshold 0.5 (mean
+        D_FALSE 0.852, mean D_TRUE 0.977; K3 attack effective on 47/48 items).
+        Receipt: ``FINDING_injection_gap_closure_2026_05_29.md``, commit
+        ``e093730``.
+      - **persona_lie** (identity framing — system prompt frames the model AS a
+        believer of the lie): **AUC 0.833** at threshold 0.5 (mean D_FALSE
+        0.644; K3 attack effective on 37/48 items at 0.771 — slightly less
+        universal than system_lie). Receipt:
+        ``FINDING_injection_attack_generalization_2026_05_29.md``, commit
+        ``dd6e3fb``.
+
+    A third vector tested in the same generalization run — **fewshot_lie**
+    single-demonstration (one assistant turn with a planted Q→lie demo before
+    the question) — was identified as INEFFECTIVE on canonical facts at
+    K3 = 0.063 (3/48 modal flips, far below the 0.70 precondition). The model
+    treats the single contrarian demo as outlier and reverts to training-time
+    priors → the threat surface is NARROWED on canonical facts at this attack
+    strength, NOT widened.
+
+    Honest scope: single-model, single-vendor, two-vector calibration;
+    multi-shot fewshot with consistent planted answer, jailbreak-grade persona
+    framings, sequential tool-output spoofing, multi-stage gradient-style
+    attacks, and cross-vendor variants are pre-registerable scope-extensions
+    not validated here. The architectural defense (stateless sampling at the
+    caller layer) is load-bearing across both calibrated vectors — a
+    deployment that uses in-session sampling without this primitive will read
+    injected lies as honest (AUC 0.011 inverted under system_lie; AUC 0.174
+    inverted under persona_lie).
 
     Parameters
     ----------
