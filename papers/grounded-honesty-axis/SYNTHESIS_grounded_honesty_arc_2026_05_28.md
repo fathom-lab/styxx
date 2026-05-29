@@ -235,6 +235,14 @@ self-claims** with four properties, each pre-registered and measured:
    *writable* (linear steering moves it −0.30 layers, p=0.0004) yet *correctness-inert*
    (zero confabulations flipped, real = sham): truth-recovery is the re-derivation
    computation itself, not the depth coordinate it occupies.
+6. **It is architecturally robust to context-injection under stateless audit** (AUC
+   0.944 under system_lie attack — only 0.022 below the clean baseline), with a hard
+   calibrated boundary on **in-session audit** (AUC 0.011, near-perfectly inverted —
+   47/48 items score the lie HIGHER than the truth). Cross-context divergence
+   `D = |C_stateless − C_in_session|` is a deployable item-level injection-detection
+   primitive (AUC 0.875). The one scope caveat that previously bounded every claim
+   above is now a calibrated boundary with a deployment requirement and a detection
+   signal.
 
 ## Honest scope (the whole arc)
 
@@ -243,8 +251,14 @@ Qwen2.5-1.5B-Instruct with a SAE-free logit-lens depth **proxy** for the publish
 Gemma Scope SAE/IG metric (a signal motivates the canonical SAE confirmation, a null
 would not refute it). One confirmatory run per claim, feasibility-grade, n ≈ 36–48 per
 run. Self-consistency, **not** external truth (where ground truth is computed —
-arithmetic, executed code — the runs are truth-anchored). **Injection-blind** (inherits
-the divergence security model — a planted lie in context reads as honest). **One
+arithmetic, executed code — the runs are truth-anchored). **Injection-resistant via the
+shipped stateless-resample architecture** (AUC 0.944 under system_lie attack — closing
+the prior "injection-blind" caveat), with a calibrated boundary on **in-session audit
+deployment posture** (AUC 0.011, near-inverted) and a deployable item-level
+**cross-context divergence injection-detection primitive** (AUC 0.875,
+`FINDING_injection_gap_closure_2026_05_29.md`). Single-vendor, single injection type
+(system_lie); stronger attacks (few-shot, persona, multi-stage) remain scope-bounded.
+**One
 axis-family** (factual/derived self-claims); says nothing about value claims,
 predictions, or non-factual self-reports. Method-diverse grounding is validated on
 **arithmetic and code-output tracing**; logic and multi-hop QA remain untested. The
@@ -379,5 +393,18 @@ honesty claims, the boundary map *is* the invention.
    — confabulation leaves at least TWO independent fingerprints (buried-geometry tell + surface
    uncertainty tell) rather than one collapsible signal; you cannot read the internal mechanism off
    the output confidence or vice versa. The arc does NOT collapse to a single number.
-10. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
-   claim above.
+10. **Close the injection gap — DONE, SURVIVED (`FINDING_injection_gap_closure_2026_05_29.md`).**
+    All four pre-registered bars HELD on n=48 with hash continuity to the standing arc.
+    **G1 (stateless architecture robust) HELD AUC 0.9442** — only 0.022 below the clean
+    0.966 baseline. **G2 (in-session collapses) HELD AUC 0.0106** — not merely
+    uninformative but **near-perfectly inverted** (47/48 items score the lie HIGHER than
+    the truth — the worst-case interpretability hazard if naively deployed). **G3
+    (cross-context divergence detects injection) HELD AUC 0.875**, mean D_FALSE 0.852,
+    mean D_TRUE 0.977 — usable item-level injection-suspicion at ~+N=10 calls/audit.
+    **K3 (system_lie attack effective) HELD 0.9792 (47/48 items modal-flipped).** The
+    architectural defense is now load-bearing and documented: *the scoring harness MUST
+    resample with a context the agent's adversary cannot reach* — the shipped
+    `resample_answers()` already meets this contract by construction. Cross-vendor
+    grounding (item 7) becomes architecturally additive, not a different defense.
+    Scope-bounded to gpt-4o-mini + system_lie injection; stronger attacks (few-shot,
+    persona, multi-stage) remain pre-registerable.
