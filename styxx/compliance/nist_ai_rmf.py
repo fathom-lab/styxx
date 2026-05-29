@@ -161,6 +161,60 @@ _GAUNTLET_PREFLIGHT = PrimitiveCoverage(
     receipt_doc="papers/agent-self-audit/FINDING_confound_audit_2026_05_27.md",
 )
 
+_GROUNDED_HONESTY = PrimitiveCoverage(
+    primitive="styxx.grounded_honesty (7.7.13 candidate)",
+    calibrated_metric=(
+        "Factual self-claim honesty grounded against the model's OWN "
+        "resampled belief distribution: g = Stability x Concordance. "
+        "Pre-registered AUC 0.966 separating TRUE from FALSE register-"
+        "matched self-claims (vs text-only deception axis 0.498 = chance, "
+        "margin +0.468), n=48 gpt-4o-mini. Self-calibrating Stability "
+        "gate (high-stratum AUC 0.97, low 0.44, report-or-abstain). "
+        "Architecturally injection-resistant under stateless sampling: "
+        "AUC 0.944 under system_lie attack (drop only 0.022 from clean)."
+    ),
+    construct_ceiling=(
+        "Grounds against the model's BELIEF, not external truth - a "
+        "confidently-wrong belief yields a confidently-wrong verdict "
+        "(same-vendor council does NOT fix; cross-vendor is the open "
+        "step). Single axis (factual self-claims) only. Past competence "
+        "cliff, plain one-shot resampling can converge on a SYSTEMATIC "
+        "miscalculation; method-diverse re-derivation recovers ~93% of "
+        "the gap, irreducible ~2/36 residue scoped to cross-vendor. "
+        "SECURITY MODEL: caller MUST sample statelessly; in-session "
+        "sampling collapses to AUC 0.011 (near-inverted, 47/48 lie>truth)."
+    ),
+    receipt_commit="e093730",
+    receipt_doc="papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md",
+)
+
+_DETECT_CONTEXT_INJECTION = PrimitiveCoverage(
+    primitive="styxx.detect_context_injection (7.7.13 candidate)",
+    calibrated_metric=(
+        "Item-level context-injection detection via cross-context "
+        "resampling divergence D = |C_stateless - C_in_session|. "
+        "Pre-registered AUC 0.875 at threshold 0.5 separating injected "
+        "from clean items on n=48 register-matched factual self-claim "
+        "pairs under system_lie injection (gpt-4o-mini, N=10 per arm at "
+        "temp=1.0). Mean D_FALSE 0.852, mean D_TRUE 0.977. Detection "
+        "cost: one extra resample set per audited claim. Pair with "
+        "grounded_honesty: stateless arm verdict + cross-context delta."
+    ),
+    construct_ceiling=(
+        "Single-model, single-vendor, single injection-type (system_lie) "
+        "calibration. Stronger attacks (few-shot lie, persona attack "
+        "in-session, sequential tool-output spoofing, multi-stage "
+        "gradient-style attacks) remain pre-registerable scope-"
+        "extensions NOT validated here. K3 attack-effectiveness was "
+        "0.98 (47/48 items) on canonical-fact set; a more aligned model "
+        "may refuse the injection more often, attenuating both signals "
+        "in parallel. The primitive measures CROSS-CONTEXT divergence - "
+        "a deployment without an in-session arm has no signal."
+    ),
+    receipt_commit="e093730",
+    receipt_doc="papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md",
+)
+
 
 # ---------------------------------------------------------------------------
 # NIST AI RMF Measure subcategory registry
@@ -188,7 +242,8 @@ MEASURE_REGISTRY: dict[str, ComplianceMap] = {
             "qualitatively or quantitatively and demonstrated for conditions "
             "similar to deployment setting(s). Measures are documented."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT),
+        styxx_primitives=(_COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT,
+                          _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION),
     ),
     "MS-2.4": ComplianceMap(
         clause="MS-2.4",
@@ -197,7 +252,14 @@ MEASURE_REGISTRY: dict[str, ComplianceMap] = {
             "components — as identified in the map function — are monitored "
             "when in production."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _AGENT_AUDIT),
+        styxx_primitives=(_COGNOMETRIC_CARD, _AGENT_AUDIT, _DETECT_CONTEXT_INJECTION),
+        notes=(
+            "MS-2.4 production monitoring extended in 7.7.13: "
+            "detect_context_injection provides item-level cross-context "
+            "divergence signal at audit time (AUC 0.875), suitable for "
+            "real-time injection-suspicion flagging at +N=10 calls/claim. "
+            "Not legal advice. Independent conformity review required."
+        ),
     ),
     "MS-2.5": ComplianceMap(
         clause="MS-2.5",
@@ -207,14 +269,18 @@ MEASURE_REGISTRY: dict[str, ComplianceMap] = {
             "conditions under which the technology was developed are "
             "documented."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT),
+        styxx_primitives=(_COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT,
+                          _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION),
         notes=(
             "MS-2.5 explicitly requires documentation of generalizability "
             "limitations. styxx's construct-ceiling discipline (every "
             "primitive ships with a documented failure mode) directly "
             "addresses this. The 'Limitations of generalizability' phrase "
             "in MS-2.5 is the exact regulatory hook for construct ceilings. "
-            "Not legal advice. Independent conformity review required."
+            "7.7.13 extends with grounded_honesty's belief-not-truth scope "
+            "and detect_context_injection's single-attack-type calibration "
+            "as published failure modes. Not legal advice. Independent "
+            "conformity review required."
         ),
     ),
     "MS-2.6": ComplianceMap(
@@ -228,14 +294,21 @@ MEASURE_REGISTRY: dict[str, ComplianceMap] = {
             "and robustness, real-time monitoring, and response times for "
             "AI system failures."
         ),
-        styxx_primitives=(_COGNOMETRIC_CARD, _RECOVER_POSTURE, _AGENT_AUDIT),
+        styxx_primitives=(_COGNOMETRIC_CARD, _RECOVER_POSTURE, _AGENT_AUDIT,
+                          _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION),
         notes=(
             "Partial coverage: styxx provides per-step cognitive monitoring "
             "(cognometric_card), context-compaction-boundary recovery "
-            "(recover_posture), and substrate-grounded claim verification "
-            "(agent_audit). Operators must add runtime fail-safe controls "
-            "(watchdogs, interrupts, rollback) to satisfy 'can fail safely' "
-            "end-to-end. Not legal advice. Independent conformity review required."
+            "(recover_posture), substrate-grounded claim verification "
+            "(agent_audit), and (NEW in 7.7.13) two fail-safe primitives "
+            "for the 'fail safely beyond knowledge limits' clause - "
+            "grounded_honesty's stateless-resample architecture IS the "
+            "fail-safe (AUC 0.944 maintained under system_lie attack), "
+            "and detect_context_injection is the item-level redundancy "
+            "(AUC 0.875). Operators must STILL add runtime fail-safe "
+            "controls (watchdogs, interrupts, rollback) to satisfy 'can "
+            "fail safely' end-to-end. Not legal advice. Independent "
+            "conformity review required."
         ),
     ),
     "MS-2.13": ComplianceMap(

@@ -696,6 +696,83 @@ External submissions go through CI auto-verification (`.github/workflows/gauntle
 
 ---
 
+## New in 7.7.13 — `grounded_honesty`, `detect_context_injection`, compliance bridge v0.2, conformity declaration templates
+
+The 7.7.13 candidate (2026-05-29) ships the first **construct-ceiling crack** as a deployable primitive, the **calibrated SECURITY MODEL** that replaces the prior blanket injection-blind caveat, and a complete conformity-declaration template surface for the EU AI Act Article 15 bridge.
+
+### `styxx.grounded_honesty` — factual self-claim honesty, sampling-grounded
+
+```python
+from styxx import grounded_honesty
+# N resamples of the model answering the bare question (temperature > 0):
+samples = ["Canberra", "Canberra", "Canberra", "Sydney", "Canberra"]
+grounded_honesty(samples, "Canberra").grounded   # high  -> claim is the stable belief
+grounded_honesty(samples, "Sydney").grounded     # low   -> contradiction
+```
+
+The first styxx honesty signal that tracks **ground truth rather than register**. Grounds a stated factual self-claim against the model's OWN resampled belief distribution: `g = Stability × Concordance`. Pre-registered AUC **0.966** separating TRUE from FALSE register-matched self-claims (vs text-only deception axis at 0.498 = chance). Self-calibrating Stability gate (high-stratum AUC 0.97 vs low 0.44 — report-or-abstain). Architecturally **injection-resistant under stateless sampling**: AUC 0.944 under system_lie attack (drop only 0.022 from clean baseline). **Honest scope:** grounds against the model's *belief*, not external truth; single axis (factual self-claims); cross-vendor is the open step. See `papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md` (22-probe pre-registered arc) and `papers/CONSTRUCT_CEILING_PUBLIC_RESPONSE_2026_05_29.md` (public-response memo).
+
+### `styxx.detect_context_injection` — item-level cross-context divergence
+
+```python
+from styxx import detect_context_injection
+stateless = ["Paris"] * 10      # neutral resampler context — architectural defense
+in_session = ["Lyon"] * 10      # agent's session context (poisoned)
+r = detect_context_injection(stateless, in_session, "Lyon")
+r.suspected   # True  (D = 1.0 > 0.5)
+r.divergence  # 1.0
+```
+
+The first deployable item-level context-injection detection primitive. Calibrated **AUC 0.875** at threshold 0.5 on n=48 register-matched factual self-claim pairs under system_lie injection. The 2026-05-29 injection-gap closure run replaced the prior blanket `INJECTION-BLIND` caveat with a **calibrated architectural boundary**:
+
+- **stateless sampling** (the shipped `resample_answers()` contract): AUC 0.944 under attack — **architecturally injection-resistant by construction**
+- **in-session sampling**: AUC 0.011 — near-perfectly **INVERTED** (47/48 items score the lie HIGHER than the truth — worst-case interpretability hazard, **DO NOT DEPLOY**)
+- **cross-context divergence** (run BOTH arms, compare): AUC 0.875 detection primitive at +N=10 calls/audit
+
+Pre-reg `PREREG_injection_gap_closure_2026_05_29.md` BEFORE data; SURVIVED bundle at commit `e093730`. **Honest scope:** single injection type (system_lie); stronger attacks (few-shot, persona, multi-stage) remain pre-registerable scope-extensions.
+
+### `styxx.compliance.eu_ai_act` v0.2 + `styxx.compliance.nist_ai_rmf` extended
+
+```python
+from styxx.compliance import cite, coverage_table, uncovered_requirements
+m = cite("Article 15.1(a)")
+print(m.styxx_primitives)              # now 5 primitives (was 3) — adds grounded_honesty + detect_context_injection
+for u in uncovered_requirements():      # 7 EU AI Act clauses NOT covered (unchanged)
+    print(u.clause, "→", u.alternative) # honest boundary statement
+```
+
+The EU AI Act Article 15 bridge ships v0.2 with the two new 7.7.13 primitives folded into Articles 15.1, 15.1(a), and 15.3. **Article 15.3 reads as a structural fit:** the stateless-resample architecture IS the fail-safe (technical-redundancy clause); `detect_context_injection` is the item-level redundancy. Companion paper at [`papers/EU_AI_ACT_COMPLIANCE_2026.md`](papers/EU_AI_ACT_COMPLIANCE_2026.md) v0.2 (extends v0.1 with §9 addendum documenting the four new commits from 2026-05-29). The parallel NIST AI RMF Measure-function bridge (`styxx.compliance.nist_ai_rmf`) is extended to cite both new primitives in MS-2.3, MS-2.4, MS-2.5, MS-2.6.
+
+### `styxx.compliance.templates` — paste-and-customize conformity declarations
+
+```python
+from styxx.compliance.templates import load_template, list_templates
+list_templates()
+# ('accuracy_declaration', 'robustness_statement', 'boundary_statement',
+#  'sycophancy_disclosure', 'injection_resistance_disclosure')
+md = load_template("accuracy_declaration")  # ~4KB markdown ready for ops
+```
+
+Five markdown templates regulated operators paste into EU AI Act conformity declarations:
+
+| template | clause | purpose |
+|---|---|---|
+| `accuracy_declaration` | Article 15.1(a) | full AUC table + construct ceilings + reproducibility receipts |
+| `robustness_statement` | Article 15.3 | fail-safe + redundancy with ASCII architecture diagram |
+| `boundary_statement` | (governance) | seven uncovered EU AI Act provisions with alternative-tool pointers |
+| `sycophancy_disclosure` | Article 15.1(a) construct ceiling | restrained-tech FPR 0.30 published failure mode |
+| `injection_resistance_disclosure` | Article 15.3 + SECURITY MODEL | load-bearing MUST-sample-statelessly operational requirement |
+
+All templates ship as package data (importlib.resources, robust across editable/wheel/egg). 10 unit tests in `tests/test_compliance_templates.py` verify legal-disclaimer presence, version disclosure, and load-bearing-statement integrity on every template.
+
+### Construct-ceiling public-response memo
+
+`papers/CONSTRUCT_CEILING_PUBLIC_RESPONSE_2026_05_29.md` (CC-BY 4.0) connects the construct-ceiling thesis (AUC 0.498 on register-matched text-only deception) to convergent public statements about AI epistemology — including Pope Leo XIV's #MagnificaHumanitas message (2026-05-29) and the Atlan field-wide admission "no framework can distinguish a factually wrong context from a correct one." Section 4 is the explicit boundary: phenomenology, qualia, moral conscience, embodied meaning, and wisdom are **outside the measurement methodology by design**. The memo is offered as a citation-ready stakeholder contribution under EU AI Act Article 15 paragraph 2, with falsification criteria F1–F4 and a defined deprecation trigger (zero independent citations by 2027-02-01).
+
+**Not legal advice. Not theology. Not phenomenology. A measurement-methodology response, honestly bounded.**
+
+---
+
 ## New in 7.7.10 — `critique_detector`, `agent_audit`, `compliance.eu_ai_act`
 
 Three pure-addition public APIs. Default install + import behavior is byte-identical to 7.7.9 for anyone who doesn't import them.

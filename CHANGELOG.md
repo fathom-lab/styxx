@@ -56,6 +56,35 @@ The persona/instruction robustness from `papers/adversarial-robustness/FINDING_r
 - **Article 15.1(a)** (accuracy metrics declared): adds both new primitives with their AUC numbers (0.966 grounded clean / 0.944 grounded under attack / 0.875 detection).
 - **Article 15.3** (robustness via fail-safe/redundancy): the stateless-resample architecture IS the fail-safe; `detect_context_injection` is the item-level redundancy. Both added.
 
+### Changed — `styxx.compliance.nist_ai_rmf` extended in parallel
+
+NIST AI RMF Measure-function bridge updated to cite the new primitives alongside the EU AI Act bridge:
+
+- **MS-2.3** (performance demonstration): adds `_GROUNDED_HONESTY` + `_DETECT_CONTEXT_INJECTION` to the deployable-performance evidence set.
+- **MS-2.4** (production monitoring): adds `_DETECT_CONTEXT_INJECTION` as item-level cross-context divergence signal at audit time (AUC 0.875), suitable for real-time injection-suspicion flagging at +N=10 calls/claim.
+- **MS-2.5** (valid and reliable + generalizability limitations): adds both primitives with their published construct ceilings — the construct-ceiling discipline is the exact regulatory hook for the "Limitations of generalizability" clause.
+- **MS-2.6** (safety + fail-safely-beyond-knowledge-limits): adds both primitives — `grounded_honesty`'s stateless-resample architecture IS the structural fail-safe; `detect_context_injection` is the item-level redundancy. Kill-gate A3 still held (6 uncovered ≥ 5 covered).
+
+### Added — `styxx.compliance.templates` (paste-and-customize EU AI Act conformity declaration templates)
+
+```python
+from styxx.compliance.templates import load_template, list_templates
+list_templates()
+# ('accuracy_declaration', 'robustness_statement', 'boundary_statement',
+#  'sycophancy_disclosure', 'injection_resistance_disclosure')
+declaration = load_template("accuracy_declaration")  # ~4KB markdown ready for ops
+```
+
+Five markdown templates regulated operators paste into EU AI Act conformity declarations (Article 15.1(a), Article 15.3, plus boundary + sycophancy + load-bearing SECURITY MODEL disclosures). All templates ship as package data (importlib.resources, robust across editable/wheel/egg) — verified at CI time via `.github/workflows/test.yml` wheel-shipping check. 10 unit tests in `tests/test_compliance_templates.py` verify legal-disclaimer presence on every template (`"not legal advice"` + `"independent legal review"` mandatory), companion-paper citation, styxx-version disclosure, load-bearing-statement integrity on `injection_resistance_disclosure` (AUC 0.944 stateless + 0.011 in-session + 0.875 detection + PREREG/FINDING commit receipts), and 7-enumerated-uncovered-Articles in `boundary_statement`. Implements item 3 of the 5-item strategic landscape ship list (after item 1 module + item 2 paper).
+
+### Changed — `papers/EU_AI_ACT_COMPLIANCE_2026.md` extended to v0.2
+
+The companion paper (v0.1 shipped in 7.7.10) is extended to v0.2 (commit `48194e8`) with the new 7.7.13 primitives folded into Articles 15.1, 15.1(a), and 15.3 coverage tables. New §9 addendum (2026-05-29) documents the four 7.7.13 commits, the SURVIVED outcome with all four pre-registered bars, and explicit "what changes for operators relying on v0.1" guidance. Kill-gates A1–A5 unchanged and continue to hold. v0.2 timeline: 63 days before the 2026-08-02 enforcement deadline.
+
+### Added — `papers/CONSTRUCT_CEILING_PUBLIC_RESPONSE_2026_05_29.md` public-response position memo
+
+Standalone CC-BY 4.0 position memo connecting the construct-ceiling thesis to convergent public statements about AI epistemology — including Pope Leo XIV's #MagnificaHumanitas message (2026-05-29) and the Atlan field-wide admission "no framework can distinguish a factually wrong context from a correct one." Eight sections + reproducibility footnotes covering: empirical receipts (AUC 0.498 register-matched four-axis chance), the boundary (phenomenology, conscience, embodied meaning explicitly OUT OF SCOPE), the EU AI Act Article 15 ¶2 stakeholder methodology operationalization, falsification criteria F1–F4, citation strategy. Explicit non-endorsement: no claim of papal/Vatican backing. Companion announcement drafts at `drafts/announcement_2026_05_29_pope_construct_ceiling.md` (Twitter single + 8-tweet thread + Telegram long-form + LinkedIn professional + operator outbound notes with hype-redirect discipline carried through).
+
 ---
 
 ## [7.7.12] — 2026-05-28 — cognometric vitals in the attestation (verifiable, re-derivable, tamper-evident)
