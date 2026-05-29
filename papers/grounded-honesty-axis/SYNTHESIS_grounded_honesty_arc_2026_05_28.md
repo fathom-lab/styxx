@@ -353,11 +353,22 @@ honesty claims, the boundary map *is* the invention.
    Llama's confabs are even LESS confident (margin 0.62 vs correct 6.48). "Confident confabulation"
    is now refuted on two architectures of two families; the open confident-when-wrong regime is the
    closed-model HALLUCINATION instrument, not any particular open architecture.
+   **DOMAIN-GENERAL (2026-05-29, REPORT_AS_LANDED, `FINDING_detection_locus_code_2026_05_29.md`):**
+   the protocol replicated UNCHANGED on CODE-OUTPUT TRACING (control-flow difficulty, not number
+   size; Qwen white-box, n_conf=35/n_corr=17 powered, ground truth by EXECUTION then hashed
+   `792b8bda…`) — single-pass clean entropy separates confab from correct at AUC **0.906**, matching
+   resampling instability (**0.908**); B_contrast **0.002** FAILS again. Single-pass confab
+   legibility is **domain-general**, not an arithmetic artifact — code confabs carry the same
+   uncertainty signature (margin 1.84 vs correct 5.53, entropy 1.06 vs 0.21). "Confident
+   confabulation" is now refuted across two architectures AND two derivation domains; white-box
+   derivation confabulation is internally uncertain by the first token regardless of whether the
+   difficulty is number magnitude or control flow.
 6. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
 7. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
    key (prefer `GEMINI_API_KEY`).
-8. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
+8. **Generalize further** — multi-hop logic QA (arithmetic + code-tracing both DONE: single-pass
+   legibility is domain-general across both; see item 5).
 9. **Link the lines: does the suppression-rhythm flip-geometry PREDICT the single-pass output
    uncertainty? — DONE, REPORT_AS_LANDED, predicted link FALSIFIED
    (`FINDING_rhythm_uncertainty_link_2026_05_29.md`).** Within confabs (n_rhythm=31, powered), the
