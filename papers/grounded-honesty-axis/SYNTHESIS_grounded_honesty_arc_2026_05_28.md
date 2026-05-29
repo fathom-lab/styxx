@@ -310,10 +310,28 @@ honesty claims, the boundary map *is* the invention.
    (corrupts the stream regardless — don't use raw argmax), and shallow-net saturation (16 layers →
    any single ablation destructive → read localization from the discordant sign test + late-vs-mid
    profile, not absolute Δ). Closes the I1 leg the band method couldn't test on Llama.
-4. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
+4. **Confabulation-specificity (the abstention-detector test) — DONE, powered NULL, REPORT_AS_LANDED
+   (`FINDING_confabulation_specificity_2026_05_29.md`).** The load-bearing question the whole arc
+   pointed at: is the late-band install confab-SPECIFIC, or just how the model emits ANY answer? If
+   knockdown dissolved *confabs* into uncertainty while leaving *correct* answers standing, "knock
+   the band, watch the entropy" would be a usable abstention detector. **It is not.** Balanced set
+   (28 usable confab vs 24 easy-correct, both powered), first-token dose-integrated band [22,26]
+   knockdown over the GAMMAS grid (γ=0 full-knockdown saturated both groups → amended to the
+   dose-integral *before* the confirmatory run, validity not verdict). **S1 AUC 0.0015** (bar 0.70)
+   — confabs show a *smaller* entropy rise (3.33±0.48) than correct answers (5.43±0.33), tight and
+   non-overlapping in the WRONG direction. **S2 dissolution gap −0.021, MWU p=0.73** — null. **S3
+   uncomputable** — confab answers (4–7 tokens) and correct (2–3) share no length, so the reversed
+   direction is fully confounded with answer length; the honest claim is the conservative one,
+   **no evidence of confab-specificity** (not a positive correct-is-more-fragile claim). **This
+   bounds the disinhibition finding's interpretation:** "knock band → confab → uncertainty" is true
+   but NOT specific — the same knockdown dissolves correct answers as much, so band-knockdown
+   entropy cannot tell confab from correct. The install is real, late, graded, and distributed, but
+   it is *shared answer-commitment machinery*, not a confabulation-only signature. The disciplined
+   value is killing the abstention-detector overclaim before it could be bet on.
+5. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
-5. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
+6. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
    key (prefer `GEMINI_API_KEY`).
-6. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
-7. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
+7. **Generalize further** — logic and multi-hop QA (arithmetic + code already done).
+8. **Close the injection gap** — the one scope caveat that, unaddressed, bounds every
    claim above.
