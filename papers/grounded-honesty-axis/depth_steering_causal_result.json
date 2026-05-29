@@ -1,0 +1,95 @@
+{
+  "experiment": "causal depth steering \u2014 can a construction-ward push flip a confabulation?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_depth_steering_causal_2026_05_29.md",
+  "answer_key_sha256_pre_scoring": "ddccd8e46f7fdac04ff5bec6d63b6b98ab00b6f17074d94c4f81122e0b87964d",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "device": "cuda",
+  "n_items": 36,
+  "n_decoder_layers": 28,
+  "core_signal": "exact integer parse vs in-code arithmetic truth (no judge)",
+  "n_confab_oneshot": 32,
+  "n_train": 17,
+  "n_test": 15,
+  "precondition_enough_test_confab": {
+    "n_test": 15,
+    "met": true
+  },
+  "locked_layer": 6,
+  "locked_alpha": 4.0,
+  "grid": [
+    {
+      "layer": 6,
+      "alpha": 4.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 6,
+      "alpha": 8.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 6,
+      "alpha": 12.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 12,
+      "alpha": 4.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 12,
+      "alpha": 8.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 12,
+      "alpha": 12.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 18,
+      "alpha": 4.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 18,
+      "alpha": 8.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    },
+    {
+      "layer": 18,
+      "alpha": 12.0,
+      "train_flip": 0.0,
+      "train_valid": 1.0
+    }
+  ],
+  "S1_causal_recovery": {
+    "real_flip_rate": 0.0,
+    "sham_flip_rate": 0.0,
+    "real_minus_sham": 0.0
+  },
+  "S2_valid_integer_rate": 1.0,
+  "S3_manipulation_check": {
+    "depth_shift_on_minus_off": -0.2983,
+    "p": 0.00043
+  },
+  "K_break_rate": {
+    "real": 0.25,
+    "sham": 0.0
+  },
+  "S1": false,
+  "S2": true,
+  "S3": true,
+  "K": false,
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "single open model Qwen2.5-1.5B-Instruct, SAE-free logit-lens depth, difference-of-means residual steering with sham control + train/test-locked hyperparameters, feasibility-grade, one confirmatory run; arithmetic ground truth computed in-code then hashed; exact-integer correctness (no judge). Tests causal sufficiency of a LINEAR residual push along one derived direction only; a null does not rule out causality via other interventions."
+}
