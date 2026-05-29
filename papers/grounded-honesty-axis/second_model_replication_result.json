@@ -1,0 +1,640 @@
+{
+  "experiment": "second-model replication of the corrected confabulation mechanism (install + disinhibition)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_second_model_replication_2026_05_29.md",
+  "answer_key_sha256_pre_scoring": "ddccd8e46f7fdac04ff5bec6d63b6b98ab00b6f17074d94c4f81122e0b87964d",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "device": "cuda",
+  "n_items": 36,
+  "n_decoder_layers": 16,
+  "n_layers_hidden": 17,
+  "anchor_model_qwen": {
+    "median_flip_hidden": 25.0,
+    "late_fraction": 0.88,
+    "flip_iqr": 4.0,
+    "d1_delta": -0.0078,
+    "target_band_decoder": [
+      22,
+      26
+    ]
+  },
+  "core_signal": "exact integer parse vs in-code arithmetic truth (no judge)",
+  "n_oneshot_confab": 35,
+  "n_alignable_confab": 35,
+  "stageA_geometry": {
+    "late_threshold_layer_index": 11,
+    "D1_truth_specific_flash": {
+      "n_digit_pos_confab": 0,
+      "correct_digit_lead_rate": null,
+      "matched_distractor_lead_rate": null,
+      "delta": null,
+      "paired_p": null,
+      "powered": false,
+      "truth_specific": false,
+      "null_as_in_qwen": false
+    },
+    "D2_late_localized": {
+      "n_crossings": 34,
+      "late_fraction": 0.6471,
+      "median_flip_layer": 11.5
+    },
+    "D3_rhythmic_tight_band": {
+      "flip_layer_iqr": 5.0
+    },
+    "D1_null": false,
+    "D2": true,
+    "D3": true
+  },
+  "band_derivation": {
+    "rule": "depth-proportional (reproduces Qwen at N=28): hw=round(2N/28), cc=round(8N/28); target center=round(median flip_hidden)-1; TARGET=[c-hw,c+hw]; CONTROL=[cc-hw,cc+hw]",
+    "half_width": 1,
+    "target_band_decoder": [
+      10,
+      12
+    ],
+    "control_band_decoder": [
+      4,
+      6
+    ],
+    "no_overlap": true,
+    "is_late": true,
+    "band_valid": true
+  },
+  "stageB_disinhibition": {
+    "n_usable_confab": 35,
+    "powered": true,
+    "scoring_gamma": 0.0,
+    "coherence_rate_target_g0": 1.0,
+    "coherence_rate_target_g50": 1.0,
+    "blunt_fallback_triggered": false,
+    "I1_late_band_causes_commitment": {
+      "f_target_removed": 0.9429,
+      "f_ctrl_removed": 0.9143,
+      "delta": 0.0286,
+      "discordant_target_only": 3,
+      "discordant_ctrl_only": 2,
+      "sign_test_p": 0.5
+    },
+    "I2_disinhibition_yields_uncertainty": {
+      "n_commitment_removed": 33,
+      "powered": true,
+      "truth_recovery_rate": 0.0,
+      "entropy_rise_mean": 1.856,
+      "entropy_rise_p": 0.0,
+      "branch": "installation"
+    },
+    "I3_dose_response": {
+      "commitment_rate_by_gamma": {
+        "1.0": 1.0,
+        "0.75": 0.5714,
+        "0.5": 0.1429,
+        "0.25": 0.0857,
+        "0.0": 0.0571
+      },
+      "spearman_rho": 1.0,
+      "p": 0.0
+    },
+    "I1": false,
+    "I2_install": true,
+    "I2_suppression": false,
+    "I3": true
+  },
+  "rows": [
+    {
+      "subset": "ctrl_3x2",
+      "expr": "123 \u00d7 45",
+      "correct": 5535,
+      "v1": 5495,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 13,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "234 \u00d7 19",
+      "correct": 4446,
+      "v1": 43686,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 12,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "317 \u00d7 28",
+      "correct": 8876,
+      "v1": 8814,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 13,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "456 \u00d7 32",
+      "correct": 14592,
+      "v1": 14752,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "198 \u00d7 47",
+      "correct": 9306,
+      "v1": 9294,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 13,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "275 \u00d7 36",
+      "correct": 9900,
+      "v1": 9750,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "512 \u00d7 27",
+      "correct": 13824,
+      "v1": 13824,
+      "ok1": true,
+      "prof": null
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "168 \u00d7 54",
+      "correct": 9072,
+      "v1": 9244,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "123 \u00d7 456",
+      "correct": 56088,
+      "v1": 55928,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "234 \u00d7 318",
+      "correct": 74412,
+      "v1": 74526,
+      "ok1": false,
+      "prof": {
+        "crossed": false,
+        "flip_layer": null,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": false,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "517 \u00d7 283",
+      "correct": 146311,
+      "v1": 144779,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 14,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "409 \u00d7 276",
+      "correct": 112884,
+      "v1": 113904,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 12,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "638 \u00d7 154",
+      "correct": 98252,
+      "v1": 95882,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 10,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "729 \u00d7 341",
+      "correct": 248589,
+      "v1": 251691,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 13,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "852 \u00d7 167",
+      "correct": 142284,
+      "v1": 141784,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 5,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "346 \u00d7 529",
+      "correct": 183034,
+      "v1": 183854,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 13,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "463 \u00d7 387",
+      "correct": 179181,
+      "v1": 163919,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 4,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "781 \u00d7 264",
+      "correct": 206184,
+      "v1": 210744,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 7,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "1234 \u00d7 567",
+      "correct": 699678,
+      "v1": 871098,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "2345 \u00d7 678",
+      "correct": 1589910,
+      "v1": 163670,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 6,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "3456 \u00d7 289",
+      "correct": 998784,
+      "v1": 9944,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 8,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "4321 \u00d7 198",
+      "correct": 855558,
+      "v1": 83388,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 7,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "5678 \u00d7 432",
+      "correct": 2452896,
+      "v1": 245104,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 14,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "1357 \u00d7 864",
+      "correct": 1172448,
+      "v1": 117744,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 11,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "6789 \u00d7 213",
+      "correct": 1446057,
+      "v1": 146871,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 8,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "9876 \u00d7 145",
+      "correct": 1432020,
+      "v1": 141710,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 8,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "47 \u00d7 38 + 219",
+      "correct": 2005,
+      "v1": 1411,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 1,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "123 \u00d7 45 + 678",
+      "correct": 6213,
+      "v1": 5673,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 12,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "234 \u00d7 56 \u2212 789",
+      "correct": 12315,
+      "v1": 13164,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 10,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "312 \u00d7 27 + 1444",
+      "correct": 9868,
+      "v1": 312,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 7,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "509 \u00d7 43 \u2212 1276",
+      "correct": 20611,
+      "v1": 22417,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 11,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "88 \u00d7 76 + 512",
+      "correct": 7200,
+      "v1": 6888,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 12,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "741 \u00d7 33 \u2212 2050",
+      "correct": 22403,
+      "v1": 741,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 11,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "264 \u00d7 19 + 333",
+      "correct": 5349,
+      "v1": 48972,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 11,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "357 \u00d7 48 + 921",
+      "correct": 18057,
+      "v1": 21474,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 11,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    },
+    {
+      "subset": "multistep",
+      "expr": "612 \u00d7 27 \u2212 1830",
+      "correct": 14694,
+      "v1": 612,
+      "ok1": false,
+      "prof": {
+        "crossed": true,
+        "flip_layer": 15,
+        "n_layers": 17,
+        "digit_pos": false,
+        "corr_lead": true,
+        "distractors": []
+      }
+    }
+  ],
+  "stage_a_ok": false,
+  "stage_b_ok": false,
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "second small open model (Llama-3.2-1B-Instruct, 16 layers) replicating the Qwen corrected mechanism; SAE-free full-vocab logit-lens; single-position teacher-forced single confirmatory run per stage; feasibility-grade n=36; arithmetic ground truth computed in-code then hashed pre-scoring; exact-integer correctness (no judge); greedy/deterministic. The target band is derived from Llama's OWN Stage-A flip geometry by the pre-committed rule, NOT transferred from Qwen and NOT hand-tuned; control is an early matched-size band. A REPLICATION_SURVIVED upgrades the mechanism from one model to two architectures (bands each found by their own geometry); it does NOT claim universality and does NOT touch the standing correctness bound (every internal lever moves confidence; only re-derivation moves correctness)."
+}
