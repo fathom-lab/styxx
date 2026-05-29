@@ -1,0 +1,51 @@
+{
+  "experiment": "code-tracing grounding \u2014 does method diversity generalize beyond arithmetic?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_code_tracing_grounding.md",
+  "answer_key_sha256_pre_scoring": "0d7de3c1a2419e22283372b0468b150d7b596261b0a29463e393c7f38ea5faeb",
+  "domain": "code-output tracing (deterministic import-free Python, ground truth via exec)",
+  "n_snippets": 36,
+  "ground_model": "gpt-4o-mini",
+  "n_samples": 10,
+  "temperature": 1.0,
+  "n_methods": 5,
+  "core_signal": "exact integer parse vs in-code-EXECUTED truth (no LLM judge)",
+  "auc_grounded_plain": 0.6709,
+  "auc_grounded_path_diverse": 1.0,
+  "auc_path_by_subset": {
+    "code_ctrl": 1.0,
+    "code_loop": 1.0,
+    "code_nested": 1.0,
+    "code_multistep": 1.0
+  },
+  "auc_plain_by_subset": {
+    "code_ctrl": 0.9383,
+    "code_loop": 0.5,
+    "code_nested": 0.7222,
+    "code_multistep": 0.5556
+  },
+  "G1_self_correction": {
+    "n_plain_wrong": 25,
+    "path_fix_rate_on_plain_wrong": 1.0
+  },
+  "G2_validity_gate": {
+    "auc_path_overall": 1.0,
+    "median_path_stability": 1.0,
+    "n_high": 27,
+    "n_low": 9,
+    "auc_high_stability_path": 1.0,
+    "auc_low_stability_path": 1.0
+  },
+  "G3_concordance_with_truth": {
+    "mean_plain_hard": 0.0926,
+    "mean_path_hard": 0.963,
+    "delta": 0.8704
+  },
+  "K_ctrl_tier_path_auc": 1.0,
+  "K_register_confound_p": 1.0,
+  "G1_method_diversity_self_corrects": true,
+  "G2_path_diverse_restores_truth_signal": true,
+  "G3_concordance_with_truth_jumps": true,
+  "K_control_tier_unharmed_register_clean": true,
+  "RESULT": "SURVIVED",
+  "honest_scope": "single model gpt-4o-mini, OpenAI-only, one run, feasibility-grade, n=36 x 2 backends; ground truth computed by EXECUTING each deterministic import-free snippet then hashed pre-scoring; core signal exact integer match (no judge); CoT answers parsed from an ANSWER: line; self-consistency not external truth, injection-blind, one axis-family; generalization claim is to code-output tracing only."
+}
