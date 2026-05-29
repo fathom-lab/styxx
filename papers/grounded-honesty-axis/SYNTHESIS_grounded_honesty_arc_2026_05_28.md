@@ -263,18 +263,21 @@ honesty claims, the boundary map *is* the invention.
 
 ## Next (disciplined, not hype)
 
-1. **Causal disinhibition — the lever, now with coordinates and a corrected criterion.**
-   The overwrite is a tight, late, rhythmic hop at **layers ≈23–27** (median 25 of 28, IQR 4;
-   `FINDING_suppression_rhythm`). That is the pre-measured target for a late-layer
-   ablation/attenuation or activation patch. **But the corrected mechanism lowers the bar of
-   what success means:** the wrong answer is *installed* late over an undifferentiated
-   mid-network field (no digit, truth included, is privileged), so dampening the hop removes
-   the *confident wrong commitment* — it is **not** predicted to recover *truth specifically*.
-   The honest pre-registration is: measure whether dampening (a) reduces confident-wrong
-   commitment and (b) shifts toward abstention/uncertainty, with truth-recovery a *secondary,
-   not expected* outcome. Richer non-linear interventions (patching a derivation run,
-   attention-pattern edits, SAE/multi-layer directions) remain on the table; "linear
-   injection doesn't pull truth" is not "the axis is acausal."
+1. **Causal disinhibition — DONE, SURVIVED (`FINDING_disinhibition_2026_05_29.md`).** The
+   pre-measured install band (decoder layers [22,26] ≈ hidden-state idx 23–27) was tested
+   causally: at the divergence position, attenuate the band's residual *write*
+   (`h_in + γ·(h_out−h_in)`) and read the next-token distribution. **I1 HELD — the band IS the
+   install:** knockdown removes the confident-wrong commitment on **0.889** of confabs vs
+   **0.222** for a matched early control band [6,10] (Δ=0.667, discordant 13:1, sign-test
+   p=0.0009). **I2 HELD (installation branch) — removing it yields UNCERTAINTY, not truth:**
+   truth-recovery **0.0625** (floor), entropy **+7.9 nats** (p≈0). **I3 HELD — dose-response
+   monotonic (ρ=1.0).** First SURVIVED causal result in the white-box line (vs the
+   writable-but-inert linear depth-steering). **The honest bound it earns: disinhibition is a
+   lever on CONFIDENCE (turns a confident wrong answer into an honest "not sure" = the
+   mechanistic basis for ABSTENTION), NOT a lever on correctness.** Dovetails with tonight's
+   keystone null — every lever we have moves confidence; only re-derivation moves correctness.
+   Richer interventions (patching a derivation run, multi-token regeneration, SAE/multi-layer
+   directions) remain open, but the core causal claim of the corrected mechanism is now closed.
 2. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
 3. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
