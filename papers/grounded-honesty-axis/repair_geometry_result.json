@@ -1,0 +1,794 @@
+{
+  "experiment": "does one-shot overwrite geometry predict method-diverse repairability?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_repair_geometry_2026_05_29.md",
+  "answer_key_sha256_pre_scoring": "ddccd8e46f7fdac04ff5bec6d63b6b98ab00b6f17074d94c4f81122e0b87964d",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "device": "cuda",
+  "n_items": 36,
+  "core_signal": "exact integer parse vs in-code arithmetic truth (no judge)",
+  "n_usable_confab": 32,
+  "powered": true,
+  "repairability_histogram_r0_to_r5": {
+    "0": 15,
+    "1": 7,
+    "2": 4,
+    "3": 4,
+    "4": 1,
+    "5": 1
+  },
+  "mean_repairability": 1.125,
+  "U1_later_install_more_repairable": {
+    "spearman_rho": -0.2883,
+    "p": 0.10956,
+    "predict_sign": "+"
+  },
+  "U2_entrenched_less_repairable": {
+    "spearman_rho": 0.1572,
+    "p": 0.39015,
+    "predict_sign": "-"
+  },
+  "U3_geometry_predicts_repair": {
+    "n_repairable_hi": 6,
+    "n_stubborn_lo": 22,
+    "powered": true,
+    "aucs": {
+      "flip_layer": 0.2121,
+      "realized_dominance": 0.6136,
+      "install_jump": 0.7197
+    },
+    "best_feature": "flip_layer",
+    "best_auc": 0.2121
+  },
+  "rows": [
+    {
+      "subset": "ctrl_3x2",
+      "expr": "123 \u00d7 45",
+      "correct": 5535,
+      "v1": 5635,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.2142857313156128,
+        "install_jump": 26.222896575927734,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 3,
+      "per_method": [
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "234 \u00d7 19",
+      "correct": 4446,
+      "v1": 4446,
+      "ok1": true,
+      "geom": null,
+      "r": null,
+      "per_method": null
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "317 \u00d7 28",
+      "correct": 8876,
+      "v1": 9296,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.535714328289032,
+        "install_jump": 2.247591018676758,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "456 \u00d7 32",
+      "correct": 14592,
+      "v1": 14592,
+      "ok1": true,
+      "geom": null,
+      "r": null,
+      "per_method": null
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "198 \u00d7 47",
+      "correct": 9306,
+      "v1": 9206,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 26,
+        "realized_dominance": 0.2857142984867096,
+        "install_jump": 2.2543601989746094,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "275 \u00d7 36",
+      "correct": 9900,
+      "v1": 9820,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.1785714328289032,
+        "install_jump": 18.410606384277344,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 2,
+      "per_method": [
+        true,
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "512 \u00d7 27",
+      "correct": 13824,
+      "v1": 13728,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 25,
+        "realized_dominance": 0.2142857313156128,
+        "install_jump": 5.3245697021484375,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "ctrl_3x2",
+      "expr": "168 \u00d7 54",
+      "correct": 9072,
+      "v1": 9072,
+      "ok1": true,
+      "geom": null,
+      "r": null,
+      "per_method": null
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "123 \u00d7 456",
+      "correct": 56088,
+      "v1": 56088,
+      "ok1": true,
+      "geom": null,
+      "r": null,
+      "per_method": null
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "234 \u00d7 318",
+      "correct": 74412,
+      "v1": 75612,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.8571429252624512,
+        "install_jump": 3.0734543800354004,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "517 \u00d7 283",
+      "correct": 146311,
+      "v1": 146091,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.9285714626312256,
+        "install_jump": 18.52938461303711,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "409 \u00d7 276",
+      "correct": 112884,
+      "v1": 115304,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.6428571939468384,
+        "install_jump": 25.576602935791016,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "638 \u00d7 154",
+      "correct": 98252,
+      "v1": 99072,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 14,
+        "realized_dominance": 0.785714328289032,
+        "install_jump": 3.959803819656372,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "729 \u00d7 341",
+      "correct": 248589,
+      "v1": 246509,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 23,
+        "realized_dominance": 0.2857142984867096,
+        "install_jump": 2.629457950592041,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "852 \u00d7 167",
+      "correct": 142284,
+      "v1": 143094,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 21,
+        "realized_dominance": 0.5,
+        "install_jump": 5.00325870513916,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "346 \u00d7 529",
+      "correct": 183034,
+      "v1": 180794,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 26,
+        "realized_dominance": 0.9285714626312256,
+        "install_jump": 16.766305923461914,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "463 \u00d7 387",
+      "correct": 179181,
+      "v1": 175921,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 26,
+        "realized_dominance": 0.4285714626312256,
+        "install_jump": 4.774733543395996,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_3x3",
+      "expr": "781 \u00d7 264",
+      "correct": 206184,
+      "v1": 205344,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.25,
+        "install_jump": 8.009016990661621,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "1234 \u00d7 567",
+      "correct": 699678,
+      "v1": 70098,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 25,
+        "realized_dominance": 0.392857164144516,
+        "install_jump": 4.31144905090332,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "2345 \u00d7 678",
+      "correct": 1589910,
+      "v1": 1590650,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.6071428656578064,
+        "install_jump": 5.975260257720947,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "3456 \u00d7 289",
+      "correct": 998784,
+      "v1": 1017104,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.7500000596046448,
+        "install_jump": 5.687877655029297,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "4321 \u00d7 198",
+      "correct": 855558,
+      "v1": 846578,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 25,
+        "realized_dominance": 0.3214285969734192,
+        "install_jump": 2.799821138381958,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "5678 \u00d7 432",
+      "correct": 2452896,
+      "v1": 2410976,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.0357142873108387,
+        "install_jump": 2.609933614730835,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "1357 \u00d7 864",
+      "correct": 1172448,
+      "v1": 117096,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 0,
+        "realized_dominance": 0.9642857313156128,
+        "install_jump": 23.72589874267578,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "6789 \u00d7 213",
+      "correct": 1446057,
+      "v1": 1420527,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.0,
+        "install_jump": 17.917373657226562,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 0,
+      "per_method": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "mul_4x3",
+      "expr": "9876 \u00d7 145",
+      "correct": 1432020,
+      "v1": 1403270,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.8214285969734192,
+        "install_jump": 25.40326690673828,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 2,
+      "per_method": [
+        false,
+        true,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "47 \u00d7 38 + 219",
+      "correct": 2005,
+      "v1": 1860,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 0,
+        "realized_dominance": 1.0,
+        "install_jump": 3.64125394821167,
+        "crossed": false,
+        "n_layers": 29
+      },
+      "r": 5,
+      "per_method": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "123 \u00d7 45 + 678",
+      "correct": 6213,
+      "v1": 5793,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 22,
+        "realized_dominance": 0.5,
+        "install_jump": 8.53488826751709,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 4,
+      "per_method": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "234 \u00d7 56 \u2212 789",
+      "correct": 12315,
+      "v1": 13045,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 23,
+        "realized_dominance": 0.535714328289032,
+        "install_jump": 12.118376731872559,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 2,
+      "per_method": [
+        false,
+        true,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "312 \u00d7 27 + 1444",
+      "correct": 9868,
+      "v1": 8608,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 23,
+        "realized_dominance": 0.4642857313156128,
+        "install_jump": 6.8685808181762695,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 3,
+      "per_method": [
+        true,
+        false,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "509 \u00d7 43 \u2212 1276",
+      "correct": 20611,
+      "v1": 18015,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 25,
+        "realized_dominance": 0.8928571939468384,
+        "install_jump": 3.4400930404663086,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        false,
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "88 \u00d7 76 + 512",
+      "correct": 7200,
+      "v1": 6944,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 23,
+        "realized_dominance": 0.6071428656578064,
+        "install_jump": 11.413884162902832,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 3,
+      "per_method": [
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "741 \u00d7 33 \u2212 2050",
+      "correct": 22403,
+      "v1": 6987,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.3571428656578064,
+        "install_jump": 16.531055450439453,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 2,
+      "per_method": [
+        false,
+        true,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "264 \u00d7 19 + 333",
+      "correct": 5349,
+      "v1": 5087,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 0,
+        "realized_dominance": 0.9642857313156128,
+        "install_jump": 19.214920043945312,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 3,
+      "per_method": [
+        true,
+        false,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "357 \u00d7 48 + 921",
+      "correct": 18057,
+      "v1": 16899,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 24,
+        "realized_dominance": 0.535714328289032,
+        "install_jump": 4.946066856384277,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "subset": "multistep",
+      "expr": "612 \u00d7 27 \u2212 1830",
+      "correct": 14694,
+      "v1": 9450,
+      "ok1": false,
+      "geom": {
+        "flip_layer": 27,
+        "realized_dominance": 0.1071428656578064,
+        "install_jump": 24.753515243530273,
+        "crossed": true,
+        "n_layers": 29
+      },
+      "r": 1,
+      "per_method": [
+        false,
+        true,
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "U1": false,
+  "U2": false,
+  "U3": true,
+  "U3_powered": true,
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "single open model Qwen2.5-1.5B-Instruct, SAE-free full-vocab logit-lens, feasibility-grade n=36, one confirmatory run; arithmetic ground truth computed in-code then hashed pre-scoring; exact-integer correctness (no judge). Repairability is Qwen's OWN 5-method recovery count (same model as the geometry, removing the cross-model confound in the prior gpt-4o-mini P1 labels); the repairable arm may be thin on a 1.5B model. Correlational within-model claim; NOT a causal demonstration that altering geometry changes repairability. A null refutes only that the two halves are legibly linked in one forward pass; it leaves both the repair result (P1) and the mechanism (suppression-rhythm) intact."
+}

@@ -198,6 +198,21 @@ with a *sharpened, more modest* success criterion: dampening removes the confide
 commitment, but recovering *truth specifically* is not predicted by anything measured. →
 `FINDING_spectral_trajectory_2026_05_29.md`, corrected by `FINDING_suppression_rhythm_2026_05_29.md`.
 
+**The keystone — does that one-shot install geometry predict which confabs re-derivation can
+repair? — was pre-registered and DID NOT survive** (`FINDING_repair_geometry_2026_05_29.md`).
+On Qwen's own 5-method repair count (same model as the geometry, removing the prior
+cross-model confound), neither install timing (U1: ρ(r, flip_layer)=−0.29, p=0.11) nor
+mid-network entrenchment (U2: ρ=+0.16, p=0.39) predicts repairability; the one feature that
+crossed the AUC bar did so in the *reversed* direction (flip_layer AUC=0.21) — the most
+entrenched one-shot installs (correct token never led, e.g. `47×38+219` realized_dominance
+1.00) were among the **most** repairable (r=5). Repair runs in a different regime
+(multi-step re-derivation) than the single-pass commitment; the two validated halves are
+**not legibly linked in one forward pass**. As pre-registered, this *hardens* the standing
+claim: truth — and now repairability — lives in the **process of re-derivation**, not in any
+single-pass internal read (a fourth concordant null: depth 0.498, β 0.589, rank-field
+Δ=−0.008, and now the repair boundary). Caveat: Qwen-1.5B's repairable arm is thin (mean
+r=1.125; only 6/32 at r≥3) — the reversed AUC is suggestive, not powered.
+
 ## The instrument, stated whole
 
 The grounded honesty axis is a **vital-signs monitor for an LLM's factual
