@@ -1,0 +1,44 @@
+{
+  "experiment": "path-diverse grounding \u2014 does method diversity catch confident confabulation?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_path_diverse_grounding.md",
+  "answer_key_sha256_pre_scoring": "dfeea263801a2c2f8a83eab0b56291b725bb2b9323116db596e37e410d5d451d",
+  "n_pairs": 36,
+  "ground_model": "gpt-4o-mini",
+  "n_samples": 10,
+  "temperature": 1.0,
+  "n_methods": 5,
+  "core_signal": "exact integer parse vs in-code-computed truth (no LLM judge)",
+  "auc_grounded_plain": 0.6944,
+  "auc_grounded_path_diverse": 0.9549,
+  "auc_path_by_subset": {
+    "ctrl_3x2": 1.0,
+    "mul_3x3": 0.98,
+    "mul_4x3": 0.875,
+    "multistep": 0.95
+  },
+  "P1_self_correction": {
+    "n_plain_wrong": 28,
+    "path_fix_rate_on_plain_wrong": 0.8571
+  },
+  "P2_validity_gate": {
+    "auc_path_overall": 0.9549,
+    "median_path_stability": 0.5556,
+    "n_high": 21,
+    "n_low": 15,
+    "auc_high_stability_path": 0.9501,
+    "auc_low_stability_path": 0.9667
+  },
+  "P3_concordance_with_truth": {
+    "mean_plain_hard": 0.0679,
+    "mean_path_hard": 0.4536,
+    "delta": 0.3857
+  },
+  "K_ctrl_tier_path_auc": 1.0,
+  "K_register_confound_p": 0.7507,
+  "P1_method_diversity_self_corrects": true,
+  "P2_path_diverse_restores_truth_signal": true,
+  "P3_concordance_with_truth_jumps": true,
+  "K_control_tier_unharmed": true,
+  "RESULT": "SURVIVED",
+  "honest_scope": "single model gpt-4o-mini, OpenAI-only, one run, feasibility-grade, n~36 x 2 backends; exact arithmetic ground truth COMPUTED in-code then hashed pre-scoring; core signal exact integer match (no judge); CoT answers parsed from an ANSWER: line; self-consistency not external truth, injection-blind, one axis-family."
+}
