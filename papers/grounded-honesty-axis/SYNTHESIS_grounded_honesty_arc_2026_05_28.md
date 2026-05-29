@@ -235,14 +235,19 @@ self-claims** with four properties, each pre-registered and measured:
    *writable* (linear steering moves it −0.30 layers, p=0.0004) yet *correctness-inert*
    (zero confabulations flipped, real = sham): truth-recovery is the re-derivation
    computation itself, not the depth coordinate it occupies.
-6. **It is architecturally robust to context-injection under stateless audit** (AUC
-   0.944 under system_lie attack — only 0.022 below the clean baseline), with a hard
-   calibrated boundary on **in-session audit** (AUC 0.011, near-perfectly inverted —
-   47/48 items score the lie HIGHER than the truth). Cross-context divergence
-   `D = |C_stateless − C_in_session|` is a deployable item-level injection-detection
-   primitive (AUC 0.875). The one scope caveat that previously bounded every claim
-   above is now a calibrated boundary with a deployment requirement and a detection
-   signal.
+6. **It is architecturally robust to context-injection under stateless audit**
+   across **two calibrated attack vectors** — system_lie (AUC 0.944 stateless / 0.011
+   in-session inverted / 0.875 cross-context divergence detection / K3 attack-effective
+   0.98) AND persona_lie identity-framing (AUC 0.955 stateless / 0.174 in-session
+   inverted / 0.833 detection / K3 0.77, `FINDING_injection_attack_generalization_2026_05_29.md`).
+   The architectural SECURITY MODEL signature (stateless ~0.95 / in-session ~0.17
+   inverted / cross-context divergence ~0.85) replicates across structurally different
+   injection roles. **Threat-surface NARROWED, not widened, by one identified
+   ineffective attack:** fewshot_lie single-demonstration attack is ineffective on
+   canonical facts at this strength (K3 0.063, 3/48 modal flips — model treats a
+   single contrarian Q→A demo as outlier). Multi-shot fewshot / sequential
+   tool-output / multi-stage / gradient-style attacks remain pre-registerable
+   scope-extensions.
 
 ## Honest scope (the whole arc)
 
@@ -408,3 +413,23 @@ honesty claims, the boundary map *is* the invention.
     grounding (item 7) becomes architecturally additive, not a different defense.
     Scope-bounded to gpt-4o-mini + system_lie injection; stronger attacks (few-shot,
     persona, multi-stage) remain pre-registerable.
+11. **Injection-attack generalization — DONE, REPORT_AS_LANDED (`FINDING_injection_attack_generalization_2026_05_29.md`).**
+    Tested the two most natural scope-extensions from item 10: **fewshot_lie**
+    (one assistant turn before the question with planted Q→lie demonstration) and
+    **persona_lie** (system prompt frames the model AS believer of the lie).
+    **Persona_lie PASS — all four pre-registered bars HELD** (G1 stateless robust
+    0.955 / G2 in-session 0.174 inverted / G3 divergence detects 0.833 / K3 attack-
+    effective 0.771). The architectural SECURITY MODEL signature replicates on a
+    structurally different attack role (identity framing vs fact assertion).
+    **Fewshot_lie K3 PRECONDITION FAILED** (rate 0.063 — 3/48 modal flips) — the
+    single-demonstration attack is ineffective on canonical facts at this strength;
+    G2_B / G3_B descriptive only, no SURVIVED claim. This is a **threat-surface
+    narrowing**, not a primitive failure: the architectural defense is *predicted*
+    to hold against fewshot by construction but is not *empirically* tested against
+    an effective fewshot attack. Hash-continuity verified with the standing arc
+    answer-key `3befd35342…`. Compliance bridge claim now extends from "calibrated
+    on system_lie" to "calibrated on system_lie + persona_lie; fewshot_lie identified
+    as ineffective at single-demo strength." Multi-shot fewshot, jailbreak-grade
+    persona framings, sequential tool-output spoofing, multi-stage attacks remain
+    pre-registerable scope-extensions. Pre-reg `f570909`, REPORT_AS_LANDED commit
+    (pending).
