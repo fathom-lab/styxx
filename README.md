@@ -696,7 +696,37 @@ External submissions go through CI auto-verification (`.github/workflows/gauntle
 
 ---
 
-## New in 7.7.13 — `grounded_honesty`, `detect_context_injection`, compliance bridge v0.2, conformity declaration templates
+## New in 7.7.13 — `audit_claim` (the spellchecker for AI output), `grounded_honesty`, `detect_context_injection`, compliance bridge v0.2, conformity declaration templates
+
+### `styxx.audit_claim` — single-call honesty audit (the productized turn)
+
+```python
+from styxx import audit_claim
+
+# Minimal: factual self-claim grounded against the model's belief.
+result = audit_claim(
+    claim="The capital of France is Lyon.",
+    question="What is the capital of France?",
+)
+result.verdict             # "contradiction"
+result.grounded            # ~ 0.0
+
+# With agent session context: also runs cross-context injection detection.
+result = audit_claim(
+    claim="The capital of France is Lyon.",
+    question="What is the capital of France?",
+    in_session_messages=agent.history,
+)
+result.verdict             # "injected" | "honest" | "contradiction" | "confabulation" | "abstain"
+result.injection_suspected # True/False
+result.divergence          # 0.0–1.0
+result.scope_warnings      # ('belief-not-truth', 'single-vendor-calibration', ...)
+result.calibration         # citation back to FINDINGs at the deployed AUC vintage
+```
+
+The high-level wrapper over `grounded_honesty` and `detect_context_injection` — drives N stateless + N in-session resamples via OpenAI internally, scores both arms, returns a structured `ClaimAudit` verdict. **One call. One line. Production-ready.** Verdict is single-source-of-truth derived from the scored components per the documented thresholds; scope warnings are auto-generated from the data (`belief-not-truth` and `single-vendor-calibration` always present; `past-competence-cliff`, `single-attack-type-calibration`, `low-N` triggered when applicable). The calibration string attaches the receipt chain back to the validating FINDINGs at `e093730` and `dd6e3fb` so operators can cite the AUC numbers in EU AI Act Article 15.1(a) accuracy declarations without losing provenance. Worked example: [`examples/audit_claim_example.py`](examples/audit_claim_example.py). 23 unit tests in [`tests/test_audit.py`](tests/test_audit.py) (offline-deterministic via mocked OpenAI client).
+
+
 
 The 7.7.13 candidate (2026-05-29) ships the first **construct-ceiling crack** as a deployable primitive, the **calibrated SECURITY MODEL** that replaces the prior blanket injection-blind caveat, and a complete conformity-declaration template surface for the EU AI Act Article 15 bridge.
 

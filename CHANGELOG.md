@@ -7,7 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.7.13] — 2026-05-29 — grounded honesty axis (the first construct-ceiling crack, as a primitive) + injection-gap closure (calibrated boundary, deployable detection)
+## [7.7.13] — 2026-05-29 — grounded honesty axis (the first construct-ceiling crack, as a primitive) + injection-gap closure (calibrated boundary, deployable detection) + the spellchecker for AI output (`audit_claim` productized turn)
+
+### Added — `styxx.audit_claim` (productized single-call honesty audit — the spellchecker for AI output)
+
+```python
+from styxx import audit_claim
+
+result = audit_claim(
+    claim="The capital of France is Lyon.",
+    question="What is the capital of France?",
+    in_session_messages=agent.history,   # optional: enables injection-detection
+    model="gpt-4o-mini",
+)
+result.verdict             # "honest" | "contradiction" | "confabulation" | "injected" | "abstain"
+result.scope_warnings      # ('belief-not-truth', ...)  auto-generated from data
+result.calibration         # citation back to FINDINGs at deployed AUC vintage
+```
+
+The high-level wrapper over `grounded_honesty` and `detect_context_injection`. The underlying primitives are pure measurement functions — they take samples and return a score; the caller has to drive the resampling. `audit_claim` closes that gap: drives N stateless resamples via OpenAI internally, drives N in-session resamples if the caller supplies `in_session_messages`, runs both calibrated primitives, returns a structured `ClaimAudit` NamedTuple with single-source-of-truth verdict + auto-generated scope warnings + calibration receipt string.
+
+- Verdict derivation is a pure function of the scored components (`_derive_verdict` is independently testable without OpenAI). Threshold customization: `honest_threshold`, `low_stability_threshold`, `contradiction_threshold`, `injection_threshold` operator-overridable. Defaults: 0.7 / 0.5 / 0.3 / 0.5.
+- Scope warnings auto-generated: `belief-not-truth` (always present — the construct ceiling), `single-vendor-calibration` (always present), `past-competence-cliff` (triggered iff stably-confabulated), `single-attack-type-calibration` (triggered iff in-session arm run), `low-N` (triggered iff `n < 8`).
+- Calibration string is bumped when underlying FINDING numbers change; preserves the receipt chain back to `e093730` (injection-gap closure SURVIVED) and `dd6e3fb` (injection-attack generalization REPORT_AS_LANDED).
+- Test coverage: `tests/test_audit.py` ships 23 offline-deterministic tests (mocked OpenAI client + exact-match same_fn) covering verdict-derivation logic, confidence bands, scope-warning generation, NamedTuple field surface, input validation, threshold customization, sample/cluster preservation for reproducibility receipts.
+- Worked example: `examples/audit_claim_example.py` (three scenarios: honest factual, contradicting, contradicting-with-injection).
+
+This is the productized turn from research toolkit to deployable AI-agent honesty audit. **One call. One line. Production-ready.** The construct-ceiling crack (AUC 0.498 register-only → 0.966 belief-grounded) and the calibrated SECURITY MODEL (stateless 0.944 vs in-session 0.011 inverted) are both operationally present in every audit; the boundary statement (scope warnings) is in every result for honest deployment.
 
 ### Added — `styxx.grounded_honesty` (factual self-claim honesty, sampling-grounded)
 
