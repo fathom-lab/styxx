@@ -158,6 +158,22 @@ classifier because the truth signal lives in the *trajectory along* the axis, no
 point on it. Belief→truth is a Pearl-Level-2 move (changing how you sample), and the
 white-box frontier is the Level-3 version: causally steering construction-ward.
 
+**The Level-3 test was run (REPORT_AS_LANDED) — and it sharpens the line.** A forward
+hook adding `α·rms·v_ℓ` (the construction−retrieval difference-of-means direction) to the
+residual stream during one-shot generation **does causally move the mechanism**: steered
+DLA depth shifts −0.30 layers construction-ward (p=0.0004, S3 held), and the push is not
+inert — it breaks 25% of initially-correct answers vs 0% for a sham (K). But it **does not
+transport correctness**: across the entire (ℓ,α) grid, construction-ward steering flipped
+**zero** held-out confabulations to correct, indistinguishable from a random direction
+(real = sham = 0.00, S1 — a clean powered null, n_test=15). The dial is therefore a
+read/**write** coordinate that is **correctness-inert under linear steering**: we can move
+the depth coordinate, but the answer does not follow. This closes the loop with the
+observational within-mode result — *no truth to read at a fixed depth, and now no truth to
+inject by moving depth linearly* — and locates truth-recovery in the **re-derivation
+computation itself**, not the depth coordinate it occupies. → `FINDING_depth_steering_causal_2026_05_29.md`.
+(Scope: one linear direction on one model; does not rule out causality via patching,
+attention edits, finetuning, or richer SAE/multi-layer directions.)
+
 ## The instrument, stated whole
 
 The grounded honesty axis is a **vital-signs monitor for an LLM's factual
@@ -172,10 +188,14 @@ self-claims** with four properties, each pre-registered and measured:
 4. **Its boundary is mapped, not hidden.** Belief = truth within competence; past the
    cliff, method-diversity repairs ~93% of the gap; the ~2/36 irreducible core is
    scoped to cross-vendor. It generalizes across derivation domains (arithmetic, code).
-5. **Its dial has a mechanistic substrate.** The belief→truth backend is the
-   construction↔retrieval axis, observable white-box as attribution depth: confabulation
-   is deep/retrieval, derivation is shallow/construction, and recovering truth is the
-   construction-ward shift — the behavioral dial and the internal axis are one thing.
+5. **Its dial has a mechanistic substrate — causally writable, but truth rides on
+   re-derivation.** The belief→truth backend is the construction↔retrieval axis,
+   observable white-box as attribution depth: confabulation is deep/retrieval, derivation
+   is shallow/construction, and recovering truth is the construction-ward shift — the
+   behavioral dial and the internal axis are one thing. The depth coordinate is causally
+   *writable* (linear steering moves it −0.30 layers, p=0.0004) yet *correctness-inert*
+   (zero confabulations flipped, real = sham): truth-recovery is the re-derivation
+   computation itself, not the depth coordinate it occupies.
 
 ## Honest scope (the whole arc)
 
@@ -204,11 +224,12 @@ honesty claims, the boundary map *is* the invention.
 
 ## Next (disciplined, not hype)
 
-1. **Causal steering — turn the dial from inside (the white-box frontier).** W3 shows
-   moving construction-ward *recovers* truth observationally; the breakthrough-grade test
-   is whether *intervening* (activation steering along the construction↔retrieval
-   direction) *causally* improves correctness. Pearl Level 3. Pre-registered kill-gate;
-   honest that steering may not transfer.
+1. **Non-linear / richer causal interventions.** Linear difference-of-means steering was
+   run and is correctness-inert (S1 null) though it does move depth (S3). The open
+   causal question is whether a *richer* intervention transports truth: activation
+   patching from a derivation run, attention-pattern edits, finetuning, or steering along
+   an SAE-derived / multi-layer / token-conditional direction. "This lever doesn't pull
+   truth" is not "the axis is acausal."
 2. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
    published metric (blocked: sae-lens uninstalled, Gemma gated).
 3. **Cross-vendor grounding** for the irreducible ~2/36 core — blocked on a second-vendor
