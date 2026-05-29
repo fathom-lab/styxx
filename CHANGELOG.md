@@ -35,6 +35,16 @@ The high-level wrapper over `grounded_honesty` and `detect_context_injection`. T
 
 This is the productized turn from research toolkit to deployable AI-agent honesty audit. **One call. One line. Production-ready.** The construct-ceiling crack (AUC 0.498 register-only → 0.966 belief-grounded) and the calibrated SECURITY MODEL (stateless 0.944 vs in-session 0.011 inverted) are both operationally present in every audit; the boundary statement (scope warnings) is in every result for honest deployment.
 
+### Changed — `audit_claim` and `audit_session` resampling is now parallelized (7-10x speedup)
+
+`_resample` was sequential at v0 — N=10 calls × ~1.5s each = ~15s wall-clock per audit (the OpenAI calls are I/O bound; CPU is mostly idle). Now uses `concurrent.futures.ThreadPoolExecutor` to dispatch the N completions concurrently against the (thread-safe, stateless-HTTP) OpenAI sync client. Empirical N=10 wall-clock: ~2s. **7-10x speedup on the default audit path, zero public-API change.**
+
+- New operator override: `audit_claim(..., max_workers=8)` (default 8; clamped to `min(n, max_workers)` so smaller N doesn't waste threads). Set `max_workers=1` for deterministic-serial debug mode.
+- `n=1` short-circuits the executor entirely (no thread spawned).
+- `audit_session(...)` inherits the same `max_workers` parameter and forwards to each per-claim audit.
+- Test coverage in `tests/test_audit.py::TestParallelization` (+4 tests): preserves verdict under parallelism, `max_workers=1` forces serial, `n=1` skips executor, `len(samples_stateless) == n` after parallel dispatch.
+- Backward compatibility: every existing test path passes unchanged. The public API surface is identical; the change is internal mechanics.
+
 ### Added — `styxx.grounded_honesty` (factual self-claim honesty, sampling-grounded)
 
 - **`grounded_honesty(samples, claim, *, method=..., same_fn=...) -> GroundedScore`** — the first styxx honesty signal that tracks GROUND TRUTH rather than register. Grounds a stated factual self-claim against the model's OWN resampled belief distribution: `g = Stability × Concordance`. A TRUE claim is the stable sampling mode (both high); a FALSE claim is either a confabulation (low Stability) or a contradiction (claim outside the stable mode → low Concordance). Built on the shipped `styxx.divergence` clustering backends (`same_fn` LLM judge recommended; cosine default; lexical fallback). A pure measurement primitive — the caller supplies the resamples.

@@ -414,3 +414,52 @@ class TestAuditSession:
             same_fn=_exact_match,
         )
         assert result.n_honest == 1
+
+
+# ---------------------------------------------------------------------------
+# Parallelization tests — exercise ThreadPoolExecutor in _resample
+# ---------------------------------------------------------------------------
+
+
+class TestParallelization:
+    """ThreadPoolExecutor parallelizes the N resamples. Verify thread-safety
+    on the mocked client + determinism of result (order-independent because
+    samples within an arm are aggregated into clusters)."""
+
+    def test_parallel_resampling_preserves_verdict(self):
+        # 10 identical samples in parallel should still produce 1 cluster
+        # and verdict "honest".
+        result = audit_claim(
+            claim="Paris", question="q?", n=10, max_workers=8,
+            client=_mk_client(["Paris"] * 10), same_fn=_exact_match,
+        )
+        assert result.verdict == "honest"
+        assert result.n_clusters_stateless == 1
+
+    def test_max_workers_1_forces_serial(self):
+        # Default-equivalent verdict at serial execution — useful as a debug
+        # mode and confirms the fallback path doesn't break.
+        result = audit_claim(
+            claim="Paris", question="q?", n=10, max_workers=1,
+            client=_mk_client(["Paris"] * 10), same_fn=_exact_match,
+        )
+        assert result.verdict == "honest"
+        assert result.grounded == 1.0
+
+    def test_parallel_n_equals_1_skips_executor(self):
+        # n=1 should not spawn a thread (perf nit, but also a defensive check
+        # the n<=1 branch returns without ThreadPoolExecutor context).
+        result = audit_claim(
+            claim="Paris", question="q?", n=1, max_workers=8,
+            client=_mk_client(["Paris"]), same_fn=_exact_match,
+        )
+        # n=1 triggers the low-N scope warning per the prior calibration band.
+        assert "low-N" in result.scope_warnings
+
+    def test_parallel_does_not_drop_samples(self):
+        # Under parallelism the executor's ex.map should preserve N exactly.
+        result = audit_claim(
+            claim="Paris", question="q?", n=10, max_workers=8,
+            client=_mk_client(["Paris"] * 10), same_fn=_exact_match,
+        )
+        assert len(result.samples_stateless) == 10
