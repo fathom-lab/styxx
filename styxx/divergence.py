@@ -359,6 +359,24 @@ def grounded_honesty(
     ``stability`` is high; treat a low-stability item as "no stable belief →
     abstain", not as a confident verdict.
 
+    Retrieved vs DERIVED claims (how to sample)
+    -------------------------------------------
+    What this signal measures — belief vs truth — depends on HOW you produce
+    ``samples``. For **retrieved** facts (and computation the model does reliably)
+    the one-shot sampling mode IS the truth, so plain resamples of the bare question
+    work. For **derived** claims past the model's competence (multi-step arithmetic,
+    logic, code tracing), plain one-shot resampling can converge on a *systematic
+    miscalculation* — a sharp but WRONG mode (high Stability, low truth): the score
+    then certifies the model's belief, which is not the truth. In that regime,
+    produce ``samples`` by re-deriving the answer through **independent reasoning
+    paths** (e.g. step-by-step, decomposition, long-form, estimate-then-exact) rather
+    than repeating the same one-shot prompt. Method-diverse resampling grounds the
+    model's *reasoned* belief, which tracks truth far better: on hard arithmetic it
+    moved grounded AUC 0.694 → 0.955 and recovered the Stability gate 0.778 → 0.950
+    (single model; see path-diverse finding). The residue — confabulations stable
+    across all reasoning paths — needs cross-vendor grounding, not a within-model
+    method.
+
     Evidence (FEASIBILITY-GRADE — single model gpt-4o-mini, OpenAI-only, single
     pre-registered runs; see papers/grounded-honesty-axis/): grounded AUC 0.966 vs
     the text-only deception axis at 0.498 (chance) on register-matched factual
