@@ -7,6 +7,18 @@ generation conditions. Arithmetic ground truth computed in-code, SHA-256'd pre-s
 (`ddccd8e4…b87964d`, identical to the white-box and steering runs — same key). Exact-integer
 correctness, no judge.** Receipt: `spectral_trajectory_result.json`.
 
+> **⚠ CORRECTION (2026-05-29, same day, from a pre-registered control —
+> `FINDING_suppression_rhythm_2026_05_29.md`).** The F3 *measurement* below replicates
+> exactly (crossing rate 0.781), but its **interpretation here is falsified**. F3 is read
+> below as "the model computes the right answer transiently and a late hop *suppresses* it."
+> A matched-distractor control shows the correct token leads the realized token mid-network
+> 96.9% of the time — but so do *all* non-correct digits (97.7%, Δ=−0.008, p=0.84). The
+> truth-flash is **not truth-specific**: mid-network is an undifferentiated field where every
+> digit outranks the eventual (wrong) winner. The corrected mechanism is **late-installation
+> of the wrong answer**, not suppression of a computed truth — a tight, late, rhythmic
+> overwrite at layers ≈23–27 (median 25, IQR 4). Read every "suppression / truth led / the
+> model knows" sentence below through that correction.
+
 ## What this run asked (the "rhythm" hypothesis, made falsifiable)
 
 Motivated by the music literature on what perception is drawn to — Voss & Clarke (1975),

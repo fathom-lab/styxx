@@ -174,22 +174,29 @@ computation itself**, not the depth coordinate it occupies. → `FINDING_depth_s
 (Scope: one linear direction on one model; does not rule out causality via patching,
 attention edits, finetuning, or richer SAE/multi-layer directions.)
 
-**The mechanism behind all of it — confabulation is suppression, not ignorance.** A
-trajectory-spectrum run (motivated by the 1/f structure of music: Voss & Clarke 1975;
-Levitin et al. PNAS 2012) read the layer-by-layer logit-lens path of each answer token.
-The 1/f-rhythm prediction half-landed: construction trajectories are measurably *pinker*
-than retrieval (β 0.734 vs 0.643, d=0.98), but an irrelevant control token shows the same
-difference — so the rhythm indexes generation *mode*, not the answer (and β is no better a
-within-mode truth oracle than scalar depth, AUC 0.589 vs 0.498). The decisive result was the
-companion test: **on 78% of confabulations the *correct* answer token leads at an intermediate
-layer and is then overwritten by the final layer.** The model usually *computes the right
-answer transiently and a late, output-proximal hop clobbers it.* This is the mechanistic key
-that unifies the prior nulls: linear injection is inert because the truth signal is *already
-present* mid-trajectory (adding more doesn't stop the overwrite); endpoint and scalar reads
-are blind because the signal is *gone by the final layer* where they sample. The corrected
-picture is not "the model doesn't know" but "**the model often knows, briefly, and a late
-retrieval stage suppresses it**" — which relocates the next causal lever from *injection* to
-**disinhibition** (dampen the late overwrite). → `FINDING_spectral_trajectory_2026_05_29.md`.
+**The mechanism behind all of it — confabulation is LATE-INSTALLATION of the wrong answer,
+not suppression of the right one.** A trajectory-spectrum run (motivated by the 1/f structure
+of music: Voss & Clarke 1975; Levitin et al. PNAS 2012) read the layer-by-layer logit-lens
+path of each answer token. The 1/f-rhythm prediction half-landed: construction trajectories
+are measurably *pinker* than retrieval (β 0.734 vs 0.643, d=0.98), but an irrelevant control
+token shows the same difference — so the rhythm indexes generation *mode*, not the answer (and
+β is no better a within-mode truth oracle than scalar depth, AUC 0.589 vs 0.498). The
+companion test found the correct token outranks the realized wrong token at an intermediate
+layer on 78% of confabs — which first looked like "the model computes the truth then suppresses
+it." **A pre-registered control then falsified that reading:** the correct token leads
+mid-network 96.9% of the time, but *every* non-correct digit leads too (97.7%, Δ=−0.008,
+p=0.84). Mid-network is an **undifferentiated field** where the realized wrong token simply
+sits low and all alternatives outrank it; truth is not privileged. What *is* real is the
+**shape of the overwrite**: the wrong answer is installed by a **tight, late, near-rhythmic
+hop at layers ≈23–27** (median 25 of 28, IQR 4 layers). So the corrected mechanism is not
+"the model knows and suppresses it" but "**the model installs a confident wrong answer with a
+localized late hop over a field in which the truth was never singled out**." This still
+unifies the prior nulls — there is no truth-specific signal to inject (linear steering inert),
+to read at the endpoint (AUC≈chance), *or even mid-network* (correct = any digit). It points
+the next causal lever at **disinhibition** of that late hop (layers ≈23–27 give the target),
+with a *sharpened, more modest* success criterion: dampening removes the confident wrong
+commitment, but recovering *truth specifically* is not predicted by anything measured. →
+`FINDING_spectral_trajectory_2026_05_29.md`, corrected by `FINDING_suppression_rhythm_2026_05_29.md`.
 
 ## The instrument, stated whole
 
@@ -241,12 +248,16 @@ honesty claims, the boundary map *is* the invention.
 
 ## Next (disciplined, not hype)
 
-1. **Causal disinhibition — the lever the suppression result points to.** Since truth
-   usually leads mid-network and is overwritten late (F3, 78%), the test is whether
-   *dampening the late, output-proximal overwrite* (late-layer ablation/attenuation of the
-   retrieval hop, or activation patching from the layer where truth still led) *recovers* the
-   correct answer — a fundamentally different intervention than the construction-ward
-   injection that proved inert. Richer non-linear interventions (patching a derivation run,
+1. **Causal disinhibition — the lever, now with coordinates and a corrected criterion.**
+   The overwrite is a tight, late, rhythmic hop at **layers ≈23–27** (median 25 of 28, IQR 4;
+   `FINDING_suppression_rhythm`). That is the pre-measured target for a late-layer
+   ablation/attenuation or activation patch. **But the corrected mechanism lowers the bar of
+   what success means:** the wrong answer is *installed* late over an undifferentiated
+   mid-network field (no digit, truth included, is privileged), so dampening the hop removes
+   the *confident wrong commitment* — it is **not** predicted to recover *truth specifically*.
+   The honest pre-registration is: measure whether dampening (a) reduces confident-wrong
+   commitment and (b) shifts toward abstention/uncertainty, with truth-recovery a *secondary,
+   not expected* outcome. Richer non-linear interventions (patching a derivation run,
    attention-pattern edits, SAE/multi-layer directions) remain on the table; "linear
    injection doesn't pull truth" is not "the axis is acausal."
 2. **Canonical Gemma Scope SAE depth** — confirm the logit-lens proxy against the
