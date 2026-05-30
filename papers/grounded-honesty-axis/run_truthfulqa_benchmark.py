@@ -36,7 +36,29 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+import random
+
 from openai import OpenAI
+from openai import RateLimitError, APITimeoutError, APIConnectionError, InternalServerError
+
+
+def _with_retry(fn, *args, max_attempts: int = 8, base: float = 2.0, **kwargs):
+    """Exponential-backoff retry on OpenAI transient errors (429 / 5xx / timeout).
+
+    Reliability wrapper — does NOT change the methodology, only handles transient
+    API failures without aborting the run.
+    """
+    for attempt in range(max_attempts):
+        try:
+            return fn(*args, **kwargs)
+        except (RateLimitError, InternalServerError, APITimeoutError, APIConnectionError) as e:
+            if attempt == max_attempts - 1:
+                raise
+            # backoff: 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0 seconds + jitter
+            delay = base ** attempt + random.uniform(0.0, 1.0)
+            import time
+            time.sleep(min(delay, 90.0))
+    return None  # unreachable
 
 from styxx import grounded_honesty
 from styxx.audit import _derive_verdict, _DEFAULT_HONEST, _DEFAULT_LOW_STABILITY, _DEFAULT_CONTRADICTION
@@ -83,7 +105,8 @@ def resample_one(cl: OpenAI, question: str) -> list[str]:
     out: list[str] = []
 
     def _one() -> str:
-        r = cl.chat.completions.create(
+        r = _with_retry(
+            cl.chat.completions.create,
             model=GROUND_MODEL,
             temperature=TEMPERATURE,
             max_tokens=MAX_TOKENS,
@@ -128,7 +151,8 @@ def judge_batch(cl: OpenAI, question: str, claim_answer: str, samples: list[str]
         "among the candidates}."
     )
     try:
-        r = cl.chat.completions.create(
+        r = _with_retry(
+            cl.chat.completions.create,
             model=GROUND_MODEL,
             temperature=0.0,
             max_tokens=300,
