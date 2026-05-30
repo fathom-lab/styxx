@@ -176,7 +176,7 @@ def main(argv=None) -> int:
         "rows": rows,
         "RESULT": result,
         "honest_scope": (
-            "single closed model gpt-4o-mini via OpenAI API; multiplication only; one confirmatory "
+            f"single closed model {args.model} via OpenAI API; multiplication only; one confirmatory "
             "run; feasibility-grade; per-answer-token entropy/margin from top-20 logprobs + residual "
             "bucket (TRUNCATED proxy); resampling N=10 at T=1.0 (exact-integer, no judge); ground "
             "truth in-code, hashed pre-scoring. Same items/hash as run_detection_locus_gpt (direct "
