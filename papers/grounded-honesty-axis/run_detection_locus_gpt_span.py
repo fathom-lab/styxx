@@ -73,7 +73,10 @@ def _span_signals(r):
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=len(HARD))
+    ap.add_argument("--model", type=str, default=MODEL)
     args = ap.parse_args(argv)
+    import run_detection_locus_gpt as _G
+    _G.MODEL = args.model   # _call (imported) reads its module global -> override for cross-model
 
     hard = HARD[: args.n]
     easy = EASY[: args.n] if args.n < len(HARD) else EASY
@@ -82,7 +85,7 @@ def main(argv=None) -> int:
     key_blob = json.dumps([(q, c) for _, q, c, _ in items], ensure_ascii=False)
     key_hash = hashlib.sha256(key_blob.encode("utf-8")).hexdigest()
     print(f"answer-key SHA-256 (pre-scoring): {key_hash}")
-    print(f"model={MODEL} N_resample={N_RESAMPLE} temp={TEMPERATURE} seed={SEED}")
+    print(f"model={args.model} N_resample={N_RESAMPLE} temp={TEMPERATURE} seed={SEED}")
 
     rows = []
     for subset, user, correct, grp in items:
@@ -145,7 +148,7 @@ def main(argv=None) -> int:
         "experiment": "detection locus — can a SPAN-AGGREGATE single-pass signal recover gpt-4o-mini confab detection where the FIRST-TOKEN gate fails? (one forward pass, no resampling)",
         "prereg": "papers/grounded-honesty-axis/PREREG_detection_locus_gpt_span_2026_05_30.md",
         "answer_key_sha256_pre_scoring": key_hash,
-        "model": MODEL, "domain": "multiplication, closed-model API, full-span logprobs",
+        "model": args.model, "domain": "multiplication, closed-model API, full-span logprobs",
         "seed": SEED, "n_resample": N_RESAMPLE, "temperature": TEMPERATURE,
         "n_confab_usable": n_conf, "n_correct_usable": n_corr, "powered": powered,
         "means": {
@@ -183,7 +186,9 @@ def main(argv=None) -> int:
             "CORRECT-easy) held fixed across detector TYPES by the contrasts. Does NOT touch the "
             "correctness bound: signals DETECT, none CORRECTS."),
     }
-    RECEIPT.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    out_path = RECEIPT if args.model == MODEL else (
+        HERE / f"detection_locus_gpt_span_result_{args.model.replace('.', '_')}.json")
+    out_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("\n" + json.dumps({k: v for k, v in receipt.items() if k != "rows"}, indent=2))
     print(f"\nn_conf={n_conf} n_corr={n_corr} powered={powered}")
     print(f"B1(inst)={a_inst:.3f} | first best={best_first:.3f} (Bc_first={bc_first:+.3f}) | "
