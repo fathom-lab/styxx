@@ -159,6 +159,29 @@ bounded confab gate that now spans white-box AND closed models for structured an
 universal oracle (single-token closed-model hallucination is unsolved), which this program has
 repeatedly refused to overclaim.
 
+## Turned on its builder — the self-audit
+
+The instrument built to measure Qwen, Llama, Gemma, and gpt-4o-mini was finally turned on Claude
+(Opus 4.x), in two pre-committed, externally-scored audits:
+
+- **Arithmetic** (`FINDING_self_audit_claude_2026_05_30`): six-digit products answered single-pass,
+  no scratchpad — 0/6 right, every error magnitude-correct with the LEADING digits right and the
+  TRAILING digits confabulated: the exact gpt-4o-mini fingerprint. I am not exempt. But my
+  confidence, committed before scoring, was calibrated (0.12 where wrong, 0.99 where right).
+- **Facts — the dangerous regime** (`FINDING_self_audit_claude_facts_2026_05_30`): 20 specific
+  claims, confidence committed before web verification. 19/20, Brier 0.054, slightly under-confident.
+  The one miss was a genuine confident confabulation — the popular-but-wrong "Snow White" as the
+  first feature-length animated film (truth: El Apóstol, 1917) — but it sat at my LOWEST confidence
+  (0.78), below a clean 17/17 wall at confidence ≥ 0.80.
+
+The gate principle holds on its maker: I confabulate, but the signal that should flag it does. Unlike
+gpt-4o-mini's first-TOKEN confidence (high even when wrong), my STATED confidence tracks my errors.
+**The agent-side operating rule the whole arc converges on: state a confidence, and verify-or-abstain
+below your calibrated threshold (~0.80 on the factual set).** Caveats: no self-logprobs (the
+logit gates can't run on me — this used resampling + introspection), self-samples not truly
+independent, n small, questions self-selected. The honesty discipline that mapped every cell mapped
+this one too.
+
 ## The arc, in one line
 
 Single-pass confabulation legibility is cross-architecture (Qwen, Llama), cross-family (+ Gemma), and

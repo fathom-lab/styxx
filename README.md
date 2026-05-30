@@ -696,6 +696,48 @@ External submissions go through CI auto-verification (`.github/workflows/gauntle
 
 ---
 
+## New in 7.7.14 -- `single_pass_confab` + `span_confab` (the ~10x-cheaper confab gate, white-box AND closed-model)
+
+```python
+from styxx import single_pass_confab, span_confab, calibrate_single_pass
+
+# FIRST-TOKEN gate (white-box / weak-model): one forward pass's first answer-token logits
+single_pass_confab(first_token_logits).entropy                       # higher = more-likely-confab
+cal = calibrate_single_pass(confab_entropies, correct_entropies)     # per-model threshold + AUC
+single_pass_confab(logits, entropy_threshold=cal.entropy_threshold).abstain
+
+# SPAN gate (the CLOSED-model variant): aggregate across a multi-token answer
+span_confab(per_token_logits, margin_threshold=t).min_margin         # least-confident token = the tell
+```
+
+The white-box, one-forward-pass analog of `grounded_honesty`'s N=10 resampling -- the same
+confab/abstain signal at ~10x lower cost. Validated by the detection-locus arc
+(`papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md`):
+
+- **`single_pass_confab`** (first answer-token entropy/margin) ties N=10 resampling at detecting
+  confabulation across THREE families (Qwen, Llama, Gemma) and THREE derivation domains (arithmetic,
+  code, logic) -- `B_contrast` in `[-0.183, +0.056]`, every cell under the +0.20 "resampling wins"
+  bar -- and extends to factual recall. **Strong on derivation (AUC ~0.91-1.00), modest on facts
+  (~0.73).** White-box / weak-model: it FAILS on strong closed models (gpt-4o-mini first-token AUC
+  0.76), where confabulation is downstream of the first token.
+- **`span_confab`** (aggregate across a multi-token answer) RECOVERS the closed model: on gpt-4o-mini
+  the least-confident token's margin hit AUC **0.991 -- matching N=10 resampling exactly** -- and it
+  is **model-strength-invariant** (gpt-3.5-turbo 1.000 / gpt-4o-mini 0.991 / gpt-4o 1.000) and
+  **domain-general** (numeric multiplication via `min_margin`, non-numeric string reversal via
+  `max_entropy`; it returns both). From the OpenAI API, build the per-token vectors from each answer
+  token's `top_logprobs`.
+
+**Honest scope:** white-box (needs logits); `span_confab` needs a multi-token answer with the error
+localized to some token(s); single-token closed-model hallucination remains the open frontier; flags
+abstain, never corrects; thresholds are model-specific (calibrate per model). 23 unit tests
+(`tests/test_single_pass.py`). The arc even turned the gate on its own builder
+(`papers/grounded-honesty-axis/FINDING_self_audit_claude_facts_2026_05_30.md`): Claude scored 19/20
+on web-verified facts, Brier 0.054, with the one confident confabulation landing below a clean 17/17
+wall at confidence >= 0.80 -- the agent-side rule the whole arc points to: **state a confidence,
+verify-or-abstain below your calibrated threshold.**
+
+---
+
 ## New in 7.7.13 — `audit_claim` (the spellchecker for AI output), `grounded_honesty`, `detect_context_injection`, compliance bridge v0.2, conformity declaration templates
 
 ### `styxx audit-claim` + `styxx audit-session` — CLI surface (CI gate-ready)
