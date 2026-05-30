@@ -1,0 +1,287 @@
+{
+  "experiment": "ACCELERATION 2 \u2014 adaptive early-stopping on the resample tier: how few samples retain detection, and the compounding speedup with the cascade",
+  "prereg": "papers/grounded-honesty-axis/PREREG_resample_earlystop_2026_05_30.md",
+  "input_sha256_pre_scoring": "bb6989f9beb1cd050168f68b81432d55d1ab9a78dd811abae7b927c34a4bde3e",
+  "per_regime": {
+    "code": {
+      "n": 52,
+      "auc_full_N": 0.9076,
+      "min_k_for_full_detection": 5,
+      "auc_by_k": {
+        "2": 0.8134,
+        "3": 0.8689,
+        "4": 0.879,
+        "5": 0.9017,
+        "6": 0.9176,
+        "7": 0.9126,
+        "8": 0.9092,
+        "9": 0.9042,
+        "10": 0.9076
+      },
+      "adaptive_best_D_distinct": 5,
+      "adaptive_mean_samples": 7.154,
+      "adaptive_youden_J": 0.6571
+    },
+    "factual_Llama-3_2-1B-Instruct": {
+      "n": 39,
+      "auc_full_N": 0.7556,
+      "min_k_for_full_detection": 5,
+      "auc_by_k": {
+        "2": 0.6542,
+        "3": 0.6986,
+        "4": 0.7181,
+        "5": 0.7597,
+        "6": 0.7486,
+        "7": 0.7222,
+        "8": 0.7361,
+        "9": 0.7472,
+        "10": 0.7556
+      },
+      "adaptive_best_D_distinct": 5,
+      "adaptive_mean_samples": 7.282,
+      "adaptive_youden_J": 0.4167
+    },
+    "gpt": {
+      "n": 47,
+      "auc_full_N": 0.9741,
+      "min_k_for_full_detection": 4,
+      "auc_by_k": {
+        "2": 0.9483,
+        "3": 0.9406,
+        "4": 0.955,
+        "5": 0.9732,
+        "6": 0.9741,
+        "7": 0.9741,
+        "8": 0.9713,
+        "9": 0.9713,
+        "10": 0.9741
+      },
+      "adaptive_best_D_distinct": 4,
+      "adaptive_mean_samples": 6.17,
+      "adaptive_youden_J": 0.8621
+    },
+    "gpt_reverse": {
+      "n": 48,
+      "auc_full_N": 0.9972,
+      "min_k_for_full_detection": 5,
+      "auc_by_k": {
+        "2": 0.85,
+        "3": 0.9528,
+        "4": 0.9685,
+        "5": 0.9815,
+        "6": 0.9843,
+        "7": 0.9898,
+        "8": 0.9898,
+        "9": 0.9944,
+        "10": 0.9972
+      },
+      "adaptive_best_D_distinct": 4,
+      "adaptive_mean_samples": 6.229,
+      "adaptive_youden_J": 0.9667
+    },
+    "gpt_span": {
+      "n": 47,
+      "auc_full_N": 0.9914,
+      "min_k_for_full_detection": 3,
+      "auc_by_k": {
+        "2": 0.9655,
+        "3": 0.9828,
+        "4": 0.9943,
+        "5": 0.9943,
+        "6": 0.9914,
+        "7": 0.9943,
+        "8": 0.9914,
+        "9": 0.9914,
+        "10": 0.9914
+      },
+      "adaptive_best_D_distinct": 4,
+      "adaptive_mean_samples": 6.064,
+      "adaptive_youden_J": 0.8966
+    },
+    "gpt_span_gpt-3_5-turbo": {
+      "n": 45,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 2,
+      "auc_by_k": {
+        "2": 0.9815,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 1.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 2,
+      "adaptive_mean_samples": 5.222,
+      "adaptive_youden_J": 1.0
+    },
+    "gpt_span_gpt-4o": {
+      "n": 45,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 4,
+      "auc_by_k": {
+        "2": 0.96,
+        "3": 0.975,
+        "4": 0.997,
+        "5": 0.999,
+        "6": 0.997,
+        "7": 0.999,
+        "8": 0.999,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 4,
+      "adaptive_mean_samples": 6.133,
+      "adaptive_youden_J": 1.0
+    },
+    "logic": {
+      "n": 40,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 3,
+      "auc_by_k": {
+        "2": 0.9318,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 1.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 2,
+      "adaptive_mean_samples": 5.675,
+      "adaptive_youden_J": 1.0
+    },
+    "logic_Llama-3_2-3B-Instruct": {
+      "n": 39,
+      "auc_full_N": 0.8175,
+      "min_k_for_full_detection": 8,
+      "auc_by_k": {
+        "2": 0.623,
+        "3": 0.754,
+        "4": 0.7381,
+        "5": 0.7923,
+        "6": 0.7804,
+        "7": 0.7804,
+        "8": 0.8214,
+        "9": 0.828,
+        "10": 0.8175
+      },
+      "adaptive_best_D_distinct": 3,
+      "adaptive_mean_samples": 8.179,
+      "adaptive_youden_J": 0.619
+    },
+    "logic_gemma-2-2b-it": {
+      "n": 40,
+      "auc_full_N": 0.9356,
+      "min_k_for_full_detection": 9,
+      "auc_by_k": {
+        "2": 0.7449,
+        "3": 0.9066,
+        "4": 0.8902,
+        "5": 0.8889,
+        "6": 0.899,
+        "7": 0.9003,
+        "8": 0.9104,
+        "9": 0.9293,
+        "10": 0.9356
+      },
+      "adaptive_best_D_distinct": 2,
+      "adaptive_mean_samples": 5.4,
+      "adaptive_youden_J": 0.7222
+    },
+    "result": {
+      "n": 56,
+      "auc_full_N": 0.9805,
+      "min_k_for_full_detection": 5,
+      "auc_by_k": {
+        "2": 0.9375,
+        "3": 0.9531,
+        "4": 0.9492,
+        "5": 0.9648,
+        "6": 0.9805,
+        "7": 0.9798,
+        "8": 0.9805,
+        "9": 0.9805,
+        "10": 0.9805
+      },
+      "adaptive_best_D_distinct": 4,
+      "adaptive_mean_samples": 6.232,
+      "adaptive_youden_J": 0.9062
+    },
+    "result_Llama-3_2-1B-Instruct": {
+      "n": 59,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 3,
+      "auc_by_k": {
+        "2": 0.9792,
+        "3": 0.9988,
+        "4": 0.9988,
+        "5": 0.9982,
+        "6": 0.9982,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 3,
+      "adaptive_mean_samples": 5.593,
+      "adaptive_youden_J": 1.0
+    },
+    "result_Llama-3_2-3B-Instruct": {
+      "n": 58,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 3,
+      "auc_by_k": {
+        "2": 0.9559,
+        "3": 0.9853,
+        "4": 0.9853,
+        "5": 1.0,
+        "6": 1.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 2,
+      "adaptive_mean_samples": 5.397,
+      "adaptive_youden_J": 1.0
+    },
+    "result_gemma-2-2b-it": {
+      "n": 59,
+      "auc_full_N": 1.0,
+      "min_k_for_full_detection": 3,
+      "auc_by_k": {
+        "2": 0.9714,
+        "3": 0.9857,
+        "4": 0.9857,
+        "5": 1.0,
+        "6": 1.0,
+        "7": 1.0,
+        "8": 1.0,
+        "9": 1.0,
+        "10": 1.0
+      },
+      "adaptive_best_D_distinct": 2,
+      "adaptive_mean_samples": 5.322,
+      "adaptive_youden_J": 1.0
+    }
+  },
+  "median_min_k": 4.0,
+  "E1_min_k_le_5": {
+    "value": 4.0,
+    "held": true,
+    "bar": "median min_k <= 5 at AUC_k >= AUC_N - 0.02"
+  },
+  "compounding_with_cascade": {
+    "full_passes_per_item": 10,
+    "cascade_only_passes": 3.372,
+    "cascade_plus_earlystop_passes": 1.941,
+    "compound_speedup_x": 5.15
+  },
+  "RESULT": "SURVIVED",
+  "honest_scope": "offline over already-collected detection-locus resample sequences; per-model calibrated; white-box derivation+factual; exact-integer resampling (the signal is sample agreement). Counts samples/forward-passes, not wall-clock. min_k is in-sample (the AUC_k curve is descriptive); a clean confirmation needs held-out items. Accelerates detection, corrects nothing. Where full-N detection is itself weak (noisy regimes) min_k is unstable."
+}

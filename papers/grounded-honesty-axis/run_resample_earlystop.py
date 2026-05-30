@@ -90,8 +90,8 @@ def main() -> int:
     if not regimes:
         print("no qualifying receipts")
         return 1
-    h = hashlib.sha256(json.dumps(sorted((tuple(s), y) for v in regimes.values()
-                       for s, y in v["items"]), default=list).encode()).hexdigest()
+    h = hashlib.sha256(json.dumps([[s, y] for v in regimes.values()
+                       for s, y in v["items"]], default=str).encode()).hexdigest()
     print(f"input SHA-256 (pre-scoring): {h}")
 
     per_regime, min_ks = {}, []
