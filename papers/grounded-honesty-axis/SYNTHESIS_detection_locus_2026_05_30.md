@@ -182,12 +182,55 @@ logit gates can't run on me — this used resampling + introspection), self-samp
 independent, n small, questions self-selected. The honesty discipline that mapped every cell mapped
 this one too.
 
+## The wall, and the door — confident misconceptions and external grounding
+
+Single-pass legibility holds where the error is *internally uncertain* — derivation, where the wrong
+commitment scatters. It hits a **wall** where the error is *internally confident*: a **shared factual
+misconception**, a stable false belief the model holds with the same confidence as a true one.
+`FINDING_cross_model_belief_topography_2026_05_30` mapped that wall — the misconceptions that defeat
+the gate are the ones models *agree on* (and that an LLM judge, holding the same belief, cannot
+grade: "an LLM judge can't grade a misconception it shares"). No model-internal or model-vs-model
+signal catches it, by construction. This is the same boundary the whole grounded-honesty program has
+named from the start: the signal measures **self-consistency, not truth**.
+
+The wall has a **door**. `FINDING_retrieval_grounding_2026_05_30` showed external retrieval corrects
+the exact confident confabulation that beat Claude, the cross-model panel, and the LLM judge (the
+"Snow White = first animated film" misconception → *El Apóstol*, 1917) — but the door is **fallible**
+(it broke one previously-correct item; net 0.867 → 0.933, framing-dependent). So the deployable shape
+is a **two-signal gate**, shipped as `audit_claim(verify_retrieval=True)` (v7.7.15): the model-internal
+confab detector for *unstable* errors, an external-grounding arm for *stable* ones. Neither is a
+universal oracle; together they cover more, and each declares its own fallibility.
+
+## The loop — detect-and-abstain, and why the detector is load-bearing
+
+The arc kept finding the same asymmetry: **every signal moves confidence/abstention, never
+correctness.** Repair-to-truth was tested directly and is a *closed negative* — depth-steering is
+correctness-INERT (`FINDING_depth_steering_causal`), and removing the disinhibition install yields
+*uncertainty, not truth* (`FINDING_disinhibition`). So the honest capstone is not correction but the
+**closed loop**: detect → **abstain**. `FINDING_honesty_knob_2026_05_30` (SURVIVED, pre-registered,
+n=32/24 powered) built it from the arc's own validated mechanisms — the detection-locus detector
+gating the disinhibition intervention — and surfaced the principle that names the whole program:
+
+> **The detector is load-bearing.** The mechanistic abstention intervention has *no intrinsic
+> selectivity* — knock down the confidence-install band ungated and it dissolves CORRECT commitments
+> as readily as confabulations (raw selectivity **−0.08**, both entropies blow up ~11 nats: a blanket
+> lobotomy). Only the calibrated detector (gate AUC **0.924**) makes abstention *targeted* — the gated
+> loop abstains 0.75 of confabs while sparing 0.875 of correct answers. **Detection is not optional
+> diagnosis you could skip before acting; it is the prerequisite that makes any intervention safe.**
+
+Shipped as `styxx.abstain_on_confab` (v7.7.16) — and the API *enforces* the principle: it refuses to
+act on an uncalibrated score. The mechanistic (white-box) proof grounds a policy-level loop deployable
+today on the existing detectors, no hooks required: gate fires → abstain (or route to the retrieval
+door).
+
 ## The arc, in one line
 
 Single-pass confabulation legibility is cross-architecture (Qwen, Llama), cross-family (+ Gemma), and
 domain-general (arithmetic, code, logic): clean first-token entropy/margin ≥ N=10 resampling at AUC
-0.91–1.00 in every measurable (family × domain) cell, even through Gemma's logit soft-capping; the
-only gaps are competence floors, not legibility boundaries; so "confident confabulation" is
-family-AND-architecture-AND-domain-general **FALSE** on small-model derivation — the open
-confident-when-wrong regime is the closed-model hallucination instrument — and every signal here
-moves confidence/abstention, never correctness.
+0.91–1.00 in every measurable cell, even through Gemma's soft-capping (the only gaps are competence
+floors, not legibility boundaries) — so "confident confabulation" is **FALSE** on small-model
+derivation; it becomes TRUE only at the **wall** of shared factual misconceptions, which needs the
+external-retrieval **door** (fallible); and across the entire arc **correction is closed while
+abstention is open**, so the deployable honesty primitive is always **detect-and-abstain** — in which
+the *detector is the load-bearing component*, the one thing that turns a global knob into a targeted,
+honest "I don't know."
