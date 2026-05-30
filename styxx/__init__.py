@@ -704,8 +704,7 @@ __all__ = [
     # structured output / agent-mode (3.3.2+)
     "schema", "StyxxError", "is_agent_mode",
 
-    # cognometric reward signal for RLHF (7.1.0+)
-    "fathom_reward", "FathomRewardModel",
+    # (fathom_reward / FathomRewardModel are exported once, in the 7.1.0 reward group above)
 
     # synthetic preference-pair generation via inverse cognometry (7.1.0+)
     "craft_preference_pair", "generate_preference_pairs",

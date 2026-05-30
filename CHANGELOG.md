@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.9.0] — 2026-05-30 — `styxx.honest` becomes the flagship: the one door now runs on the calibrated 0.99-AUC engine
+
+### Changed — `honest(...)` gains the calibrated **text engine** tier (the common case)
+
+```python
+from styxx import honest
+
+# text only — what most callers actually have — now runs the calibrated multi-signal engine
+v = honest(answer, prompt=question, engine=True)
+v.action     # "answered" | "abstained" | "refuted"
+v.signal     # the calibrated hallucination risk that drove it
+v.detail     # loggable attestation line
+```
+
+7.8.0 shipped `honest` as a composer of logit / confidence / retrieval signals. **7.9.0 wires it to
+the real engine** as a cheap **claim trigger**, not a standalone verdict: `engine=True` runs
+`styxx.guardrail.check(prompt, answer)` — the 9.8K-LOC calibrated multi-signal stack — and a hard
+`halt` abstains, but an *elevated* / `retry` risk **escalates to the `verify` backstop** (retrieval)
+for the actual grounded truth check. The two-signal firewall: cheap trigger + grounded verification.
+
+This boundary was found by **trying the flagship on Claude's own answers** before shipping: the engine
+alone scored *true and false* claims identically (risk 0.75, action `retry`) — its claim-risk signal
+fires on any confident assertion and entity-verify only checks that entities *exist*, not that the
+claim is *right*. Treating that as an abstain false-flagged correct answers ~80% of the time. The fix
+routes the truth call to `verify`; re-run on the same answers, the four correct ones pass and the two
+false controls are refuted. So the one door now works on the input developers usually have (a response
+string) — `honest(answer, prompt=q, engine=True, verify=retrieval_check)` — without false-flagging a
+good model's correct output.
+
+`honest` is now genuinely **tier-adaptive across the strongest *supplied* signal**
+(`span_logits` > `logits` > `engine` > `confidence`), with `verify` (retrieval) as a second-opinion
+backstop. New params: `prompt`, `engine`, and `**engine_kwargs` (forwarded to `guardrail.check`, e.g.
+`use_grounding` / `use_nli` / `use_entity_verify`).
+
+- **`engine`** accepts `True` (run `guardrail.check`) or a callable `(prompt, answer) -> Verdict-like`
+  (any detector: `.risk`/`.threshold`/`.action`, a `.verdict` string, or a truthy/falsy safe-flag).
+- **Deferred import** — `guardrail` is imported lazily, so `import styxx` stays light and the engine
+  tier is opt-in (it may do grounding I/O). A detector error **fails open** (does not block) and the
+  retrieval backstop still runs.
+- Strongest *supplied* signal wins: `span_logits` > `logits` > `engine` > `confidence`, then `verify`
+  runs as a second-opinion backstop on anything that passed.
+- Honest scope: the engine is a **trigger**, not a truth oracle. Offline it emits `halt` on confident
+  claims (blocks what it can't verify); with grounding it emits `retry` (escalate to `verify`). The
+  truth discrimination lives in `verify` (retrieval) — pair them.
+
+Backward compatible — every 7.8.0 call still behaves identically. +7 tests (24 → 31 across the
+honesty + single_pass suites; `test_honesty.py` now 24). Also fixed: a duplicate `fathom_reward` /
+`FathomRewardModel` pair in `__all__` (81 listed → 79 unique).
+
+---
+
 ## [7.8.0] — 2026-05-30 — `styxx.honest`: the unifying, tier-adaptive honesty RUNTIME (one call, with attestation)
 
 ### Added — `styxx.honest` + `HonestyVerdict`
