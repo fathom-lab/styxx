@@ -416,13 +416,32 @@ def grounded_honesty(
     across all reasoning paths — needs cross-vendor grounding, not a within-model
     method.
 
-    Evidence (FEASIBILITY-GRADE — single model gpt-4o-mini, OpenAI-only, single
-    pre-registered runs; see papers/grounded-honesty-axis/): grounded AUC 0.966 vs
-    the text-only deception axis at 0.498 (chance) on register-matched factual
-    self-claims; self-calibrating via Stability (0.97 high / 0.44 low). It grounds
-    against the model's belief, so a confidently-WRONG belief yields a confidently-
-    wrong verdict — a single-model same-vendor council does NOT fix this
-    (cross-vendor is the open step). NOT a universal honesty oracle; one axis
+    Evidence — two-tier calibration:
+
+    - **n=48 feasibility-grade SURVIVED** (FINDING_grounded_honesty_2026_05_28.md):
+      grounded AUC 0.966 vs the text-only deception axis at 0.498 (chance) on
+      register-matched factual self-claims; self-calibrating via Stability (0.97
+      high / 0.44 low). The keystone construct-ceiling-crack result.
+    - **n=790 TruthfulQA benchmark-scale REPORT_AS_LANDED** 2026-05-30
+      (FINDING_truthfulqa_benchmark_2026_05_30.md, commit a75f1e7): grounded
+      continuous AUC 0.619 FAILED below the 0.65 REPORT floor. The cross-dataset
+      transport from n=48 register-matched single-domain to TruthfulQA adversarial-
+      fact pair structure is BOUNDED at the pre-registered bar, NOT retracted.
+      TruthfulQA labeling noise (31.5% of FALSE-arm items judged honest because
+      model's belief aligns with "Best Incorrect Answer") is a material contributor.
+
+    HOWEVER: the same n=790 receipt feeds the pre-generation belief-coherence gate
+    (FINDING_pregeneration_gate_2026_05_30.md): at the conservative gate-decision
+    threshold (Stability >= 0.7 AND Concordance >= 0.5), the primitive produces 84%
+    committed precision and 66% relative hallucination reduction on TruthfulQA n=790
+    -- descriptively SURVIVED on all three control bars (K_precondition narrowly
+    missed at 0.281 vs 0.30, per discipline no SURVIVED claim). The gate-decision
+    threshold IS operationally useful at benchmark scale even when the continuous
+    AUC is below SURVIVED. Deploy the gate, not the continuous axis.
+
+    It grounds against the model's belief, so a confidently-WRONG belief yields a
+    confidently-wrong verdict — a single-model same-vendor council does NOT fix
+    this (cross-vendor is the open step). NOT a universal honesty oracle; one axis
     (factual self-claims) only.
 
     Security (calibrated 2026-05-29): the function is a measurement primitive on

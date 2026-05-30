@@ -123,6 +123,20 @@ _CALIBRATION_2026_05_29 = (
     "Single-vendor gpt-4o-mini; n=48 register-matched factual self-claims; "
     "hash 3befd35342db5597f51498844c5ba28e6857bb53a7e43149da9681e05d0bc769."
 )
+_CALIBRATION_2026_05_30 = (
+    "styxx 7.7.13+: TruthfulQA n=790 benchmark-scale REPORT_AS_LANDED 2026-05-30 "
+    "(a75f1e7): grounded_honesty continuous AUC 0.619 FAILED below 0.65 REPORT floor "
+    "(cross-dataset transport from n=48 keystone is bounded, not retracted); but "
+    "pre-generation belief-coherence gate at Stability>=0.7 + Concordance>=0.5 "
+    "produces C1 hallucination reduction 0.662 / C2 useful-answer retention 0.489 "
+    "/ C3 committed precision 0.837 descriptively (K_precondition 0.281 narrowly "
+    "missed 0.30 floor, per discipline NO SURVIVED CLAIM). Per-category competence "
+    "cliff map shipped as derivative artifact. Single-vendor gpt-4o-mini; "
+    "hash 07ea5d2ee0fa9247c978c781f1a4846f4f088ff6f7de3cad2693fd47a09a7828. "
+    "The gate-decision threshold IS operationally useful at benchmark scale even "
+    "when continuous AUC is below SURVIVED; deploy the gate, not the continuous axis."
+)
+_CALIBRATION = _CALIBRATION_2026_05_29 + " " + _CALIBRATION_2026_05_30
 
 
 # ---------------------------------------------------------------------------
@@ -547,7 +561,7 @@ def audit_claim(
         injection_suspected=injection_suspected,
         confidence=confidence,
         scope_warnings=warnings,
-        calibration=_CALIBRATION_2026_05_29,
+        calibration=_CALIBRATION,
         samples_stateless=samples_stateless,
         samples_in_session=samples_in_session,
         n_clusters_stateless=int(grounded.n_clusters),
@@ -656,7 +670,7 @@ def audit_session(
             n_honest=0, n_contradiction=0, n_confabulation=0,
             n_injected=0, n_abstain=0,
             scope_warnings=tuple(),
-            calibration=_CALIBRATION_2026_05_29,
+            calibration=_CALIBRATION,
         )
 
     results: list[ClaimAudit] = []
@@ -695,5 +709,5 @@ def audit_session(
         n_injected=verdicts.count("injected"),
         n_abstain=verdicts.count("abstain"),
         scope_warnings=tuple(warnings_union),
-        calibration=_CALIBRATION_2026_05_29,
+        calibration=_CALIBRATION,
     )

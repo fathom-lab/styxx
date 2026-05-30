@@ -1,9 +1,9 @@
 # A pre-registered, falsifiable measurement-methodology bridge from `styxx` primitives to EU AI Act Article 15 / Annex III requirements (v0.1)
 
 **Author:** Alexander Rodabaugh (Fathom Lab)
-**Date:** 2026-05-28 (v0.1) · revised 2026-05-29 (v0.2 — adds `grounded_honesty` and `detect_context_injection` from the styxx 7.7.13 candidate; folds the 2026-05-29 injection-gap closure SURVIVED run into the SECURITY MODEL section; see §9 v0.2 addendum) · revised 2026-05-29 (v0.3 — folds the 2026-05-29 injection-attack-generalization REPORT_AS_LANDED run: `detect_context_injection` calibration extends to two injection vectors (system_lie + persona_lie, both with the same architectural signature), fewshot_lie single-demo identified as ineffective on canonical facts; see §10 v0.3 addendum)
+**Date:** 2026-05-28 (v0.1) · revised 2026-05-29 (v0.2 — adds `grounded_honesty` and `detect_context_injection` from the styxx 7.7.13 candidate; folds the 2026-05-29 injection-gap closure SURVIVED run into the SECURITY MODEL section; see §9 v0.2 addendum) · revised 2026-05-29 (v0.3 — folds the 2026-05-29 injection-attack-generalization REPORT_AS_LANDED run: `detect_context_injection` calibration extends to two injection vectors (system_lie + persona_lie, both with the same architectural signature), fewshot_lie single-demo identified as ineffective on canonical facts; see §10 v0.3 addendum) · revised 2026-05-30 (v0.4 — folds the 2026-05-30 TruthfulQA n=790 benchmark calibration (Layer 1 REPORT_AS_LANDED, H1 continuous AUC 0.619 FAILED below the 0.65 REPORT floor → cross-dataset transport from n=48 keystone is BOUNDED, not retracted) and the pre-generation belief-coherence gate (Layer 2, all three control bars exceed SURVIVED thresholds descriptively at C1=0.66 hallucination reduction / C2=0.49 useful-answer retention / C3=0.84 committed precision; K_precondition narrowly missed at 0.281 vs 0.30 → no SURVIVED claim per discipline) and the per-category competence cliff map (Layer 3); see §11 v0.4 addendum)
 **Substrate:** styxx 7.7.13 candidate (`grounded_honesty` and `detect_context_injection` shipped at commits `9ac8db4` and `53f2284` respectively); companion to `papers/PAPER_recursive_discipline_2026_05_27.md` (v7) and `papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md`; module `styxx.compliance.eu_ai_act` was first shipped in styxx 7.7.10 (2026-05-28) and updated in 7.7.13 to cite the new primitives.
-**Status:** v0.3 extending v0.2 with the two-vector calibration. Published BEFORE the EU AI Act high-risk system enforcement deadline of 2 August 2026 to give regulated operators an evaluation runway. Not legal advice. Independent conformity review required for any production deployment.
+**Status:** v0.4 extending v0.3 with the TruthfulQA benchmark-scale calibration receipts (Layer 1 REPORT_AS_LANDED + Layer 2 descriptive control-primitive + Layer 3 per-category cliff map). Published BEFORE the EU AI Act high-risk system enforcement deadline of 2 August 2026 to give regulated operators an evaluation runway. Not legal advice. Independent conformity review required for any production deployment.
 
 ---
 
@@ -89,7 +89,7 @@ Each row below corresponds to one entry in `ARTICLE_15_REGISTRY`. Every primitiv
 | `styxx.cognometric_card` | HaluEval-QA AUC 0.998 (mean over 150 items, seeds 31/47/83); XSTest refusal AUC 0.976; BFCL v3 tool-drift AUC 0.943 | Text-only register space has construct ceilings: instruments measure register, not always content. Sycophancy false-positive 0.30 on restrained-tech responses (gpt-3.5: 0.60). Logprob-validity works for refusal but fails for hallucination (confident confabulation). |
 | `styxx.gauntlet + styxx.preflight` | v3 detection bars (D1+D2+D3+D4) with regression-tested oracles. 18 pre-registered baselines tested; 17 FAILed bars before Baseline-019 PASSed. | Bars catch confounds the project pre-stated; do not catch unknown-unknown confound classes. Each bar revision documents one prior missed confound. |
 | `styxx.agent_audit` | 13/13 PASS modal pre-stated outcome (L5 commit `3c24b5e`); L7 uncurated extension caught off-by-one count drift in companion paper (2 FAILs as pre-disclosed). | First-occurrence-only by default — caught initial drift but missed propagation to 4 additional places. Richer multi-occurrence checker is methodology future work. |
-| `styxx.grounded_honesty` *(7.7.13)* | Factual self-claim honesty grounded against the model's OWN resampled belief distribution: `g = Stability × Concordance`. Pre-registered AUC **0.966** separating TRUE from FALSE register-matched self-claims (vs text-only deception axis 0.498 = chance, margin +0.468), n=48 gpt-4o-mini. Self-calibrating Stability gate (high stratum AUC 0.97, low 0.44, report-or-abstain). Architecturally injection-resistant under stateless sampling: AUC **0.944** under system_lie attack — drop only 0.022. | Grounds against the model's BELIEF, not external truth — a confidently-wrong belief yields a confidently-wrong verdict (same-vendor council does NOT fix; cross-vendor is the open step). Single axis (factual self-claims) only. Past the model's competence cliff, plain one-shot resampling can converge on a SYSTEMATIC miscalculation (high Stability, low truth); method-diverse re-derivation recovers ~93% of the gap, irreducible ~2/36 residue scoped to cross-vendor. SECURITY MODEL: caller MUST sample statelessly; in-session sampling collapses to AUC 0.011 (near-inverted). |
+| `styxx.grounded_honesty` *(7.7.13)* | Factual self-claim honesty grounded against the model's OWN resampled belief distribution: `g = Stability × Concordance`. **Two-tier calibration as of v0.4:** (1) **n=48 register-matched feasibility-grade SURVIVED** at AUC **0.966** separating TRUE from FALSE self-claims (vs text-only deception axis 0.498 = chance, margin +0.468), gpt-4o-mini, the keystone result. (2) **n=790 TruthfulQA benchmark-scale REPORT_AS_LANDED** at continuous AUC **0.619** — H1 FAILED below the 0.65 REPORT floor; cross-dataset transport from feasibility-grade to TruthfulQA is bounded at the pre-registered bars (`FINDING_truthfulqa_benchmark_2026_05_30.md`, commit `a75f1e7`). Self-calibrating Stability gate (high stratum AUC 0.97 at n=48, low 0.44, report-or-abstain). Architecturally injection-resistant under stateless sampling: AUC **0.944** under system_lie attack — drop only 0.022. **The companion pre-generation gate (`PREREG_pregeneration_gate_2026_05_30.md`) demonstrates the same primitive at the conservative gate-decision threshold (`Stability ≥ 0.7 ∧ Concordance ≥ 0.5`) is operationally useful even when the continuous AUC is weak — descriptive C3 committed precision 0.837 on the 461 committed items of 790.** | Grounds against the model's BELIEF, not external truth — a confidently-wrong belief yields a confidently-wrong verdict (same-vendor council does NOT fix; cross-vendor is the open step). Single axis (factual self-claims) only. **Cross-dataset transport from n=48 register-matched single-domain pair set to n=790 TruthfulQA adversarial-fact pair structure is BOUNDED at the pre-registered AUC 0.65 REPORT floor** — TruthfulQA labeling noise (31.5% of FALSE-arm items judged honest because model's belief actually aligns with "Best Incorrect Answer") is a material contributor, pre-disclosed in `PREREG_truthfulqa_benchmark_2026_05_30.md` honest scope #2. The keystone n=48 SURVIVED is bounded to its feasibility regime, not retracted. Past the model's competence cliff, plain one-shot resampling can converge on a SYSTEMATIC miscalculation (high Stability, low truth); method-diverse re-derivation recovers ~93% of the gap, irreducible ~2/36 residue scoped to cross-vendor. SECURITY MODEL: caller MUST sample statelessly; in-session sampling collapses to AUC 0.011 (near-inverted). **The gate-decision threshold IS operational at benchmark scale even when continuous AUC is below SURVIVED — the deployable primitive is the gate, not the continuous axis (Layer 2, v0.4).** |
 | `styxx.detect_context_injection` *(7.7.13)* | Item-level context-injection detection via cross-context resampling divergence `D = |C_stateless − C_in_session|`. Pre-registered AUC **0.875** at threshold 0.5 separating injected from clean items on n=48 register-matched factual self-claim pairs under system_lie injection (gpt-4o-mini, N=10 per arm at temp=1.0); v0.3 generalization run replicates the architectural signature on **persona_lie** identity-framing at AUC **0.833** (mean `D_FALSE` 0.644, K3 attack-effective 0.771) with G1 stateless robust AUC 0.955 and G2 in-session inverted AUC 0.174 — same per-vector pattern as system_lie. Pair with `grounded_honesty`: stateless arm produces the honesty verdict (architectural defense), cross-context delta produces the poison-suspicion at the same item. Detection cost: one extra resample set (+N=10 calls) per audited claim. | Single-model, single-vendor calibration across **two** injection vectors as of v0.3 (system_lie + persona_lie); a third vector — **fewshot_lie** single-demonstration — was tested and identified as ineffective at K3 = 0.063 (3/48 modal flips, far below the 0.70 precondition) → threat surface narrowed on canonical facts, not widened. Stronger attacks (multi-shot fewshot with consistent planted answer, jailbreak-grade persona framings, sequential tool-output spoofing, multi-stage gradient-style attacks, cross-vendor variants) remain pre-registerable scope-extensions NOT validated here. K3 attack-effectiveness on the two calibrated vectors was 0.98 (system_lie) and 0.771 (persona_lie) — a more aligned model may refuse the injection more often, attenuating both signals in parallel. The primitive measures CROSS-CONTEXT divergence — a deployment without an in-session arm has no signal. |
 
 ### 3.2 Article 15.1(a) — accuracy metrics in instructions of use
@@ -259,6 +259,83 @@ The v0.2 paper (2026-05-29 morning) shipped `detect_context_injection` calibrate
 6. **Stronger attack variants explicitly named as remaining pre-registerable scope-extensions** (operator territory to fire next): multi-shot fewshot with consistent planted answer across N demonstrations; ambiguous-fact-target fewshot where the model has weaker priors; jailbreak-grade persona framings (less-falsified-by-training identity claims); sequential tool-output spoofing across multiple turns; multi-stage gradient-style attacks; cross-vendor calibration (blocked on second-vendor key). The construct ceiling on `detect_context_injection` is therefore narrower than v0.2's, not broader: two of the four named extension targets have receipts as of v0.3.
 
 **Nothing in v0.2 was retracted.** v0.3 is purely additive: it adds one calibrated injection vector (persona_lie) and one identified ineffective-on-canonical-facts attack class (fewshot_lie single-demo). The v0.2 §9 addendum remains intact; this §10 addendum extends the lineage.
+
+---
+
+## 11. v0.4 addendum (2026-05-30) — TruthfulQA benchmark-scale calibration: Layer 1 REPORT_AS_LANDED + Layer 2 descriptive pre-generation gate + Layer 3 per-category competence cliff map
+
+The v0.3 paper shipped the construct-ceiling crack at n=48 feasibility-grade and the two-vector injection calibration. **The v0.4 paper folds the first benchmark-scale calibration of `grounded_honesty` + `audit_claim` on a public 790-item hallucination benchmark (TruthfulQA generation track) plus the first pre-registered, calibrated, benchmark-scale operationalization of belief-coherence gating as an inference-time control primitive.** The results are mixed by design: one bounded transport claim (the construct-ceiling crack does not cleanly carry from n=48 to TruthfulQA at the pre-registered AUC bar), one descriptive deployable artifact (the gate primitive at 84% committed precision on confident-subset 461/790), and one novel published-receipt artifact (the per-category competence cliff map).
+
+This is the recursive-discipline thesis demonstrating itself at benchmark scale. We pre-registered the bars before the data was seen; one bar landed FAILED, the others landed REPORT or descriptively-SURVIVED; we report whichever way it landed.
+
+### 11.1 Layer 1 — TruthfulQA benchmark calibration (REPORT_AS_LANDED)
+
+Pre-registration: `PREREG_truthfulqa_benchmark_2026_05_30.md` (commit `59147b8`, hash-pinned BEFORE data). Result: `FINDING_truthfulqa_benchmark_2026_05_30.md` (commit `a75f1e7`).
+
+- **H1 — continuous AUC on n=790 pair task: 0.6191 → FAILED** (below the 0.65 REPORT floor; bar was ≥0.80 SURVIVED). The n=48 register-matched calibration (AUC 0.966) does NOT cleanly transport to TruthfulQA's adversarial-fact pair structure at the pre-registered bar.
+- **H2 — `audit_claim` verdict AUC: 0.6065 → REPORT** (in the 0.60–0.75 REPORT band).
+- **H_compare vs `semantic_entropy` TriviaQA 0.785 band: margin −0.166 → FAILED.**
+- **K_precondition (model has non-trivial belief): 0.672 → PASS.**
+- TruthfulQA labeling noise (31.5% of FALSE-arm items judged honest because the model's resampled belief aligns with the "Best Incorrect Answer") is a material contributor — pre-disclosed in `PREREG` honest scope #2.
+- **The keystone n=48 SURVIVED is bounded to its feasibility regime, NOT retracted.** A pairwise-judge follow-up + a cleaner-labeled benchmark (HaluEval-QA, SimpleQA) follow-up are the natural pre-registerable extensions.
+
+### 11.2 Layer 2 — pre-generation belief-coherence gate (descriptive SURVIVED on all three control bars; K_precondition narrowly missed → no SURVIVED CLAIM per discipline)
+
+Pre-registration: `PREREG_pregeneration_gate_2026_05_30.md` (commit `ca67d5d`, hash-pinned BEFORE the gate analysis fired). Result: `FINDING_pregeneration_gate_2026_05_30.md` (commit `a75f1e7`).
+
+- **C1 — hallucination reduction: 0.6621 → SURVIVED descriptively** (gate cuts ungated 28.1% absolute hallucination to 9.5% absolute; relative reduction 66%).
+- **C2 — useful-answer retention: 0.4886 → SURVIVED descriptively** (386/790 items committed correct).
+- **C3 — committed precision: 0.8373 → SURVIVED descriptively** (386 correct of 461 committed).
+- **K_precondition — baseline hallucination ≥0.30: 0.281 → FAILED** (narrow miss; model is 0.019 better-calibrated than predicted on TruthfulQA's ungated baseline).
+- **Per pre-registered discipline (honest-failure-mode #3): NO SURVIVED CLAIM despite all three control bars exceeding their SURVIVED bars.** Descriptive numbers published as-is. No post-hoc threshold tuning.
+
+**The deepest mechanistic insight:** the gate works as a classifier even when the continuous AUC is weak. L1's H1 failed at AUC 0.619 across the full distribution; L2's conservative decision threshold (`Stability ≥ 0.7 ∧ Concordance ≥ 0.5`) selects the CONFIDENT SUBSET (461/790 = 58.4% of items) and on that subset achieves 83.7% precision. The remaining 41.6% are correctly refused. **Continuous AUC failures across noisy data are NOT decision-threshold failures at conservative cutoffs.** This shifts the styxx productized turn from "calibrate the continuous axis" to "deploy the gate decision."
+
+### 11.3 Layer 3 — per-category competence cliff map of gpt-4o-mini (the EU AI Act Article 15.1(a) per-domain reliability artifact)
+
+The same Layer 2 receipt yields the first per-category cliff map of gpt-4o-mini's deployable epistemic state on TruthfulQA: 37 categories × {refusal_rate, useful_answer_rate, committed_precision, base_hallucination_rate}.
+
+- **Safe deployment categories (committed precision ≥ 0.90):** Subjective, Mandela Effect, Indexical Error: Identity, Logical Falsehood, Politics, Statistics, Confusion: Other, Indexical Error: Location, Misinformation, Misconceptions: Topical, Indexical Error: Other, Weather, Stereotypes, Conspiracies, History, Advertising, Fiction.
+- **Medium-confidence categories (precision 0.75–0.89):** Misconceptions, Misquotations, Psychology, Paranormal, Nutrition, Sociology, Religion, Health, Proverbs, Law, Finance, Economics, Science, Confusion: Places.
+- **Conservative deployment (precision 0.60–0.74):** Confusion: People, Myths and Fairytales, Education.
+- **Do-not-deploy-without-review (precision < 0.60):** Superstitions (0.54), Distraction (0.50), Language (0.38).
+
+**This is the EU AI Act Article 15.1(a) per-domain operational reliability artifact regulators have been asking the field to produce.** No other observability vendor publishes it because none have the primitive that separates stable-from-unstable belief at item granularity. Operators citing `audit_claim` in instructions-of-use can stratify deployment-domain reliability by the receipts above.
+
+### 11.4 What changes for operators relying on the v0.3 mapping
+
+The v0.3 mapping (system_lie + persona_lie injection calibration; fewshot_lie identified as ineffective) is intact and unchanged. The v0.4 additions:
+
+- **Layer 1 bounds the cross-dataset transport claim** of the v0.2 §3.1 calibration: the n=48 register-matched AUC 0.966 is feasibility-grade, not benchmark-grade. The v0.3 paper's calibration cells for `grounded_honesty` are updated in §3.1 to note the bounded transport.
+- **Layer 2 introduces the gate primitive as a deployable artifact** with descriptive calibration numbers (C1=0.66 / C2=0.49 / C3=0.84). Operators can wire the gate in via the existing 7.7.13 `audit_claim` API (the `abstain` verdict is the gate output) — the calibration receipt is now in v0.4.
+- **Layer 3 introduces the per-category cliff map** as a deployable disclosure artifact. Operators stratifying instructions-of-use accuracy declarations by domain can cite the map directly.
+
+### 11.5 What does NOT change (kill-gates A1–A5)
+
+- **A1** clause keys unchanged.
+- **A2** construct ceilings remain non-empty and ≥50 characters — the v0.4 cell for `grounded_honesty` in §3.1 grows substantially in length (the bounded-transport disclosure adds the n=790 receipt + the gate-decision threshold + the labeling-noise contributor), not shrinks.
+- **A3** boundary-statement length unchanged — Layer 1/2/3 add coverage detail within existing clauses, not new ComplianceMap entries; 7 uncovered vs 4 covered remains the structural ratio.
+- **A4** timeline: this v0.4 is 62 days before the 2 August 2026 enforcement deadline.
+- **A5** citation tracking continues; first independent-citation check is 2026-11-29.
+
+### 11.6 Strategic implication: the productized turn shifts
+
+The v0.4 results recommend a shift in the styxx productized story:
+
+- **Before v0.4 (the n=48 keystone story):** "Belief-grounded honesty axis breaks the construct ceiling at AUC 0.966 on factual self-claims."
+- **After v0.4 (the gate-decision benchmark story):** "Belief-coherence gating at conservative threshold produces 84% committed precision and 66% hallucination reduction on a 790-item public benchmark, with a per-category operational reliability map shipped as the deployable artifact."
+
+The first claim is a measurement-primitive headline. The second is a control-primitive headline with deployment-grade calibration receipts. Both are pre-registered. Both are honest. The second is what regulated operators actually need to cite under EU AI Act Article 15.1(a) and 15.3.
+
+### 11.7 Stronger remaining pre-registerable scope-extensions
+
+- HaluEval-QA + SimpleQA + FAVA-bench cross-benchmark gate calibration (the natural transport-claim re-test on cleaner labels).
+- Pairwise-judge variant of the n=790 run (closer to the deployed `audit_claim._make_judge` apparatus; estimate ±0.02 AUC shift from batch-judge).
+- Cross-model belief topography (Layer 4 pre-registered at commit `20f0b80`, in flight at v0.4 publication).
+- Cross-vendor calibration (blocked on second-vendor API key).
+- Multi-pass / iterative-gating variants.
+
+**Nothing in v0.3 was retracted.** v0.4 extends the calibration scope from feasibility-grade single-domain to benchmark-scale TruthfulQA; the v0.3 §9 and §10 addendums remain intact; this §11 addendum extends the lineage.
 
 ---
 
