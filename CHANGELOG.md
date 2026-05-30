@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.8.0] — 2026-05-30 — `styxx.honest`: the unifying, tier-adaptive honesty RUNTIME (one call, with attestation)
+
+### Added — `styxx.honest` + `HonestyVerdict`
+
+```python
+from styxx import honest, calibrate_single_pass, retrieval_check
+
+# open / weak model — gate on the calibrated logit signal (one forward pass)
+honest(answer, span_logits=token_logits, calibration=cal).action     # "answered" | "abstained"
+
+# frontier model — gate on calibrated stated confidence, escalate confident claims to retrieval
+v = honest(answer, confidence=0.9, verify=lambda claim: retrieval_check(claim))
+v.answer        # the answer, or "I'm not sure." if it abstained / was refuted
+v.action        # "answered" | "abstained" | "refuted"
+v.detail        # a loggable, compliance-grade attestation line
+bool(v)         # True iff answered
+```
+
+The 7.7.x arc shipped the *pieces* of an honesty layer as separate primitives — `single_pass_confab`
+/ `span_confab` (cheap confab detection), `abstain_on_confab` (the detect-and-abstain fail-safe),
+`retrieval_check` (external grounding). **`honest` is the unifying layer**: one call that takes a
+candidate answer plus whatever signal you have, picks the strongest available, decides **answer vs.
+abstain vs. refute**, and returns a `HonestyVerdict` you can log as an attestation.
+
+**Tier-adaptive — the research arc established the best honesty signal depends on the model tier:**
+- **open / weak models** expose token logprobs → the cheap logit gate (`span_logits` preferred, else
+  first-token `logits`); confabulation reads as uncertainty in one forward pass.
+- **frontier models** don't expose logprobs but their **stated confidence is calibrated** (self-audit:
+  Brier ~0.10, wrong only when uncertain) → `confidence` with a floor.
+- **confident fabrication** — the wall both the logit gate *and* resampling miss — is caught by the
+  **retrieval backstop** → pass `verify` (e.g. `retrieval_check`) to escalate confident answers.
+
+So one `honest(...)` call degrades gracefully across the models people actually deploy, and **flags /
+abstains** — it never fabricates a correction (correction is a closed negative in the research arc).
+The detector stays load-bearing: a logit signal with no calibrated threshold stays advisory (the gate
+cannot fire) rather than guessing. Pure Python, no new deps. 17 new tests (`tests/test_honesty.py`).
+
+---
+
 ## [7.7.16] — 2026-05-30 — `abstain_on_confab`: the closed-loop detect-and-abstain primitive (the detector is load-bearing)
 
 ### Added — `styxx.abstain_on_confab` + `AbstainDecision`

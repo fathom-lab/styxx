@@ -638,6 +638,9 @@ from .single_pass import (
     span_confab, SpanConfabScore,
     abstain_on_confab, AbstainDecision,
 )
+# 7.8.0: the unifying honesty RUNTIME — one tier-adaptive call (logit gate / stated confidence /
+# retrieval backstop) that decides answer vs abstain vs refute, with an attestation record.
+from .honesty import honest, HonestyVerdict
 
 
 __all__ = [
@@ -662,6 +665,8 @@ __all__ = [
     # 7.7.16: detect-and-abstain — gate an answer through a calibrated detector, abstain on confab
     # (FINDING_honesty_knob: the detector is load-bearing; refuses to act on an uncalibrated score)
     "abstain_on_confab", "AbstainDecision",
+    # 7.8.0: the unifying honesty RUNTIME — one tier-adaptive call + attestation
+    "honest", "HonestyVerdict",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
