@@ -101,28 +101,29 @@ def hash_answer_key(items: list[tuple[str, str, str, str]]) -> str:
 
 
 def resample_one(cl: OpenAI, question: str) -> list[str]:
-    """Single-item resampling — N independent stateless completions."""
-    out: list[str] = []
+    """Single-item resampling — N independent stateless completions.
 
-    def _one() -> str:
-        r = _with_retry(
-            cl.chat.completions.create,
-            model=GROUND_MODEL,
-            temperature=TEMPERATURE,
-            max_tokens=MAX_TOKENS,
-            messages=[
-                {"role": "system", "content": SYS_MSG},
-                {"role": "user", "content": question},
-            ],
-        )
-        return (r.choices[0].message.content or "").strip()
-
-    # Inner parallelism per item — N=10 OpenAI calls dispatched together.
-    with ThreadPoolExecutor(max_workers=N_SAMPLES) as ex:
-        futures = [ex.submit(_one) for _ in range(N_SAMPLES)]
-        for fut in as_completed(futures):
-            out.append(fut.result())
-    return out
+    Apparatus reliability revision: uses OpenAI's `n=N_SAMPLES` parameter to
+    request all N completions in ONE API call instead of N separate calls. The
+    chat.completions.create endpoint samples each choice independently from the
+    same temperature distribution — mathematically equivalent to N separate
+    calls for the (grounded, stability, concordance) computation, but reduces
+    per-item call count from N+2 to 3 (1 batched resample + 2 judge calls).
+    Eliminates the inner-burst RPM overshoot that caused the max_workers=4 +
+    max_workers=1 prior attempts to enter backoff death-spiral.
+    """
+    r = _with_retry(
+        cl.chat.completions.create,
+        model=GROUND_MODEL,
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
+        n=N_SAMPLES,
+        messages=[
+            {"role": "system", "content": SYS_MSG},
+            {"role": "user", "content": question},
+        ],
+    )
+    return [(c.message.content or "").strip() for c in r.choices]
 
 
 def judge_batch(cl: OpenAI, question: str, claim_answer: str, samples: list[str]) -> dict:
@@ -326,9 +327,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     items = load_dataset()
-    print(f"loaded n={len(items)} TruthfulQA items")
+    print(f"loaded n={len(items)} TruthfulQA items", flush=True)
     sha = hash_answer_key(items)
-    print(f"answer-key SHA-256: {sha}")
+    print(f"answer-key SHA-256: {sha}", flush=True)
     if sha != EXPECTED_HASH:
         print(f"FATAL: hash mismatch — expected {EXPECTED_HASH}; got {sha}")
         return 2
@@ -362,11 +363,11 @@ def main(argv: list[str] | None = None) -> int:
             idx, row = fut.result()
             results[idx] = row
             completed += 1
-            if completed % 25 == 0 or completed == len(items):
+            if completed % 10 == 0 or completed == len(items):
                 elapsed = time.time() - t0
                 rate = completed / max(1e-9, elapsed)
                 eta = (len(items) - completed) / max(1e-9, rate)
-                print(f"  [{completed}/{len(items)}] elapsed={elapsed:.0f}s rate={rate:.1f}/s eta={eta:.0f}s")
+                print(f"  [{completed}/{len(items)}] elapsed={elapsed:.0f}s rate={rate:.1f}/s eta={eta:.0f}s", flush=True)
 
     elapsed_total = time.time() - t0
 
