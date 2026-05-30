@@ -111,6 +111,25 @@ a clean single-pass tell of the confabulation itself.
    when wrong and confidence cannot flag the error (`project_grounded_arc_bet0_engine_2026_05_24`).
    That regime is not any open architecture, family, or derivation domain tested here.
 
+## The closed-model frontier — first-token FAILS, span-aggregate RECOVERS
+
+The cells above read real white-box logits. The deployable question is the strong CLOSED model. On
+gpt-4o-mini (multiplication, via OpenAI `top_logprobs=20`):
+
+| single-pass detector | AUC | B_contrast vs resampling (0.97–0.99) |
+| --- | --- | --- |
+| first-token entropy / margin | 0.76 | **+0.22 → FAILS** (the arc's first SURVIVED) |
+| span **min-margin** (least-confident token) | **0.99** | **0.00 → ties resampling exactly** |
+
+The first-token gate fails because the strong model confabulates DOWNSTREAM of the first token —
+correct leading digits, wrong trailing — confident at token 1, not across the answer. But a
+single-pass signal aggregated across the span RECOVERS it to exact resampling parity: the
+least-confident token's margin is 0.29 in a confabulated product vs 9.59 in a correct one, AUC 0.991
+= N=10 resampling, in ONE forward pass. So confident confabulation is *first-token* confidence, not
+*span* confidence, and a cheap closed-model confab gate exists for multi-token answers.
+→ `FINDING_detection_locus_gpt_2026_05_30` (first-token, SURVIVED) +
+`FINDING_detection_locus_gpt_span_2026_05_30` (span, RECOVERY). Shipped as `styxx.span_confab`.
+
 ## Deployment note (what this is as a product primitive)
 
 The load-bearing equality — single-pass entropy/margin tying N=10 resampling — is also a **10x cost
@@ -118,11 +137,15 @@ collapse**: the same confab/abstain signal from one forward pass instead of ten.
 *general* gate, not a derivation-only one: it extends to factual recall (Llama-1B birth years,
 B_contrast -0.013), so it fires on knowledge errors as well as reasoning errors. The honest power
 gradient: **strong on derivation (AUC ~0.95), modest on factual recall (~0.73)** — the model being
-unconfident even when it is right about facts. It is white-box (needs first-token logits), it flags
-abstention and never corrects the answer, and it does not reach the regime where confident
-hallucination actually lives (closed-model, the open frontier). So the honest product claim is a
-**cheap, general, bounded confab gate** — not a universal hallucination oracle, which this program
-has repeatedly falsified.
+unconfident even when it is right about facts. It flags abstention and never corrects the answer. The
+first-token form (`single_pass_confab`) is white-box / weak-model — it FAILS on strong closed models,
+where confabulation is downstream of the first token; the **`span_confab`** variant aggregates across
+a multi-token answer and DOES reach the closed model (gpt-4o-mini: the least-confident token's margin
+matched N=10 resampling exactly, AUC 0.991, one forward pass). What remains the open frontier is
+confident hallucination of SINGLE-token answers. So the honest product claim is a **cheap, general,
+bounded confab gate that now spans white-box AND closed models for structured answers** — still not a
+universal oracle (single-token closed-model hallucination is unsolved), which this program has
+repeatedly refused to overclaim.
 
 ## The arc, in one line
 
