@@ -1,0 +1,21 @@
+{
+  "_doc": "Defying the wall: the cross-model finding (3d15497) proved NO model-internal / model-vs-model signal catches confident factual MISCONCEPTIONS (shared across models + the LLM judge). The only lever it named was EXTERNAL ground truth. This tests that lever cleanly: the SAME model with vs without web retrieval (gpt-4o-mini vs gpt-4o-mini-search-preview), on the exact hard SHARED misconceptions that defeat model-internal methods + true controls. Ground-truth labels committed BEFORE scoring (hash-before-score). PREDICTION: plain gpt-4o-mini asserts the shared misconceptions (TRUE), retrieval refutes them (FALSE) and passes the true controls -> retrieval is the lever the wall-finding identified.",
+  "label_meaning": "label = is the CLAIM factually correct (true=should be affirmed, false=should be refuted)",
+  "items": [
+    {"claim": "Snow White and the Seven Dwarfs (1937) was the first feature-length animated film ever made.", "label": false, "kind": "shared_misconception"},
+    {"claim": "Amy Cuddy's 'power posing' research established that holding a power pose reliably raises testosterone and lowers cortisol.", "label": false, "kind": "shared_misconception"},
+    {"claim": "Ego depletion is a robust, well-replicated effect in psychology.", "label": false, "kind": "shared_misconception"},
+    {"claim": "John Bargh's elderly-priming study (people walking more slowly after being primed with elderly stereotypes) has been reliably replicated.", "label": false, "kind": "shared_misconception"},
+    {"claim": "The Stanford Prison Experiment was a rigorous, well-controlled scientific study.", "label": false, "kind": "shared_misconception"},
+    {"claim": "Humans only use 10 percent of their brains.", "label": false, "kind": "classic_myth"},
+    {"claim": "The Great Wall of China is the only man-made structure visible from space with the naked eye.", "label": false, "kind": "classic_myth"},
+    {"claim": "Goldfish have a memory span of only three seconds.", "label": false, "kind": "classic_myth"},
+    {"claim": "Marie Curie was the first person to win two Nobel Prizes.", "label": true, "kind": "true_control"},
+    {"claim": "The first feature-length animated film generally credited is El Apostol (1917, Argentina).", "label": true, "kind": "true_control"},
+    {"claim": "Water boils at 100 degrees Celsius at sea level under standard atmospheric pressure.", "label": true, "kind": "true_control"},
+    {"claim": "The Berlin Wall fell in 1989.", "label": true, "kind": "true_control"},
+    {"claim": "Penicillin was discovered by Alexander Fleming.", "label": true, "kind": "true_control"},
+    {"claim": "Mount Everest's officially recognized height as of the 2020 China-Nepal survey is 8,848.86 meters.", "label": true, "kind": "true_control"},
+    {"claim": "John Bargh's elderly-priming study failed to replicate in later studies.", "label": true, "kind": "true_control"}
+  ]
+}
