@@ -52,6 +52,15 @@ ahead. The bar for "resampling has privileged access" is +0.20. **No cell reache
 | **arithmetic** (number size) | +0.056 | 0.000 | 0.000 | **+0.044** |
 | **code-tracing** (control flow) | +0.002 | floor | floor | floor |
 | **logic** (inference depth) | 0.000 | floor | **−0.183** | **−0.064** |
+| **factual recall** (knowledge) | no confab* | **−0.013** | — | — |
+
+\* Qwen2.5-1.5B recalls canonical facts near-completely (≥92% on atomic numbers, famous birth years,
+independence years; ~0 refusals), so it cannot populate a factual-confab class — small-model
+confabulation is predominantly a *derivation* phenomenon. Factual confab was elicited on the
+knowledge-gappier Llama-3.2-1B (birth years). There the single pass still ties resampling
+(B_contrast −0.013), so legibility is **not derivation-specific** — but the whole regime is far
+weaker (AUC 0.70–0.77 vs 0.91–1.00 on derivation), because the model's confidence is low *even when
+correct* about facts. The relationship holds; the power attenuates. → `FINDING_detection_locus_factual_2026_05_30`.
 
 Underlying AUCs (instability / entropy): arith Qwen 0.980 / 0.925, Gemma 1.000 / 0.956; code Qwen
 0.908 / 0.906; logic Qwen 1.000 / 1.000, Llama-3B 0.818 / **1.000**, Gemma 0.936 / **1.000**. Every
@@ -101,6 +110,19 @@ a clean single-pass tell of the confabulation itself.
    **closed-model HALLUCINATION** instrument (gpt-4o-mini), where the model is confident precisely
    when wrong and confidence cannot flag the error (`project_grounded_arc_bet0_engine_2026_05_24`).
    That regime is not any open architecture, family, or derivation domain tested here.
+
+## Deployment note (what this is as a product primitive)
+
+The load-bearing equality — single-pass entropy/margin tying N=10 resampling — is also a **10x cost
+collapse**: the same confab/abstain signal from one forward pass instead of ten. And it is a
+*general* gate, not a derivation-only one: it extends to factual recall (Llama-1B birth years,
+B_contrast -0.013), so it fires on knowledge errors as well as reasoning errors. The honest power
+gradient: **strong on derivation (AUC ~0.95), modest on factual recall (~0.73)** — the model being
+unconfident even when it is right about facts. It is white-box (needs first-token logits), it flags
+abstention and never corrects the answer, and it does not reach the regime where confident
+hallucination actually lives (closed-model, the open frontier). So the honest product claim is a
+**cheap, general, bounded confab gate** — not a universal hallucination oracle, which this program
+has repeatedly falsified.
 
 ## The arc, in one line
 
