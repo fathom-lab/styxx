@@ -345,6 +345,7 @@ from .verify import verify, Verdict
 from .critique import critique_detector, CritiqueDetector  # 7.7.10: first-PASS detector
 from .audit import audit_claim, ClaimAudit  # 7.7.13: productized single-call honesty audit
 from .audit import audit_session, SessionAudit  # 7.7.13: multi-claim session-level audit
+from .audit import retrieval_check, RetrievalVerdict  # 7.7.15: retrieval arm (external-grounding lever)
 from . import agent_audit  # noqa: F401  # 7.7.10: L5 instrument (FINDING_agent_claim_audit_2026_05_28.md)
 from .agent_audit import Claim, AuditResult, AgentClaimAuditor  # 7.7.10: L5 public surface
 from .agent_audit import extract_claims, ExtractionReport  # 7.7.10: prose->claim falsification
@@ -705,6 +706,7 @@ __all__ = [
 
     # 7.7.13: productized single-call honesty audit (spellchecker for AI output)
     "audit_claim", "ClaimAudit",
+    "retrieval_check", "RetrievalVerdict",  # 7.7.15: two-signal gate (retrieval arm)
     "audit_session", "SessionAudit",
 
     # 7.7.10: agent-claim auditor (L5 — substrate-grounded session-output check)

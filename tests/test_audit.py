@@ -13,9 +13,11 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from styxx import ClaimAudit, SessionAudit, audit_claim, audit_session
+from styxx import (
+    ClaimAudit, SessionAudit, audit_claim, audit_session, retrieval_check, RetrievalVerdict,
+)
 from styxx.audit import (
-    _confidence_band, _derive_verdict, _scope_warnings, _session_verdict,
+    _confidence_band, _derive_verdict, _scope_warnings, _session_verdict, _combine_retrieval,
 )
 
 
@@ -280,7 +282,7 @@ class TestAuditClaimIntegration:
             "concordance_stateless", "concordance_in_session", "divergence",
             "injection_suspected", "confidence", "scope_warnings",
             "calibration", "samples_stateless", "samples_in_session",
-            "n_clusters_stateless", "n_clusters_in_session",
+            "n_clusters_stateless", "n_clusters_in_session", "retrieval",
         }
         assert set(ClaimAudit._fields) == expected
 
@@ -463,3 +465,107 @@ class TestParallelization:
             client=_mk_client(["Paris"] * 10), same_fn=_exact_match,
         )
         assert len(result.samples_stateless) == 10
+
+
+# ---------------------------------------------------------------------------
+# 7.7.15: retrieval arm (the external-grounding lever) — two-signal gate
+# ---------------------------------------------------------------------------
+
+
+class TestRetrievalCombination:
+    """Pure two-signal combination logic (_combine_retrieval), no OpenAI."""
+
+    def test_refuted_overrides_honest(self):
+        rv = RetrievalVerdict("refuted", "evidence", "claim", "m")
+        assert _combine_retrieval("honest", rv) == "refuted"
+
+    def test_refuted_overrides_contradiction(self):
+        rv = RetrievalVerdict("refuted", "e", "c", "m")
+        assert _combine_retrieval("contradiction", rv) == "refuted"
+
+    def test_supported_does_not_change_verdict(self):
+        assert _combine_retrieval("honest", RetrievalVerdict("supported", "e", "c", "m")) == "honest"
+
+    def test_unclear_does_not_change_verdict(self):
+        assert _combine_retrieval("honest", RetrievalVerdict("unclear", "e", "c", "m")) == "honest"
+
+    def test_refuted_only_overrides_confident_verdicts(self):
+        rv = RetrievalVerdict("refuted", "e", "c", "m")
+        assert _combine_retrieval("abstain", rv) == "abstain"
+        assert _combine_retrieval("confabulation", rv) == "confabulation"
+        assert _combine_retrieval("injected", rv) == "injected"
+
+    def test_none_retrieval_is_noop(self):
+        assert _combine_retrieval("honest", None) == "honest"
+
+
+class TestRetrievalCheck:
+    """retrieval_check parsing + surface, via a mock web-grounded client."""
+
+    def test_parses_refuted(self):
+        v = retrieval_check("Snow White was the first animated film.",
+                            client=_mk_client(["REFUTED: El Apostol (1917) was first."]))
+        assert v.verdict == "refuted"
+        assert not v  # __bool__ False unless supported
+
+    def test_parses_supported(self):
+        v = retrieval_check("The Berlin Wall fell in 1989.",
+                            client=_mk_client(["SUPPORTED: multiple sources confirm 1989."]))
+        assert v.verdict == "supported"
+        assert v
+
+    def test_parses_unclear(self):
+        v = retrieval_check("Some contested claim.", client=_mk_client(["UNCLEAR: sources conflict."]))
+        assert v.verdict == "unclear"
+
+    def test_unparseable_defaults_unclear(self):
+        v = retrieval_check("X.", client=_mk_client(["I think maybe possibly."]))
+        assert v.verdict == "unclear"
+
+    def test_picks_earliest_keyword(self):
+        v = retrieval_check("X.", client=_mk_client(["This is REFUTED; it is not SUPPORTED."]))
+        assert v.verdict == "refuted"
+
+    def test_empty_claim_raises(self):
+        with pytest.raises(ValueError):
+            retrieval_check("  ")
+
+    def test_records_model_and_claim(self):
+        v = retrieval_check("c", search_model="gpt-4o-search-preview",
+                            client=_mk_client(["SUPPORTED: ok."]))
+        assert v.model == "gpt-4o-search-preview" and v.claim == "c"
+
+
+class TestAuditClaimRetrievalArm:
+    """audit_claim(verify_retrieval=True) — the two-signal gate end to end."""
+
+    def test_retrieval_refutes_confident_claim(self):
+        # 10 stable "Lyon" samples -> grounded high -> honest; retrieval refutes -> "refuted"
+        # (exactly the confident-misconception case resampling alone cannot see).
+        result = audit_claim(
+            claim="Lyon", question="What is the capital of France?", n=10,
+            client=_mk_client(["Lyon"] * 10 + ["REFUTED: the capital is Paris."]),
+            same_fn=_exact_match, verify_retrieval=True,
+        )
+        assert result.verdict == "refuted"
+        assert result.retrieval is not None and result.retrieval.verdict == "refuted"
+        assert "retrieval-fallible" in result.scope_warnings
+        assert not result  # deploy gate fails closed on a refuted claim
+
+    def test_retrieval_supported_keeps_honest(self):
+        result = audit_claim(
+            claim="Paris", question="What is the capital of France?", n=10,
+            client=_mk_client(["Paris"] * 10 + ["SUPPORTED: Paris is the capital."]),
+            same_fn=_exact_match, verify_retrieval=True,
+        )
+        assert result.verdict == "honest"
+        assert result.retrieval.verdict == "supported"
+        assert bool(result) is True
+
+    def test_no_retrieval_by_default(self):
+        result = audit_claim(
+            claim="Paris", question="q?", n=10,
+            client=_mk_client(["Paris"] * 10), same_fn=_exact_match,
+        )
+        assert result.retrieval is None
+        assert "retrieval-fallible" not in result.scope_warnings

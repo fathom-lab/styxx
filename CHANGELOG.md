@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.15] — 2026-05-30 — the retrieval arm: `audit_claim` becomes a two-signal gate (model-internal confab + external grounding)
+
+### Added — `styxx.retrieval_check` + `audit_claim(verify_retrieval=True)`
+
+```python
+from styxx import retrieval_check, audit_claim
+
+# the external-grounding lever, standalone
+retrieval_check("Snow White (1937) was the first feature-length animated film.").verdict
+# -> "refuted"   (with a cited El Apóstol/1917 evidence string; bool() == False)
+
+# folded into audit_claim as the two-signal gate
+a = audit_claim(claim, question, verify_retrieval=True)
+a.verdict        # "refuted" when retrieval refutes an otherwise-confident claim
+a.retrieval      # RetrievalVerdict(verdict, evidence, claim, model)
+```
+
+The resampling stack (`grounded_honesty` / `audit_claim`) and the single-pass gates catch
+confabulation that is **unstable** — derivation/reasoning errors where the model's own samples
+scatter. They are **structurally blind to confident factual MISCONCEPTIONS**: a *stable* belief that
+is false. The detection-locus arc proved this on every model-internal signal — self-consistency,
+single-pass, cross-model disagreement, even LLM-judging all fail, because the surviving misconceptions
+are shared across models and the judge (`FINDING_truthfulqa_crossmodel_2026_05_30.md`). The only lever
+that catches them is **external ground truth**: in `FINDING_retrieval_grounding_2026_05_30.md`, a
+web-grounded model corrected the exact "Snow White = first animated film" misconception that defeated
+self-consistency, cross-model, the LLM judge, **and Claude itself** in the self-audit.
+
+- `retrieval_check(claim, *, search_model="gpt-4o-mini-search-preview", client=None)` →
+  `RetrievalVerdict(verdict ∈ {supported, refuted, unclear}, evidence, claim, model)`. Asks a
+  web-grounded OpenAI model whether retrieved sources support or refute the claim.
+- `audit_claim(..., verify_retrieval=True)` runs it as a second arm and folds the result in via the
+  pure, testable `_combine_retrieval`: external refutation downgrades an otherwise-confident verdict
+  (`honest` / `contradiction`) to **`"refuted"`** (so `bool(audit)` — the deploy gate — fails closed),
+  and adds a `retrieval-fallible` scope warning. New `ClaimAudit.retrieval` field (backward-compatible
+  default `None`).
+- **Honest scope (in the docstrings):** retrieval is **FALLIBLE** — in the validating run it also
+  *broke* one correct item by misreading its sources, so `"refuted"` is a strong flag, not ground
+  truth. The combination is deliberately conservative (refutation-only, confident-verdicts-only). The
+  two arms are complementary: model-internal for unstable confabulation, retrieval for confident
+  factual claims — neither a universal oracle.
+- 19 new unit tests (`tests/test_audit.py`: pure combination logic, parsing, the two-signal
+  integration), offline-deterministic via the mock client; ruff clean.
+
+---
+
 ## [7.7.14] — 2026-05-30 — single-pass confab gate (the ~10× cheaper, white-box analog of grounded honesty's resampling)
 
 ### Added — `styxx.single_pass_confab` + `styxx.calibrate_single_pass`
