@@ -133,9 +133,14 @@ least-confident token's margin is 0.29 in a confabulated product vs 9.59 in a co
 while first-token fails harder (0.57, B_contrast +0.427). So the gate is about confabulation
 LOCALIZATION (the model is uncertain exactly where it confabulates), not digit tokenization. The
 winning aggregate is domain-dependent — **min-margin** on numbers, **max-entropy** on character
-strings — so `span_confab` returns both. → `FINDING_detection_locus_gpt_2026_05_30` (first-token,
-SURVIVED) + `_gpt_span_` (span recovery) + `_gpt_reverse_2026_05_30` (generalization). Shipped as
-`styxx.span_confab`.
+strings — so `span_confab` returns both. **And it holds across model STRENGTHS:** span ties N=10
+resampling on gpt-3.5-turbo (AUC 1.000), gpt-4o-mini (0.991), AND frontier gpt-4o (1.000) —
+model-strength-invariant within OpenAI. One honest nuance from that run: the FIRST-token gate's
+*failure* is itself model-specific — it is adequate (0.85–0.90) on gpt-3.5/gpt-4o but fails (0.76) on
+gpt-4o-mini — so `span_confab` is the robust universal choice and `single_pass_confab` a cheaper
+model-specific fallback. → `FINDING_detection_locus_gpt_2026_05_30` (first-token, SURVIVED) +
+`_gpt_span_` (span recovery) + `_gpt_reverse_` (non-numeric generalization) +
+`_gpt_xmodel_2026_05_30` (model-strength invariance). Shipped as `styxx.span_confab`.
 
 ## Deployment note (what this is as a product primitive)
 

@@ -266,8 +266,11 @@ def span_confab(
     only 0.76 / 0.57. The recovery is about confabulation LOCALIZATION (the model is uncertain exactly
     where it confabulates), not digit tokenization. The winning aggregate is domain-dependent
     (min-margin on numbers, max-entropy on character strings), so this returns BOTH — calibrate per
-    model/domain. A cheap (one forward pass vs ten) closed-model confab gate for structured answers.
-    See ``FINDING_detection_locus_gpt_span_`` and ``_gpt_reverse_2026_05_30.md``.
+    model/domain. It is model-strength-invariant: span ties resampling on gpt-3.5-turbo (1.000),
+    gpt-4o-mini (0.991), and frontier gpt-4o (1.000). Prefer it over the cheaper first-token
+    :func:`single_pass_confab`, whose closed-model reliability is model-specific. A cheap (one forward
+    pass vs ten) closed-model confab gate for structured answers. See
+    ``FINDING_detection_locus_gpt_span_``, ``_gpt_reverse_``, and ``_gpt_xmodel_2026_05_30.md``.
 
     SCOPE: requires a MULTI-TOKEN answer with the error LOCALIZED to some token(s) — a single-token
     answer has no span (falls back to the first-token regime), and an error smeared evenly across all
