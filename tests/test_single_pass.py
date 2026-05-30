@@ -10,6 +10,8 @@ from styxx.single_pass import (
     calibrate_single_pass,
     SinglePassScore,
     SinglePassCalibration,
+    span_confab,
+    SpanConfabScore,
 )
 
 
@@ -140,6 +142,62 @@ def test_calibration_then_score_is_deployable_workflow():
     assert fresh_correct.abstain is False
 
 
+# --- span_confab -------------------------------------------------------------
+
+def test_span_aggregates_max_entropy_and_min_margin():
+    # token 0 confident (low ent, high margin), token 1 uncertain (high ent, low margin)
+    span = span_confab([[12.0, 0.0, 0.0, 0.0], [1.0, 0.9, 0.8, 0.85]])
+    assert span.n_tokens == 2
+    # max_entropy comes from the uncertain token; min_margin from it too
+    t1 = single_pass_confab([1.0, 0.9, 0.8, 0.85])
+    assert span.max_entropy == pytest.approx(t1.entropy)
+    assert span.min_margin == pytest.approx(t1.margin)
+
+
+def test_span_recovers_what_first_token_misses():
+    # THE closed-model scenario: confident FIRST token, confabulated LATER token.
+    # first-token signal is identical for confab and correct; the span separates them.
+    confident_first = [20.0, 0.0, 0.0, 0.0]
+    correct_span = span_confab([confident_first, [15.0, 0.0, 0.0, 0.0]])       # all tokens confident
+    confab_span = span_confab([confident_first, [0.6, 0.55, 0.5, 0.52]])       # later token uncertain
+    # first tokens are identical -> a first-token gate cannot tell these apart
+    assert single_pass_confab(confident_first).margin == single_pass_confab(confident_first).margin
+    # but the span does: the confab has a much lower min-margin and higher max-entropy
+    assert confab_span.min_margin < correct_span.min_margin
+    assert confab_span.max_entropy > correct_span.max_entropy
+
+
+def test_span_abstain_margin_threshold():
+    confab = span_confab([[20.0, 0.0, 0.0], [0.5, 0.45, 0.4]], margin_threshold=1.0)
+    correct = span_confab([[20.0, 0.0, 0.0], [15.0, 0.0, 0.0]], margin_threshold=1.0)
+    assert confab.abstain is True       # least-confident token margin <= 1.0
+    assert correct.abstain is False
+
+
+def test_span_abstain_is_or_of_both_thresholds():
+    # high max-entropy OR low min-margin triggers abstain
+    s = span_confab([[10.0, 0.0, 0.0], [0.1, 0.1, 0.1]],
+                    entropy_threshold=0.5, margin_threshold=0.01)
+    assert s.abstain is True            # the flat token has high entropy
+    calm = span_confab([[10.0, 0.0], [12.0, 0.0]], entropy_threshold=0.5, margin_threshold=0.01)
+    assert calm.abstain is False
+
+
+def test_span_empty_is_degenerate():
+    s = span_confab([])
+    assert s == SpanConfabScore(0.0, 0.0, 0.0, 0.0, None, 0)
+
+
+def test_span_skips_empty_token_vectors():
+    s = span_confab([[1.0, 2.0], [], [3.0, 0.0]])
+    assert s.n_tokens == 2              # the empty vector is skipped
+
+
+def test_span_float_returns_max_entropy():
+    s = span_confab([[1.0, 0.9], [5.0, 0.0]])
+    assert float(s) == s.max_entropy
+
+
 # --- public API surface ------------------------------------------------------
 
 def test_exported_from_package_root():
@@ -148,6 +206,9 @@ def test_exported_from_package_root():
     assert styxx.calibrate_single_pass is calibrate_single_pass
     assert styxx.SinglePassScore is SinglePassScore
     assert styxx.SinglePassCalibration is SinglePassCalibration
+    assert styxx.span_confab is span_confab
+    assert styxx.SpanConfabScore is SpanConfabScore
     for name in ("single_pass_confab", "SinglePassScore",
-                 "calibrate_single_pass", "SinglePassCalibration"):
+                 "calibrate_single_pass", "SinglePassCalibration",
+                 "span_confab", "SpanConfabScore"):
         assert name in styxx.__all__

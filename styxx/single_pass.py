@@ -25,7 +25,14 @@ HONEST SCOPE (see the SYNTHESIS for the full boundary):
   - **Flags ABSTAIN, never corrects.** A high-entropy first token means "no confident answer here",
     not "the answer is X". Every detection-locus cell had ``modal_correct ~0`` for confab — the
     signal detects, it does not fix.
-  - **Does not reach the closed-model confident-hallucination regime** (the open frontier).
+  - **First-token reaches white-box / weak models only.** On a strong CLOSED model (gpt-4o-mini) the
+    FIRST-token signal FAILS — it confabulates downstream of the first token (B_contrast +0.22). For
+    that regime use :func:`span_confab`, which aggregates across the answer span and recovered
+    closed-model confab detection to EXACT N=10-resampling parity (AUC 0.991, B_contrast 0.000) on
+    multi-token answers. Confident hallucination of SINGLE-token answers remains the open frontier.
+
+Two entry points: :func:`single_pass_confab` (first answer token — white-box / weak-model) and
+:func:`span_confab` (aggregate across a multi-token answer — the closed-model gate).
 """
 from __future__ import annotations
 
@@ -202,3 +209,97 @@ def calibrate_single_pass(
         if j > best_j:
             best_j, best_thr = j, thr
     return SinglePassCalibration(best_thr, auc, cm, km, n_pos, n_neg)
+
+
+class SpanConfabScore(NamedTuple):
+    """Result of :func:`span_confab` — a span-aggregate single-pass confab signal across a
+    multi-token answer (the gate that recovers CLOSED-model confabulation detection).
+
+    Fields
+    ------
+    max_entropy : float
+        Highest single-token entropy in the answer span (nats). The most-uncertain token. Validated
+        AUC 0.96 on gpt-4o-mini. ``float(score)`` returns this.
+    mean_entropy : float
+        Mean per-token entropy across the span.
+    min_margin : float
+        Lowest single-token ``top1-top2`` margin in the span — the LEAST-confident token. The best
+        closed-model signal (gpt-4o-mini AUC 0.991, tying N=10 resampling): in a confabulated answer
+        the worst token is at a near-coin-flip; in a correct answer even the worst token is decisive.
+    mean_margin : float
+        Mean per-token margin across the span.
+    abstain : bool or None
+        ``max_entropy >= entropy_threshold`` OR ``min_margin <= margin_threshold`` when either
+        threshold is supplied, else ``None``.
+    n_tokens : int
+        Number of answer tokens aggregated.
+    """
+    max_entropy: float
+    mean_entropy: float
+    min_margin: float
+    mean_margin: float
+    abstain: Optional[bool]
+    n_tokens: int
+
+    def __float__(self) -> float:  # oriented higher = more-likely-confab
+        return self.max_entropy
+
+
+def span_confab(
+    token_logits: Sequence[Sequence[float]],
+    *,
+    entropy_threshold: Optional[float] = None,
+    margin_threshold: Optional[float] = None,
+    temperature: float = 1.0,
+) -> SpanConfabScore:
+    """Span-aggregate confab signal across a MULTI-TOKEN answer — the closed-model gate.
+
+    Given the per-token next-token logit vectors for each token of the answer (one vector per answer
+    token), compute :func:`single_pass_confab` on each and aggregate: ``max_entropy`` / ``mean_entropy``
+    and ``min_margin`` / ``mean_margin`` across the span. Still ONE forward pass, NO resampling.
+
+    The first-token signal (:func:`single_pass_confab`) FAILS on strong closed models because they
+    confabulate downstream of the first token (e.g. correct leading digits, wrong trailing). The span
+    aggregate recovers it: on gpt-4o-mini multiplication, the least-confident token's margin
+    (``min_margin``) separated confab from correct at AUC 0.991 — exactly matching N=10 resampling
+    instability (0.991), B_contrast 0.000 — where the first-token gate managed only 0.76. So a cheap
+    (one forward pass vs ten) closed-model confab gate exists for structured answers. See
+    ``papers/grounded-honesty-axis/FINDING_detection_locus_gpt_span_2026_05_30.md``.
+
+    SCOPE: requires a MULTI-TOKEN answer with the error LOCALIZED to some token(s) — a single-token
+    answer has no span (falls back to the first-token regime), and an error smeared evenly across all
+    tokens would not localize. From the OpenAI API, build ``token_logits`` from each answer token's
+    ``top_logprobs`` (the top-k logprobs serve as the per-token distribution).
+
+    Parameters
+    ----------
+    token_logits : sequence of (sequence of float)
+        One next-token logit vector per answer token. Empty span → degenerate all-zero score.
+    entropy_threshold : float, optional
+        Abstain if ``max_entropy >= entropy_threshold``. Calibrate per model.
+    margin_threshold : float, optional
+        Abstain if ``min_margin <= margin_threshold`` (the validated primary closed-model gate).
+        If both thresholds are given, ``abstain`` is their OR.
+    temperature : float, default 1.0
+        Softmax temperature for the per-token entropy (margins use raw logits).
+
+    Returns
+    -------
+    SpanConfabScore
+    """
+    scores = [single_pass_confab(lg, temperature=temperature) for lg in token_logits]
+    scores = [s for s in scores if s.n_logits > 0]
+    n = len(scores)
+    if n == 0:
+        return SpanConfabScore(0.0, 0.0, 0.0, 0.0, None, 0)
+    ents = [s.entropy for s in scores]
+    margs = [s.margin for s in scores]
+    max_e = max(ents)
+    min_m = min(margs)
+    flags = []
+    if entropy_threshold is not None:
+        flags.append(max_e >= entropy_threshold)
+    if margin_threshold is not None:
+        flags.append(min_m <= margin_threshold)
+    abstain = any(flags) if flags else None
+    return SpanConfabScore(max_e, math.fsum(ents) / n, min_m, math.fsum(margs) / n, abstain, n)

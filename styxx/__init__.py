@@ -634,6 +634,7 @@ from .divergence import (
 from .single_pass import (
     single_pass_confab, SinglePassScore,
     calibrate_single_pass, SinglePassCalibration,
+    span_confab, SpanConfabScore,
 )
 
 
@@ -654,6 +655,8 @@ __all__ = [
     # 7.7.14: single-pass confab gate (white-box, ~10x cheaper than resampling)
     "single_pass_confab", "SinglePassScore",
     "calibrate_single_pass", "SinglePassCalibration",
+    # 7.7.14: span-aggregate variant — the closed-model gate (recovers gpt-4o-mini at resampling parity)
+    "span_confab", "SpanConfabScore",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",

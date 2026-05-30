@@ -28,7 +28,24 @@ The white-box, one-forward-pass analog of `grounded_honesty`'s N=10 resampling. 
 
 - Pure-python, no deps. `SinglePassScore(entropy, margin, abstain, n_logits)` and `SinglePassCalibration(entropy_threshold, auc, confab_mean, correct_mean, n_confab, n_correct)`.
 - **Honest scope** (in the docstrings): white-box (needs first-token logits); power gradient is **strong on derivation (AUC ~0.91–1.00), modest on factual recall (~0.73)** — a general confab gate, not a near-perfect hallucination oracle; thresholds are model-specific so must be calibrated per model (no universal default — Gemma-2 soft-caps its logits); flags **ABSTAIN, never corrects** (`modal_correct ~0` for confab in every cell); does not reach the closed-model confident-hallucination regime (the open frontier).
-- 16 unit tests (numerical correctness, confab-vs-correct ordering, calibration workflow, edge cases, public-export); ruff clean.
+### Added — `styxx.span_confab` (the CLOSED-model variant — recovers gpt-4o-mini at resampling parity)
+
+```python
+from styxx import span_confab
+
+# aggregate the single-pass signal across a MULTI-token answer (one logit vector per answer token)
+s = span_confab(per_token_logits, margin_threshold=cal_threshold)
+s.min_margin    # the LEAST-confident token's margin — the closed-model signal (lower = more-likely-confab)
+s.max_entropy   # the most-uncertain token's entropy
+s.abstain       # min_margin <= margin_threshold OR max_entropy >= entropy_threshold
+```
+
+The first-token `single_pass_confab` FAILS on strong closed models — they confabulate *downstream* of the first token (gpt-4o-mini: first-token AUC 0.76, `B_contrast +0.216 → SURVIVED`, the arc's first single-pass failure). But the error is still single-pass-visible later in the answer: aggregating per-token entropy/margin across the span recovers it. On gpt-4o-mini multiplication (`FINDING_detection_locus_gpt_span_2026_05_30.md`), the **least-confident token's margin (`min_margin`) reached AUC 0.991 — exactly matching N=10 resampling (0.991), `B_contrast 0.000`** — where the first token managed 0.76. So a **cheap (one forward pass vs ten) closed-model confab gate** exists for structured/multi-token answers (from the OpenAI API, build the per-token vectors from each answer token's `top_logprobs`).
+
+- `SpanConfabScore(max_entropy, mean_entropy, min_margin, mean_margin, abstain, n_tokens)`.
+- **Scope:** requires a multi-token answer with the error localized to some token(s); a single-token answer has no span (falls back to the first-token regime), and confident hallucination of single-token answers remains the open frontier.
+
+- 23 unit tests total (numerical correctness, confab-vs-correct ordering, calibration workflow, **span recovery scenario**, edge cases, public-export); ruff clean.
 
 ---
 
