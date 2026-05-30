@@ -68,6 +68,7 @@ EASY_CODE = (
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=len(SPECS))
+    ap.add_argument("--model", type=str, default=wb.MODEL_NAME)
     args = ap.parse_args(argv)
 
     def _q(src):
@@ -82,11 +83,13 @@ def main(argv=None) -> int:
     key_blob = json.dumps([(u, c) for _, u, c, _ in items], ensure_ascii=False)
     key_hash = hashlib.sha256(key_blob.encode("utf-8")).hexdigest()
     print(f"answer-key SHA-256 (pre-scoring): {key_hash}")
-    print(f"model={wb.MODEL_NAME} device={wb.DEVICE} N_resample={N_RESAMPLE} temp={TEMPERATURE}")
+    print(f"model={args.model} device={wb.DEVICE} N_resample={N_RESAMPLE} temp={TEMPERATURE}")
 
-    tok = AutoTokenizer.from_pretrained(wb.MODEL_NAME)
-    model = AutoModelForCausalLM.from_pretrained(
-        wb.MODEL_NAME, torch_dtype=torch.float16).to(wb.DEVICE).eval()
+    tok = AutoTokenizer.from_pretrained(args.model)
+    _mk = {"torch_dtype": torch.float16}
+    if "gemma" in args.model.lower():
+        _mk["attn_implementation"] = "eager"   # Gemma-2 attention soft-capping requires eager
+    model = AutoModelForCausalLM.from_pretrained(args.model, **_mk).to(wb.DEVICE).eval()
     print("model loaded\n")
 
     rows = []
@@ -145,7 +148,7 @@ def main(argv=None) -> int:
         "experiment": "detection locus — DOMAIN GENERALIZATION to code-output tracing: is single-pass confab legibility arithmetic-specific?",
         "prereg": "papers/grounded-honesty-axis/PREREG_detection_locus_code_2026_05_29.md",
         "answer_key_sha256_pre_scoring": key_hash,
-        "model": wb.MODEL_NAME, "device": wb.DEVICE, "domain": "code-output tracing",
+        "model": args.model, "device": wb.DEVICE, "domain": "code-output tracing",
         "n_resample": N_RESAMPLE, "temperature": TEMPERATURE,
         "n_confab_usable": n_conf, "n_correct_usable": n_corr, "powered": powered,
         "means": {
@@ -164,7 +167,7 @@ def main(argv=None) -> int:
         "rows": rows,
         "B1": bool(b1), "B_contrast": bool(b_contrast), "RESULT": result,
         "honest_scope": (
-            "single open model Qwen2.5-1.5B-Instruct; code-output tracing domain only; one "
+            f"single open model {args.model}; code-output tracing domain only; one "
             "confirmatory run; feasibility-grade; resampling N=10 at T=1.0, Stability from exact "
             "distinct-integer counts (no judge); single-pass entropy/margin from the clean logit-lens "
             "at the first answer token; ground truth by EXECUTION then hashed pre-scoring; exact-"
@@ -174,7 +177,9 @@ def main(argv=None) -> int:
             "cross-domain-comparable result. Does NOT touch the correctness bound: every signal "
             "DETECTS confabulation, none CORRECTS it; the detector flags abstain."),
     }
-    RECEIPT.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    out_path = RECEIPT if args.model == wb.MODEL_NAME else (
+        HERE / f"detection_locus_code_result_{args.model.split('/')[-1].replace('.', '_')}.json")
+    out_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("\n" + json.dumps({k: v for k, v in receipt.items() if k != "rows"}, indent=2))
     print(f"\nn_conf={n_conf} n_corr={n_corr} powered={powered}")
     print(f"B1={b1}(inst AUC={auc_inst:.3f}) ent AUC={auc_ent:.3f} (-margin) AUC={auc_margin:.3f} "

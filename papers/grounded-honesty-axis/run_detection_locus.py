@@ -98,8 +98,10 @@ def main(argv=None) -> int:
     print(f"model={args.model} device={wb.DEVICE} N_resample={N_RESAMPLE} temp={TEMPERATURE}")
 
     tok = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.float16).to(wb.DEVICE).eval()
+    _mk = {"torch_dtype": torch.float16}
+    if "gemma" in args.model.lower():
+        _mk["attn_implementation"] = "eager"   # Gemma-2 attention soft-capping requires eager
+    model = AutoModelForCausalLM.from_pretrained(args.model, **_mk).to(wb.DEVICE).eval()
     print("model loaded\n")
 
     SYS = "Answer with only the final number, nothing else."
