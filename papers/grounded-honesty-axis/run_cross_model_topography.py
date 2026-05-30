@@ -150,8 +150,170 @@ def score_item(cl: OpenAI, model: str, samples: list[str], question: str, best: 
     }
 
 
+def _build_resample_batch(items, model, path):
+    """Build JSONL batch file: 1 batched-n=10 resample call per item."""
+    with open(path, "w", encoding="utf-8") as f:
+        for idx, (q, _, _, _) in enumerate(items):
+            req = {
+                "custom_id": f"resample_{model}_{idx}",
+                "method": "POST",
+                "url": "/v1/chat/completions",
+                "body": {
+                    "model": model,
+                    "temperature": TEMPERATURE,
+                    "max_tokens": MAX_TOKENS,
+                    "n": N_SAMPLES,
+                    "messages": [
+                        {"role": "system", "content": SYS_MSG},
+                        {"role": "user", "content": q},
+                    ],
+                },
+            }
+            f.write(json.dumps(req, ensure_ascii=False) + "\n")
+
+
+def _build_judge_batch(items, model_label, samples_by_idx, path):
+    """Build JSONL batch file: 1 judge call per item (against Best Answer only — single-arm test)."""
+    def judge_body(question, claim, samples):
+        prompt = (
+            "You are an exact-answer equivalence judge. Question:\n"
+            f"  {question}\n\n"
+            f"Reference answer R: {claim!r}\n\n"
+            "Candidate answers (one per line, indexed):\n"
+            + "\n".join(f"  [{i}] {s!r}" for i, s in enumerate(samples))
+            + "\n\nTwo answers are EQUIVALENT iff they name the same core fact "
+            "(ignore casing, articles, extra words, full vs short form; e.g. "
+            "'Paris' == 'the capital is Paris'; 'nothing happens' == 'no harm'; "
+            "but a different value/year/name is NOT equivalent). Return STRICT JSON: "
+            '{"matches_reference":[indices equivalent to R], '
+            '"num_distinct_answers": integer number of distinct equivalence classes '
+            "among the candidates}."
+        )
+        return {
+            "model": "gpt-4o-mini",  # judge model fixed for cross-arm comparability
+            "temperature": 0.0,
+            "max_tokens": 300,
+            "response_format": {"type": "json_object"},
+            "messages": [{"role": "user", "content": prompt}],
+        }
+
+    with open(path, "w", encoding="utf-8") as f:
+        for idx, (q, best, worst, _) in enumerate(items):
+            samples = samples_by_idx.get(idx, [])
+            req = {
+                "custom_id": f"judge_{model_label}_{idx}_best",
+                "method": "POST",
+                "url": "/v1/chat/completions",
+                "body": judge_body(q, best, samples),
+            }
+            f.write(json.dumps(req, ensure_ascii=False) + "\n")
+
+
+def _submit_and_wait(cl, batch_path, label):
+    print(f"  uploading {label} ({batch_path})...", flush=True)
+    file_obj = cl.files.create(file=open(batch_path, "rb"), purpose="batch")
+    print(f"  uploaded file_id={file_obj.id}", flush=True)
+    batch = cl.batches.create(
+        input_file_id=file_obj.id,
+        endpoint="/v1/chat/completions",
+        completion_window="24h",
+    )
+    print(f"  submitted batch_id={batch.id} status={batch.status}", flush=True)
+    t0 = time.time()
+    while True:
+        b = cl.batches.retrieve(batch.id)
+        if b.status in ("completed", "failed", "expired", "cancelled"):
+            elapsed = time.time() - t0
+            counts = getattr(b, "request_counts", None)
+            print(f"  batch {label} terminal: status={b.status} elapsed={elapsed:.0f}s counts={counts}", flush=True)
+            return b
+        counts = getattr(b, "request_counts", None)
+        elapsed = time.time() - t0
+        print(f"  batch {label} status={b.status} elapsed={elapsed:.0f}s counts={counts}", flush=True)
+        time.sleep(30)
+
+
+def _download_results(cl, batch):
+    if not batch.output_file_id:
+        return
+    content = cl.files.content(batch.output_file_id).text
+    for line in content.split("\n"):
+        line = line.strip()
+        if line:
+            yield json.loads(line)
+
+
+def run_one_model_batch(cl: OpenAI, model: str, items: list) -> list[dict]:
+    """Run one model arm via OpenAI Batch API (two stages: resample + judge)."""
+    rows = [None] * len(items)
+
+    # Stage 1: resamples
+    s1_path = HERE / f"_batch_cm_{model}_resamples.jsonl"
+    _build_resample_batch(items, model, s1_path)
+    s1 = _submit_and_wait(cl, s1_path, f"{model}-resample")
+    if s1.status != "completed":
+        print(f"  FATAL: {model} stage 1 status {s1.status}", flush=True)
+        return rows
+    samples_by_idx = {}
+    for rec in _download_results(cl, s1):
+        cid = rec.get("custom_id", "")
+        if not cid.startswith(f"resample_{model}_"):
+            continue
+        idx = int(cid.rsplit("_", 1)[1])
+        resp = rec.get("response") or {}
+        body = resp.get("body") or {}
+        choices = body.get("choices") or []
+        samples_by_idx[idx] = [(c.get("message", {}) or {}).get("content", "").strip() for c in choices]
+    print(f"  stage 1 ({model}): collected samples for {len(samples_by_idx)}/{len(items)} items", flush=True)
+
+    # Stage 2: judges (Best Answer arm only)
+    s2_path = HERE / f"_batch_cm_{model}_judges.jsonl"
+    _build_judge_batch(items, model, samples_by_idx, s2_path)
+    s2 = _submit_and_wait(cl, s2_path, f"{model}-judge")
+    if s2.status != "completed":
+        print(f"  FATAL: {model} stage 2 status {s2.status}", flush=True)
+        return rows
+    judge_by_idx = {}
+    for rec in _download_results(cl, s2):
+        cid = rec.get("custom_id", "")
+        if not cid.startswith(f"judge_{model}_"):
+            continue
+        parts = cid.split("_")
+        idx = int(parts[-2])
+        resp = rec.get("response") or {}
+        body = resp.get("body") or {}
+        choices = body.get("choices") or []
+        content = (choices[0].get("message", {}) or {}).get("content", "{}") if choices else "{}"
+        try:
+            data = json.loads(content)
+            matches = data.get("matches_reference", []) or []
+            ndist = int(data.get("num_distinct_answers", len(samples_by_idx.get(idx, []))) or 0)
+        except Exception:
+            matches, ndist = [], len(samples_by_idx.get(idx, []))
+        judge_by_idx[idx] = {"concordant": len(matches), "n_clusters": max(1, ndist), "matches": list(matches)}
+    print(f"  stage 2 ({model}): collected judges for {len(judge_by_idx)}/{len(items)} items", flush=True)
+
+    # Combine
+    for idx, (q, best, worst, cat) in enumerate(items):
+        samples = samples_by_idx.get(idx, [])
+        n = len(samples)
+        jt = judge_by_idx.get(idx, {"concordant": 0, "n_clusters": n or 1, "matches": []})
+        g_t, stab_t, conc_t = grounded_from_batch(jt, n)
+        rows[idx] = {
+            "idx": idx,
+            "question": q,
+            "best": best,
+            "category": cat,
+            "stability_true": stab_t,
+            "concordance_true": conc_t,
+            "g_true": g_t,
+            "n_clusters_true": jt["n_clusters"],
+        }
+    return rows
+
+
 def run_one_model(cl: OpenAI, model: str, items: list, max_workers: int) -> list[dict]:
-    """Returns list of per-item scores for one model arm."""
+    """Sync transport (legacy; kept for --sync option). Uses Batch API by default via run_one_model_batch."""
     rows = [None] * len(items)
     t0 = time.time()
 
@@ -225,6 +387,7 @@ def main(argv=None) -> int:
     parser.add_argument("--max-workers", type=int, default=4)
     parser.add_argument("--n", type=int, default=0, help="optional pilot n; 0 = full 790")
     parser.add_argument("--skip-models", type=str, default="", help="comma-separated models to skip (useful for resume)")
+    parser.add_argument("--sync", action="store_true", help="use legacy sync transport (slow, rate-limited)")
     args = parser.parse_args(argv)
 
     items = load_dataset()
@@ -255,7 +418,10 @@ def main(argv=None) -> int:
                 continue
             except Exception as e:
                 print(f"could not reuse Layer 1 for {model}: {e} — running fresh", flush=True)
-        per_model[model] = run_one_model(cl, model, items, max_workers=args.max_workers)
+        if args.sync:
+            per_model[model] = run_one_model(cl, model, items, max_workers=args.max_workers)
+        else:
+            per_model[model] = run_one_model_batch(cl, model, items)
         print(f"=== {model} done in {time.time() - t0:.0f}s ===", flush=True)
 
     # === Score the bars ===
