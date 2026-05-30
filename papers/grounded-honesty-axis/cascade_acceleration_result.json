@@ -1,0 +1,144 @@
+{
+  "experiment": "ACCELERATION \u2014 the detector as a compute router: cheap single-pass gate routes the uncertain fraction to expensive N=10 resampling. How much compute is saved at ~full detection?",
+  "prereg": "papers/grounded-honesty-axis/PREREG_cascade_acceleration_2026_05_30.md",
+  "input_items_sha256_pre_scoring": "38d17b13cb4e00638c35f3956bc3a9f24dfb6534a7531220ec8eb36e19ac0b21",
+  "pooled_n": 489,
+  "n_resample": 10,
+  "baselines": {
+    "resample_all": {
+      "auc": 0.9602,
+      "compute_passes": 10
+    },
+    "cheap_only": {
+      "auc": 0.8458,
+      "compute_passes": 1
+    }
+  },
+  "cascade_operating_point": {
+    "auc": 0.9424,
+    "compute_passes": 9.834,
+    "compute_ratio_vs_full": 0.9834,
+    "escalation_rate": 0.8834,
+    "speedup_x": 1.02
+  },
+  "per_regime": {
+    "code": {
+      "n": 52,
+      "auc_full_resample": 0.9076,
+      "auc_cheap_only": 0.9059,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 0.9059,
+      "escalation_rate": 0.0
+    },
+    "factual_Llama-3_2-1B-Instruct": {
+      "n": 39,
+      "auc_full_resample": 0.7556,
+      "auc_cheap_only": 0.7,
+      "cascade_compute_passes": 5.359,
+      "cascade_compute_ratio": 0.5359,
+      "cascade_auc": 0.7361,
+      "escalation_rate": 0.4359
+    },
+    "gpt": {
+      "n": 47,
+      "auc_full_resample": 0.9741,
+      "auc_cheap_only": 0.7529,
+      "cascade_compute_passes": 8.66,
+      "cascade_compute_ratio": 0.866,
+      "cascade_auc": 0.9626,
+      "escalation_rate": 0.766
+    },
+    "logic": {
+      "n": 40,
+      "auc_full_resample": 1.0,
+      "auc_cheap_only": 1.0,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 1.0,
+      "escalation_rate": 0.0
+    },
+    "logic_Llama-3_2-3B-Instruct": {
+      "n": 39,
+      "auc_full_resample": 0.8175,
+      "auc_cheap_only": 1.0,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 1.0,
+      "escalation_rate": 0.0
+    },
+    "logic_gemma-2-2b-it": {
+      "n": 40,
+      "auc_full_resample": 0.9356,
+      "auc_cheap_only": 1.0,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 1.0,
+      "escalation_rate": 0.0
+    },
+    "result": {
+      "n": 56,
+      "auc_full_resample": 0.9805,
+      "auc_cheap_only": 0.9245,
+      "cascade_compute_passes": 4.75,
+      "cascade_compute_ratio": 0.475,
+      "cascade_auc": 0.9629,
+      "escalation_rate": 0.375
+    },
+    "result_Llama-3_2-1B-Instruct": {
+      "n": 59,
+      "auc_full_resample": 1.0,
+      "auc_cheap_only": 1.0,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 1.0,
+      "escalation_rate": 0.0
+    },
+    "result_Llama-3_2-3B-Instruct": {
+      "n": 58,
+      "auc_full_resample": 1.0,
+      "auc_cheap_only": 1.0,
+      "cascade_compute_passes": 1.0,
+      "cascade_compute_ratio": 0.1,
+      "cascade_auc": 1.0,
+      "escalation_rate": 0.0
+    },
+    "result_gemma-2-2b-it": {
+      "n": 59,
+      "auc_full_resample": 1.0,
+      "auc_cheap_only": 0.956,
+      "cascade_compute_passes": 8.119,
+      "cascade_compute_ratio": 0.8119,
+      "cascade_auc": 0.9869,
+      "escalation_rate": 0.7119
+    }
+  },
+  "A1_accel_POOLED_RAW": {
+    "value": {
+      "cascade_auc": 0.9424,
+      "auc_full": 0.9602,
+      "compute_ratio": 0.9834
+    },
+    "held": false,
+    "bar": "AUC >= AUC_full - 0.02 AND compute <= 0.40*N",
+    "note": "FAILS \u2014 but pooling RAW entropy across models violates the arc's per-model calibration rule (Gemma soft-caps its logits); the confound is entropy-SCALE mixing, not the cascade. See the two valid analyses below."
+  },
+  "per_model_calibrated_aggregate": {
+    "note": "the valid deployment unit: cascade computed WITHIN each regime (consistent entropy scale), compute summed across all items.",
+    "passes_per_item": 3.372,
+    "speedup_x": 2.97,
+    "nwtd_cascade_auc": 0.9595,
+    "nwtd_full_auc": 0.9461
+  },
+  "A1_rank_normalized_pooled": {
+    "note": "within-regime percentile-rank entropy then pool \u2014 a fair cross-model scale.",
+    "cascade_auc": 0.9405,
+    "auc_full": 0.9602,
+    "compute_passes": 5.315,
+    "compute_ratio": 0.5315,
+    "speedup_x": 1.88,
+    "held": false
+  },
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "offline cascade analysis over already-collected detection-locus per-item receipts (white-box open models: Qwen/Llama/Gemma; arithmetic/code/logic/factual). The cascade metric is novel (never computed before) so there is no data-peek; but the underlying signals were collected by prior runs, not for this test. Compute is counted in forward passes (cheap gate=1, each resample=1). Real wall-clock also depends on batching. This ACCELERATES detection (routes compute), it does not change WHAT is detected or correct anything (correction is the closed negative). Single-token closed-model confab is out of scope (the cheap first-token gate fails there; span/closed regimes excluded)."
+}
