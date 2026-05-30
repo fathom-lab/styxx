@@ -628,6 +628,13 @@ from .divergence import (
     detect_context_injection, InjectionScore,
     divergence_available,
 )
+# 7.7.14: single-pass confab gate — white-box, one-forward-pass analog of grounded_honesty's
+# resampling (detection-locus arc: single-pass entropy/margin tie N=10 resampling across families
+# and derivation domains, B_contrast in [-0.183, +0.056]; extends to factual recall at -0.013).
+from .single_pass import (
+    single_pass_confab, SinglePassScore,
+    calibrate_single_pass, SinglePassCalibration,
+)
 
 
 __all__ = [
@@ -644,6 +651,9 @@ __all__ = [
     "grounded_honesty", "GroundedScore",
     # 7.7.13: cross-context injection-detection (calibrated AUC 0.875)
     "detect_context_injection", "InjectionScore",
+    # 7.7.14: single-pass confab gate (white-box, ~10x cheaper than resampling)
+    "single_pass_confab", "SinglePassScore",
+    "calibrate_single_pass", "SinglePassCalibration",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",

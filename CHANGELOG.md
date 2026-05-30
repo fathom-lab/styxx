@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.14] — 2026-05-30 — single-pass confab gate (the ~10× cheaper, white-box analog of grounded honesty's resampling)
+
+### Added — `styxx.single_pass_confab` + `styxx.calibrate_single_pass`
+
+```python
+from styxx import single_pass_confab, calibrate_single_pass
+
+# read the confab signal from ONE forward pass's first answer-token logits
+score = single_pass_confab(first_token_logits)
+score.entropy   # higher = more-likely-confab (Shannon nats)
+score.margin    # top1 - top2 logit gap; lower = more-likely-confab
+
+# calibrate a per-model abstain threshold on a labeled set, then gate in production
+cal = calibrate_single_pass(confab_entropies, correct_entropies)   # -> threshold + AUC
+abstain = single_pass_confab(logits, entropy_threshold=cal.entropy_threshold).abstain
+```
+
+The white-box, one-forward-pass analog of `grounded_honesty`'s N=10 resampling. The detection-locus arc (`papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md`) showed the clean first-token entropy/margin of a single greedy pass detects confabulation as well as ten resamples: `B_contrast = AUC(resampling) − max(AUC(entropy), AUC(margin))` lay in `[−0.183, +0.056]` across Qwen / Llama / Gemma × arithmetic / code / logic — every cell below the +0.20 "resampling has privileged access" bar — and the relationship extends to factual recall (Llama-1B birth years, −0.013). So the same confab/abstain signal reads from one forward pass instead of ten: a ~10× cost collapse.
+
+- Pure-python, no deps. `SinglePassScore(entropy, margin, abstain, n_logits)` and `SinglePassCalibration(entropy_threshold, auc, confab_mean, correct_mean, n_confab, n_correct)`.
+- **Honest scope** (in the docstrings): white-box (needs first-token logits); power gradient is **strong on derivation (AUC ~0.91–1.00), modest on factual recall (~0.73)** — a general confab gate, not a near-perfect hallucination oracle; thresholds are model-specific so must be calibrated per model (no universal default — Gemma-2 soft-caps its logits); flags **ABSTAIN, never corrects** (`modal_correct ~0` for confab in every cell); does not reach the closed-model confident-hallucination regime (the open frontier).
+- 16 unit tests (numerical correctness, confab-vs-correct ordering, calibration workflow, edge cases, public-export); ruff clean.
+
+---
+
 ## [7.7.13] — 2026-05-29 — grounded honesty axis (the first construct-ceiling crack, as a primitive) + injection-gap closure (calibrated boundary, deployable detection) + the spellchecker for AI output (`audit_claim` productized turn)
 
 ### Added — `styxx.audit_claim` (productized single-call honesty audit — the spellchecker for AI output)
