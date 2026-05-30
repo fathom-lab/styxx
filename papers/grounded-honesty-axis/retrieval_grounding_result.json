@@ -1,0 +1,178 @@
+{
+  "plain": "gpt-4o-mini",
+  "search": "gpt-4o-mini-search-preview",
+  "n": 15,
+  "plain_accuracy": 0.8667,
+  "retrieval_accuracy": 0.9333,
+  "misconception_plain": 0.8,
+  "misconception_retrieval": 1.0,
+  "n_fixed": 2,
+  "n_broke": 1,
+  "rows": [
+    {
+      "kind": "shared_misconception",
+      "truth": "FALSE",
+      "plain": "TRUE",
+      "search": "FALSE",
+      "plain_ok": false,
+      "search_ok": true,
+      "claim": "Snow White and the Seven Dwarfs (1937) was the first feature",
+      "plain_txt": "TRUE. Snow White and the Seven Dwarfs, released in 1937, is widely recognized as the first full-length cel-animated feature film in motion picture history.",
+      "search_txt": "FALSE. While Snow White and the Seven Dwarfs (1937) was the first full-length cel-animated feature film produced in the United States, the first feature-length "
+    },
+    {
+      "kind": "shared_misconception",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Amy Cuddy's 'power posing' research established that holding",
+      "plain_txt": "FALSE. While Amy Cuddy's research suggested that power posing could influence feelings of confidence, subsequent studies have failed to consistently replicate t",
+      "search_txt": "FALSE\n\nWhile Amy Cuddy's 2010 study suggested that adopting high-power poses could lead to increased testosterone and decreased cortisol levels, subsequent rese"
+    },
+    {
+      "kind": "shared_misconception",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Ego depletion is a robust, well-replicated effect in psychol",
+      "plain_txt": "FALSE. While ego depletion was initially a popular theory suggesting that self-control is a limited resource, recent research has raised significant doubts abou",
+      "search_txt": "FALSE\n\nRecent large-scale replication studies have failed to find significant evidence supporting the ego depletion effect, suggesting it may not be a robust, w"
+    },
+    {
+      "kind": "shared_misconception",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "John Bargh's elderly-priming study (people walking more slow",
+      "plain_txt": "FALSE. The elderly-priming study by John Bargh has faced challenges in replication, with subsequent studies failing to consistently reproduce the original findi",
+      "search_txt": "FALSE\n\nAttempts to replicate John Bargh's 1996 elderly-priming study have produced inconsistent results, with some failing to reproduce the original effect. ([n"
+    },
+    {
+      "kind": "shared_misconception",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "The Stanford Prison Experiment was a rigorous, well-controll",
+      "plain_txt": "FALSE. The Stanford Prison Experiment has been widely criticized for its lack of scientific rigor, ethical concerns, and methodological flaws, which undermine i",
+      "search_txt": "FALSE\n\nThe Stanford Prison Experiment has been widely criticized for its methodological flaws, including lack of scientific rigor and ethical concerns. ([pubmed"
+    },
+    {
+      "kind": "classic_myth",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Humans only use 10 percent of their brains.",
+      "plain_txt": "FALSE. Neuroscientific research shows that humans use virtually all parts of their brains, with different areas responsible for various functions, even when at ",
+      "search_txt": "FALSE. Brain imaging studies have shown that humans use virtually all parts of their brains, even during simple behaviors. ([britannica.com](https://www.britann"
+    },
+    {
+      "kind": "classic_myth",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "The Great Wall of China is the only man-made structure visib",
+      "plain_txt": "FALSE. The Great Wall of China is not the only man-made structure visible from space with the naked eye; many other structures, such as cities and roads, can al",
+      "search_txt": "FALSE\n\nThe Great Wall of China is not visible to the naked eye from space due to its narrow width and natural coloring that blends into the landscape. ([science"
+    },
+    {
+      "kind": "classic_myth",
+      "truth": "FALSE",
+      "plain": "FALSE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Goldfish have a memory span of only three seconds.",
+      "plain_txt": "FALSE. Research has shown that goldfish can actually remember information for months, not just three seconds.",
+      "search_txt": "FALSE. Scientific studies have shown that goldfish can retain memories for weeks, months, and even years, debunking the myth of a three-second memory span. ([li"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "TRUE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Marie Curie was the first person to win two Nobel Prizes.",
+      "plain_txt": "TRUE. Marie Curie was the first person to win two Nobel Prizes, receiving the Nobel Prize in Physics in 1903 and the Nobel Prize in Chemistry in 1911.",
+      "search_txt": "TRUE. Marie Curie was the first person to win two Nobel Prizes, receiving the Nobel Prize in Physics in 1903 and the Nobel Prize in Chemistry in 1911. ([britann"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "FALSE",
+      "search": "TRUE",
+      "plain_ok": false,
+      "search_ok": true,
+      "claim": "The first feature-length animated film generally credited is",
+      "plain_txt": "FALSE. The first feature-length animated film generally credited is \"El Apostol\" (1917, Argentina), but it is often overshadowed by \"Snow White and the Seven Dw",
+      "search_txt": "TRUE. El Ap\u00f3stol, directed by Quirino Cristiani and produced by Federico Valle in 1917, is recognized as the first feature-length animated film, running 70 minu"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "TRUE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Water boils at 100 degrees Celsius at sea level under standa",
+      "plain_txt": "TRUE. Water does boil at 100 degrees Celsius at sea level, which is defined as 1 atmosphere of pressure (101.3 kPa).",
+      "search_txt": "TRUE. At sea level, under standard atmospheric pressure, water boils at 100\u00b0C (212\u00b0F). ([britannica.com](https://www.britannica.com/science/boiling-point?utm_so"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "TRUE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "The Berlin Wall fell in 1989.",
+      "plain_txt": "TRUE. The Berlin Wall fell on November 9, 1989, marking a significant event in the end of the Cold War and the reunification of Germany.",
+      "search_txt": "TRUE. The Berlin Wall fell on November 9, 1989, following anti-government protests in East Germany and the democratization of other eastern and central European"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "TRUE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Penicillin was discovered by Alexander Fleming.",
+      "plain_txt": "TRUE. Alexander Fleming discovered penicillin in 1928 when he observed that a mold called Penicillium notatum had antibacterial properties.",
+      "search_txt": "TRUE. In 1928, Alexander Fleming discovered penicillin when he observed that a mold contaminant in his bacterial culture inhibited bacterial growth. ([britannic"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "TRUE",
+      "plain_ok": true,
+      "search_ok": true,
+      "claim": "Mount Everest's officially recognized height as of the 2020 ",
+      "plain_txt": "TRUE. The 2020 China-Nepal survey confirmed that Mount Everest's officially recognized height is 8,848.86 meters.",
+      "search_txt": "TRUE. The 2020 China-Nepal survey established Mount Everest's official height as 8,848.86 meters (29,031.69 feet). ([nationalgeographic.com](https://www.nationa"
+    },
+    {
+      "kind": "true_control",
+      "truth": "TRUE",
+      "plain": "TRUE",
+      "search": "FALSE",
+      "plain_ok": true,
+      "search_ok": false,
+      "claim": "John Bargh's elderly-priming study failed to replicate in la",
+      "plain_txt": "TRUE. Subsequent attempts to replicate John Bargh's elderly-priming study have generally failed to produce the same effects, raising questions about the origina",
+      "search_txt": "FALSE. While some replication attempts of John Bargh's elderly-priming study have failed to find significant effects, others have reported successful replicatio"
+    }
+  ]
+}
