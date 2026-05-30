@@ -109,8 +109,10 @@ def main(argv=None) -> int:
           f"temp={TEMPERATURE} seed={SEED}")
 
     tok = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.float16).to(wb.DEVICE).eval()
+    mk = {"torch_dtype": torch.float16}
+    if "gemma" in args.model.lower():
+        mk["attn_implementation"] = "eager"   # Gemma-2 attention soft-capping requires eager
+    model = AutoModelForCausalLM.from_pretrained(args.model, **mk).to(wb.DEVICE).eval()
     print("model loaded\n")
 
     rows = []

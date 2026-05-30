@@ -42,8 +42,7 @@ TEMPERATURE = 1.0
 @torch.no_grad()
 def resample_ints(model, tok, system, user, n, max_new_tokens=16):
     """N temperature-sampled integer answers (or None per parse failure)."""
-    msgs = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    text = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+    text = wb._render_chat(tok, system, user)
     ids = tok(text, return_tensors="pt").to(wb.DEVICE)
     vals = []
     for _ in range(n):

@@ -60,10 +60,22 @@ def parse_answer_line(text: str):
     return parse_int(ints[-1]) if ints else None
 
 
+def _render_chat(tok, system, user):
+    """System+user chat prompt; fold the system text into the user turn for templates that
+    reject a system role (e.g. Gemma-2). Byte-identical for templates that accept a system role."""
+    try:
+        return tok.apply_chat_template(
+            [{"role": "system", "content": system}, {"role": "user", "content": user}],
+            tokenize=False, add_generation_prompt=True)
+    except Exception:
+        return tok.apply_chat_template(
+            [{"role": "user", "content": f"{system}\n\n{user}"}],
+            tokenize=False, add_generation_prompt=True)
+
+
 @torch.no_grad()
 def generate(model, tok, system, user, max_new_tokens):
-    msgs = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    text = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+    text = _render_chat(tok, system, user)
     ids = tok(text, return_tensors="pt").to(DEVICE)
     out = model.generate(**ids, max_new_tokens=max_new_tokens, do_sample=False,
                          pad_token_id=tok.eos_token_id)
