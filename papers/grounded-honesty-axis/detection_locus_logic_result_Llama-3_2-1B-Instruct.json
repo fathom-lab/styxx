@@ -1,0 +1,21 @@
+{
+  "experiment": "detection locus — Llama-3.2-1B cross-architecture replication on multi-hop transitive-ordering logic: COMPETENCE-FLOOR, infeasible (pre-confirmatory feasibility probe; no hypothesis test run)",
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "domain": "multi-hop transitive-ordering logic",
+  "seed": 20260530,
+  "answer_key_sha256": "97d816808a6874027637a35a7beeb8a7078aa483f30a01f3ea9e58f9e347e02c",
+  "measurement": "greedy one-shot on all 48 seeded items (24 EASY + 24 HARD), no resampling",
+  "easy_correct_members": 6,
+  "easy_total": 24,
+  "hard_confab_members": 21,
+  "hard_total": 24,
+  "easy_v1_distribution": {"2": 24},
+  "easy_true_answer_distribution": {"1": 18, "2": 6},
+  "easy_correct_by_true_answer": {"2": 6},
+  "powered": false,
+  "powering_bar_per_group": 12,
+  "RESULT": "COMPETENCE_FLOOR — no genuine CORRECT class; cross-architecture logic replication INFEASIBLE on Llama-1B",
+  "interpretation": "Llama-3.2-1B answers '2' reflexively to ALL 24 easy ordering questions; the 6 'correct' are EXACTLY the 6 items whose true answer is 2 (reflex-match, not reasoning). No competent correct class -> the confab-vs-correct B_contrast comparison is undefined. A forced AUC would separate confident-reflex (the answer-2 items, low entropy) from uncertain-confab (high entropy), NOT competence-correct from confab, so no AUC is reported. Cross-architecture single-pass legibility remains established on ARITHMETIC (Llama-1B AUC 1.00, PREREG_detection_locus_llama); the LOGIC domain's inference-depth difficulty pushes the 1B model below the competence floor.",
+  "honest_scope": "single second open model Llama-3.2-1B-Instruct; multi-hop transitive-ordering logic; pre-confirmatory feasibility probe only (greedy one-shot, no resampling, no confirmatory AUC run because the CORRECT class cannot be genuinely populated); a competence-floor boundary, NOT a legibility verdict. The Qwen2.5-1.5B-Instruct logic finding (REPORT_AS_LANDED, 3-domain domain-general) is unaffected.",
+  "repro": "python papers/grounded-honesty-axis/run_detection_locus_logic.py --model meta-llama/Llama-3.2-1B-Instruct  (per-item greedy v1 in stdout reveals the reflexive '2'; confirmatory not powered)"
+}

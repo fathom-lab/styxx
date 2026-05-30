@@ -94,6 +94,7 @@ HARD, EASY = _build_specs()
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=len(HARD))
+    ap.add_argument("--model", type=str, default=wb.MODEL_NAME)
     args = ap.parse_args(argv)
 
     hard = HARD[: args.n]
@@ -104,12 +105,12 @@ def main(argv=None) -> int:
     key_blob = json.dumps([(q, c) for _, q, c, _ in items], ensure_ascii=False)
     key_hash = hashlib.sha256(key_blob.encode("utf-8")).hexdigest()
     print(f"answer-key SHA-256 (pre-scoring): {key_hash}")
-    print(f"model={wb.MODEL_NAME} device={wb.DEVICE} N_resample={N_RESAMPLE} "
+    print(f"model={args.model} device={wb.DEVICE} N_resample={N_RESAMPLE} "
           f"temp={TEMPERATURE} seed={SEED}")
 
-    tok = AutoTokenizer.from_pretrained(wb.MODEL_NAME)
+    tok = AutoTokenizer.from_pretrained(args.model)
     model = AutoModelForCausalLM.from_pretrained(
-        wb.MODEL_NAME, torch_dtype=torch.float16).to(wb.DEVICE).eval()
+        args.model, torch_dtype=torch.float16).to(wb.DEVICE).eval()
     print("model loaded\n")
 
     rows = []
@@ -167,7 +168,7 @@ def main(argv=None) -> int:
         "experiment": "detection locus — DOMAIN GENERALIZATION to multi-hop transitive-ordering logic: is single-pass confab legibility derivation-domain-general (3rd domain: logic, after arithmetic and code)?",
         "prereg": "papers/grounded-honesty-axis/PREREG_detection_locus_logic_2026_05_30.md",
         "answer_key_sha256_pre_scoring": key_hash,
-        "model": wb.MODEL_NAME, "device": wb.DEVICE, "domain": "multi-hop transitive-ordering logic",
+        "model": args.model, "device": wb.DEVICE, "domain": "multi-hop transitive-ordering logic",
         "seed": SEED, "n_resample": N_RESAMPLE, "temperature": TEMPERATURE,
         "n_confab_usable": n_conf, "n_correct_usable": n_corr, "powered": powered,
         "means": {
@@ -186,7 +187,7 @@ def main(argv=None) -> int:
         "rows": rows,
         "B1": bool(b1), "B_contrast": bool(b_contrast), "RESULT": result,
         "honest_scope": (
-            "single open model Qwen2.5-1.5B-Instruct; multi-hop transitive-ordering logic domain "
+            f"single open model {args.model}; multi-hop transitive-ordering logic domain "
             "only; one confirmatory run; feasibility-grade; resampling N=10 at T=1.0, Stability "
             "from exact distinct-integer counts (no judge); single-pass entropy/margin from the "
             "clean logit-lens at the first answer token; ground truth in-code (target rank in a "
@@ -198,7 +199,9 @@ def main(argv=None) -> int:
             "result. Does NOT touch the correctness bound: every signal DETECTS confabulation, "
             "none CORRECTS it; the detector flags abstain."),
     }
-    RECEIPT.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    out_path = RECEIPT if args.model == wb.MODEL_NAME else (
+        HERE / f"detection_locus_logic_result_{args.model.split('/')[-1].replace('.', '_')}.json")
+    out_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("\n" + json.dumps({k: v for k, v in receipt.items() if k != "rows"}, indent=2))
     print(f"\nn_conf={n_conf} n_corr={n_corr} powered={powered}")
     print(f"B1={b1}(inst AUC={auc_inst:.3f}) ent AUC={auc_ent:.3f} (-margin) AUC={auc_margin:.3f} "
