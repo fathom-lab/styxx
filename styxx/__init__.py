@@ -636,6 +636,7 @@ from .single_pass import (
     single_pass_confab, SinglePassScore,
     calibrate_single_pass, SinglePassCalibration,
     span_confab, SpanConfabScore,
+    abstain_on_confab, AbstainDecision,
 )
 
 
@@ -658,6 +659,9 @@ __all__ = [
     "calibrate_single_pass", "SinglePassCalibration",
     # 7.7.14: span-aggregate variant — the closed-model gate (recovers gpt-4o-mini at resampling parity)
     "span_confab", "SpanConfabScore",
+    # 7.7.16: detect-and-abstain — gate an answer through a calibrated detector, abstain on confab
+    # (FINDING_honesty_knob: the detector is load-bearing; refuses to act on an uncalibrated score)
+    "abstain_on_confab", "AbstainDecision",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",

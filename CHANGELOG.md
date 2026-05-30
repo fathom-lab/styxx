@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.7.16] — 2026-05-30 — `abstain_on_confab`: the closed-loop detect-and-abstain primitive (the detector is load-bearing)
+
+### Added — `styxx.abstain_on_confab` + `AbstainDecision`
+
+```python
+from styxx import single_pass_confab, calibrate_single_pass, abstain_on_confab
+
+cal = calibrate_single_pass(confab_entropies, correct_entropies)   # per-model threshold
+score = single_pass_confab(first_token_logits, entropy_threshold=cal.entropy_threshold)
+decision = abstain_on_confab(model_answer, score)
+decision.answer       # the answer, OR "I'm not sure." if the confab gate fired
+decision.abstained    # bool — True iff replaced by an honest abstention
+bool(decision)        # truthy iff abstained
+```
+
+The deployable, framework-free form of the **closed-loop honesty primitive** — gate a candidate
+answer through a CALIBRATED confab detector and return an honest abstention when it fires. Turns a
+likely confabulation into a calibrated "I don't know" instead of a confident wrong answer.
+
+**The detector is load-bearing — and the API enforces it.** A pre-registered white-box experiment
+(`papers/grounded-honesty-axis/FINDING_honesty_knob_2026_05_30.md`, **SURVIVED**, n=32/24 powered)
+asked whether the underlying mechanistic abstention intervention is *selective*. It is **not**:
+knocking down the disinhibition "confidence-install" band dissolves CORRECT commitments as readily as
+confabulations (raw selectivity **−0.08**; both entropies blow up ~11 nats) — applied ungated it is a
+blanket lobotomy. Only the calibrated **detector** (gate AUC **0.924**) makes abstention *targeted*:
+the gated loop catches-and-abstains **0.75** of confabs while false-abstaining only **0.125** of
+correct answers. So `abstain_on_confab` **refuses** to act on an uncalibrated score
+(`score.abstain is None` → `ValueError`): you must `calibrate_single_pass` first. Detection is not
+optional diagnosis — it is the prerequisite for safe intervention.
+
+Scope: abstention, **not** correction. Repair-to-truth is a closed negative here (depth-steering is
+correctness-INERT; removing the install yields uncertainty, not truth). This makes the model honestly
+uncertain on exactly the answers it would have confabulated — a fail-safe, not a fix. Works with both
+`SinglePassScore` (white-box / weak-model first token) and `SpanConfabScore` (closed-model span).
+Pure Python, no new deps. 5 new tests (`tests/test_single_pass.py`, 28 total).
+
+---
+
 ## [7.7.15] — 2026-05-30 — the retrieval arm: `audit_claim` becomes a two-signal gate (model-internal confab + external grounding)
 
 ### Added — `styxx.retrieval_check` + `audit_claim(verify_retrieval=True)`

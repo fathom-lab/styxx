@@ -31,8 +31,12 @@ HONEST SCOPE (see the SYNTHESIS for the full boundary):
     closed-model confab detection to EXACT N=10-resampling parity (AUC 0.991, B_contrast 0.000) on
     multi-token answers. Confident hallucination of SINGLE-token answers remains the open frontier.
 
-Two entry points: :func:`single_pass_confab` (first answer token — white-box / weak-model) and
-:func:`span_confab` (aggregate across a multi-token answer — the closed-model gate).
+Two detector entry points: :func:`single_pass_confab` (first answer token — white-box / weak-model)
+and :func:`span_confab` (aggregate across a multi-token answer — the closed-model gate). Plus the
+closed-loop action :func:`abstain_on_confab` — gate a candidate answer through a CALIBRATED detector
+and return an honest abstention when it fires (the deployable "detect-and-abstain" primitive;
+``FINDING_honesty_knob_2026_05_30.md`` showed the detector is load-bearing, so it refuses to act on
+an uncalibrated score).
 """
 from __future__ import annotations
 
@@ -309,3 +313,87 @@ def span_confab(
         flags.append(min_m <= margin_threshold)
     abstain = any(flags) if flags else None
     return SpanConfabScore(max_e, math.fsum(ents) / n, min_m, math.fsum(margs) / n, abstain, n)
+
+
+class AbstainDecision(NamedTuple):
+    """Result of :func:`abstain_on_confab` — the detect-and-abstain policy decision.
+
+    Fields
+    ------
+    answer : str
+        What to return to the user: the original ``answer`` if the confab gate did NOT fire, or the
+        ``abstention`` text if it did.
+    abstained : bool
+        ``True`` iff the gate fired (the answer was replaced by an honest abstention).
+    signal : float
+        The scalar confab signal (``float(score)`` — first-token or span entropy) that drove the
+        decision. Higher = more-likely-confab.
+    reason : str
+        Human-readable explanation.
+    """
+    answer: str
+    abstained: bool
+    signal: float
+    reason: str
+
+    def __bool__(self) -> bool:  # truthy iff the model abstained
+        return self.abstained
+
+
+def abstain_on_confab(
+    answer: str,
+    score,
+    *,
+    abstention: str = "I'm not sure.",
+) -> AbstainDecision:
+    """Detect-and-abstain: return ``answer`` unless the confab gate flags it, else honest abstention.
+
+    The deployable, framework-free form of the closed-loop honesty primitive validated in
+    ``papers/grounded-honesty-axis/FINDING_honesty_knob_2026_05_30.md`` (SURVIVED). Pass a candidate
+    ``answer`` and its confab ``score`` (a :class:`SinglePassScore` or :class:`SpanConfabScore` whose
+    ``abstain`` flag was set by a CALIBRATED threshold). If the gate fired, the answer is replaced by
+    an honest "I'm not sure" — converting a likely confabulation into a calibrated abstention.
+
+    **The detector is LOAD-BEARING.** The honesty-knob finding showed the mechanistic abstention
+    intervention has NO intrinsic selectivity — applied ungated it dissolves CORRECT answers as
+    readily as confabulations (raw selectivity ``-0.08``, both entropies blow up ~equally). Only the
+    calibrated detector (gate AUC ``0.924``) makes abstention *targeted* instead of a blanket
+    lobotomy. So this function REFUSES to act on an ungated score: if ``score.abstain is None`` (you
+    never supplied a calibrated threshold to :func:`single_pass_confab` / :func:`span_confab`), it
+    raises ``ValueError``. Calibrate first (:func:`calibrate_single_pass`), then gate.
+
+    This does NOT correct the answer — abstention, not repair, is what the mechanism supports
+    (repair-via-steering is correctness-INERT; removing the install yields uncertainty, not truth —
+    the depth-steering / disinhibition findings). It makes the model honestly uncertain on exactly
+    the answers it would have confabulated.
+
+    Parameters
+    ----------
+    answer : str
+        The candidate answer the model produced.
+    score : SinglePassScore or SpanConfabScore
+        Its confab score with ``abstain`` set (you passed a calibrated ``entropy_threshold`` /
+        ``margin_threshold``). ``score.abstain is None`` → ``ValueError`` (the load-bearing-detector
+        guard).
+    abstention : str, default ``"I'm not sure."``
+        The text to return when the gate fires.
+
+    Returns
+    -------
+    AbstainDecision
+    """
+    abstain = getattr(score, "abstain", None)
+    if abstain is None:
+        raise ValueError(
+            "abstain_on_confab requires a CALIBRATED score: score.abstain is None (no threshold "
+            "was supplied). The detector is load-bearing (FINDING_honesty_knob) — gating on an "
+            "uncalibrated signal would abstain correct answers too. Fit a threshold with "
+            "calibrate_single_pass and pass it to single_pass_confab / span_confab first."
+        )
+    signal = float(score)
+    if abstain:
+        return AbstainDecision(
+            abstention, True, signal,
+            f"confab gate fired (signal {signal:.3f} over calibrated threshold) -> abstained")
+    return AbstainDecision(
+        answer, False, signal, f"confab gate clear (signal {signal:.3f}) -> answer kept")

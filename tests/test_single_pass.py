@@ -12,6 +12,8 @@ from styxx.single_pass import (
     SinglePassCalibration,
     span_confab,
     SpanConfabScore,
+    abstain_on_confab,
+    AbstainDecision,
 )
 
 
@@ -198,6 +200,51 @@ def test_span_float_returns_max_entropy():
     assert float(s) == s.max_entropy
 
 
+# --- abstain_on_confab: the detect-and-abstain loop --------------------------
+
+def test_abstain_when_gate_fires():
+    # entropy 0.69 over a low threshold -> abstain flag True -> answer replaced
+    sc = single_pass_confab([1.0, 1.0], entropy_threshold=0.1)
+    assert sc.abstain is True
+    d = abstain_on_confab("42", sc)
+    assert d.abstained is True
+    assert d.answer == "I'm not sure."
+    assert d.signal == sc.entropy
+    assert bool(d) is True
+
+
+def test_keep_answer_when_gate_clear():
+    # a decisive distribution under a high threshold -> abstain False -> answer kept
+    sc = single_pass_confab([10.0, 0.0], entropy_threshold=5.0)
+    assert sc.abstain is False
+    d = abstain_on_confab("42", sc)
+    assert d.abstained is False
+    assert d.answer == "42"
+    assert bool(d) is False
+
+
+def test_custom_abstention_text():
+    sc = single_pass_confab([1.0, 1.0], entropy_threshold=0.1)
+    d = abstain_on_confab("42", sc, abstention="unknown")
+    assert d.answer == "unknown"
+
+
+def test_uncalibrated_score_raises_load_bearing_detector_guard():
+    # no threshold -> score.abstain is None -> must refuse (the detector is load-bearing)
+    sc = single_pass_confab([1.0, 1.0])
+    assert sc.abstain is None
+    with pytest.raises(ValueError, match="CALIBRATED"):
+        abstain_on_confab("42", sc)
+
+
+def test_works_with_span_score():
+    sp = span_confab([[1.0, 1.0], [2.0, 1.9]], margin_threshold=0.5)
+    assert sp.abstain is True              # min_margin 0.0 (tied first token) <= 0.5
+    d = abstain_on_confab("hello", sp)
+    assert d.abstained is True
+    assert isinstance(d, AbstainDecision)
+
+
 # --- public API surface ------------------------------------------------------
 
 def test_exported_from_package_root():
@@ -208,7 +255,10 @@ def test_exported_from_package_root():
     assert styxx.SinglePassCalibration is SinglePassCalibration
     assert styxx.span_confab is span_confab
     assert styxx.SpanConfabScore is SpanConfabScore
+    assert styxx.abstain_on_confab is abstain_on_confab
+    assert styxx.AbstainDecision is AbstainDecision
     for name in ("single_pass_confab", "SinglePassScore",
                  "calibrate_single_pass", "SinglePassCalibration",
-                 "span_confab", "SpanConfabScore"):
+                 "span_confab", "SpanConfabScore",
+                 "abstain_on_confab", "AbstainDecision"):
         assert name in styxx.__all__
