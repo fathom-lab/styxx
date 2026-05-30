@@ -127,8 +127,15 @@ single-pass signal aggregated across the span RECOVERS it to exact resampling pa
 least-confident token's margin is 0.29 in a confabulated product vs 9.59 in a correct one, AUC 0.991
 = N=10 resampling, in ONE forward pass. So confident confabulation is *first-token* confidence, not
 *span* confidence, and a cheap closed-model confab gate exists for multi-token answers.
-→ `FINDING_detection_locus_gpt_2026_05_30` (first-token, SURVIVED) +
-`FINDING_detection_locus_gpt_span_2026_05_30` (span, RECOVERY). Shipped as `styxx.span_confab`.
+
+**It generalizes beyond digits.** Repeated on a NON-NUMERIC, character-level domain — string reversal
+— the span aggregate again ties resampling (**max-entropy** AUC 0.993 vs 0.997, B_contrast +0.005)
+while first-token fails harder (0.57, B_contrast +0.427). So the gate is about confabulation
+LOCALIZATION (the model is uncertain exactly where it confabulates), not digit tokenization. The
+winning aggregate is domain-dependent — **min-margin** on numbers, **max-entropy** on character
+strings — so `span_confab` returns both. → `FINDING_detection_locus_gpt_2026_05_30` (first-token,
+SURVIVED) + `_gpt_span_` (span recovery) + `_gpt_reverse_2026_05_30` (generalization). Shipped as
+`styxx.span_confab`.
 
 ## Deployment note (what this is as a product primitive)
 

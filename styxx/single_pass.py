@@ -260,11 +260,14 @@ def span_confab(
 
     The first-token signal (:func:`single_pass_confab`) FAILS on strong closed models because they
     confabulate downstream of the first token (e.g. correct leading digits, wrong trailing). The span
-    aggregate recovers it: on gpt-4o-mini multiplication, the least-confident token's margin
-    (``min_margin``) separated confab from correct at AUC 0.991 — exactly matching N=10 resampling
-    instability (0.991), B_contrast 0.000 — where the first-token gate managed only 0.76. So a cheap
-    (one forward pass vs ten) closed-model confab gate exists for structured answers. See
-    ``papers/grounded-honesty-axis/FINDING_detection_locus_gpt_span_2026_05_30.md``.
+    aggregate recovers it, validated on TWO gpt-4o-mini domains: multiplication (least-confident token
+    ``min_margin`` AUC 0.991) and string reversal (most-uncertain token ``max_entropy`` AUC 0.993) —
+    both matching N=10 resampling (0.991 / 0.997, B_contrast ~0.00) where the first-token gate managed
+    only 0.76 / 0.57. The recovery is about confabulation LOCALIZATION (the model is uncertain exactly
+    where it confabulates), not digit tokenization. The winning aggregate is domain-dependent
+    (min-margin on numbers, max-entropy on character strings), so this returns BOTH — calibrate per
+    model/domain. A cheap (one forward pass vs ten) closed-model confab gate for structured answers.
+    See ``FINDING_detection_locus_gpt_span_`` and ``_gpt_reverse_2026_05_30.md``.
 
     SCOPE: requires a MULTI-TOKEN answer with the error LOCALIZED to some token(s) — a single-token
     answer has no span (falls back to the first-token regime), and an error smeared evenly across all
