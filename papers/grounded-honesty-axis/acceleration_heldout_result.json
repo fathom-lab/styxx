@@ -1,0 +1,115 @@
+{
+  "experiment": "ACCELERATION held-out confirmation: train-picked (cascade tau1 + early-stop min_k) frozen, evaluated on unseen test, R=5 stratified splits, per-model calibrated",
+  "prereg": "papers/grounded-honesty-axis/PREREG_acceleration_heldout_2026_05_30.md",
+  "input_sha256_pre_scoring": "4d6f23ff0d6a9b2d967c618906fc48987db3ca46cb8c8fb0148852b44a2adeee",
+  "N_resample": 10,
+  "splits": 5,
+  "train_frac": 0.5,
+  "aggregate_heldout": {
+    "test_cascade_auc": 0.9413,
+    "test_full_auc": 0.947,
+    "auc_delta": -0.0057,
+    "test_passes_per_item": 1.508,
+    "speedup_x": 6.63
+  },
+  "HC1": {
+    "bar": "test AUC >= full AUC - 0.03 AND passes <= 0.5*N",
+    "auc_ok": true,
+    "compute_ok": true,
+    "held": true
+  },
+  "per_regime": {
+    "code": {
+      "n": 52,
+      "test_cascade_auc": 0.8556,
+      "test_full_auc": 0.8975,
+      "test_passes_per_item": 1.356,
+      "test_escalation": 0.1778,
+      "median_min_k": 2,
+      "speedup_x": 7.38
+    },
+    "factual_Llama-3_2-1B-Instruct": {
+      "n": 39,
+      "test_cascade_auc": 0.7229,
+      "test_full_auc": 0.8073,
+      "test_passes_per_item": 2.14,
+      "test_escalation": 0.41,
+      "median_min_k": 2,
+      "speedup_x": 4.67
+    },
+    "gpt": {
+      "n": 47,
+      "test_cascade_auc": 0.9015,
+      "test_full_auc": 0.9615,
+      "test_passes_per_item": 2.567,
+      "test_escalation": 0.7833,
+      "median_min_k": 2,
+      "speedup_x": 3.9
+    },
+    "logic": {
+      "n": 40,
+      "test_cascade_auc": 1.0,
+      "test_full_auc": 1.0,
+      "test_passes_per_item": 1.0,
+      "test_escalation": 0.0,
+      "median_min_k": 2,
+      "speedup_x": 10.0
+    },
+    "logic_Llama-3_2-3B-Instruct": {
+      "n": 39,
+      "test_cascade_auc": 1.0,
+      "test_full_auc": 0.8071,
+      "test_passes_per_item": 1.18,
+      "test_escalation": 0.09,
+      "median_min_k": 2,
+      "speedup_x": 8.47
+    },
+    "logic_gemma-2-2b-it": {
+      "n": 40,
+      "test_cascade_auc": 1.0,
+      "test_full_auc": 0.9404,
+      "test_passes_per_item": 1.08,
+      "test_escalation": 0.04,
+      "median_min_k": 2,
+      "speedup_x": 9.26
+    },
+    "result": {
+      "n": 56,
+      "test_cascade_auc": 0.937,
+      "test_full_auc": 0.9755,
+      "test_passes_per_item": 1.657,
+      "test_escalation": 0.3286,
+      "median_min_k": 2,
+      "speedup_x": 6.03
+    },
+    "result_Llama-3_2-1B-Instruct": {
+      "n": 59,
+      "test_cascade_auc": 1.0,
+      "test_full_auc": 1.0,
+      "test_passes_per_item": 1.027,
+      "test_escalation": 0.0133,
+      "median_min_k": 2,
+      "speedup_x": 9.74
+    },
+    "result_Llama-3_2-3B-Instruct": {
+      "n": 58,
+      "test_cascade_auc": 1.0,
+      "test_full_auc": 1.0,
+      "test_passes_per_item": 1.055,
+      "test_escalation": 0.0276,
+      "median_min_k": 2,
+      "speedup_x": 9.48
+    },
+    "result_gemma-2-2b-it": {
+      "n": 59,
+      "test_cascade_auc": 0.962,
+      "test_full_auc": 1.0,
+      "test_passes_per_item": 2.02,
+      "test_escalation": 0.4333,
+      "median_min_k": 2,
+      "speedup_x": 4.95
+    }
+  },
+  "RESULT": "SURVIVED",
+  "honest_scope": "held-out (train picks operating points, test evaluates), R=5 stratified splits, per-model calibrated, offline over detection-locus receipts carrying clean_entropy + instability + resamples. Counts forward passes, not wall-clock. Confirms the route x trim acceleration generalizes to unseen items within each model/regime; does NOT claim cross-model transport of a FIXED threshold (entropy scale is per-model). Accelerates detection, corrects nothing."
+}
