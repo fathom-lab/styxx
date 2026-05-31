@@ -1,12 +1,14 @@
 """Extract residual-stream activations + output signals + labels for the confident-confab probe.
-PREREG_residual_confab_probe_2026_05_31.md. White-box, local, no OpenAI.
+PREREG_residual_confab_probe_2026_05_31.md (+ the strict-confidence confirmatory). White-box, local.
 
 Per TriviaQA item: greedy short answer; first-token entropy/margin (OUTPUT signals); residual at the
 commitment position (predicting the first answer token) across ALL layers; correct/wrong via the
-unit-tested _evallib.alias_match. Saves residuals.npz + residuals_meta.json.
+unit-tested _evallib.alias_match. --skip drops the first K valid items (for a DISJOINT confirmatory
+set); --tag suffixes the output files.
 
-  python extract_residuals.py --n 8     # pilot
-  python extract_residuals.py --n 800   # full
+  python extract_residuals.py --n 8                          # pilot
+  python extract_residuals.py --n 800                        # base run (median-split prereg)
+  python extract_residuals.py --skip 800 --n 1800 --tag strict   # FRESH disjoint set
 """
 from __future__ import annotations
 import argparse, hashlib, json, os, sys
@@ -24,18 +26,22 @@ SYS = ("Answer with the single most likely short answer and nothing else. "
        "If you genuinely do not know, reply exactly: I don't know.")
 
 
-def load_trivia(n):
+def load_trivia(n, skip=0):
     from datasets import load_dataset
     ds = load_dataset("trivia_qa", "rc.nocontext", split="validation", streaming=True)
-    items = []
+    items, seen = [], 0
     for ex in ds:
         q = (ex.get("question") or "").strip()
         a = ex.get("answer", {}) or {}
         al = (list(a.get("aliases", []) or []) + list(a.get("normalized_aliases", []) or [])
               + ([a["value"]] if a.get("value") else []))
         al = [x for x in al if x]
-        if q and al:
-            items.append({"q": q, "aliases": al})
+        if not (q and al):
+            continue
+        seen += 1
+        if seen <= skip:
+            continue
+        items.append({"q": q, "aliases": al})
         if len(items) >= n:
             break
     return items
@@ -58,12 +64,14 @@ def is_refusal(a):
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=800)
+    ap.add_argument("--skip", type=int, default=0)
+    ap.add_argument("--tag", type=str, default="")
     args = ap.parse_args(argv)
 
-    items = load_trivia(args.n)
+    items = load_trivia(args.n, args.skip)
     khash = hashlib.sha256(json.dumps([[it["q"], sorted(it["aliases"])] for it in items],
                                       ensure_ascii=False).encode("utf-8")).hexdigest()
-    print(f"model={MODEL} n={len(items)} probe_sha256={khash}")
+    print(f"model={MODEL} skip={args.skip} n={len(items)} tag='{args.tag}' probe_sha256={khash}")
 
     tok = AutoTokenizer.from_pretrained(MODEL)
     model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16).to(DEVICE).eval()
@@ -84,31 +92,28 @@ def main(argv=None):
         if fids.input_ids.shape[1] <= plen:
             continue
         out = model(**fids, output_hidden_states=True)
-        ent, marg = entropy_margin(out.logits[0, plen - 1])               # OUTPUT signal at commitment
-        hs = torch.stack(out.hidden_states, dim=0)[:, 0, plen - 1, :]      # (L, d) residual at commitment
+        ent, marg = entropy_margin(out.logits[0, plen - 1])
+        hs = torch.stack(out.hidden_states, dim=0)[:, 0, plen - 1, :]
         correct = alias_match(ans, it["aliases"])
         meta.append({"i": idx, "q": it["q"], "answer": ans, "correct": bool(correct),
                      "entropy": ent, "margin": marg})
         resid.append(hs.float().cpu().numpy().astype(np.float16))
-        if (len(meta)) % 50 == 0:
+        if len(meta) % 100 == 0:
             print(f"  kept {len(meta)} (item {idx+1}/{len(items)})")
 
-    R = np.stack(resid, 0)  # (N, L, d)
-    np.savez_compressed(os.path.join(HERE, "residuals.npz"), residuals=R)
-    json.dump({"model": MODEL, "probe_sha256": khash, "n": len(meta),
+    R = np.stack(resid, 0)
+    np.savez_compressed(os.path.join(HERE, f"residuals{args.tag}.npz"), residuals=R)
+    json.dump({"model": MODEL, "probe_sha256": khash, "skip": args.skip, "n": len(meta),
                "L": int(R.shape[1]), "d": int(R.shape[2]), "rows": meta},
-              open(os.path.join(HERE, "residuals_meta.json"), "w"), indent=2)
+              open(os.path.join(HERE, f"residuals_meta{args.tag}.json"), "w"), indent=2)
     nC = sum(1 for m in meta if m["correct"])
-    nW = len(meta) - nC
-    # confident subset preview (entropy < median)
     ents = sorted(m["entropy"] for m in meta)
-    med = ents[len(ents) // 2] if ents else 0.0
-    conf = [m for m in meta if m["entropy"] < med]
+    q12 = ents[int(0.12 * len(ents))] if ents else 0.0
+    conf = [m for m in meta if m["entropy"] < q12]
     cW = sum(1 for m in conf if not m["correct"])
-    print(f"\nextracted {len(meta)} (correct {nC}, wrong {nW}); residuals {R.shape}")
-    print(f"median entropy {med:.3f}; confident subset {len(conf)} (confident-wrong {cW}, "
-          f"confident-right {len(conf)-cW}) -> need >=25 each")
-    print("saved residuals.npz + residuals_meta.json")
+    print(f"\nextracted {len(meta)} (correct {nC}, wrong {len(meta)-nC}); residuals {R.shape}")
+    print(f"bottom-12% entropy subset {len(conf)} (confident-wrong {cW}, confident-right {len(conf)-cW})")
+    print(f"saved residuals{args.tag}.npz + residuals_meta{args.tag}.json")
 
 
 if __name__ == "__main__":
