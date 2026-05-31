@@ -1,0 +1,59 @@
+{
+  "experiment": "intent-beyond-confidence vs capability (Qwen2.5 ladder)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_capability_ladder_2026_05_31.md",
+  "rungs": [
+    {
+      "model": "Qwen2.5-0.5B",
+      "params_B": 0.5,
+      "underpowered": false,
+      "n": 330,
+      "lie": 165,
+      "mistake": 165,
+      "auc": 0.9424489795918368,
+      "surface": 0.5791836734693877,
+      "best_layer": 13,
+      "L": 25
+    },
+    {
+      "model": "Qwen2.5-1.5B",
+      "params_B": 1.5,
+      "underpowered": false,
+      "n": 296,
+      "lie": 148,
+      "mistake": 148,
+      "auc": 0.7797979797979798,
+      "surface": 0.5383838383838384,
+      "best_layer": 26,
+      "L": 29
+    },
+    {
+      "model": "Qwen2.5-3B",
+      "params_B": 3.0,
+      "underpowered": false,
+      "n": 360,
+      "lie": 180,
+      "mistake": 180,
+      "auc": 0.7451989026063099,
+      "surface": 0.5058299039780522,
+      "best_layer": 33,
+      "L": 37
+    },
+    {
+      "model": "Qwen2.5-7B",
+      "params_B": 7.0,
+      "underpowered": false,
+      "n": 224,
+      "lie": 112,
+      "mistake": 112,
+      "auc": 0.6600346020761246,
+      "surface": 0.5735294117647058,
+      "best_layer": 19,
+      "L": 29
+    }
+  ],
+  "matched_rungs": 4,
+  "spearman_logparams_auc": -0.9999999999999998,
+  "perm_p": 0.08333333333333333,
+  "CLAIM_scales": false,
+  "honest_scope": "n<=4 rungs, very low power (Spearman cannot reach significance); within Qwen2.5 family only (not cross-vendor); each rung its own behavioral lie/mistake sets on the same MMLU slice; AUROC magnitudes modest; flat/neg trend is a real finding."
+}

@@ -1,0 +1,26 @@
+{
+  "experiment": "intent beyond confidence (confidence-matched lie vs mistake)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_beyond_confidence_2026_05_31.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "sha256": "5c26c2b994182d25f15e033a0b3de63827f022c3cbdce1affbe4159957db9c19",
+  "n": 691,
+  "primary_registered": {
+    "n_conf": 269,
+    "lie": 95,
+    "mistake": 174,
+    "powered": true,
+    "surface": 0.5815649867374005,
+    "surface_match": true,
+    "probe_auc": 0.7771883289124668,
+    "contrast": 0.19562334217506627,
+    "best_layer": 29,
+    "RESULT": "SURVIVED"
+  },
+  "diagnostic_margin_balanced": {
+    "n": 360,
+    "surface": 0.5058299039780522,
+    "probe_auc": 0.7451989026063099,
+    "contrast": 0.23936899862825778
+  },
+  "honest_scope": "single model Qwen2.5-3B, MMLU, disjoint slice, one run; confident=relative top-half margin; balanced diagnostic is not a formal pre-registered claim; correlational."
+}

@@ -1,0 +1,15 @@
+{
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "layer": 36,
+  "threshold": 0.5,
+  "d": 2048,
+  "L": 37,
+  "train_n": 1410,
+  "cv_auc": 0.8115291750503019,
+  "trained_on": [
+    "full",
+    "bc",
+    "bc2"
+  ],
+  "reads": "cave/override probability (1=caved-lie, 0=honest-mistake) at the commit position"
+}
