@@ -1,0 +1,33 @@
+{
+  "experiment": "strict-confidence residual probe (confirmatory, fresh disjoint items)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_residual_confab_strict_2026_05_31.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "probe_sha256": "f2aa5752bfe1e883a2bbf46f113038d3f7881ceb867d0d3d295ee19bfd2f38e9",
+  "skip": 800,
+  "N_fresh": 1612,
+  "q": 0.12,
+  "thr_entropy": 0.0420985671877861,
+  "confident_n": 194,
+  "confident_wrong": 31,
+  "confident_right": 163,
+  "powered": true,
+  "PRECONDITION_surface_auc": 0.6980011874134178,
+  "precondition_blind": false,
+  "PROBE_nestedcv_auc": 0.6972095784682366,
+  "CONTRAST": -0.0007916089451811548,
+  "layers_picked": [
+    28,
+    26,
+    34,
+    28,
+    23
+  ],
+  "bars": {
+    "PRECONDITION<=0.55": false,
+    "PROBE>=0.70": false,
+    "CONTRAST>=0.20": false,
+    "powered": true
+  },
+  "RESULT": "VOID (output not blind)",
+  "honest_scope": "fresh disjoint TriviaQA items; nested CV (no item scored by a model trained on it); strict bottom-12% entropy (exploratory-motivated, disclosed); SURVIVED = a linear direction separates confident-wrong from confident-right where the output is at chance, NOT 'the model knows'; probe may read familiarity; one run."
+}
