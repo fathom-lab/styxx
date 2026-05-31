@@ -1,0 +1,44 @@
+{
+  "experiment": "span-residual probe vs output on confident confabulation (confirmatory)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_span_residual_2026_05_31.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "sha256": "3da14c56f40253ef61a62e5e6108001d450b7ecc59d2525742cfd76abbac64c5",
+  "skip": 2600,
+  "N": 1117,
+  "confident_n": 279,
+  "confident_wrong": 33,
+  "confident_right": 246,
+  "powered": true,
+  "output_auc": 0.7014042867701404,
+  "PROBE_oof_auc": 0.650529687115053,
+  "BEAT": -0.05087459965508745,
+  "picks": [
+    [
+      "mean",
+      19
+    ],
+    [
+      "mean",
+      23
+    ],
+    [
+      "maxunc",
+      30
+    ],
+    [
+      "mean",
+      16
+    ],
+    [
+      "mean",
+      19
+    ]
+  ],
+  "bars": {
+    "BEAT>=0.10": false,
+    "ABSOLUTE>=0.70": false,
+    "powered": true
+  },
+  "RESULT": "REPORT_AS_LANDED",
+  "honest_scope": "single model (Qwen2.5-3B), TriviaQA, linear probe, span aggregation (mean / max-uncertain token) only, one run; nested CV; SURVIVED = a linear direction in the trajectory beats the output on confident confab, NOT 'the model knows it lies'."
+}
