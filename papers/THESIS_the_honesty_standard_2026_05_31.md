@@ -109,6 +109,42 @@ methodology for AI honesty rigorous enough that we lose to it in public and keep
 
 ---
 
+## What this is not — and why the refusals are the standard
+
+A standard earns trust by what it refuses to claim. The hype machine claims all five of these; we
+claim none of them, deliberately. These are not gaps we are working to close — they are the boundary
+that makes everything else credible.
+
+- **It does not prove factual truth.** It measures self-consistency, calibration, and grounding
+  *against a reference* — never truth itself. The grounded-honesty signal is *consistency, not truth*;
+  the NLI judge checks whether a claim *contradicts a source*, not whether the source is right. We can
+  say a model is *honest* about a claim, or that a claim *contradicts its evidence*. We cannot say the
+  claim is *true* — truth needs a ground truth no instrument possesses.
+
+- **It does not replace evaluation.** Benchmarks measure capability on labeled sets, offline, in
+  aggregate. This measures honesty per-output, inline, at the moment of generation. An eval tells you
+  how good the model is; this tells you whether to trust *this* answer. A complement, never a
+  substitute.
+
+- **It does not replace human judgment.** It flags and abstains; it never rules. A `refuted` verdict
+  is a recommendation to a human or a downstream policy, not a verdict on reality. It narrows *where*
+  judgment is needed; it does not remove the need for a judge.
+
+- **It does not guarantee safety.** It is a fail-safe that converts *some* confident errors into
+  honest abstentions — a measured reduction in one failure mode, with a boundary we publish (it misses
+  confident misconceptions). "Guarantee" is the word the field overclaims. A measured risk reduction
+  is not a safety guarantee, and that difference is the whole discipline.
+
+- **It does not prove an agent is "thinking."** It measures observable signals — uncertainty,
+  divergence, calibration — not inner experience, understanding, or consciousness. A confabulation
+  signal says an output carries the statistical signature of a guess. It says nothing about whether
+  anything is thinking. We measure behavior, never minds.
+
+Refusing these five is not what we lack. It is what we *are*: the instrument that earns trust by
+declining every claim it cannot survive.
+
+---
+
 ## Why this is the bigger picture
 
 The stated mission is the first autonomous AI company — research published, patents filed, real
