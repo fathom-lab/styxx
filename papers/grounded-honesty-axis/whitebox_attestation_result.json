@@ -1,0 +1,24 @@
+{
+  "model": "Qwen2.5-3B-Instruct",
+  "gate": "styxx.single_pass calibrate_single_pass (held-out)",
+  "regimes": {
+    "derivation (arithmetic)": {
+      "n": 168,
+      "gate_auc": 0.818,
+      "threshold": 0.0,
+      "n_test_wrong": 30,
+      "n_test_right": 21,
+      "CATCH": 1.0,
+      "PRESERVE": 0.667
+    },
+    "factual recall (TriviaQA)": {
+      "n": 700,
+      "gate_auc": 0.797,
+      "threshold": 1.229,
+      "n_test_wrong": 127,
+      "n_test_right": 84,
+      "CATCH": 0.543,
+      "PRESERVE": 0.798
+    }
+  }
+}
