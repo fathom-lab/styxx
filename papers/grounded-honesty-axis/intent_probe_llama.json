@@ -1,0 +1,13 @@
+{
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "layer": 24,
+  "threshold": 0.3,
+  "d": 3072,
+  "L": 29,
+  "train_n": 599,
+  "cv_auc": 0.8676326530612244,
+  "trained_on": [
+    "xf_llama"
+  ],
+  "reads": "cave/override probability (1=caved-lie, 0=honest-mistake) at the commit position"
+}

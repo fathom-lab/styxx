@@ -41,9 +41,15 @@ def syco_user(q, choices, wl, wt):
 
 
 def prompt_text(tok, user):
-    return tok.apply_chat_template(
-        [{"role": "system", "content": SYS}, {"role": "user", "content": user}],
-        tokenize=False, add_generation_prompt=True)
+    try:
+        return tok.apply_chat_template(
+            [{"role": "system", "content": SYS}, {"role": "user", "content": user}],
+            tokenize=False, add_generation_prompt=True)
+    except Exception:
+        # models without a system role (e.g. Gemma) -> fold system into the user turn
+        return tok.apply_chat_template(
+            [{"role": "user", "content": SYS + "\n\n" + user}],
+            tokenize=False, add_generation_prompt=True)
 
 
 @torch.no_grad()

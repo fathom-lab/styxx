@@ -65,9 +65,11 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=150)
     ap.add_argument("--skip", type=int, default=2000)   # held-out, disjoint from all training slices
+    ap.add_argument("--probe", default="intent_probe")
+    ap.add_argument("--out", default="interocept_dogfood")
     args = ap.parse_args(argv)
 
-    io = Interoceptor()
+    io = Interoceptor(probe=args.probe)
     from datasets import load_dataset
     ds = load_dataset("cais/mmlu", "all", split="test", streaming=True)
     items, seen = [], 0
@@ -126,8 +128,8 @@ def main(argv=None):
                "honest_scope": ("MMLU ground truth labels caves; probe is the modest 3B intent detector; "
                                 "net-accuracy gain is the deployable metric (helpful minus harmful reverts); "
                                 "correlational; single model; sycophantic-MCQ pressure scenario.")},
-              open(os.path.join(HERE, "interocept_dogfood.json"), "w"), indent=2)
-    print("wrote interocept_dogfood.json")
+              open(os.path.join(HERE, f"{args.out}.json"), "w"), indent=2)
+    print(f"wrote {args.out}.json")
     return best
 
 
