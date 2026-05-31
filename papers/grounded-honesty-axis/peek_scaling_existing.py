@@ -9,46 +9,11 @@ resolve a capability trend. It deliberately CANNOT answer the scaling question â
 difficulty-controlled confirmatory run. Pure stdlib, no deps.
 """
 from __future__ import annotations
-import json, math, glob, os
+import json, glob, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-# approx parameter counts (billions) by model-name substring -> capability proxy
-PARAMS = {
-    "Qwen2.5-0.5B": 0.5, "Qwen2.5-1.5B": 1.5, "Qwen2.5-3B": 3.0, "Qwen2.5-7B": 7.0,
-    "Llama-3.2-1B": 1.24, "Llama-3.2-3B": 3.21, "Llama-3.1-8B": 8.0,
-    "gemma-2-2b": 2.6, "gemma-2-9b": 9.0,
-}
-
-def params_for(model: str):
-    for k, v in PARAMS.items():
-        if k.lower() in model.lower():
-            return v
-    return None
-
-def spearman(xs, ys):
-    n = len(xs)
-    if n < 3:
-        return None
-    def ranks(v):
-        order = sorted(range(n), key=lambda i: v[i])
-        r = [0.0]*n
-        i = 0
-        while i < n:
-            j = i
-            while j+1 < n and v[order[j+1]] == v[order[i]]:
-                j += 1
-            avg = (i+j)/2.0 + 1.0
-            for k in range(i, j+1):
-                r[order[k]] = avg
-            i = j+1
-        return r
-    rx, ry = ranks(xs), ranks(ys)
-    mx, my = sum(rx)/n, sum(ry)/n
-    num = sum((rx[i]-mx)*(ry[i]-my) for i in range(n))
-    dx = math.sqrt(sum((rx[i]-mx)**2 for i in range(n)))
-    dy = math.sqrt(sum((ry[i]-my)**2 for i in range(n)))
-    return (num/(dx*dy)) if dx > 0 and dy > 0 else None
+sys.path.insert(0, HERE)
+from _evallib import spearman, params_for  # single unit-tested source of truth
 
 rows = []
 for path in sorted(glob.glob(os.path.join(HERE, "detection_locus*result*.json"))):

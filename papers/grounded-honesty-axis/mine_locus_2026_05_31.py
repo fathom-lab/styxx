@@ -6,40 +6,11 @@ fixed. Also tracks margin-on-wrong (high = confidently wrong). EXPLORATORY — g
 pre-register; NOT confirmatory. Pure stdlib.
 """
 from __future__ import annotations
-import json, glob, os, math
+import json, glob, os, math, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PARAMS = {"Qwen2.5-0.5B": 0.5, "Qwen2.5-1.5B": 1.5, "Qwen2.5-3B": 3.0,
-          "Llama-3.2-1B": 1.24, "Llama-3.2-3B": 3.21, "gemma-2-2b": 2.6, "gemma-3-1b": 1.0}
-
-
-def params_for(m):
-    for k, v in PARAMS.items():
-        if k.lower() in m.lower():
-            return v
-    return None
-
-
-def spearman(xs, ys):
-    n = len(xs)
-    if n < 3:
-        return None
-    def ranks(v):
-        order = sorted(range(n), key=lambda i: v[i]); r = [0.0]*n; i = 0
-        while i < n:
-            j = i
-            while j+1 < n and v[order[j+1]] == v[order[i]]:
-                j += 1
-            a = (i+j)/2.0 + 1.0
-            for k in range(i, j+1):
-                r[order[k]] = a
-            i = j+1
-        return r
-    rx, ry = ranks(xs), ranks(ys); mx = sum(rx)/n; my = sum(ry)/n
-    num = sum((rx[i]-mx)*(ry[i]-my) for i in range(n))
-    dx = math.sqrt(sum((rx[i]-mx)**2 for i in range(n)))
-    dy = math.sqrt(sum((ry[i]-my)**2 for i in range(n)))
-    return num/(dx*dy) if dx > 0 and dy > 0 else 0.0
+sys.path.insert(0, HERE)
+from _evallib import spearman, params_for  # single unit-tested source of truth
 
 
 def zscore_within_bins(rows):
