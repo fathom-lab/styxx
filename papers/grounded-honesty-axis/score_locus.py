@@ -7,56 +7,18 @@ Reports the max-entropy variant transparently too. SURVIVED iff LOCUS >= +0.60 (
 Pure stdlib.
 """
 from __future__ import annotations
-import json, glob, os, math
-from itertools import permutations
+import json, glob, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PARAMS = {"Qwen2.5-0.5B": 0.5, "Qwen2.5-1.5B": 1.5, "Qwen2.5-3B": 3.0, "Qwen2.5-7B": 7.0,
-          "Llama-3.2-1B": 1.24, "Llama-3.2-3B": 3.21, "gemma-2-2b": 2.6, "gemma-3-1b": 1.0}
+sys.path.insert(0, HERE)
+from _evallib import spearman, perm_p, params_for  # single unit-tested source of truth
 
 
 def meta(model):
-    p = None
-    for k, v in PARAMS.items():
-        if k.lower() in model.lower():
-            p = v; break
     ml = model.lower()
     fam = ("qwen2.5" if "qwen2.5" in ml else "llama3.2" if "llama-3.2" in ml
            else "gemma2" if "gemma-2" in ml else "gemma3" if "gemma-3" in ml else "other")
-    return model.split("/")[-1], p, fam
-
-
-def spearman(xs, ys):
-    n = len(xs)
-    if n < 3:
-        return None
-    def ranks(v):
-        order = sorted(range(n), key=lambda i: v[i]); r = [0.0]*n; i = 0
-        while i < n:
-            j = i
-            while j+1 < n and v[order[j+1]] == v[order[i]]:
-                j += 1
-            a = (i+j)/2.0 + 1.0
-            for k in range(i, j+1):
-                r[order[k]] = a
-            i = j+1
-        return r
-    rx, ry = ranks(xs), ranks(ys); mx = sum(rx)/n; my = sum(ry)/n
-    num = sum((rx[i]-mx)*(ry[i]-my) for i in range(n))
-    dx = math.sqrt(sum((rx[i]-mx)**2 for i in range(n)))
-    dy = math.sqrt(sum((ry[i]-my)**2 for i in range(n)))
-    return num/(dx*dy) if dx > 0 and dy > 0 else 0.0
-
-
-def perm_p(xs, ys, obs):
-    if len(xs) > 9:
-        return None
-    cnt = tot = 0
-    for perm in permutations(range(len(xs))):
-        if abs(spearman(xs, [ys[i] for i in perm])) >= abs(obs) - 1e-12:
-            cnt += 1
-        tot += 1
-    return cnt/tot
+    return model.split("/")[-1], params_for(model), fam
 
 
 recs = []
