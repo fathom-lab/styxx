@@ -1,0 +1,110 @@
+{
+  "bars": {
+    "SCALE": {
+      "rho": 0.12613124477737825,
+      "perm_p": 0.7976190476190477,
+      "n": 7,
+      "pass": false
+    },
+    "MONOTONE": {
+      "qwen2.5": {
+        "delta": 0.040000000000000036,
+        "small": "Qwen2.5-0.5B-Instruct",
+        "large": "Qwen2.5-3B-Instruct"
+      },
+      "llama3.2": {
+        "delta": -0.25450000000000006,
+        "small": "Llama-3.2-1B-Instruct",
+        "large": "Llama-3.2-3B-Instruct"
+      }
+    },
+    "MONOTONE_pass": false
+  },
+  "RESULT": "REPORT_AS_LANDED",
+  "models": [
+    {
+      "name": "gemma-2-2b-it",
+      "params": 2.6,
+      "family": "gemma2",
+      "acc": 0.4048,
+      "sep_ctrl": 0.7026,
+      "sep_raw": 0.8891,
+      "sep_ctrl_z": 0.4549,
+      "n_bins": 2,
+      "nw": 100,
+      "nr": 68
+    },
+    {
+      "name": "gemma-3-1b-it",
+      "params": 1.0,
+      "family": "gemma3",
+      "acc": 0.2321,
+      "sep_ctrl": 0.4963,
+      "sep_raw": 0.837,
+      "sep_ctrl_z": 0.4488,
+      "n_bins": 1,
+      "nw": 129,
+      "nr": 39
+    },
+    {
+      "name": "Llama-3.2-1B-Instruct",
+      "params": 1.24,
+      "family": "llama3.2",
+      "acc": 0.3214,
+      "sep_ctrl": 0.9414,
+      "sep_raw": 0.9755,
+      "sep_ctrl_z": 0.6187,
+      "n_bins": 2,
+      "nw": 114,
+      "nr": 54
+    },
+    {
+      "name": "Llama-3.2-3B-Instruct",
+      "params": 3.21,
+      "family": "llama3.2",
+      "acc": 0.4048,
+      "sep_ctrl": 0.6869,
+      "sep_raw": 0.9215,
+      "sep_ctrl_z": 0.5919,
+      "n_bins": 2,
+      "nw": 100,
+      "nr": 68
+    },
+    {
+      "name": "Qwen2.5-0.5B-Instruct",
+      "params": 0.5,
+      "family": "qwen2.5",
+      "acc": 0.3512,
+      "sep_ctrl": 0.7238,
+      "sep_raw": 0.6689,
+      "sep_ctrl_z": 0.5868,
+      "n_bins": 3,
+      "nw": 109,
+      "nr": 59
+    },
+    {
+      "name": "Qwen2.5-1.5B-Instruct",
+      "params": 1.5,
+      "family": "qwen2.5",
+      "acc": 0.4226,
+      "sep_ctrl": 0.582,
+      "sep_raw": 0.8779,
+      "sep_ctrl_z": 0.4353,
+      "n_bins": 2,
+      "nw": 97,
+      "nr": 71
+    },
+    {
+      "name": "Qwen2.5-3B-Instruct",
+      "params": 3.0,
+      "family": "qwen2.5",
+      "acc": 0.4583,
+      "sep_ctrl": 0.7638,
+      "sep_raw": 0.8384,
+      "sep_ctrl_z": 0.5797,
+      "n_bins": 3,
+      "nw": 91,
+      "nr": 77
+    }
+  ]
+}

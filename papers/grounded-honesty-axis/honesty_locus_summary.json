@@ -1,0 +1,113 @@
+{
+  "LOCUS": {
+    "rho": 0.6946232319096901,
+    "perm_p": 0.06378968253968254,
+    "n": 8,
+    "bar": 0.6,
+    "pass": true
+  },
+  "SCALE_span_rho": 0.5269555552418339,
+  "LOCUS_maxentropy_rho": 0.7664808076244857,
+  "firsttoken_scaling_rho": -0.03592878785739777,
+  "mean_ft": 0.690625,
+  "mean_span_mm": 0.8326125,
+  "RESULT": "SURVIVED",
+  "models": [
+    {
+      "name": "gemma-3-1b-it",
+      "params": 1.0,
+      "family": "gemma3",
+      "acc": 0.2321,
+      "ft": 0.4963,
+      "span_mm": 0.5556,
+      "span_me": 0.5259,
+      "adv_mm": 0.059299999999999964,
+      "adv_me": 0.029600000000000015,
+      "4bit": false
+    },
+    {
+      "name": "Llama-3.2-1B-Instruct",
+      "params": 1.24,
+      "family": "llama3.2",
+      "acc": 0.3214,
+      "ft": 0.9414,
+      "span_mm": 0.918,
+      "span_me": 0.9414,
+      "adv_mm": -0.023399999999999976,
+      "adv_me": 0.0,
+      "4bit": false
+    },
+    {
+      "name": "Qwen2.5-0.5B-Instruct",
+      "params": 0.5,
+      "family": "qwen2.5",
+      "acc": 0.3512,
+      "ft": 0.7238,
+      "span_mm": 0.827,
+      "span_me": 0.8847,
+      "adv_mm": 0.10319999999999996,
+      "adv_me": 0.16090000000000004,
+      "4bit": false
+    },
+    {
+      "name": "Llama-3.2-3B-Instruct",
+      "params": 3.21,
+      "family": "llama3.2",
+      "acc": 0.4048,
+      "ft": 0.6869,
+      "span_mm": 0.6096,
+      "span_me": 0.7027,
+      "adv_mm": -0.07729999999999992,
+      "adv_me": 0.015800000000000036,
+      "4bit": false
+    },
+    {
+      "name": "gemma-2-2b-it",
+      "params": 2.6,
+      "family": "gemma2",
+      "acc": 0.4048,
+      "ft": 0.7026,
+      "span_mm": 1.0,
+      "span_me": 0.979,
+      "adv_mm": 0.2974,
+      "adv_me": 0.2764,
+      "4bit": false
+    },
+    {
+      "name": "Qwen2.5-1.5B-Instruct",
+      "params": 1.5,
+      "family": "qwen2.5",
+      "acc": 0.4226,
+      "ft": 0.582,
+      "span_mm": 0.7876,
+      "span_me": 0.8827,
+      "adv_mm": 0.2056,
+      "adv_me": 0.3007000000000001,
+      "4bit": false
+    },
+    {
+      "name": "Qwen2.5-3B-Instruct",
+      "params": 3.0,
+      "family": "qwen2.5",
+      "acc": 0.4583,
+      "ft": 0.7638,
+      "span_mm": 0.9774,
+      "span_me": 0.9858,
+      "adv_mm": 0.2136,
+      "adv_me": 0.22199999999999998,
+      "4bit": false
+    },
+    {
+      "name": "Qwen2.5-7B-Instruct",
+      "params": 7.0,
+      "family": "qwen2.5",
+      "acc": 0.5119,
+      "ft": 0.6282,
+      "span_mm": 0.9857,
+      "span_me": 0.9893,
+      "adv_mm": 0.35750000000000004,
+      "adv_me": 0.3611,
+      "4bit": true
+    }
+  ]
+}
