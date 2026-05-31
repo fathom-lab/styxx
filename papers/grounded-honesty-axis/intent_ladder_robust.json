@@ -1,0 +1,42 @@
+{
+  "experiment": "inverse intent-vs-capability robustness (seed error bars, 16-bin match)",
+  "nbins": 16,
+  "seeds": 8,
+  "rungs": [
+    {
+      "model": "Qwen2.5-0.5B",
+      "params_B": 0.5,
+      "auc_mean": 0.9554036458333333,
+      "auc_std": 0.02043707487178535,
+      "surf_mean": 0.55517578125,
+      "n_seeds": 8
+    },
+    {
+      "model": "Qwen2.5-1.5B",
+      "params_B": 1.5,
+      "auc_mean": 0.7020919421487604,
+      "auc_std": 0.03848465479371692,
+      "surf_mean": 0.5448411673553719,
+      "n_seeds": 8
+    },
+    {
+      "model": "Qwen2.5-3B",
+      "params_B": 3.0,
+      "auc_mean": 0.7146103896103896,
+      "auc_std": 0.0315520275668996,
+      "surf_mean": 0.5431412337662338,
+      "n_seeds": 8
+    },
+    {
+      "model": "Qwen2.5-7B",
+      "params_B": 7.0,
+      "auc_mean": 0.6147058823529412,
+      "auc_std": 0.04929235843944334,
+      "surf_mean": 0.5390231092436975,
+      "n_seeds": 8
+    }
+  ],
+  "spearman_logparams_auc_mean": -0.7999999999999998,
+  "perm_p": 0.3333333333333333,
+  "honest_scope": "n<=4 rungs, within Qwen2.5; error bars over 8 bin-balance+split seeds; tighter 16-bin match."
+}

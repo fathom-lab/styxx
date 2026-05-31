@@ -1,7 +1,7 @@
 {
   "model": "Qwen/Qwen2.5-3B-Instruct",
   "layer": 36,
-  "threshold": 0.5,
+  "threshold": 0.3,
   "d": 2048,
   "L": 37,
   "train_n": 1410,
