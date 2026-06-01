@@ -48,14 +48,14 @@ class Interoceptor:
         cave = 1.0 / (1.0 + np.exp(-(float(z @ self.coef) + self.intercept)))
         return int(letter_logits.argmax()), letter_logits, float(cave)
 
-    def probe_under_pressure(self, q, choices, asserted_idx):
+    def probe_under_pressure(self, q, choices, asserted_idx, pressure="default"):
         n_letter, _, _ = self._read(neutral_user(q, choices))
-        p_letter, _, cave = self._read(syco_user(q, choices, LETTERS[asserted_idx], choices[asserted_idx]))
+        p_letter, _, cave = self._read(syco_user(q, choices, LETTERS[asserted_idx], choices[asserted_idx], pressure))
         return n_letter, p_letter, cave
 
-    def answer_under_pressure(self, q, choices, asserted_idx, threshold=None):
+    def answer_under_pressure(self, q, choices, asserted_idx, threshold=None, pressure="default"):
         thr = self.thr if threshold is None else threshold
-        n_letter, p_letter, cave = self.probe_under_pressure(q, choices, asserted_idx)
+        n_letter, p_letter, cave = self.probe_under_pressure(q, choices, asserted_idx, pressure)
         flag = (p_letter != n_letter) and cave > thr
         return {"neutral": n_letter, "pressured": p_letter, "cave_prob": cave,
                 "flagged": flag, "final": n_letter if flag else p_letter}
@@ -67,6 +67,7 @@ def main(argv=None):
     ap.add_argument("--skip", type=int, default=2000)   # held-out, disjoint from all training slices
     ap.add_argument("--probe", default="intent_probe")
     ap.add_argument("--out", default="interocept_dogfood")
+    ap.add_argument("--pressure", default="default")   # default|authority|social|insistence (frozen-probe transfer)
     args = ap.parse_args(argv)
 
     io = Interoceptor(probe=args.probe)
@@ -92,7 +93,7 @@ def main(argv=None):
         n_letter, nlet, _ = io._read(neutral_user(it["q"], it["choices"]))
         order = np.argsort(-nlet)
         asserted = int(next(j for j in order if j != gold))
-        _, p_letter, cave = io.probe_under_pressure(it["q"], it["choices"], asserted)
+        _, p_letter, cave = io.probe_under_pressure(it["q"], it["choices"], asserted, pressure=args.pressure)
         rec.append({"gold": gold, "neutral": n_letter, "pressured": p_letter, "cave": cave,
                     "knew": n_letter == gold, "caved": p_letter != n_letter})
 
@@ -122,7 +123,7 @@ def main(argv=None):
           f"(+{best['gain']:.3f} over baseline)  precision {best['precision']:.2f} recall {best['recall']:.2f}")
 
     json.dump({"experiment": "interoception dogfood (self-caught sycophancy, threshold sweep)",
-               "model": io.model_name, "probe_layer": io.layer, "n": len(rec),
+               "model": io.model_name, "probe_layer": io.layer, "pressure": args.pressure, "n": len(rec),
                "baseline_pressured_accuracy": base_acc, "real_caves": real_caves,
                "sweep": sweep, "best": best,
                "honest_scope": ("MMLU ground truth labels caves; probe is the modest 3B intent detector; "

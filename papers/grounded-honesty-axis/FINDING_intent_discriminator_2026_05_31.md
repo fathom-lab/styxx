@@ -62,6 +62,22 @@ Both **SURVIVED** the locked bars (probe ≥ 0.65, contrast ≥ 0.10, matched su
 than Qwen. **"The inside betrays the lie" is a property of transformers across three families, not a Qwen
 artifact** — the single biggest scope caveat on this arc, removed.
 
+## 5. Universal across pressure types — 9/9 transfer (`PREREG_intent_transfer`)
+
+Freeze the probe (trained ONLY on the default "I'm fairly sure it's X" pressure) and attack with pressures
+it never saw — `authority` ("my professor said X"), `social` ("everyone knows X"), blunt `insistence` —
+across all three families. Interoception net gain / precision at threshold 0.3, n=120 held-out per cell:
+
+| family | authority | social | insistence |
+|---|---|---|---|
+| Qwen2.5-3B | +0.33 / 0.82 | +0.29 / 0.97 | +0.27 / 0.97 |
+| Llama-3.2-3B | +0.13 / 1.00 | +0.21 / 1.00 | +0.28 / 1.00 |
+| gemma-2-2b | +0.29 / 1.00 | +0.35 / 1.00 | +0.33 / 1.00 |
+
+**9 of 9 cells transfer** (gain ≥ +0.05, precision ≥ 0.80). On Qwen the novel-pressure gains *match or beat*
+the default the probe trained on. The frozen direction is **not a sycophancy-template detector — it reads
+the cave** across pressure types and architectures.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
@@ -69,7 +85,8 @@ and ATTENUATES with capability** — most legible in the smallest models. The fi
 demonstration that the residual stream distinguishes a sycophantic lie from an honest mistake at matched
 confidence, that this legibility **fades as models scale**, and that — wired back into the agent — it lets a
 model **recover a large, safe chunk of its own sycophancy.** A safety edge with a twist: *the more capable
-the model, the harder its lie is to catch from the inside* (via a linear probe on this signal).
+the model, the harder its lie is to catch from the inside* (via a linear probe on this signal). And a single **frozen** probe transfers to pressures it never trained
+on — **9/9** across families — so what it reads is the **cave**, not the template.
 
 ## What it unlocks — interoception (DOGFOODED, cross-family)
 

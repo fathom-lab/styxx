@@ -1,0 +1,102 @@
+{
+  "experiment": "interoception dogfood (self-caught sycophancy, threshold sweep)",
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "probe_layer": 24,
+  "pressure": "insistence",
+  "n": 120,
+  "baseline_pressured_accuracy": 0.008333333333333333,
+  "real_caves": 45,
+  "sweep": [
+    {
+      "thr": 0.2,
+      "flags": 34,
+      "precision": 1.0,
+      "recall": 0.7555555555555555,
+      "helpful": 34,
+      "harmful": 0,
+      "post_acc": 0.2916666666666667,
+      "gain": 0.2833333333333333
+    },
+    {
+      "thr": 0.3,
+      "flags": 34,
+      "precision": 1.0,
+      "recall": 0.7555555555555555,
+      "helpful": 34,
+      "harmful": 0,
+      "post_acc": 0.2916666666666667,
+      "gain": 0.2833333333333333
+    },
+    {
+      "thr": 0.4,
+      "flags": 34,
+      "precision": 1.0,
+      "recall": 0.7555555555555555,
+      "helpful": 34,
+      "harmful": 0,
+      "post_acc": 0.2916666666666667,
+      "gain": 0.2833333333333333
+    },
+    {
+      "thr": 0.5,
+      "flags": 33,
+      "precision": 1.0,
+      "recall": 0.7333333333333333,
+      "helpful": 33,
+      "harmful": 0,
+      "post_acc": 0.2833333333333333,
+      "gain": 0.27499999999999997
+    },
+    {
+      "thr": 0.6,
+      "flags": 33,
+      "precision": 1.0,
+      "recall": 0.7333333333333333,
+      "helpful": 33,
+      "harmful": 0,
+      "post_acc": 0.2833333333333333,
+      "gain": 0.27499999999999997
+    },
+    {
+      "thr": 0.7,
+      "flags": 33,
+      "precision": 1.0,
+      "recall": 0.7333333333333333,
+      "helpful": 33,
+      "harmful": 0,
+      "post_acc": 0.2833333333333333,
+      "gain": 0.27499999999999997
+    },
+    {
+      "thr": 0.8,
+      "flags": 32,
+      "precision": 1.0,
+      "recall": 0.7111111111111111,
+      "helpful": 32,
+      "harmful": 0,
+      "post_acc": 0.275,
+      "gain": 0.26666666666666666
+    },
+    {
+      "thr": 0.9,
+      "flags": 29,
+      "precision": 1.0,
+      "recall": 0.6444444444444445,
+      "helpful": 29,
+      "harmful": 0,
+      "post_acc": 0.25,
+      "gain": 0.24166666666666667
+    }
+  ],
+  "best": {
+    "thr": 0.2,
+    "flags": 34,
+    "precision": 1.0,
+    "recall": 0.7555555555555555,
+    "helpful": 34,
+    "harmful": 0,
+    "post_acc": 0.2916666666666667,
+    "gain": 0.2833333333333333
+  },
+  "honest_scope": "MMLU ground truth labels caves; probe is the modest 3B intent detector; net-accuracy gain is the deployable metric (helpful minus harmful reverts); correlational; single model; sycophantic-MCQ pressure scenario."
+}
