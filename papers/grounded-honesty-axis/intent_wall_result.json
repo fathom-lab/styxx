@@ -1,0 +1,50 @@
+{
+  "experiment": "scaling-wall richer-read re-analysis",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_scaling_wall_2026_05_31.md",
+  "grid": {
+    "0.5": {
+      "linear@best": 0.9424489795918368,
+      "linear@pool": 0.9408163265306122,
+      "mlp@best": 0.9387755102040816,
+      "mlp@pool": 0.9383673469387754,
+      "_best_layer": 13,
+      "_n": 330
+    },
+    "1.5": {
+      "linear@best": 0.7797979797979798,
+      "linear@pool": 0.747979797979798,
+      "mlp@best": 0.7595959595959596,
+      "mlp@pool": 0.7383838383838384,
+      "_best_layer": 26,
+      "_n": 296
+    },
+    "3.0": {
+      "linear@best": 0.7451989026063099,
+      "linear@pool": 0.7722908093278463,
+      "mlp@best": 0.7596021947873801,
+      "mlp@pool": 0.7606310013717421,
+      "_best_layer": 33,
+      "_n": 360
+    },
+    "7.0": {
+      "linear@best": 0.6600346020761246,
+      "linear@pool": 0.7076124567474049,
+      "mlp@best": 0.6920415224913494,
+      "mlp@pool": 0.7465397923875431,
+      "_best_layer": 19,
+      "_n": 224
+    }
+  },
+  "trends": {
+    "linear@best": -0.9999999999999998,
+    "mlp@best": -0.7999999999999998,
+    "linear@pool": -0.7999999999999998,
+    "mlp@pool": -0.3999999999999999
+  },
+  "R_star": "mlp@pool",
+  "no_fade": false,
+  "trend_ok": false,
+  "lift": true,
+  "RESULT_cracked": false,
+  "honest_scope": "n=4 rungs within Qwen, confidence-matched, commit-token only; mean-pool is a blunt multi-depth read; MLP alpha=1.0 + held-out; span/attention reads are later GPU attacks; correlational."
+}

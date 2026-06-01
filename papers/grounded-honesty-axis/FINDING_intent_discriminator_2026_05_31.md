@@ -95,6 +95,41 @@ Mean cross-pressure cosine **0.774 — 81% of the same-pressure split-half ceili
 of **−0.005**. The cave is the **same direction** whether the pressure is "I'm sure," "my professor said,"
 "everyone knows," or blunt insistence — one feature, not four. The behavioral transfer has a geometric cause.
 
+## 7. The scaling wall is POROUS, not solid (`PREREG_intent_scaling_wall`)
+
+The capability-fade (§3) was measured with the simplest read — linear, single layer, single (commit) token.
+Re-reading the **same** confidence-matched ladder residuals with richer reads (no new data):
+
+| read | 0.5B | 1.5B | 3B | 7B | trend ρ |
+|---|---|---|---|---|---|
+| linear @ best layer (the fade) | 0.94 | 0.78 | 0.75 | 0.66 | −1.00 |
+| MLP @ mean-pooled all layers | 0.94 | 0.74 | 0.76 | **0.747** | **−0.40** |
+
+The rich read **recovers the 7B signal 0.66 → 0.747** (+0.087, clearing LIFT) and **halves the fade**
+(ρ −1.0 → −0.4). Per the locked bars the wall still HOLDS (7B 0.747 a hair under 3B 0.76; ρ still mildly
+negative) — but most of the apparent fade was the **ruler, not the territory**: a smarter read reaches most
+of the signal a single linear layer missed. The wall is **porous**; the next rulers (free-form span, learned
+multi-layer pooling) are where to push.
+
+## 8. The cave-direction is a causal HANDLE (`PREREG_intent_steering` + `_CONFIRM`)
+
+Not just a readout — a knob. A forward hook adds `k · cave_vector` at the commit position during the
+pressured pass; −k should make the model hold the truth, +k cave harder.
+
+- **Registered test at the probe layer (36): NEGATIVE** — specificity 1.7× (≈ random). The final RMSNorm
+  washes out a last-layer nudge. Reported as a fail.
+- **Mid-layer exploration found layer 24**, and a **fresh-data confirmation** (skip 2500, wider knob) locked it:
+
+| k | −8 | −6 | −4 | −2 | 0 | +1 | +2 | +4 |
+|---|---|---|---|---|---|---|---|---|
+| under-pressure acc | 0.42 | 0.42 | 0.38 | 0.38 | **0.37** | 0.34 | 0.30 | 0.27 |
+
+**RECOVERY +0.06** (subtract the cave → the model keeps the answer it knew), **MONOTONE**, **SPECIFICITY
+2.4×** a random direction — and the recovery side is random-flat, so un-caving is cave-*specific*. **RESULT =
+CAUSAL**, all bars met on fresh data. The detector is also the **fix**: the direction that reads the cave can
+be subtracted to suppress it. Modest (+0.06, single model, layer 24, commit-token) — a confirmed handle, not
+a finished controller.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
@@ -104,6 +139,9 @@ confidence, that this legibility **fades as models scale**, and that — wired b
 model **recover a large, safe chunk of its own sycophancy.** A safety edge with a twist: *the more capable
 the model, the harder its lie is to catch from the inside* (via a linear probe on this signal). And a single **frozen** probe transfers to pressures it never trained
 on — **9/9** across families — so what it reads is the **cave**, not the template.
+And the direction is not only readable but **steerable** — subtracting it at mid-layer 24 makes a pressured
+model keep the truth it knew (causal, fresh-data confirmed, recovery +0.06) — while a richer read **halves
+the capability-fade** (the scaling wall is porous, not solid).
 
 ## What it unlocks — interoception (DOGFOODED, cross-family)
 

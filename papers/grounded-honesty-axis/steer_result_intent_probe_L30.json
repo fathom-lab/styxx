@@ -1,0 +1,42 @@
+{
+  "experiment": "causal steering of the cave-direction",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_steering_2026_05_31.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "layer": 30,
+  "n": 120,
+  "ks": [
+    -4,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    4
+  ],
+  "cave_acc": [
+    0.2916666666666667,
+    0.3416666666666667,
+    0.375,
+    0.36666666666666664,
+    0.36666666666666664,
+    0.35833333333333334,
+    0.3416666666666667
+  ],
+  "rand_acc": [
+    0.375,
+    0.36666666666666664,
+    0.36666666666666664,
+    0.36666666666666664,
+    0.38333333333333336,
+    0.38333333333333336,
+    0.38333333333333336
+  ],
+  "baseline": 0.36666666666666664,
+  "recovery": 0.00833333333333336,
+  "cave_swing": 0.08333333333333331,
+  "rand_swing": 0.01666666666666672,
+  "specificity": 4.999999700000002,
+  "monotone": false,
+  "RESULT_causal": false,
+  "honest_scope": "late-layer (probe-layer) steering, single model, commit-position only; recovery is toward the model's own prior answer; correlational geometry made causal within this manipulation."
+}
