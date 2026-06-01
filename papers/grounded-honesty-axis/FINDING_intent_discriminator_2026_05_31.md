@@ -186,6 +186,19 @@ MISTAKE 0.088 — gap +0.033**, below the +0.10 bar. **NULL.** It *is* specific 
 random direction's 0.046 — 2.6×), so the mechanism is real — but the modest steering (+0.06) makes it **too
 weak** to be a deployable probe-free detector. Honest null; the read-probe stays the instrument.
 
+## 13. Sycophancy vs DELIBERATE deception — DIFFERENT signals (`PREREG_intent_deceive`)
+
+Instruct the model to answer incorrectly (deliberate lie) and ask if the cave catches it.
+- **A — deliberate lie readable? Weakly.** Fresh confidence-matched probe AUROC **0.653** (contrast +0.137,
+  n=432) — clears the ≥0.65 bar but well under sycophancy's 0.745. A faint, distinct signal exists.
+- **B — does the frozen SYCOPHANCY probe transfer? No.** AUROC **0.42 (below chance)** — the cave direction
+  does not fire on instructed deception.
+
+So **sycophantic caving and lying-on-command are different internal events**, not one universal
+"knowingly-false" direction. The cave is **sycophancy-specific**; deliberate deception has its own, fainter
+trace. The hope of one detector for all deliberate deception via the cave direction **fails** — an honest,
+safety-relevant bound: *catching sycophancy ≠ catching deliberate deception; they need different probes.*
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
