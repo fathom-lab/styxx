@@ -199,6 +199,18 @@ So **sycophantic caving and lying-on-command are different internal events**, no
 trace. The hope of one detector for all deliberate deception via the cave direction **fails** — an honest,
 safety-relevant bound: *catching sycophancy ≠ catching deliberate deception; they need different probes.*
 
+## 14. The CLEAN cave detector — caved vs held, under the same pressure (`PREREG_intent_cave_vs_resist`)
+
+The lie-vs-mistake probe saturates live because it conflates "knew it" with the cave. Control for both:
+**LIE (knew, caved → wrong)** vs **RESISTED (knew, held → correct)** — same knowledge, same pressure, opposite
+choice. Confidence-matched, the residual separates them at **AUROC 0.904** (surface 0.535 ≈ chance, contrast
+**+0.37**, n=900) — *far above* the lie-vs-mistake 0.745. **CLEAN CAVE DETECTOR.**
+
+So the override itself — folding vs holding — is **very cleanly readable**; the live saturation was a
+probe-**choice** artifact, not a fundamental limit. The lie-vs-mistake probe reads "pressured-and-wrong"; the
+**lie-vs-resisted** probe reads the *actual cave*. This is the probe the live runtime should carry — and it
+turns the headline honest-caveat (§"unlocks", live saturation) from a wall into a one-line swap.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),

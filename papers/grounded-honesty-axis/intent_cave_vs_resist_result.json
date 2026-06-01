@@ -1,0 +1,12 @@
+{
+  "experiment": "clean cave detector (caved vs held under same pressure)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_cave_vs_resist_2026_05_31.md",
+  "n_lie": 700,
+  "n_resisted": 455,
+  "raw_auc": 0.9313173444560305,
+  "matched_auc": 0.9044718792866941,
+  "matched_surface": 0.5350342935528121,
+  "separable": true,
+  "beyond_surface": true,
+  "RESULT": "CLEAN CAVE DETECTOR"
+}
