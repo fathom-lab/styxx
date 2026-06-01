@@ -1,0 +1,16 @@
+{
+  "experiment": "un-cave steering as probe-free lie detector",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_causal_detect_2026_05_31.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "layer": 24,
+  "kmag": 8.0,
+  "n_lie": 108,
+  "n_mistake": 148,
+  "recover_lie_cave": 0.12037037037037036,
+  "recover_mistake_cave": 0.08783783783783784,
+  "gap": 0.03253253253253252,
+  "recover_lie_rand": 0.046296296296296294,
+  "recover_mistake_rand": 0.006756756756756757,
+  "specific": true,
+  "RESULT_causal": false
+}

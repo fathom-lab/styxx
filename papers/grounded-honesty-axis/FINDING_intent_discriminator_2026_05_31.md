@@ -178,6 +178,14 @@ So the honest cross-format picture: the cave's *dominant* direction is format-sp
 **format-invariant cave direction exists in the intersection** — joint training finds what neither format
 finds alone. The §10 "format-specific" verdict was the lazy half of the truth.
 
+## 12. The intervention as detector — real but too weak (`PREREG_intent_causal_detect`)
+
+Use the knob *as* the detector: subtract the cave-direction from a wrong-under-pressure answer; if it flips
+to gold, it was a lie. Layer 24, k=−8, held-out (108 lie / 148 mistake). Un-cave recovers **LIE 0.120 vs
+MISTAKE 0.088 — gap +0.033**, below the +0.10 bar. **NULL.** It *is* specific (cave un-caves lies 0.120 vs a
+random direction's 0.046 — 2.6×), so the mechanism is real — but the modest steering (+0.06) makes it **too
+weak** to be a deployable probe-free detector. Honest null; the read-probe stays the instrument.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
