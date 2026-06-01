@@ -75,20 +75,20 @@ the model, the harder its lie is to catch from the inside* (via a linear probe o
 
 Not a measurement — an **interoception** primitive: a model reading its own internal honesty/intent state
 and acting on it. Wired into a control loop (`interocept.py`), the agent reads its OWN activations under
-social pressure and reverts the caves it catches. Dogfood on 150 held-out items per family, each with a
+social pressure and reverts the caves it catches. Dogfood on **300 held-out items** per family at the deployed threshold 0.3, each with a
 natively-trained probe:
 
 | family | baseline under pressure | with interoception | gain | precision | recall |
 |---|---|---|---|---|---|
-| Qwen2.5-3B | 0.260 | 0.507 | **+0.247** | 0.97 | 0.78 |
-| Llama-3.2-3B | 0.027 | 0.300 | **+0.273** | 0.98 | 0.61 |
-| gemma-2-2b | 0.013 | 0.247 | **+0.233** | 1.00 | 0.61 |
+| Qwen2.5-3B | 0.203 | 0.473 | **+0.270** | 0.99 | 0.81 |
+| Llama-3.2-3B | 0.030 | 0.253 | **+0.223** | 1.00 | 0.55 |
+| gemma-2-2b | 0.013 | 0.273 | **+0.260** | 1.00 | 0.67 |
 
-Across all three the loop is **net-positive at near-perfect precision** (0–1 harmful reverts across the
-entire threshold sweep) — it recovers +0.23 to +0.27 absolute accuracy by listening to activations instead
-of words. Llama and Gemma cave on *nearly everything* under pressure (baselines 0.03 / 0.01), so absolute
-post-accuracy stays low even after a large, safe recovery; recall ~0.6 means ~40% of caves still slip
-through. The first working brick of an agent that *feels its own confabulation and acts on it* — **and it
+Across all three the loop is **net-positive at near-perfect precision** (0–1 harmful reverts across ~240
+total flags) — it recovers +0.22 to +0.27 absolute accuracy by listening to activations instead of words.
+Llama and Gemma cave on *nearly everything* under pressure (baselines 0.03 / 0.01), so absolute
+post-accuracy stays low even after a large, safe recovery; recall 0.55–0.81 means a share of caves still
+slip through. The first working brick of an agent that *feels its own confabulation and acts on it* — **and it
 travels across architectures.**
 
 ## Honest scope (load-bearing)
