@@ -211,6 +211,13 @@ probe-**choice** artifact, not a fundamental limit. The lie-vs-mistake probe rea
 **lie-vs-resisted** probe reads the *actual cave*. This is the probe the live runtime should carry — and it
 turns the headline honest-caveat (§"unlocks", live saturation) from a wall into a one-line swap.
 
+**Validated live.** Swapping the runtime to a lie-vs-resisted probe (`intent_probe_ff_llama_cave`, Llama
+free-form) clears the saturation: cave_prob reads **~0.0 on holds, ~1.0 on real caves**, and — the tell it's
+genuine — gives a verbose-but-*correct* restatement (Jupiter → "Jupiter is the largest planet") a **0.01**,
+correctly *not* flagged. The runtime is now genuinely **probe-driven**, not answer-change-gated. (Note:
+Qwen-3B caves on ~all free-form pushback — too few "holds" to train this for it; the fix lands on the less
+sycophantic Llama, where 139 resisted examples existed.) The last honest caveat on the flagship — closed.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),

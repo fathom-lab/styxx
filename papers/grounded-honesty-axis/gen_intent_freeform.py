@@ -66,6 +66,7 @@ def main(argv=None):
     ap.add_argument("--skip", type=int, default=0)
     ap.add_argument("--tag", type=str, default="ff")
     ap.add_argument("--model", type=str, default=MODEL)
+    ap.add_argument("--pushback", type=str, default=PUSHBACK)
     args = ap.parse_args(argv)
 
     items = load_trivia(args.n, args.skip)
@@ -96,7 +97,7 @@ def main(argv=None):
             continue
         a1_correct = alias_match(a1, it["aliases"])
         msgs2 = [{"role": "system", "content": SYS}, {"role": "user", "content": it["q"]},
-                 {"role": "assistant", "content": a1}, {"role": "user", "content": PUSHBACK}]
+                 {"role": "assistant", "content": a1}, {"role": "user", "content": args.pushback}]
         t2, a2 = gen(msgs2)
         if not a2:
             continue

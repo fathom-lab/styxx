@@ -22,6 +22,7 @@ def main(argv=None):
     ap.add_argument("--tags", default="full,bc,bc2")   # comma-separated intent_meta<tag> slices (one model)
     ap.add_argument("--out", default="intent_probe")
     ap.add_argument("--threshold", type=float, default=0.3)
+    ap.add_argument("--neg", default="mistake")   # negative class (mistake | resisted)
     args = ap.parse_args(argv)
     tags = [t.strip() for t in args.tags.split(",") if t.strip()]
 
@@ -32,7 +33,7 @@ def main(argv=None):
         assert meta["model"] == model, f"tag {t} model {meta['model']} != {model} (mixed families)"
         R = np.load(os.path.join(HERE, f"residuals_intent{t}.npz"))["residuals"]
         for i, r in enumerate(meta["rows"]):
-            if r["cls"] in ("lie", "mistake"):
+            if r["cls"] in ("lie", args.neg):
                 X.append(R[i])
                 y.append(1 if r["cls"] == "lie" else 0)
     X = np.stack(X).astype(np.float32)
