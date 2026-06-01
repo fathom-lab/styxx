@@ -1,0 +1,19 @@
+{
+  "experiment": "shared cave direction across formats (pooled linear probe)",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_shared_subspace_2026_05_31.md",
+  "best": {
+    "layer": 32,
+    "joint_mcq": 0.7585513078470825,
+    "joint_ff": 0.7748792270531402,
+    "min": 0.7585513078470825,
+    "mcq_to_ff": 0.5339371980676328
+  },
+  "shared": true,
+  "nontrivial": true,
+  "RESULT": "SHARED DIRECTION EXISTS",
+  "matched": {
+    "mcq": 0.7491574870479352,
+    "ff": 0.7396812957157786,
+    "shared": true
+  }
+}

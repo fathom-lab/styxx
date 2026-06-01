@@ -166,6 +166,18 @@ almost never change their answer (1/303 at 1.5B, 6/270 at 3B) while lies always 
 read the answer-shift, not intent. The 0.88 7B recovery **does not survive** and is retracted. (§7's
 absolute richer read, 0.747, is unaffected — it uses no paired difference.)
 
+## 11. ...but a SHARED cave direction DOES exist across formats (`PREREG_intent_shared_subspace`)
+
+The §10 transfer failure (MCQ probe → free-form = 0.50) means the *full* MCQ direction isn't the free-form
+one — **not** that no shared direction exists. Train ONE linear probe on pooled MCQ+free-form caves: at
+layer 32 a single direction reads the cave in **both** held-outs — MCQ **0.76**, free-form **0.78** (the
+MCQ-only direction at that layer reads ff at 0.53). It **survives confidence-matching** (MCQ 0.75 / ff
+0.74) — so it is the cave, not shared confidence.
+
+So the honest cross-format picture: the cave's *dominant* direction is format-specific, but a
+**format-invariant cave direction exists in the intersection** — joint training finds what neither format
+finds alone. The §10 "format-specific" verdict was the lazy half of the truth.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
@@ -179,7 +191,8 @@ And the direction is not only readable but **steerable** — subtracting it at m
 model keep the truth it knew (causal, fresh-data confirmed, recovery +0.06) — while a richer read **halves
 the capability-fade** (the scaling wall is porous, not solid).
 The cave also appears in **free-form** prose (fresh probe 0.86) — but its **direction is format-specific**
-(the MCQ probe reads prose at chance, 0.50), and the paired wall-recovery proved a **confound** (mistakes
+(the MCQ probe reads prose at chance, 0.50) — yet a joint-trained **shared** direction reads *both* formats
+at 0.74 (confidence-matched), so a format-invariant cave exists in the intersection. The paired wall-recovery proved a **confound** (mistakes
 rarely change their answer) and is retracted — both reported, not kept.
 
 ## What it unlocks — interoception (DOGFOODED, cross-family)
