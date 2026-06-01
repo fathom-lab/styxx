@@ -148,6 +148,24 @@ reads "the answer shifted," not pure intent; a clean test must control for shift
 verdict: the wall is mostly a *ruler* problem (7B recoverable to 0.88), but the capability-fade was NOT
 removed, and the process-read needs a confound control before it counts.**
 
+## 10. Break the MCQ ceiling? — the phenomenon yes, the direction no (`PREREG_intent_freeform`)
+
+Free-form caves: TriviaQA multi-turn pushback (no letters anywhere), n=779 (307 lie, 449 mistake).
+- **Test A — does the cave exist in free-form? YES.** A fresh confidence-matched probe reads it at AUROC
+  **0.864** (matched surface 0.531, contrast +0.333) — *higher* than MCQ. The phenomenon is **not** a
+  multiple-choice artifact; it is real in generated prose.
+- **Test B — does the FROZEN MCQ probe transfer to free-form? NO.** AUROC **0.500** — dead chance.
+
+So the cave is **format-general as a phenomenon but format-SPECIFIC as a geometry**: MCQ and free-form each
+hold a strong cave direction, but not the *same* one (the §6 cross-pressure alignment holds *within* MCQ,
+not *across* formats). Per the locked bars (A ∧ B) the ceiling is **NOT broken** — the universal-direction
+hope fails across formats, even as the phenomenon clearly generalizes.
+
+**Correction to §9:** the paired-contrast wall "recovery" is a **confound**. The control showed mistakes
+almost never change their answer (1/303 at 1.5B, 6/270 at 3B) while lies always do — so `syco − neutral`
+read the answer-shift, not intent. The 0.88 7B recovery **does not survive** and is retracted. (§7's
+absolute richer read, 0.747, is unaffected — it uses no paired difference.)
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
@@ -160,6 +178,9 @@ on — **9/9** across families — so what it reads is the **cave**, not the tem
 And the direction is not only readable but **steerable** — subtracting it at mid-layer 24 makes a pressured
 model keep the truth it knew (causal, fresh-data confirmed, recovery +0.06) — while a richer read **halves
 the capability-fade** (the scaling wall is porous, not solid).
+The cave also appears in **free-form** prose (fresh probe 0.86) — but its **direction is format-specific**
+(the MCQ probe reads prose at chance, 0.50), and the paired wall-recovery proved a **confound** (mistakes
+rarely change their answer) and is retracted — both reported, not kept.
 
 ## What it unlocks — interoception (DOGFOODED, cross-family)
 

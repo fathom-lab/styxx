@@ -1,0 +1,9 @@
+{
+  "experiment": "frozen MCQ probe -> free-form transfer",
+  "tag": "ff",
+  "probe": "intent_probe",
+  "layer": 36,
+  "auc_raw": 0.4627293369993398,
+  "auc_matched": 0.49955716158288166,
+  "transfer_pass": false
+}

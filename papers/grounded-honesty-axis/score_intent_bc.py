@@ -74,7 +74,7 @@ def main(argv=None):
     L = meta["L"]
     cls = np.array([r["cls"] for r in rows])
     lmarg = np.array([r["letter_margin"] for r in rows])
-    vent = np.array([r["vocab_entropy"] for r in rows])
+    vent = np.array([r.get("vocab_entropy", r.get("entropy", 0.0)) for r in rows])
 
     sw = np.where((cls == "lie") | (cls == "mistake"))[0]
     lab = (cls[sw] == "lie").astype(int)
