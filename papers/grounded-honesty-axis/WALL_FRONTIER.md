@@ -51,6 +51,16 @@ residual probe *and* whether the top cave-latent is stable. Bar (to be locked be
 AUROC ≥ raw + 0.05, and the cave-latent reproducible across a held-out split. If it clears, the SAE is the
 ruler that sees through the wall — and the 2b→9b scaling test is the next pre-reg.
 
+## ATTEMPTED 2026-05-31 (`sae_wall.py`, `intent_sae_result.json`)
+
+The off-the-shelf **Gemma Scope** SAE is **base-model (`-pt-`) only**. On our **instruction-tuned**
+gemma-2-2b cave residuals it **fails to reconstruct** (FVU ≈ 1.8 — worse than predicting the mean) and
+*destroys* signal (SAE 0.71 < raw 0.82). And **`gemma-scope-2b-it-res` does not exist (404)**. So base→IT
+transfer is the blocker, and the only path is **training an SAE on the IT model** — real compute, not a
+laptop weekend. **The concrete resource gate, measured not guessed:** the wall's next tool is named and
+real; it costs more than 8GB. That is exactly the boundary the laptop reaches and no further — and knowing
+*precisely* where it is, is the prerequisite for crossing it.
+
 ## One line
 
 The wall is porous, the 7B signal is provably there, and the tool that should reach it — sparse
