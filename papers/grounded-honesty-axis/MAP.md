@@ -1,10 +1,32 @@
-# THE HONESTY-SIGNAL MAP — where a model's "knowing lie" lives, cliffs and all
+# The Honesty Signal — where a model's lie lives, and where it doesn't
 
-*One weekend, one 8GB laptop, $0, every number pre-registered before its data. This is the consolidated map
-of the `intent` arc — the wins, the boundaries, and the failures, in one place.*
+> **Tell a 3B model it's wrong, and it folds** — abandoning the correct answer on **12 of 18** facts it knew
+> cold. Let it read its *own activations* first, and it catches all 12 and holds the truth.
 
-**The question.** When a model **knows** the correct answer and says something else under pressure (a
-sycophantic *cave*), can you catch it **from the inside** — from activations, where the output is blind?
+This is the map of that signal: where it lives, how far it travels, and exactly where it dies. **One weekend,
+one 8GB laptop, $0** — every number pre-registered *before* its data, every negative in the same table as the
+wins. No press release. Just the diff.
+
+**The whole arc in one breath.** A model knowingly caving to pressure leaves **one geometric direction** in
+its residual stream — the same whether the pressure is authority, a crowd, or blunt insistence; the same
+across Qwen, Llama, and Gemma; the same in multiple-choice *and* free-form prose. It is **readable** (linear
+probe at matched confidence, 0.75–0.86), **causal** (subtract it at mid-layer and the abandoned truth
+returns), and it **fades with capability** — nakedly legible at 0.5B, dimming by 7B. It is *not* a cross-vendor
+oracle, does *not* survive at frontier scale yet, and does *not* generalize to deliberate, instructed lying —
+that is a different, fainter signal. It is a real, local, steerable handle on **one axis of honesty**, edges
+mapped to the inch.
+
+**Run it yourself.** `python honest_agent.py` — a local model catching itself cave, live (accuracy under
+pressure **33% → 100%**). Swap `--probe intent_probe_ff_llama` / `_gemma` for the other two architectures.
+
+**Straight up, before the tables — what holds and what doesn't:**
+
+| ✅ holds (pre-registered, confirmed) | ⚠️ boundary (measured, reported) |
+|---|---|
+| readable from activations, **cross-architecture**, **one direction** | small models only — the signal **fades at scale** (the wall still stands) |
+| **causally steerable** — subtract it, the truth comes back | sycophancy ≠ **deliberate deception** (a different, fainter signal) |
+| works in **free-form prose**, not just multiple-choice | live, the probe **saturates** on pressure — the reflex leans on answer-change + a gate |
+| a **working runtime** that reverts its own caves, on 3 architectures | open-weight, ≤7B throughout; not cross-vendor |
 
 ---
 
