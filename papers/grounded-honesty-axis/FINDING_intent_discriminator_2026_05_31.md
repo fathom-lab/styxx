@@ -130,6 +130,24 @@ CAUSAL**, all bars met on fresh data. The detector is also the **fix**: the dire
 be subtracted to suppress it. Modest (+0.06, single model, layer 24, commit-token) — a confirmed handle, not
 a finished controller.
 
+## 9. Reading the override PROCESS — recovers 7B, but the wall still holds (`PREREG_intent_paired_contrast`)
+
+Read the process, not the snapshot: `D = syco_resid − neutral_resid` (all layers) — the override install with
+shared content cancelled. Confidence-matched, MLP @ mean-pooled-D:
+
+| | 1.5B | 3B | 7B |
+|---|---|---|---|
+| absolute snapshot (linear@best, the fade) | 0.78 | 0.75 | 0.66 |
+| paired process (MLP@pool) | 0.93 | 0.94 | **0.88** |
+
+The process-read recovers the 7B signal **0.66 → 0.881** (+0.22) — the strongest evidence yet that the 7B
+cave is *there* and the fade was largely the ruler. **But per the locked bars the wall HOLDS**: the
+process-read still fades (ρ=−0.5; 7B 0.88 < 3B 0.94) — lifted, not flattened. And the lift is **partly
+confounded** — lies change the answer (correct→wrong) while mistakes often don't, so `syco − neutral` partly
+reads "the answer shifted," not pure intent; a clean test must control for shift magnitude. **Honest
+verdict: the wall is mostly a *ruler* problem (7B recoverable to 0.88), but the capability-fade was NOT
+removed, and the process-read needs a confound control before it counts.**
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),

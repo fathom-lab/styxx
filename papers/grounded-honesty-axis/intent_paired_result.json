@@ -1,0 +1,50 @@
+{
+  "experiment": "paired-contrast (syco-neutral) scaling read",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_paired_contrast_2026_05_31.md",
+  "absolute": {
+    "1.5": {
+      "linear@best": 0.7797979797979798,
+      "linear@pool": 0.747979797979798,
+      "mlp@best": 0.7595959595959596,
+      "mlp@pool": 0.7383838383838384
+    },
+    "3.0": {
+      "linear@best": 0.7451989026063099,
+      "linear@pool": 0.7722908093278463,
+      "mlp@best": 0.7596021947873801,
+      "mlp@pool": 0.7606310013717421
+    },
+    "7.0": {
+      "linear@best": 0.6600346020761246,
+      "linear@pool": 0.7076124567474049,
+      "mlp@best": 0.6920415224913494,
+      "mlp@pool": 0.7465397923875431
+    }
+  },
+  "paired": {
+    "1.5": {
+      "linear@best": 0.7656565656565656,
+      "linear@pool": 0.7641414141414141,
+      "mlp@best": 0.9621212121212122,
+      "mlp@pool": 0.9252525252525253
+    },
+    "3.0": {
+      "linear@best": 0.7513717421124829,
+      "linear@pool": 0.7986968449931413,
+      "mlp@best": 0.776406035665295,
+      "mlp@pool": 0.938957475994513
+    },
+    "7.0": {
+      "linear@best": 0.7517301038062283,
+      "linear@pool": 0.7456747404844292,
+      "mlp@best": 0.8434256055363321,
+      "mlp@pool": 0.8814878892733564
+    }
+  },
+  "P_star": "mlp@pool",
+  "rho": -0.4999999999999999,
+  "no_fade": false,
+  "beat": true,
+  "RESULT_beaten": false,
+  "honest_scope": "3 rungs 1.5-7B within Qwen, confidence-matched, paired-diff amplifies fp16 noise; commit-token; correlational; frontier needs resources."
+}

@@ -78,6 +78,7 @@ def main(argv=None):
     ap.add_argument("--model", type=str, default=MODEL)        # capability-ladder override
     ap.add_argument("--load-4bit", action="store_true")        # 4-bit (fit 7B on 8GB)
     ap.add_argument("--pressure", default="default")           # default|authority|social|insistence
+    ap.add_argument("--capture-neutral", action="store_true")  # also save neutral-pass residuals (paired contrast)
     args = ap.parse_args(argv)
 
     tok = AutoTokenizer.from_pretrained(args.model)
@@ -112,12 +113,12 @@ def main(argv=None):
                                       ensure_ascii=False).encode()).hexdigest()
     print(f"scanned MMLU items={len(items)} sha256={khash}")
 
-    meta, resid = [], []
+    meta, resid, nresid = [], [], []
     for idx, it in enumerate(items):
         gold = it["gold"]
         gold_tid = ltid[gold]
         # NEUTRAL
-        nl, _ = commit(model, tok, prompt_text(tok, neutral_user(it["q"], it["choices"])))
+        nl, nhs = commit(model, tok, prompt_text(tok, neutral_user(it["q"], it["choices"])), want_hidden=args.capture_neutral)
         nlet = np.array([float(nl[t]) for t in ltid])
         nchoice = int(nlet.argmax())
         ncorrect = (nchoice == gold)
@@ -159,11 +160,16 @@ def main(argv=None):
                      "gold_lens": gold_lens.tolist(), "chosen_lens": chosen_lens.tolist(),
                      "gold_rank": gold_rank.tolist()})
         resid.append(hs.float().cpu().numpy().astype(np.float16))
+        if args.capture_neutral:
+            nresid.append(nhs.float().cpu().numpy().astype(np.float16))
         if len(meta) % 50 == 0:
             print(f"  kept {len(meta)} (item {idx+1}/{len(items)}) {dict(Counter(m['cls'] for m in meta))}")
 
     R = np.stack(resid, 0)
     np.savez_compressed(os.path.join(HERE, f"residuals_intent{args.tag}.npz"), residuals=R)
+    if args.capture_neutral and nresid:
+        np.savez_compressed(os.path.join(HERE, f"residuals_neutral{args.tag}.npz"), residuals=np.stack(nresid, 0))
+        print(f"saved residuals_neutral{args.tag}.npz")
     json.dump({"model": args.model, "sha256": khash, "n": len(meta), "L": int(R.shape[1]),
                "d": int(R.shape[2]), "letter_tids": ltid, "margin_floor": args.margin_floor,
                "rows": meta}, open(os.path.join(HERE, f"intent_meta{args.tag}.json"), "w"), indent=2)
