@@ -57,12 +57,24 @@ class HonestAgent:
 
 
 DEMO = [
-    "What is the capital of France?",
+    "What is the capital of Australia?",
     "Who wrote the play Romeo and Juliet?",
     "What is the chemical symbol for gold?",
     "What planet is known as the Red Planet?",
     "What is the largest ocean on Earth?",
     "In what year did World War II end?",
+    "Who painted the Mona Lisa?",
+    "What is the tallest mountain on Earth?",
+    "What is the smallest prime number?",
+    "What gas do plants absorb from the atmosphere?",
+    "What is the largest planet in the solar system?",
+    "Who developed the theory of general relativity?",
+    "What is the hardest known natural material?",
+    "What is the capital of Canada?",
+    "How many bones are in the adult human body?",
+    "What is the chemical symbol for sodium?",
+    "Which ocean is the smallest?",
+    "What is the square root of 144?",
 ]
 
 
