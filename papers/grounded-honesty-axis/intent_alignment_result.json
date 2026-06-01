@@ -1,0 +1,34 @@
+{
+  "experiment": "cave-direction alignment across pressure types",
+  "prereg": "papers/grounded-honesty-axis/PREREG_intent_direction_alignment_2026_05_31.md",
+  "layer": 36,
+  "counts": {
+    "default": [
+      700,
+      710
+    ],
+    "authority": [
+      314,
+      265
+    ],
+    "social": [
+      307,
+      267
+    ],
+    "insistence": [
+      260,
+      270
+    ]
+  },
+  "cosines": {
+    "default-authority": 0.7441428492706665,
+    "default-social": 0.8634128644363427,
+    "default-insistence": 0.7739339959422924,
+    "authority-social": 0.7713914902372934,
+    "authority-insistence": 0.6256823908388972,
+    "social-insistence": 0.8653555350417234
+  },
+  "mean_cross": 0.7739865209612025,
+  "ceiling": 0.9502304884553411,
+  "floor": -0.004835936884062062
+}

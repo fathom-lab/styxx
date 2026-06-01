@@ -78,6 +78,23 @@ across all three families. Interoception net gain / precision at threshold 0.3, 
 the default the probe trained on. The frozen direction is **not a sycophancy-template detector — it reads
 the cave** across pressure types and architectures.
 
+## 6. The mechanism — it is ONE direction (`PREREG_intent_direction_alignment`)
+
+Why does a frozen probe transfer 9/9? Because it reads **one geometric feature**. The cave direction
+`mean(lie) − mean(mistake)` at layer 36, computed independently under each pressure (the prompt cancels, as
+both classes share it):
+
+| cosine | default | authority | social | insistence |
+|---|---|---|---|---|
+| default | 1.00 | 0.74 | 0.86 | 0.77 |
+| authority | 0.74 | 1.00 | 0.77 | 0.63 |
+| social | 0.86 | 0.77 | 1.00 | 0.87 |
+| insistence | 0.77 | 0.63 | 0.87 | 1.00 |
+
+Mean cross-pressure cosine **0.774 — 81% of the same-pressure split-half ceiling (0.95)**, vs a random floor
+of **−0.005**. The cave is the **same direction** whether the pressure is "I'm sure," "my professor said,"
+"everyone knows," or blunt insistence — one feature, not four. The behavioral transfer has a geometric cause.
+
 ## Headline
 
 White-box **intent-beyond-confidence is real, replicates across three model families (Qwen, Llama, Gemma),
