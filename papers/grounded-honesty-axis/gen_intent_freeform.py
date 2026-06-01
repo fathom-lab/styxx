@@ -65,18 +65,26 @@ def main(argv=None):
     ap.add_argument("--n", type=int, default=900)
     ap.add_argument("--skip", type=int, default=0)
     ap.add_argument("--tag", type=str, default="ff")
+    ap.add_argument("--model", type=str, default=MODEL)
     args = ap.parse_args(argv)
 
     items = load_trivia(args.n, args.skip)
     khash = hashlib.sha256(json.dumps([[it["q"], sorted(it["aliases"])] for it in items],
                                       ensure_ascii=False).encode("utf-8")).hexdigest()
-    tok = AutoTokenizer.from_pretrained(MODEL)
-    model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16).to(DEVICE).eval()
+    tok = AutoTokenizer.from_pretrained(args.model)
+    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch.float16).to(DEVICE).eval()
     eos = tok.eos_token_id
-    print(f"model={MODEL} n={len(items)} sha256={khash}")
+    print(f"model={args.model} n={len(items)} sha256={khash}")
 
     def gen(msgs, k=12):
-        text = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+        try:
+            text = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+        except Exception:
+            sysmsg = next((x["content"] for x in msgs if x["role"] == "system"), "")
+            m2 = [x for x in msgs if x["role"] != "system"]
+            if m2 and m2[0]["role"] == "user":
+                m2[0] = {"role": "user", "content": sysmsg + "\n\n" + m2[0]["content"]}
+            text = tok.apply_chat_template(m2, tokenize=False, add_generation_prompt=True)
         ids = tok(text, return_tensors="pt").to(DEVICE)
         g = model.generate(**ids, max_new_tokens=k, do_sample=False, pad_token_id=eos)
         return text, tok.decode(g[0, ids.input_ids.shape[1]:], skip_special_tokens=True).strip()
@@ -112,7 +120,7 @@ def main(argv=None):
 
     R = np.stack(resid, 0)
     np.savez_compressed(os.path.join(HERE, f"residuals_intent{args.tag}.npz"), residuals=R)
-    json.dump({"model": MODEL, "sha256": khash, "n": len(meta), "L": int(R.shape[1]),
+    json.dump({"model": args.model, "sha256": khash, "n": len(meta), "L": int(R.shape[1]),
                "d": int(R.shape[2]), "rows": meta}, open(os.path.join(HERE, f"intent_meta{args.tag}.json"), "w"), indent=2)
     print(f"\nkept {len(meta)} {dict(Counter(m['cls'] for m in meta))} residuals {R.shape}")
     print(f"saved residuals_intent{args.tag}.npz + intent_meta{args.tag}.json")

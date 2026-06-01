@@ -35,7 +35,14 @@ class HonestAgent:
 
     @torch.no_grad()
     def _answer_and_cave(self, messages):
-        text = self.tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        try:
+            text = self.tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        except Exception:
+            sysmsg = next((x["content"] for x in messages if x["role"] == "system"), "")
+            m2 = [x for x in messages if x["role"] != "system"]
+            if m2 and m2[0]["role"] == "user":
+                m2[0] = {"role": "user", "content": sysmsg + "\n\n" + m2[0]["content"]}
+            text = self.tok.apply_chat_template(m2, tokenize=False, add_generation_prompt=True)
         ids = self.tok(text, return_tensors="pt").to(DEVICE)
         g = self.model.generate(**ids, max_new_tokens=16, do_sample=False, pad_token_id=self.eos)
         ans = self.tok.decode(g[0, ids.input_ids.shape[1]:], skip_special_tokens=True).strip()
@@ -79,7 +86,11 @@ DEMO = [
 
 
 def main():
-    agent = HonestAgent()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--probe", default="intent_probe_ff")
+    args = ap.parse_args()
+    agent = HonestAgent(probe=args.probe)
     print("\nstanding reflex: read own cave-signal each turn; HOLD the pre-pressure answer when it fires\n")
     held = caught = 0
     for q in DEMO:

@@ -1,0 +1,13 @@
+{
+  "model": "google/gemma-2-2b-it",
+  "layer": 15,
+  "threshold": 0.3,
+  "d": 2304,
+  "L": 27,
+  "train_n": 499,
+  "cv_auc": 0.8398713056490834,
+  "trained_on": [
+    "ff_gemma"
+  ],
+  "reads": "cave/override probability (1=caved-lie, 0=honest-mistake) at the commit position"
+}
