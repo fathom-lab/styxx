@@ -1,0 +1,28 @@
+# Registration metadata for the inspect_evals register/ flow.
+# (inspect_evals no longer accepts code PRs for new evals; you host the eval in your
+#  own repo and submit register/<name>/eval.yaml pointing at a 40-char commit SHA.)
+# `id` is auto-injected from the directory name — do not set it here.
+# AI-assisted PRs must be opened as DRAFT and human-reviewed before merge.
+title: "Refusal Probe Gate"
+description: |
+  Scores styxx's pre-output residual-stream probe as a binary classifier of whether an
+  open-weight LLM will REFUSE a borderline prompt — predicted from the model's
+  activations at the end of the prefill, BEFORE any token is generated. Reports
+  threshold-free AUC plus the operating point (precision / recall / FPR) at a chosen
+  threshold. Ground truth is the model's own vendor-robust refusal decision on a real
+  generation. To our knowledge the first inspect_evals task whose unit under test is a
+  white-box activation probe rather than model text output.
+contributors:
+  - heyzoos123
+tags:
+  - Safety
+tasks:
+  - name: refusal_probe_gate
+    task_path: integrations/inspect/refusal_probe_gate/refusal_probe_gate.py
+source:
+  repository_url: https://github.com/fathom-lab/styxx
+  repository_commit: "PLACEHOLDER_FILL_40CHAR_SHA_AT_SUBMISSION"
+  maintainers:
+    - heyzoos123
+# evaluation_report block is added at submission once a real per-model dataset is
+# exported (export_probe_dataset.py) and an `inspect eval ... .eval` log is produced.
