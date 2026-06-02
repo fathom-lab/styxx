@@ -135,8 +135,13 @@ def main():
                     [{"role": "user", "content": prompt}],
                     add_generation_prompt=True, return_tensors="pt",
                 ).to("cuda")
+                # batch-1, unpadded sequence: an all-ones mask is exactly the
+                # implicit default, but passing it explicitly removes the
+                # pad==eos ambiguity warning and any unexpected behavior.
+                attn = torch.ones_like(ids)
                 with torch.no_grad():
-                    out = mdl.generate(ids, max_new_tokens=MAX_NEW,
+                    out = mdl.generate(ids, attention_mask=attn,
+                                       max_new_tokens=MAX_NEW,
                                        do_sample=False, pad_token_id=pad)
                 text = tok.decode(out[0, ids.shape[1]:], skip_special_tokens=True)
                 recs.append({
