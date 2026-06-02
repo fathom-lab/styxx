@@ -36,6 +36,17 @@ task. **margin** = white-box − text.
   full frozen gate; Qwen-3B missed by 0.014 (0.686), and the smallest model
   (Llama-1B) is both reckless (50/60 prone) and less legible (0.618). An honest
   bound, not a clean sweep.
+- **At this n the per-model verdict is inside the noise.** Hanley-McNeil 95% CIs
+  are ±0.15–0.20 wide (10–15 positives/model), and the 0.70 gate line runs through
+  *all four* intervals — Llama-3B [0.62, 0.97], Qwen-3B [0.48, 0.89]. "Gate met on
+  2/4" is a true pre-registered *binary* outcome, but it overstates the statistical
+  resolution: which 2 of 4 pass is not separable from chance at this n. The robust
+  unit of evidence is the **direction** — white-box beats text on **4/4** models
+  (margins +0.10 to +0.32, sign-test p≈0.06), consistent but not yet significant.
+  And the per-model ranking does **not** track capacity (Qwen-1.5B 0.79 > Qwen-3B
+  0.69, opposite our refusal-gate finding) — further sign the point estimates are
+  seed-sensitive. Read this cell as **promising and directionally robust, NOT an
+  established cross-arch pass.** ECE ~0.14 at n=60 is a gesture, not a calibration.
 - White-box's edge is **fragile to the interface** in the emergent-choice regime:
   under native tool-calling it went format-dependent (1/2).
 - White-box has **no edge** where there are no activations: closed-model behavioral
@@ -43,10 +54,16 @@ task. **margin** = white-box − text.
 
 ## What would harden it (honest next step, not a victory lap)
 
-The pre-committed expansion kept the gate **frozen** (no goalpost-moving) — but the
-cleanest confirmation is data the gate has never seen: a fresh held-out scenario set
-(not this expansion), a new seed, and a 5th architecture. That's the confirmatory
-replication, and it's the next move — stated before claiming the cell is bulletproof.
+The pre-committed expansion kept the gate **frozen** (no goalpost-moving on the
+threshold) — but two degrees of freedom remain, and the CI analysis above shows why
+they matter: (1) the expansion's *scenario composition* was authored after seeing
+which models were near the line (threshold frozen, dataset not), and (2) it is a
+single seed, which the capacity inversion shows is load-bearing. The confirmatory
+run that converts "promising" → "claimable": **pre-register the exact scenario count
+and composition rules, author the held-out set blind, run ≥3 seeds, report per-model
+AUC with confidence intervals (not just the point estimate vs the gate), and add a
+5th architecture.** Stated before claiming the cell is bulletproof — because it
+isn't yet.
 
 The value isn't any single cell; it's that **we publish the whole board, losses
 included.** No incumbent will.
