@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+### Added — `styxx.spec_exec`: epistemic speculative execution (integrity-gated model routing)
+
+Run a cheap model by default; escalate a single call to a stronger model **only when a styxx
+behavioral-honesty signal flags the cheap output as low-validity** — not when raw confidence is low
+(models are confidently wrong, so confidence is a poor validity oracle). The speculative-cascade
+pattern, lifted from the token level up to the *action* level and gated on a behavioral signal.
+
+```python
+from styxx import EpistemicSpeculativeRouter, calibrate_threshold
+
+router = EpistemicSpeculativeRouter(drafter=cheap, verifier=strong, gate=entropy_gate, tau=tau)
+out = router.run(prompt)
+out.answer      # the cheap draft when it's trustworthy, the verifier's answer when escalated
+out.escalated   # did this call need the strong model?
+out.signal      # the gate value that drove the decision
+
+# never guess tau — calibrate on a DISJOINT train split, render the verdict on test
+tau = calibrate_threshold(train_records, cost_cap=0.7)
+```
+
+**Validated held-out (2026-06-01):** on arithmetic, a Qwen2.5-1.5B drafter gated by `span_confab`
+and escalating to a 7B verifier recovered the full quality gap (median recovery **1.00** across
+20/20 random splits) at **~0.70×** the verifier's always-on cost — with the escalation threshold
+calibrated on a disjoint train split. Calibrate-on-train / verdict-on-test is what separated a real
+held-out win from in-sample over-fit. Generalized to a second task (sorting) via the complementary
+signal channel.
+
+**Honest bounds** (also in the docstring — read before deploying): validated on small open models
+(Qwen 1.5B → 7B) and narrow tasks (arithmetic, sorting); not yet shown at frontier scale or across
+arbitrary task types. `span_confab` has two channels (min-margin vs max-entropy) and the right one
+is **task-dependent** — choose it on held-out data, don't assume it. Routing pays only when the
+param gap dwarfs gate overhead, the verifier is actually better at the task, and the cheap model is
+competent on a real fraction of calls. And the load-bearing limit: behavioral gates catch
+**uncertainty** errors — they are blind to confident **shared-belief** errors, where you need
+external grounding (`styxx.retrieval_check`). This is a control law, not an oracle.
+
 ## [7.9.0] — 2026-05-30 — `styxx.honest` becomes the flagship: the one door now runs on the calibrated 0.99-AUC engine
 
 ### Changed — `honest(...)` gains the calibrated **text engine** tier (the common case)
