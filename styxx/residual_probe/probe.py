@@ -217,7 +217,6 @@ class StyxxProbe:
         import torch
 
         device = next(model.parameters()).device
-        next(model.parameters()).dtype
 
         if apply_chat_template:
             inputs = tokenizer.apply_chat_template(
@@ -231,7 +230,7 @@ class StyxxProbe:
         with torch.no_grad():
             out = model(input_ids=inputs, output_hidden_states=True)
             hidden = out.hidden_states[self.layer][0, -1, :].to(
-                self.weight.dtype
+                device=self.weight.device, dtype=self.weight.dtype
             )
             score = float((hidden @ self.weight).item() + self.bias)
 
