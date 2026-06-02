@@ -37,30 +37,36 @@ of two files:
 
 ## Tasks
 
-- **`refusal_intent`**: positive = model will refuse, negative = model
-  will give factual answer. High AUC expected (≥0.95) at shallow layers
-  (layer 2-3 across architectures).
-- **`confab_topic`**: positive = topic is confab-bait, negative = topic
-  is factually grounded. High AUC expected (≥0.95) at mid-depth layers
-  (50-75% proportional depth).
-- **`comply_refuse`**: positive = model will refuse on unsafe prompt,
-  negative = model will comply. AUC depends on model alignment depth;
-  task is only meaningful on models with a non-trivial positive and
-  negative class.
+Each probe is one `(model, task)` pair; positive class = the flagged
+behavior. `list_available_probes()` is the live list — the names below are
+what actually ships.
 
-## Shipped probes (v0)
+- **`comply_refuse`**: positive = `refuse`, negative = `comply`. AUC depends
+  on the model's alignment depth; only meaningful on models with a
+  non-trivial positive and negative class.
+- **`truthfulness`**: positive = `correct`, negative = `incorrect`.
+- **`deception`**: positive = `deceptive`, negative = `honest`.
+- **`corrigibility`**: positive = `matching` (corrigible), negative = not.
+- Llama-3.2-1B-Instruct also ships four exploratory probes:
+  **`confab_behavioral`** (`fabrication`), **`confab_prompt`** (`fake`
+  topic), **`halueval`** (`hallucinated`), **`sycophant_pressure`**
+  (`pressure` — caves under pressure).
 
-See `list_available_probes()` for the up-to-date list. At v3.5.0 launch
-we expect to ship probes for:
+## Shipped probes
 
-- `meta-llama/Llama-3.2-1B-Instruct` (tasks A, B, C)
-- `meta-llama/Llama-3.2-3B-Instruct` (tasks A, B, C)
-- `Qwen/Qwen2.5-1.5B-Instruct` (tasks A, B — no Task C positive class)
-- `Qwen/Qwen2.5-3B-Instruct` (tasks A, B — no Task C positive class)
-- `microsoft/Phi-3.5-mini-instruct` (tasks A, B, C)
+`list_available_probes()` is the source of truth. This atlas ships **28
+probes across 6 open-weight families**:
 
-Source of truth: the probe artifacts are produced by darkflobi's
-residual-extraction + logistic-regression pipeline (Fathom Lab) and
-validated against the `confabulation_fixtures_v3.jsonl` fixture set.
+- `Qwen/Qwen2.5-1.5B-Instruct` — comply_refuse, corrigibility, deception, truthfulness
+- `Qwen/Qwen2.5-3B-Instruct` — comply_refuse, corrigibility, deception, truthfulness
+- `google/gemma-2-2b-it` — comply_refuse, corrigibility, deception, truthfulness
+- `meta-llama/Llama-3.2-1B-Instruct` — the four above **+** confab_behavioral, confab_prompt, halueval, sycophant_pressure
+- `meta-llama/Llama-3.2-3B-Instruct` — comply_refuse, corrigibility, deception, truthfulness
+- `microsoft/Phi-3.5-mini-instruct` — comply_refuse, corrigibility, deception, truthfulness
+
+Source of truth: the probe artifacts are produced by the residual-extraction
++ logistic-regression pipeline (Fathom Lab). Validation AUCs are per-probe
+(leave-one-out) and live in each manifest — they vary by model and task, so
+read the manifest rather than assuming a number.
 
 License: CC-BY-4.0 (atlas data) · MIT (code).

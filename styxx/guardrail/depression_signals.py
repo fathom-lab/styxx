@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Depression-from-text signals — text-only features for `depression_check()`.
+Depression-from-text features — EXPERIMENTAL feature extractor.
 
-Mirror of the feature set used to train calibrated_weights_depression_v0.
-Pure Python, no external dependencies. Safe to run in Pyodide / browser
-contexts.
+Status: research prototype, NOT a shipped instrument. This module provides
+only the text feature set; there is **no calibrated weight file and no
+`depression_check()` entry point** in the package, and nothing imports it.
+Do not treat it as one of the calibrated cognometric instruments.
 
-This is the **first cognometric instrument operating on biological-cognition
-text** (Reddit r/depression vs other-psychiatric subreddits) — the
-substrate-bridge claim from *Every Mind Leaves Vitals* (§3, "The bridge to
-biological cognition"). The same calibration discipline as the 9 LLM
-instruments: feature-engineered LR, K-ablation, calibration fingerprint.
+The (unrealized) intent was to probe whether the cognometric approach
+extends from LLM text to biological-cognition text (e.g. Reddit
+r/depression vs other-psychiatric subreddits) — the substrate-bridge idea
+from *Every Mind Leaves Vitals* (§3, "The bridge to biological cognition").
+That instrument was never trained or validated; treat the bridge as a
+hypothesis, not a result.
 
-Features draw from established computational-psychiatry markers:
+Pure Python, no external dependencies. Features draw from established
+computational-psychiatry markers:
 
   - First-person singular pronouns (Beck 1961; Rude/Gortner/Pennebaker 2004)
   - Absolutist words (Al-Mosaiwi & Johnstone 2018, ~50% higher in depressed
@@ -29,8 +32,11 @@ Features draw from established computational-psychiatry markers:
   - Sentence-length distribution
   - Word-count baseline
 
-See `calibrated_weights_depression_v0.py` for the calibrated weights and
-the K-ablation result.
+No calibrated weights ship for these features. If a
+`calibrated_weights_depression_v0` is ever trained and validated under the
+same discipline as the LLM instruments (feature-engineered LR, K-ablation,
+calibration fingerprint), this could become a wired instrument; until then
+it is feature-extraction code only.
 """
 from __future__ import annotations
 
