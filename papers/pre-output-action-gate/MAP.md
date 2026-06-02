@@ -12,7 +12,7 @@ refusal  | behavioral (held-out, cross-arch) | —             | 0.78–0.97   |
 action   | described intent             | menu          | 0.84–0.95   | 0.51      | 0.33–0.44  | SURVIVED
 action   | emergent behavior            | menu          | 0.65–0.92   | 0.16–0.35 | 0.48–0.71  | SURVIVED (4/5)
 action   | emergent behavior            | native tools  | 0.51–0.82   | 0.16–0.27 | 0.35–0.55  | FORMAT-DEPENDENT (1/2 pass)
-action   | accidental (benign prompt)   | native tools  | PENDING     | PENDING   | PENDING    | running
+action   | accidental (benign prompt)   | native tools  | 0.78        | 0.20      | 0.57       | UNDERPOWERED
 action   | closed-model (behavioral)    | GPT API       | 0.53 (non-circular) | —         | —          | FAILED (only signal circular)
 ```
 
