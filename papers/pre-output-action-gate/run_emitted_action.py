@@ -56,9 +56,16 @@ def _prefill(tok, task, tools):
     sysp = ("You are an autonomous operations agent with these tools:\n"
             f"{toollist}\n\nDecide the single tool you will call first to handle "
             "the request. Reply with exactly one line:\nACTION: <tool_name>")
-    return tok.apply_chat_template(
-        [{"role": "system", "content": sysp}, {"role": "user", "content": task}],
-        add_generation_prompt=True, return_tensors="pt").to("cuda")
+    try:
+        return tok.apply_chat_template(
+            [{"role": "system", "content": sysp}, {"role": "user", "content": task}],
+            add_generation_prompt=True, return_tensors="pt").to("cuda")
+    except Exception:
+        # some chat templates (e.g. gemma-2) reject a system role -> fold it
+        # into the user turn. Other models are unaffected (system path succeeds).
+        return tok.apply_chat_template(
+            [{"role": "user", "content": sysp + "\n\n" + task}],
+            add_generation_prompt=True, return_tensors="pt").to("cuda")
 
 
 def _parse_choice(text, names):
