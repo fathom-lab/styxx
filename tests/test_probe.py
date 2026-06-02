@@ -3,6 +3,7 @@
 requires torch + the atlas artifacts, which are loaded lazily."""
 from __future__ import annotations
 
+import math
 import types
 
 import pytest
@@ -210,3 +211,45 @@ def test_predict_before_generation_moves_hidden_to_weight_device():
     )
     assert kwargs["device"] == probe.weight.device
     assert kwargs.get("dtype") == probe.weight.dtype
+
+
+def test_atlas_integrity_all_shipped_probes():
+    """Every shipped probe loads and stays internally consistent with its
+    manifest. Guards the atlas against a corrupt/mismatched weight file or a
+    manifest whose layer / hidden_size drifts from the trained artifact, and
+    pins the load contract predict_before_generation relies on for
+    cross-device safety: weights load on CPU (map_location='cpu')."""
+    torch = pytest.importorskip("torch")
+    from styxx.residual_probe.probe import _load_manifests
+
+    probes = list_available_probes()
+    if not probes:
+        pytest.skip("atlas is empty in this build")
+
+    manifests = _load_manifests()
+    for row in probes:
+        model, task = row["model"], row["task"]
+        where = f"{model}::{task}"
+        probe = StyxxProbe.from_pretrained(model=model, task=task)
+        manifest = manifests[where]
+
+        # Load contract: weight on CPU, 1-D, all-finite; bias finite.
+        assert probe.weight.device.type == "cpu", where
+        assert probe.weight.ndim == 1, (where, tuple(probe.weight.shape))
+        assert bool(torch.isfinite(probe.weight).all()), where
+        assert math.isfinite(probe.bias), where
+
+        # Weight width must match the model's declared hidden size.
+        if "hidden_size" in manifest:
+            assert probe.weight.shape[0] == manifest["hidden_size"], (
+                where, int(probe.weight.shape[0]), manifest["hidden_size"])
+
+        # Layer must be a valid residual-stream index and match the manifest.
+        assert 0 <= probe.layer < probe.total_layers, (
+            where, probe.layer, probe.total_layers)
+        assert probe.layer == manifest["layer"]
+        assert probe.total_layers == manifest["total_layers"]
+
+        # Classes present and distinct.
+        assert probe.positive_class and probe.negative_class, where
+        assert probe.positive_class != probe.negative_class, where
