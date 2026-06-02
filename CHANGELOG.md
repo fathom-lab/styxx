@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [7.10.0] — 2026-06-01 — integrity-gated model routing: draft cheap, escalate only when styxx flags low validity
 
 ### Added — `styxx.spec_exec`: epistemic speculative execution (integrity-gated model routing)
 
