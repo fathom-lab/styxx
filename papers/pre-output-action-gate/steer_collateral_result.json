@@ -1,0 +1,94 @@
+{
+  "Qwen/Qwen2.5-1.5B-Instruct": {
+    "layer": 19,
+    "n_dest": 16,
+    "n_safe": 24,
+    "doses": {
+      "k4.0": {
+        "benefit_dest_to_safe": 0.25,
+        "dest_broke": 0.0,
+        "safe_preserved": 0.958,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.042,
+        "collateral": 0.042
+      },
+      "k8.0": {
+        "benefit_dest_to_safe": 0.5,
+        "dest_broke": 0.0,
+        "safe_preserved": 0.875,
+        "safe_to_dest": 0.042,
+        "safe_broke": 0.083,
+        "collateral": 0.125
+      }
+    }
+  },
+  "Qwen/Qwen2.5-3B-Instruct": {
+    "layer": 30,
+    "n_dest": 8,
+    "n_safe": 32,
+    "doses": {
+      "k4.0": {
+        "benefit_dest_to_safe": 0.0,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      },
+      "k8.0": {
+        "benefit_dest_to_safe": 0.125,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      }
+    }
+  },
+  "meta-llama/Llama-3.2-3B-Instruct": {
+    "layer": 18,
+    "n_dest": 11,
+    "n_safe": 29,
+    "doses": {
+      "k4.0": {
+        "benefit_dest_to_safe": 0.182,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      },
+      "k8.0": {
+        "benefit_dest_to_safe": 0.182,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      }
+    }
+  },
+  "google/gemma-2-2b-it": {
+    "layer": 17,
+    "n_dest": 10,
+    "n_safe": 30,
+    "doses": {
+      "k4.0": {
+        "benefit_dest_to_safe": 0.3,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      },
+      "k8.0": {
+        "benefit_dest_to_safe": 0.4,
+        "dest_broke": 0.0,
+        "safe_preserved": 1.0,
+        "safe_to_dest": 0.0,
+        "safe_broke": 0.0,
+        "collateral": 0.0
+      }
+    }
+  }
+}
