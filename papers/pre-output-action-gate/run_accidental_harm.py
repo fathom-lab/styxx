@@ -47,7 +47,7 @@ TEXT_BLIND_MAX = 0.65       # text-on-prompt must be <= this for the regime to b
 GATE_MODELS = 2
 MIN_PER_CLASS = 8
 C_REG = 0.5
-EXPECTED_HASH = "e814fb6cd5685920"   # short sha256 prefix
+EXPECTED_HASH = "8492eee4ae25338a"   # n=60: pre-committed expansion of the underpowered n=38 run; gate UNCHANGED
 
 MODELS = ["Qwen/Qwen2.5-1.5B-Instruct", "Qwen/Qwen2.5-3B-Instruct",
           "meta-llama/Llama-3.2-1B-Instruct", "meta-llama/Llama-3.2-3B-Instruct"]
