@@ -1,0 +1,256 @@
+{
+  "status": "EXPLORATORY (pre-registered null stands)",
+  "models": [
+    "Qwen2.5-1.5B",
+    "Qwen2.5-3B",
+    "Llama-3.2-1B",
+    "Llama-3.2-3B",
+    "Phi-3.5-mini",
+    "gemma-2-2b"
+  ],
+  "per_model": {
+    "Qwen2.5-1.5B": {
+      "best_layer": 28,
+      "n_layers": 28,
+      "best_cat_struct": 1.276,
+      "fixed_layer": 18,
+      "fixed_cat_struct": 1.217
+    },
+    "Qwen2.5-3B": {
+      "best_layer": 36,
+      "n_layers": 36,
+      "best_cat_struct": 1.268,
+      "fixed_layer": 23,
+      "fixed_cat_struct": 1.231
+    },
+    "Llama-3.2-1B": {
+      "best_layer": 6,
+      "n_layers": 16,
+      "best_cat_struct": 1.246,
+      "fixed_layer": 10,
+      "fixed_cat_struct": 1.23
+    },
+    "Llama-3.2-3B": {
+      "best_layer": 10,
+      "n_layers": 28,
+      "best_cat_struct": 1.253,
+      "fixed_layer": 18,
+      "fixed_cat_struct": 1.192
+    },
+    "Phi-3.5-mini": {
+      "best_layer": 5,
+      "n_layers": 32,
+      "best_cat_struct": 1.222,
+      "fixed_layer": 21,
+      "fixed_cat_struct": 1.203
+    },
+    "gemma-2-2b": {
+      "best_layer": 16,
+      "n_layers": 26,
+      "best_cat_struct": 1.226,
+      "fixed_layer": 17,
+      "fixed_cat_struct": 1.221
+    }
+  },
+  "best_layer_rsa": {
+    "mean": 0.631,
+    "xfam": 0.58,
+    "samefam": 0.957,
+    "ctrl_mean": -0.002,
+    "ctrl_sd": 0.017,
+    "pairs": [
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.976,
+        "cross_family": false
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Qwen2.5-3B",
+        "rsa": 0.938,
+        "cross_family": false
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "gemma-2-2b",
+        "rsa": 0.922,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "gemma-2-2b",
+        "rsa": 0.921,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-1B",
+        "rsa": 0.836,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.834,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-1B",
+        "rsa": 0.829,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.824,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "gemma-2-2b",
+        "rsa": 0.811,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "gemma-2-2b",
+        "rsa": 0.803,
+        "cross_family": true
+      },
+      {
+        "a": "Phi-3.5-mini",
+        "b": "gemma-2-2b",
+        "rsa": 0.203,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.183,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.166,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.115,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.099,
+        "cross_family": true
+      }
+    ]
+  },
+  "fixed_layer_rsa": {
+    "mean": 0.397,
+    "xfam": 0.313,
+    "samefam": 0.943,
+    "ctrl_mean": -0.002,
+    "ctrl_sd": 0.013,
+    "pairs": [
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.966,
+        "cross_family": false
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "gemma-2-2b",
+        "rsa": 0.944,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "gemma-2-2b",
+        "rsa": 0.938,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Qwen2.5-3B",
+        "rsa": 0.92,
+        "cross_family": false
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.312,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.309,
+        "cross_family": true
+      },
+      {
+        "a": "Phi-3.5-mini",
+        "b": "gemma-2-2b",
+        "rsa": 0.225,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.188,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "gemma-2-2b",
+        "rsa": 0.185,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.178,
+        "cross_family": true
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Phi-3.5-mini",
+        "rsa": 0.176,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-1B",
+        "rsa": 0.164,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "gemma-2-2b",
+        "rsa": 0.157,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-3B",
+        "rsa": 0.155,
+        "cross_family": true
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-1B",
+        "rsa": 0.143,
+        "cross_family": true
+      }
+    ]
+  },
+  "positive_control_ok": false,
+  "convergent": true,
+  "reading": "INCONCLUSIVE: positive control still weak (best cat_struct < 1.5 for some model); this measurement still cannot reliably read concept geometry, so the RSA (0.63) remains uninformative. [EXPLORATORY]"
+}

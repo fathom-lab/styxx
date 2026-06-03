@@ -1,0 +1,123 @@
+{
+  "n_concepts": 96,
+  "n_models": 6,
+  "models": [
+    "Qwen2.5-1.5B",
+    "Qwen2.5-3B",
+    "Llama-3.2-1B",
+    "Llama-3.2-3B",
+    "Phi-3.5-mini",
+    "gemma-2-2b"
+  ],
+  "mean_cross_model_rsa": 0.075,
+  "mean_cross_family_rsa": 0.062,
+  "mean_same_family_rsa": 0.158,
+  "shuffled_control_mean": 0.002,
+  "shuffled_control_sd": 0.063,
+  "category_structure_across_over_within": {
+    "Qwen2.5-1.5B": 1.158,
+    "Qwen2.5-3B": 1.169,
+    "Llama-3.2-1B": 1.201,
+    "Llama-3.2-3B": 1.57,
+    "Phi-3.5-mini": 1.205,
+    "gemma-2-2b": 1.101
+  },
+  "pairs": [
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Qwen2.5-3B",
+      "rsa": 0.26,
+      "cross_family": false
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "gemma-2-2b",
+      "rsa": 0.178,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-3B",
+      "rsa": 0.088,
+      "cross_family": true
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gemma-2-2b",
+      "rsa": 0.084,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-3B",
+      "rsa": 0.08,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Phi-3.5-mini",
+      "rsa": 0.072,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gemma-2-2b",
+      "rsa": 0.061,
+      "cross_family": true
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Llama-3.2-3B",
+      "rsa": 0.055,
+      "cross_family": false
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "gemma-2-2b",
+      "rsa": 0.048,
+      "cross_family": true
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Phi-3.5-mini",
+      "rsa": 0.048,
+      "cross_family": true
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "gemma-2-2b",
+      "rsa": 0.046,
+      "cross_family": true
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Phi-3.5-mini",
+      "rsa": 0.042,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Phi-3.5-mini",
+      "rsa": 0.035,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-1B",
+      "rsa": 0.017,
+      "cross_family": true
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-1B",
+      "rsa": 0.012,
+      "cross_family": true
+    }
+  ],
+  "gate": {
+    "convergent": false,
+    "cross_family_ok": false,
+    "structure_ok": true
+  },
+  "reading": "NOT CONVERGENT by the frozen gate (mean RSA 0.075, ctrl 0.002, struct_ok=True, xfam=0.062)."
+}

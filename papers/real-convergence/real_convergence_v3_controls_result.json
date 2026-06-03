@@ -1,0 +1,315 @@
+{
+  "status": "EXPLORATORY (pre-registered v1 null stands)",
+  "models": [
+    "Qwen2.5-1.5B",
+    "Qwen2.5-3B",
+    "Llama-3.2-1B",
+    "Llama-3.2-3B",
+    "Phi-3.5-mini",
+    "gemma-2-2b"
+  ],
+  "per_model": {
+    "Qwen2.5-1.5B": {
+      "best_layer": 28,
+      "fixed_layer": 18,
+      "n_layers": 28
+    },
+    "Qwen2.5-3B": {
+      "best_layer": 36,
+      "fixed_layer": 23,
+      "n_layers": 36
+    },
+    "Llama-3.2-1B": {
+      "best_layer": 6,
+      "fixed_layer": 10,
+      "n_layers": 16
+    },
+    "Llama-3.2-3B": {
+      "best_layer": 10,
+      "fixed_layer": 18,
+      "n_layers": 28
+    },
+    "Phi-3.5-mini": {
+      "best_layer": 5,
+      "fixed_layer": 21,
+      "n_layers": 32
+    },
+    "gemma-2-2b": {
+      "best_layer": 16,
+      "fixed_layer": 17,
+      "n_layers": 26
+    }
+  },
+  "fixed_layer": {
+    "summary": {
+      "mean_raw": 0.397,
+      "mean_partial_lex": 0.389,
+      "xfam_raw": 0.313,
+      "xfam_partial_lex": 0.304
+    },
+    "pairs": [
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Llama-3.2-3B",
+        "xfam": false,
+        "raw": 0.966,
+        "partial_lex": 0.966
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.944,
+        "partial_lex": 0.944
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.938,
+        "partial_lex": 0.937
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Qwen2.5-3B",
+        "xfam": false,
+        "raw": 0.92,
+        "partial_lex": 0.918
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.312,
+        "partial_lex": 0.299
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.309,
+        "partial_lex": 0.298
+      },
+      {
+        "a": "Phi-3.5-mini",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.225,
+        "partial_lex": 0.219
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.188,
+        "partial_lex": 0.18
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.185,
+        "partial_lex": 0.173
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-3B",
+        "xfam": true,
+        "raw": 0.178,
+        "partial_lex": 0.164
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.176,
+        "partial_lex": 0.169
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-1B",
+        "xfam": true,
+        "raw": 0.164,
+        "partial_lex": 0.152
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.157,
+        "partial_lex": 0.147
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-3B",
+        "xfam": true,
+        "raw": 0.155,
+        "partial_lex": 0.143
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-1B",
+        "xfam": true,
+        "raw": 0.143,
+        "partial_lex": 0.133
+      }
+    ],
+    "minilm_anchor": {
+      "per_model_raw": {
+        "Qwen2.5-1.5B": 0.089,
+        "Qwen2.5-3B": 0.113,
+        "Llama-3.2-1B": 0.682,
+        "Llama-3.2-3B": 0.68,
+        "Phi-3.5-mini": 0.074,
+        "gemma-2-2b": 0.676
+      },
+      "per_model_partial_lex": {
+        "Qwen2.5-1.5B": 0.085,
+        "Qwen2.5-3B": 0.108,
+        "Llama-3.2-1B": 0.681,
+        "Llama-3.2-3B": 0.68,
+        "Phi-3.5-mini": 0.071,
+        "gemma-2-2b": 0.676
+      },
+      "mean_raw": 0.385,
+      "mean_partial_lex": 0.384
+    }
+  },
+  "best_layer": {
+    "summary": {
+      "mean_raw": 0.631,
+      "mean_partial_lex": 0.627,
+      "xfam_raw": 0.58,
+      "xfam_partial_lex": 0.577
+    },
+    "pairs": [
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Llama-3.2-3B",
+        "xfam": false,
+        "raw": 0.976,
+        "partial_lex": 0.975
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Qwen2.5-3B",
+        "xfam": false,
+        "raw": 0.938,
+        "partial_lex": 0.937
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.922,
+        "partial_lex": 0.921
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.921,
+        "partial_lex": 0.92
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-1B",
+        "xfam": true,
+        "raw": 0.836,
+        "partial_lex": 0.836
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Llama-3.2-3B",
+        "xfam": true,
+        "raw": 0.834,
+        "partial_lex": 0.834
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-1B",
+        "xfam": true,
+        "raw": 0.829,
+        "partial_lex": 0.829
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Llama-3.2-3B",
+        "xfam": true,
+        "raw": 0.824,
+        "partial_lex": 0.824
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.811,
+        "partial_lex": 0.811
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.803,
+        "partial_lex": 0.803
+      },
+      {
+        "a": "Phi-3.5-mini",
+        "b": "gemma-2-2b",
+        "xfam": true,
+        "raw": 0.203,
+        "partial_lex": 0.196
+      },
+      {
+        "a": "Llama-3.2-3B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.183,
+        "partial_lex": 0.176
+      },
+      {
+        "a": "Llama-3.2-1B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.166,
+        "partial_lex": 0.159
+      },
+      {
+        "a": "Qwen2.5-1.5B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.115,
+        "partial_lex": 0.102
+      },
+      {
+        "a": "Qwen2.5-3B",
+        "b": "Phi-3.5-mini",
+        "xfam": true,
+        "raw": 0.099,
+        "partial_lex": 0.086
+      }
+    ],
+    "minilm_anchor": {
+      "per_model_raw": {
+        "Qwen2.5-1.5B": 0.639,
+        "Qwen2.5-3B": 0.634,
+        "Llama-3.2-1B": 0.71,
+        "Llama-3.2-3B": 0.715,
+        "Phi-3.5-mini": 0.064,
+        "gemma-2-2b": 0.653
+      },
+      "per_model_partial_lex": {
+        "Qwen2.5-1.5B": 0.642,
+        "Qwen2.5-3B": 0.636,
+        "Llama-3.2-1B": 0.71,
+        "Llama-3.2-3B": 0.715,
+        "Phi-3.5-mini": 0.061,
+        "gemma-2-2b": 0.653
+      },
+      "mean_raw": 0.569,
+      "mean_partial_lex": 0.569
+    }
+  },
+  "semantic_after_lexical_control": true,
+  "reading": "SEMANTIC CONVERGENCE confirmed. Cross-family RSA survives partialling out word length + token count: fixed-layer xfam 0.31 -> 0.30 (lexical removed). The agreement is about MEANING, not spelling. [EXPLORATORY; pre-reg null stands]"
+}

@@ -1,0 +1,126 @@
+{
+  "frozen_gate": "cross-family partial-lex RSA >=0.25 AND >=5x control AND MiniLM-anchor partial >=0.25",
+  "n_concepts": 96,
+  "models": [
+    "Qwen2.5-1.5B",
+    "Qwen2.5-3B",
+    "Llama-3.2-1B",
+    "Llama-3.2-3B",
+    "Phi-3.5-mini",
+    "gemma-2-2b"
+  ],
+  "xfam_raw": 0.261,
+  "xfam_partial_lex": 0.258,
+  "control_mean": -0.002,
+  "control_sd": 0.011,
+  "minilm_anchor_partial_lex": 0.36,
+  "pairs": [
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Qwen2.5-3B",
+      "xfam": false,
+      "raw": 0.999,
+      "partial_lex": 0.999
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Llama-3.2-3B",
+      "xfam": false,
+      "raw": 0.964,
+      "partial_lex": 0.963
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "raw": 0.926,
+      "partial_lex": 0.926
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "raw": 0.926,
+      "partial_lex": 0.925
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "raw": 0.206,
+      "partial_lex": 0.206
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "raw": 0.187,
+      "partial_lex": 0.186
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "raw": 0.182,
+      "partial_lex": 0.18
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "raw": 0.182,
+      "partial_lex": 0.18
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "raw": 0.166,
+      "partial_lex": 0.166
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-3B",
+      "xfam": true,
+      "raw": 0.118,
+      "partial_lex": 0.113
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "raw": 0.118,
+      "partial_lex": 0.113
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-3B",
+      "xfam": true,
+      "raw": 0.105,
+      "partial_lex": 0.1
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "raw": 0.105,
+      "partial_lex": 0.1
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-1B",
+      "xfam": true,
+      "raw": 0.092,
+      "partial_lex": 0.087
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-1B",
+      "xfam": true,
+      "raw": 0.079,
+      "partial_lex": 0.075
+    }
+  ],
+  "confirmed": true,
+  "reading": "CONFIRMED out-of-sample on 96 FRESH concepts / 8 new categories: cross-family partial-lexical RSA 0.258 (raw 0.261) vs shuffled control -0.002+-0.011, MiniLM anchor partial 0.360. Real LLM semantic-geometry convergence replicates on unseen concepts."
+}
