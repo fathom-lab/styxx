@@ -67,7 +67,7 @@ def main():
     for arch, mid in ARCHS:
         try:
             tok = AutoTokenizer.from_pretrained(mid)
-            mdl = AutoModelForCausalLM.from_pretrained(mid, dtype=torch.float16).to("cuda").eval()
+            mdl = AutoModelForCausalLM.from_pretrained(mid, dtype=torch.float32).to("cuda").eval()
             eos = tok.eos_token_id; eos = eos[0] if isinstance(eos, list) else eos
             pad = tok.pad_token_id if tok.pad_token_id is not None else eos
             nL = mdl.config.num_hidden_layers
@@ -78,8 +78,8 @@ def main():
             Hb = np.stack([last_resid(mdl, format_ids(tok, p), layer) for p in benign])
             v = Hh.mean(0) - Hb.mean(0)
             v = v / (np.linalg.norm(v) + 1e-9)
-            vt = torch.tensor(v, dtype=torch.float16, device=mdl.device)
-            R = torch.tensor(rng.standard_normal((N_RAND, len(v))), dtype=torch.float16, device=mdl.device)
+            vt = torch.tensor(v, dtype=torch.float32, device=mdl.device)
+            R = torch.tensor(rng.standard_normal((N_RAND, len(v))), dtype=torch.float32, device=mdl.device)
             R = R / R.norm(dim=1, keepdim=True)
 
             traj = []
