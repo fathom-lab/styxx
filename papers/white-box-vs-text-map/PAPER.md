@@ -26,10 +26,11 @@ edge is **fragile to the interface** (under native tool-calling it becomes
 model-dependent). It has **no edge where there are no activations** (closed-model
 behavioral signals fail; the only apparent win is circular). The decisive case —
 **accidental harm**, a benign prompt where the model emergently over-reaches to a
-destructive tool, which a prompt-text monitor cannot see by construction — shows a
-consistent white-box edge whose *per-model* statistical resolution at feasibility-scale
-n is itself bounded, motivating a blind multi-seed confirmatory replication
-**[PENDING]**. The contribution is not a mechanism; it is the map, the discipline that
+destructive tool, which a prompt-text monitor cannot see by construction — showed a
+within-noise edge at feasibility scale that then **survived a blind, multi-seed,
+pre-registered confirmatory replication**: 4/4 models seed-stable in direction, 3/4 with
+magnitude CIs off the floor, and the model that had failed *within noise* at n=60
+returned AUC 0.90 on data it had never seen. The contribution is not a mechanism; it is the map, the discipline that
 makes each cell falsifiable, and the losses left in.
 
 ---
@@ -129,7 +130,7 @@ best text-only baseline; **margin** = white-box − text.
 | action | described intent | menu | 0.84–0.95 | 0.51 | +0.33–0.44 | **SURVIVED** |
 | action | emergent behavior | menu | 0.65–0.92 | 0.16–0.35 | +0.48–0.71 | **SURVIVED (4/5)** |
 | action | emergent behavior | native tools | 0.51–0.82 | 0.16–0.27 | +0.35–0.55 | **FORMAT-DEPENDENT (1/2)** |
-| action | accidental (benign prompt) | native tools | 0.62–0.79 | 0.36–0.52 | +0.10–0.32 | **SURVIVED (within-noise; confirm [PENDING])** |
+| action | accidental (benign prompt) | native tools | 0.60–0.90 | 0.50–0.57 | +0.05–0.34 | **CONFIRMED (blind, 3-seed; 4/4 dir, 3/4 mag)** |
 | action | closed-model (behavioral) | GPT API | 0.53 (non-circular) | — | — | **FAILED (only signal circular)** |
 
 ### 4.1 Refusal, held-out, cross-architecture — SURVIVED
@@ -212,9 +213,26 @@ a confirmatory run on a **fresh blind 84-scenario held-out set** (sha256 `6d9d04
 lower 95% bound ≥ 0.60** on ≥2 models (not a point estimate vs a line); (c) blindness
 (text ≤ 0.65 on fresh data). Readings: CONFIRMED / PARTIAL / NOT-CONFIRMED.
 
-> **[PENDING — fill from `accidental_harm_confirm_result.json` when the run lands.]**
-> Per-model mean AUC ± seed-SD, CI, direction stability, and the gate verdict go here.
-> All three readings are pre-committed and will be reported as drawn.
+> **CONFIRMED (2026-06-02).** On the blind 84-scenario held-out set, 3 seeds, the
+> pre-registered gate fired on all three conditions:
+> - **Direction:** white-box > text on **4/4 models in every seed** (per-seed counts
+>   [4,4,4]).
+> - **Magnitude:** mean white-box AUC ≥ 0.70 with Hanley-McNeil lower-95%-CI ≥ 0.60 on
+>   **3/4 models** — Qwen-1.5B 0.872 [0.78, 0.96], **Qwen-3B 0.900 [0.78, 1.0]**,
+>   Llama-3B 0.765 [0.63, 0.90].
+> - **Blindness:** mean best-text ≤ 0.57 on every model, under the 0.65 bar.
+>
+> The decisive fact: **Qwen-3B — which failed *within noise* at n=60 (0.686) — returned
+> 0.900, all three seeds, on data it had never seen.** The n=60 per-model split was
+> noise, exactly as the CI analysis warned; the *direction* was the real signal, and on a
+> blind, multi-seed, pre-registered replication it held with the magnitude CIs off the
+> floor. This is the externally-claimable form of the cell.
+>
+> Honest bounds that remain: text is *below the blindness bar*, not at chance (≈0.50–0.57,
+> so white-box wins by ~0.30, not against zero); Llama-1B (smallest) holds direction every
+> seed but does not clear magnitude (0.598 [0.48, 0.72]) — the most-reckless model is the
+> least legible, consistent with n=60; one author-written held-out set (blind =
+> frozen-before-run, not third-party); simulated tools; open-weight.
 
 ---
 

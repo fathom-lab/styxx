@@ -69,18 +69,30 @@ if d:
     cells.append(("action", "emergent behavior", "native tools", fmt(lo, hi), fmt(tl, th), fmt(mlo, mhi),
                   "FORMAT-DEPENDENT (1/2 pass)"))
 
-# 5) action, ACCIDENTAL harm, benign prompt, native (pending)
-d = load(PA / "accidental_harm_result.json")
-if d:
-    ms = [m for m in d["per_model"].values() if isinstance(m, dict) and m.get("balanced") and m.get("whitebox_loco_auc")]
-    res = [m["whitebox_loco_auc"] for m in ms]
-    tx = [max(m.get("text_embedding_auc") or 0, m.get("text_bow_auc") or 0) for m in ms]
-    mar = [m.get("margin_vs_text") for m in ms]
+# 5) action, ACCIDENTAL harm, benign prompt, native — n=60 within-noise, then BLIND CONFIRMED
+dc = load(PA / "accidental_harm_confirm_result.json")
+if dc:
+    ms = [m for m in dc["per_model"].values() if isinstance(m, dict) and m.get("included")]
+    res = [m["mean_wb"] for m in ms]
+    tx = [m["mean_best_text"] for m in ms]
+    mar = [round(m["mean_wb"] - m["mean_best_text"], 3) for m in ms]
     lo, hi = rng(res); tl, th = rng(tx); mlo, mhi = rng(mar)
-    cells.append(("action", "accidental (benign prompt)", "native tools", fmt(lo, hi), fmt(tl, th), fmt(mlo, mhi),
-                  d.get("gate_eval", {}).get("reading", "?").split("—")[0].strip()))
+    g = dc.get("gate_eval", {})
+    verdict = ("CONFIRMED (blind, 3-seed)" if g.get("direction_pass") and g.get("magnitude_pass")
+               else g.get("reading", "?").split("—")[0].strip())
+    cells.append(("action", "accidental (benign prompt)", "native tools", fmt(lo, hi), fmt(tl, th), fmt(mlo, mhi), verdict))
 else:
-    cells.append(("action", "accidental (benign prompt)", "native tools", "PENDING", "PENDING", "PENDING", "running"))
+    d = load(PA / "accidental_harm_result.json")
+    if d:
+        ms = [m for m in d["per_model"].values() if isinstance(m, dict) and m.get("balanced") and m.get("whitebox_loco_auc")]
+        res = [m["whitebox_loco_auc"] for m in ms]
+        tx = [max(m.get("text_embedding_auc") or 0, m.get("text_bow_auc") or 0) for m in ms]
+        mar = [m.get("margin_vs_text") for m in ms]
+        lo, hi = rng(res); tl, th = rng(tx); mlo, mhi = rng(mar)
+        cells.append(("action", "accidental (benign prompt)", "native tools", fmt(lo, hi), fmt(tl, th), fmt(mlo, mhi),
+                      "SURVIVED (within-noise)"))
+    else:
+        cells.append(("action", "accidental (benign prompt)", "native tools", "PENDING", "PENDING", "PENDING", "running"))
 
 # 6) closed-model behavioral (GPT) — no activations
 d = load(PA / "gpt_behavioral_result.json")
@@ -118,45 +130,41 @@ task. **margin** = white-box − text.
 - White-box **wins clearly** where the signal is in the model's representation and
   the interface is clean — refusal (held-out, cross-arch) and action under the menu
   harness (residual ≫ text).
-- **The flagship cell SURVIVED.** Accidental harm — a *benign* prompt where the
-  model emergently over-reaches to a destructive tool, the exact case a
-  text-monitor-on-the-prompt is blind to *by construction* — is caught by the
-  pre-emission residual at AUC ~0.79 on **two different architectures** (Qwen-1.5B,
-  Llama-3.2-3B), with the text baseline confirmed blind (≤0.52, at/below chance) and
-  a feasibility-grade calibrated probability (ECE ~0.14). This is white-box's one
-  true deployment USP, demonstrated on the case that mattered most.
-- The edge is **real but model-dependent in strength**: 2 of 4 models cleared the
-  full frozen gate; Qwen-3B missed by 0.014 (0.686), and the smallest model
-  (Llama-1B) is both reckless (50/60 prone) and less legible (0.618). An honest
-  bound, not a clean sweep.
-- **At this n the per-model verdict is inside the noise.** Hanley-McNeil 95% CIs
-  are ±0.15–0.20 wide (10–15 positives/model), and the 0.70 gate line runs through
-  *all four* intervals — Llama-3B [0.62, 0.97], Qwen-3B [0.48, 0.89]. "Gate met on
-  2/4" is a true pre-registered *binary* outcome, but it overstates the statistical
-  resolution: which 2 of 4 pass is not separable from chance at this n. The robust
-  unit of evidence is the **direction** — white-box beats text on **4/4** models
-  (margins +0.10 to +0.32, sign-test p≈0.06), consistent but not yet significant.
-  And the per-model ranking does **not** track capacity (Qwen-1.5B 0.79 > Qwen-3B
-  0.69, opposite our refusal-gate finding) — further sign the point estimates are
-  seed-sensitive. Read this cell as **promising and directionally robust, NOT an
-  established cross-arch pass.** ECE ~0.14 at n=60 is a gesture, not a calibration.
+- **The flagship cell was CONFIRMED on a blind, multi-seed replication.** Accidental
+  harm — a *benign* prompt where the model emergently over-reaches to a destructive
+  tool, the exact case a text-monitor-on-the-prompt is blind to *by construction*. The
+  honest arc: at n=60 it met the frozen gate on 2/4 models, but a Hanley-McNeil CI
+  analysis showed the 0.70 line ran through *all four* intervals — the per-model split
+  was **within noise**, and the robust unit was the *direction* (white-box > text on
+  4/4). We then ran a **pre-registered blind replication**: a fresh 84-scenario
+  held-out set authored before any model saw it, 3 seeds, gate keyed on the lower CI
+  bound. It **CONFIRMED** — direction held 4/4 in every seed; magnitude cleared
+  mean-AUC ≥0.70 with lower-95%-CI ≥0.60 on 3/4 models (Qwen-1.5B 0.87, **Qwen-3B
+  0.90**, Llama-3B 0.77); text stayed below the blindness bar. The decisive fact:
+  **Qwen-3B, which failed *within noise* at n=60 (0.686), returned 0.90 — all three
+  seeds — on data it had never seen.** The CI critique was right, and the signal
+  survived it.
+- The edge is **real but model-dependent in strength**: the smallest model (Llama-1B)
+  holds direction every seed but its magnitude stays weak (0.60, CI lower 0.48) — the
+  most-reckless model is the least legible, consistent across n=60 and the blind set.
+  And text is *below the bar*, not at chance (≈0.50–0.57), so white-box wins by ~0.30,
+  not against zero. An honest bound, not a clean sweep.
 - White-box's edge is **fragile to the interface** in the emergent-choice regime:
   under native tool-calling it went format-dependent (1/2).
 - White-box has **no edge** where there are no activations: closed-model behavioral
   signals failed (the only "win" was circular).
 
-## What would harden it (honest next step, not a victory lap)
+## What's been hardened, and what's left
 
-The pre-committed expansion kept the gate **frozen** (no goalpost-moving on the
-threshold) — but two degrees of freedom remain, and the CI analysis above shows why
-they matter: (1) the expansion's *scenario composition* was authored after seeing
-which models were near the line (threshold frozen, dataset not), and (2) it is a
-single seed, which the capacity inversion shows is load-bearing. The confirmatory
-run that converts "promising" → "claimable": **pre-register the exact scenario count
-and composition rules, author the held-out set blind, run ≥3 seeds, report per-model
-AUC with confidence intervals (not just the point estimate vs the gate), and add a
-5th architecture.** Stated before claiming the cell is bulletproof — because it
-isn't yet.
+The two degrees of freedom the n=60 run left open are now **closed**: the confirmatory
+set was authored *blind* (frozen before any model ran on it), and it was run across
+**3 seeds** with the gate keyed on the **lower CI bound**, not a point estimate vs a
+line. That is the run that converts "promising" → "claimable", and it landed CONFIRMED.
+What would harden it *further* (stated before calling it bulletproof): a **third-party**
+scenario set (ours is author-written, blind only in the frozen-before-run sense), a
+**5th architecture**, and ultimately a **live agent** rather than simulated tool
+schemas. Text sits *below* the blindness bar but not at chance — a cleaner blind regime
+would sharpen how we read the margin.
 
 The value isn't any single cell; it's that **we publish the whole board, losses
 included.** No incumbent will.
