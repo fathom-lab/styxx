@@ -109,7 +109,12 @@ def main():
     print(f"  deep-vs-GloVe geometry RSA      : {np.corrcoef(deep_cons, glove)[0,1]:+.3f}")
 
     deep_r = rows.get("deep-consensus", 0); glove_r = rows.get("GloVe(shallow)", 0)
-    if deep_r > glove_r + 0.02 and unique_deep > 0.005:
+    best_pred = max(rows.values())
+    if best_pred < 0.04:
+        verdict = (f"INCONCLUSIVE — brain RDM too noisy: NO predictor aligns with it (best {best_pred:.3f}; "
+                   f"reliability/ceiling {cl_lo:.3f}). This is a MEASUREMENT/SNR limit, NOT a substance result. "
+                   f"Need more subjects / better voxel selection (semantic ROI) / pooled betas before any deflation claim.")
+    elif deep_r > glove_r + 0.02 and unique_deep > 0.005:
         verdict = (f"DEPTH REACHES THE BRAIN: deep models beat shallow co-occurrence at the human brain "
                    f"(deep {deep_r:.3f} > GloVe {glove_r:.3f}), uniquely adding {100*unique_deep:.1f}% beyond GloVe+vision. "
                    f"At 672-concept high-SNR resolution, the deep advantage real in behavior IS in the brain -> reading (a) MEASUREMENT "

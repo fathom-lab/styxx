@@ -1,5 +1,8 @@
 # large/rebuildable artifacts — re-fetch via download_subject.py / build_predictor_rdms.py
 bold/
 annot/*.mat
+gls_out_*/
 *.npz
+*.npy
+*.nii.gz
 __pycache__/

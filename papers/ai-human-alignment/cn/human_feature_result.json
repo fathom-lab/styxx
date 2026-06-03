@@ -1,0 +1,40 @@
+{
+  "full": {
+    "scores": {
+      "GloVe": 0.379,
+      "fastText": 0.435,
+      "GPT2": 0.492,
+      "BERT": 0.44,
+      "ResNet": 0.096,
+      "ViT": 0.225
+    },
+    "deep": 0.466,
+    "shallow": 0.379,
+    "diff": 0.087,
+    "ci95": [
+      0.063,
+      0.097
+    ],
+    "p_gt0": 1.0
+  },
+  "matched": {
+    "scores": {
+      "GloVe": 0.379,
+      "fastText": 0.452,
+      "GPT2": 0.505,
+      "BERT": 0.45,
+      "ResNet": 0.096,
+      "ViT": 0.234
+    },
+    "deep": 0.478,
+    "shallow": 0.379,
+    "diff": 0.099,
+    "ci95": [
+      0.08,
+      0.115
+    ],
+    "p_gt0": 1.0
+  },
+  "robust": true,
+  "verdict": "CONFIRMED: deep LLMs capture human-rated meaning better than shallow co-occurrence, and it SURVIVES dimensionality-matching (matched diff +0.099, P=1.000). A clean, brain-independent depth effect on 672 concepts."
+}
