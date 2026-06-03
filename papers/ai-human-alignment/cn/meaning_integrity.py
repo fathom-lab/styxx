@@ -104,3 +104,42 @@ def integrity_report(E, ref, healthy=0.25, broken=0.10, words=None, top=10):
     return {"alignment": round(a, 4), "status": status,
             "per_concept_mean": round(float(np.mean(pc)), 4),
             "worst_concepts": worst, "per_concept": pc}
+
+
+class MeaningVitalSign:
+    """Deployable TWO-CHANNEL meaning-integrity monitor. Calibrate once on a healthy model, then
+    `check()` on a schedule — a *vital sign* for a model's meaning. Reads BOTH channels:
+      - alignment      (structure; basis-invariant; catches drift / poisoning / plausible-but-wrong)
+      - dispersion_ratio (magnitude vs baseline; catches the uniform collapse alignment is blind to)
+    and returns a HEALTHY / DEGRADED / BROKEN verdict plus the worst concepts."""
+
+    def __init__(self, ref, healthy_align=0.25, broken_align=0.10, min_dispersion_ratio=0.70):
+        self.ref = ref
+        self.healthy_align = healthy_align
+        self.broken_align = broken_align
+        self.min_dispersion_ratio = min_dispersion_ratio
+        self.base_align = None
+        self.base_disp = None
+
+    def calibrate(self, E_healthy):
+        self.base_align = alignment(E_healthy, self.ref)
+        self.base_disp = dispersion(E_healthy)
+        return self
+
+    def check(self, E, words=None, top=8):
+        a = alignment(E, self.ref)
+        dr = (dispersion(E) / self.base_disp) if self.base_disp else float("nan")
+        if a < self.broken_align:
+            status = "BROKEN"
+        elif a < self.healthy_align or (dr == dr and dr < self.min_dispersion_ratio):
+            status = "DEGRADED"
+        else:
+            status = "HEALTHY"
+        pc = per_concept_alignment(E, self.ref)
+        w = words or self.ref.words
+        worst = [(w[i] if w else int(i)) for i in np.argsort(pc)[:top]]
+        out = {"alignment": round(a, 4), "dispersion_ratio": round(dr, 4),
+               "status": status, "worst_concepts": worst}
+        if self.base_align is not None:
+            out["align_drop_vs_baseline"] = round(self.base_align - a, 4)
+        return out

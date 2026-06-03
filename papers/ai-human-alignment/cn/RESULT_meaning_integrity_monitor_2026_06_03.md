@@ -74,10 +74,23 @@ and can it catch a model whose **outputs still look fine while its meaning is qu
 - **"Human meaning" = this 54-feature operationalization** — one valid, brain-validated handle on
   meaning, not the whole of it. The claim is *alignment to this human reference*, bounded and honest.
 
+## Deployable form — `MeaningVitalSign` (built, `meaning_vital_sign_demo.py`)
+Calibrate once on a healthy model, then `check()` on a schedule — a *vital sign* for a model's meaning.
+It reads **both channels** and returns a HEALTHY / DEGRADED / BROKEN verdict. The longitudinal demo proves
+each channel covers the other's blind spot:
+
+- **Structural drift** (creeping concept-shuffle): alignment 0.49→0.40→0.32→0.22→0.09→0.02, verdict walks
+  HEALTHY → DEGRADED → BROKEN; dispersion stays 1.00 (correctly — shuffle preserves magnitude).
+- **Collapse** (blur toward the mean): alignment stays **flat at 0.492** (blind), but dispersion-ratio
+  falls 1.00→0.90→0.75→0.60→0.40→0.20 and *that* flips the verdict to DEGRADED. **A one-channel monitor
+  would call a collapsing model perfectly HEALTHY** — which is exactly why both channels ship.
+
 ## Productization path (next)
-1. Port to a styxx package primitive (`styxx.meaning_integrity`) with a **bundled English reference**.
-2. "Vital sign" mode: schedule re-probes, persist the trend, alarm on drift below the calibrated band.
-3. Validate against a *real* degradation (a deliberately mis-fine-tuned model) — the killer demo.
+1. Port `MeaningVitalSign` to a first-class styxx package primitive (`styxx.meaning_integrity`).
+2. **Bundle an English reference** (Lancaster Sensorimotor / Binder 2016 norms) — proves it isn't a
+   Chinese-feature-set artifact. The single highest-credibility next step.
+3. Validate against a *real* degradation (a deliberately mis-fine-tuned model) — closes the synthetic-
+   corruption caveat for good.
 
 ## Reproduce
 `python meaning_integrity_demo.py` → prints all five validations + a sample report. Core in
