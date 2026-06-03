@@ -34,6 +34,24 @@ RSA between each model's concept geometry and the human 54-feature geometry (672
 - **Cross-lingual.** Replicated in Chinese, against Chinese human ratings — not an English/co-occurrence
   artifact.
 
+## WHERE depth helps — an interpretable decomposition (`feature_decomposition.py`)
+Per-feature cross-validated prediction (embedding → each of the 54 human features), **both PCA-50
+(dim-matched)**. Overall deep 0.657 vs shallow 0.579 (advantage +0.078, consistent with the RSA). But
+the advantage is **concentrated, not uniform** — and the pattern is the story:
+
+| depth helps most (abstract/relational) | adv | word-counting suffices (perceptual/routine) | adv |
+|---|---:|---|---:|
+| 复杂度 complexity | **+0.296** | 视觉 visual | −0.048 |
+| 短/慢/快 short/slow/fast (magnitude, dynamics) | +0.16–0.20 | 触摸 touch | −0.015 |
+| 热 heat · 明亮度 brightness | +0.16 | 沟通 communication | −0.026 |
+| 路径 path · 身体 body | +0.15 | 惊讶 surprise · 自我 self | ~0.006 |
+
+**Deep models earn their advantage on abstract/structural meaning** (complexity above all — a +0.30
+chasm — plus magnitude, speed, path), the dimensions that require integrating beyond co-occurrence. On
+**directly-grounded perceptual properties** (visual, touch), shallow co-occurrence already suffices and
+even wins on "visual." (Per-feature differences are descriptive — not each individually bootstrapped —
+but the overall effect is the significant one above, and the abstract>perceptual gradient is consistent.)
+
 ## Honest scope
 - One human-feature set (54 experiential dims), one language, RSA. The human ratings are independent of
   the text models (they are behavioral ratings), so the deep>shallow gap is a real model property, not

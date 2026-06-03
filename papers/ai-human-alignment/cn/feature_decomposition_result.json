@@ -1,0 +1,331 @@
+{
+  "mean_deep": 0.657,
+  "mean_shallow": 0.579,
+  "mean_advantage": 0.078,
+  "per_feature": {
+    "视觉": {
+      "gloss": "visual",
+      "deep": 0.579,
+      "shallow": 0.627,
+      "adv": -0.048
+    },
+    "明亮度": {
+      "gloss": "brightness",
+      "deep": 0.659,
+      "shallow": 0.498,
+      "adv": 0.161
+    },
+    "黑暗度": {
+      "gloss": "darkness",
+      "deep": 0.556,
+      "shallow": 0.514,
+      "adv": 0.042
+    },
+    "颜色": {
+      "gloss": "color",
+      "deep": 0.745,
+      "shallow": 0.642,
+      "adv": 0.104
+    },
+    "图案": {
+      "gloss": "pattern",
+      "deep": 0.663,
+      "shallow": 0.638,
+      "adv": 0.025
+    },
+    "大": {
+      "gloss": "big",
+      "deep": 0.585,
+      "shallow": 0.504,
+      "adv": 0.081
+    },
+    "小": {
+      "gloss": "small",
+      "deep": 0.658,
+      "shallow": 0.612,
+      "adv": 0.046
+    },
+    "快": {
+      "gloss": "",
+      "deep": 0.629,
+      "shallow": 0.471,
+      "adv": 0.158
+    },
+    "慢": {
+      "gloss": "",
+      "deep": 0.708,
+      "shallow": 0.548,
+      "adv": 0.16
+    },
+    "复杂度": {
+      "gloss": "",
+      "deep": 0.772,
+      "shallow": 0.476,
+      "adv": 0.296
+    },
+    "脸": {
+      "gloss": "",
+      "deep": 0.678,
+      "shallow": 0.535,
+      "adv": 0.143
+    },
+    "身体": {
+      "gloss": "body",
+      "deep": 0.666,
+      "shallow": 0.522,
+      "adv": 0.145
+    },
+    "触摸": {
+      "gloss": "",
+      "deep": 0.691,
+      "shallow": 0.706,
+      "adv": -0.015
+    },
+    "热": {
+      "gloss": "",
+      "deep": 0.556,
+      "shallow": 0.388,
+      "adv": 0.168
+    },
+    "冷": {
+      "gloss": "",
+      "deep": 0.629,
+      "shallow": 0.517,
+      "adv": 0.111
+    },
+    "轻": {
+      "gloss": "",
+      "deep": 0.71,
+      "shallow": 0.655,
+      "adv": 0.056
+    },
+    "重": {
+      "gloss": "",
+      "deep": 0.642,
+      "shallow": 0.572,
+      "adv": 0.07
+    },
+    "疼痛": {
+      "gloss": "",
+      "deep": 0.716,
+      "shallow": 0.632,
+      "adv": 0.084
+    },
+    "响亮": {
+      "gloss": "",
+      "deep": 0.662,
+      "shallow": 0.568,
+      "adv": 0.095
+    },
+    "声音": {
+      "gloss": "sound",
+      "deep": 0.579,
+      "shallow": 0.527,
+      "adv": 0.052
+    },
+    "音乐": {
+      "gloss": "",
+      "deep": 0.597,
+      "shallow": 0.544,
+      "adv": 0.053
+    },
+    "味觉": {
+      "gloss": "",
+      "deep": 0.668,
+      "shallow": 0.633,
+      "adv": 0.036
+    },
+    "嗅觉": {
+      "gloss": "",
+      "deep": 0.663,
+      "shallow": 0.608,
+      "adv": 0.056
+    },
+    "头": {
+      "gloss": "",
+      "deep": 0.607,
+      "shallow": 0.596,
+      "adv": 0.011
+    },
+    "上肢": {
+      "gloss": "",
+      "deep": 0.651,
+      "shallow": 0.555,
+      "adv": 0.096
+    },
+    "下肢": {
+      "gloss": "",
+      "deep": 0.61,
+      "shallow": 0.536,
+      "adv": 0.075
+    },
+    "实践": {
+      "gloss": "",
+      "deep": 0.705,
+      "shallow": 0.565,
+      "adv": 0.139
+    },
+    "地标": {
+      "gloss": "",
+      "deep": 0.627,
+      "shallow": 0.597,
+      "adv": 0.029
+    },
+    "路径": {
+      "gloss": "",
+      "deep": 0.618,
+      "shallow": 0.468,
+      "adv": 0.15
+    },
+    "场景": {
+      "gloss": "",
+      "deep": 0.632,
+      "shallow": 0.552,
+      "adv": 0.08
+    },
+    "近距离": {
+      "gloss": "",
+      "deep": 0.609,
+      "shallow": 0.484,
+      "adv": 0.126
+    },
+    "朝向": {
+      "gloss": "",
+      "deep": 0.628,
+      "shallow": 0.518,
+      "adv": 0.109
+    },
+    "远离": {
+      "gloss": "",
+      "deep": 0.49,
+      "shallow": 0.374,
+      "adv": 0.116
+    },
+    "数字": {
+      "gloss": "",
+      "deep": 0.402,
+      "shallow": 0.378,
+      "adv": 0.024
+    },
+    "持续时间": {
+      "gloss": "",
+      "deep": 0.53,
+      "shallow": 0.41,
+      "adv": 0.12
+    },
+    "长": {
+      "gloss": "",
+      "deep": 0.644,
+      "shallow": 0.545,
+      "adv": 0.099
+    },
+    "短": {
+      "gloss": "",
+      "deep": 0.702,
+      "shallow": 0.506,
+      "adv": 0.196
+    },
+    "造成": {
+      "gloss": "",
+      "deep": 0.708,
+      "shallow": 0.589,
+      "adv": 0.119
+    },
+    "后果性": {
+      "gloss": "",
+      "deep": 0.71,
+      "shallow": 0.641,
+      "adv": 0.069
+    },
+    "人类": {
+      "gloss": "",
+      "deep": 0.764,
+      "shallow": 0.706,
+      "adv": 0.058
+    },
+    "沟通": {
+      "gloss": "",
+      "deep": 0.728,
+      "shallow": 0.755,
+      "adv": -0.026
+    },
+    "自我": {
+      "gloss": "",
+      "deep": 0.702,
+      "shallow": 0.696,
+      "adv": 0.006
+    },
+    "认知": {
+      "gloss": "cognition",
+      "deep": 0.793,
+      "shallow": 0.772,
+      "adv": 0.02
+    },
+    "益处": {
+      "gloss": "",
+      "deep": 0.674,
+      "shallow": 0.626,
+      "adv": 0.048
+    },
+    "快乐": {
+      "gloss": "happy",
+      "deep": 0.697,
+      "shallow": 0.667,
+      "adv": 0.031
+    },
+    "悲伤": {
+      "gloss": "sad",
+      "deep": 0.745,
+      "shallow": 0.638,
+      "adv": 0.108
+    },
+    "生气": {
+      "gloss": "",
+      "deep": 0.728,
+      "shallow": 0.683,
+      "adv": 0.045
+    },
+    "厌恶": {
+      "gloss": "",
+      "deep": 0.721,
+      "shallow": 0.668,
+      "adv": 0.053
+    },
+    "害怕": {
+      "gloss": "",
+      "deep": 0.754,
+      "shallow": 0.69,
+      "adv": 0.064
+    },
+    "惊讶": {
+      "gloss": "",
+      "deep": 0.688,
+      "shallow": 0.682,
+      "adv": 0.006
+    },
+    "驱动力": {
+      "gloss": "",
+      "deep": 0.678,
+      "shallow": 0.655,
+      "adv": 0.023
+    },
+    "需要": {
+      "gloss": "",
+      "deep": 0.613,
+      "shallow": 0.596,
+      "adv": 0.016
+    },
+    "注意力": {
+      "gloss": "",
+      "deep": 0.609,
+      "shallow": 0.525,
+      "adv": 0.085
+    },
+    "唤醒": {
+      "gloss": "",
+      "deep": 0.702,
+      "shallow": 0.638,
+      "adv": 0.064
+    }
+  }
+}
