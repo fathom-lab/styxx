@@ -1,0 +1,138 @@
+{
+  "n_concepts": 120,
+  "models": [
+    "Qwen-1.5B",
+    "Qwen-3B",
+    "Llama-1B",
+    "Llama-3B",
+    "Phi-3.5",
+    "gemma-2-2b",
+    "Qwen-0.5B",
+    "pythia-70m",
+    "pythia-160m",
+    "pythia-410m",
+    "gpt2",
+    "gpt2-large",
+    "gpt2-xl"
+  ],
+  "per_model": {
+    "Qwen-1.5B": {
+      "human_align": 0.671,
+      "convergence": 0.803,
+      "params": 1540000000.0,
+      "log10_params": 9.187520720836464,
+      "instruct": true
+    },
+    "Qwen-3B": {
+      "human_align": 0.667,
+      "convergence": 0.794,
+      "params": 3090000000.0,
+      "log10_params": 9.489958479424836,
+      "instruct": true
+    },
+    "Llama-1B": {
+      "human_align": 0.737,
+      "convergence": 0.812,
+      "params": 1240000000.0,
+      "log10_params": 9.093421685162236,
+      "instruct": true
+    },
+    "Llama-3B": {
+      "human_align": 0.701,
+      "convergence": 0.814,
+      "params": 3210000000.0,
+      "log10_params": 9.506505032404872,
+      "instruct": true
+    },
+    "Phi-3.5": {
+      "human_align": 0.67,
+      "convergence": 0.809,
+      "params": 3800000000.0,
+      "log10_params": 9.57978359661681,
+      "instruct": true
+    },
+    "gemma-2-2b": {
+      "human_align": 0.457,
+      "convergence": 0.676,
+      "params": 2600000000.0,
+      "log10_params": 9.414973347970818,
+      "instruct": true
+    },
+    "Qwen-0.5B": {
+      "human_align": 0.704,
+      "convergence": 0.797,
+      "params": 494000000.0,
+      "log10_params": 8.693726948923647,
+      "instruct": false
+    },
+    "pythia-70m": {
+      "human_align": 0.622,
+      "convergence": 0.706,
+      "params": 70000000.0,
+      "log10_params": 7.845098040014257,
+      "instruct": false
+    },
+    "pythia-160m": {
+      "human_align": 0.7,
+      "convergence": 0.808,
+      "params": 160000000.0,
+      "log10_params": 8.204119982655925,
+      "instruct": false
+    },
+    "pythia-410m": {
+      "human_align": 0.716,
+      "convergence": 0.828,
+      "params": 410000000.0,
+      "log10_params": 8.612783856719735,
+      "instruct": false
+    },
+    "gpt2": {
+      "human_align": 0.181,
+      "convergence": 0.364,
+      "params": 124000000.0,
+      "log10_params": 8.093421685162236,
+      "instruct": false
+    },
+    "gpt2-large": {
+      "human_align": 0.741,
+      "convergence": 0.81,
+      "params": 774000000.0,
+      "log10_params": 8.888740960682892,
+      "instruct": false
+    },
+    "gpt2-xl": {
+      "human_align": 0.744,
+      "convergence": 0.809,
+      "params": 1558000000.0,
+      "log10_params": 9.192567453336546,
+      "instruct": false
+    }
+  },
+  "H1": {
+    "pass": true,
+    "mean_human_align_instruct": 0.65,
+    "ctrl_mean": 0.0,
+    "ctrl_sd": 0.01
+  },
+  "H2": {
+    "pass": true,
+    "spearman_conv_human": 0.808,
+    "partial_out_size": 0.817
+  },
+  "H3": {
+    "pass": false,
+    "consensus_human_align": 0.688,
+    "median_individual": 0.7
+  },
+  "embedder_human_align": {
+    "MiniLM": 0.602,
+    "mpnet": 0.652
+  },
+  "phi_human_rank": 5,
+  "reading": [
+    "H1 PASS: converging models align with HUMAN geometry 0.650 (ctrl 0.000+-0.010).",
+    "H2 PASS: convergence->humanness Spearman 0.81 (partialling out size 0.82). The machine consensus IS the human-aligned geometry, beyond capability.",
+    "H3 FAIL: consensus human-align 0.688 vs median single 0.700.",
+    "Phi-3.5 (machine-convergence outlier) ranks 5/13 in human-alignment (0.67)."
+  ]
+}
