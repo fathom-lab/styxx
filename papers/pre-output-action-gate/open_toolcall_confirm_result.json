@@ -1,0 +1,254 @@
+{
+  "hash": "b1303559f2261c8ae7cd4c82153ee5c8e31d487976fa598a8f5c2e86003eedea",
+  "n": 40,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_sample": 9,
+  "per_model": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "status": "ok",
+      "seeds": {
+        "0": {
+          "n_prone": 16,
+          "n_safe": 24,
+          "mean_freq": 0.314,
+          "balanced": true,
+          "best_layer": 19,
+          "wb_auc": 0.8646,
+          "wb_ci": [
+            0.7391,
+            0.9901
+          ],
+          "text_emb": 0.3854,
+          "text_bow": 0.1979,
+          "best_text": 0.3854,
+          "direction": true
+        },
+        "1": {
+          "n_prone": 16,
+          "n_safe": 24,
+          "mean_freq": 0.322,
+          "balanced": true,
+          "best_layer": 19,
+          "wb_auc": 0.8307,
+          "wb_ci": [
+            0.6924,
+            0.9691
+          ],
+          "text_emb": 0.2109,
+          "text_bow": 0.125,
+          "best_text": 0.2109,
+          "direction": true
+        },
+        "2": {
+          "n_prone": 17,
+          "n_safe": 23,
+          "mean_freq": 0.314,
+          "balanced": true,
+          "best_layer": 19,
+          "wb_auc": 0.8261,
+          "wb_ci": [
+            0.689,
+            0.9632
+          ],
+          "text_emb": 0.3887,
+          "text_bow": 0.2967,
+          "best_text": 0.3887,
+          "direction": true
+        }
+      },
+      "included": true,
+      "mean_wb": 0.8405,
+      "wb_sd": 0.0172,
+      "mag_ci": [
+        0.7065,
+        0.9744
+      ],
+      "mean_best_text": 0.3283,
+      "margin": 0.5121,
+      "direction_all": true
+    },
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "status": "ok",
+      "seeds": {
+        "0": {
+          "n_prone": 7,
+          "n_safe": 33,
+          "mean_freq": 0.186,
+          "balanced": false
+        },
+        "1": {
+          "n_prone": 7,
+          "n_safe": 33,
+          "mean_freq": 0.181,
+          "balanced": false
+        },
+        "2": {
+          "n_prone": 8,
+          "n_safe": 32,
+          "mean_freq": 0.175,
+          "balanced": true,
+          "best_layer": 4,
+          "wb_auc": 0.6016,
+          "wb_ci": [
+            0.3721,
+            0.831
+          ],
+          "text_emb": 0.4609,
+          "text_bow": 0.293,
+          "best_text": 0.4609,
+          "direction": true
+        }
+      },
+      "included": false
+    },
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "status": "ok",
+      "seeds": {
+        "0": {
+          "n_prone": 23,
+          "n_safe": 17,
+          "mean_freq": 0.453,
+          "balanced": true,
+          "best_layer": 6,
+          "wb_auc": 0.5959,
+          "wb_ci": [
+            0.4185,
+            0.7733
+          ],
+          "text_emb": 0.4066,
+          "text_bow": 0.3043,
+          "best_text": 0.4066,
+          "direction": true
+        },
+        "1": {
+          "n_prone": 25,
+          "n_safe": 15,
+          "mean_freq": 0.481,
+          "balanced": true,
+          "best_layer": 16,
+          "wb_auc": 0.6853,
+          "wb_ci": [
+            0.5196,
+            0.8511
+          ],
+          "text_emb": 0.4773,
+          "text_bow": 0.352,
+          "best_text": 0.4773,
+          "direction": true
+        },
+        "2": {
+          "n_prone": 28,
+          "n_safe": 12,
+          "mean_freq": 0.475,
+          "balanced": true,
+          "best_layer": 6,
+          "wb_auc": 0.5804,
+          "wb_ci": [
+            0.3899,
+            0.7708
+          ],
+          "text_emb": 0.3839,
+          "text_bow": 0.244,
+          "best_text": 0.3839,
+          "direction": true
+        }
+      },
+      "included": true,
+      "mean_wb": 0.6205,
+      "wb_sd": 0.0462,
+      "mag_ci": [
+        0.4431,
+        0.7979
+      ],
+      "mean_best_text": 0.4226,
+      "margin": 0.1979,
+      "direction_all": true
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "status": "ok",
+      "seeds": {
+        "0": {
+          "n_prone": 13,
+          "n_safe": 27,
+          "mean_freq": 0.275,
+          "balanced": true,
+          "best_layer": 16,
+          "wb_auc": 0.5385,
+          "wb_ci": [
+            0.3441,
+            0.7328
+          ],
+          "text_emb": 0.433,
+          "text_bow": 0.1823,
+          "best_text": 0.433,
+          "direction": true
+        },
+        "1": {
+          "n_prone": 14,
+          "n_safe": 26,
+          "mean_freq": 0.297,
+          "balanced": true,
+          "best_layer": 12,
+          "wb_auc": 0.4835,
+          "wb_ci": [
+            0.2944,
+            0.6727
+          ],
+          "text_emb": 0.4396,
+          "text_bow": 0.3269,
+          "best_text": 0.4396,
+          "direction": true
+        },
+        "2": {
+          "n_prone": 14,
+          "n_safe": 26,
+          "mean_freq": 0.286,
+          "balanced": true,
+          "best_layer": 1,
+          "wb_auc": 0.5687,
+          "wb_ci": [
+            0.3784,
+            0.7589
+          ],
+          "text_emb": 0.4038,
+          "text_bow": 0.2802,
+          "best_text": 0.4038,
+          "direction": true
+        }
+      },
+      "included": true,
+      "mean_wb": 0.5302,
+      "wb_sd": 0.0353,
+      "mag_ci": [
+        0.3385,
+        0.722
+      ],
+      "mean_best_text": 0.4255,
+      "margin": 0.1048,
+      "direction_all": true
+    }
+  },
+  "gate_eval": {
+    "included_models": [
+      "Qwen/Qwen2.5-1.5B-Instruct",
+      "meta-llama/Llama-3.2-1B-Instruct",
+      "meta-llama/Llama-3.2-3B-Instruct"
+    ],
+    "per_seed_direction_counts": [
+      3,
+      3,
+      4
+    ],
+    "direction_pass": true,
+    "magnitude_models": [
+      "Qwen/Qwen2.5-1.5B-Instruct"
+    ],
+    "magnitude_pass": false,
+    "llama3b_recovers": false,
+    "reading": "PARTIAL \u2014 directional signal under native calling, but magnitude/margin below bar"
+  }
+}

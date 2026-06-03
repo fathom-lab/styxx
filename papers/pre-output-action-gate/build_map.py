@@ -149,8 +149,13 @@ task. **margin** = white-box − text.
   most-reckless model is the least legible, consistent across n=60 and the blind set.
   And text is *below the bar*, not at chance (≈0.50–0.57), so white-box wins by ~0.30,
   not against zero. An honest bound, not a clean sweep.
-- White-box's edge is **fragile to the interface** in the emergent-choice regime:
-  under native tool-calling it went format-dependent (1/2).
+- White-box's edge is **fragile to the interface — confirmed, and it's model-specific.**
+  In the emergent-choice regime, a multi-seed sampled-native re-test (3 seeds, CIs) found
+  Qwen-1.5B **robust** (0.84, margin +0.51) but **Llama-3B genuinely collapsed**
+  (0.53 ≈ chance — did NOT recover from the greedy 0.51, so it's a *real* format effect,
+  not a labeling artifact), while Qwen-3B simply **declines** the destructive action
+  (caution, not failure). Lesson: don't assume the gate transfers to native calling —
+  validate per-model under the deployment interface.
 - White-box has **no edge** where there are no activations: closed-model behavioral
   signals failed (the only "win" was circular).
 
