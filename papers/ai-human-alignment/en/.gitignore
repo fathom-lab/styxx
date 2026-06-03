@@ -1,4 +1,6 @@
 lancaster.csv
+binder.zip
+binder_data/
 *.npz
 *.npy
 __pycache__/

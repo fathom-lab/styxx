@@ -1,0 +1,15 @@
+{
+  "n": 434,
+  "glove_pca50": 0.462,
+  "mini_pca50": 0.3983,
+  "deep_minus_shallow": -0.0636,
+  "boot_ci": [
+    -0.089,
+    -0.03
+  ],
+  "boot_p": 0.0,
+  "invariance": true,
+  "shuffle_to_zero": 0.0,
+  "localization_auc": 0.9119,
+  "full_generalizes": false
+}
