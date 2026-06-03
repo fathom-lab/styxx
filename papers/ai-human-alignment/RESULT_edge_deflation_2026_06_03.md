@@ -55,6 +55,22 @@ without humans"). The strongest honest claim available is about **shared human-d
 specifically that its **brain-measurable** part is shallow. The grand "universal structure of mind"
 remains untested by these tools — and we say so.
 
+## REFINEMENT (per-subject paired test) — the deflation was slightly OVERSTATED
+The group result (GloVe 0.180 ≈ LLM 0.182) builds **one averaged** brain RDM, which can wash out a
+small consistent effect. The higher-power paired version (`run_edge_persubject.py`): per subject,
+deep-LLM↔brain vs GloVe↔brain, across all 9 subjects:
+
+> deep-LLM beats GloVe in **7 / 9 subjects**; mean diff **+0.015**; **paired t = 2.52 (p ≈ 0.04)**;
+> sign-test 7/9 (p = 0.18).
+
+So there **is** a faint deep-model advantage in the brain (~0.015) that the group averaging hid — but
+it is **~10× smaller than in behavior** (+12.8%) and **borderline** (parametric t marginal, sign-test
+n.s., n = 9). Honest update: depth is **not flatly invisible** in the brain — it is **at the very edge
+of detectability**, which is precisely what reading **(a) measurement** predicts (a real but tiny neural
+signal, swamped by fMRI noise). It does **not** confirm (a) — n = 9, borderline — but it nudges there
+and warns against over-reading the clean group deflation. The headline stands with this caveat: **the
+brain-measurable deep advantage is tiny and marginal; the behavioral one is large and clear.**
+
 ## Caveats / next
 53 nouns; one noisy fMRI dataset (2008, line-drawings); GloVe-50; consensus over ≤3B models. The
 decisive next test of reading (a) vs (b): a **higher-resolution / higher-SNR neural dataset**
