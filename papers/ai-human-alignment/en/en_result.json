@@ -1,0 +1,10 @@
+{
+  "n": 1500,
+  "glove_pca50": 0.1153,
+  "bert_pca50": 0.0473,
+  "deep_minus_shallow": -0.068,
+  "invariance_pass": true,
+  "shuffle_to_zero": 0.0007,
+  "localization_auc": 0.7292,
+  "mechanics_generalize": false
+}

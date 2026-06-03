@@ -1,0 +1,4 @@
+lancaster.csv
+*.npz
+*.npy
+__pycache__/
