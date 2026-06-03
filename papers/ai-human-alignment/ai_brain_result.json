@@ -1,0 +1,136 @@
+{
+  "n_nouns": 60,
+  "noise_ceiling": [
+    0.3943674667262833,
+    0.5567930754457157
+  ],
+  "models": [
+    "Qwen-1.5B",
+    "Qwen-3B",
+    "Llama-1B",
+    "Llama-3B",
+    "Phi-3.5",
+    "gemma-2-2b",
+    "Qwen-0.5B",
+    "pythia-70m",
+    "pythia-160m",
+    "pythia-410m",
+    "gpt2",
+    "gpt2-large",
+    "gpt2-xl"
+  ],
+  "per_model": {
+    "Qwen-1.5B": {
+      "brain": 0.193,
+      "brain_S": 0.156,
+      "vice_S": 0.555,
+      "params": 1540000000.0,
+      "instruct": true
+    },
+    "Qwen-3B": {
+      "brain": 0.184,
+      "brain_S": 0.141,
+      "vice_S": 0.538,
+      "params": 3090000000.0,
+      "instruct": true
+    },
+    "Llama-1B": {
+      "brain": 0.237,
+      "brain_S": 0.194,
+      "vice_S": 0.709,
+      "params": 1240000000.0,
+      "instruct": true
+    },
+    "Llama-3B": {
+      "brain": 0.233,
+      "brain_S": 0.189,
+      "vice_S": 0.66,
+      "params": 3210000000.0,
+      "instruct": true
+    },
+    "Phi-3.5": {
+      "brain": 0.206,
+      "brain_S": 0.167,
+      "vice_S": 0.614,
+      "params": 3800000000.0,
+      "instruct": true
+    },
+    "gemma-2-2b": {
+      "brain": 0.138,
+      "brain_S": 0.092,
+      "vice_S": 0.31,
+      "params": 2600000000.0,
+      "instruct": true
+    },
+    "Qwen-0.5B": {
+      "brain": 0.209,
+      "brain_S": 0.157,
+      "vice_S": 0.611,
+      "params": 494000000.0,
+      "instruct": false
+    },
+    "pythia-70m": {
+      "brain": 0.222,
+      "brain_S": 0.162,
+      "vice_S": 0.61,
+      "params": 70000000.0,
+      "instruct": false
+    },
+    "pythia-160m": {
+      "brain": 0.237,
+      "brain_S": 0.202,
+      "vice_S": 0.669,
+      "params": 160000000.0,
+      "instruct": false
+    },
+    "pythia-410m": {
+      "brain": 0.228,
+      "brain_S": 0.18,
+      "vice_S": 0.664,
+      "params": 410000000.0,
+      "instruct": false
+    },
+    "gpt2": {
+      "brain": 0.059,
+      "brain_S": 0.052,
+      "vice_S": 0.195,
+      "params": 124000000.0,
+      "instruct": false
+    },
+    "gpt2-large": {
+      "brain": 0.264,
+      "brain_S": 0.222,
+      "vice_S": 0.746,
+      "params": 774000000.0,
+      "instruct": false
+    },
+    "gpt2-xl": {
+      "brain": 0.258,
+      "brain_S": 0.215,
+      "vice_S": 0.759,
+      "params": 1558000000.0,
+      "instruct": false
+    }
+  },
+  "embedder_brain": {
+    "MiniLM": 0.196,
+    "mpnet": 0.214
+  },
+  "vice_brain": 0.247,
+  "embedder_brain_S": {
+    "MiniLM": 0.156,
+    "mpnet": 0.161
+  },
+  "shuffle_ctrl_mean": 0.002,
+  "shuffle_ctrl_sd": 0.028,
+  "H1_pass": true,
+  "best_brain": 0.264,
+  "best_model": "gpt2-large",
+  "instruct_mean_brain": 0.198,
+  "consistency_brain_vs_behavioral": 0.978,
+  "reading": [
+    "H1 PASS: best LLM RSA-to-BRAIN 0.264 (gpt2-large) = 67% of ceiling-lower / 47% of ceiling-upper; shuffle ctrl 0.002+-0.028. LLM concept geometry matches the human brain.",
+    "Three-way (60 inter THINGS, n=53): AI<->brain best 0.222 vs behavioral-human(VICE)<->brain 0.247 vs embedder<->brain {'MiniLM': 0.156, 'mpnet': 0.161}. AI matches the brain about as well as human behavior does.",
+    "Consistency: brain-alignment tracks behavioral-alignment across models, Spearman 0.98."
+  ]
+}
