@@ -39,6 +39,19 @@ instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected)
   little dynamical structure, but real eigenvalues produce no genuine oscillation.* At
   n=20, 2/20 is within instrument noise. **Verdict: BOTH_COMMIT** — the empirical result
   matches the eigenvalue structure exactly.
+- **POSITIVE CONTROL — complex recurrence DOES oscillate, and the instrument catches it.**
+  A minimal driven linear recurrence `h_{t+1} = λ·h_t + noise`, observed via `Re(h)`:
+  with **complex** λ = r·e^{i·2π/8} the instrument detects oscillation **at the exact
+  planted frequency (0.125 cyc/tok), 20–30% of trials**; with **real** λ at the models'
+  regime (r=0.40) it detects **0/40** — commitment. (A high-AR(1) real process, r=0.95,
+  leaks ~5% at the *low band edge* (0.047), *not* at the oscillation frequency — the known
+  red-noise trap, and why the band excludes the lowest bins.) The modest complex detection
+  rate reflects that a *noise-driven* oscillator at n=64 is hard; the decisive evidence is
+  that the peak lands **exactly on the true frequency.** This **closes the hierarchy
+  end-to-end with endogenous dynamics**: complex eigenvalues → oscillation at the right
+  frequency; real eigenvalues → commitment. The instrument sees rhythm exactly when a
+  recurrent substrate's eigenvalues produce it — which is precisely why the
+  transformer/Mamba-1 BOTH_COMMIT negative is credible, not an instrument blind spot.
 
 ## The claim (HYPOTHESIS)
 
