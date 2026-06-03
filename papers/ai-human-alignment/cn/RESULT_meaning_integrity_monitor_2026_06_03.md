@@ -85,12 +85,21 @@ each channel covers the other's blind spot:
   falls 1.00→0.90→0.75→0.60→0.40→0.20 and *that* flips the verdict to DEGRADED. **A one-channel monitor
   would call a collapsing model perfectly HEALTHY** — which is exactly why both channels ship.
 
+## Generalization + real-drift — both DONE
+- **English generalization** ([`en/RESULT_en_generalization`](../en/RESULT_en_generalization_2026_06_03.md)):
+  on an independent English rich reference (Binder 65-feature) with independent models, the full monitor
+  transfers — invariance exact, **localization AUC 0.91** (≈ Chinese 0.95). Not a Chinese-dataset artifact.
+- **Real-drift validation** ([`en/RESULT_real_drift`](../en/RESULT_real_drift_2026_06_03.md)): the monitor
+  catches **real** fine-tuning damage (label-noise BERT → BROKEN) and distinguishes it from **helpful**
+  fine-tuning (real categories → HEALTHY, alignment *rises*). Same model, same steps, only the labels
+  differ → opposite verdicts. The synthetic-corruption caveat is **closed**. This also forced the vital
+  sign to judge **relative to the calibrated baseline** (retain <70% → DEGRADED, <40% → BROKEN), the
+  correct design across embedding-extraction scales.
+
 ## Productization path (next)
-1. Port `MeaningVitalSign` to a first-class styxx package primitive (`styxx.meaning_integrity`).
-2. **Bundle an English reference** (Lancaster Sensorimotor / Binder 2016 norms) — proves it isn't a
-   Chinese-feature-set artifact. The single highest-credibility next step.
-3. Validate against a *real* degradation (a deliberately mis-fine-tuned model) — closes the synthetic-
-   corruption caveat for good.
+1. Port `MeaningVitalSign` to a first-class styxx package primitive (`styxx.meaning_integrity`) + bundle
+   the English (Binder) reference.
+2. More real-drift modes: catastrophic forgetting, poisoned-subset (to exercise localization on real damage).
 
 ## Reproduce
 `python meaning_integrity_demo.py` → prints all five validations + a sample report. Core in

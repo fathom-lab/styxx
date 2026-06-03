@@ -1,0 +1,67 @@
+{
+  "damaging": [
+    {
+      "step": 0,
+      "alignment": 0.1926,
+      "dispersion": 1.0,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 50,
+      "alignment": 0.0987,
+      "dispersion": 1.1532,
+      "status": "DEGRADED"
+    },
+    {
+      "step": 100,
+      "alignment": 0.1406,
+      "dispersion": 1.5219,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 200,
+      "alignment": 0.0253,
+      "dispersion": 1.7042,
+      "status": "BROKEN"
+    },
+    {
+      "step": 400,
+      "alignment": 0.0077,
+      "dispersion": 1.7641,
+      "status": "BROKEN"
+    }
+  ],
+  "benign": [
+    {
+      "step": 0,
+      "alignment": 0.1926,
+      "dispersion": 1.0,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 50,
+      "alignment": 0.5806,
+      "dispersion": 1.5046,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 100,
+      "alignment": 0.4753,
+      "dispersion": 1.6166,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 200,
+      "alignment": 0.4408,
+      "dispersion": 1.6595,
+      "status": "HEALTHY"
+    },
+    {
+      "step": 400,
+      "alignment": 0.4417,
+      "dispersion": 1.6643,
+      "status": "HEALTHY"
+    }
+  ],
+  "pass": true
+}

@@ -113,11 +113,14 @@ class MeaningVitalSign:
       - dispersion_ratio (magnitude vs baseline; catches the uniform collapse alignment is blind to)
     and returns a HEALTHY / DEGRADED / BROKEN verdict plus the worst concepts."""
 
-    def __init__(self, ref, healthy_align=0.25, broken_align=0.10, min_dispersion_ratio=0.70):
+    def __init__(self, ref, degraded_frac=0.70, broken_frac=0.40, min_dispersion_ratio=0.70,
+                 healthy_align=0.25, broken_align=0.10):
         self.ref = ref
-        self.healthy_align = healthy_align
-        self.broken_align = broken_align
+        self.degraded_frac = degraded_frac      # judged RELATIVE to the calibrated healthy baseline:
+        self.broken_frac = broken_frac          #   retain <70% of baseline alignment -> DEGRADED, <40% -> BROKEN
         self.min_dispersion_ratio = min_dispersion_ratio
+        self.healthy_align = healthy_align       # absolute fallback (used only if uncalibrated)
+        self.broken_align = broken_align
         self.base_align = None
         self.base_disp = None
 
@@ -129,17 +132,21 @@ class MeaningVitalSign:
     def check(self, E, words=None, top=8):
         a = alignment(E, self.ref)
         dr = (dispersion(E) / self.base_disp) if self.base_disp else float("nan")
-        if a < self.broken_align:
-            status = "BROKEN"
-        elif a < self.healthy_align or (dr == dr and dr < self.min_dispersion_ratio):
-            status = "DEGRADED"
-        else:
-            status = "HEALTHY"
+        if self.base_align:                      # RELATIVE to the model's own healthy baseline (correct for a vital sign)
+            frac = a / self.base_align if self.base_align else 1.0
+            if frac < self.broken_frac:
+                status = "BROKEN"
+            elif frac < self.degraded_frac or (dr == dr and dr < self.min_dispersion_ratio):
+                status = "DEGRADED"
+            else:
+                status = "HEALTHY"
+        else:                                    # absolute fallback (uncalibrated)
+            status = "BROKEN" if a < self.broken_align else ("HEALTHY" if a >= self.healthy_align else "DEGRADED")
         pc = per_concept_alignment(E, self.ref)
         w = words or self.ref.words
         worst = [(w[i] if w else int(i)) for i in np.argsort(pc)[:top]]
-        out = {"alignment": round(a, 4), "dispersion_ratio": round(dr, 4),
-               "status": status, "worst_concepts": worst}
-        if self.base_align is not None:
-            out["align_drop_vs_baseline"] = round(self.base_align - a, 4)
+        out = {"alignment": round(a, 4), "dispersion_ratio": round(dr, 4), "status": status,
+               "worst_concepts": worst}
+        if self.base_align:
+            out["frac_of_baseline"] = round(a / self.base_align, 3)
         return out
