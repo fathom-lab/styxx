@@ -1,0 +1,144 @@
+{
+  "n_concepts": 192,
+  "n_models": 11,
+  "pooled_spearman_MiniLM": -0.573,
+  "pooled_spearman_mpnet": -0.5,
+  "ladders_positive": 2,
+  "per_ladder": {
+    "Pythia": {
+      "n": 4,
+      "rho_MiniLM": -0.8,
+      "rho_mpnet": -0.8,
+      "smallest_MiniLM": 0.103,
+      "largest_MiniLM": 0.072
+    },
+    "GPT-2": {
+      "n": 4,
+      "rho_MiniLM": 1.0,
+      "rho_mpnet": 1.0,
+      "smallest_MiniLM": 0.058,
+      "largest_MiniLM": 0.083
+    },
+    "Qwen2.5": {
+      "n": 3,
+      "rho_MiniLM": 0.5,
+      "rho_mpnet": 0.5,
+      "smallest_MiniLM": 0.046,
+      "largest_MiniLM": 0.055
+    }
+  },
+  "models": [
+    {
+      "ladder": "Pythia",
+      "name": "pythia-14m",
+      "params": 14000000.0,
+      "log10_params": 7.146,
+      "align": {
+        "MiniLM": 0.103,
+        "mpnet": 0.124
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-70m",
+      "params": 70000000.0,
+      "log10_params": 7.845,
+      "align": {
+        "MiniLM": 0.093,
+        "mpnet": 0.107
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-160m",
+      "params": 160000000.0,
+      "log10_params": 8.204,
+      "align": {
+        "MiniLM": 0.096,
+        "mpnet": 0.116
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-410m",
+      "params": 410000000.0,
+      "log10_params": 8.613,
+      "align": {
+        "MiniLM": 0.072,
+        "mpnet": 0.092
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2",
+      "params": 124000000.0,
+      "log10_params": 8.093,
+      "align": {
+        "MiniLM": 0.058,
+        "mpnet": 0.079
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-medium",
+      "params": 355000000.0,
+      "log10_params": 8.55,
+      "align": {
+        "MiniLM": 0.076,
+        "mpnet": 0.1
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-large",
+      "params": 774000000.0,
+      "log10_params": 8.889,
+      "align": {
+        "MiniLM": 0.079,
+        "mpnet": 0.102
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-xl",
+      "params": 1558000000.0,
+      "log10_params": 9.193,
+      "align": {
+        "MiniLM": 0.083,
+        "mpnet": 0.107
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-0.5B",
+      "params": 494000000.0,
+      "log10_params": 8.694,
+      "align": {
+        "MiniLM": 0.046,
+        "mpnet": 0.059
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-1.5B",
+      "params": 1540000000.0,
+      "log10_params": 9.188,
+      "align": {
+        "MiniLM": 0.044,
+        "mpnet": 0.057
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-3B",
+      "params": 3090000000.0,
+      "log10_params": 9.49,
+      "align": {
+        "MiniLM": 0.055,
+        "mpnet": 0.068
+      }
+    }
+  ],
+  "confirmed": false,
+  "reading": "PARTIAL/INCONCLUSIVE: pooled rho=-0.573, 2/3 ladders positive, Pythia rho=-0.8. Does not cleanly meet or refute the frozen gate."
+}

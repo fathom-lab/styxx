@@ -1,0 +1,165 @@
+{
+  "n_concepts": 192,
+  "trends": {
+    "fixed": {
+      "pooled": -0.573,
+      "per_ladder": {
+        "Pythia": -0.8,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    },
+    "best_catstruct": {
+      "pooled": 0.191,
+      "per_ladder": {
+        "Pythia": 0.4,
+        "GPT-2": 0.6,
+        "Qwen2.5": -1.0
+      }
+    },
+    "max_layer": {
+      "pooled": 0.836,
+      "per_ladder": {
+        "Pythia": 1.0,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    }
+  },
+  "models": [
+    {
+      "ladder": "Pythia",
+      "name": "pythia-14m",
+      "params": 14000000.0,
+      "log10_params": 7.146,
+      "fixed": 0.103,
+      "best_catstruct": 0.492,
+      "max_layer": 0.492,
+      "best_layer_idx": 6,
+      "max_layer_idx": 6,
+      "n_layers": 6
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-70m",
+      "params": 70000000.0,
+      "log10_params": 7.845,
+      "fixed": 0.093,
+      "best_catstruct": 0.561,
+      "max_layer": 0.561,
+      "best_layer_idx": 6,
+      "max_layer_idx": 6,
+      "n_layers": 6
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-160m",
+      "params": 160000000.0,
+      "log10_params": 8.204,
+      "fixed": 0.096,
+      "best_catstruct": 0.317,
+      "max_layer": 0.597,
+      "best_layer_idx": 11,
+      "max_layer_idx": 12,
+      "n_layers": 12
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-410m",
+      "params": 410000000.0,
+      "log10_params": 8.613,
+      "fixed": 0.072,
+      "best_catstruct": 0.601,
+      "max_layer": 0.601,
+      "best_layer_idx": 24,
+      "max_layer_idx": 24,
+      "n_layers": 24
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2",
+      "params": 124000000.0,
+      "log10_params": 8.093,
+      "fixed": 0.058,
+      "best_catstruct": 0.184,
+      "max_layer": 0.529,
+      "best_layer_idx": 12,
+      "max_layer_idx": 0,
+      "n_layers": 12
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-medium",
+      "params": 355000000.0,
+      "log10_params": 8.55,
+      "fixed": 0.076,
+      "best_catstruct": 0.152,
+      "max_layer": 0.573,
+      "best_layer_idx": 24,
+      "max_layer_idx": 0,
+      "n_layers": 24
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-large",
+      "params": 774000000.0,
+      "log10_params": 8.889,
+      "fixed": 0.079,
+      "best_catstruct": 0.563,
+      "max_layer": 0.63,
+      "best_layer_idx": 35,
+      "max_layer_idx": 36,
+      "n_layers": 36
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-xl",
+      "params": 1558000000.0,
+      "log10_params": 9.193,
+      "fixed": 0.083,
+      "best_catstruct": 0.425,
+      "max_layer": 0.635,
+      "best_layer_idx": 47,
+      "max_layer_idx": 48,
+      "n_layers": 48
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-0.5B",
+      "params": 494000000.0,
+      "log10_params": 8.694,
+      "fixed": 0.046,
+      "best_catstruct": 0.549,
+      "max_layer": 0.614,
+      "best_layer_idx": 24,
+      "max_layer_idx": 22,
+      "n_layers": 24
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-1.5B",
+      "params": 1540000000.0,
+      "log10_params": 9.188,
+      "fixed": 0.044,
+      "best_catstruct": 0.534,
+      "max_layer": 0.567,
+      "best_layer_idx": 28,
+      "max_layer_idx": 27,
+      "n_layers": 28
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-3B",
+      "params": 3090000000.0,
+      "log10_params": 9.49,
+      "fixed": 0.055,
+      "best_catstruct": 0.517,
+      "max_layer": 0.632,
+      "best_layer_idx": 36,
+      "max_layer_idx": 33,
+      "n_layers": 36
+    }
+  ],
+  "robust_null": false,
+  "reading": "Layer choice MATTERS: under some rule the scale trend turns positive (pooled fixed -0.573 / best 0.191 / max 0.836; Pythia -0.8/0.4/1.0). The fixed-layer null is partly a measurement choice; reported as such."
+}

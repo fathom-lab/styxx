@@ -1,0 +1,198 @@
+{
+  "depths": [
+    0.5,
+    0.66,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "trend_by_depth": {
+    "0.5": {
+      "pooled": -0.636,
+      "per_ladder": {
+        "Pythia": -0.8,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    },
+    "0.66": {
+      "pooled": -0.573,
+      "per_ladder": {
+        "Pythia": -0.8,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    },
+    "0.8": {
+      "pooled": -0.582,
+      "per_ladder": {
+        "Pythia": -0.8,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    },
+    "0.9": {
+      "pooled": 0.064,
+      "per_ladder": {
+        "Pythia": -0.2,
+        "GPT-2": 1.0,
+        "Qwen2.5": 0.5
+      }
+    },
+    "1.0": {
+      "pooled": 0.355,
+      "per_ladder": {
+        "Pythia": 1.0,
+        "GPT-2": 0.8,
+        "Qwen2.5": -1.0
+      }
+    }
+  },
+  "models": [
+    {
+      "ladder": "Pythia",
+      "name": "pythia-14m",
+      "params": 14000000.0,
+      "log10_params": 7.146,
+      "depth_align": {
+        "0.5": 0.103,
+        "0.66": 0.126,
+        "0.8": 0.2,
+        "0.9": 0.2,
+        "1.0": 0.492
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-70m",
+      "params": 70000000.0,
+      "log10_params": 7.845,
+      "depth_align": {
+        "0.5": 0.093,
+        "0.66": 0.1,
+        "0.8": 0.286,
+        "0.9": 0.286,
+        "1.0": 0.561
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-160m",
+      "params": 160000000.0,
+      "log10_params": 8.204,
+      "depth_align": {
+        "0.5": 0.093,
+        "0.66": 0.103,
+        "0.8": 0.142,
+        "0.9": 0.317,
+        "1.0": 0.597
+      }
+    },
+    {
+      "ladder": "Pythia",
+      "name": "pythia-410m",
+      "params": 410000000.0,
+      "log10_params": 8.613,
+      "depth_align": {
+        "0.5": 0.07,
+        "0.66": 0.073,
+        "0.8": 0.077,
+        "0.9": 0.086,
+        "1.0": 0.601
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2",
+      "params": 124000000.0,
+      "log10_params": 8.093,
+      "depth_align": {
+        "0.5": 0.056,
+        "0.66": 0.061,
+        "0.8": 0.067,
+        "0.9": 0.071,
+        "1.0": 0.184
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-medium",
+      "params": 355000000.0,
+      "log10_params": 8.55,
+      "depth_align": {
+        "0.5": 0.066,
+        "0.66": 0.08,
+        "0.8": 0.09,
+        "0.9": 0.104,
+        "1.0": 0.152
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-large",
+      "params": 774000000.0,
+      "log10_params": 8.889,
+      "depth_align": {
+        "0.5": 0.068,
+        "0.66": 0.082,
+        "0.8": 0.096,
+        "0.9": 0.12,
+        "1.0": 0.63
+      }
+    },
+    {
+      "ladder": "GPT-2",
+      "name": "gpt2-xl",
+      "params": 1558000000.0,
+      "log10_params": 9.193,
+      "depth_align": {
+        "0.5": 0.068,
+        "0.66": 0.085,
+        "0.8": 0.098,
+        "0.9": 0.138,
+        "1.0": 0.635
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-0.5B",
+      "params": 494000000.0,
+      "log10_params": 8.694,
+      "depth_align": {
+        "0.5": 0.046,
+        "0.66": 0.047,
+        "0.8": 0.05,
+        "0.9": 0.614,
+        "1.0": 0.549
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-1.5B",
+      "params": 1540000000.0,
+      "log10_params": 9.188,
+      "depth_align": {
+        "0.5": 0.044,
+        "0.66": 0.044,
+        "0.8": 0.045,
+        "0.9": 0.047,
+        "1.0": 0.534
+      }
+    },
+    {
+      "ladder": "Qwen2.5",
+      "name": "Qwen-3B",
+      "params": 3090000000.0,
+      "log10_params": 9.49,
+      "depth_align": {
+        "0.5": 0.054,
+        "0.66": 0.055,
+        "0.8": 0.06,
+        "0.9": 0.614,
+        "1.0": 0.517
+      }
+    }
+  ],
+  "positive_depth_robust": false,
+  "reading": "NO DEPTH-ROBUST SCALE EFFECT. Even at uniform upper depths the trend is not cleanly positive (pooled [-0.582, 0.064, 0.355], Pythia [-0.8, -0.2, 1.0]). The scale hypothesis is not supported in 14M-3B."
+}
