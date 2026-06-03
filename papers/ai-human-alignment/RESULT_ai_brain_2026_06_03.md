@@ -54,8 +54,11 @@ not its size — exactly the driver found behaviorally (`RESULT_ai_human_2026_06
 - **Known direction** (Mitchell 2008 itself predicted brain activity from text-corpus features;
   Schrimpf/Goldstein). Contribution = clean, **noise-ceiling-relative**, lexical-controlled, three-way
   (brain/behavior/AI) comparison on the convergence cohort, with the discipline.
-- **Visual confound:** Mitchell stimuli were word + line-drawing, so the brain RDM carries some visual
-  similarity; the LLM match is on the semantic structure that co-varies with it — flagged, not removed.
+- **Visual confound — now TESTED** (`RESULT_ai_brain_vision_2026_06_03.md`): Mitchell stimuli were
+  word + line-drawing, so the brain RDM carries visual structure. A CLIP-image vision control shows
+  the AI↔brain match **survives** removing a vision model (partial 0.182 → 0.107), so it is **not a
+  pure visual artifact** — but it is **modest and largely shared** (the brain RDM is substantially
+  visual; the LLM geometry is itself ~half visual; AI adds little brain variance unique of human behavior).
 - 60 nouns; one classic dataset; final-layer read-out; partial-lexical. A modern, larger neural set
   (THINGS-fMRI single-trial betas) and a vision-model control to subtract the visual component are the
   honest next steps.

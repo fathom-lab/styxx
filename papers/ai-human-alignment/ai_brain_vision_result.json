@@ -1,0 +1,35 @@
+{
+  "n_nouns": 53,
+  "noise_ceiling_lo": 0.3943674667262833,
+  "best_single_model": "gpt2-large",
+  "ai_brain_partial_cascade": {
+    "raw": 0.168,
+    "lex": 0.182,
+    "lex+vision": 0.107,
+    "lex+vision+behavioral": 0.043
+  },
+  "reference_partials": {
+    "vision->brain|lex": 0.172,
+    "behavioral->brain|lex": 0.247,
+    "AI->vision|lex (how visual is AI geom)": 0.543,
+    "AI->brain|lex (best single)": 0.237
+  },
+  "brain_R2_by_predictor_set": {
+    "lex": 0.019,
+    "vis+lex": 0.048,
+    "ai+lex": 0.052,
+    "ai+vis+lex": 0.059,
+    "vis+beh+lex": 0.079,
+    "ai+vis+beh+lex": 0.081,
+    "ai+beh+lex": 0.081
+  },
+  "unique_contributions_to_brain_R2": {
+    "AI_beyond_vision+lex": 0.011,
+    "vision_beyond_AI+lex": 0.0074,
+    "AI_beyond_vision+behavioral+lex": 0.0017,
+    "behavioral_beyond_AI+vision+lex": 0.0216,
+    "vision_beyond_AI+behavioral+lex": 0.0003
+  },
+  "passed_vision_control": true,
+  "reading": "MEANING, not pixels [PASS]: AI->brain survives the vision control -- partial corr 0.168 (raw) -> 0.182 (|lex) -> 0.107 (|lex+VISION) -> 0.043 (|lex+vision+behavioral). The LLM uniquely explains 1.1% of brain variance BEYOND a vision model + word-form (vision adds 0.7% beyond AI). CLIP-image is vision-LANGUAGE (carries semantics) so this is conservative."
+}
