@@ -56,7 +56,8 @@ def main():
     prr = {t.replace("rdm__", ""): P[t][np.ix_(common, common)][IU] for t in P.files if t.startswith("rdm__")}
     glove = prr["GloVe"]; deep = (prr["GPT2"] + prr["BERT"]) / 2; vis = (prr["ResNet"] + prr["ViT"]) / 2
 
-    print(f"{'K':>6} {'ceiling':>8} {'GloVe':>8} {'GPT2':>8} {'BERT':>8} {'deep':>8} {'vision':>8}")
+    human = prr.get("Human54")
+    print(f"{'K':>6} {'ceiling':>8} {'Human54':>8} {'GloVe':>8} {'deep':>8} {'vision':>8}")
     best = {}
     for Ksel in [1000, 2000, 5000, 10000, 20000]:
         if Ksel > K:
@@ -68,9 +69,10 @@ def main():
         else:
             lo = float("nan")
         g = distmat(M.mean(0)[:, sel])[IU]
-        row = {"ceiling": lo, "GloVe": pcorr(glove, g, L), "GPT2": pcorr(prr["GPT2"], g, L),
+        row = {"ceiling": lo, "Human54": pcorr(human, g, L) if human is not None else float("nan"),
+               "GloVe": pcorr(glove, g, L), "GPT2": pcorr(prr["GPT2"], g, L),
                "BERT": pcorr(prr["BERT"], g, L), "deep": pcorr(deep, g, L), "vision": pcorr(vis, g, L)}
-        print(f"{Ksel:>6} {lo:>+8.3f} {row['GloVe']:>+8.3f} {row['GPT2']:>+8.3f} {row['BERT']:>+8.3f} {row['deep']:>+8.3f} {row['vision']:>+8.3f}")
+        print(f"{Ksel:>6} {lo:>+8.3f} {row['Human54']:>+8.3f} {row['GloVe']:>+8.3f} {row['deep']:>+8.3f} {row['vision']:>+8.3f}")
         if not best or row["deep"] > best.get("deep", -9):
             best = {"K": Ksel, **row, "g": g}
 

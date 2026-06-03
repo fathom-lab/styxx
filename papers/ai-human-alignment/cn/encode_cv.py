@@ -63,11 +63,14 @@ def main():
     print(f"{len(fs)} subj, {Y.shape[0]} concepts, {Y.shape[1]} voxels; encoding (shift={shift})", flush=True)
 
     embs = {"GloVe": "GloVe.mat", "GPT2": "GPT2.mat", "BERT": "BERT.mat", "ResNet": "ResNet.mat", "ViT": "Vit.mat"}
+    hf = os.path.join(HERE, "human_features.npy")
+    human = np.load(hf) if os.path.exists(hf) else None    # (672,54) human-rated, brain-designed reference
     res = {}
     if matched_k:
         print(f"DIMENSIONALITY-MATCHED: every embedding PCA'd to {matched_k} dims (fair-capacity fight)", flush=True)
-    for tag, fn in embs.items():
-        _, E = load_emb(fn)        # (672, dim)
+    items = list(embs.items()) + ([("Human54", None)] if human is not None else [])
+    for tag, fn in items:
+        E = human if tag == "Human54" else load_emb(fn)[1]    # (672, dim)
         Ec = E[embidx]
         if matched_k:
             Ec = pca_k(Ec, matched_k)

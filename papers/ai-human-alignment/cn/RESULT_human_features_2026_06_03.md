@@ -52,6 +52,19 @@ chasm — plus magnitude, speed, path), the dimensions that require integrating 
 even wins on "visual." (Per-feature differences are descriptive — not each individually bootstrapped —
 but the overall effect is the significant one above, and the abstract>perceptual gradient is consistent.)
 
+## Full-zoo robustness — confirmed cluster effect, refined to a GRADIENT (`human_feature_spectrum.py`)
+All 10 provided models (PCA-50, RSA vs human features): **ERNIE 0.523 > GPT2 0.505 > fastText 0.452 ≈
+BERT 0.450 > Electra 0.434 > GloVe 0.379 ≫ vision (ViT 0.234 … DenseNet 0.040).** Cluster means: deep
+**0.478** vs static **0.415** vs vision 0.147; **deep − static +0.063, bootstrap 95% CI (0.047, 0.077),
+P(deep>static) = 1.000** — the cluster effect is robust across the whole zoo.
+
+**Honest refinement:** the clusters **overlap** — fastText (a *static* subword embedding) beats BERT and
+Electra. So it is **not a clean deep/shallow binary; it is a sophistication gradient:** contextual +
+knowledge-enhanced models (ERNIE, GPT2) at the top, **raw co-occurrence (GloVe) at the floor**, and
+subword-static fastText competing with the weaker deep models. The strongest, cleanest contrast is
+**ERNIE/GPT2 vs GloVe** (~0.51 vs 0.38); "deep > shallow" holds on average but the boundary is fuzzy.
+(The full zoo both confirmed the cluster effect *and* corrected the crude binary — discipline at work.)
+
 ## Honest scope
 - One human-feature set (54 experiential dims), one language, RSA. The human ratings are independent of
   the text models (they are behavioral ratings), so the deep>shallow gap is a real model property, not

@@ -1,0 +1,35 @@
+{
+  "full": {
+    "GloVe": 0.379,
+    "fastText": 0.435,
+    "GPT2": 0.492,
+    "BERT": 0.44,
+    "ERNIE": 0.517,
+    "Electra": 0.432,
+    "ResNet": 0.096,
+    "ViT": 0.225,
+    "DenseNet": 0.04,
+    "Beit": 0.22
+  },
+  "matched": {
+    "GloVe": 0.379,
+    "fastText": 0.452,
+    "GPT2": 0.505,
+    "BERT": 0.45,
+    "ERNIE": 0.523,
+    "Electra": 0.434,
+    "ResNet": 0.096,
+    "ViT": 0.234,
+    "DenseNet": 0.04,
+    "Beit": 0.218
+  },
+  "cluster_deep": 0.478,
+  "cluster_static": 0.415,
+  "cluster_vision": 0.147,
+  "deep_minus_static": 0.063,
+  "ci95": [
+    0.047,
+    0.077
+  ],
+  "p": 1.0
+}
