@@ -176,6 +176,14 @@ that can tell us *no*, and then we run them.
   Platonic falsified"; its **positive control (0.42 on a near-isometry) caught it as a broken
   instrument before any claim shipped**; switching to the validated RSA metric flipped it to
   UNIVERSAL. `papers/disjoint-worlds/RESULT_disjoint_worlds_2026_06_03.md`.
+  - **Scaling law (follow-up) — completes Half A.** There are **two** universals, behaving
+    differently: (i) geometry *SHARING* (RSA) scales **smoothly to ≈1** with model
+    faithfulness (the SGNS point sits on the curve), robust to structure/dim/noise; (ii)
+    unsupervised correspondence *RECOVERY* (the strong vec2vec claim) is a **sharp threshold**
+    needing **both** high faithfulness (>0.98) **and** distinctive structure — isotropic geom
+    stays at chance even at RSA 0.96, distinctive geom recovers **up to 1.00** at faith 0.99.
+    This explains the original GW "failure" (isotropic + low faith) and *reproduces vec2vec*
+    in a toy (real meaning = distinctive + high-faith). `RESULT_geometry_scaling_2026_06_03.md`.
 - **BOTH halves of the 2,500-year question now have first decisive, pre-registered results:**
   *geometry* = universal / structure-determined (RSA); *rhythm* = a capacity-extending
   mechanism, not a requirement. Neither a "solve" — both real, falsifiable chips, losses and

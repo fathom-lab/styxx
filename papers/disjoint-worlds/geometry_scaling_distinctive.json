@@ -1,0 +1,32 @@
+[
+  {
+    "faith": 0.987,
+    "same_rsa": 0.985,
+    "recovery": 0.627
+  },
+  {
+    "faith": 0.974,
+    "same_rsa": 0.954,
+    "recovery": 0.05
+  },
+  {
+    "faith": 0.921,
+    "same_rsa": 0.852,
+    "recovery": 0.027
+  },
+  {
+    "faith": 0.798,
+    "same_rsa": 0.635,
+    "recovery": 0.03
+  },
+  {
+    "faith": 0.578,
+    "same_rsa": 0.324,
+    "recovery": 0.017
+  },
+  {
+    "faith": 0.338,
+    "same_rsa": 0.106,
+    "recovery": 0.013
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "sigmas": [
+    0.05,
+    0.15,
+    0.3,
+    0.5,
+    0.8,
+    1.2,
+    2.0,
+    3.0
+  ],
+  "levels": [
+    {
+      "sigma": 3.0,
+      "faithfulness": 0.171,
+      "same_rsa": 0.043,
+      "control_rsa": -0.008,
+      "recovery": 0.017
+    },
+    {
+      "sigma": 2.0,
+      "faithfulness": 0.332,
+      "same_rsa": 0.126,
+      "control_rsa": -0.011,
+      "recovery": 0.007
+    },
+    {
+      "sigma": 1.2,
+      "faithfulness": 0.611,
+      "same_rsa": 0.377,
+      "control_rsa": -0.016,
+      "recovery": 0.003
+    },
+    {
+      "sigma": 0.8,
+      "faithfulness": 0.794,
+      "same_rsa": 0.62,
+      "control_rsa": -0.018,
+      "recovery": 0.017
+    },
+    {
+      "sigma": 0.5,
+      "faithfulness": 0.91,
+      "same_rsa": 0.811,
+      "control_rsa": -0.015,
+      "recovery": 0.023
+    },
+    {
+      "sigma": 0.3,
+      "faithfulness": 0.96,
+      "same_rsa": 0.907,
+      "control_rsa": -0.011,
+      "recovery": 0.047
+    },
+    {
+      "sigma": 0.15,
+      "faithfulness": 0.98,
+      "same_rsa": 0.95,
+      "control_rsa": -0.008,
+      "recovery": 0.09
+    },
+    {
+      "sigma": 0.05,
+      "faithfulness": 0.986,
+      "same_rsa": 0.963,
+      "control_rsa": -0.006,
+      "recovery": 0.1
+    }
+  ],
+  "gate": {
+    "rsa_max": 0.963,
+    "recovery_max": 0.1,
+    "control_max": 0.018,
+    "recovery_emergence_faith": null,
+    "sgns_anchor": {
+      "faithfulness": 0.51,
+      "same_rsa": 0.42
+    },
+    "reading": "PLATEAU \u2014 same-RSA rises to 0.96, recovery max 0.10; convergence is partial even near faith 1."
+  }
+}
