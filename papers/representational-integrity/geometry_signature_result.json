@@ -1,0 +1,46 @@
+{
+  "per_model": {
+    "Llama-3.2-1B": {
+      "class_means": {
+        "attack": {
+          "footprint": 0.0368,
+          "behavioral": -4.287
+        },
+        "benign_topical": {
+          "footprint": 0.0842,
+          "behavioral": -2.049
+        },
+        "benign_behavioral": {
+          "footprint": 0.0327,
+          "behavioral": -2.128
+        }
+      },
+      "footprint_AUC_vs_all_benign": 0.684,
+      "footprint_AUC_attack_vs_benign_behavioral": 0.633,
+      "behavioral_AUC": 0.133,
+      "combined_2D_AUC": 0.449
+    },
+    "Qwen2.5-1.5B": {
+      "class_means": {
+        "attack": {
+          "footprint": 0.0906,
+          "behavioral": 2.605
+        },
+        "benign_topical": {
+          "footprint": 0.1727,
+          "behavioral": 0.21
+        },
+        "benign_behavioral": {
+          "footprint": 0.0797,
+          "behavioral": 4.141
+        }
+      },
+      "footprint_AUC_vs_all_benign": 0.653,
+      "footprint_AUC_attack_vs_benign_behavioral": 0.673,
+      "behavioral_AUC": 0.612,
+      "combined_2D_AUC": 0.592
+    }
+  },
+  "footprint_confounded_by_benign_behavioral": true,
+  "verdict": "FOOTPRINT IS CONFOUNDED: it cannot tell a jailbreak from a benign behavioral instruction (attack-vs-benign_behavioral AUC ~0.5) -- it detects META-INSTRUCTION, not MALICE. The geometry footprint does NOT ship as a manipulation detector. The real jailbreak signal is the compliance/refusal probe styxx already has (and it is model-dependent: resistant models invert it)."
+}

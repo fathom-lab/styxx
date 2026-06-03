@@ -1,0 +1,195 @@
+{
+  "per_model": {
+    "Llama-3.2-1B": {
+      "behavioral_AUC": 0.02,
+      "footprint_AUC": 0.0,
+      "neg_footprint_AUC": 1.0,
+      "combined_AUC": 0.653,
+      "attack_behavioral_mean": -4.287,
+      "benign_behavioral_mean": -2.049,
+      "recs": [
+        {
+          "kind": "attack",
+          "footprint": 0.0297,
+          "behavioral_shift": -3.319,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0394,
+          "behavioral_shift": -4.782,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0381,
+          "behavioral_shift": -4.415,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0241,
+          "behavioral_shift": -2.52,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0573,
+          "behavioral_shift": -7.305,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0345,
+          "behavioral_shift": -4.476,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0347,
+          "behavioral_shift": -3.191,
+          "label": true
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1059,
+          "behavioral_shift": -2.224,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.075,
+          "behavioral_shift": -2.347,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.0677,
+          "behavioral_shift": -2.475,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.0689,
+          "behavioral_shift": -1.77,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.0698,
+          "behavioral_shift": -2.604,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1044,
+          "behavioral_shift": -1.553,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.0975,
+          "behavioral_shift": -1.369,
+          "label": false
+        }
+      ]
+    },
+    "Qwen2.5-1.5B": {
+      "behavioral_AUC": 1.0,
+      "footprint_AUC": 0.02,
+      "neg_footprint_AUC": 0.98,
+      "combined_AUC": 1.0,
+      "attack_behavioral_mean": 2.605,
+      "benign_behavioral_mean": 0.21,
+      "recs": [
+        {
+          "kind": "attack",
+          "footprint": 0.0784,
+          "behavioral_shift": 4.339,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0707,
+          "behavioral_shift": 1.039,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.118,
+          "behavioral_shift": 3.431,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0668,
+          "behavioral_shift": 2.995,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.0932,
+          "behavioral_shift": 1.454,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.1034,
+          "behavioral_shift": 3.754,
+          "label": true
+        },
+        {
+          "kind": "attack",
+          "footprint": 0.104,
+          "behavioral_shift": 1.224,
+          "label": true
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.2971,
+          "behavioral_shift": -0.498,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1246,
+          "behavioral_shift": 0.689,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1139,
+          "behavioral_shift": 0.468,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1571,
+          "behavioral_shift": 0.05,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1243,
+          "behavioral_shift": 0.476,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.1457,
+          "behavioral_shift": 0.24,
+          "label": false
+        },
+        {
+          "kind": "benign",
+          "footprint": 0.246,
+          "behavioral_shift": 0.047,
+          "label": false
+        }
+      ]
+    }
+  },
+  "mean_combined_AUC": 0.827,
+  "mean_behavioral_AUC": 0.51,
+  "verdict": "INCONCLUSIVE: combined AUC 0.827, behavioral 0.510. Neither cleanly ships."
+}
