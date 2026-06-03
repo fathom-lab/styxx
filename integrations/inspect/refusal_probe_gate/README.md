@@ -20,6 +20,23 @@ output. The closest existing evals (`strong_reject`, `agentharm`, `coconot`,
   per-model calibration — the AUC is the portable claim, the threshold is not.
 - **`accuracy` / `stderr`** — standard Inspect metrics at the threshold.
 
+## Measured (Qwen2.5-1.5B, real export)
+
+Running `export_probe_dataset.py` then `inspect eval` on the real probe scores (45
+borderline prompts, 16 refused / 29 allowed):
+
+| metric | value |
+|---|---|
+| **probe_auc** | **0.832** |
+| accuracy @0.5 | 0.756 |
+| precision / recall @0.5 | 0.61 / 0.875 |
+| fpr @0.5 | 0.31 |
+
+The AUC reproduces the validated Qwen-1.5B refusal-gate value (0.832 — also the
+cross-architecture median), so the eval faithfully scores the shipped probe. The 0.5
+operating point shows exactly why AUC is the portable claim: recall is high (0.88) but
+FPR is 0.31, so the threshold needs per-model calibration, not the default.
+
 ## Why precomputed scores
 
 The probe reads activations *before* generation, which doesn't fit Inspect's
