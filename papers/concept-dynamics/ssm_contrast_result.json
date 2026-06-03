@@ -1,0 +1,23 @@
+{
+  "per_arch": {
+    "transformer": {
+      "status": "ok",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "n": 20,
+      "osc_frac": 0.0,
+      "rand_osc_frac": 0.0,
+      "mean_ar1_rho": 0.293,
+      "mean_trend_slope": -0.1515
+    },
+    "ssm": {
+      "status": "ok",
+      "model": "state-spaces/mamba-1.4b-hf",
+      "n": 20,
+      "osc_frac": 0.1,
+      "rand_osc_frac": 0.013,
+      "mean_ar1_rho": 0.386,
+      "mean_trend_slope": 0.0016
+    }
+  },
+  "reading": "BOTH_COMMIT \u2014 neither architecture oscillates above noise (transformer 0.0, ssm 0.1); both commit. Consistent with the architecture: a transformer has no recurrence, and Mamba-1's real-valued scan has no complex eigenvalues for rotation. The complex-SSM (Mamba-3) test is the stronger follow-up."
+}

@@ -32,8 +32,13 @@ instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected)
 - **Transformer concept signal: 0/20 trajectories oscillate** — mild commitment trend
   (slope −0.15), modest AR(1) (ρ≈0.30), random-direction null also 0/20. It **commits, it
   does not oscillate** — exactly as the no-recurrence architecture forces.
-- **Mamba-1: structurally cannot oscillate (above); empirical run confirms commitment**
-  [folded in on completion]. A real-valued SSM commits too.
+- **Mamba-1: structurally cannot oscillate (above); empirical run confirms it.** 2/20
+  trajectories above the oscillation gate (osc_frac 0.10) — **below the 0.33 bar → both
+  commit.** A faint whisper above the transformer (0/20) and its own random null (0.013),
+  with higher AR(1) (0.39 vs 0.29) and a flatter trend (≈0 vs −0.15): *recurrence adds a
+  little dynamical structure, but real eigenvalues produce no genuine oscillation.* At
+  n=20, 2/20 is within instrument noise. **Verdict: BOTH_COMMIT** — the empirical result
+  matches the eigenvalue structure exactly.
 
 ## The claim (HYPOTHESIS)
 
