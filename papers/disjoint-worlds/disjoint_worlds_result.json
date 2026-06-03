@@ -1,0 +1,38 @@
+{
+  "config": {
+    "N": 100,
+    "K_lat": 8,
+    "dA": 32,
+    "dB": 24,
+    "M": 200000,
+    "world_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "per_seed": {
+    "0": {
+      "same_structure_acc": 0.02,
+      "control_diff_struct_acc": 0.02,
+      "sanity_self_acc": 1.0
+    },
+    "1": {
+      "same_structure_acc": 0.0,
+      "control_diff_struct_acc": 0.0,
+      "sanity_self_acc": 1.0
+    },
+    "2": {
+      "same_structure_acc": 0.04,
+      "control_diff_struct_acc": 0.0,
+      "sanity_self_acc": 1.0
+    }
+  },
+  "gate": {
+    "same_structure": 0.02,
+    "control": 0.0067,
+    "sanity": 1.0,
+    "chance": 0.01,
+    "reading": "ARTIFACT \u2014 independent models on disjoint data do NOT converge to an alignable geometry (same 0.02 ~ control 0.01 ~ chance 0.01). Strong Platonic reading falsified."
+  }
+}

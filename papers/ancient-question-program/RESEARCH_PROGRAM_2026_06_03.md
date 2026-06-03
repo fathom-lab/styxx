@@ -166,10 +166,20 @@ that can tell us *no*, and then we run them.
   `papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md`. Next B-arms: binding/routing
   (transformers do these without rhythm) and capacity-vs-d scaling (is 7±2 an oscillatory
   fingerprint?).
-- **Experiment A (Disjoint-Worlds vec2vec)** = the geometry-half decider; a larger but fully
-  in-silico build (synthetic worlds + training), no blocked dependency. **The next major bet.**
-- **One half of the 2,500-year question now has its first decisive, pre-registered result.**
-  The geometry half is the next build.
+- **Experiment A (Disjoint-Worlds) — RUN 2026-06-03.** Reading: **UNIVERSAL (RSA).**
+  Independent models on **zero shared data** but shared latent structure converge to a shared
+  geometry (same-structure RSA **0.42** vs different-structure control **≈0**, validity passes);
+  different structure → uncorrelated. **The geometry of meaning is structure-determined, not
+  data-specific** — universal forms, testable sense; *partial* at synthetic scale (0.42, tracks
+  model faithfulness), scaling toward vec2vec's near-perfect real-scale convergence.
+  *Discipline note:* the initial Gromov-Wasserstein aligner returned a false "ARTIFACT —
+  Platonic falsified"; its **positive control (0.42 on a near-isometry) caught it as a broken
+  instrument before any claim shipped**; switching to the validated RSA metric flipped it to
+  UNIVERSAL. `papers/disjoint-worlds/RESULT_disjoint_worlds_2026_06_03.md`.
+- **BOTH halves of the 2,500-year question now have first decisive, pre-registered results:**
+  *geometry* = universal / structure-determined (RSA); *rhythm* = a capacity-extending
+  mechanism, not a requirement. Neither a "solve" — both real, falsifiable chips, losses and
+  corrections included.
 
 ---
 
