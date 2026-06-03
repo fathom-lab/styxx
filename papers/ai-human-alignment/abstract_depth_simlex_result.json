@@ -1,0 +1,34 @@
+{
+  "n_pairs": 999,
+  "all": {
+    "label": "ALL",
+    "n": 999,
+    "glove_rho": 0.265,
+    "llm_rho": 0.329,
+    "llm_minus_glove": 0.064
+  },
+  "abstract": {
+    "label": "ABSTRACT (conc<=2.9)",
+    "n": 330,
+    "glove_rho": 0.214,
+    "llm_rho": 0.309,
+    "llm_minus_glove": 0.095
+  },
+  "concrete": {
+    "label": "CONCRETE (conc>=4.6)",
+    "n": 330,
+    "glove_rho": 0.252,
+    "llm_rho": 0.303,
+    "llm_minus_glove": 0.051
+  },
+  "bootstrap_abstract_minus_concrete_advantage": {
+    "mean": 0.046,
+    "ci95": [
+      -0.129,
+      0.224
+    ],
+    "P_gt_0": 0.701
+  },
+  "depth_helps_abstract_more": false,
+  "verdict": "NOT confirmed: deep-LLM advantage is +0.095 abstract vs +0.051 concrete -- depth does NOT help abstract more (or helps concrete more). Honest negative."
+}
