@@ -1,0 +1,40 @@
+{
+  "n_nouns": 53,
+  "noise_ceiling_lo": 0.3943674667262833,
+  "partial_lexical_RSA_to_brain": {
+    "GloVe(shallow language)->brain": 0.18,
+    "deep LLM->brain": 0.182,
+    "vision(CLIP-image)->brain": 0.172,
+    "human behavior(VICE)->brain": 0.247
+  },
+  "glove_vs_llm_partial": 0.6,
+  "brain_R2": {
+    "lex": 0.0195,
+    "lex+glove": 0.0512,
+    "lex+glove+vision": 0.0608,
+    "lex+glove+vision+llm": 0.0643,
+    "lex+vision+llm": 0.0594,
+    "lex+glove+llm": 0.0596,
+    "lex+llm": 0.052,
+    "lex+glove+vision+vice+llm": 0.0828,
+    "lex+glove+vision+vice": 0.0823
+  },
+  "unique_contributions": {
+    "GloVe_total_over_lex": 0.0317,
+    "LLM_total_over_lex": 0.0325,
+    "LLM_unique_beyond_glove": 0.0084,
+    "LLM_unique_beyond_glove+vision": 0.0036,
+    "LLM_unique_beyond_glove+vision+behavior": 0.0005,
+    "GloVe_unique_beyond_llm+vision": 0.005
+  },
+  "robustness_clean_behavioral_target": {
+    "A_RSA": 0.545,
+    "B_RSA": 0.613,
+    "A_total_over_lex": 0.2966,
+    "B_unique_beyond_A": 0.1277
+  },
+  "brain_deflated": true,
+  "depth_real_in_behavior": true,
+  "verdict": "DEPTH IS REAL IN BEHAVIOR, INVISIBLE IN THE BRAIN. Deep LLMs DO capture human conceptual structure beyond shallow co-occurrence -- on clean behavioral data they add 12.8% unique over GloVe (LLM 0.613 > GloVe 0.545). BUT that depth does NOT reach the brain: GloVe predicts the brain as well as the deep LLM (0.18 vs 0.182), deep-unique ~0.4%. So 'deep LLMs UNIQUELY predict the brain' is NOT supported at fMRI resolution -- a 2014 GloVe matches it equally. The deep advantage is real in concepts, absent (or unresolvable) in the neural signal.",
+  "honest_limit": "All sources are human-derived; this separates shallow-language from deeper-conceptual, but cannot test substrate-independence."
+}
