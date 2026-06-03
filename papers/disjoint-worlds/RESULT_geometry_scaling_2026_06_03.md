@@ -1,5 +1,7 @@
 # RESULT — Geometry scaling law: sharing is universal & smooth; recovery is a sharp, structure-gated threshold
 
+> ⚠ **CORRECTED by peer-review audit — see [`CORRECTIONS_2026_06_03.md`](../ancient-question-program/CORRECTIONS_2026_06_03.md).** The pre-registered (isotropic) recovery FAILED its gate (PLATEAU). The distinctive-recovery result below is now committed/reproducible (`run_geometry_recovery.py`, 5 seeds) and **EXPLORATORY/post-hoc**: distinctive recovery mean **0.87** at faith 0.99 (sharp threshold), control at chance — the "up to 1.00 / reproduces vec2vec" gloss is **retracted**. "Universal/sharing" is scoped to *consistency of metric estimation* (same latent z built in; RSA uses known correspondence — not unsupervised translation).
+
 **Date:** 2026-06-03 · Completes the geometry half. Two **separate** phenomena emerge, and
 distinguishing them resolves every earlier puzzle (including two near-misses where I almost
 blamed the phenomenon for a tool limit).
