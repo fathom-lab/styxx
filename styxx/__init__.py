@@ -361,6 +361,11 @@ from . import redact  # noqa: F401  # 7.7.12: Redactable Cognometric Attestation
 from .redact import redactable_commit, disclose, verify_disclosure
 from . import community  # noqa: F401
 from .community import recommend  # noqa: F401
+from . import meaning_integrity  # noqa: F401  # 7.11.0: does a model MEAN what a human means? (concept-geometry vs human reference)
+from .meaning_integrity import (  # 7.11.0: machine-side meaning-integrity monitor (validated/generalized/real-drift)
+    MeaningReference, MeaningVitalSign,
+    meaning_alignment, meaning_dispersion, per_concept_alignment, meaning_integrity_report,
+)
 
 # 7.4.2: install-time diagnostic accessible programmatically (the
 # `styxx doctor` CLI subcommand was the only entry point until now).
