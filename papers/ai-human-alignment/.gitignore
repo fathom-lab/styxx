@@ -1,3 +1,4 @@
 # Mitchell 2008 fMRI subject files (~63MB each, 9 subjects) — re-download via build_brain_rdm.py
 # (URLs in run_ai_brain.py / cs.cmu.edu/~fmri/science2008). brain_rdm.npz (the derived RDM) IS committed.
 brain/data-science-P*.mat
+pereira/*.zip
