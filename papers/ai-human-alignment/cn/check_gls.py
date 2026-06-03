@@ -36,7 +36,8 @@ def main():
     P = np.load(os.path.join(HERE, "predictor_rdms.npz"), allow_pickle=True)
     words = [str(w) for w in P["words"]]
     cl = np.array([len(words[c]) for c in ci], float); zc = (cl - cl.mean()) / (cl.std() + 1e-9)
-    print(f"\n{'Kvox':>7} {'GloVe':>8} {'GPT2':>8} {'BERT':>8} {'vision':>8}")
+    haveH = "rdm__Human54" in P.files
+    print(f"\n{'Kvox':>7} {'Human54':>9} {'GloVe':>8} {'GPT2':>8} {'BERT':>8} {'vision':>8}")
     for Kv in [2000, 5000, 10000, 20000, K]:
         sel = np.argsort(var)[-Kv:] if Kv < K else np.arange(K)
         R = distmat(mean[:, sel]); IU = np.triu_indices(R.shape[0], 1)
@@ -45,7 +46,8 @@ def main():
         def pr(tag):
             return pcorr(P["rdm__" + tag][np.ix_(ci, ci)][IU], g, L)
         deep = (pr("GPT2") + pr("BERT")) / 2; vis = (pr("ResNet") + pr("ViT")) / 2
-        print(f"{Kv:>7} {pr('GloVe'):>+8.3f} {pr('GPT2'):>+8.3f} {pr('BERT'):>+8.3f} {vis:>+8.3f}")
+        hu = pr("Human54") if haveH else float("nan")
+        print(f"{Kv:>7} {hu:>+9.3f} {pr('GloVe'):>+8.3f} {pr('GPT2'):>+8.3f} {pr('BERT'):>+8.3f} {vis:>+8.3f}")
     print("\n(if these are clearly >0, e.g. >0.05, GLMsingle cracked it -> run all subjects + pool)")
 
 
