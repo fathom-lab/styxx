@@ -1,0 +1,52 @@
+{
+  "self_test_pass": true,
+  "sentence_period_tokens": 13.8,
+  "per_model": {
+    "gpt2": {
+      "kind": "transformer",
+      "n_tokens": 455,
+      "osc_components": 0,
+      "total_sig_peaks": 0,
+      "peak_periods_tokens": [],
+      "top6_var": 0.846,
+      "peaks_near_sentence_period": []
+    },
+    "Llama-3.2-1B": {
+      "kind": "transformer",
+      "n_tokens": 455,
+      "osc_components": 1,
+      "total_sig_peaks": 1,
+      "peak_periods_tokens": [
+        45.5
+      ],
+      "top6_var": 0.973,
+      "peaks_near_sentence_period": []
+    },
+    "Qwen2.5-1.5B": {
+      "kind": "transformer",
+      "n_tokens": 454,
+      "osc_components": 1,
+      "total_sig_peaks": 1,
+      "peak_periods_tokens": [
+        13.8
+      ],
+      "top6_var": 0.993,
+      "peaks_near_sentence_period": [
+        13.8
+      ]
+    },
+    "mamba-1.4b": {
+      "kind": "SSM",
+      "n_tokens": 469,
+      "osc_components": 2,
+      "total_sig_peaks": 2,
+      "peak_periods_tokens": [
+        4.3,
+        46.9
+      ],
+      "top6_var": 0.263,
+      "peaks_near_sentence_period": []
+    }
+  },
+  "reading": "self-test PASS. Transformers: 0.7/6 components show oscillation above the AR(1) null; SSM(Mamba): 2.0/6. Sentence period ~14 tokens. Peaks cluster near the sentence period => rhythm is largely INPUT-DRIVEN (tracks text structure), not an intrinsic neural oscillation."
+}
