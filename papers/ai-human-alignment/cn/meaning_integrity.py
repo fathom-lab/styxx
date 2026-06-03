@@ -67,6 +67,17 @@ def alignment(E, ref, control=None):
     return float(np.corrcoef(g, rv)[0, 1])
 
 
+def dispersion(E):
+    """Absolute spread of the representation = mean centered row-norm. Scale-DEPENDENT on purpose:
+    the angular `alignment` is invariant to isotropic scale (a strength for basis-robustness), which
+    makes it BLIND to a uniform collapse toward the mean (a model losing all contrast equally). In
+    vital-sign mode — compared to the model's own baseline — a falling dispersion ratio catches exactly
+    that failure. The complete monitor reads BOTH channels: alignment (structure) + dispersion (magnitude)."""
+    E = np.asarray(E, float)
+    E = E - E.mean(0)
+    return float(np.mean(np.linalg.norm(E, axis=1)))
+
+
 def per_concept_alignment(E, ref):
     """For each concept, how well its *relational profile* (its row of the RDM) matches the human one.
     Low value => that concept is misrepresented by the model. Localizes WHERE meaning breaks."""

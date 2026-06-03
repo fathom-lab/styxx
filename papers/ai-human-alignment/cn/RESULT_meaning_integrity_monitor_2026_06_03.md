@@ -40,6 +40,27 @@ not. **(5)** means it doesn't just alarm — it points at *which* concepts the m
 - **The deflation pays off here:** the monitor is nearly untouched by 1–2-bit quantization (0.49→0.40),
   i.e. meaning lives in robust relational structure — so the monitor itself can be **cheap**.
 
+## Realistic failure modes — the safety win, and an honest blind spot I fixed (`meaning_integrity_failures.py`)
+Random shuffle (the 5/5 demo) is a soft target. The real questions: does it catch *realistic* failures,
+and can it catch a model whose **outputs still look fine while its meaning is quietly broken**?
+
+- **(C) PLAUSIBLE-BUT-WRONG — the safety case, and it works.** Swap each concept to its *human-neighbor's*
+  vector, so the top-1 "output" stays in the right semantic area. At `swap@human-nbr#10` the
+  **output-plausibility is 0.517 — equal to the intact model's 0.504** — yet **monitor-alignment has
+  fallen 0.492 → 0.400.** And at nbr#1/#3 plausibility is *higher* than intact (0.67/0.64) while
+  alignment is already dropping. **Eyeballing outputs is fooled; the monitor is not.** That is precisely
+  the gap — *sounds right vs means right* — that the whole idea targets, demonstrated cleanly.
+- **(B) FORGETTING (zero a fraction of dims) — caught,** gracefully: 0.49 → 0.48 → 0.42 → 0.28 as
+  30/60/90% of dimensions are zeroed. Robust to small losses, degrades with large ones — sensible.
+- **(A) COLLAPSE toward the centroid — an honest BLIND SPOT, then fixed.** Uniform blur toward the mean
+  moved the angular score by **exactly 0.000** at every level. Why: that collapse is just an isotropic
+  *rescale* of the centered representation, and the monitor is invariant to scale **by design** (the same
+  property — #2 — that makes it basis-robust). So the angular channel is deaf to a *uniform* loss of
+  contrast. **Fix:** a second `dispersion` channel (mean centered row-norm, scale-*dependent*). It tracks
+  the collapse exactly — dispersion-ratio 1.00 → 0.70 → 0.10 → 0.01 as f rises — catching what the angular
+  channel cannot. **The complete monitor reads BOTH: alignment (structure, basis-invariant) + dispersion
+  (magnitude, for collapse).** Finding the blind spot and closing it is the result, not a footnote.
+
 ## Honest scope
 - **Needs a human reference.** Here it's the 54-feature Chinese space. Generalizing to English/other
   domains needs analogous human norms (Binder et al. 2016 experiential norms are the English analog) —
