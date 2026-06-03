@@ -156,12 +156,20 @@ that can tell us *no*, and then we run them.
 
 ## 6. Status & next move
 
-- **Experiment B (rhythm rescue), in-silico arm** = the nearest runnable decider, on tooling
-  we already have. Recommended first.
-- **Experiment A (Disjoint-Worlds vec2vec)** = a larger but fully in-silico build (synthetic
-  worlds + training); no blocked dependency.
-- This document is the map. The next concrete move is to **pre-register and run one of the
-  two** — and the rhythm rescue is the one we can start tomorrow.
+- **Experiment B (rhythm rescue), in-silico arm — RUN 2026-06-03.** Pre-registered (gate
+  frozen before data). Reading: **ADVANTAGE** — phase-clamping the eigenvalues (removing only
+  the oscillation) roughly **halves** ordered-memory capacity (kcap 6.0 → 2.67) and the free
+  net *keeps* its oscillation (osc_use 0.62), yet the no-rhythm net still partially solves the
+  task → **rhythm is a capacity-extending MECHANISM, not a hard requirement.** This refines
+  "mechanism not function" into the honest middle the literature occupies
+  ("necessary-in-tissue, not in-principle"), now shown in a clean ablation.
+  `papers/rhythm-rescue/RESULT_rhythm_rescue_2026_06_03.md`. Next B-arms: binding/routing
+  (transformers do these without rhythm) and capacity-vs-d scaling (is 7±2 an oscillatory
+  fingerprint?).
+- **Experiment A (Disjoint-Worlds vec2vec)** = the geometry-half decider; a larger but fully
+  in-silico build (synthetic worlds + training), no blocked dependency. **The next major bet.**
+- **One half of the 2,500-year question now has its first decisive, pre-registered result.**
+  The geometry half is the next build.
 
 ---
 
