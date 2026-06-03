@@ -14,10 +14,19 @@ concepts — the territory the concrete-noun work never touched, where "universa
 - GloVe-50 (`gensim glove-wiki-gigaword-50`) covers common words; pipeline (`run_edge_deflation.py`)
   is drop-in once a neural/behavioral RDM over these 180 exists.
 
-## The wall
-The **per-subject neural data** (the brain responses) is NOT in the materials zip — Pereira hosts it
-separately on Dropbox/Drive (not OSF-API-reachable). Getting it is a fresh, non-trivial fetch +
-nifti/.mat parse. Not done tonight; flagged honestly rather than rabbit-holed.
+## The wall (data-location reconnaissance, 2026-06-03 — done, so next session skips the search)
+The **per-subject neural data** is NOT in the materials zip. Tracked it to source via the paper's Data
+Availability statement (evlab PDF): *"raw and processed NIFTI imaging datasets … shared via
+http://www.openfmri.org after re-processing."* So **Pereira brain data = raw NIFTI on OpenfMRI/
+OpenNeuro** → requires a full fMRI preprocessing + single-trial GLM pipeline to get per-concept patterns.
+- Alternative modern dataset checked: **OpenNeuro ds004301** (Wang 2022 Scientific Data) — 672 **Chinese**
+  words, 11 subjects, *preprocessed* but only **4D BOLD time-series** (no betas/RDMs), many GB; ships
+  Chinese GloVe/BERT/GPT2 + ResNet/ViT embeddings. Usable but: Chinese pipeline + GLM extraction + large.
+- **Why Mitchell was usable and these aren't:** Mitchell shipped *pre-extracted per-trial voxel patterns*;
+  the higher-SNR sets ship 4D BOLD needing a GLM. That GLM pipeline on GB-scale data is the real next
+  project (use `nilearn` FirstLevelModel on the BIDS events → single-trial betas → concept RDM).
+- **Discipline call (2026-06-03):** did NOT half-build the pipeline under time pressure — an untrustworthy
+  neural RDM would be worse than an honest pause (it would launder a wrong number through the method).
 
 ## The decisive experiment (run when neural data is in hand)
 1. Build the Pereira **brain RDM** over the 180 concepts (per subject + group + noise ceiling), same
