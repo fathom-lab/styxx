@@ -12,6 +12,14 @@ Start here. Every example is runnable from the repo root.
   python examples/quickstart.py
   ```
 
+- **[`meaning_quickstart.py`](meaning_quickstart.py)** — *does your model still mean the same after an
+  update?* Reference-free `meaning_agreement` catches when a quantization / fine-tune / migration quietly
+  broke a model's meaning, and names which concepts broke. No human reference, no labels.
+
+  ```bash
+  python examples/meaning_quickstart.py
+  ```
+
 ## Advanced
 
 Deeper features, each focused on one capability. Run any of them with
