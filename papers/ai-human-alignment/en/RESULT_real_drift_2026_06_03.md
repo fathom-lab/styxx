@@ -49,6 +49,17 @@ concepts a fine-tune poisoned** — a real data-poisoning detection + localizati
 the synthetic 0.95 because real fine-tuning damage is messier (variable per-concept corruption + some
 clean-concept drift). Example poisoned concepts the monitor flagged: honeymoon, glass, choir, banjo, lightning.
 
+## Specificity — benign training does NOT trip the alarm (`catastrophic_forgetting.py`)
+Tested catastrophic forgetting by over-specializing BERT on a narrow coherent task (train only on the 2
+largest super-categories). **Result: no forgetting** — global alignment *rose* 0.193 → 0.212; both
+in-domain (+0.044) and out-of-domain (+0.020) concepts mildly improved. A coherent narrow fine-tune is
+benign, not destructive, and the monitor correctly reports **no damage**. This is the specificity complement
+to the sensitivity results: the monitor catches **harmful** training (label-noise → BROKEN, targeted
+poisoning → localized) but does **not** false-alarm on **benign** training (real categories → HEALTHY,
+narrow specialization → no change). Real meaning-damage needs *conflicting* supervision — an honest, useful
+boundary. (The named "catastrophic forgetting" failure mode simply did not occur here; BERT is robust to a
+coherent narrow fine-tune. We report the null, not a forced positive.)
+
 ## Honest notes
 - *The damaging trajectory is noisy:* step-100 bounced to 0.141/HEALTHY (frac 0.73, just over the 0.70 band)
   before collapsing. That is real training noise — a deployment would trend/smooth, not gate on a single
