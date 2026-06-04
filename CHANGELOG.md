@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.11.0] — 2026-06-03 — `styxx.meaning_integrity`: does a model MEAN what a human means?
+
+### Added — `styxx.meaning_integrity`: machine-side meaning-integrity monitor
+
+A model can produce fluent, plausible output while its internal *understanding* is wrong or degraded. This
+primitive reads the meaning behind the output: it compares a model's **concept geometry** to a **human
+meaning reference** (a concept × human-feature matrix) and reports an alignment score, a
+HEALTHY/DEGRADED/BROKEN verdict, and *which* concepts diverge most.
+
+```python
+from styxx import MeaningReference, MeaningVitalSign
+ref = MeaningReference(human_features, words=concepts)        # human judgments, (N, F)
+vs  = MeaningVitalSign(ref).calibrate(healthy_embeddings)     # (N, D), same concepts
+vs.check(current_embeddings)   # -> alignment, dispersion_ratio, status, worst_concepts
+```
+
+Two channels: `meaning_alignment` (mean-centered, L2-normalized cosine-RDM RSA — **provably invariant to
+rotation/scale/translation**, so it reads *meaning*, not the surface basis) + `meaning_dispersion`
+(scale-*dependent*, catches the uniform collapse the angular channel is blind to). `MeaningVitalSign`
+calibrates on a healthy model and judges drift **relative to that baseline**. Reference-agnostic — bring
+your own concept × human-feature matrix (e.g. Binder et al. 2016, the Lancaster Sensorimotor Norms).
+
+Validation (in `papers/ai-human-alignment`, every claim with its caveat attached):
+
+- **Mechanics 5/5** — invariant to 1e-16; sensitive to corruption; separable healthy/degraded; **localizes
+  which concepts broke** (ROC-AUC ~0.95).
+- **Safety** — catches *plausible-but-wrong*: a model whose top-1 outputs still look sensible while its
+  relational meaning is broken (the gap output-inspection misses).
+- **Generalizes** — transfers to English with an independent reference + models (localization AUC 0.91).
+- **Real-drift** — catches REAL fine-tuning damage (label-noise BERT → BROKEN) and distinguishes it from
+  *helpful* fine-tuning (real categories → HEALTHY). Not just synthetic corruptions.
+
+Honest scope: discrimination needs a *rich* reference the models actually align with (thin/perceptual
+norms give weak signal); the underlying "deep beats shallow at human meaning" finding is **contingent**
+(replicates in Chinese, ties in English); a vital sign should be trended, not gated on one reading.
+
+New public API: `MeaningReference`, `MeaningVitalSign`, `meaning_alignment`, `meaning_dispersion`,
+`per_concept_alignment`, `meaning_integrity_report`.
+
+---
+
 ## [7.10.0] — 2026-06-01 — integrity-gated model routing: draft cheap, escalate only when styxx flags low validity
 
 ### Added — `styxx.spec_exec`: epistemic speculative execution (integrity-gated model routing)
