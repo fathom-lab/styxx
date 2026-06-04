@@ -88,15 +88,19 @@ across capacity thresholds 0.70–0.90 and all 3 seeds (interior peak everywhere
 bounded: the optimum is a *band* (~0.06–0.5π), not a precise point; and "below baseline" is
 threshold-specific ("at-or-below, never above"). Figure: `frequency_resonance_curve.png`.
 
-## 5. Experiment 3 — does the optimum scale as 1/window? *(running — stub)*
+## 5. Experiment 3 — the optimum is item-count-bound, not window-bound (scaling law falsified)
 
 Pre-registered (`PREREG_scaling_law_2026_06_04.md`): insert a delay of D pad tokens between write
-and recall, locate θ\*(D) at the capacity edge, test θ\*·W ≈ const (W = D + kcap\*). Theory makes it
-diagnostic: NULL ⇒ θ\* is item-count-bound (relative phases preserved under uniform rotation);
-SCALING ⇒ θ\* is window-bound. Predicted constant if scaling holds: ~0.66 cycle over the window
-(θ\*·W ≈ 1.3π rad). *[Result + verdict + `scaling_law_curve.png` to be inserted on completion;
-note a possible kcap-saturation limit on θ\* resolution, to be checked with a continuous capacity
-measure.]*
+and recall, locate θ\*(D), test θ\*·W ≈ const. Theory made it diagnostic: NULL ⇒ θ\* item-count-bound
+(relative phases preserved under uniform rotation); SCALING ⇒ window-bound. **Result: NULL.** Across
+delays D ∈ {0,6,12,24}, θ\* held at ≈0.03–0.0625π — it did **not** move with the retention window.
+A first sweep located θ\* by integer kcap and risked a saturation artifact (several θ tied at the
+ceiling); a **de-saturated re-run with a continuous capacity measure** (area under the
+accuracy-vs-K curve, `run_scaling_sweep_clean.py`) **confirmed the NULL** (θ\* span ≤ 1 grid step;
+`scaling_clean_result.json`). So the optimum is set by *how many* items are held, not *how long* —
+consistent with the relative-phase-preservation arm of the theory (a uniform rotation over the
+hold preserves the inter-item phase differences that carry order). The pre-registered SCALING bet
+was wrong; the theory's self-correction (lean NULL) was right — recorded as such.
 
 ## 6. Discussion
 
