@@ -31,6 +31,22 @@ embeddings; English-model geometry = English BERT / MiniLM embeddings of the Eng
   here is the **clean concept-matched control** (mismatch → 0) and **per-concept localization** of where the
   languages diverge, both from one shipped tool.
 
+## Which meanings are universal? — a modest concreteness effect (`cross_lingual_decompose.py`)
+Per-concept cross-lingual agreement (Chinese-ERNIE vs English-MiniLM) correlated with **concreteness**
+(perceptual − abstract human features):
+
+- **Concrete concepts are modestly more language-universal** — Spearman **ρ = +0.18** (reliable at n=670),
+  concrete-half agreement **0.355** vs abstract-half **0.327** (a small +0.028 gap, right direction).
+- **Most language-universal:** concrete objects/materials — fruit, food, leather, insect, vegetable, ocean,
+  shrimp, silk, glass.
+- **Most language-specific:** abstract **and polysemous** — way, affect, will, judge, light, launch, fan.
+
+**Honest nuance:** the effect is *modest*, and many of the most-divergent words are **polysemous** (light,
+will, fan, screen, eave have multiple senses with no 1:1 translation) — so cross-lingual divergence reflects
+**translation-ambiguity as much as abstractness**, a real confound. The headline is a *measurable but modest*
+echo of linguistic relativity (concrete/perceptual meaning travels; abstract/polysemous meaning is more
+language-shaped), not a strong claim.
+
 ## Honest scope
 - Moderate agreement — a *partial* shared core, not "they mean the same." Isolated-word embeddings understate
   it (no context); the absolute level tracks the English model's quality (MiniLM > content-token BERT).
