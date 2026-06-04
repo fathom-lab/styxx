@@ -15,7 +15,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..", "..")))
 from styxx.divergence import grounded_honesty, detect_context_injection
 
 SMOKE = "--smoke" in sys.argv
-MODEL = "Qwen/Qwen2.5-3B-Instruct"
+MODEL = os.environ.get("ATK_MODEL", "Qwen/Qwen2.5-3B-Instruct")
+MODEL_TAG = MODEL.split("/")[-1]
 DEV = "cuda" if torch.cuda.is_available() else "cpu"
 LETTERS = ["A", "B", "C", "D"]
 N_ITEMS = 12 if SMOKE else 60
@@ -48,8 +49,12 @@ def main():
     letter_ids = [tok(L, add_special_tokens=False).input_ids[0] for L in LETTERS]
 
     def chat(sysmsg, u):
-        return tok.apply_chat_template([{"role": "system", "content": sysmsg}, {"role": "user", "content": u}],
-                                       tokenize=False, add_generation_prompt=True)
+        try:
+            return tok.apply_chat_template([{"role": "system", "content": sysmsg}, {"role": "user", "content": u}],
+                                           tokenize=False, add_generation_prompt=True)
+        except Exception:   # gemma-2 et al. reject a system role -> fold it into the user turn
+            return tok.apply_chat_template([{"role": "user", "content": sysmsg + "\n\n" + u}],
+                                           tokenize=False, add_generation_prompt=True)
 
     def qtext(stem, choices):
         return stem + "\n" + "\n".join(f"{L}) {c}" for L, c in zip(LETTERS, choices)) + "\nAnswer with a single letter."
@@ -139,7 +144,7 @@ def main():
            "confidently_fooled_naive_asasked": fooled, "confidently_fooled_defended_canonical": defended_fooled,
            "injection_flag_rate": inj_flag_rate, "injection_catches_fooled_frac": inj_catches_fooled,
            "median_stability_under_attack": stab_med, "verdict": verdict}
-    out = os.path.join(HERE, "grounded_attack_smoke.json" if SMOKE else "grounded_attack_defended_result.json")
+    out = os.path.join(HERE, f"grounded_attack_smoke_{MODEL_TAG}.json" if SMOKE else f"grounded_attack_defended_{MODEL_TAG}.json")
     json.dump(res, open(out, "w"), indent=2)
     print("\n=== RESULT ===")
     print(f"  attack effectiveness (lie-rate shift): {eff:+.3f}")
