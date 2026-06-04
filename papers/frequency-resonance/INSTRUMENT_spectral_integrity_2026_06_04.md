@@ -49,6 +49,16 @@ distributed frequency structure of the whole trajectory.
 likely dies (confounds are the usual killers). We design to find out fast and cheap. **We do not
 promise it works** — we promise it gets a fair, kill-gated test.
 
+**Update 2026-06-04 — cheap CPU de-risking of K1 (caution).** A pre-registered proxy test
+(`coherence_spectral_test.py`): does the DMD spectrum separate *coherent vs word-shuffled* text — a
+gross cognitive-state difference — on distilgpt2 layer 4? **It FAILED: 5-fold CV AUROC 0.434** (bar
+0.70). The earlier N=1 "shuffled→Nyquist" hint was noise. This is one small model, one layer, a
+~30-token trajectory, crude PCA-24+DMD extraction, and coherence≠deception — so it does **not** kill
+the instrument, but it **lowers the K1 prior (~60% → ~35%)** and flags that **signal extraction needs
+rework** (deeper/multiple layers, larger model, longer trajectories, richer features) *before* the GPU
+deception test is worth running. Honest order of operations: fix extraction, re-pass K1 on the
+coherence proxy, *then* spend GPU on deception.
+
 ## Why this is the right "impossible before us" bet
 - On-mission: a white-box integrity primitive for deployed agents — the styxx thesis.
 - Targets a *documented* weakness (static-probe fragility), not a hypothetical one.
