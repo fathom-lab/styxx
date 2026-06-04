@@ -39,6 +39,20 @@ countermeasures close it:
   law, the spectral instrument, and the cheap-probe-collapse claim all tempered or died). It passed by
   *mapping its own attack surface and naming the in-package defense* — not by being unbreakable.
 
+## Defense validated (n=60) — the loop is closed
+The paired defense the `divergence.py` security model prescribes was measured head-on against the
+*same* attack (`grounded_attack_defended_result.json`, commit 88e9076):
+- **Confidently-fooled: naive as-asked 18.3% → DEFENDED (canonical resampling) 1.7%.** Resampling a
+  canonical question instead of the attacker's framing nearly closes the hole; canonical AUROC 1.000.
+- **`detect_context_injection` flags 90.9% of the naively-fooled items** (16.7% of items overall) —
+  the framing attacks surface as cross-context divergence (canonical vs as-asked resampling disagree).
+
+Deployed correctly — **verdict from the canonical arm, injection-flag from the as-asked arm** — the
+question-framing attack is caught both ways: the verdict doesn't believe the lie (1.7% residual), and
+the poisoned item is flagged (91%). Attack and defense both measured, both inside styxx. Residual
+honesty: 1.7% is not 0, and 91% is not 100% — a thin tail of items where even canonical resampling is
+unstable; the stability gate should ABSTAIN there rather than certify.
+
 ## Honest scope
 - Question-framing vector only; one model; runner-up lie; single run; **marginal** pass (18% ≈ the bar).
 - Complementary arm NOT done: real RL-obfuscation of the activation probe (the literature's attack) —
