@@ -1,0 +1,78 @@
+{
+  "M": 256,
+  "r_range": [
+    0.9,
+    0.999
+  ],
+  "K_pool": 8,
+  "sigma_frac": 0.07,
+  "sanity_resonance": {
+    "theta_star_frac": 0.2772,
+    "cap_zero": 1.466,
+    "cap_peak": 1.466,
+    "cap_nyquist": 1.466,
+    "interior": true,
+    "reproduced": false
+  },
+  "fork_window": {
+    "delays": [
+      0,
+      6,
+      12,
+      24
+    ],
+    "windows": [
+      7,
+      13,
+      19,
+      31
+    ],
+    "theta_star_frac": [
+      0.2772,
+      0.0132,
+      0.005,
+      0.0958
+    ],
+    "product_thetaXW_pi": [
+      1.9408,
+      0.1723,
+      0.095,
+      2.9683
+    ],
+    "product_cv": 0.9399,
+    "theta_star_span_frac": 0.2722
+  },
+  "fork_itemcount": {
+    "Ks": [
+      3,
+      4,
+      6,
+      8,
+      10
+    ],
+    "theta_star_frac": [
+      0.137,
+      0.236,
+      0.2772,
+      0.2772,
+      0.665
+    ],
+    "product_thetaXK_pi": [
+      0.411,
+      0.944,
+      1.6635,
+      2.218,
+      6.65
+    ],
+    "product_cv": 0.9351,
+    "theta_star_span_frac": 0.528
+  },
+  "prediction": {
+    "trustworthy": false,
+    "window_span_frac": 0.2722,
+    "window_cv": 0.9399,
+    "itemcount_span_frac": 0.528,
+    "itemcount_cv": 0.9351,
+    "verdict": "UNTRUSTWORTHY \u2014 the linear model did not reproduce the empirical resonance, so its scaling prediction carries no weight. Honest negative for the analytic approach as built."
+  }
+}
