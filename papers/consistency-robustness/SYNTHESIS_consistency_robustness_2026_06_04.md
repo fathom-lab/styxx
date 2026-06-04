@@ -1,8 +1,17 @@
-# Consistency over signatures: an attack-tested, defended honesty monitor
+# Consistency vs signatures: an attack-tested, defended honesty monitor — and complementary surfaces
 
 **styxx / fathom-lab · 2026-06-04 · in-silico, pre-registered, self-falsified**
 
-## Thesis
+> **REVISED after the RL-obfuscation arm (`RESULT_rl_obfuscation`).** The original framing —
+> *consistency BEATS signatures* — is **not supported by my experiments and is retracted.** The
+> activation probe resisted *every* feasible attack I ran (per-item perturbation, steering, adversarial
+> LoRA); the one signal I actually cracked was the *consistency* check (grounded_honesty, 18% via
+> framing). So in these runs the signature was the *more* robust of the two. The honest conclusion is
+> **complementary attack surfaces + defense-in-depth**, not a winner. What stands fully is the narrow,
+> strong result: **grounded_honesty is attack-tested and defended, cross-vendor.** Read the "Thesis"
+> below as the starting hypothesis the evidence then corrected.
+
+## Thesis (starting hypothesis — since corrected; see above)
 The white-box honesty signals that survive adversaries are **consistency checks** (compare an output
 to the model's own resampled belief), not **fixed signatures** (a direction read off the activations).
 A signature is a target an adversary routes around; consistency is not a target — to beat it the model
