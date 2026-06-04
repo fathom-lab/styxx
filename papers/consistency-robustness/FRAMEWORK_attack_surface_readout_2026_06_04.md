@@ -18,6 +18,14 @@ follow-up — converges on one principle that *did* survive every test:
 | **detect_context_injection** | *cross-context* divergence (as-asked vs canonical) | a belief *stable across contexts* | a deep, context-independent false belief | the council (peers disagree) |
 | **council_agreement** | *cross-model* agreement | a *shared* false belief (correlated confabulation) | a globally-shared misconception | nothing self/peer-based — needs ground truth |
 | **derivation-consistency** | what the model *derives* (CoT) | *retrieved* knowledge (nothing to derive → collapses to retrieval); a belief stable across reasoning paths | a knowledge fact, or a robust mis-derivation | external ground truth |
+| **external-truth anchor** | a *source outside the model* (retrieved context) | nothing the model gets wrong with truth present (here: breaks **89%** of the knowledge floor) | a POISONED source (RAG poisoning) | detect_context_injection (cross-context divergence, 91%) |
+
+**The stack closes on itself.** Readouts 1–5 cover each other's blind spots down to the knowledge floor;
+readout 6 (external truth) breaks that floor (89%) — but relocates the irreducible commitment to the
+**trustworthiness of the source**, which is exactly the surface readout 3 guards. *Consistency layers
+guard the retrieval; retrieval grounds out the floor.* There is no consistency-only path to truth: at the
+bottom, an integrity monitor must trust something external — and securing that anchor (when AI controls
+its own sources) is the problem that does not dissolve. That is the honest foundation of AI-monitoring-AI.
 
 Each row is a measured result from this session, not a hypothesis. The retracted thesis was
 "consistency > signature"; the data says the *signature* was the more robust of the two against my

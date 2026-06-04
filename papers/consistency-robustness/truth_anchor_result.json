@@ -1,0 +1,11 @@
+{
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "n": 100,
+  "closed_book_acc": 0.17,
+  "open_book_acc": 0.91,
+  "floor_correction_rate": 0.891566265060241,
+  "residual_even_with_context": 0.09,
+  "P1_anchor_lifts": true,
+  "P2_breaks_floor": true,
+  "verdict": "ANCHOR BREAKS THE FLOOR \u2014 external trusted context lifts accuracy 0.17->0.91 and CORRECTS 89% of the closed-book knowledge floor that no self/peer/derivation readout could. The only readout that reads OUTSIDE the model grounds the stack in truth. Residual 9% = even-with-context failure (extraction/reasoning). The trust commitment now lives in the SOURCE \u2014 guarded by detect_context_injection (91% this arc). The stack closes on itself."
+}
