@@ -44,9 +44,18 @@ phases spaced by θ. Two failure modes bound the useful range — at θ→0 the 
 order code), and at θ→π (Nyquist) the mode flips sign every step so adjacent items are maximally
 confusable. Between them lies an optimum where the held items tile the phase circle ~once. **The
 resonance is therefore the generic signature of a phase code** (full derivation:
-`THEORY_phase_coding_2026_06_04.md`). The same model shows the location of the optimum is set by
-one of two competing budgets — the *number* of items (write-span; θ\*~c/K) or the *duration* of the
-hold (window; θ\*~c/W) — which experiment 3 adjudicates.
+`THEORY_phase_coding_2026_06_04.md`; Figure `phase_coding_clock.png` makes it visible — K items as
+phasors that tile the clock at the optimum and collapse onto each other at Nyquist). The same model
+shows the optimum is set by one of two competing budgets — the *number* of items (write-span;
+θ\*~c/K) or the *duration* of the hold (window; θ\*~c/W) — which experiment 3 adjudicates.
+
+**Scope of the theory (an explicit negative).** This phase-coding account is *qualitative*. We
+tried to make it quantitative — a linear code-geometry model predicting the optimum in closed form
+(Gram conditioning; singular spectrum above a noise floor) — and it **fails to reproduce the
+resonance** (`NEGATIVE_analytic_shortcut_2026_06_04.md`): the decay-magnitude structure dominates
+the linear spectrum, and the phase-separability benefit materializes only through the *trained
+nonlinear readout*. The mechanism explains the shape; it does not yet predict the optimum from
+first principles, and the empirical sweeps remain the arbiter.
 
 ## 3. Experiment 1 — oscillation doubles ordered-memory capacity (phase-clamp ablation)
 
