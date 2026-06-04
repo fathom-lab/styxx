@@ -1,0 +1,91 @@
+{
+  "threshold_sensitivity": {
+    "0.70": {
+      "theta_star_frac": 0.25,
+      "peak": 6,
+      "baseline": 4,
+      "nyquist": 2,
+      "spearman": 0.236,
+      "interior_peak": true,
+      "nyquist_below_baseline": true
+    },
+    "0.75": {
+      "theta_star_frac": 0.375,
+      "peak": 6,
+      "baseline": 3,
+      "nyquist": 2,
+      "spearman": 0.273,
+      "interior_peak": true,
+      "nyquist_below_baseline": true
+    },
+    "0.80": {
+      "theta_star_frac": 0.375,
+      "peak": 6,
+      "baseline": 3,
+      "nyquist": 2,
+      "spearman": 0.273,
+      "interior_peak": true,
+      "nyquist_below_baseline": true
+    },
+    "0.85": {
+      "theta_star_frac": 0.375,
+      "peak": 4,
+      "baseline": 2,
+      "nyquist": 2,
+      "spearman": 0.455,
+      "interior_peak": true,
+      "nyquist_below_baseline": false
+    },
+    "0.90": {
+      "theta_star_frac": 0.5,
+      "peak": 4,
+      "baseline": 2,
+      "nyquist": 2,
+      "spearman": 0.43,
+      "interior_peak": true,
+      "nyquist_below_baseline": false
+    }
+  },
+  "per_seed": {
+    "0": {
+      "theta_star_frac": 0.375,
+      "peak": 6,
+      "baseline": 3,
+      "nyquist": 2,
+      "interior_peak": true,
+      "nyquist_below_baseline": true
+    },
+    "1": {
+      "theta_star_frac": 0.0625,
+      "peak": 4,
+      "baseline": 3,
+      "nyquist": 2,
+      "interior_peak": true,
+      "nyquist_below_baseline": true
+    },
+    "2": {
+      "theta_star_frac": 0.375,
+      "peak": 6,
+      "baseline": 2,
+      "nyquist": 2,
+      "interior_peak": true,
+      "nyquist_below_baseline": false
+    }
+  },
+  "summary": {
+    "theta_star_across_thresholds": [
+      0.25,
+      0.375,
+      0.375,
+      0.375,
+      0.5
+    ],
+    "interior_peak_all_thresholds": true,
+    "nyquist_below_baseline_all_thresholds": false,
+    "interior_peak_all_seeds": true,
+    "theta_star_seed_spread_frac": [
+      0.0625,
+      0.375
+    ]
+  }
+}

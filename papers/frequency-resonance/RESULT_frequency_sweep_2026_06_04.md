@@ -62,3 +62,27 @@ resonant optimum, not a "more is better" knob.*
 - Single-fixed-θ shares one frequency across all 256 modes by design (the H_spectrum contrast).
 - Productizing into a styxx instrument is a **separate** per-feature validation (cf. the geometry
   probe, which died on a confound control despite a clean research finding). Not claimed here.
+
+## Robustness (re-analysis, no new training — `robustness_check.py`)
+
+Re-derived the verdict from the stored per-K accuracies across capacity thresholds (0.70–0.90)
+and per seed.
+
+**Robust — the headline holds:**
+- **RESONANT survives every threshold and every seed.** The peak is interior at all 5 thresholds
+  and all 3 seeds — never at θ=0 or at Nyquist.
+- **"Higher frequency = greater capacity" stays falsified at every threshold** (Spearman θ–kcap
+  0.24–0.46, never near the 0.90 bar). The Nyquist extreme is never best.
+
+**Qualified — honest scope on two sub-claims:**
+- **The optimum is a band, not a point.** θ\* sits in 0.25–0.5π across thresholds (centered
+  0.375π, the value at the registered 0.80 cut); one of three seeds peaks lower, at 0.0625π.
+  Report the optimum as *the ~0.06–0.5π band centered ~0.375π*, not a precise 0.375π.
+- **"Below the no-rhythm baseline" is threshold-specific.** At the registered threshold (0.80)
+  and below, Nyquist (kcap 2.0) is below baseline (2.67); at stricter thresholds (0.85–0.90) the
+  baseline itself bottoms out at 2.0, so Nyquist is *equal to*, not below, baseline — same in 1 of
+  3 seeds. Honest form: **at maximum frequency, capacity collapses to the floor — at or below the
+  no-rhythm baseline, never above it.**
+
+Net: the resonance and the falsification of "higher is better" are solid; the precise optimum and
+the strong "worse than silence" framing are appropriately bounded.
