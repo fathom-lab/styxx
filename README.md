@@ -180,6 +180,27 @@ drift · confabulation · refusal · sycophant · phase_transition · low_trust 
 - 🟢 **Overconfidence-register detection** *(NOT A TRUTH DETECTOR)* — n=200 paired (calibrated/overconfident) responses under stance-level prompts, 5-fold CV **0.7702 ± 0.065**. K=1 phase transition on `mean_sentence_length` (Δ +0.230), K=2 adds `epistemic_balance` (cert-hedge ratio) for +0.03 AUC. Fifth instrument shipped under the *Every Mind Leaves Vitals* call. **Scope warning:** scores epistemic REGISTER (commitment, hedging, sourcing), not factual correctness. A confidently-stated correct answer scores as overconfident. Lowest AUC in the v0 suite — shipped honestly at this number rather than gamed; the K=1 length confound is documented in [`calibrated_weights_overconfidence_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_overconfidence_v0.py).
 - 🟢 **Goal-drift detection** *(new — multi-turn)* — anchor-relative drift detector, n=200 paired (anchored/drifted) 5-turn agent sessions under stance-level prompts, 5-fold CV **0.9645 ± 0.029**. K=1 phase transition on `anchor_to_last_bigram_jaccard` (Δ +0.414), K=2 adds `max_inter_turn_levenshtein`. **Sixth and FINAL instrument shipped under the *Every Mind Leaves Vitals* call. 9-for-9 on cognometric instruments showing K=1 phase transition** under the same measurement protocol — the prediction from the position paper is now empirically held across the COMPLETE 9-instrument suite, each with a *different* critical feature, across instrument families (single-turn lexical / cross-turn structural / lexical-style register / cross-section plan-action / multi-turn drift) and AUC bands (0.7702 to 0.9995). Sibling to conversation-loop (#5) — loop measures stagnation, goal-drift measures dispersion. Distinct from tool-call drift (#3) — that catches a single schema-mismatch, this catches multi-turn intent migration.
 
+### Meaning integrity *(new in 7.11 / 7.12)* — does a model *mean* what a human means?
+
+A different axis from the text detectors above. This reads a model's **concept geometry** — the internal
+structure of how it represents meaning — and compares it to a human reference (or to another model). It
+catches when a model's *understanding* is wrong or has degraded **even when the output still looks fine**.
+Built on a rotation/scale-invariant cosine-RDM, so it reads *meaning*, not the surface representation.
+
+```python
+from styxx import MeaningVitalSign, MeaningReference, meaning_agreement
+
+# reference-free: did a model update / quantization / fine-tune keep the meaning?
+meaning_agreement(model_a_embeddings, model_b_embeddings)
+# -> {"agreement": 0.98, "most_divergent_concepts": [("...", 0.41), ...]}
+```
+
+- 🟢 catches **real fine-tuning damage** (label-noise → BROKEN) and tells it from **helpful** training (real categories → HEALTHY) — same model, same steps, opposite verdicts
+- 🟢 **localizes** which concepts broke (ROC-AUC ~0.95 synthetic, 0.85 on real targeted poisoning)
+- 🟢 generalizes across **languages + model families** (English localization AUC 0.91; a Chinese LM and an English LM share a meaning core above chance, control-validated)
+- 🟢 validated on **real LLMs**: `meaning_agreement(DistilGPT-2, GPT-2) = 0.978` — the distillation preserved meaning, confirmed on a real distilled pair
+- **scope:** the human-alignment mode needs a rich human reference (concept × feature matrix); `meaning_agreement` is reference-free. Full validation + honest caveats in [`papers/ai-human-alignment`](papers/ai-human-alignment/README.md).
+
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
 
