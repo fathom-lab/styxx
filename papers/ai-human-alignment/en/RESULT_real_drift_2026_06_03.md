@@ -32,6 +32,23 @@ Healthy baseline alignment **0.193**. Trajectories (alignment · vital-sign verd
   both runs; this fires only on the one that *hurt the meaning.*
 - Bonus finding: training on real semantic categories **raised** human-meaning alignment 0.19 → 0.44.
 
+## Localization on REAL targeted damage (`real_drift_localize.py`)
+The synthetic localization (ROC-AUC 0.95) used hand-shuffled embeddings. This closes the gap on *real*
+damage: **targeted data-poisoning** — fine-tune BERT where 30% of concepts get random (poisoned) labels and
+the rest get their real categories. Does the monitor's per-concept channel pick out the poisoned ones?
+
+| run | localization ROC-AUC | precision@130 | poisoned-mean vs clean-mean |
+|---|---|---|---|
+| **POISONED (targeted)** | **0.848** | 0.692 | +0.071 vs +0.346 |
+| **CLEAN control (all real labels)** | 0.475 (chance) | 0.292 | +0.472 vs +0.445 |
+
+The poisoned concepts are dramatically more degraded (+0.07 vs +0.35), and the monitor **localizes them at
+AUC 0.85.** The CLEAN control is the proof it's real: with no poisoning, the *same designated set* scores at
+chance (0.475) — so the localization is the actual poisoning, not an artifact. **The monitor can name which
+concepts a fine-tune poisoned** — a real data-poisoning detection + localization capability. Honest: 0.85 <
+the synthetic 0.95 because real fine-tuning damage is messier (variable per-concept corruption + some
+clean-concept drift). Example poisoned concepts the monitor flagged: honeymoon, glass, choir, banjo, lightning.
+
 ## Honest notes
 - *The damaging trajectory is noisy:* step-100 bounced to 0.141/HEALTHY (frac 0.73, just over the 0.70 band)
   before collapsing. That is real training noise — a deployment would trend/smooth, not gate on a single
