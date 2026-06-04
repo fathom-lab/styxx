@@ -16,16 +16,16 @@
 *Nine calibrated cognometric instruments · 9-for-9 on K=1 phase transition · pure Python · no LLM required.*
 *langsmith tells you the trace broke — styxx tells you why.*
 
-[![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=00d26a&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
-[![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=00d26a&label=python&style=flat-square)](https://pypi.org/project/styxx/)
-[![Downloads](https://img.shields.io/pypi/dm/styxx.svg?color=00d26a&label=downloads&style=flat-square)](https://pypi.org/project/styxx/)
-[![License](https://img.shields.io/pypi/l/styxx.svg?color=00d26a&label=license&style=flat-square)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/fathom-lab/styxx?color=00d26a&label=stars&style=flat-square)](https://github.com/fathom-lab/styxx)
-[![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
-[![Vitals](https://img.shields.io/badge/every_mind_leaves_vitals-10.5281%2Fzenodo.19777921-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19777921)
-[![Robustness](https://img.shields.io/badge/robustness_v22-10.5281%2Fzenodo.19761194-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19761194)
-[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-00d26a.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
-[![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-00d26a.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
+[![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=ff2330&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
+[![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=ff2330&label=python&style=flat-square)](https://pypi.org/project/styxx/)
+[![Downloads](https://img.shields.io/pypi/dm/styxx.svg?color=ff2330&label=downloads&style=flat-square)](https://pypi.org/project/styxx/)
+[![License](https://img.shields.io/pypi/l/styxx.svg?color=ff2330&label=license&style=flat-square)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/fathom-lab/styxx?color=ff2330&label=stars&style=flat-square)](https://github.com/fathom-lab/styxx)
+[![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
+[![Vitals](https://img.shields.io/badge/every_mind_leaves_vitals-10.5281%2Fzenodo.19777921-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19777921)
+[![Robustness](https://img.shields.io/badge/robustness_v22-10.5281%2Fzenodo.19761194-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19761194)
+[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
+[![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-ff2330.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
 # `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
 
@@ -200,6 +200,15 @@ meaning_agreement(model_a_embeddings, model_b_embeddings)
 - 🟢 generalizes across **languages + model families** (English localization AUC 0.91; a Chinese LM and an English LM share a meaning core above chance, control-validated)
 - 🟢 validated on **real LLMs**: `meaning_agreement(DistilGPT-2, GPT-2) = 0.978` — the distillation preserved meaning, confirmed on a real distilled pair
 - **scope:** the human-alignment mode needs a rich human reference (concept × feature matrix); `meaning_agreement` is reference-free. Full validation + honest caveats in [`papers/ai-human-alignment`](papers/ai-human-alignment/README.md).
+
+<div align="center">
+
+<a href="papers/ai-human-alignment/en/RESULT_real_drift_2026_06_03.md"><img src="papers/ai-human-alignment/meaning_realdrift.png" width="49%" alt="harmful vs helpful fine-tuning — the meaning monitor sends them opposite ways"></a>
+<a href="papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md"><img src="papers/ai-human-alignment/meaning_distillation.png" width="49%" alt="distillation QA on real LLMs — DistilGPT-2 vs GPT-2 = 0.978"></a>
+
+<sub><i>left — same model, same steps, only the labels differ: harmful training → <b>BROKEN</b>, helpful → <b>HEALTHY</b>. &nbsp; right — DistilGPT-2 kept its teacher's meaning (0.978), confirmed on real models. &nbsp; every claim, a chart → <a href="papers/ai-human-alignment/README.md"><code>papers/ai-human-alignment</code></a></i></sub>
+
+</div>
 
 ### ▶&nbsp; [**Try the profiler — fathom.darkflobi.com/profile**](https://fathom.darkflobi.com/profile) &nbsp;◀
 ### ▶&nbsp; [**Try the instruments — runs in your browser, no install**](https://fathom.darkflobi.com/cognometry/try) &nbsp;◀
