@@ -1,0 +1,14 @@
+{
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "n": 100,
+  "direct_acc": 0.64,
+  "cot_acc": 0.63,
+  "derivation_disagreement_auroc": 0.5164930555555556,
+  "cot_fixes_direct_errors": 0.1111111111111111,
+  "residual_floor_both_wrong": 0.32,
+  "parse_fail": 0,
+  "P1_reasoning_helps": false,
+  "P2_disagreement_flags": false,
+  "P3_floor_decomposes": false,
+  "verdict": "PARTIAL \u2014 P1(reasoning helps -0.01):False, P2(disagreement flags 0.52):False, P3(cot fixes 11%):False. Floor decomposes: reasoning fixes 11% of direct errors, residual floor 32%."
+}

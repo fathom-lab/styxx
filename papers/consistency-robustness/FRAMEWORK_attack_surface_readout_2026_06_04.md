@@ -17,6 +17,7 @@ follow-up — converges on one principle that *did* survive every test:
 | **grounded_honesty** | the *stateless resampled belief* | belief manipulation | cheap question-framing — **cracked 18%** | canonical resampling + injection detection (→1.7%) |
 | **detect_context_injection** | *cross-context* divergence (as-asked vs canonical) | a belief *stable across contexts* | a deep, context-independent false belief | the council (peers disagree) |
 | **council_agreement** | *cross-model* agreement | a *shared* false belief (correlated confabulation) | a globally-shared misconception | nothing self/peer-based — needs ground truth |
+| **derivation-consistency** | what the model *derives* (CoT) | *retrieved* knowledge (nothing to derive → collapses to retrieval); a belief stable across reasoning paths | a knowledge fact, or a robust mis-derivation | external ground truth |
 
 Each row is a measured result from this session, not a hypothesis. The retracted thesis was
 "consistency > signature"; the data says the *signature* was the more robust of the two against my
@@ -50,6 +51,13 @@ council layer is only as strong as its members are capable and vendor-diverse.**
 vendor-diverse council (memory: cross-vendor 0.917) would lift coverage and shrink the apparent floor;
 I could not max that out on an 8 GB local cache. The floor *exists*; pinning its true value needs
 better members or an external truth anchor — honestly, future work. (`council_floor_result.json`.)
+
+**The floor decomposes (derivation arm).** A *derivation* readout (chain-of-thought) shows the floor is
+not monolithic: re-derivation breaks the **derivable** sub-floor (math/logic — styxx's path-diverse moved
+grounded AUC 0.69→0.96) but is **silent on retrieved knowledge** (n=100: direct 0.64 ≈ CoT 0.63,
+disagreement at chance, reasoning fixes only 11% of errors). So the **knowledge sub-floor (~32% here) is
+the genuinely irreducible residual** — no self / peer / derivation method touches it; only an external
+truth anchor does. (`RESULT_derivation_consistency`.)
 
 ## Implication for the RSI era
 When AI builds AI, the honesty monitor that matters is not a single unbreakable signal — there isn't

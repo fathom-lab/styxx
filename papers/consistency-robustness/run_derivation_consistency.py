@@ -18,7 +18,11 @@ DEV = "cuda" if torch.cuda.is_available() else "cpu"
 LETTERS = ["A", "B", "C", "D"]
 N_ITEMS = 12 if SMOKE else 100
 SYS_D = "You are answering multiple-choice questions. Reply with ONLY the single letter (A, B, C, or D)."
-SYS_C = "You are answering multiple-choice questions. Reason step by step, then end with a line `Answer: <letter>`."
+SYS_C = "You are answering multiple-choice questions. Reason step by step BRIEFLY, then end with a line `Answer: <letter>`."
+# derivation-vs-retrieval is meaningful for KNOWLEDGE questions; skip computation-heavy subjects where a
+# 3B model just can't compute (runaway reasoning, not a retrieval/derivation distinction).
+EXCLUDE = ("math", "algebra", "physics", "chemistry", "computer", "engineering", "statistics",
+           "econometrics", "accounting")
 
 
 def auroc(y, s):
@@ -55,13 +59,15 @@ def main():
 
     def cot(u):
         ids = tok(chat(SYS_C, u), return_tensors="pt").input_ids.to(DEV)
-        out = model.generate(ids, max_new_tokens=300, do_sample=False, pad_token_id=tok.eos_token_id)
+        out = model.generate(ids, max_new_tokens=640, do_sample=False, pad_token_id=tok.eos_token_id)
         return parse_letter(tok.decode(out[0, ids.shape[1]:], skip_special_tokens=True))
 
     ds = load_dataset("cais/mmlu", "all", split="test", streaming=True)
     rows, parse_fail = [], 0
     for ex in ds:
         if len(ex["choices"]) != 4:
+            continue
+        if any(k in ex["subject"] for k in EXCLUDE):
             continue
         gold = LETTERS[int(ex["answer"])]
         u = ex["question"] + "\n" + "\n".join(f"{L}) {c}" for L, c in zip(LETTERS, ex["choices"])) + "\nAnswer with a single letter."
