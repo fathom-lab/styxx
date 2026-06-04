@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.12.0] — 2026-06-03 — `meaning_agreement`: reference-free cross-model meaning comparison
+
+### Added — `styxx.meaning_agreement`
+
+Do two models **mean the same**? Compares one model's concept geometry to another's — **no human reference
+needed** — and names which concepts they represent most differently.
+
+```python
+from styxx import meaning_agreement
+rep = meaning_agreement(model_a_embeddings, model_b_embeddings, words=concepts)
+# -> {"agreement": 0.97, "most_divergent_concepts": [(word, score), ...]}
+```
+
+Use cases nobody has a tool for: **model migration / distillation / quantization regression QA** — *did the
+new model keep the meaning of the old one, and if not, which concepts did it lose?* Demonstrated: a model
+vs its quantized self keeps meaning at 8/4-bit (agreement 0.97+) but breaks at 2-bit (0.67) and 1-bit
+(0.39), with the lost concepts named. Built on the same rotation/scale-invariant cosine-RDM core as the
+7.11.0 meaning-integrity monitor.
+
+---
+
 ## [7.11.0] — 2026-06-03 — `styxx.meaning_integrity`: does a model MEAN what a human means?
 
 ### Added — `styxx.meaning_integrity`: machine-side meaning-integrity monitor
