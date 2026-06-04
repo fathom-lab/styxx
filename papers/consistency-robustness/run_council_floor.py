@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..", "..")))
 
 SMOKE = "--smoke" in sys.argv
-MODELS = ["Qwen/Qwen2.5-3B-Instruct", "google/gemma-2-2b-it", "Qwen/Qwen2.5-0.5B-Instruct"]
+MODELS = ["Qwen/Qwen2.5-3B-Instruct", "google/gemma-2-2b-it", "Qwen/Qwen2.5-1.5B-Instruct"]
 DEV = "cuda" if torch.cuda.is_available() else "cpu"
 LETTERS = ["A", "B", "C", "D"]
 N_ITEMS = 12 if SMOKE else 100

@@ -1,0 +1,14 @@
+{
+  "models": [
+    "Qwen/Qwen2.5-3B-Instruct",
+    "google/gemma-2-2b-it",
+    "Qwen/Qwen2.5-1.5B-Instruct"
+  ],
+  "n": 100,
+  "p1_auroc_gold_vs_lie": 0.6293,
+  "p2_single_model_error_coverage": 0.26373626373626374,
+  "p3_irreducible_floor_shared_confab": 0.55,
+  "all_three_correct": 0.09,
+  "council_covers": false,
+  "verdict": "COUNCIL WEAK \u2014 P1 AUROC 0.63 (bar 0.80), single-model-error coverage 26% (bar 0.70). IRREDUCIBLE FLOOR: 55% of items have the council AGREEING on a WRONG answer (shared confabulation no consistency/council check can catch; upper bound \u2014 shrinks with model diversity). All-3-correct 9%."
+}
