@@ -365,6 +365,7 @@ from . import meaning_integrity  # noqa: F401  # 7.11.0: does a model MEAN what 
 from .meaning_integrity import (  # 7.11.0: machine-side meaning-integrity monitor (validated/generalized/real-drift)
     MeaningReference, MeaningVitalSign,
     meaning_alignment, meaning_dispersion, per_concept_alignment, meaning_integrity_report,
+    meaning_agreement,  # 7.12.0: reference-free cross-model meaning comparison (migration/distillation/quant QA)
 )
 
 # 7.4.2: install-time diagnostic accessible programmatically (the

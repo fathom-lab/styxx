@@ -8,6 +8,7 @@ import pytest
 from styxx.meaning_integrity import (
     MeaningReference, MeaningVitalSign,
     meaning_alignment, meaning_dispersion, per_concept_alignment, meaning_integrity_report,
+    meaning_agreement,
 )
 
 
@@ -80,3 +81,19 @@ def test_shape_mismatch_raises():
     ref, model, _ = _setup()
     with pytest.raises(ValueError):
         meaning_alignment(model[:-1], ref)
+
+
+def test_meaning_agreement_reference_free():
+    """Two models that share latent structure agree; a corrupted one diverges, and the divergence is named."""
+    _, model_a, rng = _setup(seed=1)
+    model_b = model_a + 0.05 * rng.standard_normal(model_a.shape)      # near-identical model
+    words = [f"c{i}" for i in range(model_a.shape[0])]
+    rep = meaning_agreement(model_a, model_b, words=words)
+    assert rep["agreement"] > 0.8                                      # they mean the same
+    corrupted = model_a.copy()
+    bad = rng.choice(model_a.shape[0], model_a.shape[0] // 4, replace=False)
+    corrupted[bad] = model_a[rng.permutation(model_a.shape[0])][:len(bad)]
+    rep2 = meaning_agreement(corrupted, model_a, words=words)
+    assert rep2["agreement"] < rep["agreement"]                        # corruption lowers agreement
+    flagged = {w for w, _ in rep2["most_divergent_concepts"]}
+    assert len(flagged & {f"c{i}" for i in bad}) >= 5                  # it names the corrupted concepts

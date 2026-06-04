@@ -37,6 +37,7 @@ import numpy as np
 __all__ = [
     "MeaningReference", "MeaningVitalSign",
     "meaning_alignment", "meaning_dispersion", "per_concept_alignment", "meaning_integrity_report",
+    "meaning_agreement",
 ]
 
 
@@ -130,6 +131,18 @@ def meaning_integrity_report(embeddings, reference, healthy=0.25, broken=0.10, w
     worst = [(int(i), (w[i] if w else int(i)), round(float(pc[i]), 3)) for i in np.argsort(pc)[:top]]
     return {"alignment": round(a, 4), "status": status,
             "per_concept_mean": round(float(np.mean(pc)), 4), "worst_concepts": worst}
+
+
+def meaning_agreement(embeddings_a, embeddings_b, words=None, top=10):
+    """Reference-FREE: do two models MEAN the same? Compares model A's concept geometry to model B's
+    (B as the reference) over the SAME concepts, and names which concepts the two represent most
+    differently. No human reference needed. Use for model migration / distillation / quantization QA:
+    *did the new model keep the meaning of the old one, and if not, which concepts did it lose?*"""
+    ref = MeaningReference(embeddings_b, words=words, name="model_b")
+    a = meaning_alignment(embeddings_a, ref)
+    pc = per_concept_alignment(embeddings_a, ref)
+    worst = [((words[i] if words else int(i)), round(float(pc[i]), 3)) for i in np.argsort(pc)[:top]]
+    return {"agreement": round(a, 4), "most_divergent_concepts": worst}
 
 
 class MeaningVitalSign:
