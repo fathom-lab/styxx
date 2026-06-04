@@ -1,5 +1,15 @@
 # Instrument design — the Spectral Integrity Probe (obfuscation-robust, dynamical)
 
+> **STATUS: SHELVED at K1 (2026-06-04).** Cheap CPU de-risking killed the premise before any GPU
+> spend. The DMD-spectral feature fails to separate even *coherent vs word-shuffled* text — the
+> grossest cognitive-state proxy — across **two** models and richer extraction: distilgpt2 L4
+> AUROC **0.434** (`coherence_spectral_test.py`), pythia-410m multi-layer **0.562**
+> (`coherence_spectral_test_v2.py`), both under the 0.70 bar. If the spectrum can't separate
+> coherence, it won't separate honest/deceptive. **Do not run the GPU deception test.** What's
+> dead is *this specific feature* (DMD modes of the residual trajectory), not dynamical integrity
+> signals in general (path-length / "restlessness" works in the literature, but is not novel).
+> Kept as a documented dead-end (cf. the geometry probe). Design below is preserved as written.
+
 **2026-06-04.** A styxx primitive that reads the **spectral signature of an agent's residual-stream
 trajectory** as an integrity signal — aimed at the documented gap that static probes can't cover.
 Design + falsification only; testing is GPU-gated (queue behind the scaling sweep). Discipline: the
