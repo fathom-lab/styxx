@@ -2,8 +2,8 @@
 
 **styxx / fathom-lab · draft 2026-06-04 · in-silico, pre-registered**
 
-> Status: experiments 1–6 complete and committed; experiments 7 (noise robustness) and 8 (timing /
-> home-turf) running — their sections are stubs to be filled on completion. Author drafts; operator
+> Status: all eight experiments complete and committed (capacity axis 1–6; robustness 7; timing 8).
+> Final pass: discussion reflects the closed two-axis map. Author drafts; operator
 > owns submission (arXiv/Zenodo).
 
 ## Abstract
@@ -30,8 +30,13 @@ computational analogue of a seizure, not enlightenment. **(7)** But on a differe
 robustness** — the phase code wins: it loses less capacity under state noise than the decay code (−33% vs
 −50%) and survives a scale-fairness control in the strong direction (more robust *despite* a smaller
 state). This is the first regime where oscillation is not dominated, and it matches what neuroscience says
-rhythms are *for* — robust coding, not raw storage. A final test (8, periodic timing — oscillation's
-native domain) probes whether a second sovereign regime exists; reported on landing.
+rhythms are *for* — robust coding, not raw storage. **(8)** And on *timing* — periodic prediction,
+oscillation's native task — it is the native mechanism: perfect at every period while the decay net
+collapses (its edge grows with period), and *undominated* by attention (both saturate) — though co-equal,
+not supreme, and not via simple resonance (a phase-probe shows a distributed multi-frequency basis, not
+θ≈2π/P tuning). The two-axis map closes: **rhythm is dominated for memory capacity, but native and
+undominated for the robust, temporal coding that capacity tasks never tested** — the demarcated, true
+shape of "frequency is fundamental to mind."
 
 ## 1. Introduction
 
@@ -173,15 +178,30 @@ on the fractional-loss gap + the control, not the ratio trend); and this is osci
 oscillation-vs-attention (state-noise has no fair transformer analogue — untested there). Still, the first
 regime in the arc where rhythm is not dominated by its baseline.
 
-## 10. Experiment 8 — timing, oscillation's home turf *(running)*
+## 10. Experiment 8 — timing is oscillation's native domain (the steelman)
 
-Pre-registered (`PREREG_timing_2026_06_04.md`). The steelman. Experiments 1–6 all used ordered *copy* —
-a pure *memory* task. Oscillation's native function is *timing*: a phase is a clock. This puts it on a
-**periodic-prediction** task (infer the period, phase-track the next element — what an oscillator does
-and a leaky-decay state structurally cannot), with the necessity rematch (does rhythm beat attention
-*here*?) and a mechanistic probe (does the free net learn phases θ≈2π/P that resonate with the trained
-periods?). The experiment that could *reframe* the six refutations — "dominated for memory, sovereign
-for timing" — rather than add a seventh. *Result pending.*
+Pre-registered (`PREREG_timing_2026_06_04.md`). Experiments 1–6 used ordered *copy* — a pure *memory*
+task. Oscillation's native function is *timing*: a phase is a clock. We test periodic next-symbol
+prediction (infer the period, phase-track the next element — what an oscillator does and a leaky-decay
+state structurally cannot), three matched-param arms, P swept 2→12, 3 seeds.
+
+| P | 2 | 4 | 6 | 8 | 10 | 12 |
+|---|---:|---:|---:|---:|---:|---:|
+| free | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| clamped | 0.97 | 0.85 | 0.71 | 0.65 | 0.54 | 0.43 |
+| transformer | 1.00 | 1.00 | 1.00 | 1.00 | 0.99 | 0.99 |
+
+**Three honest parts.** *(P1, decisive)* Oscillation is the native mechanism: perfect at every period
+while the decay net collapses (0.97 → 0.43) — its edge over decay *grows* with period (Spearman 1.00,
++0.57 at P=12). On its own task, rhythm crushes the decay baseline it merely doubled on capacity. *(P2,
+ceiling tie — correcting the gate's "sovereign")* free and transformer both **saturate** (1.00 vs 0.99);
+rhythm is *undominated* by attention here — a real change from capacity, where attention won 15.3 vs 6.0 —
+but it does not *beat* attention; both max out and only decay fails. The honest word is co-equal, and a
+harder (jittered/noisy) timing task is needed to resolve them. *(Mechanism — resonance refuted)* a
+phase-spectrum probe shows the free net does **not** learn θ≈2π/P: enrichment near each target is ~1.0×
+(chance), and it solves short periods whose 2π/P lies outside its phase range entirely. It wins via a
+broad, diverse bank of phases — a distributed Fourier-like temporal basis — not single-tone resonance.
+The reframe holds: rhythm is dominated for capacity, native and undominated for timing.
 
 ## 11. Discussion
 
@@ -193,9 +213,18 @@ insight. The phase-clamp result (exp 1) gives controlled support to the theta–
 attention control (exp 4), the extrapolation failure (exp 5), and the resource-flat multiplexing (exp 6)
 locate rhythm precisely — a real, resonant, length-specific, constant-factor recurrent *efficiency*
 mechanism that a rhythm-free architecture dominates on raw capacity. The folk claim "higher frequency =
-higher mind" is, for ordered memory, false in every component we could test. Whether rhythm is
-*sovereign* in any regime — noise robustness, or its native timing domain — is the open frontier
-(experiments 7–8), and the honest place the program now lives.
+higher mind" is, for ordered memory, false in every component we could test. But capacity is not the only
+axis, and it is the one rhythm is *worst* on. On **robustness** (exp 7) the phase code loses less capacity
+under state noise than the decay code, control-cleared in the strong direction; on **timing** (exp 8),
+oscillation's native task, it is the native mechanism — perfect across periods where the decay code
+collapses, and undominated (co-equal) with attention. Neither positive is "rhythm beats everything":
+robustness is measured against decay, not attention; timing is a ceiling tie with attention, not a win;
+and the timing mechanism is a distributed phase basis, not the single-tone resonance the folk picture
+imagines. The honest two-axis map: **rhythm is dominated for memory capacity, native and undominated for
+robust, temporal coding** — which is the direction modern neuroscience has moved on what brain rhythms are
+*for* (coordination, robustness, timing), and the demarcated, true shape of the intuition we set out to
+test. The remaining frontier is whether rhythm can *beat* attention on a harder temporal task that breaks
+the ceiling, not merely tie it.
 
 ## 12. Limitations
 
