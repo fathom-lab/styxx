@@ -1,0 +1,42 @@
+{
+  "config": {
+    "steps": 600,
+    "seeds": [
+      0
+    ],
+    "rho_sweep": [
+      0.0,
+      0.3
+    ],
+    "pgrid_eval": [
+      4,
+      6
+    ],
+    "params": {
+      "lru_free": 168460,
+      "lru_clamped": 168204,
+      "transformer": 162012
+    }
+  },
+  "by_arch": {
+    "lru_free": {
+      "0.0": 0.9974941611289978,
+      "0.3": 0.8699151277542114
+    },
+    "lru_clamped": {
+      "0.0": 0.7005459368228912,
+      "0.3": 0.4162353575229645
+    },
+    "transformer": {
+      "0.0": 0.9956034421920776,
+      "0.3": 0.8199951350688934
+    }
+  },
+  "gate": {
+    "free_minus_transformer_hi_rho": 0.0499,
+    "free_minus_clamped_hi_rho": 0.4537,
+    "P1_rhythm_beats_attention": false,
+    "P2_attention_ties_or_wins": true,
+    "verdict": "ATTENTION TIES-OR-WINS \u2014 demarcation tightened. Under corruption rhythm does NOT strictly beat attention (free-transformer +0.050 at rho>=0.3). Rhythm's only clean win stays its decay baseline; vs attention it is at best co-equal (clean timing) and not superior under noise. The map sharpens: rhythm ties attention at temporal tasks, never beats it."
+  }
+}
