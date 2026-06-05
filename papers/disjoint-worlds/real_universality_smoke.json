@@ -1,0 +1,22 @@
+{
+  "models": [
+    "distilgpt2",
+    "EleutherAI/pythia-160m"
+  ],
+  "n_concepts": 30,
+  "pairs": [
+    {
+      "a": "distilgpt2",
+      "b": "pythia-160m",
+      "rsa": 0.763,
+      "recovery": 0.1
+    }
+  ],
+  "gate": {
+    "mean_rsa": 0.763,
+    "max_recovery": 0.1,
+    "n_alignable_pairs": 0,
+    "chance": 0.0333,
+    "reading": "SHARED BUT NOT ZERO-ANCHOR ALIGNABLE \u2014 real models share geometry (mean RSA 0.76) but unsupervised recovery fails (max 0.10 ~ chance 0.033). The shared geometry is real but NOT near-isometric enough for zero-pair alignment -- exactly the warp regime: transfer needs anchors. The practical limit, on real brains."
+  }
+}
