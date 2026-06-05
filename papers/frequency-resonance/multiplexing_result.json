@@ -1,0 +1,72 @@
+{
+  "config": {
+    "steps": 4000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "d_sweep": [
+      16,
+      24,
+      32,
+      48,
+      64,
+      128,
+      256
+    ]
+  },
+  "by_d": {
+    "16": {
+      "free": 2.3333333333333335,
+      "clamped": 1.0,
+      "ratio": 2.3333333333333335
+    },
+    "24": {
+      "free": 2.3333333333333335,
+      "clamped": 1.3333333333333333,
+      "ratio": 1.7500000000000002
+    },
+    "32": {
+      "free": 3.0,
+      "clamped": 2.0,
+      "ratio": 1.5
+    },
+    "48": {
+      "free": 3.6666666666666665,
+      "clamped": 2.0,
+      "ratio": 1.8333333333333333
+    },
+    "64": {
+      "free": 5.333333333333333,
+      "clamped": 3.0,
+      "ratio": 1.7777777777777777
+    },
+    "128": {
+      "free": 6.0,
+      "clamped": 3.6666666666666665,
+      "ratio": 1.6363636363636365
+    },
+    "256": {
+      "free": 6.0,
+      "clamped": 2.6666666666666665,
+      "ratio": 2.25
+    }
+  },
+  "gate": {
+    "ratio_small_D": 2.3333333333333335,
+    "ratio_large_D": 2.25,
+    "ratios": [
+      2.3333333333333335,
+      1.7500000000000002,
+      1.5,
+      1.8333333333333333,
+      1.7777777777777777,
+      1.6363636363636365,
+      2.25
+    ],
+    "spearman_D_ratio": -0.0714,
+    "P1_advantage_grows_under_scarcity": false,
+    "verdict": "ADVANTAGE IS RESOURCE-FLAT \u2014 ratio(D) does not clearly rise under scarcity (ratio 2.25 at D=256 -> 2.33 at D=16, Spearman -0.07). Oscillation's edge is ~a fixed multiplier, not a scarcity-multiplexing mechanism. Report the curve."
+  }
+}
