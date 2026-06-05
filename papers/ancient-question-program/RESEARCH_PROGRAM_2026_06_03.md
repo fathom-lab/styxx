@@ -5,6 +5,13 @@
 ideas · **[SCI]** established science · **[SPEC]** live/open. Built from three
 citation-grounded deep-research passes + our own committed results.
 
+> **UPDATE 2026-06-05 — both halves now resolved; unified answer in
+> `SYNTHESIS_ancient_question_answered_2026_06_05.md`.** Half B (rhythm) below reflects only the *first*
+> ablation; it has since been completed across a 9-experiment arc (`papers/frequency-resonance/`) whose
+> verdict is far stronger than "mechanism not requirement": rhythm is **dominated by attention** and never
+> strictly beats it. The unified verdict is **asymmetric** — geometry universal (Half A), rhythm a
+> dominated substrate-specific mechanism (Half B). See the synthesis for the current statement.
+
 ---
 
 ## 0. What this document claims
