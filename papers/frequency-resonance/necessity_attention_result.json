@@ -1,0 +1,49 @@
+{
+  "config": {
+    "steps": 4000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "params": {
+      "lru_free": 168524,
+      "lru_clamped": 168268,
+      "transformer": 161612
+    }
+  },
+  "arms": {
+    "lru_free": {
+      "kcaps": [
+        6,
+        6,
+        6
+      ],
+      "mean_kcap": 6.0
+    },
+    "lru_clamped": {
+      "kcaps": [
+        3,
+        3,
+        2
+      ],
+      "mean_kcap": 2.6666666666666665
+    },
+    "transformer": {
+      "kcaps": [
+        10,
+        18,
+        18
+      ],
+      "mean_kcap": 15.333333333333334
+    }
+  },
+  "gate": {
+    "kcap_free": 6.0,
+    "kcap_clamped": 2.6666666666666665,
+    "kcap_transformer": 15.333333333333334,
+    "P1_oscillation_helps_recurrence": true,
+    "P2_attention_matches_oscillation": true,
+    "verdict": "RHYTHM NOT SPECIAL \u2014 oscillation helps a recurrent net (free 6.0 vs clamped 2.7) but the rhythm-free TRANSFORMER matches/beats it at matched params (15.3 vs 6.0). Oscillation is one efficient mechanism, not a requirement \u2014 the demarcated, honest reading."
+  }
+}
