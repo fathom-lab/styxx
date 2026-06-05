@@ -1,0 +1,223 @@
+{
+  "models": [
+    "distilgpt2",
+    "EleutherAI/pythia-160m",
+    "EleutherAI/pythia-410m",
+    "Qwen/Qwen2.5-0.5B",
+    "Qwen/Qwen3-0.6B",
+    "sentence-transformers/all-MiniLM-L6-v2",
+    "sentence-transformers/all-mpnet-base-v2",
+    "BAAI/bge-small-en-v1.5"
+  ],
+  "n_concepts": 100,
+  "pairs": [
+    {
+      "a": "distilgpt2",
+      "b": "pythia-160m",
+      "kind": "dec-dec",
+      "rsa": 0.533,
+      "recovery": 0.02
+    },
+    {
+      "a": "distilgpt2",
+      "b": "pythia-410m",
+      "kind": "dec-dec",
+      "rsa": 0.561,
+      "recovery": 0.03
+    },
+    {
+      "a": "distilgpt2",
+      "b": "Qwen2.5-0.5B",
+      "kind": "dec-dec",
+      "rsa": 0.479,
+      "recovery": 0.01
+    },
+    {
+      "a": "distilgpt2",
+      "b": "Qwen3-0.6B",
+      "kind": "dec-dec",
+      "rsa": 0.517,
+      "recovery": 0.02
+    },
+    {
+      "a": "distilgpt2",
+      "b": "all-MiniLM-L6-v2",
+      "kind": "mixed",
+      "rsa": 0.4,
+      "recovery": 0.02
+    },
+    {
+      "a": "distilgpt2",
+      "b": "all-mpnet-base-v2",
+      "kind": "mixed",
+      "rsa": 0.464,
+      "recovery": 0.0
+    },
+    {
+      "a": "distilgpt2",
+      "b": "bge-small-en-v1.5",
+      "kind": "mixed",
+      "rsa": 0.415,
+      "recovery": 0.0
+    },
+    {
+      "a": "pythia-160m",
+      "b": "pythia-410m",
+      "kind": "dec-dec",
+      "rsa": 0.875,
+      "recovery": 0.02
+    },
+    {
+      "a": "pythia-160m",
+      "b": "Qwen2.5-0.5B",
+      "kind": "dec-dec",
+      "rsa": 0.787,
+      "recovery": 0.0
+    },
+    {
+      "a": "pythia-160m",
+      "b": "Qwen3-0.6B",
+      "kind": "dec-dec",
+      "rsa": 0.867,
+      "recovery": 0.02
+    },
+    {
+      "a": "pythia-160m",
+      "b": "all-MiniLM-L6-v2",
+      "kind": "mixed",
+      "rsa": 0.693,
+      "recovery": 0.02
+    },
+    {
+      "a": "pythia-160m",
+      "b": "all-mpnet-base-v2",
+      "kind": "mixed",
+      "rsa": 0.782,
+      "recovery": 0.0
+    },
+    {
+      "a": "pythia-160m",
+      "b": "bge-small-en-v1.5",
+      "kind": "mixed",
+      "rsa": 0.691,
+      "recovery": 0.01
+    },
+    {
+      "a": "pythia-410m",
+      "b": "Qwen2.5-0.5B",
+      "kind": "dec-dec",
+      "rsa": 0.813,
+      "recovery": 0.05
+    },
+    {
+      "a": "pythia-410m",
+      "b": "Qwen3-0.6B",
+      "kind": "dec-dec",
+      "rsa": 0.872,
+      "recovery": 0.03
+    },
+    {
+      "a": "pythia-410m",
+      "b": "all-MiniLM-L6-v2",
+      "kind": "mixed",
+      "rsa": 0.673,
+      "recovery": 0.01
+    },
+    {
+      "a": "pythia-410m",
+      "b": "all-mpnet-base-v2",
+      "kind": "mixed",
+      "rsa": 0.764,
+      "recovery": 0.02
+    },
+    {
+      "a": "pythia-410m",
+      "b": "bge-small-en-v1.5",
+      "kind": "mixed",
+      "rsa": 0.688,
+      "recovery": 0.01
+    },
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "Qwen3-0.6B",
+      "kind": "dec-dec",
+      "rsa": 0.85,
+      "recovery": 0.04
+    },
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "all-MiniLM-L6-v2",
+      "kind": "mixed",
+      "rsa": 0.63,
+      "recovery": 0.01
+    },
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "all-mpnet-base-v2",
+      "kind": "mixed",
+      "rsa": 0.718,
+      "recovery": 0.04
+    },
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "bge-small-en-v1.5",
+      "kind": "mixed",
+      "rsa": 0.629,
+      "recovery": 0.03
+    },
+    {
+      "a": "Qwen3-0.6B",
+      "b": "all-MiniLM-L6-v2",
+      "kind": "mixed",
+      "rsa": 0.69,
+      "recovery": 0.0
+    },
+    {
+      "a": "Qwen3-0.6B",
+      "b": "all-mpnet-base-v2",
+      "kind": "mixed",
+      "rsa": 0.78,
+      "recovery": 0.04
+    },
+    {
+      "a": "Qwen3-0.6B",
+      "b": "bge-small-en-v1.5",
+      "kind": "mixed",
+      "rsa": 0.692,
+      "recovery": 0.01
+    },
+    {
+      "a": "all-MiniLM-L6-v2",
+      "b": "all-mpnet-base-v2",
+      "kind": "emb-emb",
+      "rsa": 0.774,
+      "recovery": 0.0
+    },
+    {
+      "a": "all-MiniLM-L6-v2",
+      "b": "bge-small-en-v1.5",
+      "kind": "emb-emb",
+      "rsa": 0.786,
+      "recovery": 0.01
+    },
+    {
+      "a": "all-mpnet-base-v2",
+      "b": "bge-small-en-v1.5",
+      "kind": "emb-emb",
+      "rsa": 0.776,
+      "recovery": 0.05
+    }
+  ],
+  "gate": {
+    "mean_rsa": 0.686,
+    "max_recovery": 0.05,
+    "max_recovery_by_kind": {
+      "emb-emb": 0.05,
+      "dec-dec": 0.05,
+      "mixed": 0.04
+    },
+    "n_alignable_pairs": 0,
+    "chance": 0.01,
+    "reading": "SHARED BUT NOT ZERO-ANCHOR ALIGNABLE \u2014 real models share geometry (mean RSA 0.69) but unsupervised recovery fails (max 0.05 ~ chance 0.010). The shared geometry is real but NOT near-isometric enough for zero-pair alignment -- exactly the warp regime: transfer needs anchors. The practical limit, on real brains."
+  }
+}

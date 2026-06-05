@@ -34,8 +34,12 @@ CONCEPTS = ("dog cat horse cow pig sheep lion tiger bear wolf fox deer rabbit mo
             "house school church store bank hospital bridge tower castle "
             "guitar piano drum violin trumpet flute").split()
 
-MODELS = (["distilgpt2", "EleutherAI/pythia-160m"] if SMOKE else
-          ["distilgpt2", "EleutherAI/pythia-410m", "Qwen/Qwen2.5-0.5B", "facebook/opt-125m", "bigscience/bloom-560m"])
+# safetensors-only (torch<2.6 refuses .bin via torch.load — CVE-2025-32434). Cross-family (different data):
+# GPT-2/WebText, Pythia/Pile, Qwen. Same-family scale/version pairs included for the isometry-vs-family contrast.
+DECODERS = ["distilgpt2", "EleutherAI/pythia-160m", "EleutherAI/pythia-410m", "Qwen/Qwen2.5-0.5B", "Qwen/Qwen3-0.6B"]
+EMBEDDERS = ["sentence-transformers/all-MiniLM-L6-v2", "sentence-transformers/all-mpnet-base-v2", "BAAI/bge-small-en-v1.5"]
+MODELS = (["distilgpt2", "EleutherAI/pythia-160m"] if SMOKE else DECODERS + EMBEDDERS)
+EMB_SET = set(EMBEDDERS)
 if SMOKE:
     CONCEPTS = CONCEPTS[:30]
 N = len(CONCEPTS)
@@ -51,15 +55,16 @@ TEMPLATES = ["a {}", "the {}", "I saw a {}.", "a photo of a {}.", "this is a {}.
 
 @torch.no_grad()
 def embed(model_name):
+    is_emb = model_name in EMB_SET                     # embedders: mean-pool (meaning-trained); decoders: last-token
     tok = AutoTokenizer.from_pretrained(model_name)
-    m = AutoModel.from_pretrained(model_name, dtype=torch.float32).to(DEV).eval()
+    m = AutoModel.from_pretrained(model_name, dtype=torch.float32, use_safetensors=True).to(DEV).eval()
     vecs = []
     for c in CONCEPTS:
         reps = []
         for t in TEMPLATES:
             ids = tok(t.format(c), return_tensors="pt").to(DEV)
             h = m(**ids).last_hidden_state[0]          # (T, d)
-            reps.append(h[-1].float().cpu().numpy())   # last-token rep (context integrated)
+            reps.append((h.mean(0) if is_emb else h[-1]).float().cpu().numpy())
         vecs.append(np.mean(reps, 0))                  # average across templates
     del m
     if DEV == "cuda":
@@ -88,13 +93,17 @@ def main():
             perm = rng.permutation(N); true_match = np.argsort(perm)
             assign, _ = R.align(E[a], E[b][perm], rng)
             recov = float(np.mean(assign == true_match))
-            pairs.append({"a": a.split("/")[-1], "b": b.split("/")[-1], "rsa": round(r, 3), "recovery": round(recov, 3)})
-            print(f"  {a.split('/')[-1]:18s} <-> {b.split('/')[-1]:18s}  RSA={r:.3f}  zero-anchor recovery={recov:.3f}", flush=True)
+            kind = "emb-emb" if (a in EMB_SET and b in EMB_SET) else ("dec-dec" if (a not in EMB_SET and b not in EMB_SET) else "mixed")
+            pairs.append({"a": a.split("/")[-1], "b": b.split("/")[-1], "kind": kind, "rsa": round(r, 3), "recovery": round(recov, 3)})
+            print(f"  [{kind}] {a.split('/')[-1]:16s} <-> {b.split('/')[-1]:18s}  RSA={r:.3f}  zero-anchor recovery={recov:.3f}", flush=True)
 
     chance = 1.0 / N
     rsas = [p["rsa"] for p in pairs]; recs = [p["recovery"] for p in pairs]
     mean_rsa, max_rec = float(np.mean(rsas)), float(np.max(recs))
     n_align = sum(1 for p in pairs if p["recovery"] >= 0.30)
+    def kmax(k): vs = [p["recovery"] for p in pairs if p["kind"] == k]; return round(float(max(vs)), 3) if vs else None
+    rec_by_kind = {"emb-emb": kmax("emb-emb"), "dec-dec": kmax("dec-dec"), "mixed": kmax("mixed")}
+    print(f"\n  max recovery by kind: {rec_by_kind}  (chance {chance:.3f})", flush=True)
     if mean_rsa >= 0.30 and max_rec >= 0.30:
         reading = (f"NEAR-ISOMETRIC ENOUGH (some pairs) — real differently-trained models share geometry "
                    f"(mean RSA {mean_rsa:.2f}) and {n_align}/{len(pairs)} pairs are zero-anchor alignable "
@@ -110,6 +119,7 @@ def main():
                    "diagnose extraction (pooling/layer/template) before concluding.")
     out = {"models": MODELS, "n_concepts": N, "pairs": pairs,
            "gate": {"mean_rsa": round(mean_rsa, 3), "max_recovery": round(max_rec, 3),
+                    "max_recovery_by_kind": rec_by_kind,
                     "n_alignable_pairs": n_align, "chance": round(chance, 4), "reading": reading}}
     fn = HERE / ("real_universality_smoke.json" if SMOKE else "real_universality_result.json")
     fn.write_text(json.dumps(out, indent=2), encoding="utf-8")
