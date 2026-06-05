@@ -1,0 +1,40 @@
+{
+  "config": {
+    "steps": 5000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "k_train": 8,
+    "extrap": [
+      10,
+      12,
+      15,
+      18,
+      20
+    ]
+  },
+  "arms": {
+    "lru_free": {
+      "in_dist_acc": 0.9781541666666667,
+      "extrap_acc": 0.0881
+    },
+    "lru_clamped": {
+      "in_dist_acc": 0.8045416666666667,
+      "extrap_acc": 0.17526666666666668
+    },
+    "transformer": {
+      "in_dist_acc": 1.0,
+      "extrap_acc": 0.1654933333333333
+    }
+  },
+  "gate": {
+    "extrap_transformer": 0.1654933333333333,
+    "extrap_lru_free": 0.0881,
+    "extrap_lru_clamped": 0.17526666666666668,
+    "P1_recurrence_extrapolates": false,
+    "P2_oscillation_aids": false,
+    "verdict": "NO CLEAN REGIME FLIP \u2014 extrap acc: transformer 0.17, lru-free 0.09, lru-clamped 0.18. Attention did not collapse as predicted / recurrence did not clearly win. Report curves."
+  }
+}
