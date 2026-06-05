@@ -26,8 +26,12 @@ a 16× range of state sizes, *not* preferentially under scarcity — the "rhythm
 are scarce" reconciliation is not supported. The honest landing: frequency is fundamental to memory as a
 *band to tune, not a ladder to climb* — and even tuned, it is a real but dominated, non-generalizing,
 constant-factor recurrent mechanism, not the secret of mind. Past the optimum, higher frequency is the
-computational analogue of a seizure, not enlightenment. Two frontier tests (noise robustness; periodic
-timing — oscillation's native domain) probe whether rhythm is *sovereign* anywhere; reported on landing.
+computational analogue of a seizure, not enlightenment. **(7)** But on a different axis — **noise
+robustness** — the phase code wins: it loses less capacity under state noise than the decay code (−33% vs
+−50%) and survives a scale-fairness control in the strong direction (more robust *despite* a smaller
+state). This is the first regime where oscillation is not dominated, and it matches what neuroscience says
+rhythms are *for* — robust coding, not raw storage. A final test (8, periodic timing — oscillation's
+native domain) probes whether a second sovereign regime exists; reported on landing.
 
 ## 1. Introduction
 
@@ -148,12 +152,26 @@ scarce → why biology uses it" is not supported in silico. *Confirmed:* the rat
 ~1.8×** at every D — genuine phase-multiplexing (~2 items per mode), but resource-*independent*. The
 mechanism is real; its resource-dependence is not.
 
-## 9. Experiment 7 — noise robustness *(running)*
+## 9. Experiment 7 — the phase code is more noise-robust than the decay code (oscillation's first sovereign regime)
 
 Pre-registered (`PREREG_noise_2026_06_04.md`). The most-cited reason biology phase-codes: a phase (2-D
-angle) is said to survive corruption a 1-D magnitude/decay code cannot. Inject Gaussian noise into the
-recurrent state at every timestep (train + eval), sweep σ, D=256, free vs clamped. P1: ratio(σ) rises
-with noise. *Result pending; reported on landing — read straight either way.*
+angle) is said to survive corruption a 1-D magnitude/decay code cannot. Gaussian noise into the recurrent
+state at every timestep (train + eval), sweep σ, D=256, free vs clamped, 3 seeds.
+
+| σ | 0.0 | 0.05 | 0.10 | 0.20 | 0.40 |
+|---|---:|---:|---:|---:|---:|
+| free kcap | 6.00 | 6.00 | 6.00 | 4.00 | 4.00 |
+| clamped kcap | 2.67 | 2.67 | 2.00 | 2.00 | 1.33 |
+
+**The decay net loses half its capacity (−50%); the oscillatory net a third (−33%), and is
+noise-insensitive up to σ=0.1.** The phase code degrades more gracefully. **Fairness control**
+(`run_noise_control.py`, the load-bearing check): absolute noise is fair only if state magnitudes match —
+measured RMS **free 1.33 vs clamped 1.72**, so the oscillatory net is more robust *despite a worse
+noise-to-signal ratio*; the result is not a scale artifact and is if anything understated (the reverse of
+the pre-flagged confound). Bounded: the σ-by-σ *ratio* is jagged on tiny integer kcaps (the claim rests
+on the fractional-loss gap + the control, not the ratio trend); and this is oscillation-vs-decay, **not**
+oscillation-vs-attention (state-noise has no fair transformer analogue — untested there). Still, the first
+regime in the arc where rhythm is not dominated by its baseline.
 
 ## 10. Experiment 8 — timing, oscillation's home turf *(running)*
 
