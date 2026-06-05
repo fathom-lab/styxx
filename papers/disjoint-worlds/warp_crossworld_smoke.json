@@ -1,0 +1,62 @@
+{
+  "config": {
+    "N": 100,
+    "K": 8,
+    "sigma": 0.05,
+    "alphas": [
+      0.0,
+      1.0
+    ],
+    "seeds": [
+      0
+    ]
+  },
+  "by_alpha": {
+    "0.0": {
+      "recovery": 0.14,
+      "rsa_share": 0.9694,
+      "faith": 0.9741,
+      "adv_null": -0.1583,
+      "adv_procrustes": 0.475,
+      "adv_linearmap": 0.5199,
+      "adv_proc_true": 0.978,
+      "adv_lin_true": 0.9917
+    },
+    "1.0": {
+      "recovery": 0.0,
+      "rsa_share": 0.791,
+      "faith": 0.885,
+      "adv_null": 0.1524,
+      "adv_procrustes": -0.1479,
+      "adv_linearmap": -0.0199,
+      "adv_proc_true": 0.8618,
+      "adv_lin_true": 0.9076
+    }
+  },
+  "gate": {
+    "alpha0": {
+      "recovery": 0.14,
+      "rsa_share": 0.9694,
+      "faith": 0.9741,
+      "adv_null": -0.1583,
+      "adv_procrustes": 0.475,
+      "adv_linearmap": 0.5199,
+      "adv_proc_true": 0.978,
+      "adv_lin_true": 0.9917
+    },
+    "alpha1": {
+      "recovery": 0.0,
+      "rsa_share": 0.791,
+      "faith": 0.885,
+      "adv_null": 0.1524,
+      "adv_procrustes": -0.1479,
+      "adv_linearmap": -0.0199,
+      "adv_proc_true": 0.8618,
+      "adv_lin_true": 0.9076
+    },
+    "P1_unsup_survives": false,
+    "true_correspondence_holds": true,
+    "P3_rsa_survives": true,
+    "reading": "RECOVERY-BOUND (not transfer-bound) \u2014 with TRUE correspondence the warp still transfers (proc_true 0.86 / lin_true 0.91 at alpha=1) and RSA survives (0.79), BUT unsupervised recovery fails under warp (recov 0.00) so the unsupervised map collapses (-0.15). The geometry/causal structure is still there and alignable; the bottleneck is UNSUPERVISED correspondence recovery under warp, not the transferability of meaning. Nuanced, honest."
+  }
+}
