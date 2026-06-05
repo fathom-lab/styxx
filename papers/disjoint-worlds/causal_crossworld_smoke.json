@@ -1,0 +1,84 @@
+{
+  "config": {
+    "N": 100,
+    "K": 8,
+    "dA": 32,
+    "dB": 24,
+    "sigmas": [
+      0.02,
+      0.7
+    ],
+    "seeds": [
+      0
+    ]
+  },
+  "conditions": {
+    "distinctive_sigma0.02": {
+      "recovery": 0.28,
+      "faith": 0.9715,
+      "same_rsa": 0.9701,
+      "diag_adv_unsup": 0.6749,
+      "diag_adv_true": 1.051,
+      "diag_adv_null": 0.0907,
+      "diag_unsup": 0.6312,
+      "off_unsup": -0.0437
+    },
+    "distinctive_sigma0.7": {
+      "recovery": 0.01,
+      "faith": 0.8367,
+      "same_rsa": 0.7463,
+      "diag_adv_unsup": -0.1157,
+      "diag_adv_true": 1.0325,
+      "diag_adv_null": -0.0225,
+      "diag_unsup": -0.1077,
+      "off_unsup": 0.008
+    },
+    "isotropic_sigma0.02": {
+      "recovery": 0.14,
+      "faith": 0.9857,
+      "same_rsa": 0.9657,
+      "diag_adv_unsup": 0.5754,
+      "diag_adv_true": 1.0523,
+      "diag_adv_null": 0.1652,
+      "diag_unsup": 0.5462,
+      "off_unsup": -0.0292
+    },
+    "isotropic_sigma0.7": {
+      "recovery": 0.03,
+      "faith": 0.8288,
+      "same_rsa": 0.6925,
+      "diag_adv_unsup": 0.0778,
+      "diag_adv_true": 1.049,
+      "diag_adv_null": -0.0644,
+      "diag_unsup": 0.0581,
+      "off_unsup": -0.0197
+    }
+  },
+  "gate": {
+    "sigma": 0.02,
+    "distinctive": {
+      "recovery": 0.28,
+      "faith": 0.9715,
+      "same_rsa": 0.9701,
+      "diag_adv_unsup": 0.6749,
+      "diag_adv_true": 1.051,
+      "diag_adv_null": 0.0907,
+      "diag_unsup": 0.6312,
+      "off_unsup": -0.0437
+    },
+    "isotropic": {
+      "recovery": 0.14,
+      "faith": 0.9857,
+      "same_rsa": 0.9657,
+      "diag_adv_unsup": 0.5754,
+      "diag_adv_true": 1.0523,
+      "diag_adv_null": 0.1652,
+      "diag_unsup": 0.5462,
+      "off_unsup": -0.0292
+    },
+    "P1_causal_transfer": true,
+    "P2_recovery": false,
+    "P3_isotropic_collapse": true,
+    "reading": "INCONCLUSIVE/REGIME \u2014 distinctive recovery 0.28, diag_adv 0.67; isotropic recovery 0.14. Read the full sweep; recovery prerequisite may not be met."
+  }
+}
