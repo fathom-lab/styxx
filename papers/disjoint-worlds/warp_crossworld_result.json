@@ -1,0 +1,97 @@
+{
+  "config": {
+    "N": 100,
+    "K": 8,
+    "sigma": 0.05,
+    "alphas": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "by_alpha": {
+    "0.0": {
+      "recovery": 0.18,
+      "rsa_share": 0.9705,
+      "faith": 0.9805,
+      "adv_null": 0.0012,
+      "adv_procrustes": 0.6167,
+      "adv_linearmap": 0.618,
+      "adv_proc_true": 0.9704,
+      "adv_lin_true": 0.9881
+    },
+    "0.25": {
+      "recovery": 0.1167,
+      "rsa_share": 0.947,
+      "faith": 0.9683,
+      "adv_null": 0.089,
+      "adv_procrustes": 0.2777,
+      "adv_linearmap": 0.3403,
+      "adv_proc_true": 0.9562,
+      "adv_lin_true": 0.978
+    },
+    "0.5": {
+      "recovery": 0.0367,
+      "rsa_share": 0.8597,
+      "faith": 0.9166,
+      "adv_null": -0.0645,
+      "adv_procrustes": 0.2502,
+      "adv_linearmap": 0.2898,
+      "adv_proc_true": 0.9195,
+      "adv_lin_true": 0.9699
+    },
+    "0.75": {
+      "recovery": 0.0367,
+      "rsa_share": 0.7933,
+      "faith": 0.8874,
+      "adv_null": 0.1021,
+      "adv_procrustes": 0.305,
+      "adv_linearmap": 0.3221,
+      "adv_proc_true": 0.8796,
+      "adv_lin_true": 0.9674
+    },
+    "1.0": {
+      "recovery": 0.0167,
+      "rsa_share": 0.7897,
+      "faith": 0.8835,
+      "adv_null": 0.0911,
+      "adv_procrustes": 0.1516,
+      "adv_linearmap": 0.1811,
+      "adv_proc_true": 0.8772,
+      "adv_lin_true": 0.9658
+    }
+  },
+  "gate": {
+    "alpha0": {
+      "recovery": 0.18,
+      "rsa_share": 0.9705,
+      "faith": 0.9805,
+      "adv_null": 0.0012,
+      "adv_procrustes": 0.6167,
+      "adv_linearmap": 0.618,
+      "adv_proc_true": 0.9704,
+      "adv_lin_true": 0.9881
+    },
+    "alpha1": {
+      "recovery": 0.0167,
+      "rsa_share": 0.7897,
+      "faith": 0.8835,
+      "adv_null": 0.0911,
+      "adv_procrustes": 0.1516,
+      "adv_linearmap": 0.1811,
+      "adv_proc_true": 0.8772,
+      "adv_lin_true": 0.9658
+    },
+    "P1_unsup_survives": false,
+    "true_correspondence_holds": true,
+    "P3_rsa_survives": true,
+    "reading": "RECOVERY-BOUND (not transfer-bound) \u2014 with TRUE correspondence the warp still transfers (proc_true 0.88 / lin_true 0.97 at alpha=1) and RSA survives (0.79), BUT unsupervised recovery fails under warp (recov 0.02) so the unsupervised map collapses (0.15). The geometry/causal structure is still there and alignable; the bottleneck is UNSUPERVISED correspondence recovery under warp, not the transferability of meaning. Nuanced, honest."
+  }
+}
