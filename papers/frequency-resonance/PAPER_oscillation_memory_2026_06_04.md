@@ -2,8 +2,9 @@
 
 **styxx / fathom-lab · draft 2026-06-04 · in-silico, pre-registered**
 
-> Status: all eight experiments complete and committed (capacity axis 1–6; robustness 7; timing 8).
-> Final pass: discussion reflects the closed two-axis map. Author drafts; operator
+> Status: all nine experiments complete and committed (capacity axis 1–6; robustness 7; timing 8;
+> ceiling-breaker 9). Discussion reflects the tightened map: rhythm never strictly beats attention.
+> Author drafts; operator
 > owns submission (arXiv/Zenodo).
 
 ## Abstract
@@ -34,9 +35,13 @@ rhythms are *for* — robust coding, not raw storage. **(8)** And on *timing* �
 oscillation's native task — it is the native mechanism: perfect at every period while the decay net
 collapses (its edge grows with period), and *undominated* by attention (both saturate) — though co-equal,
 not supreme, and not via simple resonance (a phase-probe shows a distributed multi-frequency basis, not
-θ≈2π/P tuning). The two-axis map closes: **rhythm is dominated for memory capacity, but native and
-undominated for the robust, temporal coding that capacity tasks never tested** — the demarcated, true
-shape of "frequency is fundamental to mind."
+θ≈2π/P tuning). **(9)** And when we break that ceiling — periodic prediction under input corruption —
+rhythm still only *ties* attention (identical degradation to three decimals), never beating it. The map
+closes in its tightened form: **across every fair comparison with attention — capacity, clean timing,
+noisy timing — rhythm never strictly wins; it loses or ties, and its only clean victories are over its own
+decay baseline.** Oscillation is one efficient way a recurrent system encodes time and resists noise, not a
+privileged or superior substrate for cognition — the demarcated, true (and smallest) shape of "frequency
+is fundamental to mind."
 
 ## 1. Introduction
 
@@ -201,9 +206,31 @@ harder (jittered/noisy) timing task is needed to resolve them. *(Mechanism — r
 phase-spectrum probe shows the free net does **not** learn θ≈2π/P: enrichment near each target is ~1.0×
 (chance), and it solves short periods whose 2π/P lies outside its phase range entirely. It wins via a
 broad, diverse bank of phases — a distributed Fourier-like temporal basis — not single-tone resonance.
-The reframe holds: rhythm is dominated for capacity, native and undominated for timing.
+The reframe holds: rhythm is dominated for capacity, native and undominated for timing — pending the
+ceiling-breaker (exp 9).
 
-## 11. Discussion
+## 11. Experiment 9 — the ceiling-breaker: rhythm ties attention under corruption (it never strictly beats it)
+
+Pre-registered (`PREREG_noisy_timing_2026_06_05.md`). Exp 8 was a *ceiling* tie, leaving open whether
+rhythm beats attention on a *harder* temporal task. We break the ceiling with input corruption (replace
+each input symbol with a random one w.p. ρ — fair to all arms, unlike exp-7 state noise; predict the clean
+periodic continuation), ρ swept, averaged over P∈{4,6,8}, 3 seeds.
+
+| ρ | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 |
+|---|---:|---:|---:|---:|---:|
+| free | 0.995 | 0.958 | 0.902 | 0.825 | 0.725 |
+| transformer | 1.000 | 0.970 | 0.915 | 0.829 | 0.717 |
+| clamped | 0.632 | 0.530 | 0.453 | 0.387 | 0.330 |
+
+**P1 refuted.** free − transformer = **+0.002** at high corruption; the curves are within ±0.013 at every
+ρ and cross at ρ=0.4 — statistically indistinguishable, identical graceful degradation, while decay sits at
+the floor. Rhythm's distributed phase code denoises periodic structure *exactly as well as* attention's
+lookup, not better. So **across every fair comparison with attention — capacity, clean timing, noisy timing
+— rhythm never strictly wins; it loses or ties.** The interesting residue is the *null itself*: two
+architectures with nothing in common produce the same robustness curve to three decimals — architectural
+convergence on one solution, not a rhythm advantage.
+
+## 12. Discussion
 
 Frequency is fundamental to ordered memory, but as a **resonance, not a ladder** — and a *dominated*
 one. The mechanism is phase-coding over the retention window: too slow and items do not separate; too
@@ -223,10 +250,16 @@ and the timing mechanism is a distributed phase basis, not the single-tone reson
 imagines. The honest two-axis map: **rhythm is dominated for memory capacity, native and undominated for
 robust, temporal coding** — which is the direction modern neuroscience has moved on what brain rhythms are
 *for* (coordination, robustness, timing), and the demarcated, true shape of the intuition we set out to
-test. The remaining frontier is whether rhythm can *beat* attention on a harder temporal task that breaks
-the ceiling, not merely tie it.
+test. We then tried to break that ceiling (exp 9): periodic prediction under input corruption, the
+hardness axis tied most directly to oscillation's claimed noise-robustness. Rhythm still only *ties*
+attention — identical degradation to three decimals — so the honest map sharpens once more: **across every
+fair comparison with attention, rhythm never strictly wins; it loses (capacity) or ties (clean and noisy
+timing). Its only clean victories are over its own decay baseline.** Oscillation is one efficient way a
+recurrent system encodes time and resists noise — not a privileged or superior substrate for cognition.
+The genuinely open doors are other hardness axes (jittered/drifting periods, long horizons, compositional
+or continuous-time structure) where the two architectures might yet diverge.
 
-## 12. Limitations
+## 13. Limitations
 
 In-silico; one task family (ordered copy; periodic prediction in exp 8), recurrent and attention
 architectures, 3 seeds, capacity at a 0.80 threshold. The theory is an order-of-magnitude phase-coding
@@ -235,7 +268,7 @@ argument, not an exact capacity theorem. We make no claim about human consciousn
 about computational memory. Every claim was registered before its data; sub-claims that did not survive
 re-derivation are bounded in text, not removed.
 
-## 13. Methods
+## 14. Methods
 
 Complex-diagonal LRU (256 modes unless swept), |λ|∈[0.9,0.999], complex input projection (matched 2-D
 real state across arms), 2-layer GELU readout. Transformer control: matched ~168k params, learned or

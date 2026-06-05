@@ -1,0 +1,57 @@
+{
+  "config": {
+    "steps": 4000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "rho_sweep": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4
+    ],
+    "pgrid_eval": [
+      4,
+      6,
+      8
+    ],
+    "params": {
+      "lru_free": 168460,
+      "lru_clamped": 168204,
+      "transformer": 162012
+    }
+  },
+  "by_arch": {
+    "lru_free": {
+      "0.0": 0.995449980099996,
+      "0.1": 0.9578778081470066,
+      "0.2": 0.9018401503562927,
+      "0.3": 0.8246097233560351,
+      "0.4": 0.725100040435791
+    },
+    "lru_clamped": {
+      "0.0": 0.6319761673609415,
+      "0.1": 0.5304967098765903,
+      "0.2": 0.45308201511700946,
+      "0.3": 0.3868954910172357,
+      "0.4": 0.3303435941537221
+    },
+    "transformer": {
+      "0.0": 0.9997468921873304,
+      "0.1": 0.9699601266119217,
+      "0.2": 0.9145713647206625,
+      "0.3": 0.8286992576387194,
+      "0.4": 0.7171029580963982
+    }
+  },
+  "gate": {
+    "free_minus_transformer_hi_rho": 0.002,
+    "free_minus_clamped_hi_rho": 0.4162,
+    "P1_rhythm_beats_attention": false,
+    "P2_attention_ties_or_wins": true,
+    "verdict": "ATTENTION TIES-OR-WINS \u2014 demarcation tightened. Under corruption rhythm does NOT strictly beat attention (free-transformer +0.002 at rho>=0.3). Rhythm's only clean win stays its decay baseline; vs attention it is at best co-equal (clean timing) and not superior under noise. The map sharpens: rhythm ties attention at temporal tasks, never beats it."
+  }
+}
