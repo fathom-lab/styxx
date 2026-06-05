@@ -1,0 +1,39 @@
+{
+  "config": {
+    "steps": 600,
+    "seeds": [
+      0
+    ],
+    "D": 256,
+    "sigma_sweep": [
+      0.0,
+      0.2
+    ]
+  },
+  "by_sigma": {
+    "0.0": {
+      "free": 3.0,
+      "clamped": 1.0,
+      "ratio": 3.0
+    },
+    "0.2": {
+      "free": 2.0,
+      "clamped": 1.0,
+      "ratio": 2.0
+    }
+  },
+  "gate": {
+    "ratio_lo_sigma": 3.0,
+    "ratio_hi_sigma": 2.0,
+    "ratios": [
+      3.0,
+      2.0
+    ],
+    "spearman_sigma_ratio": -1.0,
+    "free_frac_drop": 0.3333,
+    "clamped_frac_drop": 0.0,
+    "P1_advantage_grows_under_noise": false,
+    "P2_clamped_degrades_faster": false,
+    "verdict": "NOISE-FLAT / REFUTED \u2014 ratio(sigma) does not clearly rise (ratio 3.00 at sigma=0 -> 2.00 at sigma=0.2, Spearman -1.00). Oscillation's edge is noise-independent; the robustness reconciliation does not hold either. Report the curve."
+  }
+}
