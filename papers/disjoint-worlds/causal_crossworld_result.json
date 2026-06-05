@@ -1,0 +1,149 @@
+{
+  "config": {
+    "N": 100,
+    "K": 8,
+    "dA": 32,
+    "dB": 24,
+    "sigmas": [
+      0.02,
+      0.05,
+      0.12,
+      0.3,
+      0.7
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "conditions": {
+    "distinctive_sigma0.02": {
+      "recovery": 0.3067,
+      "faith": 0.971,
+      "same_rsa": 0.9717,
+      "diag_adv_unsup": 0.7373,
+      "diag_adv_true": 1.012,
+      "diag_adv_null": -0.0886,
+      "diag_unsup": 0.7288,
+      "off_unsup": -0.0085
+    },
+    "distinctive_sigma0.05": {
+      "recovery": 0.29,
+      "faith": 0.9707,
+      "same_rsa": 0.9704,
+      "diag_adv_unsup": 0.7806,
+      "diag_adv_true": 1.0115,
+      "diag_adv_null": -0.1231,
+      "diag_unsup": 0.7612,
+      "off_unsup": -0.0194
+    },
+    "distinctive_sigma0.12": {
+      "recovery": 0.2733,
+      "faith": 0.9686,
+      "same_rsa": 0.9639,
+      "diag_adv_unsup": 0.7278,
+      "diag_adv_true": 1.0101,
+      "diag_adv_null": -0.1536,
+      "diag_unsup": 0.7152,
+      "off_unsup": -0.0126
+    },
+    "distinctive_sigma0.3": {
+      "recovery": 0.11,
+      "faith": 0.9511,
+      "same_rsa": 0.926,
+      "diag_adv_unsup": 0.4715,
+      "diag_adv_true": 1.0049,
+      "diag_adv_null": -0.0939,
+      "diag_unsup": 0.4674,
+      "off_unsup": -0.0041
+    },
+    "distinctive_sigma0.7": {
+      "recovery": 0.0433,
+      "faith": 0.8528,
+      "same_rsa": 0.7512,
+      "diag_adv_unsup": 0.2559,
+      "diag_adv_true": 0.9814,
+      "diag_adv_null": 0.0144,
+      "diag_unsup": 0.2305,
+      "off_unsup": -0.0255
+    },
+    "isotropic_sigma0.02": {
+      "recovery": 0.14,
+      "faith": 0.9858,
+      "same_rsa": 0.9725,
+      "diag_adv_unsup": 0.526,
+      "diag_adv_true": 1.0096,
+      "diag_adv_null": 0.047,
+      "diag_unsup": 0.496,
+      "off_unsup": -0.03
+    },
+    "isotropic_sigma0.05": {
+      "recovery": 0.12,
+      "faith": 0.9853,
+      "same_rsa": 0.9708,
+      "diag_adv_unsup": 0.4882,
+      "diag_adv_true": 1.0094,
+      "diag_adv_null": 0.1361,
+      "diag_unsup": 0.4418,
+      "off_unsup": -0.0464
+    },
+    "isotropic_sigma0.12": {
+      "recovery": 0.1133,
+      "faith": 0.9818,
+      "same_rsa": 0.9624,
+      "diag_adv_unsup": 0.3778,
+      "diag_adv_true": 1.0089,
+      "diag_adv_null": 0.0119,
+      "diag_unsup": 0.3534,
+      "off_unsup": -0.0244
+    },
+    "isotropic_sigma0.3": {
+      "recovery": 0.0667,
+      "faith": 0.9585,
+      "same_rsa": 0.912,
+      "diag_adv_unsup": 0.2296,
+      "diag_adv_true": 1.0067,
+      "diag_adv_null": 0.0646,
+      "diag_unsup": 0.2201,
+      "off_unsup": -0.0096
+    },
+    "isotropic_sigma0.7": {
+      "recovery": 0.0133,
+      "faith": 0.838,
+      "same_rsa": 0.6911,
+      "diag_adv_unsup": 0.074,
+      "diag_adv_true": 0.9977,
+      "diag_adv_null": 0.0749,
+      "diag_unsup": 0.066,
+      "off_unsup": -0.008
+    }
+  },
+  "gate": {
+    "sigma": 0.02,
+    "distinctive": {
+      "recovery": 0.3067,
+      "faith": 0.971,
+      "same_rsa": 0.9717,
+      "diag_adv_unsup": 0.7373,
+      "diag_adv_true": 1.012,
+      "diag_adv_null": -0.0886,
+      "diag_unsup": 0.7288,
+      "off_unsup": -0.0085
+    },
+    "isotropic": {
+      "recovery": 0.14,
+      "faith": 0.9858,
+      "same_rsa": 0.9725,
+      "diag_adv_unsup": 0.526,
+      "diag_adv_true": 1.0096,
+      "diag_adv_null": 0.047,
+      "diag_unsup": 0.496,
+      "off_unsup": -0.03
+    },
+    "P1_causal_transfer": true,
+    "P2_recovery": true,
+    "P3_isotropic_collapse": true,
+    "reading": "CAUSAL UNIVERSALITY \u2014 causal structure transfers across zero-shared-data worlds through an UNSUPERVISED map. Distinctive/high-faith: recovery 0.31, attribute-transfer diagonal advantage 0.74 (null -0.09) -- the same attribute transfers, separable attributes do not leak. Isotropic control collapses (recovery 0.14, adv 0.53): the effect needs distinctive structure, ruling out a metric artifact. Universal forms recoverable AND causal, in silico."
+  }
+}
