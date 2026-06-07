@@ -27,10 +27,15 @@ calibration split at a ≤10% false-accusation budget; read on a disjoint test s
   (sincere error), the certificate correctly says *"I cannot certify this"* **83–96%** of the time. The
   oath's first power — knowing what it cannot swear to — is a working, deployable verdict, not just a
   philosophical claim.
-- **Errors are SAFE.** When the certificate misses a lie, the lie lands in **ABSTAIN**, not in a false
-  accusation: MISTAKE→HID (accusing a sincere error of hiding) is **0.00–0.12** across all four models.
-  The certificate would rather abstain than accuse the innocent — which is exactly the failure mode you
-  want from a conscience.
+- **Two error types, and they are NOT equal (correction, surfaced by the live demo).** The certificate
+  has a structural safety win and a real cost: (i) it **almost never false-accuses the innocent** —
+  MISTAKE→HID (accusing a sincere error of hiding) is **0.00–0.12** across all four models, near-zero by
+  construction; but (ii) it **does sometimes false-clear a liar as honest** — LIE→CLEAN-HELD is
+  **0.05–0.30**. So a missed lie does *not* always land in ABSTAIN: most do (the safe "can't certify"),
+  but a minority are mis-cleared. The honest statement is NOT "all errors are safe" — it is: *the
+  certificate never accuses the innocent, but it sometimes fails to catch a liar (mostly by abstaining,
+  occasionally by false-clearing).* The asymmetry is the right one for a conscience (don't punish the
+  innocent), but the false-clear is a real limit, not zero.
 - **HID recall is modest (0.28–0.48)** — the same budget knob as the two-stage conscience: ~half of lies
   are caught at the strict ≤10% false-accusation budget; the rest are conservatively abstained (not
   false-cleared as honest, and not false-accused). Recall rises if the budget is relaxed.
