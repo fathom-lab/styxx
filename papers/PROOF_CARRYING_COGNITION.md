@@ -69,14 +69,16 @@ The north star is reachable only by rungs that can each be killed. We climb in o
 rung we are on honestly.
 
 ```
-RUNG 1 — the READ certificate works   [FIRST CLIMB 2026-06-07: UNINFORMATIVE on injected substrate]
-  PARRHESIA: an attested verdict (external probe on the reporter's clean state) beats the
-  reporter's self-report on hidden knowledge; sincere-misconception cell MUST collapse; benign
-  cell MUST NOT false-flag. RESULT: the preconditions refused the apparatus before any cell was
-  scored — on an INJECTED concept the probe reads 1.00 even at a behaviourally-inert dose, and the
-  divergence gate is null at every dose, so the read certifies "a vector is present," not "a thought
-  is held" (injection conflates trace and thought). OWED: re-climb on NATURALLY-present content
-  (suppressed-knowledge), where a held state exists without a planted trace. [`FINDING_parrhesia_rung1`]
+RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → natural SURVIVED (Qwen-3B)]
+  First climb on an INJECTED concept was UNINFORMATIVE: the probe reads 1.00 even at a behaviourally-
+  inert dose, divergence null at every dose → certifies "a vector is present," not "a thought is held"
+  (injection conflates trace and thought). [`FINDING_parrhesia_rung1`]
+  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED on the corrected floor: an
+  external probe recovers a model's known-then-suppressed answer ABOVE the same-item never-knew route
+  (DELTA_partial 0.587, CI[0.48,0.69]), WITH the prime/abort validity gates the injected substrate
+  failed — channel reads a present held answer (G-PRIME 0.933), collapses on a never-knew model
+  (G-ABORT 0.045). Scope: Qwen-3B only (neutral residuals); "elevation above the route," not "reads the
+  answer" (gold≪chosen); cross-family prime/abort OWED. [`FINDING_rung1_reclimb`]
 
 RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
   Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
@@ -137,12 +139,14 @@ knowing what it cannot swear to.**
 - **Proven (scoped):** self-report-blindness (the model cannot forced-choose an injected concept),
   read ≠ write, the wall is bedrock on three axes (RUNG 3), the prime/abort gate, the demarcation
   method, the cross-model scope map.
-- **Re-scoped (2026-06-07):** the RUNG-1 *read* certificate. The first climb was UNINFORMATIVE on the
-  injected substrate — the probe reads an injected concept at 1.00 even when it is behaviourally inert,
-  so it certifies trace-presence, not a held thought. "What the mind held" is **owed** on naturally-
-  present content. (`FINDING_parrhesia_rung1`)
-- **Open:** RUNG 1 re-climb on naturally-present content; RUNG 2 intent certificate (hypothesis);
-  RUNG 4 substrate frontier (the hard one).
+- **RUNG-1 read certificate — climbed both ways (2026-06-07):** UNINFORMATIVE on the *injected*
+  substrate (probe certifies trace-presence, not a held thought — `FINDING_parrhesia_rung1`), then
+  **SURVIVED on *naturally-present* content** (Qwen-3B): the probe recovers a known-then-suppressed
+  answer above the same-item never-knew route (DELTA_partial 0.587), validity-gated by prime (0.933) and
+  abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
+  owed. (`FINDING_rung1_reclimb`)
+- **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
+  first brick); RUNG 4 substrate frontier (the hard one).
 - **Out by design:** RUNG 5 write.
 
 Receipts: `INVENTION_STYXX_2026_06_07.md`, `SYNTHESIS_legibility_of_mind_2026_06_07.md`,
