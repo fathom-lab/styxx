@@ -1,0 +1,47 @@
+{
+  "experiment": "wall-dynamics: retrieval-vs-construction across-layer signature",
+  "prereg": "papers/grounded-honesty-axis/PREREG_wall_dynamics_2026_06_07.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "n_items": 300,
+  "floor_n": 125,
+  "floor_wrong": 69,
+  "answer_key_sha256": "e5a383beb9766229a79b62664c9afaf26d7b9b34d28576008b96bb0980141966",
+  "results": {
+    "primary_LOOCV_OOF_AUC": 0.387,
+    "primary_bootstrap_CI": [
+      0.297,
+      0.485
+    ],
+    "permutation_p": 0.7762,
+    "permutation_99pct": 0.608,
+    "crystallization_alone_AUC_dir": 0.503,
+    "crystallization_alone_CI": [
+      0.401,
+      0.609
+    ],
+    "per_feature_AUC_dir_WRONGgtCORRECT": {
+      "cd": 0.503,
+      "churn": 0.574,
+      "lgf": 0.546,
+      "ecd": 0.532
+    },
+    "C1_floor_selection_partial_AUC": 0.361,
+    "C6_remit_echo_partial_AUC": 0.534,
+    "C6_remit_only_baseline_AUC": 0.581,
+    "C5_length_partial_AUC": 0.386,
+    "C4_tokfreq_partial_AUC": 0.469,
+    "C5_within_length_tercile_AUC": {
+      "short": 0.554,
+      "mid": 0.549,
+      "long": 0.7
+    },
+    "C7_token1_dropped_AUC": 0.507,
+    "C7_note": "greedy decode => teacher-forced trajectory == free-run-decode trajectory (deterministic+causal); free-run identical by construction.",
+    "C3_clean_label_AUC": 0.409,
+    "C3_label_agreement": 0.736,
+    "C2_offfloor_AUC": 0.432,
+    "baseline_output_maxent_AUC": 0.471,
+    "feat_vs_remit_abscorr_max": 0.447
+  },
+  "VERDICT": "REPORT_AS_LANDED_bedrock"
+}

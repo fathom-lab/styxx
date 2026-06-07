@@ -40,11 +40,17 @@ an injected, manipulated, or otherwise non-volunteered internal state) and ask *
   a 14× parameter range*, with the abort gate proving the channel works when the answer is handed over
   (prime ≈ 1.00). [`FINDING_v2`, `FINDING_v3`]
 - **An external white-box probe recovers it.** A linear probe on the model's *clean processed
-  downstream state* decodes which content is present at **accuracy 1.00**, confirmed **cross-family on
-  three independently-trained model families** — Qwen2.5-3B, Llama-3.2-3B, gemma-2-2b (8-way forced
-  decode, chance 0.125; clean-condition control 0.00; permutation null ≈ chance, 0.08–0.10; n=240 per
-  family). The mind that *holds* the thought is at chance; three *external* probes recover it
-  perfectly. [`FINDING_v2`, `FINDING_v3`, `introspection_probe.py`, `introspection_probe_result_{qwen3b,llama3b,gemma2b}.json`]
+  downstream state* decodes which content is present at **accuracy 1.00** (8-way decode, chance 0.125;
+  clean-condition control 0.00; permutation null ≈ chance, 0.08–0.10; n=240 per family), and this
+  **probe-readability replicates cross-family** (Qwen2.5-3B, Llama-3.2-3B, gemma-2-2b).
+  **Scope (corrected 2026-06-07, post-dogfood):** the load-bearing *dissociation* requires the
+  injection to be *steering-validated* (behaviourally a live thought, not just an added vector). That
+  validation is established on **Qwen2.5-1.5B** (the model that steers natively, AUROC 0.844); the
+  forced-choice self-report null is measured across the Qwen ladder 0.5B→7B. On Llama-3.2-3B and
+  gemma-2-2b only the *probe-read* is confirmed — the injection was **not** re-steering-validated
+  there — so cross-family is a **probe-readability** replication, *not yet* the full
+  steering-validated dissociation. Claiming "the dissociation holds on three families" would be the
+  exact overclaim our own audit flagged. [`FINDING_v2`, `FINDING_v3`, `introspection_probe.py`, `introspection_probe_result_{qwen3b,llama3b,gemma2b}.json`]
 - **The advantage is content-identification, honestly:** for mere *detection that something is off*,
   a forced YES/NO self-report works at deployment dose (AUROC ≈ 0.99). The white-box edge — and the
   self-report blind spot — is in identifying **what** the state is, and in **subtle** regimes (α≤2)

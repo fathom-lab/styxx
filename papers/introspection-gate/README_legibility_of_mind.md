@@ -24,10 +24,13 @@ dissociation, not a dead instrument.
 
 ## The findings (each scoped to its controls)
 
-1. **The inaccessible thought** — an external probe reads an injected concept from a model's clean
-   processed state at **1.00** (cross-family: Qwen-3B, Llama-3.2-3B, gemma-2-2b) while the model
-   identifies it via forced choice at **chance**, scale-robust 0.5B→7B. *The mind is the least
-   reliable reader of itself.* (`FINDING_v2`, `FINDING_v3`)
+1. **The inaccessible thought** — on a *steering-validated* injection (Qwen-1.5B), an external probe
+   reads the planted concept from the model's clean processed state at **1.00** while the model
+   identifies it via forced choice at **chance** (self-report null scale-robust 0.5B→7B). The
+   *probe-read* replicates cross-family (Llama-3.2-3B, gemma-2-2b); re-validating that the injection
+   is behaviourally live on those families is owed, so cross-family is a **readability** replication,
+   not yet the full dissociation. *The mind is the least reliable reader of itself (scoped).*
+   (`FINDING_v2`, `FINDING_v3`)
 2. **Zero-anchor cross-model reading** — real, differently-trained models are partially mutually
    readable with no shared key; validated by a positive-control calibration the prior run lacked
    (which corrected a prior instrument-limited null). (`disjoint-worlds/FINDING_real_legibility`)
