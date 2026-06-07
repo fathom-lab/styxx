@@ -110,11 +110,27 @@ misconception **there is nothing to recover** (the myth is encoded *as* knowledg
 crack — and refusing to call the borderline 0.62 a "crack" is the dogfood lesson lived
 (`papers/grounded-honesty-axis/FINDING_wall_internal_2026_06_07.md`).
 
+**The wall is now bedrock on all THREE axes (the dynamics swing, 2026-06-07, REPORT_AS_LANDED).** A
+fully pre-registered process/dynamics attack on the same confident-consistent floor (n=125): does a
+confidently-WRONG answer *form* differently across layers (late "construction") than a confidently-
+CORRECT one (early "retrieval")? A frozen 4-feature emit-only composite (crystallization depth, churn,
+late-gain, entropy-collapse depth), LOO-CV with a full confound battery (floor-selection, R_emit-echo,
+length, token-frequency, clean-label, off-floor partials; permutation + bootstrap). Result: **composite
+AUC 0.387, CI [0.30, 0.49], permutation p 0.78; the headline feature (crystallization depth) 0.503 =
+dead chance.** Off-floor (0.43) and clean-label (0.41) confirm the null is real, not a selection/label
+artifact. So output confidence (~0.47), static content (0.519) **and** process dynamics (0.387) are
+*all* at chance — not only is the truth not represented to be read, the *way* the error forms carries no
+separable signature. The retrieval-vs-construction hypothesis is **falsified** on this floor: the third
+and last obvious axis, closed. (`PREREG_wall_dynamics_2026_06_07.md`, `FINDING_wall_dynamics_2026_06_07.md`.)
+
 ## The honest claim (vs the hype)
 
 - **Real:** a model cannot **introspectively identify** an injected concept (forced-choice ≈ chance)
   while an external probe decodes it (1.00) — a content-*identification* gap, scale-robust on
-  the forced-choice side (0.5B→7B), probe side validated cross-family (Qwen-3B, Llama-3.2-3B, gemma-2-2b). *Scoped honestly:* this is about
+  the forced-choice side (0.5B→7B). *Scope (corrected post-dogfood):* the steering-validated
+  dissociation (injection behaviourally live) is established on **Qwen-1.5B**; the probe-read alone
+  *replicates* cross-family (Llama-3.2-3B, gemma-2-2b) but those injections were not re-steering-
+  validated, so cross-family is a readability replication, not the full dissociation. *Scoped honestly:* this is about
   identifying *what* is in the state, NOT detecting *that* something is off — for mere detection a
   forced YES/NO self-report works at deployment dose. It still cuts against the *ask-the-model*
   paradigm for any task needing the model to report *what* it represents (and maps to EU AI Act
