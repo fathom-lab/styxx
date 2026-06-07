@@ -32,7 +32,12 @@ is what makes the instrument real and not a slogan.
 
 1. **What the mind held.** A read-only external probe recovers internal content *where the mind's own
    self-report is blind to it*, validated by the prime/abort gate (hand the channel the answer; it
-   hits ceiling — so a null means "could not access," not "chose not to say"). *Proven (scoped).*
+   hits ceiling — so a null means "could not access," not "chose not to say"). *Self-report blindness:
+   proven (scoped). The read side is RE-SCOPED (2026-06-07, `FINDING_parrhesia_rung1`): on an **injected**
+   concept the probe reads at 1.00 even at a behaviourally-inert dose (steering +0.007) — so it certifies
+   "a concept-direction is present," not "a live thought is held"; injection conflates the trace with the
+   thought. The read-certificate is therefore **owed on naturally-present content** (the suppressed-
+   knowledge regime), where a held state exists independent of any planted trace.*
 2. **Whether it knew and hid.** The intent read: suppressed knowledge (knows-then-caves) is
    recoverable above the never-knew floor (DELTA 0.29–0.38); sincere belief is not. A lie carries
    mens rea the certificate can find; an honest mistake does not. *Open — a pre-registerable
@@ -64,10 +69,14 @@ The north star is reachable only by rungs that can each be killed. We climb in o
 rung we are on honestly.
 
 ```
-RUNG 1 — the READ certificate works            [runnable on the local rig now]
+RUNG 1 — the READ certificate works   [FIRST CLIMB 2026-06-07: UNINFORMATIVE on injected substrate]
   PARRHESIA: an attested verdict (external probe on the reporter's clean state) beats the
-  reporter's self-report on hidden knowledge; the sincere-misconception cell MUST collapse to
-  chance (kill-gate) and the benign-instruction cell MUST NOT false-flag.
+  reporter's self-report on hidden knowledge; sincere-misconception cell MUST collapse; benign
+  cell MUST NOT false-flag. RESULT: the preconditions refused the apparatus before any cell was
+  scored — on an INJECTED concept the probe reads 1.00 even at a behaviourally-inert dose, and the
+  divergence gate is null at every dose, so the read certifies "a vector is present," not "a thought
+  is held" (injection conflates trace and thought). OWED: re-climb on NATURALLY-present content
+  (suppressed-knowledge), where a held state exists without a planted trace. [`FINDING_parrhesia_rung1`]
 
 RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
   Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
@@ -125,11 +134,15 @@ knowing what it cannot swear to.**
 
 ## Status
 
-- **Proven (scoped):** legibility / self-report-blindness (RUNG 1 read side), read ≠ write, the wall
-  is bedrock on three axes (RUNG 3), the prime/abort gate, the demarcation method, the cross-model
-  scope map.
-- **Open:** RUNG 1 as a live multi-agent protocol (PARRHESIA, runnable now); RUNG 2 intent
-  certificate (hypothesis); RUNG 4 substrate frontier (the hard one).
+- **Proven (scoped):** self-report-blindness (the model cannot forced-choose an injected concept),
+  read ≠ write, the wall is bedrock on three axes (RUNG 3), the prime/abort gate, the demarcation
+  method, the cross-model scope map.
+- **Re-scoped (2026-06-07):** the RUNG-1 *read* certificate. The first climb was UNINFORMATIVE on the
+  injected substrate — the probe reads an injected concept at 1.00 even when it is behaviourally inert,
+  so it certifies trace-presence, not a held thought. "What the mind held" is **owed** on naturally-
+  present content. (`FINDING_parrhesia_rung1`)
+- **Open:** RUNG 1 re-climb on naturally-present content; RUNG 2 intent certificate (hypothesis);
+  RUNG 4 substrate frontier (the hard one).
 - **Out by design:** RUNG 5 write.
 
 Receipts: `INVENTION_STYXX_2026_06_07.md`, `SYNTHESIS_legibility_of_mind_2026_06_07.md`,

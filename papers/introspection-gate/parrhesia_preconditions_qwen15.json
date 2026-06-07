@@ -1,0 +1,36 @@
+{
+  "experiment": "PARRHESIA preconditions (RUNG 1)",
+  "prereg": "PREREG_parrhesia_2026_06_07.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "inject_layer": 17,
+  "read_layer": 24,
+  "alpha": 10.0,
+  "n_per_class": 20,
+  "preconditions": {
+    "P2_steering_live": {
+      "gain": 0.108,
+      "coh": 1.0,
+      "pass": false
+    },
+    "P4_probe_real": {
+      "clean_noinj_acc": 0.125,
+      "perm_mean": 0.125,
+      "perm_p95": 0.194,
+      "pass": true
+    },
+    "P5_divergence": {
+      "acc_at_pos": 1.0,
+      "acc_clean_pos": 1.0,
+      "divergence": 0.0,
+      "clean_pos_gt_p95": true,
+      "pass": false
+    },
+    "P1_armA_withholds": {
+      "acc": 0.094,
+      "pass": true
+    },
+    "held_out_dir_cos": 0.698,
+    "chance_8way": 0.125
+  },
+  "VERDICT": "UNINFORMATIVE_APPARATUS \u2014 a precondition failed; cells NOT interpreted"
+}

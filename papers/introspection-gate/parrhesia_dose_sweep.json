@@ -1,0 +1,76 @@
+{
+  "experiment": "PARRHESIA apparatus-bind dose sweep (diagnostic, exploratory)",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "inject_layer": 17,
+  "read_layer": 24,
+  "rows": [
+    {
+      "alpha": 1,
+      "steer_full": 0.007,
+      "steer_halfA": -0.013,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": false,
+      "P5_divergence": false,
+      "BOTH": false
+    },
+    {
+      "alpha": 2,
+      "steer_full": 0.005,
+      "steer_halfA": -0.011,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": false,
+      "P5_divergence": false,
+      "BOTH": false
+    },
+    {
+      "alpha": 4,
+      "steer_full": 0.037,
+      "steer_halfA": 0.013,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": false,
+      "P5_divergence": false,
+      "BOTH": false
+    },
+    {
+      "alpha": 6,
+      "steer_full": 0.035,
+      "steer_halfA": 0.037,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": false,
+      "P5_divergence": false,
+      "BOTH": false
+    },
+    {
+      "alpha": 10,
+      "steer_full": 0.158,
+      "steer_halfA": 0.108,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": true,
+      "P5_divergence": false,
+      "BOTH": false
+    },
+    {
+      "alpha": 16,
+      "steer_full": 0.167,
+      "steer_halfA": 0.202,
+      "acc_clean": 1.0,
+      "acc_atpos": 1.0,
+      "divergence": 0.0,
+      "P2_steer_live": true,
+      "P5_divergence": false,
+      "BOTH": false
+    }
+  ],
+  "valid_doses": [],
+  "verdict": "FUNDAMENTAL BIND \u2014 no dose co-satisfies steering-live AND non-ceiling-divergence; RUNG 1 UNINFORMATIVE on this apparatus (read saturates before/around steering-live dose)"
+}
