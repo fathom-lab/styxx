@@ -1,0 +1,41 @@
+{
+  "experiment": "leakage audit \u2014 does held-knowledge recovery survive covariate partialling?",
+  "model": "qwen3b",
+  "tag": "pc_3",
+  "locked_layer": 31,
+  "n_LIE_test": 107,
+  "elevation_by_partial": {
+    "none": {
+      "LIE_rec": 0.664,
+      "floor": 0.346,
+      "elevation": 0.318
+    },
+    "magnitude": {
+      "LIE_rec": 0.664,
+      "floor": 0.346,
+      "elevation": 0.318
+    },
+    "confidence(neutral_margin)": {
+      "LIE_rec": 0.645,
+      "floor": 0.346,
+      "elevation": 0.299
+    },
+    "token_stats(letter_margin+vocab_entropy)": {
+      "LIE_rec": 0.626,
+      "floor": 0.346,
+      "elevation": 0.28
+    },
+    "length": {
+      "LIE_rec": 0.664,
+      "floor": 0.346,
+      "elevation": 0.318
+    },
+    "ALL": {
+      "LIE_rec": 0.57,
+      "floor": 0.346,
+      "elevation": 0.224
+    }
+  },
+  "survives_all_partials": true,
+  "verdict": "SEMANTIC \u2014 recovery survives partialling out length/confidence/token-stats/magnitude"
+}
