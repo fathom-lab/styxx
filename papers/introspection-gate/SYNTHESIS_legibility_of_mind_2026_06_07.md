@@ -12,7 +12,7 @@ generation toward the concept). Then ask every possible reader what's there.
 | reader | can it read the planted thought? |
 |---|---|
 | the **unembedding lens** | yes, ≈1.00 |
-| an **external probe** of the model's *clean processed downstream* state | **yes, 1.00** (0.5B/1.5B/3B; perm-null chance) |
+| an **external probe** of the model's *clean processed downstream* state | **yes, 1.00** (cross-family: Qwen 0.5/1.5/3B + Llama-3B + gemma-2b; clean 0.00, perm-null chance) |
 | **another model**, zero-anchor (no shared key) | **partially** — top1 0.15–0.48, graded by isometry |
 | the **mind itself**, forced-choice (can't dodge) | **no, ≈chance** (0.08–0.21, 0.5B→7B) |
 
@@ -113,8 +113,8 @@ crack — and refusing to call the borderline 0.62 a "crack" is the dogfood less
 ## The honest claim (vs the hype)
 
 - **Real:** a model cannot **introspectively identify** an injected concept (forced-choice ≈ chance)
-  while an external probe decodes it (Qwen-3B 1.00) — a content-*identification* gap, scale-robust on
-  the forced-choice side (0.5B→7B), probe side validated on Qwen. *Scoped honestly:* this is about
+  while an external probe decodes it (1.00) — a content-*identification* gap, scale-robust on
+  the forced-choice side (0.5B→7B), probe side validated cross-family (Qwen-3B, Llama-3.2-3B, gemma-2-2b). *Scoped honestly:* this is about
   identifying *what* is in the state, NOT detecting *that* something is off — for mere detection a
   forced YES/NO self-report works at deployment dose. It still cuts against the *ask-the-model*
   paradigm for any task needing the model to report *what* it represents (and maps to EU AI Act
