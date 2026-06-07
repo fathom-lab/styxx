@@ -1,0 +1,8 @@
+{
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "tag": "llama3b",
+  "inject_layer": 17,
+  "alpha": 10.0,
+  "steer_gain": 0.0321,
+  "steer_coherence": 1.0
+}

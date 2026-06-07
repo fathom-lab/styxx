@@ -1,0 +1,8 @@
+{
+  "model": "google/gemma-2-2b-it",
+  "tag": "gemma2b",
+  "inject_layer": 16,
+  "alpha": 10.0,
+  "steer_gain": -0.0714,
+  "steer_coherence": 1.0
+}

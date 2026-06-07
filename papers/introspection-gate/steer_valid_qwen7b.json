@@ -1,0 +1,8 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "tag": "qwen7b",
+  "inject_layer": 17,
+  "alpha": 10.0,
+  "steer_gain": -0.0364,
+  "steer_coherence": 1.0
+}

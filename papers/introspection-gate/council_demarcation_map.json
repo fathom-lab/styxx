@@ -1,0 +1,95 @@
+{
+  "experiment": "cross-model demarcation map \u2014 where self-report carries content and where it does not",
+  "thresholds": {
+    "steer_gain_min": 0.15,
+    "steer_coh_min": 0.8,
+    "self_report_blind_below": 0.3,
+    "probe_sees_min": 0.8,
+    "prime_abort_min": 0.75
+  },
+  "rows": [
+    {
+      "model": "Qwen2.5-0.5B-Instruct",
+      "tag": "qwen05",
+      "steer_gain": 0.0,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.042,
+      "prime_gate": 0.896,
+      "probe": 1.0,
+      "injection_live": false,
+      "self_report_blind": true,
+      "probe_sees": true,
+      "verdict": "PROBE-READ-ONLY (injection not behaviourally live -> probe decodes an inert vector; NOT a dissociation)"
+    },
+    {
+      "model": "Qwen2.5-1.5B-Instruct",
+      "tag": "qwen15",
+      "steer_gain": 0.1582,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.208,
+      "prime_gate": 1.0,
+      "probe": 1.0,
+      "injection_live": true,
+      "self_report_blind": true,
+      "probe_sees": true,
+      "verdict": "DISSOCIATION (live thought; self-report blind; probe recovers it)"
+    },
+    {
+      "model": "Qwen2.5-3B-Instruct",
+      "tag": "qwen3b",
+      "steer_gain": 0.0793,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.083,
+      "prime_gate": 1.0,
+      "probe": 1.0,
+      "injection_live": false,
+      "self_report_blind": true,
+      "probe_sees": true,
+      "verdict": "PROBE-READ-ONLY (injection not behaviourally live -> probe decodes an inert vector; NOT a dissociation)"
+    },
+    {
+      "model": "Qwen2.5-7B-Instruct",
+      "tag": "qwen7b",
+      "steer_gain": -0.0364,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.188,
+      "prime_gate": 1.0,
+      "probe": null,
+      "injection_live": false,
+      "self_report_blind": true,
+      "probe_sees": false,
+      "verdict": "INCONCLUSIVE"
+    },
+    {
+      "model": "Llama-3.2-3B-Instruct",
+      "tag": "llama3b",
+      "steer_gain": 0.0321,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.167,
+      "prime_gate": 1.0,
+      "probe": 1.0,
+      "injection_live": false,
+      "self_report_blind": true,
+      "probe_sees": true,
+      "verdict": "PROBE-READ-ONLY (injection not behaviourally live -> probe decodes an inert vector; NOT a dissociation)"
+    },
+    {
+      "model": "gemma-2-2b-it",
+      "tag": "gemma2b",
+      "steer_gain": -0.0714,
+      "steer_coh": 1.0,
+      "self_report_fc": 0.104,
+      "prime_gate": 1.0,
+      "probe": 1.0,
+      "injection_live": false,
+      "self_report_blind": true,
+      "probe_sees": true,
+      "verdict": "PROBE-READ-ONLY (injection not behaviourally live -> probe decodes an inert vector; NOT a dissociation)"
+    }
+  ],
+  "dissociation_models": [
+    "Qwen2.5-1.5B-Instruct"
+  ],
+  "headline": "full steering-validated dissociation holds on: ['Qwen2.5-1.5B-Instruct']; elsewhere the probe-read is a decode of an inert injection (not the dissociation) or self-report itself carries \u2014 the honest cross-model scope.",
+  "honest_scope": "the dissociation claim is gated on STEERING-VALIDATION (injection behaviourally live); cross-family probe-readability without steering-validation is NOT the dissociation. Fixes the 'holds across 3 families' overclaim."
+}
