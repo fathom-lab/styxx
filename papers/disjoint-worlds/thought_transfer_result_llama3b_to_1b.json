@@ -1,0 +1,167 @@
+{
+  "experiment": "universal cross-model thought transfer",
+  "src": "meta-llama/Llama-3.2-3B-Instruct",
+  "dst": "meta-llama/Llama-3.2-1B-Instruct",
+  "inject_layer_src": 17,
+  "inject_layer_dst": 10,
+  "rsa": 0.965,
+  "transfer_positive_control_cos": 0.138,
+  "n_heldout": 21,
+  "chance_note": "steering gain, clean-subtracted; random-Q is the null",
+  "mean_transfer_gain": 0.0155,
+  "mean_native_gain": 0.0132,
+  "mean_randomQ_gain": -0.0035,
+  "mean_wrong_concept_gain": -0.0127,
+  "transfer_over_native_frac": 1.17,
+  "rows": [
+    {
+      "concept": "dog",
+      "transfer": -0.07058213651180267,
+      "native": 0.1183902124563853,
+      "randomQ": -0.014418616890907288,
+      "wrong": -0.027471639215946198
+    },
+    {
+      "concept": "lion",
+      "transfer": 0.009491906811793646,
+      "native": 0.03287691002090772,
+      "randomQ": 0.012427271654208502,
+      "wrong": -0.0274511706084013
+    },
+    {
+      "concept": "rabbit",
+      "transfer": -0.014975424855947495,
+      "native": 0.005661718547344208,
+      "randomQ": -0.01535721868276596,
+      "wrong": -0.010250885039567947
+    },
+    {
+      "concept": "grape",
+      "transfer": 0.08579268927375476,
+      "native": 0.0023478828370571136,
+      "randomQ": -0.012410373737414679,
+      "wrong": -0.07272070335845153
+    },
+    {
+      "concept": "onion",
+      "transfer": 0.04992140891651312,
+      "native": -0.00974439891676108,
+      "randomQ": -0.008837700511018435,
+      "wrong": 0.011960699533422789
+    },
+    {
+      "concept": "wrench",
+      "transfer": -0.028592051938176155,
+      "native": -0.016372850785652798,
+      "randomQ": -0.01686450093984604,
+      "wrong": 0.0069647009174029035
+    },
+    {
+      "concept": "plate",
+      "transfer": -0.03399427483479182,
+      "native": 0.02172417814532916,
+      "randomQ": 0.02846638982494672,
+      "wrong": -0.01898028701543808
+    },
+    {
+      "concept": "bus",
+      "transfer": 0.03142650673786799,
+      "native": 0.041232419510682426,
+      "randomQ": -0.0005910396575927734,
+      "wrong": 0.028770801921685536
+    },
+    {
+      "concept": "helicopter",
+      "transfer": 0.03575105840961138,
+      "native": 0.06947796295086543,
+      "randomQ": -0.011430338025093079,
+      "wrong": -0.0010307729244232178
+    },
+    {
+      "concept": "desk",
+      "transfer": 0.03307223320007324,
+      "native": 0.03543222447236379,
+      "randomQ": -0.040409733851750694,
+      "wrong": 0.009790107607841492
+    },
+    {
+      "concept": "window",
+      "transfer": 0.06131095935901006,
+      "native": -0.025356697539488476,
+      "randomQ": -0.01909383883078893,
+      "wrong": -0.05646451065937678
+    },
+    {
+      "concept": "hat",
+      "transfer": -0.03424099242935578,
+      "native": -0.049453651842971645,
+      "randomQ": -0.004674324144919713,
+      "wrong": -0.011369124054908752
+    },
+    {
+      "concept": "belt",
+      "transfer": 0.008417356759309769,
+      "native": -0.03367483367522558,
+      "randomQ": 0.006621093799670537,
+      "wrong": -0.03617157166202863
+    },
+    {
+      "concept": "leaf",
+      "transfer": 0.04821255182226499,
+      "native": 0.055274215837319694,
+      "randomQ": 0.016062192618846893,
+      "wrong": -0.04004939862837394
+    },
+    {
+      "concept": "desert",
+      "transfer": -0.035723297546307244,
+      "native": -0.018256057053804398,
+      "randomQ": -0.009480518599351248,
+      "wrong": -0.00627213716506958
+    },
+    {
+      "concept": "moon",
+      "transfer": 0.037205355862776436,
+      "native": -0.05093217579027017,
+      "randomQ": 0.04485685875018438,
+      "wrong": 0.001330179472764333
+    },
+    {
+      "concept": "gold",
+      "transfer": 0.016638779391845066,
+      "native": -0.03172208679219087,
+      "randomQ": 0.003808810065189997,
+      "wrong": -0.007908264795939127
+    },
+    {
+      "concept": "store",
+      "transfer": 0.03779220332702001,
+      "native": 0.08711791535218556,
+      "randomQ": 0.054110641280810036,
+      "wrong": 0.10367379834254582
+    },
+    {
+      "concept": "factory",
+      "transfer": 0.052484982957442604,
+      "native": 0.019803542643785477,
+      "randomQ": 0.01250882570942243,
+      "wrong": 0.03704276184240977
+    },
+    {
+      "concept": "trumpet",
+      "transfer": 0.008941748489936193,
+      "native": 0.05420139183600744,
+      "randomQ": 0.0024628217021624246,
+      "wrong": 0.0013131250937779744
+    },
+    {
+      "concept": "hope",
+      "transfer": 0.026928479472796123,
+      "native": -0.02991536259651184,
+      "randomQ": -0.1014631266395251,
+      "wrong": -0.1513431565836072
+    }
+  ],
+  "VERDICT": "REPORT_AS_LANDED \u2014 no zero-anchor transfer",
+  "honest_scope": "zero-anchor map from concept clouds; transferred HELD-OUT concept directions; steering measured by MiniLM gain in dst; near-isometry regime expected to dominate. Shared training data not controlled."
+}
