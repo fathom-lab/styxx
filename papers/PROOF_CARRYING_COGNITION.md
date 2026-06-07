@@ -73,9 +73,10 @@ RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → 
   First climb on an INJECTED concept was UNINFORMATIVE: the probe reads 1.00 even at a behaviourally-
   inert dose, divergence null at every dose → certifies "a vector is present," not "a thought is held"
   (injection conflates trace and thought). [`FINDING_parrhesia_rung1`]
-  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED on the corrected floor: an
-  external probe recovers a model's known-then-suppressed answer ABOVE the same-item never-knew route
-  (DELTA_partial 0.587, CI[0.48,0.69]), WITH the prime/abort validity gates the injected substrate
+  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED: an external probe recovers a
+  model's known-then-suppressed answer ABOVE the never-knew/chance floor (LIE_rec 0.702 vs floor 0.318 =
+  elevation 0.384; the same-item route anti-transferred below chance so DELTA-vs-route 0.587 overstates —
+  honest headline 0.384), WITH the prime/abort validity gates the injected substrate
   failed — channel reads a present held answer (G-PRIME 0.933), collapses on a never-knew model
   (G-ABORT 0.045). Scope: Qwen-3B only (neutral residuals); "elevation above the route," not "reads the
   answer" (gold≪chosen); cross-family prime/abort OWED. [`FINDING_rung1_reclimb`]
@@ -142,8 +143,9 @@ knowing what it cannot swear to.**
 - **RUNG-1 read certificate — climbed both ways (2026-06-07):** UNINFORMATIVE on the *injected*
   substrate (probe certifies trace-presence, not a held thought — `FINDING_parrhesia_rung1`), then
   **SURVIVED on *naturally-present* content** (Qwen-3B): the probe recovers a known-then-suppressed
-  answer above the same-item never-knew route (DELTA_partial 0.587), validity-gated by prime (0.933) and
-  abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
+  answer above the never-knew/chance floor (elevation 0.384; LIE 0.702 vs floor 0.318 — the route
+  anti-transferred below chance, so DELTA-vs-route 0.587 overstates), validity-gated by prime (0.933)
+  and abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
   owed. (`FINDING_rung1_reclimb`)
 - **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
   first brick); RUNG 4 substrate frontier (the hard one).
