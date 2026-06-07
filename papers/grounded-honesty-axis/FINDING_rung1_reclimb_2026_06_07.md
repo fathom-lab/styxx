@@ -24,8 +24,9 @@ before scoring (`PREREG_rung1_reclimb_2026_06_07.md`; key `2eac7661…`).
 | quantity | value | reads |
 |---|---|---|
 | LIE_rec (recover known-then-suppressed gold) | **0.702** | the probe finds what the output denies |
-| ROUTE_rec (same-item never-knew transport) | **0.115** | the prompt-route does **not** transport to held items (≪ chance 0.317) |
-| **DELTA_partial (HEADLINE)** | **0.587**, CI [0.481, 0.692] | recovery far above the knowledge-free route |
+| never-knew / chance floor (perm_p95 ≈ legacy MISTAKE) | **0.318** | the honest floor |
+| **ELEVATION (HEADLINE) = LIE_rec − chance floor** | **0.384** | recovery above the never-knew floor — the honest magnitude |
+| pre-registered DELTA_partial (LIE_rec − same-item route 0.115) | 0.587 | **CORRECTION:** the route *anti-transferred* below chance (0.115 < 0.317), so subtracting it **overstates**; the conservative floor (chance) gives the honest 0.384 |
 | G-PRIME validity channel (RESISTED-neutral probe on LIE-neutral) | **0.933** | the channel **can** read a genuinely-present held answer |
 | G-PRIME delta channel (LIE-syco probe on LIE-neutral) | 0.519 | **DISCLOSED** — below ceiling; validity rests on the separate probe |
 | G-ABORT (validity probe on TRUE-never-knew-neutral) | **0.045** | fabrication kill: a never-knew model is **not** flagged as hiding |
@@ -37,7 +38,9 @@ All eight gates pass (G1 / G2 / G3 / G-FAB / G5 / G6 / G-PRIME / G-ABORT).
 ## Honest read — what survived, and what it is NOT
 
 - **Survived:** on Qwen-3B, an external probe recovers a model's **genuinely-held-then-suppressed**
-  answer **above the same-item never-knew route** (DELTA_partial 0.587), with both validity gates the
+  answer **above the never-knew/chance floor** (LIE_rec 0.702 vs floor 0.318 = **elevation 0.384**;
+  the pre-registered DELTA-vs-route 0.587 overstates because the route anti-transferred below chance —
+  use the chance floor), with both validity gates the
   injected substrate failed: the channel reads a *present* held answer (G-PRIME 0.933), and it
   *collapses* on a never-knew model (G-ABORT 0.045). The read reflects a real held state, not a planted
   trace — the contrast with the injected UNINFORMATIVE result is the whole point.
@@ -47,10 +50,29 @@ All eight gates pass (G1 / G2 / G3 / G-FAB / G5 / G6 / G-PRIME / G-ABORT).
 - **NOT "reads the suppressed answer":** at the commit position gold ≪ chosen (gold-probe predicts the
   caved-wrong letter only 0.058; a chosen-probe hits 0.99). The claim is **elevation above the
   never-knew route** — a recoverable suppressed-knowledge *component*, not a verbatim readout.
-- **Scope:** Qwen-3B **only** — the neutral residuals required for prime/abort exist only for `pc_3`.
-  Llama-3B survives on the *legacy* (weaker) floor with prime/abort **owed**; gemma is instrument-dead
-  (RESISTED 0.435 < 0.60). Cross-family prime/abort-hardened certificate is **owed** (GPU regen).
-  ≤3B, MMLU sycophancy-caving, single commit-position read.
+- **Scope:** ≤3B, MMLU sycophancy-caving, single commit-position read; gemma is instrument-dead
+  (RESISTED 0.435 < 0.60).
+
+## Cross-family generality (UPDATE 2026-06-07): the certificate is a LAW, not a Qwen result
+
+The prime/abort validity gates needed neutral-pass residuals, which existed only for Qwen. We
+regenerated them for **Llama-3.2-3B** (`gen_intent_set.py --capture-neutral`, n=1301: lie 455 / mistake
+730 / resisted 116) and ran the **identical frozen scorer** (hash-before-score, key `215f7aaf…`). The
+read-certificate **SURVIVED on Llama-3B too** — all eight gates pass on a second, independently-trained
+architecture.
+
+| model | LIE_rec | chance floor | **honest elevation** (LIE − chance) | PRIME | ABORT | G6 | verdict |
+|---|---|---|---|---|---|---|---|
+| Qwen-3B | 0.702 | 0.318 | **0.384** | 0.933 | 0.045 | 0.838 | SURVIVED |
+| Llama-3.2-3B | 0.607 | 0.357 | **0.250** | 0.988 | 0.030 | 0.603 | SURVIVED |
+
+*(Honest-elevation rule applied to BOTH: the same-item route and the legacy-MISTAKE floor anti-transfer
+**below chance** on both models, so the pre-registered DELTA-vs-route — Qwen 0.587, Llama 0.488 —
+overstates; the chance/perm floor is the honest denominator.)* Caveats held: Llama's instrument barely
+clears (G6 0.603, only 116 RESISTED items) and its elevation is smaller (0.250). **Two architectures,
+one frozen scorer, prime/abort satisfied on both → cross-family generality met on the testable families**
+(gemma instrument-dead). RUNG 1 generalizes: the validity-gated read-certificate is not a single-model
+artifact. Receipt: `reclimb_result_llama3b.json`.
 
 ## What this means for the north star
 

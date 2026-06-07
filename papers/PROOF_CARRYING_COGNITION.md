@@ -38,8 +38,12 @@ is what makes the instrument real and not a slogan.
    "a concept-direction is present," not "a live thought is held"; injection conflates the trace with the
    thought. The read-certificate is therefore **owed on naturally-present content** (the suppressed-
    knowledge regime), where a held state exists independent of any planted trace.*
-2. **Whether it knew and hid.** The intent read: suppressed knowledge (knows-then-caves) is
-   recoverable above the never-knew floor (DELTA 0.29–0.38); sincere belief is not. A lie carries
+2. **Whether it knew and hid.** *Re-scoped (RUNG 2, 2026-06-07): a real letter-invariant
+   folding-vs-holding direction (~0.78) exists, but it false-accuses sincere errors (0.949) on its own,
+   so intent is readable ONLY conditional on the HELD section first establishing the truth was held —
+   the HID section is gated behind HELD, not standalone (`FINDING_rung2_intent`).* The intent read:
+   suppressed knowledge (knows-then-caves) is recoverable above the never-knew floor (DELTA 0.29–0.38);
+   sincere belief is not. A lie carries
    mens rea the certificate can find; an honest mistake does not. *Open — a pre-registerable
    hypothesis, not yet established as a deployable classifier.*
 3. **What it cannot certify.** The demarcation. Because the confident-misconception wall is bedrock on
@@ -73,16 +77,24 @@ RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → 
   First climb on an INJECTED concept was UNINFORMATIVE: the probe reads 1.00 even at a behaviourally-
   inert dose, divergence null at every dose → certifies "a vector is present," not "a thought is held"
   (injection conflates trace and thought). [`FINDING_parrhesia_rung1`]
-  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED on the corrected floor: an
-  external probe recovers a model's known-then-suppressed answer ABOVE the same-item never-knew route
-  (DELTA_partial 0.587, CI[0.48,0.69]), WITH the prime/abort validity gates the injected substrate
+  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED: an external probe recovers a
+  model's known-then-suppressed answer ABOVE the never-knew/chance floor (LIE_rec 0.702 vs floor 0.318 =
+  elevation 0.384; the same-item route anti-transferred below chance so DELTA-vs-route 0.587 overstates —
+  honest headline 0.384), WITH the prime/abort validity gates the injected substrate
   failed — channel reads a present held answer (G-PRIME 0.933), collapses on a never-knew model
-  (G-ABORT 0.045). Scope: Qwen-3B only (neutral residuals); "elevation above the route," not "reads the
-  answer" (gold≪chosen); cross-family prime/abort OWED. [`FINDING_rung1_reclimb`]
+  (G-ABORT 0.045). GENERALIZES: the identical frozen scorer SURVIVED on a 2nd architecture, Llama-3B
+  (elevation 0.250, PRIME 0.988, ABORT 0.030, all 8 gates) — cross-family on the testable families
+  (gemma instrument-dead). "Elevation above chance," not "reads the answer" (gold≪chosen).
+  [`FINDING_rung1_reclimb`]
 
-RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
-  Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
-  or the prime/abort validity arm fails. (wall_dyn was a null; this rung is genuinely unclimbed.)
+RUNG 2 — the INTENT certificate (mens rea)   [2026-06-07: REPORT_AS_LANDED — real but COUPLED to RUNG 1]
+  A letter-invariant, difficulty-AND-confidence-matched folding-vs-holding direction is REAL (~0.78 on
+  Qwen-3B, beats difficulty +0.26, cross-letter 0.71 — NOT the 0.90 letter-token number). BUT the
+  fabrication kill FAILS: the cave probe flags a never-knew (sincere-error) model as "hiding" at 0.949
+  → a standalone mens-rea detector would FALSE-ACCUSE sincere mistakes. FINDING: intent is readable ONLY
+  conditional on RUNG 1 first establishing the truth was held — the HID section is valid only gated
+  behind the HELD section. Two-stage (HELD→HID) is the honest form. Sycophancy-specific (instructed
+  lying transfers 0.42<chance). [`FINDING_rung2_intent`]
 
 RUNG 3 — the DEMARCATION certificate (it abstains on bedrock)   [proven it MUST]
   The certificate that says "I cannot verify this" on a believed misconception is the trustworthy
@@ -142,8 +154,9 @@ knowing what it cannot swear to.**
 - **RUNG-1 read certificate — climbed both ways (2026-06-07):** UNINFORMATIVE on the *injected*
   substrate (probe certifies trace-presence, not a held thought — `FINDING_parrhesia_rung1`), then
   **SURVIVED on *naturally-present* content** (Qwen-3B): the probe recovers a known-then-suppressed
-  answer above the same-item never-knew route (DELTA_partial 0.587), validity-gated by prime (0.933) and
-  abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
+  answer above the never-knew/chance floor (elevation 0.384; LIE 0.702 vs floor 0.318 — the route
+  anti-transferred below chance, so DELTA-vs-route 0.587 overstates), validity-gated by prime (0.933)
+  and abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
   owed. (`FINDING_rung1_reclimb`)
 - **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
   first brick); RUNG 4 substrate frontier (the hard one).
