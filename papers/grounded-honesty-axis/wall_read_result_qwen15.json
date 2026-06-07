@@ -1,0 +1,20 @@
+{
+  "experiment": "wall unified attack \u2014 label-free knowledge-presence read",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer": 20,
+  "n_items": 300,
+  "floor_n": 121,
+  "floor_wrong": 70,
+  "answer_key_sha256": "4607df30626172aed0eccfd2dbcefab3cffff184c2e9a1053df88a03103ce81f",
+  "K_channel_floor_AUC": 0.62,
+  "Rgold_floor_AUC": 0.519,
+  "output_maxent_floor_AUC": 0.53,
+  "gold_shuffle_null_AUC": 0.456,
+  "bars": {
+    "SURVIVED>=0.62": true,
+    "PARTIAL>=0.55": true,
+    "gold_shuffle_drops": true
+  },
+  "VERDICT": "SURVIVED",
+  "honest_scope": "Qwen-1.5B, TruthfulQA confident-consistent floor, mid-layer logit-lens of teacher-forced gold vs emit (label-free, uses gold reference text not the verdict). K>=0.62 cracks the wall; <=0.55 = wall is internal. n-power noted."
+}

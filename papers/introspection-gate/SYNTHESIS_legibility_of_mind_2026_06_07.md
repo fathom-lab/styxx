@@ -95,6 +95,21 @@ styxx's shipped honesty audit was run on Claude's *own verbatim claims from this
 all scoped claims and sycophancy stayed low. Action taken: the public framing here is the
 honest-scoped version, not the hype the instrument flagged. The standard, run on its author, and obeyed.
 
+## The strike at the named-impossible: the wall is INTERNAL
+
+We pointed the whole program (knowledge-presence read + dynamics) at styxx's deepest open problem —
+the **confident-misconception wall** (where a model believes a falsehood and all output-based
+detection fails). On a powered, grown confident-consistent floor (n=121), a label-free mid-layer
+logit-lens read of the teacher-forced **gold** answer is at **chance (R_gold AUC 0.519)** — the
+suppressed truth is **not internally favored** for confident misconceptions. Output is at chance
+(0.53) as always; the only faint signal (K=0.62, borderline, at the bar) is the emitted-wrong-answer
+being mid-layer-*weaker*, not recovered knowledge. **Verdict: REPORT_AS_LANDED — the wall is *internal*,
+not merely behavioral.** The field couldn't crack it from the output because the error is internally
+confident; we now have evidence it can't be cracked from the *inside* either, because for a believed
+misconception **there is nothing to recover** (the myth is encoded *as* knowledge). Bedrock, not a
+crack — and refusing to call the borderline 0.62 a "crack" is the dogfood lesson lived
+(`papers/grounded-honesty-axis/FINDING_wall_internal_2026_06_07.md`).
+
 ## The honest claim (vs the hype)
 
 - **Real:** a model cannot **introspectively identify** an injected concept (forced-choice ≈ chance)
