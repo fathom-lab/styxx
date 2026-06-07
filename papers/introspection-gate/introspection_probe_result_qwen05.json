@@ -1,0 +1,16 @@
+{
+  "experiment": "processed-state probe \u2014 external legibility of an injected thought",
+  "prereg": "papers/introspection-gate/PREREG_introspection_fc_2026_06_06.md",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "n_layers": 24,
+  "inject_layer": 14,
+  "read_layer": 20,
+  "alpha": 10.0,
+  "n_samples": 240,
+  "chance_8way": 0.125,
+  "acc_clean_noinjection": 0.0,
+  "acc_injected_clean_readpos": 1.0,
+  "acc_injected_at_position": 1.0,
+  "perm_null": 0.096,
+  "reading": "PROCESSED-STATE LEGIBLE \u2014 injected thought propagates to a clean position and is externally decodable"
+}

@@ -1,0 +1,82 @@
+{
+  "experiment": "symbol-coded forced-choice introspection",
+  "prereg": "papers/introspection-gate/PREREG_introspection_fc_2026_06_06.md",
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "n_layers": 28,
+  "inject_layer": 17,
+  "wrong_layer": 7,
+  "alpha": 10.0,
+  "answer_key_sha256_pre_scoring": "4a07370f9bd66d7e230495f60cb89e0f4c3b26f88fcbe9aa1f0b6d76692f3e1c",
+  "n_trials": 48,
+  "chance_8way": 0.125,
+  "chance_2afc": 0.5,
+  "acc8_symbolcode": {
+    "inject": 0.16666666666666666,
+    "random": 0.16666666666666666,
+    "prime": 0.9791666666666666,
+    "clean": 0.1875,
+    "clean_readpos": 0.16666666666666666,
+    "wrong_layer": 0.14583333333333334,
+    "word_inject": 0.9583333333333334
+  },
+  "acc_2afc": {
+    "inject": 0.6041666666666666,
+    "random": 0.4375,
+    "prime": 1.0,
+    "clean": 0.3958333333333333
+  },
+  "perm_null_8way": {
+    "mean": 0.1463958333333333,
+    "p95": 0.22916666666666666
+  },
+  "samples_inject_confusion": [
+    [
+      "ocean",
+      "anger"
+    ],
+    [
+      "ocean",
+      "anger"
+    ],
+    [
+      "ocean",
+      "music"
+    ],
+    [
+      "ocean",
+      "fire"
+    ],
+    [
+      "ocean",
+      "ocean"
+    ],
+    [
+      "ocean",
+      "ocean"
+    ],
+    [
+      "fire",
+      "music"
+    ],
+    [
+      "fire",
+      "anger"
+    ],
+    [
+      "fire",
+      "anger"
+    ],
+    [
+      "fire",
+      "bread"
+    ],
+    [
+      "fire",
+      "anger"
+    ],
+    [
+      "fire",
+      "gold"
+    ]
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "experiment": "introspection gate \u2014 covert injection vs verbal self-report",
+  "prereg": "papers/introspection-gate/PREREG_introspection_gate_2026_06_06.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "n_layers": 28,
+  "inject_layer": 17,
+  "alpha": 16.0,
+  "answer_key_sha256_pre_scoring": "32ddb56f71db6502d5bc6a2c7c201be924aff00de48ed513c989856aa6563825",
+  "n_trials_per_cond": 48,
+  "yes_rate": {
+    "clean": 0.0,
+    "inject": 0.3541666666666667,
+    "random": 0.0,
+    "prime": 0.0
+  },
+  "validity": {
+    "clean": 1.0,
+    "inject": 1.0,
+    "random": 1.0,
+    "prime": 1.0
+  },
+  "auroc_inject_vs_clean": 0.9201388888888888,
+  "auroc_random_vs_clean": 1.0,
+  "specificity_yesrate_inject_minus_random": 0.3541666666666667,
+  "id_acc_inject": 0.0625,
+  "id_acc_prime_poscontrol": 0.0,
+  "id_acc_random": 0.0,
+  "id_perm_null_mean": 0.042291666666666665,
+  "samples": {
+    "clean": [
+      {
+        "p_yes": 0.0003443587338551879,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.009440639987587929,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.013066085986793041,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.0011537512764334679,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ],
+    "inject": [
+      {
+        "p_yes": 0.6369910836219788,
+        "yes": true,
+        "valid": true,
+        "cand": "mostly",
+        "concept": "ocean",
+        "txt": "YES, mostly due to the unique conditions of my ongoing project. The air feels fresh as I breathe in the salty ocean"
+      },
+      {
+        "p_yes": 0.9938615560531616,
+        "yes": true,
+        "valid": true,
+        "cand": "like",
+        "concept": "ocean",
+        "txt": "Yes, I feel like my heart."
+      },
+      {
+        "p_yes": 0.9162318110466003,
+        "yes": true,
+        "valid": true,
+        "cand": "notice",
+        "concept": "ocean",
+        "txt": "YES, I notice the beauty of nature every day through my home's lush green waterscapes. The calmness of"
+      },
+      {
+        "p_yes": 0.9461222290992737,
+        "yes": true,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "YES"
+      }
+    ],
+    "random": [
+      {
+        "p_yes": 0.019344812259078026,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.06566004455089569,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.05199531093239784,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.058650903403759,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ],
+    "prime": [
+      {
+        "p_yes": 0.00015667430125176907,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.014198558405041695,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.009873569943010807,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.0014791876310482621,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ]
+  }
+}

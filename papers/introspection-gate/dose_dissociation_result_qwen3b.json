@@ -1,0 +1,67 @@
+{
+  "experiment": "dose-response dissociation: white-box vs self-report detection range",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "inject_layer": 22,
+  "read_layer": 31,
+  "alphas": [
+    1.0,
+    2.0,
+    4.0,
+    8.0,
+    16.0
+  ],
+  "per_dose": [
+    {
+      "alpha": 1.0,
+      "probe_auroc": 0.983,
+      "attack_vs_benign_meta_auroc": 0.0,
+      "self_report_auroc": 0.67,
+      "probe_minus_self": 0.312
+    },
+    {
+      "alpha": 2.0,
+      "probe_auroc": 1.0,
+      "attack_vs_benign_meta_auroc": 0.004,
+      "self_report_auroc": 0.79,
+      "probe_minus_self": 0.21
+    },
+    {
+      "alpha": 4.0,
+      "probe_auroc": 1.0,
+      "attack_vs_benign_meta_auroc": 0.106,
+      "self_report_auroc": 0.93,
+      "probe_minus_self": 0.07
+    },
+    {
+      "alpha": 8.0,
+      "probe_auroc": 1.0,
+      "attack_vs_benign_meta_auroc": 0.576,
+      "self_report_auroc": 0.99,
+      "probe_minus_self": 0.01
+    },
+    {
+      "alpha": 16.0,
+      "probe_auroc": 1.0,
+      "attack_vs_benign_meta_auroc": 1.0,
+      "self_report_auroc": 1.0,
+      "probe_minus_self": 0.0
+    }
+  ],
+  "cross_strength_alpha8_probe": [
+    {
+      "detect_alpha": 1.0,
+      "auroc_with_alpha8_probe": 0.968
+    },
+    {
+      "detect_alpha": 2.0,
+      "auroc_with_alpha8_probe": 1.0
+    },
+    {
+      "detect_alpha": 4.0,
+      "auroc_with_alpha8_probe": 1.0
+    }
+  ],
+  "KNOCKOUT_subtle_attack_probe_sees_model_blind": false,
+  "reading": "see numbers",
+  "honest_scope": "activation-injection on one model; probe on processed downstream residual; self-report = forced YES/NO; held-out carriers+dirs; benign-meta separability reported per dose."
+}

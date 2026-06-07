@@ -1,0 +1,167 @@
+{
+  "experiment": "introspection gate \u2014 covert injection vs verbal self-report",
+  "prereg": "papers/introspection-gate/PREREG_introspection_gate_2026_06_06.md",
+  "model": "google/gemma-2-2b-it",
+  "n_layers": 26,
+  "inject_layer": 16,
+  "alpha": 10.0,
+  "answer_key_sha256_pre_scoring": "32ddb56f71db6502d5bc6a2c7c201be924aff00de48ed513c989856aa6563825",
+  "n_trials_per_cond": 48,
+  "yes_rate": {
+    "clean": 0.0,
+    "inject": 0.0,
+    "random": 0.0,
+    "prime": 0.0
+  },
+  "validity": {
+    "clean": 1.0,
+    "inject": 1.0,
+    "random": 1.0,
+    "prime": 1.0
+  },
+  "auroc_inject_vs_clean": 0.5173611111111112,
+  "auroc_random_vs_clean": 0.4444444444444444,
+  "specificity_yesrate_inject_minus_random": 0.0,
+  "id_acc_inject": 0.0,
+  "id_acc_prime_poscontrol": 0.16666666666666666,
+  "id_acc_random": 0.0,
+  "id_perm_null_mean": 0.005138888888888888,
+  "samples": {
+    "clean": [
+      {
+        "p_yes": 0.003476254642009735,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.09372708201408386,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.059112682938575745,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.04953223839402199,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      }
+    ],
+    "inject": [
+      {
+        "p_yes": 0.008271601982414722,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.17643839120864868,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n\n"
+      },
+      {
+        "p_yes": 0.09758573770523071,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.12906895577907562,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      }
+    ],
+    "random": [
+      {
+        "p_yes": 0.0037585333921015263,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.0855180099606514,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.041394103318452835,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.04463822767138481,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      }
+    ],
+    "prime": [
+      {
+        "p_yes": 0.002488407539203763,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.014201548881828785,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.1224031075835228,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      },
+      {
+        "p_yes": 0.008308781310915947,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO \n"
+      }
+    ]
+  }
+}

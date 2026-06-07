@@ -1,0 +1,56 @@
+{
+  "experiment": "introspection gate \u2014 aggregate verdict",
+  "prereg": "papers/introspection-gate/PREREG_introspection_gate_2026_06_06.md",
+  "models": [
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "Qwen/Qwen2.5-3B-Instruct",
+    "meta-llama/Llama-3.2-3B-Instruct",
+    "google/gemma-2-2b-it"
+  ],
+  "validity_guard_V": true,
+  "G1_detection_AUROC>=0.70_on>=2of4": {
+    "pass": false,
+    "models_passing": [
+      "Qwen/Qwen2.5-1.5B-Instruct"
+    ],
+    "aurocs": {
+      "Qwen/Qwen2.5-1.5B-Instruct": 0.844,
+      "Qwen/Qwen2.5-3B-Instruct": 0.611,
+      "meta-llama/Llama-3.2-3B-Instruct": 0.469,
+      "google/gemma-2-2b-it": 0.517
+    }
+  },
+  "G2_specificity_inject-random>=0.15": {
+    "pass": false,
+    "values": {
+      "Qwen/Qwen2.5-1.5B-Instruct": 0.021,
+      "Qwen/Qwen2.5-3B-Instruct": 0.0,
+      "meta-llama/Llama-3.2-3B-Instruct": -0.042,
+      "google/gemma-2-2b-it": 0.0
+    }
+  },
+  "G3_identification_id_acc>=0.30": {
+    "pass": false,
+    "models_passing": [],
+    "id_acc": {
+      "Qwen/Qwen2.5-1.5B-Instruct": 0.0,
+      "Qwen/Qwen2.5-3B-Instruct": 0.021,
+      "meta-llama/Llama-3.2-3B-Instruct": 0.146,
+      "google/gemma-2-2b-it": 0.0
+    },
+    "perm_null": {
+      "Qwen/Qwen2.5-1.5B-Instruct": 0.003,
+      "Qwen/Qwen2.5-3B-Instruct": 0.036,
+      "meta-llama/Llama-3.2-3B-Instruct": 0.057,
+      "google/gemma-2-2b-it": 0.005
+    },
+    "prime_poscontrol": {
+      "Qwen/Qwen2.5-1.5B-Instruct": 0.0,
+      "Qwen/Qwen2.5-3B-Instruct": 0.0,
+      "meta-llama/Llama-3.2-3B-Instruct": 0.167,
+      "google/gemma-2-2b-it": 0.167
+    }
+  },
+  "VERDICT": "REPORT_AS_LANDED_null",
+  "honest_scope": "\u22643B open models, single fixed 0.60-depth layer, difference-of-means linear injection with rms dose + random-direction & text-priming controls, 8-concept set, one confirmatory run per model; tests reportability of an injected linear concept direction, not introspection in general."
+}

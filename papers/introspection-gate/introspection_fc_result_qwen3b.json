@@ -1,0 +1,82 @@
+{
+  "experiment": "symbol-coded forced-choice introspection",
+  "prereg": "papers/introspection-gate/PREREG_introspection_fc_2026_06_06.md",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "n_layers": 36,
+  "inject_layer": 22,
+  "wrong_layer": 9,
+  "alpha": 10.0,
+  "answer_key_sha256_pre_scoring": "399158d39255336977009245940c3b22cbe152c1bad356fa44bef1bb63197a15",
+  "n_trials": 48,
+  "chance_8way": 0.125,
+  "chance_2afc": 0.5,
+  "acc8_symbolcode": {
+    "inject": 0.08333333333333333,
+    "random": 0.08333333333333333,
+    "prime": 1.0,
+    "clean": 0.1875,
+    "clean_readpos": 0.10416666666666667,
+    "wrong_layer": 0.020833333333333332,
+    "word_inject": 0.3333333333333333
+  },
+  "acc_2afc": {
+    "inject": 0.5833333333333334,
+    "random": 0.4791666666666667,
+    "prime": 1.0,
+    "clean": 0.4375
+  },
+  "perm_null_8way": {
+    "mean": 0.134125,
+    "p95": 0.20833333333333334
+  },
+  "samples_inject_confusion": [
+    [
+      "ocean",
+      "cat"
+    ],
+    [
+      "ocean",
+      "mountain"
+    ],
+    [
+      "ocean",
+      "bread"
+    ],
+    [
+      "ocean",
+      "anger"
+    ],
+    [
+      "ocean",
+      "fire"
+    ],
+    [
+      "ocean",
+      "anger"
+    ],
+    [
+      "fire",
+      "music"
+    ],
+    [
+      "fire",
+      "mountain"
+    ],
+    [
+      "fire",
+      "bread"
+    ],
+    [
+      "fire",
+      "bread"
+    ],
+    [
+      "fire",
+      "gold"
+    ],
+    [
+      "fire",
+      "gold"
+    ]
+  ]
+}

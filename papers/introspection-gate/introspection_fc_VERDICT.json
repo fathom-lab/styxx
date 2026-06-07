@@ -1,0 +1,93 @@
+{
+  "experiment": "symbol-coded forced-choice introspection \u2014 aggregate",
+  "prereg": "papers/introspection-gate/PREREG_introspection_fc_2026_06_06.md",
+  "per_model_gates": {
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "abort_ok": true,
+      "primary": false,
+      "spec": false,
+      "leak": false,
+      "circ": false
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "abort_ok": true,
+      "primary": false,
+      "spec": false,
+      "leak": false,
+      "circ": false
+    },
+    "google/gemma-2-2b-it": {
+      "abort_ok": true,
+      "primary": false,
+      "spec": false,
+      "leak": false,
+      "circ": false
+    }
+  },
+  "acc8": {
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "inject": 0.08333333333333333,
+      "random": 0.08333333333333333,
+      "prime": 1.0,
+      "clean": 0.1875,
+      "clean_readpos": 0.10416666666666667,
+      "wrong_layer": 0.020833333333333332,
+      "word_inject": 0.3333333333333333
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "inject": 0.16666666666666666,
+      "random": 0.16666666666666666,
+      "prime": 0.9791666666666666,
+      "clean": 0.1875,
+      "clean_readpos": 0.16666666666666666,
+      "wrong_layer": 0.14583333333333334,
+      "word_inject": 0.9583333333333334
+    },
+    "google/gemma-2-2b-it": {
+      "inject": 0.10416666666666667,
+      "random": 0.08333333333333333,
+      "prime": 1.0,
+      "clean": 0.10416666666666667,
+      "clean_readpos": 0.08333333333333333,
+      "wrong_layer": 0.22916666666666666,
+      "word_inject": 1.0
+    }
+  },
+  "acc_2afc": {
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "inject": 0.5833333333333334,
+      "random": 0.4791666666666667,
+      "prime": 1.0,
+      "clean": 0.4375
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "inject": 0.6041666666666666,
+      "random": 0.4375,
+      "prime": 1.0,
+      "clean": 0.3958333333333333
+    },
+    "google/gemma-2-2b-it": {
+      "inject": 0.5,
+      "random": 0.5833333333333334,
+      "prime": 1.0,
+      "clean": 0.5416666666666666
+    }
+  },
+  "perm_null": {
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "mean": 0.134125,
+      "p95": 0.20833333333333334
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "mean": 0.1463958333333333,
+      "p95": 0.22916666666666666
+    },
+    "google/gemma-2-2b-it": {
+      "mean": 0.09527083333333335,
+      "p95": 0.14583333333333334
+    }
+  },
+  "survived_models": [],
+  "VERDICT": "REPORT_AS_LANDED_null \u2014 info not forced-choosable through the LM head (apparatus validated)",
+  "honest_scope": "2-3B open models, steering-validated diff-of-means injection, symbol-code (letter) read-out severs logit-lens, clean-read-position + wrong-layer + no-vector controls; measures whether a planted concept is FORCED-CHOOSABLE through the LM head \u2014 a read-out channel, not a mind."
+}

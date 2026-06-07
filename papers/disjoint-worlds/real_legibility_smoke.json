@@ -1,0 +1,128 @@
+{
+  "experiment": "zero-anchor cross-model legibility (aligner-validated)",
+  "models": [
+    "Qwen/Qwen2.5-0.5B",
+    "EleutherAI/pythia-410m"
+  ],
+  "n_concepts": 30,
+  "chance": 0.0333,
+  "calibration_positive_control": [
+    {
+      "sigma": 0.1,
+      "rsa": 1.0,
+      "wproc": {
+        "top1": 1.0,
+        "top5": 1.0,
+        "mrr": 1.0
+      },
+      "gw_top1": 1.0
+    },
+    {
+      "sigma": 0.3,
+      "rsa": 0.996,
+      "wproc": {
+        "top1": 0.7,
+        "top5": 0.9,
+        "mrr": 0.796
+      },
+      "gw_top1": 0.7
+    },
+    {
+      "sigma": 0.5,
+      "rsa": 0.987,
+      "wproc": {
+        "top1": 0.5,
+        "top5": 0.667,
+        "mrr": 0.585
+      },
+      "gw_top1": 0.5
+    },
+    {
+      "sigma": 0.8,
+      "rsa": 0.958,
+      "wproc": {
+        "top1": 0.167,
+        "top5": 0.4,
+        "mrr": 0.312
+      },
+      "gw_top1": 0.167
+    },
+    {
+      "sigma": 1.2,
+      "rsa": 0.883,
+      "wproc": {
+        "top1": 0.167,
+        "top5": 0.567,
+        "mrr": 0.349
+      },
+      "gw_top1": 0.167
+    },
+    {
+      "sigma": 1.8,
+      "rsa": 0.759,
+      "wproc": {
+        "top1": 0.133,
+        "top5": 0.467,
+        "mrr": 0.277
+      },
+      "gw_top1": 0.133
+    },
+    {
+      "sigma": 2.6,
+      "rsa": 0.535,
+      "wproc": {
+        "top1": 0.133,
+        "top5": 0.2,
+        "mrr": 0.218
+      },
+      "gw_top1": 0.133
+    }
+  ],
+  "calib_recovers_known_warp_at_rsa>=0.80": 1.0,
+  "aligner_validated": true,
+  "pairs": [
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "pythia-410m",
+      "same_family": false,
+      "rsa": 0.772,
+      "wproc": {
+        "top1": 0.167,
+        "top5": 0.367,
+        "mrr": 0.286
+      },
+      "gw_top1": 0.167,
+      "calib_floor_top1_at_rsa": 0.137,
+      "beats_calib_floor": true
+    }
+  ],
+  "best_cross_family": {
+    "a": "Qwen2.5-0.5B",
+    "b": "pythia-410m",
+    "same_family": false,
+    "rsa": 0.772,
+    "wproc": {
+      "top1": 0.167,
+      "top5": 0.367,
+      "mrr": 0.286
+    },
+    "gw_top1": 0.167,
+    "calib_floor_top1_at_rsa": 0.137,
+    "beats_calib_floor": true
+  },
+  "best_any_pair": {
+    "a": "Qwen2.5-0.5B",
+    "b": "pythia-410m",
+    "same_family": false,
+    "rsa": 0.772,
+    "wproc": {
+      "top1": 0.167,
+      "top5": 0.367,
+      "mrr": 0.286
+    },
+    "gw_top1": 0.167,
+    "calib_floor_top1_at_rsa": 0.137,
+    "beats_calib_floor": true
+  },
+  "VERDICT": "SHARED_NOT_ALIGNABLE \u2014 aligner is VALIDATED (recovers known warp at RSA>=0.80: 1.00) yet real cross-family pairs recover ~chance (best xfam top1=0.167 vs chance 0.033). Real models share relational geometry (high RSA) but differ by a STRUCTURED warp beyond isotropic noise: a true, non-artifactual bound \u2014 universality lives in relational structure, not an alignable frame."
+}

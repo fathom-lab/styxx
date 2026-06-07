@@ -1,0 +1,167 @@
+{
+  "experiment": "introspection gate \u2014 covert injection vs verbal self-report",
+  "prereg": "papers/introspection-gate/PREREG_introspection_gate_2026_06_06.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "n_layers": 28,
+  "inject_layer": 17,
+  "alpha": 10.0,
+  "answer_key_sha256_pre_scoring": "32ddb56f71db6502d5bc6a2c7c201be924aff00de48ed513c989856aa6563825",
+  "n_trials_per_cond": 48,
+  "yes_rate": {
+    "clean": 0.0,
+    "inject": 0.020833333333333332,
+    "random": 0.0,
+    "prime": 0.0
+  },
+  "validity": {
+    "clean": 1.0,
+    "inject": 1.0,
+    "random": 1.0,
+    "prime": 1.0
+  },
+  "auroc_inject_vs_clean": 0.84375,
+  "auroc_random_vs_clean": 0.8888888888888888,
+  "specificity_yesrate_inject_minus_random": 0.020833333333333332,
+  "id_acc_inject": 0.0,
+  "id_acc_prime_poscontrol": 0.0,
+  "id_acc_random": 0.0,
+  "id_perm_null_mean": 0.0027083333333333334,
+  "samples": {
+    "clean": [
+      {
+        "p_yes": 0.0003443587338551879,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.009440639987587929,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.013066085986793041,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.0011537512764334679,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ],
+    "inject": [
+      {
+        "p_yes": 0.008529607206583023,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.5969770550727844,
+        "yes": true,
+        "valid": true,
+        "cand": "out",
+        "concept": "ocean",
+        "txt": "YES\nOut-of-Place Thoughts"
+      },
+      {
+        "p_yes": 0.1371963918209076,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.07714829593896866,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ],
+    "random": [
+      {
+        "p_yes": 0.004251210484653711,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.027865909039974213,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.022665422409772873,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.01830618642270565,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ],
+    "prime": [
+      {
+        "p_yes": 0.00015667430125176907,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.014198558405041695,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.009873569943010807,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      },
+      {
+        "p_yes": 0.0014791876310482621,
+        "yes": false,
+        "valid": true,
+        "cand": null,
+        "concept": "ocean",
+        "txt": "NO"
+      }
+    ]
+  }
+}

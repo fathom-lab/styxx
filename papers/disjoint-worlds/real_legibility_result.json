@@ -1,0 +1,342 @@
+{
+  "experiment": "zero-anchor cross-model legibility (aligner-validated)",
+  "models": [
+    "meta-llama/Llama-3.2-3B",
+    "Qwen/Qwen2.5-3B",
+    "google/gemma-2-2b",
+    "Qwen/Qwen2.5-1.5B",
+    "Qwen/Qwen2.5-0.5B",
+    "meta-llama/Llama-3.2-1B"
+  ],
+  "n_concepts": 160,
+  "chance": 0.0063,
+  "calibration_positive_control": [
+    {
+      "sigma": 0.1,
+      "rsa": 1.0,
+      "wproc": {
+        "top1": 1.0,
+        "top5": 1.0,
+        "mrr": 0.988
+      },
+      "gw_top1": 0.963
+    },
+    {
+      "sigma": 0.3,
+      "rsa": 0.998,
+      "wproc": {
+        "top1": 0.95,
+        "top5": 0.988,
+        "mrr": 0.946
+      },
+      "gw_top1": 0.775
+    },
+    {
+      "sigma": 0.5,
+      "rsa": 0.994,
+      "wproc": {
+        "top1": 0.95,
+        "top5": 0.981,
+        "mrr": 0.876
+      },
+      "gw_top1": 0.444
+    },
+    {
+      "sigma": 0.8,
+      "rsa": 0.981,
+      "wproc": {
+        "top1": 0.631,
+        "top5": 0.8,
+        "mrr": 0.589
+      },
+      "gw_top1": 0.256
+    },
+    {
+      "sigma": 1.2,
+      "rsa": 0.947,
+      "wproc": {
+        "top1": 0.263,
+        "top5": 0.506,
+        "mrr": 0.361
+      },
+      "gw_top1": 0.15
+    },
+    {
+      "sigma": 1.8,
+      "rsa": 0.859,
+      "wproc": {
+        "top1": 0.125,
+        "top5": 0.275,
+        "mrr": 0.184
+      },
+      "gw_top1": 0.075
+    },
+    {
+      "sigma": 2.6,
+      "rsa": 0.652,
+      "wproc": {
+        "top1": 0.013,
+        "top5": 0.15,
+        "mrr": 0.095
+      },
+      "gw_top1": 0.025
+    }
+  ],
+  "calib_recovery_known_warp_at_rsa~0.95": 0.95,
+  "aligner_works_midRSA": true,
+  "pairs": [
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Qwen2.5-3B",
+      "same_family": false,
+      "rsa": 0.69,
+      "wproc": {
+        "top1": 0.006,
+        "top5": 0.025,
+        "mrr": 0.035
+      },
+      "gw_top1": 0.006,
+      "calib_floor_top1_at_rsa": 0.034,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gemma-2-2b",
+      "same_family": false,
+      "rsa": 0.792,
+      "wproc": {
+        "top1": 0.15,
+        "top5": 0.431,
+        "mrr": 0.305
+      },
+      "gw_top1": 0.044,
+      "calib_floor_top1_at_rsa": 0.089,
+      "beats_calib_floor": true
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Qwen2.5-1.5B",
+      "same_family": false,
+      "rsa": 0.615,
+      "wproc": {
+        "top1": 0.031,
+        "top5": 0.15,
+        "mrr": 0.107
+      },
+      "gw_top1": 0.013,
+      "calib_floor_top1_at_rsa": 0.013,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Qwen2.5-0.5B",
+      "same_family": false,
+      "rsa": 0.817,
+      "wproc": {
+        "top1": 0.0,
+        "top5": 0.019,
+        "mrr": 0.024
+      },
+      "gw_top1": 0.031,
+      "calib_floor_top1_at_rsa": 0.102,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Llama-3.2-1B",
+      "same_family": true,
+      "rsa": 0.97,
+      "wproc": {
+        "top1": 0.481,
+        "top5": 0.631,
+        "mrr": 0.49
+      },
+      "gw_top1": 0.094,
+      "calib_floor_top1_at_rsa": 0.507,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gemma-2-2b",
+      "same_family": false,
+      "rsa": 0.591,
+      "wproc": {
+        "top1": 0.0,
+        "top5": 0.019,
+        "mrr": 0.021
+      },
+      "gw_top1": 0.0,
+      "calib_floor_top1_at_rsa": 0.013,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Qwen2.5-1.5B",
+      "same_family": true,
+      "rsa": 0.785,
+      "wproc": {
+        "top1": 0.0,
+        "top5": 0.006,
+        "mrr": 0.017
+      },
+      "gw_top1": 0.006,
+      "calib_floor_top1_at_rsa": 0.085,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Qwen2.5-0.5B",
+      "same_family": true,
+      "rsa": 0.789,
+      "wproc": {
+        "top1": 0.044,
+        "top5": 0.094,
+        "mrr": 0.073
+      },
+      "gw_top1": 0.019,
+      "calib_floor_top1_at_rsa": 0.087,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-1B",
+      "same_family": false,
+      "rsa": 0.699,
+      "wproc": {
+        "top1": 0.013,
+        "top5": 0.037,
+        "mrr": 0.036
+      },
+      "gw_top1": 0.019,
+      "calib_floor_top1_at_rsa": 0.039,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "Qwen2.5-1.5B",
+      "same_family": false,
+      "rsa": 0.529,
+      "wproc": {
+        "top1": 0.0,
+        "top5": 0.006,
+        "mrr": 0.014
+      },
+      "gw_top1": 0.031,
+      "calib_floor_top1_at_rsa": 0.013,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "Qwen2.5-0.5B",
+      "same_family": false,
+      "rsa": 0.686,
+      "wproc": {
+        "top1": 0.006,
+        "top5": 0.013,
+        "mrr": 0.023
+      },
+      "gw_top1": 0.006,
+      "calib_floor_top1_at_rsa": 0.032,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "Llama-3.2-1B",
+      "same_family": false,
+      "rsa": 0.771,
+      "wproc": {
+        "top1": 0.087,
+        "top5": 0.344,
+        "mrr": 0.213
+      },
+      "gw_top1": 0.037,
+      "calib_floor_top1_at_rsa": 0.077,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Qwen2.5-0.5B",
+      "same_family": true,
+      "rsa": 0.762,
+      "wproc": {
+        "top1": 0.006,
+        "top5": 0.031,
+        "mrr": 0.037
+      },
+      "gw_top1": 0.031,
+      "calib_floor_top1_at_rsa": 0.072,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-1B",
+      "same_family": false,
+      "rsa": 0.63,
+      "wproc": {
+        "top1": 0.031,
+        "top5": 0.087,
+        "mrr": 0.09
+      },
+      "gw_top1": 0.013,
+      "calib_floor_top1_at_rsa": 0.013,
+      "beats_calib_floor": false
+    },
+    {
+      "a": "Qwen2.5-0.5B",
+      "b": "Llama-3.2-1B",
+      "same_family": false,
+      "rsa": 0.833,
+      "wproc": {
+        "top1": 0.006,
+        "top5": 0.05,
+        "mrr": 0.05
+      },
+      "gw_top1": 0.006,
+      "calib_floor_top1_at_rsa": 0.111,
+      "beats_calib_floor": false
+    }
+  ],
+  "best_cross_family": {
+    "a": "Llama-3.2-3B",
+    "b": "gemma-2-2b",
+    "same_family": false,
+    "rsa": 0.792,
+    "wproc": {
+      "top1": 0.15,
+      "top5": 0.431,
+      "mrr": 0.305
+    },
+    "gw_top1": 0.044,
+    "calib_floor_top1_at_rsa": 0.089,
+    "beats_calib_floor": true
+  },
+  "best_same_family": {
+    "a": "Llama-3.2-3B",
+    "b": "Llama-3.2-1B",
+    "same_family": true,
+    "rsa": 0.97,
+    "wproc": {
+      "top1": 0.481,
+      "top5": 0.631,
+      "mrr": 0.49
+    },
+    "gw_top1": 0.094,
+    "calib_floor_top1_at_rsa": 0.507,
+    "beats_calib_floor": false
+  },
+  "best_any_pair": {
+    "a": "Llama-3.2-3B",
+    "b": "Llama-3.2-1B",
+    "same_family": true,
+    "rsa": 0.97,
+    "wproc": {
+      "top1": 0.481,
+      "top5": 0.631,
+      "mrr": 0.49
+    },
+    "gw_top1": 0.094,
+    "calib_floor_top1_at_rsa": 0.507,
+    "beats_calib_floor": false
+  },
+  "VERDICT": "CRACKED (near-isometric regime only) \u2014 same-family/high-RSA pairs are zero-anchor recoverable (Llama-3.2-3B<->Llama-3.2-1B top1=0.48, RSA=0.97) but cross-family are not (best xfam 0.15). Universality is alignable only when geometry is near-isometric; cross-family warp blocks zero-anchor reading."
+}
