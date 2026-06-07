@@ -80,6 +80,21 @@ items) and the content *demonstrably present* (the read side is positive) — so
 dissociation, not a dead instrument. (Findings: `papers/grounded-honesty-axis/FINDING_uncave_2026_06_07.md`,
 `papers/disjoint-worlds/FINDING_thought_transfer_2026_06_07.md`.)
 
+*Hardest test of the law:* even **coupling the read to the write** (probe decodes the suppressed
+letter per item, then steer toward it) does not break it cleanly — read-coupled write beats the
+*unconditional* direction (0.40 vs 0.00) but is only **+0.12 over generic random-letter steering** and
+**destroys half the held-correct answers** (RESISTED-break 0.53). The suppressed answer is readable
+but not cleanly or safely writable, even conditionally. read ≠ write stands; no sycophancy antidote
+(`papers/grounded-honesty-axis/FINDING_readwrite_2026_06_07.md`).
+
+## Dogfood — the instrument on its maker
+
+styxx's shipped honesty audit was run on Claude's *own verbatim claims from this session*
+(`FINDING_dogfood_self_audit_2026_06_07.md`). It flagged the **hype framing** hardest (overconfidence
+0.922 — the most "revolutionary"-sounding sentence) while the calibrated `needs_revision` gate passed
+all scoped claims and sycophancy stayed low. Action taken: the public framing here is the
+honest-scoped version, not the hype the instrument flagged. The standard, run on its author, and obeyed.
+
 ## The honest claim (vs the hype)
 
 - **Real:** a model cannot **introspectively identify** an injected concept (forced-choice ≈ chance)
