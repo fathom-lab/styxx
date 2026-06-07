@@ -1,5 +1,12 @@
 # The Legibility of Mind — what we found (2026-06-06 → 07)
 
+> **Erratum (2026-06-07 — `papers/grounded-honesty-axis/FINDING_parrhesia_rung1_2026_06_07.md`):** the
+> probe-read of an *injected* concept reflects injected-vector **presence** — it reads 1.00 even at a
+> behaviourally-inert dose (steering +0.007), with divergence 0 at every dose. It certifies a **trace**,
+> not a held **thought**; the "inaccessible thought" framing below is re-scoped. Self-report blindness
+> (the model cannot forced-choose the concept) stands; the read-certificate is owed on naturally-present
+> content.
+
 **Fathom Lab / styxx.** A night mapping *who can read a thought inside an AI* — the mind itself,
 an external probe, another mind — and whether you can write one across. Every claim pre-registered,
 hashed before scoring, with positive controls that could (and did) catch broken instruments.

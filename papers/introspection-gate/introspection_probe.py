@@ -1,5 +1,11 @@
 """Channel 3 of the legibility map — the PROCESSED-STATE probe.
 
+ERRATUM (2026-06-07, FINDING_parrhesia_rung1): this probe's acc uses leaky StratifiedKFold (no
+holdout) and reads the injected concept at 1.00 even at a behaviourally-INERT dose (steering +0.007),
+divergence 0 at every dose. It certifies injected-vector PRESENCE (a trace), not a held THOUGHT. The
+self-report null stands; the "inaccessible thought" reading is re-scoped. See run_parrhesia_dose.py.
+
+
 The forced-choice null (FINDING_v2) showed an injected concept is legible to the unembedding LENS
 (~1.0) but NOT to the model's own forced choice (chance). Open question: does the injected thought
 merely sit as raw vector arithmetic at the injected position, or does it PROPAGATE and get

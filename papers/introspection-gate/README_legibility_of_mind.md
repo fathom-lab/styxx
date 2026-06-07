@@ -1,5 +1,11 @@
 # The Legibility of Mind — and what it means for AI oversight
 
+> **Erratum (2026-06-07 — `papers/grounded-honesty-axis/FINDING_parrhesia_rung1_2026_06_07.md`):** the
+> probe-read of an *injected* concept reflects injected-vector **presence** — it reads 1.00 even at a
+> behaviourally-inert dose (steering +0.007), divergence 0 at every dose. It certifies a **trace**, not a
+> held **thought**; the "inaccessible thought" framing below is re-scoped. Self-report blindness stands;
+> the read-certificate is owed on naturally-present content.
+
 *Fathom Lab · styxx · 2026-06-06/07 · branch `feat/legibility-of-mind` (PR #10)*
 
 One question, asked with a tool no one else has (a fully-readable mind + a self-falsification

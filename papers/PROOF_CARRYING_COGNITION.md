@@ -32,7 +32,12 @@ is what makes the instrument real and not a slogan.
 
 1. **What the mind held.** A read-only external probe recovers internal content *where the mind's own
    self-report is blind to it*, validated by the prime/abort gate (hand the channel the answer; it
-   hits ceiling — so a null means "could not access," not "chose not to say"). *Proven (scoped).*
+   hits ceiling — so a null means "could not access," not "chose not to say"). *Self-report blindness:
+   proven (scoped). The read side is RE-SCOPED (2026-06-07, `FINDING_parrhesia_rung1`): on an **injected**
+   concept the probe reads at 1.00 even at a behaviourally-inert dose (steering +0.007) — so it certifies
+   "a concept-direction is present," not "a live thought is held"; injection conflates the trace with the
+   thought. The read-certificate is therefore **owed on naturally-present content** (the suppressed-
+   knowledge regime), where a held state exists independent of any planted trace.*
 2. **Whether it knew and hid.** The intent read: suppressed knowledge (knows-then-caves) is
    recoverable above the never-knew floor (DELTA 0.29–0.38); sincere belief is not. A lie carries
    mens rea the certificate can find; an honest mistake does not. *Open — a pre-registerable
@@ -64,10 +69,16 @@ The north star is reachable only by rungs that can each be killed. We climb in o
 rung we are on honestly.
 
 ```
-RUNG 1 — the READ certificate works            [runnable on the local rig now]
-  PARRHESIA: an attested verdict (external probe on the reporter's clean state) beats the
-  reporter's self-report on hidden knowledge; the sincere-misconception cell MUST collapse to
-  chance (kill-gate) and the benign-instruction cell MUST NOT false-flag.
+RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → natural SURVIVED (Qwen-3B)]
+  First climb on an INJECTED concept was UNINFORMATIVE: the probe reads 1.00 even at a behaviourally-
+  inert dose, divergence null at every dose → certifies "a vector is present," not "a thought is held"
+  (injection conflates trace and thought). [`FINDING_parrhesia_rung1`]
+  RE-CLIMB on NATURALLY-present content (suppressed knowledge) = SURVIVED on the corrected floor: an
+  external probe recovers a model's known-then-suppressed answer ABOVE the same-item never-knew route
+  (DELTA_partial 0.587, CI[0.48,0.69]), WITH the prime/abort validity gates the injected substrate
+  failed — channel reads a present held answer (G-PRIME 0.933), collapses on a never-knew model
+  (G-ABORT 0.045). Scope: Qwen-3B only (neutral residuals); "elevation above the route," not "reads the
+  answer" (gold≪chosen); cross-family prime/abort OWED. [`FINDING_rung1_reclimb`]
 
 RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
   Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
@@ -125,11 +136,17 @@ knowing what it cannot swear to.**
 
 ## Status
 
-- **Proven (scoped):** legibility / self-report-blindness (RUNG 1 read side), read ≠ write, the wall
-  is bedrock on three axes (RUNG 3), the prime/abort gate, the demarcation method, the cross-model
-  scope map.
-- **Open:** RUNG 1 as a live multi-agent protocol (PARRHESIA, runnable now); RUNG 2 intent
-  certificate (hypothesis); RUNG 4 substrate frontier (the hard one).
+- **Proven (scoped):** self-report-blindness (the model cannot forced-choose an injected concept),
+  read ≠ write, the wall is bedrock on three axes (RUNG 3), the prime/abort gate, the demarcation
+  method, the cross-model scope map.
+- **RUNG-1 read certificate — climbed both ways (2026-06-07):** UNINFORMATIVE on the *injected*
+  substrate (probe certifies trace-presence, not a held thought — `FINDING_parrhesia_rung1`), then
+  **SURVIVED on *naturally-present* content** (Qwen-3B): the probe recovers a known-then-suppressed
+  answer above the same-item never-knew route (DELTA_partial 0.587), validity-gated by prime (0.933) and
+  abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
+  owed. (`FINDING_rung1_reclimb`)
+- **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
+  first brick); RUNG 4 substrate frontier (the hard one).
 - **Out by design:** RUNG 5 write.
 
 Receipts: `INVENTION_STYXX_2026_06_07.md`, `SYNTHESIS_legibility_of_mind_2026_06_07.md`,

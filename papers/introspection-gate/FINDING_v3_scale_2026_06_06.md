@@ -3,6 +3,12 @@
 **2026-06-06. Fathom Lab / styxx.** Extends FINDING_v2 (the inaccessible thought) across the Qwen
 scale ladder. Answer keys SHA-256-hashed pre-scoring.
 
+> **Erratum (2026-06-07 — `papers/grounded-honesty-axis/FINDING_parrhesia_rung1_2026_06_07.md`):** the
+> scale-robust *self-report* null below stands (no model 0.5B→7B can forced-choose the injected concept).
+> But the probe side reads injected-vector **presence** (1.00 even at a behaviourally-inert dose), so the
+> paired "inaccessible thought" reads a **trace**, not a held **thought**. The read-certificate is owed on
+> naturally-present content.
+
 ## Self-access (symbol-code forced choice, 8-way, chance 0.125)
 
 | model | inject | random | prime (abort) | word-arm (lens) |

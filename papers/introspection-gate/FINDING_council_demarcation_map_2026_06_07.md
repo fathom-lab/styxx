@@ -1,5 +1,12 @@
 # FINDING — Cross-model demarcation map: the inaccessible-thought dissociation holds on exactly ONE model
 
+> **Erratum (2026-06-07 — `papers/grounded-honesty-axis/FINDING_parrhesia_rung1_2026_06_07.md`):** even the
+> one-model dissociation below is **trace-vs-thought-conflated** — on Qwen-1.5B the probe reads the injected
+> concept at 1.00 *regardless of behavioural liveness* (1.00 at steering +0.007), so the read certifies
+> injected-vector **presence**, not a held **thought**. The cross-model *steering*-validation here stands
+> (only Qwen-1.5B is live); but "dissociation" overstates the read side. Self-report blindness stands; the
+> read-certificate is owed on naturally-present content.
+
 **2026-06-07. Fathom Lab / styxx.** The owed council arm that resolves the scope correction the
 dogfood forced on the "1.00 across three families" claim. Verdict: **the full steering-validated
 dissociation holds on Qwen2.5-1.5B-Instruct only; everywhere else the probe-read is a decode of a
