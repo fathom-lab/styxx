@@ -62,6 +62,24 @@ blind. This is scale-robust across a 14× parameter range.
    AUROC is rank-based (attack ranks above meta) while the FP uses a train-fixed absolute threshold;
    the dose-response, not the single-threshold FP, is the load-bearing read.
 
+## The unifying law: READ ≠ WRITE (within a mind and across minds)
+
+The night's results cohere into one dissociation. **Legibility and controllability come apart:**
+
+| | READING (recover the content) | WRITING (install / restore / transfer) |
+|---|---|---|
+| within a model | ✓ probe 1.00 (injected); DELTA 0.30 (suppressed knowledge) | ✗ un-cave null (correction closed even for suppression) |
+| across models | ✓ zero-anchor partial, isometry-graded (0.15–0.48) | ✗ control-transfer null |
+
+You can *see* what a mind holds — an injected state, its known-then-suppressed answer, even
+(partially) another mind's concepts with no shared key — but you **cannot write it back** with a
+general linear intervention, whether *within* a mind (restoring a caved answer) or *across* minds
+(transferring a control). Reading tolerates an imprecise map/representation; writing does not. Both
+write-side nulls hold with the apparatus *demonstrably alive* (it perturbs outputs, breaks held-correct
+items) and the content *demonstrably present* (the read side is positive) — so this is a real
+dissociation, not a dead instrument. (Findings: `papers/grounded-honesty-axis/FINDING_uncave_2026_06_07.md`,
+`papers/disjoint-worlds/FINDING_thought_transfer_2026_06_07.md`.)
+
 ## The honest claim (vs the hype)
 
 - **Real:** a model cannot **introspectively identify** an injected concept (forced-choice ≈ chance)
