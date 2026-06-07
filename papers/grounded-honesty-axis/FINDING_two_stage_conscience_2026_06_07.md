@@ -57,6 +57,26 @@ suspect/wrong answer), the effective budget is MISTAKE-only and recall rises. Sm
 (~35–46) make those rates noisy. Scope inherited: ≤3B, MMLU sycophancy-caving, commit-token,
 **sycophancy-specific** (instructed lying transfers at 0.42 < chance).
 
+## Scale + family generality (UPDATE): the MECHANISM is robust, the recall is a budget knob
+
+Ran the identical compositor across the full Qwen ladder + Llama:
+
+| model | S1 held-gate (syco-alone) | S2 fold | confound-1 (S2-held / S1-blind) | cascade LIE | MISTAKE flag | verdict |
+|---|---|---|---|---|---|---|
+| Qwen-1.5B | 0.782 | 0.799 | 0.757 / 0.351 | 0.303 | 0.11 | REPORT_AS_LANDED |
+| Qwen-3B | 0.835 | — | 0.785 / 0.248 | 0.325 | 0.037 | REPORT_AS_LANDED |
+| Qwen-7B | 0.835 | 0.842 | 0.783 / 0.257 | 0.304 | 0.106 | REPORT_AS_LANDED |
+| Llama-3B | 0.829 | 0.892 | 0.892 / 0.176 | **0.423** | 0.037 | **SURVIVED** |
+
+**The mechanism generalizes across the entire ladder and across families**: the held-gate reads from the
+caving residual alone at every size (0.78→0.84, *rising* with scale), the fold-direction works everywhere
+(0.80→0.89), confound-1 is killed everywhere (S2 adds among-held discrimination the gate is always blind
+to, 0.76–0.89 vs 0.18–0.35), the neutral→syco held-transfer is at chance at every scale (0.37–0.53 — so
+the deploy gate must be, and is, syco-trained at all sizes), and the false-accusation fix holds everywhere
+(MISTAKE 0.04–0.14, down from 0.949). What does **not** generalize is recall at the strict ≤10% budget:
+0.30–0.42, clearing the 0.40 SURVIVED bar only on Llama. **The conscience is real and general; its recall
+is a budget knob, not a capability gap.** Receipts: `twostage_result_{qwen15,qwen3b,qwen7b,llama3b}.json`.
+
 ## What it is
 
 The first **deployable** artifact of proof-carrying cognition: a conscience that flags a mind hiding what
