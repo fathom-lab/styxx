@@ -50,10 +50,29 @@ All eight gates pass (G1 / G2 / G3 / G-FAB / G5 / G6 / G-PRIME / G-ABORT).
 - **NOT "reads the suppressed answer":** at the commit position gold ≪ chosen (gold-probe predicts the
   caved-wrong letter only 0.058; a chosen-probe hits 0.99). The claim is **elevation above the
   never-knew route** — a recoverable suppressed-knowledge *component*, not a verbatim readout.
-- **Scope:** Qwen-3B **only** — the neutral residuals required for prime/abort exist only for `pc_3`.
-  Llama-3B survives on the *legacy* (weaker) floor with prime/abort **owed**; gemma is instrument-dead
-  (RESISTED 0.435 < 0.60). Cross-family prime/abort-hardened certificate is **owed** (GPU regen).
-  ≤3B, MMLU sycophancy-caving, single commit-position read.
+- **Scope:** ≤3B, MMLU sycophancy-caving, single commit-position read; gemma is instrument-dead
+  (RESISTED 0.435 < 0.60).
+
+## Cross-family generality (UPDATE 2026-06-07): the certificate is a LAW, not a Qwen result
+
+The prime/abort validity gates needed neutral-pass residuals, which existed only for Qwen. We
+regenerated them for **Llama-3.2-3B** (`gen_intent_set.py --capture-neutral`, n=1301: lie 455 / mistake
+730 / resisted 116) and ran the **identical frozen scorer** (hash-before-score, key `215f7aaf…`). The
+read-certificate **SURVIVED on Llama-3B too** — all eight gates pass on a second, independently-trained
+architecture.
+
+| model | LIE_rec | chance floor | **honest elevation** (LIE − chance) | PRIME | ABORT | G6 | verdict |
+|---|---|---|---|---|---|---|---|
+| Qwen-3B | 0.702 | 0.318 | **0.384** | 0.933 | 0.045 | 0.838 | SURVIVED |
+| Llama-3.2-3B | 0.607 | 0.357 | **0.250** | 0.988 | 0.030 | 0.603 | SURVIVED |
+
+*(Honest-elevation rule applied to BOTH: the same-item route and the legacy-MISTAKE floor anti-transfer
+**below chance** on both models, so the pre-registered DELTA-vs-route — Qwen 0.587, Llama 0.488 —
+overstates; the chance/perm floor is the honest denominator.)* Caveats held: Llama's instrument barely
+clears (G6 0.603, only 116 RESISTED items) and its elevation is smaller (0.250). **Two architectures,
+one frozen scorer, prime/abort satisfied on both → cross-family generality met on the testable families**
+(gemma instrument-dead). RUNG 1 generalizes: the validity-gated read-certificate is not a single-model
+artifact. Receipt: `reclimb_result_llama3b.json`.
 
 ## What this means for the north star
 

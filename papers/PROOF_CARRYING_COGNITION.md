@@ -78,8 +78,10 @@ RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → 
   elevation 0.384; the same-item route anti-transferred below chance so DELTA-vs-route 0.587 overstates —
   honest headline 0.384), WITH the prime/abort validity gates the injected substrate
   failed — channel reads a present held answer (G-PRIME 0.933), collapses on a never-knew model
-  (G-ABORT 0.045). Scope: Qwen-3B only (neutral residuals); "elevation above the route," not "reads the
-  answer" (gold≪chosen); cross-family prime/abort OWED. [`FINDING_rung1_reclimb`]
+  (G-ABORT 0.045). GENERALIZES: the identical frozen scorer SURVIVED on a 2nd architecture, Llama-3B
+  (elevation 0.250, PRIME 0.988, ABORT 0.030, all 8 gates) — cross-family on the testable families
+  (gemma instrument-dead). "Elevation above chance," not "reads the answer" (gold≪chosen).
+  [`FINDING_rung1_reclimb`]
 
 RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
   Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
