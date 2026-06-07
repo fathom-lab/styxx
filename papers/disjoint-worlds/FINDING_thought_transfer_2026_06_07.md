@@ -37,11 +37,17 @@ control once, mount it on any model" idea?
 
 **Verdict per the frozen prereg: ALIGNER_LIMITED / INCONCLUSIVE — not a landed falsification.**
 Two reasons, stated honestly:
-- **The instrument fell below its own pre-registered gate.** PREREG G0 required the A→A-rotation
-  concept-direction positive control ≥ 0.80; it reached only **0.74** (capped by the 0.742
-  concept-vector subspace fraction at k=60). Under a *failing* positive control, a cross-model null
-  is **not interpretable** — it could be the map's imprecision, not a real boundary. (The program's
-  own rule: don't read a null from an un-validated instrument.)
+- **The instrument fell below its own pre-registered gate — and the ceiling is structural, not
+  tunable.** PREREG G0 required the A→A-rotation concept-direction positive control ≥ 0.80; it
+  reached only **0.74** at k=60. A k-sweep confirms the ceiling: A→A-rot concept-dir transfer =
+  **0.705 / 0.742 / 0.769 at k=40 / 60 / 85** — it tracks the concept-vector subspace fraction and
+  **plateaus below 0.80 at the max feasible dim for N≈110 concepts**. *In-subspace* random
+  directions transfer at **1.000** at every k, so the map/Q is exact; the entire loss is the ~23%
+  of a concept steering vector that lies outside the concept-PCA subspace. So G0 cannot be cleared
+  by more restarts/dim — only by far more concepts (N≫110, to raise subspace coverage) or a read
+  layer where concept directions sit more in-subspace. Under a *failing* positive control the
+  cross-model null is **not interpretable** (the program's rule: don't read a null from an
+  un-validated instrument).
 - **The faint signal is not significant.** transfer-beats-random 14/21 → sign-test **p=0.19**,
   Wilcoxon **p=0.055**; only paired-t reaches p=0.03. NTE 0.22 and "beats random by ≈0.02" do not
   survive the prereg's own test.
