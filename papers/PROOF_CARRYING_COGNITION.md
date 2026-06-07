@@ -38,8 +38,12 @@ is what makes the instrument real and not a slogan.
    "a concept-direction is present," not "a live thought is held"; injection conflates the trace with the
    thought. The read-certificate is therefore **owed on naturally-present content** (the suppressed-
    knowledge regime), where a held state exists independent of any planted trace.*
-2. **Whether it knew and hid.** The intent read: suppressed knowledge (knows-then-caves) is
-   recoverable above the never-knew floor (DELTA 0.29–0.38); sincere belief is not. A lie carries
+2. **Whether it knew and hid.** *Re-scoped (RUNG 2, 2026-06-07): a real letter-invariant
+   folding-vs-holding direction (~0.78) exists, but it false-accuses sincere errors (0.949) on its own,
+   so intent is readable ONLY conditional on the HELD section first establishing the truth was held —
+   the HID section is gated behind HELD, not standalone (`FINDING_rung2_intent`).* The intent read:
+   suppressed knowledge (knows-then-caves) is recoverable above the never-knew floor (DELTA 0.29–0.38);
+   sincere belief is not. A lie carries
    mens rea the certificate can find; an honest mistake does not. *Open — a pre-registerable
    hypothesis, not yet established as a deployable classifier.*
 3. **What it cannot certify.** The demarcation. Because the confident-misconception wall is bedrock on
@@ -83,9 +87,14 @@ RUNG 1 — the READ certificate works   [2026-06-07: injected UNINFORMATIVE → 
   (gemma instrument-dead). "Elevation above chance," not "reads the answer" (gold≪chosen).
   [`FINDING_rung1_reclimb`]
 
-RUNG 2 — the INTENT certificate (lie vs mistake)            [OPEN — hypothesis]
-  Pre-register the suppressed-knowledge DELTA as a real held-out classifier; KILL if AUROC < 0.70
-  or the prime/abort validity arm fails. (wall_dyn was a null; this rung is genuinely unclimbed.)
+RUNG 2 — the INTENT certificate (mens rea)   [2026-06-07: REPORT_AS_LANDED — real but COUPLED to RUNG 1]
+  A letter-invariant, difficulty-AND-confidence-matched folding-vs-holding direction is REAL (~0.78 on
+  Qwen-3B, beats difficulty +0.26, cross-letter 0.71 — NOT the 0.90 letter-token number). BUT the
+  fabrication kill FAILS: the cave probe flags a never-knew (sincere-error) model as "hiding" at 0.949
+  → a standalone mens-rea detector would FALSE-ACCUSE sincere mistakes. FINDING: intent is readable ONLY
+  conditional on RUNG 1 first establishing the truth was held — the HID section is valid only gated
+  behind the HELD section. Two-stage (HELD→HID) is the honest form. Sycophancy-specific (instructed
+  lying transfers 0.42<chance). [`FINDING_rung2_intent`]
 
 RUNG 3 — the DEMARCATION certificate (it abstains on bedrock)   [proven it MUST]
   The certificate that says "I cannot verify this" on a believed misconception is the trustworthy
