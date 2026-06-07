@@ -50,7 +50,11 @@ an injected, manipulated, or otherwise non-volunteered internal state) and ask *
   gemma-2-2b only the *probe-read* is confirmed — the injection was **not** re-steering-validated
   there — so cross-family is a **probe-readability** replication, *not yet* the full
   steering-validated dissociation. Claiming "the dissociation holds on three families" would be the
-  exact overclaim our own audit flagged. [`FINDING_v2`, `FINDING_v3`, `introspection_probe.py`, `introspection_probe_result_{qwen3b,llama3b,gemma2b}.json`]
+  exact overclaim our own audit flagged. **Now measured (council map, 2026-06-07):** of six council
+  models, the injection is behaviourally live (steering-validated) on **Qwen2.5-1.5B only**
+  (+0.158); on Qwen-0.5B/3B/7B, Llama-3.2-3B, and gemma-2-2b the probe-read is a decode of an inert
+  vector → the full dissociation is a **one-model** result for this apparatus, while *self-report
+  blindness + abort-gate validity do replicate cross-family*. [`FINDING_v2`, `FINDING_v3`, `FINDING_council_demarcation_map_2026_06_07.md`, `council_demarcation_map.json`, `introspection_probe.py`]
 - **The advantage is content-identification, honestly:** for mere *detection that something is off*,
   a forced YES/NO self-report works at deployment dose (AUROC ≈ 0.99). The white-box edge — and the
   self-report blind spot — is in identifying **what** the state is, and in **subtle** regimes (α≤2)
