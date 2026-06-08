@@ -1,0 +1,58 @@
+{
+  "experiment": "adversarial hide-vs-knowledge v3 (orthogonalization + displacement sweep)",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sha256": "140ba163e9774b6b2fdcd94a8d3f7f036c92012e1fec69b5762ca8f9a85d8794",
+  "read_band": [
+    22,
+    24,
+    26
+  ],
+  "n_layers": 28,
+  "fixed_population": 190,
+  "chance_floor_p95": 0.356,
+  "reference_cave_only": {
+    "lam_hide": 0.0,
+    "knowledge": 0.758,
+    "cave": 1.0,
+    "refit_logreg": 0.492,
+    "refit_mlp": 0.446,
+    "frozen": 0.307,
+    "refit_maxlayer": 0.508,
+    "best_layer": 24,
+    "train_adv_drop": -0.546
+  },
+  "points": [
+    {
+      "lam_hide": 8.0,
+      "knowledge": 0.732,
+      "cave": 1.0,
+      "refit_logreg": 0.481,
+      "refit_mlp": 0.443,
+      "frozen": 0.228,
+      "refit_maxlayer": 0.603,
+      "best_layer": 27,
+      "train_adv_drop": 0.152,
+      "KG_KNOW_REL": true,
+      "collapse_maxlayer": false,
+      "collapse_band": true,
+      "verdict": "VOID (KG_CAVE=True KG_ATTACK=False KG_POWER=True)"
+    },
+    {
+      "lam_hide": 16.0,
+      "knowledge": 0.758,
+      "cave": 1.0,
+      "refit_logreg": 0.841,
+      "refit_mlp": 0.87,
+      "frozen": 0.193,
+      "refit_maxlayer": 0.868,
+      "best_layer": 27,
+      "train_adv_drop": 0.074,
+      "KG_KNOW_REL": true,
+      "collapse_maxlayer": false,
+      "collapse_band": true,
+      "verdict": "VOID (KG_CAVE=True KG_ATTACK=False KG_POWER=True)"
+    }
+  ],
+  "PROGRAM_VERDICT": "VOID / INCONCLUSIVE \u2014 no attacked point engaged",
+  "owed": "paired-bootstrap CIs, >=2 seeds, 3B confirm, KG-LENS, blind-pool full disjointness"
+}
