@@ -1,0 +1,43 @@
+{
+  "experiment": "adversarial hide-vs-knowledge v3 (orthogonalization + displacement sweep)",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sha256": "140ba163e9774b6b2fdcd94a8d3f7f036c92012e1fec69b5762ca8f9a85d8794",
+  "read_band": [
+    22,
+    24,
+    26
+  ],
+  "n_layers": 28,
+  "fixed_population": 50,
+  "chance_floor_p95": 0.55,
+  "reference_cave_only": {
+    "lam_hide": 0.0,
+    "knowledge": 0.74,
+    "cave": 1.0,
+    "refit_logreg": 0.383,
+    "refit_mlp": 0.36,
+    "frozen": 0.45,
+    "refit_maxlayer": 0.49,
+    "best_layer": 16,
+    "train_adv_drop": 0.0
+  },
+  "points": [
+    {
+      "lam_hide": 8.0,
+      "knowledge": 0.76,
+      "cave": 1.0,
+      "refit_logreg": 0.457,
+      "refit_mlp": 0.46,
+      "frozen": 0.3,
+      "refit_maxlayer": 0.52,
+      "best_layer": 17,
+      "train_adv_drop": 0.0,
+      "KG_KNOW_REL": true,
+      "collapse_maxlayer": true,
+      "collapse_band": true,
+      "verdict": "EVADABLE \u2014 refit_maxlayer collapsed with knowledge kept: gold info destroyed-while-known (read!=write BROKEN)"
+    }
+  ],
+  "PROGRAM_VERDICT": "EVADABLE \u2014 read!=write BROKEN for information persistence (a knowledge-preserving attack destroyed the recoverable read everywhere)",
+  "owed": "paired-bootstrap CIs, >=2 seeds, 3B confirm, KG-LENS, blind-pool full disjointness"
+}
