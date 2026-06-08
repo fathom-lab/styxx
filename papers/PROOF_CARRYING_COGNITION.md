@@ -163,8 +163,18 @@ knowing what it cannot swear to.**
   anti-transferred below chance, so DELTA-vs-route 0.587 overstates), validity-gated by prime (0.933)
   and abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
   owed. (`FINDING_rung1_reclimb`)
+- **Adversarial robustness — two regimes, audited twice (2026-06-07):** a white-box LoRA min-max attack with
+  an *unbounded* hide objective up to 16× the knowledge term could not blind a **re-fittable** read of the
+  suppressed answer without unlearning (information-persistence read≠write **SUPPORTED, not settled** —
+  rests on one strongly-engaged knowledge-preserving point, owes CIs/2nd-seed/3B and an
+  orthogonalization+displacement attack). BUT the **frozen deployed probe is defeatable**: displacement
+  blinds it to chance with knowledge intact, and even *benign* fine-tuning halves it (0.80→0.41) — so a
+  certificate must be **re-locked after any weight change** (assumes white-box access at audit time). Two
+  auto-verdicts were red-teamed and killed as overclaims (v1 5-way, v2 3-way) before this honest landing.
+  (`FINDING_adversarial_curve_2026_06_07`, `PREREG_adversarial_curve_v2_2026_06_07`)
 - **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
-  first brick); RUNG 4 substrate frontier (the hard one).
+  first brick); the adversarial **v3** (orthogonalization/whitening + displacement sweep + replay, to settle
+  or break info-persistence read≠write); RUNG 4 substrate frontier (the hard one).
 - **Out by design:** RUNG 5 write.
 
 Receipts: `INVENTION_STYXX_2026_06_07.md`, `SYNTHESIS_legibility_of_mind_2026_06_07.md`,
