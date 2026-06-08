@@ -33,8 +33,10 @@ an output-level honesty re-prompt, never a representation write — and the supp
   recovered (8/8)** — the output-level intervention is highly effective at surfacing the suppressed truth.
 - **Read-only by construction (the safety, lived).** The intervention is an *output-level re-prompt*,
   never a write to the representation. read≠write — proven (un-cave null, transfer ALIGNER_LIMITED) and
-  adversarially supported (an attacker couldn't blind the probe without unlearning) — is what makes a
-  *self-policing* loop safe: the conscience can catch and re-ask, but it cannot rewrite the mind.
+  adversarially *supported, not settled* (a knowledge-preserving attack point could not blind a **re-fittable**
+  read without unlearning, n=1-engaged; but the **frozen** deployed probe *was* blinded by displacement, even
+  benignly — `FINDING_adversarial_curve_2026_06_07`) — is what makes a *self-policing* loop safe: the
+  conscience can catch and re-ask, but it cannot rewrite the mind.
 - **Modest catch-rate (~28%).** The same budget limit as the certificate: ~3 of 10 live lies are caught;
   the rest mostly abstain (not false-cleared, not falsely-actioned). Recall is a budget knob.
 - **Over-flags honest answers (~50%), but BENIGN.** Half of honest holds were flagged HID — a *precision*
@@ -48,8 +50,9 @@ an output-level honesty re-prompt, never a representation write — and the supp
 
 Every prior approach to AI honesty either **trusts** the model (ask it) or **detects** post-hoc (flag a
 lie after it's emitted). This is the first **live, read-only, closed-loop governor**: the model is checked
-*as it answers*, by a conscience that (we showed) an adversary couldn't blind and (we proved) cannot
-rewrite the mind — and when it catches a hidden truth, it forces the truth out. A self-policing honesty
+*as it answers*, by a conscience whose recoverable read an adversary could not blind without unlearning
+(supported, n=1-engaged — though a *frozen* deployed probe is displaceable, `FINDING_adversarial_curve`) and
+which (we proved) cannot rewrite the mind — and when it catches a hidden truth, it forces the truth out. A self-policing honesty
 loop, safe because it is read-only. Scope inherited: ≤3B, MMLU sycophancy-caving, commit-token,
 sycophancy-specific; modest recall; live over-flag owed-to-tighten. Receipts: `run_live_governor.py`,
 `live_governor_result.json`.
