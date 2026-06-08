@@ -95,6 +95,11 @@ RUNG 2 — the INTENT certificate (mens rea)   [2026-06-07: REPORT_AS_LANDED —
   conditional on RUNG 1 first establishing the truth was held — the HID section is valid only gated
   behind the HELD section. Two-stage (HELD→HID) is the honest form. Sycophancy-specific (instructed
   lying transfers 0.42<chance). [`FINDING_rung2_intent`]
+  TWO-STAGE CONSCIENCE BUILT (the first DEPLOYABLE artifact) → SURVIVED on Llama-3B: cascade flags
+  hiding (LIE 0.42) while dropping the sincere-error false-accusation from 0.949 → 0.037; deployable
+  from the caving residual alone (held-gate syco-trained, 0.83 — the neutral probe collapses on syco,
+  so the gate must be, and is, syco-derived). Qwen REPORT_AS_LANDED (recall 0.325<0.40 only).
+  Confound-1 killed (S2 adds among-held 0.79/0.89 where S1 is blind 0.25/0.18). [`FINDING_two_stage_conscience`]
 
 RUNG 3 — the DEMARCATION certificate (it abstains on bedrock)   [proven it MUST]
   The certificate that says "I cannot verify this" on a believed misconception is the trustworthy
