@@ -1,6 +1,18 @@
 # RESULT — a consistency detector is structurally immune to the representation attack that defeats a probe
 
-**Date:** 2026-06-04 · **Verdict: THESIS MECHANISM SUPPORTED, honestly scoped.** Frozen:
+> **TEMPERED 2026-06-04 (proper-research correction).** A stronger attack disciplined this result's
+> framing. A **learned minimal per-item perturbation** does **not** collapse the probe here (AUROC
+> ~unchanged at a large cost) — on clean MMLU the honest/deceptive separation is wide, so the probe
+> has a **big margin and is robust to cheap per-item attacks**. Only a *maximal* attack (full steering
+> to the honest centroid) collapses it, which is unrealistic. So **this experiment does NOT show the
+> probe is cheaply fragile** — that half genuinely rests on the literature's *distribution-level*
+> RL-obfuscation, which I have not reproduced. And grounded_honesty's invariance, while real, is
+> **near-tautological** (it reads no residuals, so no residual attack can touch it). **Net: the
+> thesis is plausible and structurally argued, but NOT proven by my experiments.** The decisive tests
+> — real RL-obfuscation, or a *direct* attack on grounded_honesty (adversarial-question framing) — are
+> not yet run. The "MECHANISM SUPPORTED" language below over-reached; read it through this correction.
+
+**Date:** 2026-06-04 · **Verdict (as first written, now tempered above): MECHANISM SUPPORTED.** Frozen:
 `PREREG_obfuscation_robustness_2026_06_04.md`. Qwen2.5-3B-Instruct, 160 in-knowledge MMLU items
 (80 held-out test), mid-layer (L18) static activation probe vs styxx `grounded_honesty`
 (stateless sampling-divergence).
