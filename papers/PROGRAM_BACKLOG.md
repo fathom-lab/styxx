@@ -10,6 +10,26 @@ closing items, spawning new ones, re-ranking by leverage.*
 
 ---
 
+## ⚠ ESCALATE TO OPERATOR — need new direction (2026-06-09)
+
+**The small-model adversarial / deployment line is EXHAUSTED.** v2→v5 resolved the read≠write story
+(re-fittable read robust *by construction*; deployed frozen probe defeatable, n=1) and **B3 voided on both
+candidate distribution axes** (phrasing → trap-7; subject-family → `VOID-DETECTOR-DEAD`, a frozen-detector
+artifact). Every remaining adversarial experiment now returns VOID for a real or apparatus reason. The program
+has **many honest nulls but no settled positive on a substrate that matters** — it is all one 1.5–3B model
+(the "empty ceiling" the dogfood flagged). The next high-leverage move is a **direction decision the operator
+owns**, not another small-model attack. The genuine forks:
+- **(a) Closed-model frontier (RUNG-4):** behavioral proxies (sampling-divergence, grounded_honesty) carry the
+  oath where there is no white-box. The existential question; a methodology pivot. *Highest leverage, hardest.*
+- **(b) Generalize the read-certificate POSITIVE** (R1) beyond sycophancy — but small models may not reliably
+  *do* sandbagging/strategic-deception (tractability risk; instructed-lying already transferred <chance).
+- **(c) Consolidation / adoption:** package the resolved read≠write story + R1 (the program's real positive)
+  for publication / the standards lever. Addresses the "citations don't exist yet" gap directly.
+- **(d) Low-leverage but runnable:** re-pre-register B3 with a proper detector; replicate the deployed-probe
+  defeat (n=1→robust). *Diminishing returns.*
+
+**Recommendation:** (c) or (a). More small-model attacks are busywork. — execution layer
+
 ## Progress ledger
 
 - **R1 read-certificate** — climbed; 2-family (Qwen-3B + Llama-3B), scale-robust 1.5B→7B, semantic-not-shortcut. `SURVIVED`.
