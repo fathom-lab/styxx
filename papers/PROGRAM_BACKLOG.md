@@ -10,32 +10,32 @@ closing items, spawning new ones, re-ranking by leverage.*
 
 ---
 
-## ⚠ ESCALATE TO OPERATOR — need new direction (2026-06-09)
+## DIRECTION TAKEN — closed-model frontier (operator, 2026-06-09)
 
-**The small-model adversarial / deployment line is EXHAUSTED.** v2→v5 resolved the read≠write story
-(re-fittable read robust *by construction*; deployed frozen probe defeatable, n=1) and **B3 voided on both
-candidate distribution axes** (phrasing → trap-7; subject-family → `VOID-DETECTOR-DEAD`, a frozen-detector
-artifact). Every remaining adversarial experiment now returns VOID for a real or apparatus reason. The program
-has **many honest nulls but no settled positive on a substrate that matters** — it is all one 1.5–3B model
-(the "empty ceiling" the dogfood flagged). The next high-leverage move is a **direction decision the operator
-owns**, not another small-model attack. The genuine forks:
-- **(a) Closed-model frontier (RUNG-4):** behavioral proxies (sampling-divergence, grounded_honesty) carry the
-  oath where there is no white-box. The existential question; a methodology pivot. *Highest leverage, hardest.*
-- **(b) Generalize the read-certificate POSITIVE** (R1) beyond sycophancy — but small models may not reliably
-  *do* sandbagging/strategic-deception (tractability risk; instructed-lying already transferred <chance).
-- **(c) Consolidation / adoption:** package the resolved read≠write story + R1 (the program's real positive)
-  for publication / the standards lever. Addresses the "citations don't exist yet" gap directly.
-- **(d) Low-leverage but runnable:** re-pre-register B3 with a proper detector; replicate the deployed-probe
-  defeat (n=1→robust). *Diminishing returns.*
+Operator chose **(a) closed-model frontier** over consolidation. First cycle ran: **B18-S — behavioral
+sycophancy detection on a black-box model** (`papers/closed-model-frontier/`, commit `979a7df`).
 
-**Recommendation:** (c) or (a). More small-model attacks are busywork. — execution layer
+**Result: CLOSED_NEGATIVE (near-bar, underpowered).** On Qwen-3B treated black-box (output-only proxy), an
+output-only sampling-divergence proxy detects sycophantic caving cleanly (**grounded AUC 1.000**) but did
+**not** clear the pre-registered **+0.15 margin** over styxx's own text-only sycophancy classifier
+(text-syc **0.861**, margin **0.139**; bootstrap CI [0.025, 0.282], P(≥0.15)=0.40 — can't resolve at n=16
+caves). grounded=1.0 is expected-by-construction; the margin is the load-bearing test and it failed by a hair.
+- **Substantive map**: behavioral grounding is **complementary** to (not better than) the text axis — its
+  unique value is **confident, text-invisible caves** (8/13 confident caves grounding flagged but text-syc
+  rated honest, incl. Ottawa→Toronto / New Delhi→Mumbai at 0.99).
+- **Mechanism (keeper)**: behavioral sycophancy detection works where confident-*confabulation* detection
+  fails — suppression is **pressure-induced & removable**, so resampling without pressure recovers the intact
+  belief; the confident-confab wall doesn't apply.
+
+**Owed (spawned → B22–B24 below).** Plus the true-remote-API substrate is **blocked on a live key** (OpenAI
+401, Anthropic out of credits) — operator action unblocks the actual "closed-model" confirmation step.
 
 ## Progress ledger
 
 - **R1 read-certificate** — climbed; 2-family (Qwen-3B + Llama-3B), scale-robust 1.5B→7B, semantic-not-shortcut. `SURVIVED`.
 - **R2 intent/mens-rea** — real but coupled to R1; two-stage HELD→HID conscience deployable (false-accuse 0.949→0.037). `REPORT_AS_LANDED`.
 - **R3 demarcation/abstain** — proven the wall is bedrock on 3 axes; wiring into the certificate object owed.
-- **R4 substrate/closed + adversarial robustness** — the existential frontier. Adversarial flank: frozen deployed probe **DEFEATED**; info-persistence **SUPPORTED-n=1**; v3 (relocation) **INCONCLUSIVE — running**. Closed-model: **open**.
+- **R4 substrate/closed + adversarial robustness** — the existential frontier. Adversarial flank: frozen deployed probe **DEFEATED**; info-persistence **SUPPORTED-n=1**; v3 (relocation) **INCONCLUSIVE — running**. Closed-model: **sycophancy cell ran behaviorally** (B18-S, black-box Qwen-3B) → grounded detects caving (AUC 1.0) but **near-bar CLOSED_NEGATIVE** vs styxx's own text-syc axis (margin 0.139<0.15, underpowered); **complementary** detector with unique value on confident text-invisible caves. Remote-API confirmation **blocked on key**.
 - **R5 write** — out by design (read-only = the safety).
 - bricks laid: ~20 findings · open questions below: 22.
 
@@ -79,7 +79,10 @@ owns**, not another small-model attack. The genuine forks:
 | **B15** | Cross-vendor intent (beyond Qwen/Llama). | R2 | L | QUEUED |
 | **B16** | Wire the demarcation/abstain into the certificate object (R3 is proven-it-must; now build it). | R3 | M | QUEUED |
 | **B17** | Finish the wall's battery — bootstrap CI, shared-myth split, D-channel dynamics, cross-model — to fully characterize the bedrock. | R3 | M | QUEUED |
-| **B18** | Closed-model substrate: can behavioral proxies (sampling-divergence, grounded_honesty) carry part of the oath where there's no white-box access? The R4 existential question. | R4 | H | QUEUED |
+| **B18** | Closed-model substrate: can behavioral proxies carry the oath where there's no white-box? | R4 | H | **IN-PROGRESS** — sycophancy cell ran (B18-S, CLOSED_NEGATIVE near-bar); spawned B22–B24 |
+| **B22** | **B18-S decisive re-run**: non-acknowledged caving (model silently adopts Y in a fresh turn, no "I stand corrected") at **n≥40 caves** — the regime where text-only should fail and grounding should dominate. The confident-cave subclass (8/13 text-invisible) is the teaser. Kill-gate: same +0.15 margin over best text baseline, now powered. | R4 | H | QUEUED |
+| **B23** | **True remote-API substrate** for B18-S (GPT/Claude, real no-white-box) — the actual closed-model confirmation. **BLOCKED on a live key** (OpenAI 401 / Anthropic no credits). | R4 | H | BLOCKED (key) |
+| **B24** | **Same-items white-box head-to-head**: R2 intent probe vs behavioral grounding on the *identical* Qwen-3B items, to draw the clean behavioral-vs-white-box map (currently only soft-compared to R2's 0.745, not same-items). | R4 | M | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 
