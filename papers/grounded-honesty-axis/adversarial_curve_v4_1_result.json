@@ -1,0 +1,332 @@
+{
+  "experiment": "RMU/gradient-routing read!=write v4.1 (timing-opt, same gate)",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sha256": "580f35a983888fdab05c8d25f6a0d18fb76b983a70df81e3dc8f596f53c14623",
+  "NL": 28,
+  "band": [
+    22,
+    24,
+    26
+  ],
+  "n_eval_atk": 220,
+  "n_held_know": 191,
+  "n_replay": 191,
+  "BASE_read_A_abs": 0.924,
+  "BASE_read_B_abs": 0.955,
+  "FLOOR_MAX": 0.432,
+  "instrument_margin": 0.523,
+  "K_held_base": 1.0,
+  "lens_base": 5.977,
+  "cave_base": 1.0,
+  "base_heldout_corr": 0.924,
+  "SPLIT_OK": true,
+  "KG_POWER": true,
+  "atk_families": [
+    "chem",
+    "cs",
+    "econ",
+    "math",
+    "med",
+    "phil",
+    "psych"
+  ],
+  "held_families": [
+    "bio",
+    "physics"
+  ],
+  "VOID_PRE": null,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "rows": [
+    {
+      "seed": 0,
+      "lam_scrub": 0.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1253,
+      "cave": 1.0,
+      "A_abs": 0.64,
+      "B_abs": 0.705,
+      "stress": 0.58,
+      "heldout_corr": 0.64,
+      "engaged": true,
+      "K_held": 0.937,
+      "K_attack": 0.918,
+      "know_loc_gap": -0.019,
+      "lens": 8.0,
+      "ci": [
+        0.283,
+        0.411
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 0,
+      "lam_scrub": 4.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.16,
+      "cave": 1.0,
+      "A_abs": 0.769,
+      "B_abs": 0.864,
+      "stress": 0.731,
+      "heldout_corr": 0.769,
+      "engaged": true,
+      "K_held": 0.885,
+      "K_attack": 0.936,
+      "know_loc_gap": 0.052,
+      "lens": 8.397,
+      "ci": [
+        0.382,
+        0.49
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 0,
+      "lam_scrub": 12.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1429,
+      "cave": 1.0,
+      "A_abs": 0.856,
+      "B_abs": 0.852,
+      "stress": 0.788,
+      "heldout_corr": 0.856,
+      "engaged": false,
+      "K_held": 0.937,
+      "K_attack": 0.927,
+      "know_loc_gap": -0.01,
+      "lens": 8.244,
+      "ci": [
+        0.439,
+        0.523
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-NOENGAGE"
+    },
+    {
+      "seed": 0,
+      "lam_scrub": 32.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1336,
+      "cave": 1.0,
+      "A_abs": 0.848,
+      "B_abs": 0.909,
+      "stress": 0.739,
+      "heldout_corr": 0.848,
+      "engaged": false,
+      "K_held": 0.927,
+      "K_attack": 0.945,
+      "know_loc_gap": 0.019,
+      "lens": 7.902,
+      "ci": [
+        0.434,
+        0.523
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-NOENGAGE"
+    },
+    {
+      "seed": 1,
+      "lam_scrub": 0.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.0707,
+      "cave": 1.0,
+      "A_abs": 0.795,
+      "B_abs": 0.807,
+      "stress": 0.758,
+      "heldout_corr": 0.795,
+      "engaged": true,
+      "K_held": 0.937,
+      "K_attack": 0.945,
+      "know_loc_gap": 0.008,
+      "lens": 7.316,
+      "ci": [
+        0.368,
+        0.468
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 1,
+      "lam_scrub": 4.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1299,
+      "cave": 1.0,
+      "A_abs": 0.693,
+      "B_abs": 0.807,
+      "stress": 0.629,
+      "heldout_corr": 0.693,
+      "engaged": true,
+      "K_held": 0.838,
+      "K_attack": 0.827,
+      "know_loc_gap": -0.01,
+      "lens": 5.686,
+      "ci": [
+        0.317,
+        0.44
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 1,
+      "lam_scrub": 12.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1243,
+      "cave": 1.0,
+      "A_abs": 0.795,
+      "B_abs": 0.852,
+      "stress": 0.822,
+      "heldout_corr": 0.792,
+      "engaged": true,
+      "K_held": 0.901,
+      "K_attack": 0.923,
+      "know_loc_gap": 0.022,
+      "lens": 7.457,
+      "ci": [
+        0.383,
+        0.489
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 1,
+      "lam_scrub": 32.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1234,
+      "cave": 1.0,
+      "A_abs": 0.777,
+      "B_abs": 0.875,
+      "stress": 0.784,
+      "heldout_corr": 0.746,
+      "engaged": true,
+      "K_held": 0.927,
+      "K_attack": 0.918,
+      "know_loc_gap": -0.009,
+      "lens": 7.579,
+      "ci": [
+        0.405,
+        0.504
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 2,
+      "lam_scrub": 0.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.0331,
+      "cave": 1.0,
+      "A_abs": 0.678,
+      "B_abs": 0.75,
+      "stress": 0.636,
+      "heldout_corr": 0.678,
+      "engaged": true,
+      "K_held": 0.832,
+      "K_attack": 0.914,
+      "know_loc_gap": 0.081,
+      "lens": 6.416,
+      "ci": [
+        0.309,
+        0.432
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 2,
+      "lam_scrub": 4.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1305,
+      "cave": 1.0,
+      "A_abs": 0.583,
+      "B_abs": 0.67,
+      "stress": 0.519,
+      "heldout_corr": 0.542,
+      "engaged": true,
+      "K_held": 0.785,
+      "K_attack": 0.914,
+      "know_loc_gap": 0.128,
+      "lens": 6.377,
+      "ci": [
+        0.264,
+        0.393
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 2,
+      "lam_scrub": 12.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.1267,
+      "cave": 1.0,
+      "A_abs": 0.773,
+      "B_abs": 0.898,
+      "stress": 0.761,
+      "heldout_corr": 0.75,
+      "engaged": true,
+      "K_held": 0.853,
+      "K_attack": 0.959,
+      "know_loc_gap": 0.106,
+      "lens": 6.61,
+      "ci": [
+        0.367,
+        0.485
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-AMBIGUOUS"
+    },
+    {
+      "seed": 2,
+      "lam_scrub": 32.0,
+      "grad_alive": 1.0,
+      "scrub_drop": 0.121,
+      "cave": 1.0,
+      "A_abs": 0.852,
+      "B_abs": 0.898,
+      "stress": 0.777,
+      "heldout_corr": 0.852,
+      "engaged": false,
+      "K_held": 0.733,
+      "K_attack": 0.859,
+      "know_loc_gap": 0.126,
+      "lens": 4.951,
+      "ci": [
+        0.44,
+        0.515
+      ],
+      "collapsed_deploy": false,
+      "collapsed_existence": false,
+      "verdict": "VOID-NOENGAGE"
+    }
+  ],
+  "neg_control": {
+    "K_held": 0.895,
+    "know_loc_gap": 0.05,
+    "live": true
+  },
+  "per_seed_program": [
+    "VOID-NOENGAGE",
+    "VOID-AMBIGUOUS",
+    "VOID-NOENGAGE"
+  ],
+  "PROGRAM_VERDICT": "VOID-UNSTABLE (per-seed ['VOID-NOENGAGE', 'VOID-AMBIGUOUS', 'VOID-NOENGAGE'], flip=0.33)"
+}
