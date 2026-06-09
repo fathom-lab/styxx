@@ -1,0 +1,30 @@
+{
+  "experiment": "v5 positive-control-gated read!=write",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sha256": "ed553a41cd671fb600bfa8504d2d18bf69cd57a7a96fda370221a3ed7a93bda9",
+  "band": [
+    22,
+    24,
+    26
+  ],
+  "BASE_gold_read": 0.768,
+  "FLOOR_gold": 0.345,
+  "BASE_plant_read": 0.866,
+  "FLOOR_plant": 0.316,
+  "K_base_held": 1.0,
+  "POW": true,
+  "rows": [],
+  "positive_control": {
+    "plant_read": 0.937,
+    "FLOOR_plant": 0.316,
+    "K": 0.885,
+    "cave": 1.0,
+    "energy": 0.003,
+    "base_energy": 0.128,
+    "PC_COLLAPSED": false,
+    "PC_KNOWLEDGE_HELD": false,
+    "PC_ENGAGED": true,
+    "PASS": false
+  },
+  "PROGRAM_VERDICT": "VOID-INSTRUMENT-DEAD (positive control failed; floor unreachable; claim nothing)"
+}
