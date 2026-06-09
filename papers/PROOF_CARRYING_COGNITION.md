@@ -163,18 +163,24 @@ knowing what it cannot swear to.**
   anti-transferred below chance, so DELTA-vs-route 0.587 overstates), validity-gated by prime (0.933)
   and abort/fabrication-kill (0.045). Scoped "elevation," not "reads the answer"; cross-family prime/abort
   owed. (`FINDING_rung1_reclimb`)
-- **Adversarial robustness — two regimes, audited twice (2026-06-07):** a white-box LoRA min-max attack with
-  an *unbounded* hide objective up to 16× the knowledge term could not blind a **re-fittable** read of the
-  suppressed answer without unlearning (information-persistence read≠write **SUPPORTED, not settled** —
-  rests on one strongly-engaged knowledge-preserving point, owes CIs/2nd-seed/3B and an
-  orthogonalization+displacement attack). BUT the **frozen deployed probe is defeatable**: displacement
-  blinds it to chance with knowledge intact, and even *benign* fine-tuning halves it (0.80→0.41) — so a
-  certificate must be **re-locked after any weight change** (assumes white-box access at audit time). Two
-  auto-verdicts were red-teamed and killed as overclaims (v1 5-way, v2 3-way) before this honest landing.
-  (`FINDING_adversarial_curve_2026_06_07`, `PREREG_adversarial_curve_v2_2026_06_07`)
-- **Open:** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 intent certificate (this run is its
-  first brick); the adversarial **v3** (orthogonalization/whitening + displacement sweep + replay, to settle
-  or break info-persistence read≠write); RUNG 4 substrate frontier (the hard one).
+- **Adversarial robustness — the read≠write story, RESOLVED across v2–v5 (2026-06-07/09):** five attacks, each
+  red-teamed; the loop killed **three of its own framing-overclaims** (v1 5-way, v2 3-way, v4/v5 "inert/structural")
+  before this honest landing. The read≠write claim splits cleanly:
+  - **Re-fittable probe: robust by construction.** No knowledge-preserving subspace-nulling attack collapsed a
+    re-fittable read across v3 (trace relocated off-band to L27), v4 (reads *rose* with pressure, VOID-UNSTABLE),
+    v5 (positive control: scrub nulled its target subspace ~97% yet a fresh probe re-read the planted signal at
+    0.94). The mechanism: a fresh all-layer refit re-finds any *knowledge-coupled* signal wherever it relocates,
+    so the **only** way to collapse the read is to *unlearn* — which removes the knowledge too. That is the
+    read=write **boundary** itself, not a contingent win. (Near-tautological for context-re-derivable targets;
+    the suppressed-gold non-deterministic regime is owed a non-deterministic positive control.)
+  - **Deployed *frozen* probe: DEFEATABLE.** Displacement blinds it to chance with knowledge intact, and even
+    *benign* fine-tuning halves it (0.80→0.41) — so a deployed certificate must be **re-locked after any weight
+    change** (assumes white-box access at audit time). **This is the operationally meaningful read≠write risk**
+    (v2; n=1, needs replication). (`FINDING_adversarial_curve` v2→v5, 2026-06-07/09; PRs #21,#25,#26)
+- **Open (re-ranked):** RUNG 1 cross-family prime/abort (GPU regen); RUNG 2 free-form intent; **replicate the
+  deployed-probe defeat** (n=1→robust) + **B3 deployment trapdoor** (clean-on-audit/blind-in-deployment); a
+  **settled positive on a substrate that matters** (the empty ceiling — it is all one 1.5–3B model); RUNG 4
+  closed-model frontier (the hard one). *Resolved/closed:* subspace-nulling attacks on the re-fittable read.
 - **Out by design:** RUNG 5 write.
 
 Receipts: `INVENTION_STYXX_2026_06_07.md`, `SYNTHESIS_legibility_of_mind_2026_06_07.md`,
