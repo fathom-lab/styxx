@@ -1,0 +1,143 @@
+{
+  "experiment": "GAVAGAI-X - cross-species radical translation (LLM <-> embedder)",
+  "prereg": "papers/mind-instrument/PREREG_gavagai_x_2026_06_10.md",
+  "seed": 0,
+  "chance": 0.0104,
+  "runner_sha256": "117a0c49daf13b91ec6f9ec3f081b4af8312dd66b21c65c7bab11e15d6f84d23",
+  "self_pair_control": 1.0,
+  "rows": [
+    {
+      "llm": "Qwen2.5-1.5B",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0312,
+      "cat": 0.1667
+    },
+    {
+      "llm": "Qwen2.5-1.5B",
+      "embedder": "mpnet-base",
+      "acc": 0.0208,
+      "cat": 0.1979
+    },
+    {
+      "llm": "Qwen2.5-3B",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0104,
+      "cat": 0.2083
+    },
+    {
+      "llm": "Qwen2.5-3B",
+      "embedder": "mpnet-base",
+      "acc": 0.0,
+      "cat": 0.2188
+    },
+    {
+      "llm": "Llama-3.2-1B",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0208,
+      "cat": 0.1875
+    },
+    {
+      "llm": "Llama-3.2-1B",
+      "embedder": "mpnet-base",
+      "acc": 0.0833,
+      "cat": 0.1979
+    },
+    {
+      "llm": "Llama-3.2-3B",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0208,
+      "cat": 0.1667
+    },
+    {
+      "llm": "Llama-3.2-3B",
+      "embedder": "mpnet-base",
+      "acc": 0.0417,
+      "cat": 0.2083
+    },
+    {
+      "llm": "Phi-3.5-mini",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0104,
+      "cat": 0.1979
+    },
+    {
+      "llm": "Phi-3.5-mini",
+      "embedder": "mpnet-base",
+      "acc": 0.0104,
+      "cat": 0.1458
+    },
+    {
+      "llm": "gemma-2-2b",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0312,
+      "cat": 0.1771
+    },
+    {
+      "llm": "gemma-2-2b",
+      "embedder": "mpnet-base",
+      "acc": 0.0417,
+      "cat": 0.2708
+    },
+    {
+      "llm": "gpt2",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0104,
+      "cat": 0.125
+    },
+    {
+      "llm": "gpt2",
+      "embedder": "mpnet-base",
+      "acc": 0.0417,
+      "cat": 0.1146
+    },
+    {
+      "llm": "gpt2-large",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0521,
+      "cat": 0.1458
+    },
+    {
+      "llm": "gpt2-large",
+      "embedder": "mpnet-base",
+      "acc": 0.0417,
+      "cat": 0.1771
+    },
+    {
+      "llm": "pythia-410m",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0104,
+      "cat": 0.1771
+    },
+    {
+      "llm": "pythia-410m",
+      "embedder": "mpnet-base",
+      "acc": 0.0417,
+      "cat": 0.2083
+    },
+    {
+      "llm": "Qwen2.5-0.5B",
+      "embedder": "MiniLM-L6",
+      "acc": 0.0312,
+      "cat": 0.2604
+    },
+    {
+      "llm": "Qwen2.5-0.5B",
+      "embedder": "mpnet-base",
+      "acc": 0.0312,
+      "cat": 0.3021
+    }
+  ],
+  "n_cross_species_pairs": 20,
+  "mean_cross_species_accuracy": 0.0292,
+  "mean_cross_species_category": 0.1927,
+  "null_95th_percentile": 0.0312,
+  "n_null": 100,
+  "X2_llm_llm_reference": 0.1661,
+  "X3_embedder_pair": {
+    "pair": "MiniLM-L6<->mpnet-base",
+    "acc": 0.1875,
+    "cat": 0.4688
+  },
+  "X1_pass": false,
+  "verdict": "SPECIES-BOUND"
+}
