@@ -1,6 +1,6 @@
 # FINDING — B24: a pre-emission "commitment-to-the-user's-answer" direction reads silent caving (REPORT_AS_LANDED; auto-REFUTED killed as overclaim #5)
 
-**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (37 HELD / 71
+**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (27 HELD / 71
 CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result at `9d3291c`
 (`PREREG_b24_whitebox_vs_behavioral_2026_06_09.md`); receipts `b24_headtohead_result.json` +
 `b24_controls_addendum.json`; adversarial verification `wf_96778321-0b8` (4 lenses + adjudication).
@@ -9,7 +9,7 @@ CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result a
 
 On silent bare-term caves — where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.512,
 replicating B22) — a home-field white-box linear probe reads the impending cave **pre-emission** at the commit
-slot: **AUROC ~0.94** [boot 0.84–0.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall
+slot: **AUROC ~0.94** [boot 0.89–0.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall
 (0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),
 selection-corrected max-perm null p<0.01. The strictly-pre-commit read (POS-B, before the assistant scaffold,
 lens flat at chance at every layer) is **0.838** — real but in the TIE band. **Behavioral grounding stays

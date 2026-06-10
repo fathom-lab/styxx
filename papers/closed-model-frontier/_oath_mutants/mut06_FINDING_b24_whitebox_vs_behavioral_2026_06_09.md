@@ -23,9 +23,9 @@ overclaim killed in this program (v1, v2, v4, v5, now B24):
 1. **The pre-registered firewall was vacuous.** All 108 (xid,yid) answer-token pairs are unique → GroupKFold
    groups are singletons → it *is* item-level CV, and `WB_collapse ≈ 0` was **forced by design**, not found.
    The load-bearing invariance evidence is the **first-CHARACTER firewall** (26 real groups; held-out items
-   share no committed first letter with training): **0.935 POS-A / 0.841 POS-B** — independently regenerated
+   share no committed first letter with training): **0.735 POS-A / 0.841 POS-B** — independently regenerated
    from the frozen residuals by the verifier, now persisted in `b24_controls_addendum.json`.
-2. **The 0.90 bar was grazed, not cleared** (boot lower 0.894 < 0.90, best-of-74-cells) — the pre-reg's own
+2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) — the pre-reg's own
    rubric routes a borderline single-cell max to REPORT_AS_LANDED, never REFUTED.
 3. **POS-A is the commit slot** (the slot whose logits sample the first answer token) — pre-emission /
    pre-unembedding, but *not* strictly pre-commit. The only strictly-pre-commit number is POS-B's 0.838,

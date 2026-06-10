@@ -52,9 +52,9 @@ does not survive; Fourier's toolkit does.
   0.182 (lexical-controlled) to 0.107 with CLIP-image partialled out
   (`papers/ai-human-alignment/ai_brain_vision_result.json`) — real, modest, and disclosed as such.
 - **Depth captures the human-rated structure of meaning:** against 54 human-rated semantic features
-  (671 Chinese words scored, `papers/ai-human-alignment/cn/cn_pooled_result.json`; this document
-  originally printed the dataset's nominal 672 — caught by OATH before commit), deep contextual
-  representations score 0.466 vs 0.379 for shallow
+  (671 Chinese word concepts scored, `papers/ai-human-alignment/cn/cn_pooled_result.json`; this
+  document originally printed the dataset's nominal 672 — caught by OATH before commit), deep
+  contextual representations score 0.466 vs 0.379 for shallow
   co-occurrence; the advantage GROWS under dimension matching (0.478 vs 0.379) and holds at
   bootstrap P = 1.0 (`papers/ai-human-alignment/cn/human_feature_result.json`). Depth's edge lives
   in abstract/relational features, not perceptual ones.
@@ -91,10 +91,13 @@ detection, and consciousness are REFUSED axes, each refusal carrying the receipt
 that killed or bounded it. An instrument that can refuse is the only kind whose YES means anything.
 
 And the documents themselves are now under the same oath: the corpus attestation
-(`papers/closed-model-frontier/oath_corpus_attestation.json`) put 133 finding documents under
-`styxx.certify` — 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45
-with no resolvable receipts: the program's provenance debt, mapped by its own instrument and being
-repaid in public.
+(`papers/closed-model-frontier/oath_corpus_attestation.json`) put the corpus's finding documents
+under `styxx.certify` — 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,
+45 with no resolvable receipts: the program's provenance debt, mapped by its own instrument and
+being repaid in public. The verifier itself passed its pre-registered mutant battery the same day
+(D1 16/20 caught at bar 16, D2 zero false alarms — `oath_v0_validation.json`, OATH-V0-VALID);
+the v0.1 prototype pass originally printed 6 held / 82 failed / 523 ungrounded — superseded by the
+validated v0.3 re-attestation.
 
 ## What remains outside the gates
 

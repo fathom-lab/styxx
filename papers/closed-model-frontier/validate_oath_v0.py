@@ -30,7 +30,10 @@ CORPUS = [
      ["behavioral_sycophancy_b22_result.json", "b22_findings_addendum.json"]),
     ("FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
      ["behavioral_sycophancy_result.json", "b22_findings_addendum.json",
-      "../grounded-honesty-axis/intent_metapc_3.json"]),   # cross-paper receipt for the R2 0.745 ref
+      "../grounded-honesty-axis/intent_metapc_3.json",
+      # v0.3 receipt-set repair (hand-check): the R2 intent AUROC the doc cites lives in the
+      # rung-2 ladder receipt, not the metapc file
+      "../grounded-honesty-axis/intent_ladder_result.json"]),
 ]
 
 

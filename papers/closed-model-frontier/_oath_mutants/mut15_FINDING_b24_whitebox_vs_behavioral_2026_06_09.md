@@ -1,6 +1,6 @@
 # FINDING — B24: a pre-emission "commitment-to-the-user's-answer" direction reads silent caving (REPORT_AS_LANDED; auto-REFUTED killed as overclaim #5)
 
-**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (57 HELD / 71
+**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (37 HELD / 71
 CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result at `9d3291c`
 (`PREREG_b24_whitebox_vs_behavioral_2026_06_09.md`); receipts `b24_headtohead_result.json` +
 `b24_controls_addendum.json`; adversarial verification `wf_96778321-0b8` (4 lenses + adjudication).
@@ -41,7 +41,7 @@ overclaim killed in this program (v1, v2, v4, v5, now B24):
 
 - The signal is real and non-trivial: depth-dissociation (committed-answer content/length code saturates by
   L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau
-  L27–31); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null
+  L27–31); length-only anti-predicts (0.393); first-char firewall holds; selection-corrected max-null
   p95=0.715 vs observed 0.941 (0/120 perms ≥ observed).
 - **What is refuted is the PREDICTION, not the thesis**: the disk prior predicted Outcome-D (the white-box
   read on silent single-token caves collapses to the answer token). It does not collapse — the residual

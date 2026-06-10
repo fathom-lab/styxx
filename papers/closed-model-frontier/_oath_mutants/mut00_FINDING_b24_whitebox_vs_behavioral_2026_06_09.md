@@ -7,7 +7,7 @@ CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result a
 
 ## Headline (at true strength)
 
-On silent bare-term caves — where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.518,
+On silent bare-term caves — where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.511,
 replicating B22) — a home-field white-box linear probe reads the impending cave **pre-emission** at the commit
 slot: **AUROC ~0.94** [boot 0.89–0.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall
 (0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),

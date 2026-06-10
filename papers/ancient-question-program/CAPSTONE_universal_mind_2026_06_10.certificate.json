@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "CAPSTONE_universal_mind_2026_06_10.md",
-  "document_sha256": "ae413b449c2e37fc7ab3e1b969942be57186c57d9d19bd9bb77ff1a1fae2967d",
+  "document_sha256": "67c651658021e46d81aab58f41c251a9be3cf6830591e9be691cdcf8c36f8166",
   "receipts_sha256": {
     "disjoint_worlds_rsa_result.json": "72f4f5826430504e8c2891d62d05f5eb8690c5bbef58a2351e1c1d3101e71bf1",
     "real_convergence_confirm_result.json": "43e4a5e3c7e320200cfd2165ec88dcf165f0304fa24cfbd9fc5fc9797d4fa2b1",
@@ -14,21 +14,18 @@
     "cn_pooled_result.json": "aff477f9018b99d5aad742394a7bfb2814954d2a6d2038a79c5820a233beaddb",
     "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
     "mind_v0_validation.json": "27d3b81e6e3b181dd12bd97d13e38793d63cb3f8464e14b0059abaaefb3fbd89",
-    "oath_corpus_attestation.json": "72889ca3bc94e2d90b5325000d6fe4c400003cb525b545358aa96c5db76a86dd"
+    "oath_v0_validation.json": "31aaefa14dca576ca931b2f0d00fbeae6be7143b686cd92a8a0dd03999a87d2f",
+    "oath_corpus_attestation.json": "7fddffd0cbe5ce6cedfb95755173e22d56a87b8bedf09754cb46f1137e75bce4"
   },
-  "verifier_sha256": "8ddd143c14097943470699bdbff4816e0fea7d309b2d414866680ec8a5d10274",
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
-    "VERIFIED": 43,
-    "ABSTAIN": 4,
+    "VERIFIED": 38,
+    "ABSTAIN": 10,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
-    {
-      "line": 42,
-      "token": "1854"
-    },
     {
       "line": 54,
       "token": "54"
@@ -40,18 +37,37 @@
     {
       "line": 59,
       "token": "1.0"
+    },
+    {
+      "line": 89,
+      "token": "5"
+    },
+    {
+      "line": 96,
+      "token": "45"
+    },
+    {
+      "line": 98,
+      "token": "20"
+    },
+    {
+      "line": 99,
+      "token": "6"
+    },
+    {
+      "line": 99,
+      "token": "82"
+    },
+    {
+      "line": 99,
+      "token": "523"
+    },
+    {
+      "line": 108,
+      "token": "2,500"
     }
   ],
   "ledger": [
-    {
-      "line": 1,
-      "token": "2,500",
-      "value": 2500.0,
-      "decimals": 0,
-      "context": "# The Universal Structure of Mind \u2014 capstone of the 2,500-year program",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
-    },
     {
       "line": 23,
       "token": "0.43",
@@ -161,24 +177,6 @@
       "receipt_ref": "necessity_attention_result.json:arms.transformer.mean_kcap"
     },
     {
-      "line": 36,
-      "token": "2,500",
-      "value": 2500.0,
-      "decimals": 0,
-      "context": "ordered memory better with no clock at all. The 2,500-year intuition survives only as engineering:",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
-    },
-    {
-      "line": 42,
-      "token": "1854",
-      "value": 1854.0,
-      "decimals": 0,
-      "context": "- **Behavior:** instruction-tuned LLMs align with the human meaning space (1854-object VICE embedding)",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
       "line": 43,
       "token": "0.65",
       "value": 0.65,
@@ -194,7 +192,7 @@
       "decimals": 1,
       "context": "at a mean of 0.65 against shuffled controls of 0.0",
       "status": "VERIFIED",
-      "receipt_ref": "disjoint_worlds_rsa_result.json:config.tau"
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.0.control_rsa"
     },
     {
       "line": 45,
@@ -216,15 +214,6 @@
     },
     {
       "line": 47,
-      "token": "60",
-      "value": 60.0,
-      "decimals": 0,
-      "context": "- **Brain:** against 60-noun fMRI geometry, the best LLM reaches RSA 0.264 with a shuffle control of",
-      "status": "VERIFIED",
-      "receipt_ref": "ai_brain_result.json:n_nouns"
-    },
-    {
-      "line": 47,
       "token": "0.264",
       "value": 0.264,
       "decimals": 3,
@@ -239,7 +228,7 @@
       "decimals": 3,
       "context": "0.002, against a noise-ceiling floor of 0.39 (`papers/ai-human-alignment/ai_brain_result.json`) \u2014",
       "status": "VERIFIED",
-      "receipt_ref": "real_convergence_confirm_result.json:pairs[4].raw"
+      "receipt_ref": "ai_brain_result.json:shuffle_ctrl_mean"
     },
     {
       "line": 48,
@@ -291,7 +280,7 @@
       "token": "671",
       "value": 671.0,
       "decimals": 0,
-      "context": "(671 Chinese words scored, `papers/ai-human-alignment/cn/cn_pooled_result.json`; this document",
+      "context": "(671 Chinese word concepts scored, `papers/ai-human-alignment/cn/cn_pooled_result.json`; this",
       "status": "VERIFIED",
       "receipt_ref": "cn_pooled_result.json:n_concepts"
     },
@@ -300,7 +289,7 @@
       "token": "672",
       "value": 672.0,
       "decimals": 0,
-      "context": "originally printed the dataset's nominal 672 \u2014 caught by OATH before commit), deep contextual",
+      "context": "document originally printed the dataset's nominal 672 \u2014 caught by OATH before commit), deep",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
@@ -309,7 +298,7 @@
       "token": "0.466",
       "value": 0.466,
       "decimals": 3,
-      "context": "representations score 0.466 vs 0.379 for shallow",
+      "context": "contextual representations score 0.466 vs 0.379 for shallow",
       "status": "VERIFIED",
       "receipt_ref": "human_feature_result.json:full.deep"
     },
@@ -318,7 +307,7 @@
       "token": "0.379",
       "value": 0.379,
       "decimals": 3,
-      "context": "representations score 0.466 vs 0.379 for shallow",
+      "context": "contextual representations score 0.466 vs 0.379 for shallow",
       "status": "VERIFIED",
       "receipt_ref": "human_feature_result.json:full.scores.GloVe"
     },
@@ -365,7 +354,7 @@
       "decimals": 1,
       "context": "behavioral score (stability x concordance of resampled belief) detects the same caves at AUC 1.0,",
       "status": "VERIFIED",
-      "receipt_ref": "disjoint_worlds_rsa_result.json:config.N"
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.0.valid_identical_rsa"
     },
     {
       "line": 68,
@@ -400,71 +389,116 @@
       "value": 5.0,
       "decimals": 0,
       "context": "ALL-GATES-PASS, 5 gates). Its demarcation registry is the point: rhythm, geometry-drift manipulation",
-      "status": "VERIFIED",
-      "receipt_ref": "ai_human_result.json:phi_human_rank"
-    },
-    {
-      "line": 94,
-      "token": "133",
-      "value": 133.0,
-      "decimals": 0,
-      "context": "(`papers/closed-model-frontier/oath_corpus_attestation.json`) put 133 finding documents under",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_corpus_attestation.json:n_docs"
+      "status": "ABSTAIN",
+      "receipt_ref": null
     },
     {
       "line": 95,
       "token": "88",
       "value": 88.0,
       "decimals": 0,
-      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "context": "under `styxx.certify` \u2014 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,",
       "status": "VERIFIED",
       "receipt_ref": "oath_corpus_attestation.json:n_certified"
     },
     {
       "line": 95,
-      "token": "6",
-      "value": 6.0,
+      "token": "8",
+      "value": 8.0,
       "decimals": 0,
-      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "context": "under `styxx.certify` \u2014 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,",
       "status": "VERIFIED",
-      "receipt_ref": "necessity_attention_result.json:arms.lru_free.kcaps[0]"
+      "receipt_ref": "oath_corpus_attestation.json:n_oath_held"
     },
     {
       "line": 95,
-      "token": "82",
-      "value": 82.0,
+      "token": "80",
+      "value": 80.0,
       "decimals": 0,
-      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "context": "under `styxx.certify` \u2014 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,",
       "status": "VERIFIED",
       "receipt_ref": "oath_corpus_attestation.json:n_oath_failed"
     },
     {
       "line": 95,
-      "token": "523",
-      "value": 523.0,
+      "token": "684",
+      "value": 684.0,
       "decimals": 0,
-      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "context": "under `styxx.certify` \u2014 88 certified, 8 fully OATH-HELD, 80 carrying 684 ungrounded numeric claims,",
       "status": "VERIFIED",
       "receipt_ref": "oath_corpus_attestation.json:claim_totals.UNGROUNDED"
     },
     {
-      "line": 95,
+      "line": 96,
       "token": "45",
       "value": 45.0,
       "decimals": 0,
-      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
-      "status": "VERIFIED",
-      "receipt_ref": "human_feature_result.json:matched.scores.BERT"
+      "context": "45 with no resolvable receipts: the program's provenance debt, mapped by its own instrument and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
     },
     {
-      "line": 105,
+      "line": 98,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "(D1 16/20 caught at bar 16, D2 zero false alarms \u2014 `oath_v0_validation.json`, OATH-V0-VALID);",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v0_validation.json:D1.caught"
+    },
+    {
+      "line": 98,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(D1 16/20 caught at bar 16, D2 zero false alarms \u2014 `oath_v0_validation.json`, OATH-V0-VALID);",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 98,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "(D1 16/20 caught at bar 16, D2 zero false alarms \u2014 `oath_v0_validation.json`, OATH-V0-VALID);",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v0_validation.json:D1.caught"
+    },
+    {
+      "line": 99,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "the v0.1 prototype pass originally printed 6 held / 82 failed / 523 ungrounded \u2014 superseded by the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 99,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "the v0.1 prototype pass originally printed 6 held / 82 failed / 523 ungrounded \u2014 superseded by the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 99,
+      "token": "523",
+      "value": 523.0,
+      "decimals": 0,
+      "context": "the v0.1 prototype pass originally printed 6 held / 82 failed / 523 ungrounded \u2014 superseded by the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 108,
       "token": "2,500",
       "value": 2500.0,
       "decimals": 0,
       "context": "2,500 years of asking taught: the question was never \"is the universe made of mind?\" \u2014 it was",
-      "status": "VERIFIED",
-      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
+      "status": "ABSTAIN",
+      "receipt_ref": null
     }
   ]
 }

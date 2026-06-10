@@ -474,5 +474,11 @@
     "max": 0.8092881614008375,
     "observed_WB_best": 0.9406,
     "n_perm_ge_observed": 0
+  },
+  "doc_cited_summaries": {
+    "derived_from": "b24_headtohead_result.json ramp_pos_layer_strat_group_lens",
+    "lens_auroc_at_WB_cell_A29": 0.6,
+    "posB_best_groupinv_auroc": 0.838,
+    "posB_best_groupinv_layer": 26
   }
 }

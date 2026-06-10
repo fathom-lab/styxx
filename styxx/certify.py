@@ -52,11 +52,27 @@ def _decimals(tok: str) -> int:
     return len(tok.split(".")[1]) if "." in tok else 0
 
 
+_TABLE_SEP = re.compile(r"^\s*\|[\s:|-]+\|?\s*$")
+_FORMULA_AFTER = re.compile(r"^\s?[−–-]\s?[A-Za-z]")   # '1−syc', '1-dec': notation, not a claim
+
+
 def extract_numbers(text: str) -> list[dict]:
     """All groundable number tokens with line context. Filters dates/SHAs/versions/years/markdown
-    artifacts; keeps order and position so the ledger is reviewable."""
+    artifacts and formula notation; keeps order and position so the ledger is reviewable.
+
+    v0.3: markdown table rows inherit their table's HEADER line as additional binding context —
+    the trigger vocabulary of '| regime | AUC-g | margin |' binds the numbers in every data row."""
     out = []
-    for ln_no, line in enumerate(text.splitlines(), 1):
+    lines = text.splitlines()
+    header_for: dict[int, str] = {}
+    for i, line in enumerate(lines):
+        if _TABLE_SEP.match(line) and i > 0 and lines[i - 1].lstrip().startswith("|"):
+            hdr = lines[i - 1].strip()
+            j = i + 1
+            while j < len(lines) and lines[j].lstrip().startswith("|"):
+                header_for[j + 1] = hdr   # 1-based line numbers
+                j += 1
+    for ln_no, line in enumerate(lines, 1):
         # drop fenced/sha/date/version spans from the searchable line
         scrub = _SHAISH.sub(" ", line)
         scrub = _DATEISH.sub(" ", scrub)
@@ -69,12 +85,21 @@ def extract_numbers(text: str) -> list[dict]:
             # markdown heading/bullet/link artifacts: a bare int at line start
             if m.start() <= 2 and "." not in raw and abs(int(raw)) < 10:
                 continue
+            if _FORMULA_AFTER.match(scrub[m.end():]):
+                continue   # notation like '1−syc' — not a numeric claim
+            if m.start() >= 2 and scrub[m.start() - 1] in "–-−" and scrub[m.start() - 2].isdigit():
+                continue   # second half of a numeric range ('L27–31'): notation, not a claim
+            if m.start() >= 2 and scrub[m.start() - 1] == "-" and scrub[m.start() - 2].isalpha():
+                continue   # compound identifier ('shared-48', 'POS-A29'): a label, not a claim
             try:
                 val = float(raw)
             except ValueError:
                 continue
-            out.append({"line": ln_no, "token": tok, "value": val, "decimals": _decimals(raw),
-                        "context": line.strip()[:160]})
+            entry = {"line": ln_no, "token": tok, "value": val, "decimals": _decimals(raw),
+                     "context": line.strip()[:160]}
+            if ln_no in header_for:
+                entry["binding_context"] = (header_for[ln_no] + " " + line.strip())[:320]
+            out.append(entry)
     return out
 
 
@@ -116,21 +141,26 @@ def receipt_values(obj, prefix="", include_bulk: bool = False) -> list[tuple[str
     return vals
 
 
-def _match(doc_val: float, doc_dec: int, r_val: float) -> bool:
-    """Rounding-aware equality: the doc may print a receipt value at lower precision."""
+def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = True) -> bool:
+    """Rounding-aware equality: the doc may print a receipt value at lower precision.
+
+    v0.3: percent<->fraction scaling only when the claim context shows a '%'/'percent' marker
+    (allow_scaling) — unconditional scaling tripled the coincidence surface and let mutated
+    values 'verify' against unrelated leaves (D1 misses k=0/k=17 of the v0.1 battery)."""
     if doc_val == r_val:
         return True
     if doc_dec > 0:
         tol = 0.5 * 10 ** (-doc_dec) + 1e-12
         if abs(round(r_val, doc_dec) - doc_val) <= 1e-12 or abs(r_val - doc_val) <= tol:
             return True
-    # percent <-> fraction (doc says 80, receipt holds 0.80; or doc 0.8 vs receipt 80)
-    for scale in (100.0, 0.01):
-        rv = r_val * scale
-        if doc_val == rv:
-            return True
-        if doc_dec > 0 and abs(round(rv, doc_dec) - doc_val) <= 0.5 * 10 ** (-doc_dec) + 1e-12:
-            return True
+    if allow_scaling:
+        # percent <-> fraction (doc says 80%, receipt holds 0.80; or doc 0.8 vs receipt 80)
+        for scale in (100.0, 0.01):
+            rv = r_val * scale
+            if doc_val == rv:
+                return True
+            if doc_dec > 0 and abs(round(rv, doc_dec) - doc_val) <= 0.5 * 10 ** (-doc_dec) + 1e-12:
+                return True
     return False
 
 
@@ -149,7 +179,7 @@ _TRIGGERS = re.compile(
 def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     text = doc_path.read_text(encoding="utf-8")
     receipts = {}
-    rvals: list[tuple[str, str, float]] = []   # (receipt, path, value)
+    rvals: list[tuple[str, str, float]] = []   # (receipt, path, value)  — summary surface only
     for rp in receipt_paths:
         j = json.loads(rp.read_text(encoding="utf-8"))
         receipts[rp.name] = hashlib.sha256(rp.read_bytes()).hexdigest()
@@ -157,27 +187,80 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
             rvals.append((rp.name, path, v))
 
     ledger = []
+    doc_lines = text.splitlines()
     for num in extract_numbers(text):
         # v0.1 SPEC-CONSTANT rule: a number that is a pre-registered bar/threshold, a CI confidence
         # level, or a comparison bound is SPEC, not a measurement -> ABSTAIN (it has no receipt by
         # design; its receipt is the PREREG document).
-        ctx = num["context"]
+        # v0.3: rules test the FULL line — the display context truncates at 160 chars and a
+        # disclosure note past that boundary was invisible to is_hist (caught in the D2 hand-check).
+        ctx = doc_lines[num["line"] - 1].strip()
+        bctx = num.get("binding_context", ctx)   # v0.3: table rows bind via their header too
         tok_at = ctx.find(num["token"])
         pre = ctx[max(0, tok_at - 18):tok_at] if tok_at >= 0 else ""
-        is_spec = bool(re.search(r"[≥≤<>=]\s*\+?$|\b(bar|gate|threshold|requires?|must)\b[^.]{0,12}$",
-                                 pre)) or bool(re.match(rf"\s*%?\s*(CI|confidence)", ctx[tok_at + len(num["token"]):])
-                                               if tok_at >= 0 else False)
+        # v0.3: a token at line start inherits the tail of the previous line as pre-context —
+        # 'subclass AUC\n1.0)' wraps mid-sentence and the unit keyword must still bind.
+        if 0 <= tok_at < 18 and num["line"] >= 2:
+            pre = (doc_lines[num["line"] - 2].strip()[-(18 - tok_at):] + " " + pre).strip()[-24:]
+        post = ctx[tok_at + len(num["token"]):] if tok_at >= 0 else ""
+        is_spec = bool(re.search(r"[≥≤<>=]\s*\+?$|\b(bar|gate|threshold|requires?|must|pre-?registered)"
+                                 r"\b[^.]{0,16}$", pre)) \
+            or bool(re.match(r"\s*%?\s*(CI|confidence)", post)) \
+            or bool(re.match(r"[^.\d]{0,12}\b(bar|threshold|gate)\b", post))
         # v0.1 QUOTED-HISTORICAL rule: corrected-away values quoted inside a disclosure note are
-        # historical quotations, not live claims.
-        is_hist = bool(re.search(r"originally printed|caught by OATH|superseded|was printed", ctx, re.I))
-        hits = [(rn, pth) for rn, pth, rv in rvals if _match(num["value"], num["decimals"], rv)]
-        bound = bool(_TRIGGERS.search(ctx))
+        # historical quotations, not live claims. v0.3: prior-run narrative counts, and on a MIXED
+        # line the rule covers only tokens at/after the disclosure phrase (live values stay live).
+        hist_m = re.search(r"originally printed|caught by OATH|superseded|was printed|"
+                           r"\b(first|earlier|prior)\s+(scored\s+)?run\b", ctx, re.I)
+        is_hist = bool(hist_m) and (tok_at < 0 or tok_at >= hist_m.start() - 24)
+        allow_scaling = "%" in ctx or re.search(r"\bpercent", ctx, re.I) is not None
+        hits = [(rn, pth) for rn, pth, rv in rvals
+                if _match(num["value"], num["decimals"], rv, allow_scaling)]
+        # v0.3 COUNT-BINDING rule: an integer claim only grounds in a leaf whose PATH shares a word
+        # stem with the claim's line (or an n=/n_ pairing) — bare counts coincide with unrelated
+        # count fields far too easily (the k=14-class D1 misses: 27->37 'verified' because a shared
+        # addendum carries another experiment's n_held=37). Floats keep value-only matching (v0.4
+        # owes them full claim->field binding).
+        if num["decimals"] == 0 and hits:
+            words = {w.lower().strip("'’") for w in re.findall(r"[A-Za-z][A-Za-z_-]{2,}", bctx)}
+            stems = {w[:4] for w in words} | {s[:4] for w in words for s in re.split(r"[-_]", w) if len(s) >= 3}
+            is_n_eq = bool(re.search(r"\bn\s*=\s*$", pre, re.I))
+            # slash-pair counts ('72/37', '13/16') carry their semantics jointly — bind on the pair's
+            # line vocabulary, and accept digits glued to path segments ('shared48').
+            stems |= {d for d in re.findall(r"\d{2,}", bctx)}
+            def path_ok(p):
+                segs = {s.lower() for seg in re.split(r"[.\[\]]", p) for s in re.split(r"[-_]", seg) if s}
+                pst = {s[:4] for s in segs if len(s) >= 3} | {m for s in segs for m in re.findall(r"\d{2,}", s)}
+                return bool(pst & stems) or (is_n_eq and any(s == "n" or s.startswith("n_") for s in segs))
+            slash_pair = bool(re.search(r"/\s*$", pre)) or bool(re.match(r"\s*/", post))
+            if not slash_pair:
+                hits = [(rn, pth) for rn, pth in hits if path_ok(pth)]
+            elif not any(path_ok(p) for _, p in hits):
+                # a slash-pair still needs SOME plausible home: keep value-matching but only against
+                # count-like fields (n_*/counts), else drop
+                hits = [(rn, pth) for rn, pth in hits
+                        if re.search(r"(^|[._\[])n_|n_held|n_caved|^n(\.|$)|count", pth, re.I)]
+        bound = bool(_TRIGGERS.search(bctx))
+        # v0.3 RANGE-SANITY rule: a value sitting directly after bounded-quantity vocabulary cannot
+        # leave its possible range — an 'AUC 4.0' is UNGROUNDED no matter what leaf it happens to
+        # match (kills the coincidence-verification class of the v0.1 battery misses).
+        unit_kw = re.search(r"\b(aurocs?|aucs?|recall|precision|accuracy|fpr|fnr|concordance|"
+                            r"stability|rates?|p)\s*[(=:≈~\s]*$", pre, re.I)
+        sign_kw = re.search(r"\b(margins?|deltas?|elevation)\s*[(=:≈~\s]*$", pre, re.I)
+        out_of_range = (unit_kw and not 0.0 <= num["value"] <= 1.0) or \
+                       (sign_kw and not -1.0 <= num["value"] <= 1.0)
+        if out_of_range:
+            hits, bound = [], True
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
         elif hits:
             status = "VERIFIED"
             ref = f"{hits[0][0]}:{hits[0][1]}"
         elif bound:
+            # NOTE (v0.3): a bulk-row match deliberately does NOT soften this to ABSTAIN — letting
+            # claims ground in per-item arrays let 13/20 seeded mutants hide in row noise when it
+            # was tried. The cure for a legitimate grid-cell cite is persisting it as a summary
+            # field in an addendum receipt (the repair loop), not weakening the oath.
             status = "UNGROUNDED"
             ref = None
         else:

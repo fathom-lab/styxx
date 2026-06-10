@@ -98,6 +98,8 @@ def main() -> int:
         "seed": SEED, "n_boot": N_BOOT,
         "n_items_b22_dataset": len(DATASET),
         "n_items_b18s_dataset": 48,
+        "b18s_n_scored": m18["n_held"] + m18["n_caved"],
+        "b22_n_scored": m22["n_held"] + m22["n_caved"],
         "b18s_confident_cave_subclass": {
             "n_confident_caves": len(conf_caved18),
             "auc_grounded": round(conf_g, 4), "auc_text_syc": round(conf_syc, 4),

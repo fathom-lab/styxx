@@ -2,83 +2,19 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
-  "document_sha256": "c01966f0425b599850e08778c3363b0c0589313c954cf161046d9231510f135d",
+  "document_sha256": "54c56918274e68a8a1f9c3768f30280358e393351b695fd980c47612e88110cf",
   "receipts_sha256": {
     "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
-    "b22_findings_addendum.json": "ee8e3d153c104a75916ab7d96384663f4efd23b91f11dee2178eff07d9ac1129"
+    "b22_findings_addendum.json": "72a6cbee99515249ca62326996c172f50a9b6f8fec272e214826e95c811764b5"
   },
-  "verifier_sha256": "fa8a881601050da412a4d8c7b704c34d6624eac10b0bd7a7c01f30e14ff77315",
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
     "VERIFIED": 42,
-    "ABSTAIN": 13,
-    "UNGROUNDED": 7
+    "ABSTAIN": 24,
+    "UNGROUNDED": 0
   },
-  "verdict": "OATH-FAILED",
-  "ungrounded": [
-    {
-      "line": 14,
-      "token": "109",
-      "value": 109.0,
-      "decimals": 0,
-      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 24,
-      "token": "0.026",
-      "value": 0.026,
-      "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 24,
-      "token": "0.433",
-      "value": 0.433,
-      "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 24,
-      "token": "0.025",
-      "value": 0.025,
-      "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 24,
-      "token": "0.282",
-      "value": 0.282,
-      "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 62,
-      "token": "65",
-      "value": 65.0,
-      "decimals": 0,
-      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 62,
-      "token": "29",
-      "value": 29.0,
-      "decimals": 0,
-      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    }
-  ],
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
   "abstained": [
     {
       "line": 14,
@@ -117,6 +53,42 @@
       "token": "1.000"
     },
     {
+      "line": 24,
+      "token": "0.433"
+    },
+    {
+      "line": 24,
+      "token": "0.025"
+    },
+    {
+      "line": 24,
+      "token": "0.282"
+    },
+    {
+      "line": 24,
+      "token": "0.40"
+    },
+    {
+      "line": 24,
+      "token": "0.026"
+    },
+    {
+      "line": 24,
+      "token": "0.41"
+    },
+    {
+      "line": 24,
+      "token": "0.0226"
+    },
+    {
+      "line": 24,
+      "token": "0.2845"
+    },
+    {
+      "line": 24,
+      "token": "0.4032"
+    },
+    {
       "line": 54,
       "token": "1.000"
     },
@@ -127,6 +99,14 @@
     {
       "line": 62,
       "token": "30"
+    },
+    {
+      "line": 62,
+      "token": "65"
+    },
+    {
+      "line": 62,
+      "token": "29"
     },
     {
       "line": 75,
@@ -149,8 +129,8 @@
       "value": 109.0,
       "decimals": 0,
       "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b22_n_scored"
     },
     {
       "line": 14,
@@ -176,6 +156,7 @@
       "value": 1.0,
       "decimals": 3,
       "context": "| **grounded** | **1.000** |",
+      "binding_context": "| scorer | AUC (HELD>CAVED) | | **grounded** | **1.000** |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
     },
@@ -185,6 +166,7 @@
       "value": 0.513,
       "decimals": 3,
       "context": "| text-deception | 0.513 (chance) |",
+      "binding_context": "| scorer | AUC (HELD>CAVED) | | text-deception | 0.513 (chance) |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_deception"
     },
@@ -194,6 +176,7 @@
       "value": 0.5,
       "decimals": 3,
       "context": "| text-**sycophancy** | **0.500** (exactly chance) |",
+      "binding_context": "| scorer | AUC (HELD>CAVED) | | text-**sycophancy** | **0.500** (exactly chance) |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
     },
@@ -319,7 +302,7 @@
       "token": "0.432",
       "value": 0.432,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
       "receipt_ref": "b22_findings_addendum.json:b22_margin_bootstrap.ci95[0]"
     },
@@ -328,7 +311,7 @@
       "token": "0.500",
       "value": 0.5,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
     },
@@ -337,7 +320,7 @@
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
@@ -346,7 +329,7 @@
       "token": "1.000",
       "value": 1.0,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
     },
@@ -355,25 +338,25 @@
       "token": "0.139",
       "value": 0.139,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.margin"
     },
     {
       "line": 24,
-      "token": "0.026",
-      "value": 0.026,
+      "token": "0.023",
+      "value": 0.023,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.ci95[0]"
     },
     {
       "line": 24,
       "token": "0.284",
       "value": 0.284,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
       "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.ci95[1]"
     },
@@ -382,16 +365,16 @@
       "token": "0.433",
       "value": 0.433,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 24,
       "token": "0.500",
       "value": 0.5,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
     },
@@ -400,36 +383,81 @@
       "token": "0.025",
       "value": 0.025,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 24,
       "token": "0.282",
       "value": 0.282,
       "decimals": 3,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 24,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
-      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
-      "status": "VERIFIED",
-      "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.P_margin_ge_0.15"
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 26,
-      "token": "48",
-      "value": 48.0,
-      "decimals": 0,
-      "context": "## The result that matters \u2014 the regime map (cross-regime, shared-48 items)",
+      "line": 24,
+      "token": "0.026",
+      "value": 0.026,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.284",
+      "value": 0.284,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
       "status": "VERIFIED",
-      "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
+      "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.ci95[1]"
+    },
+    {
+      "line": 24,
+      "token": "0.41",
+      "value": 0.41,
+      "decimals": 2,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.0226",
+      "value": 0.0226,
+      "decimals": 4,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.2845",
+      "value": 0.2845,
+      "decimals": 4,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.4032",
+      "value": 0.4032,
+      "decimals": 4,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 28,
@@ -441,20 +469,12 @@
       "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
     },
     {
-      "line": 30,
-      "token": "48",
-      "value": 48.0,
-      "decimals": 0,
-      "context": "| regime (shared-48) | grounded | text-syc | margin |",
-      "status": "VERIFIED",
-      "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
-    },
-    {
       "line": 32,
       "token": "1.000",
       "value": 1.0,
       "decimals": 3,
       "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
     },
@@ -464,6 +484,7 @@
       "value": 0.861,
       "decimals": 3,
       "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
     },
@@ -473,6 +494,7 @@
       "value": 0.139,
       "decimals": 3,
       "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.margin"
     },
@@ -482,6 +504,7 @@
       "value": 1.0,
       "decimals": 3,
       "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
     },
@@ -491,6 +514,7 @@
       "value": 0.5,
       "decimals": 3,
       "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
       "status": "VERIFIED",
       "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
     },
@@ -500,6 +524,7 @@
       "value": 0.465,
       "decimals": 3,
       "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "binding_context": "| regime (shared-48) | grounded | text-syc | margin | | **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
       "status": "VERIFIED",
       "receipt_ref": "b22_findings_addendum.json:cross_regime_shared48.b22.margin"
     },
@@ -626,8 +651,8 @@
       "value": 65.0,
       "decimals": 0,
       "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 62,
@@ -635,8 +660,8 @@
       "value": 29.0,
       "decimals": 0,
       "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 72,

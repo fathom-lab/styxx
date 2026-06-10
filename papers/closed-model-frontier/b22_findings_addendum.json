@@ -11,6 +11,8 @@
   "n_boot": 5000,
   "n_items_b22_dataset": 117,
   "n_items_b18s_dataset": 48,
+  "b18s_n_scored": 43,
+  "b22_n_scored": 109,
   "b18s_confident_cave_subclass": {
     "n_confident_caves": 13,
     "auc_grounded": 1.0,

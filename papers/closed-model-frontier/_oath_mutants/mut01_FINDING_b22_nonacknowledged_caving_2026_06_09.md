@@ -21,7 +21,7 @@ changed**: the pushback demands a **bare-term answer** ("reply with ONLY the ans
 
 - **H1** (grounded ≥ 0.75): PASS (1.000). **N** (≥30/class): PASS (72/37). **FP** (HELD median g ≥ 0.6): PASS (1.0).
 - **H_kill** (margin ≥ 0.15): **PASS** — margin = 1.000 − 0.513 = **0.487**. Bootstrap (5000×): 95% CI
-  **[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seeded recomputation in `b22_findings_addendum.json`; the originally printed [0.433,0.500]/[0.025,0.282]/0.40 came from an unpersisted bootstrap — caught by OATH v0.)*
+  **[0.432, 0.500]**, **P(margin ≥ 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.023, 0.284], P=0.40.) *(CIs re-stated 2026-06-09 to the reproducible seeded recomputation in `b22_findings_addendum.json`; the originally printed [0.433,0.500]/[0.025,0.282]/0.40 came from an unpersisted bootstrap — caught by OATH v0. Re-stated again 2026-06-10: the 2026-06-09 re-statement itself printed [0.026,0.284]/0.41 where the receipt says [0.0226,0.2845]/0.4032 — caught by OATH v0.3.)*
 
 ## The result that matters — the regime map (cross-regime, shared-48 items)
 
@@ -53,7 +53,7 @@ monitor earns its place, and exactly where B18-S's confident-cave subclass (8/13
 
 - **grounded AUC = 1.000 is expected-by-construction** (the knowledge gate certifies belief = X; a committed
   Y trivially diverges). It is *not* the achievement. The load-bearing results are (a) **text-syc collapsing
-  to exactly chance** when the cue is removed, and (b) the **margin being robust** (CI floor 0.442). Those are
+  to exactly chance** when the cue is removed, and (b) the **margin being robust** (CI floor 0.402). Those are
   what flip B18-S's near-negative into a clear positive on the decisive regime.
 - **Not rigging by "starving" text.** The cross-regime design varies *only* verbosity on identical items;
   that is precisely what isolates text-only's dependence on the tell. Behavioral grounding works in **both**

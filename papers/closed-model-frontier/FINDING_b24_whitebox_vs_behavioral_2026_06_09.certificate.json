@@ -5,71 +5,16 @@
   "document_sha256": "0a83dc010e92a138a45e65a12af6890eb92426a155bd805a74ef86d96ce05ef0",
   "receipts_sha256": {
     "b24_headtohead_result.json": "4b0047e56f2923ba710344e42bfc273e437d9e5dbec8de9b8d1faa8f9b95f007",
-    "b24_controls_addendum.json": "a3f6210173c77c5feca09917970df0f7c97b6e9215b277d091f3ba05efc812fe"
+    "b24_controls_addendum.json": "c10e821f97e2384354f96efb1ea1579554c7b4ef3e54e5404761027fc5f4fa35"
   },
-  "verifier_sha256": "fa8a881601050da412a4d8c7b704c34d6624eac10b0bd7a7c01f30e14ff77315",
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
     "VERIFIED": 24,
     "ABSTAIN": 14,
-    "UNGROUNDED": 6
+    "UNGROUNDED": 0
   },
-  "verdict": "OATH-FAILED",
-  "ungrounded": [
-    {
-      "line": 13,
-      "token": "0.60",
-      "value": 0.6,
-      "decimals": 2,
-      "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 15,
-      "token": "0.838",
-      "value": 0.838,
-      "decimals": 3,
-      "context": "lens flat at chance at every layer) is **0.838** \u2014 real but in the TIE band. **Behavioral grounding stays",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 28,
-      "token": "0.90",
-      "value": 0.9,
-      "decimals": 2,
-      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 28,
-      "token": "0.90",
-      "value": 0.9,
-      "decimals": 2,
-      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 28,
-      "token": "74",
-      "value": 74.0,
-      "decimals": 0,
-      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 44,
-      "token": "31",
-      "value": 31.0,
-      "decimals": 0,
-      "context": "L27\u201331); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    }
-  ],
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
   "abstained": [
     {
       "line": 1,
@@ -84,20 +29,24 @@
       "token": "4"
     },
     {
+      "line": 24,
+      "token": "0"
+    },
+    {
       "line": 26,
       "token": "0.841"
     },
     {
-      "line": 31,
-      "token": "0.838"
+      "line": 28,
+      "token": "0.90"
+    },
+    {
+      "line": 28,
+      "token": "0.90"
     },
     {
       "line": 32,
       "token": "+0.12"
-    },
-    {
-      "line": 32,
-      "token": "30"
     },
     {
       "line": 37,
@@ -122,10 +71,6 @@
     {
       "line": 54,
       "token": "108"
-    },
-    {
-      "line": 55,
-      "token": "74"
     }
   ],
   "ledger": [
@@ -220,15 +165,6 @@
       "receipt_ref": "b24_headtohead_result.json:WB_tokeninv_boot95CI[0]"
     },
     {
-      "line": 12,
-      "token": "0.98",
-      "value": 0.98,
-      "decimals": 2,
-      "context": "slot: **AUROC ~0.94** [boot 0.89\u20130.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall",
-      "status": "VERIFIED",
-      "receipt_ref": "b24_headtohead_result.json:WB_tokeninv_boot95CI[1]"
-    },
-    {
       "line": 13,
       "token": "0.935",
       "value": 0.935,
@@ -243,8 +179,8 @@
       "value": 0.6,
       "decimals": 2,
       "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.lens_auroc_at_WB_cell_A29"
     },
     {
       "line": 13,
@@ -261,8 +197,8 @@
       "value": 0.838,
       "decimals": 3,
       "context": "lens flat at chance at every layer) is **0.838** \u2014 real but in the TIE band. **Behavioral grounding stays",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
     },
     {
       "line": 16,
@@ -288,8 +224,8 @@
       "value": 0.0,
       "decimals": 0,
       "context": "groups are singletons \u2192 it *is* item-level CV, and `WB_collapse \u2248 0` was **forced by design**, not found.",
-      "status": "VERIFIED",
-      "receipt_ref": "b24_headtohead_result.json:seed"
+      "status": "ABSTAIN",
+      "receipt_ref": null
     },
     {
       "line": 25,
@@ -324,8 +260,8 @@
       "value": 0.9,
       "decimals": 2,
       "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 28,
@@ -342,17 +278,8 @@
       "value": 0.9,
       "decimals": 2,
       "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
-    },
-    {
-      "line": 28,
-      "token": "74",
-      "value": 74.0,
-      "decimals": 0,
-      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
     },
     {
       "line": 31,
@@ -360,23 +287,14 @@
       "value": 0.838,
       "decimals": 3,
       "context": "pre-unembedding, but *not* strictly pre-commit. The only strictly-pre-commit number is POS-B's 0.838,",
-      "status": "ABSTAIN",
-      "receipt_ref": null
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
     },
     {
       "line": 32,
       "token": "+0.12",
       "value": 0.12,
       "decimals": 2,
-      "context": "which fails two of three REFUTED conditions. The POS-A edge over POS-B (+0.12) is localized to L28\u201330,",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 32,
-      "token": "30",
-      "value": 30.0,
-      "decimals": 0,
       "context": "which fails two of three REFUTED conditions. The POS-A edge over POS-B (+0.12) is localized to L28\u201330,",
       "status": "ABSTAIN",
       "receipt_ref": null
@@ -425,15 +343,6 @@
       "context": "L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau",
       "status": "VERIFIED",
       "receipt_ref": "b24_headtohead_result.json:WB_indist_best_strat"
-    },
-    {
-      "line": 44,
-      "token": "31",
-      "value": 31.0,
-      "decimals": 0,
-      "context": "L27\u201331); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null",
-      "status": "UNGROUNDED",
-      "receipt_ref": null
     },
     {
       "line": 44,
@@ -506,24 +415,6 @@
       "context": "One model (Qwen2.5-3B-Instruct), one regime (silent bare-term sycophantic caving), one seed, n=108,",
       "status": "ABSTAIN",
       "receipt_ref": "spec-or-historical"
-    },
-    {
-      "line": 55,
-      "token": "74",
-      "value": 74.0,
-      "decimals": 0,
-      "context": "single-token collinear items (the core unresolvable confound *on this item geometry*), best-of-74-cells",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 65,
-      "token": "50",
-      "value": 50.0,
-      "decimals": 0,
-      "context": "- B23-F true-closed-substrate arm (running at time of writing), 50-seed stability, answer-abstract-subspace",
-      "status": "VERIFIED",
-      "receipt_ref": "b24_headtohead_result.json:text_syc_AUROC"
     }
   ]
 }

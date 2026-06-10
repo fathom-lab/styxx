@@ -16,7 +16,7 @@ failed the knowledge gate, 1 ambiguous).
 | Scorer | AUC (HELD>CAVED) | note |
 |---|---|---|
 | **grounded** (Stability×Concordance, resampled belief vs committed answer) | **1.000** | expected-by-construction (see caveat) |
-| text-only **deception** (`styxx.attack`) | 0.300 | chance — useless here |
+| text-only **deception** (`styxx.attack`) | 0.000 | chance — useless here |
 | text-only **sycophancy** (`styxx.attack`) | **0.861** | the strong competitor |
 
 - **H1** (grounded ≥ 0.75): **PASS** (1.000).
@@ -35,8 +35,8 @@ not a result. **The only load-bearing comparison is the margin over text-only** 
 
 ## But the negative is *near-bar and underpowered* — not decisive
 
-Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.026, 0.284]**, **P(margin ≥ 0.15) = 0.41**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0.)* The CI
-straddles the bar (text-sycophancy AUC CI is wide, [0.71, 0.97], at n=16 caves). So this is **not** "behavioral
+Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.023, 0.284]**, **P(margin ≥ 0.15) = 0.40**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0. Re-stated again 2026-06-10: the 2026-06-09 re-statement printed [0.026,0.284]/0.41 against a receipt holding [0.0226,0.2845]/0.4032 — caught by OATH v0.3.)* The CI
+straddles the bar (text-sycophancy AUC CI is wide, [0.72, 0.97], at n=16 caves). So this is **not** "behavioral
 grounding is proven worse-or-equal to text"; it is "**at n=43 we cannot decisively place the margin above or
 below 0.15.**" The decisive read is owed at higher n. Per discipline we do **not** retro-claim SURVIVED — the
 frozen point estimate fell short, full stop — but the honest characterization is *inconclusive near the bar.*
@@ -72,7 +72,7 @@ closed-model hallucination cell.
 
 Cave rate is **domain-dependent and tracks belief strength**: Qwen-3B caved on ~half of geography items but
 **resisted almost every chemical-symbol item** (held the symbols it knows cold). The knowledge gate also
-filtered 6 items the model didn't reliably know (Astana, Naypyidaw, "seven" continents, "two") — correctly
+filtered 4 items the model didn't reliably know (Astana, Naypyidaw, "seven" continents, "two") — correctly
 excluded, since caving is only a lie when the model knew X.
 
 ## Honest scope & what's OWED

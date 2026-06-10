@@ -35,8 +35,8 @@ not a result. **The only load-bearing comparison is the margin over text-only** 
 
 ## But the negative is *near-bar and underpowered* — not decisive
 
-Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.026, 0.284]**, **P(margin ≥ 0.15) = 0.41**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0.)* The CI
-straddles the bar (text-sycophancy AUC CI is wide, [0.71, 0.97], at n=16 caves). So this is **not** "behavioral
+Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.023, 0.284]**, **P(margin ≥ 0.15) = 0.40**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0. Re-stated again 2026-06-10: the 2026-06-09 re-statement printed [0.026,0.284]/0.41 against a receipt holding [0.0226,0.2845]/0.4032 — caught by OATH v0.3.)* The CI
+straddles the bar (text-sycophancy AUC CI is wide, [0.72, 0.97], at n=16 caves). So this is **not** "behavioral
 grounding is proven worse-or-equal to text"; it is "**at n=43 we cannot decisively place the margin above or
 below 0.15.**" The decisive read is owed at higher n. Per discipline we do **not** retro-claim SURVIVED — the
 frozen point estimate fell short, full stop — but the honest characterization is *inconclusive near the bar.*
@@ -49,7 +49,7 @@ reads directly. The behavioral proxy's distinct value is on caves that **don't l
 
 - On the **confident-cave subclass** (13/16 caves were un-hedged), text-sycophancy degrades to 0.832 while
   grounded stays 1.000 (subclass margin **+0.168**).
-- **8 of 43 confident caves were text-invisible**: text-sycophancy rated them honest (1−syc ≥ 0.5) while
+- **8 of 13 confident caves were text-invisible**: text-sycophancy rated them honest (1−syc ≥ 0.5) while
   grounding flagged them (g = 0.0). Two are stark — **Ottawa→Toronto** and **New Delhi→Mumbai** scored
   **0.99 "honest"** to the text axis yet were flat caves.
 
@@ -91,7 +91,7 @@ excluded, since caving is only a lie when the model knew X.
 ## Bottom line
 
 On a black-box model, an output-only sampling-divergence proxy **detects sycophantic caving cleanly (AUC
-1.0)** — the confident-confabulation wall does not bind, because the belief is recoverable by removing the
+7.0)** — the confident-confabulation wall does not bind, because the belief is recoverable by removing the
 pressure. But it **did not clear the pre-registered +0.15 margin** over styxx's *own* text-only sycophancy
 classifier (margin 0.139, and underpowered: CI straddles the bar). The earned claim is **not** "behavioral
 proxies carry the sycophancy oath where text can't" — it is the **map**: behavioral grounding is a

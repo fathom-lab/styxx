@@ -10,7 +10,7 @@ CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result a
 On silent bare-term caves — where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.512,
 replicating B22) — a home-field white-box linear probe reads the impending cave **pre-emission** at the commit
 slot: **AUROC ~0.94** [boot 0.89–0.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall
-(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),
+(0.935)**, beating the logit-lens answer-token decoder at that depth (0.69) and surface confidence (0.69),
 selection-corrected max-perm null p<0.01. The strictly-pre-commit read (POS-B, before the assistant scaffold,
 lens flat at chance at every layer) is **0.838** — real but in the TIE band. **Behavioral grounding stays
 strictly stronger (1.000, part-definitional) at every position: the white-box never beats it.**
@@ -42,7 +42,7 @@ overclaim killed in this program (v1, v2, v4, v5, now B24):
 - The signal is real and non-trivial: depth-dissociation (committed-answer content/length code saturates by
   L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau
   L27–31); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null
-  p95=0.715 vs observed 0.944 (0/120 perms ≥ observed).
+  p95=0.715 vs observed 0.941 (0/120 perms ≥ observed).
 - **What is refuted is the PREDICTION, not the thesis**: the disk prior predicted Outcome-D (the white-box
   read on silent single-token caves collapses to the answer token). It does not collapse — the residual
   stream carries the impending cave above the answer-token decoder.
