@@ -1,6 +1,6 @@
 {
   "validation": "styxx.mind v0 (gates frozen in PREREG_mind_v0_2026_06_10.md)",
-  "instrument_sha256": "35a7871955d4793abdf39cffd924c86248fd9d21887614943af741dee5c985b3",
+  "instrument_sha256": "c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115",
   "frozen_original_sha256": "6d50b14a5c445f972ee90bd275f141db8937dd9984db614cfa541959d8c8cdf9",
   "gates": [
     {
@@ -46,5 +46,5 @@
     }
   ],
   "verdict": "ALL-GATES-PASS",
-  "elapsed_s": 0.6
+  "elapsed_s": 0.5
 }

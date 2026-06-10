@@ -52,6 +52,7 @@ def test_behavioral_profile_power_gate():
 @pytest.mark.skipif(not (CMF / "run_behavioral_sycophancy.py").exists(),
                     reason="frozen originals not present (wheel install)")
 def test_port_equivalence_vs_frozen_originals():
+    pytest.importorskip("torch", reason="frozen original imports torch at module level")
     import sys
     sys.path.insert(0, str(CMF))
     import run_behavioral_sycophancy as frozen

@@ -301,8 +301,9 @@ REFUSALS = {
     },
     "meaning_integrity_binder": {
         "status": "UNAVAILABLE",
-        "reason": "Validated in papers (Binder feature localization) but not yet packaged; no score "
-                  "until the port is equivalence-gated like M1/M2.",
+        "reason": "Packaged as styxx.meaning_integrity (7.11.0) but not yet wired into the mind "
+                  "certificate as a scored axis: the wiring needs its own M1/M2-style equivalence "
+                  "gates first. Use styxx.meaning_integrity directly meanwhile.",
         "receipt": "papers/ai-human-alignment/",
     },
     "consciousness": {

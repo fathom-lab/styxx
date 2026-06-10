@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.14.0] — 2026-06-10 — the certified mind: `styxx.mind`, `styxx.certify` (OATH), `styxx.token`
+
+### Added — `styxx.certify`: OATH, the certificate-carrying document
+
+Extract every numeric claim from a document, ground each against the receipt JSONs it cites, emit a
+machine-checkable certificate (`VERIFIED` / `ABSTAIN` / `UNGROUNDED` → `OATH-HELD|FAILED`). The
+verifier **passed its own pre-registered mutant battery** (16/20 seeded corruptions caught at bar 16,
+zero false alarms on clean docs — `OATH-V0-VALID`) and, while being built, caught real errors in its
+own author's documents three separate times. v0.3 binding rules: table-header inheritance,
+range-sanity for bounded quantities, count-to-field stem binding, notation filters.
+
+```bash
+python -m styxx.certify FINDING.md receipt1.json receipt2.json   # -> FINDING.certificate.json
+```
+
+### Added — `styxx.mind`: the certified mind-profile instrument
+
+Profile a mind along validated axes only — behavioral conduct under pressure (black-box, output-only:
+works on closed frontier models) and meaning-geometry citizenship vs the six-model convergence
+anchors — and emit a receipt-carrying certificate. Exact ports of the frozen B-series and
+real-convergence apparatus, equivalence-gated against the original receipts (5/5 validation gates).
+The demarcation registry is the point: rhythm, geometry-drift manipulation detection, and
+consciousness are **REFUSED axes**, each refusal carrying the receipt of the experiment that killed
+or bounded it. An instrument that can refuse is the only kind whose YES means anything.
+
+```bash
+python -m styxx.mind behavioral b22_result.json --subject Qwen2.5-3B
+```
+
+### Added — `styxx.token`: read-only $STYXX holder-tier lookup
+
+Pure-stdlib, hold-based tier mapping via public Solana RPC. Holds no keys, signs nothing, moves no
+funds; the token never gates the OSS library.
+
+### Research receipts (repo)
+
+Closed-model frontier B18-S/B22/B24 (silent-cave detection: behavioral grounding AUC 1.0 where
+text-only sycophancy sits at chance), OATH corpus attestation over every finding doc, the
+ancient-question CAPSTONE (first OATH-HELD synthesis: 38 verified / 0 ungrounded), AUTOPILOT loop
+contract + moonshot ladder.
+
+---
+
 ## [7.12.0] — 2026-06-03 — `meaning_agreement`: reference-free cross-model meaning comparison
 
 ### Added — `styxx.meaning_agreement`
