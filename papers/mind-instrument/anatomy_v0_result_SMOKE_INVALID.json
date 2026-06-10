@@ -1,0 +1,52 @@
+{
+  "experiment": "Anatomy of Convergence v0",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v0_2026_06_10.md",
+  "categories": [
+    "animal",
+    "fruit",
+    "vehicle",
+    "profession",
+    "body",
+    "weather",
+    "furniture",
+    "instrument"
+  ],
+  "seed": 0,
+  "n_perm": 10000,
+  "runner_sha256": "2d033677756ee7800a3b766c63e8a082131d5babba0cac0dfb8259dac5469fb8",
+  "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d",
+  "smoke": true,
+  "profiles": {
+    "Qwen2.5-1.5B": {
+      "animal": 0.1965,
+      "fruit": 0.1774,
+      "vehicle": 0.4366,
+      "profession": 0.104,
+      "body": 0.0029,
+      "weather": 0.3348,
+      "furniture": -0.051,
+      "instrument": 0.227
+    },
+    "Qwen2.5-3B": {
+      "animal": 0.2096,
+      "fruit": 0.1769,
+      "vehicle": 0.4456,
+      "profession": 0.1086,
+      "body": 0.8076,
+      "weather": 0.3435,
+      "furniture": -0.0425,
+      "instrument": 0.3309
+    },
+    "Llama-3.2-1B": {
+      "animal": 0.434,
+      "fruit": 0.3358,
+      "vehicle": 0.5091,
+      "profession": 0.2235,
+      "body": 0.6381,
+      "weather": 0.4549,
+      "furniture": 0.2018,
+      "instrument": 0.4814
+    }
+  },
+  "verdict": "SMOKE-OK"
+}

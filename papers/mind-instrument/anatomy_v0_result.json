@@ -1,0 +1,147 @@
+{
+  "experiment": "Anatomy of Convergence v0",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v0_2026_06_10.md",
+  "categories": [
+    "animal",
+    "fruit",
+    "vehicle",
+    "profession",
+    "body",
+    "weather",
+    "furniture",
+    "instrument"
+  ],
+  "seed": 0,
+  "n_perm": 10000,
+  "runner_sha256": "2d033677756ee7800a3b766c63e8a082131d5babba0cac0dfb8259dac5469fb8",
+  "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d",
+  "validity_control": {
+    "gpt2_recomputed": 0.3052,
+    "gpt2_atlas": 0.3052,
+    "pass": true
+  },
+  "profiles_subjects": {
+    "gpt2": {
+      "animal": 0.3898,
+      "fruit": 0.3123,
+      "vehicle": 0.4037,
+      "profession": 0.0042,
+      "body": 0.3394,
+      "weather": 0.3952,
+      "furniture": 0.0255,
+      "instrument": 0.5047
+    },
+    "gpt2-large": {
+      "animal": 0.402,
+      "fruit": 0.3221,
+      "vehicle": 0.4232,
+      "profession": 0.0317,
+      "body": 0.5069,
+      "weather": 0.4076,
+      "furniture": 0.0461,
+      "instrument": 0.5868
+    },
+    "pythia-410m": {
+      "animal": 0.4735,
+      "fruit": 0.3376,
+      "vehicle": 0.4031,
+      "profession": 0.0948,
+      "body": 0.7048,
+      "weather": 0.3952,
+      "furniture": 0.0224,
+      "instrument": 0.5441
+    },
+    "Qwen2.5-0.5B": {
+      "animal": 0.2015,
+      "fruit": 0.1776,
+      "vehicle": 0.4396,
+      "profession": 0.1069,
+      "body": 0.0958,
+      "weather": 0.338,
+      "furniture": -0.0476,
+      "instrument": 0.2509
+    }
+  },
+  "profiles_anchors_reference": {
+    "Qwen2.5-1.5B": {
+      "animal": 0.1965,
+      "fruit": 0.1774,
+      "vehicle": 0.4366,
+      "profession": 0.104,
+      "body": 0.0029,
+      "weather": 0.3348,
+      "furniture": -0.051,
+      "instrument": 0.227
+    },
+    "Qwen2.5-3B": {
+      "animal": 0.2096,
+      "fruit": 0.1769,
+      "vehicle": 0.4456,
+      "profession": 0.1086,
+      "body": 0.8076,
+      "weather": 0.3435,
+      "furniture": -0.0425,
+      "instrument": 0.3309
+    },
+    "Llama-3.2-1B": {
+      "animal": 0.434,
+      "fruit": 0.3358,
+      "vehicle": 0.5091,
+      "profession": 0.2235,
+      "body": 0.6381,
+      "weather": 0.4549,
+      "furniture": 0.2018,
+      "instrument": 0.4814
+    },
+    "Llama-3.2-3B": {
+      "animal": 0.4403,
+      "fruit": 0.3127,
+      "vehicle": 0.5071,
+      "profession": 0.2588,
+      "body": 0.6601,
+      "weather": 0.3519,
+      "furniture": 0.2247,
+      "instrument": 0.4599
+    },
+    "Phi-3.5-mini": {
+      "animal": 0.3449,
+      "fruit": 0.2042,
+      "vehicle": 0.2814,
+      "profession": -0.0585,
+      "body": 0.6676,
+      "weather": 0.407,
+      "furniture": 0.0554,
+      "instrument": 0.3753
+    },
+    "gemma-2-2b": {
+      "animal": 0.5414,
+      "fruit": 0.4237,
+      "vehicle": 0.5798,
+      "profession": 0.3582,
+      "body": 0.7002,
+      "weather": 0.4966,
+      "furniture": 0.3216,
+      "instrument": 0.5521
+    }
+  },
+  "mean_anatomy_independent": {
+    "instrument": 0.4716,
+    "vehicle": 0.4174,
+    "body": 0.4117,
+    "weather": 0.384,
+    "animal": 0.3667,
+    "fruit": 0.2874,
+    "profession": 0.0594,
+    "furniture": 0.0116
+  },
+  "kendall_W_independent": 0.75,
+  "perm_p": 0.0,
+  "perm_null_p95": 0.4585,
+  "kendall_W_anchors_reference": 0.7831,
+  "gates": {
+    "P1_W_bar": 0.6,
+    "P1_pass_W": true,
+    "P1_pass_perm": true
+  },
+  "verdict": "SUPPORTED"
+}
