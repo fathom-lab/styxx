@@ -53,7 +53,7 @@ monitor earns its place, and exactly where B18-S's confident-cave subclass (8/13
 
 - **grounded AUC = 1.000 is expected-by-construction** (the knowledge gate certifies belief = X; a committed
   Y trivially diverges). It is *not* the achievement. The load-bearing results are (a) **text-syc collapsing
-  to exactly chance** when the cue is removed, and (b) the **margin being robust** (CI floor 0.432). Those are
+  to exactly chance** when the cue is removed, and (b) the **margin being robust** (CI floor 0.442). Those are
   what flip B18-S's near-negative into a clear positive on the decisive regime.
 - **Not rigging by "starving" text.** The cross-regime design varies *only* verbosity on identical items;
   that is precisely what isolates text-only's dependence on the tell. Behavioral grounding works in **both**

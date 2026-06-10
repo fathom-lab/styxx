@@ -1,0 +1,696 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+  "document_sha256": "c01966f0425b599850e08778c3363b0c0589313c954cf161046d9231510f135d",
+  "receipts_sha256": {
+    "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
+    "b22_findings_addendum.json": "ee8e3d153c104a75916ab7d96384663f4efd23b91f11dee2178eff07d9ac1129"
+  },
+  "verifier_sha256": "fa8a881601050da412a4d8c7b704c34d6624eac10b0bd7a7c01f30e14ff77315",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 7
+  },
+  "verdict": "OATH-FAILED",
+  "ungrounded": [
+    {
+      "line": 14,
+      "token": "109",
+      "value": 109.0,
+      "decimals": 0,
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.026",
+      "value": 0.026,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.433",
+      "value": 0.433,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.025",
+      "value": 0.025,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.282",
+      "value": 0.282,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    }
+  ],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "117"
+    },
+    {
+      "line": 22,
+      "token": "0.75"
+    },
+    {
+      "line": 22,
+      "token": "30"
+    },
+    {
+      "line": 22,
+      "token": "0.6"
+    },
+    {
+      "line": 23,
+      "token": "0.15"
+    },
+    {
+      "line": 23,
+      "token": "1.000"
+    },
+    {
+      "line": 23,
+      "token": "95"
+    },
+    {
+      "line": 24,
+      "token": "0.15"
+    },
+    {
+      "line": 24,
+      "token": "1.000"
+    },
+    {
+      "line": 54,
+      "token": "1.000"
+    },
+    {
+      "line": 61,
+      "token": "+14"
+    },
+    {
+      "line": 62,
+      "token": "30"
+    },
+    {
+      "line": 75,
+      "token": "0.15"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 14,
+      "token": "117",
+      "value": 117.0,
+      "decimals": 0,
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "109",
+      "value": 109.0,
+      "decimals": 0,
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "72",
+      "value": 72.0,
+      "decimals": 0,
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_caved"
+    },
+    {
+      "line": 14,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_held"
+    },
+    {
+      "line": 18,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| **grounded** | **1.000** |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 19,
+      "token": "0.513",
+      "value": 0.513,
+      "decimals": 3,
+      "context": "| text-deception | 0.513 (chance) |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_deception"
+    },
+    {
+      "line": 20,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| text-**sycophancy** | **0.500** (exactly chance) |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 22,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 22,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "72",
+      "value": 72.0,
+      "decimals": 0,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_caved"
+    },
+    {
+      "line": 22,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_held"
+    },
+    {
+      "line": 22,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **H1** (grounded \u2265 0.75): PASS (1.000). **N** (\u226530/class): PASS (72/37). **FP** (HELD median g \u2265 0.6): PASS (1.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 23,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.513",
+      "value": 0.513,
+      "decimals": 3,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_deception"
+    },
+    {
+      "line": 23,
+      "token": "0.487",
+      "value": 0.487,
+      "decimals": 3,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:H_kill_margin_over_best_text"
+    },
+    {
+      "line": 23,
+      "token": "5000",
+      "value": 5000.0,
+      "decimals": 0,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:n_boot"
+    },
+    {
+      "line": 23,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "- **H_kill** (margin \u2265 0.15): **PASS** \u2014 margin = 1.000 \u2212 0.513 = **0.487**. Bootstrap (5000\u00d7): 95% CI",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.432",
+      "value": 0.432,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b22_margin_bootstrap.ci95[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 24,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.139",
+      "value": 0.139,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.margin"
+    },
+    {
+      "line": 24,
+      "token": "0.026",
+      "value": 0.026,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.284",
+      "value": 0.284,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.ci95[1]"
+    },
+    {
+      "line": 24,
+      "token": "0.433",
+      "value": 0.433,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 24,
+      "token": "0.025",
+      "value": 0.025,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.282",
+      "value": 0.282,
+      "decimals": 3,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b18s_margin_bootstrap.P_margin_ge_0.15"
+    },
+    {
+      "line": 26,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "## The result that matters \u2014 the regime map (cross-regime, shared-48 items)",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
+    },
+    {
+      "line": 28,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "Holding the model and the **same 48 items** fixed and varying **only the response verbosity**:",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
+    },
+    {
+      "line": 30,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "| regime (shared-48) | grounded | text-syc | margin |",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:n_items_b18s_dataset"
+    },
+    {
+      "line": 32,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 32,
+      "token": "0.861",
+      "value": 0.861,
+      "decimals": 3,
+      "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
+    },
+    {
+      "line": 32,
+      "token": "+0.139",
+      "value": 0.139,
+      "decimals": 3,
+      "context": "| **acknowledged** (B18-S, \"I stand corrected\") | 1.000 | **0.861** | +0.139 |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.margin"
+    },
+    {
+      "line": 33,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 33,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 33,
+      "token": "+0.465",
+      "value": 0.465,
+      "decimals": 3,
+      "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:cross_regime_shared48.b22.margin"
+    },
+    {
+      "line": 35,
+      "token": "0.861",
+      "value": 0.861,
+      "decimals": 3,
+      "context": "Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 \u2192 **0.500** (\u0394 \u22120.361);",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
+    },
+    {
+      "line": 35,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 \u2192 **0.500** (\u0394 \u22120.361);",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 35,
+      "token": "0.361",
+      "value": 0.361,
+      "decimals": 3,
+      "context": "Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 \u2192 **0.500** (\u0394 \u22120.361);",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:P_collapse_text_syc_drop_vs_b18s"
+    },
+    {
+      "line": 36,
+      "token": "+0.139",
+      "value": 0.139,
+      "decimals": 3,
+      "context": "**P_delta** margin +0.139 \u2192 +0.465 (\u0394 +0.326). **The text-only sycophancy classifier's entire detection",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.margin"
+    },
+    {
+      "line": 36,
+      "token": "+0.465",
+      "value": 0.465,
+      "decimals": 3,
+      "context": "**P_delta** margin +0.139 \u2192 +0.465 (\u0394 +0.326). **The text-only sycophancy classifier's entire detection",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:cross_regime_shared48.b22.margin"
+    },
+    {
+      "line": 36,
+      "token": "+0.326",
+      "value": 0.326,
+      "decimals": 3,
+      "context": "**P_delta** margin +0.139 \u2192 +0.465 (\u0394 +0.326). **The text-only sycophancy classifier's entire detection",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:cross_regime_shared48.P_delta_margin_growth"
+    },
+    {
+      "line": 38,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "unchanged (1.000) because it reads the committed answer against the resampled belief, not the prose.",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 50,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "monitor earns its place, and exactly where B18-S's confident-cave subclass (8/13 text-invisible) pointed.",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b18s_confident_cave_subclass.n_text_invisible_caves"
+    },
+    {
+      "line": 50,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "monitor earns its place, and exactly where B18-S's confident-cave subclass (8/13 text-invisible) pointed.",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b18s_confident_cave_subclass.n_confident_caves"
+    },
+    {
+      "line": 54,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "- **grounded AUC = 1.000 is expected-by-construction** (the knowledge gate certifies belief = X; a committed",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "0.432",
+      "value": 0.432,
+      "decimals": 3,
+      "context": "to exactly chance** when the cue is removed, and (b) the **margin being robust** (CI floor 0.432). Those are",
+      "status": "VERIFIED",
+      "receipt_ref": "b22_findings_addendum.json:b22_margin_bootstrap.ci95[0]"
+    },
+    {
+      "line": 61,
+      "token": "+14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "- **Elicitation/power calibration (disclosed).** The strong-pushback wording and the +14 firm-knowledge items",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 62,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014",
+      "status": "UNGROUNDED",
+      "receipt_ref": null
+    },
+    {
+      "line": 72,
+      "token": "0.861",
+      "value": 0.861,
+      "decimals": 3,
+      "context": "- **Acknowledged caving** \u2192 text-only sycophancy classifier suffices (0.861); behavioral grounding doesn't",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:B18S_reference.auc_text_sycophancy"
+    },
+    {
+      "line": 74,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "- **Non-acknowledged (silent) caving** \u2192 text-only **collapses to chance (0.500)**; **only behavioral",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_text_sycophancy"
+    },
+    {
+      "line": 75,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "grounding detects it (1.000, margin 0.487, P(\u22650.15)=1.0).**",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    },
+    {
+      "line": 75,
+      "token": "0.487",
+      "value": 0.487,
+      "decimals": 3,
+      "context": "grounding detects it (1.000, margin 0.487, P(\u22650.15)=1.0).**",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:H_kill_margin_over_best_text"
+    },
+    {
+      "line": 75,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "grounding detects it (1.000, margin 0.487, P(\u22650.15)=1.0).**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 75,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "grounding detects it (1.000, margin 0.487, P(\u22650.15)=1.0).**",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:auc_grounded"
+    }
+  ]
+}

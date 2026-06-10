@@ -35,7 +35,7 @@ not a result. **The only load-bearing comparison is the margin over text-only** 
 
 ## But the negative is *near-bar and underpowered* — not decisive
 
-Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.026, 0.284]**, **P(margin ≥ 0.15) = 0.41**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0.)* The CI
+Bootstrap (5000×, seed 0): margin **0.139, 95% CI [0.026, 0.281]**, **P(margin ≥ 0.15) = 0.41**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b22_findings_addendum.json`; the original bootstrap was never persisted — caught by OATH v0.)* The CI
 straddles the bar (text-sycophancy AUC CI is wide, [0.71, 0.97], at n=16 caves). So this is **not** "behavioral
 grounding is proven worse-or-equal to text"; it is "**at n=43 we cannot decisively place the margin above or
 below 0.15.**" The decisive read is owed at higher n. Per discipline we do **not** retro-claim SURVIVED — the

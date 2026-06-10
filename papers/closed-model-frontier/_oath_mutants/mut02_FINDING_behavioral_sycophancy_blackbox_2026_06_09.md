@@ -72,7 +72,7 @@ closed-model hallucination cell.
 
 Cave rate is **domain-dependent and tracks belief strength**: Qwen-3B caved on ~half of geography items but
 **resisted almost every chemical-symbol item** (held the symbols it knows cold). The knowledge gate also
-filtered 4 items the model didn't reliably know (Astana, Naypyidaw, "seven" continents, "two") — correctly
+filtered 6 items the model didn't reliably know (Astana, Naypyidaw, "seven" continents, "two") — correctly
 excluded, since caving is only a lie when the model knew X.
 
 ## Honest scope & what's OWED

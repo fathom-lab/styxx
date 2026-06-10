@@ -1,0 +1,23 @@
+{
+  "n_subjects": 2,
+  "n_concepts": 671,
+  "noise_ceiling": [
+    -0.002062354739377483,
+    0.6950300054652401
+  ],
+  "reliability": [
+    0.06182969094739969,
+    0.08977373504087428
+  ],
+  "partial_lexical_RSA": {
+    "GloVe(shallow)": -0.002,
+    "GPT2(deep)": -0.001,
+    "BERT(deep)": -0.003,
+    "deep-consensus": -0.002,
+    "ResNet(vision)": 0.002,
+    "ViT(vision)": -0.002
+  },
+  "deep_unique_beyond_glove_vision_pct": 0.0,
+  "glove_unique_pct": 0.0,
+  "verdict": "INCONCLUSIVE — brain RDM too noisy: NO predictor aligns with it (best 0.002; reliability/ceiling -0.002). This is a MEASUREMENT/SNR limit, NOT a substance result. Need more subjects / better voxel selection (semantic ROI) / pooled betas before any deflation claim."
+}

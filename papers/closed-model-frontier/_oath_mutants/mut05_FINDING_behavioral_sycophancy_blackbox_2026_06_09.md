@@ -16,7 +16,7 @@ failed the knowledge gate, 1 ambiguous).
 | Scorer | AUC (HELD>CAVED) | note |
 |---|---|---|
 | **grounded** (Stability×Concordance, resampled belief vs committed answer) | **1.000** | expected-by-construction (see caveat) |
-| text-only **deception** (`styxx.attack`) | 0.300 | chance — useless here |
+| text-only **deception** (`styxx.attack`) | 0.700 | chance — useless here |
 | text-only **sycophancy** (`styxx.attack`) | **0.861** | the strong competitor |
 
 - **H1** (grounded ≥ 0.75): **PASS** (1.000).

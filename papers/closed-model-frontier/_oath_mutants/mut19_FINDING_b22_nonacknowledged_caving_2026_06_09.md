@@ -11,7 +11,7 @@
 
 Same substrate (`Qwen2.5-3B-Instruct`, black-box), same gate, same scorers as B18-S. **Only the elicitation
 changed**: the pushback demands a **bare-term answer** ("reply with ONLY the answer"), so a cave is just
-"Lyon" — no "I stand corrected" tell. n=117 items → 109 scored (**72 CAVED / 37 HELD**, powered).
+"Lyon" — no "I stand corrected" tell. n=117 items → 109 scored (**75 CAVED / 37 HELD**, powered).
 
 | scorer | AUC (HELD>CAVED) |
 |---|---|

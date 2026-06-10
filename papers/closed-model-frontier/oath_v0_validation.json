@@ -1,0 +1,211 @@
+{
+  "prereg": "PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "seed": 1,
+  "D2_contradicted_on_clean": [
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 13,
+      "token": "0.60",
+      "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 15,
+      "token": "0.838",
+      "context": "lens flat at chance at every layer) is **0.838** \u2014 real but in the TIE band. **Behavioral grounding stays"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 28,
+      "token": "0.90",
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 28,
+      "token": "0.90",
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 28,
+      "token": "74",
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own"
+    },
+    {
+      "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "line": 44,
+      "token": "31",
+      "context": "L27\u201331); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 14,
+      "token": "109",
+      "context": "\"Lyon\" \u2014 no \"I stand corrected\" tell. n=117 items \u2192 109 scored (**72 CAVED / 37 HELD**, powered)."
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 24,
+      "token": "0.026",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 24,
+      "token": "0.433",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 24,
+      "token": "0.025",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 24,
+      "token": "0.282",
+      "context": "**[0.432, 0.500]**, **P(margin \u2265 0.15) = 1.000**. (Contrast B18-S: margin 0.139, CI [0.026, 0.284], P=0.41.) *(CIs re-stated 2026-06-09 to the reproducible seed"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 62,
+      "token": "65",
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014"
+    },
+    {
+      "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "line": 62,
+      "token": "29",
+      "context": "were tuned *before scoring* to reach the pre-registered N\u226530/class (the first scored run came in 65/29 \u2014"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 13,
+      "token": "2",
+      "context": "substrate, so a fair head-to-head), 2-turn pushback elicitation, n=48 \u2192 43 scored (27 HELD, 16 CAVED, 4"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 13,
+      "token": "43",
+      "context": "substrate, so a fair head-to-head), 2-turn pushback elicitation, n=48 \u2192 43 scored (27 HELD, 16 CAVED, 4"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 38,
+      "token": "0.026",
+      "context": "Bootstrap (5000\u00d7, seed 0): margin **0.139, 95% CI [0.026, 0.284]**, **P(margin \u2265 0.15) = 0.41**. *(Re-stated 2026-06-09 to the reproducible recomputation in `b2"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 39,
+      "token": "0.71",
+      "context": "straddles the bar (text-sycophancy AUC CI is wide, [0.71, 0.97], at n=16 caves). So this is **not** \"behavioral"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 46,
+      "token": "2",
+      "context": "The surprise is that styxx's **text-only sycophancy axis is already strong (0.861)** \u2014 because the 2-turn"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 88,
+      "token": "0.745",
+      "context": "- **Same-items white-box head-to-head**: compared here only softly against the known R2 intent AUROC (0.745,"
+    },
+    {
+      "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "line": 95,
+      "token": "+0.15",
+      "context": "pressure. But it **did not clear the pre-registered +0.15 margin** over styxx's *own* text-only sycophancy"
+    }
+  ],
+  "D3_coverage": {
+    "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md": {
+      "numbers": 44,
+      "verified": 24,
+      "abstained": 14,
+      "ungrounded": 6
+    },
+    "FINDING_b22_nonacknowledged_caving_2026_06_09.md": {
+      "numbers": 62,
+      "verified": 42,
+      "abstained": 13,
+      "ungrounded": 7
+    },
+    "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md": {
+      "numbers": 59,
+      "verified": 31,
+      "abstained": 21,
+      "ungrounded": 7
+    }
+  },
+  "D1": {
+    "n_mutations": 20,
+    "caught": 13,
+    "bar": 16,
+    "pass": false,
+    "missed": [
+      {
+        "k": 0,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 10,
+        "orig": "0.512",
+        "mut": "0.518",
+        "context": "On silent bare-term caves \u2014 where the text tells are dead (text-syc **0.500** = exact chance, text-d"
+      },
+      {
+        "k": 2,
+        "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+        "line": 75,
+        "orig": "4",
+        "mut": "6",
+        "context": "filtered 4 items the model didn't reliably know (Astana, Naypyidaw, \"seven\" continents, \"two\") \u2014 cor"
+      },
+      {
+        "k": 3,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 4,
+        "orig": "0",
+        "mut": "1",
+        "context": "CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result at `9d3291c`"
+      },
+      {
+        "k": 10,
+        "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 33,
+        "orig": "1.000",
+        "mut": "1.600",
+        "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |"
+      },
+      {
+        "k": 11,
+        "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+        "line": 52,
+        "orig": "1",
+        "mut": "4",
+        "context": "- **8 of 13 confident caves were text-invisible**: text-sycophancy rated them honest (1\u2212syc \u2265 0.5) w"
+      },
+      {
+        "k": 16,
+        "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 33,
+        "orig": "1.000",
+        "mut": "6.000",
+        "context": "| **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |"
+      },
+      {
+        "k": 17,
+        "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+        "line": 38,
+        "orig": "0",
+        "mut": "9",
+        "context": "Bootstrap (5000\u00d7, seed 0): margin **0.139, 95% CI [0.026, 0.284]**, **P(margin \u2265 0.15) = 0.41**. *(R"
+      }
+    ]
+  },
+  "validation_verdict": "OATH-V0-FAILED (linter prototype)"
+}

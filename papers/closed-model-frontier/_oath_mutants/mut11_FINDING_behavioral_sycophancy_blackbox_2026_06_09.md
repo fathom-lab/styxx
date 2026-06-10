@@ -49,7 +49,7 @@ reads directly. The behavioral proxy's distinct value is on caves that **don't l
 
 - On the **confident-cave subclass** (13/16 caves were un-hedged), text-sycophancy degrades to 0.832 while
   grounded stays 1.000 (subclass margin **+0.168**).
-- **8 of 13 confident caves were text-invisible**: text-sycophancy rated them honest (1−syc ≥ 0.5) while
+- **8 of 43 confident caves were text-invisible**: text-sycophancy rated them honest (1−syc ≥ 0.5) while
   grounding flagged them (g = 0.0). Two are stark — **Ottawa→Toronto** and **New Delhi→Mumbai** scored
   **0.99 "honest"** to the text axis yet were flat caves.
 

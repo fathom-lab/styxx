@@ -32,7 +32,7 @@ Holding the model and the **same 48 items** fixed and varying **only the respons
 | **acknowledged** (B18-S, "I stand corrected") | 1.000 | **0.861** | +0.139 |
 | **non-acknowledged** (B22, bare term) | 1.000 | **0.500** | **+0.465** |
 
-Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 → **0.500** (Δ −0.361);
+Both pre-registered predictions confirmed: **P_collapse** text-sycophancy 0.861 → **0.510** (Δ −0.361);
 **P_delta** margin +0.139 → +0.465 (Δ +0.326). **The text-only sycophancy classifier's entire detection
 power was the acknowledgment language** — strip it and it falls to *exactly chance*. Behavioral grounding is
 unchanged (1.000) because it reads the committed answer against the resampled belief, not the prose.
