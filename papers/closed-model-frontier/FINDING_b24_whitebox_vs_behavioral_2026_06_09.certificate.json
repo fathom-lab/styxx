@@ -1,0 +1,420 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+  "document_sha256": "0a83dc010e92a138a45e65a12af6890eb92426a155bd805a74ef86d96ce05ef0",
+  "receipts_sha256": {
+    "b24_headtohead_result.json": "4b0047e56f2923ba710344e42bfc273e437d9e5dbec8de9b8d1faa8f9b95f007",
+    "b24_controls_addendum.json": "c10e821f97e2384354f96efb1ea1579554c7b4ef3e54e5404761027fc5f4fa35"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 24,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "5"
+    },
+    {
+      "line": 3,
+      "token": "108"
+    },
+    {
+      "line": 6,
+      "token": "4"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 26,
+      "token": "0.841"
+    },
+    {
+      "line": 28,
+      "token": "0.90"
+    },
+    {
+      "line": 28,
+      "token": "0.90"
+    },
+    {
+      "line": 32,
+      "token": "+0.12"
+    },
+    {
+      "line": 37,
+      "token": "0.82"
+    },
+    {
+      "line": 43,
+      "token": "0.95"
+    },
+    {
+      "line": 43,
+      "token": "0.63"
+    },
+    {
+      "line": 45,
+      "token": "0.715"
+    },
+    {
+      "line": 45,
+      "token": "0"
+    },
+    {
+      "line": 54,
+      "token": "108"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 B24: a pre-emission \"commitment-to-the-user's-answer\" direction reads silent caving (REPORT_AS_LANDED; auto-REFUTED killed as overclaim #5)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 3,
+      "token": "108",
+      "value": 108.0,
+      "decimals": 0,
+      "context": "**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (37 HELD / 71",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 3,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (37 HELD / 71",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:n_held"
+    },
+    {
+      "line": 3,
+      "token": "71",
+      "value": 71.0,
+      "decimals": 0,
+      "context": "**2026-06-09. Fathom Lab / styxx. Closed-model frontier (R4). Qwen2.5-3B-Instruct, n=108 (37 HELD / 71",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:n_caved"
+    },
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "CAVED), silent bare-term regime, seed 0, local/$0.** Pre-reg frozen pre-result at `9d3291c`",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:seed"
+    },
+    {
+      "line": 6,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "`b24_controls_addendum.json`; adversarial verification `wf_96778321-0b8` (4 lenses + adjudication).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "On silent bare-term caves \u2014 where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.512,",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:text_syc_AUROC"
+    },
+    {
+      "line": 10,
+      "token": "0.512",
+      "value": 0.512,
+      "decimals": 3,
+      "context": "On silent bare-term caves \u2014 where the text tells are dead (text-syc **0.500** = exact chance, text-dec 0.512,",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:text_dec_AUROC"
+    },
+    {
+      "line": 12,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "slot: **AUROC ~0.94** [boot 0.89\u20130.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_indist_best_strat"
+    },
+    {
+      "line": 12,
+      "token": "0.89",
+      "value": 0.89,
+      "decimals": 2,
+      "context": "slot: **AUROC ~0.94** [boot 0.89\u20130.98] at (POS-A, L29), surviving the **non-vacuous first-character firewall",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_tokeninv_boot95CI[0]"
+    },
+    {
+      "line": 13,
+      "token": "0.935",
+      "value": 0.935,
+      "decimals": 3,
+      "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:first_char_firewall_best.auroc"
+    },
+    {
+      "line": 13,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.lens_auroc_at_WB_cell_A29"
+    },
+    {
+      "line": 13,
+      "token": "0.69",
+      "value": 0.69,
+      "decimals": 2,
+      "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence (0.69),",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:surface_conf_AUROC"
+    },
+    {
+      "line": 15,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "lens flat at chance at every layer) is **0.838** \u2014 real but in the TIE band. **Behavioral grounding stays",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
+    },
+    {
+      "line": 16,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "strictly stronger (1.000, part-definitional) at every position: the white-box never beats it.**",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:behavioral_AUROC_g"
+    },
+    {
+      "line": 23,
+      "token": "108",
+      "value": 108.0,
+      "decimals": 0,
+      "context": "1. **The pre-registered firewall was vacuous.** All 108 (xid,yid) answer-token pairs are unique \u2192 GroupKFold",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:n_answer_token_groups"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "groups are singletons \u2192 it *is* item-level CV, and `WB_collapse \u2248 0` was **forced by design**, not found.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "The load-bearing invariance evidence is the **first-CHARACTER firewall** (26 real groups; held-out items",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:n_first_char_groups"
+    },
+    {
+      "line": 26,
+      "token": "0.935",
+      "value": 0.935,
+      "decimals": 3,
+      "context": "share no committed first letter with training): **0.935 POS-A / 0.841 POS-B** \u2014 independently regenerated",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:first_char_firewall_best.auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.841",
+      "value": 0.841,
+      "decimals": 3,
+      "context": "share no committed first letter with training): **0.935 POS-A / 0.841 POS-B** \u2014 independently regenerated",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "0.892",
+      "value": 0.892,
+      "decimals": 3,
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_tokeninv_boot95CI[0]"
+    },
+    {
+      "line": 28,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "2. **The 0.90 bar was grazed, not cleared** (boot lower 0.892 < 0.90, best-of-74-cells) \u2014 the pre-reg's own",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "pre-unembedding, but *not* strictly pre-commit. The only strictly-pre-commit number is POS-B's 0.838,",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:doc_cited_summaries.posB_best_groupinv_auroc"
+    },
+    {
+      "line": 32,
+      "token": "+0.12",
+      "value": 0.12,
+      "decimals": 2,
+      "context": "which fails two of three REFUTED conditions. The POS-A edge over POS-B (+0.12) is localized to L28\u201330,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "An answer-abstract length/format code is still decodable *within* intent strata at L29 (0.82/0.93). The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.93",
+      "value": 0.93,
+      "decimals": 2,
+      "context": "An answer-abstract length/format code is still decodable *within* intent strata at L29 (0.82/0.93). The",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:first_char_firewall_best.auroc"
+    },
+    {
+      "line": 43,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep plateau",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_indist_best_strat"
+    },
+    {
+      "line": 44,
+      "token": "0.353",
+      "value": 0.353,
+      "decimals": 3,
+      "context": "L27\u201331); length-only anti-predicts (0.353); first-char firewall holds; selection-corrected max-null",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:length_only_auroc"
+    },
+    {
+      "line": 45,
+      "token": "0.715",
+      "value": 0.715,
+      "decimals": 3,
+      "context": "p95=0.715 vs observed 0.941 (0/120 perms \u2265 observed).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.941",
+      "value": 0.941,
+      "decimals": 3,
+      "context": "p95=0.715 vs observed 0.941 (0/120 perms \u2265 observed).",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_tokeninv_best_group"
+    },
+    {
+      "line": 45,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "p95=0.715 vs observed 0.941 (0/120 perms \u2265 observed).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "p95=0.715 vs observed 0.941 (0/120 perms \u2265 observed).",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_controls_addendum.json:selection_corrected_maxnull.n_perm"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **The closed-model thesis is reinforced, not refuted**: behavioral 1.0 > white-box 0.94 everywhere; BOTH",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:behavioral_AUROC_g"
+    },
+    {
+      "line": 49,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "- **The closed-model thesis is reinforced, not refuted**: behavioral 1.0 > white-box 0.94 everywhere; BOTH",
+      "status": "VERIFIED",
+      "receipt_ref": "b24_headtohead_result.json:WB_indist_best_strat"
+    },
+    {
+      "line": 54,
+      "token": "108",
+      "value": 108.0,
+      "decimals": 0,
+      "context": "One model (Qwen2.5-3B-Instruct), one regime (silent bare-term sycophantic caving), one seed, n=108,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

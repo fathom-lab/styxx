@@ -1,0 +1,25 @@
+{
+  "styxx_version": "7.12.0",
+  "instrument": "styxx.cognometrics text-only register audit",
+  "hyped": {
+    "label": "HYPED (verbatim)",
+    "words": 423,
+    "sycophancy": 0.8096,
+    "overconfidence": 0.629,
+    "refusal": 0.6772,
+    "composite": 0.7193,
+    "needs_revision": false
+  },
+  "disciplined": {
+    "label": "DISCIPLINED (same claims, matched length)",
+    "words": 371,
+    "sycophancy": 0.5063,
+    "overconfidence": 0.1428,
+    "refusal": 0.6992,
+    "composite": 0.3246,
+    "needs_revision": false
+  },
+  "delta_composite": 0.3947,
+  "length_ratio": 0.877,
+  "reading": "Same three experiments, claims unchanged, length matched within a few percent. If composite drops on the disciplined rewrite, styxx is scoring REGISTER (hype vs calibration), not word count."
+}

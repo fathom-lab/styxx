@@ -105,11 +105,19 @@ RUNG 3 — the DEMARCATION certificate (it abstains on bedrock)   [proven it MUS
   The certificate that says "I cannot verify this" on a believed misconception is the trustworthy
   one. Already established by the wall-is-bedrock result; this rung is about wiring it into the oath.
 
-RUNG 4 — the SUBSTRATE frontier (closed + cross-model)     [the existential threat]
+RUNG 4 — the SUBSTRATE frontier (closed + cross-model)     [first cell MAPPED 2026-06-09]
   The deep read is one-model today (council map: only Qwen-1.5B is steering-validated-live). The
-  models that matter most are closed APIs with no white-box access. Honest hard part: either the
-  standards lever makes readability a compliance requirement, or behavioral proxies (sampling-
-  divergence, grounded_honesty) must carry enough of the oath on closed substrates.
+  models that matter most are closed APIs with no white-box access. THE SYCOPHANCY CELL IS NOW
+  MAPPED (black-box Qwen-3B): text-only sycophancy detection is a TELL-detector — strip the
+  acknowledgment language and it collapses 0.861 → 0.500 exact chance (B18-S → B22); OUTPUT-ONLY
+  behavioral grounding (committed answer vs pressure-free resampled belief) carries the oath in the
+  SILENT regime (margin 0.487, P≥0.15=1.0) because sycophantic suppression is pressure-induced and
+  REMOVABLE — resampling without the pressure recovers the intact belief, so the confident-confab
+  wall does not bind. Same-items white-box head-to-head (B24, REPORT_AS_LANDED): a best-case
+  home-field probe reads silent caving pre-emission (commit-slot 0.94 / strictly-pre-commit 0.84,
+  first-char-firewalled, above the answer-token decoder) but NEVER beats behavioral (1.0) and on
+  single-token items cannot be called intent — defense-in-depth, with behavioral the one that needs
+  no weights. True-closed-substrate arm (claude-fable-5 via subscription CLI) running.
 
 RUNG 5 — WRITE                                              [OUT, by design]
   read ≠ write is a SAFETY property: a conscience you can read but not weaponize into a writer.

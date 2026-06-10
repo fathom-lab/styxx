@@ -1,0 +1,36 @@
+{
+  "experiment": "B3 re-locking trapdoor (calib-vs-deploy, subject-family axis)",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sha256": "3483c9020f2e128ea4f741e3178e833bce6784c2ed8333e4a9a83d2a9c5e285c",
+  "C_fams": [
+    "med",
+    "misc",
+    "phil"
+  ],
+  "D_fams": [
+    "cs",
+    "econ",
+    "math",
+    "psych"
+  ],
+  "BASE_R_C": 0.82,
+  "BASE_R_D": 0.762,
+  "FLOOR_C": 0.4,
+  "FLOOR_D": 0.326,
+  "g_dist_AUC": 0.555,
+  "feat": 0.945,
+  "BASE_CD_MATCH": true,
+  "K_base_D": 1.0,
+  "POW6": true,
+  "pools": {
+    "eval_C": 124,
+    "eval_D": 172,
+    "LIE_D": 172,
+    "RESISTED_C": 185,
+    "MISTAKE_C": 326,
+    "HELD_KNOW_D": 604
+  },
+  "cd_void_pre": "VOID-DETECTOR-DEAD",
+  "rows": [],
+  "PROGRAM_VERDICT": "VOID-DETECTOR-DEAD (claim nothing)"
+}

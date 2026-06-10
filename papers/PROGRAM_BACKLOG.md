@@ -10,12 +10,41 @@ closing items, spawning new ones, re-ranking by leverage.*
 
 ---
 
+## DIRECTION TAKEN — closed-model frontier (operator, 2026-06-09)
+
+Operator chose **(a) closed-model frontier** over consolidation. First cycle ran: **B18-S — behavioral
+sycophancy detection on a black-box model** (`papers/closed-model-frontier/`, commit `979a7df`).
+
+**Result: CLOSED_NEGATIVE (near-bar, underpowered).** On Qwen-3B treated black-box (output-only proxy), an
+output-only sampling-divergence proxy detects sycophantic caving cleanly (**grounded AUC 1.000**) but did
+**not** clear the pre-registered **+0.15 margin** over styxx's own text-only sycophancy classifier
+(text-syc **0.861**, margin **0.139**; bootstrap CI [0.025, 0.282], P(≥0.15)=0.40 — can't resolve at n=16
+caves). grounded=1.0 is expected-by-construction; the margin is the load-bearing test and it failed by a hair.
+- **Substantive map**: behavioral grounding is **complementary** to (not better than) the text axis — its
+  unique value is **confident, text-invisible caves** (8/13 confident caves grounding flagged but text-syc
+  rated honest, incl. Ottawa→Toronto / New Delhi→Mumbai at 0.99).
+- **Mechanism (keeper)**: behavioral sycophancy detection works where confident-*confabulation* detection
+  fails — suppression is **pressure-induced & removable**, so resampling without pressure recovers the intact
+  belief; the confident-confab wall doesn't apply.
+
+**B22 then RESOLVED the cell (commit `a262ac3`, SURVIVED):** re-run on **non-acknowledged (bare-term)
+caving** → grounded 1.0 vs text-syc **0.500 (exact chance)**, margin **0.487** (P(≥0.15)=1.0). Cross-regime
+on the shared-48 items (only verbosity varied): text-syc **0.861 → 0.500**. **The closed-model sycophancy
+cell is now mapped:** text-only sycophancy detection is a **tell-detector** (works only on loud "I stand
+corrected" caves); **behavioral grounding is substrate-level and carries the oath in the SILENT regime —
+the more dangerous, text-invisible one.** First demonstration that closed-model sycophancy is behaviorally
+detectable when there is no verbal tell. Argues defense-in-depth (cheap text gate + resampling monitor).
+
+**Still owed:** the true-remote-API substrate (B23) is **blocked on credits** (OpenAI 401, Anthropic key
+authenticates but balance empty — same top-up revives darkflobi AND unblocks B23 AND enables Claude Fable);
+same-items white-box head-to-head (B24).
+
 ## Progress ledger
 
 - **R1 read-certificate** — climbed; 2-family (Qwen-3B + Llama-3B), scale-robust 1.5B→7B, semantic-not-shortcut. `SURVIVED`.
 - **R2 intent/mens-rea** — real but coupled to R1; two-stage HELD→HID conscience deployable (false-accuse 0.949→0.037). `REPORT_AS_LANDED`.
 - **R3 demarcation/abstain** — proven the wall is bedrock on 3 axes; wiring into the certificate object owed.
-- **R4 substrate/closed + adversarial robustness** — the existential frontier. Adversarial flank: frozen deployed probe **DEFEATED**; info-persistence **SUPPORTED-n=1**; v3 (relocation) **INCONCLUSIVE — running**. Closed-model: **open**.
+- **R4 substrate/closed + adversarial robustness** — the existential frontier. Adversarial flank: frozen deployed probe **DEFEATED**; info-persistence **SUPPORTED-n=1**; v3 (relocation) **INCONCLUSIVE — running**. Closed-model: **sycophancy cell MAPPED** (B18-S + B22, black-box Qwen-3B). Acknowledged caving → text-syc suffices (0.861), grounding near-bar negative. **Non-acknowledged (silent) caving → text-syc collapses to exact chance (0.500), grounding holds (1.0, margin 0.487 P≥0.15=1.0) → SURVIVED.** Behavioral grounding carries the sycophancy oath in the silent regime text can't see; text-only is a tell-detector not a deception-detector. Remote-API confirmation (B23) **blocked on credits**.
 - **R5 write** — out by design (read-only = the safety).
 - bricks laid: ~20 findings · open questions below: 22.
 
@@ -59,7 +88,11 @@ closing items, spawning new ones, re-ranking by leverage.*
 | **B15** | Cross-vendor intent (beyond Qwen/Llama). | R2 | L | QUEUED |
 | **B16** | Wire the demarcation/abstain into the certificate object (R3 is proven-it-must; now build it). | R3 | M | QUEUED |
 | **B17** | Finish the wall's battery — bootstrap CI, shared-myth split, D-channel dynamics, cross-model — to fully characterize the bedrock. | R3 | M | QUEUED |
-| **B18** | Closed-model substrate: can behavioral proxies (sampling-divergence, grounded_honesty) carry part of the oath where there's no white-box access? The R4 existential question. | R4 | H | QUEUED |
+| **B18** | Closed-model substrate: can behavioral proxies carry the oath where there's no white-box? | R4 | H | **IN-PROGRESS** — sycophancy cell ran (B18-S, CLOSED_NEGATIVE near-bar); spawned B22–B24 |
+| **B22** | **B18-S decisive re-run**: non-acknowledged (bare-term) caving. | R4 | H | **SURVIVED** — n=109 (72/37), grounded 1.0 vs text-syc **0.500** (exact chance), margin **0.487** (CI [0.433,0.500], P≥0.15=1.0). Cross-regime shared-48: text-syc 0.861→0.500 by removing only the acknowledgment language. **Text-only sycophancy = a tell-detector, not a deception-detector; behavioral grounding carries the oath in the silent regime text can't see.** Commit `a262ac3` |
+| **B23-F** | **True closed-model substrate: `claude-fable-5`** via subscription CLI (UNBLOCKED 2026-06-09, operator: "let's put fable to work"; API key still creditless — transport is `claude -p` clean-config, contamination-probed). Frozen B22 silent elicitation + scorers; POWERED-AUC vs FRONTIER-RESISTANT cave-rate branches + tier-2 pressure. PREREG frozen `0ed8eea`. | R4 | H | **IN-PROGRESS — full run live** |
+| **B24** | **Same-items white-box head-to-head** on silent caves. | R4 | M | **DONE — REPORT_AS_LANDED** (auto-REFUTED killed as overclaim #5). A first-char/surface/length-invariant **pre-emission commitment-to-the-user's-answer direction** reads silent caving at commit-slot 0.94 [0.89–0.98] / strictly-pre-commit 0.838 (TIE band), beating lens 0.60 + surface 0.69, selection-corrected p<0.01 — but **never beats behavioral (1.0)**, and on single-token collinear items it cannot be called fold-INTENT. Refutes the Outcome-D *prediction*, **reinforces** the closed-model thesis (defense-in-depth: both detect, behavioral needs no weights). Pre-reg'd token-pair GroupKFold firewall found VACUOUS (singleton groups) — first-char firewall is the load-bearing control (persisted in `b24_controls_addendum.json`). `FINDING_b24_whitebox_vs_behavioral_2026_06_09.md` |
+| **B25** | **Intent-decoupling item set** (spawned by B24, the decisive next bet): multi-token answers / Y=paraphrase-of-X items so commit-to-user's-answer ≠ commit-to-wrong-content; same POS-B grouped probe. Survives ⇒ fold-intent is real; collapses ⇒ it was the answer-commitment code. | R4/R2 | H | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 

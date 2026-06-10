@@ -107,3 +107,10 @@ scripts/dogfood/_behavior_cache_*.json
 scripts/dogfood/out_*_partial.json
 scripts/self_audit/_filter_mine.py
 papers/grounded-arc/_build/
+
+# ── Activation-residual dumps (regenerable scratch, GB-scale, never tracked) ──
+# Per-run activation/residual tensors written by probe harnesses. Multi-hundred-MB
+# each (would exceed GitHub's 100MB ceiling); reproducible from the run scripts.
+# Probe-WEIGHT artifacts (intent_probe*.npz) are deliverables and remain tracked.
+residuals*.npz
+papers/**/residuals*.npz

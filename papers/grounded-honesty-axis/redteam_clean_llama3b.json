@@ -1,0 +1,25 @@
+{
+  "model": "llama3b",
+  "S1_layer": 19,
+  "S2_layer": 14,
+  "S1_residual_auc": 0.829,
+  "S1_deploy_difficulty_auc(lm+ve_only)": 0.668,
+  "S1_residual_minus_deploy_difficulty": 0.161,
+  "S1_residual_xletter_bestlock_auc": 0.73,
+  "S1_xletter_collapses_below_0.70": false,
+  "S2_residual_auc": 0.872,
+  "S2_deploy_difficulty_auc": 0.703,
+  "S2_residual_minus_deploy_difficulty": 0.169,
+  "residual_cascade_LIE/MIST/RES": [
+    0.423,
+    0.037,
+    0.286
+  ],
+  "DEPLOY_difficulty_cascade_LIE/MIST/RES(no_probe)": [
+    0.109,
+    0.082,
+    0.114
+  ],
+  "residual_LIE_minus_deploydiff_LIE": 0.314,
+  "residual_beats_noprobe_deployer": true
+}

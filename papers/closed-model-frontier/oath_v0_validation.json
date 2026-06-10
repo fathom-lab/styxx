@@ -1,0 +1,66 @@
+{
+  "prereg": "PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "seed": 1,
+  "D2_contradicted_on_clean": [],
+  "D3_coverage": {
+    "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md": {
+      "numbers": 38,
+      "verified": 24,
+      "abstained": 14,
+      "ungrounded": 0
+    },
+    "FINDING_b22_nonacknowledged_caving_2026_06_09.md": {
+      "numbers": 66,
+      "verified": 42,
+      "abstained": 24,
+      "ungrounded": 0
+    },
+    "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md": {
+      "numbers": 61,
+      "verified": 34,
+      "abstained": 27,
+      "ungrounded": 0
+    }
+  },
+  "D1": {
+    "n_mutations": 20,
+    "caught": 16,
+    "bar": 16,
+    "pass": true,
+    "missed": [
+      {
+        "k": 0,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 10,
+        "orig": "0.512",
+        "mut": "0.511",
+        "context": "On silent bare-term caves \u2014 where the text tells are dead (text-syc **0.500** = exact chance, text-d"
+      },
+      {
+        "k": 2,
+        "doc": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+        "line": 19,
+        "orig": "0.300",
+        "mut": "0.000",
+        "context": "| text-only **deception** (`styxx.attack`) | 0.300 | chance \u2014 useless here |"
+      },
+      {
+        "k": 6,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 26,
+        "orig": "0.935",
+        "mut": "0.735",
+        "context": "share no committed first letter with training): **0.935 POS-A / 0.841 POS-B** \u2014 independently regene"
+      },
+      {
+        "k": 18,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 13,
+        "orig": "0.60",
+        "mut": "0.69",
+        "context": "(0.935)**, beating the logit-lens answer-token decoder at that depth (0.60) and surface confidence ("
+      }
+    ]
+  },
+  "validation_verdict": "OATH-V0-VALID"
+}

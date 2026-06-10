@@ -1,0 +1,25 @@
+{
+  "model": "qwen3b",
+  "S1_layer": 31,
+  "S2_layer": 25,
+  "S1_residual_auc": 0.835,
+  "S1_deploy_difficulty_auc(lm+ve_only)": 0.674,
+  "S1_residual_minus_deploy_difficulty": 0.161,
+  "S1_residual_xletter_bestlock_auc": 0.656,
+  "S1_xletter_collapses_below_0.70": true,
+  "S2_residual_auc": 0.81,
+  "S2_deploy_difficulty_auc": 0.72,
+  "S2_residual_minus_deploy_difficulty": 0.09,
+  "residual_cascade_LIE/MIST/RES": [
+    0.325,
+    0.037,
+    0.174
+  ],
+  "DEPLOY_difficulty_cascade_LIE/MIST/RES(no_probe)": [
+    0.125,
+    0.062,
+    0.043
+  ],
+  "residual_LIE_minus_deploydiff_LIE": 0.2,
+  "residual_beats_noprobe_deployer": true
+}

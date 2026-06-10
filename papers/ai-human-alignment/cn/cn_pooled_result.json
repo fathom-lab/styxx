@@ -1,0 +1,21 @@
+{
+  "n_subjects": 3,
+  "n_concepts": 671,
+  "n_voxels_selected": 10000,
+  "noise_ceiling": [
+    0.035,
+    0.545
+  ],
+  "within_subject_reliability": 0.06,
+  "partial_lexical_RSA": {
+    "GloVe(shallow)": 0.002,
+    "GPT2": 0.004,
+    "BERT": 0.0,
+    "deep-consensus": 0.002,
+    "ResNet(vis)": 0.0,
+    "ViT(vis)": -0.0
+  },
+  "deep_unique_pct": 0.0,
+  "glove_unique_pct": 0.0,
+  "verdict": "STILL TOO NOISY: noise ceiling 0.035, best predictor 0.004. The pooled brain RDM does not carry enough semantic signal to test the deflation. Need more subjects or a semantic ROI. Not a result."
+}
