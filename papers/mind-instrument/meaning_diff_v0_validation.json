@@ -1,0 +1,43 @@
+{
+  "validation": "styxx.meaning_diff v0 (PREREG_meaning_diff_v0_2026_06_10.md)",
+  "module_sha256": "07a7a262bc481b94dfaec094032d78ae6e8fc7aea6216017dd0a72c1232e1b4f",
+  "gates": [
+    {
+      "gate": "D1 apparatus equivalence",
+      "n_pairs": 45,
+      "max_rdm_abs_diff_vs_distmat": 0.0,
+      "mismatches": [],
+      "pass": true
+    },
+    {
+      "gate": "D2 divergence sanity",
+      "self_divergence_count": 0,
+      "full": 0.9146,
+      "subset": 0.9078,
+      "pass": true
+    },
+    {
+      "gate": "D3 verdict monotonicity",
+      "self": 1.0,
+      "shuffled_verdict": "BROKEN",
+      "mid_agreement": 0.9146,
+      "mid_verdict": "HEALTHY",
+      "pass": true
+    },
+    {
+      "gate": "D4 reliability wiring",
+      "anatomy_v2_receipt_value": 0.9411,
+      "synthetic_reliability": 1.0,
+      "no_template_reliability": null,
+      "pass": true
+    },
+    {
+      "gate": "D5 determinism + core-wheel",
+      "identical": true,
+      "torch_in_sys_modules_after_import": false,
+      "pass": true
+    }
+  ],
+  "verdict": "ALL-GATES-PASS",
+  "elapsed_s": 0.78
+}

@@ -367,6 +367,7 @@ from .meaning_integrity import (  # 7.11.0: machine-side meaning-integrity monit
     meaning_alignment, meaning_dispersion, per_concept_alignment, meaning_integrity_report,
     meaning_agreement,  # 7.12.0: reference-free cross-model meaning comparison (migration/distillation/quant QA)
 )
+from . import meaning_diff  # noqa: F401  # 7.15.0: the meaning-regression instrument (norm-equalized agreement + verdict + named divergent concepts + reliability flag); call styxx.meaning_diff.meaning_diff(a, b)
 
 # 7.4.2: install-time diagnostic accessible programmatically (the
 # `styxx doctor` CLI subcommand was the only entry point until now).
