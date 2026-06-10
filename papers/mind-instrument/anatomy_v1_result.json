@@ -1,0 +1,24 @@
+{
+  "experiment": "Anatomy v1 - disattenuation (idiosyncrasy vs range-artifact)",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v1_disattenuation_2026_06_10.md",
+  "verdict": "VOID-APPARATUS",
+  "diagnosis": {
+    "finding": "split-half template reliability is NOT a coherent reliability for this apparatus: the unweighted template average is norm-dominated by the bare {w} template, so any half CONTAINING it reproduces the full geometry and any half WITHOUT it measures a different object.",
+    "evidence_qwen25_3b": {
+      "within_mind_halfA_vs_halfB_raw": 0.1847,
+      "composed_halves_vs_stored_full_raw": 1.0,
+      "halfA_with_bare_vs_stored_full_raw": 0.9999,
+      "halfB_no_bare_vs_stored_full_raw": 0.1942,
+      "mean_row_norm_halfA": 531.6,
+      "mean_row_norm_halfB": 80.8
+    },
+    "consequence": "reliability<validity paradox resolved as apparatus artifact; disattenuation undefined; v1 gates cannot be evaluated. Deeper: the validated template-averaging convention (anchors npz, Atlas v0, anatomy v0) measures a bare-word-dominated geometry - interpretation, not values, affected. v2 (norm-equalized averaging) is the corrective test."
+  },
+  "both_template_splits_tried": [
+    "first4/last4 (original freeze)",
+    "odd/even (disclosed amendment)"
+  ],
+  "smoke_receipts": [
+    "anatomy_v1_result_SMOKE_INVALID.json"
+  ]
+}

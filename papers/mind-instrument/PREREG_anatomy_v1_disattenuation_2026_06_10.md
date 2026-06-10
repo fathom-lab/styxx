@@ -15,9 +15,14 @@ reliability-corrected (disattenuated) convergence.
 ## Apparatus (frozen)
 
 - Reps: per-mind, per-domain sub-RDMs at the frozen 0.66-layer convention, frozen battery, computed
-  from SPLIT TEMPLATE HALVES — half A = templates 1–4, half B = templates 5–8 of the frozen list
-  (order as in `styxx.mind.TEMPLATES`). All 10 Atlas minds (6 anchors recomputed live for halves;
-  4 independent subjects).
+  from SPLIT TEMPLATE HALVES — half A = odd-indexed, half B = even-indexed templates of the frozen
+  list (order as in `styxx.mind.TEMPLATES`). All 10 Atlas minds (6 anchors recomputed live for
+  halves; 4 independent subjects).
+  *[Disclosed pre-scoring amendment: the original freeze split first-4 vs last-4; the SMOKE run
+  exposed that split as confounded with template style (bare forms vs full sentences), yielding
+  battery reliabilities BELOW between-mind convergence — psychometrically incoherent. Amended to
+  odd/even interleave BEFORE any scored run; smoke receipts kept as *_SMOKE_INVALID. Bars, floors,
+  branch definitions unchanged.]*
 - **Reliability** of mind m on domain c: partial-lexical correlation between m's half-A and half-B
   sub-RDMs, Spearman–Brown corrected to full length: `rel = 2r/(1+r)` (halves average 4 templates;
   the full measure averages 8). Negative r floors to rel = 0.
