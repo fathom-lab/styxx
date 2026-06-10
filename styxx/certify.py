@@ -84,6 +84,9 @@ def extract_numbers(text: str) -> list[dict]:
 # covers ~80% of all 2-decimal values in [0,1], so any corrupted doc number "verifies" by coincidence
 # (the D1 failure mode of the v0 validation). Claims must ground in SUMMARY fields; a doc citing an
 # individual row value lands in ABSTAIN (honest) unless the row path is explicitly allowed.
+# v0.2: the rule applies to LIST nodes only — a SCALAR summary field that happens to share a bulk
+# name (e.g. claim_totals.UNGROUNDED) is claimable truth and must ground (caught dogfooding the
+# corpus attestation: its own headline counts failed to verify under v0.1).
 _BULK_PATHS = re.compile(r"\b(rows|tier2_rows|ledger|abstained|ungrounded|ramp\w*|charfw\w*|cells)\b\[",
                          re.I)
 
@@ -93,8 +96,6 @@ def receipt_values(obj, prefix="", include_bulk: bool = False) -> list[tuple[str
     excluded by default (see _BULK_PATHS)."""
     vals: list[tuple[str, float]] = []
     if isinstance(obj, bool):
-        return vals
-    if not include_bulk and _BULK_PATHS.search(prefix + "["):
         return vals
     if isinstance(obj, (int, float)):
         return [(prefix or "$", float(obj))]

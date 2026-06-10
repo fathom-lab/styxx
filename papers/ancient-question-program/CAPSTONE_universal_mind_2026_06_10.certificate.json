@@ -1,0 +1,470 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "CAPSTONE_universal_mind_2026_06_10.md",
+  "document_sha256": "ae413b449c2e37fc7ab3e1b969942be57186c57d9d19bd9bb77ff1a1fae2967d",
+  "receipts_sha256": {
+    "disjoint_worlds_rsa_result.json": "72f4f5826430504e8c2891d62d05f5eb8690c5bbef58a2351e1c1d3101e71bf1",
+    "real_convergence_confirm_result.json": "43e4a5e3c7e320200cfd2165ec88dcf165f0304fa24cfbd9fc5fc9797d4fa2b1",
+    "necessity_attention_result.json": "bb76b600e392b0d9bfd6cbca892d38b3f522509ac192aba2000c0e8ca7712026",
+    "ai_human_result.json": "dd5ec419b308eb21bd64ebfe1bf4fe9d8095ba26ef8cb15de5483aef5a1c0328",
+    "ai_brain_result.json": "88631ed6f5155b74441ce52a7fa9ad06a093dcdeb0687bd8f842b10bb014efaa",
+    "ai_brain_vision_result.json": "71dc50c80a9a9f594adbe3ea1df621f248a2b2b712956b6b1945be39b3b95389",
+    "human_feature_result.json": "229393aa7e0eb0ce096ed5417bf9dd926d565a3f38e6c95260007d68fd3b7552",
+    "cn_pooled_result.json": "aff477f9018b99d5aad742394a7bfb2814954d2a6d2038a79c5820a233beaddb",
+    "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
+    "mind_v0_validation.json": "27d3b81e6e3b181dd12bd97d13e38793d63cb3f8464e14b0059abaaefb3fbd89",
+    "oath_corpus_attestation.json": "72889ca3bc94e2d90b5325000d6fe4c400003cb525b545358aa96c5db76a86dd"
+  },
+  "verifier_sha256": "8ddd143c14097943470699bdbff4816e0fea7d309b2d414866680ec8a5d10274",
+  "counts": {
+    "VERIFIED": 43,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 42,
+      "token": "1854"
+    },
+    {
+      "line": 54,
+      "token": "54"
+    },
+    {
+      "line": 56,
+      "token": "672"
+    },
+    {
+      "line": 59,
+      "token": "1.0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "2,500",
+      "value": 2500.0,
+      "decimals": 0,
+      "context": "# The Universal Structure of Mind \u2014 capstone of the 2,500-year program",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
+    },
+    {
+      "line": 23,
+      "token": "0.43",
+      "value": 0.43,
+      "decimals": 2,
+      "context": "hidden relational structure of their world \u2014 grow the same geometry: same-structure RSA 0.43 / 0.41 /",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.0.same_rsa"
+    },
+    {
+      "line": 23,
+      "token": "0.41",
+      "value": 0.41,
+      "decimals": 2,
+      "context": "hidden relational structure of their world \u2014 grow the same geometry: same-structure RSA 0.43 / 0.41 /",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.1.same_rsa"
+    },
+    {
+      "line": 24,
+      "token": "0.41",
+      "value": 0.41,
+      "decimals": 2,
+      "context": "0.41 across seeds vs structure-broken controls of -0.01 / 0.02 / -0.02",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.1.same_rsa"
+    },
+    {
+      "line": 24,
+      "token": "-0.01",
+      "value": -0.01,
+      "decimals": 2,
+      "context": "0.41 across seeds vs structure-broken controls of -0.01 / 0.02 / -0.02",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.0.control_rsa"
+    },
+    {
+      "line": 24,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "0.41 across seeds vs structure-broken controls of -0.01 / 0.02 / -0.02",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.1.control_rsa"
+    },
+    {
+      "line": 24,
+      "token": "-0.02",
+      "value": -0.02,
+      "decimals": 2,
+      "context": "0.41 across seeds vs structure-broken controls of -0.01 / 0.02 / -0.02",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.2.control_rsa"
+    },
+    {
+      "line": 27,
+      "token": "0.258",
+      "value": 0.258,
+      "decimals": 3,
+      "context": "partial-lexical RSA 0.258 against a shuffled control of -0.002, with an independent embedder anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:xfam_partial_lex"
+    },
+    {
+      "line": 27,
+      "token": "-0.002",
+      "value": -0.002,
+      "decimals": 3,
+      "context": "partial-lexical RSA 0.258 against a shuffled control of -0.002, with an independent embedder anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:control_mean"
+    },
+    {
+      "line": 28,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "at 0.36 (`papers/real-convergence/real_convergence_confirm_result.json`). Direction universal,",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:minilm_anchor_partial_lex"
+    },
+    {
+      "line": 34,
+      "token": "6.0",
+      "value": 6.0,
+      "decimals": 1,
+      "context": "mean k of 6.0 vs 2.67 phase-clamped. But a rhythm-free transformer at matched parameters reaches",
+      "status": "VERIFIED",
+      "receipt_ref": "necessity_attention_result.json:arms.lru_free.kcaps[0]"
+    },
+    {
+      "line": 34,
+      "token": "2.67",
+      "value": 2.67,
+      "decimals": 2,
+      "context": "mean k of 6.0 vs 2.67 phase-clamped. But a rhythm-free transformer at matched parameters reaches",
+      "status": "VERIFIED",
+      "receipt_ref": "necessity_attention_result.json:arms.lru_clamped.mean_kcap"
+    },
+    {
+      "line": 35,
+      "token": "15.3",
+      "value": 15.3,
+      "decimals": 1,
+      "context": "15.3 on the same task (`papers/frequency-resonance/necessity_attention_result.json`) \u2014 attention does",
+      "status": "VERIFIED",
+      "receipt_ref": "necessity_attention_result.json:arms.transformer.mean_kcap"
+    },
+    {
+      "line": 36,
+      "token": "2,500",
+      "value": 2500.0,
+      "decimals": 0,
+      "context": "ordered memory better with no clock at all. The 2,500-year intuition survives only as engineering:",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
+    },
+    {
+      "line": 42,
+      "token": "1854",
+      "value": 1854.0,
+      "decimals": 0,
+      "context": "- **Behavior:** instruction-tuned LLMs align with the human meaning space (1854-object VICE embedding)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "at a mean of 0.65 against shuffled controls of 0.0",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H1.mean_human_align_instruct"
+    },
+    {
+      "line": 43,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "at a mean of 0.65 against shuffled controls of 0.0",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:config.tau"
+    },
+    {
+      "line": 45,
+      "token": "0.688",
+      "value": 0.688,
+      "decimals": 3,
+      "context": "consensus alignment 0.688 vs a median individual model at 0.7 \u2014 the \"consensus IS human\" leap",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H3.consensus_human_align"
+    },
+    {
+      "line": 45,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "consensus alignment 0.688 vs a median individual model at 0.7 \u2014 the \"consensus IS human\" leap",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:per_model.Qwen-1.5B.human_align"
+    },
+    {
+      "line": 47,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "- **Brain:** against 60-noun fMRI geometry, the best LLM reaches RSA 0.264 with a shuffle control of",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:n_nouns"
+    },
+    {
+      "line": 47,
+      "token": "0.264",
+      "value": 0.264,
+      "decimals": 3,
+      "context": "- **Brain:** against 60-noun fMRI geometry, the best LLM reaches RSA 0.264 with a shuffle control of",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gpt2-large.brain"
+    },
+    {
+      "line": 48,
+      "token": "0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "0.002, against a noise-ceiling floor of 0.39 (`papers/ai-human-alignment/ai_brain_result.json`) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:pairs[4].raw"
+    },
+    {
+      "line": 48,
+      "token": "0.39",
+      "value": 0.39,
+      "decimals": 2,
+      "context": "0.002, against a noise-ceiling floor of 0.39 (`papers/ai-human-alignment/ai_brain_result.json`) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:noise_ceiling[0]"
+    },
+    {
+      "line": 50,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "0.247: a small language model sits in the same band as a million human judgments.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:vice_brain"
+    },
+    {
+      "line": 52,
+      "token": "0.182",
+      "value": 0.182,
+      "decimals": 3,
+      "context": "0.182 (lexical-controlled) to 0.107 with CLIP-image partialled out",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:pairs[6].raw"
+    },
+    {
+      "line": 52,
+      "token": "0.107",
+      "value": 0.107,
+      "decimals": 3,
+      "context": "0.182 (lexical-controlled) to 0.107 with CLIP-image partialled out",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision"
+    },
+    {
+      "line": 54,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "- **Depth captures the human-rated structure of meaning:** against 54 human-rated semantic features",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "671",
+      "value": 671.0,
+      "decimals": 0,
+      "context": "(671 Chinese words scored, `papers/ai-human-alignment/cn/cn_pooled_result.json`; this document",
+      "status": "VERIFIED",
+      "receipt_ref": "cn_pooled_result.json:n_concepts"
+    },
+    {
+      "line": 56,
+      "token": "672",
+      "value": 672.0,
+      "decimals": 0,
+      "context": "originally printed the dataset's nominal 672 \u2014 caught by OATH before commit), deep contextual",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "0.466",
+      "value": 0.466,
+      "decimals": 3,
+      "context": "representations score 0.466 vs 0.379 for shallow",
+      "status": "VERIFIED",
+      "receipt_ref": "human_feature_result.json:full.deep"
+    },
+    {
+      "line": 57,
+      "token": "0.379",
+      "value": 0.379,
+      "decimals": 3,
+      "context": "representations score 0.466 vs 0.379 for shallow",
+      "status": "VERIFIED",
+      "receipt_ref": "human_feature_result.json:full.scores.GloVe"
+    },
+    {
+      "line": 58,
+      "token": "0.478",
+      "value": 0.478,
+      "decimals": 3,
+      "context": "co-occurrence; the advantage GROWS under dimension matching (0.478 vs 0.379) and holds at",
+      "status": "VERIFIED",
+      "receipt_ref": "human_feature_result.json:matched.deep"
+    },
+    {
+      "line": 58,
+      "token": "0.379",
+      "value": 0.379,
+      "decimals": 3,
+      "context": "co-occurrence; the advantage GROWS under dimension matching (0.478 vs 0.379) and holds at",
+      "status": "VERIFIED",
+      "receipt_ref": "human_feature_result.json:full.scores.GloVe"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "bootstrap P = 1.0 (`papers/ai-human-alignment/cn/human_feature_result.json`). Depth's edge lives",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 66,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "verbal tell \u2014 text-only sycophancy detection collapses to chance: AUC 0.5, exactly. The label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:per_seed.0.faithful_E_to_z"
+    },
+    {
+      "line": 67,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "behavioral score (stability x concordance of resampled belief) detects the same caves at AUC 1.0,",
+      "status": "VERIFIED",
+      "receipt_ref": "disjoint_worlds_rsa_result.json:config.N"
+    },
+    {
+      "line": 68,
+      "token": "0.487",
+      "value": 0.487,
+      "decimals": 3,
+      "context": "margin 0.487 over the best text axis, on 72 caved / 37 held items",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:H_kill_margin_over_best_text"
+    },
+    {
+      "line": 68,
+      "token": "72",
+      "value": 72.0,
+      "decimals": 0,
+      "context": "margin 0.487 over the best text axis, on 72 caved / 37 held items",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_caved"
+    },
+    {
+      "line": 68,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "margin 0.487 over the best text axis, on 72 caved / 37 held items",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:n_held"
+    },
+    {
+      "line": 89,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "ALL-GATES-PASS, 5 gates). Its demarcation registry is the point: rhythm, geometry-drift manipulation",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:phi_human_rank"
+    },
+    {
+      "line": 94,
+      "token": "133",
+      "value": 133.0,
+      "decimals": 0,
+      "context": "(`papers/closed-model-frontier/oath_corpus_attestation.json`) put 133 finding documents under",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:n_docs"
+    },
+    {
+      "line": 95,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:n_certified"
+    },
+    {
+      "line": 95,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "status": "VERIFIED",
+      "receipt_ref": "necessity_attention_result.json:arms.lru_free.kcaps[0]"
+    },
+    {
+      "line": 95,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:n_oath_failed"
+    },
+    {
+      "line": 95,
+      "token": "523",
+      "value": 523.0,
+      "decimals": 0,
+      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:claim_totals.UNGROUNDED"
+    },
+    {
+      "line": 95,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "`styxx.certify` \u2014 88 certified, 6 fully OATH-HELD, 82 carrying 523 ungrounded numeric claims, 45",
+      "status": "VERIFIED",
+      "receipt_ref": "human_feature_result.json:matched.scores.BERT"
+    },
+    {
+      "line": 105,
+      "token": "2,500",
+      "value": 2500.0,
+      "decimals": 0,
+      "context": "2,500 years of asking taught: the question was never \"is the universe made of mind?\" \u2014 it was",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_corpus_attestation.json:oath_failed_docs[25].counts.ABSTAIN"
+    }
+  ]
+}

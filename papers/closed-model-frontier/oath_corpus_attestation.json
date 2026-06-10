@@ -2,7 +2,7 @@
   "attestation": "styxx OATH v0 corpus attestation (every finding doc under oath)",
   "date": "2026-06-10",
   "verifier": "styxx.certify",
-  "verifier_sha256": "fa8a881601050da412a4d8c7b704c34d6624eac10b0bd7a7c01f30e14ff77315",
+  "verifier_sha256": "8ddd143c14097943470699bdbff4816e0fea7d309b2d414866680ec8a5d10274",
   "runner_sha256": "56dfc94be206e7f88ee1e1bf141d60694be8cae66a1ead9fc61f7250b6a08a38",
   "n_docs": 133,
   "n_certified": 88,
