@@ -1,0 +1,326 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_anatomy_v2_2026_06_10.md",
+  "document_sha256": "6fbdde30bc8ab2a93960db4e78eb936f7dda64b0047d218cf676917c096ed8da",
+  "receipts_sha256": {
+    "anatomy_v2_result.json": "711126cc7579da853a1648fbb20747f1eafd17cc3e70ff5ecdb34f28e40b8a1e",
+    "anatomy_v0_result.json": "ee32e9e5e704c0900d81fae0370f4a7ff3c769eff1c23b93eb4b89765000fe92",
+    "anatomy_v1_result.json": "3bda4620dd46ee03af2af5a979d2cb519d6714543ebe287213d18e5ccccd0f4e",
+    "real_convergence_confirm_result.json": "43e4a5e3c7e320200cfd2165ec88dcf165f0304fa24cfbd9fc5fc9797d4fa2b1"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 26,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "0.9411"
+    },
+    {
+      "line": 40,
+      "token": "0.75"
+    },
+    {
+      "line": 40,
+      "token": "0.60"
+    },
+    {
+      "line": 40,
+      "token": "0.0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "531.6",
+      "value": 531.6,
+      "decimals": 1,
+      "context": "contextual template's (row norms 531.6 vs 80.8, Qwen2.5-3B receipt `anatomy_v1_result.json`), so the",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v1_result.json:diagnosis.evidence_qwen25_3b.mean_row_norm_halfA"
+    },
+    {
+      "line": 11,
+      "token": "80.8",
+      "value": 80.8,
+      "decimals": 1,
+      "context": "contextual template's (row norms 531.6 vs 80.8, Qwen2.5-3B receipt `anatomy_v1_result.json`), so the",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v1_result.json:diagnosis.evidence_qwen25_3b.mean_row_norm_halfB"
+    },
+    {
+      "line": 15,
+      "token": "0.291",
+      "value": 0.291,
+      "decimals": 3,
+      "context": "**The fix heals the instrument**: Qwen2.5-3B's split-half battery reliability rises from 0.291",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:G3_baseline_old_convention"
+    },
+    {
+      "line": 16,
+      "token": "0.9411",
+      "value": 0.9411,
+      "decimals": 4,
+      "context": "(old convention) to **0.9411** (gate G3 passed). And under the healed instrument, the measured",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0.4117",
+      "value": 0.4117,
+      "decimals": 4,
+      "context": "| body | 0.4117 | 0.8521 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | body | 0.4117 | 0.8521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.body"
+    },
+    {
+      "line": 21,
+      "token": "0.8521",
+      "value": 0.8521,
+      "decimals": 4,
+      "context": "| body | 0.4117 | 0.8521 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | body | 0.4117 | 0.8521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.body"
+    },
+    {
+      "line": 22,
+      "token": "0.4174",
+      "value": 0.4174,
+      "decimals": 4,
+      "context": "| vehicle | 0.4174 | 0.8448 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | vehicle | 0.4174 | 0.8448 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.vehicle"
+    },
+    {
+      "line": 22,
+      "token": "0.8448",
+      "value": 0.8448,
+      "decimals": 4,
+      "context": "| vehicle | 0.4174 | 0.8448 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | vehicle | 0.4174 | 0.8448 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.vehicle"
+    },
+    {
+      "line": 23,
+      "token": "0.3667",
+      "value": 0.3667,
+      "decimals": 4,
+      "context": "| animal | 0.3667 | 0.7949 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | animal | 0.3667 | 0.7949 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.animal"
+    },
+    {
+      "line": 23,
+      "token": "0.7949",
+      "value": 0.7949,
+      "decimals": 4,
+      "context": "| animal | 0.3667 | 0.7949 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | animal | 0.3667 | 0.7949 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.animal"
+    },
+    {
+      "line": 24,
+      "token": "0.384",
+      "value": 0.384,
+      "decimals": 3,
+      "context": "| weather | 0.384 | 0.7743 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | weather | 0.384 | 0.7743 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.weather"
+    },
+    {
+      "line": 24,
+      "token": "0.7743",
+      "value": 0.7743,
+      "decimals": 4,
+      "context": "| weather | 0.384 | 0.7743 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | weather | 0.384 | 0.7743 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.weather"
+    },
+    {
+      "line": 25,
+      "token": "0.0594",
+      "value": 0.0594,
+      "decimals": 4,
+      "context": "| profession | 0.0594 | 0.7093 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | profession | 0.0594 | 0.7093 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.profession"
+    },
+    {
+      "line": 25,
+      "token": "0.7093",
+      "value": 0.7093,
+      "decimals": 4,
+      "context": "| profession | 0.0594 | 0.7093 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | profession | 0.0594 | 0.7093 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.profession"
+    },
+    {
+      "line": 26,
+      "token": "0.4716",
+      "value": 0.4716,
+      "decimals": 4,
+      "context": "| instrument | 0.4716 | 0.6604 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | instrument | 0.4716 | 0.6604 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.instrument"
+    },
+    {
+      "line": 26,
+      "token": "0.6604",
+      "value": 0.6604,
+      "decimals": 4,
+      "context": "| instrument | 0.4716 | 0.6604 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | instrument | 0.4716 | 0.6604 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.instrument"
+    },
+    {
+      "line": 27,
+      "token": "0.2874",
+      "value": 0.2874,
+      "decimals": 4,
+      "context": "| fruit | 0.2874 | 0.6413 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | fruit | 0.2874 | 0.6413 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.fruit"
+    },
+    {
+      "line": 27,
+      "token": "0.6413",
+      "value": 0.6413,
+      "decimals": 4,
+      "context": "| fruit | 0.2874 | 0.6413 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | fruit | 0.2874 | 0.6413 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.fruit"
+    },
+    {
+      "line": 28,
+      "token": "0.0116",
+      "value": 0.0116,
+      "decimals": 4,
+      "context": "| furniture | 0.0116 | 0.6139 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | furniture | 0.0116 | 0.6139 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.furniture"
+    },
+    {
+      "line": 28,
+      "token": "0.6139",
+      "value": 0.6139,
+      "decimals": 4,
+      "context": "| furniture | 0.0116 | 0.6139 |",
+      "binding_context": "| domain | v0 (norm-dominated) | v2 (norm-equalized) | | furniture | 0.0116 | 0.6139 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.furniture"
+    },
+    {
+      "line": 33,
+      "token": "0.61",
+      "value": 0.61,
+      "decimals": 2,
+      "context": "meaning geometry at 0.61\u20130.85 across every domain tested.** The published template-averaging",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.furniture"
+    },
+    {
+      "line": 40,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:G1_kendall_W"
+    },
+    {
+      "line": 40,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "10000",
+      "value": 10000.0,
+      "decimals": 0,
+      "context": "measured: Kendall's W = **0.875** (v0: 0.75; bar 0.60), permutation p = 0.0 (10000 draws). The",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:n_perm"
+    },
+    {
+      "line": 46,
+      "token": "0.7093",
+      "value": 0.7093,
+      "decimals": 4,
+      "context": "artifact speaking. Under the healed apparatus professions converge at 0.7093 and furniture at",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.profession"
+    },
+    {
+      "line": 47,
+      "token": "0.6139",
+      "value": 0.6139,
+      "decimals": 4,
+      "context": "0.6139: not idiosyncratic, merely at the bottom of a gentle gradient on a high floor. The v0 map's",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:mean_anatomy_normeq.furniture"
+    },
+    {
+      "line": 48,
+      "token": "0.5476",
+      "value": 0.5476,
+      "decimals": 4,
+      "context": "ordering correlates with the corrected map at only Spearman 0.5476 (G2): the bare-word component",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v2_result.json:G2_spearman_v0_v2_map"
+    },
+    {
+      "line": 55,
+      "token": "0.258",
+      "value": 0.258,
+      "decimals": 3,
+      "context": "Convention-bound values measured under the old averaging (real-convergence confirm xfam 0.258, the",
+      "status": "VERIFIED",
+      "receipt_ref": "real_convergence_confirm_result.json:xfam_partial_lex"
+    }
+  ]
+}

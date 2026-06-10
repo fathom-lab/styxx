@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "ATLAS_OF_MINDS_v0.md",
-  "document_sha256": "b9696ea90101182c2cc6d659ff7d5755a8be323433bb694f9a04f8228672581d",
+  "document_sha256": "9be24eeca2ec92b64ba96e301b8635c0d17d83fc81d609e205e5c81582646a5b",
   "receipts_sha256": {
     "atlas_v0_result.json": "c99f3bd1f9e038c08f50cc3505d3053c9993a4de69f19db98f5705b44e48f723",
     "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",

@@ -51,7 +51,11 @@ own frozen runs — **no receipt, no row**; the instrument does not guess.
 
 v0 is a seed, not a survey: one battery, one layer convention, anchor entries are not independent of
 anchor-set construction (the out-of-anchor rows are the evidential core), and conduct coverage is one
-model in one regime. The frontier conduct entry (claude-fable-5, B23-F) lands when its pre-registered
+model in one regime. **Convention caveat (added same day):** the citizenship values above are
+measured under the unweighted template-averaging convention, later shown to be dominated by the
+bare-template's outsized norms (`anatomy_v1_result.json` diagnosis; corrected apparatus and the much
+higher true convergence in `FINDING_anatomy_v2_2026_06_10.md`). The ranking is convention-bound;
+Atlas v1 under norm-equalized measurement is the successor rung. The frontier conduct entry (claude-fable-5, B23-F) lands when its pre-registered
 run completes. The refusal registry travels with every certificate: rhythm, geometry-drift
 manipulation detection, and consciousness are REFUSED axes, with the receipts of the experiments
 that killed or bounded them.

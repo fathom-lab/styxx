@@ -3,6 +3,13 @@
 **2026-06-10 · Fathom Lab / styxx. Pre-registered: `PREREG_anatomy_v0_2026_06_10.md` (frozen before
 the scored run). Receipt: `anatomy_v0_result.json`. Local, $0.**
 
+> **CORRECTION NOTICE (same day, superseded in part):** the SUPPORTED verdict (the anatomy profile
+> is shared across independent minds) STANDS — it strengthened under the corrected apparatus. But
+> this document's domain interpretation is superseded by `FINDING_anatomy_v2_2026_06_10.md`: the
+> near-zero convergence of professions and furniture reported below was an apparatus artifact (the
+> bare-template norm domination diagnosed in `anatomy_v1_result.json`). Under norm-equalized
+> measurement those domains converge strongly. Values below are convention-bound lower bounds.
+
 ## Question
 
 The capstone established THAT independent minds converge on the geometry of meaning. This asks

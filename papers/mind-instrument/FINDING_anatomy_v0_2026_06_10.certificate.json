@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_anatomy_v0_2026_06_10.md",
-  "document_sha256": "4fde506f1497dbd05182c8a74d806d4637bda71f48e248268b669ca5150441aa",
+  "document_sha256": "ce12902cbc02a69e91de44487431d403e5ad914983d816f91a31e4847196100b",
   "receipts_sha256": {
     "anatomy_v0_result.json": "ee32e9e5e704c0900d81fae0370f4a7ff3c769eff1c23b93eb4b89765000fe92"
   },
@@ -16,25 +16,25 @@
   "ungrounded": [],
   "abstained": [
     {
-      "line": 16,
+      "line": 23,
       "token": "0.75"
     },
     {
-      "line": 16,
+      "line": 23,
       "token": "0.60"
     },
     {
-      "line": 17,
+      "line": 24,
       "token": "0.0"
     },
     {
-      "line": 18,
+      "line": 25,
       "token": "0.5639"
     }
   ],
   "ledger": [
     {
-      "line": 16,
+      "line": 23,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -43,7 +43,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 16,
+      "line": 23,
       "token": "0.60",
       "value": 0.6,
       "decimals": 2,
@@ -52,7 +52,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 17,
+      "line": 24,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -61,7 +61,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 17,
+      "line": 24,
       "token": "10000",
       "value": 10000.0,
       "decimals": 0,
@@ -70,7 +70,7 @@
       "receipt_ref": "anatomy_v0_result.json:n_perm"
     },
     {
-      "line": 17,
+      "line": 24,
       "token": "0.4585",
       "value": 0.4585,
       "decimals": 4,
@@ -79,7 +79,7 @@
       "receipt_ref": "anatomy_v0_result.json:perm_null_p95"
     },
     {
-      "line": 18,
+      "line": 25,
       "token": "0.5639",
       "value": 0.5639,
       "decimals": 4,
@@ -88,7 +88,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 20,
+      "line": 27,
       "token": "0.7831",
       "value": 0.7831,
       "decimals": 4,
@@ -97,7 +97,7 @@
       "receipt_ref": "anatomy_v0_result.json:kendall_W_anchors_reference"
     },
     {
-      "line": 22,
+      "line": 29,
       "token": "0.3052",
       "value": 0.3052,
       "decimals": 4,
@@ -106,7 +106,7 @@
       "receipt_ref": "anatomy_v0_result.json:validity_control.gpt2_recomputed"
     },
     {
-      "line": 29,
+      "line": 36,
       "token": "0.4716",
       "value": 0.4716,
       "decimals": 4,
@@ -116,7 +116,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.instrument"
     },
     {
-      "line": 30,
+      "line": 37,
       "token": "0.4174",
       "value": 0.4174,
       "decimals": 4,
@@ -126,7 +126,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.vehicle"
     },
     {
-      "line": 31,
+      "line": 38,
       "token": "0.4117",
       "value": 0.4117,
       "decimals": 4,
@@ -136,7 +136,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.body"
     },
     {
-      "line": 32,
+      "line": 39,
       "token": "0.384",
       "value": 0.384,
       "decimals": 3,
@@ -146,7 +146,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.weather"
     },
     {
-      "line": 33,
+      "line": 40,
       "token": "0.3667",
       "value": 0.3667,
       "decimals": 4,
@@ -156,7 +156,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.animal"
     },
     {
-      "line": 34,
+      "line": 41,
       "token": "0.2874",
       "value": 0.2874,
       "decimals": 4,
@@ -166,7 +166,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.fruit"
     },
     {
-      "line": 35,
+      "line": 42,
       "token": "0.0594",
       "value": 0.0594,
       "decimals": 4,
@@ -176,7 +176,7 @@
       "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.profession"
     },
     {
-      "line": 36,
+      "line": 43,
       "token": "0.0116",
       "value": 0.0116,
       "decimals": 4,
