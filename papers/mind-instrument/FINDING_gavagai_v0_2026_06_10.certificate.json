@@ -1,0 +1,185 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_gavagai_v0_2026_06_10.md",
+  "document_sha256": "ab724d4515351b5cc68a6dec52918232e5907bddf976fb15c7978631d228e70d",
+  "receipts_sha256": {
+    "gavagai_v0_result.json": "55e82c06c8560eb1557ecde378137df6daf6af3913cd9ce5bf9843c484dcb391"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 11,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "96"
+    },
+    {
+      "line": 23,
+      "token": "0.125"
+    },
+    {
+      "line": 23,
+      "token": "0.25"
+    },
+    {
+      "line": 44,
+      "token": "96"
+    },
+    {
+      "line": 44,
+      "token": "8"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 14,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Hungarian assignment, mapped-RDM refinement. The foreign mind's 96 battery concepts are presented",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.1661",
+      "value": 0.1661,
+      "decimals": 4,
+      "context": "- **G1 PASSED \u2014 translation exists.** Mean cross-family concept-identification accuracy 0.1661",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:mean_xfam_concept_accuracy_normeq"
+    },
+    {
+      "line": 20,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "against chance 0.0104 (sixteen times chance; frozen bar: ten times) and an identity-decoupled",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:chance_concept"
+    },
+    {
+      "line": 21,
+      "token": "0.0312",
+      "value": 0.0312,
+      "decimals": 4,
+      "context": "null whose 95th percentile is 0.0312 (100 runs). Self-pair pipeline control: 1.0.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[1].acc_old"
+    },
+    {
+      "line": 21,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "null whose 95th percentile is 0.0312 (100 runs). Self-pair pipeline control: 1.0.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:self_pair_control"
+    },
+    {
+      "line": 22,
+      "token": "0.3826",
+      "value": 0.3826,
+      "decimals": 4,
+      "context": "- **G3 PASSED \u2014 kind-translation is stronger.** Mean cross-family category accuracy 0.3826 against",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:mean_xfam_category_accuracy_normeq"
+    },
+    {
+      "line": 23,
+      "token": "0.125",
+      "value": 0.125,
+      "decimals": 3,
+      "context": "chance 0.125 (bar 0.25).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "chance 0.125 (bar 0.25).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.385",
+      "value": 0.385,
+      "decimals": 3,
+      "context": "- **Range:** best cross-family pairs translate far above the mean \u2014 Llama-3.2-3B\u2192gemma-2-2b 0.385,",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[2].cat_normeq"
+    },
+    {
+      "line": 25,
+      "token": "0.375",
+      "value": 0.375,
+      "decimals": 3,
+      "context": "Llama-3.2-1B\u2192gemma-2-2b 0.375, Qwen2.5-3B\u2192gemma-2-2b 0.344, and gpt2\u2192pythia-410m 0.302",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[19].acc_normeq"
+    },
+    {
+      "line": 25,
+      "token": "0.344",
+      "value": 0.344,
+      "decimals": 3,
+      "context": "Llama-3.2-1B\u2192gemma-2-2b 0.375, Qwen2.5-3B\u2192gemma-2-2b 0.344, and gpt2\u2192pythia-410m 0.302",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[3].cat_normeq"
+    },
+    {
+      "line": 25,
+      "token": "0.302",
+      "value": 0.302,
+      "decimals": 3,
+      "context": "Llama-3.2-1B\u2192gemma-2-2b 0.375, Qwen2.5-3B\u2192gemma-2-2b 0.344, and gpt2\u2192pythia-410m 0.302",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[40].acc_normeq"
+    },
+    {
+      "line": 28,
+      "token": "0.0437",
+      "value": 0.0437,
+      "decimals": 4,
+      "context": "same translator achieves only 0.0437; norm-equalization adds +0.1224 mean accuracy. The bare-word",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:mean_xfam_concept_accuracy_old"
+    },
+    {
+      "line": 28,
+      "token": "+0.1224",
+      "value": 0.1224,
+      "decimals": 4,
+      "context": "same translator achieves only 0.0437; norm-equalization adds +0.1224 mean accuracy. The bare-word",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:G2_normeq_minus_old"
+    },
+    {
+      "line": 44,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Translation is partial (one concept in six, not six in six); the battery is 96 concrete nouns in 8",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Translation is partial (one concept in six, not six in six); the battery is 96 concrete nouns in 8",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

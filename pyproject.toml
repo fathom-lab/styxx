@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "7.14.0"
+version = "7.15.0"
 description = "Cognitive observability for LLM agents. @styxx.profile decorator returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3). Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
 readme = "README.md"
 license = { text = "MIT" }

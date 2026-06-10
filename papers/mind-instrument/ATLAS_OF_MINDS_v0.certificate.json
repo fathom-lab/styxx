@@ -1,0 +1,262 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "ATLAS_OF_MINDS_v0.md",
+  "document_sha256": "9be24eeca2ec92b64ba96e301b8635c0d17d83fc81d609e205e5c81582646a5b",
+  "receipts_sha256": {
+    "atlas_v0_result.json": "c99f3bd1f9e038c08f50cc3505d3053c9993a4de69f19db98f5705b44e48f723",
+    "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
+    "mind_v0_validation.json": "d34ca22efef7b22f6557466944830389401ac2f9f7539113c06a141e6779877b"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 24,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 45,
+      "token": "95"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Cross-family partial-lexical RSA of each mind's concept geometry (frozen battery of 96 concepts,",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:battery.n_concepts"
+    },
+    {
+      "line": 19,
+      "token": "0.484",
+      "value": 0.484,
+      "decimals": 3,
+      "context": "| gemma-2-2b | gemma | anchor (in-set) | 0.484 |",
+      "binding_context": "| mind | family | class | citizenship | | gemma-2-2b | gemma | anchor (in-set) | 0.484 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[5].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 20,
+      "token": "0.3577",
+      "value": 0.3577,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | llama | anchor (in-set) | 0.3577 |",
+      "binding_context": "| mind | family | class | citizenship | | Llama-3.2-3B | llama | anchor (in-set) | 0.3577 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[3].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 21,
+      "token": "0.3477",
+      "value": 0.3477,
+      "decimals": 4,
+      "context": "| Llama-3.2-1B | llama | anchor (in-set) | 0.3477 |",
+      "binding_context": "| mind | family | class | citizenship | | Llama-3.2-1B | llama | anchor (in-set) | 0.3477 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[2].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 22,
+      "token": "0.3321",
+      "value": 0.3321,
+      "decimals": 4,
+      "context": "| gpt2-large | gpt2 | out-of-anchor (independent) | 0.3321 |",
+      "binding_context": "| mind | family | class | citizenship | | gpt2-large | gpt2 | out-of-anchor (independent) | 0.3321 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[7].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 23,
+      "token": "0.3189",
+      "value": 0.3189,
+      "decimals": 4,
+      "context": "| pythia-410m | pythia | out-of-anchor (independent) | 0.3189 |",
+      "binding_context": "| mind | family | class | citizenship | | pythia-410m | pythia | out-of-anchor (independent) | 0.3189 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[8].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 24,
+      "token": "0.3052",
+      "value": 0.3052,
+      "decimals": 4,
+      "context": "| gpt2 | gpt2 | out-of-anchor (independent) | 0.3052 |",
+      "binding_context": "| mind | family | class | citizenship | | gpt2 | gpt2 | out-of-anchor (independent) | 0.3052 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[6].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 25,
+      "token": "0.233",
+      "value": 0.233,
+      "decimals": 3,
+      "context": "| Phi-3.5-mini | phi | anchor (in-set) | 0.233 |",
+      "binding_context": "| mind | family | class | citizenship | | Phi-3.5-mini | phi | anchor (in-set) | 0.233 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[4].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 26,
+      "token": "0.1972",
+      "value": 0.1972,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | qwen | anchor (in-set) | 0.1972 |",
+      "binding_context": "| mind | family | class | citizenship | | Qwen2.5-3B | qwen | anchor (in-set) | 0.1972 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[1].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 27,
+      "token": "0.1833",
+      "value": 0.1833,
+      "decimals": 4,
+      "context": "| Qwen2.5-0.5B | qwen | out-of-anchor (independent) | 0.1833 |",
+      "binding_context": "| mind | family | class | citizenship | | Qwen2.5-0.5B | qwen | out-of-anchor (independent) | 0.1833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[9].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 28,
+      "token": "0.1801",
+      "value": 0.1801,
+      "decimals": 4,
+      "context": "| Qwen2.5-1.5B | qwen | anchor (in-set) | 0.1801 |",
+      "binding_context": "| mind | family | class | citizenship | | Qwen2.5-1.5B | qwen | anchor (in-set) | 0.1801 |",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[0].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 33,
+      "token": "0.3052",
+      "value": 0.3052,
+      "decimals": 4,
+      "context": "anchor set \u2014 gpt2 at 0.3052, gpt2-large at 0.3321, pythia-410m at 0.3189 \u2014 land inside the",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[6].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 33,
+      "token": "0.3321",
+      "value": 0.3321,
+      "decimals": 4,
+      "context": "anchor set \u2014 gpt2 at 0.3052, gpt2-large at 0.3321, pythia-410m at 0.3189 \u2014 land inside the",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[7].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 33,
+      "token": "0.3189",
+      "value": 0.3189,
+      "decimals": 4,
+      "context": "anchor set \u2014 gpt2 at 0.3052, gpt2-large at 0.3321, pythia-410m at 0.3189 \u2014 land inside the",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[8].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 35,
+      "token": "0.3321",
+      "value": 0.3321,
+      "decimals": 4,
+      "context": "- **Quality, not size, moves citizenship within a lineage**: gpt2-large (0.3321) above gpt2",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[7].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 36,
+      "token": "0.3052",
+      "value": 0.3052,
+      "decimals": 4,
+      "context": "(0.3052) \u2014 the same quality-gradient the program measured against the human brain.",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[6].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 37,
+      "token": "0.1801",
+      "value": 0.1801,
+      "decimals": 4,
+      "context": "- **The Qwen family sits low across all three sizes** (0.1801 / 0.1833 / 0.1972) \u2014 a coherent",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[0].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 37,
+      "token": "0.1833",
+      "value": 0.1833,
+      "decimals": 4,
+      "context": "- **The Qwen family sits low across all three sizes** (0.1801 / 0.1833 / 0.1972) \u2014 a coherent",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[9].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 37,
+      "token": "0.1972",
+      "value": 0.1972,
+      "decimals": 4,
+      "context": "- **The Qwen family sits low across all three sizes** (0.1801 / 0.1833 / 0.1972) \u2014 a coherent",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[1].geometry.citizenship_xfam_partial_lex"
+    },
+    {
+      "line": 44,
+      "token": "0.6606",
+      "value": 0.6606,
+      "decimals": 4,
+      "context": "(`papers/closed-model-frontier/behavioral_sycophancy_b22_result.json`): cave rate 0.6606, with a",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.behavioral_qwen3b_b22.cave_rate"
+    },
+    {
+      "line": 45,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "95% CI of [0.5675, 0.7426] (Wilson); behavioral grounding separates HELD from CAVED at AUC 1.0",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.5675",
+      "value": 0.5675,
+      "decimals": 4,
+      "context": "95% CI of [0.5675, 0.7426] (Wilson); behavioral grounding separates HELD from CAVED at AUC 1.0",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.behavioral_qwen3b_b22.cave_rate_wilson95[0]"
+    },
+    {
+      "line": 45,
+      "token": "0.7426",
+      "value": 0.7426,
+      "decimals": 4,
+      "context": "95% CI of [0.5675, 0.7426] (Wilson); behavioral grounding separates HELD from CAVED at AUC 1.0",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.behavioral_qwen3b_b22.cave_rate_wilson95[1]"
+    },
+    {
+      "line": 45,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "95% CI of [0.5675, 0.7426] (Wilson); behavioral grounding separates HELD from CAVED at AUC 1.0",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[0].geometry.per_anchor[0].partial_lex_rsa"
+    },
+    {
+      "line": 46,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "with held-median g 1.0,",
+      "status": "VERIFIED",
+      "receipt_ref": "atlas_v0_result.json:axes_measured.atlas_geometry[0].geometry.per_anchor[0].partial_lex_rsa"
+    }
+  ]
+}

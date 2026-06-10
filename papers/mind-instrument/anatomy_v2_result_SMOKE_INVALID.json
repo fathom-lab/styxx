@@ -1,0 +1,10 @@
+{
+  "experiment": "Anatomy v2 - norm-equalized apparatus",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v2_normeq_2026_06_10.md",
+  "seed": 0,
+  "n_perm": 10000,
+  "runner_sha256": "36ef8ae5080fe2df9b8833b708dbb9841db8682521625b728132e22f6dd04bf2",
+  "smoke": true,
+  "verdict": "SMOKE-OK",
+  "n_minds": 2
+}

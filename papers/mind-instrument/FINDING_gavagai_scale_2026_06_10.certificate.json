@@ -1,0 +1,279 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_gavagai_scale_2026_06_10.md",
+  "document_sha256": "11aa688cfd34c362942bc2b2bb11ca7f2be4cb6fa077a8e8fa576c257535e1b4",
+  "receipts_sha256": {
+    "gavagai_scale_result.json": "17f92626dd5a9657df9db1d25329875a6fbab0b6bf302af0553e7d9d4a5e61b9",
+    "telepathy_v0_result.json": "344467fe9658d913f99e3447a2b093fe97fe97275e72ecbea38b51a5633c1493",
+    "gavagai_x_result.json": "2508c2723abead746dd112d2551bb6be207c94d2dd23854a915ace8a753b139e"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 14,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 9,
+      "token": "48"
+    },
+    {
+      "line": 9,
+      "token": "96"
+    },
+    {
+      "line": 9,
+      "token": "192"
+    },
+    {
+      "line": 14,
+      "token": "48"
+    },
+    {
+      "line": 14,
+      "token": "96"
+    },
+    {
+      "line": 14,
+      "token": "192"
+    },
+    {
+      "line": 15,
+      "token": "96"
+    },
+    {
+      "line": 15,
+      "token": "192"
+    },
+    {
+      "line": 43,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "pre-run). Receipt: `gavagai_scale_result.json`. Local, $0, no new model runs.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "more of the foreign mind's world? Nested worlds of 48 \u2282 96 \u2282 192 concepts (seeded subsets of the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "more of the foreign mind's world? Nested worlds of 48 \u2282 96 \u2282 192 concepts (seeded subsets of the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "more of the foreign mind's world? Nested worlds of 48 \u2282 96 \u2282 192 concepts (seeded subsets of the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "telepathy reps), the frozen label-free matcher, 40 cross-family LLM pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:n_xfam_pairs"
+    },
+    {
+      "line": 14,
+      "token": "0.1693",
+      "value": 0.1693,
+      "decimals": 4,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:mean_accuracy_by_N.48"
+    },
+    {
+      "line": 14,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0.1573",
+      "value": 0.1573,
+      "decimals": 4,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:mean_accuracy_by_N.96"
+    },
+    {
+      "line": 14,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0.1073",
+      "value": 0.1073,
+      "decimals": 4,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:mean_accuracy_by_N.192"
+    },
+    {
+      "line": 14,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "- Mean cross-family accuracy by world size: **0.1693 (N=48) \u2192 0.1573 (N=96) \u2192 0.1073 (N=192)**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:pairs_improving_192_vs_96"
+    },
+    {
+      "line": 15,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:n_xfam_pairs"
+    },
+    {
+      "line": 15,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "Only 1 of 40 pairs improved from 96 to 192; two-sided sign test p = 0.0. Verdict per the frozen",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "8.13",
+      "value": 8.13,
+      "decimals": 2,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:accuracy_over_chance_by_N.48"
+    },
+    {
+      "line": 18,
+      "token": "15.1",
+      "value": 15.1,
+      "decimals": 1,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:accuracy_over_chance_by_N.96"
+    },
+    {
+      "line": 18,
+      "token": "20.6",
+      "value": 20.6,
+      "decimals": 1,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:accuracy_over_chance_by_N.192"
+    },
+    {
+      "line": 18,
+      "token": "0.0208",
+      "value": 0.0208,
+      "decimals": 4,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:chance_by_N.48"
+    },
+    {
+      "line": 18,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:chance_by_N.96"
+    },
+    {
+      "line": 18,
+      "token": "0.0052",
+      "value": 0.0052,
+      "decimals": 4,
+      "context": "**8.13\u00d7 \u2192 15.1\u00d7 \u2192 20.6\u00d7** as the world grows (chance 0.0208 / 0.0104 / 0.0052). The search space",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:chance_by_N.192"
+    },
+    {
+      "line": 26,
+      "token": "0.8322",
+      "value": 0.8322,
+      "decimals": 4,
+      "context": "(0.8322 achievable with the true alignment vs 0.1441 achieved without), GAVAGAI-X's",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T2_oracle_mean_xfam_top1"
+    },
+    {
+      "line": 26,
+      "token": "0.1441",
+      "value": 0.1441,
+      "decimals": 4,
+      "context": "(0.8322 achievable with the true alignment vs 0.1441 achieved without), GAVAGAI-X's",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:mean_xfam_top1"
+    },
+    {
+      "line": 43,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "bias; 10 minds. The S1 verdict is matcher-relative by construction \u2014 that is its content, not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

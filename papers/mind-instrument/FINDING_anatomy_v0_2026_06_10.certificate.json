@@ -1,0 +1,189 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_anatomy_v0_2026_06_10.md",
+  "document_sha256": "ce12902cbc02a69e91de44487431d403e5ad914983d816f91a31e4847196100b",
+  "receipts_sha256": {
+    "anatomy_v0_result.json": "ee32e9e5e704c0900d81fae0370f4a7ff3c769eff1c23b93eb4b89765000fe92"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 23,
+      "token": "0.75"
+    },
+    {
+      "line": 23,
+      "token": "0.60"
+    },
+    {
+      "line": 24,
+      "token": "0.0"
+    },
+    {
+      "line": 25,
+      "token": "0.5639"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 23,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "partial-lexical RSA agree at **Kendall's W = 0.75** against the pre-registered bar of 0.60, with",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "partial-lexical RSA agree at **Kendall's W = 0.75** against the pre-registered bar of 0.60, with",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "**permutation p = 0.0** (no draw among 10000 reached the observed W; null 95th percentile 0.4585 \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "10000",
+      "value": 10000.0,
+      "decimals": 0,
+      "context": "**permutation p = 0.0** (no draw among 10000 reached the observed W; null 95th percentile 0.4585 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:n_perm"
+    },
+    {
+      "line": 24,
+      "token": "0.4585",
+      "value": 0.4585,
+      "decimals": 4,
+      "context": "**permutation p = 0.0** (no draw among 10000 reached the observed W; null 95th percentile 0.4585 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:perm_null_p95"
+    },
+    {
+      "line": 25,
+      "token": "0.5639",
+      "value": 0.5639,
+      "decimals": 4,
+      "context": "this document originally printed 0.5639 here, a value its author never read anywhere: caught by",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0.7831",
+      "value": 0.7831,
+      "decimals": 4,
+      "context": "The six in-set anchors give a reference concordance of **0.7831** \u2014 the independent minds agree on",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:kendall_W_anchors_reference"
+    },
+    {
+      "line": 29,
+      "token": "0.3052",
+      "value": 0.3052,
+      "decimals": 4,
+      "context": "passed: gpt2's full-battery citizenship recomputed from the persisted reps as 0.3052 against the",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:validity_control.gpt2_recomputed"
+    },
+    {
+      "line": 36,
+      "token": "0.4716",
+      "value": 0.4716,
+      "decimals": 4,
+      "context": "| instrument | 0.4716 |",
+      "binding_context": "| domain | convergence | | instrument | 0.4716 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.instrument"
+    },
+    {
+      "line": 37,
+      "token": "0.4174",
+      "value": 0.4174,
+      "decimals": 4,
+      "context": "| vehicle | 0.4174 |",
+      "binding_context": "| domain | convergence | | vehicle | 0.4174 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.vehicle"
+    },
+    {
+      "line": 38,
+      "token": "0.4117",
+      "value": 0.4117,
+      "decimals": 4,
+      "context": "| body | 0.4117 |",
+      "binding_context": "| domain | convergence | | body | 0.4117 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.body"
+    },
+    {
+      "line": 39,
+      "token": "0.384",
+      "value": 0.384,
+      "decimals": 3,
+      "context": "| weather | 0.384 |",
+      "binding_context": "| domain | convergence | | weather | 0.384 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.weather"
+    },
+    {
+      "line": 40,
+      "token": "0.3667",
+      "value": 0.3667,
+      "decimals": 4,
+      "context": "| animal | 0.3667 |",
+      "binding_context": "| domain | convergence | | animal | 0.3667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.animal"
+    },
+    {
+      "line": 41,
+      "token": "0.2874",
+      "value": 0.2874,
+      "decimals": 4,
+      "context": "| fruit | 0.2874 |",
+      "binding_context": "| domain | convergence | | fruit | 0.2874 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.fruit"
+    },
+    {
+      "line": 42,
+      "token": "0.0594",
+      "value": 0.0594,
+      "decimals": 4,
+      "context": "| profession | 0.0594 |",
+      "binding_context": "| domain | convergence | | profession | 0.0594 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.profession"
+    },
+    {
+      "line": 43,
+      "token": "0.0116",
+      "value": 0.0116,
+      "decimals": 4,
+      "context": "| furniture | 0.0116 |",
+      "binding_context": "| domain | convergence | | furniture | 0.0116 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anatomy_v0_result.json:mean_anatomy_independent.furniture"
+    }
+  ]
+}

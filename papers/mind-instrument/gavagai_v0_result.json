@@ -1,0 +1,427 @@
+{
+  "experiment": "GAVAGAI v0 - radical translation between artificial minds",
+  "prereg": "papers/mind-instrument/PREREG_gavagai_v0_2026_06_10.md",
+  "seed": 0,
+  "chance_concept": 0.0104,
+  "chance_category": 0.125,
+  "runner_sha256": "f7d076d1719a0ae2a2b68ca6bd9cfa641a0782eb0d71647849f19d0a057a984d",
+  "self_pair_control": 1.0,
+  "pairs": [
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Qwen2.5-3B",
+      "xfam": false,
+      "acc_normeq": 0.4167,
+      "cat_normeq": 0.5312,
+      "acc_old": 0.1979,
+      "cat_old": 0.4688
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-1B",
+      "xfam": true,
+      "acc_normeq": 0.2396,
+      "cat_normeq": 0.4271,
+      "acc_old": 0.0312,
+      "cat_old": 0.2396
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Llama-3.2-3B",
+      "xfam": true,
+      "acc_normeq": 0.2083,
+      "cat_normeq": 0.3854,
+      "acc_old": 0.0521,
+      "cat_old": 0.25
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "acc_normeq": 0.1562,
+      "cat_normeq": 0.3438,
+      "acc_old": 0.0938,
+      "cat_old": 0.25
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "acc_normeq": 0.2396,
+      "cat_normeq": 0.4062,
+      "acc_old": 0.0312,
+      "cat_old": 0.1562
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.0625,
+      "cat_normeq": 0.2604,
+      "acc_old": 0.0,
+      "cat_old": 0.0938
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.125,
+      "cat_normeq": 0.4167,
+      "acc_old": 0.0208,
+      "cat_old": 0.1458
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1875,
+      "cat_normeq": 0.3958,
+      "acc_old": 0.0208,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Qwen2.5-1.5B",
+      "b": "Qwen2.5-0.5B",
+      "xfam": false,
+      "acc_normeq": 0.4375,
+      "cat_normeq": 0.5938,
+      "acc_old": 0.2188,
+      "cat_old": 0.5625
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-1B",
+      "xfam": true,
+      "acc_normeq": 0.2812,
+      "cat_normeq": 0.4896,
+      "acc_old": 0.0521,
+      "cat_old": 0.2604
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Llama-3.2-3B",
+      "xfam": true,
+      "acc_normeq": 0.2604,
+      "cat_normeq": 0.4271,
+      "acc_old": 0.0729,
+      "cat_old": 0.25
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "acc_normeq": 0.125,
+      "cat_normeq": 0.3646,
+      "acc_old": 0.0729,
+      "cat_old": 0.25
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "acc_normeq": 0.3438,
+      "cat_normeq": 0.4792,
+      "acc_old": 0.0312,
+      "cat_old": 0.1562
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.0833,
+      "cat_normeq": 0.1979,
+      "acc_old": 0.0104,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.1146,
+      "cat_normeq": 0.2708,
+      "acc_old": 0.0208,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1875,
+      "cat_normeq": 0.4688,
+      "acc_old": 0.0104,
+      "cat_old": 0.1042
+    },
+    {
+      "a": "Qwen2.5-3B",
+      "b": "Qwen2.5-0.5B",
+      "xfam": false,
+      "acc_normeq": 0.2083,
+      "cat_normeq": 0.3646,
+      "acc_old": 0.1771,
+      "cat_old": 0.3854
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Llama-3.2-3B",
+      "xfam": false,
+      "acc_normeq": 0.5104,
+      "cat_normeq": 0.6875,
+      "acc_old": 0.4688,
+      "cat_old": 0.6458
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "acc_normeq": 0.1146,
+      "cat_normeq": 0.3854,
+      "acc_old": 0.0312,
+      "cat_old": 0.2188
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "acc_normeq": 0.375,
+      "cat_normeq": 0.5833,
+      "acc_old": 0.2812,
+      "cat_old": 0.4896
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.125,
+      "cat_normeq": 0.3125,
+      "acc_old": 0.0,
+      "cat_old": 0.0938
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.0938,
+      "cat_normeq": 0.25,
+      "acc_old": 0.0,
+      "cat_old": 0.1146
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.2188,
+      "cat_normeq": 0.4375,
+      "acc_old": 0.0104,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Llama-3.2-1B",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.1875,
+      "cat_normeq": 0.4167,
+      "acc_old": 0.0521,
+      "cat_old": 0.1875
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Phi-3.5-mini",
+      "xfam": true,
+      "acc_normeq": 0.1146,
+      "cat_normeq": 0.3333,
+      "acc_old": 0.0312,
+      "cat_old": 0.1979
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "acc_normeq": 0.3854,
+      "cat_normeq": 0.6042,
+      "acc_old": 0.2812,
+      "cat_old": 0.5208
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.1146,
+      "cat_normeq": 0.3438,
+      "acc_old": 0.0104,
+      "cat_old": 0.0833
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.0729,
+      "cat_normeq": 0.3333,
+      "acc_old": 0.0104,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1771,
+      "cat_normeq": 0.4062,
+      "acc_old": 0.0104,
+      "cat_old": 0.1042
+    },
+    {
+      "a": "Llama-3.2-3B",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.1146,
+      "cat_normeq": 0.2917,
+      "acc_old": 0.0625,
+      "cat_old": 0.2604
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "gemma-2-2b",
+      "xfam": true,
+      "acc_normeq": 0.1771,
+      "cat_normeq": 0.4375,
+      "acc_old": 0.0521,
+      "cat_old": 0.1979
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.0521,
+      "cat_normeq": 0.2396,
+      "acc_old": 0.0104,
+      "cat_old": 0.1354
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.0938,
+      "cat_normeq": 0.3646,
+      "acc_old": 0.0208,
+      "cat_old": 0.2083
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1458,
+      "cat_normeq": 0.3333,
+      "acc_old": 0.0104,
+      "cat_old": 0.25
+    },
+    {
+      "a": "Phi-3.5-mini",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.0833,
+      "cat_normeq": 0.4062,
+      "acc_old": 0.0521,
+      "cat_old": 0.3125
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "gpt2",
+      "xfam": true,
+      "acc_normeq": 0.125,
+      "cat_normeq": 0.3229,
+      "acc_old": 0.0,
+      "cat_old": 0.1562
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "gpt2-large",
+      "xfam": true,
+      "acc_normeq": 0.1562,
+      "cat_normeq": 0.3438,
+      "acc_old": 0.0208,
+      "cat_old": 0.0938
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1667,
+      "cat_normeq": 0.4688,
+      "acc_old": 0.0104,
+      "cat_old": 0.0938
+    },
+    {
+      "a": "gemma-2-2b",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.2396,
+      "cat_normeq": 0.4792,
+      "acc_old": 0.0417,
+      "cat_old": 0.1562
+    },
+    {
+      "a": "gpt2",
+      "b": "gpt2-large",
+      "xfam": false,
+      "acc_normeq": 0.1771,
+      "cat_normeq": 0.3333,
+      "acc_old": 0.1667,
+      "cat_old": 0.3229
+    },
+    {
+      "a": "gpt2",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.3021,
+      "cat_normeq": 0.4479,
+      "acc_old": 0.1458,
+      "cat_old": 0.4167
+    },
+    {
+      "a": "gpt2",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.0417,
+      "cat_normeq": 0.25,
+      "acc_old": 0.0104,
+      "cat_old": 0.1146
+    },
+    {
+      "a": "gpt2-large",
+      "b": "pythia-410m",
+      "xfam": true,
+      "acc_normeq": 0.1875,
+      "cat_normeq": 0.4583,
+      "acc_old": 0.0729,
+      "cat_old": 0.4479
+    },
+    {
+      "a": "gpt2-large",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.0729,
+      "cat_normeq": 0.3542,
+      "acc_old": 0.0,
+      "cat_old": 0.125
+    },
+    {
+      "a": "pythia-410m",
+      "b": "Qwen2.5-0.5B",
+      "xfam": true,
+      "acc_normeq": 0.0938,
+      "cat_normeq": 0.3646,
+      "acc_old": 0.0,
+      "cat_old": 0.0833
+    }
+  ],
+  "n_pairs": 45,
+  "n_xfam_pairs": 40,
+  "mean_xfam_concept_accuracy_normeq": 0.1661,
+  "mean_xfam_category_accuracy_normeq": 0.3826,
+  "mean_xfam_concept_accuracy_old": 0.0437,
+  "G2_normeq_minus_old": 0.1224,
+  "null_95th_percentile": 0.0312,
+  "n_null": 100,
+  "G1_pass": true,
+  "G3_pass": true,
+  "verdict": "TRANSLATION-POSSIBLE"
+}

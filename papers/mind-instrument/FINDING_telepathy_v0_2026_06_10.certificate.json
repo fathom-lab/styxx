@@ -1,0 +1,248 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_telepathy_v0_2026_06_10.md",
+  "document_sha256": "2185d5c8984a8af0a940b0235353d086d9fe90d9904f7a82a3c4a5cb630dd380",
+  "receipts_sha256": {
+    "telepathy_v0_result.json": "344467fe9658d913f99e3447a2b093fe97fe97275e72ecbea38b51a5633c1493",
+    "gavagai_v0_result.json": "55e82c06c8560eb1557ecde378137df6daf6af3913cd9ce5bf9843c484dcb391"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 15,
+      "token": "8"
+    },
+    {
+      "line": 16,
+      "token": "96"
+    },
+    {
+      "line": 18,
+      "token": "96"
+    },
+    {
+      "line": 20,
+      "token": "90"
+    },
+    {
+      "line": 35,
+      "token": "0.615"
+    },
+    {
+      "line": 36,
+      "token": "0.635"
+    },
+    {
+      "line": 36,
+      "token": "0.875"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 15,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "matcher. The sender then encodes a probe concept from a DISJOINT 96-word battery (8 categories",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "including emotions) as its 96 distances to the sender's own reference concepts, and transmits that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "correlation against its own internal profiles for 96 candidates. Chance: 0.0104.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "## Result (90 ordered pairs \u00d7 96 novel probes)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "## Result (90 ordered pairs \u00d7 96 novel probes)",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:n_probes"
+    },
+    {
+      "line": 22,
+      "token": "0.1441",
+      "value": 0.1441,
+      "decimals": 4,
+      "context": "- **T1 PASSED.** Mean cross-family top-1 decode accuracy **0.1441** \u2014 about fourteen times chance",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:mean_xfam_top1"
+    },
+    {
+      "line": 24,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "100 runs) whose 95th percentile is 0.0208. Mean cross-family top-5: **0.3867**. Pipeline control",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:self_pair_control"
+    },
+    {
+      "line": 24,
+      "token": "0.3867",
+      "value": 0.3867,
+      "decimals": 4,
+      "context": "100 runs) whose 95th percentile is 0.0208. Mean cross-family top-5: **0.3867**. Pipeline control",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:mean_xfam_top5"
+    },
+    {
+      "line": 27,
+      "token": "0.8322",
+      "value": 0.8322,
+      "decimals": 4,
+      "context": "cross-family transfer of never-shared concepts averages **0.8322** top-1. The relational encoding",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T2_oracle_mean_xfam_top1"
+    },
+    {
+      "line": 28,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "itself crosses architectures almost intact (within-family oracle reaches 1.0 in the scored rows,",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:self_pair_identity_decode"
+    },
+    {
+      "line": 31,
+      "token": "0.2167",
+      "value": 0.2167,
+      "decimals": 4,
+      "context": "- **T3 \u2014 abstract content crosses.** Per-category cross-family top-1: building 0.2167, sport",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.building"
+    },
+    {
+      "line": 32,
+      "token": "0.1979",
+      "value": 0.1979,
+      "decimals": 4,
+      "context": "0.1979, tool 0.1885, drink 0.1292, **emotion 0.124** \u2014 emotions (joy, anger, hope, shame...)",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.sport"
+    },
+    {
+      "line": 32,
+      "token": "0.1885",
+      "value": 0.1885,
+      "decimals": 4,
+      "context": "0.1979, tool 0.1885, drink 0.1292, **emotion 0.124** \u2014 emotions (joy, anger, hope, shame...)",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.tool"
+    },
+    {
+      "line": 32,
+      "token": "0.1292",
+      "value": 0.1292,
+      "decimals": 4,
+      "context": "0.1979, tool 0.1885, drink 0.1292, **emotion 0.124** \u2014 emotions (joy, anger, hope, shame...)",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.drink"
+    },
+    {
+      "line": 32,
+      "token": "0.124",
+      "value": 0.124,
+      "decimals": 3,
+      "context": "0.1979, tool 0.1885, drink 0.1292, **emotion 0.124** \u2014 emotions (joy, anger, hope, shame...)",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.emotion"
+    },
+    {
+      "line": 33,
+      "token": "0.1031",
+      "value": 0.1031,
+      "decimals": 4,
+      "context": "transmit at roughly twelve times chance through pure structure \u2014 kitchen 0.1031, plant 0.101,",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.kitchen"
+    },
+    {
+      "line": 33,
+      "token": "0.101",
+      "value": 0.101,
+      "decimals": 3,
+      "context": "transmit at roughly twelve times chance through pure structure \u2014 kitchen 0.1031, plant 0.101,",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.plant"
+    },
+    {
+      "line": 35,
+      "token": "0.615",
+      "value": 0.615,
+      "decimals": 3,
+      "context": "- Within-family transmission runs far higher (e.g. Qwen2.5-0.5B\u2192Qwen2.5-1.5B 0.615 top-1, oracle",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0); cross-lab pairs work too (pythia-410m\u2192gpt2 0.188 top-1, 0.635 top-5, oracle 0.875).",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:self_pair_identity_decode"
+    },
+    {
+      "line": 36,
+      "token": "0.188",
+      "value": 0.188,
+      "decimals": 3,
+      "context": "1.0); cross-lab pairs work too (pythia-410m\u2192gpt2 0.188 top-1, 0.635 top-5, oracle 0.875).",
+      "status": "VERIFIED",
+      "receipt_ref": "telepathy_v0_result.json:T3_per_category_top1_xfam.tool"
+    },
+    {
+      "line": 36,
+      "token": "0.635",
+      "value": 0.635,
+      "decimals": 3,
+      "context": "1.0); cross-lab pairs work too (pythia-410m\u2192gpt2 0.188 top-1, 0.635 top-5, oracle 0.875).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "1.0); cross-lab pairs work too (pythia-410m\u2192gpt2 0.188 top-1, 0.635 top-5, oracle 0.875).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

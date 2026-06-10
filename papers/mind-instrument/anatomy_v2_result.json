@@ -1,0 +1,68 @@
+{
+  "experiment": "Anatomy v2 - norm-equalized apparatus",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v2_normeq_2026_06_10.md",
+  "seed": 0,
+  "n_perm": 10000,
+  "runner_sha256": "36ef8ae5080fe2df9b8833b708dbb9841db8682521625b728132e22f6dd04bf2",
+  "mean_anatomy_normeq": {
+    "body": 0.8521,
+    "vehicle": 0.8448,
+    "animal": 0.7949,
+    "weather": 0.7743,
+    "profession": 0.7093,
+    "instrument": 0.6604,
+    "fruit": 0.6413,
+    "furniture": 0.6139
+  },
+  "profiles_subjects": {
+    "gpt2": {
+      "animal": 0.788,
+      "fruit": 0.5508,
+      "vehicle": 0.8315,
+      "profession": 0.7044,
+      "body": 0.8286,
+      "weather": 0.7078,
+      "furniture": 0.5379,
+      "instrument": 0.4126
+    },
+    "gpt2-large": {
+      "animal": 0.8011,
+      "fruit": 0.6054,
+      "vehicle": 0.8332,
+      "profession": 0.6718,
+      "body": 0.8256,
+      "weather": 0.7456,
+      "furniture": 0.5859,
+      "instrument": 0.697
+    },
+    "pythia-410m": {
+      "animal": 0.8415,
+      "fruit": 0.6951,
+      "vehicle": 0.8486,
+      "profession": 0.7593,
+      "body": 0.8862,
+      "weather": 0.8081,
+      "furniture": 0.7013,
+      "instrument": 0.7172
+    },
+    "Qwen2.5-0.5B": {
+      "animal": 0.7489,
+      "fruit": 0.7139,
+      "vehicle": 0.8658,
+      "profession": 0.7017,
+      "body": 0.868,
+      "weather": 0.8359,
+      "furniture": 0.6303,
+      "instrument": 0.815
+    }
+  },
+  "G1_kendall_W": 0.875,
+  "G1_perm_p": 0.0,
+  "G1_null_p95": 0.4585,
+  "G1_pass": true,
+  "G2_spearman_v0_v2_map": 0.5476,
+  "G3_qwen3b_battery_reliability_normeq": 0.9411,
+  "G3_baseline_old_convention": 0.291,
+  "G3_pass": true,
+  "verdict": "ANATOMY-ROBUST"
+}

@@ -1,0 +1,36 @@
+{
+  "experiment": "Anatomy v1 \u2014 disattenuation (idiosyncrasy vs range-artifact)",
+  "prereg": "papers/mind-instrument/PREREG_anatomy_v1_disattenuation_2026_06_10.md",
+  "seed": 0,
+  "n_perm": 10000,
+  "rel_floor": 0.2,
+  "runner_sha256": "5ead678a04c12235a3316b921cb59ba10e1b1a41e4fd93ce1bfc8bcf1a0c7e7d",
+  "battery_reliability": {
+    "Qwen2.5-1.5B": 0.2586,
+    "Qwen2.5-3B": 0.291
+  },
+  "domain_reliability": {
+    "Qwen2.5-1.5B": {
+      "animal": 0.3054,
+      "fruit": 0.441,
+      "vehicle": 0.5474,
+      "profession": 0.2442,
+      "body": 0.0,
+      "weather": 0.2108,
+      "furniture": 0.0,
+      "instrument": 0.4063
+    },
+    "Qwen2.5-3B": {
+      "animal": 0.2739,
+      "fruit": 0.3464,
+      "vehicle": 0.6108,
+      "profession": 0.4209,
+      "body": 0.7092,
+      "weather": 0.2245,
+      "furniture": 0.0704,
+      "instrument": 0.493
+    }
+  },
+  "smoke": true,
+  "verdict": "SMOKE-OK"
+}

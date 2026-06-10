@@ -1,0 +1,156 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_gavagai_x_2026_06_10.md",
+  "document_sha256": "3087fd7d0b0328e8d8c574a3efc45eb13ab0d6fbaa326e9de1a9ac136a1c04dd",
+  "receipts_sha256": {
+    "gavagai_x_result.json": "2508c2723abead746dd112d2551bb6be207c94d2dd23854a915ace8a753b139e",
+    "gavagai_v0_result.json": "55e82c06c8560eb1557ecde378137df6daf6af3913cd9ce5bf9843c484dcb391",
+    "real_convergence_confirm_result.json": "43e4a5e3c7e320200cfd2165ec88dcf165f0304fa24cfbd9fc5fc9797d4fa2b1"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "10"
+    },
+    {
+      "line": 12,
+      "token": "2"
+    },
+    {
+      "line": 18,
+      "token": "0.0104"
+    },
+    {
+      "line": 18,
+      "token": "0.1042"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "translator between 10 causal LLMs (norm-equalized) and 2 contrastively-trained sentence embedders",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "translator between 10 causal LLMs (norm-equalized) and 2 contrastively-trained sentence embedders",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(MiniLM-L6, mpnet-base; per-template convention mirrored), 20 cross-species pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:n_cross_species_pairs"
+    },
+    {
+      "line": 17,
+      "token": "0.0292",
+      "value": 0.0292,
+      "decimals": 4,
+      "context": "- **X1 FAILED \u2014 SPECIES-BOUND.** Mean cross-species identification accuracy **0.0292** (chance",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:mean_cross_species_accuracy"
+    },
+    {
+      "line": 18,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "0.0104; bar 0.1042; identity-decoupled null 95th percentile 0.0312). At the assignment level,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.1042",
+      "value": 0.1042,
+      "decimals": 4,
+      "context": "0.0104; bar 0.1042; identity-decoupled null 95th percentile 0.0312). At the assignment level,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.0312",
+      "value": 0.0312,
+      "decimals": 4,
+      "context": "0.0104; bar 0.1042; identity-decoupled null 95th percentile 0.0312). At the assignment level,",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:null_95th_percentile"
+    },
+    {
+      "line": 21,
+      "token": "0.1875",
+      "value": 0.1875,
+      "decimals": 4,
+      "context": "at **0.1875** (category 0.4688) \u2014 at the LLM\u2194LLM cross-family level of 0.1661 (X2). The matcher",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:X3_embedder_pair.acc"
+    },
+    {
+      "line": 21,
+      "token": "0.4688",
+      "value": 0.4688,
+      "decimals": 4,
+      "context": "at **0.1875** (category 0.4688) \u2014 at the LLM\u2194LLM cross-family level of 0.1661 (X2). The matcher",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:X3_embedder_pair.cat"
+    },
+    {
+      "line": 21,
+      "token": "0.1661",
+      "value": 0.1661,
+      "decimals": 4,
+      "context": "at **0.1875** (category 0.4688) \u2014 at the LLM\u2194LLM cross-family level of 0.1661 (X2). The matcher",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:X2_llm_llm_reference"
+    },
+    {
+      "line": 23,
+      "token": "0.1927",
+      "value": 0.1927,
+      "decimals": 4,
+      "context": "- **Kind leaks, identity doesn't:** cross-species category accuracy 0.1927 vs chance 0.125 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_x_result.json:mean_cross_species_category"
+    },
+    {
+      "line": 23,
+      "token": "0.125",
+      "value": 0.125,
+      "decimals": 3,
+      "context": "- **Kind leaks, identity doesn't:** cross-species category accuracy 0.1927 vs chance 0.125 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:chance_category"
+    },
+    {
+      "line": 32,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "anchor partial RSA 0.36) WITHOUT assignable identity \u2014 second-order similarity is necessary but",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_v0_result.json:pairs[11].cat_normeq"
+    }
+  ]
+}

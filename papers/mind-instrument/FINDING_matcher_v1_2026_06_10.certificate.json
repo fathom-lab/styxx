@@ -1,0 +1,151 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_matcher_v1_2026_06_10.md",
+  "document_sha256": "8b179d7db7d7693a4e85717dbfe26c80252d8d9db764482e88819f09bc419332",
+  "receipts_sha256": {
+    "matcher_v1_result.json": "5117d0ec047006eaa06a5403ea435844bfdbc80a79567916c97f917c00cd3041",
+    "gavagai_scale_result.json": "17f92626dd5a9657df9db1d25329875a6fbab0b6bf302af0553e7d9d4a5e61b9"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 10,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 10,
+      "token": "192"
+    },
+    {
+      "line": 11,
+      "token": "48"
+    },
+    {
+      "line": 11,
+      "token": "96"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 10,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "N=192 of 0.1018 vs the v0 baseline's 0.1073 (and below baseline at every world size: 0.1349 vs",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "0.1018",
+      "value": 0.1018,
+      "decimals": 4,
+      "context": "N=192 of 0.1018 vs the v0 baseline's 0.1073 (and below baseline at every world size: 0.1349 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:mean_accuracy_by_N.192"
+    },
+    {
+      "line": 10,
+      "token": "0.1073",
+      "value": 0.1073,
+      "decimals": 4,
+      "context": "N=192 of 0.1018 vs the v0 baseline's 0.1073 (and below baseline at every world size: 0.1349 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:baseline_mean_by_N.192"
+    },
+    {
+      "line": 10,
+      "token": "0.1349",
+      "value": 0.1349,
+      "decimals": 4,
+      "context": "N=192 of 0.1018 vs the v0 baseline's 0.1073 (and below baseline at every world size: 0.1349 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:mean_accuracy_by_N.48"
+    },
+    {
+      "line": 11,
+      "token": "0.1693",
+      "value": 0.1693,
+      "decimals": 4,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:baseline_mean_by_N.48"
+    },
+    {
+      "line": 11,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "0.1352",
+      "value": 0.1352,
+      "decimals": 4,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:mean_accuracy_by_N.96"
+    },
+    {
+      "line": 11,
+      "token": "0.1573",
+      "value": 0.1573,
+      "decimals": 4,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:baseline_mean_by_N.96"
+    },
+    {
+      "line": 11,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:pairs_improving_at_192"
+    },
+    {
+      "line": 11,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "0.1693 at N=48; 0.1352 vs 0.1573 at N=96); 16 of 40 pairs improved; sign test p = 0.33678.",
+      "status": "VERIFIED",
+      "receipt_ref": "gavagai_scale_result.json:n_xfam_pairs"
+    },
+    {
+      "line": 15,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "The consensus step chose the block-seeded candidate **100% of the time at every N** \u2014 including",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:consensus_block_pick_rate_by_N.48"
+    },
+    {
+      "line": 37,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "separate \u2014 the 100% pick rate strongly implicates the consensus rule.",
+      "status": "VERIFIED",
+      "receipt_ref": "matcher_v1_result.json:consensus_block_pick_rate_by_N.48"
+    }
+  ]
+}

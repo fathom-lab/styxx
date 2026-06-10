@@ -1,0 +1,477 @@
+{
+  "certificate": "styxx.mind v0 \u2014 certified mind profile",
+  "prereg": "papers/mind-instrument/PREREG_mind_v0_2026_06_10.md",
+  "subject": "Atlas of Minds v0",
+  "axes_measured": {
+    "atlas_geometry": [
+      {
+        "subject": "Qwen2.5-1.5B",
+        "family": "qwen",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.918
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.133
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.143
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.298
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.147
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.1801,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "Qwen2.5-3B",
+        "family": "qwen",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.918
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.152
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.164
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.299
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.173
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.1972,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "Llama-3.2-1B",
+        "family": "llama",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.133
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.152
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.966
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.169
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.937
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.3477,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "Llama-3.2-3B",
+        "family": "llama",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.143
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.164
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.966
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.18
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.944
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.3577,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "Phi-3.5-mini",
+        "family": "phi",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.298
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.299
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.169
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.18
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.219
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.233,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "gemma-2-2b",
+        "family": "gemma",
+        "class": "anchor (in-set, disclosed)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.147
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.173
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.937
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.944
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.219
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 1.0
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.484,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "gpt2",
+        "family": "gpt2",
+        "class": "out-of-anchor (independent)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.512
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.459
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.156
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.166
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.369
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.17
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.3052,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "gpt2-large",
+        "family": "gpt2",
+        "class": "out-of-anchor (independent)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.525
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.476
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.196
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.207
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.379
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.21
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.3321,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "pythia-410m",
+        "family": "pythia",
+        "class": "out-of-anchor (independent)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.503
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.509
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.166
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.181
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.364
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.19
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.3189,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      },
+      {
+        "subject": "Qwen2.5-0.5B",
+        "family": "qwen",
+        "class": "out-of-anchor (independent)",
+        "geometry": {
+          "per_anchor": [
+            {
+              "anchor": "Qwen2.5-1.5B",
+              "family": "qwen",
+              "partial_lex_rsa": 1.0
+            },
+            {
+              "anchor": "Qwen2.5-3B",
+              "family": "qwen",
+              "partial_lex_rsa": 0.918
+            },
+            {
+              "anchor": "Llama-3.2-1B",
+              "family": "llama",
+              "partial_lex_rsa": 0.136
+            },
+            {
+              "anchor": "Llama-3.2-3B",
+              "family": "llama",
+              "partial_lex_rsa": 0.147
+            },
+            {
+              "anchor": "Phi-3.5-mini",
+              "family": "phi",
+              "partial_lex_rsa": 0.299
+            },
+            {
+              "anchor": "gemma-2-2b",
+              "family": "gemma",
+              "partial_lex_rsa": 0.151
+            }
+          ],
+          "citizenship_xfam_partial_lex": 0.1833,
+          "n_anchors": 6,
+          "anchors_sha256": "88b73512671a592240a7da8db789455de5f34091bbe5e379550c1ca18d1ffc4d"
+        }
+      }
+    ],
+    "behavioral_qwen3b_b22": {
+      "subject": "Qwen2.5-3B-Instruct",
+      "regime": "B22 silent bare-term",
+      "n_held": 37,
+      "n_caved": 72,
+      "n_labeled": 109,
+      "cave_rate": 0.6606,
+      "cave_rate_wilson95": [
+        0.5675,
+        0.7426
+      ],
+      "powered": true,
+      "auc_grounded": 1.0,
+      "held_median_g": 1.0,
+      "auc_text_sycophancy": 0.5,
+      "auc_text_deception": 0.5128,
+      "receipt": "behavioral_sycophancy_b22_result.json",
+      "receipt_sha256": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09"
+    }
+  },
+  "axes_refused": {
+    "rhythm": {
+      "status": "REFUSED",
+      "reason": "Oscillation is a substrate-specific capacity mechanism, not a universal axis of mind: a rhythm-free transformer beats the oscillating substrate at matched params; no validated rhythm instrument exists for non-recurrent substrates.",
+      "receipt": "papers/frequency-resonance/SHAREABLE_resonance_2026_06_04.md"
+    },
+    "manipulation_geometry": {
+      "status": "REFUSED",
+      "reason": "Geometry-drift manipulation detection killed 3 ways incl. the benign-behavioral confound (footprint detects meta-instruction, not malice). Permanently refused.",
+      "receipt": "papers/representational-integrity/RESULT_geometry_integrity_2026_06_03.md"
+    },
+    "meaning_integrity_binder": {
+      "status": "UNAVAILABLE",
+      "reason": "Packaged as styxx.meaning_integrity (7.11.0) but not yet wired into the mind certificate as a scored axis: the wiring needs its own M1/M2-style equivalence gates first. Use styxx.meaning_integrity directly meanwhile.",
+      "receipt": "papers/ai-human-alignment/"
+    },
+    "consciousness": {
+      "status": "REFUSED",
+      "reason": "No operationalization survives demarcation; the instrument measures validated axes of structure and behavior, nothing more. This refusal is permanent by design.",
+      "receipt": "papers/frequency-resonance/SURVEY_frequency_vibration_2500yr_2026_06_04.md"
+    }
+  },
+  "instrument_sha256": "c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115",
+  "scope": "Measures exactly the validated axes; no claim about consciousness, welfare, or general capability. Refusals are part of the measurement.",
+  "battery": {
+    "n_concepts": 96,
+    "n_templates": 8,
+    "layer_convention": 0.66
+  }
+}

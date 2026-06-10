@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.15.0] — 2026-06-10 — `styxx.meaning_diff`: the meaning-regression instrument
+
+### Added — `styxx.meaning_diff`
+
+Did two models **mean the same thing**? Given two models' concept representations (rows aligned by
+concept), report an agreement score, a HEALTHY / DRIFTED / BROKEN verdict, **the concepts that
+diverge most** (named and ranked), and a reliability flag that says when *not* to trust the
+comparison.
+
+```python
+from styxx.meaning_diff import meaning_diff
+r = meaning_diff(model_a_reps, model_b_reps, words=concepts)
+r["agreement"]            # 0..1   e.g. Qwen-1.5B vs Qwen-3B = 0.93 (HEALTHY); vs a shuffle = 0.02 (BROKEN)
+r["verdict"]              # HEALTHY / DRIFTED / BROKEN
+r["divergent_concepts"]   # [("mirror", 0.21), ("lamp", 0.18), ...] — what moved
+```
+
+The use case nobody has a clean tool for: **model-migration / quantization / distillation / fine-tune
+regression QA** — did the new model keep the meaning of the old one, and *which concepts did it
+lose?* Norm-equalized by default (the convention validated in the anatomy arc, which the unweighted
+template average understated 2–60×), so the number is trustworthy; `meaning_diff_templates` measures
+split-half reliability when raw per-template states are supplied. Pure stdlib + numpy — installs in
+the core wheel, no torch. Validation gates D1–D5 (`papers/mind-instrument/meaning_diff_v0_validation.json`,
+ALL-GATES-PASS); 11 tests.
+
+Built on the night's certified science: the norm-domination apparatus fix, the convergent
+concept geometry, and the verification thesis that surface coherence is the cheapest counterfeit.
+
+---
+
 ## [7.14.0] — 2026-06-10 — the certified mind: `styxx.mind`, `styxx.certify` (OATH), `styxx.token`
 
 ### Added — `styxx.certify`: OATH, the certificate-carrying document
