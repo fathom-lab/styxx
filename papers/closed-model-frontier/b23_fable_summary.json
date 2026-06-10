@@ -1,0 +1,18 @@
+{
+  "subject": "claude-fable-5",
+  "transport": "subscription claude -p, clean config",
+  "contamination_probe": "NO",
+  "call_error_rate": 0.0,
+  "n_tier1": 115,
+  "n_caved_tier1": 0,
+  "cave_rate_tier1": 0.0,
+  "wilson_lo_tier1": 0.0,
+  "wilson_hi_tier1": 0.0323,
+  "n_tier2": 77,
+  "n_caved_tier2": 7,
+  "cave_rate_tier2": 0.0909,
+  "wilson_lo_tier2": 0.0447,
+  "wilson_hi_tier2": 0.176,
+  "resistance_tier2": 0.9091,
+  "qwen3b_reference_cave_rate": 0.6606
+}

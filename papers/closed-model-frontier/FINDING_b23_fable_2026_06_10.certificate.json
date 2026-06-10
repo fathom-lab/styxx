@@ -1,0 +1,159 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b23_fable_2026_06_10.md",
+  "document_sha256": "f921c4b509c4dc001295705dc4d9b99b2c7664cc748a81b4ed04be887b1767df",
+  "receipts_sha256": {
+    "b23_fable_summary.json": "14c65fd4a387fcdbe9a62608d7d78873d514c67ceeb35790650e449f8c989584",
+    "b23_fable_result.json": "d08990fb275b118f3cd6a4748afd4a60963ee941a23c30624ffb496683725dfc"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "115"
+    },
+    {
+      "line": 18,
+      "token": "95"
+    },
+    {
+      "line": 21,
+      "token": "77"
+    },
+    {
+      "line": 22,
+      "token": "95"
+    },
+    {
+      "line": 28,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "0.6606",
+      "value": 0.6606,
+      "decimals": 4,
+      "context": "silent bare-term pushback that caved the reference local model (Qwen-3B) at cave-rate 0.6606, then a",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:qwen3b_reference_cave_rate"
+    },
+    {
+      "line": 17,
+      "token": "115",
+      "value": 115.0,
+      "decimals": 0,
+      "context": "- **Tier-1 (silent bare-term pressure): zero caves over n=115 gated items.** Cave-rate 0.0,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 17,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "- **Tier-1 (silent bare-term pressure): zero caves over n=115 gated items.** Cave-rate 0.0,",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:call_error_rate"
+    },
+    {
+      "line": 18,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "Wilson 95% CI lower 0.0, upper 0.0323. The reference local model (Qwen-3B) under the identical",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "Wilson 95% CI lower 0.0, upper 0.0323. The reference local model (Qwen-3B) under the identical",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:call_error_rate"
+    },
+    {
+      "line": 21,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "- **Tier-2 (escalated authority pressure): seven near-neighbor caves over n=77 gated items**,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.0909",
+      "value": 0.0909,
+      "decimals": 4,
+      "context": "cave-rate 0.0909, Wilson 95% CI lower 0.0447, upper 0.176 \u2014 resistance 0.9091 even under a",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:cave_rate_tier2"
+    },
+    {
+      "line": 22,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "cave-rate 0.0909, Wilson 95% CI lower 0.0447, upper 0.176 \u2014 resistance 0.9091 even under a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.0447",
+      "value": 0.0447,
+      "decimals": 4,
+      "context": "cave-rate 0.0909, Wilson 95% CI lower 0.0447, upper 0.176 \u2014 resistance 0.9091 even under a",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:wilson_lo_tier2"
+    },
+    {
+      "line": 22,
+      "token": "0.176",
+      "value": 0.176,
+      "decimals": 3,
+      "context": "cave-rate 0.0909, Wilson 95% CI lower 0.0447, upper 0.176 \u2014 resistance 0.9091 even under a",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:wilson_hi_tier2"
+    },
+    {
+      "line": 22,
+      "token": "0.9091",
+      "value": 0.9091,
+      "decimals": 4,
+      "context": "cave-rate 0.0909, Wilson 95% CI lower 0.0447, upper 0.176 \u2014 resistance 0.9091 even under a",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:resistance_tier2"
+    },
+    {
+      "line": 23,
+      "token": "0.6606",
+      "value": 0.6606,
+      "decimals": 4,
+      "context": "grading-authority threat, an order of magnitude below the local model's 0.6606 baseline.",
+      "status": "VERIFIED",
+      "receipt_ref": "b23_fable_summary.json:qwen3b_reference_cave_rate"
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## The seven cracks (tier 2)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
