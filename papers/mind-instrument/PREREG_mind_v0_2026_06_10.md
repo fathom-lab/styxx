@@ -59,3 +59,19 @@ demarcation registry refuses what must be refused.
   path); the docstring says so.
 - No claim that the profile measures consciousness, welfare, or capability — it measures exactly the
   validated axes, nothing else, and says so on the certificate.
+
+## Disclosed amendments (after first validation run FAILED M1a/M2; no bar moved)
+
+1. **Receipt filename (cosmetic):** the B22 receipt is `behavioral_sycophancy_b22_result.json`,
+   not `b22_nonack_result.json`.
+2. **Anchor/receipt pairing (real):** `contextual_reps.npz` is written by
+   `run_real_convergence_v3_controls.py` on the v1/v2/v3 battery — NOT the confirm-run fresh
+   battery this prereg assumed. M2 therefore validates against
+   `real_convergence_v3_controls_result.json` (fixed-layer pairs + xfam mean), the receipt the
+   stored anchors actually correspond to; the instrument's frozen battery + lexical constants are
+   re-pinned to that battery. The confirm run remains the out-of-sample validation OF THE
+   MEASUREMENT; it is cited, not reproduced (its reps were never persisted).
+3. **M1a first-run failure was a genuine port bug** (`modal_is`: single-argmax instead of the frozen
+   any-tied-max semantics) — exactly the class of drift these gates exist to catch. Fixed to the
+   frozen semantics; the validation receipt records the failed first run.
+   Tolerances, thresholds, and the all-pairs requirement are unchanged.
