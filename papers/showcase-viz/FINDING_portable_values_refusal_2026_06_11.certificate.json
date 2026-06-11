@@ -1,0 +1,526 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_portable_values_refusal_2026_06_11.md",
+  "document_sha256": "504356dd02132f926f5d91d9fc851f5a332e82a262601716973340e51c2efc65",
+  "receipts_sha256": {
+    "portable_values_refusal_result.json": "ae2cb5be3e681608636be899eab58db5e646ea573c12cc1d7faafa4e688d6696"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "1"
+    },
+    {
+      "line": 14,
+      "token": "0"
+    },
+    {
+      "line": 25,
+      "token": "0.65"
+    },
+    {
+      "line": 25,
+      "token": "1000"
+    },
+    {
+      "line": 49,
+      "token": "0.01"
+    },
+    {
+      "line": 54,
+      "token": "0"
+    },
+    {
+      "line": 81,
+      "token": "48"
+    },
+    {
+      "line": 81,
+      "token": "24"
+    },
+    {
+      "line": 82,
+      "token": "24"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "different axis: refuse-vs-comply. Statements are one-line REQUESTS labeled harmful(refuse-worthy)=1 vs",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "benign=0, each harmful request paired with a benign SAME-DOMAIN twin (topic control), read at the LAST",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.9965",
+      "value": 0.9965,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.9497",
+      "value": 0.9497,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 22,
+      "token": "0.008",
+      "value": 0.008,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 22,
+      "token": "0.9938",
+      "value": 0.9938,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc_drop_best"
+    },
+    {
+      "line": 22,
+      "token": "0.011",
+      "value": 0.011,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Llama-3.2-3B | **0.9965** | 0.9497 | **0.008** | 0.9938 | 0.011 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_drop_best"
+    },
+    {
+      "line": 23,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.9149",
+      "value": 0.9149,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 23,
+      "token": "0.003",
+      "value": 0.003,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value"
+    },
+    {
+      "line": 23,
+      "token": "0.9691",
+      "value": 0.9691,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc_drop_best"
+    },
+    {
+      "line": 23,
+      "token": "0.004",
+      "value": 0.004,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "binding_context": "| target | OOD AUROC | perm-null p95 | p-value | drop-best-family OOD | drop-best p | | Qwen2.5-3B | **0.9809** | 0.9149 | **0.003** | 0.9691 | 0.004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value_drop_best"
+    },
+    {
+      "line": 25,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "Both primary 3B targets clear the 0.65 bar AND beat the **label-permutation null** (k=1000 honesty",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "1000",
+      "value": 1000.0,
+      "decimals": 0,
+      "context": "Both primary 3B targets clear the 0.65 bar AND beat the **label-permutation null** (k=1000 honesty",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.008",
+      "value": 0.008,
+      "decimals": 3,
+      "context": "directions built from random source-label bipartitions pushed through the SAME real map): p 0.008 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 27,
+      "token": "0.9938",
+      "value": 0.9938,
+      "decimals": 4,
+      "context": "0.003. The effect survives dropping the single best OOD family (drugs in both): drop-best OOD 0.9938 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc_drop_best"
+    },
+    {
+      "line": 28,
+      "token": "0.9691",
+      "value": 0.9691,
+      "decimals": 4,
+      "context": "0.9691, p 0.011 / 0.004. gemma's own held-out OOD self-readout is 0.9844 (in-dist 1.0), so the axis",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc_drop_best"
+    },
+    {
+      "line": 28,
+      "token": "0.011",
+      "value": 0.011,
+      "decimals": 3,
+      "context": "0.9691, p 0.011 / 0.004. gemma's own held-out OOD self-readout is 0.9844 (in-dist 1.0), so the axis",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_drop_best"
+    },
+    {
+      "line": 28,
+      "token": "0.9844",
+      "value": 0.9844,
+      "decimals": 4,
+      "context": "0.9691, p 0.011 / 0.004. gemma's own held-out OOD self-readout is 0.9844 (in-dist 1.0), so the axis",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:gemma_self_ood_auroc"
+    },
+    {
+      "line": 28,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "0.9691, p 0.011 / 0.004. gemma's own held-out OOD self-readout is 0.9844 (in-dist 1.0), so the axis",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_sel_val_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.9983",
+      "value": 0.9983,
+      "decimals": 4,
+      "context": "(Llama-3.2-1B OOD 0.9983 p 0.007; Qwen2.5-1.5B OOD 0.9983 p 0.001). **Verdict per the frozen gate:",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.ood_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.007",
+      "value": 0.007,
+      "decimals": 3,
+      "context": "(Llama-3.2-1B OOD 0.9983 p 0.007; Qwen2.5-1.5B OOD 0.9983 p 0.001). **Verdict per the frozen gate:",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.p_value"
+    },
+    {
+      "line": 30,
+      "token": "0.9983",
+      "value": 0.9983,
+      "decimals": 4,
+      "context": "(Llama-3.2-1B OOD 0.9983 p 0.007; Qwen2.5-1.5B OOD 0.9983 p 0.001). **Verdict per the frozen gate:",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.ood_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "(Llama-3.2-1B OOD 0.9983 p 0.007; Qwen2.5-1.5B OOD 0.9983 p 0.001). **Verdict per the frozen gate:",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.p_value"
+    },
+    {
+      "line": 37,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_sel_val_auroc"
+    },
+    {
+      "line": 37,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[0]"
+    },
+    {
+      "line": 37,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[1]"
+    },
+    {
+      "line": 37,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[2]"
+    },
+    {
+      "line": 37,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[3]"
+    },
+    {
+      "line": 37,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[4]"
+    },
+    {
+      "line": 37,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[5]"
+    },
+    {
+      "line": 37,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "8** (internal-val AUROC 1.0) out of candidates 8, 10, 12, 14, 16, 18, 20 \u2014 shallower than the truth",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_candidates[6]"
+    },
+    {
+      "line": 45,
+      "token": "0.9497",
+      "value": 0.9497,
+      "decimals": 4,
+      "context": "HIGH (0.9497 / 0.9149) and so does the random-direction floor (0.8891 / 0.898): once the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 45,
+      "token": "0.9149",
+      "value": 0.9149,
+      "decimals": 4,
+      "context": "HIGH (0.9497 / 0.9149) and so does the random-direction floor (0.8891 / 0.898): once the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 45,
+      "token": "0.8891",
+      "value": 0.8891,
+      "decimals": 4,
+      "context": "HIGH (0.9497 / 0.9149) and so does the random-direction floor (0.8891 / 0.898): once the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 45,
+      "token": "0.898",
+      "value": 0.898,
+      "decimals": 3,
+      "context": "HIGH (0.9497 / 0.9149) and so does the random-direction floor (0.8891 / 0.898): once the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 49,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "structure (it beats random-label directions, p < 0.01 both primaries).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.9965",
+      "value": 0.9965,
+      "decimals": 4,
+      "context": "- **Margins over the null are modest in AUROC terms.** Llama 0.9965 vs null-p95 0.9497; Qwen 0.9809 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 50,
+      "token": "0.9497",
+      "value": 0.9497,
+      "decimals": 4,
+      "context": "- **Margins over the null are modest in AUROC terms.** Llama 0.9965 vs null-p95 0.9497; Qwen 0.9809 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 50,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "- **Margins over the null are modest in AUROC terms.** Llama 0.9965 vs null-p95 0.9497; Qwen 0.9809 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 54,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "R\u00b2 is \u2248 0 / negative (-0.0027 Llama, -0.0786 Qwen): the map does not faithfully rebuild gemma's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "-0.0027",
+      "value": -0.0027,
+      "decimals": 4,
+      "context": "R\u00b2 is \u2248 0 / negative (-0.0027 Llama, -0.0786 Qwen): the map does not faithfully rebuild gemma's",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.anchor_val_r2"
+    },
+    {
+      "line": 54,
+      "token": "-0.0786",
+      "value": -0.0786,
+      "decimals": 4,
+      "context": "R\u00b2 is \u2248 0 / negative (-0.0027 Llama, -0.0786 Qwen): the map does not faithfully rebuild gemma's",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.anchor_val_r2"
+    },
+    {
+      "line": 57,
+      "token": "0.3854",
+      "value": 0.3854,
+      "decimals": 4,
+      "context": "is descriptive: it collapses for Qwen (0.3854) but is elevated for Llama (0.6389), so for Llama some",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 57,
+      "token": "0.6389",
+      "value": 0.6389,
+      "decimals": 4,
+      "context": "is descriptive: it collapses for Qwen (0.3854) but is elevated for Llama (0.6389), so for Llama some",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 58,
+      "token": "0.9965",
+      "value": 0.9965,
+      "decimals": 4,
+      "context": "crude harm/benign separability survives even a random map; the LEARNED map (0.9965) and the",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **No single family drives it.** Per-OOD-family AUROC is \u2248 1.0 across all four harm domains",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_sel_val_auroc"
+    },
+    {
+      "line": 61,
+      "token": "0.8889",
+      "value": 0.8889,
+      "decimals": 4,
+      "context": "(the lone exception: Qwen surveillance 0.8889); dropping the best family leaves the result intact \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.per_ood_family.surveillance"
+    },
+    {
+      "line": 81,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "multi-turn pressure, or whether the model would actually refuse in generation. n_ood = 48 (24",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 81,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "multi-turn pressure, or whether the model would actually refuse in generation. n_ood = 48 (24",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 82,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "harmful / 24 benign); the gate is existence-and-significance against the correct null, not a deployed",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

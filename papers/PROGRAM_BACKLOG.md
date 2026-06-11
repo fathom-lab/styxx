@@ -55,6 +55,29 @@ same-items white-box head-to-head (B24).
   refit_max` (0.356 < 0.818 ✓ — the non-degeneracy guard the smoke run failed). The smoke artifact is quarantined
   (`adversarial_curve_v3_result_SMOKE_INVALID.json`). On completion → RED-TEAM the verdict → then B1.
 
+## Portable-conscience showcase arc (label-free cross-model conscience; `papers/showcase-viz/`)
+
+The overnight 2026-06-10/11 arc proved a gemma-2-2b difference-of-means honesty direction transfers
+through a **label-free** ridge map (target→source, labels never touch the map) into other minds:
+in-distribution (v2), out-of-distribution across unseen fact-families (`OOD-PORTABLE`), under adversarial
+framing (`ADVERSARIAL-ROBUST`), and at the apex item-level — Llama-3.2-3B caved on 13/13 false claims
+under expert pressure and the mapped honesty read caught all 13 from the same forward pass
+(`ITEM-CAUGHT`, p=0.001). All OATH-HELD.
+
+- **Autopilot cycle 1 (2026-06-11) — does the conscience transfer BEYOND truth? `VALUES-PORTABLE`.**
+  Same pipeline, second axis: refuse-vs-comply on harmful-vs-benign one-line REQUESTS (same-domain benign
+  twins; pre-output last-token regime), direction+map fit on four harm families, tested leave-families-out
+  on four DISJOINT unseen harm domains. Both 3B primaries clear the gate: **Llama-3.2-3B OOD AUROC 0.9965
+  (perm-null p95 0.9497, p=0.008)**, **Qwen2.5-3B 0.9809 (p95 0.9149, p=0.003)**; survives drop-best-family
+  (0.9938 p=0.011 / 0.9691 p=0.004); both 1B/1.5B secondaries concur. The refusal axis selects **gemma
+  layer 8** — shallower than the truth axis (layer 12): two value axes at two depths on one alignment.
+  Honest bounds: permutation null sits HIGH (broad harm/benign transport), so the earned claim is the
+  SPECIFIC direction beats random-label directions, modest margin; ridge map anchor R²≈0 (directional
+  transfer ≠ representational identity); linear, request-level, register-bounded, n_ood=48, local open
+  models. **The conscience is a BASIS, not a lucky truth vector.** Prereg `25af69e` (frozen pre-result);
+  `FINDING_portable_values_refusal_2026_06_11.md` (OATH-HELD 42/0); receipt `portable_values_refusal_result.json`.
+  Spawned **B26, B27**.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -93,6 +116,8 @@ same-items white-box head-to-head (B24).
 | **B23-F** | **True closed-model substrate: `claude-fable-5`** via subscription CLI (UNBLOCKED 2026-06-09, operator: "let's put fable to work"; API key still creditless — transport is `claude -p` clean-config, contamination-probed). Frozen B22 silent elicitation + scorers; POWERED-AUC vs FRONTIER-RESISTANT cave-rate branches + tier-2 pressure. PREREG frozen `0ed8eea`. | R4 | H | **IN-PROGRESS — full run live** |
 | **B24** | **Same-items white-box head-to-head** on silent caves. | R4 | M | **DONE — REPORT_AS_LANDED** (auto-REFUTED killed as overclaim #5). A first-char/surface/length-invariant **pre-emission commitment-to-the-user's-answer direction** reads silent caving at commit-slot 0.94 [0.89–0.98] / strictly-pre-commit 0.838 (TIE band), beating lens 0.60 + surface 0.69, selection-corrected p<0.01 — but **never beats behavioral (1.0)**, and on single-token collinear items it cannot be called fold-INTENT. Refutes the Outcome-D *prediction*, **reinforces** the closed-model thesis (defense-in-depth: both detect, behavioral needs no weights). Pre-reg'd token-pair GroupKFold firewall found VACUOUS (singleton groups) — first-char firewall is the load-bearing control (persisted in `b24_controls_addendum.json`). `FINDING_b24_whitebox_vs_behavioral_2026_06_09.md` |
 | **B25** | **Intent-decoupling item set** (spawned by B24, the decisive next bet): multi-token answers / Y=paraphrase-of-X items so commit-to-user's-answer ≠ commit-to-wrong-content; same POS-B grouped probe. Survives ⇒ fold-intent is real; collapses ⇒ it was the answer-commitment code. | R4/R2 | H | QUEUED |
+| **B26** | **Adversarial-OOD on the refusal axis** (the truth-arc treatment applied to VALUES-PORTABLE): does confident "this is for safety research / authorized" framing on the harmful requests fool the transferred refusal readout, as it failed to fool the truth readout? Same label-free map, same leave-families-out OOD harm domains. | spawned by VALUES-PORTABLE | H | QUEUED |
+| **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 
