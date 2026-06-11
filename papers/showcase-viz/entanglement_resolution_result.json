@@ -1,0 +1,101 @@
+{
+  "experiment": "entanglement resolution \u2014 REAL vs ARTIFACT vs WHITENING-removable",
+  "prereg": "papers/showcase-viz/PREREG_entanglement_resolution_2026_06_11.md",
+  "source": "google/gemma-2-2b-it",
+  "common_layer": 12,
+  "seed": 0,
+  "k_perm": 1000,
+  "n_rand": 1000,
+  "whiten_eps": 0.001,
+  "off_ceiling": 0.65,
+  "diag_floor": 0.75,
+  "n_test": {
+    "truth": 27,
+    "refusal": 27,
+    "valence": 15
+  },
+  "gemma": {
+    "A": 0.9737,
+    "D": 1.0,
+    "B_truth_reads_refusal": {
+      "obs": 0.9778,
+      "permnull_p95": 0.7278,
+      "randdir_p95": 0.8614,
+      "p_perm": 0.001,
+      "specific_real": true
+    },
+    "C_refusal_reads_truth": {
+      "obs": 0.9013,
+      "permnull_p95": 0.7368,
+      "randdir_p95": 0.8289,
+      "p_perm": 0.001,
+      "specific_real": true
+    },
+    "cos_truth_refusal": -0.2756
+  },
+  "whitened": {
+    "A": 0.9737,
+    "D": 1.0,
+    "B": 0.55,
+    "C": 0.5461,
+    "cos_truth_refusal": -0.0,
+    "clean_basis": true
+  },
+  "gram_schmidt": {
+    "refusal_perp_on_refusal_AUROC": 1.0,
+    "refusal_perp_on_truth_DISCRIM": 0.5132,
+    "truth_perp_on_truth_AUROC": 0.9671,
+    "truth_perp_on_refusal_DISCRIM": 0.5611
+  },
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "map_layer": 13,
+    "map_alpha": 10.0,
+    "map_val_r2": 0.5154,
+    "Am": 0.9671,
+    "Dm": 1.0,
+    "B": {
+      "obs": 0.9444,
+      "permnull_p95": 0.7111,
+      "randdir_p95": 0.95,
+      "p_perm": 0.001,
+      "specific_real": false
+    },
+    "C": {
+      "obs": 0.8618,
+      "permnull_p95": 0.75,
+      "randdir_p95": 0.8421,
+      "p_perm": 0.005,
+      "specific_real": true
+    }
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "map_layer": 20,
+    "map_alpha": 100.0,
+    "map_val_r2": 0.4488,
+    "Am": 0.9079,
+    "Dm": 1.0,
+    "B": {
+      "obs": 0.9111,
+      "permnull_p95": 0.7222,
+      "randdir_p95": 0.9667,
+      "p_perm": 0.001,
+      "specific_real": false
+    },
+    "C": {
+      "obs": 0.8618,
+      "permnull_p95": 0.7368,
+      "randdir_p95": 0.8224,
+      "p_perm": 0.005,
+      "specific_real": true
+    }
+  },
+  "decision": {
+    "gemma_specific_real": true,
+    "gemma_artifact": false,
+    "mapped_specific_real": false,
+    "whitening_cleans": true
+  },
+  "verdict": "WHITENING-RESOLVES"
+}

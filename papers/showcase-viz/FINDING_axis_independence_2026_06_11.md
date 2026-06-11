@@ -7,6 +7,14 @@ self-falsification of the same-day VALUES-PORTABLE finding
 not a lucky truth vector." The objection under test: truth and refusal might be ONE valence axis wearing
 two hats. They are not — but they are not clean independent readouts either.**
 
+> **CYCLE-3 RESOLUTION (2026-06-11, see `FINDING_entanglement_resolution_2026_06_11.md`,
+> WHITENING-RESOLVES):** the entanglement reported below is REAL in the raw residual stream (it beats
+> both a permutation null and a random-direction null) — so this finding's raw-space measurement was
+> correct — but it is a pure COVARIANCE artifact: under a ZCA-whitened (Mahalanobis) readout the
+> off-diagonals fall to chance while the diagonals stay perfect and the directions become exactly
+> orthogonal. The clean orthonormal basis EXISTS; "read it whitened" is the recipe. This finding is
+> resolved one rung up, not retracted.**
+
 ## Result — distinct directions, not sentiment, but with cross-axis read cross-talk
 
 Three difference-of-means directions (truth / refusal / a valence-sentiment control) fit at a common

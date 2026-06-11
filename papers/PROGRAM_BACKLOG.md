@@ -92,6 +92,22 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   `662b6ce`; `FINDING_axis_independence_2026_06_11.md` (OATH-HELD 29/0); receipt `axis_independence_result.json`.
   Spawned **B28**.
 
+- **Autopilot cycle 3 (2026-06-11, operator "keep going") — is the entanglement REAL, ARTIFACT, or
+  WHITENING-removable? `WHITENING-RESOLVES` (B28 DONE).** The decisive resolution. Correct nulls
+  (K=1000 label-permutation + 1000 random-direction) + ZCA whitening + Gram-Schmidt, larger n.
+  **Raw gemma: the cross-talk is REAL and SPECIFIC** — truth→refusal obs **0.9778** beats perm-p95
+  0.7278 AND rand-dir-p95 0.8614 (p=0.001); refusal→truth obs **0.9013** beats both (p=0.001). So cycle 2
+  was NOT imagining it. **But ZCA-whitening kills it entirely:** off-diagonals **0.9778/0.9013 → 0.55/0.5461**
+  (chance) while diagonals stay **0.9737/1.0** and the directions become **exactly orthogonal** (cos
+  −0.2756 → −0.0). Gram-Schmidt corroborates (refusal⊥truth still reads refusal 1.0, reads truth 0.5132).
+  **The clean orthonormal basis EXISTS under a Mahalanobis readout** — the cycle-2 entanglement was a pure
+  COVARIANCE artifact of raw dot-product. Cycles 1+2 UPGRADED (banners + re-cert, both still HELD):
+  the conscience IS a basis of independent value axes, read whitened. Honest scope: whitening run in
+  SOURCE only; mapped cross-model cross-talk is dominated by the map's broad transport (random dirs hit
+  0.95 floor) → truth→refusal mapped not-specific, refusal→truth specific (p=0.005) — whitened mapped
+  readout owed. Prereg `5a510a5`; `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0);
+  receipt `entanglement_resolution_result.json`. Spawned **B29**.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -132,7 +148,8 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B25** | **Intent-decoupling item set** (spawned by B24, the decisive next bet): multi-token answers / Y=paraphrase-of-X items so commit-to-user's-answer ≠ commit-to-wrong-content; same POS-B grouped probe. Survives ⇒ fold-intent is real; collapses ⇒ it was the answer-commitment code. | R4/R2 | H | QUEUED |
 | **B26** | **Adversarial-OOD on the refusal axis** (the truth-arc treatment applied to VALUES-PORTABLE): does confident "this is for safety research / authorized" framing on the harmful requests fool the transferred refusal readout, as it failed to fool the truth readout? Same label-free map, same leave-families-out OOD harm domains. | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
-| **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED): the cross-talk was measured by discriminability at n_test=15 (inflated floor). Re-test with (a) a label-permutation null on each off-diagonal, (b) larger n, (c) a whitened/Mahalanobis readout and a deliberately gram-Schmidt-orthogonalized basis — does cleaner separation appear without losing transfer? Decides whether the entanglement is real geometry or small-n/readout artifact. | spawned by axis-independence | H | QUEUED |
+| **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
+| **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28): cycle 3 whitened only the source. Apply the same ZCA recipe in the mapped target space to clean the (broad-transport-dominated) cross-model cross-talk; add a shrinkage/held-out covariance sweep (n_train≈155 in 2304-dim is regularized, not full-rank). Does the whitened basis hold cross-model and across covariance estimators? | spawned by entanglement-resolution | H | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 

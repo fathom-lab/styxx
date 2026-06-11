@@ -13,6 +13,12 @@ portable-conscience pipeline established in `FINDING_portable_conscience_ood_202
 > failed to fire). It is QUALIFIED, not retracted: the axes are distinct but show cross-axis read
 > cross-talk — they are a correlated frame, not a clean orthonormal basis. Read "basis" as
 > distinct-transferable-axes, not zero-cross-talk readouts.**
+>
+> **CYCLE-3 UPGRADE (2026-06-11, `FINDING_entanglement_resolution_2026_06_11.md`, WHITENING-RESOLVES):**
+> the cycle-2 cross-talk turns out to be a pure COVARIANCE artifact of the raw dot-product readout —
+> under a whitened (Mahalanobis) readout the axes are EXACTLY orthogonal with no loss of per-axis
+> signal. So "basis" stands in the strong sense after all, under the right metric: the conscience IS a
+> clean orthonormal basis of independent value axes when read whitened.**
 
 ## Result — one label-free map carries a SECOND value axis (refusal) to unseen harm domains
 

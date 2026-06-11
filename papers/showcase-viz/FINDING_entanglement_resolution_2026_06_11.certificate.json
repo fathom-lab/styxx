@@ -1,0 +1,421 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_entanglement_resolution_2026_06_11.md",
+  "document_sha256": "b8f3048152471929ea50f619fe50291b5bf28f48059abef52a2682af86a84206",
+  "receipts_sha256": {
+    "entanglement_resolution_result.json": "f77a9f5d95719574f72c201ef8779c0592b5413c4455a96cec88641b89d00ecd"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "2"
+    },
+    {
+      "line": 12,
+      "token": "88"
+    },
+    {
+      "line": 12,
+      "token": "88"
+    },
+    {
+      "line": 12,
+      "token": "48"
+    },
+    {
+      "line": 13,
+      "token": "1000"
+    },
+    {
+      "line": 16,
+      "token": "2"
+    },
+    {
+      "line": 35,
+      "token": "0.2756"
+    },
+    {
+      "line": 51,
+      "token": "2"
+    },
+    {
+      "line": 55,
+      "token": "2"
+    },
+    {
+      "line": 67,
+      "token": "155"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "resolves the ambiguity left by cycle 2 (`FINDING_axis_independence_2026_06_11.md`, PARTIAL-STRUCTURED):",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:n_test.truth"
+    },
+    {
+      "line": 12,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:n_test.truth"
+    },
+    {
+      "line": 12,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "directions, larger sets (truth n=88, refusal n=88, valence n=48; test 27 / 27 / 15). For each",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:n_test.valence"
+    },
+    {
+      "line": 13,
+      "token": "1000",
+      "value": 1000.0,
+      "decimals": 0,
+      "context": "truth\u2194refusal off-diagonal cell, two nulls: a K=1000 label-permutation floor and a 1000-draw",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**Raw gemma \u2014 the cross-talk is REAL and SPECIFIC (cycle 2 was not imagining it):**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.9778",
+      "value": 0.9778,
+      "decimals": 4,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.B_truth_reads_refusal.obs"
+    },
+    {
+      "line": 20,
+      "token": "0.7278",
+      "value": 0.7278,
+      "decimals": 4,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.B_truth_reads_refusal.permnull_p95"
+    },
+    {
+      "line": 20,
+      "token": "0.8614",
+      "value": 0.8614,
+      "decimals": 4,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.B_truth_reads_refusal.randdir_p95"
+    },
+    {
+      "line": 20,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | truth-dir \u2192 refusal (B) | 0.9778 | 0.7278 | 0.8614 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:whiten_eps"
+    },
+    {
+      "line": 21,
+      "token": "0.9013",
+      "value": 0.9013,
+      "decimals": 4,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.C_refusal_reads_truth.obs"
+    },
+    {
+      "line": 21,
+      "token": "0.7368",
+      "value": 0.7368,
+      "decimals": 4,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.C_refusal_reads_truth.permnull_p95"
+    },
+    {
+      "line": 21,
+      "token": "0.8289",
+      "value": 0.8289,
+      "decimals": 4,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.C_refusal_reads_truth.randdir_p95"
+    },
+    {
+      "line": 21,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "binding_context": "| cell | obs discrim | perm-null p95 | rand-dir p95 | p_perm | SPECIFIC-REAL | | refusal-dir \u2192 truth (C) | 0.9013 | 0.7368 | 0.8289 | 0.001 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:whiten_eps"
+    },
+    {
+      "line": 24,
+      "token": "0.9737",
+      "value": 0.9737,
+      "decimals": 4,
+      "context": "small-n mirage and not merely \"any direction separates a broadly-separable axis.\" Diagonals: truth 0.9737,",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 25,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "refusal 1.0; cos(w_truth, w_refusal) = \u22120.2756.",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 31,
+      "token": "0.9737",
+      "value": 0.9737,
+      "decimals": 4,
+      "context": "| truth-on-truth (A) | 0.9737 | 0.9737 |",
+      "binding_context": "| metric | raw | whitened | | truth-on-truth (A) | 0.9737 | 0.9737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 31,
+      "token": "0.9737",
+      "value": 0.9737,
+      "decimals": 4,
+      "context": "| truth-on-truth (A) | 0.9737 | 0.9737 |",
+      "binding_context": "| metric | raw | whitened | | truth-on-truth (A) | 0.9737 | 0.9737 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 32,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| refusal-on-refusal (D) | 1.0 | 1.0 |",
+      "binding_context": "| metric | raw | whitened | | refusal-on-refusal (D) | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 32,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| refusal-on-refusal (D) | 1.0 | 1.0 |",
+      "binding_context": "| metric | raw | whitened | | refusal-on-refusal (D) | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 33,
+      "token": "0.9778",
+      "value": 0.9778,
+      "decimals": 4,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | **0.55** |",
+      "binding_context": "| metric | raw | whitened | | truth-dir \u2192 refusal (B) | 0.9778 | **0.55** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.B_truth_reads_refusal.obs"
+    },
+    {
+      "line": 33,
+      "token": "0.55",
+      "value": 0.55,
+      "decimals": 2,
+      "context": "| truth-dir \u2192 refusal (B) | 0.9778 | **0.55** |",
+      "binding_context": "| metric | raw | whitened | | truth-dir \u2192 refusal (B) | 0.9778 | **0.55** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:whitened.B"
+    },
+    {
+      "line": 34,
+      "token": "0.9013",
+      "value": 0.9013,
+      "decimals": 4,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | **0.5461** |",
+      "binding_context": "| metric | raw | whitened | | refusal-dir \u2192 truth (C) | 0.9013 | **0.5461** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.C_refusal_reads_truth.obs"
+    },
+    {
+      "line": 34,
+      "token": "0.5461",
+      "value": 0.5461,
+      "decimals": 4,
+      "context": "| refusal-dir \u2192 truth (C) | 0.9013 | **0.5461** |",
+      "binding_context": "| metric | raw | whitened | | refusal-dir \u2192 truth (C) | 0.9013 | **0.5461** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:whitened.C"
+    },
+    {
+      "line": 35,
+      "token": "0.2756",
+      "value": 0.2756,
+      "decimals": 4,
+      "context": "| cos(w_truth, w_refusal) | \u22120.2756 | **\u22120.0** |",
+      "binding_context": "| metric | raw | whitened | | cos(w_truth, w_refusal) | \u22120.2756 | **\u22120.0** |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| cos(w_truth, w_refusal) | \u22120.2756 | **\u22120.0** |",
+      "binding_context": "| metric | raw | whitened | | cos(w_truth, w_refusal) | \u22120.2756 | **\u22120.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:seed"
+    },
+    {
+      "line": 41,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "refusal at AUROC 1.0 while its reading of truth drops to discriminability 0.5132 (chance); symmetrically,",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.A"
+    },
+    {
+      "line": 41,
+      "token": "0.5132",
+      "value": 0.5132,
+      "decimals": 4,
+      "context": "refusal at AUROC 1.0 while its reading of truth drops to discriminability 0.5132 (chance); symmetrically,",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gram_schmidt.refusal_perp_on_truth_DISCRIM"
+    },
+    {
+      "line": 42,
+      "token": "0.9671",
+      "value": 0.9671,
+      "decimals": 4,
+      "context": "w_truth orthogonalized reads truth at 0.9671 and refusal at 0.5611. An explicitly independent basis loses",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gram_schmidt.truth_perp_on_truth_AUROC"
+    },
+    {
+      "line": 51,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Cycle 2 (PARTIAL-STRUCTURED) called the axes \"distinct but entangled \u2014 a correlated frame, not an",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "basis of independent value axes; \"read it whitened\" is the readout recipe.** Cycle 2 is not retracted \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "refusal is so broadly separable that random directions reach the high floor (rand-dir p95 0.95 Llama /",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:mapped_primary.B.randdir_p95"
+    },
+    {
+      "line": 63,
+      "token": "0.9667",
+      "value": 0.9667,
+      "decimals": 4,
+      "context": "0.9667 Qwen), so the truth\u2192refusal mapped cell is NOT specific-real (the broad-transport regime the",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:mapped_secondary.B.randdir_p95"
+    },
+    {
+      "line": 64,
+      "token": "0.005",
+      "value": 0.005,
+      "decimals": 3,
+      "context": "VALUES-PORTABLE finding already documented), while refusal\u2192truth stays specific-real (p_perm 0.005 both",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:mapped_primary.C.p_perm"
+    },
+    {
+      "line": 67,
+      "token": "155",
+      "value": 155.0,
+      "decimals": 0,
+      "context": "eps-regularization (eps small) on n_train \u2248 155 in a 2304-dim space is a regularized covariance estimate,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_axis_independence_2026_06_11.md",
-  "document_sha256": "0b278d28fd291aec15e6d9d67620bbb7891cc7c009f0d8320217ac828f310855",
+  "document_sha256": "4c308baaa6cbe7823d60124e90fad5e7d9825491cb7b6e5766f791396c6549ff",
   "receipts_sha256": {
     "axis_independence_result.json": "305a3c1e9e2a07148c516f1eef0ab8e84494b5e6de0d73b7df8bf3963c0f6836"
   },
@@ -16,29 +16,29 @@
   "ungrounded": [],
   "abstained": [
     {
-      "line": 13,
+      "line": 21,
       "token": "15"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "0.75"
     },
     {
-      "line": 35,
+      "line": 43,
       "token": "0.65"
     },
     {
-      "line": 67,
+      "line": 75,
       "token": "15"
     },
     {
-      "line": 75,
+      "line": 83,
       "token": "48"
     }
   ],
   "ledger": [
     {
-      "line": 13,
+      "line": 21,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -47,7 +47,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 20,
+      "line": 28,
       "token": "0.84",
       "value": 0.84,
       "decimals": 2,
@@ -57,7 +57,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.truth"
     },
     {
-      "line": 20,
+      "line": 28,
       "token": "0.8929",
       "value": 0.8929,
       "decimals": 4,
@@ -67,7 +67,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.refusal"
     },
     {
-      "line": 20,
+      "line": 28,
       "token": "0.7679",
       "value": 0.7679,
       "decimals": 4,
@@ -77,7 +77,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.valence"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "0.84",
       "value": 0.84,
       "decimals": 2,
@@ -87,7 +87,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.truth"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -97,7 +97,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.refusal"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "0.7857",
       "value": 0.7857,
       "decimals": 4,
@@ -107,7 +107,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.valence"
     },
     {
-      "line": 22,
+      "line": 30,
       "token": "0.92",
       "value": 0.92,
       "decimals": 2,
@@ -117,7 +117,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.valence.truth"
     },
     {
-      "line": 22,
+      "line": 30,
       "token": "0.8036",
       "value": 0.8036,
       "decimals": 4,
@@ -127,7 +127,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.valence.refusal"
     },
     {
-      "line": 22,
+      "line": 30,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -137,7 +137,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.refusal"
     },
     {
-      "line": 24,
+      "line": 32,
       "token": "0.2132",
       "value": 0.2132,
       "decimals": 4,
@@ -146,7 +146,7 @@
       "receipt_ref": "axis_independence_result.json:gate_values.abs_cos_truth_refusal"
     },
     {
-      "line": 24,
+      "line": 32,
       "token": "0.0903",
       "value": 0.0903,
       "decimals": 4,
@@ -155,7 +155,7 @@
       "receipt_ref": "axis_independence_result.json:cosines_at_common_layer.truth_valence"
     },
     {
-      "line": 25,
+      "line": 33,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -164,7 +164,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.valence.refusal"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -173,7 +173,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 29,
+      "line": 37,
       "token": "0.2132",
       "value": 0.2132,
       "decimals": 4,
@@ -182,7 +182,7 @@
       "receipt_ref": "axis_independence_result.json:gate_values.abs_cos_truth_refusal"
     },
     {
-      "line": 32,
+      "line": 40,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -191,7 +191,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.valence.refusal"
     },
     {
-      "line": 32,
+      "line": 40,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -200,7 +200,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.refusal"
     },
     {
-      "line": 35,
+      "line": 43,
       "token": "0.65",
       "value": 0.65,
       "decimals": 2,
@@ -209,7 +209,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 36,
+      "line": 44,
       "token": "0.8929",
       "value": 0.8929,
       "decimals": 4,
@@ -218,7 +218,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.refusal"
     },
     {
-      "line": 36,
+      "line": 44,
       "token": "0.84",
       "value": 0.84,
       "decimals": 2,
@@ -227,7 +227,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.truth"
     },
     {
-      "line": 47,
+      "line": 55,
       "token": "0.3717",
       "value": 0.3717,
       "decimals": 4,
@@ -237,7 +237,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_primary.map_val_r2"
     },
     {
-      "line": 47,
+      "line": 55,
       "token": "0.82",
       "value": 0.82,
       "decimals": 2,
@@ -247,7 +247,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_primary.matrix.truth.truth"
     },
     {
-      "line": 47,
+      "line": 55,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -257,7 +257,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.refusal"
     },
     {
-      "line": 47,
+      "line": 55,
       "token": "0.875",
       "value": 0.875,
       "decimals": 3,
@@ -267,7 +267,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_primary.matrix.truth.refusal"
     },
     {
-      "line": 47,
+      "line": 55,
       "token": "0.90",
       "value": 0.9,
       "decimals": 2,
@@ -277,7 +277,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_primary.matrix.refusal.truth"
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "0.4269",
       "value": 0.4269,
       "decimals": 4,
@@ -287,7 +287,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_secondary.map_val_r2"
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "0.82",
       "value": 0.82,
       "decimals": 2,
@@ -297,7 +297,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_primary.matrix.truth.truth"
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -307,7 +307,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.refusal.refusal"
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "0.8929",
       "value": 0.8929,
       "decimals": 4,
@@ -317,7 +317,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.refusal"
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "0.76",
       "value": 0.76,
       "decimals": 2,
@@ -327,7 +327,7 @@
       "receipt_ref": "axis_independence_result.json:mapped_secondary.matrix.refusal.truth"
     },
     {
-      "line": 67,
+      "line": 75,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -336,7 +336,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 70,
+      "line": 78,
       "token": "0.77",
       "value": 0.77,
       "decimals": 2,
@@ -345,7 +345,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.valence"
     },
     {
-      "line": 70,
+      "line": 78,
       "token": "0.89",
       "value": 0.89,
       "decimals": 2,
@@ -354,7 +354,7 @@
       "receipt_ref": "axis_independence_result.json:gemma_matrix_diagAUROC_offdiagDISCRIM.truth.refusal"
     },
     {
-      "line": 75,
+      "line": 83,
       "token": "48",
       "value": 48.0,
       "decimals": 0,
