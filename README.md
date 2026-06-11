@@ -11,10 +11,10 @@
            · · · nothing crosses unseen · · ·
 ```
 
-### Cognitive observability for LLM agents
+### The measurement layer for machine minds
 
-*Nine calibrated cognometric instruments · 9-for-9 on K=1 phase transition · pure Python · no LLM required.*
-*langsmith tells you the trace broke — styxx tells you why.*
+*Reads what a model means, catches when it won't hold the truth under pressure, and certifies that every claim re-runs.*
+*Pure Python · MIT · open at the core, forever ([OPEN_CORE.md](OPEN_CORE.md)).*
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=ff2330&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
 [![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=ff2330&label=python&style=flat-square)](https://pypi.org/project/styxx/)
@@ -28,6 +28,12 @@
 [![Featured](https://img.shields.io/badge/featured_in-awesome--hallucination--detection-ff2330.svg?style=flat-square)](https://github.com/EdinburghNLP/awesome-hallucination-detection)
 
 # `0.998 HaluEval · 0.976 XSTest · 0.943 BFCL · No LLM.`
+
+> **The measurement layer (7.15.0+).** Beyond the cognometric instruments below, styxx now reads what a model *means* and whether it *holds the truth*, and certifies that every number it reports can be re-run:
+> - **`styxx.meaning_diff`** — did two models mean the same thing? agreement + HEALTHY/DRIFTED/BROKEN + the concepts that drifted, by name. Model-migration / quantization / fine-tune regression QA, zero labels.
+> - **`styxx.certify` (OATH)** — extract every numeric claim in a document, verify each against its receipts, emit a machine-checkable certificate. The verifier passed its own pre-registered mutant battery.
+> - **`styxx.mind`** — a certified mind profile (conduct under pressure + meaning-geometry citizenship); refuses the axes it cannot measure, each refusal carrying its receipt.
+> - **Watch it live** → **[styxx.org/live](https://styxx-org.netlify.app/live.html)** — a real model's grounding signature read from its activations, before it speaks. Calibrated correlate, not a verdict.
 
 ## 30-second quickstart
 

@@ -1,0 +1,152 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_portable_conscience_v2_2026_06_10.md",
+  "document_sha256": "9bd4b66e12e5cf3db2f4ce4fa7bbdbb4098429357b4d130e50af4be29f4c0443",
+  "receipts_sha256": {
+    "portable_conscience_v2_result.json": "b942b75f52236ebc1552e6aa165b68d24c31c2c5dfdf480e2cdbdbdf582ffba0",
+    "portable_conscience_result.json": "2b34d1d4e6795668926072a4abbb5e4d148ff8d2f86506913bc0a3d45220c369",
+    "portable_conscience_v1_result.json": "cb11ee3df15fee0cd22fbc7fe66ad4165c620f8ed1daf736671686665bd23969"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 18,
+      "token": "0.65"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 15,
+      "token": "0.893",
+      "value": 0.893,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.meta-llama/Llama-3.2-3B-Instruct.transferred_auroc"
+    },
+    {
+      "line": 15,
+      "token": "0.717",
+      "value": 0.717,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.meta-llama/Llama-3.2-3B-Instruct.floor_p95"
+    },
+    {
+      "line": 15,
+      "token": "0.643",
+      "value": 0.643,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.meta-llama/Llama-3.2-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 15,
+      "token": "0.876",
+      "value": 0.876,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Llama-3.2-3B | **0.893** | 0.717 | 0.643 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:ceiling_gemma_self_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.918",
+      "value": 0.918,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.Qwen/Qwen2.5-3B-Instruct.transferred_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.729",
+      "value": 0.729,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.Qwen/Qwen2.5-3B-Instruct.floor_p95"
+    },
+    {
+      "line": 16,
+      "token": "0.365",
+      "value": 0.365,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.Qwen/Qwen2.5-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.876",
+      "value": 0.876,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "binding_context": "| | transferred AUROC | floor p95 (random dir) | random-map control | ceiling (gemma self) | | Qwen2.5-3B | **0.918** | 0.729 | 0.365 | 0.876 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:ceiling_gemma_self_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "Both clear the 0.65 bar and **beat the powered floor** \u2014 so it is the SPECIFIC honesty direction, not",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.476",
+      "value": 0.476,
+      "decimals": 3,
+      "context": "any direction (the floor's median sits at chance, 0.476 / 0.520). Both also **beat the random-map",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.meta-llama/Llama-3.2-3B-Instruct.floor_median"
+    },
+    {
+      "line": 19,
+      "token": "0.520",
+      "value": 0.52,
+      "decimals": 3,
+      "context": "any direction (the floor's median sits at chance, 0.476 / 0.520). Both also **beat the random-map",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:per_target.Qwen/Qwen2.5-3B-Instruct.floor_median"
+    },
+    {
+      "line": 21,
+      "token": "0.876",
+      "value": 0.876,
+      "decimals": 3,
+      "context": "gemma's own self-readout (0.876): the honesty direction reads truth in the larger models at least as",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:ceiling_gemma_self_auroc"
+    },
+    {
+      "line": 33,
+      "token": "0.876",
+      "value": 0.876,
+      "decimals": 3,
+      "context": "- **v2** fixed BOTH \u2014 a powered floor AND an in-distribution fit source (self-ceiling 0.876) \u2014 and the",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_v2_result.json:ceiling_gemma_self_auroc"
+    }
+  ]
+}
