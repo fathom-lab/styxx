@@ -1,0 +1,237 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+  "document_sha256": "aa5bc009930a621522b21aad7bda69443fa0e2033bca94330f9d69dd7079c8e9",
+  "receipts_sha256": {
+    "portable_conscience_adversarial_ood_result.json": "9bfbe8db5a76ae93b0175f10d6d1c4d644721c55ce625f3477ebb2520d391d38"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 23,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "(lexical-confidence baseline AUROC 0.5). The honesty direction and the cross-model map were fit ONLY on",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:lexical_confidence_baseline_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.9229",
+      "value": 0.9229,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.plain_ood_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.9385",
+      "value": 0.9385,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.adversarial_ood_auroc"
+    },
+    {
+      "line": 18,
+      "token": "-0.0156",
+      "value": -0.0156,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.degradation"
+    },
+    {
+      "line": 18,
+      "token": "0.8233",
+      "value": 0.8233,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 18,
+      "token": "0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Llama-3.2-3B | 0.9229 | **0.9385** | -0.0156 | 0.8233 | **0.002** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 19,
+      "token": "0.8906",
+      "value": 0.8906,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.plain_ood_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.9189",
+      "value": 0.9189,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.adversarial_ood_auroc"
+    },
+    {
+      "line": 19,
+      "token": "-0.0283",
+      "value": -0.0283,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.degradation"
+    },
+    {
+      "line": 19,
+      "token": "0.7891",
+      "value": 0.7891,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 19,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "binding_context": "| target | plain OOD | adversarial OOD | degradation | perm-null p95 | p-value | | Qwen2.5-3B | 0.8906 | **0.9189** | -0.0283 | 0.7891 | **0.001** |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value"
+    },
+    {
+      "line": 23,
+      "token": "0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "(p 0.002 / 0.001), and two smaller secondary models concur (Llama-3.2-1B adversarial 0.8379, p 0.001;",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 23,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "(p 0.002 / 0.001), and two smaller secondary models concur (Llama-3.2-1B adversarial 0.8379, p 0.001;",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value"
+    },
+    {
+      "line": 23,
+      "token": "0.8379",
+      "value": 0.8379,
+      "decimals": 4,
+      "context": "(p 0.002 / 0.001), and two smaller secondary models concur (Llama-3.2-1B adversarial 0.8379, p 0.001;",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.adversarial_ood_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "(p 0.002 / 0.001), and two smaller secondary models concur (Llama-3.2-1B adversarial 0.8379, p 0.001;",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value"
+    },
+    {
+      "line": 24,
+      "token": "0.8896",
+      "value": 0.8896,
+      "decimals": 4,
+      "context": "Qwen2.5-1.5B 0.8896, p 0.001). gemma's own adversarial self-readout is 0.9443 (>= its plain 0.9287), so",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.adversarial_ood_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "Qwen2.5-1.5B 0.8896, p 0.001). gemma's own adversarial self-readout is 0.9443 (>= its plain 0.9287), so",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value"
+    },
+    {
+      "line": 24,
+      "token": "0.9443",
+      "value": 0.9443,
+      "decimals": 4,
+      "context": "Qwen2.5-1.5B 0.8896, p 0.001). gemma's own adversarial self-readout is 0.9443 (>= its plain 0.9287), so",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:gemma_self_adversarial_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.9287",
+      "value": 0.9287,
+      "decimals": 4,
+      "context": "Qwen2.5-1.5B 0.8896, p 0.001). gemma's own adversarial self-readout is 0.9443 (>= its plain 0.9287), so",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:gemma_self_plain_auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "(baseline 0.5). The white-box honesty direction nonetheless separates true from false at ~0.92-0.94 in",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:lexical_confidence_baseline_auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.92",
+      "value": 0.92,
+      "decimals": 2,
+      "context": "(baseline 0.5). The white-box honesty direction nonetheless separates true from false at ~0.92-0.94 in",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.plain_ood_auroc"
+    },
+    {
+      "line": 45,
+      "token": "0.8233",
+      "value": 0.8233,
+      "decimals": 4,
+      "context": "null sits high (0.8233 / 0.7891) for the same reason as in the plain OOD finding \u2014 the map transports",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 45,
+      "token": "0.7891",
+      "value": 0.7891,
+      "decimals": 4,
+      "context": "null sits high (0.8233 / 0.7891) for the same reason as in the plain OOD finding \u2014 the map transports",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_adversarial_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    }
+  ]
+}
