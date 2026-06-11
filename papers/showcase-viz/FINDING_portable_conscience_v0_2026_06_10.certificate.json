@@ -1,0 +1,164 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_portable_conscience_v0_2026_06_10.md",
+  "document_sha256": "584c08dd2208ded8718b4299b0e8bfc43d4c13dd2a8b4fe998e2a3d511b9ccc6",
+  "receipts_sha256": {
+    "portable_conscience_result.json": "2b34d1d4e6795668926072a4abbb5e4d148ff8d2f86506913bc0a3d45220c369"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 13,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 50,
+      "token": "2"
+    },
+    {
+      "line": 57,
+      "token": "0.85"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- **The tempting positive:** gemma-2-2b's truthfulness direction (layer 12), mapped into",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:source_layer"
+    },
+    {
+      "line": 17,
+      "token": "108",
+      "value": 108.0,
+      "decimals": 0,
+      "context": "Llama-3.2-3B's residual space via a ridge alignment fit on 108 anchor statements (held-out val",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:anchor_n"
+    },
+    {
+      "line": 18,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "R\u00b2 0.72), read Llama's 16 held-out true/false pairs at **paired accuracy 1.000** \u2014 higher than",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:anchor_val_r2"
+    },
+    {
+      "line": 18,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "R\u00b2 0.72), read Llama's 16 held-out true/false pairs at **paired accuracy 1.000** \u2014 higher than",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:test_pairs"
+    },
+    {
+      "line": 18,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "R\u00b2 0.72), read Llama's 16 held-out true/false pairs at **paired accuracy 1.000** \u2014 higher than",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:transferred_paired_acc"
+    },
+    {
+      "line": 19,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "gemma reading its OWN activations (ceiling 0.75). Looks like a universal conscience.",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:ceiling_gemma_self_paired_acc"
+    },
+    {
+      "line": 21,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "the SAME map also reached paired accuracy 1.000 (95th percentile = 1.000). The perfect separation is",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:transferred_paired_acc"
+    },
+    {
+      "line": 21,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "the SAME map also reached paired accuracy 1.000 (95th percentile = 1.000). The perfect separation is",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:transferred_paired_acc"
+    },
+    {
+      "line": 30,
+      "token": "0.688",
+      "value": 0.688,
+      "decimals": 3,
+      "context": "The learned map is doing genuine work, not noise: a RANDOM map of the same shape scores only 0.688",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:random_map_control_paired_acc"
+    },
+    {
+      "line": 31,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "(vs 1.000 for the fitted map). So truth IS strongly, linearly readable in the cross-model aligned",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:transferred_paired_acc"
+    },
+    {
+      "line": 41,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "mistaken for a transferred signal. The floor control \u2014 written before the data \u2014 turned a 1.000 that",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:transferred_paired_acc"
+    },
+    {
+      "line": 49,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "The portable conscience is not one magic direction. Two honest paths remain open: (1) per-model",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:random_direction_floor_p95"
+    },
+    {
+      "line": 50,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "probes (cheap, the current `styxx.residual_probe` atlas \u2014 a small zoo), or (2) a truth readout fit",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "test for the gemma probe (ceiling 0.75, not 0.85). A negative bounds linear single-direction",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_result.json:ceiling_gemma_self_paired_acc"
+    },
+    {
+      "line": 57,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "test for the gemma probe (ceiling 0.75, not 0.85). A negative bounds linear single-direction",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

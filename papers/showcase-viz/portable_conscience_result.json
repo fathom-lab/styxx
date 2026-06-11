@@ -1,0 +1,19 @@
+{
+  "experiment": "portable conscience v0 \u2014 does honesty transfer across minds?",
+  "prereg": "papers/showcase-viz/PREREG_portable_conscience_v0_2026_06_10.md",
+  "source": "google/gemma-2-2b-it",
+  "source_layer": 12,
+  "target": "meta-llama/Llama-3.2-3B-Instruct",
+  "target_layer_selected": 12,
+  "anchor_n": 108,
+  "test_pairs": 16,
+  "ridge_alpha": 10.0,
+  "anchor_val_r2": 0.7226,
+  "ceiling_gemma_self_paired_acc": 0.75,
+  "transferred_paired_acc": 1.0,
+  "transferred_effect_size": 1.1599,
+  "random_direction_floor_p95": 1.0,
+  "random_map_control_paired_acc": 0.6875,
+  "chance": 0.5,
+  "verdict": "MODEL-SPECIFIC"
+}
