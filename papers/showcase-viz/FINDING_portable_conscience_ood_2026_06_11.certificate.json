@@ -1,0 +1,394 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_portable_conscience_ood_2026_06_11.md",
+  "document_sha256": "0813df752ca9cb61cdcfdbf761a94911b6dc4dadb9d9e3e385aa52820784646f",
+  "receipts_sha256": {
+    "portable_conscience_ood_v2_result.json": "c732555363d2d43a4c74ad22d2aa774f4edcd8e70c1820a8bb7ff8861d96f88a",
+    "portable_conscience_ood_result.json": "0be25029b666993cea823f5a8f84c259dec08cfbd76fc29da5ea08999cbf620a"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 33,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 22,
+      "token": "0.65"
+    },
+    {
+      "line": 23,
+      "token": "1000"
+    },
+    {
+      "line": 25,
+      "token": "1.0"
+    },
+    {
+      "line": 38,
+      "token": "0.01"
+    },
+    {
+      "line": 48,
+      "token": "0.78"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "0.923",
+      "value": 0.923,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.830",
+      "value": 0.83,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 19,
+      "token": "0.003",
+      "value": 0.003,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 19,
+      "token": "0.898",
+      "value": 0.898,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc_nogeo"
+    },
+    {
+      "line": 19,
+      "token": "0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Llama-3.2-3B | **0.923** | 0.830 | **0.003** | 0.898 | 0.009 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 20,
+      "token": "0.849",
+      "value": 0.849,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.802",
+      "value": 0.802,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 20,
+      "token": "0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 20,
+      "token": "0.766",
+      "value": 0.766,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc_nogeo"
+    },
+    {
+      "line": 20,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "binding_context": "| target | OOD AUROC | permutation-null p95 | p-value | drop-geography OOD | drop-geo p | | Qwen2.5-3B | **0.849** | 0.802 | **0.009** | 0.766 | 0.017 |",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 22,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "Both primary targets clear the 0.65 bar AND beat the **label-permutation null** \u2014 honesty directions",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "1000",
+      "value": 1000.0,
+      "decimals": 0,
+      "context": "built from random source-label bipartitions pushed through the SAME map (k = 1000). The true-label",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.003",
+      "value": 0.003,
+      "decimals": 3,
+      "context": "direction transfers out-of-distribution significantly better than chance bipartitions (p 0.003 / 0.009),",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value"
+    },
+    {
+      "line": 24,
+      "token": "0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "direction transfers out-of-distribution significantly better than chance bipartitions (p 0.003 / 0.009),",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 25,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "and the effect SURVIVES removing the one trivially-separable family (geography = 1.0): on the remaining",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "three families it still beats the null (drop-geography p 0.009 / 0.017). Two smaller secondary models",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 26,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "three families it still beats the null (drop-geography p 0.009 / 0.017). Two smaller secondary models",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.p_value_nogeo"
+    },
+    {
+      "line": 27,
+      "token": "0.004",
+      "value": 0.004,
+      "decimals": 3,
+      "context": "concur (Llama-3.2-1B p 0.004; Qwen2.5-1.5B p 0.002). gemma's own OOD self-readout is 0.929 (the source",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.p_value"
+    },
+    {
+      "line": 27,
+      "token": "0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "concur (Llama-3.2-1B p 0.004; Qwen2.5-1.5B p 0.002). gemma's own OOD self-readout is 0.929 (the source",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:secondary_targets.Qwen/Qwen2.5-1.5B-Instruct.p_value"
+    },
+    {
+      "line": 27,
+      "token": "0.929",
+      "value": 0.929,
+      "decimals": 3,
+      "context": "concur (Llama-3.2-1B p 0.004; Qwen2.5-1.5B p 0.002). gemma's own OOD self-readout is 0.929 (the source",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:gemma_self_ood_auroc"
+    },
+    {
+      "line": 33,
+      "token": "0.830",
+      "value": 0.83,
+      "decimals": 3,
+      "context": "- **The map really does transport broad truth structure.** The permutation null sits HIGH (0.830 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 34,
+      "token": "0.802",
+      "value": 0.802,
+      "decimals": 3,
+      "context": "0.802) and so does the random-direction floor (0.838 / 0.798): once the label-free map is fit on the",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 34,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "0.802) and so does the random-direction floor (0.838 / 0.798): once the label-free map is fit on the",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 34,
+      "token": "0.798",
+      "value": 0.798,
+      "decimals": 3,
+      "context": "0.802) and so does the random-direction floor (0.838 / 0.798): once the label-free map is fit on the",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 38,
+      "token": "0.923",
+      "value": 0.923,
+      "decimals": 3,
+      "context": "- **Modest margins.** Llama 0.923 vs null 0.830; Qwen 0.849 vs 0.802. Significant (p < 0.01) and",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.830",
+      "value": 0.83,
+      "decimals": 3,
+      "context": "- **Modest margins.** Llama 0.923 vs null 0.830; Qwen 0.849 vs 0.802. Significant (p < 0.01) and",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 38,
+      "token": "0.849",
+      "value": 0.849,
+      "decimals": 3,
+      "context": "- **Modest margins.** Llama 0.923 vs null 0.830; Qwen 0.849 vs 0.802. Significant (p < 0.01) and",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "- **Modest margins.** Llama 0.923 vs null 0.830; Qwen 0.849 vs 0.802. Significant (p < 0.01) and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "0.530",
+      "value": 0.53,
+      "decimals": 3,
+      "context": "robust, but a margin, not a chasm. The random-MAP control collapses (0.530 / 0.435), so the LEARNED",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 39,
+      "token": "0.435",
+      "value": 0.435,
+      "decimals": 3,
+      "context": "robust, but a margin, not a chasm. The random-MAP control collapses (0.530 / 0.435), so the LEARNED",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.random_map_auroc"
+    },
+    {
+      "line": 41,
+      "token": "1.086",
+      "value": 1.086,
+      "decimals": 3,
+      "context": "- **No OOD degradation.** Retention (OOD / matched in-distribution) is 1.086 (Llama) and 1.080 (Qwen):",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.retention"
+    },
+    {
+      "line": 41,
+      "token": "1.080",
+      "value": 1.08,
+      "decimals": 3,
+      "context": "- **No OOD degradation.** Retention (OOD / matched in-distribution) is 1.086 (Llama) and 1.080 (Qwen):",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.retention"
+    },
+    {
+      "line": 47,
+      "token": "0.923",
+      "value": 0.923,
+      "decimals": 3,
+      "context": "v_ood_1 returned OOD AUROC 0.923 / 0.829 but a frozen guard fired: Llama's random-direction floor_p95",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 47,
+      "token": "0.829",
+      "value": 0.829,
+      "decimals": 3,
+      "context": "v_ood_1 returned OOD AUROC 0.923 / 0.829 but a frozen guard fired: Llama's random-direction floor_p95",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 48,
+      "token": "0.865",
+      "value": 0.865,
+      "decimals": 3,
+      "context": "hit 0.865 (>= 0.78). The random-direction floor is the WRONG null for a difference-of-means direction \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.floor_p95"
+    },
+    {
+      "line": 48,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "hit 0.865 (>= 0.78). The random-direction floor is the WRONG null for a difference-of-means direction \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 53,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "reported (0.838 / 0.798), and the honesty direction beats THAT too. This is the v0 -> v1 -> v2 pattern",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 53,
+      "token": "0.798",
+      "value": 0.798,
+      "decimals": 3,
+      "context": "reported (0.838 / 0.798), and the honesty direction beats THAT too. This is the v0 -> v1 -> v2 pattern",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_conscience_ood_v2_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.rand_dir_floor_p95"
+    }
+  ]
+}

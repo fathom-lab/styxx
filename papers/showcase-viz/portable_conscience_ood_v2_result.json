@@ -1,0 +1,123 @@
+{
+  "experiment": "portable conscience OOD v2 \u2014 leave-families-out, label-permutation null, AUROC",
+  "prereg": "papers/showcase-viz/PREREG_portable_conscience_ood_v2_2026_06_11.md",
+  "source": "google/gemma-2-2b-it",
+  "source_layer": 12,
+  "seed": 0,
+  "k_perm": 1000,
+  "train_families": [
+    "capitals",
+    "elements",
+    "arithmetic",
+    "biology"
+  ],
+  "ood_families": [
+    "dates",
+    "comparatives",
+    "geography",
+    "definitions"
+  ],
+  "n_fit": 92,
+  "n_indist": 24,
+  "n_ood": 64,
+  "gemma_self_indist_auroc": 0.9643,
+  "gemma_self_ood_auroc": 0.9287,
+  "primary_targets": {
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "target_layer": 15,
+      "anchor_val_r2": 0.8515,
+      "alpha": 10.0,
+      "indist_auroc": 0.85,
+      "ood_auroc": 0.9229,
+      "retention": 1.0857,
+      "perm_p95": 0.8302,
+      "perm_median": 0.5049,
+      "p_value": 0.003,
+      "ood_auroc_nogeo": 0.8976,
+      "perm_p95_nogeo": 0.809,
+      "p_value_nogeo": 0.009,
+      "rand_dir_floor_p95": 0.8375,
+      "random_map_auroc": 0.5303,
+      "per_ood_family": {
+        "comparatives": 0.8906,
+        "dates": 0.9844,
+        "definitions": 0.9531,
+        "geography": 1.0
+      },
+      "p1_pass": true
+    },
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "target_layer": 20,
+      "anchor_val_r2": 0.831,
+      "alpha": 100.0,
+      "indist_auroc": 0.7857,
+      "ood_auroc": 0.8486,
+      "retention": 1.0801,
+      "perm_p95": 0.8018,
+      "perm_median": 0.5015,
+      "p_value": 0.009,
+      "ood_auroc_nogeo": 0.7656,
+      "perm_p95_nogeo": 0.7361,
+      "p_value_nogeo": 0.017,
+      "rand_dir_floor_p95": 0.7981,
+      "random_map_auroc": 0.4346,
+      "per_ood_family": {
+        "comparatives": 0.7969,
+        "dates": 1.0,
+        "definitions": 0.9219,
+        "geography": 1.0
+      },
+      "p1_pass": true
+    }
+  },
+  "secondary_targets": {
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "target_layer": 11,
+      "anchor_val_r2": 0.7879,
+      "alpha": 10.0,
+      "indist_auroc": 0.6071,
+      "ood_auroc": 0.7812,
+      "retention": 1.2868,
+      "perm_p95": 0.6865,
+      "perm_median": 0.5034,
+      "p_value": 0.004,
+      "ood_auroc_nogeo": 0.6684,
+      "perm_p95_nogeo": 0.6146,
+      "p_value_nogeo": 0.009,
+      "rand_dir_floor_p95": 0.7132,
+      "random_map_auroc": 0.4219,
+      "per_ood_family": {
+        "comparatives": 0.7188,
+        "dates": 0.8906,
+        "definitions": 0.7812,
+        "geography": 0.9844
+      },
+      "p1_pass": true
+    },
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "target_layer": 19,
+      "anchor_val_r2": 0.8099,
+      "alpha": 100.0,
+      "indist_auroc": 0.8571,
+      "ood_auroc": 0.8799,
+      "retention": 1.0265,
+      "perm_p95": 0.7578,
+      "perm_median": 0.5063,
+      "p_value": 0.002,
+      "ood_auroc_nogeo": 0.8698,
+      "perm_p95_nogeo": 0.724,
+      "p_value_nogeo": 0.001,
+      "rand_dir_floor_p95": 0.7462,
+      "random_map_auroc": 0.5156,
+      "per_ood_family": {
+        "comparatives": 1.0,
+        "dates": 0.875,
+        "definitions": 0.9375,
+        "geography": 0.9375
+      },
+      "p1_pass": true
+    }
+  },
+  "n_primary_pass": 2,
+  "verdict": "OOD-PORTABLE"
+}
