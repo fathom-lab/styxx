@@ -1,0 +1,195 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_live_signature_mvp_2026_06_10.md",
+  "document_sha256": "9ba3d97fdbb9feec31b08699ac41992b0eb931e5a7b69c624763de76b79d9b70",
+  "receipts_sha256": {
+    "live_signature_result.json": "1d1c5c1f45128acc06db762f6ba4097d7547e95e15f0e5d404f14bdf77f3b519"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "7.9"
+    },
+    {
+      "line": 27,
+      "token": "95"
+    },
+    {
+      "line": 27,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "7.9",
+      "value": 7.9,
+      "decimals": 1,
+      "context": "dependencies (torch / transformer_lens / nnsight already present); ~7.9 GB free GPU. This is the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- **Truthfulness probe (layer 12, manifest leave-one-out AUC 0.8508 in-distribution):** on 16 FRESH,",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_probe.layer"
+    },
+    {
+      "line": 18,
+      "token": "0.8508",
+      "value": 0.8508,
+      "decimals": 4,
+      "context": "- **Truthfulness probe (layer 12, manifest leave-one-out AUC 0.8508 in-distribution):** on 16 FRESH,",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_probe.auc"
+    },
+    {
+      "line": 18,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **Truthfulness probe (layer 12, manifest leave-one-out AUC 0.8508 in-distribution):** on 16 FRESH,",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_batch.n_pairs"
+    },
+    {
+      "line": 20,
+      "token": "0.750",
+      "value": 0.75,
+      "decimals": 3,
+      "context": "**0.750**, mean gap **+0.247**. A genuine live readout of grounding from internal state \u2014 above",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_batch.paired_accuracy_true_gt_false"
+    },
+    {
+      "line": 20,
+      "token": "+0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "**0.750**, mean gap **+0.247**. A genuine live readout of grounding from internal state \u2014 above",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_batch.mean_gap"
+    },
+    {
+      "line": 21,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "chance (0.5), below the in-distribution 0.85 exactly as out-of-distribution generalization",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_demo[1].p_correct_true_stmt"
+    },
+    {
+      "line": 21,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "chance (0.5), below the in-distribution 0.85 exactly as out-of-distribution generalization",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_probe.auc"
+    },
+    {
+      "line": 22,
+      "token": "-0.251",
+      "value": -0.251,
+      "decimals": 3,
+      "context": "predicts. Per-item it is noisy (the \"Paris\" assertion even inverted, gap -0.251); the signal is in",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_demo[0].gap"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **Deception probe (layer 0, manifest AUC 1.0 in-distribution, instruction-contrast):** on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:deception_probe.layer"
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **Deception probe (layer 0, manifest AUC 1.0 in-distribution, instruction-contrast):** on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:deception_probe.auc"
+    },
+    {
+      "line": 25,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "out-of-distribution honest-vs-deceptive framings it **saturated to 1.000 on both**, flip +0.000 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:deception_probe.auc"
+    },
+    {
+      "line": 25,
+      "token": "+0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "out-of-distribution honest-vs-deceptive framings it **saturated to 1.000 on both**, flip +0.000 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:deception_probe.layer"
+    },
+    {
+      "line": 27,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "flagged (the \"catches 95-99% of lies\" robustness claim was REFUTED 0-3), observed first-hand.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "flagged (the \"catches 95-99% of lies\" robustness claim was REFUTED 0-3), observed first-hand.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "halves live: a calibrated grounding signature that carries real information off-distribution (0.75),",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_batch.paired_accuracy_true_gt_false"
+    },
+    {
+      "line": 34,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0 -> chance-on-these-prompts). The showcase renders the truthfulness signature, labeled exactly",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:deception_probe.auc"
+    },
+    {
+      "line": 42,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "0.85) or aggregate over many items rather than relying on single-token reads.",
+      "status": "VERIFIED",
+      "receipt_ref": "live_signature_result.json:truthfulness_probe.auc"
+    }
+  ]
+}
