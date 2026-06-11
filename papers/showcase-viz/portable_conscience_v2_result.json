@@ -1,0 +1,33 @@
+{
+  "experiment": "portable conscience v2 \u2014 clean transfer, in-distribution DiM source (AUROC)",
+  "prereg": "papers/showcase-viz/PREREG_portable_conscience_v2_2026_06_10.md",
+  "source": "google/gemma-2-2b-it",
+  "source_layer": 12,
+  "n_test": 67,
+  "n_true": 32,
+  "ceiling_gemma_self_auroc": 0.8759,
+  "per_target": {
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "target_layer": 15,
+      "anchor_val_r2": 0.7313,
+      "alpha": 10.0,
+      "transferred_auroc": 0.8929,
+      "floor_p95": 0.7172,
+      "floor_median": 0.4763,
+      "random_map_auroc": 0.6429,
+      "p1_pass": true
+    },
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "target_layer": 22,
+      "anchor_val_r2": 0.707,
+      "alpha": 100.0,
+      "transferred_auroc": 0.9179,
+      "floor_p95": 0.729,
+      "floor_median": 0.5196,
+      "random_map_auroc": 0.3652,
+      "p1_pass": true
+    }
+  },
+  "n_targets_pass": 2,
+  "verdict": "CONSCIENCE-PORTABLE"
+}

@@ -1,5 +1,13 @@
 # FINDING — the conscience is portable as structure, not as a direction (MODEL-SPECIFIC)
 
+> **CORRECTION (same day, OVERTURNED): this MODEL-SPECIFIC verdict was an artifact of a degenerate
+> floor (16 paired items -> random-direction floor 1.0) and an out-of-distribution source probe.
+> With a powered floor and an in-distribution fit source, the honesty direction DOES transfer
+> (`FINDING_portable_conscience_v2_2026_06_10.md`: CONSCIENCE-PORTABLE, AUROC 0.89 / 0.92 on
+> Llama-3.2-3B / Qwen-3B, beating both controls). The conscience is portable as a DIRECTION. The
+> reasoning below stands as the record of how the floor control behaved on an underpowered test;
+> the conclusion is superseded by v2.**
+
 **2026-06-10 · Fathom Lab / styxx. Pre-registered: `PREREG_portable_conscience_v0_2026_06_10.md`
 (frozen pre-run). Receipt: `portable_conscience_result.json`. The pre-registered floor control
 demoted a tempting perfect score to an honest negative — the third such save of the day.**
