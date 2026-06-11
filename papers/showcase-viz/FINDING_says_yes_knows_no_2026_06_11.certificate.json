@@ -1,0 +1,173 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_says_yes_knows_no_2026_06_11.md",
+  "document_sha256": "f398898cf3d167b4b90bc7154c49dc460acc9fb43c8b77c6d5bed09ed15b1e64",
+  "receipts_sha256": {
+    "says_yes_knows_no_result.json": "5bbea3279449dedcb836fcbc7c5ae6aec7bb3283f640892ea548758b973d7bf8"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 10,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 20,
+      "token": "0.003"
+    },
+    {
+      "line": 21,
+      "token": "0.004"
+    },
+    {
+      "line": 26,
+      "token": "0.15"
+    },
+    {
+      "line": 40,
+      "token": "0.004"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 20,
+      "token": "0.9883",
+      "value": 0.9883,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.behavioral_neutral_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.9961",
+      "value": 0.9961,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.behavioral_pressure_auroc"
+    },
+    {
+      "line": 20,
+      "token": "-0.0078",
+      "value": -0.0078,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.caving_drop"
+    },
+    {
+      "line": 20,
+      "token": "0.9229",
+      "value": 0.9229,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.internal_portable_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.003",
+      "value": 0.003,
+      "decimals": 3,
+      "context": "| Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Llama-3.2-3B | 0.9883 | 0.9961 | -0.0078 | 0.9229 (p=0.003) | yes |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0.9961",
+      "value": 0.9961,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.behavioral_pressure_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.9995",
+      "value": 0.9995,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.behavioral_pressure_auroc"
+    },
+    {
+      "line": 21,
+      "token": "-0.0034",
+      "value": -0.0034,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.caving_drop"
+    },
+    {
+      "line": 21,
+      "token": "0.8906",
+      "value": 0.8906,
+      "decimals": 4,
+      "context": "| Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.internal_portable_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.004",
+      "value": 0.004,
+      "decimals": 3,
+      "context": "| Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "binding_context": "| target | behavioral neutral | behavioral pressure | caving drop | internal portable | conscience holds? | | Qwen2.5-3B | 0.9961 | 0.9995 | -0.0034 | 0.8906 (p=0.004) | yes |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.99",
+      "value": 0.99,
+      "decimals": 2,
+      "context": "stayed at ceiling (~0.99) and even ticked UP. The pre-committed `VOID-NO-CAVING` condition (neither",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.behavioral_neutral_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.0947",
+      "value": 0.0947,
+      "decimals": 4,
+      "context": "The smaller Llama-3.2-1B bent slightly (caving drop 0.0947) but below the 0.15 threshold; gemma's",
+      "status": "VERIFIED",
+      "receipt_ref": "says_yes_knows_no_result.json:secondary_targets.meta-llama/Llama-3.2-1B-Instruct.caving_drop"
+    },
+    {
+      "line": 26,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "The smaller Llama-3.2-1B bent slightly (caving drop 0.0947) but below the 0.15 threshold; gemma's",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.004",
+      "value": 0.004,
+      "decimals": 3,
+      "context": "label-permutation null for every model (p <= 0.004), consistent with the OOD and adversarial findings.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
