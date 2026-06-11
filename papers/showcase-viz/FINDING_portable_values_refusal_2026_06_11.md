@@ -6,6 +6,14 @@
 portable-conscience pipeline established in `FINDING_portable_conscience_ood_2026_06_11.md`
 (OOD-PORTABLE, truth axis).**
 
+> **CYCLE-2 QUALIFICATION (2026-06-11, see `FINDING_axis_independence_2026_06_11.md`,
+> PARTIAL-STRUCTURED):** the "BASIS, not a lucky truth vector" framing below was adversarially tested.
+> It SURVIVES in its load-bearing sense — truth and refusal are near-orthogonal, valence-irreducible
+> directions on one map, NOT a single collapsed axis and NOT mere sentiment (both retraction gates
+> failed to fire). It is QUALIFIED, not retracted: the axes are distinct but show cross-axis read
+> cross-talk — they are a correlated frame, not a clean orthonormal basis. Read "basis" as
+> distinct-transferable-axes, not zero-cross-talk readouts.**
+
 ## Result — one label-free map carries a SECOND value axis (refusal) to unseen harm domains
 
 The same machinery as the truth arc — a gemma-2-2b difference-of-means direction plus a label-free

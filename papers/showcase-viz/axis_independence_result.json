@@ -1,0 +1,89 @@
+{
+  "experiment": "axis-independence \u2014 is the portable conscience a BASIS or one valence axis?",
+  "prereg": "papers/showcase-viz/PREREG_axis_independence_2026_06_11.md",
+  "source": "google/gemma-2-2b-it",
+  "common_layer": 12,
+  "refusal_native_layer": 8,
+  "seed": 0,
+  "n_per_axis": 48,
+  "n_test": {
+    "truth": 15,
+    "refusal": 15,
+    "valence": 15
+  },
+  "gemma_matrix_diagAUROC_offdiagDISCRIM": {
+    "truth": {
+      "truth": 0.84,
+      "refusal": 0.8929,
+      "valence": 0.7679
+    },
+    "refusal": {
+      "truth": 0.84,
+      "refusal": 1.0,
+      "valence": 0.7857
+    },
+    "valence": {
+      "truth": 0.92,
+      "refusal": 0.8036,
+      "valence": 1.0
+    }
+  },
+  "gemma_refusal_native_auroc": 0.9643,
+  "cosines_at_common_layer": {
+    "truth_refusal": -0.2132,
+    "truth_valence": 0.0903,
+    "refusal_valence": -0.0686
+  },
+  "valence_orthogonalized_diag": {
+    "truth": 0.8,
+    "refusal": 1.0
+  },
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "map_layer": 11,
+    "map_alpha": 10.0,
+    "map_val_r2": 0.3717,
+    "matrix": {
+      "truth": {
+        "truth": 0.82,
+        "refusal": 0.875
+      },
+      "refusal": {
+        "truth": 0.9,
+        "refusal": 1.0
+      }
+    }
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "map_layer": 20,
+    "map_alpha": 100.0,
+    "map_val_r2": 0.4269,
+    "matrix": {
+      "truth": {
+        "truth": 0.82,
+        "refusal": 0.8929
+      },
+      "refusal": {
+        "truth": 0.76,
+        "refusal": 1.0
+      }
+    }
+  },
+  "gate_values": {
+    "A": 0.84,
+    "D": 1.0,
+    "B": 0.8929,
+    "C": 0.84,
+    "abs_cos_truth_refusal": 0.2132,
+    "V_on_truth": 0.92,
+    "V_on_refusal": 0.8036,
+    "A_perp": 0.8,
+    "D_perp": 1.0,
+    "Am": 0.82,
+    "Dm": 1.0,
+    "Bm": 0.875,
+    "Cm": 0.9
+  },
+  "verdict": "PARTIAL-STRUCTURED"
+}

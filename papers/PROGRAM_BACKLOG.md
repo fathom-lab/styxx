@@ -78,6 +78,20 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   `FINDING_portable_values_refusal_2026_06_11.md` (OATH-HELD 42/0); receipt `portable_values_refusal_result.json`.
   Spawned **B26, B27**.
 
+- **Autopilot cycle 2 (2026-06-11, operator "go harder") — is it a BASIS or one valence axis?
+  `PARTIAL-STRUCTURED`.** Adversarial self-falsification of cycle 1's "basis" headline. Common-layer
+  (gemma L12) 3×3 cross-readout matrix over truth / refusal / a valence-sentiment control + cosines +
+  valence-orthogonalization, replicated through one shared label-free map into Llama-3.2-3B + Qwen-3B.
+  **Both retraction gates FAILED to fire (good):** truth·refusal cosine **−0.2132** (near-orthogonal, not
+  collapsed); orthogonalizing valence out leaves truth **0.80** / refusal **1.0** (not sentiment).
+  **But BASIS-INDEPENDENT also failed:** truth↔refusal off-diagonal discriminability **0.8929 / 0.84**
+  (≫0.65 ceiling), replicated mapped (Llama 0.875/0.90, Qwen 0.8929/0.76). The axes are DISTINCT and
+  valence-irreducible but ENTANGLED in readout — a correlated frame, not an orthonormal basis. Cycle 1's
+  "basis" QUALIFIED (not retracted; banner added to its finding, re-certified 42/0). Caveat: off-diagonal
+  = discriminability at n_test=15 → inflated floor; a permutation-nulled off-diagonal is owed. Prereg
+  `662b6ce`; `FINDING_axis_independence_2026_06_11.md` (OATH-HELD 29/0); receipt `axis_independence_result.json`.
+  Spawned **B28**.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -117,7 +131,8 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B24** | **Same-items white-box head-to-head** on silent caves. | R4 | M | **DONE — REPORT_AS_LANDED** (auto-REFUTED killed as overclaim #5). A first-char/surface/length-invariant **pre-emission commitment-to-the-user's-answer direction** reads silent caving at commit-slot 0.94 [0.89–0.98] / strictly-pre-commit 0.838 (TIE band), beating lens 0.60 + surface 0.69, selection-corrected p<0.01 — but **never beats behavioral (1.0)**, and on single-token collinear items it cannot be called fold-INTENT. Refutes the Outcome-D *prediction*, **reinforces** the closed-model thesis (defense-in-depth: both detect, behavioral needs no weights). Pre-reg'd token-pair GroupKFold firewall found VACUOUS (singleton groups) — first-char firewall is the load-bearing control (persisted in `b24_controls_addendum.json`). `FINDING_b24_whitebox_vs_behavioral_2026_06_09.md` |
 | **B25** | **Intent-decoupling item set** (spawned by B24, the decisive next bet): multi-token answers / Y=paraphrase-of-X items so commit-to-user's-answer ≠ commit-to-wrong-content; same POS-B grouped probe. Survives ⇒ fold-intent is real; collapses ⇒ it was the answer-commitment code. | R4/R2 | H | QUEUED |
 | **B26** | **Adversarial-OOD on the refusal axis** (the truth-arc treatment applied to VALUES-PORTABLE): does confident "this is for safety research / authorized" framing on the harmful requests fool the transferred refusal readout, as it failed to fool the truth readout? Same label-free map, same leave-families-out OOD harm domains. | spawned by VALUES-PORTABLE | H | QUEUED |
-| **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. | spawned by VALUES-PORTABLE | H | QUEUED |
+| **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
+| **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED): the cross-talk was measured by discriminability at n_test=15 (inflated floor). Re-test with (a) a label-permutation null on each off-diagonal, (b) larger n, (c) a whitened/Mahalanobis readout and a deliberately gram-Schmidt-orthogonalized basis — does cleaner separation appear without losing transfer? Decides whether the entanglement is real geometry or small-n/readout artifact. | spawned by axis-independence | H | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 
