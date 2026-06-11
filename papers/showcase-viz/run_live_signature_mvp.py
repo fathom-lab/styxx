@@ -101,18 +101,21 @@ def main() -> int:
               f"(gap {pt-pf:+.3f})", flush=True)
 
     print("\n=== BATCH — truthfulness probe paired separation over 16 factual pairs ===")
-    wins, gaps = 0, []
+    wins, gaps, per_item = 0, [], []
     for true_s, false_s in TRUTH_BATCH:
         pt = tru.predict_before_generation(mdl, tok, true_s, apply_chat_template=False).p_positive
         pf = tru.predict_before_generation(mdl, tok, false_s, apply_chat_template=False).p_positive
         wins += int(pt > pf)
         gaps.append(pt - pf)
+        per_item.append({"stmt": true_s, "label": "TRUE", "p_correct": round(pt, 4)})
+        per_item.append({"stmt": false_s, "label": "FALSE", "p_correct": round(pf, 4)})
     paired_acc = wins / len(TRUTH_BATCH)
     mean_gap = sum(gaps) / len(gaps)
     out["truthfulness_batch"] = {"n_pairs": len(TRUTH_BATCH), "paired_accuracy_true_gt_false": round(paired_acc, 4),
                                  "mean_gap": round(mean_gap, 4),
                                  "note": "paired accuracy = P(p_correct(true) > p_correct(false)); "
-                                         "manifest leave-one-out AUC on TruthfulQA-mc1 was 0.8508 (in-distribution)"}
+                                         "manifest leave-one-out AUC on TruthfulQA-mc1 was 0.8508 (in-distribution)",
+                                 "per_statement": per_item}
     print(f"  paired accuracy (true > false): {paired_acc:.3f} over {len(TRUTH_BATCH)} pairs | "
           f"mean gap {mean_gap:+.3f}  (manifest in-dist AUC 0.851)")
 
