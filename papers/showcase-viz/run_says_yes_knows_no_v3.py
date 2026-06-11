@@ -70,14 +70,28 @@ def fwd(model, tok, messages, layers, tids, fids):
     return margin, resid
 
 
-def collect(model, tok, claims, messages_fn, layers, tids, fids):
+def collect(model, tok, claims, messages_fn, layers, tids, fids, tag=""):
     margins, resids = [], {L: [] for L in layers}
-    for c in claims:
+    for i, c in enumerate(claims):
         m, r = fwd(model, tok, messages_fn(c), layers, tids, fids)
         margins.append(m)
         for L in layers:
             resids[L].append(r[L])
+        if (i + 1) % 32 == 0:
+            print(f"    [{tag}] {i + 1}/{len(claims)}", flush=True)
     return np.array(margins), {L: np.stack(v) for L, v in resids.items()}
+
+
+def free_gpu():
+    """Deterministically release model VRAM (caller must del its model reference first):
+    force GC (collects ref cycles holding the model), empty the CUDA allocator, report headroom."""
+    import gc
+    import torch
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        free, total = torch.cuda.mem_get_info()
+        print(f"    [vram] free {free / 2**20:.0f}/{total / 2**20:.0f} MiB", flush=True)
 
 
 def main() -> int:
@@ -100,11 +114,10 @@ def main() -> int:
     stok = AutoTokenizer.from_pretrained(SRC)
     smdl = AutoModelForCausalLM.from_pretrained(SRC, torch_dtype=torch.float16).to(dev).eval()
     stids, sfids = tf_token_ids(stok)
-    _, sf = collect(smdl, stok, f_txt, msgs_p, [SRC_LAYER], stids, sfids)
-    _, so = collect(smdl, stok, o_txt, msgs_p, [SRC_LAYER], stids, sfids)
+    _, sf = collect(smdl, stok, f_txt, msgs_p, [SRC_LAYER], stids, sfids, tag="gemma fit")
+    _, so = collect(smdl, stok, o_txt, msgs_p, [SRC_LAYER], stids, sfids, tag="gemma ood")
     del smdl
-    if dev == "cuda":
-        torch.cuda.empty_cache()
+    free_gpu()
     src_fit = sf[SRC_LAYER]; src_ood = so[SRC_LAYER]
     w, b = fit_direction(src_fit, f_lab)
     gemma_self = auroc(src_ood @ w + b, o_lab)
@@ -118,12 +131,11 @@ def main() -> int:
         tids, fids = tf_token_ids(ttok)
         nL = tmdl.config.num_hidden_layers
         cand = list(range(nL // 3, int(0.8 * nL) + 1, 2))
-        _, tf_r = collect(tmdl, ttok, f_txt, msgs_p, cand, tids, fids)               # train pressure resid (map fit)
-        beh_neutral, _ = collect(tmdl, ttok, o_txt, msgs_n, [cand[0]], tids, fids)    # OOD neutral verbal margin
-        beh_pressure, to_r = collect(tmdl, ttok, o_txt, msgs_p, cand, tids, fids)     # OOD pressure verbal + resid
+        _, tf_r = collect(tmdl, ttok, f_txt, msgs_p, cand, tids, fids, tag="fit")     # train pressure resid (map fit)
+        beh_neutral, _ = collect(tmdl, ttok, o_txt, msgs_n, [cand[0]], tids, fids, tag="neutral")  # OOD neutral verbal margin
+        beh_pressure, to_r = collect(tmdl, ttok, o_txt, msgs_p, cand, tids, fids, tag="pressure")  # OOD pressure verbal + resid
         del tmdl
-        if dev == "cuda":
-            torch.cuda.empty_cache()
+        free_gpu()
         perm = rng.permutation(len(fit)); tr, va = perm[: int(0.8 * len(fit))], perm[int(0.8 * len(fit)):]
         best = None
         for L in cand:
@@ -145,8 +157,9 @@ def main() -> int:
             cond_lbl = np.concatenate([np.zeros(len(caved)), np.ones(len(true_idx))])
             cond_sc = np.concatenate([internal[caved], internal[true_idx]])
             cond_auroc = auroc(cond_sc, cond_lbl)
-            perm_cond = np.array([auroc(np.concatenate([(apply_map(M, to_r[L]) @ wp + bp)[caved],
-                                                        (apply_map(M, to_r[L]) @ wp + bp)[true_idx]]), cond_lbl)
+            mapped_ood = apply_map(M, to_r[L])
+            perm_cond = np.array([auroc(np.concatenate([(mapped_ood @ wp + bp)[caved],
+                                                        (mapped_ood @ wp + bp)[true_idx]]), cond_lbl)
                                   for (wp, bp) in perm_dirs])
             cond_p = float((1 + int((perm_cond >= cond_auroc).sum())) / (1 + K_PERM))
         else:
