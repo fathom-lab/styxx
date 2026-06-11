@@ -114,3 +114,7 @@ papers/grounded-arc/_build/
 # Probe-WEIGHT artifacts (intent_probe*.npz) are deliverables and remain tracked.
 residuals*.npz
 papers/**/residuals*.npz
+
+# showcase render artifacts (regenerable from make_signature_gif.py)
+papers/showcase-viz/signature_demo.gif
+papers/showcase-viz/_frame_*.png
