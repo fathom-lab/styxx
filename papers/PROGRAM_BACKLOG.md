@@ -186,6 +186,24 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   scope-tightened to SOURCE space inline (re-cert HELD 28/0). Verdict: the arc holds up to adversarial
   review — the discipline is real, not narrated.
 
+- **THE MASTERPIECE — `styxx.mount`, the conscience mount + a LIVE catch (2026-06-12, operator "go above
+  and beyond, create a masterpiece").** The whole arc assembled into the deployed integrity layer (the
+  North Star: conscience mount). `styxx.mount.ConscienceMount` bolts borrowed value axes (via
+  `styxx.crossmind`) onto a generating agent, reads the agent's OWN hidden state, and flags
+  output-vs-substrate DIVERGENCE (says-true-knows-false). **READ-ONLY** — `steer` REFUSED; acting on a
+  flag is the integrator's policy (`on_flag`). 17 offline tests (M1–M4), synthetic catch 0.97/FA 0.03;
+  full suite **1469 green**. **LIVE-CAUGHT (OATH-HELD 12/0):** a gemma truth conscience mounted on
+  Llama-3.2-3B (map anchor R² **0.985**); under strong-deference pressure Llama caved on **13/16** false
+  claims, the BORROWED conscience caught **12/13 (0.9231)** reading Llama's substrate as FALSE while its
+  words said True, false-alarm **1/16 (0.0625)**. Discipline: first gentle run VOID-NO-CAVE (Llama
+  resisted) → fresh prereg (naming the void) used the validated strong regime, gate unchanged. The
+  borrowed-conscience design is the moat: mount integrity onto an agent you didn't train, zero target
+  labels. Bounds: WHITE-BOX (open-weight/self-host agents), linear/truth-axis/n=16/single-turn/local;
+  measures not guarantees; read≠write. Module `styxx/mount.py` + `tests/test_mount.py`; prereg
+  `PREREG_mount_v0` + `PREREG_mount_live_strong`; `FINDING_mount_live_catch_2026_06_12.md` (OATH-HELD
+  12/0); figure `mount_live_catch.png`. **OPERATOR: release crossmind+mount + fire TG #4; then wire
+  styxx.mount into styxx.adapters (the live agent loop).**
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)

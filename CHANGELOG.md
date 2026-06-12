@@ -7,7 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — `styxx.crossmind`: portable value-axis readout across model internals
+## [Unreleased] — `styxx.mount` (conscience mount) + `styxx.crossmind` (portable value readout)
+
+### Added — `styxx.mount`: a read-only conscience you bolt onto a generating agent
+
+The deployed integrity layer the portable-conscience arc was built for. Mount value axes
+(truth / danger / refusal — transported label-free via `styxx.crossmind`) onto a generating agent;
+the mount reads the agent's **own** last-token hidden state along each axis and flags
+**output-vs-substrate divergence** — the agent SAYS "true" while its substrate reads false (a
+sycophantic cave / lie), or COMPLIES while its substrate reads danger.
+
+```python
+from styxx import crossmind, mount
+axis = mount.mount_cross_model("truth", ref_states, labels, state_map, mapped_anchors=agent_anchors)
+m = mount.ConscienceMount([axis]); m.calibrate("truth", agent_calibration_states)
+m.on_flag(lambda r: r.caught and halt_or_escalate(r))      # the integrator's policy
+reading = m.read(agent_hidden_state, claims={"truth": +1}) # agent just said "true"
+reading.caught                                              # True if substrate reads false
+```
+
+The conscience is **borrowed** from a different reference model, so the agent has no labels of its own
+to game and the readout does not rely on its (gameable) self-report. **READ-ONLY by construction** —
+`steer` / `intervention` are REFUSED (read != write); acting on a flag is the integrator's policy via
+`on_flag`. Numpy-only, no torch. Self-test: `python -m styxx.mount selftest` (catches a transported lie
+at ~0.97, false-alarm ~0.03). Invariants pre-registered in
+`papers/conscience-mount/PREREG_mount_v0_2026_06_12.md`; gates M1–M4 enforced by `tests/test_mount.py`
+(17 tests). Live cross-model catch on real models: `papers/showcase-viz/run_mount_live_catch.py`.
 
 ### Added — `styxx.crossmind`
 
