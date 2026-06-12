@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `styxx.crossmind`: portable value-axis readout across model internals
+
+### Added — `styxx.crossmind`
+
+Read **one model's value-state** (truth, harm-avoidance, …) using a value axis fit on a *different*
+reference model — through a label-free map of last-token hidden states, read in a ZCA-whitened
+(Mahalanobis) frame. **No labels on the target model.** Productizes the portable-conscience arc
+(`papers/showcase-viz/`, 2026-06-11: VALUES-PORTABLE, WHITENING-RESOLVES, conscience-coordinates).
+
+```python
+from styxx import crossmind
+axis  = crossmind.fit_axis(reference_states, labels, name="truth")          # on a reference model
+smap  = crossmind.fit_state_map(target_anchor_states, reference_anchor_states)  # paired, label-free
+coords = crossmind.read(axis, target_states, state_map=smap)                # NO target labels
+```
+
+Sibling of `styxx.transport` (embedding-space transport); `crossmind` works on the residual streams
+of generative models and adds the whitened orthonormal-basis readout. **READ-ONLY by construction** —
+it returns a coordinate, never an edit; `steering` / `intervention` are REFUSED (read != write), and a
+borrowed refusal axis is REFUSED as a `content_danger` reader (HARM-AXIS-NULL bound). Pure stdlib +
+numpy, no torch (bring your own activation extractor). Self-test: `python -m styxx.crossmind selftest`.
+Invariants pre-registered in `papers/crossmind-instrument/PREREG_crossmind_v0_2026_06_12.md`; gates
+T1–T4 enforced by `tests/test_crossmind.py`.
+
+---
+
 ## [7.15.0] — 2026-06-10 — `styxx.meaning_diff`: the meaning-regression instrument
 
 ### Added — `styxx.meaning_diff`
