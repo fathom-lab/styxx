@@ -108,6 +108,23 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   readout owed. Prereg `5a510a5`; `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0);
   receipt `entanglement_resolution_result.json`. Spawned **B29**.
 
+- **Autopilot cycle 4 (2026-06-11, operator "get creative and innovative") — CONSCIENCE COORDINATES: is
+  the whitened basis a value coordinate system that locates dangerous misinformation? `HARM-AXIS-NULL`.**
+  The creative leap: treat the cycle-3 orthonormal basis as a COORDINATE SYSTEM; project a 2×2 factorial
+  of single sentences (T{true,false} × H{danger-topic,safe-topic}, n=12/cell, NEW content the axes were
+  never fit on) onto the whitened {truth, refusal} basis. **The truth coordinate is a genuine PORTABLE
+  coordinate** — recovers true/false on the new statements at **0.8524** gemma and transfers BETTER
+  through the map (Llama **0.9809**, Qwen **0.9306**); quadrant centroids sort cleanly along c_truth
+  (true-safe +2.6216 → false-danger **−3.5631**). **But the refusal coordinate is at CHANCE for
+  danger-topic** (0.5226 / 0.4948 / 0.592) → HARM-AXIS-NULL: "refusal" (fit on REQUESTS) encodes
+  request-compliance, NOT content-hazard. Dangerous-misinfo IS detectable (derived score AUROC 0.838) but
+  via FALSITY, not a (false∧dangerous) composite — the composite hypothesis NOT supported, the single-axis
+  truth generalization IS (strong, cross-model). Precise bound: you cannot read "is this dangerous content"
+  off the refusal axis. Caveat: c_truth marginally H-leaky (0.684 vs perm 0.6649; danger register depresses
+  the truth read). Figure `conscience_coordinates.png` ships the null made visible (horizontal spread, flat
+  vertical). Prereg `8692ec3`; `FINDING_conscience_coordinates_2026_06_11.md` (OATH-HELD 27/0); receipt
+  `conscience_coordinates_result.json`. Spawned **B30**.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -150,6 +167,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
 | **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28): cycle 3 whitened only the source. Apply the same ZCA recipe in the mapped target space to clean the (broad-transport-dominated) cross-model cross-talk; add a shrinkage/held-out covariance sweep (n_train≈155 in 2304-dim is regularized, not full-rank). Does the whitened basis hold cross-model and across covariance estimators? | spawned by entanglement-resolution | H | QUEUED |
+| **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL): refusal (fit on requests) does NOT read statement-level danger. Fit a dedicated danger-vs-safe STATEMENT axis, whiten, and test whether it forms a clean orthonormal pair with truth AND transfers cross-model — turning cycle 4's informative null into the intended (truth × danger) coordinate system that decomposes dangerous misinformation. | spawned by conscience-coordinates | H | QUEUED |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 

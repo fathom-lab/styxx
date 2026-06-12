@@ -1,0 +1,367 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_conscience_coordinates_2026_06_11.md",
+  "document_sha256": "e66a3d4df17129d499dc4d43de4675f3d426d191a8c00228b3a5b52a16229974",
+  "receipts_sha256": {
+    "conscience_coordinates_result.json": "55f2ddd7f7d8aaa9d38ae4505f9dd7a3053d89c93ad2d99c4253ff4136fdab72"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 27,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "4"
+    },
+    {
+      "line": 5,
+      "token": "3"
+    },
+    {
+      "line": 9,
+      "token": "2"
+    },
+    {
+      "line": 9,
+      "token": "2"
+    },
+    {
+      "line": 31,
+      "token": "0.6854"
+    },
+    {
+      "line": 32,
+      "token": "3.5631"
+    },
+    {
+      "line": 35,
+      "token": "0.1344"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "`conscience_coordinates.png`. Cycle 4 \u2014 the creative leap from cycle 3 (WHITENING-RESOLVES: truth +",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`conscience_coordinates.png`. Cycle 4 \u2014 the creative leap from cycle 3 (WHITENING-RESOLVES: truth +",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## The test \u2014 a 2\u00d72 factorial of statements, projected onto the whitened basis",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## The test \u2014 a 2\u00d72 factorial of statements, projected onto the whitened basis",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "c_truth = x\u0303\u00b7\u0175_truth and c_refusal = x\u0303\u00b7\u0175_refusal (whitened-basis cosine \u22120.0, i.e. orthonormal).",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:seed"
+    },
+    {
+      "line": 23,
+      "token": "0.8524",
+      "value": 0.8524,
+      "decimals": 4,
+      "context": "| c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_recovers_T"
+    },
+    {
+      "line": 23,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "| c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_truth_recovers_T"
+    },
+    {
+      "line": 23,
+      "token": "0.9306",
+      "value": 0.9306,
+      "decimals": 4,
+      "context": "| c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth recovers T (AUROC) | **0.8524** | **0.9809** | **0.9306** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_truth_recovers_T"
+    },
+    {
+      "line": 24,
+      "token": "0.684",
+      "value": 0.684,
+      "decimals": 3,
+      "context": "| c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_invariant_H"
+    },
+    {
+      "line": 24,
+      "token": "0.7344",
+      "value": 0.7344,
+      "decimals": 4,
+      "context": "| c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_truth_invariant_H"
+    },
+    {
+      "line": 24,
+      "token": "0.6215",
+      "value": 0.6215,
+      "decimals": 4,
+      "context": "| c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_truth invariant to H (discrim) | 0.684 | 0.7344 | 0.6215 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_truth_invariant_H"
+    },
+    {
+      "line": 25,
+      "token": "0.5226",
+      "value": 0.5226,
+      "decimals": 4,
+      "context": "| c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 25,
+      "token": "0.4948",
+      "value": 0.4948,
+      "decimals": 4,
+      "context": "| c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 25,
+      "token": "0.592",
+      "value": 0.592,
+      "decimals": 3,
+      "context": "| c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal recovers H (AUROC) | **0.5226** | **0.4948** | **0.592** |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 26,
+      "token": "0.7135",
+      "value": 0.7135,
+      "decimals": 4,
+      "context": "| c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_refusal_invariant_T"
+    },
+    {
+      "line": 26,
+      "token": "0.7049",
+      "value": 0.7049,
+      "decimals": 4,
+      "context": "| c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_refusal_invariant_T"
+    },
+    {
+      "line": 26,
+      "token": "0.5156",
+      "value": 0.5156,
+      "decimals": 4,
+      "context": "| c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "binding_context": "| readout | gemma | mapped Llama-3.2-3B | mapped Qwen2.5-3B | | c_refusal invariant to T (discrim) | 0.7135 | 0.7049 | 0.5156 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_refusal_invariant_T"
+    },
+    {
+      "line": 30,
+      "token": "0.8524",
+      "value": 0.8524,
+      "decimals": 4,
+      "context": "than it reads in the source (gemma 0.8524 \u2192 Llama 0.9809, Qwen 0.9306). The four quadrant centroids",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_recovers_T"
+    },
+    {
+      "line": 30,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "than it reads in the source (gemma 0.8524 \u2192 Llama 0.9809, Qwen 0.9306). The four quadrant centroids",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_truth_recovers_T"
+    },
+    {
+      "line": 30,
+      "token": "0.9306",
+      "value": 0.9306,
+      "decimals": 4,
+      "context": "than it reads in the source (gemma 0.8524 \u2192 Llama 0.9809, Qwen 0.9306). The four quadrant centroids",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_truth_recovers_T"
+    },
+    {
+      "line": 31,
+      "token": "+2.6216",
+      "value": 2.6216,
+      "decimals": 4,
+      "context": "spread cleanly along c_truth: true-safe +2.6216, true-danger +0.8091, false-safe \u22120.6854, false-danger",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.true_safe.c_truth_mean"
+    },
+    {
+      "line": 31,
+      "token": "+0.8091",
+      "value": 0.8091,
+      "decimals": 4,
+      "context": "spread cleanly along c_truth: true-safe +2.6216, true-danger +0.8091, false-safe \u22120.6854, false-danger",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.true_danger.c_truth_mean"
+    },
+    {
+      "line": 31,
+      "token": "0.6854",
+      "value": 0.6854,
+      "decimals": 4,
+      "context": "spread cleanly along c_truth: true-safe +2.6216, true-danger +0.8091, false-safe \u22120.6854, false-danger",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "3.5631",
+      "value": 3.5631,
+      "decimals": 4,
+      "context": "**\u22123.5631** \u2014 dangerous misinformation sits at the extreme-low-truth corner.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "0.5226",
+      "value": 0.5226,
+      "decimals": 4,
+      "context": "in all three settings (0.5226 / 0.4948 / 0.592), and the four quadrant centroids barely move on",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 34,
+      "token": "0.4948",
+      "value": 0.4948,
+      "decimals": 4,
+      "context": "in all three settings (0.5226 / 0.4948 / 0.592), and the four quadrant centroids barely move on",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_primary.readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 34,
+      "token": "0.592",
+      "value": 0.592,
+      "decimals": 3,
+      "context": "in all three settings (0.5226 / 0.4948 / 0.592), and the four quadrant centroids barely move on",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:mapped_secondary.readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 35,
+      "token": "0.1344",
+      "value": 0.1344,
+      "decimals": 4,
+      "context": "c_refusal (\u22120.1344 to +0.1912). **Verdict per the frozen gate: HARM-AXIS-NULL.** The \"refusal\" axis,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "+0.1912",
+      "value": 0.1912,
+      "decimals": 4,
+      "context": "c_refusal (\u22120.1344 to +0.1912). **Verdict per the frozen gate: HARM-AXIS-NULL.** The \"refusal\" axis,",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.false_danger.c_refusal_mean"
+    },
+    {
+      "line": 43,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "low-truth-and-high-harm score picks the false-danger cell out of the other three at AUROC 0.838 \u2014 but",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:dangerous_misinfo_detector_auroc"
+    },
+    {
+      "line": 55,
+      "token": "0.684",
+      "value": 0.684,
+      "decimals": 3,
+      "context": "The truth coordinate is not perfectly H-invariant: discrim(c_truth, H) is 0.684 in gemma, marginally",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_invariant_H"
+    },
+    {
+      "line": 56,
+      "token": "0.6649",
+      "value": 0.6649,
+      "decimals": 4,
+      "context": "above its own permutation floor 0.6649 \u2014 danger-topic nudges even TRUE statements toward lower c_truth",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_invariant_H_perm95"
+    },
+    {
+      "line": 57,
+      "token": "+0.8091",
+      "value": 0.8091,
+      "decimals": 4,
+      "context": "(true-danger +0.8091 sits well below true-safe +2.6216). So the truth read is slightly depressed by the",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.true_danger.c_truth_mean"
+    },
+    {
+      "line": 57,
+      "token": "+2.6216",
+      "value": 2.6216,
+      "decimals": 4,
+      "context": "(true-danger +0.8091 sits well below true-safe +2.6216). So the truth read is slightly depressed by the",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.true_safe.c_truth_mean"
+    }
+  ]
+}
