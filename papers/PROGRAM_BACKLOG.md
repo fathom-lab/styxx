@@ -143,6 +143,24 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   ceiling); larger factorial. Prereg `06e80dc`; `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD
   34/0); receipt `truth_danger_basis_result.json`; figure `truth_danger_basis.png`. **B30 → REPORT_AS_NEAR.**
 
+- **Autopilot cycle 6 (2026-06-12, operator pushed "we ARE close to telepathy") — the telepathy test:
+  decode WHICH concept a target model represents, cross-model & label-free? `CONTENT-WEAK`.** Adjudicated
+  the claim with a falsifiable run, not an argument: 60 concepts, label-free ridge map + ZCA fit on 40
+  ANCHOR concepts, retrieval on 20 HELD-OUT concepts the map never saw (chance top-1 0.05). **In-model,
+  content identity is nearly perfect** (gemma reads its own concepts cross-template at **0.9583**). **But
+  cross-model through the label-free map it COLLAPSES to chance:** Llama→gemma centroid top-1 **0.0**
+  (below chance, below random-map floor 0.05; top-5 0.25 = chance), per-item 0.0333; Qwen→gemma top-1 0.1
+  (< 3×-chance 0.15, top-5 0.2 < 0.50) — neither clears the gate → CONTENT-WEAK. THE POINT: the SAME
+  class of label-free map that transports low-D VALUE directions (truth/refusal/danger) does NOT
+  transport high-D CONTENT identity. **The cross-model channel is a value THERMOMETER, not a content
+  TRANSCRIPT** — value transport is robust to a lossy map (DiM is 1-D), content transport is not. The
+  telepathy answer, receipted: NO, and the very next rung (cross-model content identity) does not come
+  free with the value machinery. Honest bound: the map was underpowered (anchor R² 0.0613 Llama /
+  negative Qwen; 40 anchors can't pin a full hidden-state map) — "not with THIS linear method at THIS
+  scale", not "impossible"; heavy-machinery / many-anchor / vec2vec transport is the open bet (B31).
+  Prereg `7fb1600`; `FINDING_concept_decode_2026_06_12.md` (OATH-HELD 20/0); receipt
+  `concept_decode_result.json`; figure `concept_decode.png`. Spawned **B31**.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -185,6 +203,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
 | **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28): cycle 3 whitened only the source. Apply the same ZCA recipe in the mapped target space to clean the (broad-transport-dominated) cross-model cross-talk; add a shrinkage/held-out covariance sweep (n_train≈155 in 2304-dim is regularized, not full-rank). Does the whitened basis hold cross-model and across covariance estimators? | spawned by entanglement-resolution | H | QUEUED |
+| **B31** | **Heavy-machinery content transport** (spawned by cycle-6 CONTENT-WEAK): cross-model concept identity collapsed to chance through a label-free LINEAR map (anchor R²≈0.06, 40 anchors). Re-test with far more anchor concepts + a non-linear / vec2vec-grade map; does cross-model CONTENT identity (not just value axes) ever transport? This is the documented out-of-scope research bet — the only open door toward the telepathy-shaped claim. EVADABLE-of-the-bound iff held-out concept top-1 ≫ chance AND ≫ random-map cross-model. | spawned by concept-decode | M | QUEUED |
 | **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL). | spawned by conscience-coordinates | H | **PARTIAL-STRUCTURED (near-miss), cycle 5.** Danger axis clean+perfect+orthogonal (c_danger→H=1.0 gemma & both maps, cos −0.0, invariant to truth) — resolves HARM-AXIS-NULL (0.52→1.0). Compositional gate PASSES in gemma + Qwen-3B; primary Llama-3B misses c_truth_invariant_H 0.6562 vs 0.65 by 0.0062 → gate not met. Dangerous-misinfo decomposes (2-D 0.77–0.92 > 1-D falsity 0.52). Validates a directly-fit danger axis for styxx.crossmind. `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD 34/0). Clean cross-model claim owed to **B29**. |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |

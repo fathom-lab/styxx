@@ -1,0 +1,64 @@
+{
+  "experiment": "concept-decode \u2014 cross-model, label-free 'which concept' retrieval (the telepathy test)",
+  "prereg": "papers/showcase-viz/PREREG_concept_decode_2026_06_12.md",
+  "reference": "google/gemma-2-2b-it",
+  "seed": 0,
+  "n_concepts": 60,
+  "n_anchor": 40,
+  "n_test": 20,
+  "chance_top1": 0.05,
+  "templates": 6,
+  "test_concepts": [
+    "apple",
+    "bottle",
+    "bread",
+    "bridge",
+    "chocolate",
+    "desert",
+    "dolphin",
+    "forest",
+    "hammer",
+    "harbor",
+    "horse",
+    "kitchen",
+    "kite",
+    "ladder",
+    "lemon",
+    "mountain",
+    "rabbit",
+    "snow",
+    "telescope",
+    "violin"
+  ],
+  "gemma_layer": 13,
+  "in_model_ceiling_item_top1": 0.9583,
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "layer": 14,
+    "map_alpha": 10.0,
+    "map_val_r2": 0.0613,
+    "centroid": {
+      "top1": 0.0,
+      "top5": 0.25,
+      "mrr": 0.1444
+    },
+    "item_top1": 0.0333,
+    "randmap_top1_p95": 0.05
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "layer": 18,
+    "map_alpha": 100.0,
+    "map_val_r2": -0.1009,
+    "centroid": {
+      "top1": 0.1,
+      "top5": 0.2,
+      "mrr": 0.1944
+    },
+    "item_top1": 0.0583,
+    "randmap_top1_p95": 0.05
+  },
+  "three_x_chance": 0.15,
+  "verdict": "CONTENT-WEAK",
+  "NOTE": "CONTENT-DECODABLE is NOT telepathy: needs white-box reps + paired anchors, fixed N-way; zero-paired is closed-negative, cross-vendor universality killed. One categorical gap, not all."
+}

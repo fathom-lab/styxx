@@ -1,0 +1,277 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_concept_decode_2026_06_12.md",
+  "document_sha256": "01bbcf561655cf5a13645a68045dbcfa55babdf91d03e4c794540c00f1325a6d",
+  "receipts_sha256": {
+    "concept_decode_result.json": "7c417ac39dffcd6f18a3612866c9a0af9201229cad815df5abf89b0cfc2cadc5"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "0.05"
+    },
+    {
+      "line": 28,
+      "token": "3"
+    },
+    {
+      "line": 28,
+      "token": "0.15"
+    },
+    {
+      "line": 29,
+      "token": "0.50"
+    },
+    {
+      "line": 39,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "map target\u2192gemma + ZCA whitening were fit ONLY on 40 anchor concepts; retrieval was tested on 20",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:n_anchor"
+    },
+    {
+      "line": 12,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "map target\u2192gemma + ZCA whitening were fit ONLY on 40 anchor concepts; retrieval was tested on 20",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:n_test"
+    },
+    {
+      "line": 13,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "held-out concepts the map never saw (chance top-1 = 0.05).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 17,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| chance (20-way) | 0.05 | 0.25 | \u2014 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | chance (20-way) | 0.05 | 0.25 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 17,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "| chance (20-way) | 0.05 | 0.25 | \u2014 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | chance (20-way) | 0.05 | 0.25 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
+    },
+    {
+      "line": 18,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| random-map floor (Llama, p95) | 0.05 | \u2014 | \u2014 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | random-map floor (Llama, p95) | 0.05 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 19,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:seed"
+    },
+    {
+      "line": 19,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "| **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
+    },
+    {
+      "line": 19,
+      "token": "0.1444",
+      "value": 0.1444,
+      "decimals": 4,
+      "context": "| **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Llama-3.2-3B \u2192 gemma (centroid)** | **0.0** | 0.25 | 0.1444 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.mrr"
+    },
+    {
+      "line": 20,
+      "token": "0.0333",
+      "value": 0.0333,
+      "decimals": 4,
+      "context": "| Llama-3.2-3B \u2192 gemma (per-item) | 0.0333 | \u2014 | \u2014 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | Llama-3.2-3B \u2192 gemma (per-item) | 0.0333 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.item_top1"
+    },
+    {
+      "line": 21,
+      "token": "0.1",
+      "value": 0.1,
+      "decimals": 1,
+      "context": "| **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 21,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "| **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
+    },
+    {
+      "line": 21,
+      "token": "0.1944",
+      "value": 0.1944,
+      "decimals": 4,
+      "context": "| **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | **Qwen2.5-3B \u2192 gemma (centroid)** | **0.1** | 0.2 | 0.1944 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.mrr"
+    },
+    {
+      "line": 22,
+      "token": "0.9583",
+      "value": 0.9583,
+      "decimals": 4,
+      "context": "| gemma \u2192 gemma in-model (ceiling) | **0.9583** | \u2014 | \u2014 |",
+      "binding_context": "| readout | top-1 | top-5 | MRR | | gemma \u2192 gemma in-model (ceiling) | **0.9583** | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 27,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "is 0.0 top-1 (below chance, below the random-map floor 0.05); top-5 0.25 equals chance top-5;",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:seed"
+    },
+    {
+      "line": 27,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "is 0.0 top-1 (below chance, below the random-map floor 0.05); top-5 0.25 equals chance top-5;",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 27,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "is 0.0 top-1 (below chance, below the random-map floor 0.05); top-5 0.25 equals chance top-5;",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
+    },
+    {
+      "line": 28,
+      "token": "0.1",
+      "value": 0.1,
+      "decimals": 1,
+      "context": "per-item 0.0333. Qwen\u2192gemma is 0.1 top-1 \u2014 above chance but below the frozen 3\u00d7-chance bar (0.15) and",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 28,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "per-item 0.0333. Qwen\u2192gemma is 0.1 top-1 \u2014 above chance but below the frozen 3\u00d7-chance bar (0.15) and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "per-item 0.0333. Qwen\u2192gemma is 0.1 top-1 \u2014 above chance but below the frozen 3\u00d7-chance bar (0.15) and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "with top-5 0.2 below the 0.50 bar. Neither clears the CONTENT-DECODABLE gate.",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
+    },
+    {
+      "line": 29,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "with top-5 0.2 below the 0.50 bar. Neither clears the CONTENT-DECODABLE gate.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "ridge-map R\u00b2 \u2248 0 yet the value direction still transferred). Identifying which of twenty concepts a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "0.0613",
+      "value": 0.0613,
+      "decimals": 4,
+      "context": "full content reconstruction: held-out anchor R\u00b2 was 0.0613 (Llama) and negative for Qwen (below the",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.map_val_r2"
+    },
+    {
+      "line": 49,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "mean-predictor baseline) \u2014 40 anchor concepts cannot pin a full hidden-state-to-hidden-state linear",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:n_anchor"
+    }
+  ]
+}
