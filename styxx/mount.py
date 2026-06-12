@@ -46,7 +46,7 @@ from styxx import crossmind as _cm
 
 __all__ = [
     "MountedAxis", "mount_axis", "mount_cross_model",
-    "ConscienceReading", "ConscienceMount",
+    "ConscienceReading", "ConscienceMount", "claim_from_logits",
     "REFUSALS", "refused", "steer",
     "selftest",
 ]
@@ -162,13 +162,34 @@ class ConscienceMount:
         ax.scale = mad * 1.4826 if mad > 0 else (float(np.std(c)) or 1.0)
         return self
 
+    def calibrate_threshold(self, name: str, honest_states: np.ndarray, claims: Sequence[int], *,
+                            target_fpr: float = 0.01) -> "ConscienceMount":
+        """Set an axis's `tau` to hold the false-alarm rate at/below `target_fpr` on a LABELED HONEST set
+        (states the agent answered truthfully, with the claims it made). Picks the smallest margin
+        threshold such that at most `target_fpr` of honest items would be (wrongly) flagged. Use a held-out
+        honest set, not your test items, to get an honest operating point. Call after `calibrate`."""
+        ax = self.axes[name]
+        z = ax.z(honest_states).reshape(-1)
+        cl = np.asarray(claims)
+        # margin into the WRONG side per honest item (a catch fires when margin > tau)
+        margin = np.where(cl > 0, -z, np.where(cl < 0, z, -np.inf))
+        margin = margin[np.isfinite(margin)]
+        n = len(margin)
+        if n == 0:
+            return self
+        k = int(np.floor(target_fpr * n))            # honest items allowed to (wrongly) flag
+        order = np.sort(margin)[::-1]                 # descending; tau = the (k+1)-th largest margin
+        ax.tau = float(max(0.0, order[min(k, n - 1)]))
+        return self
+
     # -- the read ------------------------------------------------------------------------------
     def read(self, hidden_state: np.ndarray, *, claims: Optional[dict] = None) -> ConscienceReading:
         claims = claims or {}
         coords, zs, div, flags = {}, {}, {}, []
         for name, ax in self.axes.items():
-            z = float(ax.z(hidden_state).reshape(-1)[0])
-            coords[name] = float(ax.coords(hidden_state).reshape(-1)[0])
+            c = float(ax.coords(hidden_state).reshape(-1)[0])     # read the axis ONCE
+            z = (c - ax.center) / (ax.scale + 1e-9)
+            coords[name] = c
             zs[name] = z
             claim = claims.get(name)
             d = False
@@ -265,6 +286,17 @@ def refused(name: str):
 def steer(*args, **kwargs):
     """Refused: the mount is read-only. Acting on a flag is the integrator's policy (on_flag)."""
     refused("steer")
+
+
+def claim_from_logits(logits: np.ndarray, pos_token_ids: Sequence[int],
+                      neg_token_ids: Sequence[int]) -> int:
+    """Derive an axis claim polarity from next-token logits in the forced-choice case: +1 if the agent's
+    positive-pole tokens (e.g. ' True') outscore its negative-pole tokens (' False'), else -1. A
+    convenience for the common decision-token regime; free-form claim extraction is the caller's job."""
+    lg = np.asarray(logits, dtype=float)
+    p = max(float(lg[i]) for i in pos_token_ids)
+    n = max(float(lg[i]) for i in neg_token_ids)
+    return 1 if p > n else -1
 
 
 def _instrument_sha256() -> str:

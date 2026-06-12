@@ -30,7 +30,12 @@ The conscience is **borrowed** from a different reference model, so the agent ha
 to game and the readout does not rely on its (gameable) self-report. **READ-ONLY by construction** —
 `steer` / `intervention` are REFUSED (read != write); acting on a flag is the integrator's policy via
 `on_flag`. Numpy-only, no torch. Self-test: `python -m styxx.mount selftest` (catches a transported lie
-at ~0.97, false-alarm ~0.03). Invariants pre-registered in
+at ~0.97, false-alarm ~0.03).
+
+`calibrate_threshold(name, honest_states, claims, target_fpr=...)` sets a per-axis `tau` to hold the
+false-alarm rate at/below a target on a labeled honest set — a tunable operating point for deployment.
+`claim_from_logits(logits, pos_ids, neg_ids)` derives the agent's claim polarity in the forced-choice
+(next-token) case. Invariants pre-registered in
 `papers/conscience-mount/PREREG_mount_v0_2026_06_12.md`; gates M1–M4 enforced by `tests/test_mount.py`
 (17 tests). Live cross-model catch on real models: `papers/showcase-viz/run_mount_live_catch.py`.
 

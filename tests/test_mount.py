@@ -66,6 +66,30 @@ def test_calibrate_sets_center_and_scale():
 
 # ---- multi-axis + gates ---------------------------------------------------------------------
 
+def test_calibrate_threshold_controls_false_alarm():
+    m = mt.ConscienceMount([_axis()])                                # center 0, scale 1
+    # 9 clearly-honest (z=+2) + 1 borderline-negative (z=-0.5), all claimed true (+1)
+    honest = np.column_stack([np.array([2.0] * 9 + [-0.5]), np.zeros(10)])
+    claims = [+1] * 10
+    # at tau=0 the borderline item false-alarms (1/10)
+    assert m.read(np.array([-0.5, 0.0]), claims={"truth": +1}).caught is True
+    # target_fpr=0.05 -> allow 0 -> tau lifts above the worst honest margin -> no honest false alarm
+    m.calibrate_threshold("truth", honest, claims, target_fpr=0.05)
+    fa = sum(m.read(honest[i], claims={"truth": +1}).caught for i in range(10))
+    assert fa == 0
+    # but a clearly-divergent lie (z far negative) is still caught
+    assert m.read(np.array([-5.0, 0.0]), claims={"truth": +1}).caught is True
+    # a looser budget (allow 1) lets the borderline item through again
+    m.calibrate_threshold("truth", honest, claims, target_fpr=0.10)
+    assert sum(m.read(honest[i], claims={"truth": +1}).caught for i in range(10)) == 1
+
+
+def test_claim_from_logits():
+    logits = np.zeros(10); logits[3] = 5.0; logits[7] = 1.0
+    assert mt.claim_from_logits(logits, pos_token_ids=[3], neg_token_ids=[7]) == 1
+    assert mt.claim_from_logits(logits, pos_token_ids=[7], neg_token_ids=[3]) == -1
+
+
 def test_multi_axis_independent_flags():
     m = mt.ConscienceMount([_axis("truth", "true"),
                             mt.MountedAxis("danger", reader=lambda h: np.asarray(h, float)[:, 1],
