@@ -125,6 +125,24 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   vertical). Prereg `8692ec3`; `FINDING_conscience_coordinates_2026_06_11.md` (OATH-HELD 27/0); receipt
   `conscience_coordinates_result.json`. Spawned **B30**.
 
+- **Autopilot cycle 5 (2026-06-12, operator "keep going") — B30, the RIGHT second axis: does a
+  content-danger STATEMENT axis complete the (truth × danger) basis? `PARTIAL-STRUCTURED` (near-miss).**
+  Fit a danger axis DIRECTLY on danger-vs-safe statements (balanced across truth), whiten, read the
+  UNCHANGED cycle-4 factorial. **The danger axis is clean, perfect, orthogonal, transferable:** c_danger
+  recovers H at **1.0** in gemma AND through both maps, invariant to truth (≈0.51), cos(truth,danger)
+  **−0.0** — DIRECTLY resolving cycle-4 HARM-AXIS-NULL (borrowed refusal axis was at chance 0.52). Cycle
+  4's null was about a BORROWED axis, not unreadable danger. Compositional gate: **gemma PASSES all four,
+  Qwen-3B PASSES all four**; primary Llama-3B passes 3/4, missing c_truth_invariant_H **0.6562** vs 0.65
+  ceiling by **0.0062** → gate not met on the required primary → PARTIAL-STRUCTURED (a threshold miss is
+  the verdict it earns, no rounding up). Mechanism: truth coord reads truth well on SAFE statements
+  (+0.89 vs −1.20) but weakly on DANGER statements (+0.28 vs −0.04) — danger register compresses truth.
+  Dangerous-misinfo now DECOMPOSES: 2-D (low-truth,high-danger) composite gemma 0.7662 / Llama 0.9213 /
+  Qwen 0.8079, beating 1-D falsity 0.5231 in-run (danger axis adds the power). For the product: validates
+  a directly-fit danger axis as a clean styxx.crossmind second axis (the borrowed-axis refusal stands).
+  Owed: **B29** (mapped-space whitening + covariance sweep should pull Llama's marginal cell under the
+  ceiling); larger factorial. Prereg `06e80dc`; `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD
+  34/0); receipt `truth_danger_basis_result.json`; figure `truth_danger_basis.png`. **B30 → REPORT_AS_NEAR.**
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -167,7 +185,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
 | **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28): cycle 3 whitened only the source. Apply the same ZCA recipe in the mapped target space to clean the (broad-transport-dominated) cross-model cross-talk; add a shrinkage/held-out covariance sweep (n_train≈155 in 2304-dim is regularized, not full-rank). Does the whitened basis hold cross-model and across covariance estimators? | spawned by entanglement-resolution | H | QUEUED |
-| **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL): refusal (fit on requests) does NOT read statement-level danger. Fit a dedicated danger-vs-safe STATEMENT axis, whiten, and test whether it forms a clean orthonormal pair with truth AND transfers cross-model — turning cycle 4's informative null into the intended (truth × danger) coordinate system that decomposes dangerous misinformation. | spawned by conscience-coordinates | H | QUEUED |
+| **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL). | spawned by conscience-coordinates | H | **PARTIAL-STRUCTURED (near-miss), cycle 5.** Danger axis clean+perfect+orthogonal (c_danger→H=1.0 gemma & both maps, cos −0.0, invariant to truth) — resolves HARM-AXIS-NULL (0.52→1.0). Compositional gate PASSES in gemma + Qwen-3B; primary Llama-3B misses c_truth_invariant_H 0.6562 vs 0.65 by 0.0062 → gate not met. Dangerous-misinfo decomposes (2-D 0.77–0.92 > 1-D falsity 0.52). Validates a directly-fit danger axis for styxx.crossmind. `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD 34/0). Clean cross-model claim owed to **B29**. |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 

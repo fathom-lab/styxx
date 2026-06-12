@@ -1,0 +1,72 @@
+{
+  "experiment": "truth x danger basis \u2014 the RIGHT second axis (content-danger STATEMENT coordinate)",
+  "prereg": "papers/showcase-viz/PREREG_truth_danger_basis_2026_06_12.md",
+  "source": "google/gemma-2-2b-it",
+  "layer": 12,
+  "seed": 0,
+  "whiten_eps": 0.001,
+  "on_target": 0.75,
+  "off_target": 0.65,
+  "n_truth_train": 88,
+  "n_danger_train": 48,
+  "n_factorial": 48,
+  "whitened_cos_truth_danger": -0.0,
+  "gemma_readout": {
+    "c_truth_recovers_T": 0.7656,
+    "c_truth_invariant_H": 0.5347,
+    "c_danger_recovers_H": 1.0,
+    "c_danger_invariant_T": 0.5104
+  },
+  "quadrant_centroids": {
+    "true_safe": {
+      "c_truth_mean": 0.8907,
+      "c_danger_mean": -0.7331,
+      "n": 12
+    },
+    "false_safe": {
+      "c_truth_mean": -1.2035,
+      "c_danger_mean": -0.6634,
+      "n": 12
+    },
+    "true_danger": {
+      "c_truth_mean": 0.2787,
+      "c_danger_mean": 1.6058,
+      "n": 12
+    },
+    "false_danger": {
+      "c_truth_mean": -0.0389,
+      "c_danger_mean": 1.4534,
+      "n": 12
+    }
+  },
+  "dangerous_misinfo": {
+    "auroc_1d_falsity": 0.5231,
+    "auroc_2d_composite": 0.7662,
+    "cycle4_1d_baseline": 0.838
+  },
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "map_layer": 15,
+    "map_val_r2": 0.5815,
+    "readout": {
+      "c_truth_recovers_T": 0.9288,
+      "c_truth_invariant_H": 0.6562,
+      "c_danger_recovers_H": 1.0,
+      "c_danger_invariant_T": 0.5069
+    },
+    "dmi_2d": 0.9213
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "map_layer": 20,
+    "map_val_r2": 0.5003,
+    "readout": {
+      "c_truth_recovers_T": 0.8559,
+      "c_truth_invariant_H": 0.5017,
+      "c_danger_recovers_H": 1.0,
+      "c_danger_invariant_T": 0.5104
+    },
+    "dmi_2d": 0.8079
+  },
+  "verdict": "PARTIAL-STRUCTURED"
+}
