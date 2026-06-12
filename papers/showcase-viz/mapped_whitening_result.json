@@ -1,0 +1,125 @@
+{
+  "experiment": "B29 mapped-space whitening \u2014 clear cycle-5's cross-model basis miss?",
+  "prereg": "papers/showcase-viz/PREREG_mapped_whitening_2026_06_12.md",
+  "source": "google/gemma-2-2b-it",
+  "layer": 12,
+  "seed": 0,
+  "lambdas": [
+    0.2,
+    0.35,
+    0.5,
+    0.65,
+    0.8
+  ],
+  "gate_lambda": 0.5,
+  "on_target": 0.75,
+  "off_target": 0.65,
+  "gemma_source_whitened": {
+    "c_truth_recovers_T": 0.7656,
+    "c_truth_invariant_H": 0.5347,
+    "c_danger_recovers_H": 1.0,
+    "c_danger_invariant_T": 0.5104
+  },
+  "gemma_passes": true,
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "map_layer": 15,
+    "map_val_r2": 0.5815,
+    "source_whitened": {
+      "c_truth_recovers_T": 0.9288,
+      "c_truth_invariant_H": 0.6562,
+      "c_danger_recovers_H": 1.0,
+      "c_danger_invariant_T": 0.5069
+    },
+    "mapped_whitened": {
+      "lam_0.2": {
+        "c_truth_recovers_T": 0.8247,
+        "c_truth_invariant_H": 0.5729,
+        "c_danger_recovers_H": 0.9965,
+        "c_danger_invariant_T": 0.5035
+      },
+      "lam_0.35": {
+        "c_truth_recovers_T": 0.8194,
+        "c_truth_invariant_H": 0.5868,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5122
+      },
+      "lam_0.5": {
+        "c_truth_recovers_T": 0.8351,
+        "c_truth_invariant_H": 0.6059,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5087
+      },
+      "lam_0.65": {
+        "c_truth_recovers_T": 0.8438,
+        "c_truth_invariant_H": 0.6146,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5104
+      },
+      "lam_0.8": {
+        "c_truth_recovers_T": 0.8681,
+        "c_truth_invariant_H": 0.6128,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5104
+      }
+    }
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "map_layer": 20,
+    "map_val_r2": 0.5003,
+    "source_whitened": {
+      "c_truth_recovers_T": 0.8559,
+      "c_truth_invariant_H": 0.5017,
+      "c_danger_recovers_H": 1.0,
+      "c_danger_invariant_T": 0.5104
+    },
+    "mapped_whitened": {
+      "lam_0.2": {
+        "c_truth_recovers_T": 0.7101,
+        "c_truth_invariant_H": 0.5799,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5122
+      },
+      "lam_0.35": {
+        "c_truth_recovers_T": 0.7344,
+        "c_truth_invariant_H": 0.5851,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5139
+      },
+      "lam_0.5": {
+        "c_truth_recovers_T": 0.7691,
+        "c_truth_invariant_H": 0.5729,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5122
+      },
+      "lam_0.65": {
+        "c_truth_recovers_T": 0.809,
+        "c_truth_invariant_H": 0.5503,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5104
+      },
+      "lam_0.8": {
+        "c_truth_recovers_T": 0.842,
+        "c_truth_invariant_H": 0.5226,
+        "c_danger_recovers_H": 1.0,
+        "c_danger_invariant_T": 0.5017
+      }
+    }
+  },
+  "gate_matrix_lambda_0.5": {
+    "c_truth_recovers_T": 0.8351,
+    "c_truth_invariant_H": 0.6059,
+    "c_danger_recovers_H": 1.0,
+    "c_danger_invariant_T": 0.5087
+  },
+  "c_truth_invariant_H_by_lambda": {
+    "0.2": 0.5729,
+    "0.35": 0.5868,
+    "0.5": 0.6059,
+    "0.65": 0.6146,
+    "0.8": 0.6128
+  },
+  "stability_count_under_ceiling": 5,
+  "verdict": "BASIS-CLEARED"
+}

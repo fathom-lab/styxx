@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_truth_danger_basis_2026_06_12.md",
-  "document_sha256": "a36be2c4bdd83ceffedae185f9b0be2569b617def1a5bd6d487e57491a368dd0",
+  "document_sha256": "4000333032d4a2223fafccc60088e0a6b87da671c2fcbc7fa113f14c89640e65",
   "receipts_sha256": {
     "truth_danger_basis_result.json": "02aae3414636ad78a83ced2592144db30a894decdf590ccc0d891166f91f29a7"
   },
@@ -20,51 +20,51 @@
       "token": "4"
     },
     {
-      "line": 13,
+      "line": 22,
       "token": "2"
     },
     {
-      "line": 13,
+      "line": 22,
       "token": "2"
     },
     {
-      "line": 26,
+      "line": 35,
       "token": "4"
     },
     {
-      "line": 28,
+      "line": 37,
       "token": "4"
     },
     {
-      "line": 39,
+      "line": 48,
       "token": "1.2035"
     },
     {
-      "line": 40,
+      "line": 49,
       "token": "0.0389"
     },
     {
-      "line": 41,
+      "line": 50,
       "token": "4"
     },
     {
-      "line": 51,
+      "line": 60,
       "token": "4"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "0.65"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "48"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "48"
     },
     {
-      "line": 73,
+      "line": 82,
       "token": "48"
     }
   ],
@@ -79,7 +79,7 @@
       "receipt_ref": null
     },
     {
-      "line": 13,
+      "line": 22,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -88,7 +88,7 @@
       "receipt_ref": null
     },
     {
-      "line": 13,
+      "line": 22,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -97,7 +97,7 @@
       "receipt_ref": null
     },
     {
-      "line": 17,
+      "line": 26,
       "token": "0.7656",
       "value": 0.7656,
       "decimals": 4,
@@ -107,7 +107,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_truth_recovers_T"
     },
     {
-      "line": 17,
+      "line": 26,
       "token": "0.9288",
       "value": 0.9288,
       "decimals": 4,
@@ -117,7 +117,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_recovers_T"
     },
     {
-      "line": 17,
+      "line": 26,
       "token": "0.8559",
       "value": 0.8559,
       "decimals": 4,
@@ -127,7 +127,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_secondary.readout.c_truth_recovers_T"
     },
     {
-      "line": 18,
+      "line": 27,
       "token": "0.5347",
       "value": 0.5347,
       "decimals": 4,
@@ -137,7 +137,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_truth_invariant_H"
     },
     {
-      "line": 18,
+      "line": 27,
       "token": "0.6562",
       "value": 0.6562,
       "decimals": 4,
@@ -147,7 +147,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
     },
     {
-      "line": 18,
+      "line": 27,
       "token": "0.5017",
       "value": 0.5017,
       "decimals": 4,
@@ -157,7 +157,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_secondary.readout.c_truth_invariant_H"
     },
     {
-      "line": 19,
+      "line": 28,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -167,7 +167,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 19,
+      "line": 28,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -177,7 +177,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 19,
+      "line": 28,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -187,7 +187,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 20,
+      "line": 29,
       "token": "0.5104",
       "value": 0.5104,
       "decimals": 4,
@@ -197,7 +197,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_invariant_T"
     },
     {
-      "line": 20,
+      "line": 29,
       "token": "0.5069",
       "value": 0.5069,
       "decimals": 4,
@@ -207,7 +207,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_danger_invariant_T"
     },
     {
-      "line": 20,
+      "line": 29,
       "token": "0.5104",
       "value": 0.5104,
       "decimals": 4,
@@ -217,7 +217,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_invariant_T"
     },
     {
-      "line": 22,
+      "line": 31,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -226,7 +226,7 @@
       "receipt_ref": "truth_danger_basis_result.json:seed"
     },
     {
-      "line": 25,
+      "line": 34,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -235,7 +235,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 25,
+      "line": 34,
       "token": "0.51",
       "value": 0.51,
       "decimals": 2,
@@ -244,7 +244,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_invariant_T"
     },
     {
-      "line": 26,
+      "line": 35,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -253,7 +253,7 @@
       "receipt_ref": "truth_danger_basis_result.json:seed"
     },
     {
-      "line": 26,
+      "line": 35,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -262,7 +262,7 @@
       "receipt_ref": null
     },
     {
-      "line": 27,
+      "line": 36,
       "token": "0.52",
       "value": 0.52,
       "decimals": 2,
@@ -271,7 +271,7 @@
       "receipt_ref": "truth_danger_basis_result.json:dangerous_misinfo.auroc_1d_falsity"
     },
     {
-      "line": 28,
+      "line": 37,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -280,7 +280,7 @@
       "receipt_ref": null
     },
     {
-      "line": 30,
+      "line": 39,
       "token": "0.7656",
       "value": 0.7656,
       "decimals": 4,
@@ -289,7 +289,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_truth_recovers_T"
     },
     {
-      "line": 30,
+      "line": 39,
       "token": "0.5347",
       "value": 0.5347,
       "decimals": 4,
@@ -298,7 +298,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_truth_invariant_H"
     },
     {
-      "line": 30,
+      "line": 39,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -307,7 +307,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 31,
+      "line": 40,
       "token": "0.5104",
       "value": 0.5104,
       "decimals": 4,
@@ -316,7 +316,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_invariant_T"
     },
     {
-      "line": 32,
+      "line": 41,
       "token": "0.6562",
       "value": 0.6562,
       "decimals": 4,
@@ -325,7 +325,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
     },
     {
-      "line": 32,
+      "line": 41,
       "token": "0.65",
       "value": 0.65,
       "decimals": 2,
@@ -334,7 +334,7 @@
       "receipt_ref": "truth_danger_basis_result.json:off_target"
     },
     {
-      "line": 34,
+      "line": 43,
       "token": "0.6562",
       "value": 0.6562,
       "decimals": 4,
@@ -343,7 +343,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
     },
     {
-      "line": 39,
+      "line": 48,
       "token": "+0.8907",
       "value": 0.8907,
       "decimals": 4,
@@ -352,7 +352,7 @@
       "receipt_ref": "truth_danger_basis_result.json:quadrant_centroids.true_safe.c_truth_mean"
     },
     {
-      "line": 39,
+      "line": 48,
       "token": "1.2035",
       "value": 1.2035,
       "decimals": 4,
@@ -361,7 +361,7 @@
       "receipt_ref": null
     },
     {
-      "line": 39,
+      "line": 48,
       "token": "+0.2787",
       "value": 0.2787,
       "decimals": 4,
@@ -370,7 +370,7 @@
       "receipt_ref": "truth_danger_basis_result.json:quadrant_centroids.true_danger.c_truth_mean"
     },
     {
-      "line": 40,
+      "line": 49,
       "token": "0.0389",
       "value": 0.0389,
       "decimals": 4,
@@ -379,7 +379,7 @@
       "receipt_ref": null
     },
     {
-      "line": 41,
+      "line": 50,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -388,7 +388,7 @@
       "receipt_ref": null
     },
     {
-      "line": 48,
+      "line": 57,
       "token": "0.5231",
       "value": 0.5231,
       "decimals": 4,
@@ -397,7 +397,7 @@
       "receipt_ref": "truth_danger_basis_result.json:dangerous_misinfo.auroc_1d_falsity"
     },
     {
-      "line": 48,
+      "line": 57,
       "token": "0.7662",
       "value": 0.7662,
       "decimals": 4,
@@ -406,7 +406,7 @@
       "receipt_ref": "truth_danger_basis_result.json:dangerous_misinfo.auroc_2d_composite"
     },
     {
-      "line": 48,
+      "line": 57,
       "token": "0.9213",
       "value": 0.9213,
       "decimals": 4,
@@ -415,7 +415,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.dmi_2d"
     },
     {
-      "line": 51,
+      "line": 60,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -424,7 +424,7 @@
       "receipt_ref": null
     },
     {
-      "line": 51,
+      "line": 60,
       "token": "0.838",
       "value": 0.838,
       "decimals": 3,
@@ -433,7 +433,7 @@
       "receipt_ref": "truth_danger_basis_result.json:dangerous_misinfo.cycle4_1d_baseline"
     },
     {
-      "line": 60,
+      "line": 69,
       "token": "0.6562",
       "value": 0.6562,
       "decimals": 4,
@@ -442,7 +442,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
     },
     {
-      "line": 60,
+      "line": 69,
       "token": "0.65",
       "value": 0.65,
       "decimals": 2,
@@ -451,7 +451,7 @@
       "receipt_ref": "truth_danger_basis_result.json:off_target"
     },
     {
-      "line": 68,
+      "line": 77,
       "token": "0.6562",
       "value": 0.6562,
       "decimals": 4,
@@ -460,7 +460,7 @@
       "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "0.65",
       "value": 0.65,
       "decimals": 2,
@@ -469,7 +469,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "48",
       "value": 48.0,
       "decimals": 0,
@@ -478,7 +478,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 69,
+      "line": 78,
       "token": "48",
       "value": 48.0,
       "decimals": 0,
@@ -487,7 +487,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 73,
+      "line": 82,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -496,7 +496,7 @@
       "receipt_ref": "truth_danger_basis_result.json:gemma_readout.c_danger_recovers_H"
     },
     {
-      "line": 73,
+      "line": 82,
       "token": "48",
       "value": 48.0,
       "decimals": 0,

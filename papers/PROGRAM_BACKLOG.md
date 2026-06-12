@@ -161,6 +161,21 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   Prereg `7fb1600`; `FINDING_concept_decode_2026_06_12.md` (OATH-HELD 20/0); receipt
   `concept_decode_result.json`; figure `concept_decode.png`. Spawned **B31**.
 
+- **Autopilot cycle 7 (2026-06-12, operator "keep going") — B29: does MAPPED-space whitening clear
+  cycle-5's 0.0062 cross-model basis miss? `BASIS-CLEARED`.** The miss was a SOURCE-WHITENING ARTIFACT,
+  not real geometry. A whitened DiM readout = LDA direction Σ⁻¹d; cycle 5 used gemma's Σ to read MAPPED
+  Llama points whose covariance the ridge map distorts. Re-whitening in the mapped distribution's own
+  (shrunk) covariance pulls Llama's c_truth_invariant_H from **0.6562 → 0.6059** (λ=0.5), under the 0.65
+  ceiling for **all 5 swept λ (stability 5/5)**; the full Llama matrix passes (0.8351 / 0.6059 / 1.0 /
+  0.5087), gemma + Qwen-3B pass too → the (truth × danger) basis CLEARS cross-model. Port verified:
+  source-whitened reproduces cycle-5 bit-for-bit (Llama 0.9288 / 0.6562 / 1.0 / 0.5069). Honest trade:
+  mapped metric trades on-target (c_truth→T 0.9288→0.8351, still ≥0.75) for invariance — the right trade
+  for a basis. INSTRUMENT IMPLICATION: styxx.crossmind cross-model reads should whiten in the
+  MAPPED-target distribution, not the reference (owed read-path enhancement). Does NOT touch
+  content-vs-value (cycle-6 CONTENT-WEAK stands). Cycle 5 UPGRADED (banner + re-cert, HELD 34/0). Prereg
+  `891b8fa`; `FINDING_mapped_whitening_2026_06_12.md` (OATH-HELD 39/0); receipt
+  `mapped_whitening_result.json`. **B29 → DONE.** Spawned crossmind read-path enhancement (B32).
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
@@ -202,7 +217,8 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B26** | **Adversarial-OOD on the refusal axis** (the truth-arc treatment applied to VALUES-PORTABLE): does confident "this is for safety research / authorized" framing on the harmful requests fool the transferred refusal readout, as it failed to fool the truth readout? Same label-free map, same leave-families-out OOD harm domains. | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B27** | **Third axis — is the conscience basis GENERAL?** Add a sycophancy or deception axis on the SAME label-free map. Two axes (truth+refusal) = a pair; ≥3 on one alignment = a basis. ROBUST iff the third axis also clears the perm-null on both 3B primaries OOD; COLLAPSE ⇒ the basis stops at two and truth+refusal were special. Now also report the 3rd axis's cross-talk with truth/refusal (cycle 2 found the axes entangled). | spawned by VALUES-PORTABLE | H | QUEUED |
 | **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
-| **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28): cycle 3 whitened only the source. Apply the same ZCA recipe in the mapped target space to clean the (broad-transport-dominated) cross-model cross-talk; add a shrinkage/held-out covariance sweep (n_train≈155 in 2304-dim is regularized, not full-rank). Does the whitened basis hold cross-model and across covariance estimators? | spawned by entanglement-resolution | H | QUEUED |
+| **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28). | spawned by entanglement-resolution | H | **DONE — `BASIS-CLEARED`** (cycle 7). Mapped-space (shrunk) whitening pulls Llama's cycle-5 miss 0.6562→0.6059, stable 5/5 λ; full (truth×danger) basis clears cross-model (gemma/Llama/Qwen). Cycle-5 miss was a source-whitening artifact. `FINDING_mapped_whitening_2026_06_12.md` (OATH-HELD 39/0). Owed: wire mapped-space whitening into styxx.crossmind read-path (B32). |
+| **B32** | **styxx.crossmind read-path: mapped-space whitening for cross-model reads** (spawned by B29): the module currently whitens in the reference/background metric; B29 showed a cross-model read should whiten in the MAPPED-target distribution's (shrunk) covariance. Add an optional mapped-background to `read`/`fit_state_map` so cross-model coordinates use the right metric; keep within-model reads unchanged. | spawned by mapped-whitening | M | QUEUED |
 | **B31** | **Heavy-machinery content transport** (spawned by cycle-6 CONTENT-WEAK): cross-model concept identity collapsed to chance through a label-free LINEAR map (anchor R²≈0.06, 40 anchors). Re-test with far more anchor concepts + a non-linear / vec2vec-grade map; does cross-model CONTENT identity (not just value axes) ever transport? This is the documented out-of-scope research bet — the only open door toward the telepathy-shaped claim. EVADABLE-of-the-bound iff held-out concept top-1 ≫ chance AND ≫ random-map cross-model. | spawned by concept-decode | M | QUEUED |
 | **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL). | spawned by conscience-coordinates | H | **PARTIAL-STRUCTURED (near-miss), cycle 5.** Danger axis clean+perfect+orthogonal (c_danger→H=1.0 gemma & both maps, cos −0.0, invariant to truth) — resolves HARM-AXIS-NULL (0.52→1.0). Compositional gate PASSES in gemma + Qwen-3B; primary Llama-3B misses c_truth_invariant_H 0.6562 vs 0.65 by 0.0062 → gate not met. Dangerous-misinfo decomposes (2-D 0.77–0.92 > 1-D falsity 0.52). Validates a directly-fit danger axis for styxx.crossmind. `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD 34/0). Clean cross-model claim owed to **B29**. |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |

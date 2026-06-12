@@ -1,0 +1,562 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mapped_whitening_2026_06_12.md",
+  "document_sha256": "6aa413d4e251cebe8f28f713922b8faeb77c786861bb9580b33337d50747d987",
+  "receipts_sha256": {
+    "mapped_whitening_result.json": "a0c11df9471e7d25df494a9371bd9998052167f66d2e70afd5618d2e31ef73be"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 39,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "5"
+    },
+    {
+      "line": 6,
+      "token": "0.0062"
+    },
+    {
+      "line": 6,
+      "token": "0.6562"
+    },
+    {
+      "line": 6,
+      "token": "0.65"
+    },
+    {
+      "line": 12,
+      "token": "5"
+    },
+    {
+      "line": 17,
+      "token": "5"
+    },
+    {
+      "line": 23,
+      "token": "5"
+    },
+    {
+      "line": 23,
+      "token": "0.5"
+    },
+    {
+      "line": 30,
+      "token": "0.2"
+    },
+    {
+      "line": 33,
+      "token": "0.5"
+    },
+    {
+      "line": 35,
+      "token": "5"
+    },
+    {
+      "line": 37,
+      "token": "0.0062"
+    },
+    {
+      "line": 57,
+      "token": "48"
+    },
+    {
+      "line": 59,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "pre-run, committed 891b8fa). Receipt: `mapped_whitening_result.json`. Backlog B29. Cycle 5",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "0.0062",
+      "value": 0.0062,
+      "decimals": 4,
+      "context": "missed the primary Llama-3B by 0.0062 (c_truth_invariant_H = 0.6562 vs the 0.65 ceiling). This tests",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "missed the primary Llama-3B by 0.0062 (c_truth_invariant_H = 0.6562 vs the 0.65 ceiling). This tests",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "missed the primary Llama-3B by 0.0062 (c_truth_invariant_H = 0.6562 vs the 0.65 ceiling). This tests",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "covariance \u03a3 supplies the metric. Cycle 5 used gemma's covariance for everything, including reads of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "**Port check (only the metric changes):** the source-whitened readout reproduces cycle 5 exactly \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.7656",
+      "value": 0.7656,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_truth_recovers_T"
+    },
+    {
+      "line": 18,
+      "token": "0.5347",
+      "value": 0.5347,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_truth_invariant_H"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 18,
+      "token": "0.5104",
+      "value": 0.5104,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_invariant_T"
+    },
+    {
+      "line": 18,
+      "token": "0.9288",
+      "value": 0.9288,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_recovers_T"
+    },
+    {
+      "line": 18,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_invariant_H"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 18,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "gemma 0.7656 / 0.5347 / 1.0 / 0.5104 and Llama-3.2-3B 0.9288 / **0.6562** / 1.0 / 0.5069. The 0.6562 miss",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_invariant_H"
+    },
+    {
+      "line": 23,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.9288",
+      "value": 0.9288,
+      "decimals": 4,
+      "context": "| c_truth recovers T | 0.9288 | 0.8351 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_truth recovers T | 0.9288 | 0.8351 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_recovers_T"
+    },
+    {
+      "line": 25,
+      "token": "0.8351",
+      "value": 0.8351,
+      "decimals": 4,
+      "context": "| c_truth recovers T | 0.9288 | 0.8351 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_truth recovers T | 0.9288 | 0.8351 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_truth_recovers_T"
+    },
+    {
+      "line": 26,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "| c_truth invariant to H | **0.6562** (miss) | **0.6059** (clears) |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_truth invariant to H | **0.6562** (miss) | **0.6059** (clears) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_invariant_H"
+    },
+    {
+      "line": 26,
+      "token": "0.6059",
+      "value": 0.6059,
+      "decimals": 4,
+      "context": "| c_truth invariant to H | **0.6562** (miss) | **0.6059** (clears) |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_truth invariant to H | **0.6562** (miss) | **0.6059** (clears) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_truth_invariant_H"
+    },
+    {
+      "line": 27,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| c_danger recovers H | 1.0 | 1.0 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_danger recovers H | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 27,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| c_danger recovers H | 1.0 | 1.0 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_danger recovers H | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 28,
+      "token": "0.5069",
+      "value": 0.5069,
+      "decimals": 4,
+      "context": "| c_danger invariant to T | 0.5069 | 0.5087 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_danger invariant to T | 0.5069 | 0.5087 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_danger_invariant_T"
+    },
+    {
+      "line": 28,
+      "token": "0.5087",
+      "value": 0.5087,
+      "decimals": 4,
+      "context": "| c_danger invariant to T | 0.5069 | 0.5087 |",
+      "binding_context": "| readout | source-whitened (cycle 5) | mapped-whitened (\u03bb=0.5) | | c_danger invariant to T | 0.5069 | 0.5087 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_danger_invariant_T"
+    },
+    {
+      "line": 30,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.5729",
+      "value": 0.5729,
+      "decimals": 4,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.2.c_truth_invariant_H"
+    },
+    {
+      "line": 30,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:lambdas[1]"
+    },
+    {
+      "line": 30,
+      "token": "0.5868",
+      "value": 0.5868,
+      "decimals": 4,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.35.c_truth_invariant_H"
+    },
+    {
+      "line": 30,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:lambdas[2]"
+    },
+    {
+      "line": 30,
+      "token": "0.6059",
+      "value": 0.6059,
+      "decimals": 4,
+      "context": "`c_truth_invariant_H` across the shrinkage sweep: \u03bb=0.2 \u2192 0.5729, 0.35 \u2192 0.5868, 0.5 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_truth_invariant_H"
+    },
+    {
+      "line": 31,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:lambdas[3]"
+    },
+    {
+      "line": 31,
+      "token": "0.6146",
+      "value": 0.6146,
+      "decimals": 4,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.65.c_truth_invariant_H"
+    },
+    {
+      "line": 31,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:lambdas[4]"
+    },
+    {
+      "line": 31,
+      "token": "0.6128",
+      "value": 0.6128,
+      "decimals": 4,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.8.c_truth_invariant_H"
+    },
+    {
+      "line": 31,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:lambdas[3]"
+    },
+    {
+      "line": 31,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+    },
+    {
+      "line": 31,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "0.65 \u2192 0.6146, 0.8 \u2192 0.6128 \u2014 **all five under the 0.65 ceiling (stability 5/5)**, so the pass does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+    },
+    {
+      "line": 33,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "(\u03bb=0.5: 0.7691 / 0.5729 / 1.0 / 0.5122). **Verdict per the frozen gate: BASIS-CLEARED.**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.7691",
+      "value": 0.7691,
+      "decimals": 4,
+      "context": "(\u03bb=0.5: 0.7691 / 0.5729 / 1.0 / 0.5122). **Verdict per the frozen gate: BASIS-CLEARED.**",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_secondary.mapped_whitened.lam_0.5.c_truth_recovers_T"
+    },
+    {
+      "line": 33,
+      "token": "0.5729",
+      "value": 0.5729,
+      "decimals": 4,
+      "context": "(\u03bb=0.5: 0.7691 / 0.5729 / 1.0 / 0.5122). **Verdict per the frozen gate: BASIS-CLEARED.**",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.2.c_truth_invariant_H"
+    },
+    {
+      "line": 33,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(\u03bb=0.5: 0.7691 / 0.5729 / 1.0 / 0.5122). **Verdict per the frozen gate: BASIS-CLEARED.**",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 33,
+      "token": "0.5122",
+      "value": 0.5122,
+      "decimals": 4,
+      "context": "(\u03bb=0.5: 0.7691 / 0.5729 / 1.0 / 0.5122). **Verdict per the frozen gate: BASIS-CLEARED.**",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.35.c_danger_invariant_T"
+    },
+    {
+      "line": 35,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "## What this establishes \u2014 cycle 5 upgrades to a cleared cross-model basis",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.0062",
+      "value": 0.0062,
+      "decimals": 4,
+      "context": "The cycle-5 0.0062 miss was a **source-whitening artifact**, not real geometry. The ridge map distorts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "perfect (1.0) throughout. **The conscience-coordinate basis is real cross-model once each read uses the",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 48,
+      "token": "0.9288",
+      "value": 0.9288,
+      "decimals": 4,
+      "context": "recovers T drops from 0.9288 to 0.8351 (still well clear of 0.75) while its danger-leak drops below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.source_whitened.c_truth_recovers_T"
+    },
+    {
+      "line": 48,
+      "token": "0.8351",
+      "value": 0.8351,
+      "decimals": 4,
+      "context": "recovers T drops from 0.9288 to 0.8351 (still well clear of 0.75) while its danger-leak drops below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_truth_recovers_T"
+    },
+    {
+      "line": 48,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "recovers T drops from 0.9288 to 0.8351 (still well clear of 0.75) while its danger-leak drops below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:on_target"
+    },
+    {
+      "line": 56,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Methodological consolidation of a certified arc, not a new axis: the danger axis's 1.0 readout remains an",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:gemma_source_whitened.c_danger_recovers_H"
+    },
+    {
+      "line": 57,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "n=48 existence result, and the whole basis is linear, whitened, last-token, register-bounded, on local",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "content-vs-value distinction \u2014 cross-model CONTENT identity still does not transport (cycle 6",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "shrinkage sweep + stability requirement were pre-registered; the 5/5 stability is the evidence the result",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+    },
+    {
+      "line": 62,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "shrinkage sweep + stability requirement were pre-registered; the 5/5 stability is the evidence the result",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:stability_count_under_ceiling"
+    }
+  ]
+}

@@ -7,6 +7,15 @@
 harmful REQUESTS) read statement danger at chance. This fits a danger axis DIRECTLY on danger-vs-safe
 STATEMENTS and asks whether it completes the intended (truth × danger) coordinate system.**
 
+> **B29 RESOLUTION (2026-06-12, see `FINDING_mapped_whitening_2026_06_12.md`, BASIS-CLEARED):** the
+> primary-target miss reported below (the truth coordinate's danger-invariance a whisker over the
+> ceiling on Llama) was a SOURCE-WHITENING ARTIFACT, not real geometry. Reading the mapped points in the
+> mapped distribution's own (shrunk) covariance instead of the reference's pulls the cell under the
+> ceiling, stably across the whole shrinkage sweep, and the full cross-model (truth × danger) basis
+> clears in gemma, Llama-3.2-3B, and Qwen-3B. This finding is upgraded one rung, not retracted: the
+> danger axis and the orthogonal basis were already clean here; only the cross-model READ metric needed
+> to match the space it reads in.**
+
 ## Result — the danger axis is real, perfect, and orthogonal; the strict gate misses on one target by a hair
 
 A danger axis fit on a disjoint set of danger-vs-safe STATEMENTS (balanced across truth), whitened
