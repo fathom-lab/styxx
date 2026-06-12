@@ -51,9 +51,11 @@ anisotropic dot-product geometry but is a pure COVARIANCE artifact: under the re
 Cycle 2 (PARTIAL-STRUCTURED) called the axes "distinct but entangled — a correlated frame, not an
 orthonormal basis." That was correct FOR THE RAW READOUT. This cycle shows the entanglement lives
 entirely in the residual stream's covariance, not in the directions' semantics: whiten, and the frame
-becomes orthonormal with no loss of per-axis signal. The honest upgrade: **the portable conscience IS a
-basis of independent value axes; "read it whitened" is the readout recipe.** Cycle 2 is not retracted —
-its raw-space measurement was right, and it explicitly owed this test — it is resolved one rung up.
+becomes orthonormal with no loss of per-axis signal. The honest upgrade: **in the SOURCE (gemma) space,
+the portable conscience IS a basis of independent value axes; "read it whitened" is the readout recipe.**
+(The cross-model MAPPED readout needs whitening in the mapped metric, not gemma's — established later in
+`FINDING_mapped_whitening_2026_06_12.md`; here the result is the source-space geometry.) Cycle 2 is not
+retracted — its raw-space measurement was right, and it explicitly owed this test — resolved one rung up.
 
 ## Honest bounds (what is NOT claimed)
 

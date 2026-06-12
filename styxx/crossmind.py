@@ -49,11 +49,11 @@ import numpy as np
 
 __all__ = [
     # primitives (validated, lifted verbatim from papers/showcase-viz)
-    "fit_direction", "fit_map", "apply_map", "zca_whiten", "auroc", "discrim",
+    "fit_direction", "fit_map", "apply_map", "zca_whiten", "zca_shrink", "auroc", "discrim",
     "permutation_null",
     # instrument
     "PortableAxis", "StateMap", "fit_axis", "fit_state_map", "identity_map",
-    "read", "evaluate",
+    "read", "read_cross_model", "evaluate",
     # demarcation + certificate
     "REFUSALS", "refused", "crossmind_certificate",
     # self-test / equivalence gate
@@ -100,6 +100,26 @@ def zca_whiten(train: np.ndarray, eps: float = _WHITEN_EPS):
     s = np.clip(s, 0, None)
     W = V @ np.diag(1.0 / np.sqrt(s + eps)) @ V.T
     return mu, W
+
+
+def zca_shrink(train: np.ndarray, lam: float = 0.5, eps: float = 1e-8):
+    """ZCA whitening with the covariance shrunk toward its scaled identity (Ledoit-Wolf-style).
+
+    Σ_λ = (1-λ)·Σ̂ + λ·(tr Σ̂ / d)·I, for λ in [0, 1]. Use this for the MAPPED-target metric on
+    cross-model reads, where the anchor count is far below the hidden dimension so the raw covariance is
+    rank-deficient and must be shrunk (B29; FINDING_mapped_whitening_2026_06_12.md). λ=0.5 is the
+    pre-registered default. Returns (mu, W) so x_white = (x - mu) @ W.
+    """
+    train = np.asarray(train, dtype=float)
+    mu = train.mean(0)
+    Xc = train - mu
+    S = (Xc.T @ Xc) / max(1, Xc.shape[0] - 1)
+    d = S.shape[0]
+    tgt = np.trace(S) / d
+    S = (1.0 - lam) * S + lam * tgt * np.eye(d)
+    s, V = np.linalg.eigh(S)
+    s = np.clip(s, eps, None)
+    return mu, V @ np.diag(1.0 / np.sqrt(s)) @ V.T
 
 
 def auroc(scores: Sequence[float], labels: Sequence[int]) -> float:
@@ -246,6 +266,31 @@ def read(axis: PortableAxis, target_states: np.ndarray,
     x = np.asarray(target_states, dtype=float)
     mapped = x if state_map is None else state_map.apply(x)
     return axis.score(mapped)
+
+
+def read_cross_model(reference_states: np.ndarray, labels: Sequence[int], state_map: StateMap,
+                     target_states: np.ndarray, *, mapped_anchors: np.ndarray,
+                     shrink_lambda: float = 0.5, eps: float = 1e-8) -> np.ndarray:
+    """Cross-model read with MAPPED-space whitening — the correct metric for transport (B29).
+
+    `read` whitens in the REFERENCE metric (good for in-model reads). For a CROSS-model read the
+    label-free ridge map distorts covariance, so reading mapped points in the reference metric leaves a
+    residual anisotropy that bleeds neighbouring axes in (FINDING_mapped_whitening_2026_06_12.md,
+    BASIS-CLEARED). Here the whitening metric is re-estimated on the MAPPED target distribution (shrunk
+    toward scaled identity, since anchors ≪ hidden dim), the difference-of-means direction is fit in that
+    metric, and the target is read in it. Prefer this over `read(..., state_map=...)` for cross-model use.
+
+    reference_states / labels: the reference-model labeled states the axis is defined by (n, d_ref).
+    state_map: a StateMap target→reference (from fit_state_map).
+    target_states: target-model states to read (m, d_tgt).
+    mapped_anchors: target-model anchor states (unlabeled, k, d_tgt) defining the mapped distribution.
+    shrink_lambda: covariance shrinkage toward scaled identity (0.5 pre-registered).
+    """
+    ref = np.asarray(reference_states, dtype=float)
+    labels = np.asarray(labels)
+    mu_m, W_m = zca_shrink(state_map.apply(mapped_anchors), shrink_lambda, eps)
+    w = fit_direction((ref - mu_m) @ W_m, labels)
+    return ((state_map.apply(target_states) - mu_m) @ W_m) @ w
 
 
 def evaluate(coords: Sequence[float], labels: Sequence[int]) -> dict:

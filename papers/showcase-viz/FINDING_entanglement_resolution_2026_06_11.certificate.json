@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_entanglement_resolution_2026_06_11.md",
-  "document_sha256": "b8f3048152471929ea50f619fe50291b5bf28f48059abef52a2682af86a84206",
+  "document_sha256": "7a899240e04cdc3ef4cf68c6e01dbc298a93c3756fe57b81b9fdd81fbdb7cc6a",
   "receipts_sha256": {
     "entanglement_resolution_result.json": "f77a9f5d95719574f72c201ef8779c0592b5413c4455a96cec88641b89d00ecd"
   },
@@ -48,11 +48,11 @@
       "token": "2"
     },
     {
-      "line": 55,
+      "line": 57,
       "token": "2"
     },
     {
-      "line": 67,
+      "line": 69,
       "token": "155"
     }
   ],
@@ -373,16 +373,16 @@
       "receipt_ref": null
     },
     {
-      "line": 55,
+      "line": 57,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
-      "context": "basis of independent value axes; \"read it whitened\" is the readout recipe.** Cycle 2 is not retracted \u2014",
+      "context": "`FINDING_mapped_whitening_2026_06_12.md`; here the result is the source-space geometry.) Cycle 2 is not",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 62,
+      "line": 64,
       "token": "0.95",
       "value": 0.95,
       "decimals": 2,
@@ -391,7 +391,7 @@
       "receipt_ref": "entanglement_resolution_result.json:mapped_primary.B.randdir_p95"
     },
     {
-      "line": 63,
+      "line": 65,
       "token": "0.9667",
       "value": 0.9667,
       "decimals": 4,
@@ -400,7 +400,7 @@
       "receipt_ref": "entanglement_resolution_result.json:mapped_secondary.B.randdir_p95"
     },
     {
-      "line": 64,
+      "line": 66,
       "token": "0.005",
       "value": 0.005,
       "decimals": 3,
@@ -409,7 +409,7 @@
       "receipt_ref": "entanglement_resolution_result.json:mapped_primary.C.p_perm"
     },
     {
-      "line": 67,
+      "line": 69,
       "token": "155",
       "value": 155.0,
       "decimals": 0,

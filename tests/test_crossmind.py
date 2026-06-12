@@ -106,6 +106,45 @@ def test_cross_model_read_recovers_labels():
     assert cm.auroc(coords, hlab) >= 0.80
 
 
+def test_zca_shrink_interpolates_to_identity():
+    rng = np.random.default_rng(11)
+    A = rng.standard_normal((10, 10))
+    X = rng.standard_normal((300, 10)) @ A                      # anisotropic
+    # lam=1 shrinks the covariance fully to scaled identity -> whitening is uniform rescaling
+    mu1, W1 = cm.zca_shrink(X, lam=1.0)
+    assert np.allclose(W1, np.diag(np.diag(W1)), atol=1e-6)     # diagonal (no decorrelation rotation)
+    # lam=0 (eps-regularized) genuinely decorrelates: whitened covariance is near-identity
+    mu0, W0 = cm.zca_shrink(X, lam=0.0, eps=1e-6)
+    cov = np.cov(((X - mu0) @ W0), rowvar=False)
+    assert np.allclose(np.diag(cov), 1.0, atol=0.1)
+    assert np.abs(cov - np.diag(np.diag(cov))).max() < 0.1
+
+
+def test_read_cross_model_recovers_labels_no_target_labels():
+    # mapped-space whitening read; mirrors the B29 cross-model pipeline on synthetic two models
+    rng = np.random.default_rng(13)
+    dlat, dref, dtgt = 6, 22, 26
+    Aref = rng.standard_normal((dlat, dref)); Atgt = rng.standard_normal((dlat, dtgt))
+    ax = rng.standard_normal(dlat); ax /= np.linalg.norm(ax)
+
+    def emit(n, signed):
+        z = rng.standard_normal((n, dlat))
+        if signed is not None:
+            z = z + signed[:, None] * 2.0 * ax[None, :]
+        return z @ Atgt + 0.1 * rng.standard_normal((n, dtgt)), z @ Aref + 0.1 * rng.standard_normal((n, dref))
+
+    anchor_tgt, anchor_ref = emit(120, None)                   # unlabeled anchors (define mapped dist)
+    lab = np.array([1, 0] * 30)
+    val_tgt, val_ref = emit(60, np.where(lab == 1, 1.0, -1.0))
+    hlab = np.array([1, 0] * 20); hold_tgt, _ = emit(40, np.where(hlab == 1, 1.0, -1.0))
+    smap = cm.fit_state_map(anchor_tgt, anchor_ref, seed=0)    # label-free
+    coords = cm.read_cross_model(val_ref, lab, smap, hold_tgt, mapped_anchors=anchor_tgt)  # NO target labels
+    assert cm.auroc(coords, hlab) >= 0.80
+    # deterministic
+    coords2 = cm.read_cross_model(val_ref, lab, smap, hold_tgt, mapped_anchors=anchor_tgt)
+    assert np.allclose(coords, coords2)
+
+
 def test_fit_axis_validation():
     rng = np.random.default_rng(4)
     with pytest.raises(ValueError):

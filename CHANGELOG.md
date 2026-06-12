@@ -23,13 +23,19 @@ smap  = crossmind.fit_state_map(target_anchor_states, reference_anchor_states)  
 coords = crossmind.read(axis, target_states, state_map=smap)                # NO target labels
 ```
 
+For CROSS-model reads use `read_cross_model(...)`, which whitens in the **mapped-target** metric
+(shrunk via `zca_shrink`) rather than the reference metric — the label-free map distorts covariance, so
+reading mapped points in the reference metric leaves a residual anisotropy (validated in
+`FINDING_mapped_whitening_2026_06_12.md`, BASIS-CLEARED). `read(...)` stays reference-metric for
+in-model reads.
+
 Sibling of `styxx.transport` (embedding-space transport); `crossmind` works on the residual streams
 of generative models and adds the whitened orthonormal-basis readout. **READ-ONLY by construction** —
 it returns a coordinate, never an edit; `steering` / `intervention` are REFUSED (read != write), and a
 borrowed refusal axis is REFUSED as a `content_danger` reader (HARM-AXIS-NULL bound). Pure stdlib +
 numpy, no torch (bring your own activation extractor). Self-test: `python -m styxx.crossmind selftest`.
 Invariants pre-registered in `papers/crossmind-instrument/PREREG_crossmind_v0_2026_06_12.md`; gates
-T1–T4 enforced by `tests/test_crossmind.py`.
+T1–T4 enforced by `tests/test_crossmind.py` (19 tests).
 
 ---
 
