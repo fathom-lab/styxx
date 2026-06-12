@@ -1,0 +1,86 @@
+{
+  "experiment": "B31 content-wall \u2014 heavy-machinery cross-model content transport",
+  "prereg": "papers/showcase-viz/PREREG_content_wall_2026_06_12.md",
+  "reference": "google/gemma-2-2b-it",
+  "seed": 0,
+  "n_test": 20,
+  "chance_top1": 0.05,
+  "three_x_chance": 0.15,
+  "r2_wellfit_threshold": 0.4,
+  "n_anchor_concepts": 120,
+  "n_anchor_points": 720,
+  "cycle6_baseline_llama_top1": 0.0,
+  "cycle6_anchor_count": 40,
+  "test_concepts": [
+    "apple",
+    "bottle",
+    "bread",
+    "bridge",
+    "chocolate",
+    "desert",
+    "dolphin",
+    "forest",
+    "hammer",
+    "harbor",
+    "horse",
+    "kitchen",
+    "kite",
+    "ladder",
+    "lemon",
+    "mountain",
+    "rabbit",
+    "snow",
+    "telescope",
+    "violin"
+  ],
+  "gemma_layer": 13,
+  "in_model_ceiling_item_top1": 1.0,
+  "mapped_primary": {
+    "target": "meta-llama/Llama-3.2-3B-Instruct",
+    "layer": 14,
+    "map_alpha": 10.0,
+    "map_val_r2": 0.9095,
+    "gate_gemma_whitened": {
+      "top1": 0.05,
+      "top5": 0.35,
+      "mrr": 0.2478
+    },
+    "gate_item_top1": 0.0833,
+    "mapped_whitened": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "mrr": 1.0
+    },
+    "raw": {
+      "top1": 0.9,
+      "top5": 1.0,
+      "mrr": 0.9417
+    },
+    "randmap_top1_p95": 0.1
+  },
+  "mapped_secondary": {
+    "target": "Qwen/Qwen2.5-3B-Instruct",
+    "layer": 18,
+    "map_alpha": 1000.0,
+    "map_val_r2": 0.8654,
+    "gate_gemma_whitened": {
+      "top1": 0.1,
+      "top5": 0.45,
+      "mrr": 0.2774
+    },
+    "gate_item_top1": 0.075,
+    "mapped_whitened": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "mrr": 1.0
+    },
+    "raw": {
+      "top1": 0.85,
+      "top5": 0.9,
+      "mrr": 0.8808
+    },
+    "randmap_top1_p95": 0.15
+  },
+  "verdict": "CONTENT-WALL",
+  "NOTE": "Even CONTENT-TRANSPORTS is not telepathy: needs white-box reps + paired anchors, fixed N-way; zero-paired closed-neg, cross-vendor killed. CONTENT-WALL bounds LINEAR transport."
+}

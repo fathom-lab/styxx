@@ -1,0 +1,475 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_content_wall_2026_06_12.md",
+  "document_sha256": "73638c0003e0304d65134eff9646510eee1fc120a8d6226cf8ae421eaa82f180",
+  "receipts_sha256": {
+    "content_wall_result.json": "23e8ade00caf643b1cfe3d1be62a1aa3f24cf74006652583b3d6bbcd5423484f"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 29,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "6"
+    },
+    {
+      "line": 7,
+      "token": "18"
+    },
+    {
+      "line": 26,
+      "token": "0.1"
+    },
+    {
+      "line": 27,
+      "token": "3"
+    },
+    {
+      "line": 40,
+      "token": "0.0062"
+    },
+    {
+      "line": 44,
+      "token": "6"
+    },
+    {
+      "line": 46,
+      "token": "6"
+    },
+    {
+      "line": 48,
+      "token": "0.06"
+    },
+    {
+      "line": 52,
+      "token": "6"
+    },
+    {
+      "line": 60,
+      "token": "5"
+    },
+    {
+      "line": 61,
+      "token": "3"
+    },
+    {
+      "line": 68,
+      "token": "6"
+    },
+    {
+      "line": 70,
+      "token": "6"
+    },
+    {
+      "line": 76,
+      "token": "20"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "committed fa7c4ee). Receipt: `content_wall_result.json`; figure `content_wall.png`. Backlog B31. Cycle 6",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "~18\u00d7 to test whether that wall was a power problem. It is \u2014 AND more: the wall was also the wrong readout",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "720",
+      "value": 720.0,
+      "decimals": 0,
+      "context": "Only the anchor count changed from cycle six: 720 per-instance anchor points (120 concepts \u00d7 six",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:n_anchor_points"
+    },
+    {
+      "line": 12,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "Only the anchor count changed from cycle six: 720 per-instance anchor points (120 concepts \u00d7 six",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:n_anchor_concepts"
+    },
+    {
+      "line": 13,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "templates) versus cycle six's 40 concept centroids; the same 20 held-out test concepts; the gate readout",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:cycle6_anchor_count"
+    },
+    {
+      "line": 13,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "templates) versus cycle six's 40 concept centroids; the same 20 held-out test concepts; the gate readout",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:n_test"
+    },
+    {
+      "line": 15,
+      "token": "0.9095",
+      "value": 0.9095,
+      "decimals": 4,
+      "context": "map is now extremely well-fit: held-out R\u00b2 = **0.9095** (Llama) and **0.8654** (Qwen), versus the",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.map_val_r2"
+    },
+    {
+      "line": 15,
+      "token": "0.8654",
+      "value": 0.8654,
+      "decimals": 4,
+      "context": "map is now extremely well-fit: held-out R\u00b2 = **0.9095** (Llama) and **0.8654** (Qwen), versus the",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_secondary.map_val_r2"
+    },
+    {
+      "line": 18,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:chance_top1"
+    },
+    {
+      "line": 20,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:chance_top1"
+    },
+    {
+      "line": 20,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "| **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.gate_gemma_whitened.top5"
+    },
+    {
+      "line": 20,
+      "token": "0.2478",
+      "value": 0.2478,
+      "decimals": 4,
+      "context": "| **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | **gate: gemma-ZCA-whitened (cycle-6-identical)** | **0.05** | 0.35 | 0.2478 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.gate_gemma_whitened.mrr"
+    },
+    {
+      "line": 21,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| random-map floor (p95) | 0.10 | \u2014 | \u2014 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | random-map floor (p95) | 0.10 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.randmap_top1_p95"
+    },
+    {
+      "line": 22,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "| descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.raw.top1"
+    },
+    {
+      "line": 22,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 22,
+      "token": "0.9417",
+      "value": 0.9417,
+      "decimals": 4,
+      "context": "| descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: RAW cosine (no whitening) | **0.90** | 1.0 | 0.9417 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.raw.mrr"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | descriptive: mapped-space whitened (B29/B32 recipe) | **1.0** | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| gemma in-model ceiling | 1.0 | \u2014 | \u2014 |",
+      "binding_context": "| readout (Llama-3.2-3B \u2192 gemma, 20-way, chance 0.05) | top-1 | top-5 | MRR | | gemma in-model ceiling | 1.0 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 26,
+      "token": "0.1",
+      "value": 0.1,
+      "decimals": 1,
+      "context": "Qwen-3B agrees: gate-whitened 0.1 (chance), RAW 0.85, mapped-whitened 1.0. **Per the frozen gate (the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "Qwen-3B agrees: gate-whitened 0.1 (chance), RAW 0.85, mapped-whitened 1.0. **Per the frozen gate (the",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_secondary.raw.top1"
+    },
+    {
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "gemma-whitened readout < 3\u00d7 chance with a well-fit map), the verdict is CONTENT-WALL.** But that gate",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "content at 0.90 and the mapped-space-whitened readout at 1.0. **Content identity transports near-perfectly",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.raw.top1"
+    },
+    {
+      "line": 40,
+      "token": "0.0062",
+      "value": 0.0062,
+      "decimals": 4,
+      "context": "mis-calibrates them; for a 1-D value axis that cost 0.0062, for high-D content identity it costs",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "everything (1.0 \u2192 0.05). The mapped-space whitening (B29/B32) re-estimates the metric on the mapped",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 41,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "everything (1.0 \u2192 0.05). The mapped-space whitening (B29/B32) re-estimates the metric on the mapped",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:chance_top1"
+    },
+    {
+      "line": 44,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "## What this corrects \u2014 cycle 6's conclusion was an underpowered map read in the wrong metric",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Cycle 6's CONTENT-WEAK verdict was honestly earned at the time (40 anchors, gemma-whitened, top-1 0.0),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "Cycle 6's CONTENT-WEAK verdict was honestly earned at the time (40 anchors, gemma-whitened, top-1 0.0),",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:cycle6_anchor_count"
+    },
+    {
+      "line": 46,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "Cycle 6's CONTENT-WEAK verdict was honestly earned at the time (40 anchors, gemma-whitened, top-1 0.0),",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:seed"
+    },
+    {
+      "line": 48,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "RETRACTED. It rested on two stacked problems: an underpowered map (R\u00b2 0.06) AND a whitening readout that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.91",
+      "value": 0.91,
+      "decimals": 2,
+      "context": "destroys content. Remove both \u2014 scale the anchors (R\u00b2 0.91) and read raw or mapped-whitened \u2014 and the",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.map_val_r2"
+    },
+    {
+      "line": 52,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "readout space.** The value/content asymmetry cycle 6 reported was a readout artifact, not a property of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "but cannot be claimed as the verdict (no goalpost-moving \u2014 same rule that kept cycle 5 at PARTIAL). This",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "is methodological self-correction of a mis-specified gate readout, the same class as the cycle-2\u21923",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "descriptive numbers here (0.90 / 1.0, both targets) predict it passes overwhelmingly.",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.raw.top1"
+    },
+    {
+      "line": 64,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "descriptive numbers here (0.90 / 1.0, both targets) predict it passes overwhelmingly.",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 68,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Cycle 6 closed the content-transport door; B31 reopens it. With a well-fit map, cross-model content",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "identity decodes near-perfectly (20-way, 0.90 raw / 1.0 mapped-whitened, Llama AND Qwen) \u2014 much closer to",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.raw.top1"
+    },
+    {
+      "line": 69,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "identity decodes near-perfectly (20-way, 0.90 raw / 1.0 mapped-whitened, Llama AND Qwen) \u2014 much closer to",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 70,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "\"reading what a model represents\" than cycle 6 implied. The operator's \"we are close\" intuition gains real",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 76,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "centroids, n_test=20, neutral concepts, last-token pre-output, no generation. The figure shows all",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

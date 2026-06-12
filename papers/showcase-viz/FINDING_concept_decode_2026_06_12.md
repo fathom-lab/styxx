@@ -6,6 +6,14 @@ adjudicates "are we close to telepathy" with a falsifiable run, not an argument:
 concept (from a fixed set) a *different* model is representing, through a label-free map, on concepts the
 map never saw? The answer, with this method at this scale, is no.**
 
+> **B31 CORRECTION (2026-06-12, see `FINDING_content_wall_2026_06_12.md`):** this finding's broad reading
+> — "the cross-model channel is a value thermometer, not a content transcript" — is RETRACTED. B31 scaled
+> the anchor data ~18× (map R² 0.06 → 0.91) and found content identity DOES transport cross-model
+> near-perfectly (raw cosine top-1 0.90, mapped-space-whitened 1.0, Llama AND Qwen). Cycle 6's wall was
+> two stacked artifacts — an underpowered map AND a gemma-whitening readout that destroys content. The
+> per-this-method-this-scale verdict below stands as recorded; the value/content asymmetry it inferred
+> does not.**
+
 ## Result — the thermometer transports, the transcript does not
 
 Sixty concrete concepts, six neutral templates, mid-stack last-token representations. A label-free ridge

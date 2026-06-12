@@ -2,43 +2,113 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_concept_decode_2026_06_12.md",
-  "document_sha256": "01bbcf561655cf5a13645a68045dbcfa55babdf91d03e4c794540c00f1325a6d",
+  "document_sha256": "810cd8ae6556254a8c16cd89aebbd151df6b217383aba851350088fc6b00fab5",
   "receipts_sha256": {
     "concept_decode_result.json": "7c417ac39dffcd6f18a3612866c9a0af9201229cad815df5abf89b0cfc2cadc5"
   },
   "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
-    "VERIFIED": 20,
-    "ABSTAIN": 5,
+    "VERIFIED": 22,
+    "ABSTAIN": 9,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
     {
-      "line": 13,
+      "line": 11,
+      "token": "18"
+    },
+    {
+      "line": 11,
+      "token": "0.91"
+    },
+    {
+      "line": 12,
+      "token": "0.90"
+    },
+    {
+      "line": 12,
+      "token": "6"
+    },
+    {
+      "line": 21,
       "token": "0.05"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "3"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "0.15"
     },
     {
-      "line": 29,
+      "line": 37,
       "token": "0.50"
     },
     {
-      "line": 39,
+      "line": 47,
       "token": "0"
     }
   ],
   "ledger": [
     {
+      "line": 11,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "> the anchor data ~18\u00d7 (map R\u00b2 0.06 \u2192 0.91) and found content identity DOES transport cross-model",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "> the anchor data ~18\u00d7 (map R\u00b2 0.06 \u2192 0.91) and found content identity DOES transport cross-model",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_primary.map_val_r2"
+    },
+    {
+      "line": 11,
+      "token": "0.91",
+      "value": 0.91,
+      "decimals": 2,
+      "context": "> the anchor data ~18\u00d7 (map R\u00b2 0.06 \u2192 0.91) and found content identity DOES transport cross-model",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
       "line": 12,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "> near-perfectly (raw cosine top-1 0.90, mapped-space-whitened 1.0, Llama AND Qwen). Cycle 6's wall was",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "> near-perfectly (raw cosine top-1 0.90, mapped-space-whitened 1.0, Llama AND Qwen). Cycle 6's wall was",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:in_model_ceiling_item_top1"
+    },
+    {
+      "line": 12,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "> near-perfectly (raw cosine top-1 0.90, mapped-space-whitened 1.0, Llama AND Qwen). Cycle 6's wall was",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
       "token": "40",
       "value": 40.0,
       "decimals": 0,
@@ -47,7 +117,7 @@
       "receipt_ref": "concept_decode_result.json:n_anchor"
     },
     {
-      "line": 12,
+      "line": 20,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -56,7 +126,7 @@
       "receipt_ref": "concept_decode_result.json:n_test"
     },
     {
-      "line": 13,
+      "line": 21,
       "token": "0.05",
       "value": 0.05,
       "decimals": 2,
@@ -65,7 +135,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 17,
+      "line": 25,
       "token": "0.05",
       "value": 0.05,
       "decimals": 2,
@@ -75,7 +145,7 @@
       "receipt_ref": "concept_decode_result.json:chance_top1"
     },
     {
-      "line": 17,
+      "line": 25,
       "token": "0.25",
       "value": 0.25,
       "decimals": 2,
@@ -85,7 +155,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
     },
     {
-      "line": 18,
+      "line": 26,
       "token": "0.05",
       "value": 0.05,
       "decimals": 2,
@@ -95,7 +165,7 @@
       "receipt_ref": "concept_decode_result.json:chance_top1"
     },
     {
-      "line": 19,
+      "line": 27,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -105,7 +175,7 @@
       "receipt_ref": "concept_decode_result.json:seed"
     },
     {
-      "line": 19,
+      "line": 27,
       "token": "0.25",
       "value": 0.25,
       "decimals": 2,
@@ -115,7 +185,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
     },
     {
-      "line": 19,
+      "line": 27,
       "token": "0.1444",
       "value": 0.1444,
       "decimals": 4,
@@ -125,7 +195,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.mrr"
     },
     {
-      "line": 20,
+      "line": 28,
       "token": "0.0333",
       "value": 0.0333,
       "decimals": 4,
@@ -135,7 +205,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.item_top1"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "0.1",
       "value": 0.1,
       "decimals": 1,
@@ -145,7 +215,7 @@
       "receipt_ref": "concept_decode_result.json:chance_top1"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "0.2",
       "value": 0.2,
       "decimals": 1,
@@ -155,7 +225,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
     },
     {
-      "line": 21,
+      "line": 29,
       "token": "0.1944",
       "value": 0.1944,
       "decimals": 4,
@@ -165,7 +235,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.mrr"
     },
     {
-      "line": 22,
+      "line": 30,
       "token": "0.9583",
       "value": 0.9583,
       "decimals": 4,
@@ -175,7 +245,7 @@
       "receipt_ref": "concept_decode_result.json:in_model_ceiling_item_top1"
     },
     {
-      "line": 27,
+      "line": 35,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -184,7 +254,7 @@
       "receipt_ref": "concept_decode_result.json:seed"
     },
     {
-      "line": 27,
+      "line": 35,
       "token": "0.05",
       "value": 0.05,
       "decimals": 2,
@@ -193,7 +263,7 @@
       "receipt_ref": "concept_decode_result.json:chance_top1"
     },
     {
-      "line": 27,
+      "line": 35,
       "token": "0.25",
       "value": 0.25,
       "decimals": 2,
@@ -202,7 +272,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "0.1",
       "value": 0.1,
       "decimals": 1,
@@ -211,7 +281,7 @@
       "receipt_ref": "concept_decode_result.json:chance_top1"
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -220,7 +290,7 @@
       "receipt_ref": null
     },
     {
-      "line": 28,
+      "line": 36,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
@@ -229,7 +299,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 29,
+      "line": 37,
       "token": "0.2",
       "value": 0.2,
       "decimals": 1,
@@ -238,7 +308,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.centroid.top5"
     },
     {
-      "line": 29,
+      "line": 37,
       "token": "0.50",
       "value": 0.5,
       "decimals": 2,
@@ -247,7 +317,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 39,
+      "line": 47,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -256,7 +326,7 @@
       "receipt_ref": null
     },
     {
-      "line": 48,
+      "line": 56,
       "token": "0.0613",
       "value": 0.0613,
       "decimals": 4,
@@ -265,7 +335,7 @@
       "receipt_ref": "concept_decode_result.json:mapped_primary.map_val_r2"
     },
     {
-      "line": 49,
+      "line": 57,
       "token": "40",
       "value": 40.0,
       "decimals": 0,
