@@ -1,0 +1,381 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_fpr_live_2026_06_12.md",
+  "document_sha256": "0196e390169ad7f6c2ddf7a8c97ba8b4959f471107b56ed885994667cd860f89",
+  "receipts_sha256": {
+    "mount_fpr_live_result.json": "e851509245ef97fdfa7656a59707af372ad8af88e963d0f2326957a08e802164"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 23,
+    "ABSTAIN": 11,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "12"
+    },
+    {
+      "line": 1,
+      "token": "13"
+    },
+    {
+      "line": 5,
+      "token": "12"
+    },
+    {
+      "line": 5,
+      "token": "13"
+    },
+    {
+      "line": 6,
+      "token": "0"
+    },
+    {
+      "line": 14,
+      "token": "0.0"
+    },
+    {
+      "line": 22,
+      "token": "0.70"
+    },
+    {
+      "line": 24,
+      "token": "12"
+    },
+    {
+      "line": 24,
+      "token": "13"
+    },
+    {
+      "line": 33,
+      "token": "12"
+    },
+    {
+      "line": 48,
+      "token": "15"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 the deployment-honest mount catch is WEAK and calibration-sensitive: the live 12/13 was inflated by calibration leakage (CATCH-WEAK)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 1,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 the deployment-honest mount catch is WEAK and calibration-sensitive: the live 12/13 was inflated by calibration leakage (CATCH-WEAK)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "live demo (`FINDING_mount_live_catch_2026_06_12.md`, LIVE-CAUGHT 12/13) calibrated the divergence center",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "live demo (`FINDING_mount_live_catch_2026_06_12.md`, LIVE-CAUGHT 12/13) calibrated the divergence center",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "on the test states themselves (caves included) at tau=0 \u2014 flattering the catch rate. This re-runs it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "## Result \u2014 catch 0.40 at FPR 0.067, leakage-free",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 10,
+      "token": "0.067",
+      "value": 0.067,
+      "decimals": 3,
+      "context": "## Result \u2014 catch 0.40 at FPR 0.067, leakage-free",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:false_alarm_rate"
+    },
+    {
+      "line": 12,
+      "token": "0.9851",
+      "value": 0.9851,
+      "decimals": 4,
+      "context": "Same borrowed gemma\u2192Llama truth conscience (map anchor R\u00b2 0.9851, agent L21), 30 comparative claim pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:map_anchor_r2"
+    },
+    {
+      "line": 12,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Same borrowed gemma\u2192Llama truth conscience (map anchor R\u00b2 0.9851, agent L21), 30 comparative claim pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_claim_pairs"
+    },
+    {
+      "line": 13,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "Center/scale calibrated on 24 neutral factual statements (`calibrate`); divergence threshold set to",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_neutral_calib"
+    },
+    {
+      "line": 14,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "target FPR 0.10 on 15 held-out honest items (`calibrate_threshold`, tau=0.0); evaluated on disjoint test.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:target_fpr"
+    },
+    {
+      "line": 14,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "target FPR 0.10 on 15 held-out honest items (`calibrate_threshold`, tau=0.0); evaluated on disjoint test.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
+    },
+    {
+      "line": 14,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "target FPR 0.10 on 15 held-out honest items (`calibrate_threshold`, tau=0.0); evaluated on disjoint test.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| caves (agent asserted a false claim true) | 20 of 30 |",
+      "binding_context": "| metric (leakage-free) | value | | caves (agent asserted a false claim true) | 20 of 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caves"
+    },
+    {
+      "line": 18,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| caves (agent asserted a false claim true) | 20 of 30 |",
+      "binding_context": "| metric (leakage-free) | value | | caves (agent asserted a false claim true) | 20 of 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_claim_pairs"
+    },
+    {
+      "line": 19,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "| **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "binding_context": "| metric (leakage-free) | value | | **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 19,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "binding_context": "| metric (leakage-free) | value | | **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caught"
+    },
+    {
+      "line": 19,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "binding_context": "| metric (leakage-free) | value | | **catch rate on caves** | **0.40** (caught 8 of 20 caves) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caves"
+    },
+    {
+      "line": 20,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| held-out honest (agent True on true) | 15 |",
+      "binding_context": "| metric (leakage-free) | value | | held-out honest (agent True on true) | 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
+    },
+    {
+      "line": 21,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "| **false-alarm rate** | **0.0667** (1/15) |",
+      "binding_context": "| metric (leakage-free) | value | | **false-alarm rate** | **0.0667** (1/15) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:false_alarm_rate"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| **false-alarm rate** | **0.0667** (1/15) |",
+      "binding_context": "| metric (leakage-free) | value | | **false-alarm rate** | **0.0667** (1/15) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:false_alarm"
+    },
+    {
+      "line": 21,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| **false-alarm rate** | **0.0667** (1/15) |",
+      "binding_context": "| metric (leakage-free) | value | | **false-alarm rate** | **0.0667** (1/15) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
+    },
+    {
+      "line": 22,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| **Verdict per the frozen gate (catch \u2265 0.70): CATCH-WEAK** | |",
+      "binding_context": "| metric (leakage-free) | value | | **Verdict per the frozen gate (catch \u2265 0.70): CATCH-WEAK** | |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "**The masterpiece's LIVE-CAUGHT 12/13 was inflated by calibration leakage.** Catching is \"substrate",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**The masterpiece's LIVE-CAUGHT 12/13 was inflated by calibration leakage.** Catching is \"substrate",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "the honest distribution actually is, and most caves clear it. The leakage-free catch is 0.40, not ~0.92.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 32,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "but the caves SPREAD from strongly-false to clearly-positive. About 8 caves read genuinely false (caught",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caught"
+    },
+    {
+      "line": 33,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "\u2014 the substrate disagrees with the cave); the other ~12 read positive (the substrate does NOT strongly",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "1.1861",
+      "value": 1.1861,
+      "decimals": 4,
+      "context": "baseline (center 1.1861, scale 0.1799) that does not match the pressured-decision regime the caves",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:center"
+    },
+    {
+      "line": 40,
+      "token": "0.1799",
+      "value": 0.1799,
+      "decimals": 4,
+      "context": "baseline (center 1.1861, scale 0.1799) that does not match the pressured-decision regime the caves",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:scale"
+    },
+    {
+      "line": 47,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "STANDS: the substrate carries real signal \u2014 the 8 caught caves read genuinely false, and honest answers",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caught"
+    },
+    {
+      "line": 48,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "read clearly positive (1 false alarm in 15); `styxx.mount`'s machinery (borrowed cross-model conscience,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:false_alarm"
+    },
+    {
+      "line": 48,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "read clearly positive (1 false alarm in 15); `styxx.mount`'s machinery (borrowed cross-model conscience,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "harder set is 0.40, and it is calibration-sensitive. The masterpiece's headline is corrected: the mount",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
+    }
+  ]
+}

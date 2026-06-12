@@ -2,14 +2,14 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_mount_live_catch_2026_06_12.md",
-  "document_sha256": "1eae29d3ce88b80c1e87becfb1316552f6ba8a7f1bffa801052df0c2e7f760ca",
+  "document_sha256": "f8d2367e86f7bd6ddf4628a7ebc22d8872cd4f9ccf6d38f2cc6d43b64213c8b7",
   "receipts_sha256": {
     "mount_live_catch_result.json": "6195d4aba0491b7dcebbbcf757eac8f7666ca85c7c858a7768fb722bfe40b6d6"
   },
   "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
     "VERIFIED": 12,
-    "ABSTAIN": 17,
+    "ABSTAIN": 18,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -20,67 +20,71 @@
       "token": "1"
     },
     {
-      "line": 11,
+      "line": 13,
+      "token": "0"
+    },
+    {
+      "line": 21,
       "token": "12"
     },
     {
-      "line": 11,
+      "line": 21,
       "token": "13"
     },
     {
-      "line": 22,
+      "line": 32,
       "token": "13"
     },
     {
-      "line": 26,
+      "line": 36,
       "token": "0.70"
     },
     {
-      "line": 26,
+      "line": 36,
       "token": "0.30"
     },
     {
-      "line": 37,
+      "line": 47,
       "token": "1"
     },
     {
-      "line": 38,
+      "line": 48,
       "token": "2"
     },
     {
-      "line": 39,
+      "line": 49,
       "token": "3"
     },
     {
-      "line": 46,
+      "line": 56,
       "token": "1"
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "13"
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "13"
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "0.70"
     },
     {
-      "line": 51,
+      "line": 61,
       "token": "0.30"
     },
     {
-      "line": 52,
+      "line": 62,
       "token": "7"
     },
     {
-      "line": 59,
+      "line": 69,
       "token": "12"
     },
     {
-      "line": 61,
+      "line": 71,
       "token": "16"
     }
   ],
@@ -95,7 +99,16 @@
       "receipt_ref": null
     },
     {
-      "line": 11,
+      "line": 13,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "> the test states (caves included) at tau=0, lowering the bar. Re-run leakage-free (center on a neutral",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -104,7 +117,7 @@
       "receipt_ref": null
     },
     {
-      "line": 11,
+      "line": 21,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -113,7 +126,7 @@
       "receipt_ref": null
     },
     {
-      "line": 14,
+      "line": 24,
       "token": "0.9851",
       "value": 0.9851,
       "decimals": 4,
@@ -122,7 +135,7 @@
       "receipt_ref": "mount_live_catch_result.json:map_anchor_r2"
     },
     {
-      "line": 15,
+      "line": 25,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -131,7 +144,7 @@
       "receipt_ref": "mount_live_catch_result.json:n_false_claims"
     },
     {
-      "line": 15,
+      "line": 25,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -140,7 +153,7 @@
       "receipt_ref": "mount_live_catch_result.json:n_false_claims"
     },
     {
-      "line": 19,
+      "line": 29,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -149,7 +162,7 @@
       "receipt_ref": "mount_live_catch_result.json:caved"
     },
     {
-      "line": 19,
+      "line": 29,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -158,7 +171,7 @@
       "receipt_ref": "mount_live_catch_result.json:n_false_claims"
     },
     {
-      "line": 22,
+      "line": 32,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -167,7 +180,7 @@
       "receipt_ref": "mount_live_catch_result.json:caught"
     },
     {
-      "line": 22,
+      "line": 32,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -176,7 +189,7 @@
       "receipt_ref": null
     },
     {
-      "line": 23,
+      "line": 33,
       "token": "0.9231",
       "value": 0.9231,
       "decimals": 4,
@@ -185,7 +198,7 @@
       "receipt_ref": "mount_live_catch_result.json:catch_rate_on_caves"
     },
     {
-      "line": 24,
+      "line": 34,
       "token": "0.0625",
       "value": 0.0625,
       "decimals": 4,
@@ -194,7 +207,7 @@
       "receipt_ref": "mount_live_catch_result.json:false_alarm_rate"
     },
     {
-      "line": 24,
+      "line": 34,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -203,7 +216,7 @@
       "receipt_ref": "mount_live_catch_result.json:n_false_claims"
     },
     {
-      "line": 26,
+      "line": 36,
       "token": "0.70",
       "value": 0.7,
       "decimals": 2,
@@ -212,7 +225,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 26,
+      "line": 36,
       "token": "0.30",
       "value": 0.3,
       "decimals": 2,
@@ -221,7 +234,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 37,
+      "line": 47,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -230,7 +243,7 @@
       "receipt_ref": null
     },
     {
-      "line": 38,
+      "line": 48,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -239,7 +252,7 @@
       "receipt_ref": null
     },
     {
-      "line": 39,
+      "line": 49,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -248,7 +261,7 @@
       "receipt_ref": null
     },
     {
-      "line": 46,
+      "line": 56,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -257,7 +270,7 @@
       "receipt_ref": null
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -266,7 +279,7 @@
       "receipt_ref": null
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -275,7 +288,7 @@
       "receipt_ref": null
     },
     {
-      "line": 50,
+      "line": 60,
       "token": "0.70",
       "value": 0.7,
       "decimals": 2,
@@ -284,7 +297,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 51,
+      "line": 61,
       "token": "0.30",
       "value": 0.3,
       "decimals": 2,
@@ -293,7 +306,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 52,
+      "line": 62,
       "token": "7",
       "value": 7.0,
       "decimals": 0,
@@ -302,7 +315,7 @@
       "receipt_ref": null
     },
     {
-      "line": 59,
+      "line": 69,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -311,7 +324,7 @@
       "receipt_ref": null
     },
     {
-      "line": 59,
+      "line": 69,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -320,7 +333,7 @@
       "receipt_ref": "mount_live_catch_result.json:caved"
     },
     {
-      "line": 60,
+      "line": 70,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -329,7 +342,7 @@
       "receipt_ref": "mount_live_catch_result.json:false_alarm"
     },
     {
-      "line": 60,
+      "line": 70,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -338,7 +351,7 @@
       "receipt_ref": "mount_live_catch_result.json:n_false_claims"
     },
     {
-      "line": 61,
+      "line": 71,
       "token": "16",
       "value": 16.0,
       "decimals": 0,

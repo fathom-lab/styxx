@@ -8,6 +8,16 @@ portable-conscience arc: the whole stack — `styxx.crossmind` (portable cross-m
 whitening) and `styxx.mount` (the read-only conscience mount) — assembled into a deployed integrity
 layer that catches a real model lying, in real time, with a conscience it does not own.**
 
+> **DEPLOYMENT-HONEST CORRECTION (2026-06-12, see `FINDING_mount_fpr_live_2026_06_12.md`, CATCH-WEAK):**
+> the catch rate reported below was INFLATED by calibration leakage — the divergence center was set from
+> the test states (caves included) at tau=0, lowering the bar. Re-run leakage-free (center on a neutral
+> held-out set, threshold to a target false-alarm rate on held-out honest data, evaluated on disjoint
+> test) on a larger, harder set, the catch rate falls sharply at a controlled false-alarm rate, and it is
+> calibration-sensitive. The substrate carries real signal (the deeply-false caves are genuinely caught;
+> honest answers read clearly true) and the mount machinery works, but the single-token decision-time
+> deployment catch rate is weak-to-moderate, NOT the number below. Read this finding as a proof that the
+> mount CAN catch caving and is leakage-vulnerable if mis-calibrated — not as a deployment accuracy claim.**
+
 ## Result — a gemma conscience mounted on Llama catches Llama caving, 12 of 13
 
 A truth axis fit on gemma-2-2b was transported onto Llama-3.2-3B through a label-free state map (anchor
