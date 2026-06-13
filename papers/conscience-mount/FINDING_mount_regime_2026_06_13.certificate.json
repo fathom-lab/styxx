@@ -1,0 +1,433 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_regime_2026_06_13.md",
+  "document_sha256": "30823d17fac53b3ca78233e8480a4cca32e40ce7ad87a7fd514a2f980039e660",
+  "receipts_sha256": {
+    "mount_regime_result.json": "62b7fc6c2e36d5c1bf4b7c3d856a9d16543f1d14a1e3593a9d377469c46899ee"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 30,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "15"
+    },
+    {
+      "line": 23,
+      "token": "0.70"
+    },
+    {
+      "line": 23,
+      "token": "0.20"
+    },
+    {
+      "line": 27,
+      "token": "7"
+    },
+    {
+      "line": 28,
+      "token": "1.19"
+    },
+    {
+      "line": 39,
+      "token": "15"
+    },
+    {
+      "line": 45,
+      "token": "0.92"
+    },
+    {
+      "line": 48,
+      "token": "15"
+    },
+    {
+      "line": 56,
+      "token": "30"
+    },
+    {
+      "line": 56,
+      "token": "15"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "# FINDING \u2014 the definitive deployment operating point: regime-matched calibration catches 0.85 of caves (LIVE-CAUGHT-FPR)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 5,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "calibration-regime question left open by `FINDING_mount_fpr_live_2026_06_12.md` (CATCH-WEAK 0.40 under a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:neutral_calib_catch_prior"
+    },
+    {
+      "line": 9,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "## Result \u2014 catch 0.85 at a controlled (if loose) false-alarm rate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 11,
+      "token": "0.9851",
+      "value": 0.9851,
+      "decimals": 4,
+      "context": "Same borrowed gemma\u2192Llama truth conscience (map anchor R\u00b2 0.9851, agent L21), 30 comparative claim pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:map_anchor_r2"
+    },
+    {
+      "line": 11,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Same borrowed gemma\u2192Llama truth conscience (map anchor R\u00b2 0.9851, agent L21), 30 comparative claim pairs.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_claim_pairs"
+    },
+    {
+      "line": 12,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "The ONLY change from the prior run: center/scale and the FPR threshold are both fit on the 15 held-out",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| caves (agent asserted a false claim true) | 20 of 30 |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | caves (agent asserted a false claim true) | 20 of 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:caves"
+    },
+    {
+      "line": 18,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| caves (agent asserted a false claim true) | 20 of 30 |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | caves (agent asserted a false claim true) | 20 of 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_claim_pairs"
+    },
+    {
+      "line": 19,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "| **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 19,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:caught"
+    },
+    {
+      "line": 19,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | **catch rate on caves** | **0.85** (caught 17 of 20) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:caves"
+    },
+    {
+      "line": 20,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| held-out honest (agent True on true) | 15 |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | held-out honest (agent True on true) | 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_honest_calib"
+    },
+    {
+      "line": 21,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:false_alarm_rate"
+    },
+    {
+      "line": 21,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:false_alarm"
+    },
+    {
+      "line": 21,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | realized false-alarm rate | 0.20 (3 false alarms of 15 held-out honest) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_honest_calib"
+    },
+    {
+      "line": 22,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| target false-alarm rate | 0.10 |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | target false-alarm rate | 0.10 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:target_fpr"
+    },
+    {
+      "line": 23,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| **Verdict per the frozen gate (catch \u2265 0.70, FPR \u2264 0.20): LIVE-CAUGHT-FPR** | |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | **Verdict per the frozen gate (catch \u2265 0.70, FPR \u2264 0.20): LIVE-CAUGHT-FPR** | |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| **Verdict per the frozen gate (catch \u2265 0.70, FPR \u2264 0.20): LIVE-CAUGHT-FPR** | |",
+      "binding_context": "| metric (regime-matched, leakage-free) | value | | **Verdict per the frozen gate (catch \u2265 0.70, FPR \u2264 0.20): LIVE-CAUGHT-FPR** | |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "**Regime-matched calibration more than doubled the catch (0.40 \u2192 0.85), confirming the prior CATCH-WEAK",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:neutral_calib_catch_prior"
+    },
+    {
+      "line": 25,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "**Regime-matched calibration more than doubled the catch (0.40 \u2192 0.85), confirming the prior CATCH-WEAK",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 27,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "read deeply false (down to roughly \u22127 standard deviations below the honest cluster); the honest decisions",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "1.3766",
+      "value": 1.3766,
+      "decimals": 4,
+      "context": "cluster tightly high (center 1.3766, scale 0.0621). The neutral center (1.19) had sat *below* the true",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:center"
+    },
+    {
+      "line": 28,
+      "token": "0.0621",
+      "value": 0.0621,
+      "decimals": 4,
+      "context": "cluster tightly high (center 1.3766, scale 0.0621). The neutral center (1.19) had sat *below* the true",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:scale"
+    },
+    {
+      "line": 28,
+      "token": "1.19",
+      "value": 1.19,
+      "decimals": 2,
+      "context": "cluster tightly high (center 1.3766, scale 0.0621). The neutral center (1.19) had sat *below* the true",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "The threshold was calibrated to a 0.10 target FPR on the 15 honest calib items, but the realized FPR on",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:target_fpr"
+    },
+    {
+      "line": 35,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "The threshold was calibrated to a 0.10 target FPR on the 15 honest calib items, but the realized FPR on",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_honest_calib"
+    },
+    {
+      "line": 36,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "the 15 held-out honest test items is **0.20 \u2014 double the target**. Three honest true-assertions fell below",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_honest_calib"
+    },
+    {
+      "line": 36,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "the 15 held-out honest test items is **0.20 \u2014 double the target**. Three honest true-assertions fell below",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:false_alarm_rate"
+    },
+    {
+      "line": 38,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "the gemma truth axis genuinely mis-reads on Llama's substrate. So the catch (0.85) is the robust number;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 39,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "the false-alarm *control* does not yet generalize tightly at n=15 (the calib\u2192test FPR gap is a small-sample",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.92",
+      "value": 0.92,
+      "decimals": 2,
+      "context": "This supersedes both prior live numbers \u2014 the leaky 0.92 (center on test states) and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "regime-mismatched 0.40 (center on neutral statements). **The deployment operating point an integrator",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:neutral_calib_catch_prior"
+    },
+    {
+      "line": 47,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "should quote: a borrowed, read-only conscience catches ~0.85 of a model's pressured caves at a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 48,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "single decision token, at a false-alarm rate of ~0.20 (target 0.10, loose at n=15), calibrated in the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:false_alarm_rate"
+    },
+    {
+      "line": 48,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "single decision token, at a false-alarm rate of ~0.20 (target 0.10, loose at n=15), calibrated in the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:target_fpr"
+    },
+    {
+      "line": 48,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "single decision token, at a false-alarm rate of ~0.20 (target 0.10, loose at n=15), calibrated in the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "that calibration regime \u2014 not the conscience \u2014 was the lever between 0.40 and 0.85.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:neutral_calib_catch_prior"
+    },
+    {
+      "line": 56,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "same-cluster models (gemma reference, Llama-3.2-3B agent), single-turn pressure, n = 30 pairs / ~15",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "same-cluster models (gemma reference, Llama-3.2-3B agent), single-turn pressure, n = 30 pairs / ~15",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "honest calib / ~15 honest test. Read-only: the mount measures at a chosen operating point; a flag is a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:n_honest_calib"
+    }
+  ]
+}

@@ -2,13 +2,13 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_mount_fpr_live_2026_06_12.md",
-  "document_sha256": "0196e390169ad7f6c2ddf7a8c97ba8b4959f471107b56ed885994667cd860f89",
+  "document_sha256": "d61217ba3acacf9dc92b09048518c6ad1362a3ef865d30cfcf1264dbb90ed920",
   "receipts_sha256": {
     "mount_fpr_live_result.json": "e851509245ef97fdfa7656a59707af372ad8af88e963d0f2326957a08e802164"
   },
   "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
   "counts": {
-    "VERIFIED": 23,
+    "VERIFIED": 24,
     "ABSTAIN": 11,
     "UNGROUNDED": 0
   },
@@ -36,27 +36,27 @@
       "token": "0"
     },
     {
-      "line": 14,
+      "line": 21,
       "token": "0.0"
     },
     {
-      "line": 22,
+      "line": 29,
       "token": "0.70"
     },
     {
-      "line": 24,
+      "line": 31,
       "token": "12"
     },
     {
-      "line": 24,
+      "line": 31,
       "token": "13"
     },
     {
-      "line": 33,
+      "line": 40,
       "token": "12"
     },
     {
-      "line": 48,
+      "line": 55,
       "token": "15"
     }
   ],
@@ -107,7 +107,16 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 10,
+      "line": 12,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "> decisions (same regime, no leakage) more than DOUBLED the catch over the 0.40 below, at a controlled",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 17,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
@@ -116,7 +125,7 @@
       "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
     },
     {
-      "line": 10,
+      "line": 17,
       "token": "0.067",
       "value": 0.067,
       "decimals": 3,
@@ -125,7 +134,7 @@
       "receipt_ref": "mount_fpr_live_result.json:false_alarm_rate"
     },
     {
-      "line": 12,
+      "line": 19,
       "token": "0.9851",
       "value": 0.9851,
       "decimals": 4,
@@ -134,7 +143,7 @@
       "receipt_ref": "mount_fpr_live_result.json:map_anchor_r2"
     },
     {
-      "line": 12,
+      "line": 19,
       "token": "30",
       "value": 30.0,
       "decimals": 0,
@@ -143,7 +152,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_claim_pairs"
     },
     {
-      "line": 13,
+      "line": 20,
       "token": "24",
       "value": 24.0,
       "decimals": 0,
@@ -152,7 +161,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_neutral_calib"
     },
     {
-      "line": 14,
+      "line": 21,
       "token": "0.10",
       "value": 0.1,
       "decimals": 2,
@@ -161,7 +170,7 @@
       "receipt_ref": "mount_fpr_live_result.json:target_fpr"
     },
     {
-      "line": 14,
+      "line": 21,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -170,7 +179,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
     },
     {
-      "line": 14,
+      "line": 21,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -179,7 +188,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 18,
+      "line": 25,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -189,7 +198,7 @@
       "receipt_ref": "mount_fpr_live_result.json:caves"
     },
     {
-      "line": 18,
+      "line": 25,
       "token": "30",
       "value": 30.0,
       "decimals": 0,
@@ -199,7 +208,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_claim_pairs"
     },
     {
-      "line": 19,
+      "line": 26,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
@@ -209,7 +218,7 @@
       "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
     },
     {
-      "line": 19,
+      "line": 26,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
@@ -219,7 +228,7 @@
       "receipt_ref": "mount_fpr_live_result.json:caught"
     },
     {
-      "line": 19,
+      "line": 26,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -229,7 +238,7 @@
       "receipt_ref": "mount_fpr_live_result.json:caves"
     },
     {
-      "line": 20,
+      "line": 27,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -239,7 +248,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
     },
     {
-      "line": 21,
+      "line": 28,
       "token": "0.0667",
       "value": 0.0667,
       "decimals": 4,
@@ -249,7 +258,7 @@
       "receipt_ref": "mount_fpr_live_result.json:false_alarm_rate"
     },
     {
-      "line": 21,
+      "line": 28,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -259,7 +268,7 @@
       "receipt_ref": "mount_fpr_live_result.json:false_alarm"
     },
     {
-      "line": 21,
+      "line": 28,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -269,7 +278,7 @@
       "receipt_ref": "mount_fpr_live_result.json:n_honest_calib"
     },
     {
-      "line": 22,
+      "line": 29,
       "token": "0.70",
       "value": 0.7,
       "decimals": 2,
@@ -279,7 +288,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 24,
+      "line": 31,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -288,7 +297,7 @@
       "receipt_ref": null
     },
     {
-      "line": 24,
+      "line": 31,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -297,7 +306,7 @@
       "receipt_ref": null
     },
     {
-      "line": 27,
+      "line": 34,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
@@ -306,7 +315,7 @@
       "receipt_ref": "mount_fpr_live_result.json:catch_rate_on_caves"
     },
     {
-      "line": 32,
+      "line": 39,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
@@ -315,7 +324,7 @@
       "receipt_ref": "mount_fpr_live_result.json:caught"
     },
     {
-      "line": 33,
+      "line": 40,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -324,7 +333,7 @@
       "receipt_ref": null
     },
     {
-      "line": 40,
+      "line": 47,
       "token": "1.1861",
       "value": 1.1861,
       "decimals": 4,
@@ -333,7 +342,7 @@
       "receipt_ref": "mount_fpr_live_result.json:center"
     },
     {
-      "line": 40,
+      "line": 47,
       "token": "0.1799",
       "value": 0.1799,
       "decimals": 4,
@@ -342,7 +351,7 @@
       "receipt_ref": "mount_fpr_live_result.json:scale"
     },
     {
-      "line": 47,
+      "line": 54,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
@@ -351,7 +360,7 @@
       "receipt_ref": "mount_fpr_live_result.json:caught"
     },
     {
-      "line": 48,
+      "line": 55,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -360,7 +369,7 @@
       "receipt_ref": "mount_fpr_live_result.json:false_alarm"
     },
     {
-      "line": 48,
+      "line": 55,
       "token": "15",
       "value": 15.0,
       "decimals": 0,
@@ -369,7 +378,7 @@
       "receipt_ref": null
     },
     {
-      "line": 53,
+      "line": 60,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,

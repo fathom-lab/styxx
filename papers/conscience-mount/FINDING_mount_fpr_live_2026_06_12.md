@@ -7,6 +7,13 @@ on the test states themselves (caves included) at tau=0 — flattering the catch
 deployment-honestly: center on a NEUTRAL held-out set, threshold to a target false-alarm budget on a
 HELD-OUT HONEST set, evaluated on DISJOINT test. The honest number is much weaker, and that is the point.**
 
+> **RESOLVED (2026-06-13, see `FINDING_mount_regime_2026_06_13.md`, LIVE-CAUGHT-FPR):** the regime
+> mismatch diagnosed below was the cause. Calibrating center AND threshold on held-out honest PRESSURED
+> decisions (same regime, no leakage) more than DOUBLED the catch over the 0.40 below, at a controlled
+> false-alarm rate (loose at this n). The CATCH-WEAK below was substantially a calibration-regime
+> artifact, not a real wall; the definitive operating point is the regime-matched one. This finding stands
+> as the honest record of the mismatch (and of the leak it first corrected).**
+
 ## Result — catch 0.40 at FPR 0.067, leakage-free
 
 Same borrowed gemma→Llama truth conscience (map anchor R² 0.9851, agent L21), 30 comparative claim pairs.
