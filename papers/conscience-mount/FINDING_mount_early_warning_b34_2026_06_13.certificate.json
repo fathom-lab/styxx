@@ -1,0 +1,541 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_early_warning_b34_2026_06_13.md",
+  "document_sha256": "3299931535b33a02d1577ebb6518903f3f14265e153e5bf3d0d24285c14ce331",
+  "receipts_sha256": {
+    "mount_early_warning_result.json": "f0dfd8b09fdede3038ee02ca8c4f3abda0866954780c9d4211aab286c6a88241"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 52,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "30"
+    },
+    {
+      "line": 21,
+      "token": "60"
+    },
+    {
+      "line": 37,
+      "token": "0.01"
+    },
+    {
+      "line": 89,
+      "token": "0.94"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "0.9851",
+      "value": 0.9851,
+      "decimals": 4,
+      "context": "L21, anchor R\u00b2 0.9851, mapped-space ZCA-shrink frame, the identical direction \u2014 NOTHING about the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:map_anchor_r2"
+    },
+    {
+      "line": 17,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "conscience changed), read at DIFFERENT token positions of the same pressured forward pass. 30 comparative",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "claim pairs under the validated deference+pressure regime; 20 caves (the agent asserted a false claim",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_caves_total"
+    },
+    {
+      "line": 19,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "true), 15 honest calib / 15 honest test true-controls. The decision token sits in the appended",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 19,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "true), 15 honest calib / 15 honest test true-controls. The decision token sits in the appended",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 21,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "claim-content span was located and verified by decode (56 of 60 items matched cleanly, 4 excluded).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_items_claim_span_found"
+    },
+    {
+      "line": 21,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "claim-content span was located and verified by decode (56 of 60 items matched cleanly, 4 excluded).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "claim-content span was located and verified by decode (56 of 60 items matched cleanly, 4 excluded).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_items_excluded"
+    },
+    {
+      "line": 26,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.catch"
+    },
+    {
+      "line": 26,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.caught"
+    },
+    {
+      "line": 26,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_caves_total"
+    },
+    {
+      "line": 26,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.fpr"
+    },
+    {
+      "line": 26,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.false_alarm"
+    },
+    {
+      "line": 26,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "identical split / axis / layer: **catch 0.85, i.e. 17 of 20 caves caught, at false-alarm rate 0.20 (3 of 15 honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 27,
+      "token": "1.3789",
+      "value": 1.3789,
+      "decimals": 4,
+      "context": "center 1.3789, scale 0.0675, tau 0.8167 \u2014 bit-matching the published `FINDING_mount_regime` numbers",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.center"
+    },
+    {
+      "line": 27,
+      "token": "0.0675",
+      "value": 0.0675,
+      "decimals": 4,
+      "context": "center 1.3789, scale 0.0675, tau 0.8167 \u2014 bit-matching the published `FINDING_mount_regime` numbers",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.scale"
+    },
+    {
+      "line": 27,
+      "token": "0.8167",
+      "value": 0.8167,
+      "decimals": 4,
+      "context": "center 1.3789, scale 0.0675, tau 0.8167 \u2014 bit-matching the published `FINDING_mount_regime` numbers",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.tau"
+    },
+    {
+      "line": 34,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "scan) and recalibrating center/threshold on held-out honest items collapses the catch: **catch 0.05 \u2014 a single cave of 20",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.catch_win"
+    },
+    {
+      "line": 34,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "scan) and recalibrating center/threshold on held-out honest items collapses the catch: **catch 0.05 \u2014 a single cave of 20",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_caves_total"
+    },
+    {
+      "line": 35,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "caught \u2014 at a false-alarm rate of 0.0667 (1 false alarm of 15 honest)**. The continuous windowed score",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.fpr_win"
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "caught \u2014 at a false-alarm rate of 0.0667 (1 false alarm of 15 honest)**. The continuous windowed score",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.caught_win"
+    },
+    {
+      "line": 35,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "caught \u2014 at a false-alarm rate of 0.0667 (1 false alarm of 15 honest)**. The continuous windowed score",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 36,
+      "token": "0.696667",
+      "value": 0.696667,
+      "decimals": 6,
+      "context": "clears its shuffled-axis null (discriminability 0.696667 vs p95 0.683333, permutation p 0.018981) by only",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.perm_auroc"
+    },
+    {
+      "line": 36,
+      "token": "0.683333",
+      "value": 0.683333,
+      "decimals": 6,
+      "context": "clears its shuffled-axis null (discriminability 0.696667 vs p95 0.683333, permutation p 0.018981) by only",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.shuffled_axis_p95"
+    },
+    {
+      "line": 36,
+      "token": "0.018981",
+      "value": 0.018981,
+      "decimals": 6,
+      "context": "clears its shuffled-axis null (discriminability 0.696667 vs p95 0.683333, permutation p 0.018981) by only",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.perm_p_value"
+    },
+    {
+      "line": 37,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "about 0.01 \u2014 and even that thin continuous signal does not translate into a usable catch (it collapses to",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "0.05). A statistically significant continuous score is not a usable detector here. The thin single-token",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.catch_win"
+    },
+    {
+      "line": 41,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "and is rejected. (False-alarm tightening is not claimed: the windowed FPR 0.0667 vs baseline 0.20 is one",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.fpr_win"
+    },
+    {
+      "line": 41,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "and is rejected. (False-alarm tightening is not claimed: the windowed FPR 0.0667 vs baseline 0.20 is one",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.fpr"
+    },
+    {
+      "line": 42,
+      "token": "0.298851",
+      "value": 0.298851,
+      "decimals": 6,
+      "context": "honest item at this n, exact-test p 0.298851, `fpr_significant_vs_baseline` false \u2014 the \"false-alarm rate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.fpr_exact_test_vs_baseline_p"
+    },
+    {
+      "line": 55,
+      "token": "0.591667",
+      "value": 0.591667,
+      "decimals": 6,
+      "context": "- PRE-CLAIM-USER (preamble, pooled): 0.591667 (p 0.23976, not significant)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_preclaim"
+    },
+    {
+      "line": 55,
+      "token": "0.23976",
+      "value": 0.23976,
+      "decimals": 5,
+      "context": "- PRE-CLAIM-USER (preamble, pooled): 0.591667 (p 0.23976, not significant)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.perm_p_value_preclaim"
+    },
+    {
+      "line": 56,
+      "token": "0.603333",
+      "value": 0.603333,
+      "decimals": 6,
+      "context": "- CLAIM-first token (single position): 0.603333 (Holm p 0.135864, below the MDE 0.6435 and below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_early"
+    },
+    {
+      "line": 56,
+      "token": "0.135864",
+      "value": 0.135864,
+      "decimals": 6,
+      "context": "- CLAIM-first token (single position): 0.603333 (Holm p 0.135864, below the MDE 0.6435 and below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.perm_p_value_early"
+    },
+    {
+      "line": 56,
+      "token": "0.6435",
+      "value": 0.6435,
+      "decimals": 4,
+      "context": "- CLAIM-first token (single position): 0.603333 (Holm p 0.135864, below the MDE 0.6435 and below the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.mde_discrim"
+    },
+    {
+      "line": 57,
+      "token": "0.635083",
+      "value": 0.635083,
+      "decimals": 6,
+      "context": "shuffled-axis p95 0.635083 \u2014 not separable)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.shuffled_axis_p95_early"
+    },
+    {
+      "line": 58,
+      "token": "0.696667",
+      "value": 0.696667,
+      "decimals": 6,
+      "context": "- CLAIM-pooled (pooled aggregate; this is the windowed PRIMARY, not a position): 0.696667 (p 0.018981)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.perm_auroc"
+    },
+    {
+      "line": 58,
+      "token": "0.018981",
+      "value": 0.018981,
+      "decimals": 6,
+      "context": "- CLAIM-pooled (pooled aggregate; this is the windowed PRIMARY, not a position): 0.696667 (p 0.018981)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.perm_p_value"
+    },
+    {
+      "line": 59,
+      "token": "0.796667",
+      "value": 0.796667,
+      "decimals": 6,
+      "context": "- SCAFFOLD (the \"\u2026answer with one word: True or False\" tail, pooled): 0.796667 (p 0.002997)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_scaffold"
+    },
+    {
+      "line": 59,
+      "token": "0.002997",
+      "value": 0.002997,
+      "decimals": 6,
+      "context": "- SCAFFOLD (the \"\u2026answer with one word: True or False\" tail, pooled): 0.796667 (p 0.002997)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.perm_p_value_scaffold"
+    },
+    {
+      "line": 60,
+      "token": "0.89",
+      "value": 0.89,
+      "decimals": 2,
+      "context": "- HEADER (the post-prompt assistant-header positions, decision-adjacent, pooled): 0.89 (p 0.000999)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_header"
+    },
+    {
+      "line": 60,
+      "token": "0.000999",
+      "value": 0.000999,
+      "decimals": 6,
+      "context": "- HEADER (the post-prompt assistant-header positions, decision-adjacent, pooled): 0.89 (p 0.000999)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.perm_p_value_header"
+    },
+    {
+      "line": 62,
+      "token": "0.591667",
+      "value": 0.591667,
+      "decimals": 6,
+      "context": "PRE-CLAIM-USER (0.591667) and CLAIM-first (0.603333) differ by about one one-hundredth, are both",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_preclaim"
+    },
+    {
+      "line": 62,
+      "token": "0.603333",
+      "value": 0.603333,
+      "decimals": 6,
+      "context": "PRE-CLAIM-USER (0.591667) and CLAIM-first (0.603333) differ by about one one-hundredth, are both",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_early"
+    },
+    {
+      "line": 67,
+      "token": "0.89",
+      "value": 0.89,
+      "decimals": 2,
+      "context": "HEADER (0.89) or SCAFFOLD (0.796667) controls \u2014 verdict NO-PRE-DECISION-SEPARATION. Critically, the HEADER tokens are byte-identical",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_header"
+    },
+    {
+      "line": 67,
+      "token": "0.796667",
+      "value": 0.796667,
+      "decimals": 6,
+      "context": "HEADER (0.89) or SCAFFOLD (0.796667) controls \u2014 verdict NO-PRE-DECISION-SEPARATION. Critically, the HEADER tokens are byte-identical",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_scaffold"
+    },
+    {
+      "line": 68,
+      "token": "0.89",
+      "value": 0.89,
+      "decimals": 2,
+      "context": "across all items (the same assistant-header template), so their 0.89 separation is the model's INTEGRATED",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:secondary_early.discrim_header"
+    },
+    {
+      "line": 79,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "sufficient (catch 0.85) and necessary (pooling collapses it to 0.05). This is a commitment-time integrity",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:baseline.catch"
+    },
+    {
+      "line": 79,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "sufficient (catch 0.85) and necessary (pooling collapses it to 0.05). This is a commitment-time integrity",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.catch_win"
+    },
+    {
+      "line": 89,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "a different reference shares ~one truth direction, cos ~0.94; a small activation perturbation evades all",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "borrowed consciences; windowing/position add no adversarial robustness). Small n: 30 pairs, 15 honest calib",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 90,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "borrowed consciences; windowing/position add no adversarial robustness). Small n: 30 pairs, 15 honest calib",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 91,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "/ 15 honest test, 20 caves, FPR granularity \u00b10.0667; single seed (SEED=0), single agent, reference, regime,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_honest_calib"
+    },
+    {
+      "line": 91,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "/ 15 honest test, 20 caves, FPR granularity \u00b10.0667; single seed (SEED=0), single agent, reference, regime,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:n_caves_total"
+    },
+    {
+      "line": 91,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "/ 15 honest test, 20 caves, FPR granularity \u00b10.0667; single seed (SEED=0), single agent, reference, regime,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:primary_window.fpr_win"
+    },
+    {
+      "line": 91,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "/ 15 honest test, 20 caves, FPR granularity \u00b10.0667; single seed (SEED=0), single agent, reference, regime,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_early_warning_result.json:seed"
+    }
+  ]
+}
