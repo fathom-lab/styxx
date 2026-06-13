@@ -7,10 +7,19 @@ mounted axis and compares the agent's OUTPUT claim to its SUBSTRATE reading. Whe
 agent SAYS "true" while its substrate reads false, or COMPLIES while its substrate reads danger — the
 mount flags it: a lie / sycophantic cave / unsafe-compliance caught from the wiring, not the words.
 
-Why this is hard to fool: the mounted conscience is BORROWED from a different reference model through a
-label-free map (styxx.crossmind), so the agent has no labels of its own to game and the readout does not
-depend on the agent's own (gameable) self-report. Text-only monitors are tell-detectors that collapse
-when the tell is removed; this reads the substrate that carries the oath.
+The conscience is BORROWED from a different reference model through a label-free map (styxx.crossmind),
+so the agent has no labels of its own to game and the readout does not depend on the agent's own
+(gameable) self-report. Text-only monitors are tell-detectors that collapse when the tell is removed;
+this reads the substrate that carries the oath.
+
+SCOPE — this is a monitor for COOPERATIVE / non-adversarial agents, NOT a robust defense against an
+agent TRAINED to evade it. The gamed-model test (papers/conscience-mount/FINDING_mount_gamed, ATTACK-
+TRANSFERS) showed that borrowing a DIFFERENT reference does NOT add adversarial robustness: different
+references' truth-readouts are nearly the same direction in the agent's activation space (cos ~0.94), so
+a small activation-space perturbation evades all borrowed consciences at once. Borrowing protects against
+label / self-report gaming, not against an adversary that shapes activations; the (partial) defense there
+is RE-LOCKING on fresh private data. Use this to catch drift, unintentional caving, and sycophancy — not
+a model that wants to beat it.
 
 READ-ONLY by construction: the mount observes and flags. It NEVER steers, edits, or rewrites the agent —
 `steer` is REFUSED (read != write). Acting on a flag (halt, escalate, refuse-to-emit) is the integrator's

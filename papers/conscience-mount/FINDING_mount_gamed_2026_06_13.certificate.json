@@ -1,0 +1,162 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_gamed_2026_06_13.md",
+  "document_sha256": "251d4fb0c3b40e3036f5eccbe84d0c726b33a99e5ce125070decca9820103606",
+  "receipts_sha256": {
+    "mount_gamed_result.json": "8dabebda0c23ddad8ee51bba68c7b35f4df45c2fd5ac582a1b4e41ecedc07ffc"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 28,
+      "token": "5"
+    },
+    {
+      "line": 72,
+      "token": "20"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 20,
+      "token": "0.941",
+      "value": 0.941,
+      "decimals": 3,
+      "context": "| cos(a_A, a_B) \u2014 gemma vs Qwen readout directions in Llama space | **0.941** |",
+      "binding_context": "| quantity | value | | cos(a_A, a_B) \u2014 gemma vs Qwen readout directions in Llama space | **0.941** |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:cos_aA_aB"
+    },
+    {
+      "line": 21,
+      "token": "0.2432",
+      "value": 0.2432,
+      "decimals": 4,
+      "context": "| cos(a_A, a_A\u2032) \u2014 gemma vs gemma-re-fit | 0.2432 |",
+      "binding_context": "| quantity | value | | cos(a_A, a_A\u2032) \u2014 gemma vs gemma-re-fit | 0.2432 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:cos_aA_aAprime"
+    },
+    {
+      "line": 22,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| attack budget to defeat A (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | **0.05** |",
+      "binding_context": "| quantity | value | | attack budget to defeat A (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | **0.05** |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:eps_star"
+    },
+    {
+      "line": 23,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| catch at \u03b5*: A (targeted) | 0.0 |",
+      "binding_context": "| quantity | value | | catch at \u03b5*: A (targeted) | 0.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:seed"
+    },
+    {
+      "line": 24,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| catch at \u03b5*: **B (borrowed, different reference)** | **0.0** |",
+      "binding_context": "| quantity | value | | catch at \u03b5*: **B (borrowed, different reference)** | **0.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:seed"
+    },
+    {
+      "line": 25,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| catch at \u03b5*: A\u2032 (re-fit, same reference) | 0.30 |",
+      "binding_context": "| quantity | value | | catch at \u03b5*: A\u2032 (re-fit, same reference) | 0.30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:catch_at_estar.Aprime_refit_same_ref"
+    },
+    {
+      "line": 26,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| catch at \u03b5*: A under a RANDOM-direction attack (control) | 1.0 |",
+      "binding_context": "| quantity | value | | catch at \u03b5*: A under a RANDOM-direction attack (control) | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:catch_at_estar.A_random_dir_control"
+    },
+    {
+      "line": 28,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "**Verdict per the frozen gate: ATTACK-TRANSFERS.** A perturbation of just 5% of the activation norm,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "random-direction control stays at 1.0, so the attack is specific and the test is valid. Borrowing a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:catch_at_estar.A_random_dir_control"
+    },
+    {
+      "line": 43,
+      "token": "0.2432",
+      "value": 0.2432,
+      "decimals": 4,
+      "context": "(A\u2032) gives a DIFFERENT functional (cos 0.2432) and is the MORE robust defense (catch 0.30 at \u03b5* vs 0.0",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:cos_aA_aAprime"
+    },
+    {
+      "line": 43,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "(A\u2032) gives a DIFFERENT functional (cos 0.2432) and is the MORE robust defense (catch 0.30 at \u03b5* vs 0.0",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:catch_at_estar.Aprime_refit_same_ref"
+    },
+    {
+      "line": 43,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "(A\u2032) gives a DIFFERENT functional (cos 0.2432) and is the MORE robust defense (catch 0.30 at \u03b5* vs 0.0",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:seed"
+    },
+    {
+      "line": 71,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "diversity that does not exist (cos 0.94). Linear mounts, common read layer (L21), truth axis, local",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:cos_aA_aB"
+    },
+    {
+      "line": 72,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "same-cluster models (gemma/Qwen references, Llama agent), single-turn, n = 20 caves. Read-only throughout.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

@@ -18,6 +18,14 @@ layer that catches a real model lying, in real time, with a conscience it does n
 > deployment catch rate is weak-to-moderate, NOT the number below. Read this finding as a proof that the
 > mount CAN catch caving and is leakage-vulnerable if mis-calibrated — not as a deployment accuracy claim.**
 
+> **ADVERSARIAL-SCOPE CORRECTION (2026-06-13, see `FINDING_mount_gamed_2026_06_13.md`, ATTACK-TRANSFERS):**
+> the "borrowed conscience is hard to game" framing below holds ONLY for cooperative / non-adversarial
+> agents. The gamed-model test refuted it for an activation-space adversary: borrowing a DIFFERENT
+> reference adds no robustness because different references' truth-readouts share a direction in the
+> agent's activation space (cos ~0.94), so a ~5%-of-norm perturbation evades all borrowed consciences at
+> once. This catch of UNINTENTIONAL caving is real; it is NOT a defense against a model trained to evade
+> the mount. The honest (partial) adversarial defense is re-locking on fresh private data, not borrowing.**
+
 ## Result — a gemma conscience mounted on Llama catches Llama caving, 12 of 13
 
 A truth axis fit on gemma-2-2b was transported onto Llama-3.2-3B through a label-free state map (anchor
