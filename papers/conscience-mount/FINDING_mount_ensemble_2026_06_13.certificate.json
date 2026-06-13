@@ -1,0 +1,321 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_ensemble_2026_06_13.md",
+  "document_sha256": "524bbbef2d426a82966669eee4b17fbcfe827cafe617e78a721b52b86a9527f0",
+  "receipts_sha256": {
+    "mount_ensemble_result.json": "184148bf83935c92728a63ac093a09113516517a1bbd49c1b45e682dc691196a"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "5"
+    },
+    {
+      "line": 24,
+      "token": "2"
+    },
+    {
+      "line": 28,
+      "token": "2"
+    },
+    {
+      "line": 33,
+      "token": "0.94"
+    },
+    {
+      "line": 38,
+      "token": "2"
+    },
+    {
+      "line": 40,
+      "token": "2"
+    },
+    {
+      "line": 52,
+      "token": "9"
+    },
+    {
+      "line": 67,
+      "token": "9"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 the mount-side moat is re-locking, and it's real-but-modest: a diverse ensemble stops a naive attacker cold and an adaptive one only ~2\u00d7 (ENSEMBLE-D",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 6,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "is there ANY mount-side defense? A K=5 re-locked ensemble (gemma functionals on disjoint anchor splits,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 9,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "## Result \u2014 naive attacker defeated 32\u00d7, adaptive attacker evades at 2\u00d7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_naive"
+    },
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## Result \u2014 naive attacker defeated 32\u00d7, adaptive attacker evades at 2\u00d7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 13,
+      "token": "0.0133",
+      "value": 0.0133,
+      "decimals": 4,
+      "context": "fool ALL five). The members came out NEARLY ORTHOGONAL (mean pairwise cos **0.0133**) \u2014 re-locking on",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:member_cos_offdiag_mean"
+    },
+    {
+      "line": 15,
+      "token": "0.4305",
+      "value": 0.4305,
+      "decimals": 4,
+      "context": "their shared mean direction (cos **0.4305**).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:cos_member_mean_avg"
+    },
+    {
+      "line": 19,
+      "token": "0.025",
+      "value": 0.025,
+      "decimals": 3,
+      "context": "| single member alone | 0.025 | 1\u00d7 (reference) |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | single member alone | 0.025 | 1\u00d7 (reference) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:eps_star_single"
+    },
+    {
+      "line": 19,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| single member alone | 0.025 | 1\u00d7 (reference) |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | single member alone | 0.025 | 1\u00d7 (reference) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:rand_catch_at_single_estar"
+    },
+    {
+      "line": 20,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "| ensemble vs NAIVE attack (target one member) | 0.8 | **32\u00d7** (effectively never \u2014 see figure) |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | ensemble vs NAIVE attack (target one member) | 0.8 | **32\u00d7** (effectively never \u2014 see figure) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:eps_star_naive"
+    },
+    {
+      "line": 20,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "| ensemble vs NAIVE attack (target one member) | 0.8 | **32\u00d7** (effectively never \u2014 see figure) |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | ensemble vs NAIVE attack (target one member) | 0.8 | **32\u00d7** (effectively never \u2014 see figure) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_naive"
+    },
+    {
+      "line": 21,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| ensemble vs ADAPTIVE attack (target the shared mean direction) | 0.05 | **2\u00d7** |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | ensemble vs ADAPTIVE attack (target the shared mean direction) | 0.05 | **2\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:eps_star_adaptive"
+    },
+    {
+      "line": 21,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| ensemble vs ADAPTIVE attack (target the shared mean direction) | 0.05 | **2\u00d7** |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | ensemble vs ADAPTIVE attack (target the shared mean direction) | 0.05 | **2\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 22,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| ensemble vs RANDOM direction (control) | \u2014 | catch stays 1.0 at \u03b5*_single (valid) |",
+      "binding_context": "| attacker | budget to evade (\u03b5* = \u2016\u03b4\u2016/\u2016h\u2016) | vs single-mount | | ensemble vs RANDOM direction (control) | \u2014 | catch stays 1.0 at \u03b5*_single (valid) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:rand_catch_at_single_estar"
+    },
+    {
+      "line": 24,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**Verdict per the frozen gate (\u03b5*_adaptive \u2265 2\u00d7 single): ENSEMBLE-DEFENDS** \u2014 at the boundary. The honest",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "then RECOVERS to 1.0, because moving along one member's direction barely moves the ~orthogonal others), but",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:rand_catch_at_single_estar"
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "whole ensemble at just 2\u00d7 the single-mount cost.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "- **Borrowing a different reference does NOT defend** (gamed: cos 0.94 \u2014 different references read truth via",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.0133",
+      "value": 0.0133,
+      "decimals": 4,
+      "context": "- **Re-locking the same reference on disjoint data DOES diversify** (here: cos 0.0133 between members) and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:member_cos_offdiag_mean"
+    },
+    {
+      "line": 36,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "defeats a NAIVE attacker (32\u00d7).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_naive"
+    },
+    {
+      "line": 37,
+      "token": "0.43",
+      "value": 0.43,
+      "decimals": 2,
+      "context": "- **But every member still shares the truth component** (cos 0.43 with the mean), and an ADAPTIVE attacker",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:cos_member_mean_avg"
+    },
+    {
+      "line": 38,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "who moves along that shared direction evades all members at once (2\u00d7 cost).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "So the moat is RE-LOCKING DIVERSITY, and it is real against unsophisticated evasion but only a ~2\u00d7 tax on a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.2667",
+      "value": 0.2667,
+      "decimals": 4,
+      "context": "decisions is **0.2667** \u2014 the OR-rule unions five members' false alarms. So the robustness ratios above",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ensemble_fpr_heldout"
+    },
+    {
+      "line": 50,
+      "token": "0.27",
+      "value": 0.27,
+      "decimals": 2,
+      "context": "hold at a false-alarm rate near 0.27, not the target; a fair fixed-FPR comparison would shrink them. The",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ensemble_fpr_heldout"
+    },
+    {
+      "line": 51,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "baseline catch shrank too (only 9 of the caves were caught",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:n_caves_ensemble_caught"
+    },
+    {
+      "line": 52,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "by the tightened ensemble), so the \u03b5* estimates rest on n=9 and the adaptive ratio (2.0) is a fragile,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "2.0",
+      "value": 2.0,
+      "decimals": 1,
+      "context": "by the tightened ensemble), so the \u03b5* estimates rest on n=9 and the adaptive ratio (2.0) is a fragile,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 59,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "ensemble buys strong protection against NAIVE activation attacks and a modest ~2\u00d7 tax against ADAPTIVE",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 67,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "(L21); truth axis; local same-cluster models; single-turn; n=9 caves at the tightened threshold; OR-rule",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
