@@ -1,0 +1,133 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_offmanifold_v2_2026_06_13.md",
+  "document_sha256": "955c5acb6984c569b1869c8653aa884a632017f2b9bac2bcecfd5cec4276d7f2",
+  "receipts_sha256": {
+    "mount_offmanifold_v2_result.json": "636b5c72e0519fb3ec975c66d514fa326520d18f1393167277d6b33f18e02eea"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 18,
+      "token": "0.20"
+    },
+    {
+      "line": 49,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "## Result \u2014 the PCA-reduced detector still flags 100% of held-out honest",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 13,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| detector FPR on held-out honest | **1.0** (still flags ALL honest) |",
+      "binding_context": "| metric | value | | detector FPR on held-out honest | **1.0** (still flags ALL honest) |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 14,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| PCA components (k) | 17 |",
+      "binding_context": "| metric | value | | PCA components (k) | 17 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:pca_k"
+    },
+    {
+      "line": 15,
+      "token": "0.7647",
+      "value": 0.7647,
+      "decimals": 4,
+      "context": "| \u2014 in-subspace Mahalanobis detection of evasions | 0.7647 |",
+      "binding_context": "| metric | value | | \u2014 in-subspace Mahalanobis detection of evasions | 0.7647 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detect_channel_in_subspace"
+    },
+    {
+      "line": 16,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| \u2014 residual-channel detection of evasions | 1.0 |",
+      "binding_context": "| metric | value | | \u2014 residual-channel detection of evasions | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 18,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| **Verdict per the frozen gate (fpr > 0.20): FPR-UNCONTROLLED** |",
+      "binding_context": "| metric | value | | **Verdict per the frozen gate (fpr > 0.20): FPR-UNCONTROLLED** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "them all (FPR 1.0). The same data-scarcity that broke v1's raw Mahalanobis breaks v2's residual channel \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 28,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Two independent detector designs (raw shrunk-Mahalanobis, PCA-reduced + residual) both return FPR 1.0 on",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 38,
+      "token": "0.7647",
+      "value": 0.7647,
+      "decimals": 4,
+      "context": "The in-subspace Mahalanobis channel detected 0.7647 of the conscience-evading perturbed caves. IF its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detect_channel_in_subspace"
+    },
+    {
+      "line": 39,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "false-alarm rate were independently controlled (it is not \u2014 the union FPR is 1.0, dominated by the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_offmanifold_v2_result.json:detector_fpr_heldout"
+    },
+    {
+      "line": 49,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "stops naive attackers but only taxes an adaptive one ~2\u00d7, and truth is one direction. The NON-mount",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
