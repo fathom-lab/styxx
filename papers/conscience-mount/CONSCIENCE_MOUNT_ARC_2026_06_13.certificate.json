@@ -1,0 +1,480 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+  "document_sha256": "9e57eba32a82df4830b87df9b07a1c9578e52dbece66bef07dd18365999c6934",
+  "receipts_sha256": {
+    "portable_values_refusal_result.json": "ae2cb5be3e681608636be899eab58db5e646ea573c12cc1d7faafa4e688d6696",
+    "axis_independence_result.json": "305a3c1e9e2a07148c516f1eef0ab8e84494b5e6de0d73b7df8bf3963c0f6836",
+    "entanglement_resolution_result.json": "f77a9f5d95719574f72c201ef8779c0592b5413c4455a96cec88641b89d00ecd",
+    "conscience_coordinates_result.json": "55f2ddd7f7d8aaa9d38ae4505f9dd7a3053d89c93ad2d99c4253ff4136fdab72",
+    "truth_danger_basis_result.json": "02aae3414636ad78a83ced2592144db30a894decdf590ccc0d891166f91f29a7",
+    "concept_decode_result.json": "7c417ac39dffcd6f18a3612866c9a0af9201229cad815df5abf89b0cfc2cadc5",
+    "mapped_whitening_result.json": "a0c11df9471e7d25df494a9371bd9998052167f66d2e70afd5618d2e31ef73be",
+    "content_wall_result.json": "23e8ade00caf643b1cfe3d1be62a1aa3f24cf74006652583b3d6bbcd5423484f",
+    "mount_live_catch_result.json": "6195d4aba0491b7dcebbbcf757eac8f7666ca85c7c858a7768fb722bfe40b6d6",
+    "mount_fpr_live_result.json": "e851509245ef97fdfa7656a59707af372ad8af88e963d0f2326957a08e802164",
+    "mount_regime_result.json": "62b7fc6c2e36d5c1bf4b7c3d856a9d16543f1d14a1e3593a9d377469c46899ee",
+    "mount_gamed_result.json": "8dabebda0c23ddad8ee51bba68c7b35f4df45c2fd5ac582a1b4e41ecedc07ffc",
+    "mount_ensemble_result.json": "184148bf83935c92728a63ac093a09113516517a1bbd49c1b45e682dc691196a",
+    "mount_offmanifold_result.json": "b27ae0bd7553c8c10107c8c36a56c069c8885be7425a470cc7d364a7dbb037e9",
+    "mount_offmanifold_v2_result.json": "636b5c72e0519fb3ec975c66d514fa326520d18f1393167277d6b33f18e02eea"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 35,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 27,
+      "token": "36"
+    },
+    {
+      "line": 43,
+      "token": "5"
+    },
+    {
+      "line": 45,
+      "token": "0.6562"
+    },
+    {
+      "line": 45,
+      "token": "0.65"
+    },
+    {
+      "line": 46,
+      "token": "6"
+    },
+    {
+      "line": 47,
+      "token": "5"
+    },
+    {
+      "line": 62,
+      "token": "13"
+    },
+    {
+      "line": 69,
+      "token": "15"
+    },
+    {
+      "line": 88,
+      "token": "2"
+    },
+    {
+      "line": 103,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 27,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "- 36 offline/deterministic tests across the two modules; the package suite is green at 1471.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "0.9965",
+      "value": 0.9965,
+      "decimals": 4,
+      "context": "AUROC 0.9965 (Llama) / 0.9809 (Qwen) through the label-free map, beating permutation nulls at 0.9497 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 32,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "AUROC 0.9965 (Llama) / 0.9809 (Qwen) through the label-free map, beating permutation nulls at 0.9497 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 32,
+      "token": "0.9497",
+      "value": 0.9497,
+      "decimals": 4,
+      "context": "AUROC 0.9965 (Llama) / 0.9809 (Qwen) through the label-free map, beating permutation nulls at 0.9497 /",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.meta-llama/Llama-3.2-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 33,
+      "token": "0.9149",
+      "value": 0.9149,
+      "decimals": 4,
+      "context": "0.9149 respectively. The margins over the null are modest \u2014 the broad transport of harm/benign structure",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.perm_p95"
+    },
+    {
+      "line": 36,
+      "token": "0.9778",
+      "value": 0.9778,
+      "decimals": 4,
+      "context": "off-diagonals 0.9778 / 0.9013 collapse to ~0.55 under whitening in the source (gemma) space, where the",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.B_truth_reads_refusal.obs"
+    },
+    {
+      "line": 36,
+      "token": "0.9013",
+      "value": 0.9013,
+      "decimals": 4,
+      "context": "off-diagonals 0.9778 / 0.9013 collapse to ~0.55 under whitening in the source (gemma) space, where the",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:gemma.C_refusal_reads_truth.obs"
+    },
+    {
+      "line": 36,
+      "token": "0.55",
+      "value": 0.55,
+      "decimals": 2,
+      "context": "off-diagonals 0.9778 / 0.9013 collapse to ~0.55 under whitening in the source (gemma) space, where the",
+      "status": "VERIFIED",
+      "receipt_ref": "entanglement_resolution_result.json:whitened.B"
+    },
+    {
+      "line": 41,
+      "token": "0.8524",
+      "value": 0.8524,
+      "decimals": 4,
+      "context": "(0.8524 in gemma, 0.9809 mapped to Llama), but a refusal axis fit on REQUESTS does NOT read the danger",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_recovers_T"
+    },
+    {
+      "line": 41,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "(0.8524 in gemma, 0.9809 mapped to Llama), but a refusal axis fit on REQUESTS does NOT read the danger",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.ood_auroc"
+    },
+    {
+      "line": 42,
+      "token": "0.5226",
+      "value": 0.5226,
+      "decimals": 4,
+      "context": "of a STATEMENT (chance, 0.5226). A precise bound: name what an axis was fit on.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_refusal_recovers_H"
+    },
+    {
+      "line": 43,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "- **truth \u00d7 danger basis (PARTIAL-STRUCTURED, cycle 5)** \u2014 a danger axis fit directly on statements",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "reads danger at 1.0 and is nearly orthogonal to truth, but the primary Llama target's truth-invariance",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_sel_val_auroc"
+    },
+    {
+      "line": 45,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "misses the cross-model gate (0.6562 vs the 0.65 ceiling) while gemma and Qwen clear.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "misses the cross-model gate (0.6562 vs the 0.65 ceiling) while gemma and Qwen clear.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "- **BASIS-CLEARED (cycle 6 / B29)** \u2014 re-whitening the mapped points in the mapped distribution's own",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "metric (not the source metric used in cycle 5) closes the Llama miss: truth-invariance 0.6562 \u2192 0.6059,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "0.6562",
+      "value": 0.6562,
+      "decimals": 4,
+      "context": "metric (not the source metric used in cycle 5) closes the Llama miss: truth-invariance 0.6562 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "truth_danger_basis_result.json:mapped_primary.readout.c_truth_invariant_H"
+    },
+    {
+      "line": 47,
+      "token": "0.6059",
+      "value": 0.6059,
+      "decimals": 4,
+      "context": "metric (not the source metric used in cycle 5) closes the Llama miss: truth-invariance 0.6562 \u2192 0.6059,",
+      "status": "VERIFIED",
+      "receipt_ref": "mapped_whitening_result.json:mapped_primary.mapped_whitened.lam_0.5.c_truth_invariant_H"
+    },
+    {
+      "line": 51,
+      "token": "0.9095",
+      "value": 0.9095,
+      "decimals": 4,
+      "context": "(R\u00b2 0.9095), cross-model CONTENT identity shows high DESCRIPTIVE performance (raw cosine 0.90,",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:mapped_primary.map_val_r2"
+    },
+    {
+      "line": 51,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "(R\u00b2 0.9095), cross-model CONTENT identity shows high DESCRIPTIVE performance (raw cosine 0.90,",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:primary_targets.Qwen/Qwen2.5-3B-Instruct.rand_dir_floor_p95"
+    },
+    {
+      "line": 52,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "mapped-whitened 1.0). But per the frozen gate (the gemma-whitened readout) the verdict remains",
+      "status": "VERIFIED",
+      "receipt_ref": "portable_values_refusal_result.json:source_layer_sel_val_auroc"
+    },
+    {
+      "line": 62,
+      "token": "0.9231",
+      "value": 0.9231,
+      "decimals": 4,
+      "context": "- **0.9231 (12 of 13)** \u2014 the first live catch, but the divergence center was calibrated on the test",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_live_catch_result.json:catch_rate_on_caves"
+    },
+    {
+      "line": 62,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- **0.9231 (12 of 13)** \u2014 the first live catch, but the divergence center was calibrated on the test",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:quadrant_centroids.true_safe.n"
+    },
+    {
+      "line": 62,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "- **0.9231 (12 of 13)** \u2014 the first live catch, but the divergence center was calibrated on the test",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "- **0.40** \u2014 leakage-free but the center was calibrated on a NEUTRAL set, mismatched to the",
+      "status": "VERIFIED",
+      "receipt_ref": "content_wall_result.json:r2_wellfit_threshold"
+    },
+    {
+      "line": 66,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "- **0.85, the definitive operating point (caught 17 of 20 caves)** \u2014 center and threshold both",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_recovers_T"
+    },
+    {
+      "line": 66,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "- **0.85, the definitive operating point (caught 17 of 20 caves)** \u2014 center and threshold both",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_regime_result.json:caught"
+    },
+    {
+      "line": 66,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **0.85, the definitive operating point (caught 17 of 20 caves)** \u2014 center and threshold both",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_fpr_live_result.json:caves"
+    },
+    {
+      "line": 68,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "FPR of 0.10 realized as 0.20 on held-out honest test items \u2014 double the target. The calib\u2192test gap is",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.top1"
+    },
+    {
+      "line": 68,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "FPR of 0.10 realized as 0.20 on held-out honest test items \u2014 double the target. The calib\u2192test gap is",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.top5"
+    },
+    {
+      "line": 69,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "driven by the n=15 sample size and one strong outlier, but it means false-alarm control is not yet",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 70,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "tight. The honest deployment number: a borrowed, read-only conscience catches ~0.85 of pressured caves",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_coordinates_result.json:gemma_readout.c_truth_recovers_T"
+    },
+    {
+      "line": 71,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "at one decision token, at a ~0.20 false-alarm rate (double the stated threshold; control owed).",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.top5"
+    },
+    {
+      "line": 80,
+      "token": "0.941",
+      "value": 0.941,
+      "decimals": 3,
+      "context": "truth-readouts land nearly the same direction in the agent's space (cos 0.941), so an unconstrained",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_gamed_result.json:cos_aA_aB"
+    },
+    {
+      "line": 81,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "activation perturbation of \u22480.05 of the activation norm \u2014 an UPPER BOUND on a weight-fine-tune attacker,",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:chance_top1"
+    },
+    {
+      "line": 84,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **A re-locked ensemble defends a naive attacker, taxes an adaptive one ~2\u00d7 (ENSEMBLE-DEFENDS,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 86,
+      "token": "0.0133",
+      "value": 0.0133,
+      "decimals": 4,
+      "context": "functionals (mean pairwise cos 0.0133); an OR-rule ensemble forces 32\u00d7 the budget against a naive",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:member_cos_offdiag_mean"
+    },
+    {
+      "line": 86,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "functionals (mean pairwise cos 0.0133); an OR-rule ensemble forces 32\u00d7 the budget against a naive",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_naive"
+    },
+    {
+      "line": 88,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "at ~2\u00d7 cost. Crucially, this robustness is bought at a steep false-alarm price \u2014 the ensemble's realized",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "0.2667",
+      "value": 0.2667,
+      "decimals": 4,
+      "context": "FPR on held-out honest decisions is 0.2667 (vs the 0.10 target). A fair fixed-FPR comparison would",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ensemble_fpr_heldout"
+    },
+    {
+      "line": 89,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "FPR on held-out honest decisions is 0.2667 (vs the 0.10 target). A fair fixed-FPR comparison would",
+      "status": "VERIFIED",
+      "receipt_ref": "concept_decode_result.json:mapped_secondary.centroid.top1"
+    },
+    {
+      "line": 90,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "shrink these robustness ratios, so the 32\u00d7 / 2\u00d7 numbers are upper bounds at an uncontrolled false-alarm",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_naive"
+    },
+    {
+      "line": 90,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "shrink these robustness ratios, so the 32\u00d7 / 2\u00d7 numbers are upper bounds at an uncontrolled false-alarm",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_ensemble_result.json:ratio_adaptive"
+    },
+    {
+      "line": 103,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "robustness; re-locking taxes a sophisticated attacker only ~2\u00d7; and because the value lives on one",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
