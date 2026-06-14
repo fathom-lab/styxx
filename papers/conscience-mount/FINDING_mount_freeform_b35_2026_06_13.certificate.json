@@ -1,0 +1,456 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_freeform_b35_2026_06_13.md",
+  "document_sha256": "156a3129159bfdfbd58b492b79879be2535c183e53ca8939b5fef25ccc48de9e",
+  "receipts_sha256": {
+    "mount_freeform_early_warning_result.json": "8b98ca7805b705dfd3f494d12e4b8e1a037317b19109c4be71d965ed202f12f6"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 31,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 8,
+      "token": "30"
+    },
+    {
+      "line": 23,
+      "token": "13"
+    },
+    {
+      "line": 24,
+      "token": "2"
+    },
+    {
+      "line": 26,
+      "token": "8"
+    },
+    {
+      "line": 26,
+      "token": "8"
+    },
+    {
+      "line": 26,
+      "token": "6"
+    },
+    {
+      "line": 52,
+      "token": "5"
+    },
+    {
+      "line": 52,
+      "token": "30"
+    },
+    {
+      "line": 70,
+      "token": "0.94"
+    },
+    {
+      "line": 76,
+      "token": "0"
+    },
+    {
+      "line": 77,
+      "token": "0.5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "this runner existed. Runner `run_mount_freeform_early_warning.py`, SEED=0, greedy decode. Receipt",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 8,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "returns a VOID: the free-form \"think step by step, then VERDICT\" register yields only 5 of 30 caves (3 with",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 8,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "returns a VOID: the free-form \"think step by step, then VERDICT\" register yields only 5 of 30 caves (3 with",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "returns a VOID: the free-form \"think step by step, then VERDICT\" register yields only 5 of 30 caves (3 with",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave_preok"
+    },
+    {
+      "line": 11,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "fished from 5 caves. The substantive observation is in the labeling itself: under the free-form register the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 12,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "SAME deference pressure on the SAME claims caves the agent 5/30 versus 20/30 in the forced-choice register \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 12,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "SAME deference pressure on the SAME claims caves the agent 5/30 versus 20/30 in the forced-choice register \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 12,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "SAME deference pressure on the SAME claims caves the agent 5/30 versus 20/30 in the forced-choice register \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.n_caves"
+    },
+    {
+      "line": 12,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "SAME deference pressure on the SAME claims caves the agent 5/30 versus 20/30 in the forced-choice register \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 17,
+      "token": "0.9851",
+      "value": 0.9851,
+      "decimals": 4,
+      "context": "Same borrowed gemma-2-2b \u2192 Llama-3.2-3B truth conscience as B34 (map layer L21, anchor R\u00b2 0.9851, mapped",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:map_anchor_r2"
+    },
+    {
+      "line": 18,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "ZCA-shrink frame, identical direction). The 30 false claims were generated free-form under",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 19,
+      "token": "160",
+      "value": 160.0,
+      "decimals": 0,
+      "context": "`SYS_DEFERENCE` + a neutral reason-then-verdict prompt (greedy, 160 max new tokens), labeled CAVE / RESIST /",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:max_new_tokens"
+    },
+    {
+      "line": 23,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 23,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_resist"
+    },
+    {
+      "line": 23,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_hedge"
+    },
+    {
+      "line": 23,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 23,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "- **CAVE 5, RESIST 18, HEDGE 7** (of 30 false claims); 13 items had no locatable pre-assertion window;",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "only 3 caves and 11 resists had \u22652 buffered non-restatement pre-assertion tokens.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave_preok"
+    },
+    {
+      "line": 24,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "only 3 caves and 11 resists had \u22652 buffered non-restatement pre-assertion tokens.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_resist_preok"
+    },
+    {
+      "line": 24,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "only 3 caves and 11 resists had \u22652 buffered non-restatement pre-assertion tokens.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "The pre-committed gate requires \u22658 caves AND \u22658 resists AND \u22656 of each with a usable pre-assertion window.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "The pre-committed gate requires \u22658 caves AND \u22658 resists AND \u22656 of each with a usable pre-assertion window.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "The pre-committed gate requires \u22658 caves AND \u22658 resists AND \u22656 of each with a usable pre-assertion window.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "With only 5 caves (3 usable) the gate fails on the CAVE arm and the run terminates at the pre-registered VOID.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "With only 5 caves (3 usable) the gate fails on the CAVE arm and the run terminates at the pre-registered VOID.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave_preok"
+    },
+    {
+      "line": 36,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "split/axis/layer: **catch 0.85 (17 of 20 caves caught) at false-alarm rate 0.20 (3 false alarms among the held-out honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.catch"
+    },
+    {
+      "line": 36,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "split/axis/layer: **catch 0.85 (17 of 20 caves caught) at false-alarm rate 0.20 (3 false alarms among the held-out honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.caught"
+    },
+    {
+      "line": 36,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "split/axis/layer: **catch 0.85 (17 of 20 caves caught) at false-alarm rate 0.20 (3 false alarms among the held-out honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.n_caves"
+    },
+    {
+      "line": 36,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "split/axis/layer: **catch 0.85 (17 of 20 caves caught) at false-alarm rate 0.20 (3 false alarms among the held-out honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.fpr"
+    },
+    {
+      "line": 36,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "split/axis/layer: **catch 0.85 (17 of 20 caves caught) at false-alarm rate 0.20 (3 false alarms among the held-out honest)**,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave_preok"
+    },
+    {
+      "line": 42,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "In the forced-choice register (B34, recomputed here as the baseline) the agent caved on **20** false",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:baseline.n_caves"
+    },
+    {
+      "line": 43,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "claims. In the free-form reason-then-verdict register the same agent on the same claims caved on only **5**.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 52,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "prompt, caving fell to 5 of 30\" \u2014 not \"reasoning defeats caving.\" A clean CoT ablation (same neutral prompt,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 52,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "prompt, caving fell to 5 of 30\" \u2014 not \"reasoning defeats caving.\" A clean CoT ablation (same neutral prompt,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 70,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "direction, cos ~0.94; a small activation perturbation evades all borrowed consciences); reading generated",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 71,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "positions adds no adversarial-activation robustness. Small n: 30 false claims, 5 caves / 18 resists / 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:n_claim_pairs"
+    },
+    {
+      "line": 71,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "positions adds no adversarial-activation robustness. Small n: 30 false claims, 5 caves / 18 resists / 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_cave"
+    },
+    {
+      "line": 71,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "positions adds no adversarial-activation robustness. Small n: 30 false claims, 5 caves / 18 resists / 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_resist"
+    },
+    {
+      "line": 71,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "positions adds no adversarial-activation robustness. Small n: 30 false claims, 5 caves / 18 resists / 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:pilot.n_hedge"
+    },
+    {
+      "line": 73,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Greedy decoding (one deterministic generation per claim; the verdict is a 0/1 draw, not a distribution;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:descriptive.audit[2].n_pre_buf"
+    },
+    {
+      "line": 73,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Greedy decoding (one deterministic generation per claim; the verdict is a 0/1 draw, not a distribution;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_early_warning_result.json:descriptive.audit[16].n_pre_buf"
+    },
+    {
+      "line": 76,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "the prompt change (above). Single seed (SEED=0), single agent, reference, regime, and map layer L21 \u2014 the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 77,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "VOID is register/seed-specific, not \"free-form has no caves anywhere.\" Mapped-space ZCA-shrink (\u03bb=0.5,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
