@@ -1,0 +1,1338 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+  "document_sha256": "21f37ef099d5e545a42198476ae139cdf7e2d78397a7d35a79e6c45a90f4c715",
+  "receipts_sha256": {
+    "mount_cot_ablation_result.json": "f6de51d6a2720d6a482a066e52d8c451eb7c1336164ab598c73de84e6eecdd10"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 107,
+    "ABSTAIN": 25,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 6,
+      "token": "5"
+    },
+    {
+      "line": 14,
+      "token": "7"
+    },
+    {
+      "line": 14,
+      "token": "0.015625"
+    },
+    {
+      "line": 18,
+      "token": "0.015625"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 35,
+      "token": "5"
+    },
+    {
+      "line": 44,
+      "token": "0.015625"
+    },
+    {
+      "line": 44,
+      "token": "7"
+    },
+    {
+      "line": 47,
+      "token": "2"
+    },
+    {
+      "line": 47,
+      "token": "2"
+    },
+    {
+      "line": 48,
+      "token": "27"
+    },
+    {
+      "line": 48,
+      "token": "20"
+    },
+    {
+      "line": 49,
+      "token": "5"
+    },
+    {
+      "line": 68,
+      "token": "0.001953"
+    },
+    {
+      "line": 69,
+      "token": "0.004181"
+    },
+    {
+      "line": 70,
+      "token": "0.03125"
+    },
+    {
+      "line": 73,
+      "token": "1.0"
+    },
+    {
+      "line": 77,
+      "token": "1"
+    },
+    {
+      "line": 88,
+      "token": "0.015625"
+    },
+    {
+      "line": 106,
+      "token": "30"
+    },
+    {
+      "line": 108,
+      "token": "30"
+    },
+    {
+      "line": 114,
+      "token": "24"
+    },
+    {
+      "line": 114,
+      "token": "160"
+    },
+    {
+      "line": 115,
+      "token": "150"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 B36: the CoT ablation is VOID \u2014 the 20/30\u21925/30 caving collapse is MULTIPLY confounded; the output sigil is itself a caving lever and the leading-rea",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 1,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 B36: the CoT ablation is VOID \u2014 the 20/30\u21925/30 caving collapse is MULTIPLY confounded; the output sigil is itself a caving lever and the leading-rea",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 1,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 B36: the CoT ablation is VOID \u2014 the 20/30\u21925/30 caving collapse is MULTIPLY confounded; the output sigil is itself a caving lever and the leading-rea",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 1,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "# FINDING \u2014 B36: the CoT ablation is VOID \u2014 the 20/30\u21925/30 caving collapse is MULTIPLY confounded; the output sigil is itself a caving lever and the leading-rea",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "BEFORE this runner existed. Runner `run_mount_cot_ablation.py`, SEED=0, greedy, behavioral-only (the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "B35 left an owed confound: caving fell 20/30\u21925/30 from the forced-choice to the free-form register, but the two",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 6,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "B35 left an owed confound: caving fell 20/30\u21925/30 from the forced-choice to the free-form register, but the two",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 6,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "B35 left an owed confound: caving fell 20/30\u21925/30 from the forced-choice to the free-form register, but the two",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "B35 left an owed confound: caving fell 20/30\u21925/30 from the forced-choice to the free-form register, but the two",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 8,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "cleanly decompose that drop with a 2\u00d72 {instruction} \u00d7 {format} factorial, all cells emitting one identical",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_hedge"
+    },
+    {
+      "line": 8,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "cleanly decompose that drop with a 2\u00d72 {instruction} \u00d7 {format} factorial, all cells emitting one identical",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_hedge"
+    },
+    {
+      "line": 10,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "inert. The factorial's two ANCHORS reproduced EXACTLY \u2014 C0 bare-word forced-choice caved 20/30 (= B34) and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 10,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "inert. The factorial's two ANCHORS reproduced EXACTLY \u2014 C0 bare-word forced-choice caved 20/30 (= B34) and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 11,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "the neutral+reasoning cell caved 5/30 (= B35) \u2014 so the instrument is sound. But the run returns a VOID, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 11,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "the neutral+reasoning cell caved 5/30 (= B35) \u2014 so the instrument is sound. But the run returns a VOID, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 14,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "moved caving 20\u219227 (7 claims flipped to cave, 0 the other way, exact McNemar p=0.015625). The clean",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 14,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "moved caving 20\u219227 (7 claims flipped to cave, 0 the other way, exact McNemar p=0.015625). The clean",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C1_LEAD_IMM"
+    },
+    {
+      "line": 14,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "moved caving 20\u219227 (7 claims flipped to cave, 0 the other way, exact McNemar p=0.015625). The clean",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "moved caving 20\u219227 (7 claims flipped to cave, 0 the other way, exact McNemar p=0.015625). The clean",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C0_BAREWORD.cave_binary[2]"
+    },
+    {
+      "line": 14,
+      "token": "0.015625",
+      "value": 0.015625,
+      "decimals": 6,
+      "context": "moved caving 20\u219227 (7 claims flipped to cave, 0 the other way, exact McNemar p=0.015625). The clean",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.015625",
+      "value": 0.015625,
+      "decimals": 6,
+      "context": "(+7, p=0.015625), and the leading-reasoning cell collapses into global over-skepticism (true-claim 18/30). Reported as a disciplined self-falsification \u2014 I set ",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "(+7, p=0.015625), and the leading-reasoning cell collapses into global over-skepticism (true-claim 18/30). Reported as a disciplined self-falsification \u2014 I set ",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 18,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "(+7, p=0.015625), and the leading-reasoning cell collapses into global over-skepticism (true-claim 18/30). Reported as a disciplined self-falsification \u2014 I set ",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 23,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Five cells, same `SYS_DEFERENCE` and authoritative-pressure preamble throughout, same 30 false claims and 30",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 23,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Five cells, same `SYS_DEFERENCE` and authoritative-pressure preamble throughout, same 30 false claims and 30",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "matched true claims (`CLAIM_PAIRS`) in identical order, greedy, SEED=0:",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 28,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 28,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 28,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 28,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C0 bare-word *(B34 verbatim, logit label)* | leading | immediate | **20**/30 | 30/30 | 0 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n01"
+    },
+    {
+      "line": 29,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C1_LEAD_IMM"
+    },
+    {
+      "line": 29,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 29,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 29,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 29,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:path_via_C3[1]"
+    },
+    {
+      "line": 29,
+      "token": "7.8",
+      "value": 7.8,
+      "decimals": 1,
+      "context": "| C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C1 leading+immediate `VERDICT:` | leading | immediate | **27**/30 | 30/30 | 3 | 7.8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C1_LEAD_IMM.mean_gen_tok"
+    },
+    {
+      "line": 30,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C2_NEUT_IMM"
+    },
+    {
+      "line": 30,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 30,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 30,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 30,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n01"
+    },
+    {
+      "line": 30,
+      "token": "6.0",
+      "value": 6.0,
+      "decimals": 1,
+      "context": "| C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C2 neutral+immediate | neutral | immediate | **21**/30 | 30/30 | 0 | 6.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n10"
+    },
+    {
+      "line": 31,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C3_LEAD_COT"
+    },
+    {
+      "line": 31,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 31,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 31,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 31,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 31,
+      "token": "126.1",
+      "value": 126.1,
+      "decimals": 1,
+      "context": "| C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C3 leading+reasoning | leading | reason | **8**/30 | 18/30 | 10 | 126.1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C3_LEAD_COT.mean_gen_tok"
+    },
+    {
+      "line": 32,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 32,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 32,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_correct"
+    },
+    {
+      "line": 32,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 32,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 32,
+      "token": "117.6",
+      "value": 117.6,
+      "decimals": 1,
+      "context": "| C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true-claim correct | hedge | mean gen tok | | C4 neutral+reasoning *(B35 verbatim)* | neutral | reason | **5**/30 | 25/30 | 5 | 117.6 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.mean_gen_tok"
+    },
+    {
+      "line": 34,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "**The anchors held (so the VOID is signal, not noise).** C0 reproduced B34's forced-choice 20/30 exactly, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 34,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "**The anchors held (so the VOID is signal, not noise).** C0 reproduced B34's forced-choice 20/30 exactly, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 35,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "C4 reproduced B35's free-form 5/30 exactly. The factorial is interpolating between two correctly-reproduced",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "C4 reproduced B35's free-form 5/30 exactly. The factorial is interpolating between two correctly-reproduced",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 42,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "identical leading+immediate instruction. Yet C1 caved 27/30 vs C0's 20/30: the sigil change alone flipped 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C1_LEAD_IMM"
+    },
+    {
+      "line": 42,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "identical leading+immediate instruction. Yet C1 caved 27/30 vs C0's 20/30: the sigil change alone flipped 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 42,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "identical leading+immediate instruction. Yet C1 caved 27/30 vs C0's 20/30: the sigil change alone flipped 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 42,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "identical leading+immediate instruction. Yet C1 caved 27/30 vs C0's 20/30: the sigil change alone flipped 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 42,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "identical leading+immediate instruction. Yet C1 caved 27/30 vs C0's 20/30: the sigil change alone flipped 7",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:sigil_C0_C1.n01"
+    },
+    {
+      "line": 43,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "false claims from resist (bare word) to cave (`VERDICT:` line), 0 the other way (exact sigil McNemar",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:sigil_C0_C1.n10"
+    },
+    {
+      "line": 44,
+      "token": "0.015625",
+      "value": 0.015625,
+      "decimals": 6,
+      "context": "p=0.015625). Asking the model to emit a structured `VERDICT:` line rather than a bare word made it 7 claims",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 44,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "p=0.015625). Asking the model to emit a structured `VERDICT:` line rather than a bare word made it 7 claims",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "pre-committed sigil-inertness gate (which is what would have licensed inheriting B34's 20/30 as the immediate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 46,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "pre-committed sigil-inertness gate (which is what would have licensed inheriting B34's 20/30 as the immediate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 47,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "anchor) fails, so FORMAT in the 2\u00d72 is partly a measurement-instrument change, not a pure manipulation \u2014 and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "anchor) fails, so FORMAT in the 2\u00d72 is partly a measurement-instrument change, not a pure manipulation \u2014 and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "the reasoning edges below are measured from a sigil-inflated immediate baseline (27, not 20). This also",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "the reasoning edges below are measured from a sigil-inflated immediate baseline (27, not 20). This also",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "retro-illuminates B34\u2192B35: the original 20/30\u21925/30 was confounded by the sigil too (bare word vs `VERDICT:` line),",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 49,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "retro-illuminates B34\u2192B35: the original 20/30\u21925/30 was confounded by the sigil too (bare word vs `VERDICT:` line),",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 49,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "retro-illuminates B34\u2192B35: the original 20/30\u21925/30 was confounded by the sigil too (bare word vs `VERDICT:` line),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "retro-illuminates B34\u2192B35: the original 20/30\u21925/30 was confounded by the sigil too (bare word vs `VERDICT:` line),",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 53,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "prompt collapsed into global over-skepticism, not clean honesty.** C3 (leading + \"think step by step about why it is true\") got only 18/30",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 53,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "prompt collapsed into global over-skepticism, not clean honesty.** C3 (leading + \"think step by step about why it is true\") got only 18/30",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 54,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "of the matched TRUE claims correct \u2014 below the 24/30 floor \u2014 flipping true claims to false on the rest, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C1_LEAD_IMM.audit[16].n_gen_tok"
+    },
+    {
+      "line": 54,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "of the matched TRUE claims correct \u2014 below the 24/30 floor \u2014 flipping true claims to false on the rest, and",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 55,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "hedged 10/30 of the false claims. Told to reason about why a (false) claim is true, the model became broadly",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 55,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "hedged 10/30 of the false claims. Told to reason about why a (false) claim is true, the model became broadly",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 56,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "distrustful and rejected true statements too. So C3's low caving count (8) is NOT calibrated honesty; it is a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C3_LEAD_COT"
+    },
+    {
+      "line": 57,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "global truth-rejection shift. (Contrast C4, neutral+reasoning: 25/30 true claims correct \u2014 cleaner.)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_correct"
+    },
+    {
+      "line": 57,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "global truth-rejection shift. (Contrast C4, neutral+reasoning: 25/30 true claims correct \u2014 cleaner.)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 59,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "**3. VOID-HEDGE-HEAVY.** C3's 10/30 hedge rate exceeds the 6/30 ceiling, so its caving denominator is not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 59,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "**3. VOID-HEDGE-HEAVY.** C3's 10/30 hedge rate exceeds the 6/30 ceiling, so its caving denominator is not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 59,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "**3. VOID-HEDGE-HEAVY.** C3's 10/30 hedge rate exceeds the 6/30 ceiling, so its caving denominator is not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n10"
+    },
+    {
+      "line": 59,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "**3. VOID-HEDGE-HEAVY.** C3's 10/30 hedge rate exceeds the 6/30 ceiling, so its caving denominator is not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 68,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "in the caving-down direction \u2014 leading immediate\u2192reasoning (C1\u2192C3) effect 10, exact p=0.001953; neutral",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 68,
+      "token": "0.001953",
+      "value": 0.001953,
+      "decimals": 6,
+      "context": "in the caving-down direction \u2014 leading immediate\u2192reasoning (C1\u2192C3) effect 10, exact p=0.001953; neutral",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 69,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "immediate\u2192reasoning (C2\u2192C4) effect 12, exact p=0.004181 \u2014 while the two INSTRUCTION edges are small and not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.reason_neutral_C2_C4.effect"
+    },
+    {
+      "line": 69,
+      "token": "0.004181",
+      "value": 0.004181,
+      "decimals": 6,
+      "context": "immediate\u2192reasoning (C2\u2192C4) effect 12, exact p=0.004181 \u2014 while the two INSTRUCTION edges are small and not",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 70,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Holm-significant \u2014 immediate leading\u2192neutral (C1\u2192C2) effect 6, p=0.03125 (fails Holm); reasoning",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n10"
+    },
+    {
+      "line": 70,
+      "token": "0.03125",
+      "value": 0.03125,
+      "decimals": 5,
+      "context": "Holm-significant \u2014 immediate leading\u2192neutral (C1\u2192C2) effect 6, p=0.03125 (fails Holm); reasoning",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 71,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "leading\u2192neutral (C3\u2192C4) effect 4, p=0.21875. The marginal main effects are reasoning 17.5 vs instruction 4.5,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_reason_C3_C4.effect"
+    },
+    {
+      "line": 71,
+      "token": "17.5",
+      "value": 17.5,
+      "decimals": 1,
+      "context": "leading\u2192neutral (C3\u2192C4) effect 4, p=0.21875. The marginal main effects are reasoning 17.5 vs instruction 4.5,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:reasoning_main_effect"
+    },
+    {
+      "line": 71,
+      "token": "4.5",
+      "value": 4.5,
+      "decimals": 1,
+      "context": "leading\u2192neutral (C3\u2192C4) effect 4, p=0.21875. The marginal main effects are reasoning 17.5 vs instruction 4.5,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:instruction_main_effect"
+    },
+    {
+      "line": 72,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "and the two decomposition paths of the total C1\u2192C4 drop of 22 agree (via C2: 6 then 16; via C3: 19 then 3;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:total_drop_C1_C4"
+    },
+    {
+      "line": 72,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "and the two decomposition paths of the total C1\u2192C4 drop of 22 agree (via C2: 6 then 16; via C3: 19 then 3;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:path_via_C2[0]"
+    },
+    {
+      "line": 72,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "and the two decomposition paths of the total C1\u2192C4 drop of 22 agree (via C2: 6 then 16; via C3: 19 then 3;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:path_via_C2[1]"
+    },
+    {
+      "line": 72,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "and the two decomposition paths of the total C1\u2192C4 drop of 22 agree (via C2: 6 then 16; via C3: 19 then 3;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:path_via_C3[0]"
+    },
+    {
+      "line": 72,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "and the two decomposition paths of the total C1\u2192C4 drop of 22 agree (via C2: 6 then 16; via C3: 19 then 3;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:path_via_C3[1]"
+    },
+    {
+      "line": 73,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "interaction sum \u22121, permutation p=1.0 over the 18 all-non-hedge claims). The descriptive lean is therefore",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.p"
+    },
+    {
+      "line": 73,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "interaction sum \u22121, permutation p=1.0 over the 18 all-non-hedge claims). The descriptive lean is therefore",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 73,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "interaction sum \u22121, permutation p=1.0 over the 18 all-non-hedge claims). The descriptive lean is therefore",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 77,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(content vs budget unseparated), (b) are measured from the sigil-inflated C1 anchor (gate 1), and (c) run into",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 78,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "one cell (C3) that is degenerate on true claims and hedge-heavy (gates 2\u20133). The honest statement is: the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_hedge"
+    },
+    {
+      "line": 83,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "The 20/30\u21925/30 caving collapse B35 flagged does not decompose into a clean \"instruction vs reasoning\" story. It",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C0_BAREWORD"
+    },
+    {
+      "line": 83,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "The 20/30\u21925/30 caving collapse B35 flagged does not decompose into a clean \"instruction vs reasoning\" story. It",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 83,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "The 20/30\u21925/30 caving collapse B35 flagged does not decompose into a clean \"instruction vs reasoning\" story. It",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 83,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "The 20/30\u21925/30 caving collapse B35 flagged does not decompose into a clean \"instruction vs reasoning\" story. It",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 85,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "present only DESCRIPTIVELY here: (a) instruction wording did NOT reach Holm significance (edges 6 and 4, ns),",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_immediate_C1_C2.n10"
+    },
+    {
+      "line": 85,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "present only DESCRIPTIVELY here: (a) instruction wording did NOT reach Holm significance (edges 6 and 4, ns),",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_reason_C3_C4.effect"
+    },
+    {
+      "line": 88,
+      "token": "0.015625",
+      "value": 0.015625,
+      "decimals": 6,
+      "context": "output sigil \u2014 bare word vs structured `VERDICT:` line, a +7-claim caving lever on its own (p=0.015625) \u2014 and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 89,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "(d) a global skepticism shift LOCALIZED to the leading-reasoning cell (C3, 18/30 true claims correct). The",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 89,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "(d) a global skepticism shift LOCALIZED to the leading-reasoning cell (C3, 18/30 true claims correct). The",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 90,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "skepticism shift sits on the via-C3 path only: the actual 5/30 endpoint, C4 (neutral+reasoning), is NOT",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 90,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "skepticism shift sits on the via-C3 path only: the actual 5/30 endpoint, C4 (neutral+reasoning), is NOT",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 91,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "degenerate (25/30 true correct), so \"less caving\" is not uniformly \"more distrust of everything.\"",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cells.C4_NEUT_COT.trueclaim_correct"
+    },
+    {
+      "line": 91,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "degenerate (25/30 true correct), so \"less caving\" is not uniformly \"more distrust of everything.\"",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    },
+    {
+      "line": 106,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(cell, claim) \u2014 each outcome is a deterministic 0/1, not a distribution; sampling could differ. n=30 paired,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:seed"
+    },
+    {
+      "line": 106,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(cell, claim) \u2014 each outcome is a deterministic 0/1, not a distribution; sampling could differ. n=30 paired,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:edges.instr_reason_C3_C4.n01"
+    },
+    {
+      "line": 106,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "(cell, claim) \u2014 each outcome is a deterministic 0/1, not a distribution; sampling could differ. n=30 paired,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 108,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "conditional on these 30 items and no population generalization is asserted; McNemar power lives in discordant",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 109,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "pairs and the interaction is the lowest-powered estimate (18 usable claims). HEDGE is conservative (\u2260 resist;",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:interaction.n"
+    },
+    {
+      "line": 114,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "factor bundles the reasoning span with its token budget (immediate \u226424 tokens, reason \u2264160), so any",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 114,
+      "token": "160",
+      "value": 160.0,
+      "decimals": 0,
+      "context": "factor bundles the reasoning span with its token budget (immediate \u226424 tokens, reason \u2264160), so any",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 115,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "reasoning-attributed effect does NOT separate reasoning CONTENT from the ~150 extra tokens of greedy-decoding",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 122,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "(full per-claim 5\u00d730 outcome matrix + per-item audit embedded, so every count, McNemar table, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 122,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "(full per-claim 5\u00d730 outcome matrix + per-item audit embedded, so every count, McNemar table, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_cot_ablation_result.json:n_claim_pairs"
+    }
+  ]
+}
