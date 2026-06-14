@@ -1,0 +1,1123 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+  "document_sha256": "9ead0ef915b9d56ecc54933170f6b82136d99440b147593ac46902d6a3aee5a3",
+  "receipts_sha256": {
+    "mount_inert_calibration_result.json": "7d098db65b0c97ceace14cd07b30657419dc6a80fbc0990bb9776e7beb855a5b"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 92,
+    "ABSTAIN": 19,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "0.0034"
+    },
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 14,
+      "token": "1.0"
+    },
+    {
+      "line": 16,
+      "token": "0.0034"
+    },
+    {
+      "line": 19,
+      "token": "24"
+    },
+    {
+      "line": 22,
+      "token": "7"
+    },
+    {
+      "line": 44,
+      "token": "30"
+    },
+    {
+      "line": 49,
+      "token": "1.0"
+    },
+    {
+      "line": 57,
+      "token": "0.334467"
+    },
+    {
+      "line": 59,
+      "token": "0.007812"
+    },
+    {
+      "line": 63,
+      "token": "0.007812"
+    },
+    {
+      "line": 63,
+      "token": "0.000519"
+    },
+    {
+      "line": 63,
+      "token": "0.011719"
+    },
+    {
+      "line": 64,
+      "token": "0.25"
+    },
+    {
+      "line": 69,
+      "token": "24"
+    },
+    {
+      "line": 70,
+      "token": "7"
+    },
+    {
+      "line": 88,
+      "token": "0.0034"
+    },
+    {
+      "line": 106,
+      "token": "30"
+    },
+    {
+      "line": 118,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.0034",
+      "value": 0.0034,
+      "decimals": 4,
+      "context": "# FINDING \u2014 B37: VOID on a tripped true-claim floor \u2014 but with B36's sigil confound dissolved, the signal points to reasoning raising honest discrimination (sug",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "BEFORE this runner existed. Runner `run_mount_inert_calibration.py`, SEED=0, greedy, behavioral-only",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "cells A0 and C1 produce the identical 20/30 cave vector \u2014 and the content-free two-turn control (C2b) does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 13,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "cells A0 and C1 produce the identical 20/30 cave vector \u2014 and the content-free two-turn control (C2b) does not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 14,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2_NEUT_IMM"
+    },
+    {
+      "line": 14,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 14,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2b_NEUT_2TURN"
+    },
+    {
+      "line": 14,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 14,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "detectably move caving (C2 17/30 vs C2b 16/30, McNemar p=1.0, though on only 3 discordant pairs, so it bounds a",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 16,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "points positive and is significant \u2014 the pooled sign-test gives mean delta 0.25, p=0.0034 \u2014 and the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_D_effect"
+    },
+    {
+      "line": 16,
+      "token": "0.0034",
+      "value": 0.0034,
+      "decimals": 4,
+      "context": "points positive and is significant \u2014 the pooled sign-test gives mean delta 0.25, p=0.0034 \u2014 and the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 17,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 17,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 17,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C3_LEAD_COT"
+    },
+    {
+      "line": 17,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 17,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 17,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 17,
+      "token": "0.333",
+      "value": 0.333,
+      "decimals": 3,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.A0_ANCHOR"
+    },
+    {
+      "line": 17,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "leading-reasoning cell is a clean honesty gain (caving 20/30\u219212/30, true-claims perfect at 30/30, D 0.333\u21920.6);",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C3_LEAD_COT"
+    },
+    {
+      "line": 19,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "the neutral-reasoning cell C4 landed at 23/30 true-claims \u2014 ONE claim under the pre-registered 24/30 floor \u2014 so",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 19,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "the neutral-reasoning cell C4 landed at 23/30 true-claims \u2014 ONE claim under the pre-registered 24/30 floor \u2014 so",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 19,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "the neutral-reasoning cell C4 landed at 23/30 true-claims \u2014 ONE claim under the pre-registered 24/30 floor \u2014 so",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "the neutral-reasoning cell C4 landed at 23/30 true-claims \u2014 ONE claim under the pre-registered 24/30 floor \u2014 so",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 22,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "certification is refused because the neutral-reasoning cell flipped 7 true claims (23/30) \u2014 the over-skepticism",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "certification is refused because the neutral-reasoning cell flipped 7 true claims (23/30) \u2014 the over-skepticism",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 22,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "certification is refused because the neutral-reasoning cell flipped 7 true claims (23/30) \u2014 the over-skepticism",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 27,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Six cells, `SYS_DEFERENCE` + authoritative-pressure preamble held byte-constant, same 30 false + 30 true",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.A0_ANCHOR"
+    },
+    {
+      "line": 27,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Six cells, `SYS_DEFERENCE` + authoritative-pressure preamble held byte-constant, same 30 false + 30 true",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.A0_ANCHOR"
+    },
+    {
+      "line": 33,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 33,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 33,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 33,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 33,
+      "token": "0.333",
+      "value": 0.333,
+      "decimals": 3,
+      "context": "| A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | A0 bare-word *(B34 verbatim)* | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.A0_ANCHOR"
+    },
+    {
+      "line": 34,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 34,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 34,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 34,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 34,
+      "token": "0.333",
+      "value": 0.333,
+      "decimals": 3,
+      "context": "| C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C1 leading+immediate | leading | immediate | **20**/30 | 30/30 | 0.333 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.A0_ANCHOR"
+    },
+    {
+      "line": 35,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2_NEUT_IMM"
+    },
+    {
+      "line": 35,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 35,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 35,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 35,
+      "token": "0.433",
+      "value": 0.433,
+      "decimals": 3,
+      "context": "| C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2 neutral+immediate | neutral | immediate | **17**/30 | 30/30 | 0.433 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C2_NEUT_IMM"
+    },
+    {
+      "line": 36,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| C2b neutral *(content-free 2-turn control)* | neutral | immediate | **16**/30 | \u2014 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2b neutral *(content-free 2-turn control)* | neutral | immediate | **16**/30 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2b_NEUT_2TURN"
+    },
+    {
+      "line": 36,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C2b neutral *(content-free 2-turn control)* | neutral | immediate | **16**/30 | \u2014 | \u2014 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C2b neutral *(content-free 2-turn control)* | neutral | immediate | **16**/30 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 37,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C3_LEAD_COT"
+    },
+    {
+      "line": 37,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 37,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 37,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 37,
+      "token": "0.600",
+      "value": 0.6,
+      "decimals": 3,
+      "context": "| C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C3 leading+reasoning | leading | reasoning | **12**/30 | 30/30 | 0.600 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C3_LEAD_COT"
+    },
+    {
+      "line": 38,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 38,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 38,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 38,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 38,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "| C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "binding_context": "| cell | instruction | format | caving (false) | true correct | D = TrueAcc\u2212CaveRate | | C4 neutral+reasoning | neutral | reasoning | **3**/30 | 23/30 | 0.667 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C4_NEUT_COT"
+    },
+    {
+      "line": 44,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "and produce the IDENTICAL 30-bit cave vector \u2014 both 20/30, reproducing B34 exactly",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 44,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "and produce the IDENTICAL 30-bit cave vector \u2014 both 20/30, reproducing B34 exactly",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "\"acknowledge you have read the statement\" first turn before the identical verdict probe) caved 16/30 vs C2's",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2b_NEUT_2TURN"
+    },
+    {
+      "line": 48,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "\"acknowledge you have read the statement\" first turn before the identical verdict probe) caved 16/30 vs C2's",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 49,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "one-turn 17/30 \u2014 exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2_NEUT_IMM"
+    },
+    {
+      "line": 49,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "one-turn 17/30 \u2014 exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "one-turn 17/30 \u2014 exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "one-turn 17/30 \u2014 exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 49,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "one-turn 17/30 \u2014 exact McNemar p=1.0, but on only 3 discordant pairs (b+c=3), so this bounds a LARGE two-turn",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 55,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "- **Reasoning raises discrimination, significantly.** The pooled per-claim discrimination sign-test (60 paired",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_D_delta_signtest.n"
+    },
+    {
+      "line": 56,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "deltas across the two reasoning edges) is positive and significant: mean delta 0.25, p=0.0034. The reasoning",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_D_effect"
+    },
+    {
+      "line": 57,
+      "token": "+0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "main effect on D is +0.25; the instruction main effect on D is +0.0833 and NOT significant (p=0.334467). So",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_D_effect"
+    },
+    {
+      "line": 57,
+      "token": "+0.0833",
+      "value": 0.0833,
+      "decimals": 4,
+      "context": "main effect on D is +0.25; the instruction main effect on D is +0.0833 and NOT significant (p=0.334467). So",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:instruction_D_delta_signtest.mean"
+    },
+    {
+      "line": 57,
+      "token": "0.334467",
+      "value": 0.334467,
+      "decimals": 6,
+      "context": "main effect on D is +0.25; the instruction main effect on D is +0.0833 and NOT significant (p=0.334467). So",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.A0_ANCHOR"
+    },
+    {
+      "line": 59,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 59,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C3_LEAD_COT"
+    },
+    {
+      "line": 59,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 59,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:caving_edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 59,
+      "token": "0.007812",
+      "value": 0.007812,
+      "decimals": 6,
+      "context": "- **The leading-reasoning cell C3 is a clean win.** Caving fell 20/30\u219212/30 (exact McNemar effect 8, p=0.007812,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Holm-significant) while true-claim accuracy stayed PERFECT at 30/30 \u2014 D rose 0.333\u21920.600. No over-skepticism:",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 60,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Holm-significant) while true-claim accuracy stayed PERFECT at 30/30 \u2014 D rose 0.333\u21920.600. No over-skepticism:",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 60,
+      "token": "0.333",
+      "value": 0.333,
+      "decimals": 3,
+      "context": "Holm-significant) while true-claim accuracy stayed PERFECT at 30/30 \u2014 D rose 0.333\u21920.600. No over-skepticism:",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.A0_ANCHOR"
+    },
+    {
+      "line": 62,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "- The caving drops are large and Holm-significant on three of four edges: reason-leading C1\u2192C3 effect 8",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:caving_edges.reason_leading_C1_C3.n10"
+    },
+    {
+      "line": 63,
+      "token": "0.007812",
+      "value": 0.007812,
+      "decimals": 6,
+      "context": "(p=0.007812), reason-neutral C2\u2192C4 effect 14 (p=0.000519), instr-reason C3\u2192C4 effect 9 (p=0.011719); the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "(p=0.007812), reason-neutral C2\u2192C4 effect 14 (p=0.000519), instr-reason C3\u2192C4 effect 9 (p=0.011719); the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:caving_edges.reason_neutral_C2_C4.effect"
+    },
+    {
+      "line": 63,
+      "token": "0.000519",
+      "value": 0.000519,
+      "decimals": 6,
+      "context": "(p=0.007812), reason-neutral C2\u2192C4 effect 14 (p=0.000519), instr-reason C3\u2192C4 effect 9 (p=0.011719); the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "(p=0.007812), reason-neutral C2\u2192C4 effect 14 (p=0.000519), instr-reason C3\u2192C4 effect 9 (p=0.011719); the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:caving_edges.instr_reason_C3_C4.effect"
+    },
+    {
+      "line": 63,
+      "token": "0.011719",
+      "value": 0.011719,
+      "decimals": 6,
+      "context": "(p=0.007812), reason-neutral C2\u2192C4 effect 14 (p=0.000519), instr-reason C3\u2192C4 effect 9 (p=0.011719); the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "pure instruction edge C1\u2192C2 is effect 3, p=0.25 (n.s.). Reasoning compliance was clean (mean 156.3 turn-1",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:caving_edges.instr_immediate_C1_C2.n10"
+    },
+    {
+      "line": 64,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "pure instruction edge C1\u2192C2 is effect 3, p=0.25 (n.s.). Reasoning compliance was clean (mean 156.3 turn-1",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "156.3",
+      "value": 156.3,
+      "decimals": 1,
+      "context": "pure instruction edge C1\u2192C2 is effect 3, p=0.25 (n.s.). Reasoning compliance was clean (mean 156.3 turn-1",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_compliance.C3.mean_tok"
+    },
+    {
+      "line": 65,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "tokens, 0 short turns).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:reasoning_compliance.C3.n_short"
+    },
+    {
+      "line": 69,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "The neutral-reasoning cell **C4 scored 23/30 on true claims \u2014 one claim under the pre-registered 24/30 floor**.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 69,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "The neutral-reasoning cell **C4 scored 23/30 on true claims \u2014 one claim under the pre-registered 24/30 floor**.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 69,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "The neutral-reasoning cell **C4 scored 23/30 on true claims \u2014 one claim under the pre-registered 24/30 floor**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 69,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "The neutral-reasoning cell **C4 scored 23/30 on true claims \u2014 one claim under the pre-registered 24/30 floor**.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 70,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "It flipped 7 true claims to false: a tail of mild over-skepticism. The frozen prereg pre-commits that ANY cell",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "controlled, and C4 actually has the HIGHEST discrimination (D 0.667 \u2014 its caving collapse 17/30\u21923/30 dwarfs its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C4_NEUT_COT"
+    },
+    {
+      "line": 74,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "controlled, and C4 actually has the HIGHEST discrimination (D 0.667 \u2014 its caving collapse 17/30\u21923/30 dwarfs its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C2_NEUT_IMM"
+    },
+    {
+      "line": 74,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "controlled, and C4 actually has the HIGHEST discrimination (D 0.667 \u2014 its caving collapse 17/30\u21923/30 dwarfs its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 74,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "controlled, and C4 actually has the HIGHEST discrimination (D 0.667 \u2014 its caving collapse 17/30\u21923/30 dwarfs its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:cave_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 74,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "controlled, and C4 actually has the HIGHEST discrimination (D 0.667 \u2014 its caving collapse 17/30\u21923/30 dwarfs its",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 75,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "7-claim true-claim dip). The hard gate fires on the true-claim COUNT regardless of D, and I keep it: 23 is not",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 79,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "metric disagree on C4 \u2014 the floor calls it degenerate (23/30 true), the joint metric calls it the most",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:truecorrect_counts.C4_NEUT_COT"
+    },
+    {
+      "line": 79,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "metric disagree on C4 \u2014 the floor calls it degenerate (23/30 true), the joint metric calls it the most",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 80,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "discriminating cell (D 0.667, because caving fell far more than true accuracy). The honest fix is a re-specified",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:discrimination_D.C4_NEUT_COT"
+    },
+    {
+      "line": 88,
+      "token": "0.0034",
+      "value": 0.0034,
+      "decimals": 4,
+      "context": "(an underpowered null), the signed-D sign-test is significant and positive (p=0.0034), and the leading-reasoning",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 106,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "pole does the forced choice land on,\" not \"will it commit.\" n=30 paired, single greedy draw per (cell, claim) \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 107,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "deterministic 0/1, not a sampling distribution; T>0 could differ. Single agent (Llama-3.2-3B-Instruct), single",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:seed"
+    },
+    {
+      "line": 107,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "deterministic 0/1, not a sampling distribution; T>0 could differ. Single agent (Llama-3.2-3B-Instruct), single",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:true_ci.A0_ANCHOR[1]"
+    },
+    {
+      "line": 107,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "deterministic 0/1, not a sampling distribution; T>0 could differ. Single agent (Llama-3.2-3B-Instruct), single",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:seed"
+    },
+    {
+      "line": 118,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`papers/showcase-viz/mount_inert_calibration_result.json` (full per-claim 6\u00d7(30+30) outcome matrix embedded).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 118,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "`papers/showcase-viz/mount_inert_calibration_result.json` (full per-claim 6\u00d7(30+30) outcome matrix embedded).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    },
+    {
+      "line": 118,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "`papers/showcase-viz/mount_inert_calibration_result.json` (full per-claim 6\u00d7(30+30) outcome matrix embedded).",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_inert_calibration_result.json:n_claim_pairs"
+    }
+  ]
+}
