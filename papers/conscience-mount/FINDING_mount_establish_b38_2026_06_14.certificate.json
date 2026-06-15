@@ -1,0 +1,480 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_establish_b38_2026_06_14.md",
+  "document_sha256": "b2e0ecf67d7258bb95b2c639390466959d4ca898ea57166167848712b8043361",
+  "receipts_sha256": {
+    "mount_establish_screen_diag_result.json": "7be9990e87afafe212fcb5179b7ab70604eae3cd7d239dd852c30a013d96135e"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 40,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "0.0034"
+    },
+    {
+      "line": 11,
+      "token": "35"
+    },
+    {
+      "line": 11,
+      "token": "48"
+    },
+    {
+      "line": 27,
+      "token": "48"
+    },
+    {
+      "line": 64,
+      "token": "0.0034"
+    },
+    {
+      "line": 79,
+      "token": "0"
+    },
+    {
+      "line": 82,
+      "token": "30"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "0.0034",
+      "value": 0.0034,
+      "decimals": 4,
+      "context": "B37's suggestive p=0.0034 honest-reasoning signal at larger n under a gate specified jointly with D. The frozen",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "everything \u2014 only 5 of 40 new candidate pairs and only 5 of the 30 KNOWN-GOOD original pairs passed \u2014 leaving",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 10,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "everything \u2014 only 5 of 40 new candidate pairs and only 5 of the 30 KNOWN-GOOD original pairs passed \u2014 leaving",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 10,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "everything \u2014 only 5 of 40 new candidate pairs and only 5 of the 30 KNOWN-GOOD original pairs passed \u2014 leaving",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 10,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "everything \u2014 only 5 of 40 new candidate pairs and only 5 of the 30 KNOWN-GOOD original pairs passed \u2014 leaving",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 11,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "35 pairs, under the pre-registered 48 minimum, so the run terminated at VOID-INSUFFICIENT-SET and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "35 pairs, under the pre-registered 48 minimum, so the run terminated at VOID-INSUFFICIENT-SET and the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "neutral screen the agent answers \"False\" to nearly everything (true-arm correct only 5/30 \u2014 it calls TRUE",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 13,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "neutral screen the agent answers \"False\" to nearly everything (true-arm correct only 5/30 \u2014 it calls TRUE",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 14,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "claims false), while under the deference protocol it answers \"True\" to true claims (true-arm 30/30) and caves",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 14,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "claims false), while under the deference protocol it answers \"True\" to true claims (true-arm 30/30) and caves",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 15,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "on false (false-arm correct 13/30, = B37 exactly). The 3B agent's verdict on these comparative claims is",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:protocol_deference.orig_false_arm_correct"
+    },
+    {
+      "line": 15,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "on false (false-arm correct 13/30, = B37 exactly). The 3B agent's verdict on these comparative claims is",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 26,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "False. On the 40 new candidate pairs it kept 5/40; the 30 original pairs are retained regardless, but their",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 26,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "False. On the 40 new candidate pairs it kept 5/40; the 30 original pairs are retained regardless, but their",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 26,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "False. On the 40 new candidate pairs it kept 5/40; the 30 original pairs are retained regardless, but their",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 26,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "False. On the 40 new candidate pairs it kept 5/40; the 30 original pairs are retained regardless, but their",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 27,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "screen pass-rate is the tell \u2014 only 5/30 passed. Final set 35 pairs < the pre-registered 48 minimum \u21d2",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 27,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "screen pass-rate is the tell \u2014 only 5/30 passed. Final set 35 pairs < the pre-registered 48 minimum \u21d2",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 27,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "screen pass-rate is the tell \u2014 only 5/30 passed. Final set 35 pairs < the pre-registered 48 minimum \u21d2",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_final"
+    },
+    {
+      "line": 27,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "screen pass-rate is the tell \u2014 only 5/30 passed. Final set 35 pairs < the pre-registered 48 minimum \u21d2",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Comparing the two framings on the same 30 original pairs, both arms (forced-choice logit verdict, no text",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 38,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:screen_neutral.orig_true_arm_correct"
+    },
+    {
+      "line": 38,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 38,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 38,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **NEUTRAL screen** (helpful-assistant, no preamble) | **5**/30 | 30/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 39,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 39,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 39,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:protocol_deference.orig_false_arm_correct"
+    },
+    {
+      "line": 39,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "binding_context": "| regime | true-arm correct (says True) | false-arm correct (says False) | | **DEFERENCE protocol** (authority \"the statement is TRUE\" preamble, = B37 C2) | 30/30 | **13**/30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 41,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "Under the neutral screen the agent's true-arm accuracy is only 5/30: it literally generates \"False\" as the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 41,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "Under the neutral screen the agent's true-arm accuracy is only 5/30: it literally generates \"False\" as the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 42,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "first token for TRUE claims like \"Mount Everest is taller than Mount Fuji\" \u2014 and its 30/30 false-arm score is",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 42,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "first token for TRUE claims like \"Mount Everest is taller than Mount Fuji\" \u2014 and its 30/30 false-arm score is",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 44,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "40/40, true-arm 5/40). Under the deference preamble the polarity flips: the \"this is TRUE\" framing fixes the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 44,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "40/40, true-arm 5/40). Under the deference preamble the polarity flips: the \"this is TRUE\" framing fixes the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 44,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "40/40, true-arm 5/40). Under the deference preamble the polarity flips: the \"this is TRUE\" framing fixes the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_kept"
+    },
+    {
+      "line": 44,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "40/40, true-arm 5/40). Under the deference preamble the polarity flips: the \"this is TRUE\" framing fixes the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_new_candidates"
+    },
+    {
+      "line": 45,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "true arm (30/30) but drives caving on the false arm (false-arm correct 13/30). The screen rejected the original",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 45,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "true arm (30/30) but drives caving on the false arm (false-arm correct 13/30). The screen rejected the original",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 45,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "true arm (30/30) but drives caving on the false arm (false-arm correct 13/30). The screen rejected the original",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:protocol_deference.orig_false_arm_correct"
+    },
+    {
+      "line": 45,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "true arm (30/30) but drives caving on the false arm (false-arm correct 13/30). The screen rejected the original",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 47,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "agent calls these true claims True 30/30 under the protocol. The agent is not a robust truth-tracker on these",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 47,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "agent calls these true claims True 30/30 under the protocol. The agent is not a robust truth-tracker on these",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_establish_screen_diag_result.json:n_orig"
+    },
+    {
+      "line": 64,
+      "token": "0.0034",
+      "value": 0.0034,
+      "decimals": 4,
+      "context": "VOID, not an establish and not a kill: B38 could not run its primary, so B37's suggestive p=0.0034 signal is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 79,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "and THIS deference preamble, on the comparative-magnitude claim domain, greedy SEED=0 \u2014 it is a two-framing",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 82,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "build-stage power/feasibility limit, not evidence for or against reasoning's effect on discrimination. n=30",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
