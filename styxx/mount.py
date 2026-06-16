@@ -45,7 +45,7 @@ CLI:  python -m styxx.mount selftest
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Iterable, Iterator, Optional, Sequence
 
