@@ -127,6 +127,30 @@ def Raw(*args, **kwargs):
     return RawAdapter(*args, **kwargs)
 
 
+def Conscience(mount, *, on_flag=None, fail_open=True):
+    """Fail-open, read-only conscience for a self-host / open-weight agent loop.
+
+    The deployment surface for styxx.mount. Bolt a BORROWED value axis
+    (truth / danger, fit on a reference model and transported label-free via
+    styxx.crossmind) onto your agent; as it generates, pass the agent's last-token
+    hidden state and the claim it asserted to .watch(), and the conscience flags
+    output-vs-substrate divergence (says-"true" / reads-false) — fail-open and
+    read-only (steer is REFUSED). Pass a styxx.mount.ConscienceMount or a list of
+    mounted axes.
+
+    Usage:
+        from styxx import crossmind, mount, Conscience
+        axis = mount.mount_cross_model("truth", ref_states, labels, smap,
+                                       mapped_anchors=agent_anchors)
+        cons = Conscience([axis]).calibrate("truth", calib_states)
+        r = cons.watch(agent_hidden_state, claims={"truth": +1})
+        if r and r.caught:
+            escalate(r)        # your policy, not a write the conscience performs
+    """
+    from .adapters.conscience import ConscienceAdapter
+    return ConscienceAdapter(mount, on_flag=on_flag, fail_open=fail_open)
+
+
 def Anthropic(*args, **kwargs):
     """Drop-in pass-through wrapper around anthropic.Anthropic with
     text-heuristic vitals by default.
@@ -682,7 +706,7 @@ __all__ = [
     "trust", "TrustViolation", "TrustResult",
 
     # adapters — the main entry points
-    "OpenAI", "Anthropic", "Raw",
+    "OpenAI", "Anthropic", "Raw", "Conscience",
 
     # core data type
     "Vitals",

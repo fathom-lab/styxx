@@ -11,6 +11,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.17.0] — 2026-06-16 — `styxx.Conscience`: the conscience adapter (mount → live agent loop)
+
+### Added — `styxx.Conscience` / `styxx.adapters.conscience.ConscienceAdapter`
+
+The deployment surface for [7.16.0]'s `styxx.mount` — where the read-only conscience meets a live
+agent loop. Parallel to `styxx.adapters.raw` (bring-your-own-activations): `raw` takes pre-captured
+logprob trajectories and returns `Vitals`; `Conscience` takes pre-captured last-token **hidden states**
+(plus the claim the agent just asserted) and returns a `ConscienceReading` — the borrowed-conscience
+read of the agent's substrate, flagging output-vs-substrate divergence (the agent SAYS "true" while its
+substrate reads false).
+
+```python
+from styxx import crossmind, mount, Conscience
+axis = mount.mount_cross_model("truth", ref_states, labels, smap, mapped_anchors=agent_anchors)
+cons = Conscience([axis]).calibrate("truth", agent_calibration_states)
+cons.on_flag(lambda r: r.caught and escalate(r))            # your policy
+reading = cons.watch(agent_hidden_state, claims={"truth": +1})   # it said "true"
+if reading and reading.caught:
+    ...                                                     # halt / escalate / refuse-to-emit
+```
+
+**Why an adapter over the bare `ConscienceMount`:** every styxx adapter shares one contract — **fail
+open**. `mount.read()` raises on a bad read (wrong shape, unknown axis, a numerical edge); in a live
+loop that would crash the very agent the conscience watches. `ConscienceAdapter` wraps the mount so a
+failed read returns a null reading (and warns) and your generation continues — the same guarantee
+`styxx.OpenAI` / `styxx.Anthropic` give for vitals. `.watch()` / `.watch_batch()` / `.caught()` are the
+fail-open reads; `on_flag` is the policy hook; `calibrate` / `calibrate_threshold` / `certificate` pass
+through to the mount. **READ-ONLY by construction** — `steer` / `intervention` are REFUSED at the
+adapter layer too (read != write). White-box (you bring the activations → open-weight / self-host
+agents, not sealed APIs); **cooperative-scope** monitor (drift, sycophantic caving, unintentional lies)
+— NOT a defense against an agent trained to evade it (carries `styxx.mount`'s ATTACK-TRANSFERS bound).
+Numpy-only. Top-level `styxx.Conscience(mount_or_axes, on_flag=..., fail_open=...)`; 16 tests
+(`tests/test_adapter_conscience.py`).
+
+---
+
 ## [7.16.0] — 2026-06-16 — `styxx.mount` (conscience mount) + `styxx.crossmind` (portable value readout)
 
 ### Added — `styxx.mount`: a read-only conscience you bolt onto a generating agent
