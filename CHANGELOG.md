@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — `styxx.mount` (conscience mount) + `styxx.crossmind` (portable value readout)
+## [Unreleased]
+
+---
+
+## [7.16.0] — 2026-06-16 — `styxx.mount` (conscience mount) + `styxx.crossmind` (portable value readout)
 
 ### Added — `styxx.mount`: a read-only conscience you bolt onto a generating agent
 
