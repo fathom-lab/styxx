@@ -1,0 +1,722 @@
+[
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Australia",
+    "false_claim": "The capital of Australia is Sydney.",
+    "true_claim": "The capital of Australia is Canberra."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Canada",
+    "false_claim": "The capital of Canada is Toronto.",
+    "true_claim": "The capital of Canada is Ottawa."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Brazil",
+    "false_claim": "The capital of Brazil is Rio de Janeiro.",
+    "true_claim": "The capital of Brazil is Brasilia."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Turkey",
+    "false_claim": "The capital of Turkey is Istanbul.",
+    "true_claim": "The capital of Turkey is Ankara."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of the United States",
+    "false_claim": "The capital of the United States is New York City.",
+    "true_claim": "The capital of the United States is Washington, D.C."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Spain",
+    "false_claim": "The capital of Spain is Barcelona.",
+    "true_claim": "The capital of Spain is Madrid."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Switzerland",
+    "false_claim": "The capital of Switzerland is Zurich.",
+    "true_claim": "The capital of Switzerland is Bern."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Egypt",
+    "false_claim": "The capital of Egypt is Alexandria.",
+    "true_claim": "The capital of Egypt is Cairo."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of New Zealand",
+    "false_claim": "The capital of New Zealand is Auckland.",
+    "true_claim": "The capital of New Zealand is Wellington."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Russia",
+    "false_claim": "The capital of Russia is Saint Petersburg.",
+    "true_claim": "The capital of Russia is Moscow."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Longest river in the world",
+    "false_claim": "The longest river in the world is the Amazon River.",
+    "true_claim": "The longest river in the world is the Nile River."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Largest ocean on Earth",
+    "false_claim": "The largest ocean on Earth is the Atlantic Ocean.",
+    "true_claim": "The largest ocean on Earth is the Pacific Ocean."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Tallest mountain above sea level",
+    "false_claim": "The highest mountain above sea level is K2.",
+    "true_claim": "The highest mountain above sea level is Mount Everest."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Largest desert (hot) in the world",
+    "false_claim": "The largest hot desert in the world is the Gobi Desert.",
+    "true_claim": "The largest hot desert in the world is the Sahara Desert."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Continent of the Sahara Desert",
+    "false_claim": "The Sahara Desert is located in Asia.",
+    "true_claim": "The Sahara Desert is located in Africa."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Country where the Eiffel Tower stands",
+    "false_claim": "The Eiffel Tower is located in Italy.",
+    "true_claim": "The Eiffel Tower is located in France."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Country where the Great Pyramid of Giza stands",
+    "false_claim": "The Great Pyramid of Giza is located in Mexico.",
+    "true_claim": "The Great Pyramid of Giza is located in Egypt."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Japan",
+    "false_claim": "The capital of Japan is Kyoto.",
+    "true_claim": "The capital of Japan is Tokyo."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Capital of Germany",
+    "false_claim": "The capital of Germany is Munich.",
+    "true_claim": "The capital of Germany is Berlin."
+  },
+  {
+    "category": "capitals/geography",
+    "fact": "Country containing Mount Kilimanjaro",
+    "false_claim": "Mount Kilimanjaro is located in Kenya.",
+    "true_claim": "Mount Kilimanjaro is located in Tanzania."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for gold",
+    "false_claim": "The chemical symbol for gold is Gd.",
+    "true_claim": "The chemical symbol for gold is Au."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for sodium",
+    "false_claim": "The chemical symbol for sodium is So.",
+    "true_claim": "The chemical symbol for sodium is Na."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for iron",
+    "false_claim": "The chemical symbol for iron is Ir.",
+    "true_claim": "The chemical symbol for iron is Fe."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for potassium",
+    "false_claim": "The chemical symbol for potassium is P.",
+    "true_claim": "The chemical symbol for potassium is K."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Element with atomic number 1",
+    "false_claim": "The element with atomic number 1 is helium.",
+    "true_claim": "The element with atomic number 1 is hydrogen."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Most abundant gas in Earth's atmosphere",
+    "false_claim": "The most abundant gas in Earth's atmosphere is oxygen.",
+    "true_claim": "The most abundant gas in Earth's atmosphere is nitrogen."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical formula for table salt",
+    "false_claim": "The chemical formula for table salt is KCl.",
+    "true_claim": "The chemical formula for table salt is NaCl."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical formula for water",
+    "false_claim": "The chemical formula for water is CO2.",
+    "true_claim": "The chemical formula for water is H2O."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Discoverer of oxygen",
+    "false_claim": "Oxygen was discovered by Albert Einstein.",
+    "true_claim": "Oxygen was discovered by Joseph Priestley."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Gas that plants absorb for photosynthesis",
+    "false_claim": "Plants absorb oxygen from the air to perform photosynthesis.",
+    "true_claim": "Plants absorb carbon dioxide from the air to perform photosynthesis."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Element that makes up most of the Sun",
+    "false_claim": "The Sun is composed mostly of carbon.",
+    "true_claim": "The Sun is composed mostly of hydrogen."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for lead",
+    "false_claim": "The chemical symbol for lead is Le.",
+    "true_claim": "The chemical symbol for lead is Pb."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for silver",
+    "false_claim": "The chemical symbol for silver is Si.",
+    "true_claim": "The chemical symbol for silver is Ag."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Hardest naturally occurring material",
+    "false_claim": "The hardest naturally occurring material is quartz.",
+    "true_claim": "The hardest naturally occurring material is diamond."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Element diamonds are made of",
+    "false_claim": "Diamonds are made of pure silicon.",
+    "true_claim": "Diamonds are made of pure carbon."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Gas used to fill party balloons that float",
+    "false_claim": "Floating party balloons are typically filled with nitrogen.",
+    "true_claim": "Floating party balloons are typically filled with helium."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "pH of a neutral solution",
+    "false_claim": "A neutral solution has a pH of 0.",
+    "true_claim": "A neutral solution has a pH of 7."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Chemical symbol for oxygen",
+    "false_claim": "The chemical symbol for oxygen is Ox.",
+    "true_claim": "The chemical symbol for oxygen is O."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Element with chemical symbol He",
+    "false_claim": "The element with the chemical symbol He is hydrogen.",
+    "true_claim": "The element with the chemical symbol He is helium."
+  },
+  {
+    "category": "chemistry/elements",
+    "fact": "Metal that is liquid at room temperature",
+    "false_claim": "The metal that is liquid at room temperature is sodium.",
+    "true_claim": "The metal that is liquid at room temperature is mercury."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Closest planet to the Sun",
+    "false_claim": "The closest planet to the Sun is Venus.",
+    "true_claim": "The closest planet to the Sun is Mercury."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Largest planet in the Solar System",
+    "false_claim": "The largest planet in the Solar System is Saturn.",
+    "true_claim": "The largest planet in the Solar System is Jupiter."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Planet known as the Red Planet",
+    "false_claim": "The planet known as the Red Planet is Jupiter.",
+    "true_claim": "The planet known as the Red Planet is Mars."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Planet with prominent visible rings",
+    "false_claim": "The planet famous for its prominent rings is Neptune.",
+    "true_claim": "The planet famous for its prominent rings is Saturn."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Earth's natural satellite",
+    "false_claim": "Earth's natural satellite is named Titan.",
+    "true_claim": "Earth's natural satellite is named the Moon."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Star at the center of our Solar System",
+    "false_claim": "The star at the center of our Solar System is Sirius.",
+    "true_claim": "The star at the center of our Solar System is the Sun."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Galaxy containing the Solar System",
+    "false_claim": "The Solar System is located in the Andromeda Galaxy.",
+    "true_claim": "The Solar System is located in the Milky Way Galaxy."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "First person to walk on the Moon",
+    "false_claim": "The first person to walk on the Moon was Buzz Aldrin.",
+    "true_claim": "The first person to walk on the Moon was Neil Armstrong."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Planet humans live on",
+    "false_claim": "Humans live on the planet Mars.",
+    "true_claim": "Humans live on the planet Earth."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Year of the first Moon landing",
+    "false_claim": "The first crewed Moon landing took place in 1959.",
+    "true_claim": "The first crewed Moon landing took place in 1969."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Number of planets in the Solar System",
+    "false_claim": "The Solar System has eleven planets.",
+    "true_claim": "The Solar System has eight planets."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Force that keeps planets in orbit around the Sun",
+    "false_claim": "Planets are kept in orbit around the Sun by magnetism.",
+    "true_claim": "Planets are kept in orbit around the Sun by gravity."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Object that causes a solar eclipse",
+    "false_claim": "A solar eclipse occurs when Earth passes between the Sun and the Moon.",
+    "true_claim": "A solar eclipse occurs when the Moon passes between the Sun and Earth."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Planet known as the Morning Star",
+    "false_claim": "The planet commonly called the Morning Star is Mars.",
+    "true_claim": "The planet commonly called the Morning Star is Venus."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Color of the Sun's visible light combined",
+    "false_claim": "The Sun is classified as a red dwarf star.",
+    "true_claim": "The Sun is classified as a yellow dwarf star."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Planet tilted on its side / ice giant farthest known classical",
+    "false_claim": "The eighth and farthest planet from the Sun is Uranus.",
+    "true_claim": "The eighth and farthest planet from the Sun is Neptune."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Reclassified dwarf planet formerly counted as ninth planet",
+    "false_claim": "The dwarf planet formerly classified as the ninth planet is Ceres.",
+    "true_claim": "The dwarf planet formerly classified as the ninth planet is Pluto."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Approximate time light takes to travel from Sun to Earth",
+    "false_claim": "Sunlight takes about eight hours to reach Earth.",
+    "true_claim": "Sunlight takes about eight minutes to reach Earth."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Cause of Earth's seasons",
+    "false_claim": "Earth's seasons are caused by changes in its distance from the Sun.",
+    "true_claim": "Earth's seasons are caused by the tilt of its axis."
+  },
+  {
+    "category": "astronomy/space",
+    "fact": "Agency that ran the Apollo program",
+    "false_claim": "The Apollo Moon program was run by the European Space Agency.",
+    "true_claim": "The Apollo Moon program was run by NASA."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Boiling point of water at sea level in Celsius",
+    "false_claim": "Water boils at 50 degrees Celsius at sea level.",
+    "true_claim": "Water boils at 100 degrees Celsius at sea level."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Freezing point of water in Celsius",
+    "false_claim": "Water freezes at 32 degrees Celsius.",
+    "true_claim": "Water freezes at 0 degrees Celsius."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Freezing point of water in Fahrenheit",
+    "false_claim": "Water freezes at 0 degrees Fahrenheit.",
+    "true_claim": "Water freezes at 32 degrees Fahrenheit."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Approximate speed of light in a vacuum",
+    "false_claim": "Light travels through a vacuum at about 300 kilometers per second.",
+    "true_claim": "Light travels through a vacuum at about 300,000 kilometers per second."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI base unit of electric current",
+    "false_claim": "The SI base unit of electric current is the volt.",
+    "true_claim": "The SI base unit of electric current is the ampere."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI unit of force",
+    "false_claim": "The SI unit of force is the joule.",
+    "true_claim": "The SI unit of force is the newton."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI unit of energy",
+    "false_claim": "The SI unit of energy is the watt.",
+    "true_claim": "The SI unit of energy is the joule."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI unit of electrical resistance",
+    "false_claim": "The SI unit of electrical resistance is the ampere.",
+    "true_claim": "The SI unit of electrical resistance is the ohm."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of meters in a kilometer",
+    "false_claim": "There are 100 meters in one kilometer.",
+    "true_claim": "There are 1,000 meters in one kilometer."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of grams in a kilogram",
+    "false_claim": "There are 100 grams in one kilogram.",
+    "true_claim": "There are 1,000 grams in one kilogram."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Scientist who formulated the law of universal gravitation",
+    "false_claim": "The law of universal gravitation was formulated by Galileo Galilei.",
+    "true_claim": "The law of universal gravitation was formulated by Isaac Newton."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Scientist who developed the theory of general relativity",
+    "false_claim": "The theory of general relativity was developed by Niels Bohr.",
+    "true_claim": "The theory of general relativity was developed by Albert Einstein."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Unit of frequency",
+    "false_claim": "The SI unit of frequency is the pascal.",
+    "true_claim": "The SI unit of frequency is the hertz."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI base unit of temperature",
+    "false_claim": "The SI base unit of temperature is the Celsius.",
+    "true_claim": "The SI base unit of temperature is the kelvin."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of degrees in a right angle",
+    "false_claim": "A right angle measures 180 degrees.",
+    "true_claim": "A right angle measures 90 degrees."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of seconds in one minute",
+    "false_claim": "There are 100 seconds in one minute.",
+    "true_claim": "There are 60 seconds in one minute."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of hours in one day",
+    "false_claim": "There are 12 hours in one day.",
+    "true_claim": "There are 24 hours in one day."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Form of energy a moving object possesses",
+    "false_claim": "The energy possessed by a moving object is called potential energy.",
+    "true_claim": "The energy possessed by a moving object is called kinetic energy."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "SI unit of electric potential",
+    "false_claim": "The SI unit of electric potential is the ohm.",
+    "true_claim": "The SI unit of electric potential is the volt."
+  },
+  {
+    "category": "physics/measurement",
+    "fact": "Number of millimeters in a meter",
+    "false_claim": "There are 100 millimeters in one meter.",
+    "true_claim": "There are 1,000 millimeters in one meter."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Organ that pumps blood through the body",
+    "false_claim": "The organ that pumps blood through the body is the liver.",
+    "true_claim": "The organ that pumps blood through the body is the heart."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Organ that filters blood to produce urine",
+    "false_claim": "The organs that filter blood to produce urine are the lungs.",
+    "true_claim": "The organs that filter blood to produce urine are the kidneys."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Pigment that makes plant leaves green",
+    "false_claim": "The pigment that makes plant leaves green is keratin.",
+    "true_claim": "The pigment that makes plant leaves green is chlorophyll."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Number of chambers in the human heart",
+    "false_claim": "The human heart has two chambers.",
+    "true_claim": "The human heart has four chambers."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Gas humans exhale as waste",
+    "false_claim": "Humans exhale nitrogen as a waste gas.",
+    "true_claim": "Humans exhale carbon dioxide as a waste gas."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Largest organ of the human body",
+    "false_claim": "The largest organ of the human body is the brain.",
+    "true_claim": "The largest organ of the human body is the skin."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Molecule that carries genetic information",
+    "false_claim": "The molecule that carries genetic information is glucose.",
+    "true_claim": "The molecule that carries genetic information is DNA."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Cell structure known as the powerhouse of the cell",
+    "false_claim": "The structure known as the powerhouse of the cell is the nucleus.",
+    "true_claim": "The structure known as the powerhouse of the cell is the mitochondrion."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Number of bones in the adult human body",
+    "false_claim": "The adult human body has 306 bones.",
+    "true_claim": "The adult human body has 206 bones."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Liquid component of blood",
+    "false_claim": "The liquid component of blood is called lymph.",
+    "true_claim": "The liquid component of blood is called plasma."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Process plants use to make food from sunlight",
+    "false_claim": "The process plants use to make food from sunlight is respiration.",
+    "true_claim": "The process plants use to make food from sunlight is photosynthesis."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Blood cells that carry oxygen",
+    "false_claim": "Oxygen is carried through the bloodstream by white blood cells.",
+    "true_claim": "Oxygen is carried through the bloodstream by red blood cells."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Organ where most nutrient absorption occurs",
+    "false_claim": "Most nutrient absorption occurs in the stomach.",
+    "true_claim": "Most nutrient absorption occurs in the small intestine."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Scientist who proposed the theory of evolution by natural selection",
+    "false_claim": "The theory of evolution by natural selection was proposed by Gregor Mendel.",
+    "true_claim": "The theory of evolution by natural selection was proposed by Charles Darwin."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Founder of the science of genetics through pea plant experiments",
+    "false_claim": "The foundations of genetics were established through pea plant experiments by Louis Pasteur.",
+    "true_claim": "The foundations of genetics were established through pea plant experiments by Gregor Mendel."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Organ system responsible for breathing",
+    "false_claim": "Breathing is carried out by the digestive system.",
+    "true_claim": "Breathing is carried out by the respiratory system."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Part of the body that produces insulin",
+    "false_claim": "Insulin is produced by the spleen.",
+    "true_claim": "Insulin is produced by the pancreas."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Vitamin produced by the skin from sunlight",
+    "false_claim": "The vitamin produced by the skin in response to sunlight is vitamin C.",
+    "true_claim": "The vitamin produced by the skin in response to sunlight is vitamin D."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Number of legs an insect has",
+    "false_claim": "An adult insect has eight legs.",
+    "true_claim": "An adult insect has six legs."
+  },
+  {
+    "category": "biology/anatomy",
+    "fact": "Part of the brain that controls balance and coordination",
+    "false_claim": "Balance and coordination are controlled primarily by the hippocampus.",
+    "true_claim": "Balance and coordination are controlled primarily by the cerebellum."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of Romeo and Juliet",
+    "false_claim": "Romeo and Juliet was written by Charles Dickens.",
+    "true_claim": "Romeo and Juliet was written by William Shakespeare."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Inventor of the telephone (credited patent)",
+    "false_claim": "The telephone was invented by Thomas Edison.",
+    "true_claim": "The telephone was invented by Alexander Graham Bell."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Inventor of the practical light bulb (credited)",
+    "false_claim": "The practical incandescent light bulb was developed by Nikola Tesla.",
+    "true_claim": "The practical incandescent light bulb was developed by Thomas Edison."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of the play Hamlet",
+    "false_claim": "The play Hamlet was written by Leo Tolstoy.",
+    "true_claim": "The play Hamlet was written by William Shakespeare."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Painter of the Mona Lisa",
+    "false_claim": "The Mona Lisa was painted by Michelangelo.",
+    "true_claim": "The Mona Lisa was painted by Leonardo da Vinci."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "First President of the United States",
+    "false_claim": "The first President of the United States was Thomas Jefferson.",
+    "true_claim": "The first President of the United States was George Washington."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Year World War II ended",
+    "false_claim": "World War II ended in 1939.",
+    "true_claim": "World War II ended in 1945."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of On the Origin of Species",
+    "false_claim": "On the Origin of Species was written by Charles Dickens.",
+    "true_claim": "On the Origin of Species was written by Charles Darwin."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Explorer credited with 1492 voyage to the Americas",
+    "false_claim": "The 1492 voyage across the Atlantic to the Americas was led by Ferdinand Magellan.",
+    "true_claim": "The 1492 voyage across the Atlantic to the Americas was led by Christopher Columbus."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of the play Macbeth",
+    "false_claim": "The play Macbeth was written by Jane Austen.",
+    "true_claim": "The play Macbeth was written by William Shakespeare."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Composer of the Ninth Symphony (Ode to Joy)",
+    "false_claim": "The Ninth Symphony, including the Ode to Joy, was composed by Wolfgang Amadeus Mozart.",
+    "true_claim": "The Ninth Symphony, including the Ode to Joy, was composed by Ludwig van Beethoven."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of Pride and Prejudice",
+    "false_claim": "Pride and Prejudice was written by the Bronte sisters as a group.",
+    "true_claim": "Pride and Prejudice was written by Jane Austen."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Country where the Industrial Revolution began",
+    "false_claim": "The Industrial Revolution began in Germany.",
+    "true_claim": "The Industrial Revolution began in Britain."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Scientist who discovered penicillin",
+    "false_claim": "Penicillin was discovered by Marie Curie.",
+    "true_claim": "Penicillin was discovered by Alexander Fleming."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Scientist who discovered radioactivity elements polonium and radium",
+    "false_claim": "The elements polonium and radium were discovered by Rosalind Franklin.",
+    "true_claim": "The elements polonium and radium were discovered by Marie Curie."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of A Christmas Carol",
+    "false_claim": "A Christmas Carol was written by Mark Twain.",
+    "true_claim": "A Christmas Carol was written by Charles Dickens."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Year the United States Declaration of Independence was adopted",
+    "false_claim": "The United States Declaration of Independence was adopted in 1812.",
+    "true_claim": "The United States Declaration of Independence was adopted in 1776."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Author of the Adventures of Tom Sawyer / Huckleberry Finn",
+    "false_claim": "The Adventures of Huckleberry Finn was written by Ernest Hemingway.",
+    "true_claim": "The Adventures of Huckleberry Finn was written by Mark Twain."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Sculptor who created the statue of David",
+    "false_claim": "The marble statue of David was sculpted by Leonardo da Vinci.",
+    "true_claim": "The marble statue of David was sculpted by Michelangelo."
+  },
+  {
+    "category": "history/inventions/authorship",
+    "fact": "Telegraph code inventor",
+    "false_claim": "The dot-and-dash telegraph code was developed by Benjamin Franklin.",
+    "true_claim": "The dot-and-dash telegraph code was developed by Samuel Morse."
+  }
+]
