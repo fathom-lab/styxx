@@ -11,6 +11,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.17.2] — 2026-06-17 — brand-integrity sweep: the package no longer overclaims about itself
+
+A self-audit found the product's own surface committing the one sin it exists to catch —
+overclaiming. None of these are runtime bugs; each is a place where the docs/API claimed
+something the code didn't back. Fixed, with a regression guard so they can't recur.
+
+### Fixed
+- **`styxx.mind` raised `AttributeError`.** The README headlines `styxx.mind` (the 7.15.0
+  measurement layer) but the submodule was never imported into the package namespace.
+  Added `from . import mind`; `styxx.mind.mind_certificate(...)` now resolves.
+- **README drift reproducer pointed at the wrong artifacts.** The "Reproducer/Result" links
+  under tool-call drift pointed at the v0 files (AUC 0.915) while the headline is the v1
+  retrain (0.943 ± 0.009). Repointed to `scripts/drift_calibrated_v1.py` /
+  `benchmarks/drift_calibrated_v1.json`; the v0 baseline is now labeled as the v6.0 prior.
+- **`VerificationResult` name collision.** `verify_certificate()` returns provenance's result
+  type, but the exported `VerificationResult` was attestation's — so
+  `isinstance(verify_certificate(c), styxx.VerificationResult)` was silently `False`.
+  Provenance's type is now exported as **`CertificateVerificationResult`** (in `__all__`);
+  attestation's keeps `VerificationResult`.
+- **Marketed entrypoints were missing from `__all__`.** `profile`, `watch`, `preflight`,
+  `recover_posture`, `run_doctor`, `meaning_diff`, `mind` — the front door the pyproject
+  description and README headline — are now in the curated surface, so `dir(styxx)`,
+  tab-completion, and `from styxx import *` show the product's entrypoints first.
+- **Dropped quantitative caveats restored.** The sycophancy section now states the measured
+  false-positive rate (≈0.30 on restrained-technical responses, ≈0.60 on gpt-3.5-turbo) that
+  the package already declares as load-bearing in its EU AI Act disclosure, and mirrors it
+  into `calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`. The per-drift-type table now
+  surfaces the below-chance `tool_rename` class (0.377, n≈1 / under-sampled — reported, not
+  hidden). The pyproject summary's three AUCs now carry a "text-only register instruments
+  with documented construct ceilings" clause.
+
+### Added
+- `tests/test_readme_api_surface.py` — guards that every `styxx.X` referenced in the README
+  resolves and that every `__all__` name resolves (the `styxx.mind` regression guard).
+
+---
+
 ## [7.17.1] — 2026-06-17 — security: harden the untrusted-verification path
 
 ### Security

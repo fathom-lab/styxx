@@ -427,6 +427,7 @@ Per-drift-type held-out AUC (v6.1):
 | arg_drop (model misses required field) | **0.997** | clean capture |
 | irrelevance_called (model calls when should refuse) | **0.980** | +0.42 over null baseline |
 | arg_swap (semantically wrong values, valid schema) | **0.755** | v6.1 partial fix (from 0.664 in v6.0) via `arg_order_inversion` |
+| tool_rename (model swaps to a different tool) | 0.377* | *below chance, but **n≈1**: BFCL v3 under-samples this class (the mutation needs ≥2 tools/schema), so it carries no real weight in the pooled 0.943 — reported, not hidden* |
 
 ```python
 from styxx.guardrail import drift_check
@@ -445,8 +446,8 @@ v = drift_check(
 # v.top_signals  = [('spurious_arg_frac', 0, -2.44), ...]
 ```
 
-Reproducer: [`scripts/drift_calibrated_v0.py`](scripts/drift_calibrated_v0.py).
-Result: [`benchmarks/drift_calibrated_v0.json`](benchmarks/drift_calibrated_v0.json).
+Reproducer: [`scripts/drift_calibrated_v1.py`](scripts/drift_calibrated_v1.py) (v6.1 retrain — emits the headline 0.943 ± 0.009 and the per-class table above).
+Result: [`benchmarks/drift_calibrated_v1.json`](benchmarks/drift_calibrated_v1.json). The v6.0 baseline (0.916) is [`scripts/drift_calibrated_v0.py`](scripts/drift_calibrated_v0.py) → [`benchmarks/drift_calibrated_v0.json`](benchmarks/drift_calibrated_v0.json).
 
 ### Sycophancy detection — instrument #4
 
@@ -469,7 +470,7 @@ v = sycoph_check(
 # v.top_signals    = [('superlative_density', 0.107, +22.6), ...]
 ```
 
-Failure modes declared in [`calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_sycophancy_v0.py): single-model training (gpt-4o-mini only), false positives on warmly-worded evidence answers (*"Great question! Actually..."* — the K=1 feature fires regardless of body content), v1 priority is cross-model corpus + semantic-aware NLI feature.
+Failure modes declared in [`calibrated_weights_sycophancy_v0.CALIBRATION_NOTES`](styxx/guardrail/calibrated_weights_sycophancy_v0.py): single-model training (gpt-4o-mini only), false positives on warmly-worded evidence answers (*"Great question! Actually..."* — the K=1 feature fires regardless of body content; the measured false-positive rate on restrained-technical responses is **≈0.30**, rising to **≈0.60** on gpt-3.5-turbo — the same figure styxx declares as a load-bearing construct ceiling in its EU AI Act accuracy disclosure), v1 priority is cross-model corpus + semantic-aware NLI feature.
 
 A v0.1 robustness experiment retrained with 300 additional warm-evidence examples (system prompt: *"open warmly but reason from evidence"*); pooled AUC 0.938 (-0.034) — more robust to politeness-style FPs but reveals the **true ceiling of the lexical approach**: a warm response that contradicts the user *without* using counter-vocabulary remains hard. Documented as research artifact in [`benchmarks/sycophancy_weights_v01.json`](benchmarks/sycophancy_weights_v01.json), not the shipped default.
 

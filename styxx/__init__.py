@@ -343,10 +343,16 @@ from .gate import gate, GateVerdict  # v3.4.0: pre-flight cognitive verdict
 from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEvent
 from .optimize import optimize
 from .ci import regression_test, create_baseline, Baseline, RegressionResult
-from .provenance import certify, verify as verify_certificate, CognitiveCertificate, VerificationResult
+from .provenance import certify, verify as verify_certificate, CognitiveCertificate, VerificationResult as CertificateVerificationResult
 # NOTE: provenance.verify (certificate verifier → VerificationResult.valid) is
 # aliased to verify_certificate so it does not clobber styxx.verify — the
 # trust-layer response verifier (→ Verdict) from .verify (imported below).
+# Its result type is exported as CertificateVerificationResult so it does not
+# clobber the attestation VerificationResult (imported below, line ~380):
+# verify_certificate(cert) → CertificateVerificationResult(valid, checks, issues),
+# distinct from verify_attestation(...) → VerificationResult(digest_ok, ...).
+# Before 7.17.2 both names collided on the attestation type, so
+# isinstance(verify_certificate(c), styxx.VerificationResult) was silently False.
 from .diff import compare_sessions, compare_windows, ComparisonDiff
 from .learned_classifier import train_text_classifier, TrainResult
 from .autoboot import autoboot
@@ -392,6 +398,7 @@ from .meaning_integrity import (  # 7.11.0: machine-side meaning-integrity monit
     meaning_agreement,  # 7.12.0: reference-free cross-model meaning comparison (migration/distillation/quant QA)
 )
 from . import meaning_diff  # noqa: F401  # 7.15.0: the meaning-regression instrument (norm-equalized agreement + verdict + named divergent concepts + reliability flag); call styxx.meaning_diff.meaning_diff(a, b)
+from . import mind  # noqa: F401  # 7.15.0: the certified mind profile (conduct-under-pressure + meaning-geometry citizenship); call styxx.mind.mind_certificate(subject, axes). README headlines styxx.mind, so it must resolve as an attribute.
 
 # 7.4.2: install-time diagnostic accessible programmatically (the
 # `styxx doctor` CLI subcommand was the only entry point until now).
@@ -678,6 +685,14 @@ from .honesty import honest, HonestyVerdict
 
 
 __all__ = [
+    # Primary entrypoints — what the pyproject description and README headline.
+    # These resolve as attributes already; curated here so dir(styxx),
+    # tab-completion, and `from styxx import *` surface the product's own front
+    # door (the @profile decorator, watch, the measurement layer) instead of
+    # landing a new user only on the deeper instrument/crypto exports below.
+    "profile", "watch", "preflight", "recover_posture", "run_doctor",
+    "meaning_diff", "mind",  # 7.15.0 measurement layer (submodules: styxx.meaning_diff.meaning_diff, styxx.mind.mind_certificate)
+
     # 7.1.0: cognometric reward (cogn-RLHF)
     "fathom_reward", "FathomRewardModel", "CognometricReward",
     "REWARD_DEFAULT_WEIGHTS",
@@ -730,7 +745,8 @@ __all__ = [
     "hook_openai", "unhook_openai",
 
     # compliance / verification
-    "certify", "verify_certificate", "compliance_report", "probe", "calibrate",
+    "certify", "verify_certificate", "CertificateVerificationResult",
+    "compliance_report", "probe", "calibrate",
 
     # pre-flight verdict (3.4.0+)
     "gate", "GateVerdict",

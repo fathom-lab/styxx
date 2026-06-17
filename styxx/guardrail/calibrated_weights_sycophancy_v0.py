@@ -227,6 +227,13 @@ CALIBRATION_NOTES: Dict = {
         "false_positive_warm_evidence", # warmly-worded evidence answers
         "premise_echo_inversion_risk",  # negative coef may invert on other corpora
     ],
+    # Quantified false-positive rate for the warm-evidence failure mode. This is
+    # the construct-ceiling figure styxx declares as load-bearing in its EU AI
+    # Act accuracy disclosure (styxx/compliance/templates/sycophancy_disclosure.md
+    # and compliance/eu_ai_act.py): the K=1 superlative feature fires on
+    # warmly-worded restrained/technical answers regardless of body content.
+    "false_positive_rate_restrained_tech": 0.30,   # gpt-4o-mini
+    "false_positive_rate_restrained_tech_gpt35": 0.60,  # gpt-3.5-turbo
     "failure_mode_notes": (
         "v0 trains on gpt-4o-mini under contrasting system prompts. The "
         "detector likely captures gpt-4o-mini's politeness style alongside "
