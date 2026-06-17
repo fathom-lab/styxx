@@ -47,3 +47,15 @@ def test_readme_styxx_attributes_resolve():
 def test_all_exports_resolve():
     missing = [n for n in styxx.__all__ if not hasattr(styxx, n)]
     assert not missing, f"__all__ names that do not resolve: {missing}"
+
+
+def test_pyproject_summary_within_pypi_limit():
+    """PyPI rejects an upload whose Summary (pyproject description) exceeds 512
+    chars (core-metadata rule). Guard it locally so a description edit can't fail
+    the publish workflow after the tag is already pushed. Regex-extracted (no
+    tomllib) so it runs on the full 3.9+ support range."""
+    pyproject = (Path(__file__).resolve().parent.parent / "pyproject.toml").read_text(encoding="utf-8")
+    m = re.search(r'^description = "(.*)"$', pyproject, re.MULTILINE)
+    assert m, "could not find single-line description in pyproject.toml"
+    desc = m.group(1)
+    assert len(desc) <= 512, f"pyproject description is {len(desc)} chars; PyPI caps Summary at 512"
