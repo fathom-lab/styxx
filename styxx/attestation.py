@@ -77,6 +77,16 @@ _CHECKER_ALLOWLIST: dict[str, Any] = {
     if not name.startswith("_") and callable(getattr(checkers, name))
 }
 
+# Checkers that must IMPORT substrate code to evaluate a claim — importing runs
+# the module's top-level code. Re-verifying an untrusted third-party receipt must
+# never execute attacker-controlled substrate, so verify_attestation REFUSES
+# these by default and only runs them when the caller passes trust_substrate=True
+# (i.e. "I trust the code in this repo"). A refused checker is recorded as unsafe
+# and forces VerificationResult.ok to False — fail-closed, never silently skipped.
+_CODE_EXECUTION_CHECKERS: frozenset[str] = frozenset(
+    {"python_attr_in_iterable", "python_attr_equals"}
+)
+
 
 @dataclass
 class Attestation:
@@ -126,6 +136,9 @@ class VerificationResult:
     reproduced: list[dict[str, Any]] = field(default_factory=list)
     mismatches: list[dict[str, Any]] = field(default_factory=list)
     unknown_checkers: list[str] = field(default_factory=list)
+    # Code-execution checkers refused because the substrate was not trusted
+    # (verify_attestation(trust_substrate=False)). Non-empty => not ok.
+    unsafe_checkers: list[str] = field(default_factory=list)
     # Portable (cross-language) digest. None when the artifact predates it
     # (no digest.portable field); True/False once present.
     portable_present: bool = False
@@ -148,6 +161,7 @@ class VerificationResult:
             and self.portable_ok
             and not self.mismatches
             and not self.unknown_checkers
+            and not self.unsafe_checkers
             and not self.vitals_mismatches
         )
 
@@ -161,6 +175,7 @@ class VerificationResult:
             "n_mismatches": len(self.mismatches),
             "mismatches": self.mismatches,
             "unknown_checkers": self.unknown_checkers,
+            "unsafe_checkers": self.unsafe_checkers,
             "vitals_present": self.vitals_present,
             "vitals_ok": self.vitals_ok,
             "vitals_mismatches": self.vitals_mismatches,
@@ -561,6 +576,8 @@ def attest(
 def verify_attestation(
     artifact: dict[str, Any] | Attestation,
     repo_path: str | Path,
+    *,
+    trust_substrate: bool = False,
 ) -> VerificationResult:
     """Independently re-verify an attestation against the substrate.
 
@@ -573,6 +590,12 @@ def verify_attestation(
     A mismatch means the embedded verdict disagrees with what the substrate
     actually says (the agent — or a tamperer — misreported). An unknown
     checker name is refused, never executed.
+
+    Untrusted-substrate safety: checkers that must import substrate code to
+    evaluate a claim (``python_attr_*``) are REFUSED by default, because
+    importing executes the repo's top-level code and a third-party receipt's
+    repo is attacker-controlled. They run only when ``trust_substrate=True``.
+    Refused checkers are recorded in ``unsafe_checkers`` and force ``ok`` False.
 
     If the attestation is commit-pinned, verification re-materializes the EXACT
     recorded commit SHA (not the ref name, which could have moved) and
@@ -602,6 +625,7 @@ def verify_attestation(
     reproduced: list[dict[str, Any]] = []
     mismatches: list[dict[str, Any]] = []
     unknown: list[str] = []
+    unsafe: list[str] = []
 
     @contextmanager
     def _audit_path() -> Iterator[Path]:
@@ -638,6 +662,22 @@ def verify_attestation(
             checker = _CHECKER_ALLOWLIST.get(name)
             if checker is None:
                 unknown.append(name)
+                continue
+            if name in _CODE_EXECUTION_CHECKERS and not trust_substrate:
+                # Refuse to import attacker-controlled substrate code. Recorded
+                # (not silently skipped) so ok is False and the caller sees why.
+                unsafe.append(name)
+                rec = {
+                    "id": entry.get("id"),
+                    "embedded_verdict": entry.get("verdict"),
+                    "reproduced_verdict": "REFUSED",
+                    "evidence": "",
+                    "error": (
+                        f"checker {name!r} requires executing substrate code; "
+                        "refused (pass trust_substrate=True to allow)"
+                    ),
+                }
+                reproduced.append(rec)
                 continue
             claim = Claim(
                 id=entry["id"],
@@ -692,6 +732,7 @@ def verify_attestation(
         reproduced=reproduced,
         mismatches=mismatches,
         unknown_checkers=unknown,
+        unsafe_checkers=unsafe,
         portable_present=portable_present,
         portable_ok=portable_ok,
         vitals_present=vitals_present,

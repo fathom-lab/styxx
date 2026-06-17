@@ -32,12 +32,22 @@ The instrument has no external services, runs offline, mutates nothing.
 """
 from __future__ import annotations
 
+import ntpath
+import posixpath
 import re
 import subprocess
 import sys
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any, Callable
+
+# A conservative git ref/pathspec charset. The first character may not be '-'
+# (which git would parse as an option), and the body is restricted to the
+# characters real refs/tags/SHAs use. Verify-time checker args are attacker-
+# controlled (reconstructed from an untrusted attestation artifact), so any ref
+# that fails this is refused before it reaches git — closing the argument-
+# injection / `--output=` arbitrary-write vector on the verification path.
+_SAFE_REF_RE = re.compile(r"^[A-Za-z0-9_][A-Za-z0-9_./+@^~-]*$")
 
 
 __all__ = [
@@ -106,7 +116,78 @@ class AgentClaimAuditor:
 
 
 class _Checkers:
-    """Registered checker functions. Each takes ``repo_path`` first."""
+    """Registered checker functions. Each takes ``repo_path`` first.
+
+    Security boundary: these checkers run on the untrusted-verification path
+    (``styxx.attestation.verify_attestation`` reconstructs every ``args`` value
+    from an attacker-supplied artifact). File-path args are therefore confined
+    to the substrate root via :meth:`_safe_subpath`, and git ref/pathspec args
+    are validated via :meth:`_safe_ref` before reaching ``git`` — so a receipt
+    can never read a file outside the repo or inject a git option. Checkers that
+    must execute substrate code (``python_attr_*``) are additionally refused at
+    verify time unless the caller opts into trusting the substrate.
+    """
+
+    @staticmethod
+    def _safe_subpath(repo: Path, rel: str) -> Path:
+        """Resolve ``rel`` under ``repo`` and refuse any escape.
+
+        Rejects absolute paths (POSIX, Windows, or drive-relative) and any
+        ``..`` traversal, then resolves symlinks and asserts the result stays
+        within ``repo``. Raises ``ValueError`` on any escape — surfaced by the
+        auditor as an ERROR verdict (fail-closed), never a silent read.
+        """
+        if rel is None:
+            raise ValueError("path is required")
+        raw = str(rel)
+        if posixpath.isabs(raw) or ntpath.isabs(raw) or ntpath.splitdrive(raw)[0]:
+            raise ValueError(f"absolute paths are not allowed: {raw!r}")
+        parts = re.split(r"[\\/]+", raw)
+        if ".." in parts:
+            raise ValueError(f"path traversal ('..') is not allowed: {raw!r}")
+        repo_resolved = repo.resolve()
+        resolved = (repo_resolved / raw).resolve()
+        if resolved != repo_resolved and not resolved.is_relative_to(repo_resolved):
+            raise ValueError(f"path escapes the substrate root: {raw!r}")
+        return resolved
+
+    @staticmethod
+    def _safe_ref(value: str, *, kind: str = "ref") -> str:
+        """Validate a git ref/tag/commit/pathspec arg, refusing option injection."""
+        if not isinstance(value, str) or not value:
+            raise ValueError(f"{kind} must be a non-empty string")
+        if value.startswith("-"):
+            raise ValueError(f"{kind} may not begin with '-': {value!r}")
+        if not _SAFE_REF_RE.match(value):
+            raise ValueError(f"{kind} contains disallowed characters: {value!r}")
+        return value
+
+    @staticmethod
+    def _safe_module(module: str) -> str:
+        """Validate an importable module name is a plain dotted identifier.
+
+        Defense-in-depth for ``python_attr_*`` (which import substrate code):
+        blocks path-shaped or option-shaped module args. Note these checkers are
+        ALSO refused at verify time (``verify_attestation(trust_substrate=False)``)
+        because importing executes top-level code — this guard only narrows the
+        blast radius for callers that explicitly opt into trusting the substrate.
+        """
+        if not isinstance(module, str) or not module:
+            raise ValueError("module must be a non-empty string")
+        if not all(part.isidentifier() for part in module.split(".")):
+            raise ValueError(f"module is not a valid dotted identifier: {module!r}")
+        return module
+
+    @staticmethod
+    def _safe_glob(repo: Path, pattern: str) -> str:
+        """Confine a glob pattern to the substrate root (rejects absolute / ``..``)."""
+        if not isinstance(pattern, str) or not pattern:
+            raise ValueError("glob is required")
+        if posixpath.isabs(pattern) or ntpath.isabs(pattern) or ntpath.splitdrive(pattern)[0]:
+            raise ValueError(f"absolute glob is not allowed: {pattern!r}")
+        if ".." in re.split(r"[\\/]+", pattern):
+            raise ValueError(f"glob traversal ('..') is not allowed: {pattern!r}")
+        return str(repo.resolve() / pattern)
 
     @staticmethod
     def _run(repo: Path, *cmd: str) -> str:
@@ -116,7 +197,8 @@ class _Checkers:
         return (r.stdout or "") + ("\n[stderr]\n" + r.stderr if r.stderr else "")
 
     def git_show_diff_contains(self, repo: Path, *, commit: str, file: str, substring: str) -> tuple[bool, str]:
-        diff = self._run(repo, "git", "show", "--format=", f"{commit}", "--", file)
+        commit = self._safe_ref(commit, kind="commit")
+        diff = self._run(repo, "git", "show", "--format=", commit, "--", file)
         present = substring in diff
         excerpt = "\n".join(
             l for l in diff.splitlines()
@@ -126,7 +208,10 @@ class _Checkers:
 
     def git_branch_contains_commit_chain(self, repo: Path, *, branch: str, commits: list[str]) -> tuple[bool, str]:
         # all commits reachable from branch HEAD AND in monotonic order
-        log = self._run(repo, "git", "log", "--format=%H", branch).splitlines()
+        branch = self._safe_ref(branch, kind="branch")
+        for _c in commits:
+            self._safe_ref(_c, kind="commit")
+        log = self._run(repo, "git", "log", "--format=%H", branch, "--").splitlines()
         positions = []
         for c in commits:
             matches = [i for i, h in enumerate(log) if h.startswith(c)]
@@ -140,11 +225,12 @@ class _Checkers:
         return ordered, evidence
 
     def git_tag_exists(self, repo: Path, *, tag: str) -> tuple[bool, str]:
+        tag = self._safe_ref(tag, kind="tag")
         out = self._run(repo, "git", "tag", "-l", tag).strip()
         return (out == tag), f"git tag -l {tag} -> {out!r}"
 
     def file_at_path_contains(self, repo: Path, *, path: str, substring: str) -> tuple[bool, str]:
-        p = repo / path
+        p = self._safe_subpath(repo, path)
         text = p.read_text(encoding="utf-8", errors="replace")
         present = substring in text
         idx = text.find(substring)
@@ -153,6 +239,7 @@ class _Checkers:
 
     def python_attr_in_iterable(self, repo: Path, *, module: str, attr: str, iterable: str) -> tuple[bool, str]:
         # import the module from the repo; safer than evaluating arbitrary code
+        module = self._safe_module(module)
         sys.path.insert(0, str(repo))
         try:
             mod = __import__(module)
@@ -164,7 +251,7 @@ class _Checkers:
                 sys.path.remove(str(repo))
 
     def package_version_equals(self, repo: Path, *, path: str, version: str) -> tuple[bool, str]:
-        text = (repo / path).read_text(encoding="utf-8", errors="replace")
+        text = self._safe_subpath(repo, path).read_text(encoding="utf-8", errors="replace")
         m = re.search(r'^\s*version\s*=\s*"([^"]+)"', text, re.MULTILINE)
         if not m:
             return False, f"{path}: no version line found"
@@ -173,13 +260,13 @@ class _Checkers:
 
     def pdf_page_count_equals(self, repo: Path, *, path: str, n: int) -> tuple[bool, str]:
         from pypdf import PdfReader
-        r = PdfReader(str(repo / path))
+        r = PdfReader(str(self._safe_subpath(repo, path)))
         actual = len(r.pages)
         return (actual == n), f"{path}: pages={actual}, expected={n}"
 
     def pdf_contains_section(self, repo: Path, *, path: str, section_title: str) -> tuple[bool, str]:
         from pypdf import PdfReader
-        r = PdfReader(str(repo / path))
+        r = PdfReader(str(self._safe_subpath(repo, path)))
         for i, page in enumerate(r.pages):
             t = page.extract_text() or ""
             # tolerate hyphenation, whitespace, line breaks
@@ -192,14 +279,18 @@ class _Checkers:
 
     def directory_file_count_equals(self, repo: Path, *, glob: str, n: int) -> tuple[bool, str]:
         from glob import glob as _glob
-        matches = _glob(str(repo / glob), recursive=True)
+        repo_resolved = repo.resolve()
+        matches = [
+            m for m in _glob(self._safe_glob(repo, glob), recursive=True)
+            if Path(m).resolve().is_relative_to(repo_resolved)
+        ]
         # for `*` patterns that include directories, count only entries matching glob
         actual = len(matches)
         return (actual == n), f"glob {glob!r}: {actual} matches, expected {n}"
 
     def json_path_equals(self, repo: Path, *, path: str, key_path: str, expected) -> tuple[bool, str]:
         import json as _json
-        d = _json.loads((repo / path).read_text(encoding="utf-8", errors="replace"))
+        d = _json.loads(self._safe_subpath(repo, path).read_text(encoding="utf-8", errors="replace"))
         cur = d
         for part in key_path.split("."):
             if part.startswith("[") and part.endswith("]"):
@@ -209,6 +300,7 @@ class _Checkers:
         return (cur == expected), f"{path}::{key_path} = {cur!r}, expected {expected!r}"
 
     def python_attr_equals(self, repo: Path, *, module: str, attr: str, expected) -> tuple[bool, str]:
+        module = self._safe_module(module)
         sys.path.insert(0, str(repo))
         try:
             mod = __import__(module)
@@ -238,7 +330,7 @@ class _Checkers:
 
         rx = re.compile(pattern)
         want = str(expected)
-        matches = sorted(_glob(str(repo / glob), recursive=True))
+        matches = sorted(_glob(self._safe_glob(repo, glob), recursive=True))
         occurrences = 0
         divergent: list[str] = []
         for fp in matches:
@@ -285,7 +377,7 @@ class _Checkers:
         consistent (nothing contradicts), reported as PASS with the count.
         """
         rx = re.compile(pattern)
-        text = (repo / path).read_text(encoding="utf-8", errors="replace")
+        text = self._safe_subpath(repo, path).read_text(encoding="utf-8", errors="replace")
         by_value: dict[str, list[int]] = {}
         for m in rx.finditer(text):
             val = m.group(group)
@@ -308,8 +400,8 @@ class _Checkers:
         )
 
     def file_byte_equals(self, repo: Path, *, path_a: str, path_b: str) -> tuple[bool, str]:
-        a = (repo / path_a).read_bytes()
-        b = (repo / path_b).read_bytes()
+        a = self._safe_subpath(repo, path_a).read_bytes()
+        b = self._safe_subpath(repo, path_b).read_bytes()
         equal = (a == b)
         evidence = f"{path_a} ({len(a)}B) vs {path_b} ({len(b)}B): {'identical' if equal else 'DIFFER'}"
         if not equal:

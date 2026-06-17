@@ -11,6 +11,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.17.1] — 2026-06-17 — security: harden the untrusted-verification path
+
+### Security
+`verify_attestation()` re-runs an attestation's checkers against a repo with
+**every checker argument reconstructed from the (attacker-controlled) artifact**.
+Three boundaries on that path are now enforced so re-verifying an untrusted
+third-party receipt can no longer execute code or escape the substrate:
+
+- **Code execution** — checkers that must import substrate code
+  (`python_attr_in_iterable`, `python_attr_equals`) are **refused by default** and
+  run only when the caller opts in with `verify_attestation(..., trust_substrate=True)`.
+  Refused checkers are recorded in the new `VerificationResult.unsafe_checkers`
+  field and force `.ok` to `False` (fail-closed, never silently skipped).
+  Previously an artifact-named module was `__import__`-ed during verification,
+  running its top-level code **even when the embedded digest was invalid**.
+- **Arbitrary file read** — every file/path checker (`file_at_path_contains`,
+  `package_version_equals`, `json_path_equals`, `pdf_page_count_equals`,
+  `pdf_contains_section`, `file_byte_equals`, `value_consistent_across_paths`,
+  `value_internally_consistent`, `directory_file_count_equals`) now confines its
+  path/glob to the substrate root: absolute paths (POSIX, Windows, drive-relative)
+  and `..` traversal are rejected, and symlinks are resolved before the containment
+  check. Previously `path="../secret"` or an absolute path read arbitrary files and
+  leaked their contents into the receipt evidence.
+- **Git argument injection** — `branch`/`tag`/`commit` args are validated against a
+  conservative ref charset and refused if they begin with `-`, closing the
+  `git ... --output=PATH` arbitrary-write vector. Ref args are also passed after an
+  end-of-options separator where supported.
+
+Added `tests/test_attestation_verify_security.py` (11 tests) pinning each boundary
+and confirming legitimate in-repo checks still pass. No behavior change for trusted
+self-attestation: in-repo paths, real refs, and `trust_substrate=True` work exactly
+as before.
+
+---
+
 ## [7.17.0] — 2026-06-16 — `styxx.Conscience`: the conscience adapter (mount → live agent loop)
 
 ### Added — `styxx.Conscience` / `styxx.adapters.conscience.ConscienceAdapter`
