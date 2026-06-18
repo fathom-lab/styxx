@@ -1,0 +1,12 @@
+{
+  "model": "EleutherAI/pythia-410m",
+  "layer": 18,
+  "K": 6,
+  "n": 24,
+  "dynamical_auroc": 0.4236111111111111,
+  "semantic_auroc": 0.4027777777777778,
+  "combined_auroc": 0.375,
+  "novelty_delta": 0.020833333333333315,
+  "bar": 0.7,
+  "verdict": "K1_CS_FAIL"
+}
