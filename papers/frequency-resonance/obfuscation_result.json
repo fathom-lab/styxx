@@ -1,0 +1,19 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer": 20,
+  "band": [
+    17,
+    18,
+    19
+  ],
+  "locked_alpha": 6.0,
+  "n": 50,
+  "k0_positive_control": 1.0,
+  "probe_attacked": 0.0,
+  "probe_random_control": 1.0,
+  "content_deceptive_rate_steered": 0.0,
+  "content_deceptive_rate_baseline": 0.28,
+  "degenerate_rate": 0.0,
+  "steered_mean_len": 6.6,
+  "verdict": "VOID_ATTACK_MADE_HONEST"
+}
