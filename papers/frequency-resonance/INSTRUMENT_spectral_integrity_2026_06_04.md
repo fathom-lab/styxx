@@ -1,14 +1,21 @@
 # Instrument design — the Spectral Integrity Probe (obfuscation-robust, dynamical)
 
-> **STATUS: SHELVED at K1 (2026-06-04).** Cheap CPU de-risking killed the premise before any GPU
-> spend. The DMD-spectral feature fails to separate even *coherent vs word-shuffled* text — the
-> grossest cognitive-state proxy — across **two** models and richer extraction: distilgpt2 L4
-> AUROC **0.434** (`coherence_spectral_test.py`), pythia-410m multi-layer **0.562**
-> (`coherence_spectral_test_v2.py`), both under the 0.70 bar. If the spectrum can't separate
-> coherence, it won't separate honest/deceptive. **Do not run the GPU deception test.** What's
-> dead is *this specific feature* (DMD modes of the residual trajectory), not dynamical integrity
-> signals in general (path-length / "restlessness" works in the literature, but is not novel).
-> Kept as a documented dead-end (cf. the geometry probe). Design below is preserved as written.
+> **STATUS: CLOSED at K1 (2026-06-18; was SHELVED 2026-06-04).** The shelving left one open
+> question — premise or estimator? — and it is now answered: **the premise.** The DMD-spectral
+> feature fails to separate even *coherent vs word-shuffled* text (the grossest cognitive-state
+> proxy) across **three** extraction regimes and **two** models:
+> distilgpt2 L4 single-layer **0.434** (`coherence_spectral_test.py`); pythia-410m bigger+multi-layer
+> **0.562** (`coherence_spectral_test_v2.py`); pythia-410m with the principled short-trajectory
+> estimator — **time-delay (Hankel/Takens) Koopman**, the one tool no prior version tried —
+> primary q=12 **0.461**, sweep-best **0.586**, *degrading monotonically with more embedding*
+> (`coherence_spectral_test_v3_hankel.py`, `RESULT_hankel_k1_2026_06_18.md`, prereg b97548b). All
+> under the 0.70 bar. The correct estimator makes it no better and tuned harder, worse. If the
+> spectrum can't separate coherence, it won't separate honest/deceptive. **The GPU deception test
+> (K2–K4) is NOT run — there is no signal to make robust.** What's dead is *this specific feature*
+> (DMD/Koopman spectrum of the residual trajectory), **not** dynamical integrity signals in general
+> (path-length / "restlessness" works in the literature, but is not novel and was never our bet).
+> Closed, not re-shelved (binding prereg stop rule). Documented dead-end, cf. the geometry probe.
+> Design below is preserved as written.
 
 **2026-06-04.** A styxx primitive that reads the **spectral signature of an agent's residual-stream
 trajectory** as an integrity signal — aimed at the documented gap that static probes can't cover.
