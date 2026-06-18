@@ -1,0 +1,25 @@
+{
+  "model": "EleutherAI/pythia-410m",
+  "layers": [
+    6,
+    12,
+    18
+  ],
+  "primary_auroc": 0.671875,
+  "spectral_baseline": 0.461,
+  "bar": 0.7,
+  "n": 32,
+  "per_feature_auroc": {
+    "resid_cv": 0.70703125,
+    "resid_max_ratio": 0.68359375,
+    "resid_autocorr1": 0.68359375,
+    "n_jumps": 0.66015625,
+    "operator_drift": 0.53125
+  },
+  "per_layer_auroc": {
+    "6": 0.38671875,
+    "12": 0.62109375,
+    "18": 0.64453125
+  },
+  "verdict": "K1_NS_FAIL"
+}
