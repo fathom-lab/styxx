@@ -1,0 +1,10 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer": 20,
+  "n_per_cond": 60,
+  "static_honest_deceptive": 1.0,
+  "switch_honest_deceptive": 0.5008333333333334,
+  "static_honest_obfuscated": 1.0,
+  "switch_honest_obfuscated": 0.6215277777777778,
+  "verdict": "K1_FAIL"
+}
