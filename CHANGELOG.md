@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   iteration, `dict(r)`, and a new `.to_dict()` all keep working alongside attribute access
   (`r.agreement`). `MeaningDiff` is exported from `styxx.meaning_diff`.
 
+### Docs
+- README: added a **"New in 7.16 / 7.17"** section so the shipped flagship arc — `crossmind`, the
+  borrowed-conscience `mount` / `styxx.Conscience`, attestation + the 7.17.1 verifier hardening,
+  and the provenance work — is no longer absent from the body (it previously stopped at 7.7.14).
+  The cooperative-only scope of the conscience is stated, not glossed. The new code block was
+  verified to run as written; refreshed a stale version string in the `run_doctor` example.
+
 ---
 
 ## [7.17.3] — 2026-06-19 — provenance + test-floor hardening

@@ -96,7 +96,7 @@ print(posture.narrative)
 ```python
 styxx.run_doctor()                              # 7.4.2+: programmatic health check
 # [OK]   python 3.12.10 (>= 3.9 required)
-# [OK]   styxx 7.4.x
+# [OK]   styxx 7.17.x
 # [OK]   tier 0 universal logprob vitals ACTIVE
 # [OK]   audit log readable (chart.jsonl, N entries)
 # styxx is healthy and ready.
@@ -730,6 +730,57 @@ styxx gauntlet --method submissions.baseline_003_length.method:predict --task cl
 ```
 
 External submissions go through CI auto-verification (`.github/workflows/gauntlet-pr.yml`) — your reported scores must match the CI re-run within 1e-3 tolerance, or the PR fails. The leaderboard is trustworthy by construction.
+
+---
+
+## New in 7.16 / 7.17 — a borrowed conscience, portable value-reads, and a verifier that can't be turned against you
+
+The measurement layer grew a value-state read that crosses models, a read-only conscience you can bolt
+onto an agent you don't control, signed receipts for what an agent claimed, and a hardening pass on the
+attestation verifier itself.
+
+```python
+import styxx
+from styxx.crossmind import fit_axis, read
+from styxx.mount import MountedAxis
+
+# crossmind (7.16) — fit a value axis (truth, harm-avoidance) on one model's states + labels,
+# then READ a *different* model's states along it. label-free on the target.
+axis = fit_axis(reference_states, labels, name="truth")
+coords = read(axis, target_states)                        # no labels on the target model
+
+# Conscience (7.16 → 7.17) — wrap that axis as a borrowed conscience and watch the agent's own
+# hidden state; it flags when the output asserts "true" while the substrate reads false.
+truth = MountedAxis(name="truth", reader=lambda h: read(axis, h), high_means="true")
+cons = styxx.Conscience([truth])                          # the conscience comes from another model
+cons.watch(hidden_state, claims={"truth": +1}).caught     # True = claim & state disagree (read-only, fail-open)
+```
+
+- **`styxx.crossmind` / `styxx.mount` / `styxx.Conscience`** — a conscience mounted on a generating
+  agent reads the agent's own activations and catches caves the agent's words deny. Definitive operating
+  point: catch **0.85 at a 0.20 false-alarm rate**, calibration matched to the regime; the apex run caught
+  **13/13** (AUROC 0.995, p=0.001), replicated on Qwen2.5-1.5B. Read-only by construction — steering is
+  refused; acting on a flag is your policy, not the instrument's. Fail-open: a conscience that errors
+  returns `None` and warns, it never crashes the agent it watches.
+  **Honest scope:** this is a *cooperative* monitor — it catches drift, sycophantic caving, and
+  unintentional lies. The borrowed-conscience "moat" was tested against an activation-space adversary and
+  **failed** (the attack transfers across reference models, which share a truth direction), so it is an
+  integrity layer for agents you trust not to actively fight the probe — **not** an adversarial defense.
+
+- **`styxx.attest` / `verify_attestation` (7.17.0 → 7.17.1)** — signed receipts for what an agent claimed
+  and what the substrate read. 7.17.1 hardened the *verifier itself*: it used to reconstruct and run
+  checker code straight from the untrusted artifact (remote code execution even with an invalid digest,
+  arbitrary file read, git argument injection). Now code-executing checkers are refused unless you opt in
+  with `verify_attestation(trust_substrate=True)`, file checkers are confined to the substrate root, and
+  unsafe checkers fail closed. (Advisory GHSA-7547-6gcj-c2h7.)
+
+- **Provenance that grounds (7.17.3) + a typed `meaning_diff` (7.17.4)** — the version stamped into every
+  receipt now traces to a single in-repo source-of-truth, and a stale install is *surfaced*
+  (`styxx.__version_mismatch__`, flagged by `run_doctor`) rather than silently trusted.
+  `styxx.meaning_diff` returns a typed `MeaningDiff` like every other instrument — fully dict-compatible,
+  so callers written against the old dict are untouched.
+
+Read-only, fail-open, numpy-only, MIT. Full per-release detail in [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
