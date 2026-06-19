@@ -1,0 +1,156 @@
+name: nightly-heavy (AUC instrument guard)
+
+# The PR/main `tests` workflow installs `.[test]`, which deliberately OMITS the
+# heavy torch / sentence-transformers / scipy / cryptography stacks (an 8-10 min
+# install). The consequence: the instrument-correctness tests that back the
+# headline calibration numbers —
+#   - hallucination / grounded-deception discrimination
+#   - refusal & sycophancy semantic gates
+#   - phase-coherence locked-scorer parity
+#   - residual-probe device/dtype invariants
+#   - Ed25519 handoff-receipt signing
+# — `importorskip` their deps and SILENTLY SKIP in CI. A green check guarded
+# nothing for the numbers we publish.
+#
+# This nightly leg installs the heavy stack and asserts those tests actually RUN
+# and PASS. The guard is deliberately NOT "zero skips": two tests in
+# test_divergence.py are INVERSE-gated — they exercise the no-deps lexical
+# fallback and are *designed* to skip when sentence-transformers is present. So
+# the real guards are: (1) the heavy libs must import, and (2) no test may skip
+# for a MISSING-dependency reason ("could not import ...").
+#
+# Parts only an actual run can confirm are noted inline.
+
+on:
+  schedule:
+    # 03:17 UTC daily — odd minute to dodge the top-of-hour scheduling stampede.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nightly-heavy:
+    name: py3.11 + torch/nli/coherence/signing
+    runs-on: ubuntu-latest
+    # Heavy install (~8-10 min) + model-backed tests. 35 min leaves margin; the
+    # actual elapsed time is one of the things only a real run confirms.
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install CPU-only torch first (keeps the install lean & fast)
+        # Pull torch from the CPU wheel index so we don't drag in the ~2GB CUDA
+        # build. The nli/tier extras list torch>=2.x; pip sees it already
+        # satisfied and won't reinstall.
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install styxx + heavy-dep extras
+        # nli -> torch + transformers + sentence-transformers
+        # coherence -> scipy
+        # signing -> cryptography
+        run: pip install -e ".[test,nli,coherence,signing]"
+
+      - name: Premise check — the heavy libs MUST import
+        # This is the primary guard. If any of these import, the corresponding
+        # `importorskip` cannot skip, so the dep-gated AUC tests are guaranteed
+        # to run. If any FAILS to import, fail loudly here with a clear message
+        # rather than letting the suite quietly skip and go green.
+        run: |
+          python - <<'PY'
+          import importlib, sys
+          required = ["torch", "sentence_transformers", "scipy", "cryptography", "transformers"]
+          missing = []
+          for mod in required:
+              try:
+                  m = importlib.import_module(mod)
+                  print(f"  {mod} {getattr(m, '__version__', '?')}")
+              except Exception as e:  # noqa: BLE001
+                  missing.append(f"{mod}: {e}")
+          if missing:
+              print("PREMISE FAILED — heavy deps did not install:", *missing, sep="\n  ")
+              sys.exit(1)
+          print("premise OK: all heavy AUC-backing libs import")
+          PY
+
+      - name: Run AUC-backing instrument tests
+        # Fail the build on any failure/error (pytest's default non-zero). The
+        # junit report is parsed in the next step for the skip-reason guard.
+        run: |
+          python -m pytest \
+            tests/test_styxx_deception_score_core.py \
+            tests/test_semantic_subjectivity.py \
+            tests/test_coherence_locked_scorer_parity.py \
+            tests/test_preflight_needs_revision_gate.py \
+            tests/test_probe.py \
+            tests/test_divergence.py \
+            tests/test_mind.py \
+            tests/test_handoff_protocol.py \
+            -rs --tb=short --junitxml=auc-report.xml
+
+      - name: Guard — no test skipped for a MISSING dependency
+        if: always()  # run even if the previous step reported failures, for a full picture
+        run: |
+          python - <<'PY'
+          import re, sys, xml.etree.ElementTree as ET
+          root = ET.parse("auc-report.xml").getroot()
+          suites = list(root.iter("testsuite"))
+          tests    = sum(int(s.get("tests", 0))    for s in suites)
+          failures = sum(int(s.get("failures", 0)) for s in suites)
+          errors   = sum(int(s.get("errors", 0))   for s in suites)
+          skip_msgs = [sk.get("message", "")
+                       for tc in root.iter("testcase")
+                       for sk in tc.findall("skipped")]
+          # A MISSING-dependency skip always comes through importorskip, whose
+          # message is "could not import 'X': No module named 'X'". Inverse-gated
+          # skips ("sentence-transformers installed; ...") never match this.
+          DEP_MISSING = re.compile(r"could not import|no module named|importorskip", re.I)
+          dep_skips = [m for m in skip_msgs if DEP_MISSING.search(m)]
+
+          problems = []
+          if tests == 0:
+              problems.append("0 AUC tests collected — wrong paths or import break")
+          if failures:
+              problems.append(f"{failures} test failure(s) — instrument calibration regression")
+          if errors:
+              problems.append(f"{errors} collection/setup error(s)")
+          if dep_skips:
+              problems.append(f"{len(dep_skips)} dep-gated skip(s): {dep_skips}")
+
+          allowed_skips = [m for m in skip_msgs if m not in dep_skips]
+          if problems:
+              print("NIGHTLY AUC GUARD FAILED:")
+              for p in problems:
+                  print("  -", p)
+              sys.exit(1)
+          print(f"AUC guard OK: {tests} tests ran, "
+                f"{len(allowed_skips)} inverse-gated skip(s) allowed:")
+          for m in allowed_skips:
+              print("    (allowed skip)", m)
+          PY
+
+      - name: Step summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "## Nightly AUC guard passed" >> "$GITHUB_STEP_SUMMARY"
+            echo "Heavy deps installed and the instrument tests that back the published calibration numbers RAN and PASSED." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Nightly AUC guard FAILED" >> "$GITHUB_STEP_SUMMARY"
+            echo "An AUC-backing instrument test was skipped for a missing dependency, failed its calibration assertion, or errored. Reproduce locally:" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo 'pip install -e ".[test,nli,coherence,signing]"' >> "$GITHUB_STEP_SUMMARY"
+            echo 'pytest tests/test_styxx_deception_score_core.py tests/test_semantic_subjectivity.py tests/test_coherence_locked_scorer_parity.py tests/test_preflight_needs_revision_gate.py tests/test_probe.py tests/test_divergence.py tests/test_mind.py tests/test_handoff_protocol.py -rs' >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -39,7 +39,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
-from . import __version__
+from . import __version__, __version_mismatch__
 from . import config
 from .cards import Palette, color_enabled, wrap
 
@@ -90,6 +90,18 @@ def _check_numpy() -> CheckResult:
 
 
 def _check_styxx_version() -> CheckResult:
+    # __version__ is the source-of-truth (styxx/_version.py) — the code actually
+    # running. A mismatch means the installed distribution metadata is stale, so
+    # receipts would be stamped with the running version while the environment
+    # advertises a different one. Surface it so provenance can't drift silently.
+    if __version_mismatch__ is not None:
+        src, installed = __version_mismatch__
+        return CheckResult(
+            status="warn",
+            label=f"styxx {src} (source) != {installed} (installed)",
+            detail="stale install: run `pip install -e .` (or reinstall) so "
+                   "distribution metadata matches the running source",
+        )
     return CheckResult(
         status="ok",
         label=f"styxx {__version__}",

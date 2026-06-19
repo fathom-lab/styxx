@@ -38,19 +38,35 @@ Patents:  US Provisional 64/020,489 · 64/021,113 · 64/026,964
 License:  MIT (code), CC-BY-4.0 (atlas data)
 """
 
-# Read version from installed package metadata so the attribute can
-# never drift from the published wheel. Falls back to a literal for
-# environments where the package isn't installed (e.g. running directly
-# from a checkout without `pip install -e .`).
+# Version provenance: the SOURCE-OF-TRUTH is ``styxx/_version.py`` — a trivial,
+# import-free literal that ships in the wheel AND is present on a bare source
+# checkout. ``__version__`` therefore always reflects the code that is actually
+# running, which is exactly what gets stamped into every attestation / vitals
+# receipt. The installed-distribution metadata is consulted only as a CROSS-CHECK:
+# if it disagrees with the source literal a stale install is in play, surfaced as
+# ``__version_mismatch__`` rather than silently trusting metadata over the running
+# code (the old behaviour, which let a stale wheel stamp a wrong version into
+# receipts the product issues about itself).
+from ._version import __version__
+
+#: ``None`` when the running source version matches the installed-distribution
+#: metadata (or when styxx is not installed at all, e.g. a bare checkout).
+#: Otherwise a ``(source_version, installed_version)`` tuple flagging a stale
+#: install — read by ``run_doctor`` and available to any caller that wants to
+#: refuse to trust receipts from a desynced environment.
+__version_mismatch__ = None
 try:
     from importlib.metadata import version as _pkg_version, PackageNotFoundError as _PkgNotFound
     try:
-        __version__ = _pkg_version("styxx")
+        _installed_version = _pkg_version("styxx")
+        if _installed_version != __version__:
+            __version_mismatch__ = (__version__, _installed_version)
+        del _installed_version
     except _PkgNotFound:
-        __version__ = "0.0.0+source"
+        pass  # not installed (bare checkout) — the source literal stands
     del _pkg_version, _PkgNotFound
 except ImportError:  # pragma: no cover — Python < 3.8
-    __version__ = "0.0.0+source"
+    pass
 
 __author__ = "flobi"
 __license__ = "MIT"
@@ -776,6 +792,7 @@ __all__ = [
 
     # metadata
     "__version__",
+    "__version_mismatch__",
 ]
 
 
@@ -786,4 +803,4 @@ def __dir__():
     compatibility (e.g. ``styxx.Sentinel``, ``styxx.personality``)
     but don't clutter tab-completion or ``from styxx import *``.
     """
-    return sorted(set(__all__) | {"__version__", "__author__", "__license__"})
+    return sorted(set(__all__) | {"__version__", "__version_mismatch__", "__author__", "__license__"})

@@ -83,6 +83,9 @@ jobs:
           # Every real package dir (one with __init__.py) must ship.
           required = [
               "styxx/__init__.py",
+              # version source-of-truth — if this is dropped from the wheel,
+              # installed users get ImportError on `import styxx`.
+              "styxx/_version.py",
               "styxx/scan.py",
               "styxx/three_axis/__init__.py",
               "styxx/guardrail/__init__.py",

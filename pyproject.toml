@@ -4,7 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "styxx"
-version = "7.17.2"
+# Version is read dynamically from styxx/_version.py (the single source of truth)
+# via [tool.setuptools.dynamic] below, so pyproject and the runtime __version__
+# can never drift. To cut a release, bump styxx/_version.py only.
+dynamic = ["version"]
 description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3) — text-only register instruments with documented construct ceilings. Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
 readme = "README.md"
 license = { text = "MIT" }
@@ -45,7 +48,10 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Typing :: Typed",
+    # NOTE: "Typing :: Typed" intentionally removed — the package ships no
+    # py.typed marker and mypy still reports real errors in core modules, so the
+    # classifier was an overclaim. Re-add it only together with styxx/py.typed
+    # once the public surface type-checks clean.
 ]
 dependencies = [
     "numpy>=1.24",
@@ -95,6 +101,13 @@ mcp = [
 coherence = [
     "scipy>=1.10",
 ]
+# 7.17.3: Ed25519 handoff-receipt signing (styxx.handoff_protocol). Previously
+# cryptography was depended on by the signing tests but declared in NO extra, so
+# those tests silently skipped in CI. Declaring it makes the signing path an
+# installable, CI-guardable surface.
+signing = [
+    "cryptography>=41.0",
+]
 # 4.0.3: Guardrails AI validator (HallucinationCheck) backed by styxx
 guardrails = ["guardrails-ai>=0.4"]
 # 4.0.3: LlamaIndex evaluator (StyxxHallucinationEvaluator) for RAG faithfulness
@@ -142,6 +155,13 @@ styxx-demo = "styxx.selfaudit_demo:main"
 styxx-conscience = "styxx.conscience:main"
 styxx-flagship = "styxx.flagship:main"
 
+[tool.setuptools.dynamic]
+# `attr` reads styxx/_version.py.__version__ via AST without importing the
+# package (so the heavy import graph never runs at build time). Do NOT switch
+# this to `file` — that would set the version to the file's raw text
+# (`__version__ = "x.y.z"\n`), not the literal.
+version = { attr = "styxx._version.__version__" }
+
 [tool.setuptools]
 packages = [
     "styxx", "styxx.adapters", "styxx.centroids", "styxx.recipes",
@@ -185,3 +205,13 @@ select = ["F", "E9"]
 # (most of those names are deliberately kept out of __all__). The two F811s
 # there are the documented stream / agent_name false-positives.
 "__init__.py" = ["F401", "F403", "F811"]
+
+[tool.pytest.ini_options]
+# Confine collection to the canonical suite. Without this, a bare `pytest`
+# (no path) walks scratch/ and scripts/dogfood/ and hits 3 collection errors —
+# a missing module import and two module-level OpenAI calls that fire a live 401
+# at import time. CI already runs `pytest tests` explicitly; this makes the bare
+# invocation match that, so a contributor's `pytest` is green for the right
+# reason. Integration/paper tests outside tests/ are run by passing their path
+# explicitly (they were never part of the bare-pytest or CI run).
+testpaths = ["tests"]
