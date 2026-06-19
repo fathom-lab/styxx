@@ -96,3 +96,60 @@ def test_module_and_function_reachable():
 
 def test_verdict_bands_frozen():
     assert md.VERDICT_BANDS == {"HEALTHY": 0.80, "DRIFTED": 0.50}
+
+
+# --- 7.17.4: typed MeaningDiff contract (every headline instrument returns a
+#     dataclass) — must stay fully dict-compatible so pre-7.17.4 callers don't break.
+
+def test_returns_typed_meaning_diff():
+    from styxx.meaning_diff import MeaningDiff
+    R = _rng().standard_normal((20, 8))
+    r = md.meaning_diff(R, R)
+    assert isinstance(r, MeaningDiff)
+    assert "MeaningDiff" in md.__all__
+    # n_concepts is a clean python int, not numpy
+    assert isinstance(r.n_concepts, int) and r.n_concepts == 20
+
+
+def test_attribute_and_dict_access_are_equivalent():
+    R = _rng().standard_normal((25, 10))
+    S = R[_rng(3).permutation(25)]
+    r = md.meaning_diff(R, S, words=[f"w{i}" for i in range(25)])
+    for k in ("agreement", "verdict", "divergent_concepts", "n_concepts",
+              "reliability", "reliable", "reliability_caveat", "norm_equalized",
+              "verdict_bands"):
+        assert getattr(r, k) == r[k]            # attribute access == old dict access
+        assert k in r                            # membership
+    assert r.get("nope", "dflt") == "dflt"
+
+
+def test_to_dict_and_dict_cast_roundtrip():
+    R = _rng().standard_normal((15, 6))
+    r = md.meaning_diff(R, R)
+    d1, d2 = r.to_dict(), dict(r)
+    assert d1 == d2
+    assert set(r.keys()) == set(d1) == {
+        "agreement", "verdict", "divergent_concepts", "n_concepts", "reliability",
+        "reliable", "reliability_caveat", "norm_equalized", "verdict_bands",
+    }
+    # to_dict returns a fresh copy — mutating it must not touch the (frozen) result
+    d1["agreement"] = -999
+    assert r.agreement != -999
+
+
+def test_result_is_frozen():
+    import dataclasses
+    R = _rng().standard_normal((12, 5))
+    r = md.meaning_diff(R, R)
+    with pytest.raises(dataclasses.FrozenInstanceError):
+        r.agreement = 0.0
+
+
+def test_templates_path_returns_typed_result():
+    from styxx.meaning_diff import MeaningDiff
+    base = _rng().standard_normal((20, 8))
+    Ta = np.stack([base + 0.01 * _rng(i).standard_normal((20, 8)) for i in range(6)])
+    Tb = np.stack([base + 0.01 * _rng(i + 50).standard_normal((20, 8)) for i in range(6)])
+    r = md.meaning_diff_templates(Ta, Tb)
+    assert isinstance(r, MeaningDiff)
+    assert r["reliability"] is not None        # dict access still works on the typed result

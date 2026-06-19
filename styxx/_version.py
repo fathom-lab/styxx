@@ -20,4 +20,4 @@ To cut a release, bump THIS literal. ``pyproject.toml`` reads it dynamically, so
 the two can never drift.
 """
 
-__version__ = "7.17.3"
+__version__ = "7.17.4"

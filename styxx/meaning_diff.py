@@ -11,20 +11,87 @@ template-extraction stays caller-side.
 
     from styxx.meaning_diff import meaning_diff
     r = meaning_diff(model_a_reps, model_b_reps, words=concepts)
-    r["agreement"]            # 0..1 geometry agreement
-    r["verdict"]              # HEALTHY / DRIFTED / BROKEN
-    r["divergent_concepts"]   # [(word, score), ...] what moved most
+    r.agreement               # 0..1 geometry agreement   (or r["agreement"])
+    r.verdict                 # HEALTHY / DRIFTED / BROKEN
+    r.divergent_concepts      # [(word, score), ...] what moved most
+    r.to_dict()               # the plain dict, for logging / JSON
+
+``meaning_diff`` returns a typed :class:`MeaningDiff` (like every other headline
+instrument). It stays dict-compatible — ``r["agreement"]``, ``dict(r)``, ``k in r``
+and iteration all still work — so callers written against the pre-7.17.4 dict are
+untouched.
 
 Validated port: papers/mind-instrument/PREREG_meaning_diff_v0_2026_06_10.md (gates D1-D5).
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
+
 import numpy as np
 
-__all__ = ["meaning_diff", "meaning_diff_templates", "rdm", "VERDICT_BANDS"]
+__all__ = ["meaning_diff", "meaning_diff_templates", "rdm", "VERDICT_BANDS", "MeaningDiff"]
 
 # Frozen verdict bands (heuristics calibrated to the program's receipts; disclosed, not universal).
 VERDICT_BANDS = {"HEALTHY": 0.80, "DRIFTED": 0.50}   # >=0.80 healthy; >=0.50 drifted; else broken
+
+
+@dataclass(frozen=True)
+class MeaningDiff:
+    """Typed result of :func:`meaning_diff` — the meaning-regression readout.
+
+    Every other headline styxx instrument returns a typed dataclass; this brings
+    meaning_diff in line. It stays **fully back-compatible** with the plain dict
+    it used to return: ``r["agreement"]``, ``r.get(...)``, ``k in r``, iteration,
+    ``dict(r)`` and ``.to_dict()`` all still work, now alongside attribute access
+    (``r.agreement``).
+    """
+
+    agreement: float
+    verdict: str
+    divergent_concepts: List[Tuple[Any, float]]
+    n_concepts: int
+    reliability: Optional[float]
+    reliable: bool
+    reliability_caveat: Optional[str]
+    norm_equalized: bool
+    verdict_bands: Dict[str, float]
+
+    def to_dict(self) -> dict:
+        """The exact dict the instrument used to return (a fresh copy)."""
+        return {
+            "agreement": self.agreement,
+            "verdict": self.verdict,
+            "divergent_concepts": self.divergent_concepts,
+            "n_concepts": self.n_concepts,
+            "reliability": self.reliability,
+            "reliable": self.reliable,
+            "reliability_caveat": self.reliability_caveat,
+            "norm_equalized": self.norm_equalized,
+            "verdict_bands": self.verdict_bands,
+        }
+
+    # --- dict back-compat: the instrument shipped a plain dict through 7.17.3 ---
+    def __getitem__(self, key: str) -> Any:
+        return self.to_dict()[key]
+
+    def get(self, key: str, default: Any = None) -> Any:
+        return self.to_dict().get(key, default)
+
+    def keys(self):
+        return self.to_dict().keys()
+
+    def values(self):
+        return self.to_dict().values()
+
+    def items(self):
+        return self.to_dict().items()
+
+    def __contains__(self, key: object) -> bool:
+        return key in self.to_dict()
+
+    def __iter__(self):
+        return iter(self.to_dict())
 
 
 def rdm(R: np.ndarray, *, norm_equalized: bool = True) -> np.ndarray:
@@ -58,9 +125,10 @@ def _verdict(agreement: float) -> str:
 
 
 def meaning_diff(reps_a, reps_b, *, words=None, top_k: int = 10,
-                 reliability: float | None = None, norm_equalized: bool = True) -> dict:
+                 reliability: float | None = None, norm_equalized: bool = True) -> MeaningDiff:
     """Compare two models' concept geometries. reps_a/reps_b: (N, d_a)/(N, d_b), rows aligned by
-    concept (same order). Returns agreement, verdict, divergent_concepts, reliability flag."""
+    concept (same order). Returns a :class:`MeaningDiff` (dict-compatible) with agreement, verdict,
+    divergent_concepts, and the reliability flag."""
     Da, Db = rdm(reps_a, norm_equalized=norm_equalized), rdm(reps_b, norm_equalized=norm_equalized)
     if Da.shape != Db.shape:
         raise ValueError(f"concept counts differ: {Da.shape[0]} vs {Db.shape[0]} (rows must align)")
@@ -83,19 +151,19 @@ def meaning_diff(reps_a, reps_b, *, words=None, top_k: int = 10,
     divergent = [(labels[i], round(div[i], 4)) for i in order[:top_k] if div[i] > 1e-9]
 
     reliable = (reliability is None) or (reliability >= 0.5)
-    return {
-        "agreement": round(agreement, 4),
-        "verdict": _verdict(agreement),
-        "divergent_concepts": divergent,
-        "n_concepts": n,
-        "reliability": (round(reliability, 4) if reliability is not None else None),
-        "reliable": bool(reliable),
-        "reliability_caveat": (None if reliability is not None else
-                               "no template reps supplied; reliability unmeasured — treat agreement "
-                               "as indicative, not certified"),
-        "norm_equalized": norm_equalized,
-        "verdict_bands": dict(VERDICT_BANDS),
-    }
+    return MeaningDiff(
+        agreement=round(agreement, 4),
+        verdict=_verdict(agreement),
+        divergent_concepts=divergent,
+        n_concepts=int(n),
+        reliability=(round(reliability, 4) if reliability is not None else None),
+        reliable=bool(reliable),
+        reliability_caveat=(None if reliability is not None else
+                            "no template reps supplied; reliability unmeasured — treat agreement "
+                            "as indicative, not certified"),
+        norm_equalized=norm_equalized,
+        verdict_bands=dict(VERDICT_BANDS),
+    )
 
 
 def _sb_split_half_reliability(template_reps: np.ndarray) -> float:
@@ -110,7 +178,7 @@ def _sb_split_half_reliability(template_reps: np.ndarray) -> float:
     return max(0.0, 2 * r / (1 + r)) if r > 0 else 0.0
 
 
-def meaning_diff_templates(template_reps_a, template_reps_b, *, words=None, top_k: int = 10) -> dict:
+def meaning_diff_templates(template_reps_a, template_reps_b, *, words=None, top_k: int = 10) -> MeaningDiff:
     """Caller supplies (T, N, d) per-template reps for each model; applies the frozen
     per-template-L2-then-average convention, measures split-half reliability, and compares.
     The recommended entry point when raw template states are available."""

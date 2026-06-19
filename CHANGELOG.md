@@ -11,6 +11,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.17.4] — 2026-06-19 — meaning_diff returns a typed result
+
+### Changed
+- **`styxx.meaning_diff.meaning_diff()` / `meaning_diff_templates()` now return a typed
+  `MeaningDiff` dataclass** instead of a raw `dict`, bringing the instrument in line with every
+  other headline readout. Fully back-compatible: `r["agreement"]`, `r.get(...)`, `k in r`,
+  iteration, `dict(r)`, and a new `.to_dict()` all keep working alongside attribute access
+  (`r.agreement`). `MeaningDiff` is exported from `styxx.meaning_diff`.
+
+---
+
+## [7.17.3] — 2026-06-19 — provenance + test-floor hardening
+
+The version stamped into a receipt is a provenance claim; the headline AUCs need a CI that
+actually runs them. This release grounds both.
+
+### Added
+- **`styxx/_version.py` single source-of-truth.** The version lives in one import-free literal,
+  read by both the build (`[tool.setuptools.dynamic]`) and the runtime, so `__version__`
+  reflects the code that actually ran — not stale installed metadata. A source/install desync
+  surfaces as `styxx.__version_mismatch__`, and `run_doctor` warns instead of trusting it. This
+  is the version stamped into every attestation / vitals receipt.
+- **`tests/test_profile.py`** — the flagship `@styxx.profile` went from 25% to 93% line
+  coverage (fault detection, phase transitions, every exporter, every call form).
+- **`tests/test_version_provenance.py`** — locks the source → runtime → metadata → receipt chain.
+- **Nightly heavy-dependency CI leg** (`.github/workflows/nightly-heavy.yml`) — installs the
+  torch / nli / coherence / signing stack and guards the AUC instrument tests that silently skip
+  in the light `[test]` CI. The guard asserts the heavy libs import and the tests pass — not
+  "zero skips", because two tests are designed to skip when the deps are present.
+- **`signing` extra** — `cryptography` was used by the handoff-signing tests but declared in no
+  extra; it is now installable and CI-guardable.
+
+### Changed
+- `pyproject` version is now dynamic (read from `styxx/_version.py`); to cut a release, bump
+  that one literal.
+- `[tool.pytest.ini_options] testpaths = ["tests"]` — a bare `pytest` no longer walks
+  `scratch/` / `scripts/dogfood/` and fires a live OpenAI 401 at collection (was 3 collection
+  errors; now 0).
+
+### Removed
+- The `Typing :: Typed` classifier — the package ships no `py.typed` marker and the type-checker
+  still reports errors, so the classifier was an overclaim. It returns when the public surface
+  type-checks clean.
+
+---
+
 ## [7.17.2] — 2026-06-17 — brand-integrity sweep: the package no longer overclaims about itself
 
 A self-audit found the product's own surface committing the one sin it exists to catch —
