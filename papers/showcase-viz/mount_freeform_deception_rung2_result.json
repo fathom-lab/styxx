@@ -1,0 +1,9 @@
+{
+  "VERDICT": "VOID-ARM-STARVATION",
+  "n_complied": 12,
+  "floor": 30,
+  "n_test": 46,
+  "rung": "2",
+  "agent": "Qwen/Qwen2.5-7B-Instruct",
+  "smoke": false
+}

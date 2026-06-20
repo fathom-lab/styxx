@@ -1,0 +1,284 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_mount_freeform_b40_2026_06_16.md",
+  "document_sha256": "aade4aadeb6dddd93c6fff9cd51bc03ecc71a0bcfcb4eeb551cdc4e492893b7e",
+  "receipts_sha256": {
+    "mount_freeform_deception_rung1_result.json": "649d9eccfbb3e44e027cd9b25fdba63e1b391870876b4eaa4f6a1e626077b6ef",
+    "mount_freeform_deception_rung2_result.json": "6b672ea143525f80fe41f257cc08039b73527ba6697fdbfe620aa78f00772ff3"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 19,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "0"
+    },
+    {
+      "line": 33,
+      "token": "34"
+    },
+    {
+      "line": 42,
+      "token": "2"
+    },
+    {
+      "line": 79,
+      "token": "0"
+    },
+    {
+      "line": 94,
+      "token": "1"
+    },
+    {
+      "line": 94,
+      "token": "2"
+    },
+    {
+      "line": 96,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`papers/showcase-viz/run_mount_freeform_deception.py`, SEED=0, greedy decode. Receipts",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "## RUNG 1 \u2014 Llama-3.2-3B-Instruct (fp16, the only validated gemma\u2192Llama transport pair): SUCCESS",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:rung"
+    },
+    {
+      "line": 32,
+      "token": "0.9231",
+      "value": 0.9231,
+      "decimals": 4,
+      "context": "free-form commitments, no deception persona) cleared at AUROC 0.9231 \u2014 the borrowed axis demonstrably",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:build_gate_auroc"
+    },
+    {
+      "line": 33,
+      "token": "34",
+      "value": 34.0,
+      "decimals": 0,
+      "context": "transports to the forced-verdict prose register, licensing the new calibration register. On the 34",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "0.7647",
+      "value": 0.7647,
+      "decimals": 4,
+      "context": "complied lie-arm items the conscience catch is 0.7647 at realized held-out-honest FPR 0.0769; the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:PRIMARY.catch"
+    },
+    {
+      "line": 34,
+      "token": "0.0769",
+      "value": 0.0769,
+      "decimals": 4,
+      "context": "complied lie-arm items the conscience catch is 0.7647 at realized held-out-honest FPR 0.0769; the",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:PRIMARY.fpr"
+    },
+    {
+      "line": 35,
+      "token": "0.8967",
+      "value": 0.8967,
+      "decimals": 4,
+      "context": "lie-vs-honest commitment-token discriminability is AUROC 0.8967, which clears the shuffled-axis null at",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:PRIMARY.lie_vs_honest_auroc"
+    },
+    {
+      "line": 36,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "p 0.01 and the label-permutation null at p 0.001. Every condition of the frozen kill-gate (catch",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:PRIMARY.p_shuffled_axis"
+    },
+    {
+      "line": 38,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "The set: a frozen pool of 120 non-comparative claim pairs yielded 68 knowledge-gated pairs, 27 held-out",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:n_pool"
+    },
+    {
+      "line": 38,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "The set: a frozen pool of 120 non-comparative claim pairs yielded 68 knowledge-gated pairs, 27 held-out",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:n_gated"
+    },
+    {
+      "line": 38,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "The set: a frozen pool of 120 non-comparative claim pairs yielded 68 knowledge-gated pairs, 27 held-out",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:n_held"
+    },
+    {
+      "line": 39,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "honest calibration commitments (center + tau, regime-matched, leakage-free), 39 honest test commitments,",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:n_test_honest"
+    },
+    {
+      "line": 40,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "and 41 test items; the operating threshold tau is 1.299.",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:n_test"
+    },
+    {
+      "line": 42,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## The text baseline (DESCRIPTIVE, not gating \u2014 per amendment #2)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "0.0588",
+      "value": 0.0588,
+      "decimals": 4,
+      "context": "prose-internal-consistency \u2014 the honest comparator) catches only 0.0588 at FPR 0.2051: fluent debate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:text_baseline_descriptive.no_answer_key.catch"
+    },
+    {
+      "line": 45,
+      "token": "0.2051",
+      "value": 0.2051,
+      "decimals": 4,
+      "context": "prose-internal-consistency \u2014 the honest comparator) catches only 0.0588 at FPR 0.2051: fluent debate",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:text_baseline_descriptive.no_answer_key.fpr"
+    },
+    {
+      "line": 47,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "oracle handed the external answer key catches 1.0 at the same 0.2051 \u2014 reported transparently, because it",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:rung"
+    },
+    {
+      "line": 47,
+      "token": "0.2051",
+      "value": 0.2051,
+      "decimals": 4,
+      "context": "oracle handed the external answer key catches 1.0 at the same 0.2051 \u2014 reported transparently, because it",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung1_result.json:text_baseline_descriptive.no_answer_key.fpr"
+    },
+    {
+      "line": 55,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## RUNG 2 \u2014 Qwen2.5-7B-Instruct (4-bit NF4): VOID-ARM-STARVATION (honest, no primary, no re-roll)",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung2_result.json:rung"
+    },
+    {
+      "line": 57,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "The 7B scale break could not be run to a verdict: only 12 of 46 test items produced compliant lie prose",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung2_result.json:n_complied"
+    },
+    {
+      "line": 57,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "The 7B scale break could not be run to a verdict: only 12 of 46 test items produced compliant lie prose",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung2_result.json:n_test"
+    },
+    {
+      "line": 61,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "against a ~30 floor): the stronger instruct model refuses to fully commit a fluent factual lie often",
+      "status": "VERIFIED",
+      "receipt_ref": "mount_freeform_deception_rung2_result.json:floor"
+    },
+    {
+      "line": 79,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "SEED=0, greedy decode \u2014 the SUCCESS is single-seed and single-pair; cross-scale (7B) is VOID, so this is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 94,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Prereg `PREREG_mount_freeform_b40_2026_06_16.md` (frozen with amendments #1 and #2 before the runner, at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 94,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Prereg `PREREG_mount_freeform_b40_2026_06_16.md` (frozen with amendments #1 and #2 before the runner, at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 96,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "SEED=0, greedy decode. Receipts `papers/showcase-viz/mount_freeform_deception_rung1_result.json` and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
