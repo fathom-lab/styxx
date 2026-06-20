@@ -32,7 +32,9 @@ from coherence_spectral_test import auroc  # noqa: E402
 torch.set_grad_enabled(True)
 
 SEED = 0
-MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
+MODEL = os.environ.get("STYXX_OBF_MODEL", "Qwen/Qwen2.5-1.5B-Instruct")   # default = original (reproducible)
+QUANT4 = os.environ.get("STYXX_OBF_4BIT", "") == "1"                       # 4-bit base (cross-model on 8GB)
+MODEL_TAG = MODEL.split("/")[-1].replace(".", "").lower()
 SMOKE = os.environ.get("STYXX_SMOKE", "") == "1"
 MAXANS = 24                     # cap answer tokens used for the probe-residual / KL (memory bound)
 STEPS = 30 if SMOKE else 180
@@ -60,8 +62,17 @@ def main():
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"loading {MODEL} on {dev} (smoke={SMOKE})...", flush=True)
     tok = AutoTokenizer.from_pretrained(MODEL)
-    model = AutoModelForCausalLM.from_pretrained(
-        MODEL, dtype=(torch.float16 if dev == "cuda" else torch.float32)).to(dev).eval()
+    if QUANT4:
+        from transformers import BitsAndBytesConfig
+        bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+                                 bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float16)
+        model = AutoModelForCausalLM.from_pretrained(MODEL, quantization_config=bnb,
+                                                     device_map="cuda").eval()
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            MODEL, dtype=(torch.float16 if dev == "cuda" else torch.float32)).to(dev).eval()
+    if tok.pad_token is None:
+        tok.pad_token = tok.eos_token
     for p in model.parameters():
         p.requires_grad_(False)
     nL = model.config.num_hidden_layers
@@ -336,7 +347,8 @@ def main():
     }
     for h in handles:
         h.remove()
-    out = HERE / ("obfuscation_gradient_smoke.json" if SMOKE else "obfuscation_gradient_result.json")
+    out = HERE / (f"obfuscation_gradient_smoke_{MODEL_TAG}.json" if SMOKE
+                  else f"obfuscation_gradient_result_{MODEL_TAG}.json")
     json.dump(res, open(out, "w"), indent=2)
     print(f"\n=> wrote {out.name}", flush=True)
     return 0
@@ -344,7 +356,8 @@ def main():
 
 def _void(tag, info, model, layer, band):
     print(f"\n=> {tag} {json.dumps(info)}", flush=True)
-    out = HERE / ("obfuscation_gradient_smoke.json" if SMOKE else "obfuscation_gradient_result.json")
+    out = HERE / (f"obfuscation_gradient_smoke_{MODEL_TAG}.json" if SMOKE
+                  else f"obfuscation_gradient_result_{MODEL_TAG}.json")
     json.dump({"VERDICT": tag, **info, "model": model, "layer": layer, "band": band, "smoke": SMOKE},
               open(out, "w"), indent=2)
     return 0
