@@ -1,4 +1,9 @@
-# RESULT — a TRAINED gradient steering attack cannot flatten the static deception probe without changing behavior
+> **SUPERSEDED (read with `SYNTHESIS_obfuscation_gradient_xmodel_2026_06_20.md`).** This single-model
+> (Qwen2.5-1.5B) result is real but is the **outlier**: the cross-model replication (Qwen-0.5B, Llama-1B,
+> Llama-3B) found the probe **FRAGILE on 3 of 4 models**. Qwen-1.5B's robustness here does NOT generalize.
+> Do not cite this `VOID-COUPLED` finding as a robustness claim without the cross-model synthesis.
+
+# RESULT — a TRAINED gradient steering attack cannot flatten the static deception probe without changing behavior (Qwen2.5-1.5B — SUPERSEDED, see synthesis)
 
 **2026-06-20.** Executed `PREREG_obfuscation_gradient_2026_06_20.md` (frozen `381e4d1`; three pre-data
 amendments — #1 λ-leakage fix, #2 relative lie-gate, #3 hinge objective + wider λ-sweep — all applied
