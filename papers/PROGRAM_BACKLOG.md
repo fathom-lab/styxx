@@ -204,6 +204,23 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   12/0); figure `mount_live_catch.png`. **OPERATOR: release crossmind+mount + fire TG #4; then wire
   styxx.mount into styxx.adapters (the live agent loop).**
 
+- **B40 — FREE-FORM PROSE deception at the commitment token (closes the owed B34/B35 follow-up; autopilot
+  cycle 18, 2026-06-20).** `SUCCESS` at the validated 3B scale, `VOID` at 7B. When Llama-3.2-3B is
+  instructed to argue a known-false fact in fluent prose and forced to a byte-identical `FINAL ANSWER:`
+  commitment token, the borrowed gemma-2-2b truth axis read at that single token catches the lie: build
+  GO gate AUROC 0.9231 (axis transports to the prose register), then catch 0.7647 @ realized
+  held-out-honest FPR 0.0769, lie-vs-honest AUROC 0.8967, shuffled-axis null p 0.01, label-permutation
+  null p 0.001 — every condition of the frozen ITEM-CAUGHT kill-gate met. A no-answer-key text reader of
+  the identical prose catches only 0.0588 (coherent prose hides the lie); the ground-truth oracle catches
+  1.0 and is reported transparently, NOT beaten (amendment #2 retired that gate as unwinnable by
+  construction). RUNG 2 (Qwen2.5-7B 4-bit) = `VOID-ARM-STARVATION` (12/46 complied < 30 floor; no primary,
+  no re-roll) → the 7B scale break is UNTESTED, blocked by compliance not measurement. New construct
+  (instructed prose deception), COOPERATIVE-monitor scope only (ATTACK-TRANSFERS stands). Prereg
+  `PREREG_mount_freeform_b40_2026_06_16.md`; runner `run_mount_freeform_deception.py`;
+  `FINDING_mount_freeform_b40_2026_06_16.md` (OATH-HELD, verified=19/0). **OWED:** scale-break on a model
+  that complies (or a larger non-comparative pool to fill the 7B arm); multi-seed / second transport pair
+  to lift the single-substrate scope.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
