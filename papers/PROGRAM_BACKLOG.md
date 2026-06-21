@@ -221,6 +221,20 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
   that complies (or a larger non-comparative pool to fill the 7B arm); multi-seed / second transport pair
   to lift the single-substrate scope.
 
+- **REGULATORY BRIDGE refreshed — conscience mount → EU AI Act Article 15 (autopilot cycle 19,
+  2026-06-20; operator-directed "big picture" pivot).** `SHIPPED`. The Art.15 bridge
+  (`styxx/compliance/eu_ai_act.py` + `EU_AI_ACT_COMPLIANCE_2026.md`) was frozen at v7.7.13 and predated
+  the program's strongest runtime-robustness primitive. Added `_CONSCIENCE_MOUNT` (`styxx.mount` +
+  `styxx.crossmind`) to **Article 15.1 + 15.3** as a read-only runtime substrate-vs-output integrity
+  monitor, citing committed OATH-HELD evidence (regime catch 0.85 @ FPR 0.20 `89ce75e`; B40 free-form
+  catch 0.7647 @ FPR 0.0769 `d0122f5`). Strict ceilings: WHITE-BOX (open-weight/self-host only),
+  COOPERATIVE-SCOPE and NOT cybersecurity (ATTACK-TRANSFERS stands `0ccc0b5` → cybersecurity clause stays
+  UNCOVERED), single-substrate. Companion paper §12 (v0.5 addendum); new guard test locks the disclosure;
+  A3 holds (7 uncovered ≥ 4 covered); suite 1578 pass. Commit `e09d53b`. **OWED (operator-gated,
+  outward-facing):** an EXTERNAL touch before **2026-08-02** — submit/announce the v0.5 bridge to the
+  stakeholders named in the paper (EC/AISI/METR/Apollo/CEN-CENELEC). **Research OWED:** wire a 15.3-citable
+  receipt into the live `styxx.Conscience` adapter.
+
 ---
 
 ## Tier 1 — the decisive robustness frontier (R4, highest leverage)
