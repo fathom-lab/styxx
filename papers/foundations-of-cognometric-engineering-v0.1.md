@@ -3,6 +3,8 @@
 **Version 0.1 — Research-Programme Outline**
 **Fathom Lab · 2026-04-24**
 
+> **⚠ Scope note (2026-06-21).** This v0.1 outline frames cognition as an "engineering substrate" with **orthogonal axes** and a **Fathom Constant**. Those structural claims were only ever backed at **n=3 models** and were **not validated at scale** — near-orthogonality of high-dimensional random vectors is weak evidence for genuinely distinct phenomena (`papers/INVENTION_STYXX_2026_06_07.md`, boundary section). Treat the K/C/D axes and the Fathom Constant as **aspirational programme framing, not established results.** Where the programme tested the universality this outline assumes, the answer was *asymmetric and bounded*: universality lives in representation, not mechanism (`ancient-question-program/SYNTHESIS_ancient_question_answered_2026_06_05.md`). The Shannon/Faraday framing is stated ambition, not achieved status.
+
 **Status:** Working document. The monograph is planned as a ~400-page
 open-access book whose first complete draft will be v0.5 (T+9 months
 from this outline), with v1.0 targeted for T+18 months. This document

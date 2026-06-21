@@ -6,6 +6,13 @@
 
 ---
 
+> **⚠ Correction / scope erratum (2026-06-21).** This essay's central leap — *"we do not believe this is a property of language models; we believe it is a property of cognition"* — and "the detectors transfer across model families" were **bounded or falsified** by this program's later pre-registered experiments. Recorded here because the instrument's value is that it refuses to overclaim about itself:
+> - **No substrate-independent "property of cognition" was established.** The 2,500-year question this gestures at was later made testable and answered *asymmetrically*: universality lives in the **geometry of representation** (partial, synthetic-scale), **not** in mechanism, and **not** as a substrate-independent law of cognition (`ancient-question-program/SYNTHESIS_ancient_question_answered_2026_06_05.md`, `CAPSTONE_universal_mind_2026_06_10.md`). "Property of cognition" is *motivation/hypothesis*, never a result.
+> - **Cross-family / cross-vendor transfer is corpus-overlap-bound, not universal** (τ≈0.31; min Anthropic 0.617 < 0.70 floor; `papers/threshold-law-2026-05-18.md`).
+> - **The near-perfect AUCs are register detectors at a construct ceiling** (collapse to ~0.50 on adversarial honesty; `THESIS_the_honesty_standard_2026_05_31.md`).
+>
+> *We measure behaviour and representation, never minds. The boundary is the product.*
+
 **Every mind leaves vitals.**
 
 We have shown, in three independent calibrated instruments, that the

@@ -5,6 +5,12 @@
 
 ---
 
+> **⚠ Correction / scope erratum (2026-06-21).** Two claims below were later *bounded or pre-registration-falsified by this program's own experiments* — recorded here because the instrument's whole value is that it does not overclaim about itself:
+> - **Law II (cross-substrate universality) is bounded, not universal.** Cross-*vendor* transport is governed by a corpus-overlap threshold (τ≈0.31), not a retraining-free universal law — min Anthropic transported AUC 0.617 < the 0.70 floor (`papers/threshold-law-2026-05-18.md`; cross-vendor universality KILLED). Detectors transfer *within* the corpus-overlap regime, not across all substrates.
+> - **The headline text-only AUCs are register/tell detectors at a construct ceiling**, not honesty or lie oracles: they collapse toward chance (~0.50) on adversarial honesty (`THESIS_the_honesty_standard_2026_05_31.md`). Law I (every computation leaves vitals) stands as the foundational empirical claim; these caveats bound how far it generalizes.
+>
+> *The boundary is the product. The asymmetric answer: universality lives in representation, not mechanism (`ancient-question-program/SYNTHESIS_ancient_question_answered_2026_06_05.md`).*
+
 **Every computation leaves vitals.**
 
 Language models do not just produce text. Every forward pass writes
