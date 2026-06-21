@@ -26,8 +26,8 @@ WRITE_FRACS = [0.50, 0.60, 0.70]      # write-layer candidates (skip shallow ~0.
 N_NATIVE_SEL = 12                      # held-out concepts used to pick the steer-optimal layer
 
 
-def run(src, dst, tag):
-    s0 = json.loads((HERE / f"g0clear_result_{tag}.json").read_text(encoding="utf-8"))
+def run(src, dst, tag, g0tag="llama3b"):
+    s0 = json.loads((HERE / f"g0clear_result_{g0tag}.json").read_text(encoding="utf-8"))  # G0 is a SOURCE property (DST-independent)
     if not s0.get("G0_pass"):
         print("SEALED: G0 not cleared."); return None
     kstar = s0["locked"]["k"]
@@ -141,8 +141,9 @@ def main(argv=None):
     ap.add_argument("--src", default="meta-llama/Llama-3.2-3B-Instruct")
     ap.add_argument("--dst", default="meta-llama/Llama-3.2-1B-Instruct")
     ap.add_argument("--tag", default="llama3b")
+    ap.add_argument("--g0tag", default="llama3b")
     a = ap.parse_args(argv)
-    run(a.src, a.dst, a.tag)
+    run(a.src, a.dst, a.tag, a.g0tag)
 
 
 if __name__ == "__main__":
