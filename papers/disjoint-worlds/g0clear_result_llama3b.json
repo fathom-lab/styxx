@@ -1,0 +1,117 @@
+{
+  "experiment": "G0-clear (cross-model write-channel instrument upgrade)",
+  "prereg": "PREREG_thought_transfer_g0clear_2026_06_20.md",
+  "src": "meta-llama/Llama-3.2-3B-Instruct",
+  "n_concepts": 462,
+  "smoke": false,
+  "layers_tested": [
+    11,
+    14,
+    17,
+    20
+  ],
+  "k_grid": [
+    60,
+    90,
+    120,
+    150
+  ],
+  "selection_grid": [
+    {
+      "layer": 11,
+      "k": 60,
+      "pc_cos_sel": 0.8707
+    },
+    {
+      "layer": 11,
+      "k": 90,
+      "pc_cos_sel": 0.8889
+    },
+    {
+      "layer": 11,
+      "k": 120,
+      "pc_cos_sel": 0.9068
+    },
+    {
+      "layer": 11,
+      "k": 150,
+      "pc_cos_sel": 0.9131
+    },
+    {
+      "layer": 14,
+      "k": 60,
+      "pc_cos_sel": 0.8245
+    },
+    {
+      "layer": 14,
+      "k": 90,
+      "pc_cos_sel": 0.8559
+    },
+    {
+      "layer": 14,
+      "k": 120,
+      "pc_cos_sel": 0.8786
+    },
+    {
+      "layer": 14,
+      "k": 150,
+      "pc_cos_sel": 0.8938
+    },
+    {
+      "layer": 17,
+      "k": 60,
+      "pc_cos_sel": 0.7909
+    },
+    {
+      "layer": 17,
+      "k": 90,
+      "pc_cos_sel": 0.824
+    },
+    {
+      "layer": 17,
+      "k": 120,
+      "pc_cos_sel": 0.8473
+    },
+    {
+      "layer": 17,
+      "k": 150,
+      "pc_cos_sel": 0.8653
+    },
+    {
+      "layer": 20,
+      "k": 60,
+      "pc_cos_sel": 0.7443
+    },
+    {
+      "layer": 20,
+      "k": 90,
+      "pc_cos_sel": 0.7758
+    },
+    {
+      "layer": 20,
+      "k": 120,
+      "pc_cos_sel": 0.8033
+    },
+    {
+      "layer": 20,
+      "k": 150,
+      "pc_cos_sel": 0.824
+    }
+  ],
+  "locked": {
+    "layer": 11,
+    "k": 150,
+    "pc_cos_sel_at_locked": 0.9131
+  },
+  "grid_max_sel": 0.9131,
+  "G0_pc_cos_FINAL": 0.9096,
+  "G0_gate": 0.8,
+  "G0_pass": true,
+  "verdict": "G0_CLEARED -> Stage 1 interpretable",
+  "parent_baseline": {
+    "N": 110,
+    "pc_cos": 0.74,
+    "k_sweep": "0.705/0.742/0.769 @ k=40/60/85"
+  },
+  "seal": "model B not loaded; no cross-model transfer number computed in Stage 0"
+}
