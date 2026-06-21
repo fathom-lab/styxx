@@ -77,3 +77,9 @@ universality does **not** live (mechanism); this tests how far it **does** (repr
 Existing rig: `run_thought_transfer.py` + `styxx_transfer.py` (TransferMap, self_test) + `introspection-gate`.
 Upgrade = expand `CONCEPTS`, add the (layer, k) selection sweep with the SELECTION/FINAL seal, gate Stage 1 on G0.
 8GB GPU, sequential model load (A freed before B), ~$0. Smoke (tiny N, 1 layer) before the full freeze-locked run.
+
+## Amendment (2026-06-20, pre-data, conservative — no gate change)
+Stage 1 additionally measures the zero-anchor **READ** (top-1 concept identification via `transfer_point`) on
+the SAME map and SAME held-out concepts as the WRITE test, so the read-vs-write comparison is apples-to-apples
+in one run (the lit-positioning makes read≠write the load-bearing axis). This is a reported diagnostic, not a
+gate: the frozen G1–G5 write verdict is unchanged. Added before any Stage-1 number was read.

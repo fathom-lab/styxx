@@ -70,6 +70,16 @@ def run(src, dst, tag):
     Qrand, _ = np.linalg.qr(rng.standard_normal((tm.Q.shape[0], tm.Q.shape[0])))
     tm_rand = TransferMap(tm.meanA, tm.VAk, Qrand, tm.meanB, tm.VBk, 0.0)
 
+    # --- READ side (pre-data amendment 2026-06-20, conservative diagnostic, no gate change): measure
+    # the zero-anchor READ on the SAME map + SAME held-out concepts so read-vs-write is apples-to-apples
+    # in ONE run. Transfer A's concept POINT into B's space; top-1 nearest among held-out B concept points.
+    fin_ptsB = np.array([ptsB[c] for c in fin])
+    read_hits = sum(1 for i, c in enumerate(fin)
+                    if int(np.argmin(np.linalg.norm(fin_ptsB - tm.transfer_point(ptsA[c]), axis=1))) == i)
+    read_top1 = read_hits / len(fin)
+    read_chance = 1.0 / len(fin)
+    print(f"   READ zero-anchor top-1 = {read_top1:.3f} (chance {read_chance:.3f}) over {len(fin)} held-out", flush=True)
+
     state = {"vec": None, "alpha": 0.0}
     h = mB.model.layers[LB].register_forward_hook(make_hook(state))
     alpha = P.lock_dose(mB, tokB, state, LB, vecsB, fin[:5], st, cemb)
@@ -111,6 +121,9 @@ def run(src, dst, tag):
            "src": src, "dst": dst, "locked_layer_src": LA, "locked_layer_dst": LB, "locked_k": kstar,
            "G0_pc_cos": s0["G0_pc_cos_FINAL"], "rsa": round(rsa, 3), "dst_dose_alpha": alpha,
            "n_heldout": len(fin),
+           "read_zero_anchor_top1": round(read_top1, 4), "read_chance": round(read_chance, 4),
+           "read_vs_write": ("read identifies held-out concepts zero-anchor; write = does the transferred "
+                             "direction steer B's output (G1-G5). compare the two for the read!=write dissociation."),
            "mean_transfer_gain": round(mt, 4), "mean_native_gain": round(mn, 4),
            "mean_randomQ_gain": round(mr, 4), "mean_wrong_concept_gain": round(mw, 4),
            "transfer_over_native_NTE": round(frac_nte, 3),
