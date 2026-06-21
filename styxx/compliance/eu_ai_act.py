@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 """EU AI Act Article 15 / Annex III compliance map for styxx primitives.
 
-This is the v0.1 measurement-methodology bridge described in
+This is the measurement-methodology bridge described in
 papers/EU_AI_ACT_COMPLIANCE_2026.md.
+
+CHANGELOG:
+  v0.1-0.3  cognometric_card, critique_detector, agent_audit, recover_posture,
+            gauntlet+preflight, grounded_honesty, detect_context_injection.
+  +mount    styxx.mount (the conscience mount) + styxx.crossmind added to
+            Article 15.1 and 15.3 as a runtime substrate-vs-output integrity
+            monitor. Disclosed strictly: WHITE-BOX (open-weight/self-host only)
+            and COOPERATIVE-SCOPE (NOT a cybersecurity control — ATTACK-TRANSFERS
+            stands; the Article 15 cybersecurity clause remains UNCOVERED).
 
 USAGE:
 
@@ -190,6 +199,44 @@ _GROUNDED_HONESTY = PrimitiveCoverage(
     receipt_doc="papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md",
 )
 
+_CONSCIENCE_MOUNT = PrimitiveCoverage(
+    primitive="styxx.mount (ConscienceMount) + styxx.crossmind",
+    calibrated_metric=(
+        "Runtime substrate-vs-output integrity monitor (the conscience mount). A "
+        "BORROWED honesty axis (gemma-2-2b difference-of-means) is transported "
+        "label-free via styxx.crossmind and read on a GENERATING agent's OWN hidden "
+        "state, flagging says-true-knows-false DIVERGENCE. Regime-matched, leakage-"
+        "free operating point on Llama-3.2-3B: catches 0.85 of sycophantic caves "
+        "(17/20) at realized held-out-honest false-alarm rate 0.20 (commit 89ce75e, "
+        "LIVE-CAUGHT-FPR, OATH-HELD). Extends to FREE-FORM prose deception at a forced "
+        "commitment token: catch 0.7647 at false-alarm 0.0769, lie-vs-honest AUROC "
+        "0.8967, shuffled-axis and label-permutation nulls both cleared (commit "
+        "d0122f5, B40, OATH-HELD) — where a no-answer-key text reader of the identical "
+        "prose catches only 0.0588. READ-ONLY: steer() is refused; a flag is a "
+        "measurement, never an intervention (acting on it is the integrator's policy)."
+    ),
+    construct_ceiling=(
+        "WHITE-BOX: needs the agent's own hidden activations, so it applies ONLY to "
+        "open-weight or self-hosted high-risk systems, NOT closed API models. "
+        "COOPERATIVE-SCOPE ONLY and explicitly NOT a cybersecurity / adversarial "
+        "control: the borrowed truth direction is near-canonical, so a small white-box "
+        "activation perturbation evades all borrowed consciences (ATTACK-TRANSFERS, "
+        "cos ~0.94 across reference models; a re-locked ensemble raises a NAIVE "
+        "attacker's budget ~32x but an ADAPTIVE attacker still evades at ~2x — commit "
+        "0ccc0b5). It therefore maps to Article 15.3 robustness against the system's "
+        "OWN inconsistency / sycophantic drift, NOT to the Article 15 cybersecurity "
+        "clause (which stays UNCOVERED — see UNCOVERED_REQUIREMENTS). Linear BORROWED "
+        "axis with its own false positives (a true claim can read deeply negative). "
+        "SINGLE-SUBSTRATE: the free-form SUCCESS is single-seed on one agent (Llama-"
+        "3.2-3B, fp16); the 7B rung VOIDed on compliance arm-starvation, so cross-"
+        "scale is UNTESTED, not confirmed. Realized false-alarm control is loose at "
+        "small n (0.20 vs a 0.10 target). COMMITMENT-TIME monitor, not foreknowledge "
+        "(B34): the signal is localized to the commitment token, not an early warning."
+    ),
+    receipt_commit="89ce75e",
+    receipt_doc="papers/conscience-mount/FINDING_mount_regime_2026_06_13.md",
+)
+
 _DETECT_CONTEXT_INJECTION = PrimitiveCoverage(
     primitive="styxx.detect_context_injection",
     calibrated_metric=(
@@ -235,7 +282,7 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
         ),
         styxx_primitives=(
             _COGNOMETRIC_CARD, _GAUNTLET_PREFLIGHT, _AGENT_AUDIT,
-            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION, _CONSCIENCE_MOUNT,
         ),
     ),
     "Article 15.1(a)": ComplianceMap(
@@ -263,7 +310,7 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
         # requirement on the cognometric measurement layer.
         styxx_primitives=(
             _RECOVER_POSTURE, _AGENT_AUDIT,
-            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION, _CONSCIENCE_MOUNT,
         ),
     ),
     "Article 15.4": ComplianceMap(

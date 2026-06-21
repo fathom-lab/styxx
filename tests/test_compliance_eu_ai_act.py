@@ -150,6 +150,31 @@ def test_uncovered_clauses_are_specific():
         assert pattern.match(u.clause), f"non-specific uncovered clause: {u.clause!r}"
 
 
+def test_conscience_mount_primitive_present_and_honestly_scoped():
+    """The conscience-mount primitive (post-v7.7.13) is mapped to 15.1 + 15.3
+    AND its load-bearing limits are disclosed: white-box, cooperative-scope,
+    and NOT a cybersecurity control (the cybersecurity clause stays uncovered).
+    Locks the honest framing so a future edit cannot quietly overclaim it as an
+    adversarial defense.
+    """
+    def _mount(clause):
+        m = cite(clause)
+        return [p for p in m.styxx_primitives if "mount" in p.primitive.lower()]
+
+    for clause in ("Article 15.1", "Article 15.3"):
+        prims = _mount(clause)
+        assert prims, f"conscience mount missing from {clause}"
+        ceiling = prims[0].construct_ceiling.lower()
+        assert "white-box" in ceiling, f"{clause}: white-box requirement not disclosed"
+        assert "cooperative" in ceiling, f"{clause}: cooperative-scope limit not disclosed"
+        assert "attack-transfers" in ceiling, f"{clause}: ATTACK-TRANSFERS limit not disclosed"
+
+    # the cybersecurity clause must remain in the honest uncovered list — the
+    # mount maps to robustness-against-own-inconsistency, never to cybersecurity.
+    cyber = [u for u in uncovered_requirements() if "cybersecurity" in u.clause.lower()]
+    assert cyber, "Article 15 cybersecurity must stay UNCOVERED (mount is not a security control)"
+
+
 def test_no_legal_advice_in_notes():
     """Compliance maps must disclaim legal advice; no hedging language permitted to be absent."""
     for m in coverage_table():

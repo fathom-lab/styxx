@@ -339,6 +339,25 @@ The first claim is a measurement-primitive headline. The second is a control-pri
 
 ---
 
+## 12. v0.5 addendum (2026-06-20) — the conscience-mount runtime integrity primitive (Article 15.1 + 15.3), white-box and cooperative-scope
+
+The v0.1–v0.4 primitives are text/resample-grounded and run black-box on the agent's outputs. The styxx research program has since shipped a qualitatively different instrument — the **conscience mount** (`styxx.mount.ConscienceMount` + `styxx.crossmind`, with the live-loop adapter `styxx.Conscience`) — which this addendum maps into the bridge with its load-bearing limits stated up front, not buried.
+
+**What it is.** A read-only runtime integrity monitor. A *borrowed* honesty axis (a gemma-2-2b difference-of-means truth direction) is transported **label-free** via `styxx.crossmind` and read on a **generating agent's own hidden state**, flagging says-true-knows-false **divergence** between what the agent's substrate encodes and what its words assert. It is the closest thing in the stack to an Article 15.1 "performs consistently throughout its lifecycle" and Article 15.3 "technical-redundancy / fail-safe" primitive: an out-of-band conscience cross-checks the agent's output at generation time.
+
+**Calibrated evidence (both OATH-HELD, receipts on `fathom-lab/styxx`).**
+- Regime-matched, leakage-free operating point on Llama-3.2-3B: catches **0.85** of sycophantic caves (17/20) at realized held-out-honest false-alarm rate **0.20** (commit `89ce75e`).
+- Extends to **free-form prose** deception at a forced commitment token: catch **0.7647** at false-alarm **0.0769**, lie-vs-honest AUROC **0.8967**, shuffled-axis and label-permutation nulls both cleared (commit `d0122f5`, the B40 result). On the identical generations a no-answer-key text reader catches only **0.0588** — the substrate carries what the fluent words conceal.
+
+**Construct ceilings (mapped honestly to the boundary statement, §4).**
+- **WHITE-BOX.** It requires the agent's own hidden activations, so it applies **only to open-weight or self-hosted** high-risk systems — not closed API models. This narrows applicability and is stated as such.
+- **COOPERATIVE-SCOPE, and explicitly NOT a cybersecurity control.** The borrowed truth direction is near-canonical, so a small white-box activation perturbation evades all borrowed consciences (the ATTACK-TRANSFERS result, cos ~0.94 across reference models; a re-locked ensemble raises a *naive* attacker's budget ~32× but an *adaptive* attacker still evades at ~2×; commit `0ccc0b5`). The mount therefore maps to Article 15.3 robustness against the system's **own** sycophantic drift / inconsistency — and **Article 15 cybersecurity stays in the UNCOVERED list (§4.2)**. A runtime monitor is not a security perimeter.
+- **SINGLE-SUBSTRATE / single-seed.** The free-form SUCCESS is one agent (Llama-3.2-3B, fp16), one seed; the 7B rung VOIDed on compliance arm-starvation, so cross-scale is **untested, not confirmed**. False-alarm control is loose at small n (realized 0.20 vs a 0.10 target). It is a commitment-**time** monitor, not foreknowledge.
+
+**What changes for operators.** Open-weight high-risk deployments gain a *runtime* Article 15.1/15.3 evidence source (a continuous substrate-vs-output consistency check) on top of the static accuracy declarations the v0.1–v0.4 primitives produce. **What does not change:** kill-gates A1–A5 hold; the boundary statement (§4) grows, not shrinks — the cybersecurity clause and Articles 9/10/12/13/14 remain uncovered; nothing prior is retracted. This is a measurement methodology, not legal advice, and independent conformity review remains required.
+
+---
+
 ## Acknowledgments
 
 Written 2026-05-28 alongside `styxx.compliance.eu_ai_act` v0.1 in a continuous session, with the cognitive support of Claude Opus 4.7 acting as in-session collaborator. The recursive-discipline methodology of the companion paper (`PAPER_recursive_discipline_2026_05_27.md` v7) directly informs this paper's pre-registration kill-gates, the construct-ceiling discipline in §3, and the boundary-statement discipline in §4. Every claim in this paper is reproducible at commit-level granularity from `fathom-lab/styxx@main`.
