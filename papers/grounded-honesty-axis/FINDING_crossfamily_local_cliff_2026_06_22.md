@@ -56,6 +56,31 @@ here is the same shape at the reliability level:
 Representation shared, control not — a fourth independent instance, on the predicted side. Held as
 *suggestive*, not proven, pending a pre-registered confirmatory run.
 
+## Exploratory open↔closed (cross-vendor): tested and REJECTED — confounded by the judge
+
+The tempting next step was to extend the hallucination-cliff invariance across the open/closed
+divide by comparing the three open families to the committed gpt-4o-mini cliff. **It does not hold,
+and the way it fails shows why:**
+
+| comparison | hallucination cliff (mean Spearman) | refusal cliff (mean Spearman) |
+|---|---|---|
+| open ↔ open (all NLI-judged) | **+0.77** | +0.43 |
+| open ↔ closed gpt-4o-mini | **+0.23** | +0.52 |
+
+The ordering **inverts**: open↔open has hallucination ≫ refusal (the rep/mechanism split); open↔closed
+has refusal > hallucination. That inversion is the signature of an **apparatus confound, not a real
+divergence** — the open families were scored by the NLI judge and gpt-4o-mini by an LLM judge, and
+*hallucination rate (correctness)* is exactly the quantity most sensitive to the judge, while the
+*refusal rate (stability/clustering)* is judge-robust. So the cross-vendor hallucination correlation
+craters for a mechanical reason. **The cross-vendor extension is therefore NOT claimed.** The only
+trustworthy invariance is the within-apparatus open↔open 0.77.
+
+**The clean fix needs no API key** and is built + queued (`run_xvendor_matched.py`): gpt-4o-mini's
+per-item resamples are already on disk (`truthfulqa_benchmark_result.json`), so they can be
+re-judged with the *identical* NLI judge and gpt-4o-mini's cliff recomputed under the matched
+apparatus. Then open↔closed is judge-confound-free. It runs once the GPU frees from the Rung 2 read
+sweep. (This is logged here because the extension was *tested and rejected*, not silently dropped.)
+
 ## Honest bounds / confounds
 
 - **Underpowered on the pre-registered metric.** The headline pre-reg result is inconclusive; do
