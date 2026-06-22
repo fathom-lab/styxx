@@ -11,16 +11,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.17.4] — 2026-06-19 — meaning_diff returns a typed result
+## [7.18.0] — 2026-06-22 — the per-domain accuracy declaration (EU AI Act Article 15.1(a))
+
+EU AI Act Article 15.1(a) requires that *"levels of accuracy and relevant accuracy metrics shall
+be declared in the accompanying instructions of use."* A single headline number does not satisfy
+that for a model whose reliability swings by domain. This release ships the per-domain map — and
+makes it structurally unable to overclaim about itself.
+
+### Added
+- **`styxx.compliance.competence_cliff()`** — the Article 15.1(a) artifact in literal form: a
+  per-domain accuracy declaration. Returns a frozen `CompetenceCliff` over 37 TruthfulQA
+  deployment domains × committed precision under the belief-coherence gate (gpt-4o-mini, n=790),
+  each tagged `safe` / `review` / `do_not_deploy` against pre-stated thresholds (0.90 / 0.60).
+  `.as_markdown()` renders an instructions-of-use declaration; `.by_tier()` / `.to_dict()` /
+  `.get()` round it out. Wired in as the **lead primitive of `cite("Article 15.1(a)")`**.
+- **Receipt discipline, enforced in CI.** The per-domain numbers ship as package data
+  (`styxx/_data/competence_cliff_truthfulqa_gpt4omini_v1.json`), a verbatim copy of the
+  `category_competence_cliff_map` committed at `a75f1e7`. A **drift-gate** test re-derives every
+  shipped figure from that committed research receipt and fails the build on any divergence
+  (verify-by-re-derivation — the attestation philosophy applied to a regulatory declaration). An
+  **anti-rosy gate** test asserts the artifact keeps naming the bars that FAILED pre-registration
+  (continuous AUC 0.619, K_precondition 0.281; `REPORT_AS_LANDED`, not `SURVIVED`) and its
+  `do_not_deploy` domains — so the declaration can never silently drop its own failures.
+- 13 new tests (`tests/test_compliance_competence_cliff.py`). The A3 kill-gate (uncovered ≥
+  covered) remains intact: 4 Article 15 clauses mapped, 7 named as uncovered.
 
 ### Changed
 - **`styxx.meaning_diff.meaning_diff()` / `meaning_diff_templates()` now return a typed
   `MeaningDiff` dataclass** instead of a raw `dict`, bringing the instrument in line with every
   other headline readout. Fully back-compatible: `r["agreement"]`, `r.get(...)`, `k in r`,
   iteration, `dict(r)`, and a new `.to_dict()` all keep working alongside attribute access
-  (`r.agreement`). `MeaningDiff` is exported from `styxx.meaning_diff`.
+  (`r.agreement`). `MeaningDiff` is exported from `styxx.meaning_diff`. *(developed as 7.17.4;
+  first shipped in 7.18.0.)*
 
 ### Docs
+- `papers/EU_AI_ACT_COMPLIANCE_2026.md` §11.3 / §11.4 and the `accuracy_declaration.md` template
+  now point at the shipped `competence_cliff()` API (previously the cliff map was paper-only).
 - README: added a **"New in 7.16 / 7.17"** section so the shipped flagship arc — `crossmind`, the
   borrowed-conscience `mount` / `styxx.Conscience`, attestation + the 7.17.1 verifier hardening,
   and the provenance work — is no longer absent from the body (it previously stopped at 7.7.14).
