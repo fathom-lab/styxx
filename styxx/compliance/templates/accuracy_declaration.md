@@ -34,6 +34,19 @@ Each metric below is reproducible from the cited styxx commit hash. The construc
 | Factual self-claim honesty (`grounded_honesty`) | AUC **0.966** (clean) / **0.944** (under context-injection) | n=48 register-matched factual self-claim pairs; gpt-4o-mini, N=10 resamples at temp 1.0; pre-reg `papers/grounded-honesty-axis/PREREG_grounded_honesty_axis.md`; injection-gap closure SURVIVED 2026-05-29 | grounds against the model's BELIEF not external truth; single axis (factual self-claims) only; past competence-cliff can converge on stably-wrong belief; SECURITY MODEL: caller MUST sample statelessly — in-session sampling collapses to AUC 0.011 (near-inverted, see `injection_resistance_disclosure.md`) | `e093730` |
 | Context-injection detection (`detect_context_injection`) | AUC **0.875** at threshold 0.5 | n=48 register-matched pairs under system_lie injection; mean D_FALSE 0.852, mean D_TRUE 0.977; K3 attack-effective 0.98 (47/48 modal-flipped) | single-model, single-vendor, single injection-type (system_lie) calibration; stronger attacks (few-shot, persona, multi-stage) remain pre-registerable scope-extensions NOT validated here | `e093730` |
 
+## Per-domain accuracy (competence cliff)
+
+Article 15.1(a) asks for *accuracy levels*, not a single number. For a system whose reliability varies by domain, declare the **per-domain** breakdown. Generate it from the package and paste the output here:
+
+```python
+from styxx.compliance import competence_cliff
+print(competence_cliff().as_markdown())
+```
+
+This emits the 37-domain TruthfulQA reference map (gpt-4o-mini under the belief-coherence gate), grouped into **SAFE TO DEPLOY** (committed precision ≥ 0.90), **DEPLOY ONLY WITH REVIEW** (0.60–0.90), and **DO NOT DEPLOY WITHOUT MITIGATION** (< 0.60 — Language 0.38, Distraction 0.50, Superstitions 0.54), with the honest bounds (continuous AUC 0.619 FAILED; K_precondition 0.281 FAILED → REPORT_AS_LANDED, no SURVIVED claim) rendered inline. The shipped numbers are drift-gated in CI against the committed receipt (styxx@`a75f1e7`).
+
+> **Substitute your own system's map.** The shipped map characterises gpt-4o-mini on TruthfulQA — a *reference* artifact. For your deployed system, re-run the gate (`papers/grounded-honesty-axis/run_pregeneration_gate.py`) on a domain-stratified set representative of your Annex III use, and declare *that* per-domain map. The reference map shows the shape of the disclosure Article 15.1(a) needs; it is not a substitute for measuring your own system.
+
 ## Pre-registration record
 
 The measurement methodology is **pre-registration-disciplined**: every cited AUC corresponds to a pre-registered prediction document committed to public git history BEFORE the validation data was scored. Pre-registration documents:

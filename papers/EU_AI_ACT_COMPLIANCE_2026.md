@@ -302,13 +302,15 @@ The same Layer 2 receipt yields the first per-category cliff map of gpt-4o-mini'
 
 **This is the EU AI Act Article 15.1(a) per-domain operational reliability artifact regulators have been asking the field to produce.** No other observability vendor publishes it because none have the primitive that separates stable-from-unstable belief at item granularity. Operators citing `audit_claim` in instructions-of-use can stratify deployment-domain reliability by the receipts above.
 
+**Shipped as queryable, drift-gated code (2026-06-22).** The cliff map is no longer only a paper table. It ships in the package as `styxx.compliance.competence_cliff()`, which returns a frozen `CompetenceCliff` over the 37 domains — each tagged `safe` / `review` / `do_not_deploy` against pre-stated committed-precision thresholds (0.90 / 0.60) — and renders an instructions-of-use declaration via `.as_markdown()`. It is wired into `cite("Article 15.1(a)")` as the lead primitive. The per-domain numbers are loaded from package data that is a *verbatim copy* of the `category_competence_cliff_map` committed at `a75f1e7`; a CI **drift-gate** (`tests/test_compliance_competence_cliff.py`) re-derives every shipped number from that committed receipt and fails the build on any divergence, and an **anti-rosy gate** asserts the FAILED pre-registered bars (continuous AUC 0.619, K_precondition 0.281) stay named *inside* the artifact — so the regulatory declaration can never silently drift from its evidence, nor quietly drop the layers where the method did not pass. This is verify-by-re-derivation (the attestation philosophy of §6) applied to a regulatory accuracy declaration.
+
 ### 11.4 What changes for operators relying on the v0.3 mapping
 
 The v0.3 mapping (system_lie + persona_lie injection calibration; fewshot_lie identified as ineffective) is intact and unchanged. The v0.4 additions:
 
 - **Layer 1 bounds the cross-dataset transport claim** of the v0.2 §3.1 calibration: the n=48 register-matched AUC 0.966 is feasibility-grade, not benchmark-grade. The v0.3 paper's calibration cells for `grounded_honesty` are updated in §3.1 to note the bounded transport.
 - **Layer 2 introduces the gate primitive as a deployable artifact** with descriptive calibration numbers (C1=0.66 / C2=0.49 / C3=0.84). Operators can wire the gate in via the existing 7.7.13 `audit_claim` API (the `abstain` verdict is the gate output) — the calibration receipt is now in v0.4.
-- **Layer 3 introduces the per-category cliff map** as a deployable disclosure artifact. Operators stratifying instructions-of-use accuracy declarations by domain can cite the map directly.
+- **Layer 3 introduces the per-category cliff map** as a deployable disclosure artifact, now shipped as queryable, drift-gated code (`styxx.compliance.competence_cliff()`, wired into `cite("Article 15.1(a)")`). Operators stratifying instructions-of-use accuracy declarations by domain can pull the map directly from the package and paste `.as_markdown()` into the declaration.
 
 ### 11.5 What does NOT change (kill-gates A1–A5)
 

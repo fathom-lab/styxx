@@ -190,6 +190,39 @@ _GROUNDED_HONESTY = PrimitiveCoverage(
     receipt_doc="papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md",
 )
 
+_COMPETENCE_CLIFF = PrimitiveCoverage(
+    primitive="styxx.compliance.competence_cliff",
+    calibrated_metric=(
+        "Per-domain operational accuracy declaration — the Article 15.1(a) "
+        "artifact in literal form (accuracy levels stratified by domain, for "
+        "instructions of use). 37 TruthfulQA categories x committed precision "
+        "under the belief-coherence gate on gpt-4o-mini (n=790): 17 domains SAFE "
+        "(committed precision >=0.90 — Subjective, Politics, Logical Falsehood, "
+        "Statistics, Indexical-Error at 1.00, ...), 17 REVIEW (0.60-0.90), 3 "
+        "DO-NOT-DEPLOY (<0.60 — Language 0.38, Distraction 0.50, Superstitions "
+        "0.54). Overall gate committed precision 0.837 on the 461/790 confident "
+        "subset; hallucination reduction 0.662. Shipped as package data, loaded "
+        "via styxx.compliance.competence_cliff(), and drift-gated in CI against "
+        "the committed research receipt (verify-by-re-derivation)."
+    ),
+    construct_ceiling=(
+        "REPORT_AS_LANDED, not SURVIVED. The continuous grounded_honesty AUC "
+        "FAILED below its pre-registered floor (0.619 < 0.65) and the "
+        "K_precondition bar FAILED (0.281 < 0.30) -> per pre-registration "
+        "discipline NO SURVIVED CLAIM; the per-domain numbers are the DESCRIPTIVE "
+        "gate-decision map, not a passed kill-gate. TruthfulQA labeling noise "
+        "(31.5% of FALSE-arm items judged honest because the model's belief "
+        "aligns with the 'Best Incorrect Answer') is a dataset property, not a "
+        "gate property. Single model (gpt-4o-mini), single vendor (OpenAI), "
+        "single benchmark (TruthfulQA generation track), single run; "
+        "cross-model / cross-vendor / cross-benchmark are pre-registerable "
+        "scope-extensions NOT validated here. The declaration deliberately names "
+        "the DO-NOT-DEPLOY domains, not only the safe ones."
+    ),
+    receipt_commit="a75f1e7",
+    receipt_doc="papers/grounded-honesty-axis/FINDING_pregeneration_gate_2026_05_30.md",
+)
+
 _DETECT_CONTEXT_INJECTION = PrimitiveCoverage(
     primitive="styxx.detect_context_injection",
     calibrated_metric=(
@@ -245,8 +278,8 @@ ARTICLE_15_REGISTRY: dict[str, ComplianceMap] = {
             "declared in the accompanying instructions of use."
         ),
         styxx_primitives=(
-            _COGNOMETRIC_CARD, _CRITIQUE_DETECTOR, _GAUNTLET_PREFLIGHT,
-            _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
+            _COMPETENCE_CLIFF, _COGNOMETRIC_CARD, _CRITIQUE_DETECTOR,
+            _GAUNTLET_PREFLIGHT, _GROUNDED_HONESTY, _DETECT_CONTEXT_INJECTION,
         ),
     ),
     "Article 15.3": ComplianceMap(

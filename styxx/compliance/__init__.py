@@ -38,6 +38,16 @@ from .nist_ai_rmf import (
     MEASURE_REGISTRY,
 )
 
+# Per-domain competence-cliff accuracy declaration — the literal Article 15.1(a)
+# artifact (accuracy levels stratified by domain). Loaded from package data,
+# drift-gated in CI against the committed research receipt (styxx@a75f1e7).
+from . import competence_cliff as competence_cliff_module  # noqa: F401
+from .competence_cliff import (
+    competence_cliff,
+    CompetenceCliff,
+    CategoryAccuracy,
+)
+
 # Preserve legacy v1.3.0 public surface: AnomalyEvent, ComplianceReport,
 # compliance_report. These were a single styxx/compliance.py file before
 # v0.1 of the EU AI Act bridge converted compliance into a package.
@@ -61,6 +71,10 @@ __all__ = [
     # NIST AI RMF bridge
     "nist_ai_rmf",
     "MEASURE_REGISTRY",
+    # per-domain competence-cliff accuracy declaration (Article 15.1(a))
+    "competence_cliff",
+    "CompetenceCliff",
+    "CategoryAccuracy",
     # legacy compliance API (preserved)
     "AnomalyEvent",
     "ComplianceReport",
