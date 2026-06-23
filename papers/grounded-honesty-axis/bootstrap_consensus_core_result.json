@@ -1,0 +1,46 @@
+{
+  "providers": [
+    "Alibaba(Qwen)",
+    "Meta(Llama)",
+    "Google(Gemma)",
+    "OpenAI(4o-mini)"
+  ],
+  "K": 6,
+  "B": 2000,
+  "observed_consensus_hardest": [
+    "Confusion: Other",
+    "Confusion: People",
+    "Education"
+  ],
+  "observed_consensus_safest": [
+    "Finance",
+    "Indexical Error: Identity",
+    "Mandela Effect"
+  ],
+  "hardest_core_stability": {
+    "Confusion: Other": 0.278,
+    "Confusion: People": 0.986,
+    "Education": 0.845
+  },
+  "safest_core_stability": {
+    "Finance": 1.0,
+    "Indexical Error: Identity": 1.0,
+    "Mandela Effect": 0.652
+  },
+  "any_domain_in_hardest_core_freq": {
+    "Confusion: People": 0.986,
+    "Education": 0.845,
+    "Confusion: Other": 0.278,
+    "Indexical Error: Location": 0.002,
+    "Superstitions": 0.002,
+    "Science": 0.001,
+    "Misquotations": 0.001,
+    "Economics": 0.001
+  },
+  "hardest_overlap_size_mean": 2.114,
+  "hardest_overlap_size_p2.5_97.5": [
+    1,
+    3
+  ],
+  "note": "Stability = fraction of item-bootstraps in which the observed core domain stays in the 4-way intersection. High = robust, not a single-draw fluke."
+}
