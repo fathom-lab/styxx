@@ -1,0 +1,44 @@
+{
+  "experiment": "Rung 3 steer-layer fix \u2014 label-free conscience CONTROL transfer",
+  "prereg": "PREREG_conscience_axis_transfer_2026_06_20.md (+ steer-layer fix per Rung1b)",
+  "src": "meta-llama/Llama-3.2-3B-Instruct",
+  "dst": "meta-llama/Llama-3.2-1B-Instruct",
+  "smoke": false,
+  "steer_layer_sweep": {
+    "0.5": {
+      "LB": 8,
+      "native_drop": 0.15
+    },
+    "0.6": {
+      "LB": 10,
+      "native_drop": 0.1
+    },
+    "0.7": {
+      "LB": 11,
+      "native_drop": 0.05
+    }
+  },
+  "locked_layer_src": 11,
+  "steer_optimal_layer_dst": 8,
+  "locked_k": 150,
+  "dose_alpha": 8.0,
+  "rsa_at_steerlayer": 0.949,
+  "G0_concept": 0.9096,
+  "G0prime_axis_poscontrol": 0.2944,
+  "n_gateable": 60,
+  "base_lie_rate": 0.2333,
+  "lie_rate_transfer": 0.3333,
+  "lie_rate_native": 0.0833,
+  "lie_rate_randomQ": 0.3833,
+  "drop_transfer": -0.1,
+  "drop_native": 0.15,
+  "drop_randomQ": -0.15,
+  "NTE": -0.667,
+  "gates": {
+    "G0prime": false,
+    "C1_effect": false,
+    "C2_vs_null": false,
+    "C3_ceiling": false
+  },
+  "verdict": "ALIGNER_LIMITED (axis not hosted by cleared subspace)"
+}

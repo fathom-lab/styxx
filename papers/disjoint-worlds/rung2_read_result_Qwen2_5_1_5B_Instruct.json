@@ -1,0 +1,8 @@
+{
+  "hf": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer_B": 11,
+  "rsa": 0.864,
+  "read_top1": 0.0571,
+  "read_chance": 0.0143,
+  "read_x_chance": 4.0
+}
