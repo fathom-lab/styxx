@@ -58,7 +58,7 @@ def main():
 
     delta = rows["32-token (gen-matched)"]["oc_h"] - BASELINE_24["open_closed_hall"]
     print("\n" + "-"*72)
-    print(f"PRIMARY bar  Δ = (gm32 open<->closed hallucination) - 0.473 = {delta:+.3f}")
+    print(f"PRIMARY bar  delta = (gm32 open<->closed hallucination) - 0.473 = {delta:+.3f}")
     if abs(delta) < 0.05:
         verdict = "RESIDUAL ROBUST — generation fully matched; the open<->closed gap is REAL vendor divergence, not apparatus."
     elif delta >= 0.10:

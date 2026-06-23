@@ -1,0 +1,41 @@
+{
+  "rows": {
+    "24-token (committed)": {
+      "oo_h": 0.7702689310128199,
+      "oo_r": 0.4260163991528463,
+      "oc_h": 0.47272450665400984,
+      "oc_r": 0.41563294069901086,
+      "oc_h_perfam": [
+        0.4859525363977375,
+        0.442874254672984,
+        0.489346728891308
+      ]
+    },
+    "32-token (gen-matched)": {
+      "oo_h": 0.6126584887728651,
+      "oo_r": 0.3993584325607474,
+      "oc_h": 0.5095029720971548,
+      "oc_r": 0.3514229943708603,
+      "oc_h_perfam": [
+        0.5300398990944917,
+        0.3997614684281215,
+        0.5987075487688512
+      ]
+    }
+  },
+  "primary_delta": 0.0365,
+  "verdict": "RESIDUAL ROBUST \u2014 generation fully matched; the open<->closed gap is REAL vendor divergence, not apparatus.",
+  "baseline_24": {
+    "open_open_hall": 0.77,
+    "open_closed_hall": 0.473
+  },
+  "signals": [
+    "ungated_hallucination_rate",
+    "refusal_rate"
+  ],
+  "families": [
+    "Qwen2_5_3B_Instruct",
+    "Llama_3_2_3B_Instruct",
+    "gemma_2_2b_it"
+  ]
+}
