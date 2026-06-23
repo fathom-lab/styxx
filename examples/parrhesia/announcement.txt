@@ -1,0 +1,18 @@
+styxx 7.19.0 introduces PARRHESIA: verifiable honesty receipts for AI messages.
+
+An AI's honesty is usually asserted and taken on faith. Faith is the wrong basis — a model's
+self-report tracks the framing of the question, not the truth. PARRHESIA moves the check outside the
+model: an external instrument scores a message, and the verdict is written into a receipt that
+re-derives, so a third party can confirm it without trusting the agent or the auditor.
+
+Mechanism: the message is hashed into the receipt, so a swapped message is caught. The audit is
+deterministic, so re-running it reproduces the verdict — the auditor is re-run, not trusted. It is the
+same verify-by-re-derivation discipline as the styxx attestation layer.
+
+The limits, stated plainly: a receipt certifies a message passed a register audit — its tone,
+sycophancy and overclaim — not that the content is true. It is a verifiable tone receipt, not a truth
+oracle, and it depends on someone choosing to issue it. The mechanism is modest; the guarantee is the point.
+
+This announcement ships with its own PARRHESIA receipt. The verify script re-derives it.
+
+pip install styxx
