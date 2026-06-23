@@ -1,0 +1,44 @@
+{
+  "B": 2000,
+  "24token": {
+    "within_open_ci_item": [
+      0.495,
+      0.72
+    ],
+    "open_closed_ci_item": [
+      0.287,
+      0.541
+    ],
+    "within_open_ci_hier": [
+      0.34,
+      0.807
+    ],
+    "open_closed_ci_hier": [
+      0.078,
+      0.687
+    ],
+    "within_open_point": 0.77,
+    "open_closed_point": 0.473
+  },
+  "32token": {
+    "within_open_ci_item": [
+      0.393,
+      0.632
+    ],
+    "open_closed_ci_item": [
+      0.329,
+      0.548
+    ],
+    "within_open_ci_hier": [
+      0.253,
+      0.738
+    ],
+    "open_closed_ci_hier": [
+      0.139,
+      0.685
+    ],
+    "within_open_point": 0.613,
+    "open_closed_point": 0.51
+  },
+  "within_open_24_vs_32_ci_overlap": true
+}
