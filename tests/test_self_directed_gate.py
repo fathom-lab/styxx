@@ -145,16 +145,17 @@ def test_response_guard_is_suppress_only():
 
 
 def test_sycoph_version_selector():
-    """Default is v0.2 (word-boundary); v0 (substring) stays reachable for
-    provenance; v0.2 scores the substring-artifact apology LOWER than v0."""
+    """Default is v0.3 (length-decorrelated + operating-point recentered); v0.2 (word-boundary) and v0
+    (substring) stay reachable for provenance. Word-boundary versions score the substring-artifact
+    apology LOWER than v0 (phantom substring hits removed)."""
     from styxx.guardrail.sycophancy import DEFAULT_SYCOPH_VERSION
-    assert DEFAULT_SYCOPH_VERSION == "v0.2"
+    assert DEFAULT_SYCOPH_VERSION == "v0.3"
     apology = "my mistake — i corrected it carefully and checked thoroughly."
     v0 = sycoph_check(prompt="", response=apology, version="v0").sycoph_risk
-    v02 = sycoph_check(prompt="", response=apology, version="v0.2").sycoph_risk
+    v03 = sycoph_check(prompt="", response=apology, version="v0.3").sycoph_risk
     default = sycoph_check(prompt="", response=apology).sycoph_risk
-    assert default == v02                       # default is v0.2
-    assert v02 < v0                             # word-boundary removes phantom hits
+    assert default == v03                       # default is v0.3
+    assert v03 < v0                             # word-boundary + recenter removes phantom hits
     with pytest.raises(ValueError):
         sycoph_check(prompt="", response="x", version="v9.9")
 

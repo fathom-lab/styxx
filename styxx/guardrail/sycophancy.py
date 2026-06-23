@@ -61,25 +61,24 @@ from .sycophancy_signals import (
     extract_sycophancy_features_v0_2,
 )
 
-# version -> (weights module, feature extractor). v0.2 (word-boundary) is the default; v0 (substring)
-# preserved for provenance. v0.3 (length-decorrelated; drops the log_word_count length confound, see
-# FINDING_sycophancy_length_confound_2026_06_23) is STAGED + reachable via version="v0.3" but NOT yet the
-# default: removing length raises the SHORT-text baseline (0.20->0.44), which shifts the operating point
-# and ripples into the composite/preflight gates (a terse status line flips to needs_revision). Making it
-# default needs a downstream-threshold recalibration on the holdout sets first — tracked, not rushed.
+# version -> (weights module, feature extractor). v0.3 (length-decorrelated + operating-point recentered)
+# is the default; v0.2 (word-boundary) and v0 (substring) preserved for provenance + the DOI'd paper.
+# v0.3 drops the log_word_count length confound (FINDING_sycophancy_length_confound_2026_06_23) and
+# recenters so content-neutral honest text scores ~0.20 at ALL lengths (matches v0.2's short-text
+# operating point the downstream gates assume); validated TPR-preserving on the holdouts.
 _VERSIONS = {
     "v0":   (_w_v0,   extract_sycophancy_features),
     "v0.2": (_w_v0_2, extract_sycophancy_features_v0_2),
-    "v0.3": (_w_v0_3, extract_sycophancy_features_v0_2),  # staged: length-decorrelated, pending threshold recal
+    "v0.3": (_w_v0_3, extract_sycophancy_features_v0_2),
 }
-DEFAULT_SYCOPH_VERSION = "v0.2"
+DEFAULT_SYCOPH_VERSION = "v0.3"
 
 # Backward-compatible module-level exports reflect the DEFAULT version.
-FEATURE_NAMES = _w_v0_2.FEATURE_NAMES
-DEFAULT_SYCOPH_THRESHOLD = _w_v0_2.DEFAULT_SYCOPH_THRESHOLD
-MEAN_CV_AUC = _w_v0_2.MEAN_CV_AUC
-STD_CV_AUC = _w_v0_2.STD_CV_AUC
-CALIBRATION_FINGERPRINT = _w_v0_2.CALIBRATION_FINGERPRINT
+FEATURE_NAMES = _w_v0_3.FEATURE_NAMES
+DEFAULT_SYCOPH_THRESHOLD = _w_v0_3.DEFAULT_SYCOPH_THRESHOLD
+MEAN_CV_AUC = _w_v0_3.MEAN_CV_AUC
+STD_CV_AUC = _w_v0_3.STD_CV_AUC
+CALIBRATION_FINGERPRINT = _w_v0_3.CALIBRATION_FINGERPRINT
 
 
 @dataclass

@@ -52,10 +52,10 @@ import math
 import re
 from typing import Dict, List
 
-# v0.2 weights: the gated score must be on the same scale as the default sycoph_check (v0.2),
-# so cognometrics' min(raw, gated) stays coherent. (v0.3 length-decorrelated weights are staged
-# in calibrated_weights_sycophancy_v0_3 — swap here once its downstream thresholds are recalibrated.)
-from .calibrated_weights_sycophancy_v0_2 import (
+# v0.3 weights: length-decorrelated + operating-point recentered. Same scale as the default sycoph_check
+# (now v0.3), so cognometrics' min(raw, gated) stays coherent. v0.3 removes the log_word_count length
+# confound and recenters content-neutral honest text to ~0.20 at all lengths (TPR-preserving on holdouts).
+from .calibrated_weights_sycophancy_v0_3 import (
     COEFS, FEATURE_NAMES, INTERCEPT, SCALER_MEAN, SCALER_SCALE, _SCALED_Z_CLIP,
 )
 from .sycophancy_signals import (
