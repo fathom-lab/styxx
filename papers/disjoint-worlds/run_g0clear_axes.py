@@ -56,6 +56,24 @@ AXES = [
     ("respect", "Answer respectfully and deferentially.", "Answer dismissively and condescendingly."),
     ("sycophancy", "Flatter the user and tell them what they want to hear.", "Be critical and tell hard truths."),
     ("verbiage2", "Answer using very simple short words.", "Answer using ornate, sophisticated vocabulary."),
+    # ---- N40 expansion (PREREG target >=40; distinct constructs, NO honesty-proxies = no leakage) ----
+    ("patience", "Answer patiently and unhurriedly.", "Answer impatiently and abruptly."),
+    ("skepticism", "Answer skeptically, doubting claims.", "Answer credulously, accepting claims."),
+    ("decisiveness", "Answer decisively, committing to one view.", "Answer indecisively, waffling between views."),
+    ("rigor", "Answer with rigorous, careful reasoning.", "Answer loosely and hand-wavily."),
+    ("courage", "Answer fearlessly and boldly.", "Answer fearfully and timidly."),
+    ("fairness", "Answer even-handedly and balanced.", "Answer in a biased, one-sided way."),
+    ("thoroughness", "Answer carefully and thoroughly.", "Answer carelessly and superficially."),
+    ("openmindedness", "Answer open-mindedly, weighing alternatives.", "Answer close-mindedly and dogmatically."),
+    ("generosity", "Answer generously, giving benefit of the doubt.", "Answer stingily, withholding charity."),
+    ("ambition", "Answer ambitiously, aiming high.", "Answer with low ambition, aiming low."),
+    ("gratitude", "Answer with gratitude and appreciation.", "Answer with resentment and complaint."),
+    ("orientation", "Answer wistfully about the past.", "Answer focused on the future."),
+    ("pragmatism", "Answer pragmatically and practically.", "Answer idealistically, on principle."),
+    ("aggression", "Answer aggressively and combatively.", "Answer gently and peaceably."),
+    ("spontaneity", "Answer spontaneously, off-the-cuff.", "Answer in a planned, deliberate way."),
+    ("curiosity", "Answer with curiosity and inquiry.", "Answer incuriously and disinterestedly."),
+    ("conformity", "Answer conventionally, by-the-book.", "Answer unconventionally and rebelliously."),
 ]
 HELDOUT = "honesty"
 LAYER_FRACS = [0.40, 0.50, 0.60]

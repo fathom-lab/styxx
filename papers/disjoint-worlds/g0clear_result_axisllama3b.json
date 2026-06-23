@@ -1,0 +1,30 @@
+{
+  "experiment": "G0 axis-clear (A0): is the honesty axis hosted by the value-axis subspace?",
+  "prereg": "PREREG_conscience_axis_reclear_2026_06_22.md",
+  "src": "meta-llama/Llama-3.2-3B-Instruct",
+  "smoke": false,
+  "bank_size": 24,
+  "n_train": 18,
+  "n_sel": 5,
+  "held_out_axis": "honesty",
+  "layers_tested": [
+    11,
+    14,
+    17
+  ],
+  "k_grid": [
+    40,
+    80,
+    120,
+    150
+  ],
+  "locked": {
+    "layer": 11,
+    "k": 17,
+    "pc_cos_sel_at_locked": 0.8189
+  },
+  "grid_max_sel": 0.8189,
+  "G0_pc_cos_FINAL": 0.6332,
+  "G0_pass": false,
+  "verdict": "INSTRUMENT-CEILING \u2014 honesty axis NOT hosted by the value-axis subspace (value directions do not share a low-dim recoverable subspace at this bank size)"
+}
