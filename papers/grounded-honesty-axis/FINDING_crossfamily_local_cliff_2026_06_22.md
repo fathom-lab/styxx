@@ -56,32 +56,45 @@ here is the same shape at the reliability level:
 Representation shared, control not — a fourth independent instance, on the predicted side. Held as
 *suggestive*, not proven, pending a pre-registered confirmatory run.
 
-## Exploratory open↔closed (cross-vendor): tested and REJECTED — confounded by the judge
+## Exploratory open↔closed (cross-vendor): judge confound DEMONSTRATED; invariance PARTIAL after matching
 
-The tempting next step was to extend the hallucination-cliff invariance across the open/closed
-divide by comparing the three open families to the committed gpt-4o-mini cliff. **It does not hold,
-and the way it fails shows why:**
+The tempting next step was to extend the hallucination-cliff invariance across the open/closed divide
+by comparing the three open families to the committed gpt-4o-mini cliff. The naive comparison fails,
+and a follow-up run — `run_xvendor_matched.py`, **now executed** (2026-06-23) — shows *why* it failed
+and how much of the failure was apparatus, not signal. gpt-4o-mini's per-item resamples were already
+on disk (`truthfulqa_benchmark_result.json`, no API key), so they were re-judged with the **identical
+NLI judge** used for the open families and gpt-4o-mini's cliff recomputed under the matched apparatus:
 
 | comparison | hallucination cliff (mean Spearman) | refusal cliff (mean Spearman) |
 |---|---|---|
-| open ↔ open (all NLI-judged) | **+0.77** | +0.43 |
-| open ↔ closed gpt-4o-mini | **+0.23** | +0.52 |
+| open ↔ open (all NLI-judged) | **+0.770** | +0.426 |
+| open ↔ closed gpt-4o-mini — OLD (LLM judge) | +0.231 | +0.518 |
+| open ↔ closed gpt-4o-mini — **MATCHED (NLI re-judge)** | **+0.473** | +0.416 |
 
-The ordering **inverts**: open↔open has hallucination ≫ refusal (the rep/mechanism split); open↔closed
-has refusal > hallucination. That inversion is **consistent with an apparatus confound** — the open
-families were scored by the NLI judge and gpt-4o-mini by an LLM judge, and *hallucination rate
-(correctness)* is exactly the quantity most sensitive to the judge, while the *refusal rate
-(stability/clustering)* is less so. **But this is a HYPOTHESIS, not a demonstrated confound** (audit
-issue C): the matched-judge run (`run_xvendor_matched.py`) that would prove it is built but **has not
-yet executed**, so I cannot rule out that the open↔closed divergence is partly real. Either way, **the
-cross-vendor extension is NOT claimed.** The only invariance claimed is the within-apparatus open↔open
-0.77.
+**The judge confound is demonstrated, and it was large.** Two signatures, both predicted:
+1. **The inverted ordering flips back.** OLD open↔closed had refusal (0.52) **>** hallucination (0.23)
+   — the opposite of the rep/mechanism split. Under the matched judge the ordering **restores** to
+   hallucination (0.47) **>** refusal (0.42), matching the open↔open shape.
+2. **The hallucination invariance roughly doubles** (0.231 → 0.473) and the per-family estimates
+   **tighten** (matched: Qwen +0.486 / Llama +0.443 / gemma +0.489 — a 0.05 spread, vs the OLD's wide
+   scatter). Refusal stays low and model-specific throughout (0.28–0.60, mean ≈ 0.42) — control is
+   substrate-specific across the open/closed divide too, exactly as the asymmetry predicts.
 
-**The clean fix needs no API key** and is built + queued (`run_xvendor_matched.py`): gpt-4o-mini's
-per-item resamples are already on disk (`truthfulqa_benchmark_result.json`), so they can be
-re-judged with the *identical* NLI judge and gpt-4o-mini's cliff recomputed under the matched
-apparatus. Then open↔closed is judge-confound-free. It runs once the GPU frees from the Rung 2 read
-sweep. (This is logged here because the extension was *tested and rejected*, not silently dropped.)
+**But — honest bound — cross-vendor invariance is PARTIAL, not full.** Even with the judge matched,
+open↔closed hallucination (0.473) is still well below open↔open (0.770). A real residual gap remains,
+and it is **not cleanly separable here**: this run matches only the *judge*, not the *generation
+apparatus* (gpt-4o-mini was sampled via the OpenAI API under a different decoding pipeline than the
+locally-sampled open families). So the residual 0.47-vs-0.77 could be true open/closed vendor
+divergence **or** the remaining generation-apparatus mismatch — this run cannot tell them apart.
+
+**What is now claimed:** (a) the OLD 0.23 *understated* cross-vendor hallucination-cliff invariance —
+roughly half of the open↔closed attenuation was a judge artifact; (b) the rep/mechanism ordering
+(hallucination shared ≫ refusal shared) **survives across the open/closed divide** once the judge is
+matched; (c) cross-vendor hallucination-cliff invariance is **real but partial (≈0.47)**, with a
+residual gap that needs a generation-matched run to resolve. Nothing is wired from this; the shipped
+`competence_cliff()` (gpt-4o-mini, LLM-judged) is untouched. Receipts:
+`xvendor_gpt4omini_nli_gate.json`, `xvendor_matched_invariance_result.json`,
+`analyze_xvendor_matched.py`.
 
 ## Honest bounds / confounds
 
@@ -114,6 +127,10 @@ stands as-is.
    kill the dataset confound.
 2. Larger open models (7B+) that commit more, to make the committed-precision cliff measurable
    cross-family.
+3. **Generation-matched open↔closed** to resolve the residual 0.47-vs-0.77 gap: regenerate the open
+   families' samples under gpt-4o-mini's decoding pipeline (or vice versa) so that *both* generation
+   and judge are matched. Only then can the residual cross-vendor gap be attributed to true vendor
+   divergence rather than apparatus.
 
 ## Receipts
 

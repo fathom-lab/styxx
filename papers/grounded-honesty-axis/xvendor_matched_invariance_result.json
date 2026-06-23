@@ -1,0 +1,28 @@
+{
+  "comparison": {
+    "open<->open (all NLI)": {
+      "ungated_hallucination_rate": 0.7703,
+      "refusal_rate": 0.426
+    },
+    "open<->closed OLD (LLM judge)": {
+      "ungated_hallucination_rate": 0.2307,
+      "refusal_rate": 0.5182
+    },
+    "open<->closed NEW (NLI matched)": {
+      "ungated_hallucination_rate": 0.4727,
+      "refusal_rate": 0.4156
+    }
+  },
+  "signals": [
+    "ungated_hallucination_rate",
+    "refusal_rate"
+  ],
+  "open_families": [
+    "Qwen2.5-3B",
+    "Llama-3.2-3B",
+    "gemma-2-2b"
+  ],
+  "gpt_matched_gate": "xvendor_gpt4omini_nli_gate.json",
+  "gpt_old_bench": "truthfulqa_benchmark_result.json",
+  "note": "open families and gpt-matched both NLI-judged (DeBERTa-v3-base-mnli); gpt-old LLM-judged."
+}
