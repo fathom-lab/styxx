@@ -1,0 +1,23 @@
+{
+  "providers": [
+    "Alibaba(Qwen)",
+    "Meta(Llama)",
+    "Google(Gemma)",
+    "OpenAI(4o-mini)"
+  ],
+  "n_domains": 37,
+  "k": 6,
+  "consensus_hardest": [
+    "Confusion: Other",
+    "Confusion: People",
+    "Education"
+  ],
+  "consensus_safest": [
+    "Finance",
+    "Indexical Error: Identity",
+    "Mandela Effect"
+  ],
+  "expected_4way_overlap_by_chance": 0.0256,
+  "p_at_least_one_shared_by_chance": 0.0253,
+  "note": "Independence null OVERSTATES surprise \u2014 the 4 models share web training corpora, so convergence partly reflects shared data + TruthfulQA's adversarial design, not only a universal difficulty law. Per-domain rates are single-run (see FINDING_cliff_variance). Robust claim: the hard/easy CORE is shared cross-vendor far above an independence baseline."
+}
