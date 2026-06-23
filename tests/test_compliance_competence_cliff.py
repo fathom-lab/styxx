@@ -136,6 +136,24 @@ def test_answer_key_sha_matches_benchmark_receipt(cliff):
     assert cliff.answer_key_sha256 == expected
 
 
+@pytest.mark.skipif(not (_RECEIPT.exists() and _BENCHMARK.exists()), reason="research receipts not in installed wheel")
+def test_failed_bars_re_derive_from_receipts(cliff):
+    """The FAILED pre-registered bars (continuous AUC, K_precondition) must RE-DERIVE from their
+    committed receipts, not merely sit inside `<` bounds.
+
+    Without this the drift-gate's provenance claim ("every shipped figure re-derives from the
+    receipt; the declared accuracy can never silently drift") would be false in scope: the two
+    FAILED numbers are package-data literals, and an attacker could edit 0.6191 -> 0.649 (still
+    `< 0.65`, still tagged FAILED) and CI would stay green. This ties them to source.
+    """
+    bench = json.loads(_BENCHMARK.read_text(encoding="utf-8"))
+    gate = json.loads(_RECEIPT.read_text(encoding="utf-8"))
+    assert cliff.continuous_auc_value == round(bench["bars"]["H1"]["auc_merged"], 4), \
+        "continuous_auc_value drifted from the benchmark receipt (bars.H1.auc_merged)"
+    assert cliff.k_precondition_value == round(gate["bars"]["K_precondition"]["ungated_hallucination_rate"], 4), \
+        "k_precondition_value drifted from the gate receipt (bars.K_precondition.ungated_hallucination_rate)"
+
+
 # ---------------------------------------------------------------------------
 # ANTI-ROSY GATE — the honest (FAILED) bounds must stay present
 # ---------------------------------------------------------------------------

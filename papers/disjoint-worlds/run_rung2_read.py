@@ -39,9 +39,14 @@ TARGETS = [
 
 
 def distmat(R):
-    sq = np.sum(R * R, 1)
-    d2 = sq[:, None] + sq[None, :] - 2.0 * R @ R.T
-    return np.sqrt(np.maximum(d2, 0.0))
+    # MUST match run_disjoint_worlds.distmat (the metric the same-family anchor used): center +
+    # row-L2-normalize + mean-scale. A prior raw-Euclidean version made cross-family RSA values
+    # non-comparable to the anchor (audit issue A) — inflating gemma's RSA and the read-curve
+    # ordering. Heterogeneous-dim models (gemma's norm outliers) diverged by up to ~0.6.
+    R = R - R.mean(0, keepdims=True)
+    R = R / (np.linalg.norm(R, axis=1, keepdims=True) + 1e-9)
+    D = np.sqrt(np.maximum(((R[:, None, :] - R[None, :, :]) ** 2).sum(-1), 0.0))
+    return D / (D.mean() + 1e-9)
 
 
 def extract_no_grad(model, tok, layer):

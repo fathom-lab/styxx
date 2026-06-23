@@ -1,0 +1,79 @@
+{
+  "A_cloud": {
+    "eff_rank": 15.9,
+    "dist_mean": 3.854,
+    "dist_cv": 0.221,
+    "n": 462
+  },
+  "chance": 0.0143,
+  "gemma-2-2b-it": {
+    "6": {
+      "read": 0.0571,
+      "x_chance": 4.0,
+      "rsa": 0.863,
+      "cloud": {
+        "eff_rank": 19.9,
+        "dist_mean": 24.901,
+        "dist_cv": 0.215,
+        "n": 462
+      }
+    },
+    "8": {
+      "read": 0.0143,
+      "x_chance": 1.0,
+      "rsa": 0.934,
+      "cloud": {
+        "eff_rank": 19.3,
+        "dist_mean": 40.27,
+        "dist_cv": 0.197,
+        "n": 462
+      }
+    },
+    "10": {
+      "read": 0.0143,
+      "x_chance": 1.0,
+      "rsa": 0.955,
+      "cloud": {
+        "eff_rank": 16.3,
+        "dist_mean": 45.237,
+        "dist_cv": 0.217,
+        "n": 462
+      }
+    },
+    "12": {
+      "read": 0.0143,
+      "x_chance": 1.0,
+      "rsa": 0.965,
+      "cloud": {
+        "eff_rank": 15.5,
+        "dist_mean": 56.362,
+        "dist_cv": 0.22,
+        "n": 462
+      }
+    },
+    "14": {
+      "read": 0.0143,
+      "x_chance": 1.0,
+      "rsa": 0.96,
+      "cloud": {
+        "eff_rank": 16.6,
+        "dist_mean": 69.336,
+        "dist_cv": 0.223,
+        "n": 462
+      }
+    }
+  },
+  "Qwen2.5-1.5B-Instruct": {
+    "11": {
+      "read": 0.0571,
+      "x_chance": 4.0,
+      "rsa": 0.864,
+      "cloud": {
+        "eff_rank": 18.7,
+        "dist_mean": 8.761,
+        "dist_cv": 0.218,
+        "n": 462
+      }
+    }
+  }
+}

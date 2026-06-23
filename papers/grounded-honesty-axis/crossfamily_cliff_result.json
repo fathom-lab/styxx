@@ -19,7 +19,7 @@
       "value": 0.9969557962045746,
       "survived": 0.55,
       "report": 0.35,
-      "verdict": "SURVIVED",
+      "verdict": "INCONCLUSIVE_UNDERPOWERED",
       "pairs": [
         {
           "a": "Qwen2.5-3B-Instruct",
@@ -39,7 +39,8 @@
           "spearman": 0.9999999999999998,
           "n_shared": 3
         }
-      ]
+      ],
+      "power_note": "mean Spearman computed over only 3-7 shared domains (committed_n>=5 in both); below the 10-domain power floor -> NOT a real SURVIVED. See FINDING."
     },
     "L2_shared_hard_floor": {
       "domains": [],

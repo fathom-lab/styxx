@@ -11,6 +11,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.18.1] — 2026-06-22 — drift-gate now covers the FAILED bars (provenance honesty fix)
+
+A multi-agent adversarial audit of 7.18.0 found a scope gap in the very claim the artifact is
+built on. `styxx.compliance.competence_cliff` documents that "every shipped figure re-derives from
+the committed receipt … the declared accuracy can never silently drift" — but the two FAILED
+pre-registered bars (`continuous_auc_value` 0.6191, `k_precondition_value` 0.281) were package-data
+literals guarded only by `<` bounds, not re-derived. An edit of 0.6191 → 0.649 would have stayed
+green. For a regulator-facing provenance artifact, overstating provenance on exactly the FAILED
+numbers is the worst place to overclaim.
+
+### Fixed
+- **The drift-gate now re-derives the FAILED bars too.** `tests/test_compliance_competence_cliff.py`
+  ties `continuous_auc_value` to `truthfulqa_benchmark_result.json` `bars.H1.auc_merged` and
+  `k_precondition_value` to `pregeneration_gate_result.json`
+  `bars.K_precondition.ungated_hallucination_rate`. The provenance claim is now literally true in
+  full scope: drift in either FAILED number fails the build. (15 tests; the artifact, data, and
+  Article 15.1(a) mapping are otherwise unchanged.)
+
+---
+
 ## [7.18.0] — 2026-06-22 — the per-domain accuracy declaration (EU AI Act Article 15.1(a))
 
 EU AI Act Article 15.1(a) requires that *"levels of accuracy and relevant accuracy metrics shall

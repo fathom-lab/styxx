@@ -68,12 +68,14 @@ and the way it fails shows why:**
 | open ↔ closed gpt-4o-mini | **+0.23** | +0.52 |
 
 The ordering **inverts**: open↔open has hallucination ≫ refusal (the rep/mechanism split); open↔closed
-has refusal > hallucination. That inversion is the signature of an **apparatus confound, not a real
-divergence** — the open families were scored by the NLI judge and gpt-4o-mini by an LLM judge, and
-*hallucination rate (correctness)* is exactly the quantity most sensitive to the judge, while the
-*refusal rate (stability/clustering)* is judge-robust. So the cross-vendor hallucination correlation
-craters for a mechanical reason. **The cross-vendor extension is therefore NOT claimed.** The only
-trustworthy invariance is the within-apparatus open↔open 0.77.
+has refusal > hallucination. That inversion is **consistent with an apparatus confound** — the open
+families were scored by the NLI judge and gpt-4o-mini by an LLM judge, and *hallucination rate
+(correctness)* is exactly the quantity most sensitive to the judge, while the *refusal rate
+(stability/clustering)* is less so. **But this is a HYPOTHESIS, not a demonstrated confound** (audit
+issue C): the matched-judge run (`run_xvendor_matched.py`) that would prove it is built but **has not
+yet executed**, so I cannot rule out that the open↔closed divergence is partly real. Either way, **the
+cross-vendor extension is NOT claimed.** The only invariance claimed is the within-apparatus open↔open
+0.77.
 
 **The clean fix needs no API key** and is built + queued (`run_xvendor_matched.py`): gpt-4o-mini's
 per-item resamples are already on disk (`truthfulqa_benchmark_result.json`), so they can be
@@ -89,6 +91,10 @@ sweep. (This is logged here because the extension was *tested and rejected*, not
   target misconceptions humans (and models) commonly hold; some cross-family hallucination overlap
   may reflect the benchmark's design (shared targeted-hard domains) rather than a deep property. A
   non-adversarial benchmark (e.g. a balanced QA set) is the clean follow-up.
+- **Refusal-cliff 0.426 is not a clean estimate (audit issue D).** Llama-3B refuses 100% in 11/37
+  domains (≥0.95 in 19/37); tied maxima mechanically depress the Spearman via range-restriction. The
+  *direction* survives (on the non-saturated subset, refusal invariance 0.34 ≪ hallucination 0.755),
+  but do not cite 0.426 as a clean figure — cite the direction + the range-restriction caveat.
 - **Apparatus difference from the shipped cliff.** The NLI judge is not the LLM judge of the
   committed gpt-4o-mini run, so these local maps are not numerically cross-comparable to the shipped
   `competence_cliff()` artifact — the comparison here is strictly *across the three local families

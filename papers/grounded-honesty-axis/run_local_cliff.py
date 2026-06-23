@@ -155,8 +155,12 @@ def _judge_item(nli: "NLIJudge", samples: list[str], best: str, worst: str) -> t
     reference (the model's answer affirms the reference fact). This is the correct direction —
     a verbose correct answer ("X passes through the digestive system just like any seed")
     entails the short reference ("X passes through the digestive system") but NOT vice-versa,
-    so a bidirectional test would (wrongly) reject it. Polarity is still protected because Best
-    and Worst are contradictory: a sample entailing Best does not entail Worst.
+    so a bidirectional test would (wrongly) reject it. Polarity is MOSTLY protected because Best
+    and Worst are usually mutually exclusive in context — but they are distinct propositions, not
+    strict logical contradictions, so a sample can occasionally entail BOTH (audit: ~5-10% of
+    items). That symmetric overlap adds to both arms and does not flip the TRUE-vs-FALSE
+    concordance comparison (measured: 0/790 label flips), so the per-domain cliffs are unaffected;
+    a stricter variant would route both-entail samples by argmax(entail).
 
     Clustering (for the stability term) is LENIENT: two samples share a cluster iff EITHER
     entails the other (mutually compatible), so paraphrases of the same answer don't over-split.
@@ -324,6 +328,13 @@ def main(argv: list[str] | None = None) -> int:
     def verdict(v, sv, rp):
         return "NA" if v != v else ("SURVIVED" if v >= sv else ("REPORT" if v >= rp else "FAILED"))
     L1_verdict = verdict(L1, L1_SURVIVED, L1_REPORT)
+    # Power guard (audit issue F): a Spearman over a handful of shared domains is uninterpretable.
+    # Small open models refuse so heavily that committed_n>=5 leaves only ~3-7 domains, so L1 can
+    # print a spurious "SURVIVED" (0.997 on 3 points). Below the floor, the verdict is INCONCLUSIVE.
+    MIN_SHARED_DOMAINS = 10
+    min_shared = min((p["n_shared"] for p in pairs), default=0)
+    if min_shared < MIN_SHARED_DOMAINS:
+        L1_verdict = "INCONCLUSIVE_UNDERPOWERED"
 
     print("\n================== cross-family local cliff — bars ==================")
     print(f"K-valid families: {valid}")
