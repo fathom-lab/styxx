@@ -31,9 +31,14 @@ def pear(x,y):
 def sp(x,y): return pear(rank(x),rank(y))
 def cmap(p): return json.load(open(p,encoding="utf-8"))["category_competence_cliff_map"]
 
+# all-or-nothing: use gen-matched (_gm32) gates ONLY if ALL open families have them (consistent
+# apparatus). Mid-genmatch (only some _gm32 present) -> fall back to the consistent 24-token set.
+USE_GM32 = all((HERE / f"crossfamily_gate_{s}_gm32.json").exists() for s in OPEN.values())
+
 def open_gate(slug):
-    gm = HERE / f"crossfamily_gate_{slug}_gm32.json"
-    return (gm, "gen-matched(32)") if gm.exists() else (HERE / f"crossfamily_gate_{slug}.json", "matched-judge(24)")
+    if USE_GM32:
+        return HERE / f"crossfamily_gate_{slug}_gm32.json", "gen-matched(32)"
+    return HERE / f"crossfamily_gate_{slug}.json", "matched-judge(24)"
 
 def main():
     maps, prov_mode = {}, {}
