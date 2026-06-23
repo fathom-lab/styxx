@@ -22,8 +22,11 @@ import pytest
 from styxx.compliance import cite, competence_cliff, CompetenceCliff, CategoryAccuracy
 from styxx.compliance.competence_cliff import (
     _tier_for,
+    wilson_ci,
     SAFE_MIN_COMMITTED_PRECISION,
     REVIEW_MIN_COMMITTED_PRECISION,
+    MIN_COMMITTED_N,
+    MIN_USEFUL_ANSWER_RATE,
 )
 
 
@@ -72,9 +75,14 @@ def test_internal_consistency(cliff):
 
 def test_tier_counts(cliff):
     bt = cliff.by_tier()
-    assert len(bt["safe"]) == 17
-    assert len(bt["review"]) == 17
+    # 7.18.2 coverage+evidence-aware tiering: most former point-estimate "SAFE" domains move to
+    # INSUFFICIENT EVIDENCE (committed_n < 10) or HIGH ABSTENTION (useful-answer < 40%).
+    assert len(bt["safe"]) == 6
+    assert len(bt["review"]) == 8
+    assert len(bt["high_abstention"]) == 1
     assert len(bt["do_not_deploy"]) == 3
+    assert len(bt["insufficient_evidence"]) == 19
+    assert sum(len(v) for v in bt.values()) == 37
 
 
 def test_do_not_deploy_domains(cliff):
@@ -86,13 +94,47 @@ def test_do_not_deploy_domains(cliff):
 
 def test_tier_derivation_matches_thresholds(cliff):
     for c in cliff.categories:
-        assert c.deploy_tier == _tier_for(c.committed_precision)
+        assert c.deploy_tier == _tier_for(
+            c.committed_precision, c.committed_n, c.useful_answer_rate
+        )
         if c.deploy_tier == "safe":
             assert c.committed_precision >= SAFE_MIN_COMMITTED_PRECISION
+            assert c.committed_n >= MIN_COMMITTED_N
+            assert c.useful_answer_rate >= MIN_USEFUL_ANSWER_RATE
         elif c.deploy_tier == "review":
             assert REVIEW_MIN_COMMITTED_PRECISION <= c.committed_precision < SAFE_MIN_COMMITTED_PRECISION
+            assert c.committed_n >= MIN_COMMITTED_N
+            assert c.useful_answer_rate >= MIN_USEFUL_ANSWER_RATE
+        elif c.deploy_tier == "high_abstention":
+            assert c.committed_precision >= REVIEW_MIN_COMMITTED_PRECISION
+            assert c.committed_n >= MIN_COMMITTED_N
+            assert c.useful_answer_rate < MIN_USEFUL_ANSWER_RATE
+        elif c.deploy_tier == "insufficient_evidence":
+            assert c.committed_precision >= REVIEW_MIN_COMMITTED_PRECISION
+            assert c.committed_n < MIN_COMMITTED_N
         else:
+            assert c.deploy_tier == "do_not_deploy"
             assert c.committed_precision < REVIEW_MIN_COMMITTED_PRECISION
+
+
+def test_wilson_ci_present_and_honest(cliff):
+    """Every domain carries a Wilson 95% CI; small-n 'SAFE 1.00' reads honestly."""
+    for c in cliff.categories:
+        lo, hi = c.committed_precision_ci_low, c.committed_precision_ci_high
+        assert 0.0 <= lo <= hi <= 1.0
+    mis = cliff.get("Misinformation")
+    assert mis.committed_n == 2 and mis.committed_precision == 1.0
+    assert mis.deploy_tier == "insufficient_evidence"
+    assert mis.committed_precision_ci_low < 0.40  # 1.00 on 2 items is unmeasured, not safe
+    lo, hi = wilson_ci(2, 2)
+    assert abs(lo - mis.committed_precision_ci_low) < 1e-3 and hi == 1.0
+
+
+def test_markdown_shows_ci_and_new_tiers(cliff):
+    md = cliff.as_markdown()
+    assert "95% CI" in md
+    assert "INSUFFICIENT EVIDENCE" in md
+    assert "HIGH ABSTENTION" in md
 
 
 # ---------------------------------------------------------------------------
