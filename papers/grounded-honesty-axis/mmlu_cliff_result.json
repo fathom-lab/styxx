@@ -1,0 +1,1404 @@
+{
+  "benchmark": "MMLU (cais/mmlu, all, test)",
+  "k_per_subject": 14,
+  "n_items": 798,
+  "n_subjects": 57,
+  "families": [
+    "Qwen2.5-3B-Instruct",
+    "Llama-3.2-3B-Instruct",
+    "gemma-2-2b-it"
+  ],
+  "k_rates": {
+    "Qwen2.5-3B-Instruct": 0.8270676691729324,
+    "Llama-3.2-3B-Instruct": 0.7518796992481203,
+    "gemma-2-2b-it": 0.7794486215538847
+  },
+  "per_family_cliff_map": {
+    "Qwen2.5-3B-Instruct": {
+      "abstract_algebra": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6,
+        "refusal_rate": 0.2857142857142857
+      },
+      "anatomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 13,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.6923076923076923,
+        "refusal_rate": 0.07142857142857142
+      },
+      "astronomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 14,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.7857142857142857,
+        "refusal_rate": 0.0
+      },
+      "business_ethics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.8333333333333334,
+        "refusal_rate": 0.14285714285714285
+      },
+      "clinical_knowledge": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "college_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "college_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 7,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.7142857142857143,
+        "refusal_rate": 0.5
+      },
+      "college_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "college_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 8,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.5,
+        "refusal_rate": 0.42857142857142855
+      },
+      "college_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7,
+        "refusal_rate": 0.2857142857142857
+      },
+      "college_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 10,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.9,
+        "refusal_rate": 0.2857142857142857
+      },
+      "computer_security": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "conceptual_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 9,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.35714285714285715
+      },
+      "econometrics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "electrical_engineering": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7,
+        "refusal_rate": 0.2857142857142857
+      },
+      "elementary_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "formal_logic": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.2857142857142857
+      },
+      "global_facts": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.625,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      },
+      "high_school_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 12,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_european_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.8571428571428571,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_geography": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 13,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.8461538461538461,
+        "refusal_rate": 0.07142857142857142
+      },
+      "high_school_government_and_politics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 13,
+        "useful_answer_rate": 0.9285714285714286,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.07142857142857142
+      },
+      "high_school_macroeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 7,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.7142857142857143,
+        "refusal_rate": 0.5
+      },
+      "high_school_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 7,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.8571428571428571,
+        "refusal_rate": 0.5
+      },
+      "high_school_microeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 11,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.5454545454545454,
+        "refusal_rate": 0.21428571428571427
+      },
+      "high_school_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "high_school_statistics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_us_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      },
+      "high_school_world_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "human_aging": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 12,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.5833333333333334,
+        "refusal_rate": 0.14285714285714285
+      },
+      "human_sexuality": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "international_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "jurisprudence": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.21428571428571427
+      },
+      "logical_fallacies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "machine_learning": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "management": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "marketing": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 13,
+        "useful_answer_rate": 0.8571428571428571,
+        "committed_precision": 0.9230769230769231,
+        "refusal_rate": 0.07142857142857142
+      },
+      "medical_genetics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "miscellaneous": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 14,
+        "useful_answer_rate": 1.0,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.0
+      },
+      "moral_disputes": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "moral_scenarios": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.5,
+        "refusal_rate": 0.42857142857142855
+      },
+      "nutrition": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 13,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.8461538461538461,
+        "refusal_rate": 0.07142857142857142
+      },
+      "philosophy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 11,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.7272727272727273,
+        "refusal_rate": 0.21428571428571427
+      },
+      "prehistory": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "professional_accounting": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "professional_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "professional_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.2857142857142857
+      },
+      "professional_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.2857142857142857
+      },
+      "public_relations": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 7,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5
+      },
+      "security_studies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 7,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5
+      },
+      "sociology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 13,
+        "useful_answer_rate": 0.9285714285714286,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.07142857142857142
+      },
+      "us_foreign_policy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 14,
+        "useful_answer_rate": 1.0,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.0
+      },
+      "virology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 7,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.7142857142857143,
+        "refusal_rate": 0.5
+      },
+      "world_religions": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      }
+    },
+    "Llama-3.2-3B-Instruct": {
+      "abstract_algebra": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 3,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7857142857142857
+      },
+      "anatomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "astronomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 5,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.6428571428571429
+      },
+      "business_ethics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "clinical_knowledge": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.35714285714285715
+      },
+      "college_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 5,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.6,
+        "refusal_rate": 0.6428571428571429
+      },
+      "college_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 5,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.6428571428571429
+      },
+      "college_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 3,
+        "useful_answer_rate": 0.0,
+        "committed_precision": 0.0,
+        "refusal_rate": 0.7857142857142857
+      },
+      "college_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.5,
+        "committed_n": 3,
+        "useful_answer_rate": 0.07142857142857142,
+        "committed_precision": 0.3333333333333333,
+        "refusal_rate": 0.7857142857142857
+      },
+      "college_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 4,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7142857142857143
+      },
+      "college_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.5,
+        "committed_n": 3,
+        "useful_answer_rate": 0.14285714285714285,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.7857142857142857
+      },
+      "computer_security": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "conceptual_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 4,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.7142857142857143
+      },
+      "econometrics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 1,
+        "useful_answer_rate": 0.07142857142857142,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.9285714285714286
+      },
+      "electrical_engineering": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 8,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.625,
+        "refusal_rate": 0.42857142857142855
+      },
+      "elementary_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 10,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.2857142857142857
+      },
+      "formal_logic": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 6,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.5714285714285714
+      },
+      "global_facts": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.5714285714285714,
+        "committed_n": 7,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.5714285714285714,
+        "refusal_rate": 0.5
+      },
+      "high_school_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 3,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7857142857142857
+      },
+      "high_school_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_european_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 8,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.875,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_geography": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_government_and_politics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 7,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5
+      },
+      "high_school_macroeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 5,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.6428571428571429
+      },
+      "high_school_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 2,
+        "useful_answer_rate": 0.07142857142857142,
+        "committed_precision": 0.5,
+        "refusal_rate": 0.8571428571428571
+      },
+      "high_school_microeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 5,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.6428571428571429
+      },
+      "high_school_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_statistics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.625,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_us_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 6,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.8333333333333334,
+        "refusal_rate": 0.5714285714285714
+      },
+      "high_school_world_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 5,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.6428571428571429
+      },
+      "human_aging": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 6,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.5714285714285714
+      },
+      "human_sexuality": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 7,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5
+      },
+      "international_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "jurisprudence": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "logical_fallacies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 8,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.875,
+        "refusal_rate": 0.42857142857142855
+      },
+      "machine_learning": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 4,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7142857142857143
+      },
+      "management": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 8,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.42857142857142855
+      },
+      "marketing": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 10,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.2857142857142857
+      },
+      "medical_genetics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 7,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.8571428571428571,
+        "refusal_rate": 0.5
+      },
+      "miscellaneous": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      },
+      "moral_disputes": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 9,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.5555555555555556,
+        "refusal_rate": 0.35714285714285715
+      },
+      "moral_scenarios": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 12,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.5833333333333334,
+        "refusal_rate": 0.14285714285714285
+      },
+      "nutrition": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 4,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7142857142857143
+      },
+      "philosophy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 8,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.625,
+        "refusal_rate": 0.42857142857142855
+      },
+      "prehistory": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 7,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.7142857142857143,
+        "refusal_rate": 0.5
+      },
+      "professional_accounting": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 3,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7857142857142857
+      },
+      "professional_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 4,
+        "useful_answer_rate": 0.07142857142857142,
+        "committed_precision": 0.25,
+        "refusal_rate": 0.7142857142857143
+      },
+      "professional_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 7,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.8571428571428571,
+        "refusal_rate": 0.5
+      },
+      "professional_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 3,
+        "useful_answer_rate": 0.14285714285714285,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.7857142857142857
+      },
+      "public_relations": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "security_studies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 6,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.8333333333333334,
+        "refusal_rate": 0.5714285714285714
+      },
+      "sociology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 4,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.7142857142857143
+      },
+      "us_foreign_policy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "virology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 5,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.6428571428571429
+      },
+      "world_religions": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 9,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.35714285714285715
+      }
+    },
+    "gemma-2-2b-it": {
+      "abstract_algebra": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "anatomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 12,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "astronomy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      },
+      "business_ethics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.35714285714285715
+      },
+      "clinical_knowledge": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6,
+        "refusal_rate": 0.2857142857142857
+      },
+      "college_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 11,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.5454545454545454,
+        "refusal_rate": 0.21428571428571427
+      },
+      "college_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 6,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.5714285714285714
+      },
+      "college_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.42857142857142855,
+        "committed_n": 7,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.42857142857142855,
+        "refusal_rate": 0.5
+      },
+      "college_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "college_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 10,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6,
+        "refusal_rate": 0.2857142857142857
+      },
+      "college_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 7,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.42857142857142855,
+        "refusal_rate": 0.5
+      },
+      "computer_security": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8,
+        "refusal_rate": 0.2857142857142857
+      },
+      "conceptual_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 5,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.6428571428571429
+      },
+      "econometrics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 4,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.7142857142857143
+      },
+      "electrical_engineering": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 10,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.2857142857142857
+      },
+      "elementary_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 8,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.875,
+        "refusal_rate": 0.42857142857142855
+      },
+      "formal_logic": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.5,
+        "committed_n": 5,
+        "useful_answer_rate": 0.14285714285714285,
+        "committed_precision": 0.4,
+        "refusal_rate": 0.6428571428571429
+      },
+      "global_facts": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 6,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.8333333333333334,
+        "refusal_rate": 0.5714285714285714
+      },
+      "high_school_biology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.0,
+        "committed_n": 12,
+        "useful_answer_rate": 0.8571428571428571,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_chemistry": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_computer_science": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 9,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_european_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 8,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.875,
+        "refusal_rate": 0.42857142857142855
+      },
+      "high_school_geography": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 13,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.8461538461538461,
+        "refusal_rate": 0.07142857142857142
+      },
+      "high_school_government_and_politics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_macroeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 12,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_mathematics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 3,
+        "useful_answer_rate": 0.14285714285714285,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.7857142857142857
+      },
+      "high_school_microeconomics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 12,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.14285714285714285
+      },
+      "high_school_physics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 11,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.7272727272727273,
+        "refusal_rate": 0.21428571428571427
+      },
+      "high_school_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_statistics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 7,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.8571428571428571,
+        "refusal_rate": 0.5
+      },
+      "high_school_us_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.8888888888888888,
+        "refusal_rate": 0.35714285714285715
+      },
+      "high_school_world_history": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "human_aging": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "human_sexuality": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      },
+      "international_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 7,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5
+      },
+      "jurisprudence": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "logical_fallacies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 9,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7777777777777778,
+        "refusal_rate": 0.35714285714285715
+      },
+      "machine_learning": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.6,
+        "refusal_rate": 0.2857142857142857
+      },
+      "management": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "marketing": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 12,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.9166666666666666,
+        "refusal_rate": 0.14285714285714285
+      },
+      "medical_genetics": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.8181818181818182,
+        "refusal_rate": 0.21428571428571427
+      },
+      "miscellaneous": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.21428571428571427
+      },
+      "moral_disputes": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7,
+        "refusal_rate": 0.2857142857142857
+      },
+      "moral_scenarios": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 8,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.75,
+        "refusal_rate": 0.42857142857142855
+      },
+      "nutrition": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 7,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 0.8571428571428571,
+        "refusal_rate": 0.5
+      },
+      "philosophy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.21428571428571427,
+        "committed_n": 11,
+        "useful_answer_rate": 0.5714285714285714,
+        "committed_precision": 0.7272727272727273,
+        "refusal_rate": 0.21428571428571427
+      },
+      "prehistory": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7,
+        "refusal_rate": 0.2857142857142857
+      },
+      "professional_accounting": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.35714285714285715,
+        "committed_n": 6,
+        "useful_answer_rate": 0.2857142857142857,
+        "committed_precision": 0.6666666666666666,
+        "refusal_rate": 0.5714285714285714
+      },
+      "professional_law": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.5,
+        "committed_n": 8,
+        "useful_answer_rate": 0.21428571428571427,
+        "committed_precision": 0.375,
+        "refusal_rate": 0.42857142857142855
+      },
+      "professional_medicine": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 10,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.9,
+        "refusal_rate": 0.2857142857142857
+      },
+      "professional_psychology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 8,
+        "useful_answer_rate": 0.35714285714285715,
+        "committed_precision": 0.625,
+        "refusal_rate": 0.42857142857142855
+      },
+      "public_relations": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 10,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.9,
+        "refusal_rate": 0.2857142857142857
+      },
+      "security_studies": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 6,
+        "useful_answer_rate": 0.42857142857142855,
+        "committed_precision": 1.0,
+        "refusal_rate": 0.5714285714285714
+      },
+      "sociology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.07142857142857142,
+        "committed_n": 10,
+        "useful_answer_rate": 0.6428571428571429,
+        "committed_precision": 0.9,
+        "refusal_rate": 0.2857142857142857
+      },
+      "us_foreign_policy": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 13,
+        "useful_answer_rate": 0.7857142857142857,
+        "committed_precision": 0.8461538461538461,
+        "refusal_rate": 0.07142857142857142
+      },
+      "virology": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.2857142857142857,
+        "committed_n": 10,
+        "useful_answer_rate": 0.5,
+        "committed_precision": 0.7,
+        "refusal_rate": 0.2857142857142857
+      },
+      "world_religions": {
+        "n": 14,
+        "ungated_hallucination_rate": 0.14285714285714285,
+        "committed_n": 11,
+        "useful_answer_rate": 0.7142857142857143,
+        "committed_precision": 0.9090909090909091,
+        "refusal_rate": 0.21428571428571427
+      }
+    }
+  },
+  "crossfamily_ungated_hallucination_rate_spearman_mean": 0.5181907081824614,
+  "crossfamily_ungated_hallucination_rate_spearman_pairs": [
+    0.5665388081584511,
+    0.4673289278780328,
+    0.5207043885109001
+  ],
+  "crossfamily_refusal_rate_spearman_mean": 0.45288772097993535,
+  "crossfamily_refusal_rate_spearman_pairs": [
+    0.42252893499036187,
+    0.4970511501911181,
+    0.43908307775832617
+  ]
+}

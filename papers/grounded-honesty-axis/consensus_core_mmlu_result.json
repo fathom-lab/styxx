@@ -1,0 +1,21 @@
+{
+  "benchmark": "MMLU",
+  "n_subjects": 57,
+  "K": 9,
+  "n_families": 3,
+  "n_perm": 10000,
+  "consensus_hardest": [
+    "college_computer_science",
+    "professional_law"
+  ],
+  "consensus_hardest_overlap": 2,
+  "consensus_hardest_perm_p": 0.0163,
+  "consensus_safest": [
+    "high_school_biology",
+    "high_school_government_and_politics"
+  ],
+  "consensus_safest_overlap": 2,
+  "consensus_safest_perm_p": 0.019,
+  "PRIMARY_verdict": "REPLICATES (convergence above chance)",
+  "note": "Independence-null permutation overstates surprise (shared corpora). 3 OPEN vendors only. Specific subjects need not match TruthfulQA (structural, not topical)."
+}

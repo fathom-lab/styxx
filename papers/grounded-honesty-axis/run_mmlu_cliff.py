@@ -85,7 +85,12 @@ def main():
     families = [f for f in L.FAMILIES if f[0] == L.REFERENCE] if a.smoke else L.FAMILIES
     per_model, k_rates = {}, {}
     for name, hf_id in families:
-        gate = L._score_model(name, hf_id, items, nli)
+        gpath = L.HERE / f"crossfamily_gate_{L._slug(name)}.json"   # _slug adds _mmlu
+        if gpath.exists():   # resume: skip families already scored (gate on disk)
+            gate = json.loads(gpath.read_text(encoding="utf-8"))
+            print(f"  >> {name}: gate exists — skipping generation (resume)", flush=True)
+        else:
+            gate = L._score_model(name, hf_id, items, nli)
         per_model[name] = gate.get("category_competence_cliff_map", {})
         k_rates[name] = L._k_rate(gate)
         print(f"  >> {name}: K={k_rates[name]:.3f}, {len(per_model[name])} subjects", flush=True)
