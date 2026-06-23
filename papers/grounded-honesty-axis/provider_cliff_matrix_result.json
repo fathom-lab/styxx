@@ -1,0 +1,42 @@
+{
+  "providers": [
+    "Alibaba (Qwen-3B)",
+    "Meta (Llama-3B)",
+    "Google (Gemma-2B)",
+    "OpenAI (gpt-4o-mini)"
+  ],
+  "open_gate_mode": {
+    "Alibaba (Qwen-3B)": "gen-matched(32)",
+    "Meta (Llama-3B)": "matched-judge(24)",
+    "Google (Gemma-2B)": "matched-judge(24)",
+    "OpenAI (gpt-4o-mini)": "matched-judge"
+  },
+  "matrices": {
+    "ungated_hallucination_rate": {
+      "pairs": {
+        "Alibaba (Qwen-3B) | Meta (Llama-3B)": 0.6397,
+        "Alibaba (Qwen-3B) | Google (Gemma-2B)": 0.5112,
+        "Alibaba (Qwen-3B) | OpenAI (gpt-4o-mini)": 0.53,
+        "Meta (Llama-3B) | Google (Gemma-2B)": 0.7541,
+        "Meta (Llama-3B) | OpenAI (gpt-4o-mini)": 0.4429,
+        "Google (Gemma-2B) | OpenAI (gpt-4o-mini)": 0.4893
+      },
+      "open_open_mean": 0.635,
+      "open_openai_mean": 0.4874,
+      "all_pairs_mean": 0.5612
+    },
+    "refusal_rate": {
+      "pairs": {
+        "Alibaba (Qwen-3B) | Meta (Llama-3B)": 0.387,
+        "Alibaba (Qwen-3B) | Google (Gemma-2B)": 0.4045,
+        "Alibaba (Qwen-3B) | OpenAI (gpt-4o-mini)": 0.4741,
+        "Meta (Llama-3B) | Google (Gemma-2B)": 0.538,
+        "Meta (Llama-3B) | OpenAI (gpt-4o-mini)": 0.3687,
+        "Google (Gemma-2B) | OpenAI (gpt-4o-mini)": 0.2775
+      },
+      "open_open_mean": 0.4432,
+      "open_openai_mean": 0.3734,
+      "all_pairs_mean": 0.4083
+    }
+  }
+}
