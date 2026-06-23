@@ -360,6 +360,8 @@ from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEv
 from .optimize import optimize
 from .ci import regression_test, create_baseline, Baseline, RegressionResult
 from .provenance import certify, verify as verify_certificate, CognitiveCertificate, VerificationResult as CertificateVerificationResult
+from . import parrhesia  # noqa: F401  (expose styxx.parrhesia — verifiable honesty receipts)
+from .parrhesia import issue_receipt, verify_receipt, HonestyReceipt
 # NOTE: provenance.verify (certificate verifier → VerificationResult.valid) is
 # aliased to verify_certificate so it does not clobber styxx.verify — the
 # trust-layer response verifier (→ Verdict) from .verify (imported below).
@@ -732,6 +734,9 @@ __all__ = [
     "abstain_on_confab", "AbstainDecision",
     # 7.8.0: the unifying honesty RUNTIME — one tier-adaptive call + attestation
     "honest", "HonestyVerdict",
+
+    # 7.19.0: PARRHESIA — verifiable honesty receipts (external register audit, verify-by-re-derivation)
+    "parrhesia", "issue_receipt", "verify_receipt", "HonestyReceipt",
 
     # 3.9.0: the trust layer — one-line hallucination prevention
     "trust", "TrustViolation", "TrustResult",
