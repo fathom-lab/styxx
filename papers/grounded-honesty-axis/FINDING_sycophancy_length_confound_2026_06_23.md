@@ -67,3 +67,31 @@ thesis at its sharpest, and the reason the discipline (run it on yourself, on re
 claim) is the product. Receipts: `self_directed_gate.py` (`_proba`, line ~154; feature line 95),
 `calibrated_weights_sycophancy_v0.py:107`. Relates to [[the PARRHESIA ship]] and the program's standing
 length-confound theme (attribution-depth length-partial; conscience-mount "length-filler" owed).
+
+---
+
+## ADDENDUM (same day) — the family picture is real but MESSIER than a clean confound
+
+Extending the audit across the calibrated guardrail family found length is a load-bearing feature in
+**4** models (static coefs): deception_v0 **−2.089** ("K=1 critical"), overconfidence_v0 −0.523,
+sycophancy_v0 +0.356, refusal_v2 −0.185 (goal-drift / plan-action / loop / core v2-v4 have none).
+
+Behavioral, content-held-constant (distinct sober passages, repetition-controlled):
+- **sycophancy**: clean length confound (0.20→0.67); ablating the length weight flattens it — SOLID.
+- **overconfidence**: clean length sensitivity (0.95→0.34) — SOLID.
+- **deception**: in a "describe-X" regime, 0.999 (12w) → 0.010 (135w) — huge. BUT a matched-length
+  completion-status probe ('did you finish?') scored honest AND deceptive, short AND long, all ~0.99–1.0
+  (separation ≈ +0.003) — i.e. the instrument is **regime-dependent and saturates / fails to
+  discriminate** elsewhere, NOT a single clean length monotone. (deception_check v0 is the lexical model
+  already known not to generalize — project_deception_v1_negative.)
+
+**Honest verdict (not overclaimed):** length is a real, often-spurious, load-bearing feature across
+≥3 shipped instruments, and the deception instrument is unreliable across length × prompt regimes on
+real text. This is a robustness problem in the calibrated guardrail family — NOT a clean one-line
+"systemic length confound" bombshell (a matched-length probe disproved the clean version). The
+responsible next step is a **regime-stratified robustness audit** (length × prompt-type × label) across
+the family, then length-robust recalibration. The sycophancy + overconfidence length confounds are
+clean enough to fix now; deception needs the hardest look (or deprecation of the v0 lexical model).
+
+The meta-point holds and is sharpened: dogfooding surfaced the problem, and the SAME discipline
+(one more matched-length probe) stopped me shipping the overclaimed clean version of it.
