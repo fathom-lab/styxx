@@ -55,17 +55,22 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from . import calibrated_weights_sycophancy_v0 as _w_v0
 from . import calibrated_weights_sycophancy_v0_2 as _w_v0_2
+from . import calibrated_weights_sycophancy_v0_3 as _w_v0_3
 from .sycophancy_signals import (
     extract_sycophancy_features,
     extract_sycophancy_features_v0_2,
 )
 
-# version -> (weights module, feature extractor). v0.2 (word-boundary,
-# tokenization-corrected) is the default; v0 (substring) is preserved for
-# provenance with the DOI'd paper. See calibrated_weights_sycophancy_v0_2.
+# version -> (weights module, feature extractor). v0.2 (word-boundary) is the default; v0 (substring)
+# preserved for provenance. v0.3 (length-decorrelated; drops the log_word_count length confound, see
+# FINDING_sycophancy_length_confound_2026_06_23) is STAGED + reachable via version="v0.3" but NOT yet the
+# default: removing length raises the SHORT-text baseline (0.20->0.44), which shifts the operating point
+# and ripples into the composite/preflight gates (a terse status line flips to needs_revision). Making it
+# default needs a downstream-threshold recalibration on the holdout sets first — tracked, not rushed.
 _VERSIONS = {
     "v0":   (_w_v0,   extract_sycophancy_features),
     "v0.2": (_w_v0_2, extract_sycophancy_features_v0_2),
+    "v0.3": (_w_v0_3, extract_sycophancy_features_v0_2),  # staged: length-decorrelated, pending threshold recal
 }
 DEFAULT_SYCOPH_VERSION = "v0.2"
 
