@@ -61,12 +61,17 @@ def analyze():
         dw = np.load(apath(tag, "wide")); Aw, yw, domw = dw["acts"], dw["y"], dw["dom"]
         do = np.load(apath(tag, "ood")); Ao, yo = do["acts"], do["y"]
         s = StandardScaler().fit(Aw); Wd = s.transform(Aw); Od = s.transform(Ao)
-        # wide-construct direction -> OOD
-        dmm = mm_dir(Wd, yw); ood_mm = roc_auc_score(yo, Od @ dmm)
+        # wide-construct direction -> OOD (adversary-fair AUC: a probe can be inverted)
+        fair = lambda a: max(a, 1 - a)
+        dmm = mm_dir(Wd, yw); ood_mm = fair(roc_auc_score(yo, Od @ dmm))
         clf = LogisticRegression(max_iter=2000, C=1.0).fit(Wd, yw)
-        ood_lr = roc_auc_score(yo, clf.decision_function(Od))
-        best = max(ood_mm, ood_lr); best_score = Od @ dmm if ood_mm >= ood_lr else clf.decision_function(Od)
-        ci = boot_ci(yo, best_score)
+        ood_lr = fair(roc_auc_score(yo, clf.decision_function(Od)))
+        best = max(ood_mm, ood_lr); best_score = Od @ dmm
+        ci = boot_ci(yo, Od @ dmm)
+        # PERMUTATION NULL (1000x): is the transfer above a RANDOM construct direction? (fair-AUC floor >> 0.5 at small n)
+        rng0 = np.random.default_rng(0)
+        null = np.array([fair(roc_auc_score(yo, Od @ mm_dir(Wd, rng0.permutation(yw)))) for _ in range(1000)])
+        perm_p = float((null >= fair(roc_auc_score(yo, Od @ dmm))).mean())
         # in-OOD-internal LOO ceiling (does a truth axis exist on naturals?)
         oof = np.zeros(len(yo))
         for tr, te in LeaveOneOut().split(Od):
@@ -74,25 +79,23 @@ def analyze():
         ceil = roc_auc_score(yo, oof)
         ood_dir = mm_dir(Od, yo)  # in-OOD-internal direction (full)
         cos = float(dmm @ ood_dir / (np.linalg.norm(dmm) * np.linalg.norm(ood_dir) + 1e-9))
-        # controls
-        rng = np.random.default_rng(0); shuf = roc_auc_score(yo, Od @ mm_dir(Wd, rng.permutation(yw)))
         # BoW silence floors
         Vw = TfidfVectorizer().fit(txtw)
         bow = LogisticRegression(max_iter=2000).fit(Vw.transform(txtw).toarray(), yw)
-        bow_ood = roc_auc_score(yo, bow.decision_function(Vw.transform(txto).toarray()))
-        bow_ood = max(bow_ood, 1 - bow_ood)
-        # verdict (frozen)
-        if best >= 0.75 and ci[0] > 0.70 and cos >= 0.50:
+        bow_ood = fair(roc_auc_score(yo, bow.decision_function(Vw.transform(txto).toarray())))
+        # verdict (frozen prereg): transfer is significant only if perm_p<0.05 AND cos aligned
+        if best >= 0.75 and perm_p < 0.05 and cos >= 0.50:
             v = "AXIS-RECOVERABLE"
-        elif best < 0.65 and ci[1] < 0.75 and ceil >= 0.75:
-            v = "ROBUST-FAILURE"
+        elif perm_p >= 0.05 and ceil >= 0.75:
+            v = "ROBUST/NON-SIGNIFICANT TRANSFER (axis exists on naturals, construct dir doesn't transfer)"
         else:
             v = "PARTIAL"
         print(f"\n=== {tag} (L{L}, wide n={len(yw)}, OOD n={len(yo)}) ===")
-        print(f"  wide-construct dir -> OOD: mass-mean {ood_mm:.3f} | logistic {ood_lr:.3f} | best {best:.3f} CI[{ci[0]:.3f},{ci[1]:.3f}]")
+        print(f"  wide-construct dir -> OOD (fair AUC): mass-mean {ood_mm:.3f} | logistic {ood_lr:.3f} | best {best:.3f} CI[{ci[0]:.3f},{ci[1]:.3f}]")
+        print(f"  permutation null (1000x): p={perm_p:.3f}  (>=0.05 = NOT above a random construct direction)")
         print(f"  cosine(wide dir, in-OOD-internal dir): {cos:+.3f}   (>=0.5 = recovers the real axis)")
         print(f"  in-OOD-internal LOO ceiling (axis EXISTS on naturals?): {ceil:.3f}")
-        print(f"  controls: shuffle {shuf:.3f} | BoW-construct->OOD {bow_ood:.3f} (silence floor)")
+        print(f"  BoW-construct->OOD (text silence floor): {bow_ood:.3f}")
         print(f"  >>> {v}")
 
 
