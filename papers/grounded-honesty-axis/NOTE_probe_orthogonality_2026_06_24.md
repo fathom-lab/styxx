@@ -3,6 +3,9 @@
 *styxx / fathom-lab — technical note, 2026-06-24. Offline, two open 3B models, fully reproducible. This is a
 small-scale replication-plus-packaging, honestly scoped — not a new phenomenon.*
 
+**▶ Try it in 60s (Colab):** [`examples/probe_validity_colab.ipynb`](../../examples/probe_validity_colab.ipynb)
+— run `styxx.validate_probe` on a planted surface artifact, then on a real model, then on your own probe.
+
 ## Abstract
 Representation-based oversight trains linear probes on activations to read latent properties (truthfulness,
 deception). It is known that such probes can latch onto surface features rather than the concept, especially
@@ -76,6 +79,18 @@ experiments; approximately-orthogonal dataset-specific truth directions; small-m
 Levinstein & Herrmann 2023 ("Still No Lie Detector"); Bürger et al. 2024. On probe validity generally: Hewitt
 & Liang 2019 (control tasks / selectivity); Belinkov 2022 (probing survey). We contribute a small-model
 replication where the artifact survives a rank-1 probe + a silence gate, plus a packaged battery.
+
+### References
+- Azaria, A. & Mitchell, T. (2023). *The Internal State of an LLM Knows When It's Lying.* EMNLP Findings.
+- Marks, S. & Tegmark, M. (2023). *The Geometry of Truth: Emergent Linear Structure in LLM Representations of
+  True/False Datasets.* (Cross-dataset transfer experiments; approximately-orthogonal dataset-specific truth
+  directions; small-model surface clustering, Fig. 3b.)
+- Levinstein, B. & Herrmann, D. (2023). *Still No Lie Detector for Language Models: Probing Empirical and
+  Conceptual Roadblocks.* (Negation/generalization failures of truth probes.)
+- Bürger, L. et al. (2024). *Truth is Universal: Robust Detection of Lies in LLMs.*
+- Hewitt, J. & Liang, P. (2019). *Designing and Interpreting Probes with Control Tasks.* EMNLP. (Selectivity;
+  control tasks — which a rank-1 difference-of-means probe passes by construction.)
+- Belinkov, Y. (2022). *Probing Classifiers: Promises, Shortcomings, and Advances.* Computational Linguistics.
 
 ## Limitations
 Two open 3B models; template constructs (a frontier-scale test wants thousands of natural statements and
