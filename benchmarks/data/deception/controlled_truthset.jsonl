@@ -1,0 +1,136 @@
+{"statement": "The capital of France is Paris.", "entity": "France", "answer": "Paris", "domain": 0, "label_false": 0}
+{"statement": "The capital of France is Berlin.", "entity": "France", "answer": "Berlin", "domain": 0, "label_false": 1}
+{"statement": "The capital of Germany is Berlin.", "entity": "Germany", "answer": "Berlin", "domain": 0, "label_false": 0}
+{"statement": "The capital of Germany is Madrid.", "entity": "Germany", "answer": "Madrid", "domain": 0, "label_false": 1}
+{"statement": "The capital of Spain is Madrid.", "entity": "Spain", "answer": "Madrid", "domain": 0, "label_false": 0}
+{"statement": "The capital of Spain is Rome.", "entity": "Spain", "answer": "Rome", "domain": 0, "label_false": 1}
+{"statement": "The capital of Italy is Rome.", "entity": "Italy", "answer": "Rome", "domain": 0, "label_false": 0}
+{"statement": "The capital of Italy is Lisbon.", "entity": "Italy", "answer": "Lisbon", "domain": 0, "label_false": 1}
+{"statement": "The capital of Portugal is Lisbon.", "entity": "Portugal", "answer": "Lisbon", "domain": 0, "label_false": 0}
+{"statement": "The capital of Portugal is Tokyo.", "entity": "Portugal", "answer": "Tokyo", "domain": 0, "label_false": 1}
+{"statement": "The capital of Japan is Tokyo.", "entity": "Japan", "answer": "Tokyo", "domain": 0, "label_false": 0}
+{"statement": "The capital of Japan is Beijing.", "entity": "Japan", "answer": "Beijing", "domain": 0, "label_false": 1}
+{"statement": "The capital of China is Beijing.", "entity": "China", "answer": "Beijing", "domain": 0, "label_false": 0}
+{"statement": "The capital of China is Moscow.", "entity": "China", "answer": "Moscow", "domain": 0, "label_false": 1}
+{"statement": "The capital of Russia is Moscow.", "entity": "Russia", "answer": "Moscow", "domain": 0, "label_false": 0}
+{"statement": "The capital of Russia is Cairo.", "entity": "Russia", "answer": "Cairo", "domain": 0, "label_false": 1}
+{"statement": "The capital of Egypt is Cairo.", "entity": "Egypt", "answer": "Cairo", "domain": 0, "label_false": 0}
+{"statement": "The capital of Egypt is Ottawa.", "entity": "Egypt", "answer": "Ottawa", "domain": 0, "label_false": 1}
+{"statement": "The capital of Canada is Ottawa.", "entity": "Canada", "answer": "Ottawa", "domain": 0, "label_false": 0}
+{"statement": "The capital of Canada is Canberra.", "entity": "Canada", "answer": "Canberra", "domain": 0, "label_false": 1}
+{"statement": "The capital of Australia is Canberra.", "entity": "Australia", "answer": "Canberra", "domain": 0, "label_false": 0}
+{"statement": "The capital of Australia is Athens.", "entity": "Australia", "answer": "Athens", "domain": 0, "label_false": 1}
+{"statement": "The capital of Greece is Athens.", "entity": "Greece", "answer": "Athens", "domain": 0, "label_false": 0}
+{"statement": "The capital of Greece is Oslo.", "entity": "Greece", "answer": "Oslo", "domain": 0, "label_false": 1}
+{"statement": "The capital of Norway is Oslo.", "entity": "Norway", "answer": "Oslo", "domain": 0, "label_false": 0}
+{"statement": "The capital of Norway is Warsaw.", "entity": "Norway", "answer": "Warsaw", "domain": 0, "label_false": 1}
+{"statement": "The capital of Poland is Warsaw.", "entity": "Poland", "answer": "Warsaw", "domain": 0, "label_false": 0}
+{"statement": "The capital of Poland is Vienna.", "entity": "Poland", "answer": "Vienna", "domain": 0, "label_false": 1}
+{"statement": "The capital of Austria is Vienna.", "entity": "Austria", "answer": "Vienna", "domain": 0, "label_false": 0}
+{"statement": "The capital of Austria is Paris.", "entity": "Austria", "answer": "Paris", "domain": 0, "label_false": 1}
+{"statement": "The chemical symbol for oxygen is O.", "entity": "oxygen", "answer": "O", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for oxygen is H.", "entity": "oxygen", "answer": "H", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for hydrogen is H.", "entity": "hydrogen", "answer": "H", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for hydrogen is C.", "entity": "hydrogen", "answer": "C", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for carbon is C.", "entity": "carbon", "answer": "C", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for carbon is N.", "entity": "carbon", "answer": "N", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for nitrogen is N.", "entity": "nitrogen", "answer": "N", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for nitrogen is Na.", "entity": "nitrogen", "answer": "Na", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for sodium is Na.", "entity": "sodium", "answer": "Na", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for sodium is Fe.", "entity": "sodium", "answer": "Fe", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for iron is Fe.", "entity": "iron", "answer": "Fe", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for iron is Au.", "entity": "iron", "answer": "Au", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for gold is Au.", "entity": "gold", "answer": "Au", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for gold is Ag.", "entity": "gold", "answer": "Ag", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for silver is Ag.", "entity": "silver", "answer": "Ag", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for silver is K.", "entity": "silver", "answer": "K", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for potassium is K.", "entity": "potassium", "answer": "K", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for potassium is Ca.", "entity": "potassium", "answer": "Ca", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for calcium is Ca.", "entity": "calcium", "answer": "Ca", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for calcium is He.", "entity": "calcium", "answer": "He", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for helium is He.", "entity": "helium", "answer": "He", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for helium is Ne.", "entity": "helium", "answer": "Ne", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for neon is Ne.", "entity": "neon", "answer": "Ne", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for neon is Cu.", "entity": "neon", "answer": "Cu", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for copper is Cu.", "entity": "copper", "answer": "Cu", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for copper is Zn.", "entity": "copper", "answer": "Zn", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for zinc is Zn.", "entity": "zinc", "answer": "Zn", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for zinc is Pb.", "entity": "zinc", "answer": "Pb", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for lead is Pb.", "entity": "lead", "answer": "Pb", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for lead is O.", "entity": "lead", "answer": "O", "domain": 1, "label_false": 1}
+{"statement": "The largest planet in our solar system is the largest planet by the entity Jupiter.", "entity": "The largest planet in our solar system", "answer": "Jupiter", "domain": 2, "label_false": 0}
+{"statement": "The largest planet in our solar system is the largest planet by the entity Mercury.", "entity": "The largest planet in our solar system", "answer": "Mercury", "domain": 2, "label_false": 1}
+{"statement": "The smallest planet in our solar system is the largest planet by the entity Mercury.", "entity": "The smallest planet in our solar system", "answer": "Mercury", "domain": 2, "label_false": 0}
+{"statement": "The smallest planet in our solar system is the largest planet by the entity Mars.", "entity": "The smallest planet in our solar system", "answer": "Mars", "domain": 2, "label_false": 1}
+{"statement": "The closest planet to the Sun is the largest planet by the entity Mercury.", "entity": "The closest planet to the Sun", "answer": "Mercury", "domain": 2, "label_false": 0}
+{"statement": "The closest planet to the Sun is the largest planet by the entity Mars.", "entity": "The closest planet to the Sun", "answer": "Mars", "domain": 2, "label_false": 1}
+{"statement": "The red planet is the largest planet by the entity Mars.", "entity": "The red planet", "answer": "Mars", "domain": 2, "label_false": 0}
+{"statement": "The red planet is the largest planet by the entity Saturn.", "entity": "The red planet", "answer": "Saturn", "domain": 2, "label_false": 1}
+{"statement": "The ringed gas giant is the largest planet by the entity Saturn.", "entity": "The ringed gas giant", "answer": "Saturn", "domain": 2, "label_false": 0}
+{"statement": "The ringed gas giant is the largest planet by the entity Earth.", "entity": "The ringed gas giant", "answer": "Earth", "domain": 2, "label_false": 1}
+{"statement": "The planet we live on is the largest planet by the entity Earth.", "entity": "The planet we live on", "answer": "Earth", "domain": 2, "label_false": 0}
+{"statement": "The planet we live on is the largest planet by the entity Venus.", "entity": "The planet we live on", "answer": "Venus", "domain": 2, "label_false": 1}
+{"statement": "The hottest planet is the largest planet by the entity Venus.", "entity": "The hottest planet", "answer": "Venus", "domain": 2, "label_false": 0}
+{"statement": "The hottest planet is the largest planet by the entity Neptune.", "entity": "The hottest planet", "answer": "Neptune", "domain": 2, "label_false": 1}
+{"statement": "The farthest planet from the Sun is the largest planet by the entity Neptune.", "entity": "The farthest planet from the Sun", "answer": "Neptune", "domain": 2, "label_false": 0}
+{"statement": "The farthest planet from the Sun is the largest planet by the entity Jupiter.", "entity": "The farthest planet from the Sun", "answer": "Jupiter", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Japan is the yen.", "entity": "Japan", "answer": "yen", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Japan is the pound.", "entity": "Japan", "answer": "pound", "domain": 3, "label_false": 1}
+{"statement": "The official currency of the United Kingdom is the pound.", "entity": "the United Kingdom", "answer": "pound", "domain": 3, "label_false": 0}
+{"statement": "The official currency of the United Kingdom is the rupee.", "entity": "the United Kingdom", "answer": "rupee", "domain": 3, "label_false": 1}
+{"statement": "The official currency of India is the rupee.", "entity": "India", "answer": "rupee", "domain": 3, "label_false": 0}
+{"statement": "The official currency of India is the dollar.", "entity": "India", "answer": "dollar", "domain": 3, "label_false": 1}
+{"statement": "The official currency of the United States is the dollar.", "entity": "the United States", "answer": "dollar", "domain": 3, "label_false": 0}
+{"statement": "The official currency of the United States is the franc.", "entity": "the United States", "answer": "franc", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Switzerland is the franc.", "entity": "Switzerland", "answer": "franc", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Switzerland is the peso.", "entity": "Switzerland", "answer": "peso", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Mexico is the peso.", "entity": "Mexico", "answer": "peso", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Mexico is the krona.", "entity": "Mexico", "answer": "krona", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Sweden is the krona.", "entity": "Sweden", "answer": "krona", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Sweden is the zloty.", "entity": "Sweden", "answer": "zloty", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Poland is the zloty.", "entity": "Poland", "answer": "zloty", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Poland is the baht.", "entity": "Poland", "answer": "baht", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Thailand is the baht.", "entity": "Thailand", "answer": "baht", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Thailand is the won.", "entity": "Thailand", "answer": "won", "domain": 3, "label_false": 1}
+{"statement": "The official currency of South Korea is the won.", "entity": "South Korea", "answer": "won", "domain": 3, "label_false": 0}
+{"statement": "The official currency of South Korea is the lira.", "entity": "South Korea", "answer": "lira", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Turkey is the lira.", "entity": "Turkey", "answer": "lira", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Turkey is the real.", "entity": "Turkey", "answer": "real", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Brazil is the real.", "entity": "Brazil", "answer": "real", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Brazil is the yen.", "entity": "Brazil", "answer": "yen", "domain": 3, "label_false": 1}
+{"statement": "The novel '1984' was written by George Orwell.", "entity": "'1984'", "answer": "George Orwell", "domain": 4, "label_false": 0}
+{"statement": "The novel '1984' was written by Jane Austen.", "entity": "'1984'", "answer": "Jane Austen", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Pride and Prejudice' was written by Jane Austen.", "entity": "'Pride and Prejudice'", "answer": "Jane Austen", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Pride and Prejudice' was written by Herman Melville.", "entity": "'Pride and Prejudice'", "answer": "Herman Melville", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Moby-Dick' was written by Herman Melville.", "entity": "'Moby-Dick'", "answer": "Herman Melville", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Moby-Dick' was written by Leo Tolstoy.", "entity": "'Moby-Dick'", "answer": "Leo Tolstoy", "domain": 4, "label_false": 1}
+{"statement": "The novel 'War and Peace' was written by Leo Tolstoy.", "entity": "'War and Peace'", "answer": "Leo Tolstoy", "domain": 4, "label_false": 0}
+{"statement": "The novel 'War and Peace' was written by Franz Kafka.", "entity": "'War and Peace'", "answer": "Franz Kafka", "domain": 4, "label_false": 1}
+{"statement": "The novel 'The Trial' was written by Franz Kafka.", "entity": "'The Trial'", "answer": "Franz Kafka", "domain": 4, "label_false": 0}
+{"statement": "The novel 'The Trial' was written by William Shakespeare.", "entity": "'The Trial'", "answer": "William Shakespeare", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Hamlet' was written by William Shakespeare.", "entity": "'Hamlet'", "answer": "William Shakespeare", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Hamlet' was written by Miguel de Cervantes.", "entity": "'Hamlet'", "answer": "Miguel de Cervantes", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Don Quixote' was written by Miguel de Cervantes.", "entity": "'Don Quixote'", "answer": "Miguel de Cervantes", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Don Quixote' was written by Homer.", "entity": "'Don Quixote'", "answer": "Homer", "domain": 4, "label_false": 1}
+{"statement": "The novel 'The Odyssey' was written by Homer.", "entity": "'The Odyssey'", "answer": "Homer", "domain": 4, "label_false": 0}
+{"statement": "The novel 'The Odyssey' was written by Fyodor Dostoevsky.", "entity": "'The Odyssey'", "answer": "Fyodor Dostoevsky", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Crime and Punishment' was written by Fyodor Dostoevsky.", "entity": "'Crime and Punishment'", "answer": "Fyodor Dostoevsky", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Crime and Punishment' was written by George Orwell.", "entity": "'Crime and Punishment'", "answer": "George Orwell", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Brazil is Portuguese.", "entity": "Brazil", "answer": "Portuguese", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Brazil is Spanish.", "entity": "Brazil", "answer": "Spanish", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Mexico is Spanish.", "entity": "Mexico", "answer": "Spanish", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Mexico is German.", "entity": "Mexico", "answer": "German", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Austria is German.", "entity": "Austria", "answer": "German", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Austria is Arabic.", "entity": "Austria", "answer": "Arabic", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Egypt is Arabic.", "entity": "Egypt", "answer": "Arabic", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Egypt is Persian.", "entity": "Egypt", "answer": "Persian", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Iran is Persian.", "entity": "Iran", "answer": "Persian", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Iran is Vietnamese.", "entity": "Iran", "answer": "Vietnamese", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Vietnam is Vietnamese.", "entity": "Vietnam", "answer": "Vietnamese", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Vietnam is Greek.", "entity": "Vietnam", "answer": "Greek", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Greece is Greek.", "entity": "Greece", "answer": "Greek", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Greece is Hebrew.", "entity": "Greece", "answer": "Hebrew", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Israel is Hebrew.", "entity": "Israel", "answer": "Hebrew", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Israel is Swahili.", "entity": "Israel", "answer": "Swahili", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Kenya is Swahili.", "entity": "Kenya", "answer": "Swahili", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Kenya is Portuguese.", "entity": "Kenya", "answer": "Portuguese", "domain": 5, "label_false": 1}
