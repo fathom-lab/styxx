@@ -1,0 +1,22 @@
+[
+  {
+    "model": "llama",
+    "layer": 11,
+    "n_cem": 140,
+    "act_cem_strat": 0.9887755102040817,
+    "act_cem_SHUFFLE": 0.3908163265306122,
+    "act_cem_GROUPED": 0.9989743589743589,
+    "act_cem_PCA50": 0.9897959183673469,
+    "act_full_GROUPED": 0.9810000000000001
+  },
+  {
+    "model": "qwen",
+    "layer": 22,
+    "n_cem": 140,
+    "act_cem_strat": 0.9755102040816327,
+    "act_cem_SHUFFLE": 0.3704081632653061,
+    "act_cem_GROUPED": 0.9918105703819989,
+    "act_cem_PCA50": 0.9438775510204083,
+    "act_full_GROUPED": 0.9710000000000001
+  }
+]

@@ -127,3 +127,4 @@ papers/**/*_SMOKE_INVALID*
 papers/closed-model-frontier/triage_fleet_worklist.json
 papers/showcase-viz/caught_lie_demo.gif
 papers/showcase-viz/_qa_frame_*.png
+benchmarks/data/overconfidence/_acts_*.npz
