@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "model": "qwen",
+      "n": 200,
+      "calib_words": 23.93,
+      "overconf_words": 18.63,
+      "ratio": 1.2844873859366615,
+      "hedge_stddiff": -0.14299740342417114
+    },
+    {
+      "model": "gemma",
+      "n": 200,
+      "calib_words": 27.65,
+      "overconf_words": 19.44,
+      "ratio": 1.4223251028806583,
+      "hedge_stddiff": -0.4847102810919451
+    }
+  ],
+  "verdict": "REGISTER-INTRINSIC (claim holds, hardened)",
+  "thresholds": {
+    "intrinsic>=": 1.08,
+    "artifact<=": 1.03
+  }
+}
