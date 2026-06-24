@@ -130,3 +130,4 @@ papers/showcase-viz/_qa_frame_*.png
 benchmarks/data/overconfidence/_acts_*.npz
 
 benchmarks/data/deception/_silent_acts_*.npz
+benchmarks/data/deception/_truthset_acts_*.npz

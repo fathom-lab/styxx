@@ -1,0 +1,22 @@
+[
+  {
+    "model": "qwen",
+    "layer": 27,
+    "bow_lodo": 0.5048707561728396,
+    "act_lodo": 0.9467592592592592,
+    "act_minus_bow": 0.4418885030864196,
+    "shuffle_lodo": 0.533848204264871,
+    "pca50_lodo": 0.5481790123456789,
+    "verdict": "PARTIAL"
+  },
+  {
+    "model": "llama",
+    "layer": 14,
+    "bow_lodo": 0.5048707561728396,
+    "act_lodo": 0.9817708333333334,
+    "act_minus_bow": 0.47690007716049376,
+    "shuffle_lodo": 0.5247849527016195,
+    "pca50_lodo": 0.699170524691358,
+    "verdict": "PARTIAL"
+  }
+]
