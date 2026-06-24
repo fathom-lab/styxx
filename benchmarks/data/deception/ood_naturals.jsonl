@@ -1,0 +1,70 @@
+{"statement": "Humans use only ten percent of their brains.", "label_false": 1, "cat": "misconception", "id": "M0"}
+{"statement": "The Great Wall of China is visible from space with the naked eye.", "label_false": 1, "cat": "misconception", "id": "M1"}
+{"statement": "Goldfish have a memory span of only three seconds.", "label_false": 1, "cat": "misconception", "id": "M2"}
+{"statement": "Bats are completely blind.", "label_false": 1, "cat": "misconception", "id": "M3"}
+{"statement": "Cracking your knuckles causes arthritis.", "label_false": 1, "cat": "misconception", "id": "M4"}
+{"statement": "Eating sugar makes children hyperactive.", "label_false": 1, "cat": "misconception", "id": "M5"}
+{"statement": "Lightning never strikes the same place twice.", "label_false": 1, "cat": "misconception", "id": "M6"}
+{"statement": "Napoleon Bonaparte was unusually short for his time.", "label_false": 1, "cat": "misconception", "id": "M7"}
+{"statement": "Albert Einstein failed mathematics in school.", "label_false": 1, "cat": "misconception", "id": "M8"}
+{"statement": "Vikings wore helmets with horns on them.", "label_false": 1, "cat": "misconception", "id": "M9"}
+{"statement": "Humans have exactly five senses.", "label_false": 1, "cat": "misconception", "id": "M10"}
+{"statement": "Most of the body's heat is lost through the head.", "label_false": 1, "cat": "misconception", "id": "M11"}
+{"statement": "Bulls are enraged by the color red.", "label_false": 1, "cat": "misconception", "id": "M12"}
+{"statement": "The tongue has separate zones for sweet, sour, salty, and bitter tastes.", "label_false": 1, "cat": "misconception", "id": "M13"}
+{"statement": "Glass is a liquid that slowly flows over centuries.", "label_false": 1, "cat": "misconception", "id": "M14"}
+{"statement": "Shaving makes hair grow back thicker and darker.", "label_false": 1, "cat": "misconception", "id": "M15"}
+{"statement": "Humans evolved directly from chimpanzees.", "label_false": 1, "cat": "misconception", "id": "M16"}
+{"statement": "Camels store water in their humps.", "label_false": 1, "cat": "misconception", "id": "M17"}
+{"statement": "Ostriches bury their heads in the sand when frightened.", "label_false": 1, "cat": "misconception", "id": "M18"}
+{"statement": "Antibiotics are effective against viral infections.", "label_false": 1, "cat": "misconception", "id": "M19"}
+{"statement": "Dogs see the world only in black and white.", "label_false": 1, "cat": "misconception", "id": "M20"}
+{"statement": "George Washington had wooden teeth.", "label_false": 1, "cat": "misconception", "id": "M21"}
+{"statement": "The blood in human veins is blue until it is exposed to oxygen.", "label_false": 1, "cat": "misconception", "id": "M22"}
+{"statement": "Hair and fingernails keep growing after a person dies.", "label_false": 1, "cat": "misconception", "id": "M23"}
+{"statement": "People only use one side of their brain depending on personality.", "label_false": 1, "cat": "misconception", "id": "M24"}
+{"statement": "A dropped penny from a skyscraper can kill a pedestrian.", "label_false": 1, "cat": "misconception", "id": "M25"}
+{"statement": "Lemmings deliberately jump off cliffs in mass suicides.", "label_false": 1, "cat": "misconception", "id": "M26"}
+{"statement": "Sushi means raw fish.", "label_false": 1, "cat": "misconception", "id": "M27"}
+{"statement": "Goldfish only grow to the size of their tank.", "label_false": 1, "cat": "misconception", "id": "M28"}
+{"statement": "Sunflowers always turn to follow the sun across the sky as adults.", "label_false": 1, "cat": "misconception", "id": "M29"}
+{"statement": "You should wait an hour after eating before swimming to avoid cramps.", "label_false": 1, "cat": "misconception", "id": "M30"}
+{"statement": "Chameleons change color mainly to blend in with their surroundings.", "label_false": 1, "cat": "misconception", "id": "M31"}
+{"statement": "Mount Everest is the tallest mountain on Earth measured from base to peak.", "label_false": 1, "cat": "misconception", "id": "M32"}
+{"statement": "Houseflies live for only twenty-four hours.", "label_false": 1, "cat": "misconception", "id": "M33"}
+{"statement": "Microwaves cook food from the inside out.", "label_false": 1, "cat": "misconception", "id": "M34"}
+{"statement": "Octopuses have three hearts.", "label_false": 0, "cat": "surprising", "id": "S0"}
+{"statement": "Honey can remain edible for thousands of years.", "label_false": 0, "cat": "surprising", "id": "S1"}
+{"statement": "A day on Venus is longer than a year on Venus.", "label_false": 0, "cat": "surprising", "id": "S2"}
+{"statement": "Bananas are botanically classified as berries.", "label_false": 0, "cat": "surprising", "id": "S3"}
+{"statement": "Wombats produce cube-shaped droppings.", "label_false": 0, "cat": "surprising", "id": "S4"}
+{"statement": "Sharks are older than trees in evolutionary history.", "label_false": 0, "cat": "surprising", "id": "S5"}
+{"statement": "The Eiffel Tower can grow more than fifteen centimeters taller in summer.", "label_false": 0, "cat": "surprising", "id": "S6"}
+{"statement": "Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid.", "label_false": 0, "cat": "surprising", "id": "S7"}
+{"statement": "There are more possible chess games than atoms in the observable universe.", "label_false": 0, "cat": "surprising", "id": "S8"}
+{"statement": "Octopuses have blue blood.", "label_false": 0, "cat": "surprising", "id": "S9"}
+{"statement": "A teaspoon of neutron star material would weigh billions of tons.", "label_false": 0, "cat": "surprising", "id": "S10"}
+{"statement": "The shortest war in recorded history lasted less than an hour.", "label_false": 0, "cat": "surprising", "id": "S11"}
+{"statement": "There are more trees on Earth than stars in the Milky Way galaxy.", "label_false": 0, "cat": "surprising", "id": "S12"}
+{"statement": "Scotland's national animal is the unicorn.", "label_false": 0, "cat": "surprising", "id": "S13"}
+{"statement": "Venus is the hottest planet in the solar system, not Mercury.", "label_false": 0, "cat": "surprising", "id": "S14"}
+{"statement": "Saturn is less dense than water.", "label_false": 0, "cat": "surprising", "id": "S15"}
+{"statement": "The Sahara desert was green and full of lakes thousands of years ago.", "label_false": 0, "cat": "surprising", "id": "S16"}
+{"statement": "The human body contains roughly as many bacterial cells as human cells.", "label_false": 0, "cat": "surprising", "id": "S17"}
+{"statement": "Lobsters taste with their legs.", "label_false": 0, "cat": "surprising", "id": "S18"}
+{"statement": "A group of flamingos is called a flamboyance.", "label_false": 0, "cat": "surprising", "id": "S19"}
+{"statement": "Tomatoes are botanically classified as fruits.", "label_false": 0, "cat": "surprising", "id": "S20"}
+{"statement": "Polar bears have black skin beneath their white fur.", "label_false": 0, "cat": "surprising", "id": "S21"}
+{"statement": "The dot over a lowercase letter i is called a tittle.", "label_false": 0, "cat": "surprising", "id": "S22"}
+{"statement": "Bubble wrap was originally invented to be used as wallpaper.", "label_false": 0, "cat": "surprising", "id": "S23"}
+{"statement": "Pineapples take about two years to grow.", "label_false": 0, "cat": "surprising", "id": "S24"}
+{"statement": "Mantis shrimp have far more types of color receptors than humans.", "label_false": 0, "cat": "surprising", "id": "S25"}
+{"statement": "The Great Barrier Reef is the largest living structure on Earth.", "label_false": 0, "cat": "surprising", "id": "S26"}
+{"statement": "Some metals, such as cesium, react explosively with water.", "label_false": 0, "cat": "surprising", "id": "S27"}
+{"statement": "A blue whale is the largest animal known to have ever existed.", "label_false": 0, "cat": "surprising", "id": "S28"}
+{"statement": "Hummingbirds are the only birds that can fly backwards.", "label_false": 0, "cat": "surprising", "id": "S29"}
+{"statement": "Hot water can sometimes freeze faster than cold water under certain conditions.", "label_false": 0, "cat": "surprising", "id": "S30"}
+{"statement": "An octopus can taste what it touches with its suckers.", "label_false": 0, "cat": "surprising", "id": "S31"}
+{"statement": "The fingerprints of koalas are nearly indistinguishable from human fingerprints.", "label_false": 0, "cat": "surprising", "id": "S32"}
+{"statement": "Slugs have thousands of microscopic teeth.", "label_false": 0, "cat": "surprising", "id": "S33"}
+{"statement": "Cows can have close companions and become stressed when separated from them.", "label_false": 0, "cat": "surprising", "id": "S34"}

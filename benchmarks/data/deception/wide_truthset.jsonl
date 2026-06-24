@@ -1,0 +1,260 @@
+{"statement": "The capital of France is Paris.", "domain": 0, "label_false": 0}
+{"statement": "The capital of France is Berlin.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Germany is Berlin.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Germany is Madrid.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Spain is Madrid.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Spain is Rome.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Italy is Rome.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Italy is Lisbon.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Portugal is Lisbon.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Portugal is Tokyo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Japan is Tokyo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Japan is Beijing.", "domain": 0, "label_false": 1}
+{"statement": "The capital of China is Beijing.", "domain": 0, "label_false": 0}
+{"statement": "The capital of China is Moscow.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Russia is Moscow.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Russia is Cairo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Egypt is Cairo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Egypt is Ottawa.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Canada is Ottawa.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Canada is Athens.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Greece is Athens.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Greece is Oslo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Norway is Oslo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Norway is Warsaw.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Poland is Warsaw.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Poland is Vienna.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Austria is Vienna.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Austria is Paris.", "domain": 0, "label_false": 1}
+{"statement": "The chemical symbol for oxygen is O.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for oxygen is H.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for hydrogen is H.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for hydrogen is C.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for carbon is C.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for carbon is N.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for nitrogen is N.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for nitrogen is Na.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for sodium is Na.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for sodium is Fe.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for iron is Fe.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for iron is Au.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for gold is Au.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for gold is Ag.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for silver is Ag.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for silver is K.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for potassium is K.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for potassium is Ca.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for calcium is Ca.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for calcium is He.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for helium is He.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for helium is Cu.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for copper is Cu.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for copper is Zn.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for zinc is Zn.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for zinc is Pb.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for lead is Pb.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for lead is O.", "domain": 1, "label_false": 1}
+{"statement": "The official currency of Japan is the yen.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Japan is the pound.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of the United Kingdom is the pound.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of the United Kingdom is the rupee.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of India is the rupee.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of India is the dollar.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of the United States is the dollar.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of the United States is the franc.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Switzerland is the franc.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Switzerland is the peso.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Mexico is the peso.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Mexico is the krona.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Sweden is the krona.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Sweden is the zloty.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Poland is the zloty.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Poland is the baht.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Thailand is the baht.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Thailand is the won.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of South Korea is the won.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of South Korea is the lira.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Turkey is the lira.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Turkey is the real.", "domain": 2, "label_false": 1}
+{"statement": "The official currency of Brazil is the real.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Brazil is the yen.", "domain": 2, "label_false": 1}
+{"statement": "The novel '1984' was written by George Orwell.", "domain": 3, "label_false": 0}
+{"statement": "The novel '1984' was written by Jane Austen.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'Pride and Prejudice' was written by Jane Austen.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'Pride and Prejudice' was written by Herman Melville.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'Moby-Dick' was written by Herman Melville.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'Moby-Dick' was written by Leo Tolstoy.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'War and Peace' was written by Leo Tolstoy.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'War and Peace' was written by Franz Kafka.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'The Trial' was written by Franz Kafka.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'The Trial' was written by William Shakespeare.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'Hamlet' was written by William Shakespeare.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'Hamlet' was written by Miguel de Cervantes.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'Don Quixote' was written by Miguel de Cervantes.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'Don Quixote' was written by Homer.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'The Odyssey' was written by Homer.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'The Odyssey' was written by Fyodor Dostoevsky.", "domain": 3, "label_false": 1}
+{"statement": "The novel 'Crime and Punishment' was written by Fyodor Dostoevsky.", "domain": 3, "label_false": 0}
+{"statement": "The novel 'Crime and Punishment' was written by George Orwell.", "domain": 3, "label_false": 1}
+{"statement": "The primary language spoken in Brazil is Portuguese.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Brazil is Spanish.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Mexico is Spanish.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Mexico is German.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Austria is German.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Austria is Arabic.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Egypt is Arabic.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Egypt is Persian.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Iran is Persian.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Iran is Vietnamese.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Vietnam is Vietnamese.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Vietnam is Greek.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Greece is Greek.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Greece is Hebrew.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Israel is Hebrew.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Israel is Swahili.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Kenya is Swahili.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Kenya is Japanese.", "domain": 4, "label_false": 1}
+{"statement": "The primary language spoken in Japan is Japanese.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Japan is Portuguese.", "domain": 4, "label_false": 1}
+{"statement": "France is located on the continent of Europe.", "domain": 5, "label_false": 0}
+{"statement": "France is located on the continent of Africa.", "domain": 5, "label_false": 1}
+{"statement": "Egypt is located on the continent of Africa.", "domain": 5, "label_false": 0}
+{"statement": "Egypt is located on the continent of Asia.", "domain": 5, "label_false": 1}
+{"statement": "Japan is located on the continent of Asia.", "domain": 5, "label_false": 0}
+{"statement": "Japan is located on the continent of South America.", "domain": 5, "label_false": 1}
+{"statement": "Brazil is located on the continent of South America.", "domain": 5, "label_false": 0}
+{"statement": "Brazil is located on the continent of North America.", "domain": 5, "label_false": 1}
+{"statement": "Canada is located on the continent of North America.", "domain": 5, "label_false": 0}
+{"statement": "Canada is located on the continent of Africa.", "domain": 5, "label_false": 1}
+{"statement": "Kenya is located on the continent of Africa.", "domain": 5, "label_false": 0}
+{"statement": "Kenya is located on the continent of Asia.", "domain": 5, "label_false": 1}
+{"statement": "India is located on the continent of Asia.", "domain": 5, "label_false": 0}
+{"statement": "India is located on the continent of Europe.", "domain": 5, "label_false": 1}
+{"statement": "Germany is located on the continent of Europe.", "domain": 5, "label_false": 0}
+{"statement": "Germany is located on the continent of South America.", "domain": 5, "label_false": 1}
+{"statement": "Peru is located on the continent of South America.", "domain": 5, "label_false": 0}
+{"statement": "Peru is located on the continent of Asia.", "domain": 5, "label_false": 1}
+{"statement": "Thailand is located on the continent of Asia.", "domain": 5, "label_false": 0}
+{"statement": "Thailand is located on the continent of Africa.", "domain": 5, "label_false": 1}
+{"statement": "Nigeria is located on the continent of Africa.", "domain": 5, "label_false": 0}
+{"statement": "Nigeria is located on the continent of South America.", "domain": 5, "label_false": 1}
+{"statement": "Chile is located on the continent of South America.", "domain": 5, "label_false": 0}
+{"statement": "Chile is located on the continent of Europe.", "domain": 5, "label_false": 1}
+{"statement": "A dolphin is classified as a mammal.", "domain": 6, "label_false": 0}
+{"statement": "A dolphin is classified as a fish.", "domain": 6, "label_false": 1}
+{"statement": "A shark is classified as a fish.", "domain": 6, "label_false": 0}
+{"statement": "A shark is classified as a bird.", "domain": 6, "label_false": 1}
+{"statement": "A eagle is classified as a bird.", "domain": 6, "label_false": 0}
+{"statement": "A eagle is classified as a amphibian.", "domain": 6, "label_false": 1}
+{"statement": "A frog is classified as a amphibian.", "domain": 6, "label_false": 0}
+{"statement": "A frog is classified as a reptile.", "domain": 6, "label_false": 1}
+{"statement": "A snake is classified as a reptile.", "domain": 6, "label_false": 0}
+{"statement": "A snake is classified as a fish.", "domain": 6, "label_false": 1}
+{"statement": "A salmon is classified as a fish.", "domain": 6, "label_false": 0}
+{"statement": "A salmon is classified as a mammal.", "domain": 6, "label_false": 1}
+{"statement": "A bat is classified as a mammal.", "domain": 6, "label_false": 0}
+{"statement": "A bat is classified as a bird.", "domain": 6, "label_false": 1}
+{"statement": "A penguin is classified as a bird.", "domain": 6, "label_false": 0}
+{"statement": "A penguin is classified as a reptile.", "domain": 6, "label_false": 1}
+{"statement": "A crocodile is classified as a reptile.", "domain": 6, "label_false": 0}
+{"statement": "A crocodile is classified as a mammal.", "domain": 6, "label_false": 1}
+{"statement": "A whale is classified as a mammal.", "domain": 6, "label_false": 0}
+{"statement": "A whale is classified as a bird.", "domain": 6, "label_false": 1}
+{"statement": "A owl is classified as a bird.", "domain": 6, "label_false": 0}
+{"statement": "A owl is classified as a reptile.", "domain": 6, "label_false": 1}
+{"statement": "A turtle is classified as a reptile.", "domain": 6, "label_false": 0}
+{"statement": "A turtle is classified as a mammal.", "domain": 6, "label_false": 1}
+{"statement": "The chemical formula for water is H2O.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for water is NaCl.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for table salt is NaCl.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for table salt is CO2.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for carbon dioxide is CO2.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for carbon dioxide is CH4.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for methane is CH4.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for methane is NH3.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for ammonia is NH3.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for ammonia is O3.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for ozone is O3.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for ozone is H2O2.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for hydrogen peroxide is H2O2.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for hydrogen peroxide is C6H12O6.", "domain": 7, "label_false": 1}
+{"statement": "The chemical formula for glucose is C6H12O6.", "domain": 7, "label_false": 0}
+{"statement": "The chemical formula for glucose is H2O.", "domain": 7, "label_false": 1}
+{"statement": "The heart is part of the circulatory system.", "domain": 8, "label_false": 0}
+{"statement": "The heart is part of the respiratory system.", "domain": 8, "label_false": 1}
+{"statement": "The lungs is part of the respiratory system.", "domain": 8, "label_false": 0}
+{"statement": "The lungs is part of the digestive system.", "domain": 8, "label_false": 1}
+{"statement": "The stomach is part of the digestive system.", "domain": 8, "label_false": 0}
+{"statement": "The stomach is part of the nervous system.", "domain": 8, "label_false": 1}
+{"statement": "The brain is part of the nervous system.", "domain": 8, "label_false": 0}
+{"statement": "The brain is part of the urinary system.", "domain": 8, "label_false": 1}
+{"statement": "The kidney is part of the urinary system.", "domain": 8, "label_false": 0}
+{"statement": "The kidney is part of the integumentary system.", "domain": 8, "label_false": 1}
+{"statement": "The skin is part of the integumentary system.", "domain": 8, "label_false": 0}
+{"statement": "The skin is part of the circulatory system.", "domain": 8, "label_false": 1}
+{"statement": "The first planet from the Sun is Mercury.", "domain": 9, "label_false": 0}
+{"statement": "The first planet from the Sun is Venus.", "domain": 9, "label_false": 1}
+{"statement": "The second planet from the Sun is Venus.", "domain": 9, "label_false": 0}
+{"statement": "The second planet from the Sun is Earth.", "domain": 9, "label_false": 1}
+{"statement": "The third planet from the Sun is Earth.", "domain": 9, "label_false": 0}
+{"statement": "The third planet from the Sun is Mars.", "domain": 9, "label_false": 1}
+{"statement": "The fourth planet from the Sun is Mars.", "domain": 9, "label_false": 0}
+{"statement": "The fourth planet from the Sun is Jupiter.", "domain": 9, "label_false": 1}
+{"statement": "The fifth planet from the Sun is Jupiter.", "domain": 9, "label_false": 0}
+{"statement": "The fifth planet from the Sun is Saturn.", "domain": 9, "label_false": 1}
+{"statement": "The sixth planet from the Sun is Saturn.", "domain": 9, "label_false": 0}
+{"statement": "The sixth planet from the Sun is Uranus.", "domain": 9, "label_false": 1}
+{"statement": "The seventh planet from the Sun is Uranus.", "domain": 9, "label_false": 0}
+{"statement": "The seventh planet from the Sun is Neptune.", "domain": 9, "label_false": 1}
+{"statement": "The eighth planet from the Sun is Neptune.", "domain": 9, "label_false": 0}
+{"statement": "The eighth planet from the Sun is Mercury.", "domain": 9, "label_false": 1}
+{"statement": "A standard soccer team has eleven players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard soccer team has five players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard basketball team has five players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard basketball team has nine players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard baseball team has nine players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard baseball team has fifteen players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard rugby union team has fifteen players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard rugby union team has six players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard volleyball team has six players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard volleyball team has eleven players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard ice hockey team has six players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard ice hockey team has eleven players on the field.", "domain": 10, "label_false": 1}
+{"statement": "A standard cricket team has eleven players on the field.", "domain": 10, "label_false": 0}
+{"statement": "A standard cricket team has five players on the field.", "domain": 10, "label_false": 1}
+{"statement": "The largest planet in the solar system is Jupiter.", "domain": 11, "label_false": 0}
+{"statement": "The largest planet in the solar system is the Pacific.", "domain": 11, "label_false": 1}
+{"statement": "The largest ocean on Earth is the Pacific.", "domain": 11, "label_false": 0}
+{"statement": "The largest ocean on Earth is Russia.", "domain": 11, "label_false": 1}
+{"statement": "The largest country by area is Russia.", "domain": 11, "label_false": 0}
+{"statement": "The largest country by area is the blue whale.", "domain": 11, "label_false": 1}
+{"statement": "The largest mammal is the blue whale.", "domain": 11, "label_false": 0}
+{"statement": "The largest mammal is the Sahara.", "domain": 11, "label_false": 1}
+{"statement": "The largest hot desert is the Sahara.", "domain": 11, "label_false": 0}
+{"statement": "The largest hot desert is Lake Superior.", "domain": 11, "label_false": 1}
+{"statement": "The largest freshwater lake by area is Lake Superior.", "domain": 11, "label_false": 0}
+{"statement": "The largest freshwater lake by area is Asia.", "domain": 11, "label_false": 1}
+{"statement": "The largest continent by area is Asia.", "domain": 11, "label_false": 0}
+{"statement": "The largest continent by area is Jupiter.", "domain": 11, "label_false": 1}
+{"statement": "The metal mercury is liquid at room temperature.", "domain": 12, "label_false": 0}
+{"statement": "The metal mercury is solid at room temperature.", "domain": 12, "label_false": 1}
+{"statement": "The metal iron is solid at room temperature.", "domain": 12, "label_false": 0}
+{"statement": "The metal iron is liquid at room temperature.", "domain": 12, "label_false": 1}
+{"statement": "The metal gold is solid at room temperature.", "domain": 12, "label_false": 0}
+{"statement": "The metal gold is liquid at room temperature.", "domain": 12, "label_false": 1}
+{"statement": "The metal sodium is solid at room temperature.", "domain": 12, "label_false": 0}
+{"statement": "The metal sodium is liquid at room temperature.", "domain": 12, "label_false": 1}
+{"statement": "The metal tungsten is solid at room temperature.", "domain": 12, "label_false": 0}
+{"statement": "The metal tungsten is liquid at room temperature.", "domain": 12, "label_false": 1}
+{"statement": "The painting 'Mona Lisa' was created by Leonardo da Vinci.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'Mona Lisa' was created by Vincent van Gogh.", "domain": 13, "label_false": 1}
+{"statement": "The painting 'The Starry Night' was created by Vincent van Gogh.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'The Starry Night' was created by Pablo Picasso.", "domain": 13, "label_false": 1}
+{"statement": "The painting 'Guernica' was created by Pablo Picasso.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'Guernica' was created by Salvador Dali.", "domain": 13, "label_false": 1}
+{"statement": "The painting 'The Persistence of Memory' was created by Salvador Dali.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'The Persistence of Memory' was created by Edvard Munch.", "domain": 13, "label_false": 1}
+{"statement": "The painting 'The Scream' was created by Edvard Munch.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'The Scream' was created by Sandro Botticelli.", "domain": 13, "label_false": 1}
+{"statement": "The painting 'The Birth of Venus' was created by Sandro Botticelli.", "domain": 13, "label_false": 0}
+{"statement": "The painting 'The Birth of Venus' was created by Leonardo da Vinci.", "domain": 13, "label_false": 1}
