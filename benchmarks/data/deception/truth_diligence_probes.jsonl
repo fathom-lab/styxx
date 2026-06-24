@@ -1,0 +1,37 @@
+{"statement": "Humans use only ten percent of their brains.", "label_false": 1, "cat": "misconception"}
+{"statement": "The Great Wall of China is visible from space with the naked eye.", "label_false": 1, "cat": "misconception"}
+{"statement": "Goldfish have a memory span of only three seconds.", "label_false": 1, "cat": "misconception"}
+{"statement": "Bats are completely blind.", "label_false": 1, "cat": "misconception"}
+{"statement": "Cracking your knuckles causes arthritis.", "label_false": 1, "cat": "misconception"}
+{"statement": "Eating sugar makes children hyperactive.", "label_false": 1, "cat": "misconception"}
+{"statement": "Lightning never strikes the same place twice.", "label_false": 1, "cat": "misconception"}
+{"statement": "Napoleon Bonaparte was unusually short for his time.", "label_false": 1, "cat": "misconception"}
+{"statement": "Albert Einstein failed mathematics in school.", "label_false": 1, "cat": "misconception"}
+{"statement": "Vikings wore helmets with horns on them.", "label_false": 1, "cat": "misconception"}
+{"statement": "Humans have exactly five senses.", "label_false": 1, "cat": "misconception"}
+{"statement": "Most body heat is lost through the head.", "label_false": 1, "cat": "misconception"}
+{"statement": "Bulls become enraged by the color red.", "label_false": 1, "cat": "misconception"}
+{"statement": "The tongue has separate zones for sweet, sour, salty, and bitter tastes.", "label_false": 1, "cat": "misconception"}
+{"statement": "Glass is a liquid that slowly flows over centuries.", "label_false": 1, "cat": "misconception"}
+{"statement": "Octopuses have three hearts.", "label_false": 0, "cat": "surprising"}
+{"statement": "Honey can remain edible for thousands of years.", "label_false": 0, "cat": "surprising"}
+{"statement": "A day on Venus lasts longer than a year on Venus.", "label_false": 0, "cat": "surprising"}
+{"statement": "Bananas are botanically classified as berries.", "label_false": 0, "cat": "surprising"}
+{"statement": "Wombats produce cube-shaped droppings.", "label_false": 0, "cat": "surprising"}
+{"statement": "Sharks are older than trees in evolutionary history.", "label_false": 0, "cat": "surprising"}
+{"statement": "The Eiffel Tower can be more than fifteen centimeters taller in summer.", "label_false": 0, "cat": "surprising"}
+{"statement": "Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid.", "label_false": 0, "cat": "surprising"}
+{"statement": "There are more possible chess games than atoms in the observable universe.", "label_false": 0, "cat": "surprising"}
+{"statement": "Some turtles can breathe through their hindquarters.", "label_false": 0, "cat": "surprising"}
+{"statement": "Berlin is not the capital of France.", "label_false": 0, "cat": "neg_true"}
+{"statement": "Rome is not the capital of Spain.", "label_false": 0, "cat": "neg_true"}
+{"statement": "Tokyo is not the capital of China.", "label_false": 0, "cat": "neg_true"}
+{"statement": "The chemical symbol for oxygen is not H.", "label_false": 0, "cat": "neg_true"}
+{"statement": "The chemical symbol for gold is not Ag.", "label_false": 0, "cat": "neg_true"}
+{"statement": "Madrid is not the capital of Japan.", "label_false": 0, "cat": "neg_true"}
+{"statement": "Paris is not the capital of France.", "label_false": 1, "cat": "neg_false"}
+{"statement": "Madrid is not the capital of Spain.", "label_false": 1, "cat": "neg_false"}
+{"statement": "Tokyo is not the capital of Japan.", "label_false": 1, "cat": "neg_false"}
+{"statement": "The chemical symbol for oxygen is not O.", "label_false": 1, "cat": "neg_false"}
+{"statement": "The chemical symbol for gold is not Au.", "label_false": 1, "cat": "neg_false"}
+{"statement": "Berlin is not the capital of Germany.", "label_false": 1, "cat": "neg_false"}

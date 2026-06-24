@@ -131,3 +131,4 @@ benchmarks/data/overconfidence/_acts_*.npz
 
 benchmarks/data/deception/_silent_acts_*.npz
 benchmarks/data/deception/_truthset_acts_*.npz
+benchmarks/data/deception/_diligence_acts_*.npz
