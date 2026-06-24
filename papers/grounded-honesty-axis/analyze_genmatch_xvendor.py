@@ -57,21 +57,31 @@ def main():
         print(f"  open<->closed hallucination {oc_h:.3f}  refusal {oc_r:.3f}   per-family hall {[round(v,3) for v in ocv]}")
 
     delta = rows["32-token (gen-matched)"]["oc_h"] - BASELINE_24["open_closed_hall"]
+    oo32 = rows["32-token (gen-matched)"]["oo_h"]
+    sanity_drift = abs(oo32 - BASELINE_24["open_open_hall"])
+    sanity_ok = sanity_drift <= 0.05   # within-open must be STABLE for any primary verdict to be trustworthy
     print("\n" + "-"*72)
     print(f"PRIMARY bar  delta = (gm32 open<->closed hallucination) - 0.473 = {delta:+.3f}")
-    if abs(delta) < 0.05:
-        verdict = "RESIDUAL ROBUST — generation fully matched; the open<->closed gap is REAL vendor divergence, not apparatus."
+    print(f"SECONDARY (sanity): open<->open at 32 = {oo32:.3f}  (24-token was {BASELINE_24['open_open_hall']:.3f}; expect ±0.05; drift {sanity_drift:+.3f})")
+    # 2026-06-24 self-audit fix: the primary verdict is only trustworthy if the SANITY bar passes. A failed
+    # within-open stability check means the metric is noise-dominated, so "RESIDUAL ROBUST" cannot be claimed.
+    if not sanity_ok:
+        verdict = (f"INCONCLUSIVE — within noise. Secondary within-open sanity bar FAILED (drift {sanity_drift:+.3f} "
+                   f"> 0.05): the metric is noise-dominated single-run, so the primary delta {delta:+.3f} (no CI) "
+                   f"cannot support a 'real vendor divergence' claim. cf bootstrap_cliff_variance (wide overlapping CIs).")
+    elif abs(delta) < 0.05:
+        verdict = "RESIDUAL (sanity passed) — open<->closed gap holds under gen-matching; report WITH a bootstrap CI before any 'real divergence' claim."
     elif delta >= 0.10:
         verdict = "APPARATUS DRIVER — max_new_tokens moved the gap toward 0.77; residual was partly apparatus. Correct the finding."
     else:
         verdict = "PARTIAL apparatus contribution (0.05<=|Δ|<0.10)."
     print("VERDICT:", verdict)
-    oo32 = rows["32-token (gen-matched)"]["oo_h"]
-    print(f"SECONDARY (sanity): open<->open at 32 = {oo32:.3f}  (24-token was {BASELINE_24['open_open_hall']:.3f}; expect ±0.05)")
 
     out = HERE / "genmatch_xvendor_result.json"
     out.write_text(json.dumps({"rows":{k:{kk:vv for kk,vv in v.items()} for k,v in rows.items()},
                                "primary_delta":round(delta,4),"verdict":verdict,
+                               "sanity_drift":round(sanity_drift,4),"sanity_ok":bool(sanity_ok),
+                               "corrigendum":"2026-06-24 self-audit: verdict is now gated on the within-open sanity bar; the original 'RESIDUAL ROBUST / REAL vendor divergence' was an overclaim (no CIs; sanity bar failed; contradicted the finding's 'largely apparatus' title). Raw numbers unchanged.",
                                "baseline_24":BASELINE_24,"signals":SIGNALS,"families":FAMS}, indent=2), encoding="utf-8")
     print(f"\nwritten: {out}")
 

@@ -40,7 +40,9 @@
           "n_shared": 3
         }
       ],
-      "power_note": "mean Spearman computed over only 3-7 shared domains (committed_n>=5 in both); below the 10-domain power floor -> NOT a real SURVIVED. See FINDING."
+      "power_note": "mean Spearman computed over only 3-7 shared domains (committed_n>=5 in both); below a 10-domain power floor -> NOT a real SURVIVED. See FINDING.",
+      "power_floor_is_post_hoc": true,
+      "post_hoc_note": "2026-06-24 self-audit: the 10-domain power floor is POST-HOC (not in PREREG_crossfamily_local_cliff). Applied mechanically, the frozen L1 bar reads SURVIVED (0.997 >= 0.55) -- but that is an artifact of n=3-7 shared domains, so we downgrade to INCONCLUSIVE_UNDERPOWERED. Disclosed as post-hoc: the honest status is that BOTH pre-registered bars effectively returned null (L1 underpowered, L2 FAILED). Any headline hallucination/refusal Spearmans (e.g. 0.77/0.43) are EXPLORATORY, not pre-registered."
     },
     "L2_shared_hard_floor": {
       "domains": [],
