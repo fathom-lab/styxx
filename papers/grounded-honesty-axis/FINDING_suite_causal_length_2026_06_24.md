@@ -65,10 +65,12 @@ carried the result — reported transparently, not as a "prereg passed."
 
 ## Decisions on the shipped instruments
 
-- **overconfidence_v0 → length-robust recalibration owed** (this is the real target; the
-  `project_parrhesia_length_audit` note that "the recipe didn't transfer" was right that it is load-bearing —
-  now confirmed it is the *only* causally length-confounded instrument). Same treatment sycophancy got in
-  7.19.1: refit dropping the length features + operating-point recenter, or a length-matched corpus rebuild.
+- **overconfidence_v0 → REFINED by `FINDING_overconfidence_length_robust_2026_06_24.md`:** the offline
+  length-matched rebuild returned an HONEST NULL across 2 generators — calibrated register is intrinsically
+  ~16% more verbose (hedging costs words), so length is PARTLY construct-intrinsic, not purely spurious.
+  "length-confounded" overstates it; ~0.09 AUC is length (part legitimate, part spurious). **Decision: ship a
+  CAVEAT, not new weights;** force-ablating length (→~0.68) would delete partly-real signal. A clean split
+  needs a frontier-key regen with hard length control.
 - **deception_v0 → KEEP + modest caveat.** It is construct-robust under causal length control; `log_word_count`
   adds ~0.06. (Its separate, known generalization weakness — lexical → 0.59 on TruthfulQA,
   `project_deception_v1_negative` — stands, but that is not a length problem.) Do NOT deprecate for length.

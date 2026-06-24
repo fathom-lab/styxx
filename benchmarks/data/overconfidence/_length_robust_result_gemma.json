@@ -1,0 +1,28 @@
+{
+  "model": "gemma",
+  "n": 200,
+  "hedge_stddiff": -0.5172129468856512,
+  "certainty_stddiff": 0.23565244772307434,
+  "d_len": -0.7422282596670017,
+  "reg_ok": false,
+  "len_ok": false,
+  "cv_full_matched": 0.767,
+  "cv_full_ci": [
+    0.7057568922305765,
+    0.8289886686257883
+  ],
+  "cv_nolen_matched": 0.6769999999999999,
+  "shipped_xfer": 0.73205,
+  "decision": "HONEST NULL \u2014 Gate 1 failed (corpus did not instantiate a clean matched-length register)",
+  "feature_stddiff": {
+    "certainty_marker_density": 0.23565244772307434,
+    "hedge_density": -0.5172129468856512,
+    "epistemic_balance": 0.5323341598216308,
+    "specific_number_density": -0.22461867431729263,
+    "evidence_marker_density": -0.3770175312996327,
+    "strong_assertion_ratio": 0.13822389948556302,
+    "unhedged_claim_ratio": 0.5520362208981123,
+    "mean_sentence_length": -0.7822758187088188,
+    "log_word_count": -0.7503313927479316
+  }
+}
