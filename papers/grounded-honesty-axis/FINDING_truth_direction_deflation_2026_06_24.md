@@ -55,3 +55,31 @@ truth representation, on these 3B models + this 6-template construct.** Open que
 triangulation): is the OOD failure because the construct is too narrow (6 templates) or because 3B models lack
 a transferable truth axis at this scale? The settling experiment = a large diverse negation-inclusive dataset
 (Marks-Tegmark scale).
+
+## TRIANGULATION (5-agent ultracode, all converge) — the real, richer conclusion
+Five independent probes (method, layer, reverse-direction, calibration, power) agree:
+- **The 0.98 construct direction is ORTHOGONAL to the model's real truth axis** — cosine(controlled-template
+  direction, OOD-internal truth direction) = **−0.066 (Qwen) / +0.037 (Llama)**. The probe that scores 0.98
+  leave-one-domain-out is measuring something unrelated to the concept it claims to measure.
+- **A truth axis DOES exist in these 3B models:** natural true/false statements are linearly separable
+  IN-DISTRIBUTION at in-OOD leave-one-out **0.833 (Qwen) / 0.913 (Llama)**, permutation **p ≤ 0.003**. The
+  models encode truth; the controlled construct just recovered the wrong (orthogonal, surface) direction.
+- **Transfer failure is robust** (no method/layer/regularization/negation-augmentation reaches 0.70 OOD),
+  BUT honestly **underpowered at n=25** (every OOD bootstrap CI ~0.4 wide, none excludes 0.70). So this
+  REFUTES a usable generalizing direction at this construct width; it cannot, on power alone, prove no axis
+  exists in principle.
+
+## THE GENUINE CONTRIBUTION (more valuable + more defensible than the original claim)
+**A linear probe can hit 0.98 leave-one-domain-out on a silence-gated, cross-domain controlled construct and
+be ORTHOGONAL to the model's actual concept axis.** High in-distribution probe accuracy — even with
+cross-domain generalization AND a verified text-silence gate — does NOT establish you found the concept; the
+construct's surface regularities yield a high-AUC direction unrelated to the real feature. The required
+checks: OOD transfer to natural statements AND orthogonality to the in-OOD-internal direction. This is a
+clean, general cautionary result for activation-probing / interpretability, demonstrated with receipts.
+
+## SETTLING EXPERIMENT (pre-registered next, to run cold)
+Wide naturalistic paired true/false corpus (hundreds of statements, many domains/forms/lengths, truth
+decorrelated from template surface) + large balanced OOD test (≥100 misconceptions vs ≥100 surprising-true),
+fit mass-mean+logistic, pre-registered 0.70 bar with bootstrap CI required to EXCLUDE 0.70, and track cosine
+to the in-OOD-internal direction. (a) transfers + cosine→1 = "construct was too narrow, axis is recoverable";
+(b) stays flat with large n = "no linearly-transferable truth axis from a held-out construct at 3B".
