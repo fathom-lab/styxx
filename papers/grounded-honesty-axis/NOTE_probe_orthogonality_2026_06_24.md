@@ -3,7 +3,8 @@
 *styxx / fathom-lab — technical note, 2026-06-24. Offline, two open 3B models, fully reproducible. This is a
 small-scale replication-plus-packaging, honestly scoped — not a new phenomenon.*
 
-**▶ Try it in 60s (Colab):** [`examples/probe_validity_colab.ipynb`](../../examples/probe_validity_colab.ipynb)
+**▶ Try it in 60s (one-click Colab):**
+https://colab.research.google.com/github/fathom-lab/styxx/blob/main/examples/probe_validity_colab.ipynb
 — run `styxx.validate_probe` on a planted surface artifact, then on a real model, then on your own probe.
 
 ## Abstract
