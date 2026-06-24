@@ -1,0 +1,136 @@
+{"statement": "The capital of France is not Paris.", "domain": 0, "label_false": 1}
+{"statement": "The capital of France is not Berlin.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Germany is not Berlin.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Germany is not Madrid.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Spain is not Madrid.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Spain is not Rome.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Italy is not Rome.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Italy is not Lisbon.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Portugal is not Lisbon.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Portugal is not Tokyo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Japan is not Tokyo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Japan is not Beijing.", "domain": 0, "label_false": 0}
+{"statement": "The capital of China is not Beijing.", "domain": 0, "label_false": 1}
+{"statement": "The capital of China is not Moscow.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Russia is not Moscow.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Russia is not Cairo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Egypt is not Cairo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Egypt is not Ottawa.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Canada is not Ottawa.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Canada is not Canberra.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Australia is not Canberra.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Australia is not Athens.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Greece is not Athens.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Greece is not Oslo.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Norway is not Oslo.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Norway is not Warsaw.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Poland is not Warsaw.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Poland is not Vienna.", "domain": 0, "label_false": 0}
+{"statement": "The capital of Austria is not Vienna.", "domain": 0, "label_false": 1}
+{"statement": "The capital of Austria is not Paris.", "domain": 0, "label_false": 0}
+{"statement": "The chemical symbol for oxygen is not O.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for oxygen is not H.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for hydrogen is not H.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for hydrogen is not C.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for carbon is not C.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for carbon is not N.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for nitrogen is not N.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for nitrogen is not Na.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for sodium is not Na.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for sodium is not Fe.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for iron is not Fe.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for iron is not Au.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for gold is not Au.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for gold is not Ag.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for silver is not Ag.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for silver is not K.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for potassium is not K.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for potassium is not Ca.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for calcium is not Ca.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for calcium is not He.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for helium is not He.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for helium is not Ne.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for neon is not Ne.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for neon is not Cu.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for copper is not Cu.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for copper is not Zn.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for zinc is not Zn.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for zinc is not Pb.", "domain": 1, "label_false": 0}
+{"statement": "The chemical symbol for lead is not Pb.", "domain": 1, "label_false": 1}
+{"statement": "The chemical symbol for lead is not O.", "domain": 1, "label_false": 0}
+{"statement": "The largest planet in our solar system is not the largest planet by the entity Jupiter.", "domain": 2, "label_false": 1}
+{"statement": "The largest planet in our solar system is not the largest planet by the entity Mercury.", "domain": 2, "label_false": 0}
+{"statement": "The smallest planet in our solar system is not the largest planet by the entity Mercury.", "domain": 2, "label_false": 1}
+{"statement": "The smallest planet in our solar system is not the largest planet by the entity Mars.", "domain": 2, "label_false": 0}
+{"statement": "The closest planet to the Sun is not the largest planet by the entity Mercury.", "domain": 2, "label_false": 1}
+{"statement": "The closest planet to the Sun is not the largest planet by the entity Mars.", "domain": 2, "label_false": 0}
+{"statement": "The red planet is not the largest planet by the entity Mars.", "domain": 2, "label_false": 1}
+{"statement": "The red planet is not the largest planet by the entity Saturn.", "domain": 2, "label_false": 0}
+{"statement": "The ringed gas giant is not the largest planet by the entity Saturn.", "domain": 2, "label_false": 1}
+{"statement": "The ringed gas giant is not the largest planet by the entity Earth.", "domain": 2, "label_false": 0}
+{"statement": "The planet we live on is not the largest planet by the entity Earth.", "domain": 2, "label_false": 1}
+{"statement": "The planet we live on is not the largest planet by the entity Venus.", "domain": 2, "label_false": 0}
+{"statement": "The hottest planet is not the largest planet by the entity Venus.", "domain": 2, "label_false": 1}
+{"statement": "The hottest planet is not the largest planet by the entity Neptune.", "domain": 2, "label_false": 0}
+{"statement": "The farthest planet from the Sun is not the largest planet by the entity Neptune.", "domain": 2, "label_false": 1}
+{"statement": "The farthest planet from the Sun is not the largest planet by the entity Jupiter.", "domain": 2, "label_false": 0}
+{"statement": "The official currency of Japan is not the yen.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Japan is not the pound.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of the United Kingdom is not the pound.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of the United Kingdom is not the rupee.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of India is not the rupee.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of India is not the dollar.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of the United States is not the dollar.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of the United States is not the franc.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Switzerland is not the franc.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Switzerland is not the peso.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Mexico is not the peso.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Mexico is not the krona.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Sweden is not the krona.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Sweden is not the zloty.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Poland is not the zloty.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Poland is not the baht.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Thailand is not the baht.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Thailand is not the won.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of South Korea is not the won.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of South Korea is not the lira.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Turkey is not the lira.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Turkey is not the real.", "domain": 3, "label_false": 0}
+{"statement": "The official currency of Brazil is not the real.", "domain": 3, "label_false": 1}
+{"statement": "The official currency of Brazil is not the yen.", "domain": 3, "label_false": 0}
+{"statement": "The novel '1984' was not written by George Orwell.", "domain": 4, "label_false": 1}
+{"statement": "The novel '1984' was not written by Jane Austen.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Pride and Prejudice' was not written by Jane Austen.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Pride and Prejudice' was not written by Herman Melville.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Moby-Dick' was not written by Herman Melville.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Moby-Dick' was not written by Leo Tolstoy.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'War and Peace' was not written by Leo Tolstoy.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'War and Peace' was not written by Franz Kafka.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'The Trial' was not written by Franz Kafka.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'The Trial' was not written by William Shakespeare.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Hamlet' was not written by William Shakespeare.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Hamlet' was not written by Miguel de Cervantes.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Don Quixote' was not written by Miguel de Cervantes.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Don Quixote' was not written by Homer.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'The Odyssey' was not written by Homer.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'The Odyssey' was not written by Fyodor Dostoevsky.", "domain": 4, "label_false": 0}
+{"statement": "The novel 'Crime and Punishment' was not written by Fyodor Dostoevsky.", "domain": 4, "label_false": 1}
+{"statement": "The novel 'Crime and Punishment' was not written by George Orwell.", "domain": 4, "label_false": 0}
+{"statement": "The primary language spoken in Brazil is not Portuguese.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Brazil is not Spanish.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Mexico is not Spanish.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Mexico is not German.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Austria is not German.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Austria is not Arabic.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Egypt is not Arabic.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Egypt is not Persian.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Iran is not Persian.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Iran is not Vietnamese.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Vietnam is not Vietnamese.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Vietnam is not Greek.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Greece is not Greek.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Greece is not Hebrew.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Israel is not Hebrew.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Israel is not Swahili.", "domain": 5, "label_false": 0}
+{"statement": "The primary language spoken in Kenya is not Swahili.", "domain": 5, "label_false": 1}
+{"statement": "The primary language spoken in Kenya is not Portuguese.", "domain": 5, "label_false": 0}

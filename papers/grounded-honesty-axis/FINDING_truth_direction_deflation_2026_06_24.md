@@ -39,3 +39,19 @@ truth axis; if still flat -> these small models encode plausibility, not robust 
 2 local 3B models, n=37 probe statements, single seed. The negation failure is unambiguous (0.000 both
 models); the misconception result is small-n but flat both ways. 9th self-caught deflation of the session,
 and the most important: it corrects the headline I called "most mind-blowing."
+
+## DEFINITIVE follow-up — negation-augmented training (commit appended)
+Fit the direction on the controlled set PLUS its negations (labels flipped), so polarity is forced into
+training (`scripts/negation_augmented_truth.py`):
+| | Qwen | Llama |
+|---|---|---|
+| in-construct LODO (polarity in train) | 0.947 | 0.968 |
+| no-negation dir -> negations (raw) | 0.020 | 0.392 (inverts — confirms deflation) |
+| augmented dir -> held-out NEGATION polarity | 1.000 | 1.000 (CAN learn polarity if trained on it) |
+| augmented dir -> OOD natural misconceptions-vs-surprising | **0.533** | **0.600** (still FLAT) |
+**Definitive: the model can encode polarity when trained on it, but even the polarity-robust direction does
+NOT generalize to natural OOD true/false statements. The truth direction is CONSTRUCT-BOUND, not a transferable
+truth representation, on these 3B models + this 6-template construct.** Open question (under multi-agent
+triangulation): is the OOD failure because the construct is too narrow (6 templates) or because 3B models lack
+a transferable truth axis at this scale? The settling experiment = a large diverse negation-inclusive dataset
+(Marks-Tegmark scale).
