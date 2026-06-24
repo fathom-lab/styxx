@@ -975,3 +975,27 @@ def test_divergence_smoke():
     assert semantic_entropy(["a", "b", "c"], same_fn=eq) == pytest.approx(math.log(3), abs=1e-9)
     assert council_agreement(["x", "x", "x", "x"], same_fn=eq) == 1.0
     assert council_agreement(["a", "b", "c", "d"], same_fn=eq) == pytest.approx(0.25)
+
+
+def test_validate_probe_smoke():
+    """styxx.validate_probe runs the probe-validation battery and catches a surface
+    artifact: a high-in-construct probe whose direction is orthogonal to the concept's
+    natural-data direction (NOTE_probe_orthogonality_2026_06_24)."""
+    from styxx import validate_probe, ProbeValidityReport
+    rng = np.random.default_rng(0)
+    dim = 48
+    u = rng.standard_normal(dim); u /= np.linalg.norm(u)               # the concept axis
+    v = rng.standard_normal(dim); v -= (v @ u) * u; v /= np.linalg.norm(v)  # orthogonal surface axis
+    acts = {}
+    crows, nrows = [], []
+    for i in range(80):                                                # construct: label driven by v (surface)
+        y = i % 2; acts[f"c{i}"] = (2 * y - 1) * 3.0 * v + rng.standard_normal(dim)
+        crows.append({"text": f"c{i}", "label": y, "group": i // 20})
+    for i in range(40):                                                # natural: concept on u
+        y = i % 2; acts[f"n{i}"] = (2 * y - 1) * 3.0 * u + rng.standard_normal(dim)
+        nrows.append({"text": f"n{i}", "label": y})
+    report = validate_probe(crows, nrows, lambda ts: np.array([acts[t] for t in ts]), perm_iters=200)
+    assert isinstance(report, ProbeValidityReport)
+    assert report.in_construct_auc >= 0.8              # looks great in-construct
+    assert report.verdict.startswith("SURFACE-ARTIFACT")  # but caught as an artifact
+    assert "verdict" in report.as_dict()

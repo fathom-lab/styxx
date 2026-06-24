@@ -355,6 +355,7 @@ from .sla import (
 )
 from .compliance import compliance_report, ComplianceReport
 from .probe import probe, ProbeReport
+from .probe_validity import validate_probe, ProbeValidityReport  # is a probe tracking the concept or a surface artifact?
 from .gate import gate, GateVerdict  # v3.4.0: pre-flight cognitive verdict
 from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEvent
 from .optimize import optimize
@@ -768,6 +769,7 @@ __all__ = [
     # compliance / verification
     "certify", "verify_certificate", "CertificateVerificationResult",
     "compliance_report", "probe", "calibrate",
+    "validate_probe", "ProbeValidityReport",
 
     # pre-flight verdict (3.4.0+)
     "gate", "GateVerdict",

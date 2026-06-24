@@ -33,6 +33,7 @@
 > - **`styxx.meaning_diff`** — did two models mean the same thing? agreement + HEALTHY/DRIFTED/BROKEN + the concepts that drifted, by name. Model-migration / quantization / fine-tune regression QA, zero labels.
 > - **`styxx.certify` (OATH)** — extract every numeric claim in a document, verify each against its receipts, emit a machine-checkable certificate. The verifier passed its own pre-registered mutant battery.
 > - **`styxx.mind`** — a certified mind profile (conduct under pressure + meaning-geometry citizenship); refuses the axes it cannot measure, each refusal carrying its receipt.
+> - **`styxx.validate_probe` (7.19+)** — is an oversight probe tracking the concept or a surface artifact? Silence gate + natural-OOD transfer (permutation-tested) + orthogonality-to-the-natural-direction → `VALID` / `SURFACE-ARTIFACT`. We caught our *own* 0.98 truth-probe as a surface artifact with it (`papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md`).
 > - **Watch it live** → **[styxx.org/live](https://styxx-org.netlify.app/live.html)** — a real model's grounding signature read from its activations, before it speaks. Calibrated correlate, not a verdict.
 
 ## 30-second quickstart
