@@ -1,0 +1,7 @@
+corpus                   n_full  n_cem d_len_full d_len_cem AUC_full           AUC_cem
+ORIGINAL gpt-4o-mini        200     76     -1.209     0.045    0.964   0.863 CI[0.776,0.936]
+Qwen2.5-3B matched          200    182      0.030     0.003    0.587   0.585 CI[0.499,0.668]
+Llama-3.2-3B matched        200    146     -0.488    -0.004    0.822   0.756 CI[0.672,0.836]
+
+Reading: if AUC_cem collapses toward 0.5 when d_len_cem~0 (esp. on the ORIGINAL gpt corpus, where there is
+NO generator change), the shipped instrument's discrimination was length-carried. Residual AUC_cem>>0.5 = real register signal.

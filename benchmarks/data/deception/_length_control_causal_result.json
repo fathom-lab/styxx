@@ -1,0 +1,66 @@
+[
+  {
+    "label": "MATCHED-LENGTH local: qwen2.5-3b-instruct",
+    "n": 200,
+    "d_len": 0.029580723563697044,
+    "manip_ok": true,
+    "shipped_auc": 0.58665,
+    "shipped_ci": [
+      0.5058078959651391,
+      0.6666779448621554
+    ],
+    "cv_auc": 0.5595000000000001,
+    "cv_ci": [
+      0.46908690869086905,
+      0.6321539838425572
+    ],
+    "verdict": "SPURIOUS",
+    "mean_words": {
+      "honest": 32.62,
+      "dishonest": 32.51
+    },
+    "feature_stddiff": {
+      "specificity_density": -0.2896468853273001,
+      "first_person_density": 0.14177624100166714,
+      "exclusive_word_density": -0.02371693724132507,
+      "vagueness_density": 0.28703938837650333,
+      "negation_density": 0.04806978048106198,
+      "hedge_confidence_clash": 0.24680702093691811,
+      "cognitive_marker_density": 0.22353326218997452,
+      "opinion_phrase_density": 0.0,
+      "log_word_count": 0.03130079209480188
+    }
+  },
+  {
+    "label": "MATCHED-LENGTH local: llama-3.2-3b-instruct",
+    "n": 200,
+    "d_len": -0.4884045558613178,
+    "manip_ok": false,
+    "shipped_auc": 0.822,
+    "shipped_ci": [
+      0.7623702117554514,
+      0.8790267365898878
+    ],
+    "cv_auc": 0.8350000000000002,
+    "cv_ci": [
+      0.7754943892037681,
+      0.8880466162278089
+    ],
+    "verdict": "INTRINSIC-CONFOUNDED",
+    "mean_words": {
+      "honest": 62.66,
+      "dishonest": 59.0
+    },
+    "feature_stddiff": {
+      "specificity_density": -1.021671324860456,
+      "first_person_density": 0.00821722850326955,
+      "exclusive_word_density": -0.07843053464935895,
+      "vagueness_density": -0.024969397871371847,
+      "negation_density": -0.2081287615173445,
+      "hedge_confidence_clash": 0.14177624100166714,
+      "cognitive_marker_density": 0.1264649229526063,
+      "opinion_phrase_density": 0.0,
+      "log_word_count": -0.48782009850606295
+    }
+  }
+]

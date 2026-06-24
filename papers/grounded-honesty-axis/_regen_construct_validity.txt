@@ -1,0 +1,16 @@
+corpus                               class      %year  %digit specificity_density
+--------------------------------------------------------------------------------------
+gpt-4o-mini (original, trained-on)   honest       38%     67%              0.0844
+gpt-4o-mini (original, trained-on)   dishonest     1%      6%              0.0111
+                                     -> gap    specificity h-d = +0.0732; %digit h-d = +61pp  => OK (dishonest is vaguer)
+
+Qwen2.5-3B (33w matched)             honest        9%     26%              0.0737
+Qwen2.5-3B (33w matched)             dishonest     7%     13%              0.0408
+                                     -> gap    specificity h-d = +0.0329; %digit h-d = +13pp  => DEGENERATE (no real contrast)
+
+Llama-3.2-3B (60w, manip FAIL)       honest       33%     61%              0.0848
+Llama-3.2-3B (60w, manip FAIL)       dishonest     1%      4%              0.0096
+                                     -> gap    specificity h-d = +0.0752; %digit h-d = +57pp  => OK (dishonest is vaguer)
+
+Reading: if the Qwen/Llama dishonest class keeps high %year/%digit and the specificity gap is small,
+the persona did NOT instantiate -> the matched-length AUC is corpus-degeneracy-confounded, NOT a length result.

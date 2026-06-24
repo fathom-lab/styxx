@@ -1,0 +1,25 @@
+instrument        n AUC_raw n_cem dlen_raw dlen_cem               AUC_cem len_share verdict
+sycophancy     1200   0.972   958    0.313   -0.001   0.973 CI[0.962,0.980]     -0.00 CONSTRUCT-ROBUST
+overconfidence  200   0.770   122   -0.610   -0.009   0.600 CI[0.514,0.710]      0.63 LENGTH-CARRIED
+deception       200   0.956    74   -1.209   -0.018   0.811 CI[0.689,0.897]      0.32 MIXED
+goal_drift      200   0.964   144    0.423    0.006   0.953 CI[0.908,0.986]      0.02 CONSTRUCT-ROBUST
+loop            200   1.000     4   -1.848    0.440     nan             —       nan THIN(<40 matched)
+plan_action     200   0.922   106   -0.830    0.003   0.853 CI[0.753,0.914]      0.17 CONSTRUCT-ROBUST
+
+CAUSAL reading (no generator change, no regen — pure length-balancing on each instrument's OWN corpus):
+  length_share = fraction of above-chance AUC LOST when the two classes are forced to equal length.
+  LENGTH-CARRIED = discrimination is mostly length; CONSTRUCT-ROBUST = survives length-matching.
+  (loop length may be construct-INTRINSIC: a balanced-length test understates a real long==loop signal.)
+wrote benchmarks/data/_suite_causal_length_result.json
+Per instrument: raw vs length-MATCHED (CEM), each with FULL features and with explicit length feature(s) ABLATED.
+instrument     lenfeat(ablated)       raw_full  raw_abl cem_full cem_abl(b~) cem_abl(12) verdict
+sycophancy     log_word_count            0.972    0.971    0.973       0.973       0.973 CONSTRUCT-ROBUST
+overconfidence mean_sentence_length,l    0.770    0.717    0.600       0.628       0.727 MIXED
+deception      log_word_count            0.956    0.895    0.811       0.811       0.853 CONSTRUCT-ROBUST
+goal_drift                               0.964    0.964    0.953       0.953       0.953 CONSTRUCT-ROBUST
+loop                                     1.000    1.000      —           —           —   LENGTH-INTRINSIC(no overlap)
+plan_action    action_minus_plan_word    0.922    0.923    0.853       0.856       0.891 CONSTRUCT-ROBUST
+
+The honest causal floor = length-MATCHED AND length-feature-ABLATED CV-AUC (last two cols, two bin widths).
+  CONSTRUCT-ROBUST = real signal survives both controls; LENGTH-CARRIED = collapses; loop = no length overlap (intrinsic).
+wrote benchmarks/data/_suite_causal_ablate_result.json

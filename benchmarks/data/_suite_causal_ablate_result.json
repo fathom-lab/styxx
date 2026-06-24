@@ -1,0 +1,101 @@
+[
+  {
+    "instrument": "sycophancy",
+    "length_features": [
+      "log_word_count"
+    ],
+    "raw_full": 0.9719722222222222,
+    "raw_abl": 0.9709583333333333,
+    "cem_full_binW": 0.9725429459064326,
+    "cem_abl_binW": 0.9728899396929824,
+    "n_cem_binW": 958,
+    "binW": 4,
+    "cem_full_bin12": 0.9732809012647465,
+    "cem_abl_bin12": 0.9734084387288766,
+    "n_cem_bin12": 970,
+    "causal_floor_lenablated": 0.9731491892109295,
+    "verdict": "CONSTRUCT-ROBUST"
+  },
+  {
+    "instrument": "overconfidence",
+    "length_features": [
+      "mean_sentence_length",
+      "log_word_count"
+    ],
+    "raw_full": 0.77025,
+    "raw_abl": 0.71675,
+    "cem_full_binW": 0.5995726495726496,
+    "cem_abl_binW": 0.6275106837606838,
+    "n_cem_binW": 122,
+    "binW": 4,
+    "cem_full_bin12": 0.7275510204081632,
+    "cem_abl_bin12": 0.726530612244898,
+    "n_cem_bin12": 140,
+    "causal_floor_lenablated": 0.6770206480027909,
+    "verdict": "MIXED"
+  },
+  {
+    "instrument": "deception",
+    "length_features": [
+      "log_word_count"
+    ],
+    "raw_full": 0.9560000000000001,
+    "raw_abl": 0.8949999999999999,
+    "cem_full_binW": 0.8112244897959183,
+    "cem_abl_binW": 0.8112244897959183,
+    "n_cem_binW": 74,
+    "binW": 4,
+    "cem_full_bin12": 0.8440972222222222,
+    "cem_abl_bin12": 0.8534722222222222,
+    "n_cem_bin12": 82,
+    "causal_floor_lenablated": 0.8323483560090703,
+    "verdict": "CONSTRUCT-ROBUST"
+  },
+  {
+    "instrument": "goal_drift",
+    "length_features": [],
+    "raw_full": 0.9644999999999999,
+    "raw_abl": 0.9644999999999999,
+    "cem_full_binW": 0.9529931972789116,
+    "cem_abl_binW": 0.9529931972789116,
+    "n_cem_binW": 144,
+    "binW": 4,
+    "cem_full_bin12": 0.9529444444444446,
+    "cem_abl_bin12": 0.9529444444444446,
+    "n_cem_bin12": 152,
+    "causal_floor_lenablated": 0.9529688208616781,
+    "verdict": "CONSTRUCT-ROBUST"
+  },
+  {
+    "instrument": "loop",
+    "length_features": [],
+    "raw_full": 0.9995,
+    "raw_abl": 0.9995,
+    "cem_full_binW": NaN,
+    "cem_abl_binW": NaN,
+    "n_cem_binW": 4,
+    "binW": 42,
+    "cem_full_bin12": NaN,
+    "cem_abl_bin12": NaN,
+    "n_cem_bin12": 2,
+    "causal_floor_lenablated": null,
+    "verdict": "LENGTH-INTRINSIC(no overlap)"
+  },
+  {
+    "instrument": "plan_action",
+    "length_features": [
+      "action_minus_plan_word_count"
+    ],
+    "raw_full": 0.9225,
+    "raw_abl": 0.923,
+    "cem_full_binW": 0.8527272727272728,
+    "cem_abl_binW": 0.8563636363636364,
+    "n_cem_binW": 106,
+    "binW": 4,
+    "cem_full_bin12": 0.8892561983471075,
+    "cem_abl_bin12": 0.8905785123966942,
+    "n_cem_bin12": 106,
+    "causal_floor_lenablated": 0.8734710743801652,
+    "verdict": "CONSTRUCT-ROBUST"
+  }
+]

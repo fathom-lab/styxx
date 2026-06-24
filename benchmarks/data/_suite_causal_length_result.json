@@ -1,0 +1,98 @@
+[
+  {
+    "instrument": "sycophancy",
+    "n": 1200,
+    "auc_raw": 0.9719722222222222,
+    "n_cem": 958,
+    "dlen_raw": 0.3125174080750303,
+    "dlen_cem": -0.0005511591378977894,
+    "auc_cem": 0.9725429459064326,
+    "auc_cem_ci": [
+      0.9620066932580615,
+      0.9804846976403954
+    ],
+    "length_share": -0.0012092315126581489,
+    "verdict": "CONSTRUCT-ROBUST",
+    "binw": 4
+  },
+  {
+    "instrument": "overconfidence",
+    "n": 200,
+    "auc_raw": 0.77025,
+    "n_cem": 122,
+    "dlen_raw": -0.6100612454190316,
+    "dlen_cem": -0.00901947938167952,
+    "auc_cem": 0.5995726495726496,
+    "auc_cem_ci": [
+      0.5135825913197428,
+      0.7097931028447217
+    ],
+    "length_share": 0.631553563098429,
+    "verdict": "LENGTH-CARRIED",
+    "binw": 4
+  },
+  {
+    "instrument": "deception",
+    "n": 200,
+    "auc_raw": 0.9560000000000001,
+    "n_cem": 74,
+    "dlen_raw": -1.2089689025263486,
+    "dlen_cem": -0.018429990361076218,
+    "auc_cem": 0.8112244897959183,
+    "auc_cem_ci": [
+      0.6893185629514964,
+      0.8965373244641538
+    ],
+    "length_share": 0.3174901539563196,
+    "verdict": "MIXED",
+    "binw": 4
+  },
+  {
+    "instrument": "goal_drift",
+    "n": 200,
+    "auc_raw": 0.9644999999999999,
+    "n_cem": 144,
+    "dlen_raw": 0.42320127795351786,
+    "dlen_cem": 0.005643964390600278,
+    "auc_cem": 0.9529931972789116,
+    "auc_cem_ci": [
+      0.9083963656882996,
+      0.9857273779664287
+    ],
+    "length_share": 0.024772449345722897,
+    "verdict": "CONSTRUCT-ROBUST",
+    "binw": 4
+  },
+  {
+    "instrument": "loop",
+    "n": 200,
+    "auc_raw": 0.9995,
+    "n_cem": 4,
+    "dlen_raw": -1.8484423857011005,
+    "dlen_cem": 0.4399114472546605,
+    "auc_cem": NaN,
+    "auc_cem_ci": [
+      NaN,
+      NaN
+    ],
+    "length_share": NaN,
+    "verdict": "THIN(<40 matched)",
+    "binw": 42
+  },
+  {
+    "instrument": "plan_action",
+    "n": 200,
+    "auc_raw": 0.9225,
+    "n_cem": 106,
+    "dlen_raw": -0.8301593329117135,
+    "dlen_cem": 0.003225085919582327,
+    "auc_cem": 0.8527272727272728,
+    "auc_cem_ci": [
+      0.7525834592730373,
+      0.9141723764875586
+    ],
+    "length_share": 0.16514254975793421,
+    "verdict": "CONSTRUCT-ROBUST",
+    "binw": 4
+  }
+]

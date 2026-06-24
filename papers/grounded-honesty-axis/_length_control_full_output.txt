@@ -1,0 +1,62 @@
+========== ORIGINAL gpt-4o-mini (length-CONFOUNDED)  (n=200, pos=0.50) ==========
+  mean words: honest 95.4 | dishonest 76.6
+  MANIP CHECK d_len(log_wc) = -1.209   [FAIL >0.30 — length NOT equalized]
+  (A) shipped v0 AUC  = 0.964  CI[0.939,0.984]   (orig headline 0.956)
+  (B) fresh CV-AUC    = 0.956  CI[0.923,0.977]
+  per-feature std-diff (dishonest - honest):
+      specificity_density        -0.970
+      first_person_density       -0.199
+      exclusive_word_density     -0.030
+      vagueness_density          +0.868
+      negation_density           -0.314
+      hedge_confidence_clash     +0.434
+      cognitive_marker_density   +0.168
+      opinion_phrase_density     +0.000
+      log_word_count             -1.209  <-LENGTH
+  --> VERDICT: INTRINSIC-CONFOUNDED   (CAVEAT: length not fully equalized -> AUC is an UPPER bound)
+
+  within-length-bin shipped AUC (original gpt corpus):
+    [  0,  45)  honest=  0 dishonest=  0  -- too thin (need >=15/15)
+    [ 45,  65)  honest=  2 dishonest=  9  -- too thin (need >=15/15)
+    [ 65,  90)  honest= 31 dishonest= 83  AUC=0.927
+    [ 90,1000)  honest= 67 dishonest=  8  -- too thin (need >=15/15)
+
+========== MATCHED-LENGTH local: qwen2.5-3b-instruct  (n=200, pos=0.50) ==========
+  mean words: honest 32.6 | dishonest 32.5
+  MANIP CHECK d_len(log_wc) = +0.030   [OK <=0.30]
+  (A) shipped v0 AUC  = 0.587  CI[0.506,0.667]   (orig headline 0.956)
+  (B) fresh CV-AUC    = 0.560  CI[0.469,0.632]
+  per-feature std-diff (dishonest - honest):
+      specificity_density        -0.290
+      first_person_density       +0.142
+      exclusive_word_density     -0.024
+      vagueness_density          +0.287
+      negation_density           +0.048
+      hedge_confidence_clash     +0.247
+      cognitive_marker_density   +0.224
+      opinion_phrase_density     +0.000
+      log_word_count             +0.031  <-LENGTH
+  --> VERDICT: SPURIOUS
+
+========== MATCHED-LENGTH local: llama-3.2-3b-instruct  (n=200, pos=0.50) ==========
+  mean words: honest 62.7 | dishonest 59.0
+  MANIP CHECK d_len(log_wc) = -0.488   [FAIL >0.30 — length NOT equalized]
+  (A) shipped v0 AUC  = 0.822  CI[0.762,0.879]   (orig headline 0.956)
+  (B) fresh CV-AUC    = 0.835  CI[0.775,0.888]
+  per-feature std-diff (dishonest - honest):
+      specificity_density        -1.022
+      first_person_density       +0.008
+      exclusive_word_density     -0.078
+      vagueness_density          -0.025
+      negation_density           -0.208
+      hedge_confidence_clash     +0.142
+      cognitive_marker_density   +0.126
+      opinion_phrase_density     +0.000
+      log_word_count             -0.488  <-LENGTH
+  --> VERDICT: INTRINSIC-CONFOUNDED   (CAVEAT: length not fully equalized -> AUC is an UPPER bound)
+
+###### CROSS-GENERATOR SUMMARY ######
+  MATCHED-LENGTH local: qwen2.5-3b-instruct  verdict=SPURIOUS             cv=0.560 sh=0.587 manip=ok
+  MATCHED-LENGTH local: llama-3.2-3b-instruct verdict=INTRINSIC-CONFOUNDED cv=0.835 sh=0.822 manip=FAIL
+  ROBUST across generators: False  ({'INTRINSIC-CONFOUNDED', 'SPURIOUS'})
+  wrote C:\Users\heyzo\clawd\styxx\benchmarks\data\deception\_length_control_causal_result.json
