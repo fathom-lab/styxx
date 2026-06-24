@@ -66,7 +66,12 @@ _CONSTRUCT_CEILING = {
         "actual calibration. Construct ceiling preregistration-confirmed "
         "(7c36ed9, H_null): held-out AUC 0.57–0.60 vs ≥0.70 bar. Confident "
         "phrasing fires this instrument even on factually correct, "
-        "well-calibrated text. UNDER REVIEW in 7.4.1 composite."
+        "well-calibrated text. It also reads response LENGTH as a partial "
+        "cue (~0.09 of the 0.77 AUC; causal length audit 2026-06-24, "
+        "e70f55e) — partly legitimate (calibrated register is ~1.16x wordier "
+        "across 3 model families: hedging costs words) and partly spurious; "
+        "a pre-registered length-matched rebuild returned an honest null, so "
+        "the length cue is NOT cleanly removable. UNDER REVIEW in 7.4.1 composite."
     ),
     "deception_referenceless": (
         "reference-less deception is non-discriminative on real model "
