@@ -75,7 +75,14 @@ _CONSTRUCT_CEILING = {
         "overconfident text writes calibrated ~22% longer (hedging costs "
         "words), so matched-GENERATION returns an honest null (e70f55e) and "
         "the cue is removable only by CEM subsampling, not re-generation. "
-        "UNDER REVIEW in 7.4.1 composite."
+        "DEPLOYMENT BIAS (measured, orthogonal 2x2, 2026-06-25): discrimination "
+        "is length-robust (within-stratum AUC 0.83-0.86) but the SCORE is "
+        "length-biased (SHORT reads more overconfident) — at a fixed threshold a "
+        "careful short answer is false-flagged ~46% vs ~4% when long, and a "
+        "verbose overconfident one is missed ~46% vs ~4% when short. A length-"
+        "aware threshold guard (residualize on log-words) raises AUC 0.81->0.85 "
+        "and removes most of the bias; the fix is a deployment threshold, not a "
+        "retrain. UNDER REVIEW in 7.4.1 composite."
     ),
     "deception_referenceless": (
         "reference-less deception is non-discriminative on real model "

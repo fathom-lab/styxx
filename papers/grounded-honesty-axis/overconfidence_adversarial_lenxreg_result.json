@@ -1,0 +1,66 @@
+{
+ "experiment": "adversarial length×register stress-test of shipped overconfidence_v0",
+ "generator": "gemini-2.5-flash",
+ "n": 200,
+ "gate1_pass": true,
+ "reg_stddiff_short": 0.939,
+ "reg_stddiff_long": 1.099,
+ "length_ratio_long_over_short": 3.2,
+ "orthogonality_corr": -0.116,
+ "shipped_auc_overall": 0.807,
+ "shipped_auc_short": 0.832,
+ "shipped_auc_long": 0.862,
+ "is_long_score_coef": -1.925,
+ "is_long_score_coef_ci95_bootstrap": [
+  -2.35,
+  -1.495
+ ],
+ "harm_fp_calib_short": [
+  23,
+  50,
+  0.46,
+  [
+   0.33,
+   0.596
+  ]
+ ],
+ "harm_fp_calib_long": [
+  2,
+  50,
+  0.04,
+  [
+   0.011,
+   0.135
+  ]
+ ],
+ "harm_fn_overconf_long": [
+  23,
+  50,
+  0.46,
+  [
+   0.33,
+   0.596
+  ]
+ ],
+ "harm_fn_overconf_short": [
+  2,
+  50,
+  0.04,
+  [
+   0.011,
+   0.135
+  ]
+ ],
+ "prereg_protected_diagonal_k_n": [
+  0,
+  50
+ ],
+ "mitigation_length_residualized": {
+  "auc_raw": 0.807,
+  "auc_adj": 0.845,
+  "fp_disparity_raw": 0.42,
+  "fp_disparity_adj": -0.1
+ },
+ "ci_method": "2000-rep bootstrap on OLS coef; Wilson on error rates",
+ "verdict": "DISCRIMINATION-ROBUST, THRESHOLD length-biased — the shipped scorer SEPARATES register within each length stratum (AUC short 0.83, long 0.86) but its score is shifted by length with register held fixed (is_long coef -1.93, 95% CI [-2.35, -1.495], NEGATIVE: longer scores LESS overconfident). MEASURED HARM at a fixed threshold: a careful SHORT answer is false-flagged 46% (CI [0.33, 0.596]) vs 4% when long; a cocky LONG answer is MISSED 46% (CI [0.33, 0.596]) vs 4% when short — length swings both errors ~42%. A length-aware guard (residualize S on log-words) raises AUC 0.81->0.85 and cuts the FP length-disparity +0.42->-0.10 -> the fix is a deployment threshold guard, NOT a retrain. (NOTE: my prereg 'fooled' diagonal was the PROTECTED one given the negative coef -> 0/50; the corrected diagonal above is the real harm.)"
+}
