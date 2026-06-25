@@ -1,0 +1,23 @@
+{
+ "instrument": "deception_v0",
+ "confound": "log_words",
+ "n": 200,
+ "gate_ok": true,
+ "orthogonality_corr": 0.042,
+ "overall_auc": 0.585,
+ "within_stratum_auc": {
+  "low": 0.604,
+  "high": 0.744
+ },
+ "confound_score_coef": -13.011,
+ "confound_score_coef_ci95": [
+  -14.272,
+  -11.714
+ ],
+ "max_swing": 0.887,
+ "guard_auc_raw": 0.585,
+ "guard_auc_adj_oos": 0.722,
+ "construct_recoverable_auc": 0.7303000000000001,
+ "ci_method": "bootstrap 95% CI on OLS coef; 5-fold OOS guard; refit CV for construct-recoverability",
+ "verdict": "CONFOUND-DEPENDENT (broken) — within-stratum discrimination drops (AUC 0.60/0.74); 'deception_v0' needs 'log_words' to discriminate. A threshold guard will NOT fix this — the instrument is keying on the confound, not the construct. (construct IS recoverable from text, refit AUC 0.73 -> the INSTRUMENT is keying on 'log_words', not that the construct is undetectable; fix = retrain/reground, NOT a threshold guard)"
+}
