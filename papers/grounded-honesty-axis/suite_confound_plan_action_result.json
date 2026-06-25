@@ -20,5 +20,5 @@
  "guard_auc_raw": 0.746,
  "guard_auc_adj_oos": 0.831,
  "ci_method": "bootstrap OLS coef; 5-fold OOS guard; refit CV",
- "verdict": "THRESHOLD-BIASED (discrimination robust) — 'plan_action_v0' separates the construct within each 'log_words' stratum (AUC 0.83/0.82) but the SCORE shifts with the confound (coef -3.41, 95% CI [-4.041, -2.778]). At a fixed threshold the error rate swings ~66% across confound levels. A guard (residualize score on confound) raises AUC 0.75->0.83 and cuts the FP disparity -0.58->-0.28 5-fold OOS -> use report.guard(score, confound). Fix is a deployment threshold, not a retrain."
+ "verdict": "THRESHOLD-BIASED (discrimination robust) — 'plan_action_v0' separates the construct within each 'log_words' stratum (AUC 0.83/0.82) but the SCORE shifts with the confound (coef -3.41, 95% CI [-4.041, -2.778]). At a fixed threshold the error rate swings ~66% across confound levels. a guard (residualize on confound) keeps AUC and cuts the FP length-disparity -0.58->-0.28 (5-fold OOS) -> use report.guard(score, confound). Fix is a deployment threshold, not a retrain."
 }

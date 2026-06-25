@@ -1,0 +1,24 @@
+{
+ "model": "unitary/toxic-bert",
+ "target_label": "toxic",
+ "confound": "log_words",
+ "n": 200,
+ "gate_ok": true,
+ "orthogonality_corr": 0.059,
+ "overall_auc": 0.86,
+ "within_stratum_auc": {
+  "low": 0.863,
+  "high": 0.875
+ },
+ "confound_score_coef": -0.001,
+ "confound_score_coef_ci95": [
+  -0.004,
+  0.001
+ ],
+ "max_swing": 0.16,
+ "construct_recoverable_auc_bow": 1.0,
+ "guard_auc_raw": 0.86,
+ "guard_auc_adj_oos": 0.73,
+ "ci_method": "bootstrap OLS coef; 5-fold OOS guard; TF-IDF refit for construct-recoverability",
+ "verdict": "ROBUST — 'unitary/toxic-bert' separates the construct (AUC 0.86) and the confound's score effect is not significant (coef -0.00, CI [-0.004, 0.001]); swing 16%. No confound problem detected."
+}

@@ -186,12 +186,15 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
     elif (np.isnan(auc_low) or np.isnan(auc_high)):
         verdict = "INCONCLUSIVE — a confound stratum lacks both classes; widen the grid."
     elif auc_low >= AUC_BAR and auc_high >= AUC_BAR and coef_sig:
+        _gh = (auc_adj >= overall_auc - 0.005 and abs(disp_adj) < abs(disp_raw))
+        _gtxt = ("a guard (residualize on confound) keeps AUC and cuts the FP length-disparity "
+                 f"{disp_raw:+.2f}->{disp_adj:+.2f} (5-fold OOS) -> use report.guard(score, confound)") if _gh else (
+                 f"a guard reduces the FP length-disparity {disp_raw:+.2f}->{disp_adj:+.2f} but trades AUC "
+                 f"{overall_auc:.2f}->{auc_adj:.2f} (5-fold OOS) — worth it only if length-fairness outweighs the AUC cost")
         verdict = (f"THRESHOLD-BIASED (discrimination robust) — '{instrument}' separates the construct within "
                    f"each '{confound}' stratum (AUC {auc_low:.2f}/{auc_high:.2f}) but the SCORE shifts with the "
                    f"confound (coef {coef:+.2f}, 95% CI {list(coef_ci)}). At a fixed threshold the error rate swings "
-                   f"~{harm['max_swing']:.0%} across confound levels. A guard (residualize score on confound) raises "
-                   f"AUC {overall_auc:.2f}->{auc_adj:.2f} and cuts the FP disparity {disp_raw:+.2f}->{disp_adj:+.2f} "
-                   f"5-fold OOS -> use report.guard(score, confound). Fix is a deployment threshold, not a retrain.")
+                   f"~{harm['max_swing']:.0%} across confound levels. {_gtxt}. Fix is a deployment threshold, not a retrain.")
     elif auc_low < AUC_BAR or auc_high < AUC_BAR:
         verdict = (f"CONFOUND-DEPENDENT (broken) — within-stratum discrimination drops (AUC {auc_low:.2f}/"
                    f"{auc_high:.2f}); '{instrument}' needs '{confound}' to discriminate. A threshold guard will NOT "

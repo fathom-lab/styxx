@@ -1,0 +1,24 @@
+{
+ "model": "distilbert-base-uncased-finetuned-sst-2-english",
+ "target_label": "POSITIVE",
+ "confound": "log_words",
+ "n": 200,
+ "gate_ok": true,
+ "orthogonality_corr": 0.033,
+ "overall_auc": 0.972,
+ "within_stratum_auc": {
+  "low": 0.944,
+  "high": 0.999
+ },
+ "confound_score_coef": 0.106,
+ "confound_score_coef_ci95": [
+  0.026,
+  0.186
+ ],
+ "max_swing": 0.16,
+ "construct_recoverable_auc_bow": 0.982,
+ "guard_auc_raw": 0.972,
+ "guard_auc_adj_oos": 0.894,
+ "ci_method": "bootstrap OLS coef; 5-fold OOS guard; TF-IDF refit for construct-recoverability",
+ "verdict": "THRESHOLD-BIASED (discrimination robust) — 'distilbert-base-uncased-finetuned-sst-2-english' separates the construct within each 'log_words' stratum (AUC 0.94/1.00) but the SCORE shifts with the confound (coef +0.11, 95% CI [0.026, 0.186]). At a fixed threshold the error rate swings ~16% across confound levels. a guard reduces the FP length-disparity -0.12->-0.06 but trades AUC 0.97->0.89 (5-fold OOS) — worth it only if length-fairness outweighs the AUC cost. Fix is a deployment threshold, not a retrain."
+}

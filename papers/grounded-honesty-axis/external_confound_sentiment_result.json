@@ -1,0 +1,24 @@
+{
+ "model": "distilbert-base-uncased-finetuned-sst-2-english",
+ "target_label": "POSITIVE",
+ "confound": "log_words",
+ "n": 200,
+ "gate_ok": true,
+ "orthogonality_corr": 0.011,
+ "overall_auc": 1.0,
+ "within_stratum_auc": {
+  "low": 1.0,
+  "high": 1.0
+ },
+ "confound_score_coef": -0.005,
+ "confound_score_coef_ci95": [
+  -0.017,
+  -0.0
+ ],
+ "max_swing": 0,
+ "construct_recoverable_auc_bow": 0.999,
+ "guard_auc_raw": 1.0,
+ "guard_auc_adj_oos": 1.0,
+ "ci_method": "bootstrap OLS coef; 5-fold OOS guard; TF-IDF refit for construct-recoverability",
+ "verdict": "ROBUST — 'distilbert-base-uncased-finetuned-sst-2-english' separates the construct (AUC 1.00) and the confound's score effect is not significant (coef -0.01, CI [-0.017, -0.0]); swing 0%. No confound problem detected."
+}
