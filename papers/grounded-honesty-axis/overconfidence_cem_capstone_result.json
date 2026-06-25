@@ -1,0 +1,23 @@
+{
+ "generator": "gemini-2.5-flash",
+ "n_full": 200,
+ "n_cem": 116,
+ "d_len_full": -0.906,
+ "d_len_cem": -0.02,
+ "shipped_auc_full": 0.8601,
+ "shipped_auc_cem": 0.7415,
+ "refit_full_cv": 0.8445,
+ "refit_full_cv_cem": 0.6861,
+ "refit_full_cv_cem_ci95": [
+  0.5901665449985025,
+  0.7787116388563622
+ ],
+ "register_only_cv_cem": 0.7253,
+ "register_only_cv_cem_ci95": [
+  0.6238051948051948,
+  0.8074479166666665
+ ],
+ "ci_method": "bootstrap 95% CI on OOF AUC",
+ "binw_words": 6,
+ "verdict": "CLEAN SPLIT \u2014 with length held constant by CEM (d_len -0.020, n=116), register alone discriminates at 0.725 CI[0.624,0.807]. Overconfidence is a REAL epistemic-register signal that survives length-matching; the shipped length cue (~0.07-0.09 of the 0.77 headline) is the removable part, the register floor (~0.73) is the load-bearing, length-INDEPENDENT part. Confirms the shipped caveat with a clean number. Single seed/generator; CEM subsample underpowered (report CI)."
+}

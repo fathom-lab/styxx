@@ -1,0 +1,27 @@
+{
+  "n": 200,
+  "hedge_stddiff": -0.30232466472091246,
+  "certainty_stddiff": 0.40097799816573415,
+  "d_len": -0.4682274366075108,
+  "reg_ok": false,
+  "len_ok": false,
+  "cv_full_matched": 0.65625,
+  "cv_full_ci": [
+    0.5777939850377145,
+    0.7280829782196968
+  ],
+  "cv_nolen_matched": 0.5965,
+  "shipped_xfer": 0.6983,
+  "decision": "HONEST NULL \u2014 Gate 1 failed (corpus did not instantiate a clean matched-length register)",
+  "feature_stddiff": {
+    "certainty_marker_density": 0.40097799816573415,
+    "hedge_density": -0.30232466472091246,
+    "epistemic_balance": 0.5226650671118322,
+    "specific_number_density": -0.21302054164843603,
+    "evidence_marker_density": -0.07274779336505485,
+    "strong_assertion_ratio": 0.3475313387466463,
+    "unhedged_claim_ratio": 0.35473514819664415,
+    "mean_sentence_length": -0.359194954185799,
+    "log_word_count": -0.4330846913449167
+  }
+}

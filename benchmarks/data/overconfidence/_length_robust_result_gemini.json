@@ -1,0 +1,28 @@
+{
+  "model": "gemini",
+  "n": 200,
+  "hedge_stddiff": -0.5743923374802069,
+  "certainty_stddiff": 0.8597052286572096,
+  "d_len": -0.9058310090021935,
+  "reg_ok": true,
+  "len_ok": false,
+  "cv_full_matched": 0.8444999999999998,
+  "cv_full_ci": [
+    0.7906554990085475,
+    0.8973935777792386
+  ],
+  "cv_nolen_matched": 0.7727499999999999,
+  "shipped_xfer": 0.8601000000000001,
+  "decision": "HONEST NULL \u2014 Gate 1 failed (corpus did not instantiate a clean matched-length register)",
+  "feature_stddiff": {
+    "certainty_marker_density": 0.8597052286572096,
+    "hedge_density": -0.5743923374802069,
+    "epistemic_balance": 1.0172707305656081,
+    "specific_number_density": -0.3521162902272017,
+    "evidence_marker_density": -0.1608049098206193,
+    "strong_assertion_ratio": 0.8429514278993346,
+    "unhedged_claim_ratio": 0.655781887974454,
+    "mean_sentence_length": -0.9283242022063242,
+    "log_word_count": -0.8911504944736456
+  }
+}

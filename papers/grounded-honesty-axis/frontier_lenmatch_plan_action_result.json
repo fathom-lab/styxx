@@ -1,0 +1,35 @@
+{
+ "instrument": "plan_action",
+ "generator": "gemini-2.5-flash",
+ "n": 200,
+ "n_total": 200,
+ "format_compliance": 1.0,
+ "d_len": 0.17,
+ "max_nonlength_stddiff": 0.739,
+ "reg_ok": true,
+ "len_ok": true,
+ "fmt_ok": true,
+ "gate1_pass": true,
+ "cv_full_matched": 0.8335,
+ "cv_full_ci95_bootstrap": [
+  0.7767,
+  0.892
+ ],
+ "cv_nolen_matched": 0.8335,
+ "length_drop": 0.0,
+ "ci_method": "5-fold CV-AUC; 2000-rep bootstrap 95% CI on the OOF AUC",
+ "specificity_gap_stddiff": null,
+ "length_features": [],
+ "feature_stddiff": {
+  "bigram_jaccard_overlap": -0.739,
+  "trigram_jaccard_overlap": -0.501,
+  "verb_overlap_ratio": -0.183,
+  "entity_overlap_ratio": 0.178,
+  "action_to_plan_length_ratio": -0.662,
+  "action_minus_plan_word_count": -0.635,
+  "deviation_marker_density": 0.0,
+  "plan_only_content_word_ratio": 0.69,
+  "log_total_words": 0.172
+ },
+ "verdict": "LENGTH-CLEAN (structural) — the v0 instrument uses NO total-length feature (['log_word_count', 'mean_sentence_length'] absent from its 9 features); it is not total-length-confoundable by construction. On a frontier matched corpus (n=200, d_len=+0.170) cv_full=0.834 CI[0.7767, 0.892]. Single seed/generator caveat."
+}

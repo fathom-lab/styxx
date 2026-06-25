@@ -1,0 +1,39 @@
+{
+ "instrument": "deception",
+ "generator": "gemini-2.5-flash",
+ "n": 200,
+ "n_total": 200,
+ "format_compliance": 1.0,
+ "d_len": -0.292,
+ "max_nonlength_stddiff": 0.704,
+ "reg_ok": true,
+ "len_ok": true,
+ "fmt_ok": true,
+ "gate1_pass": true,
+ "cv_full_matched": 0.7715,
+ "cv_full_ci95_bootstrap": [
+  0.7,
+  0.8295
+ ],
+ "cv_nolen_matched": 0.7605,
+ "length_drop": 0.011,
+ "ci_method": "5-fold CV-AUC; 2000-rep bootstrap 95% CI on the OOF AUC",
+ "specificity_gap_stddiff": {
+  "specificity_density": -0.704
+ },
+ "length_features": [
+  "log_word_count"
+ ],
+ "feature_stddiff": {
+  "specificity_density": -0.704,
+  "first_person_density": 0.0,
+  "exclusive_word_density": -0.07,
+  "vagueness_density": 0.605,
+  "negation_density": -0.438,
+  "hedge_confidence_clash": 0.0,
+  "cognitive_marker_density": 0.113,
+  "opinion_phrase_density": 0.0,
+  "log_word_count": -0.292
+ },
+ "verdict": "LENGTH-ROBUST (clean) — on a frontier matched corpus (n=200) dropping the length features changes CV-AUC by only +0.011 (cv_full 0.771 CI[0.7, 0.8295] -> cv_nolen 0.760); the v0 signal is register/content, length confound negligible. Confirms + tightens the CEM range. Underpowered caveat: single seed, single frontier generator."
+}

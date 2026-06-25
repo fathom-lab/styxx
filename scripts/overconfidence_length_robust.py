@@ -21,7 +21,8 @@ from sklearn.model_selection import StratifiedKFold
 
 LEN_RULE = " Respond in EXACTLY 3 sentences, about 55 words — no more, no less."
 REPOS = {"qwen": "Qwen/Qwen2.5-3B-Instruct", "phi": "microsoft/Phi-3.5-mini-instruct",
-         "gemma": "google/gemma-2-2b-it"}
+         "gemma": "google/gemma-2-2b-it", "gemini": "gemini-2.5-flash"}
+GEMINI_KEY_PATH = Path(r"C:\Users\heyzo\clawd\secrets\gemini-key.txt")
 OCD = ROOT / "benchmarks" / "data" / "overconfidence"
 V0 = OCD / "pairs_v0.jsonl"
 def matched_path(tag): return OCD / f"pairs_lenmatched_{tag}.jsonl"
@@ -63,6 +64,61 @@ def generate(tag):
     print(f"[gen] wrote {n}"); del model; torch.cuda.empty_cache()
 
 
+def _gemini_call(model_id, system, user, key, max_retries=6):
+    """Single greedy generateContent call with 429/5xx backoff. Frontier instruction-follower so the
+    EXACTLY-3-sentences/~55w length rule is actually obeyed on BOTH stances (the 3B failure mode)."""
+    import urllib.request, urllib.error, time
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={key}"
+    body = {"system_instruction": {"parts": [{"text": system}]},
+            "contents": [{"role": "user", "parts": [{"text": user}]}],
+            "generationConfig": {"temperature": 0, "maxOutputTokens": 220,
+                                 "thinkingConfig": {"thinkingBudget": 0}}}  # 2.5-flash: thinking off
+    data = json.dumps(body).encode()
+    for attempt in range(max_retries):
+        try:
+            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+            d = json.load(urllib.request.urlopen(req, timeout=60))
+            cands = d.get("candidates", [])
+            if not cands:
+                return ""
+            parts = cands[0].get("content", {}).get("parts", [])
+            return "".join(p.get("text", "") for p in parts).strip()
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                time.sleep(min(60, 15 * (attempt + 1))); continue
+            if e.code >= 500:
+                time.sleep(5 * (attempt + 1)); continue
+            raise
+        except Exception:
+            time.sleep(5); continue
+    return ""
+
+
+def generate_gemini():
+    import os, time
+    model_id = REPOS["gemini"]
+    key = os.environ.get("GOOGLE_API_KEY") or GEMINI_KEY_PATH.read_text(encoding="utf-8").strip()
+    out = matched_path("gemini")
+    done = {(r["question"], r["condition"]) for r in load(out)}
+    work = [(q, c) for q in QUESTIONS for c in ("calibrated", "overconfident") if (q, c) not in done]
+    if not work:
+        print(f"[gen] gemini cache complete ({len(done)})"); return
+    print(f"[gen] {model_id}: {len(work)} of {len(QUESTIONS)*2} (resumable)", flush=True)
+    out.parent.mkdir(parents=True, exist_ok=True); n = 0
+    with open(out, "a", encoding="utf-8") as f:
+        for q, cond in work:
+            sysp = (SYSTEM_CALIBRATED if cond == "calibrated" else SYSTEM_OVERCONFIDENT) + LEN_RULE
+            t = _gemini_call(model_id, sysp, q, key)
+            if t:
+                f.write(json.dumps({"question": q, "condition": cond, "response": t,
+                                    "label_overconfident": 0 if cond == "calibrated" else 1}) + "\n")
+                f.flush(); n += 1
+                if n % 20 == 0:
+                    print(f"  [{n}/{len(work)}]", flush=True)
+            time.sleep(1.0)  # paid tier; modest pace, 429-backoff handles any bursts
+    print(f"[gen] wrote {n}", flush=True)
+
+
 def stddiff(c, y): return (c[y == 1].mean() - c[y == 0].mean()) / (c.std() or 1)
 
 
@@ -86,7 +142,8 @@ def main():
     ap.add_argument("--model", default="qwen", choices=list(REPOS))
     a = ap.parse_args()
     if a.generate:
-        generate(a.model); return
+        generate_gemini() if a.model == "gemini" else generate(a.model)
+        return
 
     rows_v0 = load(V0); rows_m = load(matched_path(a.model))
     if not rows_m:
