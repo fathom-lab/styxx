@@ -29,9 +29,10 @@ orthogonal corpus — which the v0 corpus is not.
   | overconfident-short | false-negative | 4% [0.01, 0.14] |
   A careful but terse answer is flagged overconfident ~46% of the time; a cocky but verbose one is missed ~46%.
 - **The fix is a deployment guard, not a retrain.** Residualizing the score on log-word-count (a length-aware
-  threshold guard) RAISES overall AUC **0.807 → 0.845** and cuts the false-positive length-disparity from +0.42 to
-  −0.10. Because discrimination is intact and the bias is at the score level, a length-aware threshold removes most
-  of the harm without touching the (correctly caveat-protected) feature weights.
+  threshold guard), evaluated **5-fold OUT-OF-SAMPLE** (correction fit on train, applied to held-out), RAISES
+  overall AUC **0.807 → 0.843** and cuts the false-positive length-disparity from +0.42 to **−0.08** (in-sample was
+  0.845 / −0.10 → the gain is not overfitting). Because discrimination is intact and the bias is at the score level,
+  a length-aware threshold removes most of the harm without touching the (correctly caveat-protected) feature weights.
 
 ## Discipline note (self-caught)
 The prereg "fooled" metric measured calibrated-long vs overconfident-short — but the `is_long` coefficient is
@@ -41,7 +42,7 @@ more overconfident") was backwards. Reported the prereg number honestly and adde
 
 ## Action
 `preflight.py` overconfidence caveat enriched with the measured swing + direction + the mitigating guard. A
-length-aware deployment threshold is the recommended fix; a production version fits the length correction on a
-reference corpus (the PoC here is in-sample). Honest scope: single frontier generator, single seed, n=200 (50/cell);
+length-aware deployment threshold is the recommended fix; the 5-fold OOS evaluation above shows it generalizes
+(a production version fits the correction on a fixed reference corpus). Honest scope: single frontier generator, single seed, n=200 (50/cell);
 the FN side of the linear correction stays partly imbalanced → a length-STRATIFIED threshold would beat a linear
 residualization. New tool: `scripts/overconfidence_adversarial_lenxreg.py`. Logged per rigor_gate (CIs attached).

@@ -55,12 +55,12 @@
   0,
   50
  ],
- "mitigation_length_residualized": {
+ "mitigation_length_residualized_5fold_oos": {
   "auc_raw": 0.807,
-  "auc_adj": 0.845,
+  "auc_adj_oos": 0.843,
   "fp_disparity_raw": 0.42,
-  "fp_disparity_adj": -0.1
+  "fp_disparity_adj_oos": -0.08
  },
  "ci_method": "2000-rep bootstrap on OLS coef; Wilson on error rates",
- "verdict": "DISCRIMINATION-ROBUST, THRESHOLD length-biased — the shipped scorer SEPARATES register within each length stratum (AUC short 0.83, long 0.86) but its score is shifted by length with register held fixed (is_long coef -1.93, 95% CI [-2.35, -1.495], NEGATIVE: longer scores LESS overconfident). MEASURED HARM at a fixed threshold: a careful SHORT answer is false-flagged 46% (CI [0.33, 0.596]) vs 4% when long; a cocky LONG answer is MISSED 46% (CI [0.33, 0.596]) vs 4% when short — length swings both errors ~42%. A length-aware guard (residualize S on log-words) raises AUC 0.81->0.85 and cuts the FP length-disparity +0.42->-0.10 -> the fix is a deployment threshold guard, NOT a retrain. (NOTE: my prereg 'fooled' diagonal was the PROTECTED one given the negative coef -> 0/50; the corrected diagonal above is the real harm.)"
+ "verdict": "DISCRIMINATION-ROBUST, THRESHOLD length-biased — the shipped scorer SEPARATES register within each length stratum (AUC short 0.83, long 0.86) but its score is shifted by length with register held fixed (is_long coef -1.93, 95% CI [-2.35, -1.495], NEGATIVE: longer scores LESS overconfident). MEASURED HARM at a fixed threshold: a careful SHORT answer is false-flagged 46% (CI [0.33, 0.596]) vs 4% when long; a cocky LONG answer is MISSED 46% (CI [0.33, 0.596]) vs 4% when short — length swings both errors ~42%. A length-aware guard (residualize S on log-words, 5-fold OUT-OF-SAMPLE) raises AUC 0.81->0.84 and cuts the FP length-disparity +0.42->-0.08 -> the fix is a deployment threshold guard, NOT a retrain. (NOTE: my prereg 'fooled' diagonal was the PROTECTED one given the negative coef -> 0/50; the corrected diagonal above is the real harm.)"
 }

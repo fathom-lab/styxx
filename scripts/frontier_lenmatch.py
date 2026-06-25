@@ -20,10 +20,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import StratifiedKFold
 
-# Total-RESPONSE-length confound features ONLY (the two named in the causal audit). Deliberately NOT a
-# greedy pattern: plan_action's `action_minus_plan_word_count` is a CONSTRUCT (mismatch) feature, not a
-# length confound, and must never be dropped here.
-LEN_FEATS = {"log_word_count", "mean_sentence_length"}
+# Total-RESPONSE-length confound features ONLY, named explicitly per featurizer (NOT a greedy pattern):
+#   overconfidence/deception -> log_word_count, mean_sentence_length
+#   plan_action              -> log_total_words  (its total-length covariate)
+# Deliberately EXCLUDES plan_action's `action_minus_plan_word_count`, which is a CONSTRUCT (mismatch)
+# feature — the action/plan length DIFFERENCE is the signal, not a total-length confound.
+LEN_FEATS = {"log_word_count", "mean_sentence_length", "log_total_words"}
 DROP_BAR, REG_BAR, LEN_BAR, FMT_BAR = 0.05, 0.50, 0.30, 0.90
 
 CFG = {

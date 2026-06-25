@@ -17,15 +17,17 @@ wide-CI CEM ranges can be replaced with clean, frontier-generated, CI-backed est
 | instrument | Gate 1 (construct validity) | read | matched-length AUC |
 |---|---|---|---|
 | **deception** | contrast 0.704; d_len −0.292 (matched); compliance 100% | **LENGTH-ROBUST (clean)** | cv_full 0.771 [0.70, 0.83]; drop on removing length = **+0.011** |
-| **plan_action** | contrast 0.739; d_len +0.170 (matched); compliance 100% | **LENGTH-CLEAN (structural)** — v0 uses no total-length feature | cv_full **0.834 [0.78, 0.89]** |
+| **plan_action** | contrast 0.739; d_len +0.170 (matched); compliance 100% | **LENGTH-ROBUST (clean)** — dropping `log_total_words` costs +0.009 | cv_full **0.834 [0.78, 0.89]** |
 | **overconfidence** | register present (hedge −0.57, certainty +0.86); d_len **−0.906 (NOT matchable)** | **HONEST NULL** on matched-generation → **CLEAN SPLIT via CEM** | register-only, length-matched (CEM n=116, d_len −0.02) = **0.725 [0.62, 0.81]** |
 
 ## The two real results
 1. **Two instruments confirmed length-robust on clean frontier corpora.** Deception's discrimination is
    register/content, not length (removing the length features costs +0.011 AUC at matched length;
    specificity_density std-diff −0.704 = honest-is-specific / dishonest-is-vague, intact). plan_action is
-   structurally not total-length-confoundable (its v0 features include no total-length term) and holds
-   0.834 [0.78, 0.89] at d_len ≈ 0.17. Both **replace the wide-CI CEM ranges with tight frontier estimates**.
+   likewise length-robust: dropping its total-length feature (`log_total_words`) costs only +0.009 AUC, and it
+   holds 0.834 [0.78, 0.89] at d_len ≈ 0.17 (its other length-ish features — `action_minus_plan_word_count`,
+   `action_to_plan_length_ratio` — are CONSTRUCT mismatch signals, not total-length confounds, so they stay
+   in). Both **replace the wide-CI CEM ranges with tight frontier estimates**.
 
 2. **Overconfidence's length cue is register-INTRINSIC, demonstrated on a frontier model.** Even Gemini-2.5-
    flash, instructed "exactly 3 sentences, ~55 words" on BOTH stances, wrote calibrated text 22% longer than
@@ -33,9 +35,11 @@ wide-CI CEM ranges can be replaced with clean, frontier-generated, CI-backed est
    words** — so the frozen prereg correctly returns an HONEST NULL, vindicating the shipped caveat ("length
    not cleanly removable") on a frontier model rather than merely asserting it. CEM (subsampling to a length-
    matched region, d_len −0.02, n=116) then isolates the register: **register alone discriminates at 0.725
-   [0.62, 0.81]** — CI excludes chance. So the shipped 0.77 headline decomposes into a **load-bearing,
-   length-independent register floor ≈ 0.73** + a **removable length cue ≈ 0.07–0.12** (shipped-v0 AUC falls
-   0.86 → 0.74 under CEM). This is the clean, CI-backed version of the caveat's prior range.
+   [0.62, 0.81]** — CI excludes chance. So the register signal is load-bearing and length-independent (floor
+   ≈ 0.73), while length contributes a SEPARABLE cue: the shipped-v0 AUC falls 0.86 → 0.74 when length is held
+   constant by CEM (a ~0.12 length-carried component). (These are not additive pieces of 0.77 — AUC doesn't
+   partition that way — but each is independently grounded.) This is the clean, CI-backed version of the
+   caveat's prior range.
 
 ## Mechanistic note (free side-result)
 The verbosity tax is **specific to the hedging register, not all honest registers.** Deception MATCHED length

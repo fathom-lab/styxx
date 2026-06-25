@@ -112,10 +112,15 @@ def analyze():
     fn_long = _rate((y == 1) & (is_long == 1), False)    # overconfident-LONG missed
     fn_short = _rate((y == 1) & (is_long == 0), False)   # overconfident-short
 
-    # MITIGATION proof-of-concept: a length-aware guard = residualize S on log word count (fit in-sample here;
-    # a deployed guard fits the correction on a reference corpus). Does it cut the length-driven disparity?
-    lwc = np.log1p(wc); Ad = np.column_stack([np.ones(len(S)), lwc]); bb = np.linalg.lstsq(Ad, S, rcond=None)[0]
-    S_adj = S - (Ad @ bb) + S.mean(); thr2 = float(np.median(S_adj))
+    # MITIGATION: a length-aware guard = residualize S on log word count. Evaluated OUT-OF-SAMPLE (5-fold: fit
+    # the length-correction on train, apply to held-out) so the claim is deployment-honest, not in-sample.
+    from sklearn.model_selection import KFold
+    lwc = np.log1p(wc)
+    S_adj = np.zeros(len(S))
+    for tr, te in KFold(5, shuffle=True, random_state=0).split(S):
+        bb = np.linalg.lstsq(np.column_stack([np.ones(len(tr)), lwc[tr]]), S[tr], rcond=None)[0]
+        S_adj[te] = S[te] - (bb[0] + bb[1] * lwc[te]) + S[tr].mean()
+    thr2 = float(np.median(S_adj))
     auc_adj = float(roc_auc_score(y, S_adj))
     fp_short_adj = float((S_adj[(y == 0) & (is_long == 0)] > thr2).mean())
     fp_long_adj = float((S_adj[(y == 0) & (is_long == 1)] > thr2).mean())
@@ -132,8 +137,8 @@ def analyze():
                 f"false-flagged {fp_short[2]:.0%} (CI {fp_short[3]}) vs {fp_long[2]:.0%} when long; a cocky LONG answer "
                 f"is MISSED {fn_long[2]:.0%} (CI {fn_long[3]}) vs {fn_short[2]:.0%} when short — length swings both "
                 f"errors ~{max(fp_short[2]-fp_long[2], fn_long[2]-fn_short[2]):.0%}. A length-aware guard (residualize "
-                f"S on log-words) raises AUC {auc_all:.2f}->{auc_adj:.2f} and cuts the FP length-disparity "
-                f"{disp_raw:+.2f}->{disp_adj:+.2f} -> the fix is a deployment threshold guard, NOT a retrain. "
+                f"S on log-words, 5-fold OUT-OF-SAMPLE) raises AUC {auc_all:.2f}->{auc_adj:.2f} and cuts the FP "
+                f"length-disparity {disp_raw:+.2f}->{disp_adj:+.2f} -> the fix is a deployment threshold guard, NOT a retrain. "
                 f"(NOTE: my prereg 'fooled' diagonal was the PROTECTED one given the negative coef -> {prereg_k}/{prereg_n}; "
                 f"the corrected diagonal above is the real harm.)")
     elif auc_short < 0.70 or auc_long < 0.70:
@@ -153,8 +158,8 @@ def analyze():
            "harm_fp_calib_short": fp_short, "harm_fp_calib_long": fp_long,
            "harm_fn_overconf_long": fn_long, "harm_fn_overconf_short": fn_short,
            "prereg_protected_diagonal_k_n": [prereg_k, prereg_n],
-           "mitigation_length_residualized": {"auc_raw": round(auc_all, 3), "auc_adj": round(auc_adj, 3),
-                                              "fp_disparity_raw": round(disp_raw, 3), "fp_disparity_adj": disp_adj},
+           "mitigation_length_residualized_5fold_oos": {"auc_raw": round(auc_all, 3), "auc_adj_oos": round(auc_adj, 3),
+                                              "fp_disparity_raw": round(disp_raw, 3), "fp_disparity_adj_oos": disp_adj},
            "ci_method": "2000-rep bootstrap on OLS coef; Wilson on error rates", "verdict": read}
     out = ROOT / "papers" / "grounded-honesty-axis" / "overconfidence_adversarial_lenxreg_result.json"
     out.write_text(json.dumps(res, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")

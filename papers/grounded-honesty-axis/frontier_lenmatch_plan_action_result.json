@@ -15,11 +15,13 @@
   0.7767,
   0.892
  ],
- "cv_nolen_matched": 0.8335,
- "length_drop": 0.0,
+ "cv_nolen_matched": 0.8245,
+ "length_drop": 0.009,
  "ci_method": "5-fold CV-AUC; 2000-rep bootstrap 95% CI on the OOF AUC",
  "specificity_gap_stddiff": null,
- "length_features": [],
+ "length_features": [
+  "log_total_words"
+ ],
  "feature_stddiff": {
   "bigram_jaccard_overlap": -0.739,
   "trigram_jaccard_overlap": -0.501,
@@ -31,5 +33,5 @@
   "plan_only_content_word_ratio": 0.69,
   "log_total_words": 0.172
  },
- "verdict": "LENGTH-CLEAN (structural) — the v0 instrument uses NO total-length feature (['log_word_count', 'mean_sentence_length'] absent from its 9 features); it is not total-length-confoundable by construction. On a frontier matched corpus (n=200, d_len=+0.170) cv_full=0.834 CI[0.7767, 0.892]. Single seed/generator caveat."
+ "verdict": "LENGTH-ROBUST (clean) — on a frontier matched corpus (n=200) dropping the length features changes CV-AUC by only +0.009 (cv_full 0.834 CI[0.7767, 0.892] -> cv_nolen 0.825); the v0 signal is register/content, length confound negligible. Confirms + tightens the CEM range. Underpowered caveat: single seed, single frontier generator."
 }
