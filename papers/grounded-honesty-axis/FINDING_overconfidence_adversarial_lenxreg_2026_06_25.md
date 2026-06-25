@@ -41,8 +41,12 @@ more overconfident") was backwards. Reported the prereg number honestly and adde
 (the real 46%). The mis-aimed metric is disclosed, not buried.
 
 ## Action
-`preflight.py` overconfidence caveat enriched with the measured swing + direction + the mitigating guard. A
-length-aware deployment threshold is the recommended fix; the 5-fold OOS evaluation above shows it generalizes
-(a production version fits the correction on a fixed reference corpus). Honest scope: single frontier generator, single seed, n=200 (50/cell);
+`preflight.py` overconfidence caveat enriched with the measured swing + direction + the mitigating guard.
+**SHIPPED 7.20.0** as an opt-in primitive: `styxx.length_adjust_overconfidence(raw_score, n_words)` —
+operating-point-preserving (typical-length text unchanged; only length deviations corrected), frozen
+coefficients (SLOPE −2.156, REF ~69 words) fit on this register-balanced 2×2, regression-tested (collapses the
+2×2 false-positive disparity −0.45→+0.07). NOT a default: on length-confounded inputs it trades confound-inflated
+headline AUC for length-fairness — a deliberate guardrail trade, so callers opt in (a production deployment may
+refit the coefficients on its own reference corpus). The 5-fold OOS evaluation shows the correction generalizes. Honest scope: single frontier generator, single seed, n=200 (50/cell);
 the FN side of the linear correction stays partly imbalanced → a length-STRATIFIED threshold would beat a linear
 residualization. New tool: `scripts/overconfidence_adversarial_lenxreg.py`. Logged per rigor_gate (CIs attached).
