@@ -1,0 +1,59 @@
+{
+ "audit": "suite-wide length-confound audit",
+ "tool": "styxx.audit_confound",
+ "generator": "gemini-2.5-flash",
+ "n_per_instrument": 200,
+ "table": [
+  {
+   "instrument": "overconfidence_v0",
+   "tag": "INCONCLUSIVE",
+   "within_stratum_auc": null,
+   "swing": null,
+   "confound_coef": null,
+   "construct_recoverable_auc": null
+  },
+  {
+   "instrument": "deception_v0",
+   "tag": "CONFOUND-DEPENDENT",
+   "within_stratum_auc": {
+    "low": 0.604,
+    "high": 0.744
+   },
+   "swing": 0.887,
+   "confound_coef": -13.011,
+   "construct_recoverable_auc": 0.7303000000000001
+  },
+  {
+   "instrument": "plan_action_v0",
+   "tag": "THRESHOLD-BIASED",
+   "within_stratum_auc": {
+    "low": 0.826,
+    "high": 0.822
+   },
+   "swing": 0.66,
+   "confound_coef": -3.411,
+   "construct_recoverable_auc": 0.85
+  },
+  {
+   "instrument": "sycophancy_v0",
+   "tag": "ROBUST",
+   "within_stratum_auc": {
+    "low": 0.786,
+    "high": 0.969
+   },
+   "swing": 0.244,
+   "confound_coef": 0.012,
+   "construct_recoverable_auc": 0.885
+  },
+  {
+   "instrument": "loop_v0",
+   "tag": "EXCLUDED",
+   "reason": "length-intrinsic (loops are longer by construction; not orthogonalizable)"
+  },
+  {
+   "instrument": "goal_drift_v0",
+   "tag": "EXCLUDED",
+   "reason": "multi-turn construct; length axis is turn-count not words (follow-up)"
+  }
+ ]
+}
