@@ -40,14 +40,19 @@ for name, rel, textfn, lblkey, modname in REG:
     raw_abl = auc_drop(X, y, len_idx)
     binw = max(4, int(np.subtract(*np.percentile(wc, [75, 25])) / 6) or 8)
 
+    keep_cols = [i for i in range(X.shape[1]) if i not in len_idx]
+
     def cem_aucs(bw):
         idx = cem_match(wc, y, bw)
-        if len(idx) < 40 or len(np.unique(y[idx])) < 2: return (float("nan"), float("nan"), len(idx), float("nan"))
+        if len(idx) < 40 or len(np.unique(y[idx])) < 2: return (float("nan"), float("nan"), len(idx), float("nan"), None, None)
         Xc, yc = X[idx], y[idx]
-        full = cv_oof(Xc, yc)[1]; abl = auc_drop(Xc, yc, len_idx)
-        return (full, abl, len(idx), dlen(wc[idx], y[idx]))
-    cf_b, ca_b, n_b, dlb = cem_aucs(binw)
-    cf12, ca12, n12, dl12 = cem_aucs(12)
+        full = cv_oof(Xc, yc)[1]
+        abl_oof, abl = cv_oof(Xc[:, keep_cols], yc)   # length-ablated probe, with OOF for a bootstrap CI
+        return (full, abl, len(idx), dlen(wc[idx], y[idx]), abl_oof, yc)
+    cf_b, ca_b, n_b, dlb, oof_b, yc_b = cem_aucs(binw)
+    cf12, ca12, n12, dl12, _, _ = cem_aucs(12)
+    # bootstrap 95% CI on the length-ablated causal floor (binW) — uncertainty the verdict must carry
+    floor_ci = list(boot_ci(yc_b, oof_b)) if oof_b is not None else None
     # honest verdict on the length-ABLATED, length-MATCHED number (best available causal floor)
     floor = np.nanmean([ca_b, ca12])
     if np.isnan(floor) or (np.isnan(ca_b) and np.isnan(ca12)):
@@ -61,7 +66,8 @@ for name, rel, textfn, lblkey, modname in REG:
     out.append({"instrument": name, "length_features": len_names, "raw_full": raw_full, "raw_abl": raw_abl,
                 "cem_full_binW": cf_b, "cem_abl_binW": ca_b, "n_cem_binW": n_b, "binW": binw,
                 "cem_full_bin12": cf12, "cem_abl_bin12": ca12, "n_cem_bin12": n12,
-                "causal_floor_lenablated": float(floor) if floor == floor else None, "verdict": verdict})
+                "causal_floor_lenablated": float(floor) if floor == floor else None,
+                "causal_floor_ci": floor_ci, "verdict": verdict})
     fmt = lambda v: (f"{v:.3f}" if v == v else "  —  ")
     print(f"{name:14s} {','.join(len_names)[:22]:22s} {raw_full:8.3f} {raw_abl:8.3f} "
           f"{fmt(cf_b):>8s} {fmt(ca_b):>11s} {fmt(ca12):>11s} {verdict}")

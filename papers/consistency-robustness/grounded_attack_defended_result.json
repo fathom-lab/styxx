@@ -11,5 +11,6 @@
   "injection_flag_rate": 0.16666666666666666,
   "injection_catches_fooled_frac": 0.9090909090909091,
   "median_stability_under_attack": 1.0,
-  "verdict": "PAIRED DEFENSE CLOSES THE HOLE \u2014 naive as-asked confidently-fooled 18% -> DEFENDED (canonical resampling) 2%; detect_context_injection flags 17% of items overall and 91% of the naively-fooled ones. Deployed per the styxx security model (verdict from the canonical arm + injection flag on the as-asked arm), the question-framing hole is closed. [naive as-asked arm ROBUST(marginal) \u2014 confidently fooled 18% (bar 0.20); attack eff +0.18; AUROC defended 1.00]"
+  "verdict": "PAIRED DEFENSE CLOSES THE HOLE \u2014 naive as-asked confidently-fooled 18% -> DEFENDED (canonical resampling) 2%; detect_context_injection flags 17% of items overall and 91% of the naively-fooled ones. Deployed per the styxx security model (verdict from the canonical arm + injection flag on the as-asked arm), the question-framing hole is closed. [naive as-asked arm ROBUST(marginal) \u2014 confidently fooled 18% (bar 0.20); attack eff +0.18; AUROC defended 1.00]",
+  "corrigendum": "2026-06-25 rigor-gate disclosure: single-run point rates (naive 18% -> defended 2%); no CI/bootstrap. 'CLOSES THE HOLE' is directional (large effect, but un-error-barred); CI backfill owed."
 }
