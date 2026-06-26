@@ -11,6 +11,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.21.1] — 2026-06-26 — audit_confound proves out on a real third-party model + key-free Colab
+
+The day after `audit_confound` shipped, we pointed it outward — at a model we did not build — to
+test the one thing a confound auditor must do: work on a real, black-box classifier, not just our
+own instruments.
+
+### Added
+- **External-model validation.** `audit_confound` flagged the most-downloaded HuggingFace sentiment
+  model (`distilbert-base-uncased-finetuned-sst-2-english`) for a real length bias **at the decision
+  boundary** — longer mildly-negative reviews read more positive (coef +0.11 [0.026, 0.186]) — while
+  clearing `unitary/toxic-bert` as ROBUST. A discriminating tool, not a wolf-crier, and the reusable
+  methodological lesson: **confounds hide at saturation; probe the decision boundary, not the
+  extremes.**
+- **One-click, key-free Colab** (`examples/audit_confound_colab.ipynb`) — runs the auditor on a real
+  HF model in the browser, no API key required.
+
+### Fixed
+- Self-review before publishing caught and corrected a real defect in the auditor's own output, plus
+  a `plan_action` length-read wording error and a non-additive-effect overstatement — the discipline
+  applied to ourselves, in public.
+
+---
+
+## [7.21.0] — 2026-06-25 — styxx.audit_confound: confound-robustness auditing for ANY score
+
+A scorer can pass every standard check — high accuracy, cross-domain generalization, a held-out
+split — and still track a **confound** (response length, formatting, politeness) instead of the
+concept it claims to measure. When confound and concept come apart in deployment, oversight fails
+*silently*: the dashboard stays green. This release ships the auditor for exactly that failure.
+
+### Added
+- **`styxx.audit_confound()` + `build_confound_grid()`** — a frontier model builds a
+  construct⟂confound corpus; the auditor returns `ROBUST` / `THRESHOLD-BIASED` (+ a validated
+  `report.guard()` deployment fix) / `CONFOUND-DEPENDENT` / `INCONCLUSIVE`, each with bootstrap CIs.
+- **First confound map of our own suite.** Dogfooded across the shipped guardrails:
+  `overconfidence_v0` and `plan_action_v0` are THRESHOLD-BIASED (discrimination intact, score
+  length-shifted — fixable), referenceless `deception_v0` is CONFOUND-DEPENDENT (length-dominated,
+  broken), and recalibrated `sycophancy_v0.3` is the only ROBUST one. **3 of 4 ride response
+  length** — surfaced by our own tool, reported without varnish.
+
+---
+
+## [7.20.0] — 2026-06-25 — opt-in length-aware overconfidence deployment guard
+
+The causal length audit cleared 5 of 6 guardrails and left one shipped instrument with a deployable
+length bias. This release ships the fix as an **opt-in** guard rather than silently changing a
+trained default.
+
+### Added
+- **`styxx.length_adjust_overconfidence()`** — an opt-in, length-aware deployment guard for
+  `overconfidence_v0`. Out-of-sample AUC 0.807 → 0.843; short↔long disparity +0.42 → −0.08. The
+  instrument's discrimination was never the problem — its operating point read short answers as
+  overconfident. The guard corrects the operating point without touching the trained weights.
+
+### Changed
+- The causal length-audit results are regression-locked in CI (deception construct-robust /
+  overconfidence length-carried / calibration ~1.16× intrinsically wordier) so the confound map
+  cannot silently drift.
+
+---
+
+## [7.19.1] — 2026-06-24 — probe-validity tooling + the sycophancy length confound, fixed end-to-end
+
+Dogfooding the honesty receipts surfaced that several calibrated instruments leaned on response
+length. This release closes the sycophancy case end-to-end and ships the tool that found it, turned
+into a reusable primitive.
+
+### Added
+- **`styxx.validate_probe()` / `styxx.probe_validity`** — is an oversight probe tracking the
+  concept, or a surface artifact? A silence gate + natural-OOD transfer (permutation-tested) +
+  orthogonality-to-the-natural-direction → `VALID` / `SURFACE-ARTIFACT`. We caught our **own**
+  0.98-AUC "truth probe" as a surface artifact with it: it passed control-task selectivity, a BoW
+  silence gate, and cross-domain transfer, yet was orthogonal (cosine −0.05 / +0.14) to the model's
+  natural truth axis and transferred to natural OOD at chance. The real axis is recoverable only
+  from natural data, not template constructs.
+
+### Fixed
+- **`sycophancy_v0.3` length confound removed end-to-end.** The length-decorrelated weights (drop
+  `log_word_count`, lose nothing) are now the default; the recalibrated instrument is the only one
+  that subsequently audited ROBUST.
+
+### Changed
+- **The rigor discipline made structural.** A CI rigor-gate now BLOCKS any committed result whose
+  verdict claims a win ("robust / significant / real / proven / generalizes") without an attached
+  CI / permutation-p / disclosure. It would have blocked two of our own past overclaims; now it
+  can't happen. Two already-public overclaims were self-audited and downgraded in the same pass.
+
+---
+
+## [7.19.0] — 2026-06-23 — parrhesia: verifiable honesty receipts
+
+### Added
+- **`styxx.parrhesia`** — verifiable honesty receipts: an external register audit any third party
+  can re-derive (verify-by-re-derivation rather than trust-the-label). Ships with a self-verifying
+  receipt demo that flags its own scorer false-positives rather than hiding them.
+
+---
+
 ## [7.18.1] — 2026-06-22 — drift-gate now covers the FAILED bars (provenance honesty fix)
 
 A multi-agent adversarial audit of 7.18.0 found a scope gap in the very claim the artifact is
