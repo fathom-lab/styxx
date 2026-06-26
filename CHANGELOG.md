@@ -11,6 +11,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.22.0] — 2026-06-26 — styxx.audit_hf_model: audit any HuggingFace classifier for length bias in one call
+
+`audit_confound` is instrument-agnostic but asks you to bring an orthogonal corpus and wire up the
+scoring. For the two most common cases — sentiment and toxicity classifiers — that friction is now
+gone: styxx ships the validated, length-orthogonal boundary corpora as package data and collapses the
+whole pipeline into a single call. The "send me your classifier" ask becomes
+`pip install 'styxx[hf]'; styxx audit-model <id>`.
+
+### Added
+- **`styxx.audit_hf_model(model_id, construct="sentiment"|"toxicity")`** — loads a HuggingFace
+  text-classification model, scores the bundled boundary corpus (n=200), and returns a
+  `ConfoundAuditReport` (`.verdict`, `.confound_score_coef` + CI, `.within_stratum_auc`, and a
+  ready-to-use `.guard()` when THRESHOLD-BIASED). Robust, *verifiable* label mapping (positive-polarity
+  for sentiment incl. 1–5★ star heads, toxic-probability for toxicity); override with `score_label=` or
+  bypass model loading entirely with `score_fn=`. `trust_remote_code` is left **off** — auditing a model
+  never executes its repo code.
+- **`styxx audit-model <model_id> [--construct …] [--label …] [--format card|json]`** CLI command.
+- **`styxx.available_constructs()`** — the constructs with a bundled corpus.
+- **Bundled boundary corpora** as package data (`styxx/_data/confound_boundary_{sentiment,toxicity}.jsonl`).
+- New optional extra **`styxx[hf]`** (`transformers>=4.40`, `torch>=2.6`). `torch>=2.6` is required to
+  deserialize legacy `.bin` checkpoints under the CVE-2025-32434 safety gate (safetensors is exempt).
+
+### Provenance
+- Reproduces the prior single-model finding through the one-call path (distilbert-sst2:
+  THRESHOLD-BIASED, +0.106 [0.026, 0.186]); the bundled corpora are the same validated grids
+  (BoW construct-recoverable AUC 0.99 / 1.00). Used to grade a 9-classifier **Confound Report Card**
+  (`papers/grounded-honesty-axis/FINDING_hf_report_card_2026_06_26.md` + reproducible
+  `hf_report_card_repro.py`): 4 ride length, 2 are confound-dependent, both prior-audited controls
+  replicate. 18 new tests, all runnable on a base install via injected `score_fn` (incl. CLI + the
+  bundled-corpus orthogonality gate).
+
+---
+
 ## [7.21.1] — 2026-06-26 — audit_confound proves out on a real third-party model + key-free Colab
 
 The day after `audit_confound` shipped, we pointed it outward — at a model we did not build — to

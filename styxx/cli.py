@@ -1414,6 +1414,58 @@ def cmd_gauntlet_audit_confounds(args):
     return 0
 
 
+def cmd_audit_model(args):
+    """styxx audit-model <model_id> — audit a HuggingFace text classifier for length bias.
+
+    7.22.0: CLI face of ``styxx.audit_hf_model``. Loads the model, scores the bundled
+    length-orthogonal boundary corpus, and prints a CI-backed verdict.
+    """
+    from .hf_audit import audit_hf_model, available_constructs
+
+    if args.construct not in available_constructs():
+        sys.stderr.write(
+            f"  unknown construct {args.construct!r}; choose one of {available_constructs()}\n"
+        )
+        return 2
+    try:
+        report = audit_hf_model(
+            args.model_id, construct=args.construct,
+            score_label=args.label, device=args.device,
+        )
+    except ImportError as e:
+        sys.stderr.write(f"\n  {e}\n")
+        return 1
+    except Exception as e:  # surface model-load / mapping errors cleanly
+        sys.stderr.write(f"\n  audit-model failed: {e}\n")
+        return 1
+
+    if args.format == "json":
+        import json as _json
+        from dataclasses import asdict
+        print(_json.dumps(asdict(report), default=float, indent=2))
+        return 0
+
+    lo, hi = report.confound_score_coef_ci95
+    tag = report.verdict.split()[0]
+    wa = report.within_stratum_auc or {}
+    print()
+    print("  styxx audit-model")
+    print(f"    model                {args.model_id}")
+    print(f"    construct            {args.construct}  (n={report.n}, boundary corpus)")
+    print(f"    verdict              {tag}")
+    print(f"    length->score coef   {report.confound_score_coef:+.3f}  95% CI [{lo:+.3f}, {hi:+.3f}]")
+    if isinstance(wa, dict) and "low" in wa:
+        print(f"    within-stratum AUC   {wa['low']:.2f} / {wa['high']:.2f}")
+    if report.construct_recoverable_auc is not None:
+        print(f"    construct recovers   BoW AUC {report.construct_recoverable_auc:.2f}")
+    if tag.startswith("THRESHOLD"):
+        print("    fix                  report.guard(score, confound) -- deployment-side, validated OOS")
+    elif tag.startswith("CONFOUND"):
+        print("    fix                  retrain/reground -- the score needs the confound to discriminate")
+    print()
+    return 0
+
+
 def cmd_data_dir(args):
     """styxx data-dir — print the active chart.jsonl path + a short summary.
 
@@ -2927,6 +2979,23 @@ def _build_parser() -> argparse.ArgumentParser:
     p_audit.add_argument("--format", choices=["card", "json"], default="card",
                           help="output format (default: card)")
     p_audit.set_defaults(func=cmd_gauntlet_audit_confounds)
+
+    # audit-model — 7.22.0 audit any HuggingFace text classifier for length bias
+    p_amodel = sub.add_parser(
+        "audit-model",
+        help="audit a HuggingFace text classifier for length bias (styxx.audit_hf_model)",
+    )
+    p_amodel.add_argument("model_id",
+                          help="HuggingFace model id or local path (text-classification head)")
+    p_amodel.add_argument("--construct", default="sentiment",
+                          help="bundled boundary corpus to audit against (sentiment | toxicity)")
+    p_amodel.add_argument("--label", default=None,
+                          help="force the output label whose probability is the score (e.g. POSITIVE, toxic)")
+    p_amodel.add_argument("--device", type=int, default=-1,
+                          help="transformers device index (-1 = CPU, the default; 0 = first GPU)")
+    p_amodel.add_argument("--format", choices=["card", "json"], default="card",
+                          help="output format (default: card)")
+    p_amodel.set_defaults(func=cmd_audit_model)
 
     # critique — 7.7.4 audit + register-fix suggestions
     p_critique = sub.add_parser(

@@ -1,0 +1,228 @@
+{
+  "styxx_version": "7.21.1",
+  "torch": "2.12.1+cpu",
+  "refit": {
+    "sentiment": 0.9898,
+    "toxicity": 1.0
+  },
+  "results": [
+    {
+      "model": "distilbert-base-uncased-finetuned-sst-2-english",
+      "task": "sentiment",
+      "note": "HF default SST-2 [control]",
+      "labelset": [
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "verdict": "THRESHOLD-BIASED (discrimination robust) \u2014 'distilbert-base-uncased-finetuned-sst-2-english' separates the construct within each 'log_words' stratum (AUC 0.94/1.00) but the SCORE shifts with the confound (coef +0.11, 95% CI [0.026, 0.186]). At a fixed threshold the error rate swings ~16% across confound levels. a guard reduces the FP length-disparity -0.12->-0.06 but trades AUC 0.97->0.89 (5-fold OOS) \u2014 worth it only if length-fairness outweighs the AUC cost. Fix is a deployment threshold, not a retrain.",
+      "verdict_tag": "THRESHOLD-BIASED",
+      "within_stratum_auc": {
+        "low": 0.944,
+        "high": 0.999
+      },
+      "confound_score_coef": 0.106,
+      "confound_score_coef_ci95": [
+        0.026,
+        0.186
+      ],
+      "construct_recoverable_auc": 0.9898
+    },
+    {
+      "model": "nlptown/bert-base-multilingual-uncased-sentiment",
+      "task": "sentiment",
+      "note": "multilingual 1-5 stars",
+      "labelset": [
+        "1 star",
+        "2 stars",
+        "3 stars",
+        "4 stars",
+        "5 stars"
+      ],
+      "verdict": "THRESHOLD-BIASED (discrimination robust) \u2014 'nlptown/bert-base-multilingual-uncased-sentiment' separates the construct within each 'log_words' stratum (AUC 0.95/0.96) but the SCORE shifts with the confound (coef +0.09, 95% CI [0.069, 0.108]). At a fixed threshold the error rate swings ~38% across confound levels. a guard (residualize on confound) keeps AUC and cuts the FP length-disparity +0.38->+0.04 (5-fold OOS) -> use report.guard(score, confound). Fix is a deployment threshold, not a retrain.",
+      "verdict_tag": "THRESHOLD-BIASED",
+      "within_stratum_auc": {
+        "low": 0.948,
+        "high": 0.964
+      },
+      "confound_score_coef": 0.089,
+      "confound_score_coef_ci95": [
+        0.069,
+        0.108
+      ],
+      "construct_recoverable_auc": 0.9898
+    },
+    {
+      "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+      "task": "sentiment",
+      "note": "Twitter RoBERTa",
+      "labelset": [
+        "negative",
+        "neutral",
+        "positive"
+      ],
+      "verdict": "THRESHOLD-BIASED (discrimination robust) \u2014 'cardiffnlp/twitter-roberta-base-sentiment-latest' separates the construct within each 'log_words' stratum (AUC 0.96/0.98) but the SCORE shifts with the confound (coef +0.16, 95% CI [0.1, 0.217]). At a fixed threshold the error rate swings ~16% across confound levels. a guard (residualize on confound) keeps AUC and cuts the FP length-disparity +0.08->-0.04 (5-fold OOS) -> use report.guard(score, confound). Fix is a deployment threshold, not a retrain.",
+      "verdict_tag": "THRESHOLD-BIASED",
+      "within_stratum_auc": {
+        "low": 0.962,
+        "high": 0.984
+      },
+      "confound_score_coef": 0.159,
+      "confound_score_coef_ci95": [
+        0.1,
+        0.217
+      ],
+      "construct_recoverable_auc": 0.9898
+    },
+    {
+      "model": "finiteautomata/bertweet-base-sentiment-analysis",
+      "task": "sentiment",
+      "note": "BERTweet",
+      "not_audited": "index 130 is out of bounds for dimension 1 with size 130"
+    },
+    {
+      "model": "siebert/sentiment-roberta-large-english",
+      "task": "sentiment",
+      "note": "SiEBERT RoBERTa-large",
+      "labelset": [
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "verdict": "THRESHOLD-BIASED (discrimination robust) \u2014 'siebert/sentiment-roberta-large-english' separates the construct within each 'log_words' stratum (AUC 0.96/1.00) but the SCORE shifts with the confound (coef +0.14, 95% CI [0.045, 0.23]). At a fixed threshold the error rate swings ~20% across confound levels. a guard reduces the FP length-disparity +0.12->-0.02 but trades AUC 0.97->0.85 (5-fold OOS) \u2014 worth it only if length-fairness outweighs the AUC cost. Fix is a deployment threshold, not a retrain.",
+      "verdict_tag": "THRESHOLD-BIASED",
+      "within_stratum_auc": {
+        "low": 0.962,
+        "high": 0.999
+      },
+      "confound_score_coef": 0.141,
+      "confound_score_coef_ci95": [
+        0.045,
+        0.23
+      ],
+      "construct_recoverable_auc": 0.9898
+    },
+    {
+      "model": "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
+      "task": "sentiment",
+      "note": "distilbert multiling student",
+      "labelset": [
+        "negative",
+        "neutral",
+        "positive"
+      ],
+      "verdict": "ROBUST \u2014 'lxyuan/distilbert-base-multilingual-cased-sentiments-student' separates the construct (AUC 0.93) and the confound's score effect is not significant (coef -0.02, CI [-0.064, 0.024]); swing 12%. No confound problem detected.",
+      "verdict_tag": "ROBUST",
+      "within_stratum_auc": {
+        "low": 0.882,
+        "high": 0.98
+      },
+      "confound_score_coef": -0.018,
+      "confound_score_coef_ci95": [
+        -0.064,
+        0.024
+      ],
+      "construct_recoverable_auc": 0.9898
+    },
+    {
+      "model": "unitary/toxic-bert",
+      "task": "toxicity",
+      "note": "Detoxify toxic-bert [control]",
+      "labelset": [
+        "identity_hate",
+        "insult",
+        "obscene",
+        "severe_toxic",
+        "threat",
+        "toxic"
+      ],
+      "verdict": "ROBUST \u2014 'unitary/toxic-bert' separates the construct (AUC 0.86) and the confound's score effect is not significant (coef -0.00, CI [-0.004, 0.001]); swing 16%. No confound problem detected.",
+      "verdict_tag": "ROBUST",
+      "within_stratum_auc": {
+        "low": 0.863,
+        "high": 0.875
+      },
+      "confound_score_coef": -0.001,
+      "confound_score_coef_ci95": [
+        -0.004,
+        0.001
+      ],
+      "construct_recoverable_auc": 1.0
+    },
+    {
+      "model": "s-nlp/roberta_toxicity_classifier",
+      "task": "toxicity",
+      "note": "s-nlp RoBERTa toxicity",
+      "labelset": [
+        "neutral",
+        "toxic"
+      ],
+      "verdict": "CONFOUND-DEPENDENT (broken) \u2014 within-stratum discrimination drops (AUC 0.59/0.64); 's-nlp/roberta_toxicity_classifier' needs 'log_words' to discriminate. A threshold guard will NOT fix this \u2014 the instrument is keying on the confound, not the construct. (construct IS recoverable from text, refit AUC 1.00 -> the INSTRUMENT is keying on 'log_words', not that the construct is undetectable; fix = retrain/reground, NOT a threshold guard)",
+      "verdict_tag": "CONFOUND-DEPENDENT",
+      "within_stratum_auc": {
+        "low": 0.593,
+        "high": 0.637
+      },
+      "confound_score_coef": -0.0,
+      "confound_score_coef_ci95": [
+        -0.0,
+        0.0
+      ],
+      "construct_recoverable_auc": 1.0
+    },
+    {
+      "model": "martin-ha/toxic-comment-model",
+      "task": "toxicity",
+      "note": "toxic-comment-model",
+      "labelset": [
+        "non-toxic",
+        "toxic"
+      ],
+      "verdict": "THRESHOLD-BIASED (discrimination robust) \u2014 'martin-ha/toxic-comment-model' separates the construct within each 'log_words' stratum (AUC 0.97/1.00) but the SCORE shifts with the confound (coef -0.00, 95% CI [-0.004, -0.001]). At a fixed threshold the error rate swings ~8% across confound levels. a guard reduces the FP length-disparity -0.08->+0.52 but trades AUC 0.98->0.83 (5-fold OOS) \u2014 worth it only if length-fairness outweighs the AUC cost. Fix is a deployment threshold, not a retrain.",
+      "verdict_tag": "THRESHOLD-BIASED",
+      "within_stratum_auc": {
+        "low": 0.974,
+        "high": 1.0
+      },
+      "confound_score_coef": -0.002,
+      "confound_score_coef_ci95": [
+        -0.004,
+        -0.001
+      ],
+      "construct_recoverable_auc": 1.0
+    },
+    {
+      "model": "unitary/unbiased-toxic-roberta",
+      "task": "toxicity",
+      "note": "Detoxify unbiased-toxic-roberta",
+      "labelset": [
+        "black",
+        "christian",
+        "female",
+        "homosexual_gay_or_lesbian",
+        "identity_attack",
+        "insult",
+        "jewish",
+        "male",
+        "muslim",
+        "obscene",
+        "psychiatric_or_mental_illness",
+        "severe_toxicity",
+        "sexual_explicit",
+        "threat",
+        "toxicity",
+        "white"
+      ],
+      "verdict": "CONFOUND-DEPENDENT (broken) \u2014 within-stratum discrimination drops (AUC 0.53/0.76); 'unitary/unbiased-toxic-roberta' needs 'log_words' to discriminate. A threshold guard will NOT fix this \u2014 the instrument is keying on the confound, not the construct. (construct IS recoverable from text, refit AUC 1.00 -> the INSTRUMENT is keying on 'log_words', not that the construct is undetectable; fix = retrain/reground, NOT a threshold guard)",
+      "verdict_tag": "CONFOUND-DEPENDENT",
+      "within_stratum_auc": {
+        "low": 0.53,
+        "high": 0.761
+      },
+      "confound_score_coef": 0.0,
+      "confound_score_coef_ci95": [
+        -0.0,
+        0.002
+      ],
+      "construct_recoverable_auc": 1.0
+    }
+  ]
+}

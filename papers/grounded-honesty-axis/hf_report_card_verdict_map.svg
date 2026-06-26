@@ -1,0 +1,72 @@
+<svg width="100%" viewBox="0 0 860 640" xmlns="http://www.w3.org/2000/svg" role="img" font-family="'JetBrains Mono','SFMono-Regular',ui-monospace,monospace">
+<title>styxx confound report card — verdict map of deployed text classifiers</title>
+<rect width="860" height="640" fill="#1A0F26"/>
+<text x="56" y="46" fill="#C8A86B" font-size="12" letter-spacing="3">styxx · confound report card</text>
+<text x="56" y="86" fill="#F3EBE0" font-size="30" font-family="'Source Serif 4','Georgia',serif">9 deployed classifiers, audited for length bias</text>
+<text x="56" y="110" fill="#9183A6" font-size="13">on a length-orthogonal boundary corpus (n=200). a plain bag-of-words recovers the concept (AUC 0.99 / 1.00).</text>
+<circle cx="61" cy="138" r="5" fill="#8FBF9F"/><text x="72" y="142" fill="#D0C5DA" font-size="11">ROBUST</text>
+<circle cx="141.0" cy="138" r="5" fill="#E0A458"/><text x="152.0" y="142" fill="#D0C5DA" font-size="11">THRESHOLD-BIASED</text>
+<circle cx="291.0" cy="138" r="5" fill="#D8736B"/><text x="302.0" y="142" fill="#D0C5DA" font-size="11">CONFOUND-DEPENDENT</text>
+<line x1="300" y1="196" x2="300" y2="500" stroke="#3A2B47" stroke-width="1"/>
+<line x1="300" y1="500" x2="792" y2="500" stroke="#3A2B47" stroke-width="1"/>
+<line x1="296" y1="500.0" x2="792" y2="500.0" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="504.0" fill="#9183A6" font-size="10" text-anchor="end">0.5</text>
+<line x1="296" y1="440.4" x2="792" y2="440.4" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="444.4" fill="#9183A6" font-size="10" text-anchor="end">0.6</text>
+<line x1="296" y1="380.8" x2="792" y2="380.8" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="384.8" fill="#9183A6" font-size="10" text-anchor="end">0.7</text>
+<line x1="296" y1="321.2" x2="792" y2="321.2" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="325.2" fill="#9183A6" font-size="10" text-anchor="end">0.8</text>
+<line x1="296" y1="261.6" x2="792" y2="261.6" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="265.6" fill="#9183A6" font-size="10" text-anchor="end">0.9</text>
+<line x1="296" y1="202.0" x2="792" y2="202.0" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="291" y="206.0" fill="#9183A6" font-size="10" text-anchor="end">1.0</text>
+<text x="291" y="184" fill="#5C4E70" font-size="11" text-anchor="end">within-stratum</text>
+<text x="291" y="198" fill="#5C4E70" font-size="11" text-anchor="end">AUC ↑</text>
+<line x1="387.9" y1="196" x2="387.9" y2="504" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="387.9" y="518.0" fill="#9183A6" font-size="10" text-anchor="middle">+0.00</text>
+<line x1="475.7" y1="196" x2="475.7" y2="504" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="475.7" y="518.0" fill="#9183A6" font-size="10" text-anchor="middle">+0.05</text>
+<line x1="563.6" y1="196" x2="563.6" y2="504" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="563.6" y="518.0" fill="#9183A6" font-size="10" text-anchor="middle">+0.10</text>
+<line x1="651.4" y1="196" x2="651.4" y2="504" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="651.4" y="518.0" fill="#9183A6" font-size="10" text-anchor="middle">+0.15</text>
+<line x1="739.3" y1="196" x2="739.3" y2="504" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="739.3" y="518.0" fill="#9183A6" font-size="10" text-anchor="middle">+0.20</text>
+<text x="792" y="534" fill="#5C4E70" font-size="11" text-anchor="end">length → score coefficient (threshold bias) →</text>
+<line x1="387.9" y1="196" x2="387.9" y2="500" stroke="#F3EBE0" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+<line x1="300" y1="380.8" x2="792" y2="380.8" stroke="#D8736B" stroke-width="1" stroke-dasharray="5 3" opacity="0.55"/>
+<text x="788" y="374.8" fill="#D8736B" font-size="10" text-anchor="end" opacity="0.85">below: discrimination needs the confound</text>
+<circle cx="574.1" cy="235.3" r="6.5" fill="#E0A458" opacity="0.92"/>
+<circle cx="574.1" cy="235.3" r="10" fill="none" stroke="#E0A458" stroke-width="1" opacity="0.7"/>
+<text x="574.1" y="259.3" fill="#F3EBE0" font-size="11" text-anchor="middle">distilbert-sst2</text>
+<text x="574.1" y="271.3" fill="#9183A6" font-size="9" text-anchor="middle">sentiment ·ctrl</text>
+<circle cx="544.2" cy="233.0" r="6.5" fill="#E0A458" opacity="0.92"/>
+<text x="544.2" y="220.0" fill="#F3EBE0" font-size="11" text-anchor="middle">nlptown ★</text>
+<text x="544.2" y="232.0" fill="#9183A6" font-size="9" text-anchor="middle">sentiment</text>
+<circle cx="667.2" cy="224.6" r="6.5" fill="#E0A458" opacity="0.92"/>
+<text x="678.2" y="241.6" fill="#F3EBE0" font-size="11" text-anchor="start">twitter-roberta</text>
+<text x="678.2" y="253.6" fill="#9183A6" font-size="9" text-anchor="start">sentiment</text>
+<circle cx="635.6" cy="224.6" r="6.5" fill="#E0A458" opacity="0.92"/>
+<text x="635.6" y="211.6" fill="#F3EBE0" font-size="11" text-anchor="middle">siebert-lg</text>
+<text x="635.6" y="223.6" fill="#9183A6" font-size="9" text-anchor="middle">sentiment</text>
+<circle cx="356.2" cy="272.3" r="6.5" fill="#8FBF9F" opacity="0.92"/>
+<text x="368.2" y="277.3" fill="#F3EBE0" font-size="11" text-anchor="start">distilbert-multiling</text>
+<text x="368.2" y="289.3" fill="#9183A6" font-size="9" text-anchor="start">sentiment</text>
+<circle cx="386.1" cy="283.6" r="6.5" fill="#8FBF9F" opacity="0.92"/>
+<circle cx="386.1" cy="283.6" r="10" fill="none" stroke="#8FBF9F" stroke-width="1" opacity="0.7"/>
+<text x="374.1" y="288.6" fill="#F3EBE0" font-size="11" text-anchor="end">toxic-bert</text>
+<text x="374.1" y="300.6" fill="#9183A6" font-size="9" text-anchor="end">toxicity ·ctrl</text>
+<circle cx="387.9" cy="444.6" r="6.5" fill="#D8736B" opacity="0.92"/>
+<text x="399.9" y="449.6" fill="#F3EBE0" font-size="11" text-anchor="start">s-nlp toxicity</text>
+<text x="399.9" y="461.6" fill="#9183A6" font-size="9" text-anchor="start">toxicity</text>
+<circle cx="384.3" cy="217.5" r="6.5" fill="#E0A458" opacity="0.92"/>
+<text x="396.3" y="214.5" fill="#F3EBE0" font-size="11" text-anchor="start">toxic-comment</text>
+<text x="396.3" y="226.5" fill="#9183A6" font-size="9" text-anchor="start">toxicity</text>
+<circle cx="387.9" cy="482.1" r="6.5" fill="#D8736B" opacity="0.92"/>
+<text x="399.9" y="487.1" fill="#F3EBE0" font-size="11" text-anchor="start">unbiased-toxic</text>
+<text x="399.9" y="499.1" fill="#9183A6" font-size="9" text-anchor="start">toxicity</text>
+<line x1="56" y1="586" x2="804" y2="586" stroke="#3A2B47" stroke-width="0.5"/>
+<text x="56" y="606" fill="#9183A6" font-size="11">both controls replicate prior verdicts → method trustworthy · 4 ride length · 2 confound-dependent · 2 robust · 1 borderline</text>
+<text x="56" y="623" fill="#5C4E70" font-size="11">styxx.audit_confound · pip install styxx · single generator/seed, n=200, one confound (length) · 1 model not graded</text>
+</svg>

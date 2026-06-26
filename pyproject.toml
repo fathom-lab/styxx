@@ -104,6 +104,13 @@ nli = [
 mcp = [
     "mcp>=1.0.0; python_version >= '3.10'",
 ]
+# 7.22.0: styxx.audit_hf_model / `styxx audit-model` — load a HuggingFace text classifier
+# and audit it for length bias on a bundled boundary corpus. torch>=2.6 deserializes legacy
+# .bin checkpoints under the CVE-2025-32434 safety gate (safetensors is exempt either way).
+hf = [
+    "transformers>=4.40",
+    "torch>=2.6",
+]
 # phase-coherence primitive: styxx.coherence.primary_coherence / plv_hilbert
 # need scipy.signal.hilbert (numpy is already a core dependency).
 coherence = [
@@ -191,7 +198,7 @@ packages = [
 "styxx.attack" = ["signature_calibration_v0.json", "universal_suffixes_v0.json"]
 "styxx.compliance.templates" = ["*.md"]
 "styxx.fonts" = ["*.ttf"]
-"styxx._data" = ["*.json", "*.md"]
+"styxx._data" = ["*.json", "*.md", "*.jsonl"]
 
 [tool.ruff]
 # styxx supports Python >= 3.9. Pin the target so ruff never suggests (or its

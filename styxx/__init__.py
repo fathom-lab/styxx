@@ -357,6 +357,7 @@ from .compliance import compliance_report, ComplianceReport
 from .probe import probe, ProbeReport
 from .probe_validity import validate_probe, ProbeValidityReport  # is a probe tracking the concept or a surface artifact?
 from .confound_audit import audit_confound, ConfoundAuditReport, build_confound_grid  # is a SCORE riding a confound?
+from .hf_audit import audit_hf_model, available_constructs  # one-call: audit any HF text classifier for length bias
 from .guardrail.overconfidence_length_guard import length_adjust as length_adjust_overconfidence  # opt-in length-fairness guard
 from .gate import gate, GateVerdict  # v3.4.0: pre-flight cognitive verdict
 from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEvent
@@ -773,6 +774,7 @@ __all__ = [
     "compliance_report", "probe", "calibrate",
     "validate_probe", "ProbeValidityReport",
     "audit_confound", "ConfoundAuditReport", "build_confound_grid",
+    "audit_hf_model", "available_constructs",
     "length_adjust_overconfidence",
 
     # pre-flight verdict (3.4.0+)
