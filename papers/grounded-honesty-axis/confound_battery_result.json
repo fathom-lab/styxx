@@ -1,0 +1,308 @@
+[
+  {
+    "model": "distilbert-base-uncased-finetuned-sst-2-english",
+    "construct": "sentiment",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.058,
+    "ci": [
+      -0.029,
+      0.138
+    ],
+    "within": {
+      "low": 0.981,
+      "high": 0.955
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "distilbert-base-uncased-finetuned-sst-2-english",
+    "construct": "sentiment",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": 0.042,
+    "ci": [
+      -0.041,
+      0.123
+    ],
+    "within": {
+      "low": 0.981,
+      "high": 0.963
+    },
+    "gate_ok": true,
+    "ortho": -0.001
+  },
+  {
+    "model": "nlptown/bert-base-multilingual-uncased-sentiment",
+    "construct": "sentiment",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": -0.011,
+    "ci": [
+      -0.036,
+      0.013
+    ],
+    "within": {
+      "low": 0.924,
+      "high": 0.888
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "nlptown/bert-base-multilingual-uncased-sentiment",
+    "construct": "sentiment",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": -0.007,
+    "ci": [
+      -0.03,
+      0.016
+    ],
+    "within": {
+      "low": 0.924,
+      "high": 0.88
+    },
+    "gate_ok": true,
+    "ortho": -0.001
+  },
+  {
+    "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "construct": "sentiment",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.061,
+    "ci": [
+      -0.003,
+      0.126
+    ],
+    "within": {
+      "low": 0.97,
+      "high": 0.956
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "construct": "sentiment",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": -0.055,
+    "ci": [
+      -0.123,
+      0.01
+    ],
+    "within": {
+      "low": 0.97,
+      "high": 0.891
+    },
+    "gate_ok": true,
+    "ortho": -0.001
+  },
+  {
+    "model": "siebert/sentiment-roberta-large-english",
+    "construct": "sentiment",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.059,
+    "ci": [
+      -0.036,
+      0.152
+    ],
+    "within": {
+      "low": 0.971,
+      "high": 0.963
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "siebert/sentiment-roberta-large-english",
+    "construct": "sentiment",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": 0.092,
+    "ci": [
+      -0.005,
+      0.184
+    ],
+    "within": {
+      "low": 0.971,
+      "high": 0.964
+    },
+    "gate_ok": true,
+    "ortho": -0.001
+  },
+  {
+    "model": "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
+    "construct": "sentiment",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.007,
+    "ci": [
+      -0.039,
+      0.055
+    ],
+    "within": {
+      "low": 0.927,
+      "high": 0.924
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
+    "construct": "sentiment",
+    "confound": "caps",
+    "verdict": "CONFOUND-DEPENDENT",
+    "coef": 0.06,
+    "ci": [
+      0.019,
+      0.105
+    ],
+    "within": {
+      "low": 0.927,
+      "high": 0.446
+    },
+    "gate_ok": true,
+    "ortho": -0.001
+  },
+  {
+    "model": "unitary/toxic-bert",
+    "construct": "toxicity",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.004,
+    "ci": [
+      0.0,
+      0.008
+    ],
+    "within": {
+      "low": 0.842,
+      "high": 0.914
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "unitary/toxic-bert",
+    "construct": "toxicity",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": 0.001,
+    "ci": [
+      -0.001,
+      0.004
+    ],
+    "within": {
+      "low": 0.845,
+      "high": 0.886
+    },
+    "gate_ok": true,
+    "ortho": 0.004
+  },
+  {
+    "model": "s-nlp/roberta_toxicity_classifier",
+    "construct": "toxicity",
+    "confound": "exclamation",
+    "verdict": "CONFOUND-DEPENDENT",
+    "coef": -0.0,
+    "ci": [
+      -0.0,
+      0.0
+    ],
+    "within": {
+      "low": 0.561,
+      "high": 0.752
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "s-nlp/roberta_toxicity_classifier",
+    "construct": "toxicity",
+    "confound": "caps",
+    "verdict": "CONFOUND-DEPENDENT",
+    "coef": 0.011,
+    "ci": [
+      0.002,
+      0.03
+    ],
+    "within": {
+      "low": 0.561,
+      "high": 0.67
+    },
+    "gate_ok": true,
+    "ortho": 0.004
+  },
+  {
+    "model": "martin-ha/toxic-comment-model",
+    "construct": "toxicity",
+    "confound": "exclamation",
+    "verdict": "ROBUST",
+    "coef": 0.001,
+    "ci": [
+      -0.001,
+      0.002
+    ],
+    "within": {
+      "low": 0.983,
+      "high": 0.908
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "martin-ha/toxic-comment-model",
+    "construct": "toxicity",
+    "confound": "caps",
+    "verdict": "ROBUST",
+    "coef": 0.001,
+    "ci": [
+      -0.001,
+      0.002
+    ],
+    "within": {
+      "low": 0.983,
+      "high": 0.984
+    },
+    "gate_ok": true,
+    "ortho": 0.004
+  },
+  {
+    "model": "unitary/unbiased-toxic-roberta",
+    "construct": "toxicity",
+    "confound": "exclamation",
+    "verdict": "CONFOUND-DEPENDENT",
+    "coef": 0.0,
+    "ci": [
+      -0.0,
+      0.001
+    ],
+    "within": {
+      "low": 0.658,
+      "high": 0.689
+    },
+    "gate_ok": true,
+    "ortho": 0.0
+  },
+  {
+    "model": "unitary/unbiased-toxic-roberta",
+    "construct": "toxicity",
+    "confound": "caps",
+    "verdict": "CONFOUND-DEPENDENT",
+    "coef": 0.123,
+    "ci": [
+      0.092,
+      0.159
+    ],
+    "within": {
+      "low": 0.659,
+      "high": 0.462
+    },
+    "gate_ok": true,
+    "ortho": 0.004
+  }
+]

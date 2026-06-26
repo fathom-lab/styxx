@@ -1,0 +1,80 @@
+<svg width="100%" viewBox="0 0 760 674" xmlns="http://www.w3.org/2000/svg" role="img" font-family="'JetBrains Mono','SFMono-Regular',ui-monospace,monospace">
+<rect width="760" height="674" fill="#1A0F26"/>
+<text x="56" y="46" fill="#C8A86B" font-size="12" letter-spacing="3">styxx · confound report card</text>
+<text x="56" y="86" fill="#F3EBE0" font-size="30" font-family="'Source Serif 4','Georgia',serif">which surface cue does each classifier ride?</text>
+<text x="56" y="110" fill="#9183A6" font-size="13">9 deployed text classifiers × 3 confounds, each construct-orthogonal by construction (n=200)</text>
+<rect x="56" y="132" width="11" height="11" rx="2" fill="#8FBF9F"/><text x="72" y="142" fill="#D0C5DA" font-size="11">ROBUST</text>
+<rect x="134.0" y="132" width="11" height="11" rx="2" fill="#E0A458"/><text x="150.0" y="142" fill="#D0C5DA" font-size="11">THRESHOLD-BIASED (rides)</text>
+<rect x="338.0" y="132" width="11" height="11" rx="2" fill="#D8736B"/><text x="354.0" y="142" fill="#D0C5DA" font-size="11">CONFOUND-DEPENDENT (broken)</text>
+<text x="370" y="186" fill="#F3EBE0" font-size="13" text-anchor="middle">length</text>
+<text x="518" y="186" fill="#F3EBE0" font-size="13" text-anchor="middle">exclamation !!!</text>
+<text x="666" y="186" fill="#F3EBE0" font-size="13" text-anchor="middle">ALL CAPS</text>
+<text x="56" y="226" fill="#F3EBE0" font-size="12">distilbert-sst2</text>
+<rect x="300" y="205" width="140" height="34" rx="5" fill="#E0A458" opacity="0.92"/>
+<text x="370" y="226" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">rides</text>
+<rect x="448" y="205" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="226" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="205" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="226" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="270" fill="#F3EBE0" font-size="12">nlptown ★</text>
+<rect x="300" y="249" width="140" height="34" rx="5" fill="#E0A458" opacity="0.92"/>
+<text x="370" y="270" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">rides</text>
+<rect x="448" y="249" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="270" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="249" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="270" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="314" fill="#F3EBE0" font-size="12">twitter-roberta</text>
+<rect x="300" y="293" width="140" height="34" rx="5" fill="#E0A458" opacity="0.92"/>
+<text x="370" y="314" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">rides</text>
+<rect x="448" y="293" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="314" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="293" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="314" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="358" fill="#F3EBE0" font-size="12">siebert-lg</text>
+<rect x="300" y="337" width="140" height="34" rx="5" fill="#E0A458" opacity="0.92"/>
+<text x="370" y="358" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">rides</text>
+<rect x="448" y="337" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="358" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="337" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="358" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="402" fill="#F3EBE0" font-size="12">distilbert-multiling</text>
+<rect x="300" y="381" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="370" y="402" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="448" y="381" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="402" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="381" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="666" y="402" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<text x="56" y="446" fill="#F3EBE0" font-size="12">toxic-bert</text>
+<rect x="300" y="425" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="370" y="446" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="448" y="425" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="446" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="425" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="446" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="490" fill="#F3EBE0" font-size="12">s-nlp toxicity</text>
+<rect x="300" y="469" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="370" y="490" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<rect x="448" y="469" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="518" y="490" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<rect x="596" y="469" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="666" y="490" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<text x="56" y="534" fill="#F3EBE0" font-size="12">toxic-comment</text>
+<rect x="300" y="513" width="140" height="34" rx="5" fill="#E0A458" opacity="0.92"/>
+<text x="370" y="534" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">rides</text>
+<rect x="448" y="513" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="518" y="534" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<rect x="596" y="513" width="140" height="34" rx="5" fill="#8FBF9F" opacity="0.92"/>
+<text x="666" y="534" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">ROBUST</text>
+<text x="56" y="578" fill="#F3EBE0" font-size="12">unbiased-toxic</text>
+<rect x="300" y="557" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="370" y="578" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<rect x="448" y="557" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="518" y="578" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<rect x="596" y="557" width="140" height="34" rx="5" fill="#D8736B" opacity="0.92"/>
+<text x="666" y="578" fill="#1A0F26" font-size="12" text-anchor="middle" font-weight="600">broken</text>
+<line x1="56" y1="420" x2="704" y2="420" stroke="#3A2B47" stroke-width="0.7" stroke-dasharray="2 2"/>
+<text x="56" y="170" fill="#5C4E70" font-size="10">5 sentiment · 4 toxicity</text>
+<line x1="56" y1="624" x2="704" y2="624" stroke="#3A2B47" stroke-width="0.5"/>
+<text x="56" y="644" fill="#9183A6" font-size="11">bias is cue-specific: length-riders stay robust to !!! and CAPS · toxic-bert is robust to all three · a full red row = weak on the boundary regardless of cue.</text>
+<text x="56" y="660" fill="#5C4E70" font-size="11">styxx.audit_confound · confounds injected by controlled transformation, label-orthogonal by construction (corr≈0, gate_ok verified)</text>
+</svg>
