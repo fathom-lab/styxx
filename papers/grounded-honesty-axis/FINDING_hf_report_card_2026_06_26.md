@@ -1,3 +1,11 @@
+> ⚠️ **CORRECTION (2026-06-27) — this result does not survive ground truth.** The verdicts below (4 sentiment
+> models "ride length", 2 toxicity models "confound-dependent/broken") were measured on a **frontier-generated**
+> corpus and **do not replicate on real human-labeled data.** On Yelp + Amazon reviews and Civil Comments
+> (human labels, length-matched), the length verdicts collapse to ~0 and the "broken" toxicity models classify
+> at AUC 0.996–0.998; a rule-based lexicon shows the same synthetic bias (+0.237). See
+> [FINDING_groundtruth_substrate_artifact_2026_06_27.md](FINDING_groundtruth_substrate_artifact_2026_06_27.md).
+> Read this as a record of a **synthetic-substrate artifact**, not a validated finding.
+
 # FINDING — Confound Report Card: 9 deployed HuggingFace text classifiers, audited for length bias
 
 *Tool: `styxx.audit_hf_model` (shipped in 7.22.0). Each model is scored on a validated,

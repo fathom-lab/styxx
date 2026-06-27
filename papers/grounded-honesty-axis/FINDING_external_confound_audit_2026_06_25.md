@@ -1,3 +1,9 @@
+> ⚠️ **CORRECTION (2026-06-27) — substrate artifact.** The distilbert-sst2 boundary length bias (+0.11) here
+> rests on a **frontier-generated** boundary corpus and **does not replicate on real human-labeled reviews**
+> (distilbert real coef −0.013 [−0.08, 0.05], ROBUST, not saturated). A rule-based lexicon shows the same
+> synthetic bias (+0.237), so the effect was generator style, not classifier behavior. See
+> [FINDING_groundtruth_substrate_artifact_2026_06_27.md](FINDING_groundtruth_substrate_artifact_2026_06_27.md).
+
 # FINDING — auditing REAL deployed classifiers: the default HF sentiment model is length-biased at the decision boundary
 
 **2026-06-25. Prereg: `PREREG_external_confound_audit_2026_06_25` (frozen before generating). Tool:

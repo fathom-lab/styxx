@@ -1,3 +1,9 @@
+> ⚠️ **CORRECTION (2026-06-27) — substrate artifact.** This battery is built on the same frontier-generated
+> corpus as the Confound Report Card, whose length verdicts **do not replicate on real human-labeled data**
+> (Yelp/Amazon/Civil Comments). The cue-specificity and ALL-CAPS-fragility claims here inherit that synthetic
+> substrate and are **untested against ground truth**. See
+> [FINDING_groundtruth_substrate_artifact_2026_06_27.md](FINDING_groundtruth_substrate_artifact_2026_06_27.md).
+
 # FINDING — Multi-confound battery: which surface cue does each classifier ride?
 
 *Extends the HF Confound Report Card from one confound (length) to three (length, exclamation density,

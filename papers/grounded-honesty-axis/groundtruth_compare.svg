@@ -1,0 +1,113 @@
+<svg width="100%" viewBox="0 0 860 714" xmlns="http://www.w3.org/2000/svg" role="img" font-family="'JetBrains Mono','SFMono-Regular',ui-monospace,monospace">
+<rect width="860" height="714" fill="#1A0F26"/>
+<text x="56" y="46" fill="#C8A86B" font-size="12" letter-spacing="3">styxx · ground-truth check</text>
+<text x="56" y="84" fill="#F3EBE0" font-size="29" font-family="'Source Serif 4','Georgia',serif">the length bias was in the corpus, not the classifier</text>
+<text x="56" y="108" fill="#9183A6" font-size="13">same audit, three substrates: a model-generated corpus vs two real human-labeled datasets (n=500 each, length-matched)</text>
+<circle cx="60" cy="134" r="6" fill="#E0A458"/><text x="72" y="138" fill="#D0C5DA" font-size="11">synthetic (model-generated)</text>
+<circle cx="300" cy="134" r="6" fill="#8FBF9F"/><text x="312" y="138" fill="#D0C5DA" font-size="11">Yelp · real (human stars)</text>
+<circle cx="520" cy="134" r="6" fill="#C4B5FD"/><text x="532" y="138" fill="#D0C5DA" font-size="11">Amazon · real (human stars)</text>
+<text x="330" y="172" fill="#5C4E70" font-size="11">length → score coefficient (0 = no length bias)</text>
+<line x1="394.2" y1="196" x2="394.2" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="394.2" y="584" fill="#9183A6" font-size="10" text-anchor="middle">-0.05</text>
+<line x1="458.3" y1="196" x2="458.3" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="458.3" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.00</text>
+<line x1="522.5" y1="196" x2="522.5" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="522.5" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.05</text>
+<line x1="586.7" y1="196" x2="586.7" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="586.7" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.10</text>
+<line x1="650.8" y1="196" x2="650.8" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="650.8" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.15</text>
+<line x1="715.0" y1="196" x2="715.0" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="715.0" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.20</text>
+<line x1="779.2" y1="196" x2="779.2" y2="568" stroke="#3A2B47" stroke-width="0.4" opacity="0.5"/>
+<text x="779.2" y="584" fill="#9183A6" font-size="10" text-anchor="middle">+0.25</text>
+<line x1="458.3" y1="192" x2="458.3" y2="570" stroke="#F3EBE0" stroke-width="1.1" stroke-dasharray="3 3" opacity="0.75"/>
+<text x="56" y="210" fill="#F3EBE0" font-size="13">twitter-roberta</text>
+<text x="56" y="226" fill="#9183A6" font-size="10">sentiment</text>
+<line x1="586.7" y1="206" x2="736.8" y2="206" stroke="#E0A458" stroke-width="2"/>
+<line x1="586.7" y1="202" x2="586.7" y2="210" stroke="#E0A458" stroke-width="2"/>
+<line x1="736.8" y1="202" x2="736.8" y2="210" stroke="#E0A458" stroke-width="2"/>
+<circle cx="662.4" cy="206" r="5" fill="#E0A458"/>
+<text x="745.8" y="209" fill="#E0A458" font-size="10">+0.159</text>
+<line x1="403.1" y1="222" x2="526.4" y2="222" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="403.1" y1="218" x2="403.1" y2="226" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="526.4" y1="218" x2="526.4" y2="226" stroke="#8FBF9F" stroke-width="2"/>
+<circle cx="466.0" cy="222" r="5" fill="#8FBF9F"/>
+<text x="535.4" y="225" fill="#8FBF9F" font-size="10">+0.006</text>
+<line x1="410.9" y1="238" x2="570.0" y2="238" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="410.9" y1="234" x2="410.9" y2="242" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="570.0" y1="234" x2="570.0" y2="242" stroke="#C4B5FD" stroke-width="2"/>
+<circle cx="491.7" cy="238" r="5" fill="#C4B5FD"/>
+<text x="579.0" y="241" fill="#C4B5FD" font-size="10">+0.026</text>
+<text x="56" y="290" fill="#F3EBE0" font-size="13">siebert-lg</text>
+<text x="56" y="306" fill="#9183A6" font-size="10">sentiment</text>
+<line x1="516.1" y1="286" x2="753.5" y2="286" stroke="#E0A458" stroke-width="2"/>
+<line x1="516.1" y1="282" x2="516.1" y2="290" stroke="#E0A458" stroke-width="2"/>
+<line x1="753.5" y1="282" x2="753.5" y2="290" stroke="#E0A458" stroke-width="2"/>
+<circle cx="639.3" cy="286" r="5" fill="#E0A458"/>
+<text x="762.5" y="289" fill="#E0A458" font-size="10">+0.141</text>
+<line x1="391.6" y1="302" x2="522.5" y2="302" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="391.6" y1="298" x2="391.6" y2="306" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="522.5" y1="298" x2="522.5" y2="306" stroke="#8FBF9F" stroke-width="2"/>
+<circle cx="457.1" cy="302" r="5" fill="#8FBF9F"/>
+<text x="531.5" y="305" fill="#8FBF9F" font-size="10">-0.001</text>
+<line x1="391.6" y1="318" x2="589.2" y2="318" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="391.6" y1="314" x2="391.6" y2="322" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="589.2" y1="314" x2="589.2" y2="322" stroke="#C4B5FD" stroke-width="2"/>
+<circle cx="494.3" cy="318" r="5" fill="#C4B5FD"/>
+<text x="598.2" y="321" fill="#C4B5FD" font-size="10">+0.028</text>
+<text x="56" y="370" fill="#F3EBE0" font-size="13">distilbert-sst2</text>
+<text x="56" y="386" fill="#9183A6" font-size="10">sentiment</text>
+<line x1="491.7" y1="366" x2="697.0" y2="366" stroke="#E0A458" stroke-width="2"/>
+<line x1="491.7" y1="362" x2="491.7" y2="370" stroke="#E0A458" stroke-width="2"/>
+<line x1="697.0" y1="362" x2="697.0" y2="370" stroke="#E0A458" stroke-width="2"/>
+<circle cx="594.4" cy="366" r="5" fill="#E0A458"/>
+<text x="706.0" y="369" fill="#E0A458" font-size="10">+0.106</text>
+<line x1="360.8" y1="382" x2="523.8" y2="382" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="360.8" y1="378" x2="360.8" y2="386" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="523.8" y1="378" x2="523.8" y2="386" stroke="#8FBF9F" stroke-width="2"/>
+<circle cx="441.7" cy="382" r="5" fill="#8FBF9F"/>
+<text x="532.8" y="385" fill="#8FBF9F" font-size="10">-0.013</text>
+<line x1="365.9" y1="398" x2="579.0" y2="398" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="365.9" y1="394" x2="365.9" y2="402" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="579.0" y1="394" x2="579.0" y2="402" stroke="#C4B5FD" stroke-width="2"/>
+<circle cx="468.6" cy="398" r="5" fill="#C4B5FD"/>
+<text x="588.0" y="401" fill="#C4B5FD" font-size="10">+0.008</text>
+<text x="56" y="450" fill="#F3EBE0" font-size="13">nlptown ★</text>
+<text x="56" y="466" fill="#9183A6" font-size="10">sentiment</text>
+<line x1="546.9" y1="446" x2="596.9" y2="446" stroke="#E0A458" stroke-width="2"/>
+<line x1="546.9" y1="442" x2="546.9" y2="450" stroke="#E0A458" stroke-width="2"/>
+<line x1="596.9" y1="442" x2="596.9" y2="450" stroke="#E0A458" stroke-width="2"/>
+<circle cx="572.5" cy="446" r="5" fill="#E0A458"/>
+<text x="605.9" y="449" fill="#E0A458" font-size="10">+0.089</text>
+<line x1="422.4" y1="462" x2="509.7" y2="462" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="422.4" y1="458" x2="422.4" y2="466" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="509.7" y1="458" x2="509.7" y2="466" stroke="#8FBF9F" stroke-width="2"/>
+<circle cx="466.0" cy="462" r="5" fill="#8FBF9F"/>
+<text x="518.7" y="465" fill="#8FBF9F" font-size="10">+0.006</text>
+<line x1="389.0" y1="478" x2="491.7" y2="478" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="389.0" y1="474" x2="389.0" y2="482" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="491.7" y1="474" x2="491.7" y2="482" stroke="#C4B5FD" stroke-width="2"/>
+<circle cx="440.4" cy="478" r="5" fill="#C4B5FD"/>
+<text x="500.7" y="481" fill="#C4B5FD" font-size="10">-0.014</text>
+<text x="56" y="530" fill="#F3EBE0" font-size="13">distilbert-multiling</text>
+<text x="56" y="546" fill="#9183A6" font-size="10">sentiment</text>
+<line x1="376.2" y1="526" x2="489.1" y2="526" stroke="#E0A458" stroke-width="2"/>
+<line x1="376.2" y1="522" x2="376.2" y2="530" stroke="#E0A458" stroke-width="2"/>
+<line x1="489.1" y1="522" x2="489.1" y2="530" stroke="#E0A458" stroke-width="2"/>
+<circle cx="435.2" cy="526" r="5" fill="#E0A458"/>
+<text x="498.1" y="529" fill="#E0A458" font-size="10">-0.018</text>
+<line x1="381.3" y1="542" x2="496.8" y2="542" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="381.3" y1="538" x2="381.3" y2="546" stroke="#8FBF9F" stroke-width="2"/>
+<line x1="496.8" y1="538" x2="496.8" y2="546" stroke="#8FBF9F" stroke-width="2"/>
+<circle cx="440.4" cy="542" r="5" fill="#8FBF9F"/>
+<text x="505.8" y="545" fill="#8FBF9F" font-size="10">-0.014</text>
+<line x1="418.6" y1="558" x2="555.9" y2="558" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="418.6" y1="554" x2="418.6" y2="562" stroke="#C4B5FD" stroke-width="2"/>
+<line x1="555.9" y1="554" x2="555.9" y2="562" stroke="#C4B5FD" stroke-width="2"/>
+<circle cx="487.9" cy="558" r="5" fill="#C4B5FD"/>
+<text x="564.9" y="561" fill="#C4B5FD" font-size="10">+0.023</text>
+<line x1="56" y1="656" x2="804" y2="656" stroke="#3A2B47" stroke-width="0.5"/>
+<text x="56" y="676" fill="#9183A6" font-size="11">4 models flagged biased on generated text are ROBUST on BOTH real datasets — the effect was generator style, not classifier behavior.</text>
+<text x="56" y="693" fill="#5C4E70" font-size="11">real corpora: gold human star labels (2★ vs 4★) · length-matched (CEM) · within-stratum AUC 0.81–0.96, not saturated.</text>
+</svg>

@@ -1,0 +1,73 @@
+{
+  "styxx": "7.21.1",
+  "dataset": "google/civil_comments (toxic>=0.5 vs non-toxic<=0.2, human annotator fraction)",
+  "n": 500,
+  "corr_label_length": -0.06831328347547906,
+  "bow_recoverable_auc": 0.73632,
+  "results": [
+    {
+      "model": "unitary/toxic-bert",
+      "synthetic_verdict": "ROBUST (control)",
+      "real_verdict": "ROBUST",
+      "coef": 0.008,
+      "ci": [
+        -0.039,
+        0.053
+      ],
+      "within": {
+        "low": 0.97,
+        "high": 0.978
+      },
+      "overall_auc": 0.974,
+      "gate_ok": true
+    },
+    {
+      "model": "s-nlp/roberta_toxicity_classifier",
+      "synthetic_verdict": "CONFOUND-DEPENDENT",
+      "real_verdict": "ROBUST",
+      "coef": -0.01,
+      "ci": [
+        -0.06,
+        0.038
+      ],
+      "within": {
+        "low": 0.996,
+        "high": 0.997
+      },
+      "overall_auc": 0.996,
+      "gate_ok": true
+    },
+    {
+      "model": "martin-ha/toxic-comment-model",
+      "synthetic_verdict": "THRESHOLD-BIASED (negligible)",
+      "real_verdict": "ROBUST",
+      "coef": -0.013,
+      "ci": [
+        -0.066,
+        0.036
+      ],
+      "within": {
+        "low": 0.964,
+        "high": 0.972
+      },
+      "overall_auc": 0.966,
+      "gate_ok": true
+    },
+    {
+      "model": "unitary/unbiased-toxic-roberta",
+      "synthetic_verdict": "CONFOUND-DEPENDENT",
+      "real_verdict": "ROBUST",
+      "coef": -0.02,
+      "ci": [
+        -0.05,
+        0.009
+      ],
+      "within": {
+        "low": 0.997,
+        "high": 0.999
+      },
+      "overall_auc": 0.998,
+      "gate_ok": true
+    }
+  ]
+}

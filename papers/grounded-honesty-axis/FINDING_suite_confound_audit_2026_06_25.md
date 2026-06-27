@@ -1,3 +1,11 @@
+> ⚠️ **CAVEAT (2026-06-27) — substrate-provisional.** This audit runs on the guardrails' own
+> **model-instantiated stance** corpora — the same synthetic-substrate family that, for HF classifiers,
+> manufactured a length bias absent on real data (see
+> [FINDING_groundtruth_substrate_artifact_2026_06_27.md](FINDING_groundtruth_substrate_artifact_2026_06_27.md)).
+> These per-guardrail "ride length" verdicts are **untested against natural human-labeled text** and partly
+> contradicted by the causal re-analysis ([FINDING_suite_causal_length_2026_06_24.md](FINDING_suite_causal_length_2026_06_24.md),
+> which clears 5/6). Treat as provisional pending a real-label re-test.
+
 # FINDING — suite-wide length-confound audit: 3 of 4 shipped styxx guardrails carry a length bias
 
 **2026-06-25. Prereg: `PREREG_suite_confound_audit_2026_06_25` (frozen before generating). Tool:

@@ -1,0 +1,41 @@
+[
+  {
+    "corpus": "synthetic",
+    "verdict": "THRESHOLD-BIASED",
+    "coef": 0.237,
+    "ci": [
+      0.2,
+      0.275
+    ],
+    "within_label_corr": {
+      "0": 0.7003801404228517,
+      "1": 0.6775952947662209
+    }
+  },
+  {
+    "corpus": "yelp",
+    "verdict": "ROBUST",
+    "coef": 0.023,
+    "ci": [
+      -0.013,
+      0.06
+    ],
+    "within_label_corr": {
+      "0": -0.043780633978676375,
+      "1": 0.17591061346783593
+    }
+  },
+  {
+    "corpus": "amazon",
+    "verdict": "ROBUST",
+    "coef": -0.011,
+    "ci": [
+      -0.046,
+      0.023
+    ],
+    "within_label_corr": {
+      "0": -0.022959694327446552,
+      "1": -0.03535835971798769
+    }
+  }
+]

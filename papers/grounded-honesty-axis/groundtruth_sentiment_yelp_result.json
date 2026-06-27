@@ -1,0 +1,89 @@
+{
+  "styxx": "7.21.1",
+  "dataset": "yelp_review_full (2* vs 4*, human stars=gold)",
+  "n": 500,
+  "corr_label_length": -0.18859741609213126,
+  "bow_recoverable_auc": 0.822544,
+  "results": [
+    {
+      "model": "distilbert-base-uncased-finetuned-sst-2-english",
+      "synthetic_verdict": "synthetic: THRESHOLD-BIASED (control)",
+      "real_verdict": "ROBUST",
+      "coef": -0.013,
+      "ci": [
+        -0.076,
+        0.051
+      ],
+      "within": {
+        "low": 0.879,
+        "high": 0.94
+      },
+      "gate_ok": true,
+      "ortho": -0.189
+    },
+    {
+      "model": "nlptown/bert-base-multilingual-uncased-sentiment",
+      "synthetic_verdict": "synthetic: THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": 0.006,
+      "ci": [
+        -0.028,
+        0.04
+      ],
+      "within": {
+        "low": 0.912,
+        "high": 0.945
+      },
+      "gate_ok": true,
+      "ortho": -0.189
+    },
+    {
+      "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+      "synthetic_verdict": "synthetic: THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": 0.006,
+      "ci": [
+        -0.043,
+        0.053
+      ],
+      "within": {
+        "low": 0.921,
+        "high": 0.962
+      },
+      "gate_ok": true,
+      "ortho": -0.189
+    },
+    {
+      "model": "siebert/sentiment-roberta-large-english",
+      "synthetic_verdict": "synthetic: THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": -0.001,
+      "ci": [
+        -0.052,
+        0.05
+      ],
+      "within": {
+        "low": 0.956,
+        "high": 0.978
+      },
+      "gate_ok": true,
+      "ortho": -0.189
+    },
+    {
+      "model": "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
+      "synthetic_verdict": "synthetic: ROBUST",
+      "real_verdict": "ROBUST",
+      "coef": -0.014,
+      "ci": [
+        -0.06,
+        0.03
+      ],
+      "within": {
+        "low": 0.841,
+        "high": 0.888
+      },
+      "gate_ok": true,
+      "ortho": -0.189
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "styxx": "7.21.1",
+  "dataset": "SetFit/amazon_reviews_multi_en (2* vs 4*, human stars=gold)",
+  "n": 500,
+  "corr_label_length": -0.17161546553850818,
+  "bow_recoverable_auc": 0.80856,
+  "results": [
+    {
+      "model": "distilbert-base-uncased-finetuned-sst-2-english",
+      "synthetic_verdict": "THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": 0.008,
+      "ci": [
+        -0.072,
+        0.094
+      ],
+      "within": {
+        "low": 0.861,
+        "high": 0.84
+      },
+      "gate_ok": true
+    },
+    {
+      "model": "nlptown/bert-base-multilingual-uncased-sentiment",
+      "synthetic_verdict": "THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": -0.014,
+      "ci": [
+        -0.054,
+        0.026
+      ],
+      "within": {
+        "low": 0.911,
+        "high": 0.917
+      },
+      "gate_ok": true
+    },
+    {
+      "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+      "synthetic_verdict": "THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": 0.026,
+      "ci": [
+        -0.037,
+        0.087
+      ],
+      "within": {
+        "low": 0.903,
+        "high": 0.871
+      },
+      "gate_ok": true
+    },
+    {
+      "model": "siebert/sentiment-roberta-large-english",
+      "synthetic_verdict": "THRESHOLD-BIASED",
+      "real_verdict": "ROBUST",
+      "coef": 0.028,
+      "ci": [
+        -0.052,
+        0.102
+      ],
+      "within": {
+        "low": 0.926,
+        "high": 0.862
+      },
+      "gate_ok": true
+    },
+    {
+      "model": "lxyuan/distilbert-base-multilingual-cased-sentiments-student",
+      "synthetic_verdict": "ROBUST",
+      "real_verdict": "ROBUST",
+      "coef": 0.023,
+      "ci": [
+        -0.031,
+        0.076
+      ],
+      "within": {
+        "low": 0.852,
+        "high": 0.813
+      },
+      "gate_ok": true
+    }
+  ]
+}
