@@ -1,5 +1,13 @@
 # NOTE — how often does a generated eval corpus carry the length-confound fingerprint? (program-scale)
 
+> **⚠ CORRECTED same day by [NOTE_field_eval_audit_2026_06_29](NOTE_field_eval_audit_2026_06_29.md).** The
+> "generated 75% vs natural 40%" gap below does **not** hold up: on length-rich REAL benchmarks (IMDB 0.376,
+> Yelp 0.271, Civil Comments 0.275, n=800) the within-corpus fingerprint flags at magnitudes comparable to
+> generated corpora. The gap was panel composition (short natural statements) + statistical power, not a
+> provenance signal. Read the prevalence below as *"where length↔construct coupling lives,"* **not** *"where a
+> generator manufactured it"* — the fingerprint is a coupling detector, not an artifact discriminator. Ground
+> truth (`validate_against_ground_truth`) is the only discriminator.
+
 *fathom-lab · 2026-06-29 · broadens [FINDING_groundtruth_substrate_artifact_2026_06_27](FINDING_groundtruth_substrate_artifact_2026_06_27.md)
 + [NOTE_manufactured_confound_2026_06_29](NOTE_manufactured_confound_2026_06_29.md) from "we audited two corpora"
 to the whole program. Repro: `program_synthetic_audit_repro.py` (scikit-learn only; no model download, no network).*

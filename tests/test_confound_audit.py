@@ -135,7 +135,7 @@ def test_fingerprint_surfaced_in_verdict_end_to_end():
     assert rep.verdict.startswith(("THRESHOLD-BIASED", "CONFOUND-DEPENDENT"))
     assert rep.synthetic_artifact_warning is True
     assert rep.lexical_confound_corr is not None and rep.lexical_confound_p < 0.05
-    assert "the artifact's fingerprint" in rep.verdict
+    assert "NOT diagnostic" in rep.verdict   # corroborating coupling, not proof of an artifact
 
 
 def test_lexical_entanglement_robust_to_confound_sorted_input():

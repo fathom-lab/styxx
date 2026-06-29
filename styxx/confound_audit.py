@@ -105,17 +105,18 @@ def _boot_coef_ci(D: np.ndarray, S: np.ndarray, col: int, reps: int = 2000, seed
 
 def _lexical_entanglement(texts: List[str], y: np.ndarray, C: np.ndarray, *,
                           seed: int = 0, reps: int = ENTANGLE_REPS) -> Tuple[Optional[float], Optional[float]]:
-    """The artifact's FINGERPRINT, model-free. Fit a bag-of-words label classifier (a "dumb
-    word-list") and take its out-of-fold log-odds MARGIN as a continuous lexical-construct
-    intensity (the margin doesn't saturate, so it keeps within-label variance). Then ask: WITHIN
-    each label class, does that lexical intensity ride the confound? A generator that was asked for
-    e.g. "short negative / long positive" co-varies construct vocabulary with the confound, so it
-    does; on real data it does not. Significance via a within-label permutation null — no magic
-    threshold. Returns ``(corr, p)`` or ``(None, None)`` if sklearn/text is unavailable.
+    """A model-free coupling probe. Fit a bag-of-words label classifier (a "dumb word-list") and take
+    its out-of-fold log-odds MARGIN as a continuous lexical-construct intensity (the margin doesn't
+    saturate, so it keeps within-label variance). Then ask: WITHIN each label class, does that lexical
+    intensity ride the confound? Significance via a within-label permutation null — no magic threshold.
+    Returns ``(corr, p)`` or ``(None, None)`` if sklearn/text is unavailable.
 
-    This generalizes the VADER probe that refuted our own Confound Report Card: a label-recovering
-    bag-of-words is NOT a validity control — a high recoverability that *rides the confound* is
-    exactly what a generator-injected artifact looks like.
+    Reads a clean null when construct and confound are orthogonal by construction, so it is a valid
+    *coupling detector*. But it is **corroborating, NOT diagnostic of an artifact**: real human-labeled
+    benchmarks (IMDB/Yelp/Civil Comments) show this coupling at magnitudes comparable to generated
+    corpora (field audit 2026-06-29), so a high value does NOT prove a generator manufactured it.
+    It tells you a label-recovering bag-of-words is not a validity control; only ground-truth
+    validation (see :func:`validate_against_ground_truth`) discriminates manufactured from real coupling.
     """
     try:
         from sklearn.feature_extraction.text import TfidfVectorizer
@@ -185,8 +186,9 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
     refit). It separates a degenerate corpus (refit ~chance -> INCONCLUSIVE) from one where the construct is in
     the text. **It is NOT a validity control:** a high refit AUC can mean "the construct is in the words" OR "a
     confound-correlated lexical signal is in the words" — and on a generator-built corpus the latter is common.
-    A recovering bag-of-words is the artifact's *fingerprint*, not proof of orthogonality (this is the failure
-    that refuted our own report card). Use ``check_entanglement`` (default on) and ``corpus_provenance`` below.
+    A recovering bag-of-words is NOT proof of orthogonality — it shows up in real corpora too (this is the
+    failure that refuted our own report card). Use ``check_entanglement`` (default on) and ``corpus_provenance``
+    below; the decisive test is ground truth, not any within-corpus signal.
 
     ``corpus_provenance`` ∈ {"synthetic"/"llm_generated", "ground_truth"/"real"/"human_labeled",
     "unspecified"}: where the corpus came from. On any non-ground-truth corpus an alarming verdict
@@ -194,7 +196,7 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
     manufactured the very confound being measured. Pass ``"ground_truth"`` once you have validated on real
     human-labeled, length-matched data (see :func:`validate_against_ground_truth`) to clear it.
 
-    ``check_entanglement`` (default True): run the model-free fingerprint — a within-label permutation test of
+    ``check_entanglement`` (default True): run the model-free coupling probe — a within-label permutation test of
     whether a label-trained bag-of-words margin itself rides the confound (see :func:`_lexical_entanglement`).
     Reported as ``lexical_confound_corr`` / ``lexical_confound_p``; needs the row ``text`` + sklearn.
     """
@@ -307,8 +309,9 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
         prov_clause = ("is LLM-GENERATED" if prov in _SYNTHETIC_PROV
                        else "is of UNSPECIFIED provenance (treat as synthetic until validated)")
         if lex_corr is not None and lex_p is not None and lex_p < 0.05:
-            fp = (f"A label-trained bag-of-words margin itself rides '{confound}' within class "
-                  f"(lexical entanglement corr={lex_corr}, perm p={lex_p}) — the artifact's fingerprint.")
+            fp = (f"A label-trained bag-of-words margin rides '{confound}' within class (lexical coupling "
+                  f"corr={lex_corr}, perm p={lex_p}) — consistent with entanglement, but NOT diagnostic: real "
+                  f"corpora show this coupling too, so it cannot by itself prove an artifact.")
         elif lex_corr is not None:
             fp = (f"The lexical-entanglement probe was weak (corr={lex_corr}, perm p={lex_p}) — underpowered, "
                   f"not reassurance.")
@@ -316,8 +319,8 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
             fp = "The lexical-entanglement probe was unavailable (provide row 'text' + sklearn to run it)."
         verdict += (
             f"  ⚠ SYNTHETIC-ARTIFACT RISK — this verdict rests on a corpus that {prov_clause}. {fp} A generator "
-            f"can manufacture the very '{confound}' effect under test (a label-recovering bag-of-words is its "
-            f"FINGERPRINT, not a validity control). Validate on length-matched REAL human-labeled data before "
+            f"can manufacture the very '{confound}' effect under test (a label-recovering bag-of-words is not a "
+            f"validity control). Validate on length-matched REAL human-labeled data before "
             f"trusting it — styxx.validate_against_ground_truth(report, real_rows, ...).")
 
     return ConfoundAuditReport(

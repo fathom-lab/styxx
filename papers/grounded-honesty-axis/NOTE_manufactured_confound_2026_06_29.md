@@ -1,5 +1,11 @@
 # NOTE — two ways a confound gets manufactured (deepening the substrate-artifact thesis)
 
+> **Update same day ([NOTE_field_eval_audit_2026_06_29](NOTE_field_eval_audit_2026_06_29.md)):** the
+> within-label coupling in Part A also appears in REAL benchmarks (IMDB/Yelp/Civil Comments) at comparable
+> magnitude, so it is *corroborating, not diagnostic* of a generator artifact. Part A still correctly locates
+> the entangled vocabulary *in this synthetic corpus*, and Part B's validator-artifact (a false positive under
+> a constructed TRUE null) stands — but no within-corpus signal proves provenance. Ground truth is the gate.
+
 *fathom-lab · 2026-06-29 · extends [FINDING_groundtruth_substrate_artifact_2026_06_27](FINDING_groundtruth_substrate_artifact_2026_06_27.md).
 Repro: `manufactured_confound_repro.py` (numpy + scikit-learn only; no model download, no network).*
 
