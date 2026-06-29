@@ -29,6 +29,12 @@ positive-discriminative tokens — and any reader of the words (a dumb lexicon, 
 long ⇒ positive. The "orthogonal" grid was lexically **non-orthogonal**; that is the concrete origin of the
 report card's phantom "longer reviews score more positive."
 
+**Scope (construct-specific).** Re-running this analysis on the bundled *toxicity* corpus gives a near-null
+net (+0.08) — the entangled tokens are weak hedges (`sure`, `certainly`, `if`, `you`). This is consistent
+with the parent finding's split: toxicity's artifact was **OOD-ambiguity** (the generator's "ambiguous toxic"
+text is off-distribution for real classifiers), *not* length entanglement. So Part A explains the **sentiment**
+phantom specifically; the second-order mechanism below is the construct-general one.
+
 ## B — the validator manufactures the confound via its representation (second-order)
 
 We then audit the **auditor**. Build a TRUE NULL: synthetic texts where the construct-word count is drawn

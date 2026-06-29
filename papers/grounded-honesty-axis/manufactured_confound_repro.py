@@ -54,11 +54,11 @@ def _perm_p(margin, y, C, obs, reps=400, seed=0):
     return ge / (reps + 1)
 
 
-def part_a():
+def part_a(fn="confound_boundary_sentiment.jsonl", label="sentiment (label1=positive)"):
     print("=" * 70)
-    print("PART A — the generator's entangled vocabulary (bundled sentiment corpus)")
+    print(f"PART A — the generator's entangled vocabulary [{label}]")
     print("=" * 70)
-    rows = [json.loads(l) for l in (DATA / "confound_boundary_sentiment.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    rows = [json.loads(l) for l in (DATA / fn).read_text(encoding="utf-8").splitlines() if l.strip()]
     texts = [r["text"] for r in rows]
     y = np.array([r["label"] for r in rows])
     C = np.array([r["confound"] for r in rows], float)
@@ -132,5 +132,6 @@ def part_b():
 
 
 if __name__ == "__main__":
-    part_a()
+    part_a("confound_boundary_sentiment.jsonl", "sentiment (label1=positive)")
+    part_a("confound_boundary_toxicity.jsonl", "toxicity (label1=toxic) — scope check, expect near-null")
     part_b()
