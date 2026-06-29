@@ -1462,6 +1462,12 @@ def cmd_audit_model(args):
         print("    fix                  report.guard(score, confound) -- deployment-side, validated OOS")
     elif tag.startswith("CONFOUND"):
         print("    fix                  retrain/reground -- the score needs the confound to discriminate")
+    if report.synthetic_artifact_warning:
+        lc, lp = report.lexical_confound_corr, report.lexical_confound_p
+        ent = f" (lexical entanglement corr={lc}, perm p={lp})" if lc is not None else ""
+        print(f"    [!] SYNTHETIC-ARTIFACT RISK  bundled boundary corpus is LLM-generated{ent}")
+        print( "        a generator can manufacture this very effect -- validate before trusting:")
+        print( "        styxx.validate_against_ground_truth(report, real_human_labeled_rows)")
     print()
     return 0
 

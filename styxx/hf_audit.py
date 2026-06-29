@@ -3,9 +3,16 @@
 
 ``audit_confound`` answers *is this score riding a confound?* but it asks you to bring an
 orthogonal corpus and wire up the scoring. For the two most common cases — sentiment and
-toxicity classifiers — styxx ships a *validated, length-orthogonal boundary corpus* (the concept
-and response-length are decorrelated by construction; a plain bag-of-words recovers the concept,
-so a length-biased verdict means the model's SCORE rides length, not that the signal is missing).
+toxicity classifiers — styxx ships a length-orthogonal boundary corpus (label⊥length by
+construction) so the whole pipeline collapses into a single call.
+
+**These bundled corpora are LLM-GENERATED**, so every alarming verdict from this function carries a
+SYNTHETIC-ARTIFACT warning (``report.synthetic_artifact_warning``): a generator can entangle the
+confound with the construct vocabulary and manufacture the very bias being measured — this is what
+refuted our own Confound Report Card (see ``papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact``).
+Treat a flag here as a HYPOTHESIS and confirm it on real, human-labeled, length-matched data with
+``styxx.validate_against_ground_truth`` before trusting it.
+
 This wraps the whole pipeline into a single call::
 
     from styxx import audit_hf_model
@@ -25,9 +32,10 @@ heads), computes the bag-of-words construct-recoverability ceiling, and runs ``a
 Requires ``transformers`` + ``torch`` (``pip install 'styxx[hf]'``) — unless you pass your own
 ``score_fn``, in which case only the (base) styxx install is needed.
 
-Honest scope: single frontier generator, single seed, n=200, ONE confound (length); the concept is a
-model-instantiated stance verified by a BoW refit, not gold human labels; verdicts are read at the
-decision boundary (confounds hide at saturation). For any other construct, build your own grid with
+Honest scope: single frontier generator, single seed, n=200, ONE confound (length); labels are
+generator-instantiated, NOT gold human labels (a BoW refit recovers the label, but recoverability is
+not orthogonality — it can be the artifact's fingerprint); verdicts are read at the decision boundary
+(confounds hide at saturation). For any other construct, build your own grid with
 ``styxx.build_confound_grid`` and call ``styxx.audit_confound`` directly.
 """
 from __future__ import annotations
@@ -205,5 +213,5 @@ def audit_hf_model(
     refit = _bow_recoverable_auc(rows)
     return audit_confound(
         rows, scores=scores, instrument=model_id, confound="log_words",
-        construct_recoverable_auc=refit,
+        construct_recoverable_auc=refit, corpus_provenance="synthetic",
     )

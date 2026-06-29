@@ -38,6 +38,10 @@ from sklearn.model_selection import KFold
 
 ORTHO_BAR = 0.20   # |corr(label, confound)| must be <= this for the grid to count as orthogonal
 AUC_BAR = 0.70     # within-stratum discrimination floor to call the instrument "robust"
+ENTANGLE_REPS = 1000   # within-label permutation reps for the lexical-entanglement null
+#: provenance values that mean "this corpus carries gold human labels" -> suppress the artifact warning.
+_GROUND_TRUTH_PROV = {"ground_truth", "ground-truth", "real", "human", "human_labeled", "human-labeled", "gold"}
+_SYNTHETIC_PROV = {"synthetic", "llm_generated", "llm-generated", "generated", "model_generated"}
 
 
 @dataclass
@@ -61,6 +65,13 @@ class ConfoundAuditReport:
     guard_slope: float = 0.0
     guard_ref: float = 0.0
     construct_recoverable_auc: Optional[float] = None
+    corpus_provenance: str = "unspecified"
+    #: within-label |corr(BoW-margin, confound)| — does a dumb word-list itself ride the confound?
+    lexical_confound_corr: Optional[float] = None
+    #: permutation p-value for ``lexical_confound_corr`` (within-label shuffle null). <0.05 = entangled.
+    lexical_confound_p: Optional[float] = None
+    #: True when an alarming verdict rests on a corpus that has NOT been ground-truth-validated.
+    synthetic_artifact_warning: bool = False
 
     def guard(self, raw_score: float, confound_value: float) -> float:
         """Operating-point-preserving confound correction: at the reference confound level the score is
@@ -92,11 +103,77 @@ def _boot_coef_ci(D: np.ndarray, S: np.ndarray, col: int, reps: int = 2000, seed
     return (round(float(np.percentile(out, 2.5)), 3), round(float(np.percentile(out, 97.5)), 3))
 
 
+def _lexical_entanglement(texts: List[str], y: np.ndarray, C: np.ndarray, *,
+                          seed: int = 0, reps: int = ENTANGLE_REPS) -> Tuple[Optional[float], Optional[float]]:
+    """The artifact's FINGERPRINT, model-free. Fit a bag-of-words label classifier (a "dumb
+    word-list") and take its out-of-fold log-odds MARGIN as a continuous lexical-construct
+    intensity (the margin doesn't saturate, so it keeps within-label variance). Then ask: WITHIN
+    each label class, does that lexical intensity ride the confound? A generator that was asked for
+    e.g. "short negative / long positive" co-varies construct vocabulary with the confound, so it
+    does; on real data it does not. Significance via a within-label permutation null — no magic
+    threshold. Returns ``(corr, p)`` or ``(None, None)`` if sklearn/text is unavailable.
+
+    This generalizes the VADER probe that refuted our own Confound Report Card: a label-recovering
+    bag-of-words is NOT a validity control — a high recoverability that *rides the confound* is
+    exactly what a generator-injected artifact looks like.
+    """
+    try:
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.model_selection import StratifiedKFold, cross_val_predict
+        from sklearn.pipeline import make_pipeline
+    except ImportError:  # pragma: no cover — sklearn is a base dep, but stay graceful
+        return None, None
+    texts = [t if isinstance(t, str) else "" for t in texts]
+    if len(np.unique(y)) < 2 or len(texts) < 20 or C.std() == 0:
+        return None, None
+    try:
+        # The representation must be LENGTH-INVARIANT, else the probe flags its own artifact: L2-normalized
+        # tf-idf dilutes construct-word weight as filler grows, so the margin mechanically tracks length and
+        # the test false-positives on any length-varying corpus (verified: a true-null sorted corpus hits
+        # p<0.005 under l2). binary + norm=None keys on word PRESENCE, decoupling the margin from length, so
+        # only genuine construct<->confound vocabulary entanglement survives.
+        # SHUFFLED, seeded folds also matter: an unshuffled split lets a confound-ORDERED corpus leak row
+        # order into the (fixed) OOF margin, which the permutation null cannot correct.
+        margin = np.asarray(cross_val_predict(
+            make_pipeline(TfidfVectorizer(min_df=2, binary=True, norm=None), LogisticRegression(max_iter=2000)),
+            texts, y, cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=seed),
+            method="decision_function"), float)
+    except Exception:  # pragma: no cover — degenerate corpora (too few docs/features)
+        return None, None
+
+    def _wl_corr(cvec: np.ndarray) -> float:
+        cs = []
+        for cls in (0, 1):
+            m = (y == cls)
+            if m.sum() < 3 or np.std(cvec[m]) == 0 or np.std(margin[m]) == 0:
+                continue
+            cs.append(abs(float(np.corrcoef(margin[m], cvec[m])[0, 1])))
+        return float(np.mean(cs)) if cs else float("nan")
+
+    obs = _wl_corr(C)
+    if math.isnan(obs):
+        return None, None
+    rng = np.random.default_rng(seed)
+    ge = 1  # +1 = include the observed (standard permutation-p correction)
+    for _ in range(reps):
+        Cb = C.copy()
+        for cls in (0, 1):
+            idx = np.where(y == cls)[0]
+            Cb[idx] = rng.permutation(C[idx])
+        nb = _wl_corr(Cb)
+        if not math.isnan(nb) and nb >= obs:
+            ge += 1
+    return round(obs, 3), round(ge / (reps + 1), 4)
+
+
 def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str], float]] = None, *,
                    scores: Optional[List[float]] = None, label_key: str = "label",
                    confound_key: str = "confound", text_key: str = "text",
                    instrument: str = "instrument", confound: str = "confound",
-                   construct_recoverable_auc: Optional[float] = None) -> ConfoundAuditReport:
+                   construct_recoverable_auc: Optional[float] = None,
+                   corpus_provenance: str = "unspecified",
+                   check_entanglement: bool = True) -> ConfoundAuditReport:
     """Audit whether ``score_fn`` (or precomputed ``scores``) rides ``confound`` rather than the construct.
 
     rows: each dict has the construct ``label`` (0/1), the ``confound`` value (numeric), and the ``text``.
@@ -104,12 +181,22 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
     The corpus should already decorrelate label and confound (use :func:`build_confound_grid`); the report's
     ``gate_ok`` reports whether that orthogonality actually held.
 
-    ``construct_recoverable_auc`` (optional, RECOMMENDED): the CV-AUC of a fresh refit on this corpus's text
-    (e.g. a BoW or feature refit). It disambiguates a CONFOUND-DEPENDENT verdict — if the construct is
-    recoverable from the text (refit AUC high) but the instrument's score isn't tracking it, the INSTRUMENT is
-    broken (keying on the confound); if the construct is NOT recoverable (refit AUC ~chance), the corpus didn't
-    instantiate it and the audit is INCONCLUSIVE. Without it, this tool audits the SCORE only and cannot tell
-    a broken instrument from a degenerate corpus.
+    ``construct_recoverable_auc`` (optional): the CV-AUC of a fresh refit on this corpus's text (e.g. a BoW
+    refit). It separates a degenerate corpus (refit ~chance -> INCONCLUSIVE) from one where the construct is in
+    the text. **It is NOT a validity control:** a high refit AUC can mean "the construct is in the words" OR "a
+    confound-correlated lexical signal is in the words" — and on a generator-built corpus the latter is common.
+    A recovering bag-of-words is the artifact's *fingerprint*, not proof of orthogonality (this is the failure
+    that refuted our own report card). Use ``check_entanglement`` (default on) and ``corpus_provenance`` below.
+
+    ``corpus_provenance`` ∈ {"synthetic"/"llm_generated", "ground_truth"/"real"/"human_labeled",
+    "unspecified"}: where the corpus came from. On any non-ground-truth corpus an alarming verdict
+    (THRESHOLD-BIASED / CONFOUND-DEPENDENT) carries a SYNTHETIC-ARTIFACT warning — the generator may have
+    manufactured the very confound being measured. Pass ``"ground_truth"`` once you have validated on real
+    human-labeled, length-matched data (see :func:`validate_against_ground_truth`) to clear it.
+
+    ``check_entanglement`` (default True): run the model-free fingerprint — a within-label permutation test of
+    whether a label-trained bag-of-words margin itself rides the confound (see :func:`_lexical_entanglement`).
+    Reported as ``lexical_confound_corr`` / ``lexical_confound_p``; needs the row ``text`` + sklearn.
     """
     if scores is None:
         if score_fn is None:
@@ -204,6 +291,35 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
                    f"score effect is not significant (coef {coef:+.2f}, CI {list(coef_ci)}); swing "
                    f"{harm['max_swing']:.0%}. No confound problem detected.")
 
+    # --- substrate gate: a verdict on a non-ground-truth corpus may be a generator artifact ---
+    prov = (corpus_provenance or "unspecified").strip().lower()
+    is_ground_truth = prov in _GROUND_TRUTH_PROV
+    alarming = verdict.startswith("THRESHOLD") or verdict.startswith("CONFOUND-DEPENDENT")
+    artifact_warning = bool(alarming and not is_ground_truth)
+    # the permutation probe only matters when we're about to warn — skip it (and its ~0.3s cost) for
+    # ROBUST / INCONCLUSIVE / ground-truth audits, where its result is never surfaced.
+    lex_corr = lex_p = None
+    if check_entanglement and artifact_warning:
+        texts = [str(r.get(text_key, "")) for r in rows]
+        if any(texts):
+            lex_corr, lex_p = _lexical_entanglement(texts, y, C)
+    if artifact_warning:
+        prov_clause = ("is LLM-GENERATED" if prov in _SYNTHETIC_PROV
+                       else "is of UNSPECIFIED provenance (treat as synthetic until validated)")
+        if lex_corr is not None and lex_p is not None and lex_p < 0.05:
+            fp = (f"A label-trained bag-of-words margin itself rides '{confound}' within class "
+                  f"(lexical entanglement corr={lex_corr}, perm p={lex_p}) — the artifact's fingerprint.")
+        elif lex_corr is not None:
+            fp = (f"The lexical-entanglement probe was weak (corr={lex_corr}, perm p={lex_p}) — underpowered, "
+                  f"not reassurance.")
+        else:
+            fp = "The lexical-entanglement probe was unavailable (provide row 'text' + sklearn to run it)."
+        verdict += (
+            f"  ⚠ SYNTHETIC-ARTIFACT RISK — this verdict rests on a corpus that {prov_clause}. {fp} A generator "
+            f"can manufacture the very '{confound}' effect under test (a label-recovering bag-of-words is its "
+            f"FINGERPRINT, not a validity control). Validate on length-matched REAL human-labeled data before "
+            f"trusting it — styxx.validate_against_ground_truth(report, real_rows, ...).")
+
     return ConfoundAuditReport(
         instrument=instrument, confound=confound, n=n, gate_ok=gate_ok, orthogonality_corr=round(ortho, 3),
         overall_auc=round(overall_auc, 3), within_stratum_auc={"low": round(auc_low, 3), "high": round(auc_high, 3)},
@@ -211,7 +327,9 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
         guard_auc_raw=round(overall_auc, 3), guard_auc_adj_oos=round(auc_adj, 3),
         guard_disparity_raw=round(disp_raw, 3), guard_disparity_adj_oos=round(disp_adj, 3),
         verdict=verdict, guard_slope=slope, guard_ref=ref,
-        construct_recoverable_auc=construct_recoverable_auc)
+        construct_recoverable_auc=construct_recoverable_auc,
+        corpus_provenance=prov, lexical_confound_corr=lex_corr, lexical_confound_p=lex_p,
+        synthetic_artifact_warning=artifact_warning)
 
 
 def build_confound_grid(items: List[str], pos_prompt: str, neg_prompt: str,
@@ -237,3 +355,76 @@ def build_confound_grid(items: List[str], pos_prompt: str, neg_prompt: str,
                 rows.append({"text": text, "label": label, "confound": float(confound_value_fn(text)),
                              "confound_level": level, "item": it})
     return rows
+
+
+def cem_length_match(rows: List[Dict[str, Any]], *, confound_key: str = "confound",
+                     label_key: str = "label", bins: int = 8, seed: int = 0) -> List[Dict[str, Any]]:
+    """Coarsened-exact-matching on the confound: subsample so the confound distribution is balanced
+    across the two label classes. This is how you make a REAL corpus confound-orthogonal *by
+    selection* (no generation) — the protocol that refuted our synthetic report card. Returns the
+    matched subset (orthogonality verified by the audit's own ``gate_ok``)."""
+    C = np.asarray([float(r[confound_key]) for r in rows], float)
+    y = np.asarray([int(r[label_key]) for r in rows])
+    if len(np.unique(y)) < 2:
+        return list(rows)
+    edges = np.quantile(C, np.linspace(0, 1, bins + 1))
+    edges[-1] = np.inf
+    binid = np.clip(np.digitize(C, edges[1:-1]), 0, bins - 1)
+    rng = np.random.default_rng(seed)
+    keep: List[int] = []
+    for b in range(bins):
+        i0 = np.where((binid == b) & (y == 0))[0]
+        i1 = np.where((binid == b) & (y == 1))[0]
+        k = min(len(i0), len(i1))
+        if k:
+            keep += list(rng.choice(i0, k, replace=False)) + list(rng.choice(i1, k, replace=False))
+    keep.sort()
+    return [rows[i] for i in keep]
+
+
+def validate_against_ground_truth(synthetic_report: ConfoundAuditReport, real_rows: List[Dict[str, Any]],
+                                   score_fn: Optional[Callable[[str], float]] = None, *,
+                                   scores: Optional[List[float]] = None, match: bool = True,
+                                   label_key: str = "label", confound_key: str = "confound",
+                                   text_key: str = "text", **audit_kwargs) -> Tuple[ConfoundAuditReport, str]:
+    """The robust gate the report-card refutation established: re-run the SAME audit on REAL
+    human-labeled data (length-matched by CEM) and reconcile it with the synthetic verdict.
+
+    ``real_rows``: rows with GOLD human labels (``label`` / ``confound`` / ``text``). Provide
+    ``score_fn`` (re-scored on each row of the audited corpus) or, only when ``match=False``, precomputed
+    ``scores`` aligned 1:1 with ``real_rows``. Precomputed ``scores`` are rejected when ``match=True``
+    because CEM subsets/reorders the rows. Returns ``(real_report, reconciliation)``. If the synthetic
+    corpus flagged a confound but real data clears it, the synthetic verdict was an artifact — but an
+    INCONCLUSIVE real audit (saturated / non-orthogonal / construct-not-recoverable) refutes nothing.
+    """
+    if match and scores is not None:
+        raise ValueError("precomputed `scores` can't be realigned after CEM matching — pass `score_fn` "
+                         "(re-scored on the matched rows) or set match=False with scores aligned to real_rows.")
+    rows = cem_length_match(real_rows, confound_key=confound_key, label_key=label_key) if match else list(real_rows)
+    call = dict(label_key=label_key, confound_key=confound_key, text_key=text_key,
+                instrument=synthetic_report.instrument, confound=synthetic_report.confound)
+    call.update(audit_kwargs)                 # caller overrides (e.g. confound="c") win...
+    call["corpus_provenance"] = "ground_truth"  # ...except provenance, which is forced
+    real = audit_confound(rows, score_fn=score_fn, scores=scores, **call)
+    s_alarm = synthetic_report.verdict.startswith(("THRESHOLD", "CONFOUND-DEPENDENT"))
+    r_alarm = real.verdict.startswith(("THRESHOLD", "CONFOUND-DEPENDENT"))
+    s_head = synthetic_report.verdict.split("—")[0].strip()
+    r_head = real.verdict.split("—")[0].strip()
+    if real.verdict.startswith("INCONCLUSIVE"):
+        # an uninformative real audit cannot adjudicate — never report it as a refutation
+        rec = (f"INCONCLUSIVE on ground truth — the real-data audit could not adjudicate ({r_head}, "
+               f"n={real.n}): corpus not confound-orthogonal / saturated / construct not recoverable. The "
+               f"synthetic verdict ({s_head}) is NEITHER confirmed nor refuted; get a confound-orthogonal, "
+               f"non-saturated real corpus.")
+    elif s_alarm and not r_alarm:
+        rec = (f"SYNTHETIC-ARTIFACT (refuted on ground truth) — the synthetic verdict ({s_head}) does NOT "
+               f"replicate on real human-labeled data ({r_head}, n={real.n}). Trust the real-data verdict.")
+    elif s_alarm and r_alarm:
+        rec = (f"CONFIRMED on ground truth — the confound effect replicates on real human-labeled data "
+               f"({r_head}, n={real.n}).")
+    elif (not s_alarm) and r_alarm:
+        rec = (f"REAL-ONLY — no synthetic flag, but real data shows a confound effect ({r_head}, n={real.n}); "
+               f"trust the real-data verdict.")
+    else:
+        rec = f"CLEAR on both — no confound problem on synthetic or real data (real n={real.n})."
+    return real, rec

@@ -11,6 +11,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.23.0] — 2026-06-29 — the substrate gate: the confound auditor now refuses to trust its own synthetic corpus
+
+7.22.0's report card flagged HuggingFace classifiers as length-biased on a *frontier-generated* corpus —
+then a ground-truth re-run on real human-labeled data (Yelp/Amazon/Civil Comments) showed **none of the
+alarming verdicts replicate** (`papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md`).
+The cause: a generator can entangle the confound with the construct vocabulary, and the bag-of-words
+"construct-recoverable" check we used to *validate* the corpus is the artifact's **fingerprint**, not a
+control. This release makes that lesson structural in the tool itself.
+
+### Added
+- **`corpus_provenance`** on `audit_confound` (`"synthetic"` / `"ground_truth"` / `"unspecified"`). Any
+  alarming verdict (`THRESHOLD-BIASED` / `CONFOUND-DEPENDENT`) on a non-ground-truth corpus now carries a
+  **`SYNTHETIC-ARTIFACT RISK`** caveat and sets `report.synthetic_artifact_warning`.
+- **Lexical-entanglement fingerprint** (`report.lexical_confound_corr` / `lexical_confound_p`): a model-free
+  permutation test of whether a label-trained bag-of-words *margin* itself rides the confound within class —
+  a model-free analogue of the VADER probe that refuted the report card, generalized to any construct via a
+  label-trained margin (no magic threshold).
+- **`validate_against_ground_truth(report, real_rows, ...)`** + **`cem_length_match(...)`**: the productized
+  ground-truth protocol — coarsened-exact-match a real human-labeled corpus on the confound, re-run the
+  identical audit, and reconcile (`SYNTHETIC-ARTIFACT (refuted)` / `CONFIRMED` / `REAL-ONLY` / `CLEAR`).
+- `audit_hf_model` now declares its bundled corpora **synthetic**, so its verdicts surface the warning by
+  default — the tool flags its own substrate.
+
+### Changed
+- Docstrings corrected: a high BoW-recoverability AUC is **not** proof of orthogonality. `audit_confound`
+  gained `check_entanglement` (default on).
+
+---
+
 ## [7.22.0] — 2026-06-26 — styxx.audit_hf_model: audit any HuggingFace classifier for length bias in one call
 
 `audit_confound` is instrument-agnostic but asks you to bring an orthogonal corpus and wire up the
