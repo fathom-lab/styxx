@@ -1,0 +1,52 @@
+{
+  "n_concepts": 100,
+  "n_subjects": 3,
+  "noise_ceiling": [
+    0.277,
+    0.675
+  ],
+  "per": {
+    "gpt2-large (text-only LLM)": {
+      "rsa": 0.154,
+      "ci": [
+        0.087,
+        0.233
+      ],
+      "pct_ceiling_lo": 56.0,
+      "per_subject": [
+        0.124,
+        0.128,
+        0.074
+      ]
+    },
+    "mpnet (embedder)": {
+      "rsa": 0.126,
+      "ci": [
+        0.067,
+        0.187
+      ],
+      "pct_ceiling_lo": 45.0,
+      "per_subject": [
+        0.083,
+        0.122,
+        0.061
+      ]
+    },
+    "MiniLM (embedder)": {
+      "rsa": 0.11,
+      "ci": [
+        0.058,
+        0.165
+      ],
+      "pct_ceiling_lo": 40.0,
+      "per_subject": [
+        0.076,
+        0.11,
+        0.048
+      ]
+    },
+    "VICE/human (94 concepts)": {
+      "rsa": 0.222
+    }
+  }
+}
