@@ -48,3 +48,12 @@ not resolve (it was at +0.03, CI spanning zero). **Verdict: within-category mean
 - **Human behavior (VICE) >> the LLM within-category** (0.47/0.54 vs 0.25/0.27): 1.5M judgments capture fine
   within-category structure much better than the text-only LLM does. We report that.
 - n = 3 subjects; representative-image proxy for the vision control; decoding is shortlisting, not verbatim.
+
+## Deeper — unique variance (`tier2_partition.py`): does the LLM add beyond vision AND behaviour?
+partial(LLM, brain | word-form + CLIP-image + VICE-behaviour), 645 image+VICE-matched concepts:
+- **FULL RSA: reliably yes** — ventral **+0.051 [0.030, 0.072]**, LOC **+0.059 [0.036, 0.083]** (95% CI excludes 0).
+  The free LLM uniquely predicts brain meaning-geometry beyond word-form, appearance, AND 1.5M human judgments.
+- **WITHIN-category: not significant** — ventral +0.057 [−0.020, 0.132], LOC +0.058 [−0.026, 0.134].
+- **R² unique (full):** LLM ~0.2–0.3%, vision ~0.15%, behaviour **~2.3–2.8%** — the LLM's unique slice is real but
+  ~10× smaller than behaviour's. Honest reading: the LLM mostly **shares** structure with human behaviour (both are
+  meaning models), plus a small reliable unique residual; within-category that residual is indistinguishable from 0.

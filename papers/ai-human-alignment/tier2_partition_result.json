@@ -1,0 +1,52 @@
+{
+  "n": 645,
+  "n_within_pairs": 6198,
+  "ventral": {
+    "full": {
+      "LLM|lex+vis+beh": 0.051,
+      "R2_LLM_unique": 0.0023,
+      "R2_vision_unique": 0.0015,
+      "R2_behaviour_unique": 0.0229,
+      "R2_all": 0.116,
+      "LLM|lex+vis+beh_CI": [
+        0.03,
+        0.072
+      ]
+    },
+    "within_category": {
+      "LLM|lex+vis+beh": 0.057,
+      "R2_LLM_unique": 0.0025,
+      "R2_vision_unique": 0.0,
+      "R2_behaviour_unique": 0.1075,
+      "R2_all": 0.233,
+      "LLM|lex+vis+beh_CI": [
+        -0.02,
+        0.132
+      ]
+    }
+  },
+  "LOC": {
+    "full": {
+      "LLM|lex+vis+beh": 0.059,
+      "R2_LLM_unique": 0.003,
+      "R2_vision_unique": 0.0013,
+      "R2_behaviour_unique": 0.0276,
+      "R2_all": 0.137,
+      "LLM|lex+vis+beh_CI": [
+        0.036,
+        0.083
+      ]
+    },
+    "within_category": {
+      "LLM|lex+vis+beh": 0.058,
+      "R2_LLM_unique": 0.0024,
+      "R2_vision_unique": 0.0002,
+      "R2_behaviour_unique": 0.1455,
+      "R2_all": 0.297,
+      "LLM|lex+vis+beh_CI": [
+        -0.026,
+        0.134
+      ]
+    }
+  }
+}
