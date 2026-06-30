@@ -27,11 +27,22 @@ Within-category structure **resolves at scale**: the free LLM recovers meaning r
 category-controlled RSA barely drops (0.294 → 0.275) → the match is **not** coarse taxonomy. Full RSA reaches
 **87% of the noise ceiling** (ventral) — higher than Mitchell's ~67%.
 
-## The gate — PENDING and essential (running now)
-ventral/LOC are **visual cortex** and subjects **saw photographs**, so within-category neural structure could be
-**visual** (within "animals," things that look alike), not meaning. The **CLIP-image vision control** (partial out
-an image-model RDM) is **running** (`tier2_vision.py`). Until it lands, this is *"within-category structure
-resolves and the free LLM shares it,"* **NOT yet "within-category meaning beyond appearance."** ← update on completion.
+## The gate — PASSED (vision control, `tier2_vision.py`, 645/823 concepts with images)
+ventral/LOC are visual cortex and subjects saw photographs, so we partialled out a **CLIP-image RDM**
+(conservative — CLIP is vision-language) on top of word-form:
+
+| ROI | decoder | full: \|lex → \|lex+vision | within-category: \|lex → \|lex+vision |
+|---|---|---|---|
+| ventral | **free LLM** | 0.271 → 0.147 | **0.282 → 0.141, 95% CI [0.062, 0.218]** |
+| | VICE / human | 0.334 → 0.210 | 0.480 → 0.371 |
+| LOC | **free LLM** | 0.297 → 0.165 | **0.308 → 0.156, 95% CI [0.073, 0.234]** |
+| | VICE / human | 0.363 → 0.233 | 0.541 → 0.435 |
+
+Within-category structure is **roughly halved** by the vision control but **survives — CI excludes zero** — for
+both the free LLM (0.14–0.16) and human behavior (0.37–0.44). So ~half the within-category structure in this
+visual cortex is genuinely visual (the drop), and the other half is **meaning the free LLM shares — beyond
+taxonomy and beyond appearance.** This is the fine-grained structure the 60-noun Mitchell set physically could
+not resolve (it was at +0.03, CI spanning zero). **Verdict: within-category meaning is real and the LLM shares it.**
 
 ## Honest
 - **Human behavior (VICE) >> the LLM within-category** (0.47/0.54 vs 0.25/0.27): 1.5M judgments capture fine

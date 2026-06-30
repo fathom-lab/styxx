@@ -1,0 +1,42 @@
+{
+  "n_vision": 645,
+  "n_within_pairs": 6198,
+  "ventral": {
+    "free LLM": {
+      "full|lex": 0.271,
+      "full|lex+vision": 0.147,
+      "within|lex": 0.282,
+      "within|lex+vision": 0.141,
+      "within|lex+vision_CI": [
+        0.062,
+        0.218
+      ]
+    },
+    "VICE/human": {
+      "full|lex": 0.334,
+      "full|lex+vision": 0.21,
+      "within|lex": 0.48,
+      "within|lex+vision": 0.371
+    },
+    "vision->neural|lex": 0.27
+  },
+  "LOC": {
+    "free LLM": {
+      "full|lex": 0.297,
+      "full|lex+vision": 0.165,
+      "within|lex": 0.308,
+      "within|lex+vision": 0.156,
+      "within|lex+vision_CI": [
+        0.073,
+        0.234
+      ]
+    },
+    "VICE/human": {
+      "full|lex": 0.363,
+      "full|lex+vision": 0.233,
+      "within|lex": 0.541,
+      "within|lex+vision": 0.435
+    },
+    "vision->neural|lex": 0.29
+  }
+}

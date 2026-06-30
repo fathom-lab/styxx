@@ -58,7 +58,17 @@ for roi in ["ventral", "LOC"]:
             w_lv = float(partial_corr(Mrdm[IU][same], gv[same], np.column_stack([Lex, visv])[same]))
             return {"full|lex": round(full_lex, 3), "full|lex+vision": round(full_lv, 3),
                     "within|lex": round(w_lex, 3), "within|lex+vision": round(w_lv, 3)}
+    def boot_within_vis(Mrdm, B=1000):
+        rng = np.random.default_rng(0); v = []
+        for _ in range(B):
+            idx = rng.integers(0, n, n); ii, jj = np.triu_indices(n, 1)
+            keep = (idx[ii] != idx[jj]) & (cat[idx[ii]] == cat[idx[jj]]) & has[idx[ii]] & has[idx[jj]]
+            a, b = idx[ii][keep], idx[jj][keep]
+            Zb = np.column_stack([np.abs(zc[a] - zc[b]), np.abs(zt[a] - zt[b]), vis[a, b]])
+            v.append(float(partial_corr(Mrdm[a, b], group[a, b], Zb)))
+        return [round(float(np.percentile(v, 2.5)), 3), round(float(np.percentile(v, 97.5)), 3)]
     res = {"free LLM": cascade(llm, "LLM")}
+    res["free LLM"]["within|lex+vision_CI"] = boot_within_vis(llm)
     # VICE on matched subset
     iuM = np.triu_indices(len(mk), 1); gmv = group[np.ix_(mk, mk)][iuM]; visM = vis[np.ix_(mk, mk)][iuM]
     catM = cat[mk]; hasM = has[mk]; sameM = (catM[iuM[0]] == catM[iuM[1]]) & hasM[iuM[0]] & hasM[iuM[1]]
