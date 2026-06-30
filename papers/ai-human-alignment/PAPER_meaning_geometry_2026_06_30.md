@@ -22,8 +22,10 @@ the vision control (95% CIs exclude zero). Finally, the shared geometry is stron
 no-regression relational decoder** identifies which concept a held-out brain pattern represents well above chance
 (permutation p ≤ 0.01 on both datasets). Throughout, **human behaviour is the stronger model of the brain** — the
 LLM joins it, never surpasses it. This corroborates Xu et al. (2025) and Du et al. (2024) with a far smaller model
-and adds an explicit visual/semantic decomposition and a training-free decoder. We frame it as measurement of
-shared meaning structure, not mind-reading.
+and adds what they did not measure: the vision-controlled brain-meaning signal **climbs the ventral stream ~3×**
+(localised to high-level object cortex, near-absent in early visual), the LLM carries a **small but reliable signal
+beyond *both* a vision model and human behaviour** (full RSA, CIs exclude zero), and a **training-free decoder**
+identifies concepts from brain activity. We frame it as measurement of shared meaning structure, not mind-reading.
 
 ## 1. The question and where it sits
 Does the *geometry* of concrete meaning — which concepts are held close, which apart — generalise across the human
@@ -90,7 +92,29 @@ About **half** the within-category signal in this visual cortex is visual (the ~
 word-form, taxonomy, and a proxy-image control, and the LLM shares it — fine structure the 60-noun set could not
 resolve. Human behaviour survives much more strongly.
 
-### 2.5 A training-free cross-substrate decoder
+### 2.5 Where the alignment lives: a visual→semantic gradient
+Re-streaming the archive and extracting the ventral hierarchy (V1, V2, V3, hV4, LOC, union-ventral; 823 concepts),
+the **vision-controlled** LLM↔brain meaning RSA (partial out word-form + CLIP-image) **climbs the stream** (645
+image-matched concepts; 95% CIs exclude zero at every level):
+
+| | V1 | V2 | V3 | hV4 | LOC | ventral |
+|---|---|---|---|---|---|---|
+| LLM↔brain meaning (\|lex+vision) | 0.057 | 0.045 | 0.049 | **0.131** | **0.165** | **0.147** |
+
+Early visual (V1–V3) mean 0.05 → high-level (hV4/LOC/ventral) mean 0.148 — a **~3× rise**. A vision model predicts
+all of these ROIs well (CLIP→brain |lex = 0.11–0.29 throughout), so the gradient is *not* a difference in how
+visual the regions are; it is that the LLM's residual *meaning* alignment is **localised to high-level object
+cortex, not the pixel end** (Fig. `fig_gradient.png`).
+
+### 2.6 Beyond a vision model *and* human behaviour
+Does the LLM explain brain meaning-geometry that neither appearance nor human behaviour captures? Partialling out
+word-form + CLIP-image + the VICE behavioural RDM **simultaneously** (645 concepts), the LLM retains a reliable
+partial: ventral **0.051, 95% CI [0.030, 0.072]**; LOC **0.059, [0.036, 0.083]** (full RSA). So the free LLM
+contributes brain-meaning structure beyond *both* a vision model and 1.5M human judgments. The effect is **small** —
+its unique R² (~0.2–0.3%) is roughly an order of magnitude below human behaviour's (~2.3–2.8%), and within-category
+it is not significant. The LLM mostly *shares* structure with human behaviour, plus a small reliable residual.
+
+### 2.7 A training-free cross-substrate decoder
 Using only the LLM's concept geometry as a dictionary — **no scanner-specific training, no regression** (unlike
 the voxel-encoding models of Xu et al. 2025*) — a relational leave-one-out decoder identifies which concept a
 held-out brain pattern represents. On Mitchell it ranks the true concept in the **top ~19% on average** and into a
@@ -132,14 +156,18 @@ the fly. All scripts committed.
 across LOC/OFA/FFA/PPA/EBA via voxel-wise encoding, on par with human behavioural embeddings. Du et al. (2024)* —
 LLM/multimodal-LLM odd-one-out embeddings over THINGS align with brain and behaviour. Caption-based LLM↔NSD work
 (Doerig et al.*) and feature/embedding↔fMRI decoding (Mitchell 2008; Pereira 2018*) precede both. RSA methodology:
-Kriegeskorte et al. (2008)*; noise ceilings: Nili et al. (2014)*. **Our increment** over this literature: a *small
-free* model rather than a 70B model; RSA + a *training-free relational decoder* rather than fitted encoding
-models; an explicit *CLIP-image vision partial* that quantifies the visual vs residual-semantic split within
-high-level visual cortex; and a paired-bootstrap head-to-head against sentence embedders, on two datasets with
-behaviour as the calibrated reference.
+Kriegeskorte et al. (2008)*; noise ceilings: Nili et al. (2014)*. **Our increment** over this literature, with a
+*small free* model rather than 70B: (1) an explicit **visual→semantic gradient** — partialling out a CLIP-image
+model, the residual brain-meaning alignment is ~3× stronger in high-level object cortex than early visual,
+localising *where* the LLM's meaning lives (§2.5); (2) a **simultaneous vision + behaviour partial** showing the
+LLM retains a small but reliable signal beyond *both* a vision model and 1.5M human judgments (§2.6) — neither Xu
+nor Du partialled both; (3) a **training-free relational decoder** rather than fitted encoding models; and (4) a
+paired-bootstrap head-to-head against sentence embedders, on two datasets with behaviour as the calibrated
+reference. We do not claim the core alignment as novel — Xu (2025) and Du (2024) established it.
 
 ## 6. Reproducibility
 Scripts + result files (this directory): `run_ai_brain.py`, `bootstrap_ci_threeway.py`, `run_ai_brain_vision.py`,
 `within_category_control.py`, `tier1_things_fmri_it.py`, `tier1b_things_fmri_vision.py`, `zero_shot_decoder.py`,
-`stream_build_things720.py`, `tier2_analysis.py`, `tier2_vision.py`, `make_ai_brain_figs.py`, `fig_decoder.py`.
+`stream_build_things720.py`, `tier2_analysis.py`, `tier2_vision.py`, `tier2_partition.py`, `stream_build_gradient.py`,
+`tier2_gradient.py`, `make_ai_brain_figs.py`, `fig_decoder.py`, `fig_gradient.py`.
 Data are public (Mitchell 2008; THINGS-data figshare collection 6161151).
