@@ -1,0 +1,17 @@
+{
+  "n": 94,
+  "cascade": {
+    "raw": 0.172,
+    "lex": 0.177,
+    "lex+vision": 0.103
+  },
+  "lex+vision_CI": [
+    0.041,
+    0.165
+  ],
+  "references": {
+    "vision->IT | lex": 0.169,
+    "LLM->vision | lex (how visual)": 0.545
+  },
+  "survives_vision_control": true
+}
