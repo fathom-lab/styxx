@@ -57,3 +57,11 @@ partial(LLM, brain | word-form + CLIP-image + VICE-behaviour), 645 image+VICE-ma
 - **R² unique (full):** LLM ~0.2–0.3%, vision ~0.15%, behaviour **~2.3–2.8%** — the LLM's unique slice is real but
   ~10× smaller than behaviour's. Honest reading: the LLM mostly **shares** structure with human behaviour (both are
   meaning models), plus a small reliable unique residual; within-category that residual is indistinguishable from 0.
+
+## Deeper — visual→semantic GRADIENT (`tier2_gradient.py`, `fig_gradient.png`)
+Vision-controlled (|lex + CLIP-image) LLM↔brain MEANING RSA up the ventral hierarchy (645 concepts; CI excludes 0
+at every level): **V1 0.057, V2 0.045, V3 0.049 | hV4 0.131, LOC 0.165, ventral 0.147.** Early-visual mean 0.05 →
+high-level mean 0.148 (**~3×**). After removing appearance, the LLM's brain-meaning alignment is ~3× stronger in
+high-level object cortex than early visual — **localised at the semantic end of the stream**, not the pixel end.
+(vision→brain|lex stays high everywhere, 0.11–0.29, confirming all ROIs are genuinely visual.) This anatomical
+decomposition is not in Xu 2025 / Du 2024 — one of our genuine increments.

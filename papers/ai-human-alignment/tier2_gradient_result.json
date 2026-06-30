@@ -1,0 +1,59 @@
+{
+  "n": 645,
+  "rois": {
+    "V1": {
+      "LLM|lex": 0.119,
+      "LLM|lex+vision": 0.057,
+      "LLM|lex+vision_CI": [
+        0.034,
+        0.08
+      ],
+      "vision->brain|lex": 0.127
+    },
+    "V2": {
+      "LLM|lex": 0.1,
+      "LLM|lex+vision": 0.045,
+      "LLM|lex+vision_CI": [
+        0.029,
+        0.065
+      ],
+      "vision->brain|lex": 0.11
+    },
+    "V3": {
+      "LLM|lex": 0.112,
+      "LLM|lex+vision": 0.049,
+      "LLM|lex+vision_CI": [
+        0.035,
+        0.065
+      ],
+      "vision->brain|lex": 0.124
+    },
+    "hV4": {
+      "LLM|lex": 0.249,
+      "LLM|lex+vision": 0.131,
+      "LLM|lex+vision_CI": [
+        0.111,
+        0.153
+      ],
+      "vision->brain|lex": 0.252
+    },
+    "LOC": {
+      "LLM|lex": 0.297,
+      "LLM|lex+vision": 0.165,
+      "LLM|lex+vision_CI": [
+        0.143,
+        0.19
+      ],
+      "vision->brain|lex": 0.29
+    },
+    "ventral": {
+      "LLM|lex": 0.271,
+      "LLM|lex+vision": 0.147,
+      "LLM|lex+vision_CI": [
+        0.125,
+        0.169
+      ],
+      "vision->brain|lex": 0.27
+    }
+  }
+}
