@@ -1,0 +1,82 @@
+{
+  "Mitchell-2008 (word-reading)": {
+    "free LLM (gpt2-large)": {
+      "top1": 0.033,
+      "top5": 0.333,
+      "mean_pctile": 0.808,
+      "N": 60,
+      "chance_top1": 0.017,
+      "perm_p": 0.005
+    },
+    "embedder (mpnet)": {
+      "top1": 0.033,
+      "top5": 0.183,
+      "mean_pctile": 0.752,
+      "N": 60,
+      "chance_top1": 0.017
+    },
+    "word-length (control)": {
+      "top1": 0.033,
+      "top5": 0.083,
+      "mean_pctile": 0.551,
+      "N": 60,
+      "chance_top1": 0.017
+    },
+    "CLIP-image (vision)": {
+      "top1": 0.038,
+      "top5": 0.283,
+      "mean_pctile": 0.725,
+      "N": 53,
+      "chance_top1": 0.019,
+      "note": "on 53 w/ image"
+    },
+    "human behaviour (VICE,1.5M)": {
+      "top1": 0.057,
+      "top5": 0.34,
+      "mean_pctile": 0.772,
+      "N": 53,
+      "chance_top1": 0.019,
+      "note": "on 53 matched"
+    }
+  },
+  "THINGS-fMRI IT (visual)": {
+    "free LLM (gpt2-large)": {
+      "top1": 0.04,
+      "top5": 0.17,
+      "mean_pctile": 0.711,
+      "N": 100,
+      "chance_top1": 0.01,
+      "perm_p": 0.005
+    },
+    "embedder (mpnet)": {
+      "top1": 0.03,
+      "top5": 0.14,
+      "mean_pctile": 0.698,
+      "N": 100,
+      "chance_top1": 0.01
+    },
+    "word-length (control)": {
+      "top1": 0.01,
+      "top5": 0.03,
+      "mean_pctile": 0.454,
+      "N": 100,
+      "chance_top1": 0.01
+    },
+    "CLIP-image (vision)": {
+      "top1": 0.043,
+      "top5": 0.223,
+      "mean_pctile": 0.762,
+      "N": 94,
+      "chance_top1": 0.011,
+      "note": "on 94 w/ image"
+    },
+    "human behaviour (VICE,1.5M)": {
+      "top1": 0.021,
+      "top5": 0.223,
+      "mean_pctile": 0.781,
+      "N": 94,
+      "chance_top1": 0.011,
+      "note": "on 94 matched"
+    }
+  }
+}
