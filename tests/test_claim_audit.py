@@ -49,3 +49,29 @@ def test_overclaim_caught_on_wrong_baseline():
     # claims 90% but the real ratio is 0.294/0.339=87% and 0.9 is nowhere -> unsourced (the failure mode we care about)
     r = audit_grounding("reaches 90% of ceiling.", {"full": 0.294, "ceiling_lo": 0.339})
     assert r.n_unsourced == 1
+
+
+# --- 7.24.1 regression tests (from the post-release fuzz sweep) ---
+
+def test_iso_date_not_a_claim():
+    # YYYY-MM-DD must not produce phantom range claims from the MM-DD portion
+    r = audit_grounding("Published 2026-06-30; see also 2024-01-05.", {})
+    assert r.n_total == 0, [n.raw for n in r.items]
+
+
+def test_scientific_notation_value_and_no_false_match():
+    r = audit_grounding("the rate was 1.2e-5 (p=1.2e-5).", {"rate": 1.2e-5, "p": 1.2e-5})
+    assert r.n_unsourced == 0
+    # a far-off source must NOT falsely ground a tiny sci-notation value (exponent-aware tolerance)
+    r2 = audit_grounding("the rate was 1.2e-5.", {"x": 0.04})
+    assert r2.n_unsourced == 1
+
+
+def test_numeric_dict_keys_as_sources():
+    r = audit_grounding("reaches 87% of ceiling.", {0.294: "full", 0.339: "ceiling"})
+    assert r.n_unsourced == 0
+
+
+def test_set_sources():
+    r = audit_grounding("RSA 0.222.", {0.222, 0.5})
+    assert r.n_unsourced == 0

@@ -34,6 +34,7 @@ from typing import Any
 
 # spans that look numeric but are identifiers/labels, not statistical claims — masked out before extraction
 _SKIP = [
+    re.compile(r"\b\d{4}-\d{1,2}-\d{1,2}\b"),     # ISO date YYYY-MM-DD (the MM-DD must not read as a range)
     re.compile(r"\b\d{1,2}\s*%\s*(?:CI|confidence)", re.I),  # "95% CI" — confidence-level label, not a claim
     re.compile(r"10\.\d{4,}/\S+"),               # DOI
     re.compile(r"arxiv:\s*\d{4}\.\d{4,}", re.I),  # arXiv id (labelled)
@@ -48,8 +49,14 @@ _SKIP = [
 
 
 def _decimals(s: str) -> int:
-    s = s.split("e")[0].split("E")[0]
-    return len(s.split(".")[1]) if "." in s else 0
+    """Effective decimal precision, exponent-aware so 1.2e-5 → 6 (not 1) and tolerance stays tight."""
+    m = re.match(r"^[-+]?\d*\.?(\d*)(?:[eE]([-+]?\d+))?$", s.replace("−", "-").strip())
+    if not m:
+        s2 = s.split("e")[0].split("E")[0]
+        return len(s2.split(".")[1]) if "." in s2 else 0
+    frac = len(m.group(1) or "")
+    exp = int(m.group(2)) if m.group(2) else 0
+    return max(0, frac - exp)
 
 
 def _flatten(obj: Any, path: str, out: dict) -> dict:
@@ -59,8 +66,10 @@ def _flatten(obj: Any, path: str, out: dict) -> dict:
         out.setdefault(round(float(obj), 6), path)
     elif isinstance(obj, dict):
         for k, v in obj.items():
+            if isinstance(k, (int, float)) and not isinstance(k, bool):  # numeric keys are values too ({0.294: "a"})
+                out.setdefault(round(float(k), 6), f"{path}.<key>" if path else "<key>")
             _flatten(v, f"{path}.{k}" if path else str(k), out)
-    elif isinstance(obj, (list, tuple)):
+    elif isinstance(obj, (list, tuple, set, frozenset)):
         for i, v in enumerate(obj):
             _flatten(v, f"{path}[{i}]", out)
     elif isinstance(obj, str):
@@ -74,7 +83,7 @@ def _flatten(obj: Any, path: str, out: dict) -> dict:
 
 def _load_sources(sources: Any) -> dict:
     """Return {numeric_value: provenance_path}. Accepts a dict/list, a path/JSON-string, or a list thereof."""
-    items = sources if isinstance(sources, (list, tuple)) else [sources]
+    items = sources if isinstance(sources, (list, tuple, set, frozenset)) else [sources]
     vals: dict = {}
     for it in items:
         data, name = it, ""
@@ -256,7 +265,7 @@ def _extract(text: str) -> list:
                 spans.append((m.start(), m.end()))
                 nums.extend(picked)
 
-    scan(r"p\s*[=<>]\s*(\d*\.?\d+)", "pvalue", (1,))
+    scan(r"p\s*[=<>]\s*(\d*\.?\d+(?:[eE][-+]?\d+)?)", "pvalue", (1,))
     scan(r"\[\s*([-+]?\d*\.?\d+)\s*,\s*([-+]?\d*\.?\d+)\s*\]", "ci", (1, 2))
     # ranges (a–b): skip model-name digits (letter just before) and page/id ranges (big integers);
     # a range followed by % is a percent-range, matched against source*100
@@ -273,7 +282,7 @@ def _extract(text: str) -> list:
     scan(r"(\d+(?:\.\d+)?)\s*%", "percent", (1,))
     scan(r"(\d+(?:\.\d+)?)\s*[×x]\b", "multiplier", (1,))
     # plain decimals (must carry a decimal point) in a plausible statistic range
-    for m in re.finditer(r"[-+]?\d*\.\d+", t):
+    for m in re.finditer(r"[-+]?\d*\.\d+(?:[eE][-+]?\d+)?", t):
         if overlaps(m.start(), m.end()):
             continue
         v = float(m.group())

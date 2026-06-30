@@ -11,6 +11,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.24.1] — 2026-06-30 — claim-auditor robustness (post-release fuzz fixes)
+
+### Fixed
+- **ISO dates no longer misread as range claims** — `2026-06-30` previously produced phantom `06`/`30` "range"
+  numbers, over-flagging every dated document. Added an ISO-date pattern to the skip list.
+- **Scientific notation** is now captured with its exponent (`1.2e-5` was read as `1.2`), and `_decimals` is
+  exponent-aware so tiny values match at the right precision (no false grounding of `1.2e-5` to `0.04`).
+- **Numeric dict keys** as sources (`{0.294: "label"}`) are now collected, not silently dropped.
+- **Set/frozenset sources** are treated as containers.
+
+Verified by a 4-lens post-release sweep: the published PyPI artifact installs/imports/CLIs cleanly, the auditor
+never crashed across 41 adversarial inputs, and `render_html()` HTML-escapes all user-controlled content (no XSS).
+
+---
+
 ## [7.24.0] — 2026-06-30 — claim grounding: does every number in a claim trace to a receipt?
 
 ### Added
