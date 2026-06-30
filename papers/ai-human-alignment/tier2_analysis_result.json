@@ -1,0 +1,102 @@
+{
+  "ventral": {
+    "n_concepts": 823,
+    "n_categories": 52,
+    "n_within_pairs": 7165,
+    "noise_ceiling": [
+      0.339,
+      0.703
+    ],
+    "rsa": {
+      "free LLM (gpt2-large)": {
+        "full": 0.294,
+        "pct_ceiling_lo": 87.0,
+        "cat_controlled": 0.275,
+        "within_category": 0.25
+      },
+      "mpnet (embedder)": {
+        "full": 0.271,
+        "pct_ceiling_lo": 80.0,
+        "cat_controlled": 0.252,
+        "within_category": 0.17
+      },
+      "VICE/human": {
+        "n": 720,
+        "full": 0.314,
+        "cat_controlled": 0.295,
+        "within_category": 0.471
+      }
+    },
+    "decoding": {
+      "free LLM": {
+        "top1": 0.0122,
+        "top5": 0.047,
+        "mean_pctile": 0.825,
+        "chance_top1": 0.0012,
+        "perm_p": 0.0099
+      },
+      "word-length (control)": {
+        "top1": 0.0036,
+        "top5": 0.011,
+        "mean_pctile": 0.564,
+        "chance_top1": 0.0012
+      },
+      "VICE/human": {
+        "top1": 0.0125,
+        "top5": 0.053,
+        "mean_pctile": 0.835,
+        "chance_top1": 0.0014
+      }
+    }
+  },
+  "LOC": {
+    "n_concepts": 823,
+    "n_categories": 52,
+    "n_within_pairs": 7165,
+    "noise_ceiling": [
+      0.331,
+      0.7
+    ],
+    "rsa": {
+      "free LLM (gpt2-large)": {
+        "full": 0.254,
+        "pct_ceiling_lo": 77.0,
+        "cat_controlled": 0.235,
+        "within_category": 0.269
+      },
+      "mpnet (embedder)": {
+        "full": 0.228,
+        "pct_ceiling_lo": 69.0,
+        "cat_controlled": 0.209,
+        "within_category": 0.165
+      },
+      "VICE/human": {
+        "n": 720,
+        "full": 0.344,
+        "cat_controlled": 0.323,
+        "within_category": 0.535
+      }
+    },
+    "decoding": {
+      "free LLM": {
+        "top1": 0.0207,
+        "top5": 0.066,
+        "mean_pctile": 0.842,
+        "chance_top1": 0.0012,
+        "perm_p": 0.0099
+      },
+      "word-length (control)": {
+        "top1": 0.0036,
+        "top5": 0.013,
+        "mean_pctile": 0.571,
+        "chance_top1": 0.0012
+      },
+      "VICE/human": {
+        "top1": 0.0194,
+        "top5": 0.061,
+        "mean_pctile": 0.861,
+        "chance_top1": 0.0014
+      }
+    }
+  }
+}
