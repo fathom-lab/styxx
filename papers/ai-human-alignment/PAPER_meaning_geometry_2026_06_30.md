@@ -40,7 +40,7 @@ output-readout BCIs such as MEG character decoding, which we mention only to con
 
 ## 2. Results
 
-### 2.1 A small text-only LLM is on par with human behaviour as a model of the brain
+### 2.1 A small text-only LLM approaches human behaviour as a model of the brain
 On Mitchell et al. (2008) (9 subjects, 60 concrete nouns; group RDM over the top-500 stable voxels; noise ceiling
 [0.394, 0.557]), gpt2-large's partial-lexical RSA to the brain is **0.264 = 67% of the lower noise ceiling** (60
 nouns), vs a shuffle control of 0.002 ± 0.028. On the 53 nouns shared with the THINGS behavioural data (so the
