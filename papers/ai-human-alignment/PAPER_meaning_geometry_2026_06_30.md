@@ -6,8 +6,8 @@
 > Working draft. Every number is produced by a committed script and traceable to a result file in
 > `papers/ai-human-alignment/`. We do **not** claim priority: prior work (Xu et al. 2025, PNAS; Du et al. 2024)
 > already showed LLM-derived concept geometry aligns with THINGS-fMRI at the human-behaviour level. This paper
-> **corroborates and adds controls** to that finding with a small, free, text-only model. Citations marked *
-> need final verification before submission.
+> **corroborates and adds controls** to that finding with a small, free, text-only model. All references are
+> web-verified with DOIs in §7 (the * markers point there).
 
 ## Abstract
 We test whether the *structure* of concrete meaning is shared across the human brain, human behaviour, and a
@@ -171,3 +171,26 @@ Scripts + result files (this directory): `run_ai_brain.py`, `bootstrap_ci_threew
 `stream_build_things720.py`, `tier2_analysis.py`, `tier2_vision.py`, `tier2_partition.py`, `stream_build_gradient.py`,
 `tier2_gradient.py`, `make_ai_brain_figs.py`, `fig_decoder.py`, `fig_gradient.py`.
 Data are public (Mitchell 2008; THINGS-data figshare collection 6161151).
+
+## 7. References (web-verified, 2026-06-30)
+1. Mitchell, T. M., et al. (2008). Predicting human brain activity associated with the meanings of nouns.
+   *Science* 320(5880), 1191–1195. doi:10.1126/science.1152876
+2. Kriegeskorte, N., Mur, M., & Bandettini, P. (2008). Representational similarity analysis — connecting the
+   branches of systems neuroscience. *Front. Syst. Neurosci.* 2:4. doi:10.3389/neuro.06.004.2008
+3. Nili, H., et al. (2014). A toolbox for representational similarity analysis. *PLoS Comput. Biol.*
+   10(4):e1003553. doi:10.1371/journal.pcbi.1003553
+4. Pereira, F., et al. (2018). Toward a universal decoder of linguistic meaning from brain activation.
+   *Nat. Commun.* 9:963. doi:10.1038/s41467-018-03068-4
+5. Hebart, M. N., et al. (2019). THINGS: a database of 1,854 object concepts and 26,000+ naturalistic object
+   images. *PLOS ONE* 14(10):e0223792. doi:10.1371/journal.pone.0223792
+6. Hebart, M. N., Contier, O., et al. (2023). THINGS-data, a multimodal collection of large-scale datasets for
+   investigating object representations in brain and behavior. *eLife* 12:e82580. doi:10.7554/eLife.82580
+7. Muttenthaler, L., et al. (2022). VICE: variational interpretable concept embeddings. *NeurIPS 35*.
+   arXiv:2205.00756
+8. Du, C., et al. (2024). Human-like object concept representations emerge naturally in multimodal large
+   language models. arXiv:2407.01067 (subsequently *Nature Machine Intelligence*).
+9. Doerig, A., et al. (2022/2025). Visual representations in the human brain are aligned with large language
+   models. arXiv:2209.11737; published as "High-level visual representations…", *Nat. Mach. Intell.*,
+   doi:10.1038/s42256-025-01072-0
+10. Xu, N., et al. (2025). Revealing emergent human-like conceptual representations from language prediction.
+    *PNAS*, doi:10.1073/pnas.2512514122; arXiv:2501.12547
