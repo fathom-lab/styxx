@@ -11,6 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.24.0] — 2026-06-30 — claim grounding: does every number in a claim trace to a receipt?
+
+### Added
+- **`audit_grounding(text, sources)`** — a new agent-integrity primitive (the third, after `audit_confound`
+  and `validate_probe`). Deterministically extracts every statistical number from a claim (RSA, CIs, p-values,
+  %, fold-changes) and classifies each **GROUNDED** / **DERIVED** (a %/ratio of two source values) /
+  **UNSOURCED** against the data — no LLM, no web. Ignores non-statistical numbers (years, DOIs, arXiv ids,
+  section/heading/list numbers, version tags, "95% CI" labels). `report.verdict` is CI-gate friendly.
+- **`detect_overclaims(text)`** — a negation-aware heuristic linter flagging language that reaches past the
+  data: priority/"first", equivalence-from-a-failed-rejection, certainty, causal-from-correlational, hype, and
+  "survives/robust" with no CI nearby. Flags for review, not verdicts.
+- **`GroundingReport.render_html()`** — a self-contained styxx-brand audit card.
+- CLI: `python -m styxx.claim_audit <claim> <sources…>`. Exported from `styxx`.
+
+Dogfooded on a fathom-lab preprint: grounded 119/132 numbers, flagged the 12 not in result files (one the
+authors had caught only by hand), and the linter flagged the authors' own equivalence phrasing for revision.
+
+---
+
 ## [7.23.0] — 2026-06-29 — the substrate gate: the confound auditor now refuses to trust its own synthetic corpus
 
 7.22.0's report card flagged HuggingFace classifiers as length-biased on a *frontier-generated* corpus —
