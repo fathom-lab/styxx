@@ -361,7 +361,9 @@ from .confound_audit import (  # is a SCORE riding a confound? + the ground-trut
     validate_against_ground_truth, cem_length_match,
 )
 from .hf_audit import audit_hf_model, available_constructs  # one-call: audit any HF text classifier for length bias
-from .claim_audit import audit_grounding, GroundingReport, ClaimNumber  # does every number in a CLAIM trace to a receipt?
+from .claim_audit import (  # does every number in a CLAIM trace to a receipt? + does the LANGUAGE overreach?
+    audit_grounding, GroundingReport, ClaimNumber, detect_overclaims, OverclaimFlag,
+)
 from .guardrail.overconfidence_length_guard import length_adjust as length_adjust_overconfidence  # opt-in length-fairness guard
 from .gate import gate, GateVerdict  # v3.4.0: pre-flight cognitive verdict
 from .notify import on_anomaly, notify_on_fail, clear_notifications, CognitiveEvent

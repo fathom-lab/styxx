@@ -105,8 +105,65 @@ class ClaimNumber:
 
 
 @dataclass
+class OverclaimFlag:
+    severity: str   # high | med | low
+    label: str
+    snippet: str
+    why: str
+
+    def __str__(self) -> str:
+        return f"[{self.severity}] {self.label}: …{self.snippet}…  ({self.why})"
+
+
+# heuristic overclaim linter — pattern-based flags for human review, NOT ground truth. Complements the
+# deterministic grounding: grounding asks "is the number real?", this asks "does the LANGUAGE reach past it?"
+_OVERCLAIM = [
+    ("high", re.compile(r"\b(first|the only|no one else|never before|unprecedented|world[- ]?first)\b", re.I),
+     "priority", "unverified priority/'first' — confirm the literature doesn't already own it"),
+    ("high", re.compile(r"\bstatistically\s+indistinguishable\b|\bequivalent to\b|\bon par with\b|\bas good as\b|\bjust as well\b", re.I),
+     "equivalence", "equivalence asserted from a failed rejection needs a TOST/equivalence test, not a non-significant p"),
+    ("med", re.compile(r"\b(proves|proven|confirms|establishes|definitive(ly)?|guarantees?)\b", re.I),
+     "certainty", "a single study rarely 'proves' — soften to 'is consistent with'"),
+    ("med", re.compile(r"\b(causes?|caused by|because of|drives?|leads to|due to|responsible for)\b", re.I),
+     "causal", "correlational evidence (RSA/encoding) cannot license causal language"),
+    ("low", re.compile(r"\b(breakthrough|revolutionary|game[- ]?chang\w*|paradigm[- ]?shift|stunning|telepath\w*|mind[- ]?read\w*|solv\w*\s+telepathy)\b", re.I),
+     "hype", "hype register undercuts a rigor claim — state the measurement instead"),
+]
+
+
+def detect_overclaims(text: str) -> list:
+    """Heuristic linter: flag language that may reach past the data (priority/equivalence/causal/hype/
+    uncontrolled-robustness). Pattern-based — flags for review, not verdicts."""
+    if not isinstance(text, str):
+        try:
+            p = Path(str(text))
+            text = p.read_text(encoding="utf-8") if p.exists() and p.is_file() else str(text)
+        except (OSError, ValueError):
+            text = str(text)
+
+    def ctx(m):
+        s, e = max(0, m.start() - 28), min(len(text), m.end() + 28)
+        return text[s:e].replace("\n", " ").strip()
+
+    neg = re.compile(r"\b(not|never|no|n't|isn't|aren't|wasn't|without)\W*$", re.I)
+    flags = []
+    for sev, rx, label, why in _OVERCLAIM:
+        for m in rx.finditer(text):
+            if neg.search(text[max(0, m.start() - 16):m.start()]):
+                continue  # negated ("not first", "not mind-reading") — honest, skip
+            flags.append(OverclaimFlag(sev, label, ctx(m), why))
+    # "survives / robust / holds" with no CI or p-value within the next ~80 chars
+    for m in re.finditer(r"\b(surviv\w*|robust|holds?)\b", text, re.I):
+        if not re.search(r"\[|\bCI\b|p\s*[=<]|%", text[m.start():m.start() + 80], re.I):
+            flags.append(OverclaimFlag("med", "uncontrolled-robustness", ctx(m),
+                                       "'survives/robust' with no CI, p, or % nearby — show the number"))
+    return flags
+
+
+@dataclass
 class GroundingReport:
     items: list = field(default_factory=list)
+    overclaims: list = field(default_factory=list)
     n_total: int = 0
     n_grounded: int = 0
     n_derived: int = 0
@@ -131,7 +188,47 @@ class GroundingReport:
                  f"{self.n_grounded} grounded, {self.n_derived} derived, {self.n_unsourced} unsourced)"]
         for n in self.unsourced:
             lines.append(f"  UNSOURCED  {n.raw}  ({n.kind})")
+        if self.overclaims:
+            lines.append(f"overclaim linter: {len(self.overclaims)} flag(s) for review")
+            for f in self.overclaims:
+                lines.append(f"  [{f.severity}] {f.label}: …{f.snippet}…")
         return "\n".join(lines)
+
+    def render_html(self, title: str = "claim audit") -> str:
+        """A self-contained styxx-brand card (flat, aubergine/lilac, monospace) summarising the audit."""
+        import html as _h
+        ok = self.n_unsourced == 0
+        bcol = "#65E0D8" if ok else "#F2B45C"
+        pct = self.pct_grounded
+        fill = round(100 * (self.n_grounded + self.n_derived) / max(self.n_total, 1))
+        dot = {"high": "#FF5C6C", "med": "#F2B45C", "low": "#8C7AA6"}
+        uns = "".join(
+            f'<span style="display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;border:1px solid #4A3A5C;'
+            f'border-radius:3px;color:#F2B45C;font-size:12px">{_h.escape(n.raw)}</span>' for n in self.unsourced[:16])
+        ocs = "".join(
+            f'<div style="display:flex;gap:8px;align-items:flex-start;margin:7px 0">'
+            f'<span style="flex:none;width:8px;height:8px;border-radius:50%;margin-top:5px;background:{dot.get(f.severity,"#8C7AA6")}"></span>'
+            f'<div><span style="color:#C9A2F0;font-size:12px;text-transform:uppercase;letter-spacing:.04em">{_h.escape(f.label)}</span>'
+            f'<div style="color:#9A86B4;font-size:12.5px;margin-top:1px">…{_h.escape(f.snippet)}…</div></div></div>'
+            for f in self.overclaims[:8])
+        return f"""<h2 class="sr-only">styxx claim audit: {pct}% of {self.n_total} numeric claims grounded in the data; {self.n_unsourced} unsourced; {len(self.overclaims)} overclaim flags.</h2>
+<div style="background:#1a1020;border:1px solid #33264a;border-radius:10px;padding:22px 24px;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;color:#F3ECF7;max-width:620px">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="color:#C9A2F0;font-size:13px;letter-spacing:.06em">styxx ▸ {_h.escape(title)}</div>
+    <div style="color:{bcol};border:1px solid {bcol};border-radius:4px;padding:3px 9px;font-size:11px;letter-spacing:.05em">{_h.escape(self.verdict)}</div>
+  </div>
+  <div style="margin:18px 0 6px"><span style="font-size:42px;font-weight:700;color:#F3ECF7">{pct}%</span>
+    <span style="color:#9A86B4;font-size:13px;margin-left:8px">of {self.n_total} numeric claims trace to a receipt</span></div>
+  <div style="height:9px;border-radius:5px;background:#2a1d38;overflow:hidden;margin:10px 0 16px">
+    <div style="height:100%;width:{fill}%;background:linear-gradient(90deg,#C9A2F0,#65E0D8)"></div></div>
+  <div style="display:flex;gap:18px;font-size:12.5px;color:#B79FCB;margin-bottom:6px">
+    <span><b style="color:#C9A2F0">{self.n_grounded}</b> grounded</span>
+    <span><b style="color:#C9A2F0">{self.n_derived}</b> derived</span>
+    <span><b style="color:#F2B45C">{self.n_unsourced}</b> unsourced</span></div>
+  {'<div style="margin-top:12px"><div style="color:#6E5A82;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">unsourced — review these</div>'+uns+'</div>' if uns else ''}
+  {'<div style="margin-top:16px;border-top:1px solid #2a1d38;padding-top:12px"><div style="color:#6E5A82;font-size:11px;text-transform:uppercase;letter-spacing:.08em">overclaim linter · '+str(len(self.overclaims))+' flag(s)</div>'+ocs+'</div>' if self.overclaims else ''}
+  <div style="margin-top:16px;color:#6E5A82;font-size:10.5px;border-top:1px solid #2a1d38;padding-top:10px">fathom-lab · styxx.audit_grounding — deterministic grounding + heuristic overclaim linter</div>
+</div>"""
 
 
 def _extract(text: str) -> list:
@@ -234,6 +331,7 @@ def audit_grounding(text: str, sources: Any) -> "GroundingReport":
             rep.n_derived += 1
         else:
             rep.n_unsourced += 1
+    rep.overclaims = detect_overclaims(text)
     return rep
 
 
