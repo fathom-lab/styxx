@@ -1,0 +1,52 @@
+{
+  "gpt2-large @60 (full set)": {
+    "full": 0.264,
+    "cat_controlled": 0.206,
+    "within_category": 0.032,
+    "n_within_pairs": 120,
+    "within_CI": [
+      -0.344,
+      0.421
+    ],
+    "catctrl_CI": [
+      0.116,
+      0.31
+    ]
+  },
+  "gpt2-large @53 (shared)": {
+    "full": 0.222,
+    "cat_controlled": 0.151,
+    "within_category": 0.043,
+    "n_within_pairs": 102
+  },
+  "VICE/human @53": {
+    "full": 0.247,
+    "cat_controlled": 0.186,
+    "within_category": 0.171,
+    "n_within_pairs": 102,
+    "within_CI": [
+      -0.279,
+      0.59
+    ],
+    "catctrl_CI": [
+      0.088,
+      0.291
+    ]
+  },
+  "mpnet @53": {
+    "full": 0.161,
+    "cat_controlled": 0.084,
+    "within_category": -0.041,
+    "n_within_pairs": 102
+  },
+  "MiniLM @53": {
+    "full": 0.156,
+    "cat_controlled": 0.084,
+    "within_category": -0.013,
+    "n_within_pairs": 102
+  },
+  "_catstruct_ratio": {
+    "brain": 1.153,
+    "gpt2-large": 1.196
+  }
+}
