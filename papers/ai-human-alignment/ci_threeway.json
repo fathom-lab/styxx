@@ -1,0 +1,36 @@
+{
+  "VICE": {
+    "point": 0.247,
+    "lo": 0.145,
+    "hi": 0.356
+  },
+  "gpt2-large": {
+    "point": 0.222,
+    "lo": 0.12,
+    "hi": 0.327
+  },
+  "mpnet": {
+    "point": 0.161,
+    "lo": 0.066,
+    "hi": 0.262
+  },
+  "MiniLM": {
+    "point": 0.156,
+    "lo": 0.063,
+    "hi": 0.252
+  },
+  "_diff": {
+    "VICE-gpt2large": {
+      "mean": 0.021,
+      "p_a_le_b": 0.253
+    },
+    "gpt2large-mpnet": {
+      "mean": 0.064,
+      "p_a_le_b": 0.011
+    },
+    "gpt2large-MiniLM": {
+      "mean": 0.069,
+      "p_a_le_b": 0.043
+    }
+  }
+}
