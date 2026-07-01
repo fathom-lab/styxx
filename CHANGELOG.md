@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- **Register instruments now refuse a wordless response (domain guard).** `score_all(prompt="X", response="")`
+  returned deception 0.999 / overconfidence 0.954 — a confident score for an input the register instruments
+  have no domain over (empty text is not maximally deceptive). `score_all` now omits the register instruments
+  (`sycophancy`, `deception`, `overconfidence`, `refusal`) when the response carries no natural-language word
+  content (empty, whitespace-only, emoji-only), so a caller aggregating fingerprints counts the omission
+  instead of folding an artifact into a paired conduct delta.
+  - A pre-registered length sweep **falsified** the "score stabilizes at N tokens" model: deception is
+    content- not length-driven (a 5-word factual answer reads 0.19; a correct 18-word textbook answer reads
+    0.99), so no token threshold was invented — the guard fires only on the unambiguous zero-word case.
+    Boundary tests cover empty / whitespace / emoji-only (out of domain) and pin the current behavior of
+    single-word and JSON-tool-call responses (still scored). See
+    `papers/grounded-honesty-axis/NOTE_instrument_domain_2026_07_01.md`, which also pre-registers the deeper
+    open question (does the deception channel read conduct or content on benign batteries?).
+
 ---
 
 ## [7.24.3] — 2026-06-30 — py3.9 fix + deep claim-auditor fuzz hardening

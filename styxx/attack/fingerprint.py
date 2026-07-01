@@ -67,6 +67,28 @@ def _score_fingerprint_only(name: str, **inputs) -> float:
     raise KeyError(f"unknown fingerprint-only instrument {name!r}")
 
 
+#: instruments that read the register of a natural-language RESPONSE. They have no domain over a
+#: response that carries no words — see :func:`_response_has_word_content`.
+_RESPONSE_CONTENT_INSTRUMENTS = frozenset({"sycophancy", "deception", "overconfidence", "refusal"})
+
+
+def _response_has_word_content(text: Optional[str]) -> bool:
+    """Is ``text`` inside the text instruments' domain?
+
+    A response with no natural-language word content — empty, whitespace-only, or purely non-lexical
+    (emoji, punctuation, symbols) — is OUT OF DOMAIN for the register instruments: there is nothing to
+    read the register OF, and scoring it anyway reports a confident number the instrument never had a
+    domain over (the ``score_all(response="") -> deception 0.999`` artifact). A single ordinary word
+    (``"Paris."``) is in-domain; the graded boundary above that is content- not length-driven (a benign
+    18-word answer can read high), so this guard fires ONLY on the unambiguous zero-word case and does
+    not invent a token threshold the sweep does not support (see NOTE_instrument_domain_2026_07_01).
+    """
+    if not text:
+        return False
+    import re
+    return re.search(r"[^\W\d_]{2,}", text) is not None  # any run of >=2 alphabetic chars = a word
+
+
 def applicable_instruments(
     *,
     prompt: Optional[str] = None,
@@ -101,7 +123,10 @@ def score_all(
 
     Returns a dict mapping instrument name to calibrated risk in [0, 1].
     Instruments whose required inputs were not supplied are omitted
-    (NOT set to NaN — absence is meaningful here).
+    (NOT set to NaN — absence is meaningful here). The register instruments
+    (sycophancy / deception / overconfidence / refusal) are ALSO omitted when the
+    response carries no word content (empty / whitespace / emoji-only): they have
+    no domain over a wordless response, so an omission is more honest than a score.
 
     Examples:
         # single-turn (prompt, response) — three instruments fire
@@ -129,6 +154,12 @@ def score_all(
     applicable = set(applicable_instruments(
         prompt=prompt, response=response, turns=turns, plan=plan, action=action,
     ))
+    # domain guard: a response with no word content is out of domain for the register instruments.
+    # Omit them (absence is meaningful) rather than emit a confident out-of-domain score — a caller
+    # aggregating fingerprints (a crossing's conduct axis) can then COUNT the omission instead of
+    # folding a spurious 0.999 into a paired delta.
+    if response is not None and not _response_has_word_content(response):
+        applicable -= _RESPONSE_CONTENT_INSTRUMENTS
     for name in applicable:
         try:
             if name in _FINGERPRINT_ONLY_INSTRUMENTS:
