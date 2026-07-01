@@ -34,7 +34,8 @@ from typing import Any
 
 # spans that look numeric but are identifiers/labels, not statistical claims — masked out before extraction
 _SKIP = [
-    re.compile(r"\b\d{4}-\d{1,2}-\d{1,2}\b"),     # ISO date YYYY-MM-DD (the MM-DD must not read as a range)
+    re.compile(r"\b\d{4}-\d{1,2}-\d{1,2}(?:[ T]\d{1,2}:\d{2}(?::\d{2})?(?:\.\d+)?Z?)?(?!\d)"),  # ISO date/datetime YYYY-MM-DD[ Thh:mm:ss[.f]Z] (MM-DD / hh:mm must not read as a range; a T-suffix must not defeat the mask)
+    re.compile(r"\b\d+(?:-\d+){2,}\b"),           # dash-run identifier: intl phone / DD-MM-YYYY / any 3+ dash-joined groups (a real range is always exactly two numbers) — must run before the year mask below
     re.compile(r"\b\d{1,2}\s*%\s*(?:CI|confidence)", re.I),  # "95% CI" — confidence-level label, not a claim
     re.compile(r"10\.\d{4,}/\S+"),               # DOI
     re.compile(r"arxiv:\s*\d{4}\.\d{4,}", re.I),  # arXiv id (labelled)
@@ -281,7 +282,9 @@ def _extract(text: str) -> list:
         nums.append(ClaimNumber(m.group(1), a, kind))
         nums.append(ClaimNumber(m.group(2), b, kind))
     scan(r"(\d+(?:\.\d+)?)\s*%", "percent", (1,))
-    scan(r"(\d+(?:\.\d+)?)\s*[×x]\b", "multiplier", (1,))
+    # multiplier "3x" / "3×": the unit must not be followed by an alnum — `\b` fails after the non-word ×
+    # (so "3× stronger" was silently dropped), and it also blocks dimensions like "3x2"
+    scan(r"(\d+(?:\.\d+)?)\s*[×x](?![A-Za-z0-9])", "multiplier", (1,))
     # plain decimals (must carry a decimal point) in a plausible statistic range
     for m in re.finditer(r"[-+]?\d*\.\d+(?:[eE][-+]?\d+)?", t):
         if overlaps(m.start(), m.end()):

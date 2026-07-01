@@ -11,6 +11,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.24.3] — 2026-06-30 — py3.9 fix + deep claim-auditor fuzz hardening
+
+### Fixed
+- **Python 3.9 crash loading bundled receipts** — `competence_cliff()` (and `hf_audit`) called
+  `importlib.resources.files("styxx._data")`, which on 3.9 dereferences `package.__file__`. `styxx._data`
+  had no `__init__.py`, so it was a namespace package with `__file__ is None` → `TypeError`. Added the
+  `__init__.py`; 3.10+ used a different resolver, so only 3.9 was affected. `requires-python` is `>=3.9`, so
+  this was a real break. Swept all four `resources.files()` call sites and every declared package — no other
+  namespace-package landmines (`styxx.attack.seeds` and `styxx.compliance.templates` already had `__init__`).
+- **ISO datetimes leaked range claims** — a `T`-suffixed timestamp (`2026-06-30T14:30:00Z`) defeated the
+  ISO-date mask (the trailing `\b` failed before `T`), so the `MM-DD` re-read as a phantom `06`/`30` range.
+  The mask now spans the optional `[ T]hh:mm[:ss][.f][Z]` time portion.
+- **Dash-run identifiers leaked range claims** — international phone numbers (`+1-555-123-4567`) and
+  `DD-MM-YYYY` dates produced phantom ranges. Any run of 3+ dash-joined integer groups is now masked; a real
+  statistical range is always exactly two numbers, so genuine ranges (`12-15`, `10-20%`) are untouched.
+- **Unicode `×` multiplier silently dropped** — `3×` (U+00D7) never matched because a trailing `\b` can't
+  form a boundary after a non-word symbol, so "3× stronger" extracted nothing (the multiplier test passed
+  vacuously). Now matched via a not-followed-by-alnum guard, which also correctly rejects dimensions (`3x2`).
+
+### Internal
+- Dropped two dead imports (`dataclasses.field`, `typing.Optional`) that had failed the `ruff` lint step of
+  the `tests` workflow since 7.24.0. CI is green across 3.9–3.12 for the first time in three releases.
+
++7 regression tests (18/18 in the claim-audit suite; 1675 pass overall). Found by a post-7.24.2 adversarial
+fuzz sweep of the extractor across dates, times, versions, IPs, phones, ranges, sci-notation, and unicode.
+
+---
+
 ## [7.24.2] — 2026-06-30 — claim-auditor robustness (dotted-identifier fuzz fix)
 
 ### Fixed

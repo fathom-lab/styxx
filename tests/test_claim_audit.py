@@ -89,3 +89,38 @@ def test_single_dot_decimal_still_extracted():
     # the dotted-identifier mask must NOT swallow a genuine two-part decimal statistic
     r = audit_grounding("RSA was 0.222.", {})
     assert r.n_total == 1 and r.items[0].raw == "0.222"
+
+
+# --- 7.24.3 regression tests (deep fuzz sweep: datetime, dash-runs, unicode ×) ---
+
+def test_iso_datetime_not_a_claim():
+    # a T-suffixed timestamp must not defeat the ISO-date mask (the MM-DD used to leak as a range)
+    r = audit_grounding("logged 2026-06-30T14:30:00Z and 2026-06-30 14:30.", {})
+    assert r.n_total == 0, [n.raw for n in r.items]
+
+
+def test_dash_run_identifiers_not_claims():
+    # 3+ dash-joined groups are never a statistical range (which is always exactly two numbers):
+    # intl phone / DD-MM-YYYY dates must not yield phantom range claims
+    r = audit_grounding("call +1-555-123-4567 on 30-06-2026.", {})
+    assert r.n_total == 0, [n.raw for n in r.items]
+
+
+def test_genuine_two_number_range_preserved():
+    # the dash-run mask must NOT suppress a real range (exactly two numbers)
+    r = audit_grounding("collected 12-15 samples.", {})
+    assert r.n_total == 2 and all(n.kind == "range" for n in r.items)
+    assert {n.raw for n in r.items} == {"12", "15"}
+
+
+def test_unicode_multiplier_extracted_and_grounded():
+    # "3×" (unicode ×) was silently dropped by a trailing \b; it must extract as a multiplier and derive
+    r = audit_grounding("the signal is ~3× stronger.", {"high": 0.148, "low": 0.05})  # 0.148/0.05 ≈ 3
+    assert any(n.kind == "multiplier" for n in r.items), [(n.raw, n.kind) for n in r.items]
+    assert r.n_unsourced == 0
+
+
+def test_multiplier_not_matched_in_dimension():
+    # "3x2" is a dimension, not a 3-fold multiplier — must not extract a multiplier claim
+    r = audit_grounding("a 3x2 grid.", {})
+    assert not any(n.kind == "multiplier" for n in r.items), [(n.raw, n.kind) for n in r.items]
