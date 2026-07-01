@@ -1,0 +1,32 @@
+{
+  "_comment": "Phase-0 instrument freeze for the keystone depth-vs-truth experiment. Read from the pipeline, not assumed. Frozen with PREREG.md at staging commit. No correctness statistic derives from this file.",
+  "depth_metric": {
+    "symbol": "get_mean_depth",
+    "file": "research/experiment_12_power.py",
+    "git_repo": "clawd/research",
+    "git_sha": "fc6f2c3",
+    "definition": "mean of circuit_tracer.attribute(prompt, model, attribution_targets=[target], batch_size=16, max_feature_nodes=500, offload='cpu').active_features[:, 0] (the layer index of each active feature node)",
+    "reuse": "verbatim; this experiment validates the instrument, it does not modify it"
+  },
+  "model": {
+    "hf_id": "google/gemma-2-2b",
+    "revision": "main",
+    "variant": "BASE",
+    "variant_evidence": "experiment_12_power.py line 11 MODEL_NAME = 'google/gemma-2-2b' (not -it)",
+    "prompt_branch": "5-shot (Appendix A of PREREG.md)"
+  },
+  "sae": {
+    "hf_repo": "google/gemma-scope-2b-pt-transcoders",
+    "loader": "circuit_tracer 'gemma' preset via ReplacementModel.from_pretrained('google/gemma-2-2b', 'gemma', dtype=bf16, backend='transformerlens')",
+    "circuit_tracer_git_sha": "6d64f60",
+    "circuit_tracer_release": "2026-03-13 (#87)",
+    "layers": "preset default (all layers); resolved manifest dumped to results/sae_manifest.json at first load",
+    "dtype": "bfloat16"
+  },
+  "attribute_params": {"batch_size": 16, "max_feature_nodes": 500, "offload": "cpu"},
+  "seeds": {"generation": 7, "bootstrap": 7, "dataset_shuffle": 7},
+  "amendments_pending": {
+    "A0_sample_sizes": "UNSET (from pilot timing, §7)",
+    "A1_adaptation_freeze": "UNSET (answer-token span selection + aggregation, from pilot, §1)"
+  }
+}
