@@ -223,6 +223,10 @@ def main():
         "n_gen_errors": sum(1 for r in rows if "gen_error" in r),
         "n_depth_errors": sum(1 for r in rows if "depth_error" in r),
         "A0_hint": "median_item_seconds * n gives wall-clock; pick n_ID/n_OOD1 under ~8h (§7)",
+        "HALT_boundary": ("PILOT COMPLETE — the machine STOPS here. No main run chains (PREREG §9). "
+                          "Human reads this timing table + KG1 line, then commits A1 (adaptation freeze, "
+                          "a judgment call on pilot data) and A0 (sample sizes) as SEPARATE commits, and "
+                          "only THEN fires the main run."),
     }
     with open(os.path.join(OUT_DIR, "pilot_timing_report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
@@ -230,6 +234,8 @@ def main():
         f"median {report['median_item_seconds']}s/item")
     log(f"KG1_triggered={report['KG1_triggered']} | {report['KG1_note']}")
     log(f"report -> {os.path.join(OUT_DIR, 'pilot_timing_report.json')}")
+    log("HALT: pilot boundary reached. Nothing chains to the main run — A1 (adaptation) + A0 (sample "
+        "sizes) are the human checkpoint before main fires (PREREG §9).")
 
 
 if __name__ == "__main__":
