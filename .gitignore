@@ -25,6 +25,8 @@ htmlcov/
 # ── Venvs ─────────────────────────────────────────────────
 .venv/
 .venv-*/
+.venv_smoke/
+dist_smoke/
 venv/
 env/
 ENV/
