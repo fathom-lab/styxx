@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.24.2] — 2026-06-30 — claim-auditor robustness (dotted-identifier fuzz fix)
+
+### Fixed
+- **Dotted identifiers no longer misread as decimal claims** — semantic versions (`3.11.2`), tool versions
+  (`CUDA 12.4.1`), and IP addresses (`192.168.1.1`) previously leaked their sub-parts into the decimal
+  extractor (`3.11`/`.2`, `12.4`/`.1`, `.1`/`.1`). Any number with 3+ dotted segments is now masked before
+  scanning — the same class of fix as 7.24.1's ISO-date mask. Genuine single-dot decimals, CIs, and
+  scientific notation are unaffected.
+
++2 regression tests (13/13 pass). Found by a post-7.24.1 adversarial fuzz sweep of the extractor.
+
+---
+
 ## [7.24.1] — 2026-06-30 — claim-auditor robustness (post-release fuzz fixes)
 
 ### Fixed

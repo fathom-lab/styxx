@@ -75,3 +75,17 @@ def test_numeric_dict_keys_as_sources():
 def test_set_sources():
     r = audit_grounding("RSA 0.222.", {0.222, 0.5})
     assert r.n_unsourced == 0
+
+
+# --- 7.24.2 regression tests (dotted-identifier fuzz fix) ---
+
+def test_dotted_identifiers_not_claims():
+    # semver / IP / tool versions (3+ dotted segments) must not leak sub-parts as decimal claims
+    r = audit_grounding("Python 3.11.2 on CUDA 12.4.1, host 192.168.1.1.", {})
+    assert r.n_total == 0, [n.raw for n in r.items]
+
+
+def test_single_dot_decimal_still_extracted():
+    # the dotted-identifier mask must NOT swallow a genuine two-part decimal statistic
+    r = audit_grounding("RSA was 0.222.", {})
+    assert r.n_total == 1 and r.items[0].raw == "0.222"

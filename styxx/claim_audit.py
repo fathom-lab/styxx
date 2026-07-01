@@ -45,6 +45,7 @@ _SKIP = [
     re.compile(r"\b(?:18|19|20)\d{2}\b"),         # year
     re.compile(r"\bgpt-?2\b", re.I),              # model names with digits
     re.compile(r"\bv\d+(?:\.\d+)*\b", re.I),      # version tags
+    re.compile(r"\b\d+(?:\.\d+){2,}\b"),          # dotted identifier: semver / IP / tool version (3+ segments — sub-parts must not read as decimals)
 ]
 
 
