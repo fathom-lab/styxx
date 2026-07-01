@@ -30,7 +30,7 @@ Offline, numpy/sklearn only.
 """
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Callable, Optional
+from typing import Callable
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression

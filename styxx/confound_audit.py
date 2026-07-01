@@ -28,7 +28,7 @@ concept?) — this asks: is a *score* tracking the concept, or a confound?
       fair_score = report.guard(raw_score, confound_value)  # length/whatever-fair score
 """
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple
 import math
 
