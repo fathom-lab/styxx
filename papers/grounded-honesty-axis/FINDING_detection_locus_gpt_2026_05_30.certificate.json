@@ -1,0 +1,471 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_detection_locus_gpt_2026_05_30.md",
+  "document_sha256": "1f2fdae9a92ccd1df785d867dd13cc1cae37f7ba2851ae31552381bd9d5e48d8",
+  "receipts_sha256": {
+    "detection_locus_gpt_result.json": "b837dfea6799777aaf6126c740d8bb14b25036a77e015d642e8277e22776296d"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "0.20"
+    },
+    {
+      "line": 5,
+      "token": "20"
+    },
+    {
+      "line": 5,
+      "token": "10"
+    },
+    {
+      "line": 12,
+      "token": "10"
+    },
+    {
+      "line": 13,
+      "token": "0.20"
+    },
+    {
+      "line": 16,
+      "token": "0.20"
+    },
+    {
+      "line": 25,
+      "token": "0.974"
+    },
+    {
+      "line": 25,
+      "token": "0.20"
+    },
+    {
+      "line": 27,
+      "token": "29"
+    },
+    {
+      "line": 27,
+      "token": "18"
+    },
+    {
+      "line": 37,
+      "token": "0.20"
+    },
+    {
+      "line": 62,
+      "token": "10"
+    },
+    {
+      "line": 62,
+      "token": "1.0"
+    },
+    {
+      "line": 64,
+      "token": "20"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "# FINDING \u2014 single-pass FIRST-TOKEN confabulation legibility FAILS on the closed model gpt-4o-mini (the first SURVIVED in the arc \u2014 i.e. the BOUNDARY): resampli",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B1_resampling_instability.auc"
+    },
+    {
+      "line": 1,
+      "token": "0.76",
+      "value": 0.76,
+      "decimals": 2,
+      "context": "# FINDING \u2014 single-pass FIRST-TOKEN confabulation legibility FAILS on the closed model gpt-4o-mini (the first SURVIVED in the arc \u2014 i.e. the BOUNDARY): resampli",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B3_single_pass_neg_margin.auc"
+    },
+    {
+      "line": 1,
+      "token": "+0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "# FINDING \u2014 single-pass FIRST-TOKEN confabulation legibility FAILS on the closed model gpt-4o-mini (the first SURVIVED in the arc \u2014 i.e. the BOUNDARY): resampli",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B_contrast_resampling_minus_single_pass.contrast"
+    },
+    {
+      "line": 1,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "# FINDING \u2014 single-pass FIRST-TOKEN confabulation legibility FAILS on the closed model gpt-4o-mini (the first SURVIVED in the arc \u2014 i.e. the BOUNDARY): resampli",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "OpenAI API \u2014 single-pass entropy/margin from the first generated token's `top_logprobs=20`, N=10",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "OpenAI API \u2014 single-pass entropy/margin from the first generated token's `top_logprobs=20`, N=10",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "The detection-locus arc found single-pass first-token entropy/margin tie N=10 resampling on small",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "WHITE-BOX open models (Qwen/Llama/Gemma, every B_contrast < 0.20), and `styxx.single_pass_confab`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "SURVIVED (B_contrast \u2265 0.20, resampling wins) was the substantive, pre-stated outcome.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "| **B1** resampling instability | **0.974** | confab IS detectable (by 10 resamples) |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B1** resampling instability | **0.974** | confab IS detectable (by 10 resamples) |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B1_resampling_instability.auc"
+    },
+    {
+      "line": 22,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| **B1** resampling instability | **0.974** | confab IS detectable (by 10 resamples) |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B1** resampling instability | **0.974** | confab IS detectable (by 10 resamples) |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:n_resample"
+    },
+    {
+      "line": 23,
+      "token": "0.753",
+      "value": 0.753,
+      "decimals": 3,
+      "context": "| B2 single-pass first-token entropy | 0.753 | the shipped gate \u2014 WEAK |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | B2 single-pass first-token entropy | 0.753 | the shipped gate \u2014 WEAK |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B2_single_pass_entropy.auc"
+    },
+    {
+      "line": 24,
+      "token": "0.759",
+      "value": 0.759,
+      "decimals": 3,
+      "context": "| B3 single-pass first-token \u2212margin | 0.759 | the shipped gate \u2014 WEAK |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | B3 single-pass first-token \u2212margin | 0.759 | the shipped gate \u2014 WEAK |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B3_single_pass_neg_margin.auc"
+    },
+    {
+      "line": 25,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "| **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.759",
+      "value": 0.759,
+      "decimals": 3,
+      "context": "| **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B3_single_pass_neg_margin.auc"
+    },
+    {
+      "line": 25,
+      "token": "+0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "| **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B_contrast_resampling_minus_single_pass.contrast"
+    },
+    {
+      "line": 25,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "binding_context": "| signal | AUC (confab vs correct), gpt-4o-mini | role | | **B_contrast** = 0.974 \u2212 0.759 | **+0.216** (\u22650.20) | **SURVIVED \u2192 single-pass FAILS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "0.847",
+      "value": 0.847,
+      "decimals": 3,
+      "context": "| confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_instability"
+    },
+    {
+      "line": 29,
+      "token": "0.233",
+      "value": 0.233,
+      "decimals": 3,
+      "context": "| confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_clean_entropy"
+    },
+    {
+      "line": 29,
+      "token": "4.76",
+      "value": 4.76,
+      "decimals": 2,
+      "context": "| confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_logit_margin"
+    },
+    {
+      "line": 29,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "| confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | confab | **0.847** | 0.233 | 4.76 | 0.00 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_modal_correct"
+    },
+    {
+      "line": 30,
+      "token": "0.031",
+      "value": 0.031,
+      "decimals": 3,
+      "context": "| correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_instability"
+    },
+    {
+      "line": 30,
+      "token": "0.087",
+      "value": 0.087,
+      "decimals": 3,
+      "context": "| correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_clean_entropy"
+    },
+    {
+      "line": 30,
+      "token": "10.14",
+      "value": 10.14,
+      "decimals": 2,
+      "context": "| correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_logit_margin"
+    },
+    {
+      "line": 30,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "| correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "binding_context": "| group means (n_conf=29, n_corr=18, powered) | instability | first-token entropy | first-token margin | modal-resample correct | | correct | **0.031** | 0.087 | 10.14 | 0.94 |",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_modal_correct"
+    },
+    {
+      "line": 36,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "gpt-4o-mini's confabulation from its correct answers nearly perfectly (AUC 0.974) while the",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B1_resampling_instability.auc"
+    },
+    {
+      "line": 37,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "first-token signal barely beats chance (0.75-0.76). B_contrast +0.216 clears the 0.20 bar \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B2_single_pass_entropy.auc"
+    },
+    {
+      "line": 37,
+      "token": "+0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "first-token signal barely beats chance (0.75-0.76). B_contrast +0.216 clears the 0.20 bar \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B_contrast_resampling_minus_single_pass.contrast"
+    },
+    {
+      "line": 37,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "first-token signal barely beats chance (0.75-0.76). B_contrast +0.216 clears the 0.20 bar \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.233",
+      "value": 0.233,
+      "decimals": 3,
+      "context": "correct have LOW first-token entropy (0.233 vs 0.087): gpt-4o-mini is confident at the leading",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_clean_entropy"
+    },
+    {
+      "line": 40,
+      "token": "0.087",
+      "value": 0.087,
+      "decimals": 3,
+      "context": "correct have LOW first-token entropy (0.233 vs 0.087): gpt-4o-mini is confident at the leading",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_clean_entropy"
+    },
+    {
+      "line": 50,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "RESAMPLING-based grounding (`grounded_honesty` / `audit_claim`, AUC 0.974 here), which pays 10x",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B1_resampling_instability.auc"
+    },
+    {
+      "line": 56,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "5. **Correctness bound untouched.** modal_correct 0.00 (confab) vs 0.94 (correct): gpt-4o-mini is",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.confab_modal_correct"
+    },
+    {
+      "line": 56,
+      "token": "0.94",
+      "value": 0.94,
+      "decimals": 2,
+      "context": "5. **Correctness bound untouched.** modal_correct 0.00 (confab) vs 0.94 (correct): gpt-4o-mini is",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:means.correct_modal_correct"
+    },
+    {
+      "line": 62,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "feasibility-grade (29 confab + 18 correct, powered); resampling N=10 at T=1.0 (exact-integer",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:n_confab_usable"
+    },
+    {
+      "line": 62,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "feasibility-grade (29 confab + 18 correct, powered); resampling N=10 at T=1.0 (exact-integer",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:n_correct_usable"
+    },
+    {
+      "line": 62,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "feasibility-grade (29 confab + 18 correct, powered); resampling N=10 at T=1.0 (exact-integer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 62,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "feasibility-grade (29 confab + 18 correct, powered); resampling N=10 at T=1.0 (exact-integer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(TRUNCATED \u2014 entropy is a lower-bound proxy; OpenAI caps top_logprobs at 20, which if anything",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 75,
+      "token": "+0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "gpt-4o-mini (B_contrast +0.216, the arc's first SURVIVED), because confident confabulation there is",
+      "status": "VERIFIED",
+      "receipt_ref": "detection_locus_gpt_result.json:B_contrast_resampling_minus_single_pass.contrast"
+    }
+  ]
+}

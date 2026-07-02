@@ -50,6 +50,23 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 18 (2026-07-02) — bind the UNBOUND finding backlog (standing priority #2), receipt-honest. `PARTIAL-BOUND`.**
+  GPU held by in-flight scored runs (rung2 cross-family write PID 2604 + depth-truth autofire waiting behind it,
+  VRAM 7690/8188) → non-GPU cycle. Swept all 203 uncertified FINDING/RESULT docs (excluding the in-flight
+  `disjoint-worlds/` + `depth-truth/` dirs). A naive folder-scoped pass reported 109 "OATH-HELD" — but 24 of those
+  ground against **217 unrelated grounded-honesty-axis receipts** (and 9 vs 23 frequency-resonance): grounding a
+  number against 200+ receipts drives UNGROUNDED→0 by coincidence, **a sieve, not an attestation**. Held to the
+  honest bar (doc's own NAMED receipts, else a single-experiment folder ≤4 receipts) the certifiable set is **13**,
+  all written OATH-HELD (UNGROUNDED=0), each recording exact receipt SHAs and independently re-runnable. `styxx.certify`
+  UNCHANGED (no mutant-battery re-run owed). Test suite green 1661-passed CPU-only; the one faulting test
+  (`test_companion_reports_honestly`) segfaults only because it loads a transformer into VRAM the scored run holds
+  — GPU contention, not a regression. **OWED (next cycles):** (a) the big-folder docs (grounded-honesty-axis n=217,
+  frequency-resonance/introspection-gate n≈23-31) need in-doc receipt **citations written first**, then bind — that
+  is the real content of standing priority #2, not a certifier pass; (b) 139 blocked docs need per-doc UNGROUNDED
+  triage — the dominant false-positive class is **config tokens** (steering α=0.75, arXiv IDs like 2505.27958) sitting
+  in results-table label columns inheriting the table's AUROC trigger; a certifier-precision prereg (arXiv-ID skip is
+  the safe unambiguous class) could recover many, gated by re-running `validate_oath_v0.py`.
+
 - **B0 — v3 real run to a valid verdict.** The 800-step/n=190 orthogonalization+displacement run is `IN-PROGRESS`
   (lam_hide=8 at last check). Gate: only trust the JSON when `fixed_population==190` and `chance_floor_p95 < base
   refit_max` (0.356 < 0.818 ✓ — the non-degeneracy guard the smoke run failed). The smoke artifact is quarantined

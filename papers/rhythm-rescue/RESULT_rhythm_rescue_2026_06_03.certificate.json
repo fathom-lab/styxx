@@ -1,0 +1,462 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_rhythm_rescue_2026_06_03.md",
+  "document_sha256": "1f0b0a61d281c9747dd4ec01e55c344ca35ec37e7e2a38bd54d5bdfa0dc393ea",
+  "receipts_sha256": {
+    "rhythm_rescue_result.json": "2dfd6118d267023bbc7aa74654e7f9053e15d6b54963e9d847bae93f8dce5599"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 25,
+    "ABSTAIN": 15,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "3"
+    },
+    {
+      "line": 18,
+      "token": "10"
+    },
+    {
+      "line": 19,
+      "token": "12"
+    },
+    {
+      "line": 20,
+      "token": "20"
+    },
+    {
+      "line": 22,
+      "token": "0.80"
+    },
+    {
+      "line": 26,
+      "token": "2"
+    },
+    {
+      "line": 50,
+      "token": "7"
+    },
+    {
+      "line": 50,
+      "token": "2"
+    },
+    {
+      "line": 50,
+      "token": "3"
+    },
+    {
+      "line": 53,
+      "token": "0.80"
+    },
+    {
+      "line": 53,
+      "token": "7"
+    },
+    {
+      "line": 53,
+      "token": "2"
+    },
+    {
+      "line": 69,
+      "token": "3"
+    },
+    {
+      "line": 71,
+      "token": "7"
+    },
+    {
+      "line": 71,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "\u03b8\u22610, real eigenvalues, no rotation), matched state & parameters, ordered-copy task, 3 seeds.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| 1 | 1.000 | 1.000 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 1 | 1.000 | 1.000 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:config.seeds[1]"
+    },
+    {
+      "line": 12,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| 1 | 1.000 | 1.000 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 1 | 1.000 | 1.000 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:config.seeds[1]"
+    },
+    {
+      "line": 13,
+      "token": "0.988",
+      "value": 0.988,
+      "decimals": 3,
+      "context": "| 2 | 0.988 | 0.959 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 2 | 0.988 | 0.959 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.2"
+    },
+    {
+      "line": 13,
+      "token": "0.959",
+      "value": 0.959,
+      "decimals": 3,
+      "context": "| 2 | 0.988 | 0.959 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 2 | 0.988 | 0.959 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.2"
+    },
+    {
+      "line": 14,
+      "token": "0.988",
+      "value": 0.988,
+      "decimals": 3,
+      "context": "| 3 | 0.988 | 0.823 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 3 | 0.988 | 0.823 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.2"
+    },
+    {
+      "line": 14,
+      "token": "0.823",
+      "value": 0.823,
+      "decimals": 3,
+      "context": "| 3 | 0.988 | 0.823 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 3 | 0.988 | 0.823 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.3"
+    },
+    {
+      "line": 15,
+      "token": "0.974",
+      "value": 0.974,
+      "decimals": 3,
+      "context": "| 4 | 0.974 | 0.723 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 4 | 0.974 | 0.723 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.4"
+    },
+    {
+      "line": 15,
+      "token": "0.723",
+      "value": 0.723,
+      "decimals": 3,
+      "context": "| 4 | 0.974 | 0.723 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 4 | 0.974 | 0.723 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.4"
+    },
+    {
+      "line": 16,
+      "token": "0.895",
+      "value": 0.895,
+      "decimals": 3,
+      "context": "| 6 | 0.895 | 0.594 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 6 | 0.895 | 0.594 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.6"
+    },
+    {
+      "line": 16,
+      "token": "0.594",
+      "value": 0.594,
+      "decimals": 3,
+      "context": "| 6 | 0.895 | 0.594 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 6 | 0.895 | 0.594 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.6"
+    },
+    {
+      "line": 17,
+      "token": "0.727",
+      "value": 0.727,
+      "decimals": 3,
+      "context": "| 8 | 0.727 | 0.463 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 8 | 0.727 | 0.463 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.8"
+    },
+    {
+      "line": 17,
+      "token": "0.463",
+      "value": 0.463,
+      "decimals": 3,
+      "context": "| 8 | 0.727 | 0.463 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 8 | 0.727 | 0.463 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.8"
+    },
+    {
+      "line": 18,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| 10 | 0.635 | 0.385 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 10 | 0.635 | 0.385 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.635",
+      "value": 0.635,
+      "decimals": 3,
+      "context": "| 10 | 0.635 | 0.385 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 10 | 0.635 | 0.385 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.10"
+    },
+    {
+      "line": 18,
+      "token": "0.385",
+      "value": 0.385,
+      "decimals": 3,
+      "context": "| 10 | 0.635 | 0.385 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 10 | 0.635 | 0.385 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.10"
+    },
+    {
+      "line": 19,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| 12 | 0.593 | 0.318 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 12 | 0.593 | 0.318 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.593",
+      "value": 0.593,
+      "decimals": 3,
+      "context": "| 12 | 0.593 | 0.318 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 12 | 0.593 | 0.318 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.12"
+    },
+    {
+      "line": 19,
+      "token": "0.318",
+      "value": 0.318,
+      "decimals": 3,
+      "context": "| 12 | 0.593 | 0.318 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 12 | 0.593 | 0.318 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:free.0.acc.15"
+    },
+    {
+      "line": 20,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| 20 | 0.331 | 0.205 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 20 | 0.331 | 0.205 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.331",
+      "value": 0.331,
+      "decimals": 3,
+      "context": "| 20 | 0.331 | 0.205 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 20 | 0.331 | 0.205 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_free.20"
+    },
+    {
+      "line": 20,
+      "token": "0.205",
+      "value": 0.205,
+      "decimals": 3,
+      "context": "| 20 | 0.331 | 0.205 |",
+      "binding_context": "| K (items) | FREE acc | CLAMPED acc | | 20 | 0.331 | 0.205 |",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.mean_acc_clamped.20"
+    },
+    {
+      "line": 22,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "- **Capacity (kcap, acc \u2265 0.80):** FREE **6.0** vs CLAMPED **2.67** \u2192 oscillation **\u2248 doubles**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "6.0",
+      "value": 6.0,
+      "decimals": 1,
+      "context": "- **Capacity (kcap, acc \u2265 0.80):** FREE **6.0** vs CLAMPED **2.67** \u2192 oscillation **\u2248 doubles**",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:config.kgrid[4]"
+    },
+    {
+      "line": 22,
+      "token": "2.67",
+      "value": 2.67,
+      "decimals": 2,
+      "context": "- **Capacity (kcap, acc \u2265 0.80):** FREE **6.0** vs CLAMPED **2.67** \u2192 oscillation **\u2248 doubles**",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.kcap_clamped"
+    },
+    {
+      "line": 23,
+      "token": "3.3",
+      "value": 3.3,
+      "decimals": 1,
+      "context": "ordered-memory capacity (gap 3.3 items).",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.gap"
+    },
+    {
+      "line": 24,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "- **FREE kept its oscillation:** osc_use = **0.62** after training (it did *not* learn \u03b8\u21920) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:gate.osc_use_free"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **FREE kept its oscillation:** osc_use = **0.62** after training (it did *not* learn \u03b8\u21920) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:clamped.0.osc_use"
+    },
+    {
+      "line": 26,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- FREE > CLAMPED at **every** K \u2265 2, and the gap **widens with K** (the signature of a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "FREE's capacity (~6) lands inside the **7\u00b12** range; the no-rhythm net (~3) is far below.",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:free.0.kcap"
+    },
+    {
+      "line": 50,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "FREE's capacity (~6) lands inside the **7\u00b12** range; the no-rhythm net (~3) is far below.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "FREE's capacity (~6) lands inside the **7\u00b12** range; the no-rhythm net (~3) is far below.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "FREE's capacity (~6) lands inside the **7\u00b12** range; the no-rhythm net (~3) is far below.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "size, task difficulty, and the 0.80 threshold, so we do **not** claim 7\u00b12 here. It is a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 53,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "size, task difficulty, and the 0.80 threshold, so we do **not** claim 7\u00b12 here. It is a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "size, task difficulty, and the 0.80 threshold, so we do **not** claim 7\u00b12 here. It is a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "- One function (ordered copy), one architecture (LRU), n=3 seeds, capacity at a 0.80",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 69,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "- One function (ordered copy), one architecture (LRU), n=3 seeds, capacity at a 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "rhythm_rescue_result.json:config.acc_thr"
+    },
+    {
+      "line": 71,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "not the absolute numbers, and do not over-read the 7\u00b12 coincidence.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 71,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "not the absolute numbers, and do not over-read the 7\u00b12 coincidence.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

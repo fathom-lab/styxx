@@ -1,0 +1,297 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_ai_brain_vision_2026_06_03.md",
+  "document_sha256": "9437d979212ce01a5e2b4f58edd3d67a631aae279416cbbb39d2c510e6347bc1",
+  "receipts_sha256": {
+    "ai_brain_vision_result.json": "71dc50c80a9a9f594adbe3ea1df621f248a2b2b712956b6b1945be39b3b95389"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 10,
+      "token": "0.10"
+    },
+    {
+      "line": 10,
+      "token": "0"
+    },
+    {
+      "line": 24,
+      "token": "0.10"
+    },
+    {
+      "line": 35,
+      "token": "0.56"
+    },
+    {
+      "line": 35,
+      "token": "0.16"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "with a **vision model** (CLIP-image features over the real THINGS object images, 53 nouns) and a",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:n_nouns"
+    },
+    {
+      "line": 10,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "partial(AI, brain | lexical + vision) \u2265 0.10 and > 0, and the LLM's unique brain-variance beyond",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "partial(AI, brain | lexical + vision) \u2265 0.10 and > 0, and the LLM's unique brain-variance beyond",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.168",
+      "value": 0.168,
+      "decimals": 3,
+      "context": "| \u2014 (raw) | 0.168 |",
+      "binding_context": "| controlling for\u2026 | partial(AI, brain) | | \u2014 (raw) | 0.168 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.raw"
+    },
+    {
+      "line": 20,
+      "token": "0.182",
+      "value": 0.182,
+      "decimals": 3,
+      "context": "| word-form (lexical) | 0.182 |",
+      "binding_context": "| controlling for\u2026 | partial(AI, brain) | | word-form (lexical) | 0.182 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex"
+    },
+    {
+      "line": 21,
+      "token": "0.107",
+      "value": 0.107,
+      "decimals": 3,
+      "context": "| **+ VISION (CLIP-image)** | **0.107** |",
+      "binding_context": "| controlling for\u2026 | partial(AI, brain) | | **+ VISION (CLIP-image)** | **0.107** |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision"
+    },
+    {
+      "line": 22,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "| + vision + human behavior (VICE) | 0.043 |",
+      "binding_context": "| controlling for\u2026 | partial(AI, brain) | | + vision + human behavior (VICE) | 0.043 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision+behavioral"
+    },
+    {
+      "line": 24,
+      "token": "0.182",
+      "value": 0.182,
+      "decimals": 3,
+      "context": "**AI\u2192brain survives the vision control (0.182 \u2192 0.107 \u2265 0.10): the match is genuinely (partly) about",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex"
+    },
+    {
+      "line": 24,
+      "token": "0.107",
+      "value": 0.107,
+      "decimals": 3,
+      "context": "**AI\u2192brain survives the vision control (0.182 \u2192 0.107 \u2265 0.10): the match is genuinely (partly) about",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision"
+    },
+    {
+      "line": 24,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "**AI\u2192brain survives the vision control (0.182 \u2192 0.107 \u2265 0.10): the match is genuinely (partly) about",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "| **behavioral human (VICE) \u2192 brain** | **0.247** | the **strongest** single brain predictor |",
+      "binding_context": "| reference (partial | lexical) | value | reading | | **behavioral human (VICE) \u2192 brain** | **0.247** | the **strongest** single brain predictor |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:reference_partials.behavioral->brain|lex"
+    },
+    {
+      "line": 30,
+      "token": "0.237",
+      "value": 0.237,
+      "decimals": 3,
+      "context": "| AI \u2192 brain (best single) | 0.237 | as strong as behavior, individually |",
+      "binding_context": "| reference (partial | lexical) | value | reading | | AI \u2192 brain (best single) | 0.237 | as strong as behavior, individually |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:reference_partials.AI->brain|lex (best single)"
+    },
+    {
+      "line": 31,
+      "token": "0.172",
+      "value": 0.172,
+      "decimals": 3,
+      "context": "| vision (CLIP-image) \u2192 brain | 0.172 | **the brain RDM is substantially visual** |",
+      "binding_context": "| reference (partial | lexical) | value | reading | | vision (CLIP-image) \u2192 brain | 0.172 | **the brain RDM is substantially visual** |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:reference_partials.vision->brain|lex"
+    },
+    {
+      "line": 32,
+      "token": "0.543",
+      "value": 0.543,
+      "decimals": 3,
+      "context": "| AI \u2192 vision | **0.543** | **the LLM's own geometry is itself half-visual** |",
+      "binding_context": "| reference (partial | lexical) | value | reading | | AI \u2192 vision | **0.543** | **the LLM's own geometry is itself half-visual** |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:reference_partials.AI->vision|lex (how visual is AI geom)"
+    },
+    {
+      "line": 35,
+      "token": "0.56",
+      "value": 0.56,
+      "decimals": 2,
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.081",
+      "value": 0.081,
+      "decimals": 3,
+      "context": "model reaches **R\u00b2 \u2248 0.081**, so these unique slivers are a few % of the *explainable* variance.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:brain_R2_by_predictor_set.ai+vis+beh+lex"
+    },
+    {
+      "line": 40,
+      "token": "+2.2",
+      "value": 2.2,
+      "decimals": 1,
+      "context": "| behavioral-human beyond AI + vision + lexical | **+2.2%** |",
+      "binding_context": "| unique contribution to brain R\u00b2 | value | | behavioral-human beyond AI + vision + lexical | **+2.2%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:unique_contributions_to_brain_R2.behavioral_beyond_AI+vision+lex"
+    },
+    {
+      "line": 41,
+      "token": "+1.1",
+      "value": 1.1,
+      "decimals": 1,
+      "context": "| AI beyond vision + lexical | +1.1% |",
+      "binding_context": "| unique contribution to brain R\u00b2 | value | | AI beyond vision + lexical | +1.1% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:unique_contributions_to_brain_R2.AI_beyond_vision+lex"
+    },
+    {
+      "line": 42,
+      "token": "+0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "| vision beyond AI + lexical | +0.7% |",
+      "binding_context": "| unique contribution to brain R\u00b2 | value | | vision beyond AI + lexical | +0.7% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:unique_contributions_to_brain_R2.vision_beyond_AI+lex"
+    },
+    {
+      "line": 43,
+      "token": "+0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "| **AI beyond vision + behavioral + lexical** | **+0.2%** |",
+      "binding_context": "| unique contribution to brain R\u00b2 | value | | **AI beyond vision + behavioral + lexical** | **+0.2%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.raw"
+    },
+    {
+      "line": 44,
+      "token": "+0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| vision beyond AI + behavioral + lexical | +0.0% |",
+      "binding_context": "| unique contribution to brain R\u00b2 | value | | vision beyond AI + behavioral + lexical | +0.0% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:noise_ceiling_lo"
+    },
+    {
+      "line": 51,
+      "token": "0.54",
+      "value": 0.54,
+      "decimals": 2,
+      "context": "visual; the LLM's geometry is itself ~half visual (0.54); and the LLM adds almost nothing UNIQUE to",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:reference_partials.AI->vision|lex (how visual is AI geom)"
+    },
+    {
+      "line": 52,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "brain prediction once human behavior is included (unique 0.043 / +0.2% R\u00b2). **Human behavioral",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision+behavioral"
+    },
+    {
+      "line": 52,
+      "token": "+0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "brain prediction once human behavior is included (unique 0.043 / +0.2% R\u00b2). **Human behavioral",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.raw"
+    },
+    {
+      "line": 64,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "- 53 nouns; one example image per concept; one fMRI dataset (noisy, ceiling ~0.4\u20130.56). The modern",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:n_nouns"
+    },
+    {
+      "line": 64,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "- 53 nouns; one example image per concept; one fMRI dataset (noisy, ceiling ~0.4\u20130.56). The modern",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_vision_result.json:noise_ceiling_lo"
+    }
+  ]
+}

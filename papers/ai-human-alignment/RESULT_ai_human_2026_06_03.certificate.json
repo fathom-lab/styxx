@@ -1,0 +1,654 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_ai_human_2026_06_03.md",
+  "document_sha256": "7da7048293f5b6a6c077038d1102b6237e83d6bb9365a261f2333c2ef7124b81",
+  "receipts_sha256": {
+    "ai_human_reliability_result.json": "1d406e1e00ac30eb31a7c3bc33705ac833d2a4ee15b8be63179a3045d64aa7f0",
+    "ai_human_result.json": "dd5ec419b308eb21bd64ebfe1bf4fe9d8095ba26ef8cb15de5483aef5a1c0328"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 50,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "1,854"
+    },
+    {
+      "line": 5,
+      "token": "42"
+    },
+    {
+      "line": 5,
+      "token": "120"
+    },
+    {
+      "line": 31,
+      "token": "0.764"
+    },
+    {
+      "line": 35,
+      "token": "13"
+    },
+    {
+      "line": 35,
+      "token": "0.07"
+    },
+    {
+      "line": 53,
+      "token": "13"
+    },
+    {
+      "line": 54,
+      "token": "0.81"
+    },
+    {
+      "line": 58,
+      "token": "13"
+    },
+    {
+      "line": 65,
+      "token": "0.81"
+    },
+    {
+      "line": 68,
+      "token": "13"
+    },
+    {
+      "line": 71,
+      "token": "13"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "1,854",
+      "value": 1854.0,
+      "decimals": 0,
+      "context": "1,854 objects \u00d7 42 human dimensions distilled from ~1.5M human odd-one-out judgments. **120** of our",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "1,854 objects \u00d7 42 human dimensions distilled from ~1.5M human odd-one-out judgments. **120** of our",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "1,854 objects \u00d7 42 human dimensions distilled from ~1.5M human odd-one-out judgments. **120** of our",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "0.650",
+      "value": 0.65,
+      "decimals": 3,
+      "context": "Converging instruct models align with the human RDM at **mean 0.650** (shuffled-concept control",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H1.mean_human_align_instruct"
+    },
+    {
+      "line": 11,
+      "token": "0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "**0.000 \u00b1 0.010**). For context, purpose-built sentence embedders trained *on* similarity:",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H1.ctrl_mean"
+    },
+    {
+      "line": 11,
+      "token": "0.010",
+      "value": 0.01,
+      "decimals": 3,
+      "context": "**0.000 \u00b1 0.010**). For context, purpose-built sentence embedders trained *on* similarity:",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H1.ctrl_sd"
+    },
+    {
+      "line": 12,
+      "token": "0.602",
+      "value": 0.602,
+      "decimals": 3,
+      "context": "MiniLM **0.602**, mpnet **0.652**. **The LLMs match humans as well as the dedicated embedders do.**",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:embedder_human_align.MiniLM"
+    },
+    {
+      "line": 12,
+      "token": "0.652",
+      "value": 0.652,
+      "decimals": 3,
+      "context": "MiniLM **0.602**, mpnet **0.652**. **The LLMs match humans as well as the dedicated embedders do.**",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:embedder_human_align.mpnet"
+    },
+    {
+      "line": 13,
+      "token": "0.74",
+      "value": 0.74,
+      "decimals": 2,
+      "context": "Top single models reach **0.74** \u2014 plausibly near the human-embedding noise ceiling.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.human"
+    },
+    {
+      "line": 17,
+      "token": "0.744",
+      "value": 0.744,
+      "decimals": 3,
+      "context": "| gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2-xl.human"
+    },
+    {
+      "line": 17,
+      "token": "0.982",
+      "value": 0.982,
+      "decimals": 3,
+      "context": "| gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2-xl.reliability"
+    },
+    {
+      "line": 17,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "| gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-1.5B.human"
+    },
+    {
+      "line": 17,
+      "token": "0.903",
+      "value": 0.903,
+      "decimals": 3,
+      "context": "| gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-1.5B.reliability"
+    },
+    {
+      "line": 18,
+      "token": "0.741",
+      "value": 0.741,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2-large.human"
+    },
+    {
+      "line": 18,
+      "token": "0.983",
+      "value": 0.983,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2-large.reliability"
+    },
+    {
+      "line": 18,
+      "token": "0.670",
+      "value": 0.67,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Phi-3.5.human"
+    },
+    {
+      "line": 18,
+      "token": "0.844",
+      "value": 0.844,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Phi-3.5.reliability"
+    },
+    {
+      "line": 19,
+      "token": "0.737",
+      "value": 0.737,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.human"
+    },
+    {
+      "line": 19,
+      "token": "0.971",
+      "value": 0.971,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.reliability"
+    },
+    {
+      "line": 19,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-3B.human"
+    },
+    {
+      "line": 19,
+      "token": "0.891",
+      "value": 0.891,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-1B | 0.737 | 0.971 | Qwen-3B | 0.667 | 0.891 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-3B.reliability"
+    },
+    {
+      "line": 20,
+      "token": "0.716",
+      "value": 0.716,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-410m.human"
+    },
+    {
+      "line": 20,
+      "token": "0.969",
+      "value": 0.969,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-410m.reliability"
+    },
+    {
+      "line": 20,
+      "token": "0.622",
+      "value": 0.622,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-70m.human"
+    },
+    {
+      "line": 20,
+      "token": "0.954",
+      "value": 0.954,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-410m | 0.716 | 0.969 | pythia-70m | 0.622 | 0.954 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-70m.reliability"
+    },
+    {
+      "line": 21,
+      "token": "0.704",
+      "value": 0.704,
+      "decimals": 3,
+      "context": "| Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-0.5B.human"
+    },
+    {
+      "line": 21,
+      "token": "0.854",
+      "value": 0.854,
+      "decimals": 3,
+      "context": "| Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-0.5B.reliability"
+    },
+    {
+      "line": 21,
+      "token": "0.457",
+      "value": 0.457,
+      "decimals": 3,
+      "context": "| Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gemma-2-2b.human"
+    },
+    {
+      "line": 21,
+      "token": "0.935",
+      "value": 0.935,
+      "decimals": 3,
+      "context": "| Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Qwen-0.5B | 0.704 | 0.854 | gemma-2-2b | 0.457 | 0.935 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gemma-2-2b.reliability"
+    },
+    {
+      "line": 22,
+      "token": "0.701",
+      "value": 0.701,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-3B.human"
+    },
+    {
+      "line": 22,
+      "token": "0.971",
+      "value": 0.971,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.reliability"
+    },
+    {
+      "line": 22,
+      "token": "0.181",
+      "value": 0.181,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2.human"
+    },
+    {
+      "line": 22,
+      "token": "0.420",
+      "value": 0.42,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | Llama-3B | 0.701 | 0.971 | gpt2 (124M) | 0.181 | 0.420 |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2.reliability"
+    },
+    {
+      "line": 23,
+      "token": "0.700",
+      "value": 0.7,
+      "decimals": 3,
+      "context": "| pythia-160m | 0.700 | 0.967 | | | |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-160m | 0.700 | 0.967 | | | |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-160m.human"
+    },
+    {
+      "line": 23,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "| pythia-160m | 0.700 | 0.967 | | | |",
+      "binding_context": "| model | human-align | reliability | model | human-align | reliability | | pythia-160m | 0.700 | 0.967 | | | |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-160m.reliability"
+    },
+    {
+      "line": 29,
+      "token": "0.808",
+      "value": 0.808,
+      "decimals": 3,
+      "context": "Across models, machine-convergence predicts human-alignment (Spearman **0.808**). But that is largely",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-160m.convergence"
+    },
+    {
+      "line": 31,
+      "token": "0.764",
+      "value": 0.764,
+      "decimals": 3,
+      "context": "reliability at **\u03c1 = 0.764**. Partialling reliability out:",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.808",
+      "value": 0.808,
+      "decimals": 3,
+      "context": "> conv\u2192human  **0.808 \u2192 0.599** (control reliability) **\u2192 0.600** (control reliability + size).",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-160m.convergence"
+    },
+    {
+      "line": 33,
+      "token": "0.599",
+      "value": 0.599,
+      "decimals": 3,
+      "context": "> conv\u2192human  **0.808 \u2192 0.599** (control reliability) **\u2192 0.600** (control reliability + size).",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:rho_partial_reliability"
+    },
+    {
+      "line": 33,
+      "token": "0.600",
+      "value": 0.6,
+      "decimals": 3,
+      "context": "> conv\u2192human  **0.808 \u2192 0.599** (control reliability) **\u2192 0.600** (control reliability + size).",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:rho_partial_reliability_and_size"
+    },
+    {
+      "line": 35,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "A residual remains, but at **n = 13 it is borderline** (p \u2248 0.07) and hard to separate from \"every",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "0.07",
+      "value": 0.07,
+      "decimals": 2,
+      "context": "A residual remains, but at **n = 13 it is borderline** (p \u2248 0.07) and hard to separate from \"every",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "(Qwen-3B 0.667 \u2264 Qwen-0.5B 0.704; the chart is topped by gpt2-large/xl). The honest driver is the",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-3B.human"
+    },
+    {
+      "line": 37,
+      "token": "0.704",
+      "value": 0.704,
+      "decimals": 3,
+      "context": "(Qwen-3B 0.667 \u2264 Qwen-0.5B 0.704; the chart is topped by gpt2-large/xl). The honest driver is the",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-0.5B.human"
+    },
+    {
+      "line": 42,
+      "token": "0.688",
+      "value": 0.688,
+      "decimals": 3,
+      "context": "beat individuals at matching humans. It does **not**: consensus **0.688** < best single **0.744**,",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:consensus_human"
+    },
+    {
+      "line": 42,
+      "token": "0.744",
+      "value": 0.744,
+      "decimals": 3,
+      "context": "beat individuals at matching humans. It does **not**: consensus **0.688** < best single **0.744**,",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.gpt2-xl.human"
+    },
+    {
+      "line": 43,
+      "token": "0.700",
+      "value": 0.7,
+      "decimals": 3,
+      "context": "\u2248 median **0.700**; even a reliability-screened strong-models-only consensus (**0.735**) does not beat",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.pythia-160m.human"
+    },
+    {
+      "line": 43,
+      "token": "0.735",
+      "value": 0.735,
+      "decimals": 3,
+      "context": "\u2248 median **0.700**; even a reliability-screened strong-models-only consensus (**0.735**) does not beat",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:consensus_strong_only_human"
+    },
+    {
+      "line": 49,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "- **CONFIRMED:** LLMs and humans share a strong concept geometry over concrete objects (0.65\u20130.74,",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:H1.mean_human_align_instruct"
+    },
+    {
+      "line": 53,
+      "token": "0.76",
+      "value": 0.76,
+      "decimals": 2,
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:rho_human_reliability"
+    },
+    {
+      "line": 53,
+      "token": "0.81",
+      "value": 0.81,
+      "decimals": 2,
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Llama-1B.convergence"
+    },
+    {
+      "line": 53,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:rho_partial_reliability"
+    },
+    {
+      "line": 53,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 54,
+      "token": "0.81",
+      "value": 0.81,
+      "decimals": 2,
+      "context": "decisive consensus test (H3) fails. **Discipline note:** H2's raw \u03c1 = 0.81 was the exciting number;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "0.809",
+      "value": 0.809,
+      "decimals": 3,
+      "context": "0.809, human 0.670, rank 5/13). Its outlier status was measurement-specific, not intrinsic.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Phi-3.5.convergence"
+    },
+    {
+      "line": 58,
+      "token": "0.670",
+      "value": 0.67,
+      "decimals": 3,
+      "context": "0.809, human 0.670, rank 5/13). Its outlier status was measurement-specific, not intrinsic.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:per_model.Phi-3.5.human"
+    },
+    {
+      "line": 58,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "0.809, human 0.670, rank 5/13). Its outlier status was measurement-specific, not intrinsic.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_result.json:phi_human_rank"
+    },
+    {
+      "line": 58,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "0.809, human 0.670, rank 5/13). Its outlier status was measurement-specific, not intrinsic.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 65,
+      "token": "0.81",
+      "value": 0.81,
+      "decimals": 2,
+      "context": "- A method that refused to let an exciting \u03c1 = 0.81 become a claim it could not defend.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 68,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "- **Behavioral** human data (odd-one-out), not neural; **concrete objects only** (120); n = 13 models;",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_human_reliability_result.json:n_concepts"
+    },
+    {
+      "line": 68,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "- **Behavioral** human data (odd-one-out), not neural; **concrete objects only** (120); n = 13 models;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 71,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "set would move the n = 13 H2 residual off the fence.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

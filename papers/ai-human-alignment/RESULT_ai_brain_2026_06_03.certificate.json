@@ -1,0 +1,659 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_ai_brain_2026_06_03.md",
+  "document_sha256": "8f409bbba2105c7941645e4376915286a3ab38c7d44d723025ca80a5a8756da4",
+  "receipts_sha256": {
+    "ai_brain_result.json": "88631ed6f5155b74441ce52a7fa9ad06a093dcdeb0687bd8f842b10bb014efaa"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 31,
+    "ABSTAIN": 25,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "9"
+    },
+    {
+      "line": 8,
+      "token": "67"
+    },
+    {
+      "line": 8,
+      "token": "47"
+    },
+    {
+      "line": 9,
+      "token": "47"
+    },
+    {
+      "line": 14,
+      "token": "67"
+    },
+    {
+      "line": 14,
+      "token": "56"
+    },
+    {
+      "line": 15,
+      "token": "65"
+    },
+    {
+      "line": 15,
+      "token": "53"
+    },
+    {
+      "line": 16,
+      "token": "60"
+    },
+    {
+      "line": 16,
+      "token": "52"
+    },
+    {
+      "line": 17,
+      "token": "60"
+    },
+    {
+      "line": 17,
+      "token": "49"
+    },
+    {
+      "line": 18,
+      "token": "59"
+    },
+    {
+      "line": 18,
+      "token": "47"
+    },
+    {
+      "line": 19,
+      "token": "58"
+    },
+    {
+      "line": 19,
+      "token": "35"
+    },
+    {
+      "line": 20,
+      "token": "15"
+    },
+    {
+      "line": 23,
+      "token": "53"
+    },
+    {
+      "line": 27,
+      "token": "63"
+    },
+    {
+      "line": 28,
+      "token": "56"
+    },
+    {
+      "line": 29,
+      "token": "41"
+    },
+    {
+      "line": 30,
+      "token": "40"
+    },
+    {
+      "line": 59,
+      "token": "0.182"
+    },
+    {
+      "line": 59,
+      "token": "0.107"
+    },
+    {
+      "line": 67,
+      "token": "9"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "fMRI (9 subjects, 60 concrete nouns, top-500 stable voxels, group RDM). LLM concept RDMs at the fixed",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "fMRI (9 subjects, 60 concrete nouns, top-500 stable voxels, group RDM). LLM concept RDMs at the fixed",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:n_nouns"
+    },
+    {
+      "line": 5,
+      "token": "0.394",
+      "value": 0.394,
+      "decimals": 3,
+      "context": "final layer; **partial-lexical** RSA, judged **relative to the fMRI noise ceiling [0.394, 0.557]**.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:noise_ceiling[0]"
+    },
+    {
+      "line": 5,
+      "token": "0.557",
+      "value": 0.557,
+      "decimals": 3,
+      "context": "final layer; **partial-lexical** RSA, judged **relative to the fMRI noise ceiling [0.394, 0.557]**.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:noise_ceiling[1]"
+    },
+    {
+      "line": 8,
+      "token": "0.264",
+      "value": 0.264,
+      "decimals": 3,
+      "context": "Best LLM (gpt2-large) RSA-to-brain **0.264 = 67% of the noise-ceiling lower bound** (47% of upper);",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gpt2-large.brain"
+    },
+    {
+      "line": 8,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "Best LLM (gpt2-large) RSA-to-brain **0.264 = 67% of the noise-ceiling lower bound** (47% of upper);",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 8,
+      "token": "47",
+      "value": 47.0,
+      "decimals": 0,
+      "context": "Best LLM (gpt2-large) RSA-to-brain **0.264 = 67% of the noise-ceiling lower bound** (47% of upper);",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "shuffled-noun control **0.002 \u00b1 0.028**. Most models reach 47\u201367% of ceiling. The brain's own",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Qwen-1.5B.brain"
+    },
+    {
+      "line": 9,
+      "token": "0.028",
+      "value": 0.028,
+      "decimals": 3,
+      "context": "shuffled-noun control **0.002 \u00b1 0.028**. Most models reach 47\u201367% of ceiling. The brain's own",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:shuffle_ctrl_sd"
+    },
+    {
+      "line": 9,
+      "token": "47",
+      "value": 47.0,
+      "decimals": 0,
+      "context": "shuffled-noun control **0.002 \u00b1 0.028**. Most models reach 47\u201367% of ceiling. The brain's own",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "inter-subject reliability caps achievable RSA at ~0.4\u20130.56, so two-thirds of that is a strong match.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:noise_ceiling[0]"
+    },
+    {
+      "line": 14,
+      "token": "0.264",
+      "value": 0.264,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gpt2-large.brain"
+    },
+    {
+      "line": 14,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "0.222",
+      "value": 0.222,
+      "decimals": 3,
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.pythia-70m.brain"
+    },
+    {
+      "line": 14,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.258",
+      "value": 0.258,
+      "decimals": 3,
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gpt2-xl.brain"
+    },
+    {
+      "line": 15,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.209",
+      "value": 0.209,
+      "decimals": 3,
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Qwen-0.5B.brain"
+    },
+    {
+      "line": 15,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.237",
+      "value": 0.237,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Llama-1B.brain"
+    },
+    {
+      "line": 16,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.206",
+      "value": 0.206,
+      "decimals": 3,
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Phi-3.5.brain"
+    },
+    {
+      "line": 16,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "0.237",
+      "value": 0.237,
+      "decimals": 3,
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Llama-1B.brain"
+    },
+    {
+      "line": 17,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "0.193",
+      "value": 0.193,
+      "decimals": 3,
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Qwen-1.5B.brain"
+    },
+    {
+      "line": 17,
+      "token": "49",
+      "value": 49.0,
+      "decimals": 0,
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.233",
+      "value": 0.233,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Llama-3B.brain"
+    },
+    {
+      "line": 18,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.184",
+      "value": 0.184,
+      "decimals": 3,
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Qwen-3B.brain"
+    },
+    {
+      "line": 18,
+      "token": "47",
+      "value": 47.0,
+      "decimals": 0,
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.228",
+      "value": 0.228,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.pythia-410m.brain"
+    },
+    {
+      "line": 19,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.138",
+      "value": 0.138,
+      "decimals": 3,
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gemma-2-2b.brain"
+    },
+    {
+      "line": 19,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.059",
+      "value": 0.059,
+      "decimals": 3,
+      "context": "| | | | gpt2 (124M) | 0.059 | 15% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | | | | gpt2 (124M) | 0.059 | 15% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.gpt2.brain"
+    },
+    {
+      "line": 20,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| | | | gpt2 (124M) | 0.059 | 15% |",
+      "binding_context": "| model | RSA\u2192brain | % ceil-lo | model | RSA\u2192brain | % ceil-lo | | | | | gpt2 (124M) | 0.059 | 15% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "Over the 53 nouns shared with THINGS/VICE, all judged against the **same** brain RDM:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "| **behavioral human** (VICE \u2014 1.5M odd-one-out judgments) | **0.247** | 63% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | **behavioral human** (VICE \u2014 1.5M odd-one-out judgments) | **0.247** | 63% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:vice_brain"
+    },
+    {
+      "line": 27,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "| **behavioral human** (VICE \u2014 1.5M odd-one-out judgments) | **0.247** | 63% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | **behavioral human** (VICE \u2014 1.5M odd-one-out judgments) | **0.247** | 63% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "0.222",
+      "value": 0.222,
+      "decimals": 3,
+      "context": "| **best LLM** (text-only concept geometry) | **0.222** | 56% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | **best LLM** (text-only concept geometry) | **0.222** | 56% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.pythia-70m.brain"
+    },
+    {
+      "line": 28,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "| **best LLM** (text-only concept geometry) | **0.222** | 56% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | **best LLM** (text-only concept geometry) | **0.222** | 56% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "0.161",
+      "value": 0.161,
+      "decimals": 3,
+      "context": "| mpnet (sentence embedder, trained on similarity) | 0.161 | 41% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | mpnet (sentence embedder, trained on similarity) | 0.161 | 41% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:embedder_brain_S.mpnet"
+    },
+    {
+      "line": 29,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "| mpnet (sentence embedder, trained on similarity) | 0.161 | 41% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | mpnet (sentence embedder, trained on similarity) | 0.161 | 41% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0.156",
+      "value": 0.156,
+      "decimals": 3,
+      "context": "| MiniLM (sentence embedder, trained on similarity) | 0.156 | 40% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | MiniLM (sentence embedder, trained on similarity) | 0.156 | 40% |",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.Qwen-1.5B.brain_S"
+    },
+    {
+      "line": 30,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| MiniLM (sentence embedder, trained on similarity) | 0.156 | 40% |",
+      "binding_context": "| matches the human brain... | RSA | % of ceiling-lower | | MiniLM (sentence embedder, trained on similarity) | 0.156 | 40% |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "0.222",
+      "value": 0.222,
+      "decimals": 3,
+      "context": "behavioral judgments do** (0.222 vs 0.247 \u2014 behavior marginally ahead), and **both clearly beat",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:per_model.pythia-70m.brain"
+    },
+    {
+      "line": 33,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "behavioral judgments do** (0.222 vs 0.247 \u2014 behavior marginally ahead), and **both clearly beat",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:vice_brain"
+    },
+    {
+      "line": 35,
+      "token": "0.98",
+      "value": 0.98,
+      "decimals": 2,
+      "context": "models at **Spearman 0.98** \u2014 the same models match the brain and human behavior, in the same order.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:consistency_brain_vs_behavioral"
+    },
+    {
+      "line": 49,
+      "token": "0.98",
+      "value": 0.98,
+      "decimals": 2,
+      "context": "The claim is the clean H1 + the three-way comparison + the 0.98 brain\u2194behavior consistency \u2014 all",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:consistency_brain_vs_behavioral"
+    },
+    {
+      "line": 50,
+      "token": "0.98",
+      "value": 0.98,
+      "decimals": 2,
+      "context": "supported. The 0.98 consistency is partly the shared model-quality factor (good geometry matches",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:consistency_brain_vs_behavioral"
+    },
+    {
+      "line": 51,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "everything), not proof that brain and behavior are the *same* space beyond their direct 0.247 link.",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:vice_brain"
+    },
+    {
+      "line": 59,
+      "token": "0.182",
+      "value": 0.182,
+      "decimals": 3,
+      "context": "the AI\u2194brain match **survives** removing a vision model (partial 0.182 \u2192 0.107), so it is **not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "0.107",
+      "value": 0.107,
+      "decimals": 3,
+      "context": "the AI\u2194brain match **survives** removing a vision model (partial 0.182 \u2192 0.107), so it is **not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "- 60 nouns; one classic dataset; final-layer read-out; partial-lexical. A modern, larger neural set",
+      "status": "VERIFIED",
+      "receipt_ref": "ai_brain_result.json:n_nouns"
+    },
+    {
+      "line": 67,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "`build_brain_rdm.py` (neural RDMs + noise ceiling) \u00b7 `run_ai_brain.py` (the test). Data: 9\u00d7 Mitchell",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

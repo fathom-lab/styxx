@@ -1,0 +1,216 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_llm_breadth_2026_06_03.md",
+  "document_sha256": "3fd95ae6cb6d05e6928cde023bc6c119a463f4ca9f2b818bf75281645871f0e0",
+  "receipts_sha256": {
+    "binder_result.json": "21c790fa92310935b8c76f81fb1111b7d58f225c96d7b932db4d58c48f0a1889",
+    "en_result.json": "56736d9e7ec673c042ec9eaff7359bf6014e722b75dfe09c689fd20ff3154221",
+    "real_drift_result.json": "265b6aecf949f7230a1d6894527d8b98ad412ff5293c7df66e7c8b709781ce46"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 2,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "6"
+    },
+    {
+      "line": 5,
+      "token": "4"
+    },
+    {
+      "line": 6,
+      "token": "434"
+    },
+    {
+      "line": 11,
+      "token": "0.176"
+    },
+    {
+      "line": 12,
+      "token": "0.130"
+    },
+    {
+      "line": 13,
+      "token": "0.121"
+    },
+    {
+      "line": 14,
+      "token": "0.067"
+    },
+    {
+      "line": 15,
+      "token": "0.024"
+    },
+    {
+      "line": 16,
+      "token": "0.022"
+    },
+    {
+      "line": 26,
+      "token": "0.541"
+    },
+    {
+      "line": 32,
+      "token": "4"
+    },
+    {
+      "line": 33,
+      "token": "0.978"
+    },
+    {
+      "line": 39,
+      "token": "434"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "hidden layer) from 6 open models across 4 families: GPT-2 / DistilGPT-2 (OpenAI), Pythia-160m / 410m",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "hidden layer) from 6 open models across 4 families: GPT-2 / DistilGPT-2 (OpenAI), Pythia-160m / 410m",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "434",
+      "value": 434.0,
+      "decimals": 0,
+      "context": "(EleutherAI), Qwen2.5-0.5B (Alibaba), BLOOM-560m (BigScience). 434 Binder concepts. `llm_breadth.py`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "0.176",
+      "value": 0.176,
+      "decimals": 3,
+      "context": "| Pythia-410m | **0.176** |",
+      "binding_context": "| model | alignment | | Pythia-410m | **0.176** |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "0.130",
+      "value": 0.13,
+      "decimals": 3,
+      "context": "| Qwen2.5-0.5B | 0.130 |",
+      "binding_context": "| model | alignment | | Qwen2.5-0.5B | 0.130 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "0.121",
+      "value": 0.121,
+      "decimals": 3,
+      "context": "| Pythia-160m | 0.121 |",
+      "binding_context": "| model | alignment | | Pythia-160m | 0.121 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "0.067",
+      "value": 0.067,
+      "decimals": 3,
+      "context": "| BLOOM-560m | 0.067 |",
+      "binding_context": "| model | alignment | | BLOOM-560m | 0.067 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.024",
+      "value": 0.024,
+      "decimals": 3,
+      "context": "| DistilGPT-2 | 0.024 |",
+      "binding_context": "| model | alignment | | DistilGPT-2 | 0.024 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.022",
+      "value": 0.022,
+      "decimals": 3,
+      "context": "| GPT-2 | 0.022 |",
+      "binding_context": "| model | alignment | | GPT-2 | 0.022 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "0.541",
+      "value": 0.541,
+      "decimals": 3,
+      "context": "- **Within-family scale:** Pythia-160m vs Pythia-410m = 0.541 (same family, sizes diverge moderately).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "- **Cross-family agreement is LOW** (0.03\u20130.37): models from different families / training data genuinely",
+      "status": "VERIFIED",
+      "receipt_ref": "real_drift_result.json:damaging[3].alignment"
+    },
+    {
+      "line": 28,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "mean differently on these concepts. **BLOOM is the outlier** (agrees least with everyone, 0.03\u20130.13) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "real_drift_result.json:damaging[3].alignment"
+    },
+    {
+      "line": 32,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "- Demonstrates the shipped tool on **real, recognizable LLM internals** across 4 families \u2014 not toy vectors.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "0.978",
+      "value": 0.978,
+      "decimals": 3,
+      "context": "- The **DistilGPT-2 \u2248 GPT-2 (0.978)** result is the cleanest possible proof of the cross-model use case:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "434",
+      "value": 434.0,
+      "decimals": 0,
+      "context": "`python llm_breadth.py` \u2014 embeds 434 concepts with each model, prints the human-alignment ranking + the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
