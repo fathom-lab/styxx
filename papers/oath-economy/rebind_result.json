@@ -1,0 +1,208 @@
+{
+ "rows": [
+  {
+   "benchmark": "MMLU",
+   "language": "",
+   "card": 49.3,
+   "receipt": 49.3,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "Open-rewrite eval",
+   "language": "",
+   "card": 41.6,
+   "receipt": 41.6,
+   "grade": "MATCH",
+   "note": "card tag micro_avg/rougeL == receipts average/rougeL (naming alias)",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "TLDR9+ (test)",
+   "language": "",
+   "card": 16.8,
+   "receipt": null,
+   "grade": "ABSENT",
+   "note": "no data for this benchmark anywhere in the receipts dataset"
+  },
+  {
+   "benchmark": "IFEval",
+   "language": "",
+   "card": 59.5,
+   "receipt": null,
+   "grade": "ABSENT",
+   "note": "card metric = Avg(Prompt/Instruction acc, Loose/Strict); receipts carry ONLY prompt_acc (55.3/51.0) \u2014 instruction-level components absent, composite not recomputable"
+  },
+  {
+   "benchmark": "GSM8K (CoT)",
+   "language": "",
+   "card": 44.4,
+   "receipt": 44.4,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MATH (CoT)",
+   "language": "",
+   "card": 30.6,
+   "receipt": null,
+   "grade": "ABSENT",
+   "note": "card states 0-shot final_em; receipts label is 'MATH (4-shot, CoT)' with em=30.4 \u2014 no 0-shot record exists; card and its own receipts disagree on config"
+  },
+  {
+   "benchmark": "ARC-C",
+   "language": "",
+   "card": 59.4,
+   "receipt": 59.4,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "GPQA",
+   "language": "",
+   "card": 27.2,
+   "receipt": 27.2,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "Hellaswag",
+   "language": "",
+   "card": 41.2,
+   "receipt": 41.2,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "BFCL V2",
+   "language": "",
+   "card": 25.7,
+   "receipt": 38.7,
+   "grade": "VALUE-MISMATCH",
+   "note": "card 25.7 matches NO receipt aggregate (macro_avg/acc 38.7, average/acc 21.5)",
+   "delta": 13.0
+  },
+  {
+   "benchmark": "Nexus",
+   "language": "",
+   "card": 13.5,
+   "receipt": 13.5,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "InfiniteBench/En.QA",
+   "language": "",
+   "card": 20.3,
+   "receipt": 20.3,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "InfiniteBench/En.MC",
+   "language": "",
+   "card": 38.0,
+   "receipt": 38.0,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "NIH/Multi-needle",
+   "language": "",
+   "card": 75.0,
+   "receipt": 75.0,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MGSM (CoT)",
+   "language": "",
+   "card": 24.5,
+   "receipt": 24.5,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "Portuguese",
+   "card": 39.8,
+   "receipt": 39.8,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "Spanish",
+   "card": 41.5,
+   "receipt": 41.5,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "Italian",
+   "card": 39.8,
+   "receipt": 39.8,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "German",
+   "card": 39.2,
+   "receipt": 39.2,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "French",
+   "card": 40.5,
+   "receipt": 40.5,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "Hindi",
+   "card": 33.5,
+   "receipt": 33.5,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  },
+  {
+   "benchmark": "MMLU (5-shot, macro_avg/acc)",
+   "language": "Thai",
+   "card": 34.7,
+   "receipt": 34.7,
+   "grade": "MATCH",
+   "note": "",
+   "delta": 0.0
+  }
+ ],
+ "tally": {
+  "MATCH": 18,
+  "ABSENT": 3,
+  "VALUE-MISMATCH": 1
+ },
+ "verdict": "PARTIAL",
+ "tolerance": 0.15,
+ "receipts_dataset": "meta-llama/Llama-3.2-1B-Instruct-evals (Details_metrics_details 2024-09-23)",
+ "self_audit_note": "matcher v1 (fuzzy) produced 3 phantom mismatches, removed before publication: Portugese label spelling, unreached IFEval composite branch, micro_avg->average alias"
+}

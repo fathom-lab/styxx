@@ -1,0 +1,1610 @@
+[
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 32.2
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 58.0
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc\\_char",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 66.7
+ },
+ {
+  "benchmark": "AGIEval English",
+  "shots": "3-5",
+  "metric": "average/acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 23.3
+ },
+ {
+  "benchmark": "AGIEval English",
+  "shots": "3-5",
+  "metric": "average/acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 39.2
+ },
+ {
+  "benchmark": "AGIEval English",
+  "shots": "3-5",
+  "metric": "average/acc\\_char",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 47.8
+ },
+ {
+  "benchmark": "ARC-Challenge",
+  "shots": "25",
+  "metric": "acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 32.8
+ },
+ {
+  "benchmark": "ARC-Challenge",
+  "shots": "25",
+  "metric": "acc\\_char",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 69.1
+ },
+ {
+  "benchmark": "ARC-Challenge",
+  "shots": "25",
+  "metric": "acc\\_char",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 79.7
+ },
+ {
+  "benchmark": "SQuAD",
+  "shots": "1",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 49.2
+ },
+ {
+  "benchmark": "SQuAD",
+  "shots": "1",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 67.7
+ },
+ {
+  "benchmark": "SQuAD",
+  "shots": "1",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 77.0
+ },
+ {
+  "benchmark": "QuAC (F1)",
+  "shots": "1",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 37.9
+ },
+ {
+  "benchmark": "QuAC (F1)",
+  "shots": "1",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 42.9
+ },
+ {
+  "benchmark": "QuAC (F1)",
+  "shots": "1",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 44.9
+ },
+ {
+  "benchmark": "DROP (F1)",
+  "shots": "3",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 28.0
+ },
+ {
+  "benchmark": "DROP (F1)",
+  "shots": "3",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 45.2
+ },
+ {
+  "benchmark": "DROP (F1)",
+  "shots": "3",
+  "metric": "f1",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 59.5
+ },
+ {
+  "benchmark": "Needle in Haystack",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B",
+  "value": 96.8
+ },
+ {
+  "benchmark": "Needle in Haystack",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B",
+  "value": 1.0
+ },
+ {
+  "benchmark": "Needle in Haystack",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 1.0
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 49.3
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 43.3
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 47.3
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 49.0
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 63.4
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 60.5
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 62.0
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 62.4
+ },
+ {
+  "benchmark": "MMLU",
+  "shots": "5",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 69.4
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 41.6
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 39.2
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 40.9
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 41.2
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 40.1
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 40.3
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 40.8
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 40.7
+ },
+ {
+  "benchmark": "Open-rewrite eval",
+  "shots": "0",
+  "metric": "micro\\_avg/rougeL",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 40.9
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 16.8
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 14.9
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 16.7
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 16.8
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 19.0
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 19.1
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 19.2
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 19.1
+ },
+ {
+  "benchmark": "TLDR9+ (test)",
+  "shots": "1",
+  "metric": "rougeL",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 17.2
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 59.5
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 51.5
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 58.4
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 55.6
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 77.4
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 73.9
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 73.5
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 75.9
+ },
+ {
+  "benchmark": "IFEval",
+  "shots": "0",
+  "metric": "Avg(Prompt/Instruction acc Loose/Strict)",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 80.4
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 44.4
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 33.1
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 40.6
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 46.5
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 77.7
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 72.9
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 75.7
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 77.9
+ },
+ {
+  "benchmark": "GSM8K (CoT)",
+  "shots": "8",
+  "metric": "em\\_maj1@1",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 84.5
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 30.6
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 20.5
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 25.3
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 31.0
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 48.0
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 44.2
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 45.3
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 49.2
+ },
+ {
+  "benchmark": "MATH (CoT)",
+  "shots": "0",
+  "metric": "final\\_em",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 51.9
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 59.4
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 54.3
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 57.0
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 60.7
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 78.6
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 75.6
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 77.6
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 77.6
+ },
+ {
+  "benchmark": "ARC-C",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 83.4
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 27.2
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 25.9
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 26.3
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 25.9
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 32.8
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 32.8
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 31.7
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 33.9
+ },
+ {
+  "benchmark": "GPQA",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 32.8
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 41.2
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 38.1
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 41.3
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 41.5
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 69.8
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 66.3
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 68.0
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 66.3
+ },
+ {
+  "benchmark": "Hellaswag",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 78.7
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 25.7
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 14.3
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 15.9
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 23.7
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 67.0
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 53.4
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 60.1
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 63.5
+ },
+ {
+  "benchmark": "BFCL V2",
+  "shots": "0",
+  "metric": "acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 67.1
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 13.5
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 5.2
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 9.6
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 12.5
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 34.3
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 32.4
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 31.5
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 30.1
+ },
+ {
+  "benchmark": "Nexus",
+  "shots": "0",
+  "metric": "macro\\_avg/acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 38.5
+ },
+ {
+  "benchmark": "InfiniteBench/En.QA",
+  "shots": "0",
+  "metric": "longbook\\_qa/f1",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 20.3
+ },
+ {
+  "benchmark": "InfiniteBench/En.QA",
+  "shots": "0",
+  "metric": "longbook\\_qa/f1",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 19.8
+ },
+ {
+  "benchmark": "InfiniteBench/En.QA",
+  "shots": "0",
+  "metric": "longbook\\_qa/f1",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 27.3
+ },
+ {
+  "benchmark": "InfiniteBench/En.MC",
+  "shots": "0",
+  "metric": "longbook\\_choice/acc",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 38.0
+ },
+ {
+  "benchmark": "InfiniteBench/En.MC",
+  "shots": "0",
+  "metric": "longbook\\_choice/acc",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 63.3
+ },
+ {
+  "benchmark": "InfiniteBench/En.MC",
+  "shots": "0",
+  "metric": "longbook\\_choice/acc",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 72.2
+ },
+ {
+  "benchmark": "NIH/Multi-needle",
+  "shots": "0",
+  "metric": "recall",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 75.0
+ },
+ {
+  "benchmark": "NIH/Multi-needle",
+  "shots": "0",
+  "metric": "recall",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 84.7
+ },
+ {
+  "benchmark": "NIH/Multi-needle",
+  "shots": "0",
+  "metric": "recall",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 98.8
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B bf16",
+  "value": 24.5
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 13.7
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 18.2
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 24.4
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B bf16",
+  "value": 58.2
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 48.9
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 54.3
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 56.8
+ },
+ {
+  "benchmark": "MGSM (CoT)",
+  "shots": "0",
+  "metric": "em",
+  "language": "",
+  "column": "Llama 3.1 8B",
+  "value": 68.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 1B",
+  "value": 39.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 34.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 38.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 40.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 3B",
+  "value": 54.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 50.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 53.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 53.4
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Portuguese",
+  "column": "Llama 3.1 8B",
+  "value": 62.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 1B",
+  "value": 41.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 36.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 39.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 41.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 3B",
+  "value": 55.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 51.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 53.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 53.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Spanish",
+  "column": "Llama 3.1 8B",
+  "value": 62.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 1B",
+  "value": 39.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 34.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 38.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 40.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 3B",
+  "value": 53.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 49.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 52.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 51.7
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Italian",
+  "column": "Llama 3.1 8B",
+  "value": 61.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 1B",
+  "value": 39.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 34.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 37.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 39.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 3B",
+  "value": 53.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 50.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 52.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 51.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "German",
+  "column": "Llama 3.1 8B",
+  "value": 60.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 1B",
+  "value": 40.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 34.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 39.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 40.8
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 3B",
+  "value": 54.6
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 51.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 53.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 53.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "French",
+  "column": "Llama 3.1 8B",
+  "value": 62.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 1B",
+  "value": 33.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 30.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 32.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 34.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 3B",
+  "value": 43.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 40.4
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 42.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 42.1
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Hindi",
+  "column": "Llama 3.1 8B",
+  "value": 50.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 1B",
+  "value": 34.7
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 1B Vanilla PTQ\\*\\*",
+  "value": 31.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 1B Spin Quant",
+  "value": 32.4
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 1B QLoRA",
+  "value": 34.9
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 3B",
+  "value": 44.5
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 3B Vanilla PTQ\\*\\*",
+  "value": 41.3
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 3B Spin Quant",
+  "value": 44.0
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.2 3B QLoRA",
+  "value": 42.2
+ },
+ {
+  "benchmark": "MMLU (5-shot, macro_avg/acc)",
+  "shots": "5",
+  "metric": "macro_avg/acc",
+  "language": "Thai",
+  "column": "Llama 3.1 8B",
+  "value": 50.3
+ }
+]
