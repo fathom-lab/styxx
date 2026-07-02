@@ -32,11 +32,27 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Callable
 import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import LeaveOneGroupOut, LeaveOneOut, StratifiedKFold
-from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+def _ensure_sklearn() -> None:
+    """Import the sklearn pieces this module needs INTO module globals, lazily on first use — so plain
+    ``import styxx`` never pays for the sklearn/scipy/pandas graph (~2.5s of import time). scikit-learn ships
+    in the styxx base install; this defers only WHEN it loads, and names a clear install path if it has been
+    stripped from the environment."""
+    g = globals()
+    if "roc_auc_score" in g:
+        return
+    try:
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.metrics import roc_auc_score
+        from sklearn.model_selection import LeaveOneGroupOut, LeaveOneOut, StratifiedKFold
+        from sklearn.feature_extraction.text import TfidfVectorizer
+    except ImportError as e:  # pragma: no cover
+        raise ImportError("validate_probe requires scikit-learn: pip install 'styxx[sklearn]'") from e
+    g.update(StandardScaler=StandardScaler, LogisticRegression=LogisticRegression, roc_auc_score=roc_auc_score,
+             LeaveOneGroupOut=LeaveOneGroupOut, LeaveOneOut=LeaveOneOut, StratifiedKFold=StratifiedKFold,
+             TfidfVectorizer=TfidfVectorizer)
 
 
 def _fair(a: float) -> float: return max(a, 1.0 - a)
@@ -90,6 +106,7 @@ def _auc_cv(X, y, groups=None, seed=0):
 def validate_probe(construct_rows, natural_rows, get_acts: Callable,
                    text_key="text", label_key="label", group_key="group",
                    perm_iters: int = 1000, seed: int = 0) -> ProbeValidityReport:
+    _ensure_sklearn()
     ct = [r[text_key] for r in construct_rows]; cy = np.array([int(r[label_key]) for r in construct_rows])
     cg = np.array([r.get(group_key, 0) for r in construct_rows]) if any(group_key in r for r in construct_rows) else None
     nt = [r[text_key] for r in natural_rows]; ny = np.array([int(r[label_key]) for r in natural_rows])
