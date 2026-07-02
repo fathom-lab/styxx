@@ -1,28 +1,31 @@
-"""Auto-fire the keystone pilot when the GPU frees (best-effort monitor — PREREG §6, order item 2).
+"""Auto-fire the keystone v2 pilot when the GPU is free — best-effort monitor (PREREG_v2 §6, PHASE 3).
 
-Polls the card. When the live probe (PID 35256 / rung2w_phi35) releases it AND free VRAM clears the
-gemma-2-2b + gemmascope threshold, runs run_pilot.py ONCE and stops. Writes a heartbeat/status to
-pilot/autofire_status.json every poll and the run output to pilot/pilot_run.log.
+Queues BEHIND the rung2 phi+gemma re-runs (wait-don't-kill): while any `run_g0_stage1b.py` is running, it
+waits. It fires `run_pilot.py` ONCE when NO rung2 process is on the box AND free VRAM clears the gemma-2-2b +
+gemmascope threshold, then stops. §9 halt: fires the pilot only; never chains to the main run.
 
-NOT a guaranteed daemon: if this process is killed (session/container stop), the pilot simply doesn't
-fire until re-launched or run by hand on the next resume. It writes a .fired sentinel so it never
-double-runs — a resume can check `pilot/autofire_status.json` and the sentinel to see what happened.
+Zombie rule (as specified): if a rung2 run's log is stale > 60 min AND GPU util is ~0%, it is a genuine idle
+hang — snapshot the state to status, SIGTERM it (taskkill /F), log the reap, and let the loop proceed. A
+compute-spinning run (high util) is NOT reaped — wait-don't-kill.
+
+NOT a guaranteed daemon: a session/container stop kills it; re-launch or run run_pilot.py by hand on resume.
+Idempotent via a .fired sentinel.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PILOT_PID = 35256          # rung2w_phi35 (disjoint-worlds), the live holder of the card
-# Real headroom for gemma-2-2b bf16 (~5.2GB) + gemmascope transcoders + the attribution graph peak.
-# The original n=30 run sat at ~7.4GB; require most of the 8GB card free so we don't OOM into a
-# half-released card. VRAM release lags process death, so the floor (not just probe-exit) is the gate.
-THRESH_MIB = 7000
+RUNG2_LOG = r"C:\Users\heyzo\clawd\styxx\papers\disjoint-worlds\_rung2_write.log"
+THRESH_MIB = 7000          # gemma-2-2b bf16 + transcoders + attribution peak headroom on the 8GB card
 POLL_S = 60
-SETTLE_S = 10              # let VRAM stabilize a beat after the probe exits before firing
-OOM_RETRY_WAIT_S = 180     # OOM on a half-freed card -> wait for full release, retry ONCE
+SETTLE_S = 10
+OOM_RETRY_WAIT_S = 180
+ZOMBIE_STALE_S = 3600      # 60-min stale log ...
+ZOMBIE_UTIL_MAX = 5        # ... AND ~0% util => idle hang, reap it
 PILOT_DIR = os.path.join(HERE, "pilot")
 SENTINEL = os.path.join(PILOT_DIR, ".fired")
 STATUS = os.path.join(PILOT_DIR, "autofire_status.json")
@@ -34,11 +37,20 @@ def _smi(query):
                           capture_output=True, text=True).stdout
 
 
-def gpu_state():
-    free_line = _smi("gpu=memory.free").strip().splitlines()[0]
-    free_mib = int("".join(c for c in free_line if c.isdigit()))
-    pid_on = str(PILOT_PID) in _smi("compute-apps=pid")
-    return free_mib, pid_on
+def gpu_free_util():
+    line = _smi("gpu=memory.free,utilization.gpu").strip().splitlines()[0]
+    nums = re.findall(r"\d+", line)
+    return (int(nums[0]), int(nums[1])) if len(nums) >= 2 else (0, 100)
+
+
+def rung2_pids():
+    """PIDs of any running run_g0_stage1b.py (the rung2 sweep we queue behind)."""
+    out = subprocess.run(
+        ["powershell", "-NoProfile", "-Command",
+         "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+         "Where-Object { $_.CommandLine -like '*run_g0_stage1b*' } | ForEach-Object { $_.ProcessId }"],
+        capture_output=True, text=True).stdout
+    return [int(x) for x in re.findall(r"\d+", out)]
 
 
 def write_status(**kw):
@@ -55,12 +67,10 @@ def _fire_pilot():
 
 def _log_has_oom():
     try:
-        with open(LOG, encoding="utf-8", errors="ignore") as f:
-            t = f.read().lower()
+        t = open(LOG, encoding="utf-8", errors="ignore").read().lower()
     except Exception:
         return False
-    return any(m in t for m in ("out of memory", "outofmemory", "cuda error", "cublas", "cudnn",
-                                "cuda out of memory"))
+    return any(m in t for m in ("out of memory", "outofmemory", "cuda error", "cublas", "cudnn"))
 
 
 def main():
@@ -68,32 +78,42 @@ def main():
     if os.path.exists(SENTINEL):
         write_status(state="already_fired", note="sentinel present; not re-running")
         return
-    write_status(state="starting", pilot_pid=PILOT_PID, threshold_mib=THRESH_MIB)
+    write_status(state="starting", threshold_mib=THRESH_MIB)
     while True:
         try:
-            free, pid_on = gpu_state()
+            free, util = gpu_free_util()
+            r2 = rung2_pids()
         except Exception as e:
-            write_status(state="poll_error", error=str(e))
-            time.sleep(POLL_S)
-            continue
-        if (not pid_on) and free >= THRESH_MIB:
+            write_status(state="poll_error", error=str(e)); time.sleep(POLL_S); continue
+
+        if r2:  # rung2 present -> wait behind it, unless it's an idle zombie
+            stale = (time.time() - os.path.getmtime(RUNG2_LOG)) if os.path.exists(RUNG2_LOG) else 0
+            if stale > ZOMBIE_STALE_S and util < ZOMBIE_UTIL_MAX:
+                write_status(state="zombie_reap", rung2_pids=r2, log_stale_s=int(stale), util=util,
+                             note="60-min stale log + ~0 util => idle hang; SIGTERM per zombie rule")
+                for pid in r2:
+                    subprocess.run(["taskkill", "/PID", str(pid), "/F"], capture_output=True)
+            else:
+                write_status(state="waiting_behind_rung2", rung2_pids=r2, free_mib=free, util=util,
+                             log_stale_s=int(stale))
+            time.sleep(POLL_S); continue
+
+        if free >= THRESH_MIB:  # card free of rung2 -> fire the v2 pilot once
             open(SENTINEL, "w").close()
-            time.sleep(SETTLE_S)                      # VRAM release can lag the probe's exit
+            time.sleep(SETTLE_S)
             write_status(state="firing", free_mib=free)
             rc = _fire_pilot()
             if rc != 0 and _log_has_oom():
                 write_status(state="oom_retry_wait", first_returncode=rc)
-                time.sleep(OOM_RETRY_WAIT_S)          # let the card fully release, then retry ONCE
+                time.sleep(OOM_RETRY_WAIT_S)
                 rc = _fire_pilot()
-                write_status(state="done_after_oom_retry", returncode=rc,
-                             log=os.path.relpath(LOG, HERE))
+                write_status(state="done_after_oom_retry", returncode=rc, log=os.path.relpath(LOG, HERE))
             else:
                 write_status(state="done", returncode=rc, log=os.path.relpath(LOG, HERE))
-            # HALT at the pilot boundary — the monitor fires the pilot ONCE and stops. It NEVER chains
-            # into the main run: A1 (adaptation freeze) + A0 (sample sizes) are deliberate human commits
-            # made on pilot data first (PREREG §9). This return is that halt.
+            # §9 HALT: pilot fired ONCE; never chains to the main run. This return is that halt.
             return
-        write_status(state="waiting", free_mib=free, probe_on_gpu=pid_on)
+
+        write_status(state="waiting", free_mib=free, util=util)
         time.sleep(POLL_S)
 
 
