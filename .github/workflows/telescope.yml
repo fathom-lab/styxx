@@ -45,12 +45,32 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
+      # No vendor keys configured is an expected CONFIGURATION state, not a failure — skip green with a
+      # notice instead of red-Xing the repo daily. The schedule stays armed: add any TELESCOPE_* secret and
+      # the next run scores for real. (run.py exiting 1 on "no usable models" is correct CLI behavior; the
+      # skip belongs here, at the config layer.)
+      - name: check vendor keys
+        id: keys
+        env:
+          K1: ${{ secrets.TELESCOPE_OPENAI_KEY }}
+          K2: ${{ secrets.TELESCOPE_ANTHROPIC_KEY }}
+          K3: ${{ secrets.TELESCOPE_OPENROUTER_KEY }}
+        run: |
+          if [ -z "$K1$K2$K3" ]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::telescope skipped — no TELESCOPE_* vendor key secrets configured (expected state, not a failure)"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: install deps
+        if: steps.keys.outputs.present == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -U 'styxx>=7.1.0' 'anthropic>=0.86' 'openai>=1.50'
 
       - name: run telescope
+        if: steps.keys.outputs.present == 'true'
         env:
           # map TELESCOPE_* repo secrets onto the env vars run.py reads
           OPENAI_API_KEY:     ${{ secrets.TELESCOPE_OPENAI_KEY }}
@@ -64,7 +84,7 @@ jobs:
           python -X utf8 telescope/run.py $ARGS
 
       - name: commit daily snapshot
-        if: github.event.inputs.dry_run != 'true'
+        if: steps.keys.outputs.present == 'true' && github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "cognitive-telescope"
           git config user.email "telescope@fathom.darkflobi.com"
