@@ -33,6 +33,16 @@ from dataclasses import dataclass, field
 from typing import Callable
 import numpy as np
 
+# sklearn names, populated by _ensure_sklearn() on first use. Declared as None placeholders so the module's
+# names are DEFINED at import time (ruff F821-clean) without paying the sklearn/scipy import (~2.5s).
+StandardScaler = None
+LogisticRegression = None
+roc_auc_score = None
+LeaveOneGroupOut = None
+LeaveOneOut = None
+StratifiedKFold = None
+TfidfVectorizer = None
+
 
 def _ensure_sklearn() -> None:
     """Import the sklearn pieces this module needs INTO module globals, lazily on first use — so plain
@@ -40,7 +50,7 @@ def _ensure_sklearn() -> None:
     in the styxx base install; this defers only WHEN it loads, and names a clear install path if it has been
     stripped from the environment."""
     g = globals()
-    if "roc_auc_score" in g:
+    if g.get("roc_auc_score") is not None:
         return
     try:
         from sklearn.preprocessing import StandardScaler
