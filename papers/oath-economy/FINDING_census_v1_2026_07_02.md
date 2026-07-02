@@ -1,8 +1,7 @@
-# FINDING — binding census v1 (partial): the residue replicates
+# FINDING — binding census v1: base cards fully re-bind; the instruct residue replicates
 
 **Fathom Lab · 2026-07-02 · prereg: `PREREG_census_v1_2026_07_02.md` (frozen before any new receipts opened,
-`4186f2d`; ratified). Status: 2 arms complete, remaining arms BLOCKED on gated receipt access. Publishes
-regardless — and partial is what the data allows tonight.**
+`4186f2d`; ratified). Status: 4 arms complete (all accessible receipts exhausted); 3.1/3.3 arms gated. COMPLETE within access.**
 
 Framing rule (frozen): gaps are industry properties; deltas with receipts; correction invited; selection
 findings reported in both directions.
@@ -13,11 +12,14 @@ findings reported in both directions.
 |---|---|---|---|---|---|
 | Llama-3.2-**1B**-Instruct (rung 3) | 22 | **18 (82%)** — all Δ=0.0 | 3 | 1 — BFCL 25.7 matches nothing | PARTIAL |
 | Llama-3.2-**3B**-Instruct | 22 | **17 (77%)** — all Δ=0.0 | 3 | 2 — BFCL 67.0, Nexus 34.3 match nothing (manually verified per the hazard rule) | PARTIAL |
-| Llama-3.1-8B (cross-cited), 3.1-70B/405B, 3.3-70B | — | — | — | — | **BLOCKED**: receipts datasets are gated and this account is not in the authorized list — third-party verification stops at a license wall (itself a binding-infrastructure finding) |
+| Llama-3.2-**1B base** | 7 | **7 (100%)** | 0 | 0 | **REBOUND (OATH-HELD-BY-PROXY)** |
+| Llama-3.2-**3B base** | 7 | **7 (100%)** | 0 | 0 | **REBOUND** — incl. the Needle-in-Haystack row, where receipts ADJUDICATE rung 1's unit anomaly: 1B=96.9, 3B=100.0 — the card printed "1" (a fraction) beside percents; real published formatting defect, normalized per the frozen percent/fraction rule |
+| Llama-3.1-8B (cross-cited), 3.1-70B/405B, 3.3-70B | — | — | — | — | **GATED**: receipts datasets require per-repo license acceptance; this account is not authorized — third-party verification stops at a license wall (itself a binding-infrastructure finding) |
 
-## The census's first real discovery: the residue REPLICATES
+## The structural split (the census's headline)
 
-The failures are not scattered — they are the **same rows on both arms**:
+**Base cards fully re-bind (14/14 across two models, both REBOUND). The residue lives ENTIRELY in the
+instruct layer** — and there it replicates:
 
 - **BFCL V2 is an orphan twice** (25.7 and 67.0, matching no receipt aggregate on either arm) — whatever
   produced the card's BFCL numbers is not what produced the receipts' BFCL numbers;

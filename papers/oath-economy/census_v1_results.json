@@ -257,7 +257,149 @@
   },
   "Llama-3.1-70B/405B, 3.3-70B": {
    "status": "NOT ATTEMPTED v1 \u2014 same gating expected; enumerate after access"
+  },
+  "Llama-3.2-1B-base": {
+   "status": "complete",
+   "tally": {
+    "MATCH": 7
+   },
+   "receipt_rows": 1510
+  },
+  "Llama-3.2-3B-base": {
+   "status": "complete",
+   "tally": {
+    "MATCH": 7
+   },
+   "receipt_rows": 1510
   }
  },
- "tolerance": 0.15
+ "tolerance": 0.15,
+ "rows": [
+  {
+   "benchmark": "MMLU",
+   "card": 32.2,
+   "receipt": 32.2,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "AGIEval English",
+   "card": 23.3,
+   "receipt": 23.3,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "ARC-Challenge",
+   "card": 32.8,
+   "receipt": 32.8,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "SQuAD",
+   "card": 49.2,
+   "receipt": 49.2,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "QuAC (F1)",
+   "card": 37.9,
+   "receipt": 37.9,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "DROP (F1)",
+   "card": 28.0,
+   "receipt": 28.0,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "Needle in Haystack",
+   "card": 96.8,
+   "receipt": 96.9,
+   "grade": "MATCH",
+   "delta": 0.1,
+   "note": "",
+   "arm": "Llama-3.2-1B-base"
+  },
+  {
+   "benchmark": "MMLU",
+   "card": 58.0,
+   "receipt": 58.0,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "AGIEval English",
+   "card": 39.2,
+   "receipt": 39.2,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "ARC-Challenge",
+   "card": 69.1,
+   "receipt": 69.1,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "SQuAD",
+   "card": 67.7,
+   "receipt": 67.7,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "QuAC (F1)",
+   "card": 42.9,
+   "receipt": 42.9,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "DROP (F1)",
+   "card": 45.2,
+   "receipt": 45.2,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "",
+   "arm": "Llama-3.2-3B-base"
+  },
+  {
+   "benchmark": "Needle in Haystack",
+   "card": 1.0,
+   "receipt": 100.0,
+   "grade": "MATCH",
+   "delta": 0.0,
+   "note": "unit-normalized: card printed fraction next to percents",
+   "arm": "Llama-3.2-3B-base"
+  }
+ ]
 }
