@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- **README restructured 1288 -> 200 lines** — 30-second pitch, install+quickstart, ONE instruments
+  table (every headline number with its receipt path), the discipline section, links. Every claim
+  adversarially fact-checked against repo receipts before shipping; the unverifiable (a GHSA id with
+  no in-repo receipt) was cut. Root markdown 15 -> 8 files: announcements/quickstarts/findings/
+  governance moved under docs/ (inbound links fixed); AUTOPILOT.md, LEADERBOARD.md, PATENTS.md kept
+  at root deliberately (live scheduler contract; CI path-trigger + cli fallback + published blob
+  URLs; legal-notice convention + URLs frozen in the published Zenodo spec and NIST submission).
+- **"Pure Python" claim retired** (README, pyproject description) — the base install ships compiled
+  numpy + scikit-learn, so the claim was false. Replaced with what is true and differentiating:
+  no torch, no GPU, no LLM in the loop for the core instruments.
+- **cognitive-telescope workflow no longer red-Xes daily** — all TELESCOPE_* key secrets are empty,
+  which is a configuration state, not a failure; the workflow now skips green with a notice and the
+  schedule stays armed. Known remaining gap: telescope/prompts.json is not tracked (and absent
+  locally), so the corpus must be restored before keys make the run real.
+
 ### Fixed
 - **Register instruments now refuse a wordless response (domain guard).** `score_all(prompt="X", response="")`
   returned deception 0.999 / overconfidence 0.954 — a confident score for an input the register instruments

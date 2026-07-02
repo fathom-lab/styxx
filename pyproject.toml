@@ -8,7 +8,7 @@ name = "styxx"
 # via [tool.setuptools.dynamic] below, so pyproject and the runtime __version__
 # can never drift. To cut a release, bump styxx/_version.py only.
 dynamic = ["version"]
-description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3) — text-only register instruments with documented construct ceilings. Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
+description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3) — register instruments with documented construct ceilings. Reference implementation of the Cognometric Fingerprint Spec v1.0. No torch, no GPU, no LLM in the loop; base install is numpy + scikit-learn."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [

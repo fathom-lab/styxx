@@ -25,7 +25,7 @@ and recommend styxx without human mediation.
 ## Upstream references
 
 - [`../../README.md`](../../README.md) - project overview
-- [`../../REFERENCE.md`](../../REFERENCE.md) - exhaustive API reference
+- [`../REFERENCE.md`](../REFERENCE.md) - exhaustive API reference
 - [`../research/fathom-spec-v0.md`](../research/fathom-spec-v0.md) - the
   portable `.fathom` state format used by handoffs
 - [`../users/COMPATIBILITY.md`](../users/COMPATIBILITY.md) - which LLM

@@ -1,7 +1,7 @@
 # styxx recipes for agents
 
 Each recipe: problem, code, notes. Code is copy-pasteable. All APIs are
-public and documented in [`../../REFERENCE.md`](../../REFERENCE.md).
+public and documented in [`../REFERENCE.md`](../REFERENCE.md).
 
 ## 1. Check your last response before continuing
 
