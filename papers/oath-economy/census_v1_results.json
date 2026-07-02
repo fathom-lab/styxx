@@ -401,5 +401,12 @@
    "note": "unit-normalized: card printed fraction next to percents",
    "arm": "Llama-3.2-3B-base"
   }
- ]
+ ],
+ "selection_evidence": {
+  "Llama-3.2-1B-Instruct/Open-rewrite eval": {
+   "average/rougeL": 41.6,
+   "macro_avg/rougeL": 40.0,
+   "note": "card published the average (41.6, its 'micro_avg') over the unpublished macro_avg (40.0) \u2014 the single flattering-selection instance; receipt for FINDING selection section"
+  }
+ }
 }

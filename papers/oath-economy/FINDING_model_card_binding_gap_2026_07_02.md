@@ -30,7 +30,7 @@ exist yet. Until it does, card certification runs on manual/agent extraction wit
 | card | numeric eval claims | BOUND | posture |
 |---|---|---|---|
 | `meta-llama/Llama-3.2-1B-Instruct` | **201** (29 benchmark rows × model/quantization columns) | **0 (0%)** — 100% CONFIG-NO-CODE | **unbound claims**: every row states shots + metric variant, but the only harness reference is an unnamed, unversioned, unlinked "internal evaluations library"; no prompts, no eval code, no raw outputs linked |
-| `google/gemma-2-2b` | **91** (36 rows) | **0 (0%)** — 90 CONFIG-NO-CODE, 1 NAMED-ONLY | **claims at tension with their own receipt**: the card's PT-2B column disagrees with its sole linked receipt (the tech report) in 15/17 rows (e.g. MMLU 51.3 vs 52.2, HumanEval 17.7 vs 20.1); the report itself discloses 12 unpublished formatting variants |
+| `google/gemma-2-2b` | **91** (36 rows) | **0 (0%)** — 90 CONFIG-NO-CODE, 1 NAMED-ONLY | **claims at tension with their own receipt**: the card's PT-2B column disagrees with its sole linked receipt (the tech report) in 15/17 rows (e.g. MMLU 51.3 vs 52.2, HumanEval 17.7 vs 20.1 — single-scout readings; the receipt is the gemma tech report, unfetched, so these numbers are UNSOURCED under our own audit_grounding until the second pass fetches it); the report itself discloses 12 unpublished formatting variants |
 | `Qwen/Qwen2.5-1.5B-Instruct` | **0** on-card | n/a | **delegation**: evals live two link-hops away (outside the prereg's direct-link scope), and even there are NAMED-ONLY |
 
 **The sharpest single fact:** Meta's raw eval receipts EXIST — `meta-llama/Llama-3.2-1B-Instruct-evals` is a

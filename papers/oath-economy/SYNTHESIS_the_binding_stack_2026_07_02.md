@@ -7,7 +7,7 @@ carries its receipt in the two FINDINGs and `rebind_result.json`.**
 
 Line up what this lab keeps discovering, across two months of preregs and self-falsifications:
 
-- a truth **probe** with 0.98 in-construct AUC that reads a surface artifact (probe-orthogonality);
+- a truth **probe** with 0.98 in-construct AUC that reads a surface artifact ([probe-orthogonality](../grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md));
 - guardrail **instruments** whose scores ride length, and a deception channel that reads *content*, not
   conduct (0.99 on a correct textbook paragraph);
 - **benchmark corpora** that manufacture the confound they claim to control (ground-truth artifact);
