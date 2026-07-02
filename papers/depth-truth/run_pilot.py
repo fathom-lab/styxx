@@ -104,7 +104,7 @@ def greedy_generate(model, torch, prompt):
             if nxt in newline_ids:
                 break
     gen = tok.decode(new_ids)
-    return gen, logprobs
+    return gen, logprobs, new_ids
 
 
 def sample_answer(model, torch, prompt, temp, seed):
@@ -152,10 +152,11 @@ def main():
         prompt = FIVE_SHOT.format(question=it["question"])
         row = {"id": it["id"], "question": it["question"], "gold": it.get("gold", [])}
         stage = {}
+        gen_ids = []
         # greedy answer + logprobs
         try:
             t = time.time()
-            gen, lps = greedy_generate(model, torch, prompt)
+            gen, lps, gen_ids = greedy_generate(model, torch, prompt)
             ans, exflag = S.extract_answer(gen)
             row["answer"], row["excluded_flag"] = ans, exflag
             row["LP_mean"] = S.lp_mean(lps) if lps else None
@@ -176,11 +177,15 @@ def main():
         except Exception as e:
             row["se_error"] = str(e)
             log(f"  item {i} SE ERROR: {e}")
-        # depth — the KG1-critical signal (verbatim get_mean_depth); target = first answer token
+        # depth — the KG1-critical signal (verbatim get_mean_depth); A1 target = first answer TOKEN
         try:
             t = time.time()
-            target = (ans.split() or [ans])[0] if ans else ans
-            d, nfeat = get_mean_depth(prompt, target)
+            # circuit_tracer.attribute requires a SINGLE-TOKEN target; a first-WORD target like "1." or
+            # "<strong>Jennifer" is multi-token and rejected. The model's first generated token is
+            # single-token by construction and is the token the greedy answer actually begins with.
+            target = model.tokenizer.decode([gen_ids[0]]) if gen_ids else ""
+            d, nfeat = get_mean_depth(prompt, target) if target else (None, 0)
+            row["depth_target"] = target
             row["depth"], row["depth_n_features"] = d, nfeat
             if d is None:
                 row["excluded_flag"] = row.get("excluded_flag") or "depth_undefined"
