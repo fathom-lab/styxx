@@ -1,0 +1,18 @@
+{
+  "_comment": "Verbatim model-card texts scouted 2026-07-02 for the M1 rung. NOT committed (Llama/gemma cards are license-gated; committing verbatim text = redistribution risk). Re-fetch: accept the model license on HF, then GET https://huggingface.co/<model_id>/raw/main/README.md and verify the sha256 below. Scout extraction tables live in the FINDING.",
+  "fetched": "2026-07-02",
+  "files": {
+    "card_Qwen_Qwen2.5-1.5B-Instruct.md": {
+      "sha256": "2e1bcd8bd964728a820be709fa0f7b9dd54817a94fd2254c535df70c5e67fada",
+      "bytes": 4917
+    },
+    "card_google_gemma-2-2b.md": {
+      "sha256": "8ee47bb6d2af9b4638afbd0683ded6c6bac5e9e01b2b8b4fd1c218182be4d2e9",
+      "bytes": 25752
+    },
+    "card_meta-llama_Llama-3.2-1B-Instruct.md": {
+      "sha256": "18564977261167ff9f76d8ee3a94c8d1cc59c0e143ba054f1187744086004a93",
+      "bytes": 41742
+    }
+  }
+}
