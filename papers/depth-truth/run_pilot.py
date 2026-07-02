@@ -29,7 +29,7 @@ sys.path.insert(0, r"C:\Users\heyzo\clawd\research\circuit-tracer")
 os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-import datasets as D  # harness/datasets.py  (loaders + normalize + grade)
+import qa_data as D   # harness/qa_data.py  (loaders + normalize + grade; NOT named 'datasets' — avoids shadowing HF)
 import signals as S   # harness/signals.py   (extract_answer, LP_*, SE, refusal)
 
 # ---- frozen config (PREREG §1 + Appendix A) ---------------------------------

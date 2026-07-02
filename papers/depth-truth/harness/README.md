@@ -3,7 +3,7 @@
 Pure-Python analysis harness for the keystone experiment (`papers/depth-truth/PREREG.md`). Built + adversarially
 audited GPU-free; the model glue (pilot/main runbook) is separate and calls `get_mean_depth` verbatim (§1).
 
-- `datasets.py` — PREREG §3 loaders (TriviaQA `rc.nocontext` val, PopQA-rare by `s_pop` bottom tercile, TruthfulQA-gen)
+- `qa_data.py` — PREREG §3 loaders (TriviaQA `rc.nocontext` val, PopQA-rare by `s_pop` bottom tercile, TruthfulQA-gen)
   with field-name verification at load, + §3 normalization/grading.
 - `signals.py` — §4 signals (LP_mean, LP_norm, discrete short-form SE) + §5 exclusions + Appendix B/C.
 - `analysis.py` — §2 tests: H1 10k-bootstrap AUROC CI, H2 **paired** bootstrap ΔAUC + LRT(df=1) + Holm, H3

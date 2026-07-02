@@ -8,8 +8,10 @@ Implements PREREG.md (papers/depth-truth/PREREG.md):
     normalized-exact-match grading against an item's full alias list. Mechanical, no model judge.
 
 Contract note: loaders return item dicts consumed by the generation/scoring modules; this file
-performs NO model loading, NO GPU work, and NO network access at import time. `datasets.load_dataset`
-is imported lazily INSIDE each loader so `import datasets` (this module) works fully offline.
+performs NO model loading, NO GPU work, and NO network access at import time. The HuggingFace
+`datasets` library's `load_dataset` is imported lazily INSIDE each loader so importing this module
+works fully offline. (This module is named `qa_data`, NOT `datasets`, precisely so it never shadows
+that library — an earlier `datasets.py` name broke transformer_lens's own `from datasets...` import.)
 
 Seeds: dataset-shuffle seed is passed explicitly by the caller (PREREG pins it to 7).
 """
