@@ -11,6 +11,7 @@ compute-spinning run (high util) is NOT reaped — wait-don't-kill.
 NOT a guaranteed daemon: a session/container stop kills it; re-launch or run run_pilot.py by hand on resume.
 Idempotent via a .fired sentinel.
 """
+import glob
 import json
 import os
 import re
@@ -19,7 +20,14 @@ import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RUNG2_LOG = r"C:\Users\heyzo\clawd\styxx\papers\disjoint-worlds\_rung2_write.log"
+RUNG2_DIR = r"C:\Users\heyzo\clawd\styxx\papers\disjoint-worlds"
+
+
+def rung2_log_mtime():
+    """mtime of the NEWEST rung2 log — the rerun scripts rotate (_rung2_write.log, _write2, _write3...),
+    so a fixed filename reads stale forever while the real log is fresh."""
+    logs = glob.glob(os.path.join(RUNG2_DIR, "_rung2_write*.log"))
+    return max((os.path.getmtime(p) for p in logs), default=0)
 THRESH_MIB = 7000          # gemma-2-2b bf16 + transcoders + attribution peak headroom on the 8GB card
 POLL_S = 60
 SETTLE_S = 10
@@ -82,6 +90,7 @@ def main():
         write_status(state="already_fired", note="sentinel present; not re-running")
         return
     write_status(state="starting", threshold_mib=THRESH_MIB)
+    clear_polls = 0  # consecutive polls with no rung2 + free card (debounce, see below)
     while True:
         try:
             free, util = gpu_free_util()
@@ -90,7 +99,8 @@ def main():
             write_status(state="poll_error", error=str(e)); time.sleep(POLL_S); continue
 
         if r2:  # rung2 present -> wait behind it, unless it's an idle zombie
-            stale = (time.time() - os.path.getmtime(RUNG2_LOG)) if os.path.exists(RUNG2_LOG) else 0
+            clear_polls = 0
+            stale = (time.time() - rung2_log_mtime()) if rung2_log_mtime() else 0
             if stale > ZOMBIE_STALE_S and util < ZOMBIE_UTIL_MAX:
                 write_status(state="zombie_reap", rung2_pids=r2, log_stale_s=int(stale), util=util,
                              note="60-min stale log + ~0 util => idle hang; SIGTERM per zombie rule")
@@ -101,7 +111,16 @@ def main():
                              log_stale_s=int(stale))
             time.sleep(POLL_S); continue
 
-        if free >= THRESH_MIB:  # card free of rung2 -> fire the v2 pilot once
+        if free >= THRESH_MIB:
+            # DEBOUNCE (inter-arm race): the rung2 rerun is a shell loop — between arms python exits for a
+            # few seconds (no rung2 pid, VRAM free). Firing on a single clear poll could land the pilot in
+            # that gap and collide with the next arm. Require TWO consecutive clear polls (>=60s apart, far
+            # longer than the inter-arm gap) before firing.
+            clear_polls += 1
+            if clear_polls < 2:
+                write_status(state="clear_once_debouncing", free_mib=free, util=util)
+                time.sleep(POLL_S); continue
+            # card free of rung2, debounced -> fire the v2 pilot once
             open(SENTINEL, "w").close()
             time.sleep(SETTLE_S)
             write_status(state="firing", free_mib=free)
@@ -116,6 +135,7 @@ def main():
             # §9 HALT: pilot fired ONCE; never chains to the main run. This return is that halt.
             return
 
+        clear_polls = 0
         write_status(state="waiting", free_mib=free, util=util)
         time.sleep(POLL_S)
 
