@@ -38,8 +38,11 @@ def _smi(query):
 
 
 def gpu_free_util():
-    line = _smi("gpu=memory.free,utilization.gpu").strip().splitlines()[0]
-    nums = re.findall(r"\d+", line)
+    out = _smi("gpu=memory.free,utilization.gpu").strip()
+    lines = out.splitlines()
+    if not lines:  # transient empty nvidia-smi read (caused the 02:55 poll_error) -> treat as busy, retry next poll
+        return (0, 100)
+    nums = re.findall(r"\d+", lines[0])
     return (int(nums[0]), int(nums[1])) if len(nums) >= 2 else (0, 100)
 
 
