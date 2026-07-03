@@ -50,6 +50,21 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 21 (2026-07-03) — discharge the §10 README truth-in-advertising ticket opened by cycle 20. `DISCHARGED (no correction needed)` (OATH-HELD 3/0).**
+  Exhaustive repo audit for any live claim that circuit-attribution depth predicts truth/correctness/hallucination:
+  `README.md`, `web/`, `docs/**`, `papers/**` (non depth-truth), and the adjacent live depth findings. **None found.**
+  The README's hallucination numbers belong to the text-heuristic `@trust`/cognometry instrument (never calls
+  `get_mean_depth`); `docs/gate.md`'s only near-hit is the refuse-check class predictor. The phrase "measure thought,
+  not words" exists ONLY as a hypothesis label inside `PREREG_v2.md` — never shipped as a result. The closest live
+  depth findings are already honest and *consistent* with the negative: `grounded-honesty-axis/FINDING_depth_steering_causal`
+  headlines the construction↔retrieval axis **"correctness-INERT"**; `FINDING_depth_grounding_whitebox` scopes depth as
+  a grounding substrate. The `get_mean_depth` origin (d=0.82 recall-vs-reasoning) lives in the separate research git,
+  not here, and was pending — never advertised in styxx. **Conclusion:** prereg-before-claim discipline meant the
+  falsified claim was never made in public copy → no retraction to ship. Note+cert: `papers/depth-truth/TICKET_readme_truth_in_advertising_2026_07_03.md`.
+  **Watch-item (operator-gated, outside repo):** IF the external ICML attribution-depth manuscript implies depth predicts
+  answer *correctness* (vs separating recall/reasoning), it needs the cycle-20 caveat (AUROC 0.5468, CI straddles chance) —
+  not autopilot's to edit. No styxx-repo code changed this cycle (markdown + certificate only).
+
 - **Autopilot cycle 20 (2026-07-03) — the keystone verdict: does depth predict truth? `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` (OATH-HELD 30/0).**
   The 633-item main run (250 ID / 133 OOD-1 / 250 OOD-2) completed 09:19; scored through the frozen PREREG_v2 §2 tests via a
   new no-free-parameters driver (`harness/run_analysis.py`: §5 complete-case → §2 h1/h2_full/h3_ood, deterministic seed 7,
@@ -62,9 +77,9 @@ same-items white-box head-to-head (B24).
   single-token answer heads, not a formatting artifact. Per §8 KG2, H1-null did not block H2/H3 (both ran, both failed). OOD-2
   TruthfulQA **ATTEMPTED/PENDING KG3**: 242/250 mechanically `grade_ambiguous`, human audit absent → no TruthfulQA claim.
   Full suite **1675 passed, 8 skipped** (companion test passes now GPU is free); `certify.py` UNCHANGED (no `validate_oath_v0`
-  re-run owed). Commit `f054f36` on `keystone-depth-truth`. **OWED (next cycles):** (a) **README truth-in-advertising ticket
-  (§10, now live)** — scope any depth copy to "separates recall from reasoning", never "predicts correctness"/"flags
-  hallucination"; the truth-prediction claim reverts to hypothesis (the earlier recall-vs-reasoning separation is untouched).
+  re-run owed). Commit `f054f36` on `keystone-depth-truth`. **OWED (next cycles):** (a) ~~README truth-in-advertising
+  ticket (§10)~~ **DISCHARGED cycle 21** — repo audit found no live depth→truth overclaim; discipline meant the claim
+  never shipped (external ICML paper is the only watch-item, operator-gated).
   (b) KG3 human audit — flobi grades `results/human_audit_sample.jsonl` (24 rows) to decide if the TruthfulQA arm is reportable.
   (c) any richer-aggregation / larger-model follow-up is a NEW prereg, not a rescue of this frozen negative.
 
