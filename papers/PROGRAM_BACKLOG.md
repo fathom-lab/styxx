@@ -66,6 +66,17 @@ same-items white-box head-to-head (B24).
   triage — the dominant false-positive class is **config tokens** (steering α=0.75, arXiv IDs like 2505.27958) sitting
   in results-table label columns inheriting the table's AUROC trigger; a certifier-precision prereg (arXiv-ID skip is
   the safe unambiguous class) could recover many, gated by re-running `validate_oath_v0.py`.
+  **DILIGENCE ADDENDUM (2026-07-03, operator-directed, cycle 19) — `TAMPER-EVIDENCE-WEAK`.** Mutant battery
+  (269 single-digit mutations of every VERIFIED token, seed 1, `validate_oath_v0` scheme) on the 13 certs:
+  catch **58/269 (0.216)** vs the D1 analogue 0.80; **26 FALSE-VERIFY (0.097)** — corrupted values re-verify
+  against *neighboring* receipt leaves (the disclosed v0 float claim→field gap, now with evidence); **182
+  abstain-degrade (0.677)** — the older ρ/RSA/alignment register never binds, so corruption falls to ABSTAIN
+  and the verdict silently stays HELD. **Stands:** the 13 certs as ledgers (every number matches at recorded
+  SHAs). **Does not stand:** reading HELD on these docs as tamper-evidence. Receipt:
+  `papers/autopilot/cycle18_mutant_battery_result.json`; note (itself OATH-HELD 27/0):
+  `papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md`. Sharpens OWED (b) into two concrete
+  preregs: **v0.4 float claim→field binding** (priority #5, evidence attached) and **trigger-vocabulary
+  recall extension** for the older register — both gated by `validate_oath_v0.py`, bars never move.
 
 - **B0 — v3 real run to a valid verdict.** The 800-step/n=190 orthogonalization+displacement run is `IN-PROGRESS`
   (lam_hide=8 at last check). Gate: only trust the JSON when `fixed_population==190` and `chance_floor_p95 < base

@@ -1,0 +1,309 @@
+{
+  "cycle": 18,
+  "what": "cycle-18 due-diligence mutant battery: single-significant-digit mutations of every VERIFIED token in the 13 cycle-18 certificates, re-certified in memory against each cert's exact receipt set",
+  "method": "mutate_token scheme identical to validate_oath_v0.py; seed=1; one mutant per VERIFIED token; temp-file certify_doc; nothing on disk modified",
+  "preregistered": false,
+  "note": "diagnostic audit of already-shipped artifacts, NOT a scored claim run; no frozen bar; the 0.80 figure is the D1 bar from PREREG_oath_v0_certify_doc_2026_06_09.md quoted as an ANALOGUE reference (its bar was frozen for the closed-model-frontier corpus, not these docs)",
+  "seed": 1,
+  "n_docs": 13,
+  "n_mutants": 269,
+  "caught_ungrounded": 58,
+  "catch_rate": 0.216,
+  "false_verify": 26,
+  "false_verify_rate": 0.097,
+  "abstain_degrade": 182,
+  "abstain_degrade_rate": 0.677,
+  "dropped": 3,
+  "verdict_flips": 58,
+  "d1_bar_analogue": 0.8,
+  "per_doc": {
+    "RESULT_ai_brain_2026_06_03.md": {
+      "caught": 0,
+      "false_verify": 4,
+      "abstain_degrade": 27,
+      "dropped": 0,
+      "verdict_flips": 0,
+      "n_mutants": 31
+    },
+    "RESULT_ai_brain_vision_2026_06_03.md": {
+      "caught": 0,
+      "false_verify": 2,
+      "abstain_degrade": 20,
+      "dropped": 0,
+      "verdict_flips": 0,
+      "n_mutants": 22
+    },
+    "RESULT_ai_human_2026_06_03.md": {
+      "caught": 3,
+      "false_verify": 7,
+      "abstain_degrade": 40,
+      "dropped": 0,
+      "verdict_flips": 3,
+      "n_mutants": 50
+    },
+    "RESULT_llm_breadth_2026_06_03.md": {
+      "caught": 1,
+      "false_verify": 1,
+      "abstain_degrade": 0,
+      "dropped": 0,
+      "verdict_flips": 1,
+      "n_mutants": 2
+    },
+    "FINDING_council_2026_05_25.md": {
+      "caught": 11,
+      "false_verify": 1,
+      "abstain_degrade": 4,
+      "dropped": 1,
+      "verdict_flips": 11,
+      "n_mutants": 17
+    },
+    "FINDING_fame_vs_truth_2026_05_25.md": {
+      "caught": 5,
+      "false_verify": 1,
+      "abstain_degrade": 4,
+      "dropped": 0,
+      "verdict_flips": 5,
+      "n_mutants": 10
+    },
+    "FINDING_dogfood_2026_05_25.md": {
+      "caught": 4,
+      "false_verify": 1,
+      "abstain_degrade": 9,
+      "dropped": 1,
+      "verdict_flips": 4,
+      "n_mutants": 15
+    },
+    "FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "caught": 3,
+      "false_verify": 1,
+      "abstain_degrade": 30,
+      "dropped": 0,
+      "verdict_flips": 3,
+      "n_mutants": 34
+    },
+    "FINDING_council_grounding_2026_05_28.md": {
+      "caught": 2,
+      "false_verify": 1,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "verdict_flips": 2,
+      "n_mutants": 8
+    },
+    "FINDING_detection_locus_gpt_2026_05_30.md": {
+      "caught": 20,
+      "false_verify": 1,
+      "abstain_degrade": 7,
+      "dropped": 0,
+      "verdict_flips": 20,
+      "n_mutants": 28
+    },
+    "RESULT_geometry_integrity_2026_06_03.md": {
+      "caught": 4,
+      "false_verify": 3,
+      "abstain_degrade": 2,
+      "dropped": 0,
+      "verdict_flips": 4,
+      "n_mutants": 9
+    },
+    "RESULT_rhythm_rescue_2026_06_03.md": {
+      "caught": 0,
+      "false_verify": 3,
+      "abstain_degrade": 21,
+      "dropped": 1,
+      "verdict_flips": 0,
+      "n_mutants": 25
+    },
+    "FINDING_promptopinion_2026_05_24.md": {
+      "caught": 5,
+      "false_verify": 0,
+      "abstain_degrade": 13,
+      "dropped": 0,
+      "verdict_flips": 5,
+      "n_mutants": 18
+    }
+  },
+  "false_verify_rows": [
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 9,
+      "orig": "0.002",
+      "mutant": "0.001",
+      "false_receipt_ref": "ai_brain_result.json:per_model.Qwen-3B.brain_S"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 10,
+      "orig": "0.4",
+      "mutant": "0.7",
+      "false_receipt_ref": "ai_brain_result.json:per_model.Llama-1B.vice_S"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 14,
+      "orig": "0.222",
+      "mutant": "0.228",
+      "false_receipt_ref": "ai_brain_result.json:per_model.pythia-410m.brain"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 16,
+      "orig": "0.206",
+      "mutant": "0.006",
+      "false_receipt_ref": "ai_brain_result.json:noise_ceiling[1]"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 41,
+      "orig": "+1.1",
+      "mutant": "+0.1",
+      "false_receipt_ref": "ai_brain_vision_result.json:ai_brain_partial_cascade.lex+vision"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 43,
+      "orig": "+0.2",
+      "mutant": "+0.7",
+      "false_receipt_ref": "ai_brain_vision_result.json:unique_contributions_to_brain_R2.vision_beyond_AI+lex"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 12,
+      "orig": "0.652",
+      "mutant": "0.602",
+      "false_receipt_ref": "ai_human_result.json:embedder_human_align.MiniLM"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 17,
+      "orig": "0.903",
+      "mutant": "0.803",
+      "false_receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-1.5B.convergence"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 18,
+      "orig": "0.741",
+      "mutant": "0.701",
+      "false_receipt_ref": "ai_human_reliability_result.json:per_model.Llama-3B.human"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 23,
+      "orig": "0.967",
+      "mutant": "0.667",
+      "false_receipt_ref": "ai_human_reliability_result.json:per_model.Qwen-3B.human"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.76",
+      "mutant": "0.70",
+      "false_receipt_ref": "ai_human_reliability_result.json:per_model.Llama-3B.human"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.81",
+      "mutant": "0.83",
+      "false_receipt_ref": "ai_human_reliability_result.json:per_model.pythia-410m.convergence"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.60",
+      "mutant": "0.00",
+      "false_receipt_ref": "ai_human_result.json:H1.ctrl_mean"
+    },
+    {
+      "doc": "RESULT_llm_breadth_2026_06_03.md",
+      "line": 27,
+      "orig": "0.03",
+      "mutant": "0.00",
+      "false_receipt_ref": "binder_result.json:boot_p"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 20,
+      "orig": "0.88",
+      "mutant": "0.98",
+      "false_receipt_ref": "probe_council_results.json:by_cosine_clustering.C2_obscure_vs_fake"
+    },
+    {
+      "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+      "line": 18,
+      "orig": "0.75",
+      "mutant": "0.25",
+      "false_receipt_ref": "probe_fame_vs_truth_results.json:agreement_vs_rarity_curve.fake"
+    },
+    {
+      "doc": "FINDING_dogfood_2026_05_25.md",
+      "line": 19,
+      "orig": "1.0",
+      "mutant": "1.2",
+      "false_receipt_ref": "probe_dogfood_results.json:part_a.semantic_entropy_confabulation (fake compound)"
+    },
+    {
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 20,
+      "orig": "1.000",
+      "mutant": "0.000",
+      "false_receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.lam_hide"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 51,
+      "orig": "0.65",
+      "mutant": "0.95",
+      "false_receipt_ref": "council_grounding_result.json:auc_council_pooled"
+    },
+    {
+      "doc": "FINDING_detection_locus_gpt_2026_05_30.md",
+      "line": 29,
+      "orig": "0.00",
+      "mutant": "0.20",
+      "false_receipt_ref": "detection_locus_gpt_result.json:B_contrast_resampling_minus_single_pass.bar"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 9,
+      "orig": "0.01",
+      "mutant": "0.00",
+      "false_receipt_ref": "geometry_integrity_result.json:per_model.Llama-3.2-1B.drift_AUC"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 14,
+      "orig": "0.02",
+      "mutant": "0.03",
+      "false_receipt_ref": "geometry_mismatch_result.json:per_model.Llama-3.2-1B.recs[0].footprint"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 18,
+      "orig": "+4.1",
+      "mutant": "+4.3",
+      "false_receipt_ref": "geometry_mismatch_result.json:per_model.Qwen2.5-1.5B.recs[0].behavioral_shift"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 22,
+      "orig": "6.0",
+      "mutant": "2.0",
+      "false_receipt_ref": "rhythm_rescue_result.json:config.seeds[2]"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 23,
+      "orig": "3.3",
+      "mutant": "0.3",
+      "false_receipt_ref": "rhythm_rescue_result.json:free.0.acc.15"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 69,
+      "orig": "0.80",
+      "mutant": "0.90",
+      "false_receipt_ref": "rhythm_rescue_result.json:free.0.acc.6"
+    }
+  ]
+}
