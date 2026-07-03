@@ -1,0 +1,23 @@
+========================================================================
+DEPTH-TRUTH KEYSTONE — VERDICT (PREREG_v2 §2/§8/§10)
+========================================================================
+[id] total=250 kept(complete-case)=249 flagged=1 {'nonanswer': 1} no_label=0 bad_signal=0
+[ood1] total=133 kept(complete-case)=133 flagged=0 {} no_label=0 bad_signal=0
+[ood2] total=250 kept(complete-case)=8 flagged=242 {'grade_ambiguous': 242} no_label=0 bad_signal=0
+------------------------------------------------------------------------
+[id] n=249 correct=146 wrong=103 | depth mean=8.8226 std=0.0558 [8.6187,9.0706]
+[ood1] n=133 correct=17 wrong=116 | depth mean=8.8244 std=0.0449 [8.6494,8.8949]
+------------------------------------------------------------------------
+H1  AUROC(depth->correct)=0.5468 CI95=[0.4738,0.6183] excludes_0.5=False  (PASS=False)
+H2  [SE primary] dAUC=0.0026 CI95=[-0.0044,0.0188] excl_0=False LRT_p=1.00000 (pass<.01=False) DeLong_p=0.70818 => PASS=False
+    [LP_mean sec] dAUC=-0.0011 CI95=[-0.0025,0.0183] excl_0=False LRT_p=1.00000 Holm=1.00000 DeLong_p=0.32673
+    [LP_norm sec] dAUC=-0.0011 CI95=[-0.0025,0.0183] excl_0=False LRT_p=1.00000 Holm=1.00000 DeLong_p=0.32673
+H3  [fit ID, score OOD-1] dAUC_ood=-0.0517 CI95=[-0.1069,-0.0116] excl_0=False DeLong_p=0.03442 (PASS=False)
+------------------------------------------------------------------------
+OOD-2 TruthfulQA: ATTEMPTED_PENDING_KG3_HUMAN_AUDIT (mech grade {'correct': 2, 'incorrect': 6, 'none_or_ambiguous': 242}) — 250 items
+------------------------------------------------------------------------
+VERDICT: CLOSED_NEGATIVE_NO_TRUTH_SIGNAL
+  §10: H1 null AND H2 null. Depth carries no truth signal in this regime; 'we measure thought, not words' reverts to hypothesis and a README truth-in-advertising ticket opens.
+  H1=False H2(SE)=False H3=False
+
+verdict.json -> C:\Users\heyzo\clawd\styxx\papers\depth-truth\results\verdict.json

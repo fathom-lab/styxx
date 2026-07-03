@@ -1,0 +1,6 @@
+{
+ "model": "google/gemma-2-2b",
+ "n_layers": 26,
+ "transcoder_preset": "gemma",
+ "dtype": "bfloat16"
+}
