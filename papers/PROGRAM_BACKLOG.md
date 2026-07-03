@@ -50,6 +50,24 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 20 (2026-07-03) — the keystone verdict: does depth predict truth? `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` (OATH-HELD 30/0).**
+  The 633-item main run (250 ID / 133 OOD-1 / 250 OOD-2) completed 09:19; scored through the frozen PREREG_v2 §2 tests via a
+  new no-free-parameters driver (`harness/run_analysis.py`: §5 complete-case → §2 h1/h2_full/h3_ood, deterministic seed 7,
+  re-run byte-identical). **All three hypotheses NULL.** H1 AUROC(depth→correct)=**0.5468** CI[0.4738,0.6183] (straddles chance);
+  H2 ΔAUC(SE+depth vs SE)=**0.0026** CI[-0.0044,0.0188] LRT p=1.0 DeLong 0.708, LP_mean/LP_norm concur Holm p=1.0 (adds NOTHING
+  over confidence); H3 ΔAUC_ood=**-0.0517** CI[-0.1069,-0.0116] — **anti-signal** (DeLong 0.034), depth HURTS OOD. **Mechanism:**
+  first-content-token attribution depth is near-constant (ID std **0.0558**, OOD-1 std 0.0449) so it cannot sort correct from
+  wrong — THE figure shows green/red fully superimposed on the depth axis, only SE separates. The v1 narrow-depth signature
+  SURVIVED the v2 plumbing fix (content tokens, clean extraction, KG0/KG1 passed at pilot) ⇒ it is a property of the metric on
+  single-token answer heads, not a formatting artifact. Per §8 KG2, H1-null did not block H2/H3 (both ran, both failed). OOD-2
+  TruthfulQA **ATTEMPTED/PENDING KG3**: 242/250 mechanically `grade_ambiguous`, human audit absent → no TruthfulQA claim.
+  Full suite **1675 passed, 8 skipped** (companion test passes now GPU is free); `certify.py` UNCHANGED (no `validate_oath_v0`
+  re-run owed). Commit `f054f36` on `keystone-depth-truth`. **OWED (next cycles):** (a) **README truth-in-advertising ticket
+  (§10, now live)** — scope any depth copy to "separates recall from reasoning", never "predicts correctness"/"flags
+  hallucination"; the truth-prediction claim reverts to hypothesis (the earlier recall-vs-reasoning separation is untouched).
+  (b) KG3 human audit — flobi grades `results/human_audit_sample.jsonl` (24 rows) to decide if the TruthfulQA arm is reportable.
+  (c) any richer-aggregation / larger-model follow-up is a NEW prereg, not a rescue of this frozen negative.
+
 - **Autopilot cycle 18 (2026-07-02) — bind the UNBOUND finding backlog (standing priority #2), receipt-honest. `PARTIAL-BOUND`.**
   GPU held by in-flight scored runs (rung2 cross-family write PID 2604 + depth-truth autofire waiting behind it,
   VRAM 7690/8188) → non-GPU cycle. Swept all 203 uncertified FINDING/RESULT docs (excluding the in-flight
