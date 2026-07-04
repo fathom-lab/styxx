@@ -50,6 +50,22 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 22 (2026-07-03) — OATH v0.4 float claim→field binding, last-two-segment design (standing priority #5). `CLOSED_NEGATIVE` — bar B3 missed, change REVERTED (note OATH-HELD 38/0).**
+  Prereg frozen+committed BEFORE code (`PREREG_oath_v04_float_binding_2026_07_03.md`): floats VERIFIED only if a
+  value-matching leaf's last-two path segments share claim-line vocabulary; binding failure ⇒ loud ABSTAIN (never
+  UNGROUNDED). Bars: B1 D1≥16 → **17 PASS** (v0.4 *improved* catch); B2 D2=0 → PASS; **B3 battery FALSE-VERIFY ≤13 →
+  20 of 247 FAIL — kill**; B4 all 13 docs UNGROUNDED=0 → PASS; B5 suite 1675-passed → PASS. One missed bar ⇒ reverted;
+  `styxx/certify.py` byte-identical to shipped v0.3 (validator re-run under revert = zero git diff). **Measured
+  boundary (the yield):** field-level binding removes cross-table coincidences (FALSE-VERIFY 26→20, rate 0.097→0.081,
+  catch unhurt) but the residual 20/20 are **same-table SIBLINGS** — a corrupted row value matching another row of the
+  same field family (plus rounding-tolerance neighbors); field vocabulary cannot separate row k=2 from k=4 by
+  construction. Next attempt = **claim→CELL binding** (row-key aware; single-digit row labels + list indices are
+  invisible to current binding vocab) — a NEW prereg that must name this negative. **Bonus:** cycle-19's in-memory
+  battery is now a committed script (`papers/autopilot/mutant_battery.py`) that reproduces the v0.3 baseline EXACTLY
+  (269/58/26/182/3) — the reproducibility gap is closed. Receipts: `cycle22_v04_battery_result.json`,
+  `cycle22_v04_validation_result.json`, `cycle22_v03_baseline_battery_result.json`,
+  `RESULT_oath_v04_float_binding_2026_07_03.md`.
+
 - **Autopilot cycle 21 (2026-07-03) — discharge the §10 README truth-in-advertising ticket opened by cycle 20. `DISCHARGED (no correction needed)` (OATH-HELD 3/0).**
   Exhaustive repo audit for any live claim that circuit-attribution depth predicts truth/correctness/hallucination:
   `README.md`, `web/`, `docs/**`, `papers/**` (non depth-truth), and the adjacent live depth findings. **None found.**

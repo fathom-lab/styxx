@@ -1,0 +1,58 @@
+{
+  "prereg": "PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "seed": 1,
+  "D2_contradicted_on_clean": [],
+  "D3_coverage": {
+    "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md": {
+      "numbers": 38,
+      "verified": 19,
+      "abstained": 19,
+      "ungrounded": 0
+    },
+    "FINDING_b22_nonacknowledged_caving_2026_06_09.md": {
+      "numbers": 66,
+      "verified": 40,
+      "abstained": 26,
+      "ungrounded": 0
+    },
+    "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md": {
+      "numbers": 61,
+      "verified": 33,
+      "abstained": 28,
+      "ungrounded": 0
+    }
+  },
+  "D1": {
+    "n_mutations": 20,
+    "caught": 17,
+    "bar": 16,
+    "pass": true,
+    "missed": [
+      {
+        "k": 0,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 10,
+        "orig": "0.512",
+        "mut": "0.612",
+        "context": "On silent bare-term caves \u2014 where the text tells are dead (text-syc **0.500** = exact chance, text-d"
+      },
+      {
+        "k": 1,
+        "doc": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+        "line": 74,
+        "orig": "0.500",
+        "mut": "0.000",
+        "context": "- **Non-acknowledged (silent) caving** \u2192 text-only **collapses to chance (0.500)**; **only behaviora"
+      },
+      {
+        "k": 6,
+        "doc": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+        "line": 43,
+        "orig": "0.94",
+        "mut": "0.74",
+        "context": "L4 at 0.95 while the cave label is near chance 0.63 there, ramping to 0.94 only by L29 on a deep pla"
+      }
+    ]
+  },
+  "validation_verdict": "OATH-V0-VALID"
+}
