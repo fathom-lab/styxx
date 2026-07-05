@@ -50,6 +50,29 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 23 (2026-07-04) — OATH v0.4 trigger-vocabulary RECALL extension (cycle-22-owed sibling of float binding; standing priority #5). `CLOSED_NEGATIVE` — bar G3 missed, change REVERTED (RESULT OATH-HELD 36/0).**
+  Prereg frozen+committed BEFORE code (`PREREG_oath_v04_trigger_recall_2026_07_04.md`): widen `_TRIGGERS` with the
+  correlation/similarity register (rsa/rdm/spearman/correlation/rho/consistency/reliability/ceiling/agreement/
+  convergence/drift/entropy/similarity/variance) to convert the cycle-19 battery's **182/269 abstain-degrade** bucket
+  into caught UNGROUNDED. **The extension works on its own axis** — battery **caught 58 → 128 of 269** (catch rate
+  0.216 → 0.476, +70 abstain-degrades recovered), with **no false-verify regression** (26 unchanged — the feared dense-
+  table abstain→false-verify conversion did not net occur); G1 D1=16 PASS, G2 D2=0 PASS, G4 catch≥116 → 128 PASS, G5
+  suite 1675-passed PASS. **But G3 (honesty gate) FIRED:** re-certifying the 13 clean cycle-18 docs produced **35 clean
+  UNGROUNDED** (baseline 0), of which **6 are certifier ARTIFACTS** — a register word obligating a non-measurement
+  number (unambiguous: `detection_locus_gpt` L64 API-cap `20` obligated by "entropy"; `geometry_integrity` L46 stage
+  ordinals `1`/`2` obligated by "drift"). One artifact is a kill; there are six. **Measured boundary (the yield):**
+  recall and precision are COUPLED for this register — the same words that name a measured correlation
+  (entropy/drift/variance/ceiling) also appear as spec constants / ordinals / "2D"; a blunt vocabulary widening buys
+  +70 catches at 6 false accusations and the oath cannot ship false accusations. **29 of 35 are REAL** doc↔receipt gaps
+  (grid-cell correlations never persisted as summary receipts — the tool correctly turning on older docs).
+  **Revert proven:** `certify.py` byte-identical to HEAD; 3 corpus certs + `_oath_mutants` fixtures restored;
+  reproducible from the committed (reverted) tree via `papers/autopilot/cycle23_recall_probe.py` (monkeypatches the
+  exact one-line change in memory → 128/26/112 + 35[28 absent/1 bulk/6 artifact]). Receipts:
+  `RESULT_oath_v04_trigger_recall_2026_07_04.md` (+ certificate), `cycle23_recall_battery_result.json`,
+  `cycle23_g3_handcheck_result.json`. **Next = RANGE-GUARDED recall** (fire the register only when the adjacent number
+  is in ~[−1,1] via the existing RANGE-SANITY `unit_kw` machinery — spares API caps / ordinals / "2D") — NEW prereg
+  naming this negative, re-gate G3 = 0 artifacts.
+
 - **Autopilot cycle 22 (2026-07-03) — OATH v0.4 float claim→field binding, last-two-segment design (standing priority #5). `CLOSED_NEGATIVE` — bar B3 missed, change REVERTED (note OATH-HELD 38/0).**
   Prereg frozen+committed BEFORE code (`PREREG_oath_v04_float_binding_2026_07_03.md`): floats VERIFIED only if a
   value-matching leaf's last-two path segments share claim-line vocabulary; binding failure ⇒ loud ABSTAIN (never

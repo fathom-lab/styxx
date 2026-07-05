@@ -1,0 +1,700 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+  "document_sha256": "ea82ed5c0ca91d2b22f988d966cdfa28a8e7591a28543ba2688d85defb5eba0a",
+  "receipts_sha256": {
+    "cycle23_recall_battery_result.json": "0c7936500c0c84669ae0089636f2044ff50a5f0ec5371b66e03508e585a18c0f",
+    "cycle23_g3_handcheck_result.json": "cbdd6dc1663a7c835f7e5ca7313da585eb8f7986a700ee16dc3df276d6f0d3be",
+    "cycle22_v03_baseline_battery_result.json": "2383891af1939f0255265463353a1261ee5e340eeca16615d5b913149e261162"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 36,
+    "ABSTAIN": 26,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 20,
+      "token": "16"
+    },
+    {
+      "line": 20,
+      "token": "16"
+    },
+    {
+      "line": 21,
+      "token": "0"
+    },
+    {
+      "line": 21,
+      "token": "26"
+    },
+    {
+      "line": 21,
+      "token": "0"
+    },
+    {
+      "line": 21,
+      "token": "26"
+    },
+    {
+      "line": 23,
+      "token": "116"
+    },
+    {
+      "line": 24,
+      "token": "1675"
+    },
+    {
+      "line": 28,
+      "token": "70"
+    },
+    {
+      "line": 38,
+      "token": "29"
+    },
+    {
+      "line": 40,
+      "token": "19"
+    },
+    {
+      "line": 40,
+      "token": "6"
+    },
+    {
+      "line": 45,
+      "token": "20"
+    },
+    {
+      "line": 45,
+      "token": "20"
+    },
+    {
+      "line": 46,
+      "token": "1"
+    },
+    {
+      "line": 47,
+      "token": "1"
+    },
+    {
+      "line": 57,
+      "token": "+70"
+    },
+    {
+      "line": 66,
+      "token": "128"
+    },
+    {
+      "line": 66,
+      "token": "26"
+    },
+    {
+      "line": 66,
+      "token": "112"
+    },
+    {
+      "line": 71,
+      "token": "24"
+    },
+    {
+      "line": 75,
+      "token": "20"
+    },
+    {
+      "line": 76,
+      "token": "0.264"
+    },
+    {
+      "line": 76,
+      "token": "0.735"
+    },
+    {
+      "line": 77,
+      "token": "0"
+    },
+    {
+      "line": 77,
+      "token": "29"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "# RESULT \u2014 OATH v0.4 trigger-vocabulary recall extension: CLOSED_NEGATIVE (autopilot cycle 23)",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.caught"
+    },
+    {
+      "line": 12,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "`similarity`, `variance`. Goal: convert the cycle-19 battery's **182**-mutant abstain-degrade",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.abstain_degrade"
+    },
+    {
+      "line": 20,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:per_doc.RESULT_ai_brain_vision_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 20,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G1 | `validate_oath_v0.py` D1 caught \u2265 16 of 20 | **16 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 false UNGROUNDED on the 3-doc corpus AND battery false-verify \u2264 26 | **0 and 26 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| G3 | every clean UNGROUNDED hand-verifies as a REAL doc\u2194receipt gap (no certifier artifact) | **6 artifacts of 35 \u2192 FAIL** |",
+      "binding_context": "| bar | gate | result | | G3 | every clean UNGROUNDED hand-verifies as a REAL doc\u2194receipt gap (no certifier artifact) | **6 artifacts of 35 \u2192 FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.FINDING_dogfood_2026_05_25.md.abstain_degrade"
+    },
+    {
+      "line": 22,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "| G3 | every clean UNGROUNDED hand-verifies as a REAL doc\u2194receipt gap (no certifier artifact) | **6 artifacts of 35 \u2192 FAIL** |",
+      "binding_context": "| bar | gate | result | | G3 | every clean UNGROUNDED hand-verifies as a REAL doc\u2194receipt gap (no certifier artifact) | **6 artifacts of 35 \u2192 FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 23,
+      "token": "116",
+      "value": 116.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.n_mutants"
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_ai_brain_vision_2026_06_03.md.false_verify"
+    },
+    {
+      "line": 23,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.caught"
+    },
+    {
+      "line": 23,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 of 269 (\u2265 2\u00d7 the v0.3 baseline of 58) | **128 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:caught"
+    },
+    {
+      "line": 24,
+      "token": "1675",
+      "value": 1675.0,
+      "decimals": 0,
+      "context": "| G5 | `pytest tests -q` green | 1675 passed \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G5 | `pytest tests -q` green | 1675 passed \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "the v0.3 baseline **58** caught to **128** caught of **269** mutants (catch rate **0.216 \u2192 0.476**, more than doubling),",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.caught"
+    },
+    {
+      "line": 27,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "the v0.3 baseline **58** caught to **128** caught of **269** mutants (catch rate **0.216 \u2192 0.476**, more than doubling),",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:caught"
+    },
+    {
+      "line": 27,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "the v0.3 baseline **58** caught to **128** caught of **269** mutants (catch rate **0.216 \u2192 0.476**, more than doubling),",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:n_mutants"
+    },
+    {
+      "line": 27,
+      "token": "0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "the v0.3 baseline **58** caught to **128** caught of **269** mutants (catch rate **0.216 \u2192 0.476**, more than doubling),",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:catch_rate"
+    },
+    {
+      "line": 27,
+      "token": "0.476",
+      "value": 0.476,
+      "decimals": 3,
+      "context": "the v0.3 baseline **58** caught to **128** caught of **269** mutants (catch rate **0.216 \u2192 0.476**, more than doubling),",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:catch_rate"
+    },
+    {
+      "line": 28,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "recovering **70** of the 182 abstain-degrades, and it did so **without** a false-verify regression",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "recovering **70** of the 182 abstain-degrades, and it did so **without** a false-verify regression",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.abstain_degrade"
+    },
+    {
+      "line": 29,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "(**26**, unchanged \u2014 the feared dense-table abstain\u2192false-verify conversion did not net occur).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:false_verify"
+    },
+    {
+      "line": 30,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "But the honesty gate **G3 fired**: re-certifying the 13 clean cycle-18 docs under the extension",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:n_docs"
+    },
+    {
+      "line": 31,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "produced **35** clean UNGROUNDED (baseline **0**), and **6** of them are certifier **artifacts** \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "produced **35** clean UNGROUNDED (baseline **0**), and **6** of them are certifier **artifacts** \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_ai_human_2026_06_03.md.clean_ungrounded"
+    },
+    {
+      "line": 31,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "produced **35** clean UNGROUNDED (baseline **0**), and **6** of them are certifier **artifacts** \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:artifact"
+    },
+    {
+      "line": 37,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "Of the 35 clean UNGROUNDED, **28** are numbers genuinely absent from any grounding summary receipt",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 37,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "Of the 35 clean UNGROUNDED, **28** are numbers genuinely absent from any grounding summary receipt",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:real_absent"
+    },
+    {
+      "line": 38,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "and **1** lives only in a bulk per-item array \u2014 **29 REAL** gaps where the extension correctly",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 38,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "and **1** lives only in a bulk per-item array \u2014 **29 REAL** gaps where the extension correctly",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "claimable summary field (the tool doing its job, exactly as cycle 19 celebrated). But **6** are",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "claimable summary field (the tool doing its job, exactly as cycle 19 celebrated). But **6** are",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "20\"* \u2014 the API cap `20` is obligated by `entropy`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "20\"* \u2014 the API cap `20` is obligated by `entropy`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- `geometry_integrity` L46: a reproduction line *\"run_geometry_integrity.py (**drift**, stage 1) \u00b7",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "run_geometry_mismatch.py (2D signature, stage 2)\"* \u2014 the stage ordinals `1` and `2` are obligated",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 47,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "run_geometry_mismatch.py (2D signature, stage 2)\"* \u2014 the stage ordinals `1` and `2` are obligated",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "run_geometry_mismatch.py (2D signature, stage 2)\"* \u2014 the stage ordinals `1` and `2` are obligated",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 57,
+      "token": "+70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "extension cannot separate them; it buys +70 catches at the cost of 6 false accusations, and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "extension cannot separate them; it buys +70 catches at the cost of 6 false accusations, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:false_verify_rows[23].orig"
+    },
+    {
+      "line": 59,
+      "token": "0.476",
+      "value": 0.476,
+      "decimals": 3,
+      "context": "bar structure outranks the 0.476 catch rate.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:catch_rate"
+    },
+    {
+      "line": 66,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "`cycle23_recall_battery_result.json` (128 / 26 / 112) and `cycle23_g3_handcheck_result.json`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "`cycle23_recall_battery_result.json` (128 / 26 / 112) and `cycle23_g3_handcheck_result.json`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "112",
+      "value": 112.0,
+      "decimals": 0,
+      "context": "`cycle23_recall_battery_result.json` (128 / 26 / 112) and `cycle23_g3_handcheck_result.json`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "(35 clean UNGROUNDED; 28 absent, 1 bulk-only, 6 artifact). Baseline reference:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 67,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "(35 clean UNGROUNDED; 28 absent, 1 bulk-only, 6 artifact). Baseline reference:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:real_absent"
+    },
+    {
+      "line": 67,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(35 clean UNGROUNDED; 28 absent, 1 bulk-only, 6 artifact). Baseline reference:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:per_doc.FINDING_council_grounding_2026_05_28.md.false_verify"
+    },
+    {
+      "line": 67,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "(35 clean UNGROUNDED; 28 absent, 1 bulk-only, 6 artifact). Baseline reference:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:artifact"
+    },
+    {
+      "line": 68,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "`cycle22_v03_baseline_battery_result.json` (58 / 26 / 182). `validate_oath_v0.py` and",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.caught"
+    },
+    {
+      "line": 68,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "`cycle22_v03_baseline_battery_result.json` (58 / 26 / 182). `validate_oath_v0.py` and",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:false_verify"
+    },
+    {
+      "line": 68,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "`cycle22_v03_baseline_battery_result.json` (58 / 26 / 182). `validate_oath_v0.py` and",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:baseline_v03.abstain_degrade"
+    },
+    {
+      "line": 71,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "## What cycle 24 should consider (names this burial)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "register only when the adjacent number lies in a correlation's range (roughly \u22121 to 1), reusing the",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:real_bulk_only"
+    },
+    {
+      "line": 74,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "register only when the adjacent number lies in a correlation's range (roughly \u22121 to 1), reusing the",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_g3_handcheck_result.json:real_bulk_only"
+    },
+    {
+      "line": 75,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "existing RANGE-SANITY `unit_kw` machinery. That spares `20` (an API cap), stage ordinals, and \"2D\",",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 76,
+      "token": "0.264",
+      "value": 0.264,
+      "decimals": 3,
+      "context": "while still binding an `RSA 0.264` or a `reliability 0.735`. A NEW prereg must name this negative",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 76,
+      "token": "0.735",
+      "value": 0.735,
+      "decimals": 3,
+      "context": "while still binding an `RSA 0.264` or a `reliability 0.735`. A NEW prereg must name this negative",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "and re-gate on G3 = 0 artifacts. The 29 REAL gaps this cycle surfaced are also owed a separate",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 77,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "and re-gate on G3 = 0 artifacts. The 29 REAL gaps this cycle surfaced are also owed a separate",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

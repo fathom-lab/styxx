@@ -1,0 +1,255 @@
+{
+  "what": "cycle-23 G3 hand-check: clean UNGROUNDED under the trigger-recall extension, REAL vs ARTIFACT",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v04_trigger_recall_2026_07_04.md",
+  "clean_ungrounded_total": 35,
+  "real_absent": 28,
+  "real_bulk_only": 1,
+  "artifact": 6,
+  "rows": [
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 4,
+      "token": "9",
+      "kind": "real_absent",
+      "context": "fMRI (9 subjects, 60 concrete nouns, top-500 stable voxels, group RDM). LLM concept RDMs at the fixed"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 8,
+      "token": "47",
+      "kind": "real_absent",
+      "context": "Best LLM (gpt2-large) RSA-to-brain **0.264 = 67% of the noise-ceiling lower bound** (47% of upper);"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 9,
+      "token": "47",
+      "kind": "real_absent",
+      "context": "shuffled-noun control **0.002 \u00b1 0.028**. Most models reach 47\u201367% of ceiling. The brain's own"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 14,
+      "token": "67",
+      "kind": "real_absent",
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 14,
+      "token": "56",
+      "kind": "real_absent",
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 15,
+      "token": "65",
+      "kind": "real_absent",
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 15,
+      "token": "53",
+      "kind": "real_absent",
+      "context": "| gpt2-xl | 0.258 | 65% | Qwen-0.5B | 0.209 | 53% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 16,
+      "token": "60",
+      "kind": "artifact",
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 16,
+      "token": "52",
+      "kind": "real_absent",
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 17,
+      "token": "60",
+      "kind": "artifact",
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 17,
+      "token": "49",
+      "kind": "real_absent",
+      "context": "| pythia-160m | 0.237 | 60% | Qwen-1.5B | 0.193 | 49% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 18,
+      "token": "59",
+      "kind": "real_absent",
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 18,
+      "token": "47",
+      "kind": "real_absent",
+      "context": "| Llama-3B | 0.233 | 59% | Qwen-3B | 0.184 | 47% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 19,
+      "token": "58",
+      "kind": "real_absent",
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 19,
+      "token": "35",
+      "kind": "real_absent",
+      "context": "| pythia-410m | 0.228 | 58% | gemma-2-2b | 0.138 | 35% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 20,
+      "token": "15",
+      "kind": "real_absent",
+      "context": "| | | | gpt2 (124M) | 0.059 | 15% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 23,
+      "token": "53",
+      "kind": "real_absent",
+      "context": "Over the 53 nouns shared with THINGS/VICE, all judged against the **same** brain RDM:"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 27,
+      "token": "63",
+      "kind": "real_absent",
+      "context": "| **behavioral human** (VICE \u2014 1.5M odd-one-out judgments) | **0.247** | 63% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 28,
+      "token": "56",
+      "kind": "real_absent",
+      "context": "| **best LLM** (text-only concept geometry) | **0.222** | 56% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 29,
+      "token": "41",
+      "kind": "real_absent",
+      "context": "| mpnet (sentence embedder, trained on similarity) | 0.161 | 41% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 30,
+      "token": "40",
+      "kind": "real_absent",
+      "context": "| MiniLM (sentence embedder, trained on similarity) | 0.156 | 40% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 67,
+      "token": "9",
+      "kind": "real_absent",
+      "context": "`build_brain_rdm.py` (neural RDMs + noise ceiling) \u00b7 `run_ai_brain.py` (the test). Data: 9\u00d7 Mitchell"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.56",
+      "kind": "real_absent",
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.16",
+      "kind": "real_absent",
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 63,
+      "token": "8",
+      "kind": "real_absent",
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 63,
+      "token": "8",
+      "kind": "real_absent",
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 63,
+      "token": "0.50",
+      "kind": "real_bulk_only",
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a"
+    },
+    {
+      "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+      "line": 56,
+      "token": "8",
+      "kind": "real_absent",
+      "context": "n = 6/6/8/8, single run, 4-way agreement quantized to {0.25,\u2026,1.0}."
+    },
+    {
+      "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+      "line": 56,
+      "token": "8",
+      "kind": "real_absent",
+      "context": "n = 6/6/8/8, single run, 4-way agreement quantized to {0.25,\u2026,1.0}."
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 30,
+      "token": "36",
+      "kind": "artifact",
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 30,
+      "token": "3",
+      "kind": "real_absent",
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 30,
+      "token": "3",
+      "kind": "real_absent",
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is"
+    },
+    {
+      "doc": "FINDING_detection_locus_gpt_2026_05_30.md",
+      "line": 64,
+      "token": "20",
+      "kind": "artifact",
+      "context": "(TRUNCATED \u2014 entropy is a lower-bound proxy; OpenAI caps top_logprobs at 20, which if anything"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 46,
+      "token": "1",
+      "kind": "artifact",
+      "context": "`run_geometry_integrity.py` (drift, stage 1) \u00b7 `run_geometry_mismatch.py` (2D signature, stage 2) \u00b7"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 46,
+      "token": "2",
+      "kind": "artifact",
+      "context": "`run_geometry_integrity.py` (drift, stage 1) \u00b7 `run_geometry_mismatch.py` (2D signature, stage 2) \u00b7"
+    }
+  ]
+}
