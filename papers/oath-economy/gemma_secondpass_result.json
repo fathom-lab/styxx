@@ -124,5 +124,5 @@
  "n_disagree": 15,
  "report_pdf_sha256_16": "4caf88137b228c54",
  "report_cite": "Table 13, p.7",
- "verdict": "SCOUT CONFIRMED"
+ "verdict": "reproduced 15/17 disagreeing rows (deterministic exact comparison at published precision; no sampling, so no CI applies \u2014 every row is an integer match/mismatch, receipts in rows[])"
 }
