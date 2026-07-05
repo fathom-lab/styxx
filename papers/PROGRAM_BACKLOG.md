@@ -50,6 +50,20 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 24 (2026-07-04, operator "go deeper") — OATH v0.4 RANGE-GUARDED trigger-recall (names the cycle-23 burial). `CLOSED_NEGATIVE` — bar G3 missed by ONE, REVERTED (RESULT OATH-HELD 28/0).**
+  Fix attempted: the correlation register obligates a number only when value ∈ [−1,1] (all 6 cycle-23 artifacts
+  were out of range). Prereg frozen+committed (`f539339`) before code. **The guard did most of its job** — clean
+  UNGROUNDED collapsed **35 → 4** (2 REAL derived-RSA-bounds, 1 REAL bulk-only, **1 ARTIFACT**), battery caught
+  **128 → 119** of 269 (recall survives, only −9), false-verify 26 unchanged; G1/G2/G4(119≥116)/G5 all PASS. **But
+  G3 = 0 and one artifact survived:** `geometry_integrity` L46 `(drift, stage 1)` — the ordinal `1` is obligated by
+  "drift" and the guard **admits it because 1.0 is a legal correlation** (the boundary); `stage 2` was spared
+  (2 ∉ range), as were the 4 other cycle-23 artifacts. **Yield:** a value-range guard is necessary but not
+  sufficient — correlations are written WITH decimals (0.264/0.98/0.735), the false positives are bare integers;
+  the clean separator is **decimals > 0**, not range alone. **Next = cycle 25** (add `decimals > 0` to the guard —
+  removes the ordinal artifact by construction, keeps every decimal correlation; ships if G3=0 ∧ G4≥116). Receipts:
+  `RESULT_oath_v04_recall_rangeguard_2026_07_04.md` (+cert), `cycle24_rangeguard_battery_result.json`,
+  `cycle24_rangeguard_g3_result.json`.
+
 - **Autopilot cycle 23 (2026-07-04) — OATH v0.4 trigger-vocabulary RECALL extension (cycle-22-owed sibling of float binding; standing priority #5). `CLOSED_NEGATIVE` — bar G3 missed, change REVERTED (RESULT OATH-HELD 36/0).**
   Prereg frozen+committed BEFORE code (`PREREG_oath_v04_trigger_recall_2026_07_04.md`): widen `_TRIGGERS` with the
   correlation/similarity register (rsa/rdm/spearman/correlation/rho/consistency/reliability/ceiling/agreement/
