@@ -7,7 +7,7 @@
     "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
     "b22_findings_addendum.json": "72a6cbee99515249ca62326996c172f50a9b6f8fec272e214826e95c811764b5"
   },
-  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
   "counts": {
     "VERIFIED": 42,
     "ABSTAIN": 24,

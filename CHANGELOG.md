@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- **`styxx.certify` OATH v0.4 -- trigger-recall extension (decimal+range-guarded).** The certifier's
+  UNGROUNDED trigger vocabulary now covers the correlation/similarity register (RSA, RDM, Spearman,
+  correlation, rho, consistency, reliability, ceiling, agreement, convergence, drift, entropy,
+  similarity, variance) in addition to the AUROC/margin/FPR register -- but only for a number that is
+  a *fractional correlation* (`decimals > 0` and value in [-1, 1]), so ordinals, counts, API
+  constants, and whole-percents are never obligated. A corrupted correlation value now fires
+  UNGROUNDED instead of silently falling to ABSTAIN. Tamper-catch on the cycle-18 mutant battery
+  rose 58 -> 119 of 269 (0.216 -> 0.442) with no false-verify regression and zero certifier
+  artifacts. Validated by the frozen OATH v0 gate (`validate_oath_v0.py` D1 >= 16, D2 = 0, unchanged).
+  Preregs + result: `papers/closed-model-frontier/PREREG_oath_v04_recall_decimalguard_2026_07_04.md`,
+  `RESULT_oath_v04_recall_decimalguard_2026_07_04.md` (arc: cycles 23-25).
+
 ---
 
 ## [7.24.3] — 2026-06-30 — py3.9 fix + deep claim-auditor fuzz hardening

@@ -50,6 +50,23 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 25 (2026-07-04, operator "go deeper → break the ceiling") — OATH v0.4 DECIMAL+RANGE-guarded trigger-recall. `SHIPPED` — ALL FIVE BARS PASS (first `styxx.certify` upgrade since v0.3; RESULT OATH-HELD 17/0).**
+  Add `decimals > 0` to the [−1,1] correlation-register guard — correlations carry a fractional part; ordinals /
+  counts / API-caps / whole-percents never do. Prereg frozen+committed (`b6f5808`) before code, with a **frozen G3
+  artifact definition** (measurement-domain vs not) to remove post-hoc judgment. **Tamper-catch on the 13-doc
+  cycle-18 battery rose from the v0.3 baseline 58 → 119 of 269** (catch rate 0.216 → 0.442, +61 abstain-degrades
+  recovered) with false-verify held at 26 (no regression) and **zero certifier artifacts** — the `decimals>0` clause
+  removed the cycle-24 residual (`drift, stage 1`, the integer 1 admitted at the correlation boundary 1.0) by
+  construction. G1 D1=16, G2 D2=0, G3 artifacts=0, G4 119≥116, G5 1675-passed. The 3 remaining clean UNGROUNDED are
+  all REAL provenance gaps (derived RSA/R² bounds; a bulk-only agreement value) — the tool correctly turning on the
+  older docs. **This is the payoff of a 4-negative arc** (cycle 22 float → 23 blunt → 24 range → 25 decimal, each
+  naming the last). Ship surface: `styxx/certify.py` (+`_TRIGGERS_CORR` + one guarded `bound` line), 3 corpus certs
+  regenerated (D2=0 held), `CHANGELOG [Unreleased]`. Receipts: `RESULT_oath_v04_recall_decimalguard_2026_07_04.md`
+  (+cert), `cycle25_decimalguard_{battery,g3}_result.json`, `cycle25_decimalguard_probe.py`.
+  **Owed next = re-certify the 13 cycle-18 docs under the shipped verifier + repair the surfaced provenance gaps**
+  (persist bulk/derived correlations as summary receipts, or scope claims) — now the concrete content of standing
+  priority #2.
+
 - **Autopilot cycle 24 (2026-07-04, operator "go deeper") — OATH v0.4 RANGE-GUARDED trigger-recall (names the cycle-23 burial). `CLOSED_NEGATIVE` — bar G3 missed by ONE, REVERTED (RESULT OATH-HELD 28/0).**
   Fix attempted: the correlation register obligates a number only when value ∈ [−1,1] (all 6 cycle-23 artifacts
   were out of range). Prereg frozen+committed (`f539339`) before code. **The guard did most of its job** — clean

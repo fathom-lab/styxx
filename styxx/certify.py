@@ -175,6 +175,17 @@ _TRIGGERS = re.compile(
     r"gated|dropped|grounded|sycophancy|deception|surface|lens|firewall|collapse|wilson|"
     r"concordance|stability|score[sd]?)\b", re.I)
 
+# v0.4 trigger-recall: the correlation/similarity register the AUROC-centric _TRIGGERS above misses
+# (the 182/269 abstain-degrade bucket of the cycle-19 mutant battery lives here). A BLUNT add
+# over-triggers (cycle 23: 6 artifacts) and a bare value-range guard leaves the integer ordinal that
+# collides with the correlation boundary 1.0 (cycle 24: "drift, stage 1"). The shipped rule: this
+# register obligates a number only when it is a FRACTIONAL correlation — decimals > 0 AND value in
+# [−1, 1]. No ordinal/index/count/API-constant/whole-percent (all decimals == 0) can bind; the range
+# spares out-of-range decimals. See PREREG_oath_v04_recall_decimalguard_2026_07_04.md.
+_TRIGGERS_CORR = re.compile(
+    r"\b(rsa|rdm|spearman|pearson|correlations?|rho|consistency|reliability|ceiling|agreement|"
+    r"convergence|drift|entropy|similarity|variance)\b", re.I)
+
 
 def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     text = doc_path.read_text(encoding="utf-8")
@@ -241,6 +252,12 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                 hits = [(rn, pth) for rn, pth in hits
                         if re.search(r"(^|[._\[])n_|n_held|n_caved|^n(\.|$)|count", pth, re.I)]
         bound = bool(_TRIGGERS.search(bctx))
+        # v0.4 decimal+range-guarded recall: the correlation/similarity register obligates a number
+        # only when it is a fractional correlation (decimals > 0 and in [−1, 1]) — spares ordinals /
+        # counts / API caps / whole-percents, binds RSA 0.264 / reliability 0.735.
+        if not bound and num["decimals"] > 0 and -1.0 <= num["value"] <= 1.0 \
+                and _TRIGGERS_CORR.search(bctx):
+            bound = True
         # v0.3 RANGE-SANITY rule: a value sitting directly after bounded-quantity vocabulary cannot
         # leave its possible range — an 'AUC 4.0' is UNGROUNDED no matter what leaf it happens to
         # match (kills the coincidence-verification class of the v0.1 battery misses).
