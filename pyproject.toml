@@ -8,7 +8,7 @@ name = "styxx"
 # via [tool.setuptools.dynamic] below, so pyproject and the runtime __version__
 # can never drift. To cut a release, bump styxx/_version.py only.
 dynamic = ["version"]
-description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence — localized to the step that produced them. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3) — text-only register instruments with documented construct ceilings. Reference implementation of the Cognometric Fingerprint Specification v1.0. Pure Python."
+description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence. Calibrated AUC: 0.998 hallucination (HaluEval-QA), 0.976 refusal (XSTest-GPT-4), 0.943 tool-call drift (BFCL v3) — register instruments with documented construct ceilings. Reference implementation of the Cognometric Fingerprint Spec v1.0. No torch, no GPU, no LLM in the loop; base install is numpy + scikit-learn."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
@@ -55,17 +55,22 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.24",
-    # scikit-learn powers the two flagship auditors — audit_confound and
-    # validate_probe — which styxx/__init__.py imports EAGERLY at top level. It
-    # must therefore be a BASE dependency, not an extra: a bare `pip install styxx`
-    # followed by `import styxx` (or `from styxx import audit_confound`, exactly as
-    # the README instructs) crashes with ModuleNotFoundError if sklearn is absent.
-    # Do not move this into an optional-dependency group without also making those
-    # imports lazy/fail-open. (Pulls scipy transitively.)
+    # scikit-learn powers the two flagship auditors — audit_confound and validate_probe. As of the
+    # perf-and-weight work it is imported LAZILY, at the first CALL of those functions (see the
+    # `_ensure_sklearn` helpers in confound_audit.py / probe_validity.py), NOT at `import styxx` — which
+    # keeps a cold import off the sklearn/scipy/pandas graph (~2.4s). It is kept a BASE dependency so the
+    # documented one-liner `from styxx import audit_confound; audit_confound(...)` works out of the box on a
+    # bare `pip install styxx`. The lazy helpers already name `pip install 'styxx[sklearn]'` in their error,
+    # so demoting it to that extra is now safe should a slimmer base ever be wanted; it is not done here
+    # because it would change the runtime behaviour of a bare install. (sklearn pulls scipy + pandas.)
     "scikit-learn>=1.3",
 ]
 
 [project.optional-dependencies]
+# scikit-learn ships in the BASE install (see the dependencies block), so this extra is normally a no-op.
+# It exists so the lazy-import error path (`pip install 'styxx[sklearn]'`) resolves for slimmed bases that
+# stripped it, and so a future base-slimming can move the pin here without touching the error message.
+sklearn = ["scikit-learn>=1.3"]
 openai  = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
 # 0.5.4: framework integrations

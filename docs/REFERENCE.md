@@ -2,7 +2,7 @@
 
 Technical reference for advanced users. Every public symbol, signature, and a minimal example.
 
-For narrative intros see [`README.md`](README.md). For data-format and dynamics specs see [`docs/research/`](docs/research/). For provider compatibility see [`docs/users/COMPATIBILITY.md`](docs/users/COMPATIBILITY.md).
+For narrative intros see [`README.md`](../README.md). For data-format and dynamics specs see [`research/`](research/). For provider compatibility see [`users/COMPATIBILITY.md`](users/COMPATIBILITY.md).
 
 ## Contents
 
@@ -61,7 +61,7 @@ print(r.choices[0].message.content)
 print(r.vitals.phase4, r.vitals.gate)  # "reasoning:0.69" "pass"
 ```
 
-Works with any OpenAI-compatible endpoint (OpenRouter, Groq, vLLM, llama.cpp, Ollama, Azure, LiteLLM) via `base_url`. See [`docs/users/COMPATIBILITY.md`](docs/users/COMPATIBILITY.md) for verified providers.
+Works with any OpenAI-compatible endpoint (OpenRouter, Groq, vLLM, llama.cpp, Ollama, Azure, LiteLLM) via `base_url`. See [`users/COMPATIBILITY.md`](users/COMPATIBILITY.md) for verified providers.
 
 ### `styxx.Anthropic`
 
@@ -217,7 +217,7 @@ with styxx.guardian() as g:
     ...
 ```
 
-Higher-level supervisor that composes reflex + autoreflex + sentinel into one context manager. Tier-2 builds can also apply in-flight steering (experimental; see [`docs/research/cognitive-metrology-charter.md`](docs/research/cognitive-metrology-charter.md)).
+Higher-level supervisor that composes reflex + autoreflex + sentinel into one context manager. Tier-2 builds can also apply in-flight steering (experimental; see [`research/cognitive-metrology-charter.md`](research/cognitive-metrology-charter.md)).
 
 ---
 
@@ -295,7 +295,7 @@ styxx.agent_card() -> AgentCard  # shareable personality card (PNG via [agent-ca
 
 ## Thought (.fathom)
 
-Portable, substrate-independent cognitive state. Full spec: [`docs/research/fathom-spec-v0.md`](docs/research/fathom-spec-v0.md).
+Portable, substrate-independent cognitive state. Full spec: [`research/fathom-spec-v0.md`](research/fathom-spec-v0.md).
 
 ```python
 from styxx import Thought, PhaseThought, read_thought, write_thought
@@ -306,13 +306,13 @@ write_thought(t, "out.fathom")
 t2 = t.delta(other)   # ThoughtDelta
 ```
 
-Canonical sort-keys UTF-8 JSON, no BOM. Conformance tests live in [`tests/`](tests/).
+Canonical sort-keys UTF-8 JSON, no BOM. Conformance tests live in [`tests/`](../tests/).
 
 ---
 
 ## Dynamics (.cogdyn)
 
-Linear state-space model of cognitive evolution. Full spec: [`docs/research/cognitive-dynamics-v0.md`](docs/research/cognitive-dynamics-v0.md).
+Linear state-space model of cognitive evolution. Full spec: [`research/cognitive-dynamics-v0.md`](research/cognitive-dynamics-v0.md).
 
 ```python
 from styxx import CognitiveDynamics, Observation, synthetic_observations
@@ -541,7 +541,7 @@ pip install styxx[agent-card]  # personality card PNG renderer (Pillow)
 
 ---
 
-For the discipline behind the instruments, see the charter: [`docs/research/cognitive-metrology-charter.md`](docs/research/cognitive-metrology-charter.md).
+For the discipline behind the instruments, see the charter: [`research/cognitive-metrology-charter.md`](research/cognitive-metrology-charter.md).
 
 ```
 · · · fathom lab · 2026 · · ·

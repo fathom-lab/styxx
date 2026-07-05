@@ -46,6 +46,6 @@ So don't take our word for it — **re-run the receipts.**
 
 ## Verify
 
-- License `LICENSE` (MIT) · Security `SECURITY.md` · Citation `CITATION.cff` · Contributing `CONTRIBUTING.md`
+- License `../../LICENSE` (MIT) · Security `../../SECURITY.md` · Citation `../../CITATION.cff` · Contributing `../../CONTRIBUTING.md`
 - Re-run any finding: `papers/grounded-honesty-axis/` — pre-registration, harness, and result JSON sit side by side.
 - The standard, stated in full: `papers/THESIS_the_honesty_standard_2026_05_31.md`.

@@ -20,7 +20,7 @@ If you are an LLM agent reading this without a human in the loop, start at [`age
 See also:
 
 - **[../README.md](../README.md)** — project overview, install, quickstart.
-- **[../REFERENCE.md](../REFERENCE.md)** — full API reference (every public symbol, every CLI command).
+- **[REFERENCE.md](REFERENCE.md)** — full API reference (every public symbol, every CLI command).
 
 ## 🔬 For researchers — cognitive metrology
 

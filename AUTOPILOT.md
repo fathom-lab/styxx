@@ -43,7 +43,7 @@ instruments that refuse what they cannot measure, certificates anyone can re-run
 
 - **Never**: PyPI publish, version bump, tag, GitHub release, merge to main — operator-gated.
 - **Never**: close, paywall, obfuscate, or token-gate the verifier or the measurement primitives,
-  or ship a certificate the public can't re-verify — styxx stays open at the core (see `OPEN_CORE.md`).
+  or ship a certificate the public can't re-verify — styxx stays open at the core (see `docs/governance/OPEN_CORE.md`).
 - **Never**: force-push, branch delete, history rewrite, `git reset --hard`, secrets in output.
 - **Never**: delete or weaken a kill-gate, recalibrate a closed-negative instrument
   (overconfidence), resurrect a buried claim (geometry-manipulation probe, "universal oracle")

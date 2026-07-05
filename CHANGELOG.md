@@ -30,6 +30,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   artifacts. Validated by the frozen OATH v0 gate (`validate_oath_v0.py` D1 >= 16, D2 = 0, unchanged).
   Preregs + result: `papers/closed-model-frontier/PREREG_oath_v04_recall_decimalguard_2026_07_04.md`,
   `RESULT_oath_v04_recall_decimalguard_2026_07_04.md` (arc: cycles 23-25).
+- **README restructured 1288 -> 200 lines** — 30-second pitch, install+quickstart, ONE instruments
+  table (every headline number with its receipt path), the discipline section, links. Every claim
+  adversarially fact-checked against repo receipts before shipping; the unverifiable (a GHSA id with
+  no in-repo receipt) was cut. Root markdown 15 -> 8 files: announcements/quickstarts/findings/
+  governance moved under docs/ (inbound links fixed); AUTOPILOT.md, LEADERBOARD.md, PATENTS.md kept
+  at root deliberately (live scheduler contract; CI path-trigger + cli fallback + published blob
+  URLs; legal-notice convention + URLs frozen in the published Zenodo spec and NIST submission).
+- **"Pure Python" claim retired** (README, pyproject description) — the base install ships compiled
+  numpy + scikit-learn, so the claim was false. Replaced with what is true and differentiating:
+  no torch, no GPU, no LLM in the loop for the core instruments.
+- **cognitive-telescope workflow no longer red-Xes daily** — all TELESCOPE_* key secrets are empty,
+  which is a configuration state, not a failure; the workflow now skips green with a notice and the
+  schedule stays armed. Known remaining gap: telescope/prompts.json is not tracked (and absent
+  locally), so the corpus must be restored before keys make the run real.
+
+### Fixed
+- **Register instruments now refuse a wordless response (domain guard).** `score_all(prompt="X", response="")`
+  returned deception 0.999 / overconfidence 0.954 — a confident score for an input the register instruments
+  have no domain over (empty text is not maximally deceptive). `score_all` now omits the register instruments
+  (`sycophancy`, `deception`, `overconfidence`, `refusal`) when the response carries no natural-language word
+  content (empty, whitespace-only, emoji-only), so a caller aggregating fingerprints counts the omission
+  instead of folding an artifact into a paired conduct delta.
+  - A pre-registered length sweep **falsified** the "score stabilizes at N tokens" model: deception is
+    content- not length-driven (a 5-word factual answer reads 0.19; a correct 18-word textbook answer reads
+    0.99), so no token threshold was invented — the guard fires only on the unambiguous zero-word case.
+    Boundary tests cover empty / whitespace / emoji-only (out of domain) and pin the current behavior of
+    single-word and JSON-tool-call responses (still scored). See
+    `papers/grounded-honesty-axis/NOTE_instrument_domain_2026_07_01.md`, which also pre-registers the deeper
+    open question (does the deception channel read conduct or content on benign batteries?).
 
 ---
 

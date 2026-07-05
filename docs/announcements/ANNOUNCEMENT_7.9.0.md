@@ -58,7 +58,7 @@ ourselves before you ever see it.
 
 `honest` is the one door over primitives we shipped and calibrated across the 7.7–7.9 line:
 the single-pass / span confab gates, `abstain_on_confab`, `retrieval_check`, and the 9.8K-LOC
-calibrated detection engine (AUC 0.998 on HaluEval-QA). pure Python, no required heavy deps; the
+calibrated detection engine (AUC 0.998 on HaluEval-QA). no required heavy deps (no torch/transformers in the base install); the
 engine and retrieval tiers are opt-in. backward compatible — every prior call behaves identically.
 
 ```

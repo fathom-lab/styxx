@@ -33,8 +33,27 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import math
 
 import numpy as np
-from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import KFold
+
+# sklearn names, populated by _ensure_sklearn() on first use. Declared as None placeholders so the module's
+# names are DEFINED at import time (ruff F821-clean) without paying the sklearn/scipy import (~2.5s).
+roc_auc_score = None
+KFold = None
+
+
+def _ensure_sklearn() -> None:
+    """Import the sklearn pieces this module needs INTO module globals, lazily on first use — so plain
+    ``import styxx`` never pays for the sklearn/scipy/pandas graph (~2.5s of import time). scikit-learn ships
+    in the styxx base install; this defers only WHEN it loads, and names a clear install path if it has been
+    stripped from the environment."""
+    g = globals()
+    if g.get("roc_auc_score") is not None:
+        return
+    try:
+        from sklearn.metrics import roc_auc_score
+        from sklearn.model_selection import KFold
+    except ImportError as e:  # pragma: no cover
+        raise ImportError("audit_confound requires scikit-learn: pip install 'styxx[sklearn]'") from e
+    g.update(roc_auc_score=roc_auc_score, KFold=KFold)
 
 ORTHO_BAR = 0.20   # |corr(label, confound)| must be <= this for the grid to count as orthogonal
 AUC_BAR = 0.70     # within-stratum discrimination floor to call the instrument "robust"
@@ -200,6 +219,7 @@ def audit_confound(rows: List[Dict[str, Any]], score_fn: Optional[Callable[[str]
     whether a label-trained bag-of-words margin itself rides the confound (see :func:`_lexical_entanglement`).
     Reported as ``lexical_confound_corr`` / ``lexical_confound_p``; needs the row ``text`` + sklearn.
     """
+    _ensure_sklearn()
     if scores is None:
         if score_fn is None:
             raise ValueError("provide score_fn or scores")
