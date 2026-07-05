@@ -137,7 +137,7 @@ register instruments on wordless input rather than folding an artifact into the 
 | `validate_probe` | is an oversight probe reading the concept or a surface artifact? | caught our own 0.98 truth-probe as a surface artifact ([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)) |
 | `audit_confound` | is a classifier's score riding a confound? verdicts with CIs | flagged our own `overconfidence_v0` as length-threshold-biased, condemned referenceless `deception_v0` ([papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md](papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md)) |
 | `audit_hf_model` + `validate_against_ground_truth` | one-call confound audit of any HF text classifier, with a synthetic-artifact gate | our own first report card did NOT replicate on real labels — the gate exists because of it ([papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md](papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md)) |
-| `certify` (OATH) | extract every numeric claim in a document, verify against receipts, emit a machine-checkable certificate | the verifier passed its own pre-registered mutant battery ([CHANGELOG.md](CHANGELOG.md)) |
+| `certify` (OATH) + `corpus_audit` | extract every numeric claim in a document, verify against its receipts, emit a machine-checkable certificate — and re-certify the *entire* published corpus on demand | v0.4 hardened its own tamper-catch 0.216 → 0.442 on a pre-registered single-digit mutant battery, zero false accusations; `python -m styxx.corpus_audit papers/` turns the verifier on every claim styxx has ever shipped ([CHANGELOG.md](CHANGELOG.md)) |
 | `attest` / `verify_attestation` | signed receipts for what an agent claimed vs what the substrate read | verifier hardened against its own artifact — RCE fix, 7.17.1 ([SECURITY.md](SECURITY.md), [CHANGELOG.md](CHANGELOG.md)) |
 | **runtime — agent-side primitives.** | | |
 | `gate` | pre-flight refuse/confabulate verdict before you pay for the call | [docs/gate.md](docs/gate.md) |
@@ -163,7 +163,10 @@ the probe validator catching our own probe
 ([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)),
 and the below-chance benchmark rows left in the tables. OATH certificates
 (`styxx.certify`) make the practice portable: every numeric claim in a document is extracted,
-checked against its receipt, and stamped. the standing rules live in
+checked against its receipt, and stamped — and `styxx.corpus_audit` runs that verifier across the
+*whole* published corpus on demand, so styxx's own integrity is a number you regenerate yourself,
+not a promise we make. it is deliberately strict enough to flag styxx's own outstanding provenance
+gaps; a verifier you cannot turn on its authors is not one. the standing rules live in
 [papers/research-integrity-protocol.md](papers/research-integrity-protocol.md); the standing
 challenge to beat our published floor lives in [LEADERBOARD.md](LEADERBOARD.md) — external
 submissions are CI-re-run against the locked benchmark, and if the re-run doesn't match your

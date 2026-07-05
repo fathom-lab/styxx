@@ -1,0 +1,344 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
+  "document_sha256": "b122782b9fbae5e105e24f0cdd4ae77a00f1616f9e506bdeff67f2acae390aa6",
+  "receipts_sha256": {
+    "e3_result.json": "22c5429dd1aad62da29e49050dcbdc38196502df160c89ee5f7ce693095a8d13"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 31,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 38,
+      "token": "0.75"
+    },
+    {
+      "line": 41,
+      "token": "16"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 8,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "The adaptive attacker re-fits a moving honesty probe on its own MIMIC split every 25 steps and",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:refit_every"
+    },
+    {
+      "line": 11,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "families cleared their clean guards this run (Qwen 0.912 / knowledge 0.800; Llama 0.821 /",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 11,
+      "token": "0.800",
+      "value": 0.8,
+      "decimals": 3,
+      "context": "families cleared their clean guards this run (Qwen 0.912 / knowledge 0.800; Llama 0.821 /",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 11,
+      "token": "0.821",
+      "value": 0.821,
+      "decimals": 3,
+      "context": "families cleared their clean guards this run (Qwen 0.912 / knowledge 0.800; Llama 0.821 /",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 12,
+      "token": "0.800",
+      "value": 0.8,
+      "decimals": 3,
+      "context": "knowledge 0.800), so this is a **two-family** result \u2014 closing E1's single-family flank.",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 16,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[0]"
+    },
+    {
+      "line": 16,
+      "token": "0.786",
+      "value": 0.786,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[0].clean_calib_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 0 | 0.786 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[0].knowledge"
+    },
+    {
+      "line": 17,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[1]"
+    },
+    {
+      "line": 17,
+      "token": "0.775",
+      "value": 0.775,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[1].clean_calib_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | naive (control) | 1 | 0.775 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[1].knowledge"
+    },
+    {
+      "line": 18,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[0]"
+    },
+    {
+      "line": 18,
+      "token": "0.782",
+      "value": 0.782,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[2].clean_calib_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | **adaptive** | 0 | **0.782** | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[0].knowledge"
+    },
+    {
+      "line": 19,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[1]"
+    },
+    {
+      "line": 19,
+      "token": "0.733",
+      "value": 0.733,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.733",
+      "value": 0.733,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Qwen2.5-1.5B | adaptive | 1 | 0.733 | 0.733 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[0]"
+    },
+    {
+      "line": 20,
+      "token": "0.739",
+      "value": 0.739,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[6].clean_calib_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.783",
+      "value": 0.783,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | **adaptive** | 0 | 0.739 | 0.783 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[4].knowledge"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[1]"
+    },
+    {
+      "line": 21,
+      "token": "0.772",
+      "value": 0.772,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[7].clean_calib_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "binding_context": "| family | mode | seed | clean-calibrated read | knowledge | | Llama-3.2-1B | adaptive | 1 | 0.772 | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[1].knowledge"
+    },
+    {
+      "line": 25,
+      "token": "0.48",
+      "value": 0.48,
+      "decimals": 2,
+      "context": "floor ~0.48\u20130.60.",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[1].rand"
+    },
+    {
+      "line": 33,
+      "token": "0.73",
+      "value": 0.73,
+      "decimals": 2,
+      "context": "reads (~0.73\u20130.79). This means E3 shows the defense holds **against this adaptive scheme**, but does",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **Qwen adaptive seed 1 dipped below knowledge-preserving:** knowledge 0.733 < the 0.75 bar, so that",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[1]"
+    },
+    {
+      "line": 38,
+      "token": "0.733",
+      "value": 0.733,
+      "decimals": 3,
+      "context": "- **Qwen adaptive seed 1 dipped below knowledge-preserving:** knowledge 0.733 < the 0.75 bar, so that",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "- **Qwen adaptive seed 1 dipped below knowledge-preserving:** knowledge 0.733 < the 0.75 bar, so that",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "hold rests on **seed 0** (0.782 @ 0.833); Llama corroborates on both seeds.",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:seeds[0]"
+    },
+    {
+      "line": 40,
+      "token": "0.782",
+      "value": 0.782,
+      "decimals": 3,
+      "context": "hold rests on **seed 0** (0.782 @ 0.833); Llama corroborates on both seeds.",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[2].clean_calib_auroc"
+    },
+    {
+      "line": 40,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "hold rests on **seed 0** (0.782 @ 0.833); Llama corroborates on both seeds.",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:points[0].knowledge"
+    },
+    {
+      "line": 41,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=16, 300 steps, a difference-of-means-targeted scrub, 1.5B/1B, small",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=16, 300 steps, a difference-of-means-targeted scrub, 1.5B/1B, small",
+      "status": "VERIFIED",
+      "receipt_ref": "e3_result.json:steps"
+    }
+  ]
+}
