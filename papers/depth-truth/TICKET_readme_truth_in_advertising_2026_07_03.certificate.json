@@ -1,0 +1,141 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "TICKET_readme_truth_in_advertising_2026_07_03.md",
+  "document_sha256": "f4f1295d47a7104d7d7aa553417fa3f81b96122367f30bff521d4cb1ee1095bd",
+  "receipts_sha256": {
+    "verdict.json": "ffdcb4bde4375a98b3a4bda9769ec4c03f2356ab88d6c08c3854674423e0f8f8"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "10"
+    },
+    {
+      "line": 5,
+      "token": "10"
+    },
+    {
+      "line": 11,
+      "token": "10"
+    },
+    {
+      "line": 24,
+      "token": "0.82"
+    },
+    {
+      "line": 32,
+      "token": "10"
+    },
+    {
+      "line": 37,
+      "token": "0.82"
+    },
+    {
+      "line": 37,
+      "token": "1.57"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "# \u00a710 TICKET \u2014 depth-truth README truth-in-advertising audit \u2014 `DISCHARGED (no correction needed)`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "whose PREREG_v2 \u00a710 says: *\"H1 null AND H2 null \u21d2 \u2026 a truth-in-advertising ticket opens against the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "correct\" (H1/H2/H3 all null). \u00a710 obligates a check: **does any live, public-facing styxx claim",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "| `research/` (the `get_mean_depth` origin) | the d=0.82 recall-vs-reasoning claim | **not in this repo** \u2014 it lives in the separate research git (PREREG \u00a71 pin",
+      "binding_context": "| surface | searched for | result | | `research/` (the `get_mean_depth` origin) | the d=0.82 recall-vs-reasoning claim | **not in this repo** \u2014 it lives in the separate research git (PREREG \u00a71 pins it at `fc6f2c3`), and was described as a *pending* finding, never shipped in styxx. |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| `research/` (the `get_mean_depth` origin) | the d=0.82 recall-vs-reasoning claim | **not in this repo** \u2014 it lives in the separate research git (PREREG \u00a71 pin",
+      "binding_context": "| surface | searched for | result | | `research/` (the `get_mean_depth` origin) | the d=0.82 recall-vs-reasoning claim | **not in this repo** \u2014 it lives in the separate research git (PREREG \u00a71 pins it at `fc6f2c3`), and was described as a *pending* finding, never shipped in styxx. |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.secondary.LP_mean.lrt_p"
+    },
+    {
+      "line": 32,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "the honest, quiet outcome \u00a710 was written to force a check on, and the check passes.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "d=0.82\u21921.57). It lives in the research git, not here. **If** that manuscript states or implies",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "1.57",
+      "value": 1.57,
+      "decimals": 2,
+      "context": "d=0.82\u21921.57). It lives in the research git, not here. **If** that manuscript states or implies",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "0.5468",
+      "value": 0.5468,
+      "decimals": 4,
+      "context": "attribution depth is near-constant and carries **no** correctness signal (AUROC 0.5468, CI",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.auroc"
+    },
+    {
+      "line": 49,
+      "token": "0.5468",
+      "value": 0.5468,
+      "decimals": 4,
+      "context": "- `results/verdict.json` \u2014 H1 AUROC 0.5468 and the null battery.",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.auroc"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "experiment": "depth-truth keystone (PREREG_v2)",
+  "results_dir": "C:\\Users\\heyzo\\clawd\\styxx\\papers\\depth-truth\\results",
+  "exclusions": {
+    "id": {
+      "n_total": 250,
+      "n_kept": 249,
+      "n_excluded_flagged": 1,
+      "flag_breakdown": {
+        "nonanswer": 1
+      },
+      "n_excluded_no_label": 0,
+      "n_excluded_bad_signal": 0
+    },
+    "ood1": {
+      "n_total": 133,
+      "n_kept": 133,
+      "n_excluded_flagged": 0,
+      "flag_breakdown": {},
+      "n_excluded_no_label": 0,
+      "n_excluded_bad_signal": 0
+    },
+    "ood2": {
+      "n_total": 250,
+      "n_kept": 8,
+      "n_excluded_flagged": 242,
+      "flag_breakdown": {
+        "grade_ambiguous": 242
+      },
+      "n_excluded_no_label": 0,
+      "n_excluded_bad_signal": 0
+    }
+  },
+  "class_balance": {
+    "id": {
+      "n": 249,
+      "n_correct": 146,
+      "n_wrong": 103
+    },
+    "ood1": {
+      "n": 133,
+      "n_correct": 17,
+      "n_wrong": 116
+    }
+  },
+  "depth_describe": {
+    "id": {
+      "min": 8.618725776672363,
+      "max": 9.07061767578125,
+      "mean": 8.82264573124039,
+      "std": 0.05577990306979131
+    },
+    "ood1": {
+      "min": 8.649353981018066,
+      "max": 8.894911766052246,
+      "mean": 8.824381046725396,
+      "std": 0.04489317801763502
+    }
+  },
+  "H1": {
+    "auroc": 0.5468147360021279,
+    "ci_lo": 0.4737744787567316,
+    "ci_hi": 0.6182877483609429,
+    "excludes_half": false
+  },
+  "H2": {
+    "primary": {
+      "confounder": "SE",
+      "dAUC": 0.002626679079664851,
+      "ci_lo": -0.004426397398547291,
+      "ci_hi": 0.018786893155555484,
+      "excludes_zero": false,
+      "lrt_p": 1.0,
+      "lrt_pass": false,
+      "delong_p": 0.708182240087306
+    },
+    "secondary": {
+      "LP_mean": {
+        "confounder": "LP_mean",
+        "dAUC": -0.0010639712727755768,
+        "ci_lo": -0.00252002786485547,
+        "ci_hi": 0.018285442186948803,
+        "excludes_zero": false,
+        "lrt_p": 1.0,
+        "lrt_pass": false,
+        "delong_p": 0.32673238202775423
+      },
+      "LP_norm": {
+        "confounder": "LP_norm",
+        "dAUC": -0.0010639712727755768,
+        "ci_lo": -0.00252002786485547,
+        "ci_hi": 0.018285442186948803,
+        "excludes_zero": false,
+        "lrt_p": 1.0,
+        "lrt_pass": false,
+        "delong_p": 0.32673238202775423
+      }
+    },
+    "secondary_holm_lrt_p": {
+      "LP_mean": 1.0,
+      "LP_norm": 1.0
+    }
+  },
+  "H3": {
+    "dAUC_ood": -0.051724137931034364,
+    "ci_lo": -0.1069318271812927,
+    "ci_hi": -0.01159389584868595,
+    "excludes_zero": false,
+    "delong_p": 0.034416810670707565
+  },
+  "OOD2_truthfulqa": {
+    "status": "ATTEMPTED_PENDING_KG3_HUMAN_AUDIT",
+    "note": "PREREG \u00a73/\u00a78: TruthfulQA is the SECONDARY, disclosed-noisy arm; no claim until flobi grades the 50-item human_audit_sample.jsonl (KG3, >10% disagreement drops the arm). Human audit absent this cycle.",
+    "n_total": 250,
+    "mechanical_grade": {
+      "correct": 2,
+      "incorrect": 6,
+      "none_or_ambiguous": 242
+    }
+  },
+  "verdict": {
+    "label": "CLOSED_NEGATIVE_NO_TRUTH_SIGNAL",
+    "meaning": "\u00a710: H1 null AND H2 null. Depth carries no truth signal in this regime; 'we measure thought, not words' reverts to hypothesis and a README truth-in-advertising ticket opens.",
+    "H1_pass": false,
+    "H2_primary_pass": false,
+    "H3_pass": false,
+    "note": "KG2: H1 null does not block H2/H3 (both still run)."
+  }
+}

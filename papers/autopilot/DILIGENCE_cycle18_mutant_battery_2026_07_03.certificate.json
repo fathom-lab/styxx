@@ -1,0 +1,362 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+  "document_sha256": "5b760d32ae1504b3ad699a1bece6cb6108e534f49a00be0512731dc65b9d6c66",
+  "receipts_sha256": {
+    "cycle18_mutant_battery_result.json": "f5508c924a1d21bda0f3de3aa5dcba2b112fe34537443e59d83ac24204c4c979"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 27,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 10,
+      "token": "13"
+    },
+    {
+      "line": 25,
+      "token": "0.80"
+    },
+    {
+      "line": 39,
+      "token": "13"
+    },
+    {
+      "line": 50,
+      "token": "5"
+    },
+    {
+      "line": 50,
+      "token": "26"
+    },
+    {
+      "line": 50,
+      "token": "269"
+    },
+    {
+      "line": 54,
+      "token": "139"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "autopilot cycle 18 (commit `7c2066d`). Not a scored claim run and **not pre-registered**; no",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:cycle"
+    },
+    {
+      "line": 5,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "frozen bar. Receipt: `cycle18_mutant_battery_result.json` (seed 1, deterministic, re-runnable).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:seed"
+    },
+    {
+      "line": 7,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**Question.** All 13 docs' certificates are OATH-HELD. Do they have *teeth* \u2014 if a verified",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_docs"
+    },
+    {
+      "line": 10,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**Method.** For every VERIFIED token in each of the 13 certificates, mutate one significant digit",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(the `mutate_token` scheme of `validate_oath_v0.py`, seed 1), re-run `certify_doc` in memory on a",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:seed"
+    },
+    {
+      "line": 13,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "modified. 13 docs, 269 mutants total.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_docs"
+    },
+    {
+      "line": 13,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "modified. 13 docs, 269 mutants total.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_mutants"
+    },
+    {
+      "line": 19,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "| caught as UNGROUNDED \u2014 verdict flips to OATH-FAILED | 58 | 0.216 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | caught as UNGROUNDED \u2014 verdict flips to OATH-FAILED | 58 | 0.216 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:caught_ungrounded"
+    },
+    {
+      "line": 19,
+      "token": "0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "| caught as UNGROUNDED \u2014 verdict flips to OATH-FAILED | 58 | 0.216 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | caught as UNGROUNDED \u2014 verdict flips to OATH-FAILED | 58 | 0.216 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:catch_rate"
+    },
+    {
+      "line": 20,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| **FALSE-VERIFY \u2014 the oath swears to the corrupted number** | 26 | 0.097 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | **FALSE-VERIFY \u2014 the oath swears to the corrupted number** | 26 | 0.097 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:false_verify"
+    },
+    {
+      "line": 20,
+      "token": "0.097",
+      "value": 0.097,
+      "decimals": 3,
+      "context": "| **FALSE-VERIFY \u2014 the oath swears to the corrupted number** | 26 | 0.097 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | **FALSE-VERIFY \u2014 the oath swears to the corrupted number** | 26 | 0.097 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:false_verify_rate"
+    },
+    {
+      "line": 21,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "| abstain-degrade \u2014 oath stops swearing; verdict silently stays HELD | 182 | 0.677 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | abstain-degrade \u2014 oath stops swearing; verdict silently stays HELD | 182 | 0.677 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:abstain_degrade"
+    },
+    {
+      "line": 21,
+      "token": "0.677",
+      "value": 0.677,
+      "decimals": 3,
+      "context": "| abstain-degrade \u2014 oath stops swearing; verdict silently stays HELD | 182 | 0.677 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | abstain-degrade \u2014 oath stops swearing; verdict silently stays HELD | 182 | 0.677 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:abstain_degrade_rate"
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| dropped by extraction | 3 | \u2014 |",
+      "binding_context": "| fate of the corrupted number | count | rate | | dropped by extraction | 3 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:dropped"
+    },
+    {
+      "line": 24,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "- Overall catch: 58 caught of 269 mutants; verdict flips 58 (a doc fails exactly when a mutant is",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:caught_ungrounded"
+    },
+    {
+      "line": 24,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "- Overall catch: 58 caught of 269 mutants; verdict flips 58 (a doc fails exactly when a mutant is",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_mutants"
+    },
+    {
+      "line": 24,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "- Overall catch: 58 caught of 269 mutants; verdict flips 58 (a doc fails exactly when a mutant is",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:caught_ungrounded"
+    },
+    {
+      "line": 25,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "caught). For reference, the D1 validation bar was 0.80 catch \u2014 an **analogue only**: that bar was",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "- **FALSE-VERIFY mechanism (26 mutants, rate 0.097):** the corrupted value coincidence-matches a",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:false_verify"
+    },
+    {
+      "line": 27,
+      "token": "0.097",
+      "value": 0.097,
+      "decimals": 3,
+      "context": "- **FALSE-VERIFY mechanism (26 mutants, rate 0.097):** the corrupted value coincidence-matches a",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:false_verify_rate"
+    },
+    {
+      "line": 30,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "limitation** (\"v0.4 owes floats full claim\u2192field binding\", `styxx/certify.py`); these 13 docs",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_docs"
+    },
+    {
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "carry dense per-model receipt tables, so the coincidence surface is large even with 1\u20133 receipts.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 32,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "- **Abstain-degrade mechanism (182 mutants, rate 0.677):** these older docs state results in a",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:abstain_degrade"
+    },
+    {
+      "line": 32,
+      "token": "0.677",
+      "value": 0.677,
+      "decimals": 3,
+      "context": "- **Abstain-degrade mechanism (182 mutants, rate 0.677):** these older docs state results in a",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:abstain_degrade_rate"
+    },
+    {
+      "line": 39,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**Stands:** the 13 certificates as *ledgers*. Every VERIFIED number genuinely matches its receipt",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "at the recorded SHAs; the V/A counts are accurate; anyone can re-run them. Nothing in cycle 18 is",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:cycle"
+    },
+    {
+      "line": 43,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "**Does not stand:** reading OATH-HELD on these 13 docs as *tamper-evidence*. On this corpus the",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:n_docs"
+    },
+    {
+      "line": 44,
+      "token": "0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "certificate detects a single corrupted digit at 0.216, not the 0.80 the validated corpus supports.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:catch_rate"
+    },
+    {
+      "line": 44,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "certificate detects a single corrupted digit at 0.216, not the 0.80 the validated corpus supports.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:d1_bar_analogue"
+    },
+    {
+      "line": 50,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "1. **OATH v0.4 float claim\u2192field binding** (standing priority #5) \u2014 now with evidence: 26 of 269",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "1. **OATH v0.4 float claim\u2192field binding** (standing priority #5) \u2014 now with evidence: 26 of 269",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "1. **OATH v0.4 float claim\u2192field binding** (standing priority #5) \u2014 now with evidence: 26 of 269",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "139",
+      "value": 139.0,
+      "decimals": 0,
+      "context": "3. Config-token triage of the 139 blocked docs from the cycle-18 sweep (steering \u03b1, arXiv IDs;",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "count per CYCLE_LOG cycle 18, outside this battery's receipt) remains owed.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle18_mutant_battery_result.json:cycle"
+    }
+  ]
+}

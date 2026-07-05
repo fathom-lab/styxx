@@ -1,0 +1,935 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+  "document_sha256": "0e581fc8c9b7884bf669d78526be706db09d3d9d76aff057d5eaf306a77c2e8a",
+  "receipts_sha256": {
+    "verdict.json": "ffdcb4bde4375a98b3a4bda9769ec4c03f2356ab88d6c08c3854674423e0f8f8"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 30,
+    "ABSTAIN": 48,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "8"
+    },
+    {
+      "line": 4,
+      "token": "10"
+    },
+    {
+      "line": 8,
+      "token": "09"
+    },
+    {
+      "line": 8,
+      "token": "19"
+    },
+    {
+      "line": 8,
+      "token": "250"
+    },
+    {
+      "line": 8,
+      "token": "250"
+    },
+    {
+      "line": 9,
+      "token": "2"
+    },
+    {
+      "line": 9,
+      "token": "21"
+    },
+    {
+      "line": 10,
+      "token": "11"
+    },
+    {
+      "line": 13,
+      "token": "0"
+    },
+    {
+      "line": 23,
+      "token": "2"
+    },
+    {
+      "line": 29,
+      "token": "95"
+    },
+    {
+      "line": 32,
+      "token": "1.0"
+    },
+    {
+      "line": 32,
+      "token": "0.708"
+    },
+    {
+      "line": 33,
+      "token": "-0.0011"
+    },
+    {
+      "line": 33,
+      "token": "1.0"
+    },
+    {
+      "line": 34,
+      "token": "-0.0011"
+    },
+    {
+      "line": 34,
+      "token": "1.0"
+    },
+    {
+      "line": 35,
+      "token": "0.034"
+    },
+    {
+      "line": 40,
+      "token": "1.0"
+    },
+    {
+      "line": 41,
+      "token": "1.0"
+    },
+    {
+      "line": 43,
+      "token": "-0.0517"
+    },
+    {
+      "line": 44,
+      "token": "0.034"
+    },
+    {
+      "line": 46,
+      "token": "8"
+    },
+    {
+      "line": 46,
+      "token": "10"
+    },
+    {
+      "line": 51,
+      "token": "249"
+    },
+    {
+      "line": 52,
+      "token": "133"
+    },
+    {
+      "line": 54,
+      "token": "11"
+    },
+    {
+      "line": 56,
+      "token": "0.068"
+    },
+    {
+      "line": 63,
+      "token": "3"
+    },
+    {
+      "line": 64,
+      "token": "250"
+    },
+    {
+      "line": 68,
+      "token": "10"
+    },
+    {
+      "line": 70,
+      "token": "10"
+    },
+    {
+      "line": 73,
+      "token": "0.82"
+    },
+    {
+      "line": 75,
+      "token": "10"
+    },
+    {
+      "line": 79,
+      "token": "249"
+    },
+    {
+      "line": 79,
+      "token": "133"
+    },
+    {
+      "line": 83,
+      "token": "9"
+    },
+    {
+      "line": 85,
+      "token": "7"
+    },
+    {
+      "line": 90,
+      "token": "250"
+    },
+    {
+      "line": 90,
+      "token": "133"
+    },
+    {
+      "line": 90,
+      "token": "250"
+    },
+    {
+      "line": 92,
+      "token": "11"
+    },
+    {
+      "line": 93,
+      "token": "09"
+    },
+    {
+      "line": 93,
+      "token": "19"
+    },
+    {
+      "line": 93,
+      "token": "25"
+    },
+    {
+      "line": 94,
+      "token": "2"
+    },
+    {
+      "line": 94,
+      "token": "21"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "**Verdict: `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` (PREREG_v2 \u00a78 KG2 + \u00a710 falsification map).**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "**Verdict: `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` (PREREG_v2 \u00a78 KG2 + \u00a710 falsification map).**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "09",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "completed 2026-07-03 09:19 (250 ID / 133 OOD-1 / 250 OOD-2; A0 sizes ratified `6af88ed`, A1 span",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "completed 2026-07-03 09:19 (250 ID / 133 OOD-1 / 250 OOD-2; A0 sizes ratified `6af88ed`, A1 span",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "250",
+      "value": 250.0,
+      "decimals": 0,
+      "context": "completed 2026-07-03 09:19 (250 ID / 133 OOD-1 / 250 OOD-2; A0 sizes ratified `6af88ed`, A1 span",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "133",
+      "value": 133.0,
+      "decimals": 0,
+      "context": "completed 2026-07-03 09:19 (250 ID / 133 OOD-1 / 250 OOD-2; A0 sizes ratified `6af88ed`, A1 span",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:exclusions.ood1.n_total"
+    },
+    {
+      "line": 8,
+      "token": "250",
+      "value": 250.0,
+      "decimals": 0,
+      "context": "completed 2026-07-03 09:19 (250 ID / 133 OOD-1 / 250 OOD-2; A0 sizes ratified `6af88ed`, A1 span",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "frozen `ff46754`). Analysis is the frozen \u00a72 test suite (`harness/analysis.py`, 21 synthetic tests)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "frozen `ff46754`). Analysis is the frozen \u00a72 test suite (`harness/analysis.py`, 21 synthetic tests)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "wired to the results JSONs by `harness/run_analysis.py` with no free parameters (\u00a711); deterministic",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "## The question (verbatim, PREREG \u00a70)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(A1, \u00a71). Confidence opponent = semantic entropy (SE), pre-declared primary (\u00a72). Complete-case",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.primary.lrt_p"
+    },
+    {
+      "line": 23,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "(A1, \u00a71). Confidence opponent = semantic entropy (SE), pre-declared primary (\u00a72). Complete-case",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "| test | statistic | 95% CI | gate met | PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "0.5468",
+      "value": 0.5468,
+      "decimals": 4,
+      "context": "| **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.4738",
+      "value": 0.4738,
+      "decimals": 4,
+      "context": "| **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.ci_lo"
+    },
+    {
+      "line": 31,
+      "token": "0.6183",
+      "value": 0.6183,
+      "decimals": 4,
+      "context": "| **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H1** signal | AUROC(depth\u2192correct) = **0.5468** | [0.4738, 0.6183] | CI clears chance | **NO** |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.ci_hi"
+    },
+    {
+      "line": 32,
+      "token": "0.0026",
+      "value": 0.0026,
+      "decimals": 4,
+      "context": "| **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.primary.dAUC"
+    },
+    {
+      "line": 32,
+      "token": "-0.0044",
+      "value": -0.0044,
+      "decimals": 4,
+      "context": "| **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.primary.ci_lo"
+    },
+    {
+      "line": 32,
+      "token": "0.0188",
+      "value": 0.0188,
+      "decimals": 4,
+      "context": "| **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.primary.ci_hi"
+    },
+    {
+      "line": 32,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0.708",
+      "value": 0.708,
+      "decimals": 3,
+      "context": "| **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (SE) | \u0394AUC = **0.0026** | [-0.0044, 0.0188] | CI clears zero, LRT sig | **NO** (LRT p=1.0, DeLong p=0.708) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "-0.0011",
+      "value": -0.0011,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "-0.0025",
+      "value": -0.0025,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.secondary.LP_mean.ci_lo"
+    },
+    {
+      "line": 33,
+      "token": "0.0183",
+      "value": 0.0183,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.secondary.LP_mean.ci_hi"
+    },
+    {
+      "line": 33,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_mean) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "-0.0011",
+      "value": -0.0011,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "-0.0025",
+      "value": -0.0025,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.secondary.LP_mean.ci_lo"
+    },
+    {
+      "line": 34,
+      "token": "0.0183",
+      "value": 0.0183,
+      "decimals": 4,
+      "context": "| **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.secondary.LP_mean.ci_hi"
+    },
+    {
+      "line": 34,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H2** additivity (LP_norm) | \u0394AUC = -0.0011 | [-0.0025, 0.0183] | Holm LRT | NO (Holm p=1.0) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "-0.0517",
+      "value": -0.0517,
+      "decimals": 4,
+      "context": "| **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H3.dAUC_ood"
+    },
+    {
+      "line": 35,
+      "token": "-0.1069",
+      "value": -0.1069,
+      "decimals": 4,
+      "context": "| **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H3.ci_lo"
+    },
+    {
+      "line": 35,
+      "token": "-0.0116",
+      "value": -0.0116,
+      "decimals": 4,
+      "context": "| **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H3.ci_hi"
+    },
+    {
+      "line": 35,
+      "token": "0.034",
+      "value": 0.034,
+      "decimals": 3,
+      "context": "| **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "binding_context": "| test | statistic | 95% CI | gate met | PASS | | **H3** OOD retention | \u0394AUC_ood = **-0.0517** | [-0.1069, -0.0116] | CI positive, dir \u2265 ID | **NO** (anti-signal; DeLong p=0.034) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.5468",
+      "value": 0.5468,
+      "decimals": 4,
+      "context": "- **H1 is null:** depth's solo AUROC for correctness is 0.5468 and its 10,000-resample bootstrap CI",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.4738",
+      "value": 0.4738,
+      "decimals": 4,
+      "context": "[0.4738, 0.6183] straddles chance. No standalone truth signal.",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.ci_lo"
+    },
+    {
+      "line": 38,
+      "token": "0.6183",
+      "value": 0.6183,
+      "decimals": 4,
+      "context": "[0.4738, 0.6183] straddles chance. No standalone truth signal.",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H1.ci_hi"
+    },
+    {
+      "line": 39,
+      "token": "0.0026",
+      "value": 0.0026,
+      "decimals": 4,
+      "context": "- **H2 is null:** adding depth to an SE-only logistic model moves AUROC by only 0.0026 (CI includes",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H2.primary.dAUC"
+    },
+    {
+      "line": 40,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "zero), the likelihood-ratio test for the added depth term is p=1.0, and DeLong is 0.708. Depth adds",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "no information over confidence. LP_mean and LP_norm concur (Holm-corrected p=1.0).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "-0.0517",
+      "value": -0.0517,
+      "decimals": 4,
+      "context": "on OOD-1 (PopQA-rare), depth *lowers* AUROC (\u0394AUC_ood = -0.0517; CI [-0.1069, -0.0116]) \u2014 it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "-0.1069",
+      "value": -0.1069,
+      "decimals": 4,
+      "context": "on OOD-1 (PopQA-rare), depth *lowers* AUROC (\u0394AUC_ood = -0.0517; CI [-0.1069, -0.0116]) \u2014 it",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H3.ci_lo"
+    },
+    {
+      "line": 43,
+      "token": "-0.0116",
+      "value": -0.0116,
+      "decimals": 4,
+      "context": "on OOD-1 (PopQA-rare), depth *lowers* AUROC (\u0394AUC_ood = -0.0517; CI [-0.1069, -0.0116]) \u2014 it",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:H3.ci_hi"
+    },
+    {
+      "line": 44,
+      "token": "0.034",
+      "value": 0.034,
+      "decimals": 3,
+      "context": "excludes zero on the wrong side (DeLong p=0.034). Where confidence fails hardest, depth hurts.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Per \u00a78 KG2, H1's null did not block H2/H3 \u2014 both ran and both failed. Per \u00a710, **H1 null \u2227 H2 null \u21d2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "Per \u00a78 KG2, H1's null did not block H2/H3 \u2014 both ran and both failed. Per \u00a710, **H1 null \u2227 H2 null \u21d2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "249",
+      "value": 249.0,
+      "decimals": 0,
+      "context": "The reason is visible in one statistic: across the ID arm (n=249) the first-content-token attribution",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "0.0558",
+      "value": 0.0558,
+      "decimals": 4,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.id.std"
+    },
+    {
+      "line": 52,
+      "token": "8.8226",
+      "value": 8.8226,
+      "decimals": 4,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.id.mean"
+    },
+    {
+      "line": 52,
+      "token": "8.6187",
+      "value": 8.6187,
+      "decimals": 4,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.id.min"
+    },
+    {
+      "line": 52,
+      "token": "9.0706",
+      "value": 9.0706,
+      "decimals": 4,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.id.max"
+    },
+    {
+      "line": 52,
+      "token": "133",
+      "value": 133.0,
+      "decimals": 0,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "0.0449",
+      "value": 0.0449,
+      "decimals": 4,
+      "context": "depth has **std 0.0558** (mean 8.8226, range [8.6187, 9.0706]); across OOD-1 (n=133) **std 0.0449**",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.ood1.std"
+    },
+    {
+      "line": 53,
+      "token": "8.8244",
+      "value": 8.8244,
+      "decimals": 4,
+      "context": "(mean 8.8244). The metric barely varies item-to-item, so it cannot sort correct from wrong. THE",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:depth_describe.ood1.mean"
+    },
+    {
+      "line": 54,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "figure (`results/figure_depth_vs_confidence.png`, \u00a711) shows it directly: on the depth axis the green",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 56,
+      "token": "0.068",
+      "value": 0.068,
+      "decimals": 3,
+      "context": "This is the same narrow-depth signature the v1 pilot flagged (std 0.068 on formatting tokens) \u2014 v2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "OOD-2 TruthfulQA-gen (SECONDARY, disclosed-noisy, \u00a73) is **ATTEMPTED / PENDING KG3**: mechanical",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "242",
+      "value": 242.0,
+      "decimals": 0,
+      "context": "grading left 242 of 250 items `grade_ambiguous` (the short greedy answer matched neither the",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:exclusions.ood2.flag_breakdown.grade_ambiguous"
+    },
+    {
+      "line": 64,
+      "token": "250",
+      "value": 250.0,
+      "decimals": 0,
+      "context": "grading left 242 of 250 items `grade_ambiguous` (the short greedy answer matched neither the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 65,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "correct- nor incorrect-answer list), with only 2 mechanical-correct and 6 mechanical-incorrect. No",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:OOD2_truthfulqa.mechanical_grade.correct"
+    },
+    {
+      "line": 65,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "correct- nor incorrect-answer list), with only 2 mechanical-correct and 6 mechanical-incorrect. No",
+      "status": "VERIFIED",
+      "receipt_ref": "verdict.json:OOD2_truthfulqa.mechanical_grade.incorrect"
+    },
+    {
+      "line": 68,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "attempted, exactly as \u00a710 requires.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 70,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "## What this closes and what it opens (\u00a710)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 73,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "hypothesis *for the truth-prediction claim*. The earlier recall-vs-reasoning separation (d=0.82)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 75,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "it just does not track *whether the answer is correct* on this task. A README truth-in-advertising ticket is owed (\u00a710): any copy that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 79,
+      "token": "249",
+      "value": 249.0,
+      "decimals": 0,
+      "context": "token), two QA distributions, n_ID=249 / n_OOD1=133 complete-case, greedy short-form answers. A",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 79,
+      "token": "133",
+      "value": 133.0,
+      "decimals": 0,
+      "context": "token), two QA distributions, n_ID=249 / n_OOD1=133 complete-case, greedy short-form answers. A",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 83,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "(\u00a79); the verdict is the deterministic output of pre-registered code.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 85,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "## Receipts (re-runnable, seed 7)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "250",
+      "value": 250.0,
+      "decimals": 0,
+      "context": "- `results/main_id.jsonl` (250), `results/main_ood1.jsonl` (133), `results/main_ood2.jsonl` (250) \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "133",
+      "value": 133.0,
+      "decimals": 0,
+      "context": "- `results/main_id.jsonl` (250), `results/main_ood1.jsonl` (133), `results/main_ood2.jsonl` (250) \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 90,
+      "token": "250",
+      "value": 250.0,
+      "decimals": 0,
+      "context": "- `results/main_id.jsonl` (250), `results/main_ood1.jsonl` (133), `results/main_ood2.jsonl` (250) \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 92,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "- `results/figure_depth_vs_confidence.png` \u2014 THE figure (\u00a711).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "09",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "- `results/main_run.log` \u2014 the generation log (completed 09:19:25 2026-07-03).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "- `results/main_run.log` \u2014 the generation log (completed 09:19:25 2026-07-03).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "- `results/main_run.log` \u2014 the generation log (completed 09:19:25 2026-07-03).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 94,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- `harness/analysis.py` (frozen \u00a72 tests, 21 synthetic passing) \u00b7 `harness/run_analysis.py`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 94,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "- `harness/analysis.py` (frozen \u00a72 tests, 21 synthetic passing) \u00b7 `harness/run_analysis.py`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

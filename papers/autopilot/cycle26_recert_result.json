@@ -1,0 +1,157 @@
+{
+  "what": "cycle 26 -- re-certify 13 cycle-18 docs under shipped v0.4 + 2 addendum repairs",
+  "prereg": "papers/autopilot/PREREG_cycle26_corpus_recert_2026_07_04.md",
+  "all_13_oath_held": true,
+  "battery": {
+    "n_mutants": 272,
+    "caught": 117,
+    "false_verify": 28,
+    "abstain_degrade": 123,
+    "dropped": 4,
+    "false_verify_le_26": false,
+    "caught_ge_116": true
+  },
+  "per_doc": {
+    "RESULT_ai_brain_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 31,
+      "ABSTAIN": 25,
+      "UNGROUNDED": 0,
+      "shipped_verified": 31,
+      "receipts": [
+        "ai_brain_result.json"
+      ]
+    },
+    "RESULT_ai_brain_vision_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 24,
+      "ABSTAIN": 3,
+      "UNGROUNDED": 0,
+      "shipped_verified": 22,
+      "receipts": [
+        "ai_brain_vision_result.json",
+        "ai_brain_vision_ceiling_addendum.json"
+      ]
+    },
+    "RESULT_ai_human_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 50,
+      "ABSTAIN": 12,
+      "UNGROUNDED": 0,
+      "shipped_verified": 50,
+      "receipts": [
+        "ai_human_reliability_result.json",
+        "ai_human_result.json"
+      ]
+    },
+    "RESULT_llm_breadth_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 2,
+      "ABSTAIN": 13,
+      "UNGROUNDED": 0,
+      "shipped_verified": 2,
+      "receipts": [
+        "binder_result.json",
+        "en_result.json",
+        "real_drift_result.json"
+      ]
+    },
+    "FINDING_council_2026_05_25.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 18,
+      "ABSTAIN": 8,
+      "UNGROUNDED": 0,
+      "shipped_verified": 17,
+      "receipts": [
+        "probe_council_results.json",
+        "probe_fame_vs_truth_results.json",
+        "self_audit_with_claude_results.json",
+        "council_agreement_scale_addendum.json"
+      ]
+    },
+    "FINDING_fame_vs_truth_2026_05_25.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 10,
+      "ABSTAIN": 12,
+      "UNGROUNDED": 0,
+      "shipped_verified": 10,
+      "receipts": [
+        "probe_council_results.json",
+        "probe_fame_vs_truth_results.json",
+        "self_audit_with_claude_results.json"
+      ]
+    },
+    "FINDING_dogfood_2026_05_25.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 15,
+      "ABSTAIN": 2,
+      "UNGROUNDED": 0,
+      "shipped_verified": 15,
+      "receipts": [
+        "probe_dogfood_results.json"
+      ]
+    },
+    "FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 34,
+      "ABSTAIN": 9,
+      "UNGROUNDED": 0,
+      "shipped_verified": 34,
+      "receipts": [
+        "adversarial_curve_v3_result.json"
+      ]
+    },
+    "FINDING_council_grounding_2026_05_28.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 8,
+      "ABSTAIN": 15,
+      "UNGROUNDED": 0,
+      "shipped_verified": 8,
+      "receipts": [
+        "council_grounding_result.json"
+      ]
+    },
+    "FINDING_detection_locus_gpt_2026_05_30.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 28,
+      "ABSTAIN": 14,
+      "UNGROUNDED": 0,
+      "shipped_verified": 28,
+      "receipts": [
+        "detection_locus_gpt_result.json"
+      ]
+    },
+    "RESULT_geometry_integrity_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 9,
+      "ABSTAIN": 5,
+      "UNGROUNDED": 0,
+      "shipped_verified": 9,
+      "receipts": [
+        "geometry_integrity_result.json",
+        "geometry_mismatch_result.json",
+        "geometry_signature_result.json"
+      ]
+    },
+    "RESULT_rhythm_rescue_2026_06_03.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 25,
+      "ABSTAIN": 15,
+      "UNGROUNDED": 0,
+      "shipped_verified": 25,
+      "receipts": [
+        "rhythm_rescue_result.json"
+      ]
+    },
+    "FINDING_promptopinion_2026_05_24.md": {
+      "verdict": "OATH-HELD",
+      "VERIFIED": 18,
+      "ABSTAIN": 16,
+      "UNGROUNDED": 0,
+      "shipped_verified": 18,
+      "receipts": [
+        "results_promptopinion.json"
+      ]
+    }
+  }
+}

@@ -1,0 +1,447 @@
+{
+  "what": "read-neq-write stage-2 adversarial LoRA sweep + full-spectrum re-lock",
+  "prereg": [
+    "papers/read-neq-write/PREREG_read_neq_write_coupling_2026_07_04.md",
+    "papers/read-neq-write/PREREG_stage2_attack_sweep_2026_07_04.md"
+  ],
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "scan_layers": [
+    12,
+    14,
+    16,
+    18,
+    20,
+    22
+  ],
+  "deploy_layer": 18,
+  "lambdas": [
+    0.0,
+    0.3,
+    1.0,
+    3.0,
+    10.0
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "steps": 300,
+  "clean_probe_auroc": 0.854066985645933,
+  "clean_knowledge_acc": 0.8048780487804879,
+  "ref_knowledge": 0.8048780487804879,
+  "reproduction_guard_ok": true,
+  "split_disjoint": true,
+  "verdict": "EVADABLE",
+  "points": [
+    {
+      "seed": 0,
+      "lambda": 0.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.4880382775119617,
+      "frozen_l18_heldout_auroc": 0.4742822966507177,
+      "rand_dir_auroc": 0.562799043062201,
+      "knowledge_acc": 0.573170731707317,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.657608695652174,
+          "heldout_auroc": 0.465311004784689
+        },
+        "14": {
+          "attack_auroc": 0.6584448160535117,
+          "heldout_auroc": 0.4880382775119617
+        },
+        "16": {
+          "attack_auroc": 0.629180602006689,
+          "heldout_auroc": 0.4694976076555024
+        },
+        "18": {
+          "attack_auroc": 0.6191471571906354,
+          "heldout_auroc": 0.4742822966507177
+        },
+        "20": {
+          "attack_auroc": 0.6045150501672241,
+          "heldout_auroc": 0.465311004784689
+        },
+        "22": {
+          "attack_auroc": 0.6141304347826086,
+          "heldout_auroc": 0.46710526315789475
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.00459431076887995,
+        "l_rep": 1.5502024292945862
+      }
+    },
+    {
+      "seed": 0,
+      "lambda": 0.3,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.4964114832535885,
+      "frozen_l18_heldout_auroc": 0.47906698564593303,
+      "rand_dir_auroc": 0.5568181818181818,
+      "knowledge_acc": 0.8170731707317073,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6525919732441472,
+          "heldout_auroc": 0.4694976076555024
+        },
+        "14": {
+          "attack_auroc": 0.6622073578595318,
+          "heldout_auroc": 0.4964114832535885
+        },
+        "16": {
+          "attack_auroc": 0.6346153846153846,
+          "heldout_auroc": 0.4826555023923445
+        },
+        "18": {
+          "attack_auroc": 0.6258361204013378,
+          "heldout_auroc": 0.47906698564593303
+        },
+        "20": {
+          "attack_auroc": 0.6204013377926422,
+          "heldout_auroc": 0.47667464114832536
+        },
+        "22": {
+          "attack_auroc": 0.6199832775919732,
+          "heldout_auroc": 0.4742822966507177
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.004884769674390554,
+        "l_rep": 0.00018438407096255105
+      }
+    },
+    {
+      "seed": 0,
+      "lambda": 1.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.506578947368421,
+      "frozen_l18_heldout_auroc": 0.4922248803827751,
+      "rand_dir_auroc": 0.55622009569378,
+      "knowledge_acc": 0.8902439024390244,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6546822742474916,
+          "heldout_auroc": 0.47368421052631576
+        },
+        "14": {
+          "attack_auroc": 0.6768394648829431,
+          "heldout_auroc": 0.506578947368421
+        },
+        "16": {
+          "attack_auroc": 0.6534280936454849,
+          "heldout_auroc": 0.49940191387559807
+        },
+        "18": {
+          "attack_auroc": 0.6475752508361204,
+          "heldout_auroc": 0.4922248803827751
+        },
+        "20": {
+          "attack_auroc": 0.6513377926421404,
+          "heldout_auroc": 0.486244019138756
+        },
+        "22": {
+          "attack_auroc": 0.637123745819398,
+          "heldout_auroc": 0.48444976076555024
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.009623587131500244,
+        "l_rep": 0.0002494973687134916
+      }
+    },
+    {
+      "seed": 0,
+      "lambda": 3.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.5149521531100478,
+      "frozen_l18_heldout_auroc": 0.4958133971291866,
+      "rand_dir_auroc": 0.5520334928229665,
+      "knowledge_acc": 0.8048780487804879,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6559364548494984,
+          "heldout_auroc": 0.48145933014354064
+        },
+        "14": {
+          "attack_auroc": 0.7006688963210702,
+          "heldout_auroc": 0.5149521531100478
+        },
+        "16": {
+          "attack_auroc": 0.6780936454849499,
+          "heldout_auroc": 0.49940191387559807
+        },
+        "18": {
+          "attack_auroc": 0.657190635451505,
+          "heldout_auroc": 0.4958133971291866
+        },
+        "20": {
+          "attack_auroc": 0.6580267558528428,
+          "heldout_auroc": 0.49282296650717705
+        },
+        "22": {
+          "attack_auroc": 0.6341973244147158,
+          "heldout_auroc": 0.48086124401913877
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.0021929055510554463,
+        "l_rep": 0.0003171093603668851
+      }
+    },
+    {
+      "seed": 0,
+      "lambda": 10.0,
+      "steps": 300,
+      "relock_layer": 16,
+      "relock_auroc": 0.5251196172248804,
+      "frozen_l18_heldout_auroc": 0.506578947368421,
+      "rand_dir_auroc": 0.5442583732057417,
+      "knowledge_acc": 0.8170731707317073,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6580267558528428,
+          "heldout_auroc": 0.48145933014354064
+        },
+        "14": {
+          "attack_auroc": 0.6952341137123745,
+          "heldout_auroc": 0.5227272727272727
+        },
+        "16": {
+          "attack_auroc": 0.6989966555183946,
+          "heldout_auroc": 0.5251196172248804
+        },
+        "18": {
+          "attack_auroc": 0.6705685618729097,
+          "heldout_auroc": 0.506578947368421
+        },
+        "20": {
+          "attack_auroc": 0.6659698996655519,
+          "heldout_auroc": 0.506578947368421
+        },
+        "22": {
+          "attack_auroc": 0.6396321070234113,
+          "heldout_auroc": 0.49521531100478466
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.0035167807363905013,
+        "l_rep": 4.7936966439010575e-05
+      }
+    },
+    {
+      "seed": 1,
+      "lambda": 0.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.458133971291866,
+      "frozen_l18_heldout_auroc": 0.4312200956937799,
+      "rand_dir_auroc": 0.5604066985645934,
+      "knowledge_acc": 0.5975609756097561,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6500836120401338,
+          "heldout_auroc": 0.45095693779904306
+        },
+        "14": {
+          "attack_auroc": 0.6626254180602007,
+          "heldout_auroc": 0.458133971291866
+        },
+        "16": {
+          "attack_auroc": 0.6442307692307693,
+          "heldout_auroc": 0.4342105263157895
+        },
+        "18": {
+          "attack_auroc": 0.6417224080267558,
+          "heldout_auroc": 0.4312200956937799
+        },
+        "20": {
+          "attack_auroc": 0.6258361204013378,
+          "heldout_auroc": 0.423444976076555
+        },
+        "22": {
+          "attack_auroc": 0.6036789297658863,
+          "heldout_auroc": 0.444377990430622
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.0035394992446526885,
+        "l_rep": 1.2475920915603638
+      }
+    },
+    {
+      "seed": 1,
+      "lambda": 0.3,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.4605263157894737,
+      "frozen_l18_heldout_auroc": 0.4383971291866029,
+      "rand_dir_auroc": 0.5813397129186603,
+      "knowledge_acc": 0.8292682926829268,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6601170568561873,
+          "heldout_auroc": 0.45394736842105265
+        },
+        "14": {
+          "attack_auroc": 0.6755852842809364,
+          "heldout_auroc": 0.4605263157894737
+        },
+        "16": {
+          "attack_auroc": 0.6609531772575251,
+          "heldout_auroc": 0.44019138755980863
+        },
+        "18": {
+          "attack_auroc": 0.6551003344481605,
+          "heldout_auroc": 0.4383971291866029
+        },
+        "20": {
+          "attack_auroc": 0.6496655518394648,
+          "heldout_auroc": 0.4395933014354067
+        },
+        "22": {
+          "attack_auroc": 0.6367056856187291,
+          "heldout_auroc": 0.4527511961722488
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.0036604722554329783,
+        "l_rep": 0.00010463488251843955
+      }
+    },
+    {
+      "seed": 1,
+      "lambda": 1.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.47248803827751196,
+      "frozen_l18_heldout_auroc": 0.4485645933014354,
+      "rand_dir_auroc": 0.5771531100478469,
+      "knowledge_acc": 0.8658536585365854,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6655518394648829,
+          "heldout_auroc": 0.451555023923445
+        },
+        "14": {
+          "attack_auroc": 0.7023411371237458,
+          "heldout_auroc": 0.47248803827751196
+        },
+        "16": {
+          "attack_auroc": 0.6931438127090301,
+          "heldout_auroc": 0.4533492822966507
+        },
+        "18": {
+          "attack_auroc": 0.6826923076923077,
+          "heldout_auroc": 0.4485645933014354
+        },
+        "20": {
+          "attack_auroc": 0.6718227424749164,
+          "heldout_auroc": 0.451555023923445
+        },
+        "22": {
+          "attack_auroc": 0.6592809364548495,
+          "heldout_auroc": 0.4694976076555024
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.0009121603070525452,
+        "l_rep": 5.6337030400754884e-05
+      }
+    },
+    {
+      "seed": 1,
+      "lambda": 3.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.4694976076555024,
+      "frozen_l18_heldout_auroc": 0.4473684210526316,
+      "rand_dir_auroc": 0.5717703349282297,
+      "knowledge_acc": 0.8536585365853658,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6542642140468228,
+          "heldout_auroc": 0.45873205741626794
+        },
+        "14": {
+          "attack_auroc": 0.6831103678929766,
+          "heldout_auroc": 0.4694976076555024
+        },
+        "16": {
+          "attack_auroc": 0.6559364548494984,
+          "heldout_auroc": 0.45514354066985646
+        },
+        "18": {
+          "attack_auroc": 0.6538461538461539,
+          "heldout_auroc": 0.4473684210526316
+        },
+        "20": {
+          "attack_auroc": 0.6183110367892977,
+          "heldout_auroc": 0.44258373205741625
+        },
+        "22": {
+          "attack_auroc": 0.6082775919732442,
+          "heldout_auroc": 0.4503588516746411
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.010444090701639652,
+        "l_rep": 0.01605063211172819
+      }
+    },
+    {
+      "seed": 1,
+      "lambda": 10.0,
+      "steps": 300,
+      "relock_layer": 14,
+      "relock_auroc": 0.5059808612440191,
+      "frozen_l18_heldout_auroc": 0.4772727272727273,
+      "rand_dir_auroc": 0.5879186602870813,
+      "knowledge_acc": 0.8292682926829268,
+      "per_layer": {
+        "12": {
+          "attack_auroc": 0.6810200668896321,
+          "heldout_auroc": 0.4605263157894737
+        },
+        "14": {
+          "attack_auroc": 0.7303511705685619,
+          "heldout_auroc": 0.5059808612440191
+        },
+        "16": {
+          "attack_auroc": 0.7107023411371237,
+          "heldout_auroc": 0.4784688995215311
+        },
+        "18": {
+          "attack_auroc": 0.7006688963210702,
+          "heldout_auroc": 0.4772727272727273
+        },
+        "20": {
+          "attack_auroc": 0.6726588628762542,
+          "heldout_auroc": 0.4700956937799043
+        },
+        "22": {
+          "attack_auroc": 0.6525919732441472,
+          "heldout_auroc": 0.48325358851674644
+        }
+      },
+      "train_hist": {
+        "step": 299,
+        "l_adv": 0.00043323126737959683,
+        "l_rep": 8.038841770030558e-05
+      }
+    }
+  ]
+}

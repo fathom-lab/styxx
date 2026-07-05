@@ -1,0 +1,49 @@
+{
+  "what": "read-neq-write clean-model foundation (non-degeneracy guards)",
+  "prereg": "papers/read-neq-write/PREREG_read_neq_write_coupling_2026_07_04.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "seed": 0,
+  "n_facts": 180,
+  "n_attack": 98,
+  "n_heldout": 82,
+  "selected_layer": 18,
+  "per_layer": {
+    "12": {
+      "held_auroc": 0.6022727272727273,
+      "rand_auroc": 0.6507177033492823
+    },
+    "14": {
+      "held_auroc": 0.7302631578947368,
+      "rand_auroc": 0.5550239234449761
+    },
+    "16": {
+      "held_auroc": 0.8110047846889952,
+      "rand_auroc": 0.3199760765550239
+    },
+    "18": {
+      "held_auroc": 0.8510765550239234,
+      "rand_auroc": 0.5
+    },
+    "20": {
+      "held_auroc": 0.8319377990430622,
+      "rand_auroc": 0.47667464114832536
+    },
+    "22": {
+      "held_auroc": 0.8086124401913876,
+      "rand_auroc": 0.638755980861244
+    }
+  },
+  "ref_knowledge_acc": 0.8048780487804879,
+  "guards": {
+    "g_void_1_clean_probe_auroc": 0.8510765550239234,
+    "g_void_1_pass": true,
+    "g_void_2_clean_knowledge_acc": 0.8048780487804879,
+    "g_void_2_pass": true,
+    "g_void_3_stems_disjoint": true,
+    "g_void_4a_rand_dir_auroc": 0.5,
+    "g_void_4a_pass": true,
+    "g_void_4b_shuffled_knowledge_acc": 0.5121951219512195,
+    "g_void_4b_pass": true
+  },
+  "all_guards_pass": true
+}

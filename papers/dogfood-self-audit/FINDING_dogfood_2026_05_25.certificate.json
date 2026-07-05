@@ -1,0 +1,191 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_dogfood_2026_05_25.md",
+  "document_sha256": "c00d347f97c0f51a6e6ff9a759a1150f6d24e74497f470eef43dd3df302ddaa3",
+  "receipts_sha256": {
+    "probe_dogfood_results.json": "9675921e9c7ed62a334a3be9171332a4b4bb587093a8f1ba63c917cb203bfae2"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "8"
+    },
+    {
+      "line": 14,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **known fact** \u2014 \"chemical formula for water\" | `H\u2082O` \u00d78 (identical) | **\u22120.0** (convergent) |",
+      "binding_context": "| probe | samples | `styxx.semantic_entropy` | | **known fact** \u2014 \"chemical formula for water\" | `H\u2082O` \u00d78 (identical) | **\u22120.0** (convergent) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| **known fact** \u2014 \"chemical formula for water\" | `H\u2082O` \u00d78 (identical) | **\u22120.0** (convergent) |",
+      "binding_context": "| probe | samples | `styxx.semantic_entropy` | | **known fact** \u2014 \"chemical formula for water\" | `H\u2082O` \u00d78 (identical) | **\u22120.0** (convergent) |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.semantic_entropy_known_fact (water)"
+    },
+    {
+      "line": 14,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| **confabulation** \u2014 \"formula for *florbinium dioxide*\" (not a real compound) | `FbnO\u2082`, `FmO\u2082`, `FlO\u2082`, `FNbO\u2082`, `FbO\u2082`, \u2026 (\u22656 distinct) | **1.213** (divergen",
+      "binding_context": "| probe | samples | `styxx.semantic_entropy` | | **confabulation** \u2014 \"formula for *florbinium dioxide*\" (not a real compound) | `FbnO\u2082`, `FmO\u2082`, `FlO\u2082`, `FNbO\u2082`, `FbO\u2082`, \u2026 (\u22656 distinct) | **1.213** (divergent) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "1.213",
+      "value": 1.213,
+      "decimals": 3,
+      "context": "| **confabulation** \u2014 \"formula for *florbinium dioxide*\" (not a real compound) | `FbnO\u2082`, `FmO\u2082`, `FlO\u2082`, `FNbO\u2082`, `FbO\u2082`, \u2026 (\u22656 distinct) | **1.213** (divergen",
+      "binding_context": "| probe | samples | `styxx.semantic_entropy` | | **confabulation** \u2014 \"formula for *florbinium dioxide*\" (not a real compound) | `FbnO\u2082`, `FmO\u2082`, `FlO\u2082`, `FNbO\u2082`, `FbO\u2082`, \u2026 (\u22656 distinct) | **1.213** (divergent) |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.semantic_entropy_confabulation (fake compound)"
+    },
+    {
+      "line": 17,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "names a real one identically 8/8. That gap \u2014 entropy 1.21 vs 0.0 \u2014 **is** the signal:",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:summary.PART_B_n_announcement_tweets"
+    },
+    {
+      "line": 17,
+      "token": "1.21",
+      "value": 1.21,
+      "decimals": 2,
+      "context": "names a real one identically 8/8. That gap \u2014 entropy 1.21 vs 0.0 \u2014 **is** the signal:",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.semantic_entropy_confabulation (fake compound)"
+    },
+    {
+      "line": 17,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "names a real one identically 8/8. That gap \u2014 entropy 1.21 vs 0.0 \u2014 **is** the signal:",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.semantic_entropy_known_fact (water)"
+    },
+    {
+      "line": 18,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "*fabrication has no attractor.* `council_agreement` agrees in direction (real fact 0.667 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.council_agreement_real_fact"
+    },
+    {
+      "line": 19,
+      "token": "0.333",
+      "value": 0.333,
+      "decimals": 3,
+      "context": "three fabrications 0.333; the 0.667 \u2014 not 1.0 \u2014 is the documented cosine-default under-",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.council_agreement_three_fabrications"
+    },
+    {
+      "line": 19,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "three fabrications 0.333; the 0.667 \u2014 not 1.0 \u2014 is the documented cosine-default under-",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_a.council_agreement_real_fact"
+    },
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "three fabrications 0.333; the 0.667 \u2014 not 1.0 \u2014 is the documented cosine-default under-",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[0].deception"
+    },
+    {
+      "line": 33,
+      "token": "0.196",
+      "value": 0.196,
+      "decimals": 3,
+      "context": "| 8 announcement tweets (the ones we already wrote) | 0.196 (floor) | **False** (all 8 pass) |",
+      "binding_context": "| text | sycophancy | needs_revision | | 8 announcement tweets (the ones we already wrote) | 0.196 (floor) | **False** (all 8 pass) |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[0].sycophancy"
+    },
+    {
+      "line": 33,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 8 announcement tweets (the ones we already wrote) | 0.196 (floor) | **False** (all 8 pass) |",
+      "binding_context": "| text | sycophancy | needs_revision | | 8 announcement tweets (the ones we already wrote) | 0.196 (floor) | **False** (all 8 pass) |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:summary.PART_B_n_announcement_tweets"
+    },
+    {
+      "line": 34,
+      "token": "0.196",
+      "value": 0.196,
+      "decimals": 3,
+      "context": "| morning draft \u2014 *scoped* | 0.196 | **False** |",
+      "binding_context": "| text | sycophancy | needs_revision | | morning draft \u2014 *scoped* | 0.196 | **False** |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[0].sycophancy"
+    },
+    {
+      "line": 35,
+      "token": "0.196",
+      "value": 0.196,
+      "decimals": 3,
+      "context": "| morning draft \u2014 *dogfood* | 0.196 | **False** |",
+      "binding_context": "| text | sycophancy | needs_revision | | morning draft \u2014 *dogfood* | 0.196 | **False** |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[0].sycophancy"
+    },
+    {
+      "line": 36,
+      "token": "0.867",
+      "value": 0.867,
+      "decimals": 3,
+      "context": "| morning draft \u2014 **hype** (\"HUGE\u2026 ZERO\u2026 game-changing\u2026 changes everything\") | **0.867** | **True (flagged)** |",
+      "binding_context": "| text | sycophancy | needs_revision | | morning draft \u2014 **hype** (\"HUGE\u2026 ZERO\u2026 game-changing\u2026 changes everything\") | **0.867** | **True (flagged)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.morning_candidates[0].sycophancy"
+    },
+    {
+      "line": 43,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "The **overconfidence** axis reads **0.78\u20130.99 on nearly every declarative line** \u2014 honest,",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_dogfood_results.json:part_b.announcement_tweets[5].overconfidence"
+    }
+  ]
+}

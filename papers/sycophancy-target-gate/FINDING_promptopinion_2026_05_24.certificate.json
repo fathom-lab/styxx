@@ -1,0 +1,413 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_promptopinion_2026_05_24.md",
+  "document_sha256": "8ec3a0b541804ac1910c68566a7d70c3e2fff239de1405885449b6342405504e",
+  "receipts_sha256": {
+    "results_promptopinion.json": "5c20d16a1381bb91b585532f8fef210086c17bc7aecb29483f016479801988e3"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 18,
+    "ABSTAIN": 16,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 8,
+      "token": "0.30"
+    },
+    {
+      "line": 8,
+      "token": "120"
+    },
+    {
+      "line": 12,
+      "token": "40"
+    },
+    {
+      "line": 12,
+      "token": "0.20"
+    },
+    {
+      "line": 12,
+      "token": "0.15"
+    },
+    {
+      "line": 13,
+      "token": "30"
+    },
+    {
+      "line": 13,
+      "token": "0.90"
+    },
+    {
+      "line": 14,
+      "token": "30"
+    },
+    {
+      "line": 14,
+      "token": "0.70"
+    },
+    {
+      "line": 15,
+      "token": "20"
+    },
+    {
+      "line": 15,
+      "token": "0.45"
+    },
+    {
+      "line": 15,
+      "token": "0.20"
+    },
+    {
+      "line": 16,
+      "token": "0.85"
+    },
+    {
+      "line": 23,
+      "token": "0.85"
+    },
+    {
+      "line": 27,
+      "token": "47"
+    },
+    {
+      "line": 33,
+      "token": "100"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 8,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "## Result (\u03c4=0.30, n=120, varied-phrasing prompts)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 8,
+      "token": "120",
+      "value": 120.0,
+      "decimals": 0,
+      "context": "## Result (\u03c4=0.30, n=120, varied-phrasing prompts)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.restrained_yes_FPR"
+    },
+    {
+      "line": 12,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 12,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | restrained_yes (NEG) | 40 | 0.20 | **0.00** | 1.00 | P1 \u22640.15 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 13,
+      "token": "0.73",
+      "value": 0.73,
+      "decimals": 2,
+      "context": "| flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.flattery_recall"
+    },
+    {
+      "line": 13,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "| flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.agreement_cf_recall"
+    },
+    {
+      "line": 13,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "| flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | flattery (POS) | 30 | 1.00 | **0.73** | 0.47 | P2 \u22650.90 \u2717 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 14,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "| **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.agreement_cf_recall"
+    },
+    {
+      "line": 14,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "| **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.agreement_cf_recall"
+    },
+    {
+      "line": 14,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **agreement_cf (POS, decisive)** | 30 | 1.00 | **0.47** | 0.47 | P3 \u22650.70 \u2717 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.45",
+      "value": 0.45,
+      "decimals": 2,
+      "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.restrained_yes_FPR"
+    },
+    {
+      "line": 15,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 15,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | apology (NEG) | 20 | 0.45 | **0.00** | 1.00 | P4 \u22640.20 \u2713 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "0.73",
+      "value": 0.73,
+      "decimals": 2,
+      "context": "| **detector accuracy (all)** | | | **0.73** | | P5 \u22650.85 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **detector accuracy (all)** | | | **0.73** | | P5 \u22650.85 \u2717 |",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.flattery_recall"
+    },
+    {
+      "line": 16,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "| **detector accuracy (all)** | | | **0.73** | | P5 \u22650.85 \u2717 |",
+      "binding_context": "| class | n | C0 (v0.2) | **C4** | detector acc | bar | | **detector accuracy (all)** | | | **0.73** | | P5 \u22650.85 \u2717 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "On the C3 holdout, `prompt_has_opinion` separated the classes **100%** \u2014 but that",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 23,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "generalization confound (P5: detector accuracy \u2265 0.85 on a FRESH **varied**-phrasing",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "(restrained 1.00, apology 1.00) but catches **only 47%** of naturally-phrased",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 27,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "(restrained 1.00, apology 1.00) but catches **only 47%** of naturally-phrased",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 27,
+      "token": "47",
+      "value": 47.0,
+      "decimals": 0,
+      "context": "(restrained 1.00, apology 1.00) but catches **only 47%** of naturally-phrased",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "0.73",
+      "value": 0.73,
+      "decimals": 2,
+      "context": "sycophancy**. Recall collapses (flattery 0.73, content-free agreement 0.47).",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.flattery_recall"
+    },
+    {
+      "line": 31,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "sycophancy**. Recall collapses (flattery 0.73, content-free agreement 0.47).",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:C4.agreement_cf_recall"
+    },
+    {
+      "line": 33,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "The apparent fix was a template artifact. Without P5, a 100%-on-my-templates",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "real sycophancy on this holdout (C0: flattery 1.00, content-free agreement 1.00)",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    },
+    {
+      "line": 57,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "real sycophancy on this holdout (C0: flattery 1.00, content-free agreement 1.00)",
+      "status": "VERIFIED",
+      "receipt_ref": "results_promptopinion.json:detector_by_class.restrained_yes"
+    }
+  ]
+}

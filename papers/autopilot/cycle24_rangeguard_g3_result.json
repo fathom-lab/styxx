@@ -1,0 +1,38 @@
+{
+  "what": "cycle-24 G3: clean UNGROUNDED under the range-guarded recall, REAL vs ARTIFACT",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v04_recall_rangeguard_2026_07_04.md",
+  "clean_ungrounded_total": 4,
+  "real_absent": 2,
+  "real_bulk_only": 1,
+  "artifact": 1,
+  "rows": [
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.56",
+      "kind": "real_absent",
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.16",
+      "kind": "real_absent",
+      "context": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u20130.31); the full"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 63,
+      "token": "0.50",
+      "kind": "real_bulk_only",
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 46,
+      "token": "1",
+      "kind": "artifact",
+      "context": "`run_geometry_integrity.py` (drift, stage 1) \u00b7 `run_geometry_mismatch.py` (2D signature, stage 2) \u00b7"
+    }
+  ]
+}

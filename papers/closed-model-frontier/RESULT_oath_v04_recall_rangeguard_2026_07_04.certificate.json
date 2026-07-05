@@ -1,0 +1,728 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+  "document_sha256": "0ab4e3d9688ea4f28d103ee4fd1114a70aa4331f0233498beab2b3f1978b6e48",
+  "receipts_sha256": {
+    "cycle24_rangeguard_battery_result.json": "ed4f722d86904a2efae1d082aa7732a978ddbfb4c47b75c8b6af8843354f197e",
+    "cycle24_rangeguard_g3_result.json": "cdf876ee59f2ea7bab779c4792e7de41f6f20e1a52f1375de1adfab6e92fcc0b",
+    "cycle23_recall_battery_result.json": "0c7936500c0c84669ae0089636f2044ff50a5f0ec5371b66e03508e585a18c0f"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 34,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 19,
+      "token": "16"
+    },
+    {
+      "line": 19,
+      "token": "16"
+    },
+    {
+      "line": 20,
+      "token": "0"
+    },
+    {
+      "line": 20,
+      "token": "26"
+    },
+    {
+      "line": 20,
+      "token": "0"
+    },
+    {
+      "line": 20,
+      "token": "26"
+    },
+    {
+      "line": 21,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "116"
+    },
+    {
+      "line": 26,
+      "token": "0.56"
+    },
+    {
+      "line": 26,
+      "token": "0.16"
+    },
+    {
+      "line": 27,
+      "token": "0.50"
+    },
+    {
+      "line": 29,
+      "token": "0"
+    },
+    {
+      "line": 35,
+      "token": "2"
+    },
+    {
+      "line": 35,
+      "token": "1"
+    },
+    {
+      "line": 36,
+      "token": "1"
+    },
+    {
+      "line": 36,
+      "token": "1"
+    },
+    {
+      "line": 36,
+      "token": "2"
+    },
+    {
+      "line": 37,
+      "token": "20"
+    },
+    {
+      "line": 37,
+      "token": "60"
+    },
+    {
+      "line": 37,
+      "token": "60"
+    },
+    {
+      "line": 37,
+      "token": "36"
+    },
+    {
+      "line": 38,
+      "token": "5"
+    },
+    {
+      "line": 38,
+      "token": "6"
+    },
+    {
+      "line": 42,
+      "token": "0.264"
+    },
+    {
+      "line": 42,
+      "token": "0.735"
+    },
+    {
+      "line": 43,
+      "token": "20"
+    },
+    {
+      "line": 43,
+      "token": "36"
+    },
+    {
+      "line": 43,
+      "token": "60"
+    },
+    {
+      "line": 45,
+      "token": "0"
+    },
+    {
+      "line": 52,
+      "token": "119"
+    },
+    {
+      "line": 52,
+      "token": "121"
+    },
+    {
+      "line": 56,
+      "token": "25"
+    },
+    {
+      "line": 58,
+      "token": "0"
+    },
+    {
+      "line": 61,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "plausible correlation** (value \u2208 [\u22121, 1]), reusing the observation that all six cycle-23 artifacts",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:artifact"
+    },
+    {
+      "line": 11,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "plausible correlation** (value \u2208 [\u22121, 1]), reusing the observation that all six cycle-23 artifacts",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:artifact"
+    },
+    {
+      "line": 19,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| G1 | `validate_oath_v0.py` D1 caught \u2265 16 | 16 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G1 | `validate_oath_v0.py` D1 caught \u2265 16 | 16 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| G1 | `validate_oath_v0.py` D1 caught \u2265 16 | 16 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G1 | `validate_oath_v0.py` D1 caught \u2265 16 | 16 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "binding_context": "| bar | gate | result | | G2 | D2 = 0 on corpus AND battery false-verify \u2264 26 | 0 and 26 \u2192 PASS |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "binding_context": "| bar | gate | result | | G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "binding_context": "| bar | gate | result | | G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:n_docs"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "binding_context": "| bar | gate | result | | G3 | clean UNGROUNDED artifacts = 0 across the 13 docs | **1 \u2192 FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 22,
+      "token": "116",
+      "value": 116.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 | **119 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 | **119 \u2192 PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "119",
+      "value": 119.0,
+      "decimals": 0,
+      "context": "| G4 | battery caught \u2265 116 | **119 \u2192 PASS** |",
+      "binding_context": "| bar | gate | result | | G4 | battery caught \u2265 116 | **119 \u2192 PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:caught"
+    },
+    {
+      "line": 25,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "The range guard did **most** of its job: clean UNGROUNDED collapsed from cycle-23's 35 to **4**, of",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle23_recall_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 25,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "The range guard did **most** of its job: clean UNGROUNDED collapsed from cycle-23's 35 to **4**, of",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 26,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "which **2** are REAL (derived RSA bounds `~0.56`/`~0.16` the receipts do not hold), **1** REAL",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:real_absent"
+    },
+    {
+      "line": 26,
+      "token": "0.56",
+      "value": 0.56,
+      "decimals": 2,
+      "context": "which **2** are REAL (derived RSA bounds `~0.56`/`~0.16` the receipts do not hold), **1** REAL",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "which **2** are REAL (derived RSA bounds `~0.56`/`~0.16` the receipts do not hold), **1** REAL",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "which **2** are REAL (derived RSA bounds `~0.56`/`~0.16` the receipts do not hold), **1** REAL",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify_rows[16].orig"
+    },
+    {
+      "line": 27,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "(a `0.50` agreement value living only in a bulk array), and **1** ARTIFACT. Battery caught **119**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(a `0.50` agreement value living only in a bulk array), and **1** ARTIFACT. Battery caught **119**",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 27,
+      "token": "119",
+      "value": 119.0,
+      "decimals": 0,
+      "context": "(a `0.50` agreement value living only in a bulk array), and **1** ARTIFACT. Battery caught **119**",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:caught"
+    },
+    {
+      "line": 28,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "of 269 mutants (down only 9 from the blunt 128 caught \u2014 the recall survives the guard) with",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:n_mutants"
+    },
+    {
+      "line": 28,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "of 269 mutants (down only 9 from the blunt 128 caught \u2014 the recall survives the guard) with",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.n_mutants"
+    },
+    {
+      "line": 28,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "of 269 mutants (down only 9 from the blunt 128 caught \u2014 the recall survives the guard) with",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:cycle23_blunt.caught"
+    },
+    {
+      "line": 29,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "false-verify still **26**. Four bars pass. But G3 is `= 0`, and there is **one** artifact \u2014 a kill.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify"
+    },
+    {
+      "line": 29,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "false-verify still **26**. Four bars pass. But G3 is `= 0`, and there is **one** artifact \u2014 a kill.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "*\"`run_geometry_integrity.py` (**drift, stage 1**) \u00b7 `run_geometry_mismatch.py` (2D signature,",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.clean_ungrounded"
+    },
+    {
+      "line": 35,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "stage 2)\"*. The ordinal **`1`** is obligated by \"drift\", and the value guard admits it **because 1.0",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "stage 2)\"*. The ordinal **`1`** is obligated by \"drift\", and the value guard admits it **because 1.0",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "stage 2)\"*. The ordinal **`1`** is obligated by \"drift\", and the value guard admits it **because 1.0",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:seed"
+    },
+    {
+      "line": 36,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "is a legal correlation** (the boundary of [\u22121, 1]). Its sibling `stage 2` was correctly spared",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "is a legal correlation** (the boundary of [\u22121, 1]). Its sibling `stage 2` was correctly spared",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "is a legal correlation** (the boundary of [\u22121, 1]). Its sibling `stage 2` was correctly spared",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(2 \u2209 range), as were the other four cycle-23 artifacts (`20`, `60`, `60`, `36`, all out of range).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "(2 \u2209 range), as were the other four cycle-23 artifacts (`20`, `60`, `60`, `36`, all out of range).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "(2 \u2209 range), as were the other four cycle-23 artifacts (`20`, `60`, `60`, `36`, all out of range).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "(2 \u2209 range), as were the other four cycle-23 artifacts (`20`, `60`, `60`, `36`, all out of range).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "So the range guard fixed **5 of 6**; the one it cannot fix is the integer ordinal that collides with",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "So the range guard fixed **5 of 6**; the one it cannot fix is the integer ordinal that collides with",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.264",
+      "value": 0.264,
+      "decimals": 3,
+      "context": "written with a decimal point (`0.264`, `0.98`, `0.735`); the false-positive tokens are bare integers",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.98",
+      "value": 0.98,
+      "decimals": 2,
+      "context": "written with a decimal point (`0.264`, `0.98`, `0.735`); the false-positive tokens are bare integers",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify_rows[14].mutant"
+    },
+    {
+      "line": 42,
+      "token": "0.735",
+      "value": 0.735,
+      "decimals": 3,
+      "context": "written with a decimal point (`0.264`, `0.98`, `0.735`); the false-positive tokens are bare integers",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(stage `1`/`2`, cap `20`, `36` items, `60`%). The clean separator is therefore **decimals**, not",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.FINDING_council_2026_05_25.md.clean_ungrounded"
+    },
+    {
+      "line": 43,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "(stage `1`/`2`, cap `20`, `36` items, `60`%). The clean separator is therefore **decimals**, not",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_ai_brain_vision_2026_06_03.md.clean_ungrounded"
+    },
+    {
+      "line": 43,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(stage `1`/`2`, cap `20`, `36` items, `60`%). The clean separator is therefore **decimals**, not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "(stage `1`/`2`, cap `20`, `36` items, `60`%). The clean separator is therefore **decimals**, not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "(stage `1`/`2`, cap `20`, `36` items, `60`%). The clean separator is therefore **decimals**, not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(`decimals > 0`) \u2014 which no ordinal, count, or whole-percent ever does. That also subsumes the range",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "119",
+      "value": 119.0,
+      "decimals": 0,
+      "context": "to regenerate `cycle24_rangeguard_battery_result.json` (119 / 26 / 121) and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 52,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "to regenerate `cycle24_rangeguard_battery_result.json` (119 / 26 / 121) and",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:false_verify"
+    },
+    {
+      "line": 52,
+      "token": "121",
+      "value": 121.0,
+      "decimals": 0,
+      "context": "to regenerate `cycle24_rangeguard_battery_result.json` (119 / 26 / 121) and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "`cycle24_rangeguard_g3_result.json` (4 clean UNGROUNDED: 2 absent, 1 bulk, 1 artifact).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 53,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`cycle24_rangeguard_g3_result.json` (4 clean UNGROUNDED: 2 absent, 1 bulk, 1 artifact).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_ai_brain_vision_2026_06_03.md.false_verify"
+    },
+    {
+      "line": 53,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`cycle24_rangeguard_g3_result.json` (4 clean UNGROUNDED: 2 absent, 1 bulk, 1 artifact).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 53,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`cycle24_rangeguard_g3_result.json` (4 clean UNGROUNDED: 2 absent, 1 bulk, 1 artifact).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 56,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "## What cycle 25 should consider (names this burial)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Add a **`decimals > 0`** condition to the range-guarded correlation register (obligate only",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "fractional numbers in [\u22121, 1]). This removes the `stage 1` ordinal artifact by construction while",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:artifact"
+    },
+    {
+      "line": 59,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "fractional numbers in [\u22121, 1]). This removes the `stage 1` ordinal artifact by construction while",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:artifact"
+    },
+    {
+      "line": 59,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "fractional numbers in [\u22121, 1]). This removes the `stage 1` ordinal artifact by construction while",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle24_rangeguard_g3_result.json:artifact"
+    },
+    {
+      "line": 61,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "G3 = 0 artifacts AND G4 catch \u2265 116. If it passes, it is the first certifier upgrade to ship since",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "what": "cycle-25 decimal+range-guarded trigger-recall battery (on-disk verifier)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v04_recall_rangeguard_2026_07_04.md",
+  "seed": 1,
+  "n_docs": 13,
+  "n_mutants": 269,
+  "caught": 119,
+  "false_verify": 26,
+  "abstain_degrade": 121,
+  "dropped": 3,
+  "catch_rate": 0.442,
+  "false_verify_rate": 0.097,
+  "abstain_degrade_rate": 0.45,
+  "clean_ungrounded_total": 3,
+  "baseline_v03": {
+    "n_mutants": 269,
+    "caught": 58,
+    "false_verify": 26,
+    "abstain_degrade": 182
+  },
+  "cycle23_blunt": {
+    "caught": 128,
+    "false_verify": 26,
+    "abstain_degrade": 112,
+    "artifacts": 6
+  },
+  "per_doc": {
+    "RESULT_ai_brain_2026_06_03.md": {
+      "caught": 22,
+      "false_verify": 4,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "n_mutants": 31,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "RESULT_ai_brain_vision_2026_06_03.md": {
+      "caught": 3,
+      "false_verify": 2,
+      "abstain_degrade": 17,
+      "dropped": 0,
+      "n_mutants": 22,
+      "clean_verdict": "OATH-FAILED",
+      "clean_ungrounded": 2
+    },
+    "RESULT_ai_human_2026_06_03.md": {
+      "caught": 33,
+      "false_verify": 7,
+      "abstain_degrade": 10,
+      "dropped": 0,
+      "n_mutants": 50,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "RESULT_llm_breadth_2026_06_03.md": {
+      "caught": 1,
+      "false_verify": 1,
+      "abstain_degrade": 0,
+      "dropped": 0,
+      "n_mutants": 2,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_council_2026_05_25.md": {
+      "caught": 14,
+      "false_verify": 1,
+      "abstain_degrade": 1,
+      "dropped": 1,
+      "n_mutants": 17,
+      "clean_verdict": "OATH-FAILED",
+      "clean_ungrounded": 1
+    },
+    "FINDING_fame_vs_truth_2026_05_25.md": {
+      "caught": 6,
+      "false_verify": 1,
+      "abstain_degrade": 3,
+      "dropped": 0,
+      "n_mutants": 10,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_dogfood_2026_05_25.md": {
+      "caught": 4,
+      "false_verify": 1,
+      "abstain_degrade": 9,
+      "dropped": 1,
+      "n_mutants": 15,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "caught": 3,
+      "false_verify": 1,
+      "abstain_degrade": 30,
+      "dropped": 0,
+      "n_mutants": 34,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_council_grounding_2026_05_28.md": {
+      "caught": 2,
+      "false_verify": 1,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "n_mutants": 8,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_detection_locus_gpt_2026_05_30.md": {
+      "caught": 22,
+      "false_verify": 1,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "n_mutants": 28,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "RESULT_geometry_integrity_2026_06_03.md": {
+      "caught": 4,
+      "false_verify": 3,
+      "abstain_degrade": 2,
+      "dropped": 0,
+      "n_mutants": 9,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "RESULT_rhythm_rescue_2026_06_03.md": {
+      "caught": 0,
+      "false_verify": 3,
+      "abstain_degrade": 21,
+      "dropped": 1,
+      "n_mutants": 25,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    },
+    "FINDING_promptopinion_2026_05_24.md": {
+      "caught": 5,
+      "false_verify": 0,
+      "abstain_degrade": 13,
+      "dropped": 0,
+      "n_mutants": 18,
+      "clean_verdict": "OATH-HELD",
+      "clean_ungrounded": 0
+    }
+  },
+  "false_verify_rows": [
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 9,
+      "orig": "0.002",
+      "mutant": "0.001"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 10,
+      "orig": "0.4",
+      "mutant": "0.7"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 14,
+      "orig": "0.222",
+      "mutant": "0.228"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 16,
+      "orig": "0.206",
+      "mutant": "0.006"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 41,
+      "orig": "+1.1",
+      "mutant": "+0.1"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 43,
+      "orig": "+0.2",
+      "mutant": "+0.7"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 12,
+      "orig": "0.652",
+      "mutant": "0.602"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 17,
+      "orig": "0.903",
+      "mutant": "0.803"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 18,
+      "orig": "0.741",
+      "mutant": "0.701"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 23,
+      "orig": "0.967",
+      "mutant": "0.667"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.76",
+      "mutant": "0.70"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.81",
+      "mutant": "0.83"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.60",
+      "mutant": "0.00"
+    },
+    {
+      "doc": "RESULT_llm_breadth_2026_06_03.md",
+      "line": 27,
+      "orig": "0.03",
+      "mutant": "0.00"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 20,
+      "orig": "0.88",
+      "mutant": "0.98"
+    },
+    {
+      "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+      "line": 18,
+      "orig": "0.75",
+      "mutant": "0.25"
+    },
+    {
+      "doc": "FINDING_dogfood_2026_05_25.md",
+      "line": 19,
+      "orig": "1.0",
+      "mutant": "1.2"
+    },
+    {
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 20,
+      "orig": "1.000",
+      "mutant": "0.000"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 51,
+      "orig": "0.65",
+      "mutant": "0.95"
+    },
+    {
+      "doc": "FINDING_detection_locus_gpt_2026_05_30.md",
+      "line": 29,
+      "orig": "0.00",
+      "mutant": "0.20"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 9,
+      "orig": "0.01",
+      "mutant": "0.00"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 14,
+      "orig": "0.02",
+      "mutant": "0.03"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 18,
+      "orig": "+4.1",
+      "mutant": "+4.3"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 22,
+      "orig": "6.0",
+      "mutant": "2.0"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 23,
+      "orig": "3.3",
+      "mutant": "0.3"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 69,
+      "orig": "0.80",
+      "mutant": "0.90"
+    }
+  ]
+}

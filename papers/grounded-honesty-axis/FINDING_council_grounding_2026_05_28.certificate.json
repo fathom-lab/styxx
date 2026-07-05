@@ -1,0 +1,290 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_council_grounding_2026_05_28.md",
+  "document_sha256": "60326cae3f9944c229fab89ab0e2d9e6546ff7af1383ec5b786e3073c049f58c",
+  "receipts_sha256": {
+    "council_grounding_result.json": "a24a8c1ac9ad400f2a23f5d9045c4a43d6c06179d9f1e1e7db2b1b9414a8bdae"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 15,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "36"
+    },
+    {
+      "line": 7,
+      "token": "10"
+    },
+    {
+      "line": 8,
+      "token": "30"
+    },
+    {
+      "line": 14,
+      "token": "0.90"
+    },
+    {
+      "line": 30,
+      "token": "36"
+    },
+    {
+      "line": 30,
+      "token": "3"
+    },
+    {
+      "line": 30,
+      "token": "3"
+    },
+    {
+      "line": 31,
+      "token": "2"
+    },
+    {
+      "line": 32,
+      "token": "0.75"
+    },
+    {
+      "line": 32,
+      "token": "0.75"
+    },
+    {
+      "line": 47,
+      "token": "0.29"
+    },
+    {
+      "line": 48,
+      "token": "0.65"
+    },
+    {
+      "line": 50,
+      "token": "0.09"
+    },
+    {
+      "line": 50,
+      "token": "0.80"
+    },
+    {
+      "line": 63,
+      "token": "94"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "Feasibility-grade: three OpenAI models, n=36 hard pairs.**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 7,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "Council = `gpt-4o-mini` + `gpt-4o` + `gpt-3.5-turbo`, N=10 resamples each,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 8,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "pooled (30 samples/item) and judged against each claim.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "| **C1 \u2014 diversity doesn't destroy the signal** (AUC \u2265 0.90) | **HELD: 0.945** |",
+      "binding_context": "| prediction | result | | **C1 \u2014 diversity doesn't destroy the signal** (AUC \u2265 0.90) | **HELD: 0.945** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0.945",
+      "value": 0.945,
+      "decimals": 3,
+      "context": "| **C1 \u2014 diversity doesn't destroy the signal** (AUC \u2265 0.90) | **HELD: 0.945** |",
+      "binding_context": "| prediction | result | | **C1 \u2014 diversity doesn't destroy the signal** (AUC \u2265 0.90) | **HELD: 0.945** |",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:auc_council_pooled"
+    },
+    {
+      "line": 21,
+      "token": "0.945",
+      "value": 0.945,
+      "decimals": 3,
+      "context": "**AUC 0.945** on the hard set \u2014 statistically indistinguishable from the",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:auc_council_pooled"
+    },
+    {
+      "line": 30,
+      "token": "34",
+      "value": 34.0,
+      "decimals": 0,
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:C2_agreement_gate.n_high"
+    },
+    {
+      "line": 30,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "**structural** reason: **34 of 36 items had full 3/3 council agreement.** There is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "essentially no low-agreement stratum to gate on (n_low = 2). With only two",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "disagreement items the \"gate\" AUC is 0.75 \u2014 failing the pre-registered `< 0.75`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "disagreement items the \"gate\" AUC is 0.75 \u2014 failing the pre-registered `< 0.75`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "0.29",
+      "value": 0.29,
+      "decimals": 2,
+      "context": "emits Lobamba (the royal/legislative capital). Pooled g_true (Lobamba) = 0.29 <",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "g_false (Mbabane) = 0.65: **still inverted.**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.09",
+      "value": 0.09,
+      "decimals": 2,
+      "context": "The dissent did narrow the inversion (single-model was 0.09 vs 0.80 \u2192 council 0.29",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "The dissent did narrow the inversion (single-model was 0.09 vs 0.80 \u2192 council 0.29",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "0.29",
+      "value": 0.29,
+      "decimals": 2,
+      "context": "The dissent did narrow the inversion (single-model was 0.09 vs 0.80 \u2192 council 0.29",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:C3_eswatini.g_pool_true_Lobamba"
+    },
+    {
+      "line": 51,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "vs 0.65), but it did not flip the verdict. This is precisely the honest prior I",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:C3_eswatini.g_pool_false_Mbabane"
+    },
+    {
+      "line": 63,
+      "token": "94",
+      "value": 94.0,
+      "decimals": 0,
+      "context": "models agree on 94% of items. We report C2 as not established here, not as a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "0.945",
+      "value": 0.945,
+      "decimals": 3,
+      "context": "0.945). But the two things I hoped the council would buy \u2014 a cross-model",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:auc_council_pooled"
+    },
+    {
+      "line": 77,
+      "token": "34",
+      "value": 34.0,
+      "decimals": 0,
+      "context": "They agree 34/36 times and they share the Eswatini error. This is the most",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:C2_agreement_gate.n_high"
+    },
+    {
+      "line": 77,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "They agree 34/36 times and they share the Eswatini error. This is the most",
+      "status": "VERIFIED",
+      "receipt_ref": "council_grounding_result.json:n_hard_pairs"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "prereg": "PREREG_v2.md",
+  "n_items": 20,
+  "KG0_extraction_clean_rate": 0.95,
+  "KG0_extraction_pass": true,
+  "KG0_human_eyeball": "PENDING flobi \u2014 pilot/pilot_grading_eyeball_v2.md (need 20/20, zero disagreements)",
+  "KG0_note": "KG0 gates BEFORE KG1: extraction-clean >=90% AND flobi's 20/20 eyeball. If KG0 fails -> STOP, iterate plumbing, new pilot (no hypothesis claim).",
+  "median_item_seconds": 68.18657219409943,
+  "mean_item_seconds": 97.01921986341476,
+  "depth_n_valid": 19,
+  "depth_mean": 8.813366689180073,
+  "depth_std": 0.03668759420116332,
+  "depth_min": 8.761406898498535,
+  "depth_max": 8.906851768493652,
+  "depth_undefined_frac": 0.05,
+  "KG1_zero_variance": false,
+  "KG1_triggered": false,
+  "correct_rate": 0.5,
+  "n_gen_errors": 0,
+  "n_depth_errors": 0,
+  "A0_hint": "median_item_seconds * n gives wall-clock; pick n_ID/n_OOD1 under ~8h (\u00a77)",
+  "HALT_boundary": "PILOT COMPLETE \u2014 the machine STOPS here (PREREG_v2 \u00a79). Human reads KG0 + KG1 + timing, does the 20/20 grading eyeball, then commits A1 (SPAN freeze) + A0 (sizes) as SEPARATE ratified commits, and only THEN fires the main run."
+}

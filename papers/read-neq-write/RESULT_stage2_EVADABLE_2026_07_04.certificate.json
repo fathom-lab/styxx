@@ -1,0 +1,318 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_stage2_EVADABLE_2026_07_04.md",
+  "document_sha256": "276dd51039fff657eb23bf4af1b73ddbfef944bd06b45c4631e8b98e2a5ab0f6",
+  "receipts_sha256": {
+    "attack_sweep_result.json": "95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237",
+    "foundation_result.json": "b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "2"
+    },
+    {
+      "line": 22,
+      "token": "0.3"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 47,
+      "token": "16"
+    },
+    {
+      "line": 48,
+      "token": "82"
+    },
+    {
+      "line": 52,
+      "token": "3"
+    },
+    {
+      "line": 58,
+      "token": "2"
+    },
+    {
+      "line": 58,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "# RESULT \u2014 read\u2260write stage 2: EVADABLE under the registered protocol (with the confound named)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "0.854",
+      "value": 0.854,
+      "decimals": 3,
+      "context": "probe held-out AUROC **0.854**, clean knowledge **0.805** \u2014 matching the foundation), so the read",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:clean_probe_auroc"
+    },
+    {
+      "line": 12,
+      "token": "0.805",
+      "value": 0.805,
+      "decimals": 3,
+      "context": "probe held-out AUROC **0.854**, clean knowledge **0.805** \u2014 matching the foundation), so the read",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:clean_knowledge_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "| 0 | 0.3 | **0.496** | 0.817 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 0.3 | **0.496** | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:lambdas[1]"
+    },
+    {
+      "line": 17,
+      "token": "0.496",
+      "value": 0.496,
+      "decimals": 3,
+      "context": "| 0 | 0.3 | **0.496** | 0.817 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 0.3 | **0.496** | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[1].relock_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "| 0 | 0.3 | **0.496** | 0.817 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 0.3 | **0.496** | 0.817 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[1].knowledge_acc"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0 | 1.0 | 0.507 | 0.890 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 1.0 | 0.507 | 0.890 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:lambdas[2]"
+    },
+    {
+      "line": 18,
+      "token": "0.507",
+      "value": 0.507,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.507 | 0.890 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 1.0 | 0.507 | 0.890 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[2].relock_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.890",
+      "value": 0.89,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.507 | 0.890 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 0 | 1.0 | 0.507 | 0.890 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[2].knowledge_acc"
+    },
+    {
+      "line": 19,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "| 1 | 0.3 | **0.461** | 0.829 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 0.3 | **0.461** | 0.829 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:lambdas[1]"
+    },
+    {
+      "line": 19,
+      "token": "0.461",
+      "value": 0.461,
+      "decimals": 3,
+      "context": "| 1 | 0.3 | **0.461** | 0.829 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 0.3 | **0.461** | 0.829 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[6].relock_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.829",
+      "value": 0.829,
+      "decimals": 3,
+      "context": "| 1 | 0.3 | **0.461** | 0.829 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 0.3 | **0.461** | 0.829 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[6].knowledge_acc"
+    },
+    {
+      "line": 20,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 1 | 1.0 | 0.472 | 0.866 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 1.0 | 0.472 | 0.866 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:lambdas[2]"
+    },
+    {
+      "line": 20,
+      "token": "0.472",
+      "value": 0.472,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.472 | 0.866 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 1.0 | 0.472 | 0.866 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[7].relock_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.866",
+      "value": 0.866,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.472 | 0.866 |",
+      "binding_context": "| seed | \u03bb | full-spectrum re-lock AUROC | held-out knowledge | | 1 | 1.0 | 0.472 | 0.866 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[7].knowledge_acc"
+    },
+    {
+      "line": 22,
+      "token": "0.3",
+      "value": 0.3,
+      "decimals": 1,
+      "context": "Every knowledge-preserving point (\u03bb \u2265 0.3, both seeds) lands in the EVADABLE corner: the re-locked",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.56",
+      "value": 0.56,
+      "decimals": 2,
+      "context": "read at chance (a random direction on the same residuals scores ~0.56, so ~0.5 is genuinely",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[0].rand_dir_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "read at chance (a random direction on the same residuals scores ~0.56, so ~0.5 is genuinely",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[0].relock_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "chance), knowledge held \u2265 0.75. At \u03bb = 0 (no knowledge replay) the scrub also damages knowledge",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.57",
+      "value": 0.57,
+      "decimals": 2,
+      "context": "(\u2192 ~0.57\u20130.60), and the replay term is what buys the attacker a knowledge-preserving evasion \u2014 the",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[0].knowledge_acc"
+    },
+    {
+      "line": 47,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, one architecture, one probe family (difference-of-means), LoRA r=16 (not a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "full fine-tune), 300 steps, n=82 held-out facts, seeds {0,1}, raw-statement residuals. A **first",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:steps"
+    },
+    {
+      "line": 48,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "full fine-tune), 300 steps, n=82 held-out facts, seeds {0,1}, raw-statement residuals. A **first",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "full fine-tune), 300 steps, n=82 held-out facts, seeds {0,1}, raw-statement residuals. A **first",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:seeds[0]"
+    },
+    {
+      "line": 48,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "full fine-tune), 300 steps, n=82 held-out facts, seeds {0,1}, raw-statement residuals. A **first",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:seeds[1]"
+    },
+    {
+      "line": 52,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "## The mandated next experiment (E1, pre-committed in stage 3)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "clean-calibrated stronger auditor also reads chance with knowledge kept, on \u22652 seeds and \u22652",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "clean-calibrated stronger auditor also reads chance with knowledge kept, on \u22652 seeds and \u22652",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

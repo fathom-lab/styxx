@@ -7,7 +7,7 @@
     "b24_headtohead_result.json": "4b0047e56f2923ba710344e42bfc273e437d9e5dbec8de9b8d1faa8f9b95f007",
     "b24_controls_addendum.json": "c10e821f97e2384354f96efb1ea1579554c7b4ef3e54e5404761027fc5f4fa35"
   },
-  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
   "counts": {
     "VERIFIED": 24,
     "ABSTAIN": 14,

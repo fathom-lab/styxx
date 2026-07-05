@@ -50,6 +50,137 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 25 (2026-07-04, operator "go deeper → break the ceiling") — OATH v0.4 DECIMAL+RANGE-guarded trigger-recall. `SHIPPED` — ALL FIVE BARS PASS (first `styxx.certify` upgrade since v0.3; RESULT OATH-HELD 17/0).**
+  Add `decimals > 0` to the [−1,1] correlation-register guard — correlations carry a fractional part; ordinals /
+  counts / API-caps / whole-percents never do. Prereg frozen+committed (`b6f5808`) before code, with a **frozen G3
+  artifact definition** (measurement-domain vs not) to remove post-hoc judgment. **Tamper-catch on the 13-doc
+  cycle-18 battery rose from the v0.3 baseline 58 → 119 of 269** (catch rate 0.216 → 0.442, +61 abstain-degrades
+  recovered) with false-verify held at 26 (no regression) and **zero certifier artifacts** — the `decimals>0` clause
+  removed the cycle-24 residual (`drift, stage 1`, the integer 1 admitted at the correlation boundary 1.0) by
+  construction. G1 D1=16, G2 D2=0, G3 artifacts=0, G4 119≥116, G5 1675-passed. The 3 remaining clean UNGROUNDED are
+  all REAL provenance gaps (derived RSA/R² bounds; a bulk-only agreement value) — the tool correctly turning on the
+  older docs. **This is the payoff of a 4-negative arc** (cycle 22 float → 23 blunt → 24 range → 25 decimal, each
+  naming the last). Ship surface: `styxx/certify.py` (+`_TRIGGERS_CORR` + one guarded `bound` line), 3 corpus certs
+  regenerated (D2=0 held), `CHANGELOG [Unreleased]`. Receipts: `RESULT_oath_v04_recall_decimalguard_2026_07_04.md`
+  (+cert), `cycle25_decimalguard_{battery,g3}_result.json`, `cycle25_decimalguard_probe.py`.
+  **Owed next = re-certify the 13 cycle-18 docs under the shipped verifier + repair the surfaced provenance gaps**
+  (persist bulk/derived correlations as summary receipts, or scope claims) — now the concrete content of standing
+  priority #2.
+
+- **Autopilot cycle 24 (2026-07-04, operator "go deeper") — OATH v0.4 RANGE-GUARDED trigger-recall (names the cycle-23 burial). `CLOSED_NEGATIVE` — bar G3 missed by ONE, REVERTED (RESULT OATH-HELD 28/0).**
+  Fix attempted: the correlation register obligates a number only when value ∈ [−1,1] (all 6 cycle-23 artifacts
+  were out of range). Prereg frozen+committed (`f539339`) before code. **The guard did most of its job** — clean
+  UNGROUNDED collapsed **35 → 4** (2 REAL derived-RSA-bounds, 1 REAL bulk-only, **1 ARTIFACT**), battery caught
+  **128 → 119** of 269 (recall survives, only −9), false-verify 26 unchanged; G1/G2/G4(119≥116)/G5 all PASS. **But
+  G3 = 0 and one artifact survived:** `geometry_integrity` L46 `(drift, stage 1)` — the ordinal `1` is obligated by
+  "drift" and the guard **admits it because 1.0 is a legal correlation** (the boundary); `stage 2` was spared
+  (2 ∉ range), as were the 4 other cycle-23 artifacts. **Yield:** a value-range guard is necessary but not
+  sufficient — correlations are written WITH decimals (0.264/0.98/0.735), the false positives are bare integers;
+  the clean separator is **decimals > 0**, not range alone. **Next = cycle 25** (add `decimals > 0` to the guard —
+  removes the ordinal artifact by construction, keeps every decimal correlation; ships if G3=0 ∧ G4≥116). Receipts:
+  `RESULT_oath_v04_recall_rangeguard_2026_07_04.md` (+cert), `cycle24_rangeguard_battery_result.json`,
+  `cycle24_rangeguard_g3_result.json`.
+
+- **Autopilot cycle 23 (2026-07-04) — OATH v0.4 trigger-vocabulary RECALL extension (cycle-22-owed sibling of float binding; standing priority #5). `CLOSED_NEGATIVE` — bar G3 missed, change REVERTED (RESULT OATH-HELD 36/0).**
+  Prereg frozen+committed BEFORE code (`PREREG_oath_v04_trigger_recall_2026_07_04.md`): widen `_TRIGGERS` with the
+  correlation/similarity register (rsa/rdm/spearman/correlation/rho/consistency/reliability/ceiling/agreement/
+  convergence/drift/entropy/similarity/variance) to convert the cycle-19 battery's **182/269 abstain-degrade** bucket
+  into caught UNGROUNDED. **The extension works on its own axis** — battery **caught 58 → 128 of 269** (catch rate
+  0.216 → 0.476, +70 abstain-degrades recovered), with **no false-verify regression** (26 unchanged — the feared dense-
+  table abstain→false-verify conversion did not net occur); G1 D1=16 PASS, G2 D2=0 PASS, G4 catch≥116 → 128 PASS, G5
+  suite 1675-passed PASS. **But G3 (honesty gate) FIRED:** re-certifying the 13 clean cycle-18 docs produced **35 clean
+  UNGROUNDED** (baseline 0), of which **6 are certifier ARTIFACTS** — a register word obligating a non-measurement
+  number (unambiguous: `detection_locus_gpt` L64 API-cap `20` obligated by "entropy"; `geometry_integrity` L46 stage
+  ordinals `1`/`2` obligated by "drift"). One artifact is a kill; there are six. **Measured boundary (the yield):**
+  recall and precision are COUPLED for this register — the same words that name a measured correlation
+  (entropy/drift/variance/ceiling) also appear as spec constants / ordinals / "2D"; a blunt vocabulary widening buys
+  +70 catches at 6 false accusations and the oath cannot ship false accusations. **29 of 35 are REAL** doc↔receipt gaps
+  (grid-cell correlations never persisted as summary receipts — the tool correctly turning on older docs).
+  **Revert proven:** `certify.py` byte-identical to HEAD; 3 corpus certs + `_oath_mutants` fixtures restored;
+  reproducible from the committed (reverted) tree via `papers/autopilot/cycle23_recall_probe.py` (monkeypatches the
+  exact one-line change in memory → 128/26/112 + 35[28 absent/1 bulk/6 artifact]). Receipts:
+  `RESULT_oath_v04_trigger_recall_2026_07_04.md` (+ certificate), `cycle23_recall_battery_result.json`,
+  `cycle23_g3_handcheck_result.json`. **Next = RANGE-GUARDED recall** (fire the register only when the adjacent number
+  is in ~[−1,1] via the existing RANGE-SANITY `unit_kw` machinery — spares API caps / ordinals / "2D") — NEW prereg
+  naming this negative, re-gate G3 = 0 artifacts.
+
+- **Autopilot cycle 22 (2026-07-03) — OATH v0.4 float claim→field binding, last-two-segment design (standing priority #5). `CLOSED_NEGATIVE` — bar B3 missed, change REVERTED (note OATH-HELD 38/0).**
+  Prereg frozen+committed BEFORE code (`PREREG_oath_v04_float_binding_2026_07_03.md`): floats VERIFIED only if a
+  value-matching leaf's last-two path segments share claim-line vocabulary; binding failure ⇒ loud ABSTAIN (never
+  UNGROUNDED). Bars: B1 D1≥16 → **17 PASS** (v0.4 *improved* catch); B2 D2=0 → PASS; **B3 battery FALSE-VERIFY ≤13 →
+  20 of 247 FAIL — kill**; B4 all 13 docs UNGROUNDED=0 → PASS; B5 suite 1675-passed → PASS. One missed bar ⇒ reverted;
+  `styxx/certify.py` byte-identical to shipped v0.3 (validator re-run under revert = zero git diff). **Measured
+  boundary (the yield):** field-level binding removes cross-table coincidences (FALSE-VERIFY 26→20, rate 0.097→0.081,
+  catch unhurt) but the residual 20/20 are **same-table SIBLINGS** — a corrupted row value matching another row of the
+  same field family (plus rounding-tolerance neighbors); field vocabulary cannot separate row k=2 from k=4 by
+  construction. Next attempt = **claim→CELL binding** (row-key aware; single-digit row labels + list indices are
+  invisible to current binding vocab) — a NEW prereg that must name this negative. **Bonus:** cycle-19's in-memory
+  battery is now a committed script (`papers/autopilot/mutant_battery.py`) that reproduces the v0.3 baseline EXACTLY
+  (269/58/26/182/3) — the reproducibility gap is closed. Receipts: `cycle22_v04_battery_result.json`,
+  `cycle22_v04_validation_result.json`, `cycle22_v03_baseline_battery_result.json`,
+  `RESULT_oath_v04_float_binding_2026_07_03.md`.
+
+- **Autopilot cycle 21 (2026-07-03) — discharge the §10 README truth-in-advertising ticket opened by cycle 20. `DISCHARGED (no correction needed)` (OATH-HELD 3/0).**
+  Exhaustive repo audit for any live claim that circuit-attribution depth predicts truth/correctness/hallucination:
+  `README.md`, `web/`, `docs/**`, `papers/**` (non depth-truth), and the adjacent live depth findings. **None found.**
+  The README's hallucination numbers belong to the text-heuristic `@trust`/cognometry instrument (never calls
+  `get_mean_depth`); `docs/gate.md`'s only near-hit is the refuse-check class predictor. The phrase "measure thought,
+  not words" exists ONLY as a hypothesis label inside `PREREG_v2.md` — never shipped as a result. The closest live
+  depth findings are already honest and *consistent* with the negative: `grounded-honesty-axis/FINDING_depth_steering_causal`
+  headlines the construction↔retrieval axis **"correctness-INERT"**; `FINDING_depth_grounding_whitebox` scopes depth as
+  a grounding substrate. The `get_mean_depth` origin (d=0.82 recall-vs-reasoning) lives in the separate research git,
+  not here, and was pending — never advertised in styxx. **Conclusion:** prereg-before-claim discipline meant the
+  falsified claim was never made in public copy → no retraction to ship. Note+cert: `papers/depth-truth/TICKET_readme_truth_in_advertising_2026_07_03.md`.
+  **Watch-item (operator-gated, outside repo):** IF the external ICML attribution-depth manuscript implies depth predicts
+  answer *correctness* (vs separating recall/reasoning), it needs the cycle-20 caveat (AUROC 0.5468, CI straddles chance) —
+  not autopilot's to edit. No styxx-repo code changed this cycle (markdown + certificate only).
+
+- **Autopilot cycle 20 (2026-07-03) — the keystone verdict: does depth predict truth? `CLOSED_NEGATIVE_NO_TRUTH_SIGNAL` (OATH-HELD 30/0).**
+  The 633-item main run (250 ID / 133 OOD-1 / 250 OOD-2) completed 09:19; scored through the frozen PREREG_v2 §2 tests via a
+  new no-free-parameters driver (`harness/run_analysis.py`: §5 complete-case → §2 h1/h2_full/h3_ood, deterministic seed 7,
+  re-run byte-identical). **All three hypotheses NULL.** H1 AUROC(depth→correct)=**0.5468** CI[0.4738,0.6183] (straddles chance);
+  H2 ΔAUC(SE+depth vs SE)=**0.0026** CI[-0.0044,0.0188] LRT p=1.0 DeLong 0.708, LP_mean/LP_norm concur Holm p=1.0 (adds NOTHING
+  over confidence); H3 ΔAUC_ood=**-0.0517** CI[-0.1069,-0.0116] — **anti-signal** (DeLong 0.034), depth HURTS OOD. **Mechanism:**
+  first-content-token attribution depth is near-constant (ID std **0.0558**, OOD-1 std 0.0449) so it cannot sort correct from
+  wrong — THE figure shows green/red fully superimposed on the depth axis, only SE separates. The v1 narrow-depth signature
+  SURVIVED the v2 plumbing fix (content tokens, clean extraction, KG0/KG1 passed at pilot) ⇒ it is a property of the metric on
+  single-token answer heads, not a formatting artifact. Per §8 KG2, H1-null did not block H2/H3 (both ran, both failed). OOD-2
+  TruthfulQA **ATTEMPTED/PENDING KG3**: 242/250 mechanically `grade_ambiguous`, human audit absent → no TruthfulQA claim.
+  Full suite **1675 passed, 8 skipped** (companion test passes now GPU is free); `certify.py` UNCHANGED (no `validate_oath_v0`
+  re-run owed). Commit `f054f36` on `keystone-depth-truth`. **OWED (next cycles):** (a) ~~README truth-in-advertising
+  ticket (§10)~~ **DISCHARGED cycle 21** — repo audit found no live depth→truth overclaim; discipline meant the claim
+  never shipped (external ICML paper is the only watch-item, operator-gated).
+  (b) KG3 human audit — flobi grades `results/human_audit_sample.jsonl` (24 rows) to decide if the TruthfulQA arm is reportable.
+  (c) any richer-aggregation / larger-model follow-up is a NEW prereg, not a rescue of this frozen negative.
+
+- **Autopilot cycle 18 (2026-07-02) — bind the UNBOUND finding backlog (standing priority #2), receipt-honest. `PARTIAL-BOUND`.**
+  GPU held by in-flight scored runs (rung2 cross-family write PID 2604 + depth-truth autofire waiting behind it,
+  VRAM 7690/8188) → non-GPU cycle. Swept all 203 uncertified FINDING/RESULT docs (excluding the in-flight
+  `disjoint-worlds/` + `depth-truth/` dirs). A naive folder-scoped pass reported 109 "OATH-HELD" — but 24 of those
+  ground against **217 unrelated grounded-honesty-axis receipts** (and 9 vs 23 frequency-resonance): grounding a
+  number against 200+ receipts drives UNGROUNDED→0 by coincidence, **a sieve, not an attestation**. Held to the
+  honest bar (doc's own NAMED receipts, else a single-experiment folder ≤4 receipts) the certifiable set is **13**,
+  all written OATH-HELD (UNGROUNDED=0), each recording exact receipt SHAs and independently re-runnable. `styxx.certify`
+  UNCHANGED (no mutant-battery re-run owed). Test suite green 1661-passed CPU-only; the one faulting test
+  (`test_companion_reports_honestly`) segfaults only because it loads a transformer into VRAM the scored run holds
+  — GPU contention, not a regression. **OWED (next cycles):** (a) the big-folder docs (grounded-honesty-axis n=217,
+  frequency-resonance/introspection-gate n≈23-31) need in-doc receipt **citations written first**, then bind — that
+  is the real content of standing priority #2, not a certifier pass; (b) 139 blocked docs need per-doc UNGROUNDED
+  triage — the dominant false-positive class is **config tokens** (steering α=0.75, arXiv IDs like 2505.27958) sitting
+  in results-table label columns inheriting the table's AUROC trigger; a certifier-precision prereg (arXiv-ID skip is
+  the safe unambiguous class) could recover many, gated by re-running `validate_oath_v0.py`.
+  **DILIGENCE ADDENDUM (2026-07-03, operator-directed, cycle 19) — `TAMPER-EVIDENCE-WEAK`.** Mutant battery
+  (269 single-digit mutations of every VERIFIED token, seed 1, `validate_oath_v0` scheme) on the 13 certs:
+  catch **58/269 (0.216)** vs the D1 analogue 0.80; **26 FALSE-VERIFY (0.097)** — corrupted values re-verify
+  against *neighboring* receipt leaves (the disclosed v0 float claim→field gap, now with evidence); **182
+  abstain-degrade (0.677)** — the older ρ/RSA/alignment register never binds, so corruption falls to ABSTAIN
+  and the verdict silently stays HELD. **Stands:** the 13 certs as ledgers (every number matches at recorded
+  SHAs). **Does not stand:** reading HELD on these docs as tamper-evidence. Receipt:
+  `papers/autopilot/cycle18_mutant_battery_result.json`; note (itself OATH-HELD 27/0):
+  `papers/autopilot/DILIGENCE_cycle18_mutant_battery_2026_07_03.md`. Sharpens OWED (b) into two concrete
+  preregs: **v0.4 float claim→field binding** (priority #5, evidence attached) and **trigger-vocabulary
+  recall extension** for the older register — both gated by `validate_oath_v0.py`, bars never move.
+
 - **B0 — v3 real run to a valid verdict.** The 800-step/n=190 orthogonalization+displacement run is `IN-PROGRESS`
   (lam_hide=8 at last check). Gate: only trust the JSON when `fixed_population==190` and `chance_floor_p95 < base
   refit_max` (0.356 < 0.818 ✓ — the non-degeneracy guard the smoke run failed). The smoke artifact is quarantined

@@ -1,0 +1,465 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_adversarial_curve_v3_2026_06_08.md",
+  "document_sha256": "8f38766ecb1884b1142c35a82be416e19823a5e4a070a76d2486cbd396e4e1b8",
+  "receipts_sha256": {
+    "adversarial_curve_v3_result.json": "260d1402f2062b1b04d9c1f3601e8cd73fb186b806c9394ffbc1a4e73b1f61a4"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 34,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "28"
+    },
+    {
+      "line": 33,
+      "token": "0.15"
+    },
+    {
+      "line": 33,
+      "token": "0.10"
+    },
+    {
+      "line": 35,
+      "token": "0.079"
+    },
+    {
+      "line": 41,
+      "token": "0.798"
+    },
+    {
+      "line": 42,
+      "token": "0.796"
+    },
+    {
+      "line": 42,
+      "token": "0.675"
+    },
+    {
+      "line": 43,
+      "token": "0.18"
+    },
+    {
+      "line": 67,
+      "token": "190"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "base probe's gold direction directly, and (b) a **displacement sweep** \u2014 refit a probe at every one of the 28",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "0.356",
+      "value": 0.356,
+      "decimals": 3,
+      "context": "## The real run (Qwen-1.5B, fixed 190-item population, floor 0.356; reference = cave-only LoRA)",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:chance_floor_p95"
+    },
+    {
+      "line": 18,
+      "token": "0.758",
+      "value": 0.758,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.knowledge"
+    },
+    {
+      "line": 18,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.cave"
+    },
+    {
+      "line": 18,
+      "token": "0.492",
+      "value": 0.492,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.refit_logreg"
+    },
+    {
+      "line": 18,
+      "token": "0.443",
+      "value": 0.443,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].refit_mlp"
+    },
+    {
+      "line": 18,
+      "token": "0.307",
+      "value": 0.307,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.frozen"
+    },
+    {
+      "line": 18,
+      "token": "0.508",
+      "value": 0.508,
+      "decimals": 3,
+      "context": "| 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 0 (ref) | 0.758 | 1.000 | 0.492 | 0.443 | 0.307 | 0.508 @L24 | \u2014 | reference |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.refit_maxlayer"
+    },
+    {
+      "line": 19,
+      "token": "0.732",
+      "value": 0.732,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].knowledge"
+    },
+    {
+      "line": 19,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.cave"
+    },
+    {
+      "line": 19,
+      "token": "0.481",
+      "value": 0.481,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].refit_logreg"
+    },
+    {
+      "line": 19,
+      "token": "0.443",
+      "value": 0.443,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].refit_mlp"
+    },
+    {
+      "line": 19,
+      "token": "0.228",
+      "value": 0.228,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].frozen"
+    },
+    {
+      "line": 19,
+      "token": "0.603",
+      "value": 0.603,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].refit_maxlayer"
+    },
+    {
+      "line": 19,
+      "token": "0.152",
+      "value": 0.152,
+      "decimals": 3,
+      "context": "| 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 8 | 0.732 | 1.000 | 0.481 | 0.443 | **0.228** | **0.603 @L27** | 0.152 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].train_adv_drop"
+    },
+    {
+      "line": 20,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].lam_hide"
+    },
+    {
+      "line": 20,
+      "token": "0.758",
+      "value": 0.758,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.knowledge"
+    },
+    {
+      "line": 20,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.cave"
+    },
+    {
+      "line": 20,
+      "token": "0.841",
+      "value": 0.841,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].refit_logreg"
+    },
+    {
+      "line": 20,
+      "token": "0.870",
+      "value": 0.87,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].refit_mlp"
+    },
+    {
+      "line": 20,
+      "token": "0.193",
+      "value": 0.193,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].frozen"
+    },
+    {
+      "line": 20,
+      "token": "0.868",
+      "value": 0.868,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].refit_maxlayer"
+    },
+    {
+      "line": 20,
+      "token": "0.074",
+      "value": 0.074,
+      "decimals": 3,
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "binding_context": "| lam_hide | knowledge | cave | refit_lg | refit_mlp | frozen | **refit_maxlayer** | adv-drop | verdict | | 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].train_adv_drop"
+    },
+    {
+      "line": 25,
+      "token": "0.19",
+      "value": 0.19,
+      "decimals": 2,
+      "context": "the band/frozen probe (frozen 0.19\u20130.23, near/below the floor) \u2014 yet the all-layer sweep recovered the",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].frozen"
+    },
+    {
+      "line": 26,
+      "token": "27",
+      "value": 27.0,
+      "decimals": 0,
+      "context": "suppressed answer **off-band at layer 27** (0.60\u21920.87), at or above the cave-only reference. Attacking the",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].best_layer"
+    },
+    {
+      "line": 26,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "suppressed answer **off-band at layer 27** (0.60\u21920.87), at or above the cave-only reference. Attacking the",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].refit_maxlayer"
+    },
+    {
+      "line": 26,
+      "token": "0.87",
+      "value": 0.87,
+      "decimals": 2,
+      "context": "suppressed answer **off-band at layer 27** (0.60\u21920.87), at or above the cave-only reference. Attacking the",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].refit_mlp"
+    },
+    {
+      "line": 30,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "28 noisy per-layer CV accuracies \u2014 it is selection-inflated and needs a permutation-corrected penalty before",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:n_layers"
+    },
+    {
+      "line": 33,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "read \u22650.15 (frozen) or \u22650.10 (refit) *below the cave-only reference*. It fails at both points: at lam16 the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "read \u22650.15 (frozen) or \u22650.10 (refit) *below the cave-only reference*. It fails at both points: at lam16 the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.074",
+      "value": 0.074,
+      "decimals": 3,
+      "context": "optimizer barely moved anything (adv-drop 0.074; refit *rose* to 0.84); at lam8 it engaged a little",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].train_adv_drop"
+    },
+    {
+      "line": 34,
+      "token": "0.84",
+      "value": 0.84,
+      "decimals": 2,
+      "context": "optimizer barely moved anything (adv-drop 0.074; refit *rose* to 0.84); at lam8 it engaged a little",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].refit_logreg"
+    },
+    {
+      "line": 35,
+      "token": "0.152",
+      "value": 0.152,
+      "decimals": 3,
+      "context": "(adv-drop 0.152, frozen \u22120.079 vs ref) but not past the bar. **read\u2260write is neither supported nor broken by",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[0].train_adv_drop"
+    },
+    {
+      "line": 35,
+      "token": "0.079",
+      "value": 0.079,
+      "decimals": 3,
+      "context": "(adv-drop 0.152, frozen \u22120.079 vs ref) but not past the bar. **read\u2260write is neither supported nor broken by",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "0.798",
+      "value": 0.798,
+      "decimals": 3,
+      "context": "*relative to a cave-only LoRA*, but cave-training itself already crushes the reads (frozen 0.798\u21920.307, refit",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "0.307",
+      "value": 0.307,
+      "decimals": 3,
+      "context": "*relative to a cave-only LoRA*, but cave-training itself already crushes the reads (frozen 0.798\u21920.307, refit",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.frozen"
+    },
+    {
+      "line": 42,
+      "token": "0.796",
+      "value": 0.796,
+      "decimals": 3,
+      "context": "0.796\u21920.492) **before any adversary acts**, and that reference is noisy across runs (v2 ref refit 0.675 vs v3 ref",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.492",
+      "value": 0.492,
+      "decimals": 3,
+      "context": "0.796\u21920.492) **before any adversary acts**, and that reference is noisy across runs (v2 ref refit 0.675 vs v3 ref",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.refit_logreg"
+    },
+    {
+      "line": 42,
+      "token": "0.675",
+      "value": 0.675,
+      "decimals": 3,
+      "context": "0.796\u21920.492) **before any adversary acts**, and that reference is noisy across runs (v2 ref refit 0.675 vs v3 ref",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.492",
+      "value": 0.492,
+      "decimals": 3,
+      "context": "0.492 \u2014 a 0.18 swing on one seed). So there is almost no headroom to register \"the attack pushed *further* than",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:reference_cave_only.refit_logreg"
+    },
+    {
+      "line": 43,
+      "token": "0.18",
+      "value": 0.18,
+      "decimals": 2,
+      "context": "0.492 \u2014 a 0.18 swing on one seed). So there is almost no headroom to register \"the attack pushed *further* than",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "0.19",
+      "value": 0.19,
+      "decimals": 2,
+      "context": "(re-confirmed here: blinded 0.19\u20130.23 at every point), and **information-persistence is supported-not-settled**",
+      "status": "VERIFIED",
+      "receipt_ref": "adversarial_curve_v3_result.json:points[1].frozen"
+    },
+    {
+      "line": 67,
+      "token": "190",
+      "value": 190.0,
+      "decimals": 0,
+      "context": "190 \u2014 the real run; the earlier smoke JSON was quarantined as `..._SMOKE_INVALID.json` before it could be cited),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

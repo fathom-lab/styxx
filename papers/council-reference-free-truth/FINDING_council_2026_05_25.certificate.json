@@ -1,0 +1,303 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_council_2026_05_25.md",
+  "document_sha256": "81d7d2da3ef2ea0d49ec2fd1bb82a3082f81e60dbb3b681efa1a529475606bdc",
+  "receipts_sha256": {
+    "probe_council_results.json": "941289efc7740edcb6e344cf617b6d294ab094631fef591665685e29812b444e",
+    "probe_fame_vs_truth_results.json": "dab29f0315f6968a4c0bb6df7d9bf7fef3f5c629af0de364340a04c40254fa8f",
+    "self_audit_with_claude_results.json": "ff573806719dbc8d23a4a49af355bd0aaa1bfe6b40e348a916e1dd1d50757e43"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "4"
+    },
+    {
+      "line": 10,
+      "token": "99"
+    },
+    {
+      "line": 29,
+      "token": "0.75"
+    },
+    {
+      "line": 29,
+      "token": "0.70"
+    },
+    {
+      "line": 29,
+      "token": "8"
+    },
+    {
+      "line": 63,
+      "token": "6"
+    },
+    {
+      "line": 63,
+      "token": "8"
+    },
+    {
+      "line": 63,
+      "token": "8"
+    },
+    {
+      "line": 63,
+      "token": "0.50"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**2026-05-25.** Prereg `preregistration_council_2026_05_25.md`. Council of 4 OpenAI",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "99",
+      "value": 99.0,
+      "decimals": 0,
+      "context": "> einsteinium=99), collapsing only on fakes. So this is **truth-tracking, not",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| real-common | 1.00 | 0.88 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | real-common | 1.00 | 0.88 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 20,
+      "token": "0.88",
+      "value": 0.88,
+      "decimals": 2,
+      "context": "| real-common | 1.00 | 0.88 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | real-common | 1.00 | 0.88 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_cosine_clustering.mean_real_common"
+    },
+    {
+      "line": 21,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| real-obscure | 1.00 | 0.78 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | real-obscure | 1.00 | 0.78 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 21,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "| real-obscure | 1.00 | 0.78 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | real-obscure | 1.00 | 0.78 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_cosine_clustering.mean_real_obscure"
+    },
+    {
+      "line": 22,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "context": "| fake | 0.28 | 0.31 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | fake | 0.28 | 0.31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.mean_fake"
+    },
+    {
+      "line": 22,
+      "token": "0.31",
+      "value": 0.31,
+      "decimals": 2,
+      "context": "| fake | 0.28 | 0.31 |",
+      "binding_context": "| tier | mean agreement (judge) | mean agreement (cosine) | | fake | 0.28 | 0.31 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_cosine_clustering.mean_fake"
+    },
+    {
+      "line": 26,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| **C1 real vs fake AUC** | **1.00** | 0.99 |",
+      "binding_context": "| bar | judge | cosine | | **C1 real vs fake AUC** | **1.00** | 0.99 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 26,
+      "token": "0.99",
+      "value": 0.99,
+      "decimals": 2,
+      "context": "| **C1 real vs fake AUC** | **1.00** | 0.99 |",
+      "binding_context": "| bar | judge | cosine | | **C1 real vs fake AUC** | **1.00** | 0.99 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_cosine_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 27,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| **C2 obscure-real vs fake AUC** | **1.00** | 0.98 |",
+      "binding_context": "| bar | judge | cosine | | **C2 obscure-real vs fake AUC** | **1.00** | 0.98 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 27,
+      "token": "0.98",
+      "value": 0.98,
+      "decimals": 2,
+      "context": "| **C2 obscure-real vs fake AUC** | **1.00** | 0.98 |",
+      "binding_context": "| bar | judge | cosine | | **C2 obscure-real vs fake AUC** | **1.00** | 0.98 |",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_cosine_clustering.C2_obscure_vs_fake"
+    },
+    {
+      "line": 29,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "PASS (C1 \u2265 0.75 \u2227 C2 \u2265 0.70). On all 8 obscure-real questions the four models converged",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "PASS (C1 \u2265 0.75 \u2227 C2 \u2265 0.70). On all 8 obscure-real questions the four models converged",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "PASS (C1 \u2265 0.75 \u2227 C2 \u2265 0.70). On all 8 obscure-real questions the four models converged",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "on the same core answer; on fakes they diverged or abstained (agreement 0.25\u20130.50).",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_fame_vs_truth_results.json:agreement_vs_rarity_curve.fake"
+    },
+    {
+      "line": 34,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1. **Reference-free separation of real from fabricated, AUC 1.0** \u2014 no reference, no",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 43,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "**AUC 1.0 is exactly where this session has been wrong before, so:** the \"obscure-real\"",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 63,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_fame_vs_truth_results.json:agreement_vs_rarity_curve.fake"
+    },
+    {
+      "line": 63,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_fame_vs_truth_results.json:T1_truth_not_fame(R2>=0.70 & R2-fake>=0.30)[2]"
+    },
+    {
+      "line": 63,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    },
+    {
+      "line": 70,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "1. **Ultra-rare-real tier** \u2014 verified-true facts known to ~1\u20132 of the models \u2014 to split",
+      "status": "VERIFIED",
+      "receipt_ref": "probe_council_results.json:by_judge_clustering.C1_real_vs_fake"
+    }
+  ]
+}

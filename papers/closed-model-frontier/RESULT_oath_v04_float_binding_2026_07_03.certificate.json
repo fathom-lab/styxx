@@ -1,0 +1,586 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v04_float_binding_2026_07_03.md",
+  "document_sha256": "47ae703bf0d90a5c4d46247a5cd0a85cb12b3d788ca795e2d498c10d8c7e9a1a",
+  "receipts_sha256": {
+    "cycle22_v04_battery_result.json": "e0c8ed8a0f5c1a718ef799e41e7d9b0d2fe99e199a4db4633962e740801f6be0",
+    "cycle22_v04_validation_result.json": "3228584e8fc3189fa86785328a10d3956f3f86be6151d43153f086ca9b2a8d94",
+    "cycle22_v03_baseline_battery_result.json": "2383891af1939f0255265463353a1261ee5e340eeca16615d5b913149e261162"
+  },
+  "verifier_sha256": "1084573186deafdf588a8a843a03891843536fd5e57d13bedcb210be66176745",
+  "counts": {
+    "VERIFIED": 38,
+    "ABSTAIN": 16,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "16"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 23,
+      "token": "13"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 36,
+      "token": "20"
+    },
+    {
+      "line": 38,
+      "token": "0.988"
+    },
+    {
+      "line": 40,
+      "token": "2"
+    },
+    {
+      "line": 40,
+      "token": "4"
+    },
+    {
+      "line": 49,
+      "token": "19"
+    },
+    {
+      "line": 59,
+      "token": "58"
+    },
+    {
+      "line": 59,
+      "token": "26"
+    },
+    {
+      "line": 59,
+      "token": "182"
+    },
+    {
+      "line": 59,
+      "token": "3"
+    },
+    {
+      "line": 59,
+      "token": "19"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 21,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.FINDING_detection_locus_gpt_2026_05_30.md.caught"
+    },
+    {
+      "line": 21,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "| B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.RESULT_rhythm_rescue_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 21,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B1 | validator D1 caught \u2265 16 of 20 | caught **17** of 20 | YES |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.FINDING_detection_locus_gpt_2026_05_30.md.caught"
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B2 | validator D2 false UNGROUNDED = 0 | 0 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B2 | validator D2 false UNGROUNDED = 0 | 0 | YES |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B2 | validator D2 false UNGROUNDED = 0 | 0 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B2 | validator D2 false UNGROUNDED = 0 | 0 | YES |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "binding_context": "| bar | gate | result | PASS | | B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "binding_context": "| bar | gate | result | PASS | | B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify"
+    },
+    {
+      "line": 23,
+      "token": "247",
+      "value": 247.0,
+      "decimals": 0,
+      "context": "| B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "binding_context": "| bar | gate | result | PASS | | B3 | battery FALSE-VERIFY \u2264 13 | **20** (of 247 mutants) | **NO \u2014 kill** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:n_mutants"
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:n_docs"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "| B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "binding_context": "| bar | gate | result | PASS | | B4 | 13 docs stay UNGROUNDED = 0 | 0 across all 13 | YES |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:n_docs"
+    },
+    {
+      "line": 32,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "1. **Field-level binding is real but insufficient.** FALSE-VERIFY moved 26 \u2192 **20** (rate 0.097 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:false_verify"
+    },
+    {
+      "line": 32,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "1. **Field-level binding is real but insufficient.** FALSE-VERIFY moved 26 \u2192 **20** (rate 0.097 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify"
+    },
+    {
+      "line": 32,
+      "token": "0.097",
+      "value": 0.097,
+      "decimals": 3,
+      "context": "1. **Field-level binding is real but insufficient.** FALSE-VERIFY moved 26 \u2192 **20** (rate 0.097 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:false_verify_rate"
+    },
+    {
+      "line": 33,
+      "token": "0.081",
+      "value": 0.081,
+      "decimals": 3,
+      "context": "0.081) and catch was unhurt (battery caught 58 \u2192 caught 53 of a smaller 247-mutant pool, catch",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify_rate"
+    },
+    {
+      "line": 33,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "0.081) and catch was unhurt (battery caught 58 \u2192 caught 53 of a smaller 247-mutant pool, catch",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:caught"
+    },
+    {
+      "line": 33,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "0.081) and catch was unhurt (battery caught 58 \u2192 caught 53 of a smaller 247-mutant pool, catch",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:caught"
+    },
+    {
+      "line": 34,
+      "token": "0.216",
+      "value": 0.216,
+      "decimals": 3,
+      "context": "rate 0.216 \u2192 0.215; validator D1 caught *improved* from 16 to caught 17). The eliminated class",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify_rows[10].orig"
+    },
+    {
+      "line": 34,
+      "token": "0.215",
+      "value": 0.215,
+      "decimals": 3,
+      "context": "rate 0.216 \u2192 0.215; validator D1 caught *improved* from 16 to caught 17). The eliminated class",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:catch_rate"
+    },
+    {
+      "line": 34,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "rate 0.216 \u2192 0.215; validator D1 caught *improved* from 16 to caught 17). The eliminated class",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify_rows[16].line"
+    },
+    {
+      "line": 34,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "rate 0.216 \u2192 0.215; validator D1 caught *improved* from 16 to caught 17). The eliminated class",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_validation_result.json:D1.caught"
+    },
+    {
+      "line": 36,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "2. **The residual channel is same-table siblings, not cross-table strangers.** All 20 surviving",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "legitimately-bound table (a `| 2 | 0.988 | 0.959 |` row mutating into another row's value) or",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.n_mutants"
+    },
+    {
+      "line": 38,
+      "token": "0.988",
+      "value": 0.988,
+      "decimals": 3,
+      "context": "legitimately-bound table (a `| 2 | 0.988 | 0.959 |` row mutating into another row's value) or",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.959",
+      "value": 0.959,
+      "decimals": 3,
+      "context": "legitimately-bound table (a `| 2 | 0.988 | 0.959 |` row mutating into another row's value) or",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify_rows[14].orig"
+    },
+    {
+      "line": 40,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "row k=2 from row k=4 \u2014 both share the binding surface by construction. The fix this points at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "row k=2 from row k=4 \u2014 both share the binding surface by construction. The fix this points at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "3. **The honesty cost of binding was small and safe.** On the 3-doc validation corpus, 8 floats",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.clean_counts.ABSTAIN"
+    },
+    {
+      "line": 44,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.RESULT_rhythm_rescue_2026_06_03.md.n_mutants"
+    },
+    {
+      "line": 44,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_validation_result.json:D3_coverage.FINDING_b24_whitebox_vs_behavioral_2026_06_09.md.verified"
+    },
+    {
+      "line": 44,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify_rows[1].line"
+    },
+    {
+      "line": 44,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.RESULT_ai_human_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 44,
+      "token": "34",
+      "value": 34.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:per_doc.FINDING_adversarial_curve_v3_2026_06_08.md.n_mutants"
+    },
+    {
+      "line": 44,
+      "token": "33",
+      "value": 33.0,
+      "decimals": 0,
+      "context": "demoted VERIFIED\u2192ABSTAIN (24\u219219, 42\u219240, 34\u219233 per doc), zero new UNGROUNDED anywhere (B4:",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.FINDING_adversarial_curve_v3_2026_06_08.md.n_mutants"
+    },
+    {
+      "line": 45,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "demotion refuses to swear, it never accuses \u2014 held empirically on all 13 docs).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:n_docs"
+    },
+    {
+      "line": 48,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "numbers EXACTLY: 269 mutants, caught 58, FALSE-VERIFY 26, abstain-degrade 182, dropped 3.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:n_mutants"
+    },
+    {
+      "line": 48,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "numbers EXACTLY: 269 mutants, caught 58, FALSE-VERIFY 26, abstain-degrade 182, dropped 3.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:caught"
+    },
+    {
+      "line": 48,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "numbers EXACTLY: 269 mutants, caught 58, FALSE-VERIFY 26, abstain-degrade 182, dropped 3.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_validation_result.json:D3_coverage.FINDING_b22_nonacknowledged_caving_2026_06_09.md.abstained"
+    },
+    {
+      "line": 48,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "numbers EXACTLY: 269 mutants, caught 58, FALSE-VERIFY 26, abstain-degrade 182, dropped 3.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:abstain_degrade"
+    },
+    {
+      "line": 49,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "The reproducibility gap named in cycle 19 is closed; the negative above is measured by a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "247",
+      "value": 247.0,
+      "decimals": 0,
+      "context": "(247 mutants; per-doc table; all 20 false-verify rows with contexts).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:n_mutants"
+    },
+    {
+      "line": 55,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "(247 mutants; per-doc table; all 20 false-verify rows with contexts).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify"
+    },
+    {
+      "line": 57,
+      "token": "17",
+      "value": 17.0,
+      "decimals": 0,
+      "context": "candidate (D1 17/20, D2 clean).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.FINDING_council_grounding_2026_05_28.md.clean_counts.ABSTAIN"
+    },
+    {
+      "line": 57,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "candidate (D1 17/20, D2 clean).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:false_verify"
+    },
+    {
+      "line": 59,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v03_baseline_battery_result.json:n_mutants"
+    },
+    {
+      "line": 59,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "182",
+      "value": 182.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "under shipped v0.3 (269/58/26/182/3, exact match to cycle 19).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- `papers/autopilot/mutant_battery.py` \u2014 the battery script (seed 1, SHA-verified receipt",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:seed"
+    },
+    {
+      "line": 66,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "float limitation \u2014 now with a *measured boundary*: field-level binding buys \u22126 false-verifies and",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle22_v04_battery_result.json:per_doc.FINDING_council_grounding_2026_05_28.md.clean_counts.VERIFIED"
+    }
+  ]
+}

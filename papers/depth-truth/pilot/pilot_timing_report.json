@@ -1,0 +1,18 @@
+{
+  "n_items": 20,
+  "median_item_seconds": 85.20928025245667,
+  "mean_item_seconds": 130.2094210267067,
+  "depth_n_valid": 20,
+  "depth_mean": 8.763599252700805,
+  "depth_std": 0.0681525452456126,
+  "depth_min": 8.57695484161377,
+  "depth_max": 8.878737449645996,
+  "depth_undefined_frac": 0.0,
+  "KG1_zero_variance": false,
+  "KG1_triggered": false,
+  "KG1_note": "depth varies on short QA answers; hypothesis run may proceed",
+  "n_gen_errors": 0,
+  "n_depth_errors": 0,
+  "A0_hint": "median_item_seconds * n gives wall-clock; pick n_ID/n_OOD1 under ~8h (\u00a77)",
+  "HALT_boundary": "PILOT COMPLETE \u2014 the machine STOPS here. No main run chains (PREREG \u00a79). Human reads this timing table + KG1 line, then commits A1 (adaptation freeze, a judgment call on pilot data) and A0 (sample sizes) as SEPARATE commits, and only THEN fires the main run."
+}

@@ -9,7 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **`styxx.corpus_audit` -- standing corpus re-certification / tamper-evidence check.** Point it at a
+  directory; for every `*.certificate.json` it resolves the receipts that certificate recorded,
+  SHA-verifies them (flags drift), and re-runs the current verifier on the document -- answering, on
+  demand, "is every number we ever shipped still grounded at the receipts it cited?" `--tamper`
+  additionally mutates each VERIFIED token once and reports the corpus tamper-catch rate (the
+  mutant-battery scheme, lifted into the package). Open primitive (`OPEN_CORE.md`); no result is
+  cached or gated. `python -m styxx.corpus_audit [ROOT] [--tamper] [--json OUT]`.
+
 ### Changed
+- **`styxx.certify` OATH v0.4 -- trigger-recall extension (decimal+range-guarded).** The certifier's
+  UNGROUNDED trigger vocabulary now covers the correlation/similarity register (RSA, RDM, Spearman,
+  correlation, rho, consistency, reliability, ceiling, agreement, convergence, drift, entropy,
+  similarity, variance) in addition to the AUROC/margin/FPR register -- but only for a number that is
+  a *fractional correlation* (`decimals > 0` and value in [-1, 1]), so ordinals, counts, API
+  constants, and whole-percents are never obligated. A corrupted correlation value now fires
+  UNGROUNDED instead of silently falling to ABSTAIN. Tamper-catch on the cycle-18 mutant battery
+  rose 58 -> 119 of 269 (0.216 -> 0.442) with no false-verify regression and zero certifier
+  artifacts. Validated by the frozen OATH v0 gate (`validate_oath_v0.py` D1 >= 16, D2 = 0, unchanged).
+  Preregs + result: `papers/closed-model-frontier/PREREG_oath_v04_recall_decimalguard_2026_07_04.md`,
+  `RESULT_oath_v04_recall_decimalguard_2026_07_04.md` (arc: cycles 23-25).
 - **README restructured 1288 -> 200 lines** — 30-second pitch, install+quickstart, ONE instruments
   table (every headline number with its receipt path), the discipline section, links. Every claim
   adversarially fact-checked against repo receipts before shipping; the unverifiable (a GHSA id with
