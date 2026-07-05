@@ -1,0 +1,132 @@
+[
+ {
+  "benchmark": "[MMLU][mmlu]",
+  "metric": "5-shot, top-1",
+  "card_2B": 51.3
+ },
+ {
+  "benchmark": "[HellaSwag][hellaswag]",
+  "metric": "10-shot",
+  "card_2B": 73.0
+ },
+ {
+  "benchmark": "[PIQA][piqa]",
+  "metric": "0-shot",
+  "card_2B": 77.8
+ },
+ {
+  "benchmark": "[SocialIQA][socialiqa]",
+  "metric": "0-shot",
+  "card_2B": 51.9
+ },
+ {
+  "benchmark": "[BoolQ][boolq]",
+  "metric": "0-shot",
+  "card_2B": 72.5
+ },
+ {
+  "benchmark": "[WinoGrande][winogrande]",
+  "metric": "partial score",
+  "card_2B": 70.9
+ },
+ {
+  "benchmark": "[ARC-e][arc]",
+  "metric": "0-shot",
+  "card_2B": 80.1
+ },
+ {
+  "benchmark": "[ARC-c][arc]",
+  "metric": "25-shot",
+  "card_2B": 55.4
+ },
+ {
+  "benchmark": "[TriviaQA][triviaqa]",
+  "metric": "5-shot",
+  "card_2B": 59.4
+ },
+ {
+  "benchmark": "[Natural Questions][naturalq]",
+  "metric": "5-shot",
+  "card_2B": 16.7
+ },
+ {
+  "benchmark": "[HumanEval][humaneval]",
+  "metric": "pass@1",
+  "card_2B": 17.7
+ },
+ {
+  "benchmark": "[MBPP][mbpp]",
+  "metric": "3-shot",
+  "card_2B": 29.6
+ },
+ {
+  "benchmark": "[GSM8K][gsm8k]",
+  "metric": "5-shot, maj@1",
+  "card_2B": 23.9
+ },
+ {
+  "benchmark": "[MATH][math]",
+  "metric": "4-shot",
+  "card_2B": 15.0
+ },
+ {
+  "benchmark": "[AGIEval][agieval]",
+  "metric": "3-5-shot",
+  "card_2B": 30.6
+ },
+ {
+  "benchmark": "[DROP][drop]",
+  "metric": "3-shot, F1",
+  "card_2B": 52.0
+ },
+ {
+  "benchmark": "[BIG-Bench][big-bench]",
+  "metric": "3-shot, CoT",
+  "card_2B": 41.9
+ },
+ {
+  "benchmark": "[RealToxicity][realtox]",
+  "metric": "average",
+  "card_2B": 8.16
+ },
+ {
+  "benchmark": "[CrowS-Pairs][crows]",
+  "metric": "top-1",
+  "card_2B": 37.67
+ },
+ {
+  "benchmark": "[BBQ Ambig][bbq]",
+  "metric": "1-shot, top-1",
+  "card_2B": 83.2
+ },
+ {
+  "benchmark": "[BBQ Disambig][bbq]",
+  "metric": "top-1",
+  "card_2B": 69.31
+ },
+ {
+  "benchmark": "[Winogender][winogender]",
+  "metric": "top-1",
+  "card_2B": 52.91
+ },
+ {
+  "benchmark": "[TruthfulQA][truthfulqa]",
+  "metric": "",
+  "card_2B": 43.72
+ },
+ {
+  "benchmark": "[Winobias 1_2][winobias]",
+  "metric": "",
+  "card_2B": 59.28
+ },
+ {
+  "benchmark": "[Winobias 2_2][winobias]",
+  "metric": "",
+  "card_2B": 88.57
+ },
+ {
+  "benchmark": "[Toxigen][toxigen]",
+  "metric": "",
+  "card_2B": 48.32
+ }
+]

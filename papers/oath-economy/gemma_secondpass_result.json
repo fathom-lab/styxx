@@ -1,0 +1,128 @@
+{
+ "rows": [
+  {
+   "benchmark": "MMLU",
+   "card_2B": 51.3,
+   "report_2B": 52.2,
+   "delta_report_minus_card": 0.9,
+   "match": false
+  },
+  {
+   "benchmark": "HellaSwag",
+   "card_2B": 73.0,
+   "report_2B": 72.9,
+   "delta_report_minus_card": -0.1,
+   "match": false
+  },
+  {
+   "benchmark": "PIQA",
+   "card_2B": 77.8,
+   "report_2B": 78.4,
+   "delta_report_minus_card": 0.6,
+   "match": false
+  },
+  {
+   "benchmark": "SocialIQA",
+   "card_2B": 51.9,
+   "report_2B": 51.9,
+   "delta_report_minus_card": 0.0,
+   "match": true
+  },
+  {
+   "benchmark": "BoolQ",
+   "card_2B": 72.5,
+   "report_2B": 72.7,
+   "delta_report_minus_card": 0.2,
+   "match": false
+  },
+  {
+   "benchmark": "WinoGrande",
+   "card_2B": 70.9,
+   "report_2B": 71.3,
+   "delta_report_minus_card": 0.4,
+   "match": false
+  },
+  {
+   "benchmark": "ARC-e",
+   "card_2B": 80.1,
+   "report_2B": 80.6,
+   "delta_report_minus_card": 0.5,
+   "match": false
+  },
+  {
+   "benchmark": "ARC-c",
+   "card_2B": 55.4,
+   "report_2B": 55.7,
+   "delta_report_minus_card": 0.3,
+   "match": false
+  },
+  {
+   "benchmark": "TriviaQA",
+   "card_2B": 59.4,
+   "report_2B": 60.4,
+   "delta_report_minus_card": 1.0,
+   "match": false
+  },
+  {
+   "benchmark": "Natural Questions",
+   "card_2B": 16.7,
+   "report_2B": 17.1,
+   "delta_report_minus_card": 0.4,
+   "match": false
+  },
+  {
+   "benchmark": "HumanEval",
+   "card_2B": 17.7,
+   "report_2B": 20.1,
+   "delta_report_minus_card": 2.4,
+   "match": false
+  },
+  {
+   "benchmark": "MBPP",
+   "card_2B": 29.6,
+   "report_2B": 30.2,
+   "delta_report_minus_card": 0.6,
+   "match": false
+  },
+  {
+   "benchmark": "GSM8K",
+   "card_2B": 23.9,
+   "report_2B": 24.3,
+   "delta_report_minus_card": 0.4,
+   "match": false
+  },
+  {
+   "benchmark": "MATH",
+   "card_2B": 15.0,
+   "report_2B": 16.0,
+   "delta_report_minus_card": 1.0,
+   "match": false
+  },
+  {
+   "benchmark": "AGIEval",
+   "card_2B": 30.6,
+   "report_2B": 31.5,
+   "delta_report_minus_card": 0.9,
+   "match": false
+  },
+  {
+   "benchmark": "DROP",
+   "card_2B": 52.0,
+   "report_2B": 51.2,
+   "delta_report_minus_card": -0.8,
+   "match": false
+  },
+  {
+   "benchmark": "BIG-Bench",
+   "card_2B": 41.9,
+   "report_2B": 41.9,
+   "delta_report_minus_card": 0.0,
+   "match": true
+  }
+ ],
+ "n_compared": 17,
+ "n_disagree": 15,
+ "report_pdf_sha256_16": "4caf88137b228c54",
+ "report_cite": "Table 13, p.7",
+ "verdict": "SCOUT CONFIRMED"
+}
