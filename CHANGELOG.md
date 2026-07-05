@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **`styxx.corpus_audit` -- standing corpus re-certification / tamper-evidence check.** Point it at a
+  directory; for every `*.certificate.json` it resolves the receipts that certificate recorded,
+  SHA-verifies them (flags drift), and re-runs the current verifier on the document -- answering, on
+  demand, "is every number we ever shipped still grounded at the receipts it cited?" `--tamper`
+  additionally mutates each VERIFIED token once and reports the corpus tamper-catch rate (the
+  mutant-battery scheme, lifted into the package). Open primitive (`OPEN_CORE.md`); no result is
+  cached or gated. `python -m styxx.corpus_audit [ROOT] [--tamper] [--json OUT]`.
+
 ### Changed
 - **`styxx.certify` OATH v0.4 -- trigger-recall extension (decimal+range-guarded).** The certifier's
   UNGROUNDED trigger vocabulary now covers the correlation/similarity register (RSA, RDM, Spearman,
