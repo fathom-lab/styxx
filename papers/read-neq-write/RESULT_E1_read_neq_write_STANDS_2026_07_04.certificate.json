@@ -1,0 +1,308 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+  "document_sha256": "92d67bd770e71bf93147732058b86c17f42c5b155af5644092ea273096094408",
+  "receipts_sha256": {
+    "e1_result.json": "97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 19,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 9,
+      "token": "2"
+    },
+    {
+      "line": 24,
+      "token": "0.70"
+    },
+    {
+      "line": 32,
+      "token": "2"
+    },
+    {
+      "line": 36,
+      "token": "2"
+    },
+    {
+      "line": 38,
+      "token": "2"
+    },
+    {
+      "line": 45,
+      "token": "0.80"
+    },
+    {
+      "line": 45,
+      "token": "0.012"
+    },
+    {
+      "line": 49,
+      "token": "16"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Stage 2 returned EVADABLE, but its re-lock calibrated the probe on the ATTACK facts the attacker",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "0.938, knowledge 0.818):**",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 15,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "0.938, knowledge 0.818):**",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
+    },
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0 | 1.0 | **0.838** | 0.818 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 1.0 | **0.838** | 0.818 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:lambdas[0]"
+    },
+    {
+      "line": 19,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | **0.838** | 0.818 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 1.0 | **0.838** | 0.818 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[0].best_clean_calib_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | **0.838** | 0.818 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 1.0 | **0.838** | 0.818 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
+    },
+    {
+      "line": 20,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 0 | 3.0 | 0.835 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 3.0 | 0.835 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:lambdas[1]"
+    },
+    {
+      "line": 20,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.835 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 3.0 | 0.835 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[1].best_clean_calib_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.835 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 0 | 3.0 | 0.835 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[1].eval_knowledge"
+    },
+    {
+      "line": 21,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 1 | 1.0 | **0.722** | 0.803 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 1.0 | **0.722** | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:lambdas[0]"
+    },
+    {
+      "line": 21,
+      "token": "0.722",
+      "value": 0.722,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | **0.722** | 0.803 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 1.0 | **0.722** | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[2].best_clean_calib_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.803",
+      "value": 0.803,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | **0.722** | 0.803 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 1.0 | **0.722** | 0.803 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[2].eval_knowledge"
+    },
+    {
+      "line": 22,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 1 | 3.0 | 0.711 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 3.0 | 0.711 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:lambdas[1]"
+    },
+    {
+      "line": 22,
+      "token": "0.711",
+      "value": 0.711,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.711 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 3.0 | 0.711 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[3].best_clean_calib_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.711 | 0.833 |",
+      "binding_context": "| seed | \u03bb | clean-calibrated read (EVAL AUROC) | knowledge | | 1 | 3.0 | 0.711 | 0.833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[1].eval_knowledge"
+    },
+    {
+      "line": 24,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "Every knowledge-preserving attack point clears the 0.70 recovery bar on both seeds (random-direction",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.55",
+      "value": 0.55,
+      "decimals": 2,
+      "context": "floor ~0.55). The attack that drove the ATTACK-calibrated re-lock to chance (in stage two) leaves the",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[0].rand_auroc"
+    },
+    {
+      "line": 32,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "The apparent evasion in stage 2 was **calibration poisoning, not information erasure.** The honesty",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "reading chance (stage 2) and reading 0.72\u20130.84 (E1) on the *same attacked weights*.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "reading chance (stage 2) and reading 0.72\u20130.84 (E1) on the *same attacked weights*.",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[2].best_clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "It also vindicates the discipline over the result: at stage 2 we had a headline-ready \"we broke",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "0.788",
+      "value": 0.788,
+      "decimals": 3,
+      "context": "EVAL knowledge 0.788 < the frozen 0.80 bar (missed by 0.012), so its arm is not a verdict. Its",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_eval_knowledge"
+    },
+    {
+      "line": 45,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "EVAL knowledge 0.788 < the frozen 0.80 bar (missed by 0.012), so its arm is not a verdict. Its",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.012",
+      "value": 0.012,
+      "decimals": 3,
+      "context": "EVAL knowledge 0.788 < the frozen 0.80 bar (missed by 0.012), so its arm is not a verdict. Its",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "0.67",
+      "value": 0.67,
+      "decimals": 2,
+      "context": "points *corroborate* directionally (clean-calibrated read recovers to 0.67\u20130.75 through the",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[4].best_clean_calib_auroc"
+    },
+    {
+      "line": 49,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **Scope of \"STANDS\":** against *this* attacker \u2014 LoRA r=16, 300 steps, a scrub targeting the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "- **Scope of \"STANDS\":** against *this* attacker \u2014 LoRA r=16, 300 steps, a scrub targeting the",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:steps"
+    }
+  ]
+}
