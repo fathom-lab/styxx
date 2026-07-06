@@ -1,0 +1,205 @@
+[
+ {
+  "id": "1074692",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most plausible referents (the 1967 film Hotel and the 1983 TV series Hotel) are both d"
+ },
+ {
+  "id": "1170670",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Joseph MacRory was a Catholic cardinal and Archbishop of Armagh."
+ },
+ {
+  "id": "2235290",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most prominent Museum of Islamic Art is in Doha, Qatar."
+ },
+ {
+  "id": "2664757",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Beethoven composed a Symphony No. 3 (the Eroica), the most plausible referent of the under"
+ },
+ {
+  "id": "3087683",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The 2019 film Glass was written (and directed) by M. Night Shyamalan."
+ },
+ {
+  "id": "4078079",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The TV series Evil (2019) is classified as horror (alongside drama/mystery), so horror is "
+ },
+ {
+  "id": "5206135",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Patty Jenkins directed Monster (2003), the most plausible intended film."
+ },
+ {
+  "id": "5294538",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Ninja Boy II (Game Boy, 1993) is an action role-playing game, so 'action' is a factually a"
+ },
+ {
+  "id": "6170674",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most prominent referent, the 2018 film Wildlife (dir. Paul Dano), is a drama."
+ },
+ {
+  "id": "6270618",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Joseph Schubert (1890-1969), the Romanian bishop this KB-style religion question most plau"
+ },
+ {
+  "id": "6363270",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Alexander the Great's father was Philip II of Macedon."
+ },
+ {
+  "id": "tb_805",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Bran Castle is marketed as 'Dracula's Castle'."
+ },
+ {
+  "id": "sfq_24050",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The phrase is Spock's Vulcan salute from Star Trek, so the stated association is factually"
+ },
+ {
+  "id": "qw_9842",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Lenny Bruce was a stand-up comedian, i.e. worked in comedy."
+ },
+ {
+  "id": "bb_9398",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Turnbull & Asser is the famous shirtmaker located on Jermyn Street, London."
+ },
+ {
+  "id": "qg_2312",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Apollo 11 launched July 16, 1969 and achieved the first crewed moon landing."
+ },
+ {
+  "id": "odql_12046",
+  "arm": "main_id",
+  "mech": true,
+  "judge1": "INCORRECT",
+  "why": "The specific name of the straw basket used to keep bees is a 'skep'; 'beehive' is the gene"
+ },
+ {
+  "id": "qw_2634",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Masters has been played at Augusta National since 1934."
+ },
+ {
+  "id": "qf_995",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The femur is the standard quiz answer for the strongest/hardest bone."
+ },
+ {
+  "id": "qb_6233",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "His mother was Stanley Ann Dunham, known as Ann."
+ },
+ {
+  "id": "dpql_259",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Battle of Austerlitz, 2 December 1805, was Napoleon's victory over the Austro-Russian "
+ },
+ {
+  "id": "sfq_5321",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Dick Fosbury debuted the flop at the 1968 Mexico City Olympics."
+ },
+ {
+  "id": "bt_4101",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Donington Collection was a museum of Grand Prix racing cars, so 'a collection of cars'"
+ },
+ {
+  "id": "odql_1641",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Tumbrils (tumbrels) were the open carts that carried the condemned to the guillotine."
+ },
+ {
+  "id": "wh_3204",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Stephen Crane's The Red Badge of Courage is set during the American Civil War."
+ },
+ {
+  "id": "qb_107",
+  "arm": "main_id",
+  "mech": true,
+  "judge1": "INCORRECT",
+  "why": "Engelbart's 'X-Y Position Indicator for a Display System' patent is the computer mouse, no"
+ },
+ {
+  "id": "bb_1774",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Sesame seeds are genuinely a very good source of zinc (~7-8 mg/100g), so the fact stands e"
+ },
+ {
+  "id": "sfq_8662",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Pan is classically depicted as a man with goat horns, legs, tail, and pointed ears, so the"
+ },
+ {
+  "id": "sfq_4513",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Nighthawks depicts a late-night diner in New York City (inspired by a Greenwich Village re"
+ }
+]

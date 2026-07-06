@@ -1,0 +1,292 @@
+[
+ {
+  "id": "1074692",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most plausible referents (the 1967 film Hotel and the 1983 TV series Hotel) are both d",
+  "judge2": "CORRECT",
+  "why2": "The most plausible referents of plain 'Hotel' \u2014 the 1983 ABC TV series and the 1967 Arthur Hailey film \u2014 are both dramas, so 'Drama' fits.",
+  "confirmed": true
+ },
+ {
+  "id": "1170670",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Joseph MacRory was a Catholic cardinal and Archbishop of Armagh.",
+  "judge2": "CORRECT",
+  "why2": "Joseph MacRory was a Roman Catholic cardinal and Archbishop of Armagh, so 'Catholic' is correct.",
+  "confirmed": true
+ },
+ {
+  "id": "2235290",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most prominent Museum of Islamic Art is in Doha, Qatar.",
+  "judge2": "CORRECT",
+  "why2": "The most prominent institution officially named 'Museum of Islamic Art' is the I. M. Pei-designed museum in Doha, Qatar.",
+  "confirmed": true
+ },
+ {
+  "id": "2664757",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Beethoven composed a Symphony No. 3 (the Eroica), the most plausible referent of the under",
+  "judge2": "CORRECT",
+  "why2": "The most plausible referent of an unqualified 'Symphony No. 3' is Beethoven's Eroica, so Beethoven is correct.",
+  "confirmed": true
+ },
+ {
+  "id": "3087683",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The 2019 film Glass was written (and directed) by M. Night Shyamalan.",
+  "judge2": "CORRECT",
+  "why2": "Glass (2019) was written (and directed) by M. Night Shyamalan.",
+  "confirmed": true
+ },
+ {
+  "id": "4078079",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The TV series Evil (2019) is classified as horror (alongside drama/mystery), so horror is ",
+  "judge2": "CORRECT",
+  "why2": "The 2019 series 'Evil' is listed under Horror by major genre sources (IMDb, Rotten Tomatoes) alongside drama/mystery, so 'Horror' is a factually supported genre.",
+  "confirmed": true
+ },
+ {
+  "id": "5206135",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Patty Jenkins directed Monster (2003), the most plausible intended film.",
+  "judge2": "CORRECT",
+  "why2": "The most plausible referent, Monster (2003) with Charlize Theron, was directed by Patty Jenkins.",
+  "confirmed": true
+ },
+ {
+  "id": "5294538",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Ninja Boy II (Game Boy, 1993) is an action role-playing game, so 'action' is a factually a",
+  "judge2": "CORRECT",
+  "why2": "Ninja Boy 2 (Game Boy, 1993) is an action role-playing game, so 'Action' is a true (if incomplete) genre descriptor.",
+  "confirmed": true
+ },
+ {
+  "id": "6170674",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The most prominent referent, the 2018 film Wildlife (dir. Paul Dano), is a drama.",
+  "judge2": "CORRECT",
+  "why2": "The most plausible referent, the 2018 film Wildlife (dir. Paul Dano), is a drama.",
+  "confirmed": true
+ },
+ {
+  "id": "6270618",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Joseph Schubert (1890-1969), the Romanian bishop this KB-style religion question most plau",
+  "judge2": "CORRECT",
+  "why2": "The most plausible referent for a religion question is Joseph Schubert (1890-1969), Romanian titular bishop of the Roman Catholic Church \u2014 Catholic is correct (verified via Wikipedia/Catholic-Hierarchy).",
+  "confirmed": true
+ },
+ {
+  "id": "6363270",
+  "arm": "main_ood1",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Alexander the Great's father was Philip II of Macedon.",
+  "judge2": "CORRECT",
+  "why2": "Alexander the Great's father was Philip II of Macedon.",
+  "confirmed": true
+ },
+ {
+  "id": "tb_805",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Bran Castle is marketed as 'Dracula's Castle'.",
+  "judge2": "CORRECT",
+  "why2": "Bran Castle in Transylvania is marketed as the home of Dracula from Bram Stoker's 1897 novel.",
+  "confirmed": true
+ },
+ {
+  "id": "sfq_24050",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The phrase is Spock's Vulcan salute from Star Trek, so the stated association is factually",
+  "judge2": "CORRECT",
+  "why2": "'Live Long and Prosper' is the Vulcan salute phrase from Star Trek.",
+  "confirmed": true
+ },
+ {
+  "id": "qw_9842",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Lenny Bruce was a stand-up comedian, i.e. worked in comedy.",
+  "judge2": "CORRECT",
+  "why2": "Lenny Bruce was a stand-up comedian; comedy is his field of entertainment.",
+  "confirmed": true
+ },
+ {
+  "id": "bb_9398",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Turnbull & Asser is the famous shirtmaker located on Jermyn Street, London.",
+  "judge2": "CORRECT",
+  "why2": "Shirt-maker Turnbull & Asser's famous shop is on Jermyn Street, London.",
+  "confirmed": true
+ },
+ {
+  "id": "qg_2312",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Apollo 11 launched July 16, 1969 and achieved the first crewed moon landing.",
+  "judge2": "CORRECT",
+  "why2": "July 2009 marked the 40th anniversary of the July 1969 Apollo 11 Moon landing.",
+  "confirmed": true
+ },
+ {
+  "id": "odql_12046",
+  "arm": "main_id",
+  "mech": true,
+  "judge1": "INCORRECT",
+  "why": "The specific name of the straw basket used to keep bees is a 'skep'; 'beehive' is the gene",
+  "judge2": "INCORRECT",
+  "why2": "The specific name for a straw basket used to keep bees is a 'skep'; 'beehive' merely restates the object's function and is not the name the question asks for.",
+  "confirmed": true
+ },
+ {
+  "id": "qw_2634",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Masters has been played at Augusta National since 1934.",
+  "judge2": "CORRECT",
+  "why2": "The Masters is played every year at Augusta National Golf Club in Augusta, Georgia.",
+  "confirmed": true
+ },
+ {
+  "id": "qf_995",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The femur is the standard quiz answer for the strongest/hardest bone.",
+  "judge2": "CORRECT",
+  "why2": "The femur is the standard answer for the strongest (and in general references, hardest) bone in the human body.",
+  "confirmed": true
+ },
+ {
+  "id": "qb_6233",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "His mother was Stanley Ann Dunham, known as Ann.",
+  "judge2": "INCORRECT",
+  "why2": "Obama's mother was Stanley Ann Dunham \u2014 her first name was Stanley (after her father); Ann was her middle name, though she went by it.",
+  "confirmed": false
+ },
+ {
+  "id": "dpql_259",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Battle of Austerlitz, 2 December 1805, was Napoleon's victory over the Austro-Russian ",
+  "judge2": "CORRECT",
+  "why2": "The Battle of Austerlitz (2 December 1805) is widely regarded as Napoleon's greatest victory.",
+  "confirmed": true
+ },
+ {
+  "id": "sfq_5321",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Dick Fosbury debuted the flop at the 1968 Mexico City Olympics.",
+  "judge2": "CORRECT",
+  "why2": "Dick Fosbury debuted the Fosbury Flop internationally and won gold at the 1968 Mexico City Olympics.",
+  "confirmed": true
+ },
+ {
+  "id": "bt_4101",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "The Donington Collection was a museum of Grand Prix racing cars, so 'a collection of cars'",
+  "judge2": "CORRECT",
+  "why2": "The Donington Collection was a museum collection of Grand Prix racing cars at Donington Park, so 'a collection of cars' is factually accurate.",
+  "confirmed": true
+ },
+ {
+  "id": "odql_1641",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Tumbrils (tumbrels) were the open carts that carried the condemned to the guillotine.",
+  "judge2": "CORRECT",
+  "why2": "Tumbrils (tumbrels) were the carts that carried the condemned to the guillotine during the French Revolution.",
+  "confirmed": true
+ },
+ {
+  "id": "wh_3204",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Stephen Crane's The Red Badge of Courage is set during the American Civil War.",
+  "judge2": "CORRECT",
+  "why2": "Stephen Crane's 'The Red Badge of Courage' is set during the American Civil War.",
+  "confirmed": true
+ },
+ {
+  "id": "qb_107",
+  "arm": "main_id",
+  "mech": true,
+  "judge1": "INCORRECT",
+  "why": "Engelbart's 'X-Y Position Indicator for a Display System' patent is the computer mouse, no",
+  "judge2": "CORRECT",
+  "why2": "Douglas Engelbart's computer mouse was patented in 1970 as an 'X-Y Position Indicator for a Display System'.",
+  "confirmed": false
+ },
+ {
+  "id": "bb_1774",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Sesame seeds are genuinely a very good source of zinc (~7-8 mg/100g), so the fact stands e",
+  "judge2": "INCORRECT",
+  "why2": "Sesame seeds are renowned as a very good source of calcium (~975mg/100g), which is the standout mineral among the options; zinc is not the correct choice.",
+  "confirmed": false
+ },
+ {
+  "id": "sfq_8662",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Pan is classically depicted as a man with goat horns, legs, tail, and pointed ears, so the",
+  "judge2": "CORRECT",
+  "why2": "Pan is the Greek god depicted with the horns, legs, tail, and ears of a goat.",
+  "confirmed": true
+ },
+ {
+  "id": "sfq_4513",
+  "arm": "main_id",
+  "mech": false,
+  "judge1": "CORRECT",
+  "why": "Nighthawks depicts a late-night diner in New York City (inspired by a Greenwich Village re",
+  "judge2": "CORRECT",
+  "why2": "Hopper's 'Nighthawks' depicts a diner in New York City, inspired by Greenwich Village.",
+  "confirmed": true
+ }
+]

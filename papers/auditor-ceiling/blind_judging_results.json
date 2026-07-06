@@ -1,0 +1,1916 @@
+{
+ "n_judged": 382,
+ "stage1": [
+  {
+   "id": "41331",
+   "verdict": "INCORRECT",
+   "why": "Stephen King wrote no book titled 'Panic'; novels of that title are by authors such as Lauren Oliver and Jeff Abbott."
+  },
+  {
+   "id": "91028",
+   "verdict": "INCORRECT",
+   "why": "Break Up (1998) was directed by Paul Marcus, and The Break-Up (2006) by Peyton Reed; Michael Bay directed neither."
+  },
+  {
+   "id": "118580",
+   "verdict": "CORRECT",
+   "why": "BWV 63 is a church cantata by Johann Sebastian Bach."
+  },
+  {
+   "id": "166546",
+   "verdict": "INCORRECT",
+   "why": "Hitchcock never directed a film called The Suspect; the 1944 film was directed by Robert Siodmak (2013 versions by Won Shin-yun / Stuart Connelly)."
+  },
+  {
+   "id": "210027",
+   "verdict": "INCORRECT",
+   "why": "No film titled The Dove was written by Steinbeck; the 1974 film was scripted by Peter S. Beagle and Adam Kennedy, the 1927 film adapted from Willard Mack's play."
+  },
+  {
+   "id": "282946",
+   "verdict": "UNSURE",
+   "why": "Cannot identify which work 'The Copper' refers to, so its catalogued genre is undeterminable."
+  },
+  {
+   "id": "291513",
+   "verdict": "UNSURE",
+   "why": "The question does not identify which 'Morgan' is meant, so the intended father cannot be determined."
+  },
+  {
+   "id": "308413",
+   "verdict": "INCORRECT",
+   "why": "The 2007 documentary was directed by Rene Daalder and produced by Aaron Ohlmann; John Malkovich was not its producer."
+  },
+  {
+   "id": "323685",
+   "verdict": "INCORRECT",
+   "why": "Notable athletes named Atanas Atanasov are footballers, a volleyball player, a basketball player, and a long jumper \u2014 none is a tennis player."
+  },
+  {
+   "id": "345035",
+   "verdict": "CORRECT",
+   "why": "The notable Vladimir Korotkov (Soviet tennis player, 1948-2025) was born in Moscow per Wikipedia/ATP."
+  },
+  {
+   "id": "451211",
+   "verdict": "INCORRECT",
+   "why": "Hitchcock's fully documented filmography contains no film titled The Victor."
+  },
+  {
+   "id": "542248",
+   "verdict": "INCORRECT",
+   "why": "Tadhg Dall \u00d3 hUiginn was a 16th-century Irish bardic poet, not a teacher."
+  },
+  {
+   "id": "564506",
+   "verdict": "CORRECT",
+   "why": "The American landscape painter Robert Crannell Minor was born in New York City in 1839."
+  },
+  {
+   "id": "627430",
+   "verdict": "CORRECT",
+   "why": "KIQZ is a radio station in Rawlins, Wyoming, United States."
+  },
+  {
+   "id": "687919",
+   "verdict": "CORRECT",
+   "why": "Basin City is a community in Franklin County, Washington, United States."
+  },
+  {
+   "id": "823225",
+   "verdict": "INCORRECT",
+   "why": "He was born in Ubud (per Wikidata); Bali is the island/province, not the city, so the answer names the wrong entity."
+  },
+  {
+   "id": "932183",
+   "verdict": "INCORRECT",
+   "why": "\"Mr. Thopia\" is a placeholder that identifies no one; Niketa Thopia's father was Karl Topia."
+  },
+  {
+   "id": "953373",
+   "verdict": "UNSURE",
+   "why": "Multiple sportsmen named Paul Hoffman(n) exist (NBA basketball player, Scotland cricketer); no prominent footballer of that name is verifiable, but the intended referent is indeterminate."
+  },
+  {
+   "id": "1044970",
+   "verdict": "INCORRECT",
+   "why": "Mohd Sharkar Shamsudin is a Malaysian politician (Pahang), not a teacher."
+  },
+  {
+   "id": "1045576",
+   "verdict": "INCORRECT",
+   "why": "Bruckheimer has no film titled Contract; e.g., Contract (2008) was produced by Ram Gopal Varma and The Contract (2006) by other producers."
+  },
+  {
+   "id": "1074278",
+   "verdict": "INCORRECT",
+   "why": "David Heyman's filmography contains no film titled 'Home'; known 'Home' films (2008, 2009, 2013, 2015) have other producers."
+  },
+  {
+   "id": "1074692",
+   "verdict": "CORRECT",
+   "why": "The most plausible referents (the 1967 film Hotel and the 1983 TV series Hotel) are both dramas."
+  },
+  {
+   "id": "1098833",
+   "verdict": "CORRECT",
+   "why": "Obeakpu is a village/community in Imo State, Nigeria."
+  },
+  {
+   "id": "1118020",
+   "verdict": "INCORRECT",
+   "why": "John Hughes's well-documented filmography contains no film titled 'The Right Way'; the films of that title were written by others."
+  },
+  {
+   "id": "1124195",
+   "verdict": "INCORRECT",
+   "why": "Kanjiroba Himal is a mountain in the Dolpa district of Nepal, not Japan."
+  },
+  {
+   "id": "1170670",
+   "verdict": "CORRECT",
+   "why": "Joseph MacRory was a Catholic cardinal and Archbishop of Armagh."
+  },
+  {
+   "id": "1189069",
+   "verdict": "UNSURE",
+   "why": "'Alt' is ambiguous (band ALT, several albums); cannot determine the referent or its catalogued genre with confidence."
+  },
+  {
+   "id": "1292989",
+   "verdict": "CORRECT",
+   "why": "Revigliasco d'Asti is a comune in the Province of Asti, Piedmont, Italy."
+  },
+  {
+   "id": "1382188",
+   "verdict": "INCORRECT",
+   "why": "Kandathum Kettathum (1988) was directed by Balachandra Menon, not Kamal (verified via Wikipedia/IMDb)."
+  },
+  {
+   "id": "1385147",
+   "verdict": "INCORRECT",
+   "why": "The notable places named Rogers (e.g. Rogers, Arkansas; Rogers, Minnesota) are in the United States, not Canada."
+  },
+  {
+   "id": "1774445",
+   "verdict": "INCORRECT",
+   "why": "Long Pants (1927, dir. Frank Capra) was produced by Harry Langdon via the Harry Langdon Corporation; John Hughes (b. 1950) is wrong."
+  },
+  {
+   "id": "1964398",
+   "verdict": "INCORRECT",
+   "why": "Neither the 2008 French film Disco (written by Fabien Onteniente et al.) nor the 2019 Norwegian film (Jorunn Myklebust Syversen) was written by John Hughes."
+  },
+  {
+   "id": "1980163",
+   "verdict": "CORRECT",
+   "why": "Imperatriz Airport is in Imperatriz, Maranh\u00e3o, Brazil."
+  },
+  {
+   "id": "2096935",
+   "verdict": "INCORRECT",
+   "why": "Konjsko Brdo is a village in the Peru\u0161i\u0107 municipality, Lika-Senj County, Croatia."
+  },
+  {
+   "id": "2235290",
+   "verdict": "CORRECT",
+   "why": "The most prominent Museum of Islamic Art is in Doha, Qatar."
+  },
+  {
+   "id": "2363437",
+   "verdict": "INCORRECT",
+   "why": "Guy (Gui) of Amiens was a son of Enguerrand I of Ponthieu's line, not of Saint Bernard."
+  },
+  {
+   "id": "2378482",
+   "verdict": "INCORRECT",
+   "why": "Princess Yamanobe (7th century, wife of Prince Otsu) was a daughter of Emperor Tenji, not Emperor Meiji (per Wikipedia/Wikidata Q3138027)."
+  },
+  {
+   "id": "2405693",
+   "verdict": "CORRECT",
+   "why": "Jean Dorion, the Quebec politician (b. 1943), was born in Montreal."
+  },
+  {
+   "id": "2454554",
+   "verdict": "UNSURE",
+   "why": "Multiple works are titled 'The Children' (horror film, Wharton novel, Kirkwood play) with different genres; the intended referent is indeterminate."
+  },
+  {
+   "id": "2483706",
+   "verdict": "INCORRECT",
+   "why": "Kirk O'Bee, the American cyclist, was born in Ann Arbor, Michigan, not New York."
+  },
+  {
+   "id": "2493472",
+   "verdict": "INCORRECT",
+   "why": "The Black Book (1949, aka Reign of Terror) was directed by Anthony Mann; the 2006 Black Book (Zwartboek) by Paul Verhoeven \u2014 neither is Lars von Trier."
+  },
+  {
+   "id": "2542277",
+   "verdict": "INCORRECT",
+   "why": "The most plausible referent, the 1978 film Northern Lights, was produced by John Hanson and Rob Nilsson (per Wikipedia/IMDb); no notable 'Northern Lights' was produced by David Attenborough."
+  },
+  {
+   "id": "2627938",
+   "verdict": "UNSURE",
+   "why": "Multiple works are titled 'Sly' (Wolf-Ferrari opera, 2018 Iranian comedy, 2023 documentary); the intended referent and its genre cannot be determined."
+  },
+  {
+   "id": "2664757",
+   "verdict": "CORRECT",
+   "why": "Beethoven composed a Symphony No. 3 (the Eroica), the most plausible referent of the underspecified question."
+  },
+  {
+   "id": "2675293",
+   "verdict": "INCORRECT",
+   "why": "No version of The Spoilers (1914-1955, from Rex Beach's novel) was written by John Ford; e.g. the 1942 film was scripted by Lawrence Hazard and Tom Reed."
+  },
+  {
+   "id": "2692328",
+   "verdict": "CORRECT",
+   "why": "FK (fudbalski klub) Mladost Ba\u010dki Jarak is a Serbian association football club."
+  },
+  {
+   "id": "2730662",
+   "verdict": "INCORRECT",
+   "why": "Jeannot Gilbert was a Canadian professional ice hockey player (Boston Bruins), not a rugby player."
+  },
+  {
+   "id": "2736490",
+   "verdict": "INCORRECT",
+   "why": "J.K. Rowling has no work titled 'Anniversary'; known works of that title are by other authors."
+  },
+  {
+   "id": "2797611",
+   "verdict": "INCORRECT",
+   "why": "The song 'Estate' was composed by Bruno Martino (1960); John Williams has no known work titled 'Estate'."
+  },
+  {
+   "id": "2798406",
+   "verdict": "INCORRECT",
+   "why": "Spielberg directed no film titled Tomorrow; e.g. the 1972 film Tomorrow was directed by Joseph Anthony."
+  },
+  {
+   "id": "2799304",
+   "verdict": "INCORRECT",
+   "why": "Sune Sik was reputedly a son of King Sverker I of Sweden, not the god Odin."
+  },
+  {
+   "id": "2837679",
+   "verdict": "INCORRECT",
+   "why": "Robert Frost has no work titled 'Images'; that title belongs to other authors (e.g., Richard Aldington's imagist collection), not Frost."
+  },
+  {
+   "id": "2876696",
+   "verdict": "INCORRECT",
+   "why": "Matteo Pivotto is an Italian footballer (Serie A/B defender), not a tennis player."
+  },
+  {
+   "id": "2915101",
+   "verdict": "INCORRECT",
+   "why": "\u017darko Petan was a Slovenian writer, aphorist, and theatre director, not a teacher."
+  },
+  {
+   "id": "2930103",
+   "verdict": "INCORRECT",
+   "why": "The musical Sunny (1925) was composed by Jerome Kern, and the song Sunny is by Bobby Hebb \u2014 not George Gershwin."
+  },
+  {
+   "id": "2933296",
+   "verdict": "INCORRECT",
+   "why": "The Dub (1919) was directed by James Cruze; John Hughes directed no such film."
+  },
+  {
+   "id": "2997537",
+   "verdict": "INCORRECT",
+   "why": "No film 'The Lamp' directed by John R. Miller exists; known versions were directed by Tom Daley (1987) and Tracy Trost (2011)."
+  },
+  {
+   "id": "3008387",
+   "verdict": "INCORRECT",
+   "why": "Competitors is a 2008 novel by Sergey Lukyanenko; Grisham has no work by that title."
+  },
+  {
+   "id": "3073609",
+   "verdict": "INCORRECT",
+   "why": "Andreas R\u00fcdiger (1673-1731) was a German philosopher and physician who practiced medicine and lectured on philosophy; he was not a professor of physics."
+  },
+  {
+   "id": "3087683",
+   "verdict": "CORRECT",
+   "why": "The 2019 film Glass was written (and directed) by M. Night Shyamalan."
+  },
+  {
+   "id": "3097971",
+   "verdict": "INCORRECT",
+   "why": "John Hughes has no film titled 'Threat' in his producing credits; the indie film Threat (2006) was produced by Matt Pizzolo and Katie Nisa."
+  },
+  {
+   "id": "3198097",
+   "verdict": "INCORRECT",
+   "why": "A London Life is a novella by Henry James, not the diarist Samuel Pepys."
+  },
+  {
+   "id": "3295029",
+   "verdict": "INCORRECT",
+   "why": "'All Over' is a 1971 play by Edward Albee, not a work by David Sedaris."
+  },
+  {
+   "id": "3335561",
+   "verdict": "INCORRECT",
+   "why": "Footballer Andy Keeley was born in Basildon, Essex, not London."
+  },
+  {
+   "id": "3511774",
+   "verdict": "UNSURE",
+   "why": "I cannot reliably identify which Billy Lumley is meant or confirm his sport."
+  },
+  {
+   "id": "3512012",
+   "verdict": "UNSURE",
+   "why": "Multiple people named Billy McGinty exist (e.g., a Glasgow-born footballer, a Missouri-born Rough Rider) and I cannot determine which is meant or verify a New York birthplace."
+  },
+  {
+   "id": "3559442",
+   "verdict": "INCORRECT",
+   "why": "John Green's documented bibliography contains no book titled 'Brake'; no such work by him found on search."
+  },
+  {
+   "id": "3577048",
+   "verdict": "INCORRECT",
+   "why": "No notable work titled 'Broadway' was composed by Gershwin; the jazz standard 'Broadway' is by Woode/McRae/Bird."
+  },
+  {
+   "id": "3635524",
+   "verdict": "CORRECT",
+   "why": "The 1906 Canton Bulldogs\u2013Massillon Tigers scandal was in American football."
+  },
+  {
+   "id": "3676856",
+   "verdict": "INCORRECT",
+   "why": "Serpent Mage is by Margaret Weis & Tracy Hickman (Death Gate Cycle #4) or Greg Bear (1986); J.R. Ward wrote neither."
+  },
+  {
+   "id": "3719469",
+   "verdict": "INCORRECT",
+   "why": "No film or work titled Choices is directed by 'Mr. K'; known Choices films were directed by Silvio Narizzano (1981) and David Lowell Rich (1986), among others."
+  },
+  {
+   "id": "3740506",
+   "verdict": "CORRECT",
+   "why": "Ciepie\u0144 is a village in Rypin County, Kuyavian-Pomeranian Voivodeship, Poland."
+  },
+  {
+   "id": "3747076",
+   "verdict": "CORRECT",
+   "why": "Florac is the subprefecture/capital of the arrondissement of Florac in Loz\u00e8re, France."
+  },
+  {
+   "id": "3775858",
+   "verdict": "INCORRECT",
+   "why": "Computer Warriors (1990) was written by Carl Macek (directed by Bill Kroyer), not John Hughes."
+  },
+  {
+   "id": "3803810",
+   "verdict": "INCORRECT",
+   "why": "Crossover (2006) was directed by Preston A. Whitmore II, not John Singleton."
+  },
+  {
+   "id": "3884063",
+   "verdict": "INCORRECT",
+   "why": "Death of a Batman is a 1964 British Edgar Wallace Mysteries film; Christopher Nolan (b. 1970) did not write it."
+  },
+  {
+   "id": "3895236",
+   "verdict": "INCORRECT",
+   "why": "The Denmark Hill Insect Bed is a Triassic fossil locality in Ipswich, Queensland, Australia, not England."
+  },
+  {
+   "id": "3903448",
+   "verdict": "INCORRECT",
+   "why": "Richard Strauss's well-catalogued oeuvre contains no work titled 'Desire'; known 'Desire' compositions are by others (Bee Gees, U2, Chopin's \u017byczenie, etc.)."
+  },
+  {
+   "id": "3909587",
+   "verdict": "INCORRECT",
+   "why": "No plausible 'Diamonds' (Jerry Lordan's 1963 instrumental, Sia-penned Rihanna hit, etc.) was composed by Charles Trenet, who is known for French chansons like 'La Mer'."
+  },
+  {
+   "id": "3922189",
+   "verdict": "INCORRECT",
+   "why": "Known works titled 'Discipline' (King Crimson, Nine Inch Nails, Janet Jackson, Throbbing Gristle) have other composers; no John Williams composition of that title exists."
+  },
+  {
+   "id": "3957671",
+   "verdict": "INCORRECT",
+   "why": "Dual Plover is a Sydney-based Australian record label, not English."
+  },
+  {
+   "id": "3972968",
+   "verdict": "INCORRECT",
+   "why": "The place named simply 'Earl' is a town in North Carolina, United States; there is no plain 'Earl' in England."
+  },
+  {
+   "id": "4008359",
+   "verdict": "INCORRECT",
+   "why": "El Madina (1999) is an Egyptian film written/directed by Yousry Nasrallah; John Hughes had no involvement."
+  },
+  {
+   "id": "4074008",
+   "verdict": "UNSURE",
+   "why": "Cannot identify which Evan Abraham is meant or verify a birthplace; no way to confirm New York."
+  },
+  {
+   "id": "4078079",
+   "verdict": "CORRECT",
+   "why": "The TV series Evil (2019) is classified as horror (alongside drama/mystery), so horror is a factually correct genre."
+  },
+  {
+   "id": "4080704",
+   "verdict": "INCORRECT",
+   "why": "Conrad wrote no work titled Exposure; novels of that title are by authors such as Mal Peet, Helen Dunmore, and Kathryn Harrison."
+  },
+  {
+   "id": "4107787",
+   "verdict": "INCORRECT",
+   "why": "Filming 'The Trial' is Orson Welles' 1981 documentary; Stanley Kubrick had no involvement as producer."
+  },
+  {
+   "id": "4176872",
+   "verdict": "CORRECT",
+   "why": "The F\u00e2nt\u00e2neaua Rece is a river in Romania (Romanian toponym recorded in Romanian river gazetteers)."
+  },
+  {
+   "id": "4304705",
+   "verdict": "INCORRECT",
+   "why": "Places named Kalu are in Ethiopia (woreda), Iran, Afghanistan, Pakistan, and India \u2014 none in Nigeria."
+  },
+  {
+   "id": "4364911",
+   "verdict": "INCORRECT",
+   "why": "Li\u0161kiava is a village in Lithuania, not Latvia."
+  },
+  {
+   "id": "4408940",
+   "verdict": "CORRECT",
+   "why": "Toronto Northwest was a federal electoral district in Ontario, Canada."
+  },
+  {
+   "id": "4535360",
+   "verdict": "INCORRECT",
+   "why": "The intended 'I Will' (PopQA row 4535360) was composed by Dick Glasser (and the Beatles' 'I Will' is McCartney); John Newton composed neither."
+  },
+  {
+   "id": "4541606",
+   "verdict": "UNSURE",
+   "why": "The location of the geographic feature 'Ida Ridge' cannot be reliably determined; Russia is unverifiable."
+  },
+  {
+   "id": "4659843",
+   "verdict": "INCORRECT",
+   "why": "Jo\u00e3o Schlittler is a Brazilian judoka, not a footballer."
+  },
+  {
+   "id": "4674657",
+   "verdict": "INCORRECT",
+   "why": "Artur Lemba was an Estonian classical composer and pianist, not a pop artist."
+  },
+  {
+   "id": "4783605",
+   "verdict": "UNSURE",
+   "why": "Cannot identify the intended film/work titled Just a Matter of Time or its genre with confidence."
+  },
+  {
+   "id": "4880546",
+   "verdict": "INCORRECT",
+   "why": "TEEN is a Brooklyn alternative rock/experimental pop band; science fiction is not its genre."
+  },
+  {
+   "id": "4886186",
+   "verdict": "UNSURE",
+   "why": "Kristian Outinen is too obscure for me to verify a birthplace; cannot confirm or refute Helsinki."
+  },
+  {
+   "id": "4918912",
+   "verdict": "INCORRECT",
+   "why": "Larry Coon is a computer scientist/basketball writer known for the NBA Salary Cap FAQ, not a football executive."
+  },
+  {
+   "id": "5102920",
+   "verdict": "INCORRECT",
+   "why": "The notable Martin Simonson (scholar/translator) was born in Gothenburg, Sweden, not Salt Lake City."
+  },
+  {
+   "id": "5126477",
+   "verdict": "INCORRECT",
+   "why": "Maximiano de Sousa ('Max') was a Madeiran singer of fado/traditional Portuguese music, not a poetry figure."
+  },
+  {
+   "id": "5183899",
+   "verdict": "INCORRECT",
+   "why": "Hans Pieren is a Swiss alpine skier, not a hockey player."
+  },
+  {
+   "id": "5206135",
+   "verdict": "CORRECT",
+   "why": "Patty Jenkins directed Monster (2003), the most plausible intended film."
+  },
+  {
+   "id": "5215694",
+   "verdict": "UNSURE",
+   "why": "'Mother' is ambiguous (film, game, song, story); cannot determine which work is meant or its genre."
+  },
+  {
+   "id": "5294538",
+   "verdict": "CORRECT",
+   "why": "Ninja Boy II (Game Boy, 1993) is an action role-playing game, so 'action' is a factually accurate (if incomplete) genre."
+  },
+  {
+   "id": "5317180",
+   "verdict": "INCORRECT",
+   "why": "John Wyndham's well-documented bibliography contains no work titled Nuclear Alert; he is not its author."
+  },
+  {
+   "id": "5424513",
+   "verdict": "UNSURE",
+   "why": "Multiple people named Pete Stewart exist and no birth city is reliably attributable; cannot confirm or refute New York."
+  },
+  {
+   "id": "5563764",
+   "verdict": "INCORRECT",
+   "why": "No film titled Revenge was directed by Michael Bay; the 1990 Revenge was Tony Scott, the 2017 one Coralie Fargeat."
+  },
+  {
+   "id": "5634089",
+   "verdict": "INCORRECT",
+   "why": "J.K. Rowling has no work titled Rose; works by that name are by others (e.g. Martin Cruz Smith's novel, Li-Young Lee's poetry collection)."
+  },
+  {
+   "id": "5919871",
+   "verdict": "INCORRECT",
+   "why": "The Curious Room (collected dramatic works) is by Angela Carter, not David Walliams."
+  },
+  {
+   "id": "5920612",
+   "verdict": "INCORRECT",
+   "why": "Spielberg directed no film called The Day; known films of that title were directed by others (e.g., Douglas Aarniokoski, 2011)."
+  },
+  {
+   "id": "5922043",
+   "verdict": "INCORRECT",
+   "why": "'The Discarded' is a short story by Harlan Ellison; C.S. Lewis wrote 'The Discarded Image', a different work."
+  },
+  {
+   "id": "5922139",
+   "verdict": "UNSURE",
+   "why": "Multiple works are titled 'The Dive' (two films, plus a Pedro Novoa short story); the verdict flips with the intended referent, which cannot be determined."
+  },
+  {
+   "id": "5922285",
+   "verdict": "INCORRECT",
+   "why": "The Dog (2013) was directed by Allison Berg and Frank Keraudren; Cassavetes directed no film titled 'The Dog'."
+  },
+  {
+   "id": "5928450",
+   "verdict": "INCORRECT",
+   "why": "J.K. Rowling's bibliography (Harry Potter, Strike novels, etc.) contains no work titled 'The Girl'; fabricated attribution."
+  },
+  {
+   "id": "5930682",
+   "verdict": "INCORRECT",
+   "why": "John Grisham's bibliography contains no work titled 'The Guard'; this is a fabricated attribution."
+  },
+  {
+   "id": "5940509",
+   "verdict": "INCORRECT",
+   "why": "The Man Without Desire (1923, dir. Adrian Brunel) was produced by Miles Mander/Atlas-Biocraft; John Huston was a teenager in 1923 and uninvolved."
+  },
+  {
+   "id": "5941433",
+   "verdict": "INCORRECT",
+   "why": "The Media Elite (1986) was written by S. Robert Lichter, Stanley Rothman, and Linda Lichter, not Chomsky."
+  },
+  {
+   "id": "5942867",
+   "verdict": "INCORRECT",
+   "why": "No work titled The Moor was directed by Shakespeare (a playwright, not a director); the 2023 film The Moor was directed by Chris Cronin."
+  },
+  {
+   "id": "5945781",
+   "verdict": "UNSURE",
+   "why": "Multiple films titled The Only Way exist and I cannot verify the screenwriter for the intended one."
+  },
+  {
+   "id": "5952754",
+   "verdict": "INCORRECT",
+   "why": "The Rubber Gun (1977) was written by Stephen Lack with director Allan Moyle, not John Hughes."
+  },
+  {
+   "id": "5955120",
+   "verdict": "UNSURE",
+   "why": "Multiple works are titled 'The Shot' (Pushkin's short story, several films); cannot determine which entity the question intends, so the genre cannot be verified."
+  },
+  {
+   "id": "5965570",
+   "verdict": "INCORRECT",
+   "why": "The Woods (2006 film) was written by David Ross; John Sayles has no known screenwriting credit for a work called The Woods."
+  },
+  {
+   "id": "5981733",
+   "verdict": "INCORRECT",
+   "why": "Charlotte von Hagn was a German actress, not a teacher."
+  },
+  {
+   "id": "6078661",
+   "verdict": "CORRECT",
+   "why": "United Theological Seminary of the Twin Cities is affiliated with the United Church of Christ."
+  },
+  {
+   "id": "6149560",
+   "verdict": "INCORRECT",
+   "why": "John Cassavetes directed no film called Way Out; known Way Out films were directed by others (e.g., Irvin Yeaworth, 1966)."
+  },
+  {
+   "id": "6164905",
+   "verdict": "INCORRECT",
+   "why": "White Line Fever: The Autobiography was written by Lemmy Kilmister (with Janiss Garza), not John Steinbeck."
+  },
+  {
+   "id": "6170674",
+   "verdict": "CORRECT",
+   "why": "The most prominent referent, the 2018 film Wildlife (dir. Paul Dano), is a drama."
+  },
+  {
+   "id": "6230809",
+   "verdict": "INCORRECT",
+   "why": "You Are Free is Cat Power's 2003 indie rock/folk album, not rap."
+  },
+  {
+   "id": "6270618",
+   "verdict": "CORRECT",
+   "why": "Joseph Schubert (1890-1969), the Romanian bishop this KB-style religion question most plausibly refers to, was Roman Catholic."
+  },
+  {
+   "id": "6281317",
+   "verdict": "UNSURE",
+   "why": "'Best Of' is too generic to resolve; no verifiable work of that exact title with Letterman as producer found, but a Late Show best-of entity cannot be ruled out."
+  },
+  {
+   "id": "6363270",
+   "verdict": "CORRECT",
+   "why": "Alexander the Great's father was Philip II of Macedon."
+  },
+  {
+   "id": "6379689",
+   "verdict": "CORRECT",
+   "why": "Macky Escalona is a Filipino professional basketball player (PBA)."
+  },
+  {
+   "id": "jp_658",
+   "verdict": "CORRECT",
+   "why": "Tolkien's hobbits famously eat seven daily meals including second breakfast and elevenses."
+  },
+  {
+   "id": "bt_1942",
+   "verdict": "INCORRECT",
+   "why": "Joe Loss's signature tune was 'In the Mood', not 'The Blue Danube'."
+  },
+  {
+   "id": "odql_8598",
+   "verdict": "CORRECT",
+   "why": "Kevin Spacey played Verbal Kint, revealed as Keyser Soze, in The Usual Suspects (1995)."
+  },
+  {
+   "id": "bb_7437",
+   "verdict": "INCORRECT",
+   "why": "The hit released version of 'Je t'aime... moi non plus' (1969) was sung with Jane Birkin; the Bardot recording was unreleased until 1986."
+  },
+  {
+   "id": "qw_5569",
+   "verdict": "CORRECT",
+   "why": "The Treaty of Fontainebleau (11 April 1814) forced Napoleon Bonaparte's abdication and exile to Elba."
+  },
+  {
+   "id": "sfq_12180",
+   "verdict": "INCORRECT",
+   "why": "Little Jackie Paper's friend was Puff the Magic Dragon; the answer circularly names Jackie Paper himself."
+  },
+  {
+   "id": "qf_478",
+   "verdict": "CORRECT",
+   "why": "James Cameron wrote, produced, and directed Avatar (2009)."
+  },
+  {
+   "id": "jp_3239",
+   "verdict": "CORRECT",
+   "why": "'Carpe diem' is the Latin expression meaning 'seize the day'."
+  },
+  {
+   "id": "qw_6647",
+   "verdict": "INCORRECT",
+   "why": "The October 2010 trademark suit against Alexander McQueen and Saks was filed by the Hells Angels Motorcycle Club, not the McQueen family (per Wikipedia/FindLaw coverage of the case)."
+  },
+  {
+   "id": "wh_1312",
+   "verdict": "CORRECT",
+   "why": "Payne Stewart, three-time major winner and reigning 1999 US Open champion, died in a plane crash on October 25, 1999."
+  },
+  {
+   "id": "tc_888",
+   "verdict": "INCORRECT",
+   "why": "Carl Wilson was the youngest Wilson brother; Brian was the oldest."
+  },
+  {
+   "id": "qg_46",
+   "verdict": "INCORRECT",
+   "why": "Denise Richards played Dr. Christmas Jones in The World Is Not Enough (1999), not GoldenEye."
+  },
+  {
+   "id": "sfq_13042",
+   "verdict": "CORRECT",
+   "why": "Dmitri, Ivan and Alexei Karamazov are the brothers of Dostoyevsky's 1880 novel The Brothers Karamazov."
+  },
+  {
+   "id": "wh_8",
+   "verdict": "INCORRECT",
+   "why": "Jim Hawkins shoots Israel Hands in the rigging of the Hispaniola; Long John Silver survives the novel."
+  },
+  {
+   "id": "qf_1366",
+   "verdict": "CORRECT",
+   "why": "Tina Turner sang the title song of GoldenEye (1995)."
+  },
+  {
+   "id": "qb_2870",
+   "verdict": "INCORRECT",
+   "why": "George Frampton's bronze statue in Kensington Gardens depicts Peter Pan, not Alice Liddell."
+  },
+  {
+   "id": "odql_465",
+   "verdict": "CORRECT",
+   "why": "Kenny Dalglish was Liverpool's player-manager (from 1985) when Ferguson joined Manchester United on 6 November 1986."
+  },
+  {
+   "id": "bt_4096",
+   "verdict": "CORRECT",
+   "why": "A Tale of Two Cities is Dickens's novel set during the French Revolution."
+  },
+  {
+   "id": "dpql_2047",
+   "verdict": "CORRECT",
+   "why": "The fruit of the blackthorn (Prunus spinosa) is the sloe."
+  },
+  {
+   "id": "qb_1757",
+   "verdict": "INCORRECT",
+   "why": "The New Zealand flag bears 4 stars (the Southern Cross), not 14."
+  },
+  {
+   "id": "dpql_5446",
+   "verdict": "CORRECT",
+   "why": "Merton Pride and Williams (Bartlett) are both pear varieties."
+  },
+  {
+   "id": "odql_2555",
+   "verdict": "CORRECT",
+   "why": "Hereford is the only English city on the River Wye."
+  },
+  {
+   "id": "sfq_16069",
+   "verdict": "CORRECT",
+   "why": "Vitamin B9 is folic acid (folate)."
+  },
+  {
+   "id": "odql_12791",
+   "verdict": "CORRECT",
+   "why": "Kirklees's four concert town halls are Huddersfield, Cleckheaton, Dewsbury and Batley."
+  },
+  {
+   "id": "bb_5443",
+   "verdict": "INCORRECT",
+   "why": "That official is Black Rod (Gentleman/Lady Usher of the Black Rod); the Lord Speaker presides over the Lords."
+  },
+  {
+   "id": "bt_3237",
+   "verdict": "INCORRECT",
+   "why": "Aled Jones famously forgot the words of 'Walking in the Air' at the Royal Variety Performance."
+  },
+  {
+   "id": "odql_14488",
+   "verdict": "INCORRECT",
+   "why": "Ned Keene and Bob Boles are characters in Britten's Peter Grimes, not The Mikado."
+  },
+  {
+   "id": "bb_7750",
+   "verdict": "CORRECT",
+   "why": "Iago coins 'the green-eyed monster' in Othello, Act 3 Scene 3."
+  },
+  {
+   "id": "sfq_6043",
+   "verdict": "CORRECT",
+   "why": "Nietzsche wrote Thus Spoke Zarathustra in parts between 1883 and 1885."
+  },
+  {
+   "id": "sfq_7766",
+   "verdict": "CORRECT",
+   "why": "This quote is famously attributed to Albert Einstein, the intended answer of the trivia question."
+  },
+  {
+   "id": "qb_5286",
+   "verdict": "CORRECT",
+   "why": "A traditional feather shuttlecock has 16 feathers in its skirt."
+  },
+  {
+   "id": "sfq_2494",
+   "verdict": "CORRECT",
+   "why": "Denmark sold the Danish West Indies to the US in 1917 and they became the U.S. Virgin Islands."
+  },
+  {
+   "id": "jp_968",
+   "verdict": "CORRECT",
+   "why": "The prologue of Romeo and Juliet describes the 'star-cross'd lovers'."
+  },
+  {
+   "id": "bb_488",
+   "verdict": "INCORRECT",
+   "why": "The unlucky number in Italy is 17 (XVII, anagram of VIXI = 'I have lived'); 6 is wrong."
+  },
+  {
+   "id": "qb_2483",
+   "verdict": "CORRECT",
+   "why": "The Iceman Cometh (1939/1946) was written by Eugene O'Neill."
+  },
+  {
+   "id": "wh_2249",
+   "verdict": "CORRECT",
+   "why": "Silver Cross is the famous Yorkshire maker of prams (baby carriages)."
+  },
+  {
+   "id": "tb_805",
+   "verdict": "CORRECT",
+   "why": "Bran Castle is marketed as 'Dracula's Castle'."
+  },
+  {
+   "id": "qw_9488",
+   "verdict": "CORRECT",
+   "why": "Putonghua is Standard Mandarin, the official language of China."
+  },
+  {
+   "id": "sfq_17012",
+   "verdict": "INCORRECT",
+   "why": "The answer is the (heraldic) eagle \u2014 double-headed on Austrian/Russian arms, single-headed on German \u2014 not the Holy Roman Empire."
+  },
+  {
+   "id": "qw_4590",
+   "verdict": "INCORRECT",
+   "why": "The joke word was 'nuclear' (jab at Bush's 'nucular'); 'potato' was Dan Quayle's spelling gaffe, not a pronunciation issue."
+  },
+  {
+   "id": "dpql_5313",
+   "verdict": "CORRECT",
+   "why": "Mozart was born in Salzburg on 27 January 1756."
+  },
+  {
+   "id": "jp_3108",
+   "verdict": "CORRECT",
+   "why": "Five cards of the same suit is a flush."
+  },
+  {
+   "id": "qw_3063",
+   "verdict": "CORRECT",
+   "why": "P.T. Barnum launched his traveling circus/menagerie in 1871, billed as The Greatest Show on Earth by 1872."
+  },
+  {
+   "id": "jp_3082",
+   "verdict": "CORRECT",
+   "why": "Walt Whitman is the author of Leaves of Grass (1855)."
+  },
+  {
+   "id": "sfq_13471",
+   "verdict": "CORRECT",
+   "why": "Porky's Hare Hunt (1938) introduced the prototype rabbit that became Bugs Bunny, the intended answer."
+  },
+  {
+   "id": "qg_3843",
+   "verdict": "INCORRECT",
+   "why": "Enterprise is the largest US car rental company, not the third largest (third is Avis, behind Enterprise and Hertz)."
+  },
+  {
+   "id": "tb_1432",
+   "verdict": "CORRECT",
+   "why": "Toledo was famed for its steel and sword-making throughout the Middle Ages."
+  },
+  {
+   "id": "sfq_24050",
+   "verdict": "CORRECT",
+   "why": "The phrase is Spock's Vulcan salute from Star Trek, so the stated association is factually right, just less specific than naming Spock."
+  },
+  {
+   "id": "bt_671",
+   "verdict": "CORRECT",
+   "why": "The Purple Heart is awarded to US service members wounded or killed in action."
+  },
+  {
+   "id": "sfq_14566",
+   "verdict": "INCORRECT",
+   "why": "Moroni is the capital of the Comoros, not the Maldives (whose capital is Mal\u00e9)."
+  },
+  {
+   "id": "tb_1524",
+   "verdict": "INCORRECT",
+   "why": "Tikki Tikki Tembo is a humorous take on the perils of having a very long name, not the jungle."
+  },
+  {
+   "id": "sfq_17010",
+   "verdict": "INCORRECT",
+   "why": "Geoffrey Rush won the Oscar for playing pianist David Helfgott in Shine; Hoffman's Rain Man role was an autistic savant, not a pianist."
+  },
+  {
+   "id": "sfq_4618",
+   "verdict": "CORRECT",
+   "why": "The roadrunner belongs to the cuckoo family, Cuculidae."
+  },
+  {
+   "id": "bb_1341",
+   "verdict": "CORRECT",
+   "why": "Japan suspended its Antarctic whale hunt in February 2011 after Sea Shepherd activists chased the factory ship Nisshin Maru."
+  },
+  {
+   "id": "sfq_22863",
+   "verdict": "INCORRECT",
+   "why": "The gesture was named the 'quenelle' (described as an inverted Nazi salute); 'the Nazi salute' is not the name given to it."
+  },
+  {
+   "id": "qz_4241",
+   "verdict": "INCORRECT",
+   "why": "Leon Baptiste (England) won the 200m at Delhi 2010; Usain Bolt is Jamaican and did not compete."
+  },
+  {
+   "id": "bt_97",
+   "verdict": "INCORRECT",
+   "why": "The intended proper name is a 'quant'; 'punting pole' merely restates the question."
+  },
+  {
+   "id": "qz_2217",
+   "verdict": "CORRECT",
+   "why": "Robert Ludlum wrote the original Bourne trilogy."
+  },
+  {
+   "id": "qw_14501",
+   "verdict": "INCORRECT",
+   "why": "Libya lies north of Chad; Niger is to the west."
+  },
+  {
+   "id": "qw_8790",
+   "verdict": "CORRECT",
+   "why": "Ninette de Valois was a ballet dancer/choreographer who founded the Royal Ballet."
+  },
+  {
+   "id": "qb_1036",
+   "verdict": "INCORRECT",
+   "why": "A UK long ton is 2,240 pounds; 2,000 is the US short ton."
+  },
+  {
+   "id": "qb_4987",
+   "verdict": "CORRECT",
+   "why": "Paphos is a resort city on Cyprus."
+  },
+  {
+   "id": "bt_1215",
+   "verdict": "INCORRECT",
+   "why": "Clayton Farlow was played by Howard Keel; Larry Hagman played J.R. Ewing."
+  },
+  {
+   "id": "sfq_23388",
+   "verdict": "CORRECT",
+   "why": "Vietnam borders Cambodia and Laos to its west and China to its north."
+  },
+  {
+   "id": "qw_5335",
+   "verdict": "CORRECT",
+   "why": "Charlie Chan is Biggers' detective from The House Without a Key (1925), featured in dozens of films."
+  },
+  {
+   "id": "bb_2494",
+   "verdict": "INCORRECT",
+   "why": "The song was sung by Ross MacManus, father of Elvis Costello; the intended answer is Elvis Costello, and 'John Whites' names no real person."
+  },
+  {
+   "id": "qb_4301",
+   "verdict": "INCORRECT",
+   "why": "A female gerbil is called a doe; a gopher is a different animal entirely."
+  },
+  {
+   "id": "qz_6127",
+   "verdict": "CORRECT",
+   "why": "Howard Carter discovered Tutankhamun's tomb in November 1922."
+  },
+  {
+   "id": "qw_1989",
+   "verdict": "CORRECT",
+   "why": "Both sites are famed for their prehistoric Paleolithic cave paintings."
+  },
+  {
+   "id": "sfq_10466",
+   "verdict": "CORRECT",
+   "why": "Legend holds Alexander the Great cut the Gordian Knot with his sword."
+  },
+  {
+   "id": "qw_14505",
+   "verdict": "INCORRECT",
+   "why": "Gulf waters reach the Atlantic through the Straits of Florida; the Mississippi flows into the Gulf, not out of it."
+  },
+  {
+   "id": "sfq_16986",
+   "verdict": "CORRECT",
+   "why": "'Corridor of uncertainty' is a standard cricket commentary term for a line just outside off stump."
+  },
+  {
+   "id": "qb_6105",
+   "verdict": "CORRECT",
+   "why": "An albatross (double eagle) is three strokes under par on a hole."
+  },
+  {
+   "id": "qg_256",
+   "verdict": "CORRECT",
+   "why": "In West Side Story the Sharks' rival gang is the Jets."
+  },
+  {
+   "id": "qb_1538",
+   "verdict": "CORRECT",
+   "why": "Boise is the capital of Idaho."
+  },
+  {
+   "id": "qw_3289",
+   "verdict": "CORRECT",
+   "why": "\"Hair of the dog\" is the standard name for a drink taken to cure a hangover."
+  },
+  {
+   "id": "odql_456",
+   "verdict": "CORRECT",
+   "why": "Hagrid's three-headed dog guarding the trapdoor is named Fluffy."
+  },
+  {
+   "id": "qw_9842",
+   "verdict": "CORRECT",
+   "why": "Lenny Bruce was a stand-up comedian, i.e. worked in comedy."
+  },
+  {
+   "id": "qz_621",
+   "verdict": "INCORRECT",
+   "why": "The 1988 UK top-ten hit 'Valentine' (No. 9) was by T'Pau, not Erasure."
+  },
+  {
+   "id": "qw_12770",
+   "verdict": "CORRECT",
+   "why": "The Ming dynasty ruled 1368-1644, spanning the 14th to 17th centuries."
+  },
+  {
+   "id": "qb_3768",
+   "verdict": "CORRECT",
+   "why": "The Bledisloe Cup is the annual rugby union series between the Wallabies and All Blacks."
+  },
+  {
+   "id": "qw_5418",
+   "verdict": "INCORRECT",
+   "why": "Peafowl belong to the pheasant family (Phasianidae); 'fowl' is not a bird family."
+  },
+  {
+   "id": "sfq_18839",
+   "verdict": "INCORRECT",
+   "why": "Both sculptures are by Sir Jacob Epstein, not William Reynolds."
+  },
+  {
+   "id": "qb_2701",
+   "verdict": "CORRECT",
+   "why": "A triangle with all sides of different lengths is a scalene triangle."
+  },
+  {
+   "id": "bb_6701",
+   "verdict": "CORRECT",
+   "why": "On a standard QWERTY layout, Shift+5 produces the % sign."
+  },
+  {
+   "id": "jp_2919",
+   "verdict": "CORRECT",
+   "why": "Benjamin Franklin invented the lightning rod in the early 1750s."
+  },
+  {
+   "id": "qb_4411",
+   "verdict": "CORRECT",
+   "why": "Barbara Cartland's married name was McCorquodale and she published early works as Barbara McCorquodale."
+  },
+  {
+   "id": "sfq_23199",
+   "verdict": "CORRECT",
+   "why": "The Appalachians run roughly 1,500 miles and Mount Mitchell (6,684 ft) is their highest peak."
+  },
+  {
+   "id": "qb_8111",
+   "verdict": "CORRECT",
+   "why": "Tallahassee is the state capital of Florida."
+  },
+  {
+   "id": "bb_9398",
+   "verdict": "CORRECT",
+   "why": "Turnbull & Asser is the famous shirtmaker located on Jermyn Street, London."
+  },
+  {
+   "id": "sfq_6340",
+   "verdict": "CORRECT",
+   "why": "Ground lapis lazuli is the traditional source of ultramarine pigment."
+  },
+  {
+   "id": "sfq_12262",
+   "verdict": "CORRECT",
+   "why": "Pope John Paul II died on 2 April 2005."
+  },
+  {
+   "id": "sfq_12439",
+   "verdict": "CORRECT",
+   "why": "Hans Langsdorff commanded the pocket battleship Admiral Graf Spee, scuttled after the Battle of the River Plate in 1939."
+  },
+  {
+   "id": "odql_4141",
+   "verdict": "CORRECT",
+   "why": "Danae was Perseus's mother, impregnated by Zeus as a shower of gold."
+  },
+  {
+   "id": "wh_3390",
+   "verdict": "CORRECT",
+   "why": "Panzer is German for armour and named WWII German armoured divisions."
+  },
+  {
+   "id": "odql_13299",
+   "verdict": "INCORRECT",
+   "why": "The 1941 Anglo-Soviet invasion of Iran was by Britain and the Soviet Union, not Iraq."
+  },
+  {
+   "id": "sfq_11272",
+   "verdict": "INCORRECT",
+   "why": "Laila Morse is the sister of Gary Oldman, not Tom Cruise."
+  },
+  {
+   "id": "wh_430",
+   "verdict": "CORRECT",
+   "why": "Bela Bartok composed both Duke Bluebeard's Castle and The Wooden Prince."
+  },
+  {
+   "id": "jp_1806",
+   "verdict": "CORRECT",
+   "why": "A hafidh is someone who has memorized the entire Quran."
+  },
+  {
+   "id": "sfq_20357",
+   "verdict": "CORRECT",
+   "why": "OPEC's five founders first met in Baghdad in September 1960."
+  },
+  {
+   "id": "qw_879",
+   "verdict": "INCORRECT",
+   "why": "That describes John Paul Jones; Sir John Franklin was an English Arctic explorer."
+  },
+  {
+   "id": "odql_4052",
+   "verdict": "CORRECT",
+   "why": "Wanderers FC won the inaugural FA Cup in 1872."
+  },
+  {
+   "id": "bb_7724",
+   "verdict": "INCORRECT",
+   "why": "Gooney bird is a colloquial name for the albatross, not the penguin."
+  },
+  {
+   "id": "bb_5126",
+   "verdict": "CORRECT",
+   "why": "A substance that accelerates a reaction and is recovered unchanged is a catalyst."
+  },
+  {
+   "id": "jp_3165",
+   "verdict": "CORRECT",
+   "why": "Kim is by far the most common Korean surname (~20% of the population)."
+  },
+  {
+   "id": "qg_2992",
+   "verdict": "INCORRECT",
+   "why": "Sammy Hagar's song is \"I Can't Drive 55\" \u2014 he can't drive 55 (mph), not \"a car\"."
+  },
+  {
+   "id": "sfq_23723",
+   "verdict": "INCORRECT",
+   "why": "Marc Bolland, the Dutch-born CEO, headed Marks & Spencer (after Morrisons), not H&M."
+  },
+  {
+   "id": "odql_4856",
+   "verdict": "INCORRECT",
+   "why": "The youngest pope ever was Benedict IX (elected as a teenager); John Paul II was only the youngest of the 20th century."
+  },
+  {
+   "id": "sfq_11352",
+   "verdict": "INCORRECT",
+   "why": "Athens is the capital of Greece, so it cannot be a non-capital host; the intended answer is Sydney 2000 (or Rio 2016 post-dating the quiz)."
+  },
+  {
+   "id": "dpql_4754",
+   "verdict": "CORRECT",
+   "why": "Bruce Springsteen's famous nickname is 'The Boss'."
+  },
+  {
+   "id": "sfq_19212",
+   "verdict": "CORRECT",
+   "why": "Both Honky Ch\u00e2teau (1972) and Sleeping with the Past (1989) are Elton John albums."
+  },
+  {
+   "id": "qg_2312",
+   "verdict": "CORRECT",
+   "why": "Apollo 11 launched July 16, 1969 and achieved the first crewed moon landing."
+  },
+  {
+   "id": "dpql_5368",
+   "verdict": "CORRECT",
+   "why": "The pituitary is the 'master gland' that controls hormone release from other endocrine glands."
+  },
+  {
+   "id": "sfq_1375",
+   "verdict": "INCORRECT",
+   "why": "Ivan IV (the Terrible) was crowned first Tsar of all Russia in 1547; Peter the Great was the first Emperor."
+  },
+  {
+   "id": "bb_9298",
+   "verdict": "CORRECT",
+   "why": "Edward FitzGerald published his celebrated English translation of the Rubaiyat in 1859."
+  },
+  {
+   "id": "odql_11788",
+   "verdict": "CORRECT",
+   "why": "June 2010 saw the G8 summit in Huntsville and the G20 summit in Toronto, both in Canada."
+  },
+  {
+   "id": "odql_5824",
+   "verdict": "CORRECT",
+   "why": "Peter Parker is the alter ego of Spider-Man; 'Spiderman' spelling variance is immaterial."
+  },
+  {
+   "id": "qw_4403",
+   "verdict": "CORRECT",
+   "why": "The alpaca is the domesticated Andean camelid resembling a small llama, herded at high altitude and bred for its fleece fibre."
+  },
+  {
+   "id": "qw_555",
+   "verdict": "CORRECT",
+   "why": "Margaret Rutherford played Agatha Christie's Miss Marple in four MGM films in the 1960s."
+  },
+  {
+   "id": "bb_7368",
+   "verdict": "INCORRECT",
+   "why": "Faye Turney was a Royal Navy sailor (captured by Iran in 2007), not a member of the Royal Air Force."
+  },
+  {
+   "id": "qg_762",
+   "verdict": "CORRECT",
+   "why": "The laryngeal prominence is commonly known as the Adam's apple."
+  },
+  {
+   "id": "sfq_8071",
+   "verdict": "INCORRECT",
+   "why": "Element 74, formerly called Wolfram, is tungsten; ruthenium is element 44."
+  },
+  {
+   "id": "sfq_3028",
+   "verdict": "INCORRECT",
+   "why": "Edward VII's 1902 coronation was postponed because of appendicitis (requiring surgery), not typhoid."
+  },
+  {
+   "id": "sfq_17020",
+   "verdict": "CORRECT",
+   "why": "The Burj Khalifa (about 830 m) is in Dubai."
+  },
+  {
+   "id": "odql_12046",
+   "verdict": "INCORRECT",
+   "why": "The specific name of the straw basket used to keep bees is a 'skep'; 'beehive' is the generic structure, not the basket's name the question asks for."
+  },
+  {
+   "id": "qw_9163",
+   "verdict": "INCORRECT",
+   "why": "Princess Beatrice was born 8 August 1988; Prince William was born 21 June 1982."
+  },
+  {
+   "id": "wh_2212",
+   "verdict": "INCORRECT",
+   "why": "Henry Campbell-Bannerman (17-letter surname) had the longest surname of 20th-century British PMs; Churchill is only 9 letters."
+  },
+  {
+   "id": "qg_1107",
+   "verdict": "CORRECT",
+   "why": "Muhammad Ali was stripped of his heavyweight titles after refusing induction into the US Army in April 1967."
+  },
+  {
+   "id": "odql_11754",
+   "verdict": "INCORRECT",
+   "why": "The Thrilla in Manila (1975) was Ali vs Joe Frazier; Foreman fought Ali in the Rumble in the Jungle."
+  },
+  {
+   "id": "qb_8367",
+   "verdict": "INCORRECT",
+   "why": "Vincent Eugene Craddock was the birth name of Gene Vincent, not Elvis Presley."
+  },
+  {
+   "id": "bb_5703",
+   "verdict": "INCORRECT",
+   "why": "The ~$6bn 2015 fines on those six banks were for rigging the foreign exchange (forex/currency) market, not Libor."
+  },
+  {
+   "id": "qw_15635",
+   "verdict": "CORRECT",
+   "why": "JFK was well documented to have Addison's disease."
+  },
+  {
+   "id": "qb_5694",
+   "verdict": "INCORRECT",
+   "why": "The most powerful piece is the Queen, not the King."
+  },
+  {
+   "id": "sfq_1385",
+   "verdict": "CORRECT",
+   "why": "Encephalo- means brain; an encephalogram images the brain."
+  },
+  {
+   "id": "qw_2634",
+   "verdict": "CORRECT",
+   "why": "The Masters has been played at Augusta National since 1934."
+  },
+  {
+   "id": "odql_7185",
+   "verdict": "INCORRECT",
+   "why": "'Hitman' was Thomas Hearns (also Ricky Hatton); Tyson was 'Iron Mike'."
+  },
+  {
+   "id": "odql_9194",
+   "verdict": "CORRECT",
+   "why": "All three are high-fidelity audio equipment makers."
+  },
+  {
+   "id": "dpql_3312",
+   "verdict": "INCORRECT",
+   "why": "Pugwash's enemy, captain of the Flying Dustman, was Cut-Throat Jake."
+  },
+  {
+   "id": "qz_2822",
+   "verdict": "INCORRECT",
+   "why": "The third convict was played by Humphrey Bogart, not Sidney Poitier."
+  },
+  {
+   "id": "qf_995",
+   "verdict": "CORRECT",
+   "why": "The femur is the standard quiz answer for the strongest/hardest bone."
+  },
+  {
+   "id": "sfq_12193",
+   "verdict": "INCORRECT",
+   "why": "Dulcie Gray was married to actor Michael Denison, not Olivier."
+  },
+  {
+   "id": "qb_6233",
+   "verdict": "CORRECT",
+   "why": "His mother was Stanley Ann Dunham, known as Ann."
+  },
+  {
+   "id": "sfq_25784",
+   "verdict": "CORRECT",
+   "why": "Mary Surratt was hanged in 1865 for conspiring in the assassination of President Abraham Lincoln."
+  },
+  {
+   "id": "wh_122",
+   "verdict": "INCORRECT",
+   "why": "The Chester Cup is run over about 2 miles 2.5 furlongs, i.e. 18 complete furlongs, not 10."
+  },
+  {
+   "id": "qz_3432",
+   "verdict": "CORRECT",
+   "why": "Coco Chanel is credited with popularising the little black dress in the 1920s."
+  },
+  {
+   "id": "sfq_21241",
+   "verdict": "INCORRECT",
+   "why": "Community Chest is not a station; the first station after Go on the UK board is King's Cross (Reading Railroad in the US version)."
+  },
+  {
+   "id": "odql_5021",
+   "verdict": "CORRECT",
+   "why": "Sri Lanka produces the vast majority of true cinnamon, which is native to the island."
+  },
+  {
+   "id": "bb_4415",
+   "verdict": "INCORRECT",
+   "why": "The New York City Subway is busier, making Mexico City's metro the second busiest in North America, so the answer is one, not none."
+  },
+  {
+   "id": "bb_1467",
+   "verdict": "CORRECT",
+   "why": "Benesh Movement Notation is a written system for recording dance/human movement."
+  },
+  {
+   "id": "odql_12340",
+   "verdict": "CORRECT",
+   "why": "The elephant is the traditional emblem of the US Republican Party."
+  },
+  {
+   "id": "jp_1047",
+   "verdict": "CORRECT",
+   "why": "Banksy is known for graffiti/street art."
+  },
+  {
+   "id": "odql_10315",
+   "verdict": "CORRECT",
+   "why": "The intended quiz answer is The Yardbirds \u2014 Page was a member and the band that became Led Zeppelin (with Jones) first performed as the New Yardbirds."
+  },
+  {
+   "id": "bt_3652",
+   "verdict": "CORRECT",
+   "why": "Christine in the 1983 film is a 1958 Plymouth Fury \u2014 a car."
+  },
+  {
+   "id": "dpql_259",
+   "verdict": "CORRECT",
+   "why": "The Battle of Austerlitz, 2 December 1805, was Napoleon's victory over the Austro-Russian army."
+  },
+  {
+   "id": "odql_11822",
+   "verdict": "CORRECT",
+   "why": "Amundsen died in June 1928 during the search for Nobile's airship Italia."
+  },
+  {
+   "id": "sfq_5321",
+   "verdict": "CORRECT",
+   "why": "Dick Fosbury debuted the flop at the 1968 Mexico City Olympics."
+  },
+  {
+   "id": "qg_3828",
+   "verdict": "CORRECT",
+   "why": "NOVA is the WGBH-produced PBS science series airing since 1974."
+  },
+  {
+   "id": "qz_63",
+   "verdict": "CORRECT",
+   "why": "Oprah's film debut was as Sofia in The Color Purple (1985)."
+  },
+  {
+   "id": "odql_982",
+   "verdict": "INCORRECT",
+   "why": "Zhou Enlai was Premier (Prime Minister) 1949-1976; Mao was Chairman, not Premier."
+  },
+  {
+   "id": "bb_4020",
+   "verdict": "INCORRECT",
+   "why": "The term is 'highball'; a Bloody Mary is neither fizzy nor slang for traveling fast."
+  },
+  {
+   "id": "qw_1505",
+   "verdict": "INCORRECT",
+   "why": "Uneven bars are about 2.4 m (roughly 8 feet) long, not 25 meters."
+  },
+  {
+   "id": "wh_2893",
+   "verdict": "INCORRECT",
+   "why": "The eight-letter answer is 'pyorrhea'; gingivitis has ten letters and is gum inflammation without purulent socket involvement or tooth loosening."
+  },
+  {
+   "id": "sfq_829",
+   "verdict": "INCORRECT",
+   "why": "Bromine is the only halogen liquid at room temperature; iodine is a solid."
+  },
+  {
+   "id": "bb_1010",
+   "verdict": "CORRECT",
+   "why": "Staines, home of Ali G, rebranded as Staines-upon-Thames in 2012."
+  },
+  {
+   "id": "tb_1447",
+   "verdict": "CORRECT",
+   "why": "Portugal handed Macau over to China in December 1999."
+  },
+  {
+   "id": "bb_5336",
+   "verdict": "CORRECT",
+   "why": "The cabasa is a percussion instrument."
+  },
+  {
+   "id": "odql_8567",
+   "verdict": "INCORRECT",
+   "why": "The Austin 7 (Austin Seven) carried the nicknames 'Baby Austin' and 'The Tiddler', not the Mini."
+  },
+  {
+   "id": "bt_4101",
+   "verdict": "CORRECT",
+   "why": "The Donington Collection was a museum of Grand Prix racing cars, so 'a collection of cars' is factually right if less specific."
+  },
+  {
+   "id": "dpql_5071",
+   "verdict": "CORRECT",
+   "why": "Seasons in the Sun topped the UK chart for Terry Jacks in 1974 and for Westlife in December 1999."
+  },
+  {
+   "id": "tc_954",
+   "verdict": "CORRECT",
+   "why": "Armstrong stepped onto the Moon on July 20, 1969 (US time), the conventionally cited date."
+  },
+  {
+   "id": "bb_9463",
+   "verdict": "INCORRECT",
+   "why": "Carpology is the study of fruits and seeds, not fish (that is ichthyology)."
+  },
+  {
+   "id": "bb_6668",
+   "verdict": "CORRECT",
+   "why": "Self-actualization tops Maslow's original five-level hierarchy."
+  },
+  {
+   "id": "odql_1641",
+   "verdict": "CORRECT",
+   "why": "Tumbrils (tumbrels) were the open carts that carried the condemned to the guillotine."
+  },
+  {
+   "id": "bt_2064",
+   "verdict": "CORRECT",
+   "why": "Titanic's maiden voyage was Southampton to New York City."
+  },
+  {
+   "id": "qf_656",
+   "verdict": "INCORRECT",
+   "why": "Rimsky-Korsakov's Tale of Tsar Saltan contains 'Flight of the Bumblebee'; 'The Swan' is from Saint-Saens' Carnival of the Animals."
+  },
+  {
+   "id": "odql_8011",
+   "verdict": "CORRECT",
+   "why": "Thabo Mbeki succeeded Nelson Mandela as South African president in June 1999."
+  },
+  {
+   "id": "qb_10189",
+   "verdict": "CORRECT",
+   "why": "The Purple Heart bears a profile of George Washington."
+  },
+  {
+   "id": "qg_1847",
+   "verdict": "CORRECT",
+   "why": "OJ Simpson was in a white Ford Bronco during the June 17, 1994 chase."
+  },
+  {
+   "id": "bb_4656",
+   "verdict": "CORRECT",
+   "why": "Beaujolais Nouveau, made from Gamay grapes, is released the third Thursday of November."
+  },
+  {
+   "id": "bb_6520",
+   "verdict": "INCORRECT",
+   "why": "The period immediately after the Big Bang is the Planck epoch/era; 'The Big Bang' is circular and not the term for the period after it."
+  },
+  {
+   "id": "qz_5236",
+   "verdict": "INCORRECT",
+   "why": "The Bond Bug was a small British three-wheeled sports car built 1970-1974, not a spying device."
+  },
+  {
+   "id": "sfq_10277",
+   "verdict": "INCORRECT",
+   "why": "The band Right Said Fred took its name from the Bernard Cribbins hit 'Right Said Fred'; The Wurzels did not."
+  },
+  {
+   "id": "sfq_24950",
+   "verdict": "CORRECT",
+   "why": "Marble Arch in London was designed by John Nash."
+  },
+  {
+   "id": "dpql_5473",
+   "verdict": "CORRECT",
+   "why": "Andy Murray married his childhood sweetheart Kim Sears in April 2015."
+  },
+  {
+   "id": "bb_297",
+   "verdict": "CORRECT",
+   "why": "Jenny Shipley became New Zealand's first female prime minister in 1997."
+  },
+  {
+   "id": "sfq_1981",
+   "verdict": "INCORRECT",
+   "why": "Southport artist Frank Hampson created Dan Dare (1950); Dennis the Menace was created by David Law."
+  },
+  {
+   "id": "wh_3204",
+   "verdict": "CORRECT",
+   "why": "Stephen Crane's The Red Badge of Courage is set during the American Civil War."
+  },
+  {
+   "id": "qw_8332",
+   "verdict": "INCORRECT",
+   "why": "Doggett's Coat and Badge is a rowing (sculling) race on the Thames, not the London Marathon."
+  },
+  {
+   "id": "tc_2818",
+   "verdict": "CORRECT",
+   "why": "Giant kelp is the seaweed famed for lengths up to ~100 m and is harvested/farmed for alginates."
+  },
+  {
+   "id": "odql_2344",
+   "verdict": "INCORRECT",
+   "why": "The island discovered in 1471 on the saint's feast day is Sao Tome (St Thomas's Day); Saint Helena was discovered in 1502."
+  },
+  {
+   "id": "qb_107",
+   "verdict": "INCORRECT",
+   "why": "Engelbart's 'X-Y Position Indicator for a Display System' patent is the computer mouse, not the cursor."
+  },
+  {
+   "id": "qb_8445",
+   "verdict": "CORRECT",
+   "why": "Subcutaneous means under the skin, and the skin is an organ."
+  },
+  {
+   "id": "sfq_5775",
+   "verdict": "CORRECT",
+   "why": "A shapka is a Russian (typically fur) hat, so 'a hat' is factually correct."
+  },
+  {
+   "id": "tc_1324",
+   "verdict": "INCORRECT",
+   "why": "Woody Herman (b. 1913) formed his first orchestra in 1936, making him 23, not 21."
+  },
+  {
+   "id": "tc_2280",
+   "verdict": "INCORRECT",
+   "why": "The Black Hills lie between the Cheyenne and Belle Fourche rivers; 'Missouri' names the wrong river."
+  },
+  {
+   "id": "qg_3321",
+   "verdict": "CORRECT",
+   "why": "Michael Faraday was born 22 Sept 1791 and the farad (SI capacitance unit) is named for him; he built early electromagnets per the question's framing."
+  },
+  {
+   "id": "qb_2975",
+   "verdict": "CORRECT",
+   "why": "Marie Antoinette was born in Vienna, Austria."
+  },
+  {
+   "id": "qb_930",
+   "verdict": "CORRECT",
+   "why": "Baton Rouge is the capital of Louisiana."
+  },
+  {
+   "id": "bb_1774",
+   "verdict": "CORRECT",
+   "why": "Sesame seeds are genuinely a very good source of zinc (~7-8 mg/100g), so the fact stands even though calcium/copper are also common answers."
+  },
+  {
+   "id": "qw_7349",
+   "verdict": "CORRECT",
+   "why": "Summing the cumulative gifts over all twelve days gives 364 total gifts."
+  },
+  {
+   "id": "wh_3524",
+   "verdict": "CORRECT",
+   "why": "Aldi was founded in Essen, Germany, by the Albrecht brothers."
+  },
+  {
+   "id": "jp_3826",
+   "verdict": "CORRECT",
+   "why": "Hitler's toothbrush mustache is famously similar to Chaplin's."
+  },
+  {
+   "id": "qw_7793",
+   "verdict": "CORRECT",
+   "why": "Las Vegas is Spanish for 'the meadows'."
+  },
+  {
+   "id": "sfq_8782",
+   "verdict": "CORRECT",
+   "why": "Espiritu Santo is the largest island of the Republic of Vanuatu."
+  },
+  {
+   "id": "qw_15432",
+   "verdict": "CORRECT",
+   "why": "John Wayne's lifelong nickname was 'Duke'."
+  },
+  {
+   "id": "odql_10070",
+   "verdict": "INCORRECT",
+   "why": "Superintendent Mullett in A Touch of Frost was played by Bruce Alexander; Roy Barraclough is a different actor."
+  },
+  {
+   "id": "odql_6763",
+   "verdict": "CORRECT",
+   "why": "Larkspur is the common name for plants of the genus Delphinium."
+  },
+  {
+   "id": "dpql_1410",
+   "verdict": "CORRECT",
+   "why": "Luncheon of the Boating Party (1881) was painted by Pierre-Auguste Renoir."
+  },
+  {
+   "id": "qg_4615",
+   "verdict": "CORRECT",
+   "why": "The Grinch tried to steal Christmas from Whoville in Dr. Seuss's story; missing article is fine."
+  },
+  {
+   "id": "odql_7143",
+   "verdict": "INCORRECT",
+   "why": "The rhyme usually cited is Humpty Dumpty; 'The King's Horses' is a line/song title, not the nursery rhyme's name."
+  },
+  {
+   "id": "qw_1851",
+   "verdict": "INCORRECT",
+   "why": "Sinn F\u00e9in means 'We Ourselves' (often rendered 'Ourselves Alone'), not 'New Force'."
+  },
+  {
+   "id": "odql_3668",
+   "verdict": "CORRECT",
+   "why": "Ilich Ram\u00edrez S\u00e1nchez, the 1970s terrorist, was known as Carlos the Jackal."
+  },
+  {
+   "id": "qb_4157",
+   "verdict": "INCORRECT",
+   "why": "The craft of hand-making cricket bats is called podshaving, not whittling."
+  },
+  {
+   "id": "bb_3038",
+   "verdict": "CORRECT",
+   "why": "Gunwale (gun wale) is the top edge of a boat's side, named for supporting naval guns."
+  },
+  {
+   "id": "qf_1082",
+   "verdict": "CORRECT",
+   "why": "Everton beat Rapid Vienna 3-1 in the European Cup Winners' Cup final in Rotterdam in 1985."
+  },
+  {
+   "id": "wh_4381",
+   "verdict": "CORRECT",
+   "why": "Paul Scott's four novels ending with A Division of the Spoils are known as The Raj Quartet."
+  },
+  {
+   "id": "bb_2636",
+   "verdict": "CORRECT",
+   "why": "Cartier named Mount Royal ('Mont Royal') in 1535, from which Montreal takes its name."
+  },
+  {
+   "id": "sfq_8662",
+   "verdict": "CORRECT",
+   "why": "Pan is classically depicted as a man with goat horns, legs, tail, and pointed ears, so the answer factually fits the description (satyr would also fit)."
+  },
+  {
+   "id": "sfq_4327",
+   "verdict": "CORRECT",
+   "why": "Peter walked toward Jesus on the water and began to sink (Matthew 14:28-31)."
+  },
+  {
+   "id": "odql_7869",
+   "verdict": "INCORRECT",
+   "why": "Postcards from Paradise (March 2015) is Ringo Starr's eighteenth studio album, not Bruno Mars's."
+  },
+  {
+   "id": "sfq_8164",
+   "verdict": "INCORRECT",
+   "why": "Wainwright's ashes were scattered on Haystacks (by Innominate Tarn), not Helvellyn."
+  },
+  {
+   "id": "bb_4025",
+   "verdict": "INCORRECT",
+   "why": "Wellington's 'Sparrowhawks, Ma'am' remark concerned sparrows in the Crystal Palace (Great Exhibition, 1851), not the Houses of Parliament."
+  },
+  {
+   "id": "bb_8494",
+   "verdict": "CORRECT",
+   "why": "Hepatic means relating to the liver."
+  },
+  {
+   "id": "odql_824",
+   "verdict": "INCORRECT",
+   "why": "The last before Brown was Sir Alec Douglas-Home (Kinross and West Perthshire); Wilson sat for Huyton in England."
+  },
+  {
+   "id": "qw_15580",
+   "verdict": "CORRECT",
+   "why": "Both songs were written by Cole Porter."
+  },
+  {
+   "id": "bt_3594",
+   "verdict": "CORRECT",
+   "why": "The UK General Strike took place in May 1926."
+  },
+  {
+   "id": "sfq_10482",
+   "verdict": "CORRECT",
+   "why": "Love Never Dies is Lloyd Webber's sequel to The Phantom of the Opera; missing article is immaterial."
+  },
+  {
+   "id": "bb_2939",
+   "verdict": "INCORRECT",
+   "why": "Chemistry is 'the central science'; mathematics is named in the question as a thing it connects, not the answer."
+  },
+  {
+   "id": "sfq_23885",
+   "verdict": "INCORRECT",
+   "why": "Moon and Source Code were directed by Duncan Jones, son of David Bowie; Kosinski directed Tron: Legacy/Oblivion."
+  },
+  {
+   "id": "jp_2463",
+   "verdict": "CORRECT",
+   "why": "Portuguese is Brazil's official and overwhelmingly most-spoken language."
+  },
+  {
+   "id": "bb_8142",
+   "verdict": "INCORRECT",
+   "why": "It was Charlie Chaplin, whose stolen coffin was recovered in 1978 and reburied under concrete in Switzerland; Elvis is buried at Graceland."
+  },
+  {
+   "id": "sfq_4513",
+   "verdict": "CORRECT",
+   "why": "Nighthawks depicts a late-night diner in New York City (inspired by a Greenwich Village restaurant), so NYC is a factually correct setting."
+  },
+  {
+   "id": "qb_3822",
+   "verdict": "CORRECT",
+   "why": "Krakatoa's 1883 eruption is widely cited as the largest explosion in recorded history."
+  },
+  {
+   "id": "bb_6489",
+   "verdict": "CORRECT",
+   "why": "Flying Scotsman was the first steam locomotive officially recorded at 100 mph in 1934."
+  },
+  {
+   "id": "sfq_20945",
+   "verdict": "CORRECT",
+   "why": "The first UNGA session convened January 1946 at Methodist Central Hall, London."
+  },
+  {
+   "id": "sfq_5384",
+   "verdict": "CORRECT",
+   "why": "Queen Anne founded Ascot Racecourse in 1711."
+  },
+  {
+   "id": "odql_8108",
+   "verdict": "CORRECT",
+   "why": "The Second Triumvirate of 43 BC was Octavian, Mark Antony, and Lepidus."
+  },
+  {
+   "id": "sfq_20871",
+   "verdict": "INCORRECT",
+   "why": "Doc is the dwarf who wears spectacles in Disney's Snow White, not Grumpy."
+  },
+  {
+   "id": "qw_7381",
+   "verdict": "CORRECT",
+   "why": "Shania Twain (born Eilleen Regina Edwards) made Come On Over, the best-selling album by a female artist and in country music history."
+  },
+  {
+   "id": "qw_15440",
+   "verdict": "INCORRECT",
+   "why": "The horse described (foaled 1925 out of Marsa by Phar Lap's sire Night Raid, won 1929 Melbourne Cup and Cox Plate) is Nightmarch, not Phar Lap."
+  },
+  {
+   "id": "sfq_9480",
+   "verdict": "CORRECT",
+   "why": "Air Vice-Marshal is the RAF equivalent of the Army rank of Major General."
+  },
+  {
+   "id": "odql_547",
+   "verdict": "CORRECT",
+   "why": "Both Kiel (the capital) and L\u00fcbeck are cities in Schleswig-Holstein."
+  },
+  {
+   "id": "odql_1078",
+   "verdict": "INCORRECT",
+   "why": "The Post Office Surveyor novelist credited with introducing the pillar box was Anthony Trollope, not Charles Dickens."
+  },
+  {
+   "id": "bb_7844",
+   "verdict": "CORRECT",
+   "why": "Heath Ledger, star of Brokeback Mountain, died on 22 January 2008."
+  },
+  {
+   "id": "bb_1170",
+   "verdict": "CORRECT",
+   "why": "Osmic pertains to odors/the sense of smell."
+  },
+  {
+   "id": "bb_4604",
+   "verdict": "CORRECT",
+   "why": "A frontispiece is the illustration facing the title page at the front of a book."
+  },
+  {
+   "id": "odql_6831",
+   "verdict": "CORRECT",
+   "why": "The Rowley Mile and the 'Home of Racing' branding belong to Newmarket racecourse."
+  },
+  {
+   "id": "bb_6943",
+   "verdict": "CORRECT",
+   "why": "Gluteus maximus, gluteus medius, and piriformis are muscles of the buttocks/gluteal region."
+  },
+  {
+   "id": "qg_812",
+   "verdict": "INCORRECT",
+   "why": "\"Obey your thirst\" was Sprite's slogan, not Coca-Cola's."
+  }
+ ],
+ "disagreements": []
+}
