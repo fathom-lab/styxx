@@ -569,3 +569,20 @@ class TestAuditClaimRetrievalArm:
         )
         assert result.retrieval is None
         assert "retrieval-fallible" not in result.scope_warnings
+
+
+def test_version_claim_resolves_dynamic_version_pointer():
+    """Dogfood 2026-07-04 regression: this repo uses PEP 621 dynamic versioning (pyproject
+    `dynamic = ["version"]` -> styxx/_version.py). The version checker used to FALSE-FAIL a TRUE
+    version claim here ("no version line found") — a false accusation by a shipped auditor on its
+    own repo. The checker must follow the setuptools attr pointer to the literal."""
+    from pathlib import Path
+    from styxx.agent_audit import AgentClaimAuditor, extract_claims
+    from styxx._version import __version__
+    repo = Path(__file__).resolve().parent.parent
+    rep = extract_claims(f"The version is now {__version__}. The version is now 0.0.0-nope.")
+    # first claim (true) must verify; a wrong version must fail WITH the resolved actual in evidence
+    results = AgentClaimAuditor(repo).run(rep.claims)
+    true_claims = [r for r in results if r.expected and str(r.actual) == "True"]
+    assert true_claims, f"true dynamic-version claim did not verify: {[(r.expected, r.actual, r.evidence) for r in results]}"
+    assert any("_version.py" in r.evidence for r in results), "evidence must show the dynamic resolution chain"

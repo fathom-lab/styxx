@@ -253,10 +253,28 @@ class _Checkers:
     def package_version_equals(self, repo: Path, *, path: str, version: str) -> tuple[bool, str]:
         text = self._safe_subpath(repo, path).read_text(encoding="utf-8", errors="replace")
         m = re.search(r'^\s*version\s*=\s*"([^"]+)"', text, re.MULTILINE)
-        if not m:
-            return False, f"{path}: no version line found"
-        actual = m.group(1)
-        return (actual == version), f"{path}: version={actual!r}, expected={version!r}"
+        if m:
+            actual = m.group(1)
+            return (actual == version), f"{path}: version={actual!r}, expected={version!r}"
+        # Dynamic versioning (PEP 621 `dynamic = ["version"]`): follow the setuptools attr pointer
+        # (version = {attr = "pkg._version.__version__"}) to the literal, exactly as a build would.
+        # Without this, a TRUE version claim on a dynamic-version repo (this one included) was
+        # falsely FAILED with "no version line found" — a false accusation, caught by dogfood 2026-07-04.
+        dyn = re.search(r'version\s*=\s*\{\s*attr\s*=\s*"(?P<attr>[\w.]+)"', text)
+        if dyn and re.search(r'^\s*dynamic\s*=\s*\[[^\]]*"version"', text, re.MULTILINE):
+            attr_path = dyn.group("attr")                       # e.g. styxx._version.__version__
+            mod_path, attr_name = attr_path.rsplit(".", 1)
+            rel = mod_path.replace(".", "/") + ".py"
+            try:
+                vtext = self._safe_subpath(repo, rel).read_text(encoding="utf-8", errors="replace")
+            except Exception as e:
+                return False, f"{path}: dynamic version points at {rel} which could not be read ({e})"
+            vm = re.search(rf'^\s*{re.escape(attr_name)}\s*=\s*["\']([^"\']+)["\']', vtext, re.MULTILINE)
+            if not vm:
+                return False, f"{rel}: no {attr_name} literal found (dynamic pointer from {path})"
+            actual = vm.group(1)
+            return (actual == version), f"{path} -> dynamic -> {rel}: version={actual!r}, expected={version!r}"
+        return False, f"{path}: no version line found (and no dynamic-version pointer)"
 
     def pdf_page_count_equals(self, repo: Path, *, path: str, n: int) -> tuple[bool, str]:
         from pypdf import PdfReader

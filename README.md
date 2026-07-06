@@ -142,7 +142,7 @@ register instruments on wordless input rather than folding an artifact into the 
 | **runtime — agent-side primitives.** | | |
 | `gate` | pre-flight refuse/confabulate verdict before you pay for the call | [docs/gate.md](docs/gate.md) |
 | `preflight` / `recover_posture` / `run_doctor` | draft audit · posture recovery across compaction · install health | offline, deterministic, no API key |
-| `audit_claim` / `agent_audit` / `extract_claims` | falsify an agent's self-report against the repo substrate — one-line CI merge gate (`styxx audit-claims pr_body.md`) | dogfooded on its own session report; caught a real authoring error ([tests/test_audit.py](tests/test_audit.py)) |
+| `audit_claim` / `agent_audit` / `extract_claims` | deterministic checks of an agent's self-report against the repo — a CLOSED template set (version / tag / file-contains / pdf shapes; the ceiling is the construct) — one-line CI merge gate (`styxx audit-claims pr_body.md`) | dogfooded on its own session reports; caught a real authoring error — and the 2026-07-04 dogfood caught both a breadth overclaim in this very row and a false-accusation bug on dynamic-version repos, both fixed ([tests/test_audit.py](tests/test_audit.py)) |
 
 what these are not: the register instruments cannot verify facts, read minds, or detect a confident
 lie with specifics. deception_v0 without a reference is a signature detector and says so. the
