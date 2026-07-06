@@ -2,76 +2,87 @@
  "main_id": {
   "fn": [
    "tb_805",
-   "sfq_24050",
    "qw_9842",
    "bb_9398",
    "qg_2312",
    "qw_2634",
-   "qf_995",
    "dpql_259",
    "sfq_5321",
    "bt_4101",
    "odql_1641",
    "wh_3204",
+   "bb_1774",
    "sfq_8662",
    "sfq_4513"
   ],
+  "fn_rate_pct": 12.6,
+  "fn_ci": [
+   7.5,
+   20.4
+  ],
   "fp": [
-   "odql_12046"
+   "odql_12046",
+   "qb_107"
+  ],
+  "fp_rate_pct": 1.4,
+  "fp_ci": [
+   0.4,
+   4.9
+  ],
+  "referent_ambiguous": [
+   "qb_6233"
+  ],
+  "judge1_overreach_rejected": [
+   "sfq_24050",
+   "qf_995"
   ],
   "n_false": 103,
   "n_true": 146,
-  "unsure_f": 0,
-  "unsure_t": 0,
+  "stage1_unsure": 0,
   "mech_acc": 58.6,
-  "corr_acc": 63.9,
-  "fn_ci": [
-   8.272350365983902,
-   21.530273331152795
-  ],
-  "fp_ci": [
-   0.1210066099070966,
-   3.777510223869371
-  ],
-  "accuracy_delta_points": 5.2
+  "corr_acc": 63.1,
+  "accuracy_delta_points": 4.5
  },
  "main_ood1": {
   "fn": [
-   "1074692",
    "1170670",
+   "3087683",
+   "5294538"
+  ],
+  "fn_rate_pct": 3.1,
+  "fn_ci": [
+   1.0,
+   8.6
+  ],
+  "fp": [],
+  "fp_rate_pct": 0.0,
+  "fp_ci": [
+   0,
+   18.4
+  ],
+  "referent_ambiguous": [
+   "1074692",
    "2235290",
    "2664757",
-   "3087683",
    "4078079",
    "5206135",
-   "5294538",
    "6170674",
    "6270618",
    "6363270"
   ],
-  "fp": [],
+  "judge1_overreach_rejected": [],
   "n_false": 98,
   "n_true": 17,
-  "unsure_f": 18,
-  "unsure_t": 0,
+  "stage1_unsure": 18,
   "mech_acc": 12.8,
-  "corr_acc": 21.1,
-  "fn_ci": [
-   6.384204220315411,
-   18.99010254627113
-  ],
-  "fp_ci": [
-   0,
-   18.432366037156456
-  ],
-  "accuracy_delta_points": 8.3
+  "corr_acc": 15.0,
+  "accuracy_delta_points": 2.2
  },
- "label_corrected_h1_robustness": {
-  "auroc": 0.5786,
-  "ci_lo": 0.5048,
-  "ci_hi": 0.6512,
-  "excludes_half": true,
-  "ci_lo_minus_half": 0.005,
-  "note": "pre-registered robustness check; prereg predicted null; FLIPPED \u2014 reported as surprise; H2/H3 untouched, keystone verdict stands"
+ "label_corrected_h1_v2": {
+  "auroc": 0.5687,
+  "ci_lo": 0.4951,
+  "ci_hi": 0.6415,
+  "excludes_half": false,
+  "note": "recomputed after CLEAN stage-2 (v1 stage-2 voided: fabricated inputs)"
  }
 }

@@ -1,0 +1,264 @@
+[
+ {
+  "id": "1074692",
+  "answer": "Drama",
+  "gold_sample": [
+   "power pop"
+  ],
+  "norm_answer": "drama",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "1170670",
+  "answer": "Catholic",
+  "gold_sample": [
+   "Catholic Church",
+   "Roman Catholic Church",
+   "Church"
+  ],
+  "norm_answer": "catholic",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "2235290",
+  "answer": "Qatar",
+  "gold_sample": [
+   "Afghanistan",
+   "af",
+   "\ud83c\udde6\ud83c\uddeb"
+  ],
+  "norm_answer": "qatar",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "2664757",
+  "answer": "Ludwig van Beethoven",
+  "gold_sample": [
+   "Carl Nielsen",
+   "Carl August Nielsen"
+  ],
+  "norm_answer": "ludwig van beethoven",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "3087683",
+  "answer": "M. Night Shyamalan",
+  "gold_sample": [
+   "Bert Haanstra",
+   "Albert Haanstra"
+  ],
+  "norm_answer": "m night shyamalan",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "4078079",
+  "answer": "Horror",
+  "gold_sample": [
+   "alternative rock",
+   "alternative music",
+   "alt-rock"
+  ],
+  "norm_answer": "horror",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "5206135",
+  "answer": "Patty Jenkins",
+  "gold_sample": [
+   "Perry Lang"
+  ],
+  "norm_answer": "patty jenkins",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "5294538",
+  "answer": "Action",
+  "gold_sample": [
+   "action role-playing game",
+   "action role-playing video game",
+   "action RPG"
+  ],
+  "norm_answer": "action",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "6170674",
+  "answer": "Drama",
+  "gold_sample": [
+   "Britpop",
+   "British pop",
+   "Brit-pop"
+  ],
+  "norm_answer": "drama",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "6270618",
+  "answer": "Catholic",
+  "gold_sample": [
+   "Catholic Church",
+   "Roman Catholic Church",
+   "Church"
+  ],
+  "norm_answer": "catholic",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "6363270",
+  "answer": "Philip II of Macedon",
+  "gold_sample": [
+   "Lysimachus"
+  ],
+  "norm_answer": "philip ii of macedon",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "tb_805",
+  "answer": "Dracula",
+  "gold_sample": [
+   "Bram Stoker's Dracula",
+   "Bram Stoker's Dracula (1992 film)",
+   "Bram Stoker's Dracula (film)"
+  ],
+  "norm_answer": "dracula",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "sfq_24050",
+  "answer": "Star Trek",
+  "gold_sample": [
+   "Mr. Spock",
+   "Mr Spock",
+   "Spock, son of Sarek"
+  ],
+  "norm_answer": "star trek",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "qw_9842",
+  "answer": "Comedy",
+  "gold_sample": [
+   "Standup comedy",
+   "Stand up comedy",
+   "Stand-up Comedy"
+  ],
+  "norm_answer": "comedy",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "bb_9398",
+  "answer": "Turnbull and Asser",
+  "gold_sample": [
+   "Thomas Pink",
+   "thomas pink"
+  ],
+  "norm_answer": "turnbull and asser",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "qg_2312",
+  "answer": "Apollo 11",
+  "gold_sample": [
+   "11",
+   "eleven"
+  ],
+  "norm_answer": "apollo 11",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "qw_2634",
+  "answer": "Augusta National Golf Club",
+  "gold_sample": [
+   "Augusta National Golf Club in Augusta, Georgia",
+   "augusta national golf club in augusta georgia"
+  ],
+  "norm_answer": "augusta national golf club",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "qf_995",
+  "answer": "The femur",
+  "gold_sample": [
+   "Jawbone",
+   "Jaw bones",
+   "Jaw"
+  ],
+  "norm_answer": "femur",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "dpql_259",
+  "answer": "Austerlitz",
+  "gold_sample": [
+   "Battle of Austerlitz",
+   "Battle of Slavkov",
+   "Battle of Three Emperors"
+  ],
+  "norm_answer": "austerlitz",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "sfq_5321",
+  "answer": "1968",
+  "gold_sample": [
+   "MEXICO 1968",
+   "mexico 1968"
+  ],
+  "norm_answer": "1968",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "bt_4101",
+  "answer": "a collection of cars",
+  "gold_sample": [
+   "Grand Prix racing cars",
+   "grand prix racing cars"
+  ],
+  "norm_answer": "collection of cars",
+  "mechanism": "ALIAS-GAP"
+ },
+ {
+  "id": "odql_1641",
+  "answer": "tumbrils",
+  "gold_sample": [
+   "TUMBRELS",
+   "Tumbrel",
+   "Tumbrels"
+  ],
+  "norm_answer": "tumbrils",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "wh_3204",
+  "answer": "Civil War",
+  "gold_sample": [
+   "AMERICAN CIVIL WAR",
+   "Civil War in the United States",
+   "USA civil war"
+  ],
+  "norm_answer": "civil war",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "sfq_8662",
+  "answer": "Pan",
+  "gold_sample": [
+   "A SATYR",
+   "Saturos",
+   "Baby satyr"
+  ],
+  "norm_answer": "pan",
+  "mechanism": "SPECIFICITY"
+ },
+ {
+  "id": "sfq_4513",
+  "answer": "New York City",
+  "gold_sample": [
+   "A DINER",
+   "The Diner",
+   "Dinner/Archive 1"
+  ],
+  "norm_answer": "new york city",
+  "mechanism": "ALIAS-GAP"
+ }
+]

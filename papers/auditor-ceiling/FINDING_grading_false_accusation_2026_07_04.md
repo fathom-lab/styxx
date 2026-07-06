@@ -1,63 +1,54 @@
-# FINDING — the auditor's ceiling: mechanical QA grading false-accuses at 11–14%
+# FINDING v2 — the auditor's ceiling: TriviaQA grading false-accuses at ~13%; PopQA's gap is ambiguity
 
-**Fathom Lab · 2026-07-04 · prereg: `PREREG_grading_false_accusation_2026_07_04.md` (frozen before any row
-was re-judged, `3d7e0a7`). Status: PENDING KG-HUMAN — flobi's seal of the 26 confirmed disagreements
-(`KG_HUMAN_seal_table.md`) gates every claim below except the TruthfulQA count, which needs no judge.**
+**Fathom Lab · 2026-07-04/05 · prereg `3d7e0a7` (frozen before any judging). v2 SUPERSEDES v1 of this file.
+Status: PENDING KG-HUMAN — flobi's seal of the 18 confirmed rows (`KG_HUMAN_seal_table.md`) gates every
+judged claim; the TruthfulQA count needs no judge.**
 
-## Headline (double-blind-confirmed, per the frozen protocol)
+## v1 → v2 correction (read first — this is the load-bearing disclosure)
 
-| benchmark | false accusations (mech=False, both blind judges say CORRECT) | false credit | accuracy: mechanical → corrected |
-|---|---|---|---|
-| **TriviaQA-ID** (n=249) | **14/103 = 13.6%**, Wilson95 [8.3, 21.5] | 1/146 = 0.7% [0.1, 3.8] — "beehive" credited where the answer is *skep* | 58.6% → **63.9%** (+5.2 pts) |
-| **PopQA-rare** (n=133) | **11/98 = 11.2%**, Wilson95 [6.4, 19.0] (18 UNSURE excluded-and-counted) | 0/17 [0.0, 18.4] | 12.8% → **21.1%** (+8.3 pts — a 65% relative understatement) |
-| **TruthfulQA-gen** (n=250, no judge needed) | — | — | **242/250 = 96.8% mechanically ungradeable** by its own correct/incorrect-list matching |
+v1's confirmation stage was **void: the operator hand-typed the second-judge inputs and paraphrased all 18
+TriviaQA questions from memory** — some inverted the question's meaning, one added answer options that don't
+exist in the dataset. The corruption was caught by a row-level mechanism autopsy BEFORE the human seal
+(prompt-hash arbitration cleared the data pipeline; the fabrication was isolated to the stage-2 prompt text).
+Stage 2 was re-run clean: judges read verbatim rows from the committed file and echo each question back
+(`q_echo`, integrity-checked), under a tightened rule — judge the question AS WRITTEN, non-responsive answers
+are wrong, under-determined referents are UNSURE. Consequences of the correction:
 
-Both FN confidence intervals exclude zero decisively. The confirmed false accusations are not edge cases —
-they include *"Apollo 11"* (40th-anniversary mission), *"the femur"* (strongest bone), *"Austerlitz"*
-(Napoleon, Dec 1805), *"Bran Castle"*, *"Star Trek"*, *"Augusta National"*, *"Pan"*, *"tumbrils"*: answers a
-schoolteacher would mark right, failed by alias-list gaps. On PopQA the mechanism differs: under-specified
-questions ("What genre is Hotel?") whose narrow `possible_answers` miss the model's defensible reading.
+- PopQA's v1 "11.2% false accusations" **collapsed to 3.1%** — 8 of 11 rows dissolved into referent ambiguity;
+- two loose stage-1 calls were rejected ("Star Trek" is not a *who*; the femur is not the *hardest* bone);
+- **the v1 "pre-registered surprise" (label-corrected H1 flip) is RETRACTED**: recomputed with clean
+  confirmations, AUROC 0.5687 CI [0.4951, 0.6415] — does NOT exclude chance. The "surprise" was manufactured
+  by the corrupted confirmations. The keystone null stands exactly as frozen, and this prereg's original
+  prediction (robustness check stays null) was CORRECT after all.
 
-**What this licenses (per the frozen interpretation limits):** on real model output, benchmark labels carry a
-measurable, phrasing-dependent false-accusation rate — mechanically-scored short-form QA numbers are deflated
-lower bounds, and the deflation differs by dataset (5.2 vs 8.3 points here). It does NOT license "TriviaQA is
-broken for everyone": this is our frozen §3 pipeline (dataset alias lists + v1-identical normalization) on one
-model's answers.
+## Headline (clean, double-blind-confirmed, verbatim inputs)
 
-**Protocol integrity:** the two-judge concurrence rule worked as designed — it rejected the 2 genuinely
-contestable candidates (Obama's mother's *first* name is Stanley, not Ann; sesame's standout mineral is
-calcium, not zinc) and 1 of 2 false-credit candidates (judges split on the mouse-patent row). Judges were
-blind to grades and gold; verdicts are schema-forced with one-line justifications, all committed.
+| | result |
+|---|---|
+| **TriviaQA false accusations** | **13/103 = 12.6%**, Wilson95 [7.5, 20.4] — mech-failed answers that are correct and responsive: *Apollo 11, Austerlitz, tumbrils, Civil War, 1968 (Fosbury), Augusta National, Pan, zinc, Bran Castle→Dracula, Turnbull & Asser, comedy (Lenny Bruce), a collection of cars, New York City (Nighthawks)* — alias-format and gold-list gaps on quiz-plain answers |
+| **TriviaQA false credit** | 2/146 = 1.4% — mech credited "beehive" (answer: *skep*) and "cursor" (the patent is the *mouse*): gold lists containing wrong aliases |
+| **PopQA false accusations** | **3/98 = 3.1%** [1.0, 8.6] — the honest number after ambiguity is separated |
+| **PopQA referent ambiguity** | **8 rows**: "Symphony No. 3", "Monster", "Museum of Islamic Art", "Evil", "Wildlife", "Hotel", "Joseph Schubert", "Alexander" — KB-derived questions whose TEXT under-determines the entity the gold binds to. A blind judge *cannot* grade these; neither can a model *answer* them except by luck. **This is PopQA's deeper defect: it tests referent-guessing, not knowledge, on a measurable slice of items** |
+| **TruthfulQA** | 242/250 = 96.8% mechanically ungradeable by its own matching path (no judge needed) |
+| **accuracy corrections** | TriviaQA 58.6% → **63.1%** (+4.5 pts) · PopQA 12.8% → **15.0%** (+2.2 pts) |
 
-## The pre-registered surprise (reported at full size, as the prereg requires)
+## What this licenses
+1. **Mechanical grading false-accuses at ~1-in-8 on TriviaQA** (CI excludes zero) for this frozen §3 pipeline
+   on this model's outputs — mechanically-scored short-form QA numbers are deflated lower bounds with a
+   phrasing-dependent bias term larger than most claimed model-vs-model gaps.
+2. **Gold lists carry both error directions**: missing correct aliases (FN) and wrong credited aliases (FP —
+   "cursor" for the mouse patent).
+3. **KB-derived QA has a distinct, previously-unmeasured defect class — referent under-determination** — that
+   label-correction cannot fix and blind judging can only quarantine.
+4. **No depth rescue**: the keystone verdict is untouched; the H1 robustness check returned to its predicted null.
 
-The label-corrected H1 robustness check — which this prereg **predicted would stay null** — flipped:
+## Protocol integrity, in full
+Stage-1: 382 rows, judges blind to grades/gold, real questions (prompt-hash-verified against what the model
+saw). Stage-2 v1: VOIDED (fabricated inputs — operator error, disclosed above; the week's fifth and most
+serious self-catch). Stage-2 v2: file-read verbatim rows + q_echo integrity + responsiveness rule; concurrence
+required. The two-judge rule rejected judge-1 overreach in both directions. Receipts: `blind_rows.jsonl`,
+`mech_key.json`, `blind_judging_results.json`, `disagreements_final.json`, `fn_mechanism_autopsy.json`,
+`final_rates.json`, `stage2_rows.jsonl`. Workflow-args gotcha (args arrive as a string) documented in the
+memory index; local recomputation from committed raw verdicts is the path of record.
 
-> AUROC(depth → corrected-correct) = **0.5786**, CI [**0.5048**, 0.6512] — the CI now excludes 0.5.
-
-Read with discipline: the lower bound clears chance by 0.005; the effect is weak; and this check touched ONLY
-H1 — H2 (depth adds nothing over semantic entropy) and H3 (anti-signal OOD) were not part of it. **The keystone
-verdict stays CLOSED_NEGATIVE under its own frozen prereg.** What this licenses is one sentence: *label noise
-was attenuating what little depth signal exists* — the benchmark's false accusations were themselves hiding a
-marginal instrument signal. The binding stack eating its own tail: the labels layer corrupting the computation
-layer's verdict. Any reopening of depth-predicts-truth requires a NEW prereg (corrected-label pipeline, H1+H2+H3,
-adequate power) — not a rescue of the frozen negative, whose H2/H3 nulls stand untouched.
-
-## Methods receipts (all committed here)
-`blind_rows.jsonl` (382 shuffled rows, no grades — what judges saw) · `mech_key.json` (grades, script-side
-only) · `blind_judging_results.json` (all 382 stage-1 verdicts + justifications) ·
-`stage1_disagreements_local.json` → `disagreements_final.json` (29 candidates → 26 confirmed) ·
-`final_rates.json` (rates + CIs) · `KG_HUMAN_seal_table.md` (flobi's gate). Two of our own tooling bugs were
-caught and disclosed en route: a truncated args paste (run stopped and resumed from cache) and workflow args
-arriving as a string (disagreement filter silently empty — recomputed locally from the committed raw verdicts,
-which is the auditable path regardless).
-
-## What this changes
-1. **Labels join the binding stack as unbound claims.** The fourth gap: benchmarks are auditors with an
-   unmeasured false-accusation rate; ours is the first measurement of it on real model output that we know of.
-2. **Every mechanically-scored comparison inherits an error bar it never reports.** A 5-point deflation on ID
-   and 8-point on rare-entity OOD is larger than most claimed model-vs-model gaps at this scale.
-3. **KG3 context:** TruthfulQA's 96.8% mechanical ungradeability stands on its own — a widely-cited benchmark
-   whose generation split cannot be scored by its own matching path on real outputs.
-
-*The ground truth was the last unaudited auditor in the stack. Now it has a number.*
+*The ground truth was the last unaudited auditor — and auditing it required auditing ourselves twice more.*
