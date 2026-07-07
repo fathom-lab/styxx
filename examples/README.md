@@ -20,6 +20,16 @@ Start here. Every example is runnable from the repo root.
   python examples/meaning_quickstart.py
   ```
 
+- **[`mount_relock_defense.py`](mount_relock_defense.py)** — *the calibration-poisoning
+  defense.* A read-only conscience mount goes blind when its honesty probe is calibrated on
+  data an adversary influenced; `ConscienceMount.relock()` re-fits the probe on a private clean
+  split and recovers the read (0%→100% lies caught in the demo). Numpy-only, deterministic, free.
+  The shipped form of the read≠write E1/E3 result (DOI 10.5281/zenodo.21241185).
+
+  ```bash
+  python examples/mount_relock_defense.py
+  ```
+
 ## Advanced
 
 Deeper features, each focused on one capability. Run any of them with
