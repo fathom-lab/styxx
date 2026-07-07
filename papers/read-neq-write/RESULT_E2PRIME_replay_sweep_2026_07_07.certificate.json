@@ -1,0 +1,632 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+  "document_sha256": "0f1c4ce4da5bc91ba718455acff4b473818e13d6a0687fc6675ce1b188fc6db7",
+  "receipts_sha256": {
+    "e2prime_result.json": "b93b9164e7bfa12d8bf73005488aea41f70753b65597788e85a05f558c96b53c"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 17,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "4"
+    },
+    {
+      "line": 10,
+      "token": "64"
+    },
+    {
+      "line": 10,
+      "token": "1.0"
+    },
+    {
+      "line": 11,
+      "token": "3"
+    },
+    {
+      "line": 11,
+      "token": "10"
+    },
+    {
+      "line": 25,
+      "token": "4"
+    },
+    {
+      "line": 27,
+      "token": "8"
+    },
+    {
+      "line": 31,
+      "token": "10"
+    },
+    {
+      "line": 32,
+      "token": "30"
+    },
+    {
+      "line": 34,
+      "token": "1"
+    },
+    {
+      "line": 37,
+      "token": "3"
+    },
+    {
+      "line": 37,
+      "token": "10"
+    },
+    {
+      "line": 37,
+      "token": "30"
+    },
+    {
+      "line": 38,
+      "token": "0.70"
+    },
+    {
+      "line": 40,
+      "token": "64"
+    },
+    {
+      "line": 40,
+      "token": "1"
+    },
+    {
+      "line": 40,
+      "token": "66"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "# RESULT \u2014 E2\u2032: STANDS_vs_strong. Forced to preserve knowledge, the 4\u00d7-capacity whole-stack attacker cannot blind a private-calibrated read.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "E2's r=64 whole-stack attacker at \u03bb=1.0 over-damaged knowledge, leaving no knowledge-preserving point",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "E2's r=64 whole-stack attacker at \u03bb=1.0 over-damaged knowledge, leaving no knowledge-preserving point",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "to judge. E2\u2032 swept the knowledge-replay weight \u03bb \u2208 {3, 10, 30}. On the decisive family this bought",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "to judge. E2\u2032 swept the knowledge-replay weight \u03bb \u2208 {3, 10, 30}. On the decisive family this bought",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "to judge. E2\u2032 swept the knowledge-replay weight \u03bb \u2208 {3, 10, 30}. On the decisive family this bought",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[10].lambda"
+    },
+    {
+      "line": 14,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 14,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 14,
+      "token": "0.786",
+      "value": 0.786,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_frozen_stack_read"
+    },
+    {
+      "line": 14,
+      "token": "0.879",
+      "value": 0.879,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 14,
+      "token": "0.803",
+      "value": 0.803,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 14,
+      "token": "0.665",
+      "value": 0.665,
+      "decimals": 3,
+      "context": "EVAL AUROC 0.938, knowledge 0.818, frozen-stack read 0.786; Llama 0.879, 0.803, 0.665).",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_frozen_stack_read"
+    },
+    {
+      "line": 20,
+      "token": "10.0",
+      "value": 10.0,
+      "decimals": 1,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:lambdas[1]"
+    },
+    {
+      "line": 20,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:seeds[1]"
+    },
+    {
+      "line": 20,
+      "token": "0.759",
+      "value": 0.759,
+      "decimals": 3,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].knowledge"
+    },
+    {
+      "line": 20,
+      "token": "0.553",
+      "value": 0.553,
+      "decimals": 3,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].frozen_stack_read"
+    },
+    {
+      "line": 20,
+      "token": "0.520",
+      "value": 0.52,
+      "decimals": 3,
+      "context": "| 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 10.0 | 1 | **0.759** | 0.833 | 0.553 | 0.520 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].rand"
+    },
+    {
+      "line": 21,
+      "token": "30.0",
+      "value": 30.0,
+      "decimals": 1,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:lambdas[2]"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:seeds[1]"
+    },
+    {
+      "line": 21,
+      "token": "0.754",
+      "value": 0.754,
+      "decimals": 3,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].clean_calib_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 21,
+      "token": "0.533",
+      "value": 0.533,
+      "decimals": 3,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].frozen_stack_read"
+    },
+    {
+      "line": 21,
+      "token": "0.521",
+      "value": 0.521,
+      "decimals": 3,
+      "context": "| 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "binding_context": "| \u03bb | seed | clean-calibrated read (EVAL AUROC) | EVAL knowledge | frozen whole-stack read | random dir | | 30.0 | 1 | **0.754** | 0.818 | 0.533 | 0.521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].rand"
+    },
+    {
+      "line": 23,
+      "token": "0.786",
+      "value": 0.786,
+      "decimals": 3,
+      "context": "At both points the attack bit hard \u2014 the frozen whole-stack read fell from a clean 0.786 to 0.553 /",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_frozen_stack_read"
+    },
+    {
+      "line": 23,
+      "token": "0.553",
+      "value": 0.553,
+      "decimals": 3,
+      "context": "At both points the attack bit hard \u2014 the frozen whole-stack read fell from a clean 0.786 to 0.553 /",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].frozen_stack_read"
+    },
+    {
+      "line": 24,
+      "token": "0.533",
+      "value": 0.533,
+      "decimals": 3,
+      "context": "0.533 \u2014 yet the private-calibrated read stayed at 0.759 / 0.754 while knowledge was preserved at",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].frozen_stack_read"
+    },
+    {
+      "line": 24,
+      "token": "0.759",
+      "value": 0.759,
+      "decimals": 3,
+      "context": "0.533 \u2014 yet the private-calibrated read stayed at 0.759 / 0.754 while knowledge was preserved at",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].clean_calib_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.754",
+      "value": 0.754,
+      "decimals": 3,
+      "context": "0.533 \u2014 yet the private-calibrated read stayed at 0.759 / 0.754 while knowledge was preserved at",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].clean_calib_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "0.833 / 0.818 (random direction 0.520 / 0.521). A 4\u00d7-capacity scrub applied at every scan layer,",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].knowledge"
+    },
+    {
+      "line": 25,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "0.833 / 0.818 (random direction 0.520 / 0.521). A 4\u00d7-capacity scrub applied at every scan layer,",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 25,
+      "token": "0.520",
+      "value": 0.52,
+      "decimals": 3,
+      "context": "0.833 / 0.818 (random direction 0.520 / 0.521). A 4\u00d7-capacity scrub applied at every scan layer,",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].rand"
+    },
+    {
+      "line": 25,
+      "token": "0.521",
+      "value": 0.521,
+      "decimals": 3,
+      "context": "0.833 / 0.818 (random direction 0.520 / 0.521). A 4\u00d7-capacity scrub applied at every scan layer,",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[5].rand"
+    },
+    {
+      "line": 25,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "0.833 / 0.818 (random direction 0.520 / 0.521). A 4\u00d7-capacity scrub applied at every scan layer,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "never saw. This is the strongest STANDS the 8 GB bench allows.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **The STANDS rides seed 1.** On Qwen, only seed 1 reached the knowledge-preserving regime (at \u03bb=10",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:seeds[1]"
+    },
+    {
+      "line": 31,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "- **The STANDS rides seed 1.** On Qwen, only seed 1 reached the knowledge-preserving regime (at \u03bb=10",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:seeds[0]"
+    },
+    {
+      "line": 32,
+      "token": "0.652",
+      "value": 0.652,
+      "decimals": 3,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[0].knowledge"
+    },
+    {
+      "line": 32,
+      "token": "0.682",
+      "value": 0.682,
+      "decimals": 3,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[2].knowledge"
+    },
+    {
+      "line": 32,
+      "token": "0.697",
+      "value": 0.697,
+      "decimals": 3,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[4].knowledge"
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "and \u03bb=30); seed 0 never preserved knowledge at any \u03bb (0.652 / 0.682 / 0.697, all below 0.75), so it",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[3].whole_stack"
+    },
+    {
+      "line": 34,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "frozen gate requires \u22651 decisive seed, which is met, but this is a single-seed hold and a second",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.848",
+      "value": 0.848,
+      "decimals": 3,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[6].knowledge"
+    },
+    {
+      "line": 37,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.788",
+      "value": 0.788,
+      "decimals": 3,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[9].knowledge"
+    },
+    {
+      "line": 37,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "(\u03bb=3 s0 knowledge 0.848; \u03bb=10 s1 0.788; \u03bb=30 s0 0.818) but its clean-calibrated read there was only",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 38,
+      "token": "0.599",
+      "value": 0.599,
+      "decimals": 3,
+      "context": "0.599 / 0.584 / 0.586 \u2014 in the ambiguous band, not \u2265 0.70, and its clean frozen-stack read was",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[6].clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.584",
+      "value": 0.584,
+      "decimals": 3,
+      "context": "0.599 / 0.584 / 0.586 \u2014 in the ambiguous band, not \u2265 0.70, and its clean frozen-stack read was",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[9].clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.586",
+      "value": 0.586,
+      "decimals": 3,
+      "context": "0.599 / 0.584 / 0.586 \u2014 in the ambiguous band, not \u2265 0.70, and its clean frozen-stack read was",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:points[10].clean_calib_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "0.599 / 0.584 / 0.586 \u2014 in the ambiguous band, not \u2265 0.70, and its clean frozen-stack read was",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "0.665",
+      "value": 0.665,
+      "decimals": 3,
+      "context": "weaker to begin with (0.665). Llama neither confirms nor breaks STANDS; the verdict rides Qwen.",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_frozen_stack_read"
+    },
+    {
+      "line": 40,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=64, 600 steps, whole-stack DoM scrub, 1\u20131.5B, small EVAL (66 facts),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "600",
+      "value": 600.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=64, 600 steps, whole-stack DoM scrub, 1\u20131.5B, small EVAL (66 facts),",
+      "status": "VERIFIED",
+      "receipt_ref": "e2prime_result.json:steps"
+    },
+    {
+      "line": 40,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=64, 600 steps, whole-stack DoM scrub, 1\u20131.5B, small EVAL (66 facts),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "- **Scope unchanged:** LoRA r=64, 600 steps, whole-stack DoM scrub, 1\u20131.5B, small EVAL (66 facts),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
