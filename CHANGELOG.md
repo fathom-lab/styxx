@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`styxx.mount.ConscienceMount.relock` -- the calibration-poisoning defense, shipped.** Re-fits a
+  mounted axis's probe IN-MODEL on a private, clean, labeled split of the agent's own hidden states
+  the audited party never saw. This is the operation that recovered a substrate honesty read through a
+  knowledge-preserving weight attack (AUROC 0.711-0.838; survives an adaptive attacker over two model
+  families) in the read!=write attack-defense study (`papers/read-neq-write/`, DOI
+  10.5281/zenodo.21241185). Additive: existing mount semantics unchanged; the axis gains `relocked` /
+  `relock_n_pos` / `relock_n_neg` provenance and the certificate surfaces relock status with honest
+  scope (defeats calibration poisoning, not activation-geometry perturbation). Runnable demo:
+  `examples/mount_relock_defense.py` (numpy-only, 0%->100% lies caught after relock).
 - **`styxx.corpus_audit` -- standing corpus re-certification / tamper-evidence check.** Point it at a
   directory; for every `*.certificate.json` it resolves the receipts that certificate recorded,
   SHA-verifies them (flags drift), and re-runs the current verifier on the document -- answering, on
