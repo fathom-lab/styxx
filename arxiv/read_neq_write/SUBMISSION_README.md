@@ -49,18 +49,19 @@ Linear probes on a language model's residual stream can read whether the model i
 5. License: CC-BY 4.0
 6. Preview (8 pages); submit; 1–2 business-day moderation
 
-## Zenodo — PUBLISHED 2026-07-07 ✅ (Fathom series v26)
-**Canonical DOI: [10.5281/zenodo.21241185](https://doi.org/10.5281/zenodo.21241185)**
-(Fathom v26, in the series lineage) · concept DOI for all versions:
+## Zenodo — PUBLISHED 2026-07-07 ✅ (Fathom series, current = v27 / v0.2)
+**Canonical DOI: [10.5281/zenodo.21250272](https://doi.org/10.5281/zenodo.21250272)**
+(Fathom v27 = paper v0.2) · concept DOI for all versions (always resolves to latest):
 [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174). Deposited via
-`scripts/zenodo_version_read_neq_write.py` (main.pdf + source.md +
-source.certificate.json, CC-BY 4.0, preprint). Receipt:
-`zenodo-deposit-receipt.json` in this directory.
+`scripts/zenodo_version_v27_read_neq_write.py`. Receipt: `zenodo-deposit-receipt-v27.json`.
 
-History: an initial standalone deposit (10.5281/zenodo.21240661, via
-`scripts/zenodo_deposit_read_neq_write.py`) landed outside the series lineage
-the same morning; it is now marked [SUPERSEDED] with a forward pointer to v26
-and remains resolvable. Cite v26.
+**v0.2 (v27)** folds in three same-day escalations: E2 INCONCLUSIVE + E2′ STANDS_vs_strong
+(strong-attacker axis strengthened) and E3′ NO_BITE (v26's "survives an adaptive attacker"
+claim demoted — self-falsification via our own frozen verification). source.md is OATH-HELD
+**146 verified / 0 contradicted** against seven result JSONs.
+
+Version history (all under the concept DOI): v26 = v0.1 (10.5281/zenodo.21241185);
+initial standalone 10.5281/zenodo.21240661 marked [SUPERSEDED]. **Cite v27.**
 
 ## What this submission is, and is NOT
 **IS:** to our knowledge the first pre-registered weight-level attack–defense study
