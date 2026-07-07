@@ -1,0 +1,75 @@
+{
+  "what": "E2 stronger multi-layer attacker vs private-calibration defense",
+  "verdict": "PARTIAL_OR_INCONCLUSIVE",
+  "prereg": "papers/read-neq-write/PREREG_E2_multilayer_strong_attacker_2026_07_04.md",
+  "lora_r": 64,
+  "steps": 600,
+  "seeds": [
+    0,
+    1
+  ],
+  "scrub": "all scan layers",
+  "attack_bit": true,
+  "guards": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "clean_calib_auroc": 0.9382488479262673,
+      "clean_knowledge": 0.8181818181818182,
+      "clean_frozen_stack_read": 0.7861751152073732,
+      "disjoint": true,
+      "pass": true
+    },
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "clean_calib_auroc": 0.8792626728110599,
+      "clean_knowledge": 0.803030303030303,
+      "clean_frozen_stack_read": 0.6650691244239632,
+      "disjoint": true,
+      "pass": true
+    }
+  },
+  "points": [
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 0,
+      "clean_calib_auroc": 0.7013824884792627,
+      "whole_stack": 0.6783410138248848,
+      "knowledge": 0.6060606060606061,
+      "rand": 0.48294930875576036,
+      "frozen_stack_read": 0.5540706605222734,
+      "clean_frozen_stack_read": 0.7861751152073732
+    },
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 1,
+      "clean_calib_auroc": 0.791705069124424,
+      "whole_stack": 0.7391705069124423,
+      "knowledge": 0.6666666666666666,
+      "rand": 0.5161290322580645,
+      "frozen_stack_read": 0.567741935483871,
+      "clean_frozen_stack_read": 0.7861751152073732
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 0,
+      "clean_calib_auroc": 0.5714285714285714,
+      "whole_stack": 0.47557603686635946,
+      "knowledge": 0.6818181818181818,
+      "rand": 0.511520737327189,
+      "frozen_stack_read": 0.48589861751152075,
+      "clean_frozen_stack_read": 0.6650691244239632
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 1,
+      "clean_calib_auroc": 0.6221198156682027,
+      "whole_stack": 0.5198156682027649,
+      "knowledge": 0.4393939393939394,
+      "rand": 0.5548387096774193,
+      "frozen_stack_read": 0.4965898617511521,
+      "clean_frozen_stack_read": 0.6650691244239632
+    }
+  ]
+}
