@@ -49,12 +49,18 @@ Linear probes on a language model's residual stream can read whether the model i
 5. License: CC-BY 4.0
 6. Preview (8 pages); submit; 1–2 business-day moderation
 
-## Zenodo — PUBLISHED 2026-07-07 ✅
-**DOI: [10.5281/zenodo.21240661](https://doi.org/10.5281/zenodo.21240661)** ·
-record: https://zenodo.org/record/21240661 · deposited via
-`scripts/zenodo_deposit_read_neq_write.py` (main.pdf + source.md +
+## Zenodo — PUBLISHED 2026-07-07 ✅ (Fathom series v26)
+**Canonical DOI: [10.5281/zenodo.21241185](https://doi.org/10.5281/zenodo.21241185)**
+(Fathom v26, in the series lineage) · concept DOI for all versions:
+[10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174). Deposited via
+`scripts/zenodo_version_read_neq_write.py` (main.pdf + source.md +
 source.certificate.json, CC-BY 4.0, preprint). Receipt:
 `zenodo-deposit-receipt.json` in this directory.
+
+History: an initial standalone deposit (10.5281/zenodo.21240661, via
+`scripts/zenodo_deposit_read_neq_write.py`) landed outside the series lineage
+the same morning; it is now marked [SUPERSEDED] with a forward pointer to v26
+and remains resolvable. Cite v26.
 
 ## What this submission is, and is NOT
 **IS:** to our knowledge the first pre-registered weight-level attack–defense study
