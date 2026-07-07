@@ -49,16 +49,12 @@ Linear probes on a language model's residual stream can read whether the model i
 5. License: CC-BY 4.0
 6. Preview (8 pages); submit; 1–2 business-day moderation
 
-## Upload steps — Zenodo DOI (operator; same-day, recommended first)
-1. Sign in at https://zenodo.org; New upload
-2. File: `main.pdf` (optionally also `source.md` + `source.certificate.json`)
-3. Resource type: Preprint · Title/Authors/Abstract from above (strip markdown)
-4. Keywords: `interpretability; honesty probes; adversarial robustness; calibration poisoning; AI audit; pre-registration; linear probes; activation steering`
-5. Related identifiers:
-   - `https://github.com/fathom-lab/styxx` (isSupplementTo)
-   - `10.5281/zenodo.19326174` (isContinuedBy → this record continues the methodology deposit)
-   - `arXiv:2606.24952` (references) · `arXiv:2502.03407` (references)
-6. License CC-BY 4.0 · Publish → paste the minted DOI into README + memory
+## Zenodo — PUBLISHED 2026-07-07 ✅
+**DOI: [10.5281/zenodo.21240661](https://doi.org/10.5281/zenodo.21240661)** ·
+record: https://zenodo.org/record/21240661 · deposited via
+`scripts/zenodo_deposit_read_neq_write.py` (main.pdf + source.md +
+source.certificate.json, CC-BY 4.0, preprint). Receipt:
+`zenodo-deposit-receipt.json` in this directory.
 
 ## What this submission is, and is NOT
 **IS:** to our knowledge the first pre-registered weight-level attack–defense study
