@@ -138,6 +138,64 @@ def test_mount_cross_model_factory_reads():
     assert isinstance(r.caught, bool) and "truth" in r.coords
 
 
+# ---- relock: the calibration-poisoning defense (read!=write E1/E3) --------------------------
+
+def _agent_states(n=200, d=6, seed=0):
+    """Synthetic agent: truth signal lives on dim 0 (label 1 -> high, label 0 -> low) plus noise."""
+    rng = np.random.default_rng(seed)
+    lab = np.array([1, 0] * (n // 2))
+    H = rng.standard_normal((len(lab), d)) * 0.5
+    H[:, 0] += np.where(lab == 1, 2.0, -2.0)      # dim0 carries truth; other dims are distractors
+    return H, lab
+
+
+def test_relock_recovers_a_poisoned_reader():
+    # A POISONED reader points the wrong way on dim0 (as if fit on attacker-influenced data): it reads
+    # honest-true states as "false" and vice versa -> it MISSES lies and false-alarms on honest agents.
+    H, lab = _agent_states(seed=1)
+    poisoned = mt.MountedAxis(name="truth", reader=lambda h: -np.asarray(h, float)[:, 0],
+                              high_means="true")
+    m = mt.ConscienceMount([poisoned]); m.calibrate("truth", H)
+    false_states = H[lab == 0]
+    lie_catch_before = np.mean([m.read(s, claims={"truth": +1}).caught for s in false_states])
+
+    # RE-LOCK on a private, clean, labeled split of the agent's OWN states the attacker never saw.
+    priv_H, priv_lab = _agent_states(seed=99)
+    m.relock("truth", priv_H, priv_lab)
+    assert m.axes["truth"].relocked is True
+    assert m.axes["truth"].relock_n_pos > 0 and m.axes["truth"].relock_n_neg > 0
+
+    # After relock the in-model probe reads the true geometry: lies on false states are caught,
+    lie_catch_after = np.mean([m.read(s, claims={"truth": +1}).caught for s in false_states])
+    # and honest-true agents are NOT false-alarmed.
+    true_states = H[lab == 1]
+    false_alarm_after = np.mean([m.read(s, claims={"truth": +1}).caught for s in true_states])
+    assert lie_catch_after >= 0.80
+    assert lie_catch_after > lie_catch_before          # the poisoned reader was strictly worse
+    assert false_alarm_after <= 0.20
+
+
+def test_relock_provenance_in_certificate():
+    H, lab = _agent_states(seed=2)
+    m = mt.ConscienceMount([_axis()])
+    assert m.certificate()["mounted_axes"]["truth"]["relocked"] is False
+    m.relock("truth", H, lab)
+    cert = m.certificate()
+    ax_cert = cert["mounted_axes"]["truth"]
+    assert ax_cert["relocked"] is True
+    assert ax_cert["relock_calibration"]["n_pos"] + ax_cert["relock_calibration"]["n_neg"] == len(lab)
+    assert "calibration-poisoning" in cert["relock_defense"]
+    json.dumps(cert)
+
+
+def test_relock_validates_shapes():
+    m = mt.ConscienceMount([_axis()])
+    with pytest.raises(ValueError):
+        m.relock("truth", np.zeros(10), [0, 1])                                   # 1-D states
+    with pytest.raises(ValueError):
+        m.relock("truth", np.zeros((4, 3)), [0, 1])                              # labels length mismatch
+
+
 # ---- read != write demarcation --------------------------------------------------------------
 
 def test_steer_is_refused():

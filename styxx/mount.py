@@ -12,14 +12,26 @@ so the agent has no labels of its own to game and the readout does not depend on
 (gameable) self-report. Text-only monitors are tell-detectors that collapse when the tell is removed;
 this reads the substrate that carries the oath.
 
-SCOPE — this is a monitor for COOPERATIVE / non-adversarial agents, NOT a robust defense against an
-agent TRAINED to evade it. The gamed-model test (papers/conscience-mount/FINDING_mount_gamed, ATTACK-
-TRANSFERS) showed that borrowing a DIFFERENT reference does NOT add adversarial robustness: different
-references' truth-readouts are nearly the same direction in the agent's activation space (cos ~0.94), so
-a small activation-space perturbation evades all borrowed consciences at once. Borrowing protects against
-label / self-report gaming, not against an adversary that shapes activations; the (partial) defense there
-is RE-LOCKING on fresh private data. Use this to catch drift, unintentional caving, and sycophancy — not
-a model that wants to beat it.
+SCOPE — this is a monitor for COOPERATIVE / non-adversarial agents by default, NOT a robust defense
+against an agent TRAINED to evade it. The gamed-model test (papers/conscience-mount/FINDING_mount_gamed,
+ATTACK-TRANSFERS) showed that borrowing a DIFFERENT reference does NOT add adversarial robustness:
+different references' truth-readouts are nearly the same direction in the agent's activation space
+(cos ~0.94), so a small activation-space perturbation evades all borrowed consciences at once.
+
+There IS one adversary a mount can be hardened against: a weight-level attacker that fine-tunes the
+agent to blind the deployed probe while preserving its knowledge. The read!=write attack-defense study
+(papers/read-neq-write/, DOI 10.5281/zenodo.21240661) showed the apparent evasion there is CALIBRATION
+POISONING, not signal erasure — a probe fit on data the attacker influenced points the wrong way while
+the honesty signal survives on clean data. The defense that recovered the read through the attack
+(AUROC 0.71-0.84, and through an adaptive attacker over two model families) is to RE-LOCK: re-fit the
+probe IN-MODEL on a PRIVATE, clean, labeled split of the agent's own states the attacker never saw.
+That defense is shipped here as `ConscienceMount.relock` — the operation E1/E3 validated, made a
+first-class capability. Its honest scope is the study's: it defeats calibration poisoning by a
+knowledge-preserving weight attacker (LoRA-scale evidence, 1-1.5B); it does NOT make the mount robust
+to the activation-geometry perturbation above, and re-lock is only as private as the calibration split.
+Use borrowing to resist label/self-report gaming, relock to resist calibration poisoning, and neither
+against an adversary free to reshape activations. Use this to catch drift, unintentional caving, and
+sycophancy — and, once relocked on private data, a model fine-tuned to blind the deployed probe.
 
 READ-ONLY by construction: the mount observes and flags. It NEVER steers, edits, or rewrites the agent —
 `steer` is REFUSED (read != write). Acting on a flag (halt, escalate, refuse-to-emit) is the integrator's
@@ -80,6 +92,9 @@ class MountedAxis:
     center: float = 0.0
     scale: float = 1.0
     tau: float = 0.0
+    relocked: bool = False        # True once re-fit in-model on a private clean split (calibration-poisoning defense)
+    relock_n_pos: int = 0         # provenance of the relock fit: labeled positives / negatives seen
+    relock_n_neg: int = 0
 
     def coords(self, hidden_states: np.ndarray) -> np.ndarray:
         h = np.asarray(hidden_states, dtype=float)
@@ -191,6 +206,48 @@ class ConscienceMount:
         ax.tau = float(max(0.0, order[min(k, n - 1)]))
         return self
 
+    # -- re-lock: the calibration-poisoning defense (read!=write E1/E3) -------------------------
+    def relock(self, name: str, private_states: np.ndarray, private_labels: Sequence[int], *,
+               background: "Optional[np.ndarray]" = None, whiten: bool = True,
+               recalibrate: bool = True) -> "ConscienceMount":
+        """Re-fit an axis's reader IN-MODEL on a PRIVATE, clean, labeled split of the AGENT'S OWN hidden
+        states — the defense the read!=write study validated against a knowledge-preserving weight
+        attacker (E1/E3; DOI 10.5281/zenodo.21240661; papers/read-neq-write/).
+
+        Why: a borrowed/transported axis (or any probe whose calibration data the adversary could
+        influence) is vulnerable to CALIBRATION POISONING — a fine-tune blinds a probe fit on data the
+        attacker touched while the honesty signal survives on clean data. Re-fitting the probe on a
+        private split the attacker never saw recovered the read through the same attacked weights. This
+        makes that operation a first-class capability: after relock, the axis reads its OWN in-model
+        difference-of-means direction (whitened), not the transported one.
+
+        `private_states`: (n, d) last-token hidden states of the AGENT, on facts the audited party did
+        not see the labels/order of. `private_labels`: length-n {0,1}, where 1 is the `high_means` pole
+        (e.g. 1 == true for a truth axis). `background`: optional states for the whitening covariance.
+        Sets the axis's reader, records relock provenance for the certificate, and (default) re-calibrates
+        the divergence center/scale from the same private states. Re-run `calibrate_threshold` afterward
+        on a held-out honest slice to reset `tau`.
+
+        Scope (do not overclaim): defeats calibration poisoning by a knowledge-preserving weight
+        attacker (LoRA-scale evidence, 1-1.5B, linear probes). It does NOT defend the activation-geometry
+        perturbation the module docstring warns about, and the defense is only as private as this split.
+        """
+        states = np.asarray(private_states, dtype=float)
+        labels = np.asarray(private_labels)
+        if states.ndim != 2:
+            raise ValueError(f"private_states must be 2-D (n, d); got shape {states.shape}")
+        if len(labels) != states.shape[0]:
+            raise ValueError(f"private_labels length {len(labels)} != n_states {states.shape[0]}")
+        ax = self.axes[name]
+        axis = _cm.fit_axis(states, labels, name=name, background=background, whiten=whiten)
+        ax.reader = lambda h: axis.score(np.asarray(h, dtype=float))
+        ax.relocked = True
+        ax.relock_n_pos = int((labels == 1).sum())
+        ax.relock_n_neg = int((labels == 0).sum())
+        if recalibrate:
+            self.calibrate(name, states)
+        return self
+
     # -- the read ------------------------------------------------------------------------------
     def read(self, hidden_state: np.ndarray, *, claims: Optional[dict] = None) -> ConscienceReading:
         claims = claims or {}
@@ -255,7 +312,16 @@ class ConscienceMount:
             "agent": agent_id,
             "reference_model": reference_id,
             "mounted_axes": {n: {"high_means": a.high_means, "center": round(a.center, 6),
-                                 "scale": round(a.scale, 6), "tau": a.tau} for n, a in self.axes.items()},
+                                 "scale": round(a.scale, 6), "tau": a.tau,
+                                 "relocked": a.relocked,
+                                 "relock_calibration": ({"n_pos": a.relock_n_pos, "n_neg": a.relock_n_neg}
+                                                        if a.relocked else None)}
+                             for n, a in self.axes.items()},
+            "relock_defense": ("calibration-poisoning defense (read!=write E1/E3, DOI "
+                               "10.5281/zenodo.21240661): relocked axes re-fit their probe in-model on a "
+                               "private clean labeled split the audited party did not see. Defeats a "
+                               "knowledge-preserving weight attacker (LoRA-scale evidence); does not "
+                               "defend activation-geometry perturbation."),
             "axes_refused": REFUSALS,
             "scope": ("Read-only conscience mount: reads borrowed value axes on an agent's last-token "
                       "hidden states and flags output-vs-substrate divergence. Linear, whitened, "
