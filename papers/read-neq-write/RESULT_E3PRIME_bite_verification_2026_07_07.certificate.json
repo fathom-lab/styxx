@@ -1,0 +1,399 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+  "document_sha256": "05d2482ff13224c1dc76e05f6baf51667748162f48c4477ac2d4b32e0605b809",
+  "receipts_sha256": {
+    "e3prime_result.json": "00978cf4b0ab5c57828cbd731510d9ad793aa330385414810e66f55d82e36a72",
+    "e1_result.json": "97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "10.5281"
+    },
+    {
+      "line": 24,
+      "token": "0.02"
+    },
+    {
+      "line": 46,
+      "token": "5.4"
+    },
+    {
+      "line": 52,
+      "token": "10"
+    },
+    {
+      "line": 53,
+      "token": "25"
+    },
+    {
+      "line": 59,
+      "token": "16"
+    },
+    {
+      "line": 60,
+      "token": "1.0"
+    },
+    {
+      "line": 60,
+      "token": "1"
+    },
+    {
+      "line": 60,
+      "token": "60"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "published paper (Fathom v26, DOI 10.5281/zenodo.21241185) carried \u2014 reported loudly, as the prereg",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.400",
+      "value": 0.4,
+      "decimals": 3,
+      "context": "| frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].frozen_deployed_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.445",
+      "value": 0.445,
+      "decimals": 3,
+      "context": "| frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].frozen_deployed_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.448",
+      "value": 0.448,
+      "decimals": 3,
+      "context": "| frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[2].frozen_deployed_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.453",
+      "value": 0.453,
+      "decimals": 3,
+      "context": "| frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | frozen-deployed read | 0.400 | 0.445 | 0.448 | 0.453 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[3].frozen_deployed_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.432",
+      "value": 0.432,
+      "decimals": 3,
+      "context": "| mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].mimic_refit_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.467",
+      "value": 0.467,
+      "decimals": 3,
+      "context": "| mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].mimic_refit_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.629",
+      "value": 0.629,
+      "decimals": 3,
+      "context": "| mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[2].mimic_refit_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.660",
+      "value": 0.66,
+      "decimals": 3,
+      "context": "| mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "binding_context": "| bite measure (EVAL AUROC) | naive s0 | naive s1 | adaptive s0 | adaptive s1 | | mimic-refit read (the adaptive loop's own target) | 0.432 | 0.467 | 0.629 | 0.660 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[3].mimic_refit_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "within the \u03b5 = 0.02 noise floor (`delta_frozen_deployed` in the receipt), and the mimic-refit delta",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.629",
+      "value": 0.629,
+      "decimals": 3,
+      "context": "is strongly negative \u2014 on that read the adaptive seeds (0.629, 0.660) sit far ABOVE the naive seeds",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[2].mimic_refit_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.660",
+      "value": 0.66,
+      "decimals": 3,
+      "context": "is strongly negative \u2014 on that read the adaptive seeds (0.629, 0.660) sit far ABOVE the naive seeds",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[3].mimic_refit_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.432",
+      "value": 0.432,
+      "decimals": 3,
+      "context": "(0.432, 0.467). The mimic-refit read is the direction the adaptive loop directly chases and scrubs \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].mimic_refit_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.467",
+      "value": 0.467,
+      "decimals": 3,
+      "context": "(0.432, 0.467). The mimic-refit read is the direction the adaptive loop directly chases and scrubs \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].mimic_refit_auroc"
+    },
+    {
+      "line": 28,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "readable signal there than naive did. Chasing a moving MIMIC-fit target every 25 steps split the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:refit_every"
+    },
+    {
+      "line": 32,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "Clean-model guards passed both families (Qwen CALIB-probe EVAL 0.912, knowledge 0.800,",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 32,
+      "token": "0.800",
+      "value": 0.8,
+      "decimals": 3,
+      "context": "Clean-model guards passed both families (Qwen CALIB-probe EVAL 0.912, knowledge 0.800,",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 33,
+      "token": "0.878",
+      "value": 0.878,
+      "decimals": 3,
+      "context": "frozen-deployed read 0.878 \u2014 sane; Llama 0.821 / 0.817 / 0.792). The naive control reproduced E1/E3",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_frozen_deployed_eval"
+    },
+    {
+      "line": 33,
+      "token": "0.821",
+      "value": 0.821,
+      "decimals": 3,
+      "context": "frozen-deployed read 0.878 \u2014 sane; Llama 0.821 / 0.817 / 0.792). The naive control reproduced E1/E3",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_calib_auroc"
+    },
+    {
+      "line": 33,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "frozen-deployed read 0.878 \u2014 sane; Llama 0.821 / 0.817 / 0.792). The naive control reproduced E1/E3",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 33,
+      "token": "0.792",
+      "value": 0.792,
+      "decimals": 3,
+      "context": "frozen-deployed read 0.878 \u2014 sane; Llama 0.821 / 0.817 / 0.792). The naive control reproduced E1/E3",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_frozen_deployed_eval"
+    },
+    {
+      "line": 34,
+      "token": "0.786",
+      "value": 0.786,
+      "decimals": 3,
+      "context": "(clean-calibrated read 0.786 / 0.775 at knowledge 0.833 / 0.817), so the harness is sound and the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].clean_calib_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.775",
+      "value": 0.775,
+      "decimals": 3,
+      "context": "(clean-calibrated read 0.786 / 0.775 at knowledge 0.833 / 0.817), so the harness is sound and the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].clean_calib_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "(clean-calibrated read 0.786 / 0.775 at knowledge 0.833 / 0.817), so the harness is sound and the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].knowledge"
+    },
+    {
+      "line": 34,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "(clean-calibrated read 0.786 / 0.775 at knowledge 0.833 / 0.817), so the harness is sound and the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_knowledge"
+    },
+    {
+      "line": 41,
+      "token": "0.711",
+      "value": 0.711,
+      "decimals": 3,
+      "context": "0.711\u20130.838 (E1) and to 0.775 / 0.786 (E3\u2032 naive control, both decisive seeds) through the attack",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[3].best_clean_calib_auroc"
+    },
+    {
+      "line": 41,
+      "token": "0.775",
+      "value": 0.775,
+      "decimals": 3,
+      "context": "0.711\u20130.838 (E1) and to 0.775 / 0.786 (E3\u2032 naive control, both decisive seeds) through the attack",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].clean_calib_auroc"
+    },
+    {
+      "line": 41,
+      "token": "0.786",
+      "value": 0.786,
+      "decimals": 3,
+      "context": "0.711\u20130.838 (E1) and to 0.775 / 0.786 (E3\u2032 naive control, both decisive seeds) through the attack",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].clean_calib_auroc"
+    },
+    {
+      "line": 46,
+      "token": "5.4",
+      "value": 5.4,
+      "decimals": 1,
+      "context": "paper's abstract and \u00a75.4 (\"survives an adaptive attacker \u2026 two model families\") overstate this and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 52,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "adaptive scheme, frozen separately before its run. E3\u2033 candidates: refit the MIMIC probe every 10",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "steps (not 25); scrub the moving MIMIC direction across *all* scan layers (not just the deployed",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct` decisive + `Llama-3.2-1B-Instruct` corroborating, LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct` decisive + `Llama-3.2-1B-Instruct` corroborating, LoRA r=16, 300 steps,",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:steps"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "refit-every-25, \u03bb=1.0, seeds {0,1}, small EVAL (60 facts). The finding is \"this adaptive scheme did",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "refit-every-25, \u03bb=1.0, seeds {0,1}, small EVAL (60 facts). The finding is \"this adaptive scheme did",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:seeds[0]"
+    },
+    {
+      "line": 60,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "refit-every-25, \u03bb=1.0, seeds {0,1}, small EVAL (60 facts). The finding is \"this adaptive scheme did",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "refit-every-25, \u03bb=1.0, seeds {0,1}, small EVAL (60 facts). The finding is \"this adaptive scheme did",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
