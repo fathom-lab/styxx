@@ -1,13 +1,15 @@
 ---
 title: "Calibration Poisoning, Not Erasure: Substrate Honesty Probes Survive Knowledge-Preserving Weight Attacks When the Auditor's Calibration Is Private"
 author: "Alexander Rodabaugh (Fathom Lab)"
-date: "July 7, 2026 — v0.2"
+date: "July 8, 2026 — v0.3"
 ---
 
-*v0.2 supersedes v0.1 (Fathom v26, DOI 10.5281/zenodo.21241185) with three escalations run the
-same day: E2/E2′ strengthen the strong-attacker result, and E3′ **demotes** v0.1's "survives an
-adaptive attacker" claim (the tested adaptive scheme did not out-attack naive). See §5.5–§5.6 and
-the erratum in `papers/read-neq-write/ERRATUM_v26_adaptive_claim.md`.*
+*v0.3 supersedes v0.2 (Fathom v27, DOI 10.5281/zenodo.21250272). It reports E3″, the stronger
+adaptive attacker v0.2 named as owed: it also does not bite (VOID_NO_BITE), underperforming the
+naive scrub, and its high clean read illustrates why the pre-committed bite gate — which blocked a
+false STANDS — matters (§5.4, §7.1). The strong-attacker STANDS (E2′) and the calibration-poisoning
+core result are unchanged. v0.2 folded in E2/E2′ (strengthen) and E3′ (demote the adaptive claim);
+lineage and erratum at `papers/read-neq-write/`.*
 
 ## Abstract
 
@@ -29,11 +31,12 @@ recovers the read through the same attacked weights (AUROC 0.711–0.838) — th
 evasion was **calibration poisoning, not erasure** of the honesty signal. The defense
 also survives a **4×-capacity, whole-stack attacker forced to preserve knowledge** (E2′:
 clean-calibrated read 0.754–0.759 while the attack drives the frozen read to 0.53–0.55),
-the strongest attacker this bench supports. A pre-committed verification (E3′) then
-showed that the "adaptive" attacker of an earlier draft **did not out-attack the naive
-one** — so we demote the adaptive-robustness claim to what is earned: robustness to the
-naive and to the knowledge-preserving strong attacker, with genuine adaptive escalation
-still open. The transferable lesson for substrate audits is operational: **calibrate the
+the strongest attacker this bench supports. A pre-committed verification (E3′, and a
+stronger E3″) then showed the "adaptive" attackers **did not out-attack the naive one**
+— they underperformed it — so we demote the adaptive-robustness claim to what is earned:
+robustness to the naive and to the knowledge-preserving strong attacker, with an
+adaptive attacker *verified to bite* still open because within these schemes we could
+not construct one. The transferable lesson for substrate audits is operational: **calibrate the
 probe on data the attacker did not see.** We report the load-bearing caveats — the
 single-seed reach of the strong-attacker STANDS, the LoRA-scale attackers, the 1–1.5B
 models. All preregistrations, code, result artifacts, and machine-checked certificates
@@ -297,10 +300,28 @@ loop directly chases and scrubs*, the adaptive attacker left MORE signal than na
 Chasing a moving target every 25 steps split the attacker's capacity and weakened its
 attack. Verdict per the frozen gate: **NO_BITE.** The consequence is a demotion we make
 explicitly: E3's DEFENSE_HOLDS shows the private-calibration read beats the *naive*
-attacker, not that it beats a genuine adaptive escalation. Robustness to a stronger
-adaptive attacker (E3″: refit every 10 steps, whole-stack MIMIC scrub) is open and
-frozen as the next prereg. This demotion was produced by our own pre-committed
-verification, not by external review.
+attacker, not that it beats a genuine adaptive escalation. This demotion was produced by
+our own pre-committed verification, not by external review.
+
+**E3″ (stronger adaptive, this version): a second escalation also does not bite — and
+the bite gate blocks a false STANDS.** E3′ named the owed escalation, so we ran it. E3″
+strengthens the adaptive attacker by construction — refit the moving MIMIC probe every
+10 steps and scrub it across *every* scan layer, not just the deployed one — and makes
+"the attack must bite" a hard VOID gate read before any defense verdict (per
+`e3dprime_result.json`). It bit even less than E3′: on the deployed read the adaptive
+attacker left 0.557 / 0.516 versus naive's 0.400 / 0.445, and on the mimic-refit read
+0.699 / 0.685 versus naive's 0.432 / 0.467 — the whole-stack moving terms have gradients
+that conflict with the frozen-deploy suppression, so spreading the objective made the
+attack *weaker*. Verdict: **VOID_NO_BITE.** The gate earned its place here: the adaptive
+clean-calibrated read came in *high* (0.833 / 0.758), higher than the naive control,
+purely because the attack barely touched the signal — without the pre-committed bite
+gate that would have read as a clean "DEFENSE_HOLDS vs a stronger adaptive attacker," a
+false positive off a non-attack. Two independent adaptive escalations now underperform
+the naive static scrub, which means the naive attacker is the empirically *strongest*
+threat found here — and it is the one the private-calibration read defeats. Robustness
+to an adaptive attacker *verified to bite* remains open, because within this objective
+family we could not construct one; a cleaner scheme that drops the conflicting frozen
+term (E3‴) is the honest next option, not a claimed result.
 
 ### 5.5 E2 / E2′: the defense holds against a 4×-capacity whole-stack attacker forced to preserve knowledge
 
@@ -359,14 +380,19 @@ would demand stronger probes or non-linear reads; poisoning demands data provena
 
 ## 7. Limitations and pre-registered pending escalations
 
-**7.1 Adaptive robustness is open — the tested adaptive scheme did not bite (resolved
-in this version).** v0.1 claimed the defense survives an adaptive attacker. E3′
-(§5.4) measured the bite and returned NO_BITE: the adaptive scheme was not a stronger
-attack than naive. We have therefore demoted the claim to "robust to the naive and to
-the knowledge-preserving strong attacker; adaptive escalation open." A genuinely
-stronger adaptive attacker (E3″: refit every 10 steps, whole-stack MIMIC scrub) is the
-owed escalation. This is the honest state: the defense is not shown robust to an
-attacker that successfully anticipates it, only to schemes that, in the event, did not.
+**7.1 Adaptive robustness is open — two schemes could not be made to bite.** v0.1
+claimed the defense survives an adaptive attacker; E3′ measured the bite and returned
+NO_BITE, and we demoted the claim. E3″ (§5.4) then strengthened the adaptive attacker
+(refit every 10 steps, whole-stack scrub) and it bit even less, underperforming the
+naive static scrub by a wider margin. So within this objective family (difference-of-
+means gap-suppression) and scale (LoRA r=16), the adaptive schemes are self-defeating
+and the *naive* static attacker is the empirically strongest threat — the one the
+private-calibration read defeats (E1, E3-naive). The honest state: the defense is shown
+robust to the strongest attacker we could actually build here, but not to an adaptive
+attacker *verified to bite*, because we could not construct one. A scheme that drops the
+conflicting frozen term (E3‴) is the owed next attempt, offered without a prediction. We
+report this because a defense whose only untested threat is one nobody has been able to
+make land is in a different, and more honest, position than one that ducked the test.
 
 **7.2 Attacker scale (strengthened in this version).** The core E1 result is LoRA
 r=16, 300 steps. E2/E2′ (§5.5) escalate to a 4×-capacity, whole-stack, 600-step scrub;

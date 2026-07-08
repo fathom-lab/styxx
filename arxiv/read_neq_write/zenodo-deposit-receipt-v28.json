@@ -1,0 +1,14 @@
+{
+  "series_doi": "10.5281/zenodo.21263158",
+  "series_doi_url": "https://doi.org/10.5281/zenodo.21263158",
+  "concept_doi": "10.5281/zenodo.19326174",
+  "concept_doi_url": "https://doi.org/10.5281/zenodo.19326174",
+  "deposition_id": 21263158,
+  "supersedes": "10.5281/zenodo.21250272",
+  "version": "v28 / v0.3",
+  "uploaded_files": [
+    "main.pdf",
+    "source.md",
+    "source.certificate.json"
+  ]
+}

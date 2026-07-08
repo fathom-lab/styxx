@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "source.md",
-  "document_sha256": "561060e95da6ca3a7715ef67b4b4458eb2d27cc5f41eb0b7fe0a31ec9c236e6f",
+  "document_sha256": "8de718cd7eae2b61e7064c5743c2084be69cc79690f225377e405739e22d7263",
   "receipts_sha256": {
     "foundation_result.json": "b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05",
     "attack_sweep_result.json": "95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237",
@@ -10,12 +10,13 @@
     "e2_result.json": "6a5c77ceb15ded0547f2ac770a2077a2de7427b6536cc2e2cc17dfcefd82f2b8",
     "e2prime_result.json": "b93b9164e7bfa12d8bf73005488aea41f70753b65597788e85a05f558c96b53c",
     "e3_result.json": "22c5429dd1aad62da29e49050dcbdc38196502df160c89ee5f7ce693095a8d13",
-    "e3prime_result.json": "00978cf4b0ab5c57828cbd731510d9ad793aa330385414810e66f55d82e36a72"
+    "e3prime_result.json": "00978cf4b0ab5c57828cbd731510d9ad793aa330385414810e66f55d82e36a72",
+    "e3dprime_result.json": "145affd35a75beeda289e518f07c216156ef18b42ffdfce5b4abd67eb9e0e0e7"
   },
   "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
   "counts": {
-    "VERIFIED": 146,
-    "ABSTAIN": 78,
+    "VERIFIED": 158,
+    "ABSTAIN": 77,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -23,324 +24,320 @@
   "abstained": [
     {
       "line": 4,
-      "token": "7"
+      "token": "8"
     },
     {
       "line": 7,
       "token": "10.5281"
     },
     {
-      "line": 9,
-      "token": "5.5"
-    },
-    {
-      "line": 9,
-      "token": "5.6"
-    },
-    {
-      "line": 30,
-      "token": "4"
-    },
-    {
-      "line": 51,
-      "token": "83"
-    },
-    {
-      "line": 76,
-      "token": "3"
-    },
-    {
-      "line": 79,
-      "token": "5.2"
-    },
-    {
-      "line": 88,
+      "line": 10,
       "token": "5.4"
     },
     {
-      "line": 93,
-      "token": "2"
+      "line": 10,
+      "token": "7.1"
     },
     {
-      "line": 94,
+      "line": 32,
       "token": "4"
     },
     {
-      "line": 97,
-      "token": "16"
+      "line": 54,
+      "token": "83"
     },
     {
-      "line": 99,
-      "token": "7"
+      "line": 79,
+      "token": "3"
     },
     {
-      "line": 122,
-      "token": "10"
+      "line": 82,
+      "token": "5.2"
     },
     {
-      "line": 123,
-      "token": "8"
+      "line": 91,
+      "token": "5.4"
     },
     {
-      "line": 127,
+      "line": 96,
       "token": "2"
     },
     {
-      "line": 129,
+      "line": 97,
+      "token": "4"
+    },
+    {
+      "line": 100,
+      "token": "16"
+    },
+    {
+      "line": 102,
+      "token": "7"
+    },
+    {
+      "line": 125,
+      "token": "10"
+    },
+    {
+      "line": 126,
+      "token": "8"
+    },
+    {
+      "line": 130,
+      "token": "2"
+    },
+    {
+      "line": 132,
       "token": "50"
     },
     {
-      "line": 131,
+      "line": 134,
       "token": "40"
     },
     {
-      "line": 131,
-      "token": "20"
-    },
-    {
-      "line": 131,
-      "token": "20"
-    },
-    {
-      "line": 131,
+      "line": 134,
       "token": "20"
     },
     {
       "line": 134,
-      "token": "2"
+      "token": "20"
     },
     {
-      "line": 144,
-      "token": "16"
+      "line": 134,
+      "token": "20"
+    },
+    {
+      "line": 137,
+      "token": "2"
     },
     {
       "line": 147,
-      "token": "0"
+      "token": "16"
     },
     {
-      "line": 148,
-      "token": "2"
+      "line": 150,
+      "token": "0"
     },
     {
       "line": 151,
       "token": "2"
     },
     {
-      "line": 160,
+      "line": 154,
+      "token": "2"
+    },
+    {
+      "line": 163,
       "token": "0.75"
     },
     {
-      "line": 160,
+      "line": 163,
       "token": "0.80"
     },
     {
-      "line": 193,
+      "line": 196,
       "token": "5.1"
     },
     {
-      "line": 200,
+      "line": 203,
       "token": "0.75"
     },
     {
-      "line": 210,
+      "line": 213,
       "token": "5.2"
     },
     {
-      "line": 210,
+      "line": 213,
       "token": "2"
     },
     {
-      "line": 223,
+      "line": 226,
       "token": "0"
     },
     {
-      "line": 230,
+      "line": 233,
       "token": "1"
     },
     {
-      "line": 231,
+      "line": 234,
       "token": "2"
     },
     {
-      "line": 237,
+      "line": 240,
       "token": "5.3"
     },
     {
-      "line": 251,
+      "line": 254,
       "token": "0.70"
     },
     {
-      "line": 259,
+      "line": 262,
       "token": "0.80"
     },
     {
-      "line": 259,
+      "line": 262,
       "token": "0.012"
     },
     {
-      "line": 263,
+      "line": 266,
       "token": "5.4"
     },
     {
-      "line": 265,
+      "line": 268,
       "token": "3"
     },
     {
-      "line": 269,
+      "line": 272,
       "token": "1.0"
     },
     {
-      "line": 301,
-      "token": "10"
-    },
-    {
-      "line": 305,
+      "line": 326,
       "token": "5.5"
-    },
-    {
-      "line": 305,
-      "token": "4"
-    },
-    {
-      "line": 307,
-      "token": "64"
-    },
-    {
-      "line": 307,
-      "token": "4"
-    },
-    {
-      "line": 308,
-      "token": "1.0"
-    },
-    {
-      "line": 315,
-      "token": "3"
-    },
-    {
-      "line": 315,
-      "token": "10"
     },
     {
       "line": 326,
       "token": "4"
     },
     {
-      "line": 334,
-      "token": "2"
+      "line": 328,
+      "token": "64"
     },
     {
-      "line": 342,
-      "token": "1"
-    },
-    {
-      "line": 344,
-      "token": "2"
-    },
-    {
-      "line": 347,
-      "token": "3"
-    },
-    {
-      "line": 362,
-      "token": "7.1"
-    },
-    {
-      "line": 364,
-      "token": "5.4"
-    },
-    {
-      "line": 367,
-      "token": "10"
-    },
-    {
-      "line": 371,
-      "token": "7.2"
-    },
-    {
-      "line": 372,
-      "token": "16"
-    },
-    {
-      "line": 372,
-      "token": "5.5"
-    },
-    {
-      "line": 372,
+      "line": 328,
       "token": "4"
     },
     {
-      "line": 379,
-      "token": "7.3"
+      "line": 329,
+      "token": "1.0"
     },
     {
-      "line": 379,
+      "line": 336,
+      "token": "3"
+    },
+    {
+      "line": 336,
+      "token": "10"
+    },
+    {
+      "line": 347,
+      "token": "4"
+    },
+    {
+      "line": 355,
+      "token": "2"
+    },
+    {
+      "line": 363,
       "token": "1"
     },
     {
-      "line": 380,
-      "token": "25"
+      "line": 365,
+      "token": "2"
     },
     {
-      "line": 380,
-      "token": "180"
+      "line": 368,
+      "token": "3"
     },
     {
-      "line": 380,
-      "token": "20"
+      "line": 383,
+      "token": "7.1"
     },
     {
       "line": 385,
+      "token": "5.4"
+    },
+    {
+      "line": 388,
+      "token": "16"
+    },
+    {
+      "line": 397,
+      "token": "7.2"
+    },
+    {
+      "line": 398,
+      "token": "16"
+    },
+    {
+      "line": 398,
+      "token": "5.5"
+    },
+    {
+      "line": 398,
+      "token": "4"
+    },
+    {
+      "line": 405,
+      "token": "7.3"
+    },
+    {
+      "line": 405,
+      "token": "1"
+    },
+    {
+      "line": 406,
+      "token": "25"
+    },
+    {
+      "line": 406,
+      "token": "180"
+    },
+    {
+      "line": 406,
+      "token": "20"
+    },
+    {
+      "line": 411,
       "token": "7.4"
     },
     {
-      "line": 408,
+      "line": 434,
       "token": "0.12"
     },
     {
-      "line": 424,
+      "line": 450,
       "token": "8"
     },
     {
-      "line": 425,
+      "line": 451,
       "token": "130"
     },
     {
-      "line": 426,
+      "line": 452,
       "token": "10.5281"
     },
     {
-      "line": 436,
+      "line": 462,
       "token": "10.5281"
     },
     {
-      "line": 438,
+      "line": 464,
       "token": "07"
     },
     {
-      "line": 440,
+      "line": 466,
       "token": "2606.24952"
     },
     {
-      "line": 441,
+      "line": 467,
       "token": "05"
     },
     {
-      "line": 459,
+      "line": 485,
       "token": "6"
     },
     {
-      "line": 463,
+      "line": 489,
       "token": "10.5281"
     }
   ],
   "ledger": [
     {
       "line": 4,
-      "token": "7",
-      "value": 7.0,
+      "token": "8",
+      "value": 8.0,
       "decimals": 0,
-      "context": "date: \"July 7, 2026 \u2014 v0.2\"",
+      "context": "date: \"July 8, 2026 \u2014 v0.3\"",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
@@ -349,30 +346,30 @@
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
-      "context": "*v0.2 supersedes v0.1 (Fathom v26, DOI 10.5281/zenodo.21241185) with three escalations run the",
+      "context": "*v0.3 supersedes v0.2 (Fathom v27, DOI 10.5281/zenodo.21250272). It reports E3\u2033, the stronger",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 9,
-      "token": "5.5",
-      "value": 5.5,
+      "line": 10,
+      "token": "5.4",
+      "value": 5.4,
       "decimals": 1,
-      "context": "adaptive attacker\" claim (the tested adaptive scheme did not out-attack naive). See \u00a75.5\u2013\u00a75.6 and",
+      "context": "false STANDS \u2014 matters (\u00a75.4, \u00a77.1). The strong-attacker STANDS (E2\u2032) and the calibration-poisoning",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 9,
-      "token": "5.6",
-      "value": 5.6,
+      "line": 10,
+      "token": "7.1",
+      "value": 7.1,
       "decimals": 1,
-      "context": "adaptive attacker\" claim (the tested adaptive scheme did not out-attack naive). See \u00a75.5\u2013\u00a75.6 and",
+      "context": "false STANDS \u2014 matters (\u00a75.4, \u00a77.1). The strong-attacker STANDS (E2\u2032) and the calibration-poisoning",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 24,
+      "line": 26,
       "token": "0.461",
       "value": 0.461,
       "decimals": 3,
@@ -381,7 +378,7 @@
       "receipt_ref": "attack_sweep_result.json:points[6].relock_auroc"
     },
     {
-      "line": 25,
+      "line": 27,
       "token": "0.817",
       "value": 0.817,
       "decimals": 3,
@@ -390,7 +387,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].knowledge_acc"
     },
     {
-      "line": 28,
+      "line": 30,
       "token": "0.711",
       "value": 0.711,
       "decimals": 3,
@@ -399,7 +396,7 @@
       "receipt_ref": "attack_sweep_result.json:points[9].per_layer.16.attack_auroc"
     },
     {
-      "line": 30,
+      "line": 32,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -408,7 +405,7 @@
       "receipt_ref": null
     },
     {
-      "line": 31,
+      "line": 33,
       "token": "0.754",
       "value": 0.754,
       "decimals": 3,
@@ -417,7 +414,7 @@
       "receipt_ref": "e2prime_result.json:points[5].clean_calib_auroc"
     },
     {
-      "line": 31,
+      "line": 33,
       "token": "0.53",
       "value": 0.53,
       "decimals": 2,
@@ -426,7 +423,7 @@
       "receipt_ref": "attack_sweep_result.json:points[4].relock_auroc"
     },
     {
-      "line": 38,
+      "line": 41,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -435,7 +432,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 50,
+      "line": 53,
       "token": "1.000",
       "value": 1.0,
       "decimals": 3,
@@ -444,7 +441,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 51,
+      "line": 54,
       "token": "83",
       "value": 83.0,
       "decimals": 0,
@@ -453,7 +450,7 @@
       "receipt_ref": null
     },
     {
-      "line": 76,
+      "line": 79,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -462,7 +459,7 @@
       "receipt_ref": null
     },
     {
-      "line": 79,
+      "line": 82,
       "token": "5.2",
       "value": 5.2,
       "decimals": 1,
@@ -471,7 +468,7 @@
       "receipt_ref": null
     },
     {
-      "line": 83,
+      "line": 86,
       "token": "0.711",
       "value": 0.711,
       "decimals": 3,
@@ -480,7 +477,7 @@
       "receipt_ref": "attack_sweep_result.json:points[9].per_layer.16.attack_auroc"
     },
     {
-      "line": 86,
+      "line": 89,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -489,7 +486,7 @@
       "receipt_ref": "e3_result.json:refit_every"
     },
     {
-      "line": 88,
+      "line": 91,
       "token": "5.4",
       "value": 5.4,
       "decimals": 1,
@@ -498,7 +495,7 @@
       "receipt_ref": null
     },
     {
-      "line": 93,
+      "line": 96,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -507,7 +504,7 @@
       "receipt_ref": null
     },
     {
-      "line": 94,
+      "line": 97,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -516,7 +513,7 @@
       "receipt_ref": null
     },
     {
-      "line": 97,
+      "line": 100,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -525,7 +522,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 97,
+      "line": 100,
       "token": "300",
       "value": 300.0,
       "decimals": 0,
@@ -534,7 +531,7 @@
       "receipt_ref": "attack_sweep_result.json:steps"
     },
     {
-      "line": 99,
+      "line": 102,
       "token": "7",
       "value": 7.0,
       "decimals": 0,
@@ -543,7 +540,7 @@
       "receipt_ref": null
     },
     {
-      "line": 121,
+      "line": 124,
       "token": "18",
       "value": 18.0,
       "decimals": 0,
@@ -552,7 +549,7 @@
       "receipt_ref": "foundation_result.json:selected_layer"
     },
     {
-      "line": 121,
+      "line": 124,
       "token": "12",
       "value": 12.0,
       "decimals": 0,
@@ -561,7 +558,7 @@
       "receipt_ref": "attack_sweep_result.json:scan_layers[0]"
     },
     {
-      "line": 122,
+      "line": 125,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
@@ -570,7 +567,7 @@
       "receipt_ref": null
     },
     {
-      "line": 123,
+      "line": 126,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
@@ -579,7 +576,7 @@
       "receipt_ref": null
     },
     {
-      "line": 126,
+      "line": 129,
       "token": "180",
       "value": 180.0,
       "decimals": 0,
@@ -588,7 +585,7 @@
       "receipt_ref": "foundation_result.json:n_facts"
     },
     {
-      "line": 127,
+      "line": 130,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -597,7 +594,7 @@
       "receipt_ref": null
     },
     {
-      "line": 127,
+      "line": 130,
       "token": "98",
       "value": 98.0,
       "decimals": 0,
@@ -606,7 +603,7 @@
       "receipt_ref": "foundation_result.json:n_attack"
     },
     {
-      "line": 128,
+      "line": 131,
       "token": "82",
       "value": 82.0,
       "decimals": 0,
@@ -615,7 +612,7 @@
       "receipt_ref": "foundation_result.json:n_heldout"
     },
     {
-      "line": 129,
+      "line": 132,
       "token": "50",
       "value": 50.0,
       "decimals": 0,
@@ -624,7 +621,7 @@
       "receipt_ref": null
     },
     {
-      "line": 129,
+      "line": 132,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -633,7 +630,7 @@
       "receipt_ref": "e3_result.json:refit_every"
     },
     {
-      "line": 129,
+      "line": 132,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -642,7 +639,7 @@
       "receipt_ref": "e3_result.json:refit_every"
     },
     {
-      "line": 131,
+      "line": 134,
       "token": "40",
       "value": 40.0,
       "decimals": 0,
@@ -651,25 +648,7 @@
       "receipt_ref": null
     },
     {
-      "line": 131,
-      "token": "20",
-      "value": 20.0,
-      "decimals": 0,
-      "context": "the auditor \u2014 for a 4-way split (~40/20/20/20).",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 131,
-      "token": "20",
-      "value": 20.0,
-      "decimals": 0,
-      "context": "the auditor \u2014 for a 4-way split (~40/20/20/20).",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 131,
+      "line": 134,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -679,6 +658,24 @@
     },
     {
       "line": 134,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "the auditor \u2014 for a 4-way split (~40/20/20/20).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 134,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "the auditor \u2014 for a 4-way split (~40/20/20/20).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 137,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -687,7 +684,7 @@
       "receipt_ref": null
     },
     {
-      "line": 144,
+      "line": 147,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -696,7 +693,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 144,
+      "line": 147,
       "token": "300",
       "value": 300.0,
       "decimals": 0,
@@ -705,7 +702,7 @@
       "receipt_ref": "attack_sweep_result.json:steps"
     },
     {
-      "line": 147,
+      "line": 150,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -714,7 +711,7 @@
       "receipt_ref": null
     },
     {
-      "line": 147,
+      "line": 150,
       "token": "0.3",
       "value": 0.3,
       "decimals": 1,
@@ -723,7 +720,7 @@
       "receipt_ref": "foundation_result.json:per_layer.16.rand_auroc"
     },
     {
-      "line": 147,
+      "line": 150,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -732,7 +729,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "3.0",
       "value": 3.0,
       "decimals": 1,
@@ -741,7 +738,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[3]"
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "10.0",
       "value": 10.0,
       "decimals": 1,
@@ -750,7 +747,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[4]"
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -759,7 +756,7 @@
       "receipt_ref": null
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -768,7 +765,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "3.0",
       "value": 3.0,
       "decimals": 1,
@@ -777,7 +774,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[3]"
     },
     {
-      "line": 148,
+      "line": 151,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -786,7 +783,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 149,
+      "line": 152,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -795,7 +792,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 149,
+      "line": 152,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -804,7 +801,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 151,
+      "line": 154,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -813,7 +810,7 @@
       "receipt_ref": null
     },
     {
-      "line": 153,
+      "line": 156,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -822,7 +819,7 @@
       "receipt_ref": "e3_result.json:refit_every"
     },
     {
-      "line": 160,
+      "line": 163,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -831,7 +828,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 160,
+      "line": 163,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -840,7 +837,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 193,
+      "line": 196,
       "token": "5.1",
       "value": 5.1,
       "decimals": 1,
@@ -849,7 +846,7 @@
       "receipt_ref": null
     },
     {
-      "line": 195,
+      "line": 198,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -858,7 +855,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 195,
+      "line": 198,
       "token": "98",
       "value": 98.0,
       "decimals": 0,
@@ -867,7 +864,7 @@
       "receipt_ref": "foundation_result.json:n_attack"
     },
     {
-      "line": 195,
+      "line": 198,
       "token": "82",
       "value": 82.0,
       "decimals": 0,
@@ -876,7 +873,7 @@
       "receipt_ref": "foundation_result.json:n_heldout"
     },
     {
-      "line": 200,
+      "line": 203,
       "token": "0.851",
       "value": 0.851,
       "decimals": 3,
@@ -886,7 +883,7 @@
       "receipt_ref": "foundation_result.json:per_layer.18.held_auroc"
     },
     {
-      "line": 200,
+      "line": 203,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -896,7 +893,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 201,
+      "line": 204,
       "token": "0.805",
       "value": 0.805,
       "decimals": 3,
@@ -906,7 +903,7 @@
       "receipt_ref": "foundation_result.json:ref_knowledge_acc"
     },
     {
-      "line": 201,
+      "line": 204,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -916,7 +913,7 @@
       "receipt_ref": "foundation_result.json:ref_knowledge_acc"
     },
     {
-      "line": 203,
+      "line": 206,
       "token": "0.500",
       "value": 0.5,
       "decimals": 3,
@@ -926,7 +923,7 @@
       "receipt_ref": "foundation_result.json:per_layer.18.rand_auroc"
     },
     {
-      "line": 204,
+      "line": 207,
       "token": "0.512",
       "value": 0.512,
       "decimals": 3,
@@ -936,7 +933,7 @@
       "receipt_ref": "foundation_result.json:guards.g_void_4b_shuffled_knowledge_acc"
     },
     {
-      "line": 204,
+      "line": 207,
       "token": "0.5",
       "value": 0.5,
       "decimals": 1,
@@ -946,7 +943,7 @@
       "receipt_ref": "foundation_result.json:per_layer.18.rand_auroc"
     },
     {
-      "line": 206,
+      "line": 209,
       "token": "18",
       "value": 18.0,
       "decimals": 0,
@@ -955,7 +952,7 @@
       "receipt_ref": "foundation_result.json:selected_layer"
     },
     {
-      "line": 206,
+      "line": 209,
       "token": "0.602",
       "value": 0.602,
       "decimals": 3,
@@ -964,7 +961,7 @@
       "receipt_ref": "foundation_result.json:per_layer.12.held_auroc"
     },
     {
-      "line": 206,
+      "line": 209,
       "token": "0.730",
       "value": 0.73,
       "decimals": 3,
@@ -973,7 +970,7 @@
       "receipt_ref": "foundation_result.json:per_layer.14.held_auroc"
     },
     {
-      "line": 207,
+      "line": 210,
       "token": "0.811",
       "value": 0.811,
       "decimals": 3,
@@ -982,7 +979,7 @@
       "receipt_ref": "foundation_result.json:per_layer.16.held_auroc"
     },
     {
-      "line": 207,
+      "line": 210,
       "token": "0.851",
       "value": 0.851,
       "decimals": 3,
@@ -991,7 +988,7 @@
       "receipt_ref": "foundation_result.json:per_layer.18.held_auroc"
     },
     {
-      "line": 207,
+      "line": 210,
       "token": "0.832",
       "value": 0.832,
       "decimals": 3,
@@ -1000,7 +997,7 @@
       "receipt_ref": "foundation_result.json:per_layer.20.held_auroc"
     },
     {
-      "line": 207,
+      "line": 210,
       "token": "0.809",
       "value": 0.809,
       "decimals": 3,
@@ -1009,7 +1006,7 @@
       "receipt_ref": "foundation_result.json:per_layer.22.held_auroc"
     },
     {
-      "line": 210,
+      "line": 213,
       "token": "5.2",
       "value": 5.2,
       "decimals": 1,
@@ -1018,7 +1015,7 @@
       "receipt_ref": null
     },
     {
-      "line": 210,
+      "line": 213,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -1027,7 +1024,7 @@
       "receipt_ref": null
     },
     {
-      "line": 214,
+      "line": 217,
       "token": "0.854",
       "value": 0.854,
       "decimals": 3,
@@ -1036,7 +1033,7 @@
       "receipt_ref": "attack_sweep_result.json:clean_probe_auroc"
     },
     {
-      "line": 214,
+      "line": 217,
       "token": "0.805",
       "value": 0.805,
       "decimals": 3,
@@ -1045,7 +1042,7 @@
       "receipt_ref": "foundation_result.json:ref_knowledge_acc"
     },
     {
-      "line": 218,
+      "line": 221,
       "token": "0.3",
       "value": 0.3,
       "decimals": 1,
@@ -1055,7 +1052,7 @@
       "receipt_ref": "foundation_result.json:per_layer.16.rand_auroc"
     },
     {
-      "line": 218,
+      "line": 221,
       "token": "0.496",
       "value": 0.496,
       "decimals": 3,
@@ -1065,7 +1062,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].relock_auroc"
     },
     {
-      "line": 218,
+      "line": 221,
       "token": "0.817",
       "value": 0.817,
       "decimals": 3,
@@ -1075,7 +1072,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].knowledge_acc"
     },
     {
-      "line": 219,
+      "line": 222,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1085,7 +1082,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 219,
+      "line": 222,
       "token": "0.507",
       "value": 0.507,
       "decimals": 3,
@@ -1095,7 +1092,7 @@
       "receipt_ref": "attack_sweep_result.json:points[2].relock_auroc"
     },
     {
-      "line": 219,
+      "line": 222,
       "token": "0.890",
       "value": 0.89,
       "decimals": 3,
@@ -1105,7 +1102,7 @@
       "receipt_ref": "attack_sweep_result.json:points[2].knowledge_acc"
     },
     {
-      "line": 220,
+      "line": 223,
       "token": "0.3",
       "value": 0.3,
       "decimals": 1,
@@ -1115,7 +1112,7 @@
       "receipt_ref": "foundation_result.json:per_layer.16.rand_auroc"
     },
     {
-      "line": 220,
+      "line": 223,
       "token": "0.461",
       "value": 0.461,
       "decimals": 3,
@@ -1125,7 +1122,7 @@
       "receipt_ref": "attack_sweep_result.json:points[6].relock_auroc"
     },
     {
-      "line": 220,
+      "line": 223,
       "token": "0.829",
       "value": 0.829,
       "decimals": 3,
@@ -1135,7 +1132,7 @@
       "receipt_ref": "attack_sweep_result.json:points[6].knowledge_acc"
     },
     {
-      "line": 221,
+      "line": 224,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1145,7 +1142,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 221,
+      "line": 224,
       "token": "0.472",
       "value": 0.472,
       "decimals": 3,
@@ -1155,7 +1152,7 @@
       "receipt_ref": "attack_sweep_result.json:points[7].relock_auroc"
     },
     {
-      "line": 221,
+      "line": 224,
       "token": "0.866",
       "value": 0.866,
       "decimals": 3,
@@ -1165,7 +1162,7 @@
       "receipt_ref": "attack_sweep_result.json:points[7].knowledge_acc"
     },
     {
-      "line": 223,
+      "line": 226,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1174,7 +1171,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 223,
+      "line": 226,
       "token": "0.573",
       "value": 0.573,
       "decimals": 3,
@@ -1183,7 +1180,7 @@
       "receipt_ref": "attack_sweep_result.json:points[0].knowledge_acc"
     },
     {
-      "line": 225,
+      "line": 228,
       "token": "0.54",
       "value": 0.54,
       "decimals": 2,
@@ -1192,7 +1189,7 @@
       "receipt_ref": "attack_sweep_result.json:points[4].rand_dir_auroc"
     },
     {
-      "line": 225,
+      "line": 228,
       "token": "0.5",
       "value": 0.5,
       "decimals": 1,
@@ -1201,7 +1198,7 @@
       "receipt_ref": "foundation_result.json:per_layer.18.rand_auroc"
     },
     {
-      "line": 230,
+      "line": 233,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1210,7 +1207,7 @@
       "receipt_ref": null
     },
     {
-      "line": 231,
+      "line": 234,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -1219,7 +1216,7 @@
       "receipt_ref": null
     },
     {
-      "line": 237,
+      "line": 240,
       "token": "5.3",
       "value": 5.3,
       "decimals": 1,
@@ -1228,7 +1225,7 @@
       "receipt_ref": null
     },
     {
-      "line": 241,
+      "line": 244,
       "token": "0.938",
       "value": 0.938,
       "decimals": 3,
@@ -1237,7 +1234,7 @@
       "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
     },
     {
-      "line": 246,
+      "line": 249,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1247,7 +1244,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 246,
+      "line": 249,
       "token": "0.838",
       "value": 0.838,
       "decimals": 3,
@@ -1257,7 +1254,7 @@
       "receipt_ref": "e1_result.json:points[0].best_clean_calib_auroc"
     },
     {
-      "line": 246,
+      "line": 249,
       "token": "0.818",
       "value": 0.818,
       "decimals": 3,
@@ -1267,7 +1264,7 @@
       "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
     },
     {
-      "line": 247,
+      "line": 250,
       "token": "3.0",
       "value": 3.0,
       "decimals": 1,
@@ -1277,7 +1274,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[3]"
     },
     {
-      "line": 247,
+      "line": 250,
       "token": "0.835",
       "value": 0.835,
       "decimals": 3,
@@ -1287,7 +1284,7 @@
       "receipt_ref": "e1_result.json:points[1].best_clean_calib_auroc"
     },
     {
-      "line": 247,
+      "line": 250,
       "token": "0.833",
       "value": 0.833,
       "decimals": 3,
@@ -1297,7 +1294,7 @@
       "receipt_ref": "e1_result.json:points[1].eval_knowledge"
     },
     {
-      "line": 248,
+      "line": 251,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1307,7 +1304,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 248,
+      "line": 251,
       "token": "0.722",
       "value": 0.722,
       "decimals": 3,
@@ -1317,7 +1314,7 @@
       "receipt_ref": "e1_result.json:points[2].best_clean_calib_auroc"
     },
     {
-      "line": 248,
+      "line": 251,
       "token": "0.803",
       "value": 0.803,
       "decimals": 3,
@@ -1327,7 +1324,7 @@
       "receipt_ref": "e1_result.json:points[2].eval_knowledge"
     },
     {
-      "line": 249,
+      "line": 252,
       "token": "3.0",
       "value": 3.0,
       "decimals": 1,
@@ -1337,7 +1334,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[3]"
     },
     {
-      "line": 249,
+      "line": 252,
       "token": "0.711",
       "value": 0.711,
       "decimals": 3,
@@ -1347,7 +1344,7 @@
       "receipt_ref": "attack_sweep_result.json:points[9].per_layer.16.attack_auroc"
     },
     {
-      "line": 249,
+      "line": 252,
       "token": "0.833",
       "value": 0.833,
       "decimals": 3,
@@ -1357,7 +1354,7 @@
       "receipt_ref": "e1_result.json:points[1].eval_knowledge"
     },
     {
-      "line": 251,
+      "line": 254,
       "token": "0.70",
       "value": 0.7,
       "decimals": 2,
@@ -1366,7 +1363,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 252,
+      "line": 255,
       "token": "0.551",
       "value": 0.551,
       "decimals": 3,
@@ -1375,7 +1372,7 @@
       "receipt_ref": "e1_result.json:points[0].rand_auroc"
     },
     {
-      "line": 259,
+      "line": 262,
       "token": "0.788",
       "value": 0.788,
       "decimals": 3,
@@ -1384,7 +1381,7 @@
       "receipt_ref": "e1_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_eval_knowledge"
     },
     {
-      "line": 259,
+      "line": 262,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -1393,7 +1390,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 259,
+      "line": 262,
       "token": "0.012",
       "value": 0.012,
       "decimals": 3,
@@ -1402,7 +1399,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 260,
+      "line": 263,
       "token": "0.669",
       "value": 0.669,
       "decimals": 3,
@@ -1411,7 +1408,7 @@
       "receipt_ref": "e1_result.json:points[4].best_clean_calib_auroc"
     },
     {
-      "line": 263,
+      "line": 266,
       "token": "5.4",
       "value": 5.4,
       "decimals": 1,
@@ -1420,7 +1417,7 @@
       "receipt_ref": null
     },
     {
-      "line": 265,
+      "line": 268,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -1429,7 +1426,7 @@
       "receipt_ref": null
     },
     {
-      "line": 268,
+      "line": 271,
       "token": "0.912",
       "value": 0.912,
       "decimals": 3,
@@ -1438,7 +1435,7 @@
       "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_calib_auroc"
     },
     {
-      "line": 268,
+      "line": 271,
       "token": "0.800",
       "value": 0.8,
       "decimals": 3,
@@ -1447,7 +1444,7 @@
       "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
     },
     {
-      "line": 268,
+      "line": 271,
       "token": "0.821",
       "value": 0.821,
       "decimals": 3,
@@ -1456,7 +1453,7 @@
       "receipt_ref": "e3_result.json:guards.meta-llama/Llama-3.2-1B-Instruct.clean_calib_auroc"
     },
     {
-      "line": 268,
+      "line": 271,
       "token": "0.800",
       "value": 0.8,
       "decimals": 3,
@@ -1465,7 +1462,7 @@
       "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
     },
     {
-      "line": 269,
+      "line": 272,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1474,7 +1471,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 273,
+      "line": 276,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1484,7 +1481,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 273,
+      "line": 276,
       "token": "0.786",
       "value": 0.786,
       "decimals": 3,
@@ -1494,7 +1491,7 @@
       "receipt_ref": "e1_result.json:points[0].per_layer.L16.logistic"
     },
     {
-      "line": 273,
+      "line": 276,
       "token": "0.833",
       "value": 0.833,
       "decimals": 3,
@@ -1504,7 +1501,7 @@
       "receipt_ref": "e1_result.json:points[1].eval_knowledge"
     },
     {
-      "line": 274,
+      "line": 277,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1514,7 +1511,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 274,
+      "line": 277,
       "token": "0.775",
       "value": 0.775,
       "decimals": 3,
@@ -1524,7 +1521,7 @@
       "receipt_ref": "e3_result.json:points[1].clean_calib_auroc"
     },
     {
-      "line": 274,
+      "line": 277,
       "token": "0.817",
       "value": 0.817,
       "decimals": 3,
@@ -1534,7 +1531,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].knowledge_acc"
     },
     {
-      "line": 275,
+      "line": 278,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1544,7 +1541,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 275,
+      "line": 278,
       "token": "0.782",
       "value": 0.782,
       "decimals": 3,
@@ -1554,7 +1551,7 @@
       "receipt_ref": "e3_result.json:points[2].clean_calib_auroc"
     },
     {
-      "line": 275,
+      "line": 278,
       "token": "0.833",
       "value": 0.833,
       "decimals": 3,
@@ -1564,7 +1561,7 @@
       "receipt_ref": "e1_result.json:points[1].eval_knowledge"
     },
     {
-      "line": 276,
+      "line": 279,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1574,7 +1571,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 276,
+      "line": 279,
       "token": "0.733",
       "value": 0.733,
       "decimals": 3,
@@ -1584,7 +1581,7 @@
       "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
     },
     {
-      "line": 276,
+      "line": 279,
       "token": "0.733",
       "value": 0.733,
       "decimals": 3,
@@ -1594,7 +1591,7 @@
       "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
     },
     {
-      "line": 277,
+      "line": 280,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1604,7 +1601,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 277,
+      "line": 280,
       "token": "0.706",
       "value": 0.706,
       "decimals": 3,
@@ -1614,7 +1611,7 @@
       "receipt_ref": "e2prime_result.json:points[5].whole_stack"
     },
     {
-      "line": 277,
+      "line": 280,
       "token": "0.783",
       "value": 0.783,
       "decimals": 3,
@@ -1624,7 +1621,7 @@
       "receipt_ref": "e3_result.json:points[4].knowledge"
     },
     {
-      "line": 278,
+      "line": 281,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1634,7 +1631,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 278,
+      "line": 281,
       "token": "0.732",
       "value": 0.732,
       "decimals": 3,
@@ -1644,7 +1641,7 @@
       "receipt_ref": "e3_result.json:points[5].clean_calib_auroc"
     },
     {
-      "line": 278,
+      "line": 281,
       "token": "0.800",
       "value": 0.8,
       "decimals": 3,
@@ -1654,7 +1651,7 @@
       "receipt_ref": "e3_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_knowledge"
     },
     {
-      "line": 279,
+      "line": 282,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1664,7 +1661,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 279,
+      "line": 282,
       "token": "0.739",
       "value": 0.739,
       "decimals": 3,
@@ -1674,7 +1671,7 @@
       "receipt_ref": "e2_result.json:points[1].whole_stack"
     },
     {
-      "line": 279,
+      "line": 282,
       "token": "0.783",
       "value": 0.783,
       "decimals": 3,
@@ -1684,7 +1681,7 @@
       "receipt_ref": "e3_result.json:points[4].knowledge"
     },
     {
-      "line": 280,
+      "line": 283,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1694,7 +1691,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 280,
+      "line": 283,
       "token": "0.772",
       "value": 0.772,
       "decimals": 3,
@@ -1704,7 +1701,7 @@
       "receipt_ref": "e1_result.json:points[0].per_layer.L18.logistic"
     },
     {
-      "line": 280,
+      "line": 283,
       "token": "0.817",
       "value": 0.817,
       "decimals": 3,
@@ -1714,7 +1711,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].knowledge_acc"
     },
     {
-      "line": 284,
+      "line": 287,
       "token": "0.483",
       "value": 0.483,
       "decimals": 3,
@@ -1723,7 +1720,7 @@
       "receipt_ref": "attack_sweep_result.json:points[1].per_layer.16.heldout_auroc"
     },
     {
-      "line": 285,
+      "line": 288,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1732,7 +1729,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 286,
+      "line": 289,
       "token": "0.733",
       "value": 0.733,
       "decimals": 3,
@@ -1741,7 +1738,7 @@
       "receipt_ref": "e3_result.json:points[3].clean_calib_auroc"
     },
     {
-      "line": 286,
+      "line": 289,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -1750,7 +1747,7 @@
       "receipt_ref": "e1_result.json:points[7].best_clean_calib_auroc"
     },
     {
-      "line": 287,
+      "line": 290,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -1759,7 +1756,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 294,
+      "line": 297,
       "token": "0.02",
       "value": 0.02,
       "decimals": 2,
@@ -1768,7 +1765,7 @@
       "receipt_ref": "attack_sweep_result.json:points[8].train_hist.l_rep"
     },
     {
-      "line": 296,
+      "line": 299,
       "token": "0.629",
       "value": 0.629,
       "decimals": 3,
@@ -1777,7 +1774,7 @@
       "receipt_ref": "attack_sweep_result.json:points[0].per_layer.16.attack_auroc"
     },
     {
-      "line": 296,
+      "line": 299,
       "token": "0.660",
       "value": 0.66,
       "decimals": 3,
@@ -1786,7 +1783,7 @@
       "receipt_ref": "attack_sweep_result.json:points[6].per_layer.12.attack_auroc"
     },
     {
-      "line": 296,
+      "line": 299,
       "token": "0.432",
       "value": 0.432,
       "decimals": 3,
@@ -1795,7 +1792,7 @@
       "receipt_ref": "e3prime_result.json:points[0].mimic_refit_auroc"
     },
     {
-      "line": 296,
+      "line": 299,
       "token": "0.467",
       "value": 0.467,
       "decimals": 3,
@@ -1804,7 +1801,7 @@
       "receipt_ref": "attack_sweep_result.json:points[0].per_layer.22.heldout_auroc"
     },
     {
-      "line": 297,
+      "line": 300,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -1813,16 +1810,106 @@
       "receipt_ref": "e3_result.json:refit_every"
     },
     {
-      "line": 301,
+      "line": 309,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
-      "context": "adaptive attacker (E3\u2033: refit every 10 steps, whole-stack MIMIC scrub) is open and",
-      "status": "ABSTAIN",
-      "receipt_ref": null
+      "context": "10 steps and scrub it across *every* scan layer, not just the deployed one \u2014 and makes",
+      "status": "VERIFIED",
+      "receipt_ref": "e3dprime_result.json:refit_every"
     },
     {
-      "line": 305,
+      "line": 312,
+      "token": "0.557",
+      "value": 0.557,
+      "decimals": 3,
+      "context": "attacker left 0.557 / 0.516 versus naive's 0.400 / 0.445, and on the mimic-refit read",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[1].rand_dir_auroc"
+    },
+    {
+      "line": 312,
+      "token": "0.516",
+      "value": 0.516,
+      "decimals": 3,
+      "context": "attacker left 0.557 / 0.516 versus naive's 0.400 / 0.445, and on the mimic-refit read",
+      "status": "VERIFIED",
+      "receipt_ref": "e2_result.json:points[1].rand"
+    },
+    {
+      "line": 312,
+      "token": "0.400",
+      "value": 0.4,
+      "decimals": 3,
+      "context": "attacker left 0.557 / 0.516 versus naive's 0.400 / 0.445, and on the mimic-refit read",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].frozen_deployed_auroc"
+    },
+    {
+      "line": 312,
+      "token": "0.445",
+      "value": 0.445,
+      "decimals": 3,
+      "context": "attacker left 0.557 / 0.516 versus naive's 0.400 / 0.445, and on the mimic-refit read",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[1].frozen_deployed_auroc"
+    },
+    {
+      "line": 313,
+      "token": "0.699",
+      "value": 0.699,
+      "decimals": 3,
+      "context": "0.699 / 0.685 versus naive's 0.432 / 0.467 \u2014 the whole-stack moving terms have gradients",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[4].per_layer.16.attack_auroc"
+    },
+    {
+      "line": 313,
+      "token": "0.685",
+      "value": 0.685,
+      "decimals": 3,
+      "context": "0.699 / 0.685 versus naive's 0.432 / 0.467 \u2014 the whole-stack moving terms have gradients",
+      "status": "VERIFIED",
+      "receipt_ref": "e3dprime_result.json:points[3].mimic_refit_auroc"
+    },
+    {
+      "line": 313,
+      "token": "0.432",
+      "value": 0.432,
+      "decimals": 3,
+      "context": "0.699 / 0.685 versus naive's 0.432 / 0.467 \u2014 the whole-stack moving terms have gradients",
+      "status": "VERIFIED",
+      "receipt_ref": "e3prime_result.json:points[0].mimic_refit_auroc"
+    },
+    {
+      "line": 313,
+      "token": "0.467",
+      "value": 0.467,
+      "decimals": 3,
+      "context": "0.699 / 0.685 versus naive's 0.432 / 0.467 \u2014 the whole-stack moving terms have gradients",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[0].per_layer.22.heldout_auroc"
+    },
+    {
+      "line": 316,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "clean-calibrated read came in *high* (0.833 / 0.758), higher than the naive control,",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[1].eval_knowledge"
+    },
+    {
+      "line": 316,
+      "token": "0.758",
+      "value": 0.758,
+      "decimals": 3,
+      "context": "clean-calibrated read came in *high* (0.833 / 0.758), higher than the naive control,",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[4].eval_knowledge"
+    },
+    {
+      "line": 326,
       "token": "5.5",
       "value": 5.5,
       "decimals": 1,
@@ -1831,7 +1918,7 @@
       "receipt_ref": null
     },
     {
-      "line": 305,
+      "line": 326,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -1840,7 +1927,7 @@
       "receipt_ref": null
     },
     {
-      "line": 307,
+      "line": 328,
       "token": "64",
       "value": 64.0,
       "decimals": 0,
@@ -1849,7 +1936,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 307,
+      "line": 328,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -1858,7 +1945,7 @@
       "receipt_ref": null
     },
     {
-      "line": 308,
+      "line": 329,
       "token": "600",
       "value": 600.0,
       "decimals": 0,
@@ -1867,7 +1954,7 @@
       "receipt_ref": "e2_result.json:steps"
     },
     {
-      "line": 308,
+      "line": 329,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -1876,7 +1963,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 309,
+      "line": 330,
       "token": "0.786",
       "value": 0.786,
       "decimals": 3,
@@ -1885,7 +1972,7 @@
       "receipt_ref": "e1_result.json:points[0].per_layer.L16.logistic"
     },
     {
-      "line": 309,
+      "line": 330,
       "token": "0.55",
       "value": 0.55,
       "decimals": 2,
@@ -1894,7 +1981,7 @@
       "receipt_ref": "attack_sweep_result.json:points[3].rand_dir_auroc"
     },
     {
-      "line": 310,
+      "line": 331,
       "token": "0.606",
       "value": 0.606,
       "decimals": 3,
@@ -1903,7 +1990,7 @@
       "receipt_ref": "e1_result.json:points[0].per_layer.L18.dom"
     },
     {
-      "line": 310,
+      "line": 331,
       "token": "0.667",
       "value": 0.667,
       "decimals": 3,
@@ -1912,7 +1999,7 @@
       "receipt_ref": "e2_result.json:points[1].knowledge"
     },
     {
-      "line": 310,
+      "line": 331,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -1921,7 +2008,7 @@
       "receipt_ref": "e1_result.json:points[7].best_clean_calib_auroc"
     },
     {
-      "line": 315,
+      "line": 336,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -1930,7 +2017,7 @@
       "receipt_ref": null
     },
     {
-      "line": 315,
+      "line": 336,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
@@ -1939,7 +2026,7 @@
       "receipt_ref": null
     },
     {
-      "line": 315,
+      "line": 336,
       "token": "30",
       "value": 30.0,
       "decimals": 0,
@@ -1948,7 +2035,7 @@
       "receipt_ref": "e2prime_result.json:points[10].lambda"
     },
     {
-      "line": 321,
+      "line": 342,
       "token": "10.0",
       "value": 10.0,
       "decimals": 1,
@@ -1958,7 +2045,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[4]"
     },
     {
-      "line": 321,
+      "line": 342,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -1968,7 +2055,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 321,
+      "line": 342,
       "token": "0.759",
       "value": 0.759,
       "decimals": 3,
@@ -1978,7 +2065,7 @@
       "receipt_ref": "e2prime_result.json:points[3].clean_calib_auroc"
     },
     {
-      "line": 321,
+      "line": 342,
       "token": "0.833",
       "value": 0.833,
       "decimals": 3,
@@ -1988,7 +2075,7 @@
       "receipt_ref": "e1_result.json:points[1].eval_knowledge"
     },
     {
-      "line": 321,
+      "line": 342,
       "token": "0.553",
       "value": 0.553,
       "decimals": 3,
@@ -1998,7 +2085,7 @@
       "receipt_ref": "e2prime_result.json:points[3].frozen_stack_read"
     },
     {
-      "line": 322,
+      "line": 343,
       "token": "30.0",
       "value": 30.0,
       "decimals": 1,
@@ -2008,7 +2095,7 @@
       "receipt_ref": "e2prime_result.json:lambdas[2]"
     },
     {
-      "line": 322,
+      "line": 343,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -2018,7 +2105,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 322,
+      "line": 343,
       "token": "0.754",
       "value": 0.754,
       "decimals": 3,
@@ -2028,7 +2115,7 @@
       "receipt_ref": "e2prime_result.json:points[5].clean_calib_auroc"
     },
     {
-      "line": 322,
+      "line": 343,
       "token": "0.818",
       "value": 0.818,
       "decimals": 3,
@@ -2038,7 +2125,7 @@
       "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_eval_knowledge"
     },
     {
-      "line": 322,
+      "line": 343,
       "token": "0.533",
       "value": 0.533,
       "decimals": 3,
@@ -2048,7 +2135,7 @@
       "receipt_ref": "e2prime_result.json:points[5].frozen_stack_read"
     },
     {
-      "line": 324,
+      "line": 345,
       "token": "0.786",
       "value": 0.786,
       "decimals": 3,
@@ -2057,7 +2144,7 @@
       "receipt_ref": "e1_result.json:points[0].per_layer.L16.logistic"
     },
     {
-      "line": 324,
+      "line": 345,
       "token": "0.55",
       "value": 0.55,
       "decimals": 2,
@@ -2066,7 +2153,7 @@
       "receipt_ref": "attack_sweep_result.json:points[3].rand_dir_auroc"
     },
     {
-      "line": 325,
+      "line": 346,
       "token": "0.759",
       "value": 0.759,
       "decimals": 3,
@@ -2075,7 +2162,7 @@
       "receipt_ref": "e2prime_result.json:points[3].clean_calib_auroc"
     },
     {
-      "line": 325,
+      "line": 346,
       "token": "0.754",
       "value": 0.754,
       "decimals": 3,
@@ -2084,7 +2171,7 @@
       "receipt_ref": "e2prime_result.json:points[5].clean_calib_auroc"
     },
     {
-      "line": 325,
+      "line": 346,
       "token": "0.52",
       "value": 0.52,
       "decimals": 2,
@@ -2093,7 +2180,7 @@
       "receipt_ref": "attack_sweep_result.json:points[4].per_layer.14.heldout_auroc"
     },
     {
-      "line": 326,
+      "line": 347,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -2102,7 +2189,7 @@
       "receipt_ref": null
     },
     {
-      "line": 328,
+      "line": 349,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -2111,7 +2198,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 328,
+      "line": 349,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -2120,7 +2207,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 330,
+      "line": 351,
       "token": "0.584",
       "value": 0.584,
       "decimals": 3,
@@ -2129,7 +2216,7 @@
       "receipt_ref": "e2prime_result.json:points[9].clean_calib_auroc"
     },
     {
-      "line": 334,
+      "line": 355,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -2138,7 +2225,7 @@
       "receipt_ref": null
     },
     {
-      "line": 334,
+      "line": 355,
       "token": "0.711",
       "value": 0.711,
       "decimals": 3,
@@ -2147,7 +2234,7 @@
       "receipt_ref": "attack_sweep_result.json:points[9].per_layer.16.attack_auroc"
     },
     {
-      "line": 342,
+      "line": 363,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -2156,7 +2243,7 @@
       "receipt_ref": null
     },
     {
-      "line": 344,
+      "line": 365,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -2165,7 +2252,7 @@
       "receipt_ref": null
     },
     {
-      "line": 347,
+      "line": 368,
       "token": "3",
       "value": 3.0,
       "decimals": 0,
@@ -2174,34 +2261,43 @@
       "receipt_ref": null
     },
     {
-      "line": 362,
+      "line": 383,
       "token": "7.1",
       "value": 7.1,
       "decimals": 1,
-      "context": "**7.1 Adaptive robustness is open \u2014 the tested adaptive scheme did not bite (resolved",
+      "context": "**7.1 Adaptive robustness is open \u2014 two schemes could not be made to bite.** v0.1",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 364,
+      "line": 385,
       "token": "5.4",
       "value": 5.4,
       "decimals": 1,
-      "context": "(\u00a75.4) measured the bite and returned NO_BITE: the adaptive scheme was not a stronger",
+      "context": "NO_BITE, and we demoted the claim. E3\u2033 (\u00a75.4) then strengthened the adaptive attacker",
       "status": "ABSTAIN",
       "receipt_ref": null
     },
     {
-      "line": 367,
+      "line": 386,
       "token": "10",
       "value": 10.0,
       "decimals": 0,
-      "context": "stronger adaptive attacker (E3\u2033: refit every 10 steps, whole-stack MIMIC scrub) is the",
-      "status": "ABSTAIN",
-      "receipt_ref": null
+      "context": "(refit every 10 steps, whole-stack scrub) and it bit even less, underperforming the",
+      "status": "VERIFIED",
+      "receipt_ref": "e3dprime_result.json:refit_every"
     },
     {
-      "line": 371,
+      "line": 388,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "means gap-suppression) and scale (LoRA r=16), the adaptive schemes are self-defeating",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 397,
       "token": "7.2",
       "value": 7.2,
       "decimals": 1,
@@ -2210,7 +2306,7 @@
       "receipt_ref": null
     },
     {
-      "line": 372,
+      "line": 398,
       "token": "16",
       "value": 16.0,
       "decimals": 0,
@@ -2219,7 +2315,7 @@
       "receipt_ref": "spec-or-historical"
     },
     {
-      "line": 372,
+      "line": 398,
       "token": "300",
       "value": 300.0,
       "decimals": 0,
@@ -2228,7 +2324,7 @@
       "receipt_ref": "attack_sweep_result.json:steps"
     },
     {
-      "line": 372,
+      "line": 398,
       "token": "5.5",
       "value": 5.5,
       "decimals": 1,
@@ -2237,7 +2333,7 @@
       "receipt_ref": null
     },
     {
-      "line": 372,
+      "line": 398,
       "token": "4",
       "value": 4.0,
       "decimals": 0,
@@ -2246,7 +2342,7 @@
       "receipt_ref": null
     },
     {
-      "line": 379,
+      "line": 405,
       "token": "7.3",
       "value": 7.3,
       "decimals": 1,
@@ -2255,7 +2351,7 @@
       "receipt_ref": null
     },
     {
-      "line": 379,
+      "line": 405,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -2264,7 +2360,7 @@
       "receipt_ref": null
     },
     {
-      "line": 380,
+      "line": 406,
       "token": "25",
       "value": 25.0,
       "decimals": 0,
@@ -2273,7 +2369,7 @@
       "receipt_ref": null
     },
     {
-      "line": 380,
+      "line": 406,
       "token": "180",
       "value": 180.0,
       "decimals": 0,
@@ -2282,7 +2378,7 @@
       "receipt_ref": null
     },
     {
-      "line": 380,
+      "line": 406,
       "token": "20",
       "value": 20.0,
       "decimals": 0,
@@ -2291,7 +2387,7 @@
       "receipt_ref": null
     },
     {
-      "line": 380,
+      "line": 406,
       "token": "0",
       "value": 0.0,
       "decimals": 0,
@@ -2300,7 +2396,7 @@
       "receipt_ref": "foundation_result.json:seed"
     },
     {
-      "line": 380,
+      "line": 406,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -2309,7 +2405,7 @@
       "receipt_ref": "attack_sweep_result.json:seeds[1]"
     },
     {
-      "line": 385,
+      "line": 411,
       "token": "7.4",
       "value": 7.4,
       "decimals": 1,
@@ -2318,7 +2414,7 @@
       "receipt_ref": null
     },
     {
-      "line": 408,
+      "line": 434,
       "token": "0.12",
       "value": 0.12,
       "decimals": 2,
@@ -2327,7 +2423,7 @@
       "receipt_ref": null
     },
     {
-      "line": 424,
+      "line": 450,
       "token": "8",
       "value": 8.0,
       "decimals": 0,
@@ -2336,7 +2432,7 @@
       "receipt_ref": null
     },
     {
-      "line": 425,
+      "line": 451,
       "token": "130",
       "value": 130.0,
       "decimals": 0,
@@ -2345,7 +2441,7 @@
       "receipt_ref": null
     },
     {
-      "line": 426,
+      "line": 452,
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
@@ -2354,7 +2450,7 @@
       "receipt_ref": null
     },
     {
-      "line": 436,
+      "line": 462,
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
@@ -2364,7 +2460,7 @@
       "receipt_ref": null
     },
     {
-      "line": 438,
+      "line": 464,
       "token": "07",
       "value": 7.0,
       "decimals": 0,
@@ -2374,7 +2470,7 @@
       "receipt_ref": null
     },
     {
-      "line": 438,
+      "line": 464,
       "token": "1.00",
       "value": 1.0,
       "decimals": 2,
@@ -2384,7 +2480,7 @@
       "receipt_ref": "attack_sweep_result.json:lambdas[2]"
     },
     {
-      "line": 440,
+      "line": 466,
       "token": "2606.24952",
       "value": 2606.24952,
       "decimals": 5,
@@ -2394,7 +2490,7 @@
       "receipt_ref": null
     },
     {
-      "line": 441,
+      "line": 467,
       "token": "05",
       "value": 5.0,
       "decimals": 0,
@@ -2404,7 +2500,7 @@
       "receipt_ref": null
     },
     {
-      "line": 459,
+      "line": 485,
       "token": "6",
       "value": 6.0,
       "decimals": 0,
@@ -2413,7 +2509,7 @@
       "receipt_ref": null
     },
     {
-      "line": 463,
+      "line": 489,
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
