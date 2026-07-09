@@ -50,6 +50,30 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 31 (2026-07-08) — read≠write E3‴: does dropping the frozen anchor let the adaptive attacker finally BITE? `VOID_NO_BITE` — the pure-moving scheme STILL did not bite (RESULT OATH-HELD 54/9/0).**
+  Names the E3″ VOID_NO_BITE burial and applies the mechanistic fix E3″ handed forward: the adaptive branch scrubs
+  ONLY the moving whole-stack re-fit-every-10 MIMIC consensus direction — the frozen-deploy anchor term is removed
+  (the entire E3‴ delta; naive control unchanged). Prereg frozen+committed (`814947f`) before the retrain, bite-gated,
+  able to return DEFENSE_BROKEN. **It bit even less than E3″.** Decisive Qwen2.5-1.5B: adaptive left the frozen-deployed
+  read at **0.624/0.664** vs naive **0.400/0.445** and the mimic-refit read at **0.749/0.682** vs naive **0.432/0.467**
+  — MORE legible on both; `delta_frozen`=**−0.222**, `delta_mimic`=**−0.266**, `attack_bit`=false. The pre-committed
+  bite gate **blocked a false STANDS** (adaptive clean-calib came in HIGH at 0.806/0.728 precisely because the attack
+  barely touched the signal). Clean guards passed both families (Qwen calib 0.912/know 0.800, Llama 0.821/0.817); naive
+  control reproduced E1/E3 (clean-calib 0.786/0.775 @ knowledge 0.833/0.817). **THREE independent adaptive escalations**
+  (E3′ refit-25 deploy, E3″ two-term whole-stack, E3‴ pure-moving whole-stack) now all fail to out-attack the naive
+  static scrub → within this difference-of-means objective family at LoRA r16/300-step/1.5B-1B, **the naive static
+  attacker is empirically the STRONGEST threat and adaptive complexity is self-defeating.** E3″'s hypothesis
+  (frozen/moving gradient conflict was the sole cause) is FALSIFIED: a moving DoM reference re-fit every 10 steps never
+  converges at this budget, so even the single-objective pure-moving scheme is toothless. **Adaptive robustness stays
+  formally OPEN; v27's STANDS-vs-naive-and-strong demotion unchanged and correct** — E3‴ neither re-earns nor breaks
+  the adaptive claim. Receipts: `PREREG_E3TPRIME_pure_moving_adaptive_2026_07_08.md`,
+  `RESULT_E3TPRIME_pure_moving_2026_07_08.md` (+cert), `e3tprime_result.json`, `e3tprime_pure_moving.py`,
+  `_e3tprime_run.log`. **Next (recommended) = STOP the adaptive lane** (3 consecutive NO_BITEs) and pivot to **B2**
+  (RMU/gradient-routing unlearning of the gold subspace + knowledge-replay — the real read≠write test, Tier-1 QUEUED)
+  or standing-priority #2 (45 UNBOUND finding docs / 13 cycle-18 provenance). If the adaptive lane IS pursued: E3⁗ with
+  a reference held STATIONARY within a bite (fit once on a large MIMIC pool, hold many steps) or ≥800 steps — a NEW
+  prereg naming this burial.
+
 - **Autopilot cycle 25 (2026-07-04, operator "go deeper → break the ceiling") — OATH v0.4 DECIMAL+RANGE-guarded trigger-recall. `SHIPPED` — ALL FIVE BARS PASS (first `styxx.certify` upgrade since v0.3; RESULT OATH-HELD 17/0).**
   Add `decimals > 0` to the [−1,1] correlation-register guard — correlations carry a fractional part; ordinals /
   counts / API-caps / whole-percents never do. Prereg frozen+committed (`b6f5808`) before code, with a **frozen G3
