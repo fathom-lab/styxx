@@ -1,0 +1,60 @@
+{
+  "what": "calibration-poisoning generalization -- sentiment foundation v2 (K-averaged controls)",
+  "verdict": "FOUNDATION_VALID",
+  "prereg": "papers/calib-poison-general/PREREG_calib_poison_sentiment_v2_2026_07_09.md",
+  "dataset": "SetFit/amazon_reviews_multi_en (2* vs 4*, human stars=gold, length-matched)",
+  "n": 440,
+  "corr_label_length": 0.003,
+  "k_rand": 200,
+  "k_shuf": 500,
+  "decisive_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "models": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "decisive": true,
+      "best_read_auroc": 0.9537,
+      "best_layer": 22,
+      "first_layer_auroc": 0.8395,
+      "per_layer": {
+        "L12": 0.8395,
+        "L14": 0.8736,
+        "L16": 0.9163,
+        "L18": 0.9378,
+        "L20": 0.9176,
+        "L22": 0.9537
+      },
+      "rand_dir_mean_auroc_k200": 0.4957,
+      "behavioral_sentiment_acc": 0.8455,
+      "shuffled_behavioral_mean_acc_k500": 0.4937,
+      "guards": {
+        "g1_read>=0.75": true,
+        "g2_behavior>=0.80": true,
+        "g3_disjoint": true,
+        "g4_kavg_chance_floors": true
+      },
+      "foundation_valid": true
+    },
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "decisive": false,
+      "best_read_auroc": 0.9119,
+      "best_layer": 14,
+      "first_layer_auroc": 0.8977,
+      "per_layer": {
+        "L6": 0.8977,
+        "L8": 0.8937,
+        "L10": 0.8904,
+        "L12": 0.9,
+        "L14": 0.9119
+      },
+      "rand_dir_mean_auroc_k200": 0.4958,
+      "behavioral_sentiment_acc": 0.4818,
+      "shuffled_behavioral_mean_acc_k500": 0.4818,
+      "guards": {
+        "g1_read>=0.75": true,
+        "g2_behavior>=0.80": false,
+        "g3_disjoint": true,
+        "g4_kavg_chance_floors": true
+      },
+      "foundation_valid": false
+    }
+  }
+}
