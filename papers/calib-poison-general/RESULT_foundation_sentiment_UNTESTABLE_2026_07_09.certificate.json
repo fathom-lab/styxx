@@ -1,0 +1,353 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+  "document_sha256": "2827f011d9a0d681454af040f7fc0574c4cb10c52a28d2d976bf855c04bb9665",
+  "receipts_sha256": {
+    "foundation_sentiment_result.json": "f8ed1ae26944b834454c705a7f18b2c24c6d5e53e4eb33d8c3ac69e30d10d141"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 9,
+      "token": "184"
+    },
+    {
+      "line": 9,
+      "token": "2"
+    },
+    {
+      "line": 22,
+      "token": "4"
+    },
+    {
+      "line": 24,
+      "token": "46"
+    },
+    {
+      "line": 28,
+      "token": "0.565"
+    },
+    {
+      "line": 28,
+      "token": "2"
+    },
+    {
+      "line": 28,
+      "token": "4"
+    },
+    {
+      "line": 49,
+      "token": "2"
+    },
+    {
+      "line": 54,
+      "token": "184"
+    },
+    {
+      "line": 54,
+      "token": "92"
+    },
+    {
+      "line": 54,
+      "token": "46"
+    },
+    {
+      "line": 54,
+      "token": "46"
+    },
+    {
+      "line": 66,
+      "token": "0.017"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "184",
+      "value": 184.0,
+      "decimals": 0,
+      "context": "On 184 length-matched 2\u2605-vs-4\u2605 Amazon reviews (the label\u2194length correlation is negligible \u2014 the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "On 184 length-matched 2\u2605-vs-4\u2605 Amazon reviews (the label\u2194length correlation is negligible \u2014 the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.789",
+      "value": 0.789,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.756",
+      "value": 0.756,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.first_layer_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.646",
+      "value": 0.646,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+    },
+    {
+      "line": 16,
+      "token": "0.891",
+      "value": 0.891,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 16,
+      "token": "0.717",
+      "value": 0.717,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Qwen2.5-1.5B | **0.789** @L22 | 0.756 | 0.646 | **0.891** | 0.717 | NO (g4 only) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_shuffled_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.794",
+      "value": 0.794,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.meta-llama/Llama-3.2-1B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.742",
+      "value": 0.742,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.meta-llama/Llama-3.2-1B-Instruct.first_layer_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.375",
+      "value": 0.375,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.meta-llama/Llama-3.2-1B-Instruct.rand_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.565",
+      "value": 0.565,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.565",
+      "value": 0.565,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "binding_context": "| model | read EVAL AUROC | first-layer AUROC | rand floor | behavioral acc | shuffled-beh acc | valid | | Llama-3.2-1B | 0.794 @L8 | 0.742 | 0.375 | 0.565 | 0.565 | NO (g2) |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 20,
+      "token": "0.756",
+      "value": 0.756,
+      "decimals": 3,
+      "context": "(L12 0.756 \u2192 L22 0.789), the lexical-trivial flag is false, and the random-direction floor (0.646)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.first_layer_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.789",
+      "value": 0.789,
+      "decimals": 3,
+      "context": "(L12 0.756 \u2192 L22 0.789), the lexical-trivial flag is false, and the random-direction floor (0.646)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.646",
+      "value": 0.646,
+      "decimals": 3,
+      "context": "(L12 0.756 \u2192 L22 0.789), the lexical-trivial flag is false, and the random-direction floor (0.646)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.891",
+      "value": 0.891,
+      "decimals": 3,
+      "context": "sentiment judgment is strong (0.891). Qwen fails **only** guard 4, and only its shuffled-behavioral",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 22,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "sentiment judgment is strong (0.891). Qwen fails **only** guard 4, and only its shuffled-behavioral",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.717",
+      "value": 0.717,
+      "decimals": 3,
+      "context": "half: the shuffled-behavioral accuracy (0.717) sits just above the upper edge of the intended chance",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_shuffled_acc"
+    },
+    {
+      "line": 24,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "band. At EVAL n=46 a single label permutation is high-variance, so that value is within noise of the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.891",
+      "value": 0.891,
+      "decimals": 3,
+      "context": "true-label behavioral accuracy 0.891 still separates from the shuffled 0.717).",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 26,
+      "token": "0.717",
+      "value": 0.717,
+      "decimals": 3,
+      "context": "true-label behavioral accuracy 0.891 still separates from the shuffled 0.717).",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_shuffled_acc"
+    },
+    {
+      "line": 28,
+      "token": "0.565",
+      "value": 0.565,
+      "decimals": 3,
+      "context": "**Llama genuinely fails the behavioral bar** (0.565 \u2014 it cannot classify 2\u2605/4\u2605 sentiment reliably",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**Llama genuinely fails the behavioral bar** (0.565 \u2014 it cannot classify 2\u2605/4\u2605 sentiment reliably",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**Llama genuinely fails the behavioral bar** (0.565 \u2014 it cannot classify 2\u2605/4\u2605 sentiment reliably",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "is genuinely too weak). If Qwen then clears all four guards, Stage 2 (attack + defense) is licensed;",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "184",
+      "value": 184.0,
+      "decimals": 0,
+      "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "184 reviews, index-split 92/46/46, `Qwen2.5-1.5B` + `Llama-3.2-1B`, DoM read on last-review-token",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "fix, rather than nudging the bar 0.017 to declare victory.*",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

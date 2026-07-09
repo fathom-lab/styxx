@@ -1,0 +1,57 @@
+{
+  "what": "calibration-poisoning generalization -- sentiment foundation",
+  "verdict": "UNTESTABLE_ON_THIS_DATA",
+  "prereg": "papers/calib-poison-general/PREREG_calib_poison_sentiment_2026_07_09.md",
+  "dataset": "SetFit/amazon_reviews_multi_en (2* vs 4*, human stars=gold, length-matched)",
+  "n": 184,
+  "corr_label_length": -0.0107,
+  "models": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "best_read_auroc": 0.7885,
+      "best_layer": 22,
+      "first_layer_auroc": 0.7558,
+      "per_layer": {
+        "L12": 0.7558,
+        "L14": 0.7365,
+        "L16": 0.7577,
+        "L18": 0.7673,
+        "L20": 0.7808,
+        "L22": 0.7885
+      },
+      "rand_auroc": 0.6462,
+      "behavioral_sentiment_acc": 0.8913,
+      "behavioral_shuffled_acc": 0.7174,
+      "lexical_trivial_flag": false,
+      "guards": {
+        "g1_read>=0.75": true,
+        "g2_behavior>=0.80": true,
+        "g3_disjoint": true,
+        "g4_chance_floors": false
+      },
+      "foundation_valid": false
+    },
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "best_read_auroc": 0.7942,
+      "best_layer": 8,
+      "first_layer_auroc": 0.7423,
+      "per_layer": {
+        "L6": 0.7423,
+        "L8": 0.7942,
+        "L10": 0.7788,
+        "L12": 0.7577,
+        "L14": 0.7596
+      },
+      "rand_auroc": 0.375,
+      "behavioral_sentiment_acc": 0.5652,
+      "behavioral_shuffled_acc": 0.5652,
+      "lexical_trivial_flag": false,
+      "guards": {
+        "g1_read>=0.75": true,
+        "g2_behavior>=0.80": false,
+        "g3_disjoint": true,
+        "g4_chance_floors": true
+      },
+      "foundation_valid": false
+    }
+  }
+}
