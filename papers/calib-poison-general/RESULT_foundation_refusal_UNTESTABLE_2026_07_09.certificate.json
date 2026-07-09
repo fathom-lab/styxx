@@ -1,0 +1,357 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+  "document_sha256": "50d20c884d0aee2b4b8bb452ef7b08bdc075946c8160723b52cb564de8e77c74",
+  "receipts_sha256": {
+    "foundation_refusal_result.json": "dd71b97f4fa00783da8253ce916990b0db6a6e563251fe805dc9f1e237271e9c"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "92"
+    },
+    {
+      "line": 12,
+      "token": "8"
+    },
+    {
+      "line": 20,
+      "token": "2"
+    },
+    {
+      "line": 20,
+      "token": "0.80"
+    },
+    {
+      "line": 20,
+      "token": "4"
+    },
+    {
+      "line": 40,
+      "token": "92"
+    },
+    {
+      "line": 49,
+      "token": "1.0"
+    },
+    {
+      "line": 50,
+      "token": "0.80"
+    },
+    {
+      "line": 57,
+      "token": "92"
+    },
+    {
+      "line": 57,
+      "token": "8"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "preserve. On the frozen refusal pairs (92 items, 8 families, family-disjoint 44/24/24 split), neither",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "preserve. On the frozen refusal pairs (92 items, 8 families, family-disjoint 44/24/24 split), neither",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "preserve. On the frozen refusal pairs (92 items, 8 families, family-disjoint 44/24/24 split), neither",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_attack"
+    },
+    {
+      "line": 12,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "preserve. On the frozen refusal pairs (92 items, 8 families, family-disjoint 44/24/24 split), neither",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_calib"
+    },
+    {
+      "line": 12,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "preserve. On the frozen refusal pairs (92 items, 8 families, family-disjoint 44/24/24 split), neither",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_calib"
+    },
+    {
+      "line": 17,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.049",
+      "value": 0.049,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+    },
+    {
+      "line": 17,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.583",
+      "value": 0.583,
+      "decimals": 3,
+      "context": "| Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Qwen2.5-1.5B | 1.000 (all layers, incl. L6) | 0.049 | **0.667** | 0.583 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_shuffled_acc"
+    },
+    {
+      "line": 18,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.694",
+      "value": 0.694,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.rand_auroc"
+    },
+    {
+      "line": 18,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 18,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "binding_context": "| model | refusal read EVAL AUROC | random-dir floor | behavioral refusal acc | shuffled acc | valid | | Llama-3.2-1B | 1.000 (all layers, incl. L6) | 0.694 | **0.500** | 0.500 | NO |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 20,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Guard 2 (behavioral refusal judgment \u2265 0.80) FAILS on both models, and guard 4 (chance floors) also",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "Guard 2 (behavioral refusal judgment \u2265 0.80) FAILS on both models, and guard 4 (chance floors) also",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Guard 2 (behavioral refusal judgment \u2265 0.80) FAILS on both models, and guard 4 (chance floors) also",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "1. **The read is trivially separable, not a graded representation.** AUROC is 1.000 at *every* layer,",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.049",
+      "value": 0.049,
+      "decimals": 3,
+      "context": "including the earliest scanned (L6), and random directions score at the extremes (0.049 / 0.694)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.rand_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.694",
+      "value": 0.694,
+      "decimals": 3,
+      "context": "including the earliest scanned (L6), and random directions score at the extremes (0.049 / 0.694)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.rand_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "Qwen scores 0.667 and Llama 0.500 (pure chance) on EVAL. The capability analog of \"knowledge\" that",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 30,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "Qwen scores 0.667 and Llama 0.500 (pure chance) on EVAL. The capability analog of \"knowledge\" that",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 40,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "- **Licenses only:** on this particular refusal dataset (92 lexically-marked intent requests) and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "these 1\u20131.5B instruct models, the refusal read is trivially separable and the behavioral refusal",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "behaves like honesty*: a graded read that is NOT trivially lexical (AUROC < 1.0, rising with depth,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "random floor ~0.5) AND a behavioral judgment the model actually has (\u2265 0.80). Candidates: a",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 50,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "random floor ~0.5) AND a behavioral judgment the model actually has (\u2265 0.80). Candidates: a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_attack"
+    },
+    {
+      "line": 57,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_calib"
+    },
+    {
+      "line": 57,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_calib"
+    },
+    {
+      "line": 57,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "92 refusal items, 8 domain families, family-disjoint 44/24/24, small EVAL (24), `Qwen2.5-1.5B` +",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.n_calib"
+    }
+  ]
+}
