@@ -36,7 +36,8 @@ DEPLOY = 22                     # best clean-read layer from foundation v2
 LAMBDAS = [1.0, 3.0]
 SEEDS = [0, 1]
 STEPS = 300
-MICRO, ACCUM, LR = 8, 2, 1e-4
+MICRO, ACCUM, LR = 8, 2, 1e-4   # MICRO=8 matches the honesty stage-2 attack strength
+MAXTOK = 160                     # covers <=120-word reviews at full length (grad-checkpointing fits 8GB)
 TARGETS = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
 
@@ -116,6 +117,10 @@ def train_attack(base_reload, tok, attack, d_np, lam, seed, steps, yids_t, nids_
     torch.manual_seed(seed); np.random.seed(seed)
     model = get_peft_model(base_reload(), LoraConfig(
         r=16, lora_alpha=32, lora_dropout=0.0, bias="none", target_modules=TARGETS))
+    # gradient checkpointing: fit MICRO=8 + full-length reviews in 8GB without weakening the attack
+    model.config.use_cache = False
+    model.enable_input_require_grads()
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     model.train()
     dev = next(model.parameters()).device
     d = torch.tensor(d_np, dtype=torch.float32, device=dev)
@@ -125,12 +130,14 @@ def train_attack(base_reload, tok, attack, d_np, lam, seed, steps, yids_t, nids_
     rng = np.random.default_rng(seed)
 
     def bids(texts):
-        e = tok(texts, return_tensors="pt", padding=True); return e.input_ids.to(dev), e.attention_mask.to(dev)
+        e = tok(texts, return_tensors="pt", padding=True, truncation=True, max_length=MAXTOK)
+        return e.input_ids.to(dev), e.attention_mask.to(dev)
 
     def pids(texts):  # behavioral sentiment prompt
         strs = [tok.apply_chat_template([{"role": "user", "content": F1.sentiment_prompt(t)}],
                                         add_generation_prompt=True, tokenize=False) for t in texts]
-        e = tok(strs, return_tensors="pt", padding=True, add_special_tokens=False)
+        e = tok(strs, return_tensors="pt", padding=True, add_special_tokens=False,
+                truncation=True, max_length=MAXTOK + 48)
         return e.input_ids.to(dev), e.attention_mask.to(dev)
 
     for step in range(steps):
