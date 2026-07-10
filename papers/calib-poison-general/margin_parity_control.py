@@ -211,7 +211,7 @@ def main() -> int:
               "clean_margin_layer_auroc": round(clean_margin, 4),
               "clean_naive_dom_per_layer": {f"L{L}": round(v, 4) for L, v in clean_pl.items()},
               "margin_matched": bool(margin_matched),
-              "clean_guard_ok": bool(guard_ok), "cells": cells}
+              "clean_guard_ok": bool(guard_ok), "points": cells}
     suffix = "_SMOKE_INVALID" if a.smoke else ""
     (HERE / f"margin_parity_control_result{suffix}.json").write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8")

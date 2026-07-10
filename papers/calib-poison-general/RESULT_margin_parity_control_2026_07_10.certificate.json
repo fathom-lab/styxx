@@ -1,0 +1,814 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_margin_parity_control_2026_07_10.md",
+  "document_sha256": "f9cd00afc45e99415f3617aa417c8f90464a0950a955ac36d69112d37c28c98c",
+  "receipts_sha256": {
+    "margin_parity_control_result.json": "26a1f0ea7bb4d7a5345da06dded2747414f0063abff8135d13bc10bbf247da95",
+    "attack_sentiment_wholestack_result.json": "f396d0a7c1f6dd5a454b02d4f2a0e5d52357b1e83307cf60ef0485fd94abced6",
+    "attack_sweep_result.json": "95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237",
+    "foundation_result.json": "b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 66,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "1.0"
+    },
+    {
+      "line": 20,
+      "token": "110"
+    },
+    {
+      "line": 20,
+      "token": "110"
+    },
+    {
+      "line": 32,
+      "token": "0.70"
+    },
+    {
+      "line": 49,
+      "token": "0.0575"
+    },
+    {
+      "line": 50,
+      "token": "0.6941"
+    },
+    {
+      "line": 50,
+      "token": "0.7315"
+    },
+    {
+      "line": 58,
+      "token": "110"
+    },
+    {
+      "line": 77,
+      "token": "1.0"
+    },
+    {
+      "line": 77,
+      "token": "110"
+    },
+    {
+      "line": 80,
+      "token": "0.0036"
+    },
+    {
+      "line": 86,
+      "token": "1"
+    },
+    {
+      "line": 87,
+      "token": "1"
+    },
+    {
+      "line": 87,
+      "token": "1"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(seed 0 and seed 1, \u03bb=1.0, 300 steps), four auditors per cell. All guards passed: clean guard",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:subsample_seed"
+    },
+    {
+      "line": 6,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(seed 0 and seed 1, \u03bb=1.0, 300 steps), four auditors per cell. All guards passed: clean guard",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:seeds[1]"
+    },
+    {
+      "line": 6,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(seed 0 and seed 1, \u03bb=1.0, 300 steps), four auditors per cell. All guards passed: clean guard",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "(seed 0 and seed 1, \u03bb=1.0, 300 steps), four auditors per cell. All guards passed: clean guard",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:steps"
+    },
+    {
+      "line": 7,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "(private 0.9619, behavioral 0.8455), margin premise measured-and-matched (rule selected L20,",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_private_auroc"
+    },
+    {
+      "line": 7,
+      "token": "0.8455",
+      "value": 0.8455,
+      "decimals": 4,
+      "context": "(private 0.9619, behavioral 0.8455), margin premise measured-and-matched (rule selected L20,",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 8,
+      "token": "0.8497",
+      "value": 0.8497,
+      "decimals": 4,
+      "context": "ATTACK-fit clean 0.8497 vs honesty's clean 0.8511), bite in both cells (frozen-stack 0.8194 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_margin_layer_auroc"
+    },
+    {
+      "line": 8,
+      "token": "0.8511",
+      "value": 0.8511,
+      "decimals": 4,
+      "context": "ATTACK-fit clean 0.8497 vs honesty's clean 0.8511), bite in both cells (frozen-stack 0.8194 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:honesty_clean_anchor"
+    },
+    {
+      "line": 8,
+      "token": "0.8194",
+      "value": 0.8194,
+      "decimals": 4,
+      "context": "ATTACK-fit clean 0.8497 vs honesty's clean 0.8511), bite in both cells (frozen-stack 0.8194 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_frozen_stack_read"
+    },
+    {
+      "line": 9,
+      "token": "0.6158",
+      "value": 0.6158,
+      "decimals": 4,
+      "context": "0.6158 / 0.604), behavior preserved (0.8273 / 0.8).**",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].frozen_stack_read"
+    },
+    {
+      "line": 9,
+      "token": "0.604",
+      "value": 0.604,
+      "decimals": 3,
+      "context": "0.6158 / 0.604), behavior preserved (0.8273 / 0.8).**",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 9,
+      "token": "0.8273",
+      "value": 0.8273,
+      "decimals": 4,
+      "context": "0.6158 / 0.604), behavior preserved (0.8273 / 0.8).**",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].behavioral_acc"
+    },
+    {
+      "line": 9,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "0.6158 / 0.604), behavior preserved (0.8273 / 0.8).**",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 20,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.6068",
+      "value": 0.6068,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_dom_per_layer.L14"
+    },
+    {
+      "line": 22,
+      "token": "0.6167",
+      "value": 0.6167,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_dom6_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.6941",
+      "value": 0.6941,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_matched13_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.7315",
+      "value": 0.7315,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].private13_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.8273",
+      "value": 0.8273,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].behavioral_acc"
+    },
+    {
+      "line": 22,
+      "token": "0.6158",
+      "value": 0.6158,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].frozen_stack_read"
+    },
+    {
+      "line": 22,
+      "token": "0.4257",
+      "value": 0.4257,
+      "decimals": 4,
+      "context": "| 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 0 | 0.6068 | 0.6167 | 0.6941 | 0.7315 | 0.8273 | 0.6158 | 0.4257 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_matched13_rand_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.6044",
+      "value": 0.6044,
+      "decimals": 4,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 23,
+      "token": "0.6154",
+      "value": 0.6154,
+      "decimals": 4,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom6_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.7494",
+      "value": 0.7494,
+      "decimals": 4,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_matched13_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.7441",
+      "value": 0.7441,
+      "decimals": 4,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].private13_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 23,
+      "token": "0.604",
+      "value": 0.604,
+      "decimals": 3,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 23,
+      "token": "0.4088",
+      "value": 0.4088,
+      "decimals": 4,
+      "context": "| 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "binding_context": "| seed | margin arm (L20, fit ATTACK) | naive-DoM-6 | naive-MATCHED-13 (fit ATTACK n=110) | private-13 (fit CALIB n=110) | behavioral | frozen-stack | random | | 1 | 0.6044 | 0.6154 | 0.7494 | 0.7441 | 0.8 | 0.604 | 0.4088 |",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_matched13_rand_auroc"
+    },
+    {
+      "line": 25,
+      "token": "-0.0026",
+      "value": -0.0026,
+      "decimals": 4,
+      "context": "Rerun stability vs the canonical Stage-2b cells: naive -0.0026 / -0.0006, private +0.0016 / +0.0036",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].delta_vs_canonical_naive"
+    },
+    {
+      "line": 25,
+      "token": "-0.0006",
+      "value": -0.0006,
+      "decimals": 4,
+      "context": "Rerun stability vs the canonical Stage-2b cells: naive -0.0026 / -0.0006, private +0.0016 / +0.0036",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].delta_vs_canonical_naive"
+    },
+    {
+      "line": 25,
+      "token": "+0.0016",
+      "value": 0.0016,
+      "decimals": 4,
+      "context": "Rerun stability vs the canonical Stage-2b cells: naive -0.0026 / -0.0006, private +0.0016 / +0.0036",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].delta_vs_canonical_private"
+    },
+    {
+      "line": 25,
+      "token": "+0.0036",
+      "value": 0.0036,
+      "decimals": 4,
+      "context": "Rerun stability vs the canonical Stage-2b cells: naive -0.0026 / -0.0006, private +0.0016 / +0.0036",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].delta_vs_canonical_private"
+    },
+    {
+      "line": 26,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "\u2014 an order of magnitude below the 0.05 gap guard; adjudicability is not in question.",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:margin_tolerance"
+    },
+    {
+      "line": 30,
+      "token": "0.8497",
+      "value": 0.8497,
+      "decimals": 4,
+      "context": "The margin-matched arm (clean 0.8497, depth-similar and directly-scrubbed like honesty's L18) was",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_margin_layer_auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.6068",
+      "value": 0.6068,
+      "decimals": 4,
+      "context": "dragged to **0.6068 / 0.6044** \u2014 above the \u2264 0.60 SUPPORTED bar by well under a hundredth on both",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_dom_per_layer.L14"
+    },
+    {
+      "line": 31,
+      "token": "0.6044",
+      "value": 0.6044,
+      "decimals": 4,
+      "context": "dragged to **0.6068 / 0.6044** \u2014 above the \u2264 0.60 SUPPORTED bar by well under a hundredth on both",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 31,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "dragged to **0.6068 / 0.6044** \u2014 above the \u2264 0.60 SUPPORTED bar by well under a hundredth on both",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L14"
+    },
+    {
+      "line": 32,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "cells, and far below the \u2265 0.70 UNSUPPORTED bar. Neither frozen corner is reached: reported verbatim",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.759",
+      "value": 0.759,
+      "decimals": 3,
+      "context": "0.759) **did** cross the collapse bar in both cells (attacked 0.5839 / 0.568), while the matched-",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:clean_naive_dom_per_layer.L12"
+    },
+    {
+      "line": 37,
+      "token": "0.5839",
+      "value": 0.5839,
+      "decimals": 4,
+      "context": "0.759) **did** cross the collapse bar in both cells (attacked 0.5839 / 0.568), while the matched-",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_dom_per_layer.L12"
+    },
+    {
+      "line": 37,
+      "token": "0.568",
+      "value": 0.568,
+      "decimals": 3,
+      "context": "0.759) **did** cross the collapse bar in both cells (attacked 0.5839 / 0.568), while the matched-",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L12"
+    },
+    {
+      "line": 38,
+      "token": "0.6068",
+      "value": 0.6068,
+      "decimals": 4,
+      "context": "margin L20 stopped at 0.6068 / 0.6044 and honesty's matched equivalent (clean 0.8511) fell to",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_dom_per_layer.L14"
+    },
+    {
+      "line": 38,
+      "token": "0.6044",
+      "value": 0.6044,
+      "decimals": 4,
+      "context": "margin L20 stopped at 0.6068 / 0.6044 and honesty's matched equivalent (clean 0.8511) fell to",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 38,
+      "token": "0.8511",
+      "value": 0.8511,
+      "decimals": 4,
+      "context": "margin L20 stopped at 0.6068 / 0.6044 and honesty's matched equivalent (clean 0.8511) fell to",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:honesty_clean_anchor"
+    },
+    {
+      "line": 39,
+      "token": "0.4922",
+      "value": 0.4922,
+      "decimals": 4,
+      "context": "0.4922 / 0.4486 (`papers/read-neq-write/attack_sweep_result.json`, per-layer L18 at \u03bb=1). Within",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[2].frozen_l18_heldout_auroc"
+    },
+    {
+      "line": 39,
+      "token": "0.4486",
+      "value": 0.4486,
+      "decimals": 4,
+      "context": "0.4922 / 0.4486 (`papers/read-neq-write/attack_sweep_result.json`, per-layer L18 at \u03bb=1). Within",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[7].frozen_l18_heldout_auroc"
+    },
+    {
+      "line": 39,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "0.4922 / 0.4486 (`papers/read-neq-write/attack_sweep_result.json`, per-layer L18 at \u03bb=1). Within",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:attack_subsample_indices[1]"
+    },
+    {
+      "line": 41,
+      "token": "0.6044",
+      "value": 0.6044,
+      "decimals": 4,
+      "context": "margin, sentiment retained 0.6044-0.6068 where honesty retained 0.4486-0.4922 \u2014 margin alone does",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_dom_per_layer.L20"
+    },
+    {
+      "line": 41,
+      "token": "0.4486",
+      "value": 0.4486,
+      "decimals": 4,
+      "context": "margin, sentiment retained 0.6044-0.6068 where honesty retained 0.4486-0.4922 \u2014 margin alone does",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[7].frozen_l18_heldout_auroc"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- Seed 0: baseline gap (private-13 - naive-DoM-6) = **0.1149**; at probe+size parity the gap is",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:subsample_seed"
+    },
+    {
+      "line": 48,
+      "token": "0.1149",
+      "value": 0.1149,
+      "decimals": 4,
+      "context": "- Seed 0: baseline gap (private-13 - naive-DoM-6) = **0.1149**; at probe+size parity the gap is",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].baseline_gap"
+    },
+    {
+      "line": 49,
+      "token": "0.0374",
+      "value": 0.0374,
+      "decimals": 4,
+      "context": "**0.0374** \u2014 under the STANDS bar (half of baseline = 0.0575), and above the FAILS bar",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 49,
+      "token": "0.0575",
+      "value": 0.0575,
+      "decimals": 4,
+      "context": "**0.0374** \u2014 under the STANDS bar (half of baseline = 0.0575), and above the FAILS bar",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.6941",
+      "value": 0.6941,
+      "decimals": 4,
+      "context": "(0.6941 < 0.7315 - 0.02). Roughly two-thirds of the gap vanished at parity.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.7315",
+      "value": 0.7315,
+      "decimals": 4,
+      "context": "(0.6941 < 0.7315 - 0.02). Roughly two-thirds of the gap vanished at parity.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 50,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "(0.6941 < 0.7315 - 0.02). Roughly two-thirds of the gap vanished at parity.",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[8].train_hist.l_rep"
+    },
+    {
+      "line": 51,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- Seed 1: baseline gap = **0.1288**; parity gap = **-0.0053** \u2014 the ATTACK-fit parity auditor READ",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:attack_subsample_indices[1]"
+    },
+    {
+      "line": 51,
+      "token": "0.1288",
+      "value": 0.1288,
+      "decimals": 4,
+      "context": "- Seed 1: baseline gap = **0.1288**; parity gap = **-0.0053** \u2014 the ATTACK-fit parity auditor READ",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].baseline_gap"
+    },
+    {
+      "line": 51,
+      "token": "-0.0053",
+      "value": -0.0053,
+      "decimals": 4,
+      "context": "- Seed 1: baseline gap = **0.1288**; parity gap = **-0.0053** \u2014 the ATTACK-fit parity auditor READ",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].parity_gap"
+    },
+    {
+      "line": 52,
+      "token": "0.7494",
+      "value": 0.7494,
+      "decimals": 4,
+      "context": "BETTER than the private one (0.7494 vs 0.7441). This cell satisfies the FAILS condition outright.",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_matched13_auroc"
+    },
+    {
+      "line": 52,
+      "token": "0.7441",
+      "value": 0.7441,
+      "decimals": 4,
+      "context": "BETTER than the private one (0.7494 vs 0.7441). This cell satisfies the FAILS condition outright.",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].private13_auroc"
+    },
+    {
+      "line": 58,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "private probe family (at matched fit-size n=110, frozen subsample) recovered 0.6941 / 0.7494 of the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "0.6941",
+      "value": 0.6941,
+      "decimals": 4,
+      "context": "private probe family (at matched fit-size n=110, frozen subsample) recovered 0.6941 / 0.7494 of the",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].naive_matched13_auroc"
+    },
+    {
+      "line": 58,
+      "token": "0.7494",
+      "value": 0.7494,
+      "decimals": 4,
+      "context": "private probe family (at matched fit-size n=110, frozen subsample) recovered 0.6941 / 0.7494 of the",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].naive_matched13_auroc"
+    },
+    {
+      "line": 59,
+      "token": "0.7315",
+      "value": 0.7315,
+      "decimals": 4,
+      "context": "0.7315 / 0.7441 private read. A privacy-specific residual of ~0.037 appears on one seed and is",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].private13_auroc"
+    },
+    {
+      "line": 59,
+      "token": "0.7441",
+      "value": 0.7441,
+      "decimals": 4,
+      "context": "0.7315 / 0.7441 private read. A privacy-specific residual of ~0.037 appears on one seed and is",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[1].private13_auroc"
+    },
+    {
+      "line": 59,
+      "token": "0.037",
+      "value": 0.037,
+      "decimals": 3,
+      "context": "0.7315 / 0.7441 private read. A privacy-specific residual of ~0.037 appears on one seed and is",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 62,
+      "token": "0.71",
+      "value": 0.71,
+      "decimals": 2,
+      "context": "gap is larger \u2014 chance-level naive vs 0.71\u20130.84 private \u2014 and may not reduce to capacity the same",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sweep_result.json:points[9].per_layer.16.attack_auroc"
+    },
+    {
+      "line": 77,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Qwen2.5-1.5B only, sentiment construct only, \u03bb=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE \u2248 0.05 \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 77,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B only, sentiment construct only, \u03bb=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE \u2248 0.05 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:subsample_seed"
+    },
+    {
+      "line": 77,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B only, sentiment construct only, \u03bb=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE \u2248 0.05 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:seeds[1]"
+    },
+    {
+      "line": 77,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B only, sentiment construct only, \u03bb=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE \u2248 0.05 \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 77,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "Qwen2.5-1.5B only, sentiment construct only, \u03bb=1.0 only, seeds {0,1}, EVAL n=110 (AUROC SE \u2248 0.05 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:margin_tolerance"
+    },
+    {
+      "line": 80,
+      "token": "0.0036",
+      "value": 0.0036,
+      "decimals": 4,
+      "context": "non-bit-deterministic training (measured deltas \u2264 0.0036 here). The margin arm is one layer on one",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 86,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "1. **Honesty-side parity check** (new frozen prereg, ~1 GPU-hour: retrain the E1-regime honesty",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 87,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "attack at \u03bb=1, seeds {0,1}, score the same four auditors via the same shared code path on the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 87,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "attack at \u03bb=1, seeds {0,1}, score the same four auditors via the same shared code path on the",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:subsample_seed"
+    },
+    {
+      "line": 87,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "attack at \u03bb=1, seeds {0,1}, score the same four auditors via the same shared code path on the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 98,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "recorded in the result JSON (seed 0).",
+      "status": "VERIFIED",
+      "receipt_ref": "margin_parity_control_result.json:subsample_seed"
+    }
+  ]
+}
