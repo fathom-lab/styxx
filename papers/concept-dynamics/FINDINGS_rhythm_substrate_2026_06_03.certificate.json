@@ -1,0 +1,576 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDINGS_rhythm_substrate_2026_06_03.md",
+  "document_sha256": "5d90b2f612423a768015c8dc15b92b85e1c14406df012ec78b463b2ad3998b8a",
+  "receipts_sha256": {
+    "llm_rhythm_result.json": "205dc36b24d3aa7c3e49a910376573a441bc10aaaed2ad9a497db094bce9b656",
+    "ssm_contrast_raw.json": "c02cb8d8d6da39230ee4e3eeeea11b7c6080ecb5d2e72ffaf894125dae63067d",
+    "ssm_contrast_result.json": "d3c9133488f4f2bdf6a18ae34e895988e2545f4c61f9600fb08495d288225c3e"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 28,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "43657"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "1"
+    },
+    {
+      "line": 31,
+      "token": "0"
+    },
+    {
+      "line": 31,
+      "token": "40"
+    },
+    {
+      "line": 31,
+      "token": "35"
+    },
+    {
+      "line": 31,
+      "token": "40"
+    },
+    {
+      "line": 36,
+      "token": "0.10"
+    },
+    {
+      "line": 36,
+      "token": "0.33"
+    },
+    {
+      "line": 38,
+      "token": "1"
+    },
+    {
+      "line": 38,
+      "token": "0"
+    },
+    {
+      "line": 40,
+      "token": "20"
+    },
+    {
+      "line": 40,
+      "token": "2"
+    },
+    {
+      "line": 40,
+      "token": "20"
+    },
+    {
+      "line": 43,
+      "token": "1"
+    },
+    {
+      "line": 45,
+      "token": "20"
+    },
+    {
+      "line": 46,
+      "token": "0.40"
+    },
+    {
+      "line": 46,
+      "token": "0"
+    },
+    {
+      "line": 46,
+      "token": "40"
+    },
+    {
+      "line": 46,
+      "token": "1"
+    },
+    {
+      "line": 46,
+      "token": "0.95"
+    },
+    {
+      "line": 47,
+      "token": "5"
+    },
+    {
+      "line": 49,
+      "token": "64"
+    },
+    {
+      "line": 63,
+      "token": "7"
+    },
+    {
+      "line": 63,
+      "token": "2"
+    },
+    {
+      "line": 66,
+      "token": "7"
+    },
+    {
+      "line": 66,
+      "token": "2"
+    },
+    {
+      "line": 92,
+      "token": "64"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 21,
+      "token": "43657",
+      "value": 43657.0,
+      "decimals": 0,
+      "context": "(range [\u221243657, \u22120.004], zero imaginary part). The transition `exp(dt\u00b7A)` is real in",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "0.004",
+      "value": 0.004,
+      "decimals": 3,
+      "context": "(range [\u221243657, \u22120.004], zero imaginary part). The transition `exp(dt\u00b7A)` is real in",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].rand[32][1]"
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(0,1): **pure exponential decay, no rotation \u2192 no oscillation capacity.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(0,1): **pure exponential decay, no rotation \u2192 no oscillation capacity.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected):",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected):",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected):",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "instrument (red-noise/ramp 0/40 false-positive, planted sinusoid 35/40 detected):",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **Transformer concept signal: 0/20 trajectories oscillate** \u2014 mild commitment trend",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.gpt2.osc_components"
+    },
+    {
+      "line": 32,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **Transformer concept signal: 0/20 trajectories oscillate** \u2014 mild commitment trend",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:n_dyn"
+    },
+    {
+      "line": 33,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "(slope \u22120.15), modest AR(1) (\u03c1\u22480.30), random-direction null also 0/20. It **commits, it",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].rand[25][6]"
+    },
+    {
+      "line": 33,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(slope \u22120.15), modest AR(1) (\u03c1\u22480.30), random-direction null also 0/20. It **commits, it",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.Llama-3.2-1B.osc_components"
+    },
+    {
+      "line": 33,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "(slope \u22120.15), modest AR(1) (\u03c1\u22480.30), random-direction null also 0/20. It **commits, it",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].rand[0][5]"
+    },
+    {
+      "line": 33,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(slope \u22120.15), modest AR(1) (\u03c1\u22480.30), random-direction null also 0/20. It **commits, it",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.gpt2.osc_components"
+    },
+    {
+      "line": 35,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **Mamba-1: structurally cannot oscillate (above); empirical run confirms it.** 2/20",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.mamba-1.4b.osc_components"
+    },
+    {
+      "line": 35,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- **Mamba-1: structurally cannot oscillate (above); empirical run confirms it.** 2/20",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:n_dyn"
+    },
+    {
+      "line": 36,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "trajectories above the oscillation gate (osc_frac 0.10) \u2014 **below the 0.33 bar \u2192 both",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "0.33",
+      "value": 0.33,
+      "decimals": 2,
+      "context": "trajectories above the oscillation gate (osc_frac 0.10) \u2014 **below the 0.33 bar \u2192 both",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "commit.** A faint whisper above the transformer (0/20) and its own random null (0.013),",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.gpt2.osc_components"
+    },
+    {
+      "line": 37,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "commit.** A faint whisper above the transformer (0/20) and its own random null (0.013),",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:n_dyn"
+    },
+    {
+      "line": 37,
+      "token": "0.013",
+      "value": 0.013,
+      "decimals": 3,
+      "context": "commit.** A faint whisper above the transformer (0/20) and its own random null (0.013),",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.ssm.traj[0].rand[25][7]"
+    },
+    {
+      "line": 38,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "with higher AR(1) (0.39 vs 0.29) and a flatter trend (\u22480 vs \u22120.15): *recurrence adds a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.39",
+      "value": 0.39,
+      "decimals": 2,
+      "context": "with higher AR(1) (0.39 vs 0.29) and a flatter trend (\u22480 vs \u22120.15): *recurrence adds a",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[0].rand[0][1]"
+    },
+    {
+      "line": 38,
+      "token": "0.29",
+      "value": 0.29,
+      "decimals": 2,
+      "context": "with higher AR(1) (0.39 vs 0.29) and a flatter trend (\u22480 vs \u22120.15): *recurrence adds a",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].rand[11][0]"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "with higher AR(1) (0.39 vs 0.29) and a flatter trend (\u22480 vs \u22120.15): *recurrence adds a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "with higher AR(1) (0.39 vs 0.29) and a flatter trend (\u22480 vs \u22120.15): *recurrence adds a",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].rand[25][6]"
+    },
+    {
+      "line": 40,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "n=20, 2/20 is within instrument noise. **Verdict: BOTH_COMMIT** \u2014 the empirical result",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "n=20, 2/20 is within instrument noise. **Verdict: BOTH_COMMIT** \u2014 the empirical result",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "n=20, 2/20 is within instrument noise. **Verdict: BOTH_COMMIT** \u2014 the empirical result",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "A minimal driven linear recurrence `h_{t+1} = \u03bb\u00b7h_t + noise`, observed via `Re(h)`:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "with **complex** \u03bb = r\u00b7e^{i\u00b72\u03c0/8} the instrument detects oscillation **at the exact",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:n_rand"
+    },
+    {
+      "line": 45,
+      "token": "0.125",
+      "value": 0.125,
+      "decimals": 3,
+      "context": "planted frequency (0.125 cyc/tok), 20\u201330% of trials**; with **real** \u03bb at the models'",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[3].rand[22][4]"
+    },
+    {
+      "line": 45,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "planted frequency (0.125 cyc/tok), 20\u201330% of trials**; with **real** \u03bb at the models'",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "regime (r=0.40) it detects **0/40** \u2014 commitment. (A high-AR(1) real process, r=0.95,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "regime (r=0.40) it detects **0/40** \u2014 commitment. (A high-AR(1) real process, r=0.95,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "regime (r=0.40) it detects **0/40** \u2014 commitment. (A high-AR(1) real process, r=0.95,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "regime (r=0.40) it detects **0/40** \u2014 commitment. (A high-AR(1) real process, r=0.95,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "regime (r=0.40) it detects **0/40** \u2014 commitment. (A high-AR(1) real process, r=0.95,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "leaks ~5% at the *low band edge* (0.047), *not* at the oscillation frequency \u2014 the known",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 47,
+      "token": "0.047",
+      "value": 0.047,
+      "decimals": 3,
+      "context": "leaks ~5% at the *low band edge* (0.047), *not* at the oscillation frequency \u2014 the known",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:archs.transformer.traj[1].sig[9]"
+    },
+    {
+      "line": 49,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "rate reflects that a *noise-driven* oscillator at n=64 is hard; the decisive evidence is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "nesting (the ~7\u00b12 memory limit as a frequency ratio; Lisman & Idiart), phase coding",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "nesting (the ~7\u00b12 memory limit as a frequency ratio; Lisman & Idiart), phase coding",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "order/binding via positional encoding, and memory without a 7\u00b12 limit (full context).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "order/binding via positional encoding, and memory without a 7\u00b12 limit (full context).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 72,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "and shows no rhythm \u2014 empirically (0/20) and structurally (no complex recurrence).",
+      "status": "VERIFIED",
+      "receipt_ref": "llm_rhythm_result.json:per_model.gpt2.osc_components"
+    },
+    {
+      "line": 72,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "and shows no rhythm \u2014 empirically (0/20) and structurally (no complex recurrence).",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_raw.json:n_dyn"
+    },
+    {
+      "line": 92,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- n is small (20 transformer trajectories, one transformer + one real SSM); T=64 is",
+      "status": "VERIFIED",
+      "receipt_ref": "ssm_contrast_result.json:per_arch.transformer.n"
+    },
+    {
+      "line": 92,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "- n is small (20 transformer trajectories, one transformer + one real SSM); T=64 is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
