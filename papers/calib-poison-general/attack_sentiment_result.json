@@ -1,0 +1,61 @@
+{
+  "what": "calibration-poisoning generalization -- sentiment Stage-2 attack + defense",
+  "verdict": "PARTIAL_OR_INCONCLUSIVE",
+  "prereg": "papers/calib-poison-general/PREREG_calib_poison_sentiment_2026_07_09.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "deploy_layer": 22,
+  "scan": [
+    12,
+    14,
+    16,
+    18,
+    20,
+    22
+  ],
+  "lambdas": [
+    1.0,
+    3.0
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "steps": 300,
+  "clean_private_auroc": 0.9619,
+  "clean_behavioral_acc": 0.8455,
+  "clean_guard_ok": true,
+  "points": [
+    {
+      "seed": 0,
+      "lambda": 1.0,
+      "naive_relock_auroc": 0.767,
+      "private_relock_auroc": 0.8875,
+      "rand_auroc": 0.4489,
+      "behavioral_acc": 0.8818
+    },
+    {
+      "seed": 0,
+      "lambda": 3.0,
+      "naive_relock_auroc": 0.7802,
+      "private_relock_auroc": 0.8921,
+      "rand_auroc": 0.4578,
+      "behavioral_acc": 0.8636
+    },
+    {
+      "seed": 1,
+      "lambda": 1.0,
+      "naive_relock_auroc": 0.7226,
+      "private_relock_auroc": 0.8524,
+      "rand_auroc": 0.375,
+      "behavioral_acc": 0.8909
+    },
+    {
+      "seed": 1,
+      "lambda": 3.0,
+      "naive_relock_auroc": 0.7286,
+      "private_relock_auroc": 0.8593,
+      "rand_auroc": 0.3744,
+      "behavioral_acc": 0.8818
+    }
+  ]
+}

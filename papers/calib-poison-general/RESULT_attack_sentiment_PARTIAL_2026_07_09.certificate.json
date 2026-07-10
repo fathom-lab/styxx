@@ -1,0 +1,678 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+  "document_sha256": "43ca78b5ab085f2fd605d6d467d46774489892fd0ec67b2d6b778a3a68ab4ec4",
+  "receipts_sha256": {
+    "attack_sentiment_result.json": "94fdea16c9fcfdc9fb7121cbc2b658bc66d7949364224e865b5ff7cb3d3f7ab2"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 39,
+    "ABSTAIN": 22,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "16"
+    },
+    {
+      "line": 6,
+      "token": "8"
+    },
+    {
+      "line": 11,
+      "token": "0.60"
+    },
+    {
+      "line": 12,
+      "token": "0.70"
+    },
+    {
+      "line": 13,
+      "token": "0.60"
+    },
+    {
+      "line": 29,
+      "token": "0.60"
+    },
+    {
+      "line": 30,
+      "token": "0.48"
+    },
+    {
+      "line": 30,
+      "token": "0.954"
+    },
+    {
+      "line": 32,
+      "token": "0.75"
+    },
+    {
+      "line": 43,
+      "token": "0.60"
+    },
+    {
+      "line": 56,
+      "token": "0.60"
+    },
+    {
+      "line": 56,
+      "token": "0.70"
+    },
+    {
+      "line": 63,
+      "token": "440"
+    },
+    {
+      "line": 63,
+      "token": "2"
+    },
+    {
+      "line": 63,
+      "token": "4"
+    },
+    {
+      "line": 63,
+      "token": "220"
+    },
+    {
+      "line": 63,
+      "token": "110"
+    },
+    {
+      "line": 63,
+      "token": "110"
+    },
+    {
+      "line": 63,
+      "token": "16"
+    },
+    {
+      "line": 63,
+      "token": "300"
+    },
+    {
+      "line": 70,
+      "token": "8"
+    },
+    {
+      "line": 70,
+      "token": "8"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "strength (LoRA r=16, MICRO=8, full-length reviews via gradient checkpointing, 300 steps, single-layer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "strength (LoRA r=16, MICRO=8, full-length reviews via gradient checkpointing, 300 steps, single-layer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "strength (LoRA r=16, MICRO=8, full-length reviews via gradient checkpointing, 300 steps, single-layer",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:steps"
+    },
+    {
+      "line": 11,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "The frozen gate needs the naive (ATTACK-calibrated) re-lock poisoned to \u2264 0.60 with the private",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "(CALIB-calibrated) re-lock recovering \u2265 0.70 for GENERALIZES, or the private re-lock also collapsing",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "to \u2264 0.60 for NO_GENERALIZATION. Neither corner is reached: the naive re-lock does not collapse to",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0.962",
+      "value": 0.962,
+      "decimals": 3,
+      "context": "chance, and the private re-lock stays high. Clean-model guard passed (private-audit EVAL AUROC 0.962,",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:clean_private_auroc"
+    },
+    {
+      "line": 15,
+      "token": "0.845",
+      "value": 0.845,
+      "decimals": 3,
+      "context": "behavioral sentiment accuracy 0.845).",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 21,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[0]"
+    },
+    {
+      "line": 21,
+      "token": "0.767",
+      "value": 0.767,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].naive_relock_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.888",
+      "value": 0.888,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 21,
+      "token": "0.882",
+      "value": 0.882,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].behavioral_acc"
+    },
+    {
+      "line": 21,
+      "token": "0.449",
+      "value": 0.449,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 1.0 | 0.767 | **0.888** | 0.882 | 0.449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].rand_auroc"
+    },
+    {
+      "line": 22,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[1]"
+    },
+    {
+      "line": 22,
+      "token": "0.780",
+      "value": 0.78,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].naive_relock_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.892",
+      "value": 0.892,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].private_relock_auroc"
+    },
+    {
+      "line": 22,
+      "token": "0.864",
+      "value": 0.864,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].behavioral_acc"
+    },
+    {
+      "line": 22,
+      "token": "0.458",
+      "value": 0.458,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 0 | 3.0 | 0.780 | **0.892** | 0.864 | 0.458 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].rand_auroc"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[0]"
+    },
+    {
+      "line": 23,
+      "token": "0.723",
+      "value": 0.723,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.852",
+      "value": 0.852,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].private_relock_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.891",
+      "value": 0.891,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].behavioral_acc"
+    },
+    {
+      "line": 23,
+      "token": "0.375",
+      "value": 0.375,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 1.0 | 0.723 | **0.852** | 0.891 | 0.375 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].rand_auroc"
+    },
+    {
+      "line": 24,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[1]"
+    },
+    {
+      "line": 24,
+      "token": "0.729",
+      "value": 0.729,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[3].naive_relock_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.859",
+      "value": 0.859,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.882",
+      "value": 0.882,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].behavioral_acc"
+    },
+    {
+      "line": 24,
+      "token": "0.374",
+      "value": 0.374,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | random | | 1 | 3.0 | 0.729 | **0.859** | 0.882 | 0.374 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[3].rand_auroc"
+    },
+    {
+      "line": 29,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "from its high clean value to 0.72\u20130.78 \u2014 hurt, but nowhere near the \u2264 0.60 collapse the *honesty* attack",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 29,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "from its high clean value to 0.72\u20130.78 \u2014 hurt, but nowhere near the \u2264 0.60 collapse the *honesty* attack",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.48",
+      "value": 0.48,
+      "decimals": 2,
+      "context": "produced (there the naive re-lock fell to ~0.48). The sentiment read (clean 0.954, graded) is more",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0.954",
+      "value": 0.954,
+      "decimals": 3,
+      "context": "produced (there the naive re-lock fell to ~0.48). The sentiment read (clean 0.954, graded) is more",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "robust than the honesty read (clean 0.85); a knowledge-preserving single-layer LoRA scrub cannot",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 32,
+      "token": "0.86",
+      "value": 0.86,
+      "decimals": 2,
+      "context": "flatten it. Every attack point preserved behavioral sentiment (0.86\u20130.89 \u2265 0.75).",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].behavioral_acc"
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "flatten it. Every attack point preserved behavioral sentiment (0.86\u20130.89 \u2265 0.75).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.888",
+      "value": 0.888,
+      "decimals": 3,
+      "context": "the private (clean-calibrated) re-lock beats the naive (poisoned) re-lock \u2014 0.888 vs 0.767, 0.892",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.767",
+      "value": 0.767,
+      "decimals": 3,
+      "context": "the private (clean-calibrated) re-lock beats the naive (poisoned) re-lock \u2014 0.888 vs 0.767, 0.892",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[0].naive_relock_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.892",
+      "value": 0.892,
+      "decimals": 3,
+      "context": "the private (clean-calibrated) re-lock beats the naive (poisoned) re-lock \u2014 0.888 vs 0.767, 0.892",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].private_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.780",
+      "value": 0.78,
+      "decimals": 3,
+      "context": "vs 0.780, 0.852 vs 0.723, 0.859 vs 0.729 \u2014 a systematic gap in the same direction as honesty. The",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].naive_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.852",
+      "value": 0.852,
+      "decimals": 3,
+      "context": "vs 0.780, 0.852 vs 0.723, 0.859 vs 0.729 \u2014 a systematic gap in the same direction as honesty. The",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].private_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.723",
+      "value": 0.723,
+      "decimals": 3,
+      "context": "vs 0.780, 0.852 vs 0.723, 0.859 vs 0.729 \u2014 a systematic gap in the same direction as honesty. The",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.859",
+      "value": 0.859,
+      "decimals": 3,
+      "context": "vs 0.780, 0.852 vs 0.723, 0.859 vs 0.729 \u2014 a systematic gap in the same direction as honesty. The",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.729",
+      "value": 0.729,
+      "decimals": 3,
+      "context": "vs 0.780, 0.852 vs 0.723, 0.859 vs 0.729 \u2014 a systematic gap in the same direction as honesty. The",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[3].naive_relock_auroc"
+    },
+    {
+      "line": 43,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "- **Does NOT license NO_GENERALIZATION.** The private re-lock is 0.85\u20130.89, nowhere near the \u2264 0.60",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 43,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "- **Does NOT license NO_GENERALIZATION.** The private re-lock is 0.85\u20130.89, nowhere near the \u2264 0.60",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "then collapses (\u2264 0.60) while the private re-lock holds (\u2265 0.70), calibration poisoning GENERALIZES;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "then collapses (\u2264 0.60) while the private re-lock holds (\u2265 0.70), calibration poisoning GENERALIZES;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "440",
+      "value": 440.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "220",
+      "value": 220.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct`, 440 length-matched 2\u2605/4\u2605 reviews, index-split 220/110/110, LoRA r=16, 300",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "steps, single-layer L22 scrub, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}, DoM + logistic + whole-stack",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[0]"
+    },
+    {
+      "line": 64,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "steps, single-layer L22 scrub, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}, DoM + logistic + whole-stack",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:lambdas[1]"
+    },
+    {
+      "line": 64,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "steps, single-layer L22 scrub, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}, DoM + logistic + whole-stack",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:seeds[0]"
+    },
+    {
+      "line": 64,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "steps, single-layer L22 scrub, \u03bb \u2208 {1.0, 3.0}, seeds {0,1}, DoM + logistic + whole-stack",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:seeds[1]"
+    },
+    {
+      "line": 70,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "`attack_sentiment.py` (gradient-checkpointed to run MICRO=8 full-length in 8 GB) \u2192",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 70,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "`attack_sentiment.py` (gradient-checkpointed to run MICRO=8 full-length in 8 GB) \u2192",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
