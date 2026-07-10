@@ -1,0 +1,918 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+  "document_sha256": "5f03b737f5da1e74158e1eefb67c2ccfd4efb75a507535b118824f4587666035",
+  "receipts_sha256": {
+    "attack_sentiment_wholestack_result.json": "f396d0a7c1f6dd5a454b02d4f2a0e5d52357b1e83307cf60ef0485fd94abced6",
+    "attack_sentiment_result.json": "94fdea16c9fcfdc9fb7121cbc2b658bc66d7949364224e865b5ff7cb3d3f7ab2",
+    "foundation_sentiment_v2_result.json": "587e732d1c3d9528428b10e67cba6857582aab3f30a6dea6a21f035164388783"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 60,
+    "ABSTAIN": 25,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "0.60"
+    },
+    {
+      "line": 31,
+      "token": "0.60"
+    },
+    {
+      "line": 34,
+      "token": "0.70"
+    },
+    {
+      "line": 51,
+      "token": "64"
+    },
+    {
+      "line": 52,
+      "token": "0.70"
+    },
+    {
+      "line": 53,
+      "token": "3"
+    },
+    {
+      "line": 57,
+      "token": "16"
+    },
+    {
+      "line": 77,
+      "token": "0.60"
+    },
+    {
+      "line": 86,
+      "token": "0.60"
+    },
+    {
+      "line": 97,
+      "token": "0.60"
+    },
+    {
+      "line": 98,
+      "token": "0.60"
+    },
+    {
+      "line": 104,
+      "token": "440"
+    },
+    {
+      "line": 105,
+      "token": "220"
+    },
+    {
+      "line": 105,
+      "token": "110"
+    },
+    {
+      "line": 105,
+      "token": "110"
+    },
+    {
+      "line": 105,
+      "token": "16"
+    },
+    {
+      "line": 105,
+      "token": "12"
+    },
+    {
+      "line": 106,
+      "token": "110"
+    },
+    {
+      "line": 110,
+      "token": "64"
+    },
+    {
+      "line": 112,
+      "token": "64"
+    },
+    {
+      "line": 116,
+      "token": "16"
+    },
+    {
+      "line": 128,
+      "token": "10"
+    },
+    {
+      "line": 128,
+      "token": "28"
+    },
+    {
+      "line": 128,
+      "token": "11"
+    },
+    {
+      "line": 128,
+      "token": "32"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "branch: the whole-stack attack could not drive the naive (ATTACK-calibrated) re-lock to the \u2264 0.60",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "(private-audit EVAL AUROC 0.9619, behavioral sentiment accuracy 0.8455, frozen-stack read 0.8194):**",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_private_auroc"
+    },
+    {
+      "line": 20,
+      "token": "0.8455",
+      "value": 0.8455,
+      "decimals": 4,
+      "context": "(private-audit EVAL AUROC 0.9619, behavioral sentiment accuracy 0.8455, frozen-stack read 0.8194):**",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_behavioral_acc"
+    },
+    {
+      "line": 20,
+      "token": "0.8194",
+      "value": 0.8194,
+      "decimals": 4,
+      "context": "(private-audit EVAL AUROC 0.9619, behavioral sentiment accuracy 0.8455, frozen-stack read 0.8194):**",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_frozen_stack_read"
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.6193",
+      "value": 0.6193,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].naive_relock_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.7299",
+      "value": 0.7299,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.8273",
+      "value": 0.8273,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].behavioral_acc"
+    },
+    {
+      "line": 24,
+      "token": "0.6127",
+      "value": 0.6127,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].frozen_stack_read"
+    },
+    {
+      "line": 24,
+      "token": "0.423",
+      "value": 0.423,
+      "decimals": 3,
+      "context": "| 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 1.0 | 0.6193 | **0.7299** | 0.8273 | 0.6127 | 0.423 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].rand_auroc"
+    },
+    {
+      "line": 25,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[1]"
+    },
+    {
+      "line": 25,
+      "token": "0.6263",
+      "value": 0.6263,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].naive_relock_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.764",
+      "value": 0.764,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].private_relock_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.8727",
+      "value": 0.8727,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].behavioral_acc"
+    },
+    {
+      "line": 25,
+      "token": "0.6322",
+      "value": 0.6322,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].frozen_stack_read"
+    },
+    {
+      "line": 25,
+      "token": "0.4419",
+      "value": 0.4419,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 0 | 3.0 | 0.6263 | **0.764** | 0.8727 | 0.6322 | 0.4419 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[1].rand_auroc"
+    },
+    {
+      "line": 26,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[0]"
+    },
+    {
+      "line": 26,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.7405",
+      "value": 0.7405,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].private_relock_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.8182",
+      "value": 0.8182,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].behavioral_acc"
+    },
+    {
+      "line": 26,
+      "token": "0.6016",
+      "value": 0.6016,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+    },
+    {
+      "line": 26,
+      "token": "0.4118",
+      "value": 0.4118,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 1.0 | 0.616 | **0.7405** | 0.8182 | 0.6016 | 0.4118 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].rand_auroc"
+    },
+    {
+      "line": 27,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[1]"
+    },
+    {
+      "line": 27,
+      "token": "0.6213",
+      "value": 0.6213,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].naive_relock_auroc"
+    },
+    {
+      "line": 27,
+      "token": "0.7498",
+      "value": 0.7498,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 27,
+      "token": "0.8636",
+      "value": 0.8636,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].behavioral_acc"
+    },
+    {
+      "line": 27,
+      "token": "0.6098",
+      "value": 0.6098,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].frozen_stack_read"
+    },
+    {
+      "line": 27,
+      "token": "0.4151",
+      "value": 0.4151,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "binding_context": "| seed | \u03bb | naive re-lock (poisoned) | private re-lock (clean-calibrated) | behavioral | frozen-stack read | random | | 1 | 3.0 | 0.6213 | **0.7498** | 0.8636 | 0.6098 | 0.4151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].rand_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.8194",
+      "value": 0.8194,
+      "decimals": 4,
+      "context": "from its clean 0.8194 to 0.6016\u20130.6322. The naive re-lock fell from the clean sentiment read",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_frozen_stack_read"
+    },
+    {
+      "line": 30,
+      "token": "0.6016",
+      "value": 0.6016,
+      "decimals": 4,
+      "context": "from its clean 0.8194 to 0.6016\u20130.6322. The naive re-lock fell from the clean sentiment read",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+    },
+    {
+      "line": 31,
+      "token": "0.9537",
+      "value": 0.9537,
+      "decimals": 4,
+      "context": "(foundation v2: 0.9537 at L22) to 0.616\u20130.6263 \u2014 above the 0.60 bar on every cell, by less than",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "(foundation v2: 0.9537 at L22) to 0.616\u20130.6263 \u2014 above the 0.60 bar on every cell, by less than",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 31,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(foundation v2: 0.9537 at L22) to 0.616\u20130.6263 \u2014 above the 0.60 bar on every cell, by less than",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "three hundredths at the closest cell (0.616). Behavioral sentiment stayed 0.8182\u20130.8727 (all at or",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 32,
+      "token": "0.8182",
+      "value": 0.8182,
+      "decimals": 4,
+      "context": "three hundredths at the closest cell (0.616). Behavioral sentiment stayed 0.8182\u20130.8727 (all at or",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].behavioral_acc"
+    },
+    {
+      "line": 33,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "above the 0.75 behavior-preserving requirement). The private re-lock read 0.7299\u20130.764 \u2014 at or above",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 33,
+      "token": "0.7299",
+      "value": 0.7299,
+      "decimals": 4,
+      "context": "above the 0.75 behavior-preserving requirement). The private re-lock read 0.7299\u20130.764 \u2014 at or above",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "its 0.70 recovery bar everywhere, clearing it by three hundredths at the weakest cell (0.7299, which",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.7299",
+      "value": 0.7299,
+      "decimals": 4,
+      "context": "its 0.70 recovery bar everywhere, clearing it by three hundredths at the weakest cell (0.7299, which",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "also sits below the 0.75 clean-guard level).",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 41,
+      "token": "0.9537",
+      "value": 0.9537,
+      "decimals": 4,
+      "context": "| clean (foundation v2 / Stage-2 guard) | 0.9537 | 0.9619 |",
+      "binding_context": "| stage | naive read | private read | | clean (foundation v2 / Stage-2 guard) | 0.9537 | 0.9619 |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 41,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "| clean (foundation v2 / Stage-2 guard) | 0.9537 | 0.9619 |",
+      "binding_context": "| stage | naive read | private read | | clean (foundation v2 / Stage-2 guard) | 0.9537 | 0.9619 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_private_auroc"
+    },
+    {
+      "line": 42,
+      "token": "0.7226",
+      "value": 0.7226,
+      "decimals": 4,
+      "context": "| Stage-2 single-layer attack | 0.7226\u20130.7802 | 0.8524\u20130.8921 |",
+      "binding_context": "| stage | naive read | private read | | Stage-2 single-layer attack | 0.7226\u20130.7802 | 0.8524\u20130.8921 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 42,
+      "token": "0.8524",
+      "value": 0.8524,
+      "decimals": 4,
+      "context": "| Stage-2 single-layer attack | 0.7226\u20130.7802 | 0.8524\u20130.8921 |",
+      "binding_context": "| stage | naive read | private read | | Stage-2 single-layer attack | 0.7226\u20130.7802 | 0.8524\u20130.8921 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].private_relock_auroc"
+    },
+    {
+      "line": 43,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "| Stage-2b whole-stack attack | 0.616\u20130.6263 | 0.7299\u20130.764 |",
+      "binding_context": "| stage | naive read | private read | | Stage-2b whole-stack attack | 0.616\u20130.6263 | 0.7299\u20130.764 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 43,
+      "token": "0.7299",
+      "value": 0.7299,
+      "decimals": 4,
+      "context": "| Stage-2b whole-stack attack | 0.616\u20130.6263 | 0.7299\u20130.764 |",
+      "binding_context": "| stage | naive read | private read | | Stage-2b whole-stack attack | 0.616\u20130.6263 | 0.7299\u20130.764 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 51,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "the private one is a rung behind.\" A stronger attacker (the prereg's named r=64 rung) is on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "trajectory to push the private read through its own 0.70 bar \u2014 and the frozen verdict string would",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 53,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "print `poison_resistant` on that outcome too (see disclosure 3).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "- **Calibration-poisoning COLLAPSE did not generalize to sentiment at whole-stack r=16 / 300 steps:**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "- **Calibration-poisoning COLLAPSE did not generalize to sentiment at whole-stack r=16 / 300 steps:**",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:steps"
+    },
+    {
+      "line": 58,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "no cell at or below 0.60, both seeds, behavior preserved. The gate output NO_GENERALIZATION is the",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+    },
+    {
+      "line": 63,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "audit-relevant harm transported even without collapse: a naive auditor reading 0.616\u20130.6263 on a",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 64,
+      "token": "0.7299",
+      "value": 0.7299,
+      "decimals": 4,
+      "context": "signal privately recoverable at 0.7299\u20130.764 has already been misled about the model's legibility.",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 71,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "forbids rounding 0.616 down to a GENERALIZES collapse forbids rounding it up to a resistance law.",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 72,
+      "token": "0.8194",
+      "value": 0.8194,
+      "decimals": 4,
+      "context": "The bite guard itself shows the probe was substantially poisoned (0.8194 \u2192 0.6016).",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:clean_frozen_stack_read"
+    },
+    {
+      "line": 72,
+      "token": "0.6016",
+      "value": 0.6016,
+      "decimals": 4,
+      "context": "The bite guard itself shows the probe was substantially poisoned (0.8194 \u2192 0.6016).",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+    },
+    {
+      "line": 77,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(an absolute 0.60 bar applied to a probe whose clean read is 0.9537, where honesty's was lower)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 77,
+      "token": "0.9537",
+      "value": 0.9537,
+      "decimals": 4,
+      "context": "(an absolute 0.60 bar applied to a probe whose clean read is 0.9537, where honesty's was lower)",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 78,
+      "token": "0.8395",
+      "value": 0.8395,
+      "decimals": 4,
+      "context": "and **redundancy** (the sentiment signal already reads 0.8395 at L12 and is spread across the",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.first_layer_auroc"
+    },
+    {
+      "line": 86,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "sentence (no cell driven to \u2264 0.60, both seeds) AND sit inside the PARTIAL band (\"naive in",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 87,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(0.60, ~0.75] with private high\") verbatim. The overlap was resolved by the frozen executable's",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].frozen_stack_read"
+    },
+    {
+      "line": 87,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "(0.60, ~0.75] with private high\") verbatim. The overlap was resolved by the frozen executable's",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 97,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "private-collapse condition (private \u2264 0.60 \u2014 the defense BROKEN) and the non-collapse condition",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 98,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(naive > 0.60 \u2014 the probe robust) print the SAME string,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 104,
+      "token": "440",
+      "value": 440.0,
+      "decimals": 0,
+      "context": "`Qwen2.5-1.5B-Instruct` only (the arc's decisive family), 440 length-matched reviews, index-split",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "220",
+      "value": 220.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 105,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:steps"
+    },
+    {
+      "line": 105,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[0]"
+    },
+    {
+      "line": 105,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[1]"
+    },
+    {
+      "line": 105,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:seeds[0]"
+    },
+    {
+      "line": 105,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "220/110/110, LoRA r=16, 300 steps, whole-stack scrub over layers 12\u201322, \u03bb \u2208 {1.0, 3.0}, seeds {0, 1},",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:lambdas[0]"
+    },
+    {
+      "line": 106,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "single run per cell, no CIs; EVAL n=110, where the run-to-run jitter previously measured on this",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 110,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "## Next (the r=64 rung is declined; two experiments are named instead)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 112,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "The prereg's PARTIAL branch names r=64 whole-stack as the next rung. It is **declined for now**: it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 116,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "whole-stack r=16 attack at two cells, scoring (a) the original naive DoM re-lock with per-layer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 119,
+      "token": "0.8395",
+      "value": 0.8395,
+      "decimals": 4,
+      "context": "L12 read (0.8395) matches the honesty arc's clean read to within a hundredth. This one run",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.first_layer_auroc"
+    },
+    {
+      "line": 128,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "`attack_sentiment_wholestack_result.json`; run log `_ws_run.log` (start 10:28, verdict 11:32,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 128,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "`attack_sentiment_wholestack_result.json`; run log `_ws_run.log` (start 10:28, verdict 11:32,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 128,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "`attack_sentiment_wholestack_result.json`; run log `_ws_run.log` (start 10:28, verdict 11:32,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 128,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "`attack_sentiment_wholestack_result.json`; run log `_ws_run.log` (start 10:28, verdict 11:32,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
