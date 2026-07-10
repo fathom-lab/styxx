@@ -14,10 +14,11 @@ either answer can go against the program.**
    bar, starting from a clean read of 0.9537. Honesty's naive re-lock collapsed below the same bar —
    starting from a clean read of 0.8511 (`papers/read-neq-write/foundation_result.json`, layer 18).
    Whether "sentiment did not collapse" is construct or starting-margin arithmetic is untested. The
-   margin-matched arm: sentiment's shallowest scan layer L12, whose CALIB-fit clean read is 0.8395
-   (`foundation_sentiment_v2_result.json`). NOTE (estimator honesty): that anchor is CALIB-fit
-   (n=110); the arm below is ATTACK-fit (n=220) — a different estimator whose clean value this run
-   measures itself, so Question M is GUARDED on the measured match, not the anchor (see guards).
+   margin-matched arm: the scan layer whose ATTACK-fit clean DoM read (the operative estimator —
+   measured by this run's own clean pass) sits closest to honesty's 0.8511, within a 0.05 tolerance,
+   else Question M VOIDs. (The foundation's CALIB-fit L12 anchor 0.8395 from
+   `foundation_sentiment_v2_result.json` is a DIFFERENT estimator and is not used for selection —
+   see the amendment note in the design section.)
    Honesty-side comparability, from data already on disk (`papers/read-neq-write/attack_sweep_result.json`
    per-layer): under honesty's L18-only scrub at λ=1, the held-out re-lock collapsed at EVERY scan
    layer including L12 (0.4737 seed 0 / 0.4516 seed 1) — the honesty collapse was not a
@@ -45,8 +46,20 @@ frozen-stack bite read:
   (rng seed 0, drawn once, indices logged) — so probe family AND fit-sample size are both matched;
   the ONLY remaining difference vs (c) is the fit split itself.
 - **(c) private-13** — the original `private_audit` (fit CALIB n=110), via the same shared function.
-- **(d) naive-L12-DoM** — the margin-matched arm: the L12 entry of (a)'s per-layer log (fit ATTACK,
-  DoM, layer 12 only, no layer selection).
+- **(d) naive-marginL-DoM** — the margin-matched arm: the single-layer entry of (a)'s per-layer log
+  at the **rule-selected margin layer**: argmin over SCAN of |ATTACK-fit clean read − 0.8511|,
+  admissible only if that minimum ≤ 0.05 (else `VOID_M__margin_not_matched`). No EVAL-side
+  selection: the layer is fixed by the CLEAN pass before any attacked read exists.
+  **AMENDMENT (pre-run, disclosed):** the first frozen draft hardcoded L12 from the CALIB-fit
+  foundation anchor (0.8395); the smoke run's clean pass — deterministic in the base model + splits,
+  identical in the scored run — measured the ATTACK-fit clean L12 at 0.759, outside the band, which
+  would have VOIDed Question M by construction. The arm was amended to this rule (and this text
+  updated) BEFORE the scored run; the M bars (≤ 0.60 / ≥ 0.70) are untouched; the smoke output
+  stays quarantined in `*_SMOKE_INVALID*`. Under the measured clean pass the rule selects **L20**
+  (ATTACK-fit clean 0.8497, |d| = 0.0014) — which strengthens the honesty comparison: honesty's
+  collapsed read (L18, clean 0.8511) was likewise a DEEP, DIRECTLY-scrubbed layer (its deploy layer
+  under a direct scrub; per-layer receipts show L18 held-out 0.4922 s0 / 0.4486 s1 at λ=1), so the
+  margin arm is now depth-similar and scrub-symmetric, not an early-layer proxy.
 
 ## Frozen verdicts (two independent questions; every adjudicating branch a DISTINCT string)
 
@@ -58,21 +71,20 @@ flagged near-bar in the RESULT.
 
 **Question M (margin):** does an honesty-margin-matched attacker-calibrated read collapse under the
 identical attack?
-- Guard first — `VOID_M__margin_not_matched` (voids Question M ONLY) unless the run's measured
-  ATTACK-fit clean L12 read is within **0.05** of honesty's clean 0.8511, i.e. in **[0.8011, 0.9011]**.
-  The margin premise must hold as measured, not as anchored.
-- `MARGIN_ACCOUNT_SUPPORTED__headroom_consistent` iff naive-L12-DoM ≤ **0.60** on BOTH cells.
-  ⇒ an honesty-margin-matched read collapses under this attack: the Stage-2b boundary is CONSISTENT
-  WITH headroom arithmetic, and the construct reading is weakened. NOT licensed: "the construct
-  reading is dead" — in this arm margin is confounded with layer depth (L12 is the only
-  margin-matched layer and the shallowest), and L12 is DIRECTLY scrubbed by the whole-stack loss
-  (honesty's L12 collapse was spillover from an L18-only scrub), which biases toward collapse.
-  SUPPORTED is deliberately the easier branch and is worded accordingly.
-- `MARGIN_ACCOUNT_UNSUPPORTED__lowmargin_read_survives` iff naive-L12-DoM ≥ **0.70** on BOTH cells.
-  ⇒ a margin-matched, directly-scrubbed read survives where honesty's spillover-scrubbed equivalent
-  collapsed — margin does not explain the boundary. Residual named: under the whole-stack scrub,
-  L12's adversarial term shares one LoRA r=16 budget with five other layers (attack dilution), where
-  honesty's budget was concentrated; separating dilution from construct needs a further design.
+- Guard first — `VOID_M__margin_not_matched` (voids Question M ONLY) unless the rule-selected
+  margin layer's ATTACK-fit clean read is within **0.05** of honesty's clean 0.8511. The margin
+  premise must hold as measured, not as anchored.
+- `MARGIN_ACCOUNT_SUPPORTED__headroom_consistent` iff naive-marginL-DoM ≤ **0.60** on BOTH cells.
+  ⇒ a clean-read-matched, depth-similar, directly-scrubbed read collapses under this attack exactly
+  as honesty's did: the Stage-2b boundary is CONSISTENT WITH headroom arithmetic, and the construct
+  reading is weakened. NOT licensed: "the construct reading is dead" — single layer, single
+  construct pair, and the whole-stack-vs-single-target scrub geometry still differs.
+- `MARGIN_ACCOUNT_UNSUPPORTED__lowmargin_read_survives` iff naive-marginL-DoM ≥ **0.70** on BOTH
+  cells. ⇒ a margin-matched, directly-scrubbed read survives where honesty's equivalent collapsed —
+  margin does not explain the boundary. Residual named: under the whole-stack scrub, the margin
+  layer's adversarial term shares one LoRA r=16 budget with five other layers (attack dilution),
+  where honesty's budget was concentrated on its deploy layer; separating dilution from construct
+  needs a further design.
 - else `MARGIN_INCONCLUSIVE__between_bars` — reported verbatim. (This catch-all also covers
   discordant cells — one ≤ 0.60, one ≥ 0.70; the RESULT must disclose per-cell values under it.)
 

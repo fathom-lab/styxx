@@ -34,9 +34,11 @@ WS = _load("sent_ws", HERE / "attack_sentiment_wholestack.py")
 
 MODEL = AT.MODEL
 SCAN = AT.SCAN
-MARGIN_LAYER = 12               # margin-matched arm; premise GUARDED on the measured clean read
+# margin arm: RULE-selected layer = argmin |ATTACK-fit clean read - HONESTY_CLEAN| over SCAN,
+# admissible iff that minimum <= MARGIN_TOL (else VOID_M). Amended pre-run after the smoke's
+# deterministic clean pass showed the hardcoded-L12 premise fails under the operative estimator.
 HONESTY_CLEAN = 0.8511          # papers/read-neq-write/foundation_result.json, layer 18
-MARGIN_TOL = 0.05               # VOID_M unless measured clean L12 in [0.8011, 0.9011]
+MARGIN_TOL = 0.05
 SUBSAMPLE_SEED = 0              # frozen seed for the n=|CALIB| ATTACK subsample (fit-size parity)
 LAM = 1.0
 SEEDS = [0, 1]
@@ -80,7 +82,7 @@ def family13_audit(model, tok, fit_items, evl):
 
 def naive_dom_perlayer(model, tok, attack, evl):
     """The original naive re-lock (fit full ATTACK, DoM per layer) with per-layer EVAL AUROCs logged.
-    max over SCAN = arm (a); the MARGIN_LAYER entry = arm (d). Body mirrors AT.naive_relock."""
+    max over SCAN = arm (a); the rule-selected margin-layer entry = arm (d). Body mirrors AT.naive_relock."""
     a_txt = [t for t, _, _ in attack]; a_y = np.array([l for _, l, _ in attack])
     e_txt = [t for t, _, _ in evl]; e_y = np.array([l for _, l, _ in evl])
     a_res = SYK.resid_all(model, tok, a_txt, SCAN)
@@ -122,12 +124,13 @@ def main() -> int:
     clean_stack = WS.frozen_stack_read(base, tok, layer_dirs, SCAN, evl)
     clean_priv, clean_rand = family13_audit(base, tok, calib, evl)
     clean_beh = AT.behavioral_acc(base, tok, evl, yids, nids)
-    clean_l12_all, _ = naive_dom_perlayer(base, tok, attack, evl)
-    clean_l12 = clean_l12_all[MARGIN_LAYER]
+    clean_pl, _ = naive_dom_perlayer(base, tok, attack, evl)
+    margin_layer = min(SCAN, key=lambda L: abs(clean_pl[L] - HONESTY_CLEAN))
+    clean_margin = clean_pl[margin_layer]
     guard_ok = clean_priv >= 0.75 and clean_beh >= 0.80
-    margin_matched = abs(clean_l12 - HONESTY_CLEAN) <= MARGIN_TOL
+    margin_matched = abs(clean_margin - HONESTY_CLEAN) <= MARGIN_TOL
     print(f"[clean] private={clean_priv:.3f} (rand {clean_rand:.3f}) behavioral={clean_beh:.3f} "
-          f"frozen-stack={clean_stack:.3f} L12-naive={clean_l12:.3f} "
+          f"frozen-stack={clean_stack:.3f} margin-layer=L{margin_layer} clean-margin={clean_margin:.3f} "
           f"guard={guard_ok} margin-matched={margin_matched}", flush=True)
     yids_t = torch.tensor(yids, device="cuda"); nids_t = torch.tensor(nids, device="cuda")
     del base; gc.collect(); torch.cuda.empty_cache()
@@ -143,7 +146,7 @@ def main() -> int:
         cell = {"seed": seed, "lambda": LAM,
                 "naive_dom6_auroc": round(naive_dom6, 4),
                 "naive_dom_per_layer": {f"L{L}": round(v, 4) for L, v in per_layer.items()},
-                "naive_L12_auroc": round(per_layer[MARGIN_LAYER], 4),
+                "naive_marginL_auroc": round(per_layer[margin_layer], 4),
                 "naive_matched13_auroc": round(naive_matched13, 4),
                 "naive_matched13_rand_auroc": round(rand_m, 4),
                 "private13_auroc": round(private13, 4),
@@ -159,9 +162,9 @@ def main() -> int:
                 "delta_vs_canonical_private": (round(private13 - CANONICAL[seed]["private"], 4)
                                                if seed in CANONICAL else None)}
         cells.append(cell)
-        print(f"{tag}[s{seed} lam={LAM}] domL12={cell['naive_L12_auroc']:.3f} dom6={naive_dom6:.3f} "
-              f"matched13={naive_matched13:.3f} private13={private13:.3f} behavioral={beh:.3f} "
-              f"frozen-stack={fstack:.3f}(clean {clean_stack:.3f})", flush=True)
+        print(f"{tag}[s{seed} lam={LAM}] domL{margin_layer}={cell['naive_marginL_auroc']:.3f} "
+              f"dom6={naive_dom6:.3f} matched13={naive_matched13:.3f} private13={private13:.3f} "
+              f"behavioral={beh:.3f} frozen-stack={fstack:.3f}(clean {clean_stack:.3f})", flush=True)
         del model; gc.collect(); torch.cuda.empty_cache()
 
     # ---- frozen verdicts (PREREG_margin_parity_control_2026_07_10; bars on rounded-as-logged) ----
@@ -176,10 +179,10 @@ def main() -> int:
         if not margin_matched:
             vm = "VOID_M__margin_not_matched"
         else:
-            l12 = [c["naive_L12_auroc"] for c in cells]
-            if all(v <= 0.60 for v in l12):
+            ml = [c["naive_marginL_auroc"] for c in cells]
+            if all(v <= 0.60 for v in ml):
                 vm = "MARGIN_ACCOUNT_SUPPORTED__headroom_consistent"
-            elif all(v >= 0.70 for v in l12):
+            elif all(v >= 0.70 for v in ml):
                 vm = "MARGIN_ACCOUNT_UNSUPPORTED__lowmargin_read_survives"
             else:
                 vm = "MARGIN_INCONCLUSIVE__between_bars"
@@ -196,15 +199,17 @@ def main() -> int:
     result = {"what": "margin/probe-parity control on the Stage-2b whole-stack sentiment attack",
               "verdict_margin": vm, "verdict_privacy": vp,
               "prereg": "papers/calib-poison-general/PREREG_margin_parity_control_2026_07_10.md",
-              "model": MODEL, "scan": SCAN, "margin_layer": MARGIN_LAYER,
+              "model": MODEL, "scan": SCAN,
+              "margin_layer": margin_layer,
+              "margin_layer_rule": "argmin_L |ATTACK-fit clean DoM read(L) - honesty_clean_anchor|, admissible iff min <= margin_tolerance",
               "honesty_clean_anchor": HONESTY_CLEAN, "margin_tolerance": MARGIN_TOL,
               "subsample_seed": SUBSAMPLE_SEED, "attack_subsample_indices": sub_idx,
               "lambda": LAM, "seeds": seeds, "steps": steps,
               "clean_private_auroc": round(clean_priv, 4), "clean_rand_auroc": round(clean_rand, 4),
               "clean_behavioral_acc": round(clean_beh, 4),
               "clean_frozen_stack_read": round(clean_stack, 4),
-              "clean_naive_L12_auroc": round(clean_l12, 4),
-              "clean_naive_dom_per_layer": {f"L{L}": round(v, 4) for L, v in clean_l12_all.items()},
+              "clean_margin_layer_auroc": round(clean_margin, 4),
+              "clean_naive_dom_per_layer": {f"L{L}": round(v, 4) for L, v in clean_pl.items()},
               "margin_matched": bool(margin_matched),
               "clean_guard_ok": bool(guard_ok), "cells": cells}
     suffix = "_SMOKE_INVALID" if a.smoke else ""
