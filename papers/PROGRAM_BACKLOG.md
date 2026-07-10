@@ -50,6 +50,26 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 32 (2026-07-10) — GPU held by in-flight scored run (calib-poison sentiment attack pid 5480, 7.2/8.2GB) → CPU-only receipt-binding cycle (standing priority #2). `BOUND` (1 doc OATH-HELD).**
+  Bound `papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md` against its OWN 3 experiment
+  receipts (`llm_rhythm_result.json`, `ssm_contrast_raw.json`, `ssm_contrast_result.json`) — **OATH-HELD
+  verified=21, UNGROUNDED=0, CONTRADICTED=0** (abstained 28). Honest bar held: single-experiment folder
+  ≤4 receipts, no 200-receipt sieve; `verifier_sha` matches shipped `certify.py` (UNCHANGED → no
+  `validate_oath_v0` re-run owed). Certify/oath tests **17 passed** CPU-forced (`CUDA_VISIBLE_DEVICES=""`,
+  zero contention with the scored GPU run). **Measured ceiling of standing priority #2 (the yield):** of
+  **201** UNBOUND FINDING/RESULT docs (excluding the in-flight `calib-poison-general/` dir), only **15**
+  sit in honest small (≤4-receipt) folders and only **THIS one** certifies clean today. The NEAR misses
+  (consensus-truth-engine UNG=1, triviaqa/kbc/holdout-gate UNG=2, convergence/capstone/curve UNG=3, all
+  CONTRADICTED=0) fail purely on **certifier-precision config-token false positives** — bare `0` in "> 0"/
+  "≈0", model-size ranges like "2–3B", prose counts "4 of 6" — NOT doc errors; not doctoring prose to pass.
+  The big-folder docs (grounded-honesty-axis n≈70, frequency-resonance n≈14) still need their own named
+  receipts written first or the sieve caveat. Repair-by-summary-receipt stays blocked on float→CELL binding
+  (cycle 26). Two concrete forks fall out: **(a)** a certifier-PRECISION prereg for the unambiguous
+  false-positive classes (comparison-`0` / config-range / "N of M" prose counts — the safe extension of the
+  arXiv-ID-skip idea cycle 18 named), re-gated by `validate_oath_v0.py` with bars frozen; **(b)** doc-named-
+  receipt binding for the big folders (parse each doc's cited JSONs, ground against exactly those). Commit
+  `3b388a9`. Receipts: `papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.certificate.json`.
+
 - **Autopilot cycle 31 (2026-07-08) — read≠write E3‴: does dropping the frozen anchor let the adaptive attacker finally BITE? `VOID_NO_BITE` — the pure-moving scheme STILL did not bite (RESULT OATH-HELD 54/9/0).**
   Names the E3″ VOID_NO_BITE burial and applies the mechanistic fix E3″ handed forward: the adaptive branch scrubs
   ONLY the moving whole-stack re-fit-every-10 MIMIC consensus direction — the frozen-deploy anchor term is removed
