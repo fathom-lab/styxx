@@ -50,6 +50,34 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 33 (2026-07-11) — honesty-side probe-parity check (the sentiment control's Next #1: the single most load-bearing unrun experiment). `PRIVACY_PARTIAL__between_bars` (RESULT OATH-HELD 68/0). The flagship's private>naive recovery is MOSTLY probe capacity, not privacy — on the flagship's own construct.**
+  GPU free (463/8188 MiB, no scored run) → ran the identical E1-regime honesty attack (`attack_sweep.train_attack`;
+  Qwen2.5-1.5B, LoRA r=16, deploy-18 scrub + knowledge-replay, 300 steps) on E1's three-way split, two cells
+  (seeds {0,1}, λ=1.0), three auditors via one shared 13-family code path. Prereg frozen+committed (`a617eca`)
+  BEFORE the retrain, with a **pre-committed FAILS re-attribution language + a binding sequencing rail**.
+  **Reproduction exact:** private-13 matched E1's canonical Qwen λ=1 reads to 4 decimals on BOTH cells
+  (**0.8378** s0 / **0.7217** s1, `delta_vs_canonical` = 0.0 each); naive-DoM-6 reproduced the collapse
+  (0.5106 / 0.4876 vs `attack_sweep` 0.5066 / 0.4725); frozen-18 bit 0.8562 → 0.5502 / 0.5899; knowledge held
+  0.8182 / 0.803. **The swap:** upgrade the naive auditor from 6-feature DoM to the SAME 13-probe family
+  (per-layer DoM + per-layer logistic + whole-stack) fit on a frozen n=53=|CALIB| subsample of the attacker's
+  OWN poisoned ATTACK split (probe family AND fit-size matched; only fit-split differs). It recovered
+  **0.7825 (s0) / 0.8037 (s1)** of the 0.8378 / 0.7217 private read — `baseline_gap` 0.3272 / 0.2341 →
+  `parity_gap` **0.0553 / −0.082** (parity removed ~83% of the seed-0 gap and **>100%** of seed-1: the
+  poisoned-fit parity auditor BEAT the clean-fit private one). Verdict PARTIAL by the frozen conjunction
+  (discordant cells): STANDS refused (`parity_gap` ≪ ½·baseline both cells); FAILS refused ONLY because seed 0
+  kept a ~0.035 privacy residual (private 0.8378 > the 0.8178 matched-13 bar), while seed 1 satisfies FAILS
+  outright. **Cross-construct convergence:** same string as the sentiment margin/parity control (cycle-32 era,
+  07-10), from opposite starting magnitudes (sentiment small gap ~0.11–0.13, ~⅔ removed; honesty large gap
+  ~0.23–0.33, ~83%+ removed) → the flagship's "privacy" attribution is **probe-capacity-dominated on BOTH
+  tested constructs**; the clean fit-split buys at most a small one-of-two-seeds residual. Per the frozen
+  sequencing rail **NO erratum ships from this run alone** (FAILS did not fire; PARTIAL did) — but demotion
+  pressure now sits on both constructs. Commit `7d82ff4`; prereg+harness `a617eca`. **Next = the confirmation
+  run** (new frozen prereg, ≥3 seeds + λ sweep {1.0, 3.0} + Llama-3.2-1B via this same shared code path);
+  its FAILS branch inherits this prereg's frozen re-attribution language and opens the operator-gated erratum
+  path (Fathom v26/v28). Only after the attribution is correctly named on ≥3 seeds does **B2** make sense.
+  Receipts: `PREREG_honesty_parity_control_2026_07_11.md`, `honesty_parity_control.py`,
+  `honesty_parity_control_result.json`, `RESULT_honesty_parity_control_2026_07_11.md` (+cert).
+
 - **Autopilot cycle 32 (2026-07-10) — GPU held by in-flight scored run (calib-poison sentiment attack pid 5480, 7.2/8.2GB) → CPU-only receipt-binding cycle (standing priority #2). `BOUND` (1 doc OATH-HELD).**
   Bound `papers/concept-dynamics/FINDINGS_rhythm_substrate_2026_06_03.md` against its OWN 3 experiment
   receipts (`llm_rhythm_result.json`, `ssm_contrast_raw.json`, `ssm_contrast_result.json`) — **OATH-HELD
@@ -435,6 +463,11 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 
 ---
 
-*Re-rank every cycle. The single most decisive open experiment is **B2** (RMU unlearning + knowledge-replay) —
-it is the real test of read≠write, the core safety claim, and the loop must be willing to let it return EVADABLE.
-B0→B1 (validate v3 + CIs) gate it: settle the current attack family before escalating to the strongest one.*
+*Re-rank every cycle. **As of cycle 33 the single most decisive open experiment is the ATTRIBUTION CONFIRMATION
+run** — the probe-parity check (honesty cycle 33 + sentiment 07-10) shows the read≠write defense's private>naive
+recovery is probe-capacity-dominated on BOTH tested constructs (PARTIAL, one seed FAILS each); a ≥3-seed + λ-sweep
++ Llama re-run through the shared parity code path decides whether the flagship "privacy" clause needs re-attribution
+(operator-gated erratum path pre-committed in `PREREG_honesty_parity_control_2026_07_11.md`). There is no point
+running **B2** (RMU unlearning + knowledge-replay, the real read≠write stress test) until the defense's MECHANISM is
+correctly named — you cannot stress-test a claim whose attribution is unsettled. Sequence: attribution-confirmation →
+B2. B0→B1 (validate v3 + CIs) still gate the attacker-strength escalation.*
