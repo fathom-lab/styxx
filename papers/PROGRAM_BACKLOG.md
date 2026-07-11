@@ -50,6 +50,28 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 34 (2026-07-11) — attribution confirmation part (i): does cycle-33's privacy residual survive ≥3 seeds + a λ sweep? `PARTIAL_CONSOLIDATED__residual_real_but_not_robust` (RESULT OATH-HELD 82/0). The residual is REAL but seed-dependent and small; the erratum path stays CLOSED.**
+  Qwen2.5-1.5B, seeds {0,1,2} × λ {1.0, 3.0} = 6 cells, 300 steps, via `honesty_parity_confirm.py` which
+  **imports** `honesty_parity_control.py` (byte-identical shared parity code path — the 2 cells shared with
+  cycle 33 reproduced all three auditor reads to `delta_vs_cy33` = **0.0**). Prereg frozen+committed (`79fba7a`)
+  BEFORE the retrain, two-thirds-majority aggregate, STANDS written as reachable as FAILS. **N_admissible=6,
+  FAILS-cells=2, STANDS-cells=0, majority=4, median baseline_gap 0.2793, median parity_gap 0.0516, mean 0.0091.**
+  **Structure, not noise:** seeds 0 & 2 hold a small **positive** privacy residual at BOTH λ (parity_gap
+  0.0553/0.0479 s0; 0.0645/0.0553 s2); seed 1 **reverses** it at both (−0.082/−0.0866, poisoned-fit parity
+  auditor beats clean-fit private). It is a **seed effect, not a λ effect** — within every seed
+  |Δ parity_gap| ≤ 0.0092 across λ 1→3, so stronger knowledge-replay doesn't change the attribution. The parity
+  swap removes ~⅘ of the honesty gap on EVERY cell (dominantly probe capacity), leaving a small (~0.05 AUROC,
+  ~0.8 SE at EVAL n=66) genuine privacy residual on two of three seeds, reversed on the third — too small for
+  STANDS, not consistently ≤0.02 for FAILS. **Three probe-parity runs now agree** (sentiment PARTIAL, honesty-λ1
+  PARTIAL cycle 33, honesty-3seed PARTIAL_CONSOLIDATED cycle 34): the flagship read≠write private>naive gap is
+  **capacity-dominated with a small seed-dependent privacy residual**. **Sequencing: FAILS did NOT consolidate
+  (2 of 6, needed 4) → the operator-gated erratum path stays CLOSED**; the correct update is a scope note
+  ("calibrate on a private split" is minor-but-real, ~⅕ of the gap), NOT a retraction. Commit `e9ce645`;
+  prereg+harness `79fba7a`. **Next = part (ii) Llama-3.2-1B cross-family** (new frozen prereg; must pre-commit a
+  borderline-guard → VOID branch), then **B2**. Receipts: `PREREG_honesty_parity_confirm_2026_07_11.md`,
+  `honesty_parity_confirm.py`, `honesty_parity_confirm_result.json`,
+  `RESULT_honesty_parity_confirm_2026_07_11.md` (+cert).
+
 - **Autopilot cycle 33 (2026-07-11) — honesty-side probe-parity check (the sentiment control's Next #1: the single most load-bearing unrun experiment). `PRIVACY_PARTIAL__between_bars` (RESULT OATH-HELD 68/0). The flagship's private>naive recovery is MOSTLY probe capacity, not privacy — on the flagship's own construct.**
   GPU free (463/8188 MiB, no scored run) → ran the identical E1-regime honesty attack (`attack_sweep.train_attack`;
   Qwen2.5-1.5B, LoRA r=16, deploy-18 scrub + knowledge-replay, 300 steps) on E1's three-way split, two cells
@@ -463,11 +485,11 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 
 ---
 
-*Re-rank every cycle. **As of cycle 33 the single most decisive open experiment is the ATTRIBUTION CONFIRMATION
-run** — the probe-parity check (honesty cycle 33 + sentiment 07-10) shows the read≠write defense's private>naive
-recovery is probe-capacity-dominated on BOTH tested constructs (PARTIAL, one seed FAILS each); a ≥3-seed + λ-sweep
-+ Llama re-run through the shared parity code path decides whether the flagship "privacy" clause needs re-attribution
-(operator-gated erratum path pre-committed in `PREREG_honesty_parity_control_2026_07_11.md`). There is no point
-running **B2** (RMU unlearning + knowledge-replay, the real read≠write stress test) until the defense's MECHANISM is
-correctly named — you cannot stress-test a claim whose attribution is unsettled. Sequence: attribution-confirmation →
-B2. B0→B1 (validate v3 + CIs) still gate the attacker-strength escalation.*
+*Re-rank every cycle. **As of cycle 34 the attribution is named to evidence-grade** — the read≠write private>naive
+recovery is CAPACITY-DOMINATED (~⅘ of the gap is probe family) with a SMALL, SEED-DEPENDENT, λ-insensitive real
+privacy residual (~0.05 AUROC on 2 of 3 Qwen seeds, reversed on the 3rd); three probe-parity runs (sentiment +
+honesty×2) all land PARTIAL. FAILS did not consolidate → no erratum; the "privacy" clause is minor-but-real (scope
+note, not retraction). **Remaining decisive items, in order: (1) part (ii) Llama-3.2-1B cross-family** through the
+shared parity code path (only a cross-family FAILS re-opens the operator-gated erratum path; otherwise the
+attribution closes); **(2) B2** (RMU / gradient-routing erasure attacker) — the mechanism is now named well enough
+to stress-test the defense honestly. B0→B1 (validate v3 + CIs) still gate the attacker-strength escalation.*
