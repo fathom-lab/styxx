@@ -1,0 +1,1120 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_honesty_parity_confirm_2026_07_11.md",
+  "document_sha256": "99321a111d1a7810d379afb19cb98be6840dc3135d038fca4f22848ea002e0f9",
+  "receipts_sha256": {
+    "honesty_parity_confirm_result.json": "02eb8117febb89fa0549fe0c5bcabf3e0ad587a30d4bcb6679b9c1aba90bd362"
+  },
+  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "counts": {
+    "VERIFIED": 82,
+    "ABSTAIN": 25,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "6"
+    },
+    {
+      "line": 12,
+      "token": "2"
+    },
+    {
+      "line": 13,
+      "token": "0"
+    },
+    {
+      "line": 13,
+      "token": "4"
+    },
+    {
+      "line": 13,
+      "token": "0.0516"
+    },
+    {
+      "line": 13,
+      "token": "0.0091"
+    },
+    {
+      "line": 16,
+      "token": "4"
+    },
+    {
+      "line": 16,
+      "token": "6"
+    },
+    {
+      "line": 16,
+      "token": "4"
+    },
+    {
+      "line": 16,
+      "token": "6"
+    },
+    {
+      "line": 40,
+      "token": "66"
+    },
+    {
+      "line": 43,
+      "token": "0.0092"
+    },
+    {
+      "line": 48,
+      "token": "33"
+    },
+    {
+      "line": 49,
+      "token": "0.0"
+    },
+    {
+      "line": 57,
+      "token": "6"
+    },
+    {
+      "line": 57,
+      "token": "4"
+    },
+    {
+      "line": 68,
+      "token": "1"
+    },
+    {
+      "line": 68,
+      "token": "33"
+    },
+    {
+      "line": 68,
+      "token": "6"
+    },
+    {
+      "line": 77,
+      "token": "66"
+    },
+    {
+      "line": 78,
+      "token": "3"
+    },
+    {
+      "line": 80,
+      "token": "4"
+    },
+    {
+      "line": 87,
+      "token": "0.788"
+    },
+    {
+      "line": 87,
+      "token": "0.80"
+    },
+    {
+      "line": 100,
+      "token": "53"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 5,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 5,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[2]"
+    },
+    {
+      "line": 5,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 5,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:lambdas[1]"
+    },
+    {
+      "line": 5,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "Six Qwen2.5-1.5B cells (seeds {0,1,2} \u00d7 \u03bb {1.0, 3.0}, 300 steps) through the byte-identical shared",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:steps"
+    },
+    {
+      "line": 7,
+      "token": "0.9382",
+      "value": 0.9382,
+      "decimals": 4,
+      "context": "`family13_audit` / `naive_dom6` / `frozen18_read`). Clean guard passed (private-13 0.9382, knowledge",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:clean_private13_auroc"
+    },
+    {
+      "line": 8,
+      "token": "0.8182",
+      "value": 0.8182,
+      "decimals": 4,
+      "context": "0.8182, disjoint); all 6 cells admissible (bit + knowledge-preserving).**",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:clean_eval_knowledge"
+    },
+    {
+      "line": 8,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "0.8182, disjoint); all 6 cells admissible (bit + knowledge-preserving).**",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_admissible"
+    },
+    {
+      "line": 12,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "- **`PARTIAL_CONSOLIDATED__residual_real_but_not_robust`** \u2014 N_admissible=6, FAILS-cells=2,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **`PARTIAL_CONSOLIDATED__residual_real_but_not_robust`** \u2014 N_admissible=6, FAILS-cells=2,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.0516",
+      "value": 0.0516,
+      "decimals": 4,
+      "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.0091",
+      "value": 0.0091,
+      "decimals": 4,
+      "context": "STANDS-cells=0, majority threshold=4, median parity_gap=0.0516, mean parity_gap=0.0091, median",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Neither strong-majority corner was reached: FAILS needed \u22654 of 6 (got 2), STANDS needed \u22654 of 6",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Neither strong-majority corner was reached: FAILS needed \u22654 of 6 (got 2), STANDS needed \u22654 of 6",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Neither strong-majority corner was reached: FAILS needed \u22654 of 6 (got 2), STANDS needed \u22654 of 6",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_fails_cells"
+    },
+    {
+      "line": 16,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Neither strong-majority corner was reached: FAILS needed \u22654 of 6 (got 2), STANDS needed \u22654 of 6",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Neither strong-majority corner was reached: FAILS needed \u22654 of 6 (got 2), STANDS needed \u22654 of 6",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(got 0). Per-cell disclosure is mandatory; it follows.",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_stands_cells"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 23,
+      "token": "0.5106",
+      "value": 0.5106,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].naive_dom6_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.7825",
+      "value": 0.7825,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].naive_matched13_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.8378",
+      "value": 0.8378,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].private13_auroc"
+    },
+    {
+      "line": 23,
+      "token": "0.3272",
+      "value": 0.3272,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].baseline_gap"
+    },
+    {
+      "line": 23,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "| 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 1.0 | 0.5106 | 0.7825 | 0.8378 | 0.3272 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 24,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:lambdas[1]"
+    },
+    {
+      "line": 24,
+      "token": "0.5263",
+      "value": 0.5263,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].naive_dom6_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.7871",
+      "value": 0.7871,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].naive_matched13_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].private13_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.3088",
+      "value": 0.3088,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].baseline_gap"
+    },
+    {
+      "line": 24,
+      "token": "0.0479",
+      "value": 0.0479,
+      "decimals": 4,
+      "context": "| 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 0 | 3.0 | 0.5263 | 0.7871 | 0.835 | 0.3088 | 0.0479 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].parity_gap"
+    },
+    {
+      "line": 25,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 25,
+      "token": "0.4876",
+      "value": 0.4876,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].naive_dom6_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.8037",
+      "value": 0.8037,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].naive_matched13_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.7217",
+      "value": 0.7217,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].private13_auroc"
+    },
+    {
+      "line": 25,
+      "token": "0.2341",
+      "value": 0.2341,
+      "decimals": 4,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].baseline_gap"
+    },
+    {
+      "line": 25,
+      "token": "-0.082",
+      "value": -0.082,
+      "decimals": 3,
+      "context": "| 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 1.0 | 0.4876 | 0.8037 | 0.7217 | 0.2341 | -0.082 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].parity_gap"
+    },
+    {
+      "line": 26,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:lambdas[1]"
+    },
+    {
+      "line": 26,
+      "token": "0.4756",
+      "value": 0.4756,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].naive_dom6_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.7972",
+      "value": 0.7972,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].naive_matched13_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.7106",
+      "value": 0.7106,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].private13_auroc"
+    },
+    {
+      "line": 26,
+      "token": "0.235",
+      "value": 0.235,
+      "decimals": 3,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].baseline_gap"
+    },
+    {
+      "line": 26,
+      "token": "-0.0866",
+      "value": -0.0866,
+      "decimals": 4,
+      "context": "| 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 1 | 3.0 | 0.4756 | 0.7972 | 0.7106 | 0.235 | -0.0866 | FAILS |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].parity_gap"
+    },
+    {
+      "line": 27,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 27,
+      "token": "0.5253",
+      "value": 0.5253,
+      "decimals": 4,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].naive_dom6_auroc"
+    },
+    {
+      "line": 27,
+      "token": "0.7484",
+      "value": 0.7484,
+      "decimals": 4,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].naive_matched13_auroc"
+    },
+    {
+      "line": 27,
+      "token": "0.8129",
+      "value": 0.8129,
+      "decimals": 4,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].private13_auroc"
+    },
+    {
+      "line": 27,
+      "token": "0.2876",
+      "value": 0.2876,
+      "decimals": 4,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].baseline_gap"
+    },
+    {
+      "line": 27,
+      "token": "0.0645",
+      "value": 0.0645,
+      "decimals": 4,
+      "context": "| 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 1.0 | 0.5253 | 0.7484 | 0.8129 | 0.2876 | 0.0645 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].parity_gap"
+    },
+    {
+      "line": 28,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:lambdas[1]"
+    },
+    {
+      "line": 28,
+      "token": "0.5493",
+      "value": 0.5493,
+      "decimals": 4,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[5].naive_dom6_auroc"
+    },
+    {
+      "line": 28,
+      "token": "0.765",
+      "value": 0.765,
+      "decimals": 3,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[5].naive_matched13_auroc"
+    },
+    {
+      "line": 28,
+      "token": "0.8203",
+      "value": 0.8203,
+      "decimals": 4,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[5].private13_auroc"
+    },
+    {
+      "line": 28,
+      "token": "0.271",
+      "value": 0.271,
+      "decimals": 3,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[5].baseline_gap"
+    },
+    {
+      "line": 28,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "| 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "binding_context": "| seed | \u03bb | naive-DoM-6 | naive-MATCHED-13 | private-13 | baseline_gap | parity_gap | cell | | 2 | 3.0 | 0.5493 | 0.765 | 0.8203 | 0.271 | 0.0553 | neither |",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 32,
+      "token": "0.2793",
+      "value": 0.2793,
+      "decimals": 4,
+      "context": "**The parity swap removes the large majority of the gap on every cell.** Median baseline_gap 0.2793;",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:median_baseline_gap"
+    },
+    {
+      "line": 34,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "0.0479",
+      "value": 0.0479,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "-0.082",
+      "value": -0.082,
+      "decimals": 3,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "-0.0866",
+      "value": -0.0866,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "0.0645",
+      "value": 0.0645,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 34,
+      "token": "0.0516",
+      "value": 0.0516,
+      "decimals": 4,
+      "context": "the residual parity_gap is 0.0553 / 0.0479 / -0.082 / -0.0866 / 0.0645 / 0.0553 \u2014 median 0.0516,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:median_parity_gap"
+    },
+    {
+      "line": 39,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**The residual is a SEED effect, not noise and not a \u03bb effect.** Seeds 0 and 2 hold a **positive**",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 39,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**The residual is a SEED effect, not noise and not a \u03bb effect.** Seeds 0 and 2 hold a **positive**",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[2]"
+    },
+    {
+      "line": 40,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "privacy residual at BOTH \u03bb (0.0553 & 0.0479; 0.0645 & 0.0553) \u2014 small (~one SE, EVAL n=66) but",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 40,
+      "token": "0.0479",
+      "value": 0.0479,
+      "decimals": 4,
+      "context": "privacy residual at BOTH \u03bb (0.0553 & 0.0479; 0.0645 & 0.0553) \u2014 small (~one SE, EVAL n=66) but",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[1].parity_gap"
+    },
+    {
+      "line": 40,
+      "token": "0.0645",
+      "value": 0.0645,
+      "decimals": 4,
+      "context": "privacy residual at BOTH \u03bb (0.0553 & 0.0479; 0.0645 & 0.0553) \u2014 small (~one SE, EVAL n=66) but",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[4].parity_gap"
+    },
+    {
+      "line": 40,
+      "token": "0.0553",
+      "value": 0.0553,
+      "decimals": 4,
+      "context": "privacy residual at BOTH \u03bb (0.0553 & 0.0479; 0.0645 & 0.0553) \u2014 small (~one SE, EVAL n=66) but",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 40,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "privacy residual at BOTH \u03bb (0.0553 & 0.0479; 0.0645 & 0.0553) \u2014 small (~one SE, EVAL n=66) but",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "consistent and same-signed across the \u03bb sweep. Seed 1 **reverses** it at both \u03bb (-0.082 & -0.0866:",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 41,
+      "token": "-0.082",
+      "value": -0.082,
+      "decimals": 3,
+      "context": "consistent and same-signed across the \u03bb sweep. Seed 1 **reverses** it at both \u03bb (-0.082 & -0.0866:",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[2].parity_gap"
+    },
+    {
+      "line": 41,
+      "token": "-0.0866",
+      "value": -0.0866,
+      "decimals": 4,
+      "context": "consistent and same-signed across the \u03bb sweep. Seed 1 **reverses** it at both \u03bb (-0.082 & -0.0866:",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[3].parity_gap"
+    },
+    {
+      "line": 43,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "tripling the knowledge-replay weight (\u03bb 1.0 \u2192 3.0) barely moves parity_gap (|\u0394| \u2264 0.0092) \u2014 the",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 43,
+      "token": "3.0",
+      "value": 3.0,
+      "decimals": 1,
+      "context": "tripling the knowledge-replay weight (\u03bb 1.0 \u2192 3.0) barely moves parity_gap (|\u0394| \u2264 0.0092) \u2014 the",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:lambdas[1]"
+    },
+    {
+      "line": 43,
+      "token": "0.0092",
+      "value": 0.0092,
+      "decimals": 4,
+      "context": "tripling the knowledge-replay weight (\u03bb 1.0 \u2192 3.0) barely moves parity_gap (|\u0394| \u2264 0.0092) \u2014 the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 48,
+      "token": "33",
+      "value": 33.0,
+      "decimals": 0,
+      "context": "**Exact reproduction.** The two cells shared with cycle 33 (seed 0 / seed 1 at \u03bb=1) reproduced all",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**Exact reproduction.** The two cells shared with cycle 33 (seed 0 / seed 1 at \u03bb=1) reproduced all",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 48,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "**Exact reproduction.** The two cells shared with cycle 33 (seed 0 / seed 1 at \u03bb=1) reproduced all",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 48,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "**Exact reproduction.** The two cells shared with cycle 33 (seed 0 / seed 1 at \u03bb=1) reproduced all",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 49,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "three auditor reads to four decimals: `delta_vs_cy33` = 0.0 on naive-DoM-6, naive-MATCHED-13, and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "(2 of 6, needed 4).** Therefore **no erratum is triggered and none ships.** The correct, non-erratum",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(2 of 6, needed 4).** Therefore **no erratum is triggered and none ships.** The correct, non-erratum",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "contribution (positive on two of the three seeds, ~0.05 AUROC, \u03bb-insensitive; sign-reversed on the other). The",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:median_parity_gap"
+    },
+    {
+      "line": 67,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Three probe-parity runs now agree: **sentiment** (2 cells, `RESULT_margin_parity_control_2026_07_10`,",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_fails_cells"
+    },
+    {
+      "line": 68,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "PARTIAL), **honesty \u03bb=1** (2 cells, cycle 33, PARTIAL), **honesty 3-seed \u00d7 \u03bb-sweep** (6 cells, this",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 68,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "PARTIAL), **honesty \u03bb=1** (2 cells, cycle 33, PARTIAL), **honesty 3-seed \u00d7 \u03bb-sweep** (6 cells, this",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[2]"
+    },
+    {
+      "line": 68,
+      "token": "33",
+      "value": 33.0,
+      "decimals": 0,
+      "context": "PARTIAL), **honesty \u03bb=1** (2 cells, cycle 33, PARTIAL), **honesty 3-seed \u00d7 \u03bb-sweep** (6 cells, this",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 68,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "PARTIAL), **honesty \u03bb=1** (2 cells, cycle 33, PARTIAL), **honesty 3-seed \u00d7 \u03bb-sweep** (6 cells, this",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B only (Llama = part ii, not run here), honesty construct, EVAL n=66 (per-cell AUROC",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 78,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "SE \u2248 0.06 \u2014 the ~0.05 residual is ~0.8 SE, which is exactly why 2 seeds could not and 3 seeds can",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:points[0].parity_gap"
+    },
+    {
+      "line": 78,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "SE \u2248 0.06 \u2014 the ~0.05 residual is ~0.8 SE, which is exactly why 2 seeds could not and 3 seeds can",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:median_parity_gap"
+    },
+    {
+      "line": 78,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "SE \u2248 0.06 \u2014 the ~0.05 residual is ~0.8 SE, which is exactly why 2 seeds could not and 3 seeds can",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:clean_eval_knowledge"
+    },
+    {
+      "line": 78,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "SE \u2248 0.06 \u2014 the ~0.05 residual is ~0.8 SE, which is exactly why 2 seeds could not and 3 seeds can",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[2]"
+    },
+    {
+      "line": 78,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "SE \u2248 0.06 \u2014 the ~0.05 residual is ~0.8 SE, which is exactly why 2 seeds could not and 3 seeds can",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 80,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "reproduced to 0.0). The two-thirds-majority rule distinguishes \"residual on \u22654/6\" from \"on ~2/6\";",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 80,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "reproduced to 0.0). The two-thirds-majority rule distinguishes \"residual on \u22654/6\" from \"on ~2/6\";",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 80,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "reproduced to 0.0). The two-thirds-majority rule distinguishes \"residual on \u22654/6\" from \"on ~2/6\";",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_admissible"
+    },
+    {
+      "line": 80,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "reproduced to 0.0). The two-thirds-majority rule distinguishes \"residual on \u22654/6\" from \"on ~2/6\";",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_fails_cells"
+    },
+    {
+      "line": 80,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "reproduced to 0.0). The two-thirds-majority rule distinguishes \"residual on \u22654/6\" from \"on ~2/6\";",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:n_admissible"
+    },
+    {
+      "line": 87,
+      "token": "0.788",
+      "value": 0.788,
+      "decimals": 3,
+      "context": "E1's Llama clean guard was borderline (knowledge 0.788 < 0.80) \u2014 the prereg must pre-commit the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 87,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "E1's Llama clean guard was borderline (knowledge 0.788 < 0.80) \u2014 the prereg must pre-commit the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 99,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`honesty_parity_confirm_result_SMOKE_INVALID.json`. Frozen E1 three-way split (seed 0); ATTACK",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 100,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "subsample indices (n=53, seed 0) in the result JSON.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 100,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "subsample indices (n=53, seed 0) in the result JSON.",
+      "status": "VERIFIED",
+      "receipt_ref": "honesty_parity_confirm_result.json:seeds[0]"
+    }
+  ]
+}
