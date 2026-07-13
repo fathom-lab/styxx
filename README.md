@@ -172,6 +172,23 @@ challenge to beat our published floor lives in [LEADERBOARD.md](LEADERBOARD.md) 
 submissions are CI-re-run against the locked benchmark, and if the re-run doesn't match your
 submitted scores, the discrepancy is reported.
 
+### the probe-robustness ladder
+
+the same discipline, turned on substrate probes themselves. `python -m styxx.ladder` walks the
+four-rung adversarial ladder every honesty-probe robustness claim should survive — **calibration
+poisoning → probe-parity attribution → static subspace erasure → adaptive re-fit erasure** — each
+rung a frozen, pre-registered attack arc with its receipts committed
+([styxx/ladder.py](styxx/ladder.py)). the parity rung is the mandatory line item: *how much of your
+probe's "robustness" is just probe capacity?* — the control almost nobody runs on their own work.
+we ran it on ours; it demoted our own flagship attribution (median capacity share 0.8379, computed
+live from the receipts every time the CLI runs, never quoted from memory). current standings on the
+honesty construct: the read survived both erasure rungs — the eraser that converged watched the
+signal relocate, and the eraser that chased never converged
+([the receipts](papers/calib-poison-general/), figure:
+[erasure_bound_fork.png](papers/calib-poison-general/erasure_bound_fork.png)). every rung re-runs
+on an 8GB consumer GPU, and [REPLICATIONS.md](REPLICATIONS.md) pays named credit to the first
+external re-run of each — more for breaking one than for confirming it.
+
 ## links
 
 | | |
