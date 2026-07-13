@@ -1,0 +1,53 @@
+name: replication verification
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'replications/*.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  verify:
+    if: ${{ startsWith(github.event.pull_request.title, '[replication]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR (read-only head)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Identify submitted replication files
+        id: find
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+          files=$(git diff --name-only --diff-filter=A origin/${{ github.event.pull_request.base.ref }}...HEAD -- 'replications/*.json')
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$files" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Verify each submission against its canonical receipt
+        run: |
+          status=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            # filename convention: <target>__<handle>.json
+            base=$(basename "$f" .json)
+            target="${base%%__*}"
+            echo "::group::$f (target: $target)"
+            python scripts/verify_replication.py "$target" "$f" || status=1
+            echo "::endgroup::"
+          done <<< "${{ steps.find.outputs.files }}"
+          # verdict-divergent submissions fail this check on purpose: they are merged
+          # manually with the replication-divergent label, never silently.
+          exit $status

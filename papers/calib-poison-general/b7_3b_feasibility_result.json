@@ -1,0 +1,36 @@
+{
+  "what": "B7 feasibility/VRAM probe of Qwen2.5-3B-Instruct under the erasure arc's exact training regime on 8GB -- no scientific claim",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "gpu_total_mib": 8187.5,
+  "probes": {
+    "load_bf16": {
+      "ok": true,
+      "peak_allocated_mib": 5886.0,
+      "peak_reserved_mib": 5914.0,
+      "load_seconds": 6.3,
+      "n_layers": 36,
+      "hidden_size": 2048
+    },
+    "audit_forward_hidden_states": {
+      "ok": true,
+      "peak_allocated_mib": 6019.3,
+      "peak_reserved_mib": 6044.0,
+      "n_hidden_states": 37
+    },
+    "train_step_plain": {
+      "ok": true,
+      "peak_allocated_mib": 8334.2,
+      "peak_reserved_mib": 8458.0,
+      "steps": 8,
+      "sec_per_step": 6.19,
+      "est_300_step_minutes": 30.9
+    },
+    "train_step_grad_checkpointing": {
+      "ok": null,
+      "skipped": "plain training fit; checkpointing not needed"
+    }
+  },
+  "gpu_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "load_strategy": "load_bf16",
+  "feasibility": "FITS_PLAIN"
+}
