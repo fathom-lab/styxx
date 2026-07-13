@@ -558,13 +558,17 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 
 ---
 
-*Re-rank every cycle. **As of cycle 37 the removal class is mapped at 1.5B**: static erasure → the signal
-RELOCATES (cycle 36); adaptive re-fit erasure → the eraser NEVER CONVERGES and the read comes back higher
-(cycle 37); knowledge-dropping → inadmissible by the arc's own gate. The read/knowledge coupling is now an
-ERASURE BOUND at this budget, survived twice with OATH-HELD receipts (74/0, 100/0) and, for the adaptive rung, a
-pre-result adversarial review of the instrument itself. The parity-arc attribution (capacity-dominated, small
-seed-dependent privacy residual) extends to both removal regimes. **Remaining decisive items, in order:
-(1) 3B feasibility smoke → B7** — scale is now the binding flank on the whole erasure arc; **(2) accumulating
-(union-of-past-subspaces) eraser** — the one removal escalation left standing at 1.5B; **(3) B6 full-FT.** The
-paper (erasure bound + relock certificate) fires only after (1)+(2), per the program's paper bar. B0→B1
-(validate v3 + CIs) still gate the attacker-strength escalation on the poisoning side.*
+*Re-rank every cycle. **As of cycle 38 the removal class is mapped at 1.5B and the pre-paper experiment is
+redesigned from a binary into a LAW.** Static erasure → RELOCATES (cycle 36, 74/0); adaptive re-fit erasure →
+NEVER CONVERGES, read returns higher (cycle 37, 100/0); both SURVIVES. The reframe (prereg `48e064a`, frozen):
+the **accumulating union eraser as a DOSE-RESPONSE curve** — sweep the erased RANK, read the private-13 auditor
+AND knowledge at each dose, with a fixed-rank control isolating dose from steps. Deliverable = the **coupling
+constant r\*** (rank where the read breaks) and whether knowledge breaks with it: COUPLED (bound is a measured
+number) / DECOUPLED (read≠write BROKEN by accumulation — a published break-point, written exactly as reachable) /
+SURVIVES. This is what carries a paper title vs "it survived again". **Remaining decisive items, in order:
+(1) B7 3B scored run** — IN FLIGHT (cell 1/4 SURVIVES: private-13 0.8065 @ knowledge 0.9091; ~3.9h/cell under
+WDDM spill); **(2) B2-coupling dose-response** — prereg frozen, scored run waits for the card; **(3) B6 full-FT.**
+The tool half (erasure-resistance certificate, SHIPPED `acf7034`) is built and pending its 3B entry. The paper
+fires after (1)+(2). Enabling infra shipped same-arc: `styxx.ladder` v1 (G1), OATH v0.5 precision (G4),
+REPLICATIONS.md (G2), the certificate. G5/G6 code-unblocked; the external counterparty (arXiv + one replication)
+is the operator-gated giant step.*
