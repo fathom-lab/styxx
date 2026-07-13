@@ -50,6 +50,27 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Autopilot cycle 35 (2026-07-12) — attribution confirmation part (ii): the Llama-3.2-1B cross-family run. `VOID_HPCF__clean_guard_failed` (RESULT OATH-HELD 73/0). The base model fails the frozen non-degeneracy knowledge floor, so the cross-family attribution is ill-posed on this model — VOID, not a smuggled verdict; the erratum path stays CLOSED.**
+  Ran the byte-identical shared parity code path (`honesty_parity_confirm_llama.py` **imports**
+  `honesty_parity_control.py`; only the three E1 Llama family constants change — scan {6,8,10,12,14},
+  deploy 10). Prereg frozen+committed (`30d943e`) BEFORE the retrain with a **pre-committed
+  guard-fail → VOID** branch (E1's Llama clean guard was borderline). **Result: `clean_eval_knowledge`
+  0.7727 < the frozen 0.80 knowledge floor** (clean private-13 AUROC 0.8793 reproduced E1's Llama
+  number to 4 decimals; split disjoint) → guard fails → the run VOIDs before any attribution, exactly
+  as E1 found (`guard_pass=false`, clean knowledge 0.7879). **Descriptive, NON-GATING under VOID:**
+  3 of 6 cells cleared the 0.75 knowledge-admissibility floor; all 3 admissible cells are FAILS
+  (parity_gap ≤ 0.02: −0.0046, −0.0083, −0.0608; median −0.0083, mean −0.0246), 0 STANDS — every
+  admissible cell has the naive-MATCHED-13 poisoned-fit auditor ≥ the private clean-fit one, i.e. the
+  same capacity-dominant direction as Qwen (part i). But a bar is a bar: no verdict rests on an
+  ill-posed base, so this is corroborating color only, not a cross-family FAILS. **Sequencing: VOID is
+  not FAILS → the operator-gated erratum path cannot open here, and (family untestable) it cannot close
+  the attribution as two-family either. The attribution stays as part (i) left it: capacity-dominated
+  with a small seed-dependent λ-insensitive privacy residual, single-family on Qwen2.5-1.5B.** Commit
+  `05267e5`; prereg+harness `30d943e`. **Next = cross-family on a ≥3B model that clears the 0.80 floor**
+  (Qwen2.5-3B / Llama-3.2-3B, new frozen prereg), then **B2**. Receipts:
+  `PREREG_honesty_parity_confirm_llama_2026_07_12.md`, `honesty_parity_confirm_llama.py`,
+  `honesty_parity_confirm_llama_result.json`, `RESULT_honesty_parity_confirm_llama_2026_07_12.md` (+cert).
+
 - **Autopilot cycle 34 (2026-07-11) — attribution confirmation part (i): does cycle-33's privacy residual survive ≥3 seeds + a λ sweep? `PARTIAL_CONSOLIDATED__residual_real_but_not_robust` (RESULT OATH-HELD 82/0). The residual is REAL but seed-dependent and small; the erratum path stays CLOSED.**
   Qwen2.5-1.5B, seeds {0,1,2} × λ {1.0, 3.0} = 6 cells, 300 steps, via `honesty_parity_confirm.py` which
   **imports** `honesty_parity_control.py` (byte-identical shared parity code path — the 2 cells shared with
