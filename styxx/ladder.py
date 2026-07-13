@@ -189,13 +189,131 @@ def verify(root: Path | str = ".") -> list:
     return problems
 
 
+# --- the erasure-resistance certificate -------------------------------------------------------
+#
+# PRE-COMMITTED BEHAVIOR (written 2026-07-13 while the B7 3B run was STILL TRAINING, blind to its
+# verdict): the certificate composes whatever removal-class receipts exist. A SURVIVES__* verdict
+# enters `claim_scope`; an ERASED__* verdict enters `measured_breaks` WITH EQUAL PROMINENCE — a
+# certificate that hides a break is not a certificate; VOID/PARTIAL verdicts enter `unadjudicated`
+# (neither certified nor broken); an absent receipt enters `pending`. The certificate REFUSES to
+# exist without a non-empty `unbounded_dimensions` section — an adversarial bound with no named
+# unmeasured flank is dishonest by construction.
+
+# scale replications of the removal-class attack (receipt may not exist yet -> pending)
+SCALE_RECEIPTS: tuple = (
+    ("Qwen2.5-3B-Instruct", "papers/calib-poison-general/b7_erasure_3b_result.json",
+     "papers/calib-poison-general/PREREG_B7_erasure_3b_2026_07_13.md"),
+)
+
+# the flanks the current receipts do NOT bound — frozen from the preregs' own owed lists
+UNBOUNDED_DIMENSIONS: tuple = (
+    "accumulating eraser (union of all past subspaces -- closes the flow-back channel)",
+    "chased whole-stack subspace (the 13-family's full span, not its rank-2 projection)",
+    "full fine-tuning attacker (B6; all receipts are LoRA r=16)",
+    "training budgets beyond 300 steps / cadences beyond refit-50",
+    "constructs beyond honesty; families beyond Qwen at the receipted scales",
+    "knowledge invariant is behavioral EVAL accuracy on disjoint stems, not a capability battery (B4)",
+)
+
+
+def _sha256(p: Path) -> str:
+    import hashlib
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def _classify_removal_receipt(rec: dict, label: str, path: str) -> tuple:
+    """(bucket, entry) for one removal-class receipt. Buckets: claim_scope / measured_breaks /
+    unadjudicated. Decisive minima are computed over ADMISSIBLE cells only."""
+    verdict = rec.get("verdict", "")
+    adm = [c for c in rec.get("points", []) if c.get("admissible")]
+    reads = [c.get("private13_auroc") for c in adm if c.get("private13_auroc") is not None]
+    know = [c.get("eval_knowledge") for c in adm if c.get("eval_knowledge") is not None]
+    entry = {
+        "attacker": label,
+        "model": rec.get("model"),
+        "verdict": verdict,
+        "receipt": path,
+        "budget": {"adapter": "LoRA r=16", "steps": rec.get("steps"),
+                   "lambda": rec.get("lambda"), "alphas": rec.get("alphas"),
+                   "refit_every": rec.get("refit_every")},
+        "n_admissible": rec.get("n_admissible"),
+        "private13_min_admissible": min(reads) if reads else None,
+        "knowledge_min_admissible": min(know) if know else None,
+    }
+    if verdict.startswith("SURVIVES__"):
+        return "claim_scope", entry
+    if verdict.startswith("ERASED"):
+        return "measured_breaks", entry
+    return "unadjudicated", entry
+
+
+def erasure_resistance_certificate(root: Path | str = ".", out_path: Path | str | None = None) -> dict:
+    """Compose the removal-class receipts into the erasure-resistance certificate: what survived,
+    what broke, what is unadjudicated, what is pending, and -- mandatorily -- what is unbounded.
+    Writes JSON to out_path when given. Never states anything not in a receipt."""
+    root = Path(root)
+    buckets: dict = {"claim_scope": [], "measured_breaks": [], "unadjudicated": [], "pending": []}
+    receipt_hashes = {}
+    removal = [("static subspace erasure", "static-erasure"),
+               ("adaptive re-fit erasure", "adaptive-erasure")]
+    for label, key in removal:
+        rung = next(r for r in RUNGS if r.key == key)
+        rec = load_receipt(rung, root)   # loud on absence: the base rungs are required
+        receipt_hashes[rung.receipt] = _sha256(root / rung.receipt)
+        bucket, entry = _classify_removal_receipt(rec, label, rung.receipt)
+        buckets[bucket].append(entry)
+    for model, rel, prereg in SCALE_RECEIPTS:
+        p = root / rel
+        if not p.exists():
+            buckets["pending"].append({"attacker": "static subspace erasure", "model": model,
+                                       "receipt": rel, "prereg": prereg,
+                                       "status": "receipt not yet on disk (run pre-registered)"})
+            continue
+        rec = json.loads(p.read_text(encoding="utf-8"))
+        receipt_hashes[rel] = _sha256(p)
+        bucket, entry = _classify_removal_receipt(rec, "static subspace erasure (scale)", rel)
+        buckets[bucket].append(entry)
+    if not UNBOUNDED_DIMENSIONS:
+        raise ValueError("refusing to issue a certificate with no unbounded dimensions")
+    survived_models = sorted({e["model"] for e in buckets["claim_scope"] if e["model"]})
+    broken_models = sorted({e["model"] for e in buckets["measured_breaks"] if e["model"]})
+    cert = {
+        "what": "styxx erasure-resistance certificate -- the private-13 substrate honesty read vs "
+                "removal-class attackers, composed verbatim from pre-registered receipts",
+        "claim": (f"the read survived every admissible removal-class cell on: {', '.join(survived_models)}"
+                  if survived_models else "no surviving scope -- see measured_breaks/unadjudicated"),
+        "measured_breaks_summary": (f"the read was REMOVED with knowledge held on: {', '.join(broken_models)}"
+                                    if broken_models else "none in the receipts composed here"),
+        **buckets,
+        "unbounded_dimensions": list(UNBOUNDED_DIMENSIONS),
+        "receipts_sha256": receipt_hashes,
+        "reverify": "re-run the scripts named in styxx.ladder.RUNGS at the commits recorded in each "
+                    "RESULT doc; python -m styxx.ladder verifies verdict-string integrity",
+        "issued_by": "styxx.ladder.erasure_resistance_certificate (behavior pre-committed blind to "
+                     "the 3B verdict; see module comment)",
+    }
+    if out_path is not None:
+        Path(out_path).write_text(json.dumps(cert, indent=2) + "\n", encoding="utf-8")
+    return cert
+
+
 def _main() -> int:
     import argparse
     ap = argparse.ArgumentParser(prog="python -m styxx.ladder",
                                  description="the styxx probe-robustness ladder over the repo's canonical receipts")
     ap.add_argument("--root", default=".", help="styxx repository root (default: cwd)")
     ap.add_argument("--json", action="store_true", help="emit the full report as JSON")
+    ap.add_argument("--certificate", metavar="OUT",
+                    help="issue the erasure-resistance certificate to OUT (JSON) and print its claim")
     a = ap.parse_args()
+    if a.certificate:
+        cert = erasure_resistance_certificate(a.root, a.certificate)
+        print(f"claim          : {cert['claim']}")
+        print(f"measured breaks: {cert['measured_breaks_summary']}")
+        print(f"pending        : {len(cert['pending'])} | unadjudicated: {len(cert['unadjudicated'])}")
+        print(f"unbounded      : {len(cert['unbounded_dimensions'])} named dimensions")
+        print(f"-> {a.certificate}")
+        return 0
     problems = verify(a.root)
     if problems:
         print("LADDER: receipts incomplete --")

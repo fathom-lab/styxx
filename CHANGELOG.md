@@ -22,6 +22,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   execution is the documented v2 (backlog G1), with the frozen per-rung scripts as its backends.
   Tests: `tests/test_ladder.py` (registry shape, loud missing-receipt failure, live-computed
   attribution, tamper-flagging of a drifted verdict).
+- **`styxx.ladder.erasure_resistance_certificate` -- the first adversarially-bounded certificate
+  for a substrate read.** Composes the removal-class receipts verbatim into one machine-verifiable
+  object: `claim_scope` (what survived, with budgets and admissible-cell minima), `measured_breaks`
+  (ERASED verdicts, surfaced with EQUAL prominence -- a certificate that hides a break is not a
+  certificate), `unadjudicated` (VOID/PARTIAL), `pending` (pre-registered runs whose receipts do
+  not exist yet), a MANDATORY non-empty `unbounded_dimensions` section (refuses to issue without
+  one), and SHA-256 receipt hashes. Behavior pre-committed BLIND to the in-flight 3B verdict (see
+  the module comment); CLI `python -m styxx.ladder --certificate OUT`. Break-handling is tested by
+  fabricating an ERASED receipt.
 - **`styxx.mount.ConscienceMount.relock` -- the calibration-poisoning defense, shipped.** Re-fits a
   mounted axis's probe IN-MODEL on a private, clean, labeled split of the agent's own hidden states
   the audited party never saw. This is the operation that recovered a substrate honesty read through a

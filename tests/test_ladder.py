@@ -54,6 +54,48 @@ def test_parity_attribution_is_computed_not_hardcoded():
 
 
 @needs_receipts
+def test_certificate_composes_only_from_receipts():
+    cert = ladder.erasure_resistance_certificate(ROOT)
+    # the two 1.5B removal rungs are SURVIVES in the canonical receipts
+    scope_attackers = {e["attacker"] for e in cert["claim_scope"]}
+    assert "static subspace erasure" in scope_attackers
+    assert "adaptive re-fit erasure" in scope_attackers
+    # the 3B scale receipt is classified wherever its verdict puts it -- or pending if absent
+    b7 = ROOT / "papers" / "calib-poison-general" / "b7_erasure_3b_result.json"
+    if b7.exists():
+        placed = [e for b in ("claim_scope", "measured_breaks", "unadjudicated")
+                  for e in cert[b] if e.get("receipt", "").endswith("b7_erasure_3b_result.json")]
+        assert len(placed) == 1
+    else:
+        assert any(p["receipt"].endswith("b7_erasure_3b_result.json") for p in cert["pending"])
+    # mandatory honesty surfaces
+    assert len(cert["unbounded_dimensions"]) >= 5
+    assert all(len(h) == 64 for h in cert["receipts_sha256"].values())
+
+
+@needs_receipts
+def test_certificate_surfaces_a_break_with_equal_prominence(tmp_path):
+    """Pre-committed blind behavior: an ERASED verdict lands in measured_breaks and the claim
+    scope excludes that receipt -- the certificate reports breaks, never hides them."""
+    import json, shutil
+    for rung in ladder.RUNGS:
+        src = ROOT / rung.receipt
+        if src.exists():
+            dst = tmp_path / rung.receipt
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(src, dst)
+    # tamper the adaptive rung into a break
+    adaptive = tmp_path / "papers" / "calib-poison-general" / "b2_adaptive_erasure_result.json"
+    rec = json.loads(adaptive.read_text(encoding="utf-8"))
+    rec["verdict"] = "ERASED_ADAPT__read_neq_write_BROKEN_1p5B"
+    adaptive.write_text(json.dumps(rec), encoding="utf-8")
+    cert = ladder.erasure_resistance_certificate(tmp_path)
+    assert any(e["attacker"] == "adaptive re-fit erasure" for e in cert["measured_breaks"])
+    assert not any(e["attacker"] == "adaptive re-fit erasure" for e in cert["claim_scope"])
+    assert "REMOVED" in cert["measured_breaks_summary"]
+
+
+@needs_receipts
 def test_erased_verdict_would_be_flagged(tmp_path):
     """verify() must catch a receipt whose verdict drifted from the frozen canonical string."""
     import json, shutil
