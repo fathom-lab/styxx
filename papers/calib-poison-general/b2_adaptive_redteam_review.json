@@ -1,0 +1,44 @@
+{
+  "what": "Pre-result adversarial review of the B2-adaptive harness/prereg/verdict machinery, run WHILE the scored run trained (review of the instrument, blind to the final verdict; 2 of 4 cells existed when it launched)",
+  "date": "2026-07-13",
+  "reviewed": [
+    "papers/calib-poison-general/b2_adaptive_erasure.py",
+    "papers/calib-poison-general/PREREG_B2_adaptive_erasure_2026_07_13.md"
+  ],
+  "method": "five independent attack lenses (impl-correctness, stats-verdict, prereg-integrity, artifact-hunt, certifier-readiness), each finding then passed to an independent refutation agent",
+  "findings_raised": 32,
+  "refuted": 6,
+  "survived_refutation": 4,
+  "verify_agents_lost_to_session_limit": 22,
+  "fatal": 0,
+  "major": 0,
+  "note_on_lost_verifiers": "each unverified major-class finding had a verified sibling refutation covering its substance (bite-gate-bias family refuted on inverted-bias grounds: the excluded cell was a would-be SURVIVES cell; delta-grounding family refuted on operand-pair precedent); adjudicated by the parent agent before the RESULT was written",
+  "confirmed_findings": [
+    {
+      "severity": "minor",
+      "title": "step-0 subspace is recomputed by recipe, not persisted-and-reloaded; RESULT must not say 'B2's exact subspace'",
+      "resolution": "RESULT words it as recomputed with the identical recipe on the identical clean checkpoint; clean metrics reproduce B2's to 4 decimals"
+    },
+    {
+      "severity": "none",
+      "title": "verified non-defects: refit rebinding real, no train-state corruption, resid_all peft-safe, smoke globals visible, batch-RNG parity with static B2 holds; training loop otherwise line-identical to B2",
+      "resolution": "coverage record; single-variable claim holds at code level"
+    },
+    {
+      "severity": "minor",
+      "title": "per-re-fit l_erase trajectory not persisted (only the endpoint tail)",
+      "resolution": "RESULT scopes all loss-history claims to the stored train_hist_tail; future harnesses should persist full hist"
+    },
+    {
+      "severity": "minor",
+      "title": "re-fit counting hazard: 5 re-fits (steps 50-250) plus the inherited step-0 subspace = six subspaces; prose saying 'six re-fits' would unground against n_refits=5",
+      "resolution": "RESULT uses the stored-scalar convention: n_refits=5, step-0 subspace inherited"
+    }
+  ],
+  "adopted_disclosures": [
+    "the inadmissible NO-BITE cell is disclosed with its full row incl. its private-13 read (the strongest in the run) - exclusion is anti-SURVIVES",
+    "static-vs-adaptive comparisons stated as operand pairs from the two receipt JSONs, never bare deltas",
+    "union-of-past-subspaces (accumulating) eraser added to the owed-attacker list",
+    "knowledge-replay dominance note: one attacked cell's knowledge read exceeded the clean model's"
+  ]
+}
