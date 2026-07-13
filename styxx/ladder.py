@@ -297,6 +297,31 @@ def erasure_resistance_certificate(root: Path | str = ".", out_path: Path | str 
     return cert
 
 
+def verify_erasure_certificate(cert: dict | str | Path, root: Path | str = ".") -> dict:
+    """Tamper-check an issued erasure-resistance certificate against the live receipts: re-hash every
+    receipt the certificate recorded and confirm it still matches. This is what makes the certificate
+    an ASSURANCE rather than a snapshot -- an auditor runs it to prove the evidence has not drifted
+    since issuance. Returns {ok, checked, mismatches, missing}; ok iff every recorded receipt exists
+    and re-hashes to its recorded value. Does NOT re-run the experiments (that is `reverify`); it
+    verifies the certificate is a faithful, un-tampered index of receipts that are still on disk."""
+    if isinstance(cert, (str, Path)):
+        cert = json.loads(Path(cert).read_text(encoding="utf-8"))
+    root = Path(root)
+    recorded = cert.get("receipts_sha256", {})
+    mismatches, missing, checked = [], [], 0
+    for rel, sha in recorded.items():
+        p = root / rel
+        if not p.exists():
+            missing.append(rel)
+            continue
+        checked += 1
+        live = _sha256(p)
+        if live != sha:
+            mismatches.append({"receipt": rel, "recorded": sha, "live": live})
+    return {"ok": not mismatches and not missing, "checked": checked,
+            "n_recorded": len(recorded), "mismatches": mismatches, "missing": missing}
+
+
 def _main() -> int:
     import argparse
     ap = argparse.ArgumentParser(prog="python -m styxx.ladder",
@@ -305,7 +330,18 @@ def _main() -> int:
     ap.add_argument("--json", action="store_true", help="emit the full report as JSON")
     ap.add_argument("--certificate", metavar="OUT",
                     help="issue the erasure-resistance certificate to OUT (JSON) and print its claim")
+    ap.add_argument("--verify", metavar="CERT",
+                    help="tamper-check an issued certificate: re-hash its receipts against the live repo")
     a = ap.parse_args()
+    if a.verify:
+        v = verify_erasure_certificate(a.verify, a.root)
+        print(f"certificate receipts: checked {v['checked']}/{v['n_recorded']} -> "
+              f"{'OK (un-tampered)' if v['ok'] else 'DRIFT DETECTED'}")
+        for m in v["mismatches"]:
+            print(f"  MISMATCH {m['receipt']}: recorded {m['recorded'][:12]} != live {m['live'][:12]}")
+        for miss in v["missing"]:
+            print(f"  MISSING  {miss}")
+        return 0 if v["ok"] else 1
     if a.certificate:
         cert = erasure_resistance_certificate(a.root, a.certificate)
         print(f"claim          : {cert['claim']}")

@@ -55,6 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   one), and SHA-256 receipt hashes. Behavior pre-committed BLIND to the in-flight 3B verdict (see
   the module comment); CLI `python -m styxx.ladder --certificate OUT`. Break-handling is tested by
   fabricating an ERASED receipt.
+- **`styxx.ladder.verify_erasure_certificate` + `python -m styxx.ladder --verify CERT` -- the
+  certificate's tamper-check.** Re-hashes every receipt an issued certificate recorded against the
+  live repository and reports `ok / mismatches / missing` -- what turns the certificate from a
+  snapshot into an assurance an auditor can re-check without re-running the experiments. Detects a
+  drifted or edited receipt; round-trips with `--certificate`. +2 tests.
 - **`styxx.mount.ConscienceMount.relock` -- the calibration-poisoning defense, shipped.** Re-fits a
   mounted axis's probe IN-MODEL on a private, clean, labeled split of the agent's own hidden states
   the audited party never saw. This is the operation that recovered a substrate honesty read through a

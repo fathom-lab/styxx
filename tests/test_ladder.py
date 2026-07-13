@@ -96,6 +96,26 @@ def test_certificate_surfaces_a_break_with_equal_prominence(tmp_path):
 
 
 @needs_receipts
+def test_certificate_self_verifies_against_live_receipts():
+    cert = ladder.erasure_resistance_certificate(ROOT)
+    v = ladder.verify_erasure_certificate(cert, ROOT)
+    assert v["ok"] is True
+    assert v["checked"] == v["n_recorded"] >= 2
+    assert v["mismatches"] == [] and v["missing"] == []
+
+
+@needs_receipts
+def test_certificate_verification_detects_receipt_drift(tmp_path):
+    """An auditor's tamper-check must fire when a recorded receipt hash no longer matches on disk."""
+    cert = ladder.erasure_resistance_certificate(ROOT)
+    rel = next(iter(cert["receipts_sha256"]))
+    cert["receipts_sha256"][rel] = "0" * 64          # simulate a drifted/edited receipt
+    v = ladder.verify_erasure_certificate(cert, ROOT)
+    assert v["ok"] is False
+    assert any(m["receipt"] == rel for m in v["mismatches"])
+
+
+@needs_receipts
 def test_erased_verdict_would_be_flagged(tmp_path):
     """verify() must catch a receipt whose verdict drifted from the frozen canonical string."""
     import json, shutil
