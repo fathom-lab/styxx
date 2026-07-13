@@ -1,0 +1,24 @@
+{
+  "what": "P4 13-doc recert under shipped v0.5 (A dropped)",
+  "n_ungrounded": 3,
+  "points": [
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.56",
+      "ctx": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u2013"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 35,
+      "token": "0.16",
+      "ctx": "Total explainable is capped by the fMRI noise ceiling (RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16\u2013"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 63,
+      "token": "0.50",
+      "ctx": "- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with"
+    }
+  ]
+}

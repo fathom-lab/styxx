@@ -1,0 +1,385 @@
+{
+  "what": "mutant battery over the 13 cycle-18 certificates (committed script)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v04_float_binding_2026_07_03.md",
+  "seed": 1,
+  "n_docs": 13,
+  "receipt_sha_drift": {},
+  "n_mutants": 269,
+  "caught": 119,
+  "false_verify": 26,
+  "abstain_degrade": 121,
+  "dropped": 3,
+  "verdict_flips": 102,
+  "catch_rate": 0.442,
+  "false_verify_rate": 0.097,
+  "abstain_degrade_rate": 0.45,
+  "clean_ungrounded_total": 3,
+  "per_doc": {
+    "RESULT_ai_brain_2026_06_03.md": {
+      "caught": 22,
+      "false_verify": 4,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "verdict_flips": 22,
+      "n_mutants": 31,
+      "clean_counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "RESULT_ai_brain_vision_2026_06_03.md": {
+      "caught": 3,
+      "false_verify": 2,
+      "abstain_degrade": 17,
+      "dropped": 0,
+      "verdict_flips": 0,
+      "n_mutants": 22,
+      "clean_counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 2
+      },
+      "clean_verdict": "OATH-FAILED"
+    },
+    "RESULT_ai_human_2026_06_03.md": {
+      "caught": 33,
+      "false_verify": 7,
+      "abstain_degrade": 10,
+      "dropped": 0,
+      "verdict_flips": 33,
+      "n_mutants": 50,
+      "clean_counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "RESULT_llm_breadth_2026_06_03.md": {
+      "caught": 1,
+      "false_verify": 1,
+      "abstain_degrade": 0,
+      "dropped": 0,
+      "verdict_flips": 1,
+      "n_mutants": 2,
+      "clean_counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_council_2026_05_25.md": {
+      "caught": 14,
+      "false_verify": 1,
+      "abstain_degrade": 1,
+      "dropped": 1,
+      "verdict_flips": 0,
+      "n_mutants": 17,
+      "clean_counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 1
+      },
+      "clean_verdict": "OATH-FAILED"
+    },
+    "FINDING_fame_vs_truth_2026_05_25.md": {
+      "caught": 6,
+      "false_verify": 1,
+      "abstain_degrade": 3,
+      "dropped": 0,
+      "verdict_flips": 6,
+      "n_mutants": 10,
+      "clean_counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_dogfood_2026_05_25.md": {
+      "caught": 4,
+      "false_verify": 1,
+      "abstain_degrade": 9,
+      "dropped": 1,
+      "verdict_flips": 4,
+      "n_mutants": 15,
+      "clean_counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_adversarial_curve_v3_2026_06_08.md": {
+      "caught": 3,
+      "false_verify": 1,
+      "abstain_degrade": 30,
+      "dropped": 0,
+      "verdict_flips": 3,
+      "n_mutants": 34,
+      "clean_counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_council_grounding_2026_05_28.md": {
+      "caught": 2,
+      "false_verify": 1,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "verdict_flips": 2,
+      "n_mutants": 8,
+      "clean_counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_detection_locus_gpt_2026_05_30.md": {
+      "caught": 22,
+      "false_verify": 1,
+      "abstain_degrade": 5,
+      "dropped": 0,
+      "verdict_flips": 22,
+      "n_mutants": 28,
+      "clean_counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "RESULT_geometry_integrity_2026_06_03.md": {
+      "caught": 4,
+      "false_verify": 3,
+      "abstain_degrade": 2,
+      "dropped": 0,
+      "verdict_flips": 4,
+      "n_mutants": 9,
+      "clean_counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "RESULT_rhythm_rescue_2026_06_03.md": {
+      "caught": 0,
+      "false_verify": 3,
+      "abstain_degrade": 21,
+      "dropped": 1,
+      "verdict_flips": 0,
+      "n_mutants": 25,
+      "clean_counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    },
+    "FINDING_promptopinion_2026_05_24.md": {
+      "caught": 5,
+      "false_verify": 0,
+      "abstain_degrade": 13,
+      "dropped": 0,
+      "verdict_flips": 5,
+      "n_mutants": 18,
+      "clean_counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "clean_verdict": "OATH-HELD"
+    }
+  },
+  "false_verify_rows": [
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 9,
+      "orig": "0.002",
+      "mutant": "0.001",
+      "context": "shuffled-noun control **0.002 \u00b1 0.028**. Most models reach 47\u201367% of ceiling. The brain's own"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 10,
+      "orig": "0.4",
+      "mutant": "0.7",
+      "context": "inter-subject reliability caps achievable RSA at ~0.4\u20130.56, so two-thirds of that is a strong match."
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 14,
+      "orig": "0.222",
+      "mutant": "0.228",
+      "context": "| gpt2-large | **0.264** | 67% | pythia-70m | 0.222 | 56% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_2026_06_03.md",
+      "line": 16,
+      "orig": "0.206",
+      "mutant": "0.006",
+      "context": "| Llama-1B | 0.237 | 60% | Phi-3.5 | 0.206 | 52% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 41,
+      "orig": "+1.1",
+      "mutant": "+0.1",
+      "context": "| AI beyond vision + lexical | +1.1% |"
+    },
+    {
+      "doc": "RESULT_ai_brain_vision_2026_06_03.md",
+      "line": 43,
+      "orig": "+0.2",
+      "mutant": "+0.7",
+      "context": "| **AI beyond vision + behavioral + lexical** | **+0.2%** |"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 12,
+      "orig": "0.652",
+      "mutant": "0.602",
+      "context": "MiniLM **0.602**, mpnet **0.652**. **The LLMs match humans as well as the dedicated embedders do.**"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 17,
+      "orig": "0.903",
+      "mutant": "0.803",
+      "context": "| gpt2-xl | **0.744** | 0.982 | Qwen-1.5B | 0.671 | 0.903 |"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 18,
+      "orig": "0.741",
+      "mutant": "0.701",
+      "context": "| gpt2-large | **0.741** | 0.983 | Phi-3.5 | 0.670 | 0.844 |"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 23,
+      "orig": "0.967",
+      "mutant": "0.667",
+      "context": "| pythia-160m | 0.700 | 0.967 | | | |"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.76",
+      "mutant": "0.70",
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.81",
+      "mutant": "0.83",
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the"
+    },
+    {
+      "doc": "RESULT_ai_human_2026_06_03.md",
+      "line": 53,
+      "orig": "0.60",
+      "mutant": "0.00",
+      "context": "(reliability \u03c1 0.76; conv\u2192human collapses 0.81\u21920.60), the residual is borderline at n=13, and the"
+    },
+    {
+      "doc": "RESULT_llm_breadth_2026_06_03.md",
+      "line": 27,
+      "orig": "0.03",
+      "mutant": "0.00",
+      "context": "- **Cross-family agreement is LOW** (0.03\u20130.37): models from different families / training data genuinely"
+    },
+    {
+      "doc": "FINDING_council_2026_05_25.md",
+      "line": 20,
+      "orig": "0.88",
+      "mutant": "0.98",
+      "context": "| real-common | 1.00 | 0.88 |"
+    },
+    {
+      "doc": "FINDING_fame_vs_truth_2026_05_25.md",
+      "line": 18,
+      "orig": "0.75",
+      "mutant": "0.25",
+      "context": "- AUC(R2 vs fake) = 1.00. T1 PASS (R2 1.00 \u2265 0.70; R2\u2212fake 0.75 \u2265 0.30). T2 PASS (1.00)."
+    },
+    {
+      "doc": "FINDING_dogfood_2026_05_25.md",
+      "line": 19,
+      "orig": "1.0",
+      "mutant": "1.2",
+      "context": "three fabrications 0.333; the 0.667 \u2014 not 1.0 \u2014 is the documented cosine-default under-"
+    },
+    {
+      "doc": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "line": 20,
+      "orig": "1.000",
+      "mutant": "0.000",
+      "context": "| 16 | 0.758 | 1.000 | 0.841 | 0.870 | **0.193** | **0.868 @L27** | 0.074 | VOID |"
+    },
+    {
+      "doc": "FINDING_council_grounding_2026_05_28.md",
+      "line": 51,
+      "orig": "0.65",
+      "mutant": "0.95",
+      "context": "vs 0.65), but it did not flip the verdict. This is precisely the honest prior I"
+    },
+    {
+      "doc": "FINDING_detection_locus_gpt_2026_05_30.md",
+      "line": 29,
+      "orig": "0.00",
+      "mutant": "0.20",
+      "context": "| confab | **0.847** | 0.233 | 4.76 | 0.00 |"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 9,
+      "orig": "0.01",
+      "mutant": "0.00",
+      "context": "Jailbreaks/injections drift *less* than length-matched benign topical context (drift AUC \u2248 0.01,"
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 14,
+      "orig": "0.02",
+      "mutant": "0.03",
+      "context": "it refuse *more*, behavioral AUC 0.02). The only cross-model-robust part was the low footprint."
+    },
+    {
+      "doc": "RESULT_geometry_integrity_2026_06_03.md",
+      "line": 18,
+      "orig": "+4.1",
+      "mutant": "+4.3",
+      "context": "*more* than the jailbreaks (+4.1 vs +2.6). The 2D signature collapses to 0.45 / 0.59."
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 22,
+      "orig": "6.0",
+      "mutant": "2.0",
+      "context": "- **Capacity (kcap, acc \u2265 0.80):** FREE **6.0** vs CLAMPED **2.67** \u2192 oscillation **\u2248 doubles**"
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 23,
+      "orig": "3.3",
+      "mutant": "0.3",
+      "context": "ordered-memory capacity (gap 3.3 items)."
+    },
+    {
+      "doc": "RESULT_rhythm_rescue_2026_06_03.md",
+      "line": 69,
+      "orig": "0.80",
+      "mutant": "0.90",
+      "context": "- One function (ordered copy), one architecture (LRU), n=3 seeds, capacity at a 0.80"
+    }
+  ]
+}

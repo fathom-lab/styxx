@@ -1,0 +1,808 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_oath_v05_precision_2026_07_13.md",
+  "document_sha256": "ab580fc2448834b7c98ff41a78e849cbf5f2e496967860a6eaa1ca8a13456e90",
+  "receipts_sha256": {
+    "cycle38_v05_battery_result.json": "b61516ee1dfb60a09f28146dddaaaf44cfd69d9afea37187d27d5c880964f17e",
+    "cycle38_v05_p1_sixdoc_result.json": "c009e2ab17e42065f582f94ca38ff37d019b808a5a08233c52005470c60fc9f7",
+    "cycle38_v05_p4_recert.json": "01d05a9b6ab4df6fac82c6cd4604f19075d902fca834f57d4aefb355af133c15",
+    "cycle38_v05_class_sweep_result.json": "a9f22d3e2686ada4c16ca6e98be9bc3f870c616f56d400ebba3c4d04cb93e4d8",
+    "cycle38_v05_baseline_battery_result.json": "253b4e4b0cf778057f4682df777196622754b32d38917259232ad7df2a7e6469"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 47,
+    "ABSTAIN": 25,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "11"
+    },
+    {
+      "line": 22,
+      "token": "116"
+    },
+    {
+      "line": 22,
+      "token": "269"
+    },
+    {
+      "line": 22,
+      "token": "117"
+    },
+    {
+      "line": 24,
+      "token": "16"
+    },
+    {
+      "line": 24,
+      "token": "16"
+    },
+    {
+      "line": 27,
+      "token": "1694"
+    },
+    {
+      "line": 27,
+      "token": "8"
+    },
+    {
+      "line": 59,
+      "token": "2"
+    },
+    {
+      "line": 61,
+      "token": "0.90"
+    },
+    {
+      "line": 62,
+      "token": "12.7"
+    },
+    {
+      "line": 62,
+      "token": "150"
+    },
+    {
+      "line": 62,
+      "token": "150"
+    },
+    {
+      "line": 63,
+      "token": "100"
+    },
+    {
+      "line": 63,
+      "token": "150"
+    },
+    {
+      "line": 63,
+      "token": "12.7"
+    },
+    {
+      "line": 63,
+      "token": "12.7"
+    },
+    {
+      "line": 65,
+      "token": "4"
+    },
+    {
+      "line": 66,
+      "token": "8"
+    },
+    {
+      "line": 67,
+      "token": "2"
+    },
+    {
+      "line": 67,
+      "token": "2"
+    },
+    {
+      "line": 78,
+      "token": "5"
+    },
+    {
+      "line": 85,
+      "token": "0"
+    },
+    {
+      "line": 93,
+      "token": "119"
+    },
+    {
+      "line": 93,
+      "token": "26"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 21,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "| **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.false_verify"
+    },
+    {
+      "line": 21,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P1** six-doc UNGROUNDED | 11 \u2192 at most 4 | **3** (`cycle38_v05_p1_sixdoc_result.json`) |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 22,
+      "token": "116",
+      "value": 116.0,
+      "decimals": 0,
+      "context": "| **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "| **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "117",
+      "value": 117.0,
+      "decimals": 0,
+      "context": "| **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "binding_context": "| bar | requirement | result | | **P2** battery catch | at least 116 of 269 | **117** (`cycle38_v05_battery_result.json`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| **P2** battery false-verify | at most 26 | **26** |",
+      "binding_context": "| bar | requirement | result | | **P2** battery false-verify | at most 26 | **26** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify"
+    },
+    {
+      "line": 23,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "| **P2** battery false-verify | at most 26 | **26** |",
+      "binding_context": "| bar | requirement | result | | **P2** battery false-verify | at most 26 | **26** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify"
+    },
+    {
+      "line": 24,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| **P3** validator D1 | at least 16 | **16** (`OATH-V0-VALID`) |",
+      "binding_context": "| bar | requirement | result | | **P3** validator D1 | at least 16 | **16** (`OATH-V0-VALID`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| **P3** validator D1 | at least 16 | **16** (`OATH-V0-VALID`) |",
+      "binding_context": "| bar | requirement | result | | **P3** validator D1 | at least 16 | **16** (`OATH-V0-VALID`) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **P3** validator D2 | 0 | **0** |",
+      "binding_context": "| bar | requirement | result | | **P3** validator D2 | 0 | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 25,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **P3** validator D2 | 0 | **0** |",
+      "binding_context": "| bar | requirement | result | | **P3** validator D2 | 0 | **0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 26,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "binding_context": "| bar | requirement | result | | **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 26,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "binding_context": "| bar | requirement | result | | **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 26,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "binding_context": "| bar | requirement | result | | **P4** 13-doc recert artifacts | 0 | **0** \u2014 3 UNGROUNDED, all the SAME real provenance gaps as the v0.4 baseline (`cycle38_v05_p4_recert.json`) |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:clean_ungrounded_total"
+    },
+    {
+      "line": 27,
+      "token": "1694",
+      "value": 1694.0,
+      "decimals": 0,
+      "context": "| **P5** pytest | green | **1694 passed, 8 skipped** (CPU-forced; the one GPU-loading test deselected while the B7 run holds the card) |",
+      "binding_context": "| bar | requirement | result | | **P5** pytest | green | **1694 passed, 8 skipped** (CPU-forced; the one GPU-loading test deselected while the B7 run holds the card) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **P5** pytest | green | **1694 passed, 8 skipped** (CPU-forced; the one GPU-loading test deselected while the B7 run holds the card) |",
+      "binding_context": "| bar | requirement | result | | **P5** pytest | green | **1694 passed, 8 skipped** (CPU-forced; the one GPU-loading test deselected while the B7 run holds the card) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "+3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:dropped"
+    },
+    {
+      "line": 37,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.FINDING_fame_vs_truth_2026_05_25.md.caught"
+    },
+    {
+      "line": 37,
+      "token": "+1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **A approx-notation** | **+3** | **\u22126** | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B unit-range | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | B unit-range | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B unit-range | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | B unit-range | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| B unit-range | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | B unit-range | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 39,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| C arXiv-id | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | C arXiv-id | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 39,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| C arXiv-id | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | C arXiv-id | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 39,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| C arXiv-id | 0 | 0 | 0 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | C arXiv-id | 0 | 0 | 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 40,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| D @-parameter | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | D @-parameter | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 40,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| D @-parameter | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | D @-parameter | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 40,
+      "token": "+1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| D @-parameter | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | D @-parameter | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 41,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| E derived-percent | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | E derived-percent | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 41,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| E derived-percent | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | E derived-percent | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 41,
+      "token": "+1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| E derived-percent | 0 | 0 | +1 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | E derived-percent | 0 | 0 | +1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_llm_breadth_2026_06_03.md.caught"
+    },
+    {
+      "line": 42,
+      "token": "+6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| **F self-scoped n=** | +6 | 0 | +5 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **F self-scoped n=** | +6 | 0 | +5 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.FINDING_fame_vs_truth_2026_05_25.md.caught"
+    },
+    {
+      "line": 42,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **F self-scoped n=** | +6 | 0 | +5 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **F self-scoped n=** | +6 | 0 | +5 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 42,
+      "token": "+5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| **F self-scoped n=** | +6 | 0 | +5 |",
+      "binding_context": "| drop class | \u0394 catch | \u0394 false-verify | \u0394 six-doc FP | | **F self-scoped n=** | +6 | 0 | +5 |",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.abstain_degrade"
+    },
+    {
+      "line": 44,
+      "token": "114",
+      "value": 114.0,
+      "decimals": 0,
+      "context": "With all six on the battery read **caught 114 / false-verify 32** \u2014 BOTH bars missed. Class A was",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_class_sweep_result.json:all_on.caught"
+    },
+    {
+      "line": 44,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "With all six on the battery read **caught 114 / false-verify 32** \u2014 BOTH bars missed. Class A was",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_class_sweep_result.json:all_on.false_verify"
+    },
+    {
+      "line": 45,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "the sole offender: keeping it **cost 3 catches and added 6 false-verifies** (its `~` tilde abstains",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_vision_2026_06_03.md.clean_counts.ABSTAIN"
+    },
+    {
+      "line": 45,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "the sole offender: keeping it **cost 3 catches and added 6 false-verifies** (its `~` tilde abstains",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[23].orig"
+    },
+    {
+      "line": 47,
+      "token": "117",
+      "value": 117.0,
+      "decimals": 0,
+      "context": "Dropping A alone cleared both bars (caught 117, false-verify 26). No other class had an adverse",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:caught"
+    },
+    {
+      "line": 47,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "Dropping A alone cleared both bars (caught 117, false-verify 26). No other class had an adverse",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify"
+    },
+    {
+      "line": 48,
+      "token": "+6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "delta; class F \u2014 the self-scoped `n=` fix \u2014 was pure gain (+6 catches, 0 false-verify cost, five of",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[23].orig"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "delta; class F \u2014 the self-scoped `n=` fix \u2014 was pure gain (+6 catches, 0 false-verify cost, five of",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.FINDING_promptopinion_2026_05_24.md.false_verify"
+    },
+    {
+      "line": 52,
+      "token": "0.56",
+      "value": 0.56,
+      "decimals": 2,
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_p4_recert.json:points[0].token"
+    },
+    {
+      "line": 52,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_p4_recert.json:points[1].token"
+    },
+    {
+      "line": 52,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "derived-bound gaps written with `~` (`RSA \u2264 ~0.56 \u2192 R\u00b2 \u2264 ~0.16`; a bulk agreement `0.50`). Class A",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_p4_recert.json:points[2].token"
+    },
+    {
+      "line": 59,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **B \u2014 unit-suffixed range \u2192 ABSTAIN**: \"2\u20133B\" is a model-size range, not a measurement.",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 61,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "- **D \u2014 @-parameter \u2192 ABSTAIN**: \"cosine@0.90\" is a config threshold.",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 62,
+      "token": "12.7",
+      "value": 12.7,
+      "decimals": 1,
+      "context": "- **E \u2014 derived-percent VERIFY**: \"12.7% (19/150\" verifies iff BOTH 19 and 150 ground as receipt",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "- **E \u2014 derived-percent VERIFY**: \"12.7% (19/150\" verifies iff BOTH 19 and 150 ground as receipt",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[16].line"
+    },
+    {
+      "line": 62,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "- **E \u2014 derived-percent VERIFY**: \"12.7% (19/150\" verifies iff BOTH 19 and 150 ground as receipt",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "- **E \u2014 derived-percent VERIFY**: \"12.7% (19/150\" verifies iff BOTH 19 and 150 ground as receipt",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[16].line"
+    },
+    {
+      "line": 62,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "- **E \u2014 derived-percent VERIFY**: \"12.7% (19/150\" verifies iff BOTH 19 and 150 ground as receipt",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "values AND 100\u00b719/150 rounds to 12.7 \u2014 no fabricated-pair verification (triviaqa `12.7` =",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "values AND 100\u00b719/150 rounds to 12.7 \u2014 no fabricated-pair verification (triviaqa `12.7` =",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[16].line"
+    },
+    {
+      "line": 63,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "values AND 100\u00b719/150 rounds to 12.7 \u2014 no fabricated-pair verification (triviaqa `12.7` =",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "12.7",
+      "value": 12.7,
+      "decimals": 1,
+      "context": "values AND 100\u00b719/150 rounds to 12.7 \u2014 no fabricated-pair verification (triviaqa `12.7` =",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "12.7",
+      "value": 12.7,
+      "decimals": 1,
+      "context": "values AND 100\u00b719/150 rounds to 12.7 \u2014 no fabricated-pair verification (triviaqa `12.7` =",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 65,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "- **F \u2014 self-scoped `n=`**: an \"N=4\" obligates ONLY the token it directly prefixes, not every bare",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 66,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "integer on its line. This is the dominant measured false-positive class (kbc `3`/`8`, curve",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.FINDING_adversarial_curve_v3_2026_06_08.md.caught"
+    },
+    {
+      "line": 66,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "integer on its line. This is the dominant measured false-positive class (kbc `3`/`8`, curve",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`2`/`6`, truthengine `2`) and the change's load-bearing fix.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`2`/`6`, truthengine `2`) and the change's load-bearing fix.",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.FINDING_fame_vs_truth_2026_05_25.md.caught"
+    },
+    {
+      "line": 67,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "`2`/`6`, truthengine `2`) and the change's load-bearing fix.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 78,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "`N=5`-style value with no receipt scalar \"stays UNGROUNDED\". It does NOT \u2014 the trailing `=` in",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 83,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "- `0.25\u21920.00` transition values stay UNGROUNDED (real gap; repair is doc/receipt-side).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:false_verify_rows[15].mutant"
+    },
+    {
+      "line": 83,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "- `0.25\u21920.00` transition values stay UNGROUNDED (real gap; repair is doc/receipt-side).",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_ai_brain_2026_06_03.md.dropped"
+    },
+    {
+      "line": 85,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "remain their own preregs. The zero-false-accusation property (P4 artifacts = 0) is what makes the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 91,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`OATH-V0-VALID`; the 3 closed-model-frontier corpus certs regenerated (diff = `verifier_sha256`",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:per_doc.RESULT_geometry_integrity_2026_06_03.md.false_verify"
+    },
+    {
+      "line": 93,
+      "token": "269",
+      "value": 269.0,
+      "decimals": 0,
+      "context": "before-receipt, 269/119/26 reproduced exactly), `cycle38_v05_battery_result.json`,",
+      "status": "VERIFIED",
+      "receipt_ref": "cycle38_v05_battery_result.json:n_mutants"
+    },
+    {
+      "line": 93,
+      "token": "119",
+      "value": 119.0,
+      "decimals": 0,
+      "context": "before-receipt, 269/119/26 reproduced exactly), `cycle38_v05_battery_result.json`,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "before-receipt, 269/119/26 reproduced exactly), `cycle38_v05_battery_result.json`,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

@@ -57,3 +57,52 @@ def test_auroc_register_still_obligates(tmp_path):
     # sanity: the pre-existing AUROC register is untouched by the recall extension
     assert _status(tmp_path, "The detector reached AUROC 0.884 on the held-out split.",
                    {"unrelated": 5}, "0.884") == "UNGROUNDED"
+
+
+# --- OATH v0.5 precision classes (autopilot cycle 38); A dropped by the battery, B/C/D/E/F ship ---
+
+def test_v05_self_scoped_n_frees_line_siblings(tmp_path):
+    # class F: "N=4" must NOT obligate the unrelated integer 8 on its own line
+    assert _status(tmp_path, "Feasibility: 3 OpenAI models, N=4, 8 items/tier, single run.",
+                   {"unrelated": 1}, "8") != "UNGROUNDED"
+
+
+def test_v05_self_scoped_n_own_token_abstains_via_spec_rule(tmp_path):
+    # class F frees LINE SIBLINGS; the glued value itself ABSTAINs -- the trailing "=" in "N="
+    # matches the pre-existing comparison-operator spec rule, so a sample size reads as a spec
+    # constant, not a provenance gap. (Corrects the prereg/RESULT overclaim that it stays UNGROUNDED.)
+    assert _status(tmp_path, "The holdout was scored with N=5 samples per item.",
+                   {"unrelated": 42}, "5") == "ABSTAIN"
+
+
+def test_v05_unit_suffixed_range_abstains(tmp_path):
+    # class B: "2-3B" model-size range is not a measurement
+    assert _status(tmp_path, "one strong plus two weak (2-3B) members in the council.",
+                   {"unrelated": 9}, "2") == "ABSTAIN"
+
+
+def test_v05_at_parameter_abstains(tmp_path):
+    # class D: "cosine@0.90" is a config threshold
+    assert _status(tmp_path, "inconsistency is cosine@0.90 cross-sample entropy on answered items.",
+                   {"unrelated": 7}, "0.90") == "ABSTAIN"
+
+
+def test_v05_derived_percent_verifies_from_grounded_operands(tmp_path):
+    # class E: "12.7% (19/150" verifies iff both 19 and 150 ground and 100*19/150 rounds to 12.7
+    st = _status(tmp_path, "Base error rate 12.7% (19/150 wrong).",
+                 {"n_incorrect": 19, "n": 150}, "12.7")
+    assert st == "VERIFIED"
+
+
+def test_v05_derived_percent_rejects_ungrounded_operands(tmp_path):
+    # no fabricated-pair verification: if the operands do not ground, the percent does not verify
+    st = _status(tmp_path, "Base error rate 12.7% (19/150 wrong).",
+                 {"unrelated": 1}, "12.7")
+    assert st != "VERIFIED"
+
+
+def test_v05_class_a_is_dropped():
+    # class A (approx-notation) was dropped by the severability procedure; the flag must stay off
+    import styxx.certify as C
+    assert C.V05_APPROX_NOTATION is False
+    assert C.V05_SELF_SCOPED_N is True and C.V05_DERIVED_PCT is True

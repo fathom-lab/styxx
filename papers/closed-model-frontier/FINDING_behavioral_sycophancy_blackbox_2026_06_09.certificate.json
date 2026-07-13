@@ -9,7 +9,7 @@
     "intent_metapc_3.json": "5126be8842aa3514d67e2d9a8e4fc04188330dd5d311295c0ca15dbde6ca938d",
     "intent_ladder_result.json": "4b705f7009aee0beb12e55db1cdab2641fa531966c49a02fbc1b124766f2d05b"
   },
-  "verifier_sha256": "3981714d32e8ea22f1fa92cadf7b40e50fccf7765388141dc9ebb608f7921ee5",
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
     "VERIFIED": 34,
     "ABSTAIN": 27,

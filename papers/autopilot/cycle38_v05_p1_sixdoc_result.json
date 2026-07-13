@@ -1,0 +1,51 @@
+{
+  "what": "P1 six-doc recert under SHIPPED v0.5 (class A dropped; B/C/D/E/F on)",
+  "baseline_total": 11,
+  "bar": "<=4",
+  "docs": [
+    {
+      "doc": "FINDING_truthengine_2026_05_25.md",
+      "verdict": "OATH-HELD",
+      "ung": 0,
+      "tokens": []
+    },
+    {
+      "doc": "FINDING_2026_05_25.md",
+      "verdict": "OATH-FAILED",
+      "ung": 3,
+      "tokens": [
+        {
+          "line": 13,
+          "token": "0.25"
+        },
+        {
+          "line": 36,
+          "token": "2"
+        },
+        {
+          "line": 37,
+          "token": "0.03"
+        }
+      ]
+    },
+    {
+      "doc": "FINDING_triviaqa_2026_05_25.md",
+      "verdict": "OATH-HELD",
+      "ung": 0,
+      "tokens": []
+    },
+    {
+      "doc": "FINDING_kbc_2026_05_25.md",
+      "verdict": "OATH-HELD",
+      "ung": 0,
+      "tokens": []
+    },
+    {
+      "doc": "FINDING_curve_2026_05_25.md",
+      "verdict": "OATH-HELD",
+      "ung": 0,
+      "tokens": []
+    }
+  ],
+  "total_ung": 3
+}

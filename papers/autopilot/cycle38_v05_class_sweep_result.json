@@ -1,0 +1,103 @@
+{
+  "all_on": {
+    "config": "ALL",
+    "caught": 114,
+    "false_verify": 32,
+    "n_mutants": 264,
+    "clean_ung13": 1,
+    "sixdoc_ung": 2
+  },
+  "leave_one_out": [
+    {
+      "config": "drop_V05_APPROX_NOTATION",
+      "caught": 117,
+      "false_verify": 26,
+      "n_mutants": 269,
+      "clean_ung13": 3,
+      "sixdoc_ung": 3
+    },
+    {
+      "config": "drop_V05_UNIT_RANGE",
+      "caught": 114,
+      "false_verify": 32,
+      "n_mutants": 264,
+      "clean_ung13": 1,
+      "sixdoc_ung": 2
+    },
+    {
+      "config": "drop_V05_ARXIV_ID",
+      "caught": 114,
+      "false_verify": 32,
+      "n_mutants": 264,
+      "clean_ung13": 1,
+      "sixdoc_ung": 2
+    },
+    {
+      "config": "drop_V05_AT_PARAM",
+      "caught": 114,
+      "false_verify": 32,
+      "n_mutants": 264,
+      "clean_ung13": 1,
+      "sixdoc_ung": 3
+    },
+    {
+      "config": "drop_V05_DERIVED_PCT",
+      "caught": 114,
+      "false_verify": 32,
+      "n_mutants": 264,
+      "clean_ung13": 1,
+      "sixdoc_ung": 3
+    },
+    {
+      "config": "drop_V05_SELF_SCOPED_N",
+      "caught": 120,
+      "false_verify": 32,
+      "n_mutants": 264,
+      "clean_ung13": 5,
+      "sixdoc_ung": 7
+    }
+  ],
+  "drop_deltas": [
+    {
+      "class": "V05_APPROX_NOTATION",
+      "d_caught_from_dropping": 3,
+      "d_fv_from_dropping": -6,
+      "d_sixdoc_ung_from_dropping": 1
+    },
+    {
+      "class": "V05_UNIT_RANGE",
+      "d_caught_from_dropping": 0,
+      "d_fv_from_dropping": 0,
+      "d_sixdoc_ung_from_dropping": 0
+    },
+    {
+      "class": "V05_ARXIV_ID",
+      "d_caught_from_dropping": 0,
+      "d_fv_from_dropping": 0,
+      "d_sixdoc_ung_from_dropping": 0
+    },
+    {
+      "class": "V05_AT_PARAM",
+      "d_caught_from_dropping": 0,
+      "d_fv_from_dropping": 0,
+      "d_sixdoc_ung_from_dropping": 1
+    },
+    {
+      "class": "V05_DERIVED_PCT",
+      "d_caught_from_dropping": 0,
+      "d_fv_from_dropping": 0,
+      "d_sixdoc_ung_from_dropping": 1
+    },
+    {
+      "class": "V05_SELF_SCOPED_N",
+      "d_caught_from_dropping": 6,
+      "d_fv_from_dropping": 0,
+      "d_sixdoc_ung_from_dropping": 5
+    }
+  ],
+  "bars": {
+    "caught_min": 116,
+    "false_verify_max": 26,
+    "sixdoc_ung_max": 4
+  }
+}

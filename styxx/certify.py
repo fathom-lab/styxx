@@ -164,6 +164,22 @@ def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = Tru
     return False
 
 
+# v0.5 precision classes (PREREG_oath_v05_precision_2026_07_13) -- severable feature flags. Each
+# gates one false-positive-elimination clause below; the prereg's severability procedure toggles
+# these to measure per-class battery deltas and to drop a class that misses a bar. Shipped values
+# are the composition the battery admits.
+V05_APPROX_NOTATION = False   # class A: token after ≈/~/∼ -> ABSTAIN. DROPPED per the prereg's
+                              # severability procedure (cycle38 battery: keeping it cost 3 catches
+                              # and added 6 false-verifies -- the tilde abstains approximations that
+                              # were being correctly caught -- for one FP eliminated). A refined
+                              # ≈-only class A' is a future prereg, not a mid-run redesign.
+V05_UNIT_RANGE = True         # class B: "2–3B" unit-suffixed range -> ABSTAIN
+V05_ARXIV_ID = True           # class C: dddd.ddddd arXiv id -> ABSTAIN
+V05_AT_PARAM = True           # class D: @-glued parameter -> ABSTAIN
+V05_DERIVED_PCT = True        # class E: "12.7% (19/150" -> VERIFY iff both operands ground
+V05_SELF_SCOPED_N = True      # class F: n= obligates only its own glued token
+
+
 # ---------------------------------------------------------------- contradiction triggers
 
 # context keywords that bind a doc number to receipt quantities (the v0 trigger vocabulary).
@@ -171,9 +187,13 @@ def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = Tru
 # OBLIGATED to match some receipt value, else UNGROUNDED.
 _TRIGGERS = re.compile(
     r"\b(aurocs?|aucs?|margins?|cis?\b|boot(strap)?|perm(utation)?(_p\d+)?|p9\d|recall|precision|"
-    r"fpr|fnr|accuracy|rate|median|mean|elevation|floor|delta|n\s*=|n_held|n_caved|held|caved|"
+    r"fpr|fnr|accuracy|rate|median|mean|elevation|floor|delta|n_held|n_caved|held|caved|"
     r"gated|dropped|grounded|sycophancy|deception|surface|lens|firewall|collapse|wilson|"
     r"concordance|stability|score[sd]?)\b", re.I)
+# v0.5 class F (self-scoped n=, PREREG_oath_v05_precision): `n\s*=` no longer sits in the
+# LINE-WIDE alternation above — an "N=4" was obligating every other bare integer sharing its line
+# (the dominant measured false-positive class). It now obligates ONLY the token it directly
+# prefixes, via the n_self check in certify_doc.
 
 # v0.4 trigger-recall: the correlation/similarity register the AUROC-centric _TRIGGERS above misses
 # (the 182/269 abstain-degrade bucket of the cycle-19 mutant battery lives here). A BLUNT add
@@ -214,10 +234,22 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if 0 <= tok_at < 18 and num["line"] >= 2:
             pre = (doc_lines[num["line"] - 2].strip()[-(18 - tok_at):] + " " + pre).strip()[-24:]
         post = ctx[tok_at + len(num["token"]):] if tok_at >= 0 else ""
-        is_spec = bool(re.search(r"[≥≤<>=]\s*\+?$|\b(bar|gate|threshold|requires?|must|pre-?registered)"
+        # v0.5 class A (approx-notation): ≈/~/∼ join the comparison class — a value the doc itself
+        # marks approximate is not an exact-oath-swearable claim (PREREG_oath_v05_precision).
+        _spec_ops = "≥≤<>=≈~∼" if V05_APPROX_NOTATION else "≥≤<>="
+        is_spec = bool(re.search(r"[" + _spec_ops + r"]\s*\+?$|\b(bar|gate|threshold|requires?|must|pre-?registered)"
                                  r"\b[^.]{0,16}$", pre)) \
             or bool(re.match(r"\s*%?\s*(CI|confidence)", post)) \
             or bool(re.match(r"[^.\d]{0,12}\b(bar|threshold|gate)\b", post))
+        # v0.5 classes B/C/D (notation-level non-measurements -> ABSTAIN, PREREG_oath_v05_precision):
+        # B unit-suffixed numeric range ("2–3B"), C arXiv identifier, D @-glued parameter.
+        is_notation = (
+            (V05_UNIT_RANGE and (
+                bool(re.match(r"\s*[–-]\s*\d+(\.\d+)?\s*[BMK]\b", post))
+                or (bool(re.search(r"\d\s*[–-]\s*$", pre)) and bool(re.match(r"\s*[BMK]\b", post)))))
+            or (V05_ARXIV_ID and bool(re.fullmatch(r"\d{4}\.\d{4,5}", num["token"])))
+            or (V05_AT_PARAM and bool(re.search(r"@\s*$", pre)))
+        )
         # v0.1 QUOTED-HISTORICAL rule: corrected-away values quoted inside a disclosure note are
         # historical quotations, not live claims. v0.3: prior-run narrative counts, and on a MIXED
         # line the rule covers only tokens at/after the disclosure phrase (live values stay live).
@@ -251,7 +283,12 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                 # count-like fields (n_*/counts), else drop
                 hits = [(rn, pth) for rn, pth in hits
                         if re.search(r"(^|[._\[])n_|n_held|n_caved|^n(\.|$)|count", pth, re.I)]
-        bound = bool(_TRIGGERS.search(bctx))
+        # v0.5 class F: the n= register obligates only its OWN glued token (self-scoped). When the
+        # class is OFF, n= falls back to the v0.4 line-wide trigger behavior.
+        if V05_SELF_SCOPED_N:
+            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=\s*$", pre, re.I))
+        else:
+            bound = bool(_TRIGGERS.search(bctx)) or bool(re.search(r"\bn\s*=", bctx, re.I))
         # v0.4 decimal+range-guarded recall: the correlation/similarity register obligates a number
         # only when it is a fractional correlation (decimals > 0 and in [−1, 1]) — spares ordinals /
         # counts / API caps / whole-percents, binds RSA 0.264 / reliability 0.735.
@@ -268,8 +305,26 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                        (sign_kw and not -1.0 <= num["value"] <= 1.0)
         if out_of_range:
             hits, bound = [], True
+        # v0.5 class E (derived-percent VERIFY, PREREG_oath_v05_precision): "12.7% (19/150" — a
+        # percent restated by its OWN parenthetical operands verifies iff BOTH operands ground as
+        # receipt values AND 100·a/b rounds to the token at the token's decimals.
+        derived_ref = None
+        if V05_DERIVED_PCT and not hits and not is_spec and not is_hist and not is_notation:
+            dm = re.match(r"\s*%\s*\(\s*(\d+(?:\.\d+)?)\s*/\s*(\d+(?:\.\d+)?)", post)
+            if dm:
+                a_v, b_v = float(dm.group(1)), float(dm.group(2))
+                a_ok = [(rn, pth) for rn, pth, rv in rvals if _match(a_v, _decimals(dm.group(1)), rv, False)]
+                b_ok = [(rn, pth) for rn, pth, rv in rvals if _match(b_v, _decimals(dm.group(2)), rv, False)]
+                if a_ok and b_ok and b_v != 0 and \
+                        abs(round(100.0 * a_v / b_v, num["decimals"]) - num["value"]) < 1e-9:
+                    derived_ref = (f"derived:{dm.group(1)}/{dm.group(2)}@"
+                                   f"{a_ok[0][0]}:{a_ok[0][1]}|{b_ok[0][0]}:{b_ok[0][1]}")
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
+        elif is_notation:
+            status, ref = "ABSTAIN", "v05-notation"
+        elif derived_ref:
+            status, ref = "VERIFIED", derived_ref
         elif hits:
             status = "VERIFIED"
             ref = f"{hits[0][0]}:{hits[0][1]}"

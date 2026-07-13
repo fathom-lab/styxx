@@ -1,0 +1,68 @@
+{
+  "what": "per-token attribution of the 9 baseline FP eliminations (P1)",
+  "points": [
+    {
+      "doc": "FINDING_truthengine_2026_05_25.md",
+      "line": 50,
+      "token": "2",
+      "status": "ABSTAIN",
+      "ref": "v05-notation"
+    },
+    {
+      "doc": "FINDING_2026_05_25.md",
+      "line": 37,
+      "token": "0.03",
+      "status": "ABSTAIN",
+      "ref": "spec-or-historical"
+    },
+    {
+      "doc": "FINDING_triviaqa_2026_05_25.md",
+      "line": 7,
+      "token": "5",
+      "status": "ABSTAIN",
+      "ref": null
+    },
+    {
+      "doc": "FINDING_triviaqa_2026_05_25.md",
+      "line": 15,
+      "token": "12.7",
+      "status": "VERIFIED",
+      "ref": "derived:19/150@probe_benchmark_results.json:n_incorrect|probe_benchmark_results.json:n"
+    },
+    {
+      "doc": "FINDING_kbc_2026_05_25.md",
+      "line": 70,
+      "token": "3",
+      "status": "ABSTAIN",
+      "ref": null
+    },
+    {
+      "doc": "FINDING_kbc_2026_05_25.md",
+      "line": 70,
+      "token": "8",
+      "status": "ABSTAIN",
+      "ref": null
+    },
+    {
+      "doc": "FINDING_curve_2026_05_25.md",
+      "line": 18,
+      "token": "0.90",
+      "status": "ABSTAIN",
+      "ref": "v05-notation"
+    },
+    {
+      "doc": "FINDING_curve_2026_05_25.md",
+      "line": 54,
+      "token": "2",
+      "status": "ABSTAIN",
+      "ref": null
+    },
+    {
+      "doc": "FINDING_curve_2026_05_25.md",
+      "line": 54,
+      "token": "6",
+      "status": "ABSTAIN",
+      "ref": null
+    }
+  ]
+}

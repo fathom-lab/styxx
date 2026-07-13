@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- **OATH v0.5 -- certifier precision (five of six classes shipped; `styxx/certify.py`).** Kills the
+  dominant false-positive classes so the verifier can be turned on documents it did not author (the
+  gating property for the model-card scorecard and Annex-IV lint). Shipped, each gated on a
+  severable `V05_*` flag: **self-scoped `n=`** (an "N=4" no longer obligates every bare integer on
+  its line -- the biggest measured false-positive class), unit-suffixed ranges ("2-3B"), arXiv ids,
+  `@`-parameters ("cosine@0.90"), and derived-percent VERIFY ("12.7% (19/150" verifies iff both
+  operands ground and 100*a/b rounds to the token). The sixth proposed class (approx-notation
+  `≈/~`) was DROPPED by the prereg's severability procedure -- the mutant battery showed it cost 3
+  catches and added 6 false-verifies while also suppressing real `~`-written provenance gaps. Bars
+  held at the cycle-25 values (battery catch 117/269, false-verify 26, validator D1 16 D2 0,
+  13-doc recert artifacts 0). Six single-experiment docs: 11 false positives -> 3 (all real
+  provenance gaps). Prereg `PREREG_oath_v05_precision_2026_07_13.md`; result (OATH-HELD 47/0)
+  `RESULT_oath_v05_precision_2026_07_13.md`; +7 regression tests in `tests/test_certify_recall.py`.
+
 ### Added
 - **`styxx.ladder` -- the probe-robustness ladder as a first-class object.** The four-rung
   adversarial ladder a substrate probe's robustness claim should survive (calibration poisoning ->
