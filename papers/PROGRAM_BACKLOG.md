@@ -534,6 +534,22 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |
 
+## Tier D — distribution & counterparty (from the 2026-07-13 five-seat strategy panel; `papers/autopilot/STRATEGY_edge_panel_2026_07_13.md`)
+
+*The panel's unanimous fatal weakness: zero external counterparties — no replications, no arXiv, no one running the receipts. These items manufacture the counterparty. None may violate the open-core rail.*
+
+| ID | Item | Done-when | Lev | Status |
+|---|---|---|---|---|
+| **G1** | **`styxx.gauntlet`** — package the attack ladder (poisoning → parity attribution → static erasure → adaptive erasure) as one pip-installable harness: frozen prereg templates, verdict-string grammar, bite/admissibility gates, OATH-certified output, parity-attribution number as a MANDATORY line item. The consensus move of four of five seats. | harness runs any (model, probe-family) pair on 8GB and emits a certificate; the four existing scripts are its backends by import. | H | QUEUED (CPU) |
+| **G2** | **REPLICATIONS.md bounty** — named co-credit (next Zenodo version + leaderboard line) for the first externals to re-run a flagship receipt (E1, B2, B2-adaptive, parity controls) hash-matched on their own hardware. "One independent re-run converts the diary into a record." | file + CI verify workflow committed; zero-replication after 6 months is itself an answer. | H | QUEUED (zero-cost) |
+| **G3** | **External scale challenge** — frozen-prereg escrow inviting UK AISI / EleutherAI / lab interp teams to run the gauntlet at ≥70B, co-authorship offered; converts the 8GB ceiling into the distribution strategy. | challenge doc published after G1; any external run counts. | H | BLOCKED on G1 |
+| **G4** | **Certifier-precision prereg** (cycle-32 fork (a), now gating TWO moves): kill the documented false-positive classes (comparison-0, config-range, "N of M" prose, en-dash ranges) with bars frozen via validate_oath_v0; zero-false-accusation is the load-bearing property and must survive. | G-series scorecard/lint unblocked; battery catch not regressed, artifacts=0. | H | QUEUED (CPU) |
+| **G5** | **OATH scorecard, population-framed** — aggregate receipt-binding rate across ALL GPAI Code-of-Practice signatories (10-20 providers), neutral genre-deficiency framing, per-provider appendix; NOT a solo "Meta 0/201" gotcha. Timed to the 2026-08-02 AI Act enforcement date. | published with the hardened certifier + method-validation report (error rates disclosed). | H | BLOCKED on G4 |
+| **G6** | **Annex IV lint** (regulator seat): `styxx conformity-audit ./techdocs/` — completeness lint for high-risk providers' declared metrics vs attached evidence; customer zero = conformity consultants; field data feeds a CEN Workshop Agreement proposal. Explicitly a completeness lint, never an adequacy judgment. | CLI ships on the hardened certifier; first external consultant run. | M | BLOCKED on G4 |
+| **G7** | **Benign-drift monitoring** (interp seat): does an ordinary benign fine-tune / RLHF pass silently break the mounted read, and does relock() recover it? The commercially real adversary is the training process, not a LoRA attacker; cheaper than the adversarial ladder. | new frozen prereg; verdict either way is publishable. | H | QUEUED (GPU) |
+| **G8** | **Silent-cave detection SKU** (buyer seat): productize B22 — black-box middleware re-asking a pressured agent's final claim with pressure stripped, flagging divergence; closed-API compatible, customer keys pay resample; each flag ships an OATH receipt. The one move that ends in a purchase order. | PARKED until G1-G2 are moving; do not start a solo GTM motion now. | M | PARKED |
+| **G9** | **Operator decisions owed (flagged, not autopilot's):** excise/quarantine $STYXX validator-tiers from `docs/governance/OPEN_CORE.md` §4 (two seats: disqualifying in Brussels, poisons grants); arXiv account/endorsement; main fast-forward pending since cycle 36. | operator word. | H | BLOCKED (operator) |
+
 ## Tier 4 — the demarcation (the 2,500-year deliverable)
 
 | ID | Question | Lev | Status |
