@@ -25,6 +25,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `RESULT_oath_v05_precision_2026_07_13.md`; +7 regression tests in `tests/test_certify_recall.py`.
 
 ### Added
+- **`styxx.mount.ConscienceMount.attach_erasure_resistance` -- the erasure-resistance certificate
+  wired into the mount.** A mounted conscience can now carry the removal-class robustness evidence
+  for the instrument family (via `styxx.ladder.erasure_resistance_certificate`) inside its own
+  `certificate()`: what survived verifiable subspace erasure, what broke, what is pending, what is
+  unbounded -- with a mandatory NON-TRANSFER scope note (the bound documents the family's measured
+  robustness on the receipted construct/models; it does not transfer to whatever axis/model a given
+  mount reads). Also updates the relock-defense citation to the always-latest concept DOI. This
+  completes the tool half of the erasure-bound paper pairing (discovery = the bound; tool = the
+  certificate, mounted).
 - **`styxx.ladder` -- the probe-robustness ladder as a first-class object.** The four-rung
   adversarial ladder a substrate probe's robustness claim should survive (calibration poisoning ->
   probe-parity attribution -> static subspace erasure -> adaptive re-fit erasure), assembled from

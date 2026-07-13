@@ -239,3 +239,24 @@ def test_public_surface_and_import():
     from styxx import mount  # noqa: F401
     for name in mt.__all__:
         assert hasattr(mt, name)
+
+
+def test_erasure_resistance_attaches_with_scope_note():
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    if not (root / "papers" / "calib-poison-general").exists():
+        pytest.skip("repo receipts not present")
+    m = mt.ConscienceMount([_axis()]).attach_erasure_resistance(root)
+    cert = m.certificate(agent_id="t")
+    er = cert["erasure_resistance"]
+    assert er is not None
+    assert "survived" in er["summary"]["claim"]
+    assert er["summary"]["n_unbounded_dimensions"] >= 5
+    assert "does NOT transfer" in er["scope_note"]
+    assert er["full"]["receipts_sha256"]
+    json.dumps(cert)  # the full certificate stays JSON-serializable
+
+
+def test_erasure_resistance_absent_by_default():
+    cert = mt.ConscienceMount([_axis()]).certificate()
+    assert cert["erasure_resistance"] is None

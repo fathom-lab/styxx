@@ -304,7 +304,20 @@ class ConscienceMount:
         return self
 
     # -- certificate ---------------------------------------------------------------------------
+    def attach_erasure_resistance(self, repo_root=".") -> "ConscienceMount":
+        """Attach the erasure-resistance certificate (styxx.ladder) to this mount's certificate:
+        the removal-class robustness evidence for the instrument family — what survived verifiable
+        subspace erasure (static and chasing), what broke, what is pending, and what remains
+        unbounded, composed verbatim from the pre-registered receipts. SCOPE: the evidence is
+        construct- and model-scoped by its receipts; attaching it documents the instrument
+        family's measured robustness, it does NOT transfer the bound to whatever axis/model this
+        mount happens to read (that transfer claim would need its own receipts)."""
+        from styxx import ladder as _ladder
+        self._erasure_resistance = _ladder.erasure_resistance_certificate(repo_root)
+        return self
+
     def certificate(self, *, agent_id: str = "", reference_id: str = "") -> dict:
+        er = getattr(self, "_erasure_resistance", None)
         return {
             "instrument": "styxx.mount v0",
             "prereg": "papers/conscience-mount/PREREG_mount_v0_2026_06_12.md",
@@ -317,11 +330,23 @@ class ConscienceMount:
                                  "relock_calibration": ({"n_pos": a.relock_n_pos, "n_neg": a.relock_n_neg}
                                                         if a.relocked else None)}
                              for n, a in self.axes.items()},
-            "relock_defense": ("calibration-poisoning defense (read!=write E1/E3, DOI "
-                               "10.5281/zenodo.21240661): relocked axes re-fit their probe in-model on a "
-                               "private clean labeled split the audited party did not see. Defeats a "
-                               "knowledge-preserving weight attacker (LoRA-scale evidence); does not "
-                               "defend activation-geometry perturbation."),
+            "relock_defense": ("calibration-poisoning defense (read!=write E1/E3; latest version via "
+                               "concept DOI 10.5281/zenodo.19326174): relocked axes re-fit their probe "
+                               "in-model on a private clean labeled split the audited party did not see. "
+                               "Defeats a knowledge-preserving weight attacker (LoRA-scale evidence); does "
+                               "not defend activation-geometry perturbation."),
+            "erasure_resistance": (
+                {"summary": {"claim": er["claim"],
+                             "measured_breaks": er["measured_breaks_summary"],
+                             "n_pending": len(er["pending"]),
+                             "n_unbounded_dimensions": len(er["unbounded_dimensions"])},
+                 "scope_note": ("removal-class robustness evidence for the instrument family, composed "
+                                "from pre-registered receipts (construct- and model-scoped by those "
+                                "receipts). It does NOT transfer the bound to this mount's specific "
+                                "axes/model — it documents the family's measured resistance to "
+                                "subspace erasure."),
+                 "full": er}
+                if er is not None else None),
             "axes_refused": REFUSALS,
             "scope": ("Read-only conscience mount: reads borrowed value axes on an agent's last-token "
                       "hidden states and flags output-vs-substrate divergence. Linear, whitened, "
