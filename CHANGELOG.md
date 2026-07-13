@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`styxx.ladder` -- the probe-robustness ladder as a first-class object.** The four-rung
+  adversarial ladder a substrate probe's robustness claim should survive (calibration poisoning ->
+  probe-parity attribution -> static subspace erasure -> adaptive re-fit erasure), assembled from
+  the program's frozen, pre-registered attack arcs. `RUNGS` registry (frozen harnesses, preregs,
+  canonical receipts, verdict strings), `report()` (per-rung verdicts + decisive per-cell reads),
+  `parity_attribution()` (the MANDATORY line item: what share of a probe's recovery is capacity,
+  computed live from receipts -- median 0.8379 on the honesty construct), `verify()` (ladder-wide
+  receipt + canonical-verdict check), CLI `python -m styxx.ladder [--json]`. v1 scope is honest:
+  the ladder over THIS repo's canonical honesty-construct receipts; arbitrary (model, probe-family)
+  execution is the documented v2 (backlog G1), with the frozen per-rung scripts as its backends.
+  Tests: `tests/test_ladder.py` (registry shape, loud missing-receipt failure, live-computed
+  attribution, tamper-flagging of a drifted verdict).
 - **`styxx.mount.ConscienceMount.relock` -- the calibration-poisoning defense, shipped.** Re-fits a
   mounted axis's probe IN-MODEL on a private, clean, labeled split of the agent's own hidden states
   the audited party never saw. This is the operation that recovered a substrate honesty read through a
