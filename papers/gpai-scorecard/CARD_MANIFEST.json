@@ -1,0 +1,643 @@
+{
+  "_what": "G5 frozen population manifest -- EU GPAI Code-of-Practice signatories' flagship docs",
+  "_prereg": "papers/gpai-scorecard/PREREG_gpai_scorecard_2026_07_14.md",
+  "_authority": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai (page-update 2026-04-23; 24 signatories)",
+  "_doc_rule": "flagship model/system card or primary eval tech report; HF raw > PDF > HTML; no swaps after freeze",
+  "_texts_not_committed": "raw+text live in _cards/ (gitignored); sha256 pins re-verification",
+  "_meta_contrast_arm": "papers/oath-economy/ rung-1 receipts (201 claims, 0 BOUND), reused frozen -- never headline",
+  "frozen_utc": "2026-07-14T12:23:54+00:00",
+  "tool_versions": {
+    "requests": "2.32.5",
+    "pypdf": "6.9.2",
+    "html2text": "2025.4.15"
+  },
+  "providers": {
+    "OpenAI": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf",
+          "format": "pdf",
+          "status": 200,
+          "bytes": 2367063,
+          "error": null,
+          "text_chars": 94542
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf",
+        "format": "pdf",
+        "raw_sha256": "50c7c11439c316732dbccd0f7df01be65cd46926ad21436ab7cd36735ac15106",
+        "raw_bytes": 2367063,
+        "converter": "pypdf 6.9.2",
+        "text_sha256": "7e4d7874206e8d52db52c2377e24e67ef72646d58840d78e05e3577925578e08",
+        "text_chars": 94542,
+        "raw_file": "openai.pdf",
+        "text_file": "openai.txt"
+      }
+    },
+    "Anthropic": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://www-cdn.anthropic.com/14e4fb01875d2a69f646fa5e574dea2b1c0ff7b5.pdf",
+          "format": "pdf",
+          "status": 200,
+          "bytes": 14457097,
+          "error": null,
+          "text_chars": 444567
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://www-cdn.anthropic.com/14e4fb01875d2a69f646fa5e574dea2b1c0ff7b5.pdf",
+        "format": "pdf",
+        "raw_sha256": "75130eefef08af5b37eb356f59ccfbe64985d54cb3184be2568db9fe287841f5",
+        "raw_bytes": 14457097,
+        "converter": "pypdf 6.9.2",
+        "text_sha256": "58660cb725aaf4d18c851f5ece9f02c2b2eecfd0db1f918134056826a2250d84",
+        "text_chars": 444567,
+        "raw_file": "anthropic.pdf",
+        "text_file": "anthropic.txt"
+      }
+    },
+    "Google": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf",
+          "format": "pdf",
+          "status": 200,
+          "bytes": 875842,
+          "error": null,
+          "text_chars": 13782
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf",
+        "format": "pdf",
+        "raw_sha256": "70bcda79a248255d2c858600cb1fecae9ea30278c942684754df0bca71ca8315",
+        "raw_bytes": 875842,
+        "converter": "pypdf 6.9.2",
+        "text_sha256": "334046759a8c6444b7d38c738156d391dac3f79fc6d2aee33836f4c8b1de1203",
+        "text_chars": 13782,
+        "raw_file": "google.pdf",
+        "text_file": "google.txt"
+      }
+    },
+    "Microsoft": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/microsoft/phi-4/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 13763,
+          "error": null,
+          "text_chars": 13747
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/microsoft/phi-4/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "4cc56faa6a5bcbde6227789b2ef9aedfde481ca660c8a4b686703aae19b00011",
+        "raw_bytes": 13763,
+        "converter": "passthrough",
+        "text_sha256": "4cc56faa6a5bcbde6227789b2ef9aedfde481ca660c8a4b686703aae19b00011",
+        "text_chars": 13747,
+        "raw_file": "microsoft.md",
+        "text_file": "microsoft.txt"
+      }
+    },
+    "Amazon": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://assets.amazon.science/96/7d/0d3e59514abf8fdcfafcdc574300/nova-tech-report-20250317-0810.pdf",
+          "format": "pdf",
+          "status": 200,
+          "bytes": 21232147,
+          "error": null,
+          "text_chars": 127201
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://assets.amazon.science/96/7d/0d3e59514abf8fdcfafcdc574300/nova-tech-report-20250317-0810.pdf",
+        "format": "pdf",
+        "raw_sha256": "52091131f581fffc952b1b528c05603b1ecdd61578e4cf4235ba55cda375adbb",
+        "raw_bytes": 21232147,
+        "converter": "pypdf 6.9.2",
+        "text_sha256": "99559f248e52e65945fc68a452204f45d20afe82c2b4d9da24a9ea2d1666410b",
+        "text_chars": 127201,
+        "raw_file": "amazon.pdf",
+        "text_file": "amazon.txt"
+      }
+    },
+    "IBM": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/ibm-granite/granite-4.1-8b/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 32332,
+          "error": null,
+          "text_chars": 32319
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/ibm-granite/granite-4.1-8b/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "218ca03fa60c23052fd4eba9fce500649360caa1eef30757e4aa2ce4b3390691",
+        "raw_bytes": 32332,
+        "converter": "passthrough",
+        "text_sha256": "218ca03fa60c23052fd4eba9fce500649360caa1eef30757e4aa2ce4b3390691",
+        "text_chars": 32319,
+        "raw_file": "ibm.md",
+        "text_file": "ibm.txt"
+      }
+    },
+    "Mistral AI": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 14427,
+          "error": null,
+          "text_chars": 14425
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "8f8882191b7bc0e2a348b2f85b35180bc213f4c15da17e8028c8b5cb7a25cb5a",
+        "raw_bytes": 14427,
+        "converter": "passthrough",
+        "text_sha256": "8f8882191b7bc0e2a348b2f85b35180bc213f4c15da17e8028c8b5cb7a25cb5a",
+        "text_chars": 14425,
+        "raw_file": "mistral_ai.md",
+        "text_file": "mistral_ai.txt"
+      }
+    },
+    "Aleph Alpha": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/Aleph-Alpha/Pharia-1-LLM-7B-control/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 43537,
+          "error": null,
+          "text_chars": 43482
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/Aleph-Alpha/Pharia-1-LLM-7B-control/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "cb8761ef46f8b540965f1d0b890c900fcba8e8cf5dffd16afb3fa5c05cd4d864",
+        "raw_bytes": 43537,
+        "converter": "passthrough",
+        "text_sha256": "cb8761ef46f8b540965f1d0b890c900fcba8e8cf5dffd16afb3fa5c05cd4d864",
+        "text_chars": 43482,
+        "raw_file": "aleph_alpha.md",
+        "text_file": "aleph_alpha.txt"
+      }
+    },
+    "Cohere": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/CohereLabs/c4ai-command-a-03-2025/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/CohereLabs/c4ai-command-a-03-2025",
+          "format": "html",
+          "status": 200,
+          "bytes": 459685,
+          "error": null,
+          "text_chars": 28662
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/CohereLabs/c4ai-command-a-03-2025",
+        "format": "html",
+        "raw_sha256": "677ec32762ca5d7efa7e1b8a1254a8936afb01ad4d0b3020ca4cdaca978110d2",
+        "raw_bytes": 459685,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "88a1b2b2d50071b193c30e5c8f2bdce25c8be918b6656ded06ae69b21d5daea3",
+        "text_chars": 28662,
+        "raw_file": "cohere.html",
+        "text_file": "cohere.txt"
+      }
+    },
+    "xAI": {
+      "signed": "partial-safety-only",
+      "attempts": [
+        {
+          "url": "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf",
+          "format": "pdf",
+          "status": 200,
+          "bytes": 205866,
+          "error": null,
+          "text_chars": 15916
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "PARTIAL-SIGNATORY",
+      "doc": {
+        "url": "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf",
+        "format": "pdf",
+        "raw_sha256": "635f30c2ea83cd2b4a1ef46bb7626e8330b635e826c53a6e77f07b279780ad6d",
+        "raw_bytes": 205866,
+        "converter": "pypdf 6.9.2",
+        "text_sha256": "fcbf40104a933af7b052358fff2df4237c280c4d0f1c8b747910fa9519552ef4",
+        "text_chars": 15916,
+        "raw_file": "xai.pdf",
+        "text_file": "xai.txt"
+      }
+    },
+    "ServiceNow": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/ServiceNow-AI/Apriel-1.5-15b-Thinker/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 17170,
+          "error": null,
+          "text_chars": 17153
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/ServiceNow-AI/Apriel-1.5-15b-Thinker/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "c88c7c7051c1516676e415da8373f1528623ffa6647173d67d2e31ce0930e0b2",
+        "raw_bytes": 17170,
+        "converter": "passthrough",
+        "text_sha256": "c88c7c7051c1516676e415da8373f1528623ffa6647173d67d2e31ce0930e0b2",
+        "text_chars": 17153,
+        "raw_file": "servicenow.md",
+        "text_file": "servicenow.txt"
+      }
+    },
+    "WRITER": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://dev.writer.com/home/models",
+          "format": "html",
+          "status": 200,
+          "bytes": 730603,
+          "error": null,
+          "text_chars": 34122
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://dev.writer.com/home/models",
+        "format": "html",
+        "raw_sha256": "330951dd5fc46704499f4887ca5000dab24a4f455625b60badefa05ec432e427",
+        "raw_bytes": 730603,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "836272f4f725ddee6ce0d71159e52cda7f9025e3ac9db48dbee81644d12d0068",
+        "text_chars": 34122,
+        "raw_file": "writer.html",
+        "text_file": "writer.txt"
+      }
+    },
+    "Black Forest Labs": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/black-forest-labs/FLUX.1-dev/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/black-forest-labs/FLUX.2-dev/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/black-forest-labs/FLUX.2-dev",
+          "format": "html",
+          "status": 200,
+          "bytes": 195951,
+          "error": null,
+          "text_chars": 15205
+        }
+      ],
+      "resolved": "candidates failed; resolved via HF API most-downloaded for author black-forest-labs: black-forest-labs/FLUX.2-dev",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/black-forest-labs/FLUX.2-dev",
+        "format": "html",
+        "raw_sha256": "e9d6b1fe397f63063747fb56c8f0ed53326a99bd8011ba8f2fb9427577d8b95f",
+        "raw_bytes": 195951,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "1481c2ddd6c696c389e36d05eff516242945e211d556f9d47f5cc5a22f4ae51a",
+        "text_chars": 15205,
+        "raw_file": "black_forest_labs.html",
+        "text_file": "black_forest_labs.txt"
+      }
+    },
+    "Almawave": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/Almawave/Velvet-14B/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/Almawave/Velvet-14B/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/Almawave/Velvet-14B",
+          "format": "html",
+          "status": 200,
+          "bytes": 264985,
+          "error": null,
+          "text_chars": 21929
+        }
+      ],
+      "resolved": "candidates failed; resolved via HF API most-downloaded for author Almawave: Almawave/Velvet-14B",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/Almawave/Velvet-14B",
+        "format": "html",
+        "raw_sha256": "c0ce6efbccd96ea649775ed99b48909113b1c835dd336b6ddde9b8ed503aab19",
+        "raw_bytes": 264985,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "0290c8a35e2bf3548b190036659658e1c21c8e6865b84b334d3141407fcac0c0",
+        "text_chars": 21929,
+        "raw_file": "almawave.html",
+        "text_file": "almawave.txt"
+      }
+    },
+    "Fastweb": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/Fastweb/FastwebMIIA-7B/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/Fastweb/FastwebMIIA-7B/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/Fastweb/FastwebMIIA-7B",
+          "format": "html",
+          "status": 200,
+          "bytes": 231344,
+          "error": null,
+          "text_chars": 23726
+        }
+      ],
+      "resolved": "candidates failed; resolved via HF API most-downloaded for author Fastweb: Fastweb/FastwebMIIA-7B",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/Fastweb/FastwebMIIA-7B",
+        "format": "html",
+        "raw_sha256": "a1e051a7041346e6e5c314483c2558ddbb6950ed9349e4227744891d680f59cd",
+        "raw_bytes": 231344,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "7da40fe39bfd405aed592b936ef95bc58c04f5e7dafbeb1306b67b4f3480c357",
+        "text_chars": 23726,
+        "raw_file": "fastweb.html",
+        "text_file": "fastweb.txt"
+      }
+    },
+    "LINAGORA": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/OpenLLM-France/Lucie-7B-Instruct/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/OpenLLM-France/Lucie-7B-Instruct-v1.1/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 10193,
+          "error": null,
+          "text_chars": 10169
+        }
+      ],
+      "resolved": "candidates failed; resolved via HF API most-downloaded for author OpenLLM-France: OpenLLM-France/Lucie-7B-Instruct-v1.1",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/OpenLLM-France/Lucie-7B-Instruct-v1.1/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "4531b30ff51ced9df82d80d5bcd202309924356cd2302ac1314b41cf0ca57a97",
+        "raw_bytes": 10193,
+        "converter": "passthrough",
+        "text_sha256": "4531b30ff51ced9df82d80d5bcd202309924356cd2302ac1314b41cf0ca57a97",
+        "text_chars": 10169,
+        "raw_file": "linagora.md",
+        "text_file": "linagora.txt"
+      }
+    },
+    "Domyn": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://build.nvidia.com/igenius/colosseum_355b_instruct_16k/modelcard",
+          "format": "html",
+          "status": 200,
+          "bytes": 73114,
+          "error": "extracted text too small (JS shell or empty doc)",
+          "text_chars": 653
+        },
+        {
+          "url": "https://huggingface.co/iGeniusAI/Italia-9B-Instruct-v0.1/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/iGeniusAI/Italia-9B-Instruct-v0.1",
+          "format": "html",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        }
+      ],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    },
+    "Pleias": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/PleIAs/Monad/raw/main/README.md",
+          "format": "md",
+          "status": 200,
+          "bytes": 2944,
+          "error": null,
+          "text_chars": 2939
+        }
+      ],
+      "resolved": "resolved via HF API most-downloaded for author PleIAs: PleIAs/Monad",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/PleIAs/Monad/raw/main/README.md",
+        "format": "md",
+        "raw_sha256": "6a6120d8abdf4c276d47fb6b049dc68381899f9e516aeba345c24a8f8f920684",
+        "raw_bytes": 2944,
+        "converter": "passthrough",
+        "text_sha256": "6a6120d8abdf4c276d47fb6b049dc68381899f9e516aeba345c24a8f8f920684",
+        "text_chars": 2939,
+        "raw_file": "pleias.md",
+        "text_file": "pleias.txt"
+      }
+    },
+    "Bria AI": {
+      "signed": "full",
+      "attempts": [
+        {
+          "url": "https://huggingface.co/briaai/BRIA-3.2/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/briaai/RMBG-2.0/raw/main/README.md",
+          "format": "md",
+          "status": 401,
+          "bytes": 0,
+          "error": null
+        },
+        {
+          "url": "https://huggingface.co/briaai/RMBG-2.0",
+          "format": "html",
+          "status": 200,
+          "bytes": 224664,
+          "error": null,
+          "text_chars": 12123
+        }
+      ],
+      "resolved": "candidates failed; resolved via HF API most-downloaded for author briaai: briaai/RMBG-2.0",
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "FETCHED",
+      "doc": {
+        "url": "https://huggingface.co/briaai/RMBG-2.0",
+        "format": "html",
+        "raw_sha256": "6f970ff037f585cf446cbafe5ef56f1eca89ccb1ce0154ef42e941fb9c51ac8a",
+        "raw_bytes": 224664,
+        "converter": "html2text 2025.4.15",
+        "text_sha256": "0d991ec6567256ac1394000a9f9b0c4085d25001be4d539d569d1db02f0ce661",
+        "text_chars": 12123,
+        "raw_file": "bria_ai.html",
+        "text_file": "bria_ai.txt"
+      }
+    },
+    "Accexible": {
+      "signed": "full",
+      "attempts": [],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    },
+    "AI Studio Delta": {
+      "signed": "full",
+      "attempts": [],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    },
+    "Dweve": {
+      "signed": "full",
+      "attempts": [],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    },
+    "Lawise": {
+      "signed": "full",
+      "attempts": [],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    },
+    "Open Hippo": {
+      "signed": "full",
+      "attempts": [],
+      "resolved": null,
+      "fetched_utc": "2026-07-14T12:23:54+00:00",
+      "stratum_candidate": "NO-PUBLIC-FLAGSHIP-DOC",
+      "doc": null
+    }
+  }
+}
