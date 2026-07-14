@@ -3,3 +3,7 @@
 _b7_run.pid
 b7_erasure_3b_clean.json
 b7_erasure_3b_cells.jsonl
+# card-chain watcher runtime state (the watcher script itself IS committed)
+_card_chain_watcher.log
+_card_chain_watcher.pid
+_coupling_run.pid
