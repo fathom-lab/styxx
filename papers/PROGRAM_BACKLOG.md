@@ -50,6 +50,26 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 39 (2026-07-14, autopilot) — B7 is the #1 decisive item but its overnight 3B run DIED at cell 3/4 with no crash-safety. Made the harness crash-safe and relaunched. `TOOLING_SHIPPED (b7 crash-safe resume) + B7_RELAUNCHED_INFLIGHT` — no scored verdict this cycle; the binding scale gate is now robustly in flight.**
+  Orient found GPU free (201/8188 MiB, no scored run) and B7 half-complete: the 07-13 overnight run's
+  clean guard PASSED at 3B (private13 0.9853, knowledge 0.9242) and both seed-0 cells came back SURVIVES
+  (s0α1 0.8065@0.9091; s0α4 0.8378@0.9091, ~225 min each) — but `b7_erasure_3b.py` wrote its result JSON
+  only at the very END of all 4 cells, so a session/kernel death lost every completed cell (log-only).
+  **The blocker was fragility, not science.** Fix = `b7_checkpoint.py` (stdlib-only, self-tested): append
+  each completed cell to a JSONL cache the instant it finishes + cache the clean-guard block once + a
+  resumed launch skips cached (seed,α) cells and computes the SAME frozen verdict over the union. **Proven
+  science-neutral:** the attack (`B2.gold_subspace`/`train_erasure`), audit (`HPC.*`), every guard/bar,
+  and the verdict block are byte-identical (import + verdict function unchanged — it operates on the cell
+  list irrespective of provenance). CPU end-to-end check drove `main()` through the all-cached resume
+  branch (no model load) → reconstructs SURVIVES from cache and flips to PARTIAL when a seed erases.
+  `pytest tests -q` 1719 passed / 8 skipped; `py_compile` clean; `certify.py` untouched (no
+  `validate_oath_v0` re-run owed). Relaunched B7 fresh + DETACHED (survives session end; crash-safe resume
+  is the backstop if it dies again) — confirmed healthy start (frozen split + layer map printed, 3B model
+  on GPU, computing the clean guard). **Score NEXT cycle when both seeds land** (VOID_B7__underpowered
+  until seed 1). Discipline: this is backlog **B13** ("harden all experiment scripts") discharged on the
+  arc's binding run, in the tradition of cycle-37's added instrumentation; no frozen bar moved. Receipts:
+  `b7_checkpoint.py`, `b7_erasure_3b.py` (crash-safety note in the docstring), `PREREG_B7_erasure_3b_2026_07_13.md`.
+
 - **Cycle 37 (2026-07-13, autopilot + operator escalation) — B2-adaptive: the chasing eraser. `SURVIVES__vs_adaptive_erasure_1p5B` (RESULT OATH-HELD 100/0). The adaptive re-fit eraser NEVER CONVERGES — chasing made the attack WEAKER, and the read/knowledge coupling hardens into an erasure bound.**
   Single-variable escalation of cycle 36 by import (`b2_adaptive_erasure.py` imports `b2_subspace_erasure`;
   only delta = re-fit the gold subspace on the current model every 50 steps, n_refits=5/cell). Prereg
@@ -498,7 +518,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B4** | **Fix the knowledge invariant** — add KG-LENS (gold-lens-preservation) gate AND measure held-knowledge on a DISJOINT capability set (different MMLU subjects than the attacked lie population), so "knowledge preserved" can't be satisfied while the audited capability is corrupted. | a verdict is admissible only if KG-LENS intact AND disjoint-set knowledge ≥ ref−0.05. | H | QUEUED |
 | **B5** | **Break the refit circularity** — report frozen-then-RE-LOCKED-on-DISJOINT-items as the deployment-faithful read; same-model CV refit is an activation-existence lower bound only, never the headline. | deployment claim uses only the disjoint-item re-locked number. | M | QUEUED |
 | **B6** | **Attacker beyond LoRA** — ≥1 full fine-tune point + ≥1 distillation-to-clean-student point (a real vendor isn't limited to r=16 adapters). | does full-FT/distillation evade the re-fittable read with knowledge kept? same gate as B2. | M | QUEUED |
-| **B7** | **3B confirmation** (prereg-owed across v1/v2/v3) — a 1.5B-vs-3B split is itself the finding. | run the decisive sweep on Qwen-3B; report the split. | M | **FEASIBLE — probe FITS_PLAIN (2026-07-13, operator-driven, `65e57ca`):** Qwen2.5-3B trains at the arc's exact regime on 8GB (8334MiB peak alloc w/ small WDDM spill, ~6.2 s/step probe-loss; real cell est ~60 min w/ replay forward → 4-cell scored run = overnight). **No compute upgrade needed. NEXT = the frozen B7 prereg**: erasure ladder on 3B, layer set re-selected per family as E1 did, third seed + EVAL n ≥ 300 where data allows (panel evidence-bundle). Receipt: `b7_3b_feasibility_result.json`. |
+| **B7** | **3B confirmation** (prereg-owed across v1/v2/v3) — a 1.5B-vs-3B split is itself the finding. | run the decisive sweep on Qwen-3B; report the split. | M | **IN-FLIGHT, CRASH-SAFE (relaunched 2026-07-14, cycle 39).** Prereg frozen `PREREG_B7_erasure_3b_2026_07_13.md`; clean guard PASSES at 3B (clean private13 0.9853, knowledge 0.9242 ≥ 0.80 — a valid base, unlike Llama-1B). Overnight 07-13 run died at cell 3/4 with NO per-cell persistence → both seed-0 cells (s0α1 private13 0.8065@know 0.9091 SURVIVES; s0α4 0.8378@0.9091 SURVIVES; ~225 min/cell, ~10.86GB peak w/ WDDM spill) were lost from the result file (log-only). Cycle 39 shipped crash-safe per-cell checkpoint+resume (`b7_checkpoint.py`, science-neutral) and relaunched fresh + DETACHED; each cell now persists on completion, so a future death resumes instead of restarting. 4-cell run ≈ 15h; scored NEXT cycle when both seeds complete (VOID_B7__underpowered until seed 1 lands). Feasibility receipt: `b7_3b_feasibility_result.json` (FITS_PLAIN, `65e57ca`). |
 | **B8** | **Non-sycophancy suppression** — sandbagging / strategic-deception / instructed-lying (program's own data: instructed-lying transfers 0.42<chance → likely a BOUND). | does the read-certificate + robustness hold off-sycophancy, or is it sycophancy-specific? | M | QUEUED |
 | **B9** | **MoE / architectural rerouting** — route the computation to experts/heads the probe doesn't tap (untested architecture frontier; all work is dense ≤7B). | can a MoE hide the suppressed answer in an untapped expert with knowledge kept? | L | PARKED (no MoE ≤8GB) |
 | **B10** | **Calibration-set poisoning** (data attack on the probe-training set). | can poisoning the calibration set blind the re-locked probe? | L | QUEUED |
@@ -566,8 +586,10 @@ AND knowledge at each dose, with a fixed-rank control isolating dose from steps.
 constant r\*** (rank where the read breaks) and whether knowledge breaks with it: COUPLED (bound is a measured
 number) / DECOUPLED (read≠write BROKEN by accumulation — a published break-point, written exactly as reachable) /
 SURVIVES. This is what carries a paper title vs "it survived again". **Remaining decisive items, in order:
-(1) B7 3B scored run** — IN FLIGHT (cell 1/4 SURVIVES: private-13 0.8065 @ knowledge 0.9091; ~3.9h/cell under
-WDDM spill); **(2) B2-coupling dose-response** — prereg frozen, scored run waits for the card; **(3) B6 full-FT.**
+(1) B7 3B scored run** — IN FLIGHT, now CRASH-SAFE (cycle 39): overnight seed-0 cells both SURVIVES (0.8065 /
+0.8378 @ knowledge 0.9091) but were log-only; harness hardened with per-cell checkpoint+resume and relaunched
+detached (~15h, ~225 min/cell under WDDM spill); scored next cycle when seed 1 lands; **(2) B2-coupling
+dose-response** — prereg frozen, scored run waits for the card; **(3) B6 full-FT.**
 The tool half (erasure-resistance certificate, SHIPPED `acf7034`) is built and pending its 3B entry. The paper
 fires after (1)+(2). Enabling infra shipped same-arc: `styxx.ladder` v1 (G1), OATH v0.5 precision (G4),
 REPLICATIONS.md (G2), the certificate. G5/G6 code-unblocked; the external counterparty (arXiv + one replication)

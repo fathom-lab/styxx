@@ -1,0 +1,5 @@
+# B7 3B run crash-safe RUNTIME state -- transient, rewritten every launch/resume.
+# The committed receipt is b7_erasure_3b_result.json (scored next cycle); these are not.
+_b7_run.pid
+b7_erasure_3b_clean.json
+b7_erasure_3b_cells.jsonl

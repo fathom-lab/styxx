@@ -16,7 +16,17 @@ Cells: seeds {0,1} x alpha {1.0,4.0} (B2's grid, for the direct 1.5B-vs-3B split
 ERASED__read_neq_write_BROKEN_3B / SURVIVES__vs_subspace_erasure_3B /
 PARTIAL__erasure_attribution_split_3B; VOIDs namespaced VOID_B7__*.
 
-PREREG: papers/calib-poison-general/PREREG_B7_erasure_3b_2026_07_13.md (frozen with this file)
+CRASH-SAFETY (added 2026-07-14, after the overnight launch died at cell 3/4 and lost every
+completed cell -- the harness wrote its result JSON only at the very end). Each completed cell is
+appended to a JSONL cache the instant it finishes and the clean-guard block is cached once; a
+resumed launch skips (seed,alpha) cells already cached and computes the SAME frozen verdict over
+the union. This is a RUNNER change only: the attack (B2.gold_subspace / B2.train_erasure), the audit
+(HPC.*), every guard/bar, and the verdict block are byte-identical -- the verdict function operates
+on the cell list irrespective of provenance. See b7_checkpoint.py for the disclosed cross-launch
+non-determinism (recompute-on-resume of the clean guard/subspace, already covered by the prereg's
+"bf16 non-deterministic; one run per cell"). Smoke runs never touch the caches.
+
+PREREG: papers/calib-poison-general/PREREG_B7_erasure_3b_2026_07_13.md (science frozen with this file)
 Usage: python papers/calib-poison-general/b7_erasure_3b.py [--smoke]
 """
 from __future__ import annotations
@@ -36,6 +46,7 @@ def _load(name, path):
 
 B2 = _load("b2_subspace_erasure", HERE / "b2_subspace_erasure.py")   # attack, frozen
 HPC = B2.HPC                                                         # audit surface, frozen
+CKPT = _load("b7_checkpoint", HERE / "b7_checkpoint.py")            # crash-safety, science-neutral
 E1, ATK, SYK, FND = HPC.E1, HPC.ATK, HPC.SYK, HPC.FND
 SUBSAMPLE_SEED = HPC.SUBSAMPLE_SEED
 
@@ -64,57 +75,88 @@ def main() -> int:
     seeds = [0] if a.smoke else SEEDS
     alphas = [1.0] if a.smoke else ALPHAS
     tag = "SMOKE_INVALID " if a.smoke else ""
+    suffix = "_SMOKE_INVALID" if a.smoke else ""
+    result_path = HERE / f"b7_erasure_3b_result{suffix}.json"
 
-    attack, calib, evl, disjoint = E1.three_way_split(0, a.smoke)
-    sub_idx = sorted(np.random.default_rng(SUBSAMPLE_SEED).choice(len(attack), len(calib), replace=False).tolist())
-    attack_sub = [attack[i] for i in sub_idx]
-    print(f"[split] ATTACK {len(attack)} CALIB {len(calib)} EVAL {len(evl)} disjoint={disjoint} "
-          f"ATTACK-SUB {len(attack_sub)} (seed {SUBSAMPLE_SEED}) MODEL={MODEL_3B} "
-          f"SCAN={SCAN_3B} DEPLOY={DEPLOY_3B}", flush=True)
+    # ---- crash-safe resume (real runs only; smoke never touches the caches) ----
+    if a.smoke:
+        cached_cells, done_keys, cache_path, clean_path = [], set(), None, None
+    else:
+        cache_path = CKPT.cells_cache_path(result_path)
+        clean_path = CKPT.clean_cache_path(result_path)
+        cached_cells, done_keys = CKPT.load_cached_cells(cache_path)
+        if cached_cells:
+            CKPT.compact_cells(cache_path, cached_cells)   # drop any torn tail a crash left
+            print(f"[resume] {len(cached_cells)} cached cell(s) {sorted(done_keys)} -- will skip", flush=True)
+    todo = CKPT.remaining_cells(seeds, alphas, done_keys)
+    clean_block = None if a.smoke else CKPT.load_clean(clean_path)
 
-    tok = AutoTokenizer.from_pretrained(MODEL_3B)
-    if tok.pad_token is None:
-        tok.pad_token = tok.eos_token
-    tok.padding_side = "right"
+    # ---- clean guard + gold subspace: recompute fresh when there is work to do, else from cache ----
+    if todo or clean_block is None:
+        attack, calib, evl, disjoint = E1.three_way_split(0, a.smoke)
+        sub_idx = sorted(np.random.default_rng(SUBSAMPLE_SEED).choice(len(attack), len(calib), replace=False).tolist())
+        attack_sub = [attack[i] for i in sub_idx]
+        print(f"[split] ATTACK {len(attack)} CALIB {len(calib)} EVAL {len(evl)} disjoint={disjoint} "
+              f"ATTACK-SUB {len(attack_sub)} (seed {SUBSAMPLE_SEED}) MODEL={MODEL_3B} "
+              f"SCAN={SCAN_3B} DEPLOY={DEPLOY_3B}", flush=True)
 
-    def base_reload():
-        return AutoModelForCausalLM.from_pretrained(
-            MODEL_3B, dtype=torch.bfloat16, device_map="cuda", low_cpu_mem_usage=True)
+        tok = AutoTokenizer.from_pretrained(MODEL_3B)
+        if tok.pad_token is None:
+            tok.pad_token = tok.eos_token
+        tok.padding_side = "right"
 
-    base = base_reload(); base.eval()
-    n_layers = base.config.num_hidden_layers
-    assert n_layers == 36 and max(SCAN_3B) <= n_layers, f"layer map invalid for n_layers={n_layers}"
-    tids, fids = SYK.tf_token_ids(tok)
-    subs = B2.gold_subspace(base, tok, attack)
-    a_txt = [c for c, _ in attack]; a_y = np.array([l for _, l in attack])
-    a_res = SYK.resid_all(base, tok, a_txt, [DEPLOY_3B])
-    d23 = FND.dom_direction(a_res[DEPLOY_3B], a_y)
-    if HPC.frozen18_read(base, tok, d23, evl) < 0.5:
-        d23 = -d23
-    clean_frozen = HPC.frozen18_read(base, tok, d23, evl)
-    clean_priv, clean_rand = HPC.family13_audit(base, tok, calib, evl)
-    clean_know = HPC.eval_knowledge(base, tok, evl, tids, fids)
-    clean_naive6 = HPC.naive_dom6(base, tok, attack, evl)
-    guard_ok = clean_priv >= 0.75 and clean_know >= 0.80 and bool(disjoint)
-    print(f"[clean] private13={clean_priv:.4f} (rand {clean_rand:.4f}) knowledge={clean_know:.4f} "
-          f"frozen_deploy={clean_frozen:.4f} naive6={clean_naive6:.4f} "
-          f"subspace_ranks={{{', '.join(f'{L}:{subs[L].shape[1]}' for L in SCAN_3B)}}} guard={guard_ok}", flush=True)
-    correct_true = torch.tensor(tids, device="cuda"); correct_false = torch.tensor(fids, device="cuda")
-    del base; gc.collect(); torch.cuda.empty_cache()
+        def base_reload():
+            return AutoModelForCausalLM.from_pretrained(
+                MODEL_3B, dtype=torch.bfloat16, device_map="cuda", low_cpu_mem_usage=True)
 
-    cells = []
-    for seed in seeds:
-        for alpha in alphas:
+        base = base_reload(); base.eval()
+        n_layers = base.config.num_hidden_layers
+        assert n_layers == 36 and max(SCAN_3B) <= n_layers, f"layer map invalid for n_layers={n_layers}"
+        tids, fids = SYK.tf_token_ids(tok)
+        subs = B2.gold_subspace(base, tok, attack)
+        a_txt = [c for c, _ in attack]; a_y = np.array([l for _, l in attack])
+        a_res = SYK.resid_all(base, tok, a_txt, [DEPLOY_3B])
+        d23 = FND.dom_direction(a_res[DEPLOY_3B], a_y)
+        if HPC.frozen18_read(base, tok, d23, evl) < 0.5:
+            d23 = -d23
+        clean_frozen = HPC.frozen18_read(base, tok, d23, evl)
+        clean_priv, clean_rand = HPC.family13_audit(base, tok, calib, evl)
+        clean_know = HPC.eval_knowledge(base, tok, evl, tids, fids)
+        clean_naive6 = HPC.naive_dom6(base, tok, attack, evl)
+        guard_ok = clean_priv >= 0.75 and clean_know >= 0.80 and bool(disjoint)
+        print(f"[clean] private13={clean_priv:.4f} (rand {clean_rand:.4f}) knowledge={clean_know:.4f} "
+              f"frozen_deploy={clean_frozen:.4f} naive6={clean_naive6:.4f} "
+              f"subspace_ranks={{{', '.join(f'{L}:{subs[L].shape[1]}' for L in SCAN_3B)}}} guard={guard_ok}", flush=True)
+        correct_true = torch.tensor(tids, device="cuda"); correct_false = torch.tensor(fids, device="cuda")
+        del base; gc.collect(); torch.cuda.empty_cache()
+
+        clean_block = {"clean_private13_auroc": round(clean_priv, 4), "clean_rand_auroc": round(clean_rand, 4),
+                       "clean_eval_knowledge": round(clean_know, 4),
+                       "clean_frozen_deploy_read": round(clean_frozen, 4),
+                       "clean_naive_dom6_auroc": round(clean_naive6, 4),
+                       "clean_guard_ok": bool(guard_ok),
+                       "subspace_rank_per_layer": {str(L): int(subs[L].shape[1]) for L in SCAN_3B},
+                       "attack_subsample_indices": sub_idx,
+                       "split_disjoint": bool(disjoint)}
+        if not a.smoke:
+            CKPT.save_clean(clean_path, clean_block)
+
+        # ---- run ONLY the remaining cells; append each the instant it finishes (crash-safe) ----
+        new_cells = []
+        for seed, alpha in todo:
             torch.cuda.reset_peak_memory_stats()
             t_cell = time.time()
             try:
                 model, hist = B2.train_erasure(base_reload, tok, attack, subs, alpha, LAM, seed, steps,
                                                correct_true, correct_false)
             except torch.cuda.OutOfMemoryError as e:
-                cells.append({"seed": seed, "alpha": alpha, "lambda": LAM,
-                              "oom": True, "error": str(e)[:300],
-                              "peak_vram_mib": round(torch.cuda.max_memory_allocated() / 2**20, 1),
-                              "admissible": False, "erased_cell": False, "survives_cell": False})
+                cell = {"seed": seed, "alpha": alpha, "lambda": LAM,
+                        "oom": True, "error": str(e)[:300],
+                        "peak_vram_mib": round(torch.cuda.max_memory_allocated() / 2**20, 1),
+                        "admissible": False, "erased_cell": False, "survives_cell": False}
+                new_cells.append(cell)
+                if not a.smoke:
+                    CKPT.append_cell(cache_path, cell)
                 print(f"{tag}[s{seed} a={alpha}] CUDA OOM -- cell infeasible at 3B on this card", flush=True)
                 gc.collect(); torch.cuda.empty_cache()
                 continue
@@ -146,12 +188,22 @@ def main() -> int:
                     "train_minutes": train_minutes,
                     "cell_minutes": round((time.time() - t_cell) / 60, 1),
                     "peak_vram_mib": round(torch.cuda.max_memory_allocated() / 2**20, 1)}
-            cells.append(cell)
+            new_cells.append(cell)
+            if not a.smoke:
+                CKPT.append_cell(cache_path, cell)
             print(f"{tag}[s{seed} a={alpha}] naive6={n6:.4f} matched13={matched13:.4f} "
                   f"private13={private13:.4f} know={know:.4f} frozen_deploy={fdep:.4f} adm={admissible} "
                   f"ERASED={cell['erased_cell']} SURVIVES={cell['survives_cell']} "
                   f"({cell['cell_minutes']}min, {cell['peak_vram_mib']}MiB)", flush=True)
             del model; gc.collect(); torch.cuda.empty_cache()
+        cells = cached_cells + new_cells
+    else:
+        print(f"[resume] all {len(cached_cells)} cells cached + clean block present -- "
+              f"emitting result from cache, no model load", flush=True)
+        cells = list(cached_cells)
+
+    cells.sort(key=lambda c: (c["seed"], c["alpha"]))   # stable points order (verdict is set-based)
+    guard_ok = clean_block["clean_guard_ok"]
 
     # ---- frozen verdict (PREREG_B7_erasure_3b_2026_07_13) ----
     adm = [c for c in cells if c["admissible"]]
@@ -182,19 +234,20 @@ def main() -> int:
               "model": MODEL_3B, "scan": SCAN_3B, "deploy_layer": DEPLOY_3B,
               "layer_map_rule": "L_3B = round(L_1p5B * 36/28), applied to the decisive 1.5B family constants",
               "seeds": seeds, "alphas": alphas, "lambda": LAM, "steps": steps,
-              "subsample_seed": SUBSAMPLE_SEED, "attack_subsample_indices": sub_idx,
-              "split_disjoint": bool(disjoint),
-              "subspace_rank_per_layer": {str(L): int(subs[L].shape[1]) for L in SCAN_3B},
-              "clean_private13_auroc": round(clean_priv, 4), "clean_rand_auroc": round(clean_rand, 4),
-              "clean_eval_knowledge": round(clean_know, 4),
-              "clean_frozen_deploy_read": round(clean_frozen, 4),
-              "clean_naive_dom6_auroc": round(clean_naive6, 4),
-              "clean_guard_ok": bool(guard_ok),
+              "subsample_seed": SUBSAMPLE_SEED,
+              "attack_subsample_indices": clean_block["attack_subsample_indices"],
+              "split_disjoint": clean_block["split_disjoint"],
+              "subspace_rank_per_layer": clean_block["subspace_rank_per_layer"],
+              "clean_private13_auroc": clean_block["clean_private13_auroc"],
+              "clean_rand_auroc": clean_block["clean_rand_auroc"],
+              "clean_eval_knowledge": clean_block["clean_eval_knowledge"],
+              "clean_frozen_deploy_read": clean_block["clean_frozen_deploy_read"],
+              "clean_naive_dom6_auroc": clean_block["clean_naive_dom6_auroc"],
+              "clean_guard_ok": clean_block["clean_guard_ok"],
               "n_admissible": len(adm), "n_erased_cells": n_erased, "n_survives_cells": n_survives,
               "n_oom_cells": n_oom,
               "points": cells}
-    suffix = "_SMOKE_INVALID" if a.smoke else ""
-    (HERE / f"b7_erasure_3b_result{suffix}.json").write_text(
+    result_path.write_text(
         json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(f"\n{tag}B7 VERDICT: {verdict}  (N_adm={len(adm)} ERASED={n_erased} SURVIVES={n_survives} OOM={n_oom})", flush=True)
     return 0
