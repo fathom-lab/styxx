@@ -50,6 +50,37 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 41 (2026-07-15, autopilot + operator mid-cycle redirect) — two deliverables: (a) FROZE the B2-coupling CONFIRMATION prereg + its disjoint capability battery (the B4 strengthening the dose PARTIAL owed); (b) built a self-certifying ARTWORK at the operator's live direction. No scored run (deferred), no new FINDING/RESULT (nothing to certify). `PREREG_FROZEN + ART_SHIPPED`.**
+  Orient found GPU free (207/8188 MiB, no scored run) and cycle 40's coupling result PARTIAL — its
+  own named next step is more seeds at the knee + a capability battery replacing the single behavioral
+  invariant (arc-wide B4 caveat). (a) Froze `PREREG_B2_coupling_confirm_2026_07_15.md`: seeds
+  {0,1,2,3,4}; gating invariant becomes a DISJOINT capability battery (four sub-tasks — MUL / ORTH
+  first-letter / INEQ / SEQ weekday-month — in categories OUTSIDE the honesty fact bank the eraser
+  trains on); a majority aggregate rule that can RESOLVE the split (strict-majority decoupled → BREAK,
+  strict-majority coupled → bound measured, else PARTIAL); every dose threshold inherited unchanged
+  (0.70/0.75/0.10) + one NEW per-sub-task guard (0.20) that only makes a break HARDER. Instrument
+  shipped + validated: `capability_battery.py` (frozen item bank + measure_battery via the
+  byte-identical behavioral_margin primitive + battery_guard/battery_broke; `--selftest` recomputes
+  every MUL/INEQ label from arithmetic + exercises the break rule CPU-only, 40/40). **The ~10-15h
+  scored run is DEFERRED to a later cycle** — it needs a GPU `--smoke` to review the new instrument
+  before an unattended overnight launch on a brand-new battery; freezing the instrument before any
+  scored run is the discipline, not a stall. (b) Mid-cycle the operator forwarded a vision (Remote
+  control thread): a self-certifying artwork whose subject is its own verifiability. Shipped
+  `web/self-certifying.html` — every headline number bound to an embedded receipt (the frozen
+  `b7_erasure_3b_result.json` / `b2_coupling_dose_result.json`), re-verified in-browser on load
+  (styxx number-grounding OATH performed as art), with a live TAMPER→BROKEN→RESTORE self-falsification.
+  Faithful to the locked brand (aubergine+lilac dark / Fathom cream light), zero-dep, CSP-safe,
+  theme-aware; colophon honest that it checks numbers-match-receipts (grounding), not the science.
+  Verified end-to-end in the browser (OATH·HELD, 15/15 claims ✓, ledger built, tamper flips to BROKEN
+  1-ungrounded then restores, no console errors, no horizontal scroll). Published as an Artifact.
+  `pytest tests -q` 1719 passed / 8 skipped; `py_compile` clean; certify.py untouched (no
+  `validate_oath_v0` re-run owed). Commits `5fa6a20` (prereg+battery), `0524b1b` (artwork), pushed
+  `a12f3fa..0524b1b` on `paper/read-neq-write`. **Next = wire the frozen battery into the accumulating
+  training loop (`coupling_confirm.py`, own loop built on b2_coupling_dose primitives), GPU `--smoke`
+  it, then launch the 5-seed scored run detached + crash-safe (per-seed JSONL checkpoint, cf. cycle 39
+  b7_checkpoint), score in the cycle after.** Receipts: `PREREG_B2_coupling_confirm_2026_07_15.md`,
+  `capability_battery.py`, `web/self-certifying.html`, Artifact a00159df.
+
 - **Cycle 40 (2026-07-14, operator session "make history") — the two pre-paper GPU gates BOTH scored + certified in one day. B7 `SURVIVES__vs_subspace_erasure_3B` (OATH-HELD 92/0) + B2-coupling `PARTIAL__coupling_seed_split` (OATH-HELD 49/0).**
   B7: the erasure bound holds at 3B (all 4 cells SURVIVES; the 3B read sits ABOVE its 1.5B
   counterpart in every cell, knowledge higher, naive collapse shallower — scale gave the signal
