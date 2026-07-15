@@ -1,0 +1,612 @@
+{
+  "guard_ok": true,
+  "clean_private13": 0.9382,
+  "clean_knowledge": 0.8182,
+  "clean_frozen": 0.8562,
+  "curves": {
+    "0": {
+      "clean_knowledge": 0.8182,
+      "accumulate": [
+        {
+          "step": 0,
+          "erased_rank": 2,
+          "private13": 0.9382,
+          "knowledge": 0.8182,
+          "naive6": 0.8581,
+          "frozen": 0.8562,
+          "rand": 0.5032,
+          "bit": false,
+          "knowledge_ok": true
+        },
+        {
+          "step": 25,
+          "erased_rank": 4,
+          "private13": 0.8221,
+          "knowledge": 0.8182,
+          "naive6": 0.6359,
+          "frozen": 0.6839,
+          "rand": 0.5171,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 50,
+          "erased_rank": 6,
+          "private13": 0.7171,
+          "knowledge": 0.7727,
+          "naive6": 0.6553,
+          "frozen": 0.6378,
+          "rand": 0.5207,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 75,
+          "erased_rank": 8,
+          "private13": 0.671,
+          "knowledge": 0.7273,
+          "naive6": 0.5078,
+          "frozen": 0.6516,
+          "rand": 0.5604,
+          "bit": true,
+          "knowledge_ok": false
+        },
+        {
+          "step": 100,
+          "erased_rank": 10,
+          "private13": 0.7346,
+          "knowledge": 0.8333,
+          "naive6": 0.5115,
+          "frozen": 0.5751,
+          "rand": 0.577,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 125,
+          "erased_rank": 12,
+          "private13": 0.7751,
+          "knowledge": 0.7424,
+          "naive6": 0.5742,
+          "frozen": 0.5751,
+          "rand": 0.5687,
+          "bit": true,
+          "knowledge_ok": false
+        },
+        {
+          "step": 150,
+          "erased_rank": 14,
+          "private13": 0.7982,
+          "knowledge": 0.803,
+          "naive6": 0.53,
+          "frozen": 0.5198,
+          "rand": 0.5429,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 175,
+          "erased_rank": 16,
+          "private13": 0.7419,
+          "knowledge": 0.8182,
+          "naive6": 0.6037,
+          "frozen": 0.5023,
+          "rand": 0.4654,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 200,
+          "erased_rank": 18,
+          "private13": 0.8138,
+          "knowledge": 0.8333,
+          "naive6": 0.5502,
+          "frozen": 0.6571,
+          "rand": 0.4415,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 225,
+          "erased_rank": 20,
+          "private13": 0.8074,
+          "knowledge": 0.8485,
+          "naive6": 0.6341,
+          "frozen": 0.6212,
+          "rand": 0.4147,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 250,
+          "erased_rank": 22,
+          "private13": 0.8369,
+          "knowledge": 0.8636,
+          "naive6": 0.5585,
+          "frozen": 0.5889,
+          "rand": 0.4175,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 275,
+          "erased_rank": 24,
+          "private13": 0.8083,
+          "knowledge": 0.8788,
+          "naive6": 0.5364,
+          "frozen": 0.635,
+          "rand": 0.4166,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 299,
+          "erased_rank": 24,
+          "private13": 0.7005,
+          "knowledge": 0.8182,
+          "naive6": 0.4894,
+          "frozen": 0.6092,
+          "rand": 0.5364,
+          "bit": true,
+          "knowledge_ok": true
+        }
+      ],
+      "fixed": [
+        {
+          "step": 0,
+          "erased_rank": 2,
+          "private13": 0.9382,
+          "knowledge": 0.8182,
+          "naive6": 0.8581,
+          "frozen": 0.8562,
+          "rand": 0.5032,
+          "bit": false,
+          "knowledge_ok": true
+        },
+        {
+          "step": 25,
+          "erased_rank": 2,
+          "private13": 0.8221,
+          "knowledge": 0.8182,
+          "naive6": 0.6359,
+          "frozen": 0.6839,
+          "rand": 0.5171,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 50,
+          "erased_rank": 2,
+          "private13": 0.7687,
+          "knowledge": 0.7121,
+          "naive6": 0.5078,
+          "frozen": 0.5797,
+          "rand": 0.5484,
+          "bit": true,
+          "knowledge_ok": false
+        },
+        {
+          "step": 75,
+          "erased_rank": 2,
+          "private13": 0.7521,
+          "knowledge": 0.7273,
+          "naive6": 0.518,
+          "frozen": 0.694,
+          "rand": 0.5843,
+          "bit": true,
+          "knowledge_ok": false
+        },
+        {
+          "step": 100,
+          "erased_rank": 2,
+          "private13": 0.6986,
+          "knowledge": 0.7727,
+          "naive6": 0.4728,
+          "frozen": 0.6074,
+          "rand": 0.5041,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 125,
+          "erased_rank": 2,
+          "private13": 0.7244,
+          "knowledge": 0.7879,
+          "naive6": 0.5023,
+          "frozen": 0.6369,
+          "rand": 0.5355,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 150,
+          "erased_rank": 2,
+          "private13": 0.7548,
+          "knowledge": 0.803,
+          "naive6": 0.5161,
+          "frozen": 0.5373,
+          "rand": 0.5106,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 175,
+          "erased_rank": 2,
+          "private13": 0.7982,
+          "knowledge": 0.7879,
+          "naive6": 0.6065,
+          "frozen": 0.7373,
+          "rand": 0.5235,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 200,
+          "erased_rank": 2,
+          "private13": 0.8249,
+          "knowledge": 0.8333,
+          "naive6": 0.6765,
+          "frozen": 0.7392,
+          "rand": 0.529,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 225,
+          "erased_rank": 2,
+          "private13": 0.8221,
+          "knowledge": 0.8182,
+          "naive6": 0.6664,
+          "frozen": 0.6599,
+          "rand": 0.5171,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 250,
+          "erased_rank": 2,
+          "private13": 0.7926,
+          "knowledge": 0.803,
+          "naive6": 0.6286,
+          "frozen": 0.6553,
+          "rand": 0.4894,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 275,
+          "erased_rank": 2,
+          "private13": 0.8184,
+          "knowledge": 0.8182,
+          "naive6": 0.6092,
+          "frozen": 0.6442,
+          "rand": 0.47,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 299,
+          "erased_rank": 2,
+          "private13": 0.73,
+          "knowledge": 0.803,
+          "naive6": 0.6378,
+          "frozen": 0.6359,
+          "rand": 0.4765,
+          "bit": true,
+          "knowledge_ok": true
+        }
+      ]
+    },
+    "1": {
+      "clean_knowledge": 0.8182,
+      "accumulate": [
+        {
+          "step": 0,
+          "erased_rank": 2,
+          "private13": 0.9382,
+          "knowledge": 0.8182,
+          "naive6": 0.8581,
+          "frozen": 0.8562,
+          "rand": 0.5032,
+          "bit": false,
+          "knowledge_ok": true
+        },
+        {
+          "step": 25,
+          "erased_rank": 4,
+          "private13": 0.7816,
+          "knowledge": 0.7727,
+          "naive6": 0.5853,
+          "frozen": 0.7263,
+          "rand": 0.5456,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 50,
+          "erased_rank": 6,
+          "private13": 0.7318,
+          "knowledge": 0.8485,
+          "naive6": 0.4876,
+          "frozen": 0.6525,
+          "rand": 0.6138,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 75,
+          "erased_rank": 8,
+          "private13": 0.6756,
+          "knowledge": 0.8333,
+          "naive6": 0.4654,
+          "frozen": 0.73,
+          "rand": 0.5161,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 100,
+          "erased_rank": 10,
+          "private13": 0.7465,
+          "knowledge": 0.8333,
+          "naive6": 0.5244,
+          "frozen": 0.7935,
+          "rand": 0.5659,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 125,
+          "erased_rank": 12,
+          "private13": 0.6793,
+          "knowledge": 0.6818,
+          "naive6": 0.5253,
+          "frozen": 0.6728,
+          "rand": 0.4276,
+          "bit": true,
+          "knowledge_ok": false
+        },
+        {
+          "step": 150,
+          "erased_rank": 14,
+          "private13": 0.8037,
+          "knowledge": 0.8485,
+          "naive6": 0.5502,
+          "frozen": 0.7281,
+          "rand": 0.4065,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 175,
+          "erased_rank": 16,
+          "private13": 0.7982,
+          "knowledge": 0.8939,
+          "naive6": 0.5714,
+          "frozen": 0.6793,
+          "rand": 0.4737,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 200,
+          "erased_rank": 18,
+          "private13": 0.7161,
+          "knowledge": 0.803,
+          "naive6": 0.5263,
+          "frozen": 0.6571,
+          "rand": 0.5014,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 225,
+          "erased_rank": 20,
+          "private13": 0.765,
+          "knowledge": 0.7879,
+          "naive6": 0.659,
+          "frozen": 0.7355,
+          "rand": 0.4876,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 250,
+          "erased_rank": 22,
+          "private13": 0.7714,
+          "knowledge": 0.8333,
+          "naive6": 0.5604,
+          "frozen": 0.6286,
+          "rand": 0.4903,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 275,
+          "erased_rank": 24,
+          "private13": 0.7641,
+          "knowledge": 0.7576,
+          "naive6": 0.6,
+          "frozen": 0.6608,
+          "rand": 0.4774,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 299,
+          "erased_rank": 24,
+          "private13": 0.7806,
+          "knowledge": 0.7273,
+          "naive6": 0.6599,
+          "frozen": 0.7724,
+          "rand": 0.4516,
+          "bit": true,
+          "knowledge_ok": false
+        }
+      ],
+      "fixed": [
+        {
+          "step": 0,
+          "erased_rank": 2,
+          "private13": 0.9382,
+          "knowledge": 0.8182,
+          "naive6": 0.8581,
+          "frozen": 0.8562,
+          "rand": 0.5032,
+          "bit": false,
+          "knowledge_ok": true
+        },
+        {
+          "step": 25,
+          "erased_rank": 2,
+          "private13": 0.7816,
+          "knowledge": 0.7727,
+          "naive6": 0.5853,
+          "frozen": 0.7263,
+          "rand": 0.5456,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 50,
+          "erased_rank": 2,
+          "private13": 0.7253,
+          "knowledge": 0.8182,
+          "naive6": 0.459,
+          "frozen": 0.5816,
+          "rand": 0.4737,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 75,
+          "erased_rank": 2,
+          "private13": 0.7641,
+          "knowledge": 0.8788,
+          "naive6": 0.6018,
+          "frozen": 0.7668,
+          "rand": 0.6581,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 100,
+          "erased_rank": 2,
+          "private13": 0.73,
+          "knowledge": 0.8182,
+          "naive6": 0.6157,
+          "frozen": 0.6111,
+          "rand": 0.4479,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 125,
+          "erased_rank": 2,
+          "private13": 0.7438,
+          "knowledge": 0.8485,
+          "naive6": 0.5779,
+          "frozen": 0.6618,
+          "rand": 0.5438,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 150,
+          "erased_rank": 2,
+          "private13": 0.7078,
+          "knowledge": 0.8333,
+          "naive6": 0.5622,
+          "frozen": 0.7493,
+          "rand": 0.4839,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 175,
+          "erased_rank": 2,
+          "private13": 0.8194,
+          "knowledge": 0.8182,
+          "naive6": 0.5594,
+          "frozen": 0.6959,
+          "rand": 0.5382,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 200,
+          "erased_rank": 2,
+          "private13": 0.8424,
+          "knowledge": 0.8333,
+          "naive6": 0.5318,
+          "frozen": 0.7493,
+          "rand": 0.565,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 225,
+          "erased_rank": 2,
+          "private13": 0.776,
+          "knowledge": 0.8333,
+          "naive6": 0.6737,
+          "frozen": 0.6737,
+          "rand": 0.4747,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 250,
+          "erased_rank": 2,
+          "private13": 0.8479,
+          "knowledge": 0.803,
+          "naive6": 0.67,
+          "frozen": 0.7226,
+          "rand": 0.4147,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 275,
+          "erased_rank": 2,
+          "private13": 0.7576,
+          "knowledge": 0.7879,
+          "naive6": 0.5392,
+          "frozen": 0.6369,
+          "rand": 0.3991,
+          "bit": true,
+          "knowledge_ok": true
+        },
+        {
+          "step": 299,
+          "erased_rank": 2,
+          "private13": 0.9014,
+          "knowledge": 0.8182,
+          "naive6": 0.4986,
+          "frozen": 0.6968,
+          "rand": 0.6378,
+          "bit": true,
+          "knowledge_ok": true
+        }
+      ]
+    }
+  },
+  "verdict": "PARTIAL__coupling_seed_split",
+  "per_seed": {
+    "0": {
+      "outcome": "coupled",
+      "r_star": 8,
+      "read_at_rstar": 0.671,
+      "knowledge_at_rstar": 0.7273,
+      "knowledge_drop": 0.0909
+    },
+    "1": {
+      "outcome": "decoupled",
+      "r_star": 8,
+      "read_at_rstar": 0.6756,
+      "knowledge_at_rstar": 0.8333,
+      "knowledge_drop": -0.0151
+    }
+  },
+  "prereg": "papers/calib-poison-general/PREREG_B2_coupling_dose_2026_07_13.md"
+}

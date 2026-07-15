@@ -1,0 +1,704 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+  "document_sha256": "ed8bd3dda4f9471e1244bbfe9f2c760c53adbc3b5f2eaa74f4a9190737bb46f1",
+  "receipts_sha256": {
+    "b2_coupling_dose_result.json": "504ffc96ac04161312910736713d28e915e7475aba59352d2428a34c915aca0f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 49,
+    "ABSTAIN": 18,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 19,
+      "token": "0"
+    },
+    {
+      "line": 19,
+      "token": "1"
+    },
+    {
+      "line": 20,
+      "token": "8"
+    },
+    {
+      "line": 29,
+      "token": "0.75"
+    },
+    {
+      "line": 37,
+      "token": "66"
+    },
+    {
+      "line": 38,
+      "token": "0.70"
+    },
+    {
+      "line": 38,
+      "token": "0"
+    },
+    {
+      "line": 38,
+      "token": "0.75"
+    },
+    {
+      "line": 41,
+      "token": "66"
+    },
+    {
+      "line": 41,
+      "token": "1"
+    },
+    {
+      "line": 43,
+      "token": "1"
+    },
+    {
+      "line": 49,
+      "token": "1"
+    },
+    {
+      "line": 61,
+      "token": "36"
+    },
+    {
+      "line": 61,
+      "token": "37"
+    },
+    {
+      "line": 76,
+      "token": "1.0"
+    },
+    {
+      "line": 76,
+      "token": "16"
+    },
+    {
+      "line": 76,
+      "token": "300"
+    },
+    {
+      "line": 77,
+      "token": "66"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "erased direction \u2014 pushed the read to 0.671 (seed 0) and 0.6756 (seed 1), both at the SAME dose:",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].private13"
+    },
+    {
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "erased direction \u2014 pushed the read to 0.671 (seed 0) and 0.6756 (seed 1), both at the SAME dose:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "erased direction \u2014 pushed the read to 0.671 (seed 0) and 0.6756 (seed 1), both at the SAME dose:",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[3].private13"
+    },
+    {
+      "line": 19,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "erased direction \u2014 pushed the read to 0.671 (seed 0) and 0.6756 (seed 1), both at the SAME dose:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "accumulated erased rank r_star = 8 per scan layer, reached at step 75.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:per_seed.0.r_star"
+    },
+    {
+      "line": 26,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].private13"
+    },
+    {
+      "line": 26,
+      "token": "0.7273",
+      "value": 0.7273,
+      "decimals": 4,
+      "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].knowledge"
+    },
+    {
+      "line": 26,
+      "token": "0.0909",
+      "value": 0.0909,
+      "decimals": 4,
+      "context": "| 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 0 | coupled | 8 | 0.671 | 0.7273 | 0.0909 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:per_seed.0.knowledge_drop"
+    },
+    {
+      "line": 27,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:per_seed.0.r_star"
+    },
+    {
+      "line": 27,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "| 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[3].private13"
+    },
+    {
+      "line": 27,
+      "token": "0.8333",
+      "value": 0.8333,
+      "decimals": 4,
+      "context": "| 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].knowledge"
+    },
+    {
+      "line": 27,
+      "token": "-0.0151",
+      "value": -0.0151,
+      "decimals": 4,
+      "context": "| 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "binding_context": "| seed | outcome | r_star | read at r_star | knowledge at r_star | knowledge_drop | | 1 | decoupled | 8 | 0.6756 | 0.8333 | -0.0151 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:per_seed.1.knowledge_drop"
+    },
+    {
+      "line": 29,
+      "token": "0.7273",
+      "value": 0.7273,
+      "decimals": 4,
+      "context": "The coupled seed's knowledge fell to 0.7273, under the frozen floor (threshold of 0.75) \u2014 its",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].knowledge"
+    },
+    {
+      "line": 29,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "The coupled seed's knowledge fell to 0.7273, under the frozen floor (threshold of 0.75) \u2014 its",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.8333",
+      "value": 0.8333,
+      "decimals": 4,
+      "context": "read broke only where the knowledge broke with it. The decoupled seed's knowledge HELD at 0.8333",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].knowledge"
+    },
+    {
+      "line": 31,
+      "token": "-0.0151",
+      "value": -0.0151,
+      "decimals": 4,
+      "context": "(the drop is negative, -0.0151, i.e. knowledge at the crossing sits above its clean reference) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:per_seed.1.knowledge_drop"
+    },
+    {
+      "line": 37,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "- EVAL n=66; per-checkpoint AUROC SE = 0.06. Both crossings (0.671 and 0.6756 against the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 37,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "- EVAL n=66; per-checkpoint AUROC SE = 0.06. Both crossings (0.671 and 0.6756 against the",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].private13"
+    },
+    {
+      "line": 37,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "- EVAL n=66; per-checkpoint AUROC SE = 0.06. Both crossings (0.671 and 0.6756 against the",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[3].private13"
+    },
+    {
+      "line": 38,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "threshold of 0.70) and seed 0's knowledge break (0.7273 against the threshold of 0.75) sit",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "threshold of 0.70) and seed 0's knowledge break (0.7273 against the threshold of 0.75) sit",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 38,
+      "token": "0.7273",
+      "value": 0.7273,
+      "decimals": 4,
+      "context": "threshold of 0.70) and seed 0's knowledge break (0.7273 against the threshold of 0.75) sit",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].knowledge"
+    },
+    {
+      "line": 38,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "threshold of 0.70) and seed 0's knowledge break (0.7273 against the threshold of 0.75) sit",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "is \"the accumulating eraser transiently breaks the read at rank 8 on both seeds; whether",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].erased_rank"
+    },
+    {
+      "line": 41,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "knowledge pays the price is NOT resolved at n=66,\" not \"seed 1 broke read-neq-write.\"",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "knowledge pays the price is NOT resolved at n=66,\" not \"seed 1 broke read-neq-write.\"",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **The break is transient.** After r_star both accumulate arms RECOVER: seed 0 climbs back to",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[0].step"
+    },
+    {
+      "line": 43,
+      "token": "0.7346",
+      "value": 0.7346,
+      "decimals": 4,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].private13"
+    },
+    {
+      "line": 43,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].erased_rank"
+    },
+    {
+      "line": 43,
+      "token": "0.8369",
+      "value": 0.8369,
+      "decimals": 4,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[10].private13"
+    },
+    {
+      "line": 43,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[10].erased_rank"
+    },
+    {
+      "line": 43,
+      "token": "0.7005",
+      "value": 0.7005,
+      "decimals": 4,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[12].private13"
+    },
+    {
+      "line": 43,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[11].erased_rank"
+    },
+    {
+      "line": 43,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "0.7346 at rank 10 and reaches 0.8369 at rank 22 (final checkpoint 0.7005 at rank 24); seed 1",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "0.7465",
+      "value": 0.7465,
+      "decimals": 4,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[4].private13"
+    },
+    {
+      "line": 44,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].erased_rank"
+    },
+    {
+      "line": 44,
+      "token": "0.8037",
+      "value": 0.8037,
+      "decimals": 4,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[6].private13"
+    },
+    {
+      "line": 44,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[6].erased_rank"
+    },
+    {
+      "line": 44,
+      "token": "0.7806",
+      "value": 0.7806,
+      "decimals": 4,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[12].private13"
+    },
+    {
+      "line": 44,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "climbs to 0.7465 at rank 10 and 0.8037 at rank 14 (final 0.7806 at rank 24). Twelve re-fits",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[11].erased_rank"
+    },
+    {
+      "line": 45,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "accumulate only 24 directions per layer \u2014 the signal keeps finding room. The verdict is defined",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[11].erased_rank"
+    },
+    {
+      "line": 48,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "- **Dose vs steps.** At the matched step 75 the fixed-rank control reads 0.7521 (seed 0) and",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].step"
+    },
+    {
+      "line": 48,
+      "token": "0.7521",
+      "value": 0.7521,
+      "decimals": 4,
+      "context": "- **Dose vs steps.** At the matched step 75 the fixed-rank control reads 0.7521 (seed 0) and",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.fixed[3].private13"
+    },
+    {
+      "line": 48,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **Dose vs steps.** At the matched step 75 the fixed-rank control reads 0.7521 (seed 0) and",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[0].step"
+    },
+    {
+      "line": 49,
+      "token": "0.7641",
+      "value": 0.7641,
+      "decimals": 4,
+      "context": "0.7641 (seed 1) against the accumulate arms' 0.671 and 0.6756 \u2014 the accumulate arm is lower at",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[11].private13"
+    },
+    {
+      "line": 49,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "0.7641 (seed 1) against the accumulate arms' 0.671 and 0.6756 \u2014 the accumulate arm is lower at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "0.7641 (seed 1) against the accumulate arms' 0.671 and 0.6756 \u2014 the accumulate arm is lower at",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].private13"
+    },
+    {
+      "line": 49,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "0.7641 (seed 1) against the accumulate arms' 0.671 and 0.6756 \u2014 the accumulate arm is lower at",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.1.accumulate[3].private13"
+    },
+    {
+      "line": 51,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "sub-threshold excursion (seed 0 fixed: 0.6986 at step 100), so step-noise is live in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[0].step"
+    },
+    {
+      "line": 51,
+      "token": "0.6986",
+      "value": 0.6986,
+      "decimals": 4,
+      "context": "sub-threshold excursion (seed 0 fixed: 0.6986 at step 100), so step-noise is live in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.fixed[4].private13"
+    },
+    {
+      "line": 51,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "sub-threshold excursion (seed 0 fixed: 0.6986 at step 100), so step-noise is live in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].step"
+    },
+    {
+      "line": 53,
+      "token": "0.9382",
+      "value": 0.9382,
+      "decimals": 4,
+      "context": "- Guards: clean guard passed (clean private-13 0.9382, clean knowledge 0.8182, clean frozen-deploy",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:clean_private13"
+    },
+    {
+      "line": 53,
+      "token": "0.8182",
+      "value": 0.8182,
+      "decimals": 4,
+      "context": "- Guards: clean guard passed (clean private-13 0.9382, clean knowledge 0.8182, clean frozen-deploy",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:clean_knowledge"
+    },
+    {
+      "line": 54,
+      "token": "0.8562",
+      "value": 0.8562,
+      "decimals": 4,
+      "context": "0.8562); every non-zero checkpoint of both accumulate arms bit per the frozen bite rule; a few",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:clean_frozen"
+    },
+    {
+      "line": 61,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "1. **The erasure bound acquires a ceiling worth measuring.** Cycles 36, 37, and B7 (same day,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "1. **The erasure bound acquires a ceiling worth measuring.** Cycles 36, 37, and B7 (same day,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "rank 8 of a union that never lets go \u2014 and the read comes back as the accumulator dilutes",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].erased_rank"
+    },
+    {
+      "line": 68,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "(rank 6 to 10), a capability battery replacing the single behavioral invariant (B4), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[2].erased_rank"
+    },
+    {
+      "line": 68,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "(rank 6 to 10), a capability battery replacing the single behavioral invariant (B4), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[4].erased_rank"
+    },
+    {
+      "line": 76,
+      "token": "4.0",
+      "value": 4.0,
+      "decimals": 1,
+      "context": "Qwen2.5-1.5B-Instruct only; honesty construct; alpha 4.0, lambda 1.0, LoRA r=16, 300 steps,",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[1].erased_rank"
+    },
+    {
+      "line": 76,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Qwen2.5-1.5B-Instruct only; honesty construct; alpha 4.0, lambda 1.0, LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 76,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B-Instruct only; honesty construct; alpha 4.0, lambda 1.0, LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 76,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "Qwen2.5-1.5B-Instruct only; honesty construct; alpha 4.0, lambda 1.0, LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "re-fit every 25 steps, rank-2 union increments; EVAL n=66; one run per (seed, arm); behavioral",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[1].step"
+    },
+    {
+      "line": 77,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "re-fit every 25 steps, rank-2 union increments; EVAL n=66; one run per (seed, arm); behavioral",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 93,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "the read can be shoved under its bar for one checkpoint at rank 8, it does not stay there, and",
+      "status": "VERIFIED",
+      "receipt_ref": "b2_coupling_dose_result.json:curves.0.accumulate[3].erased_rank"
+    }
+  ]
+}

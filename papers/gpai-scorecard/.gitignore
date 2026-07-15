@@ -1,3 +1,6 @@
 # fetched third-party document texts -- license/copyright, NEVER committed.
 # CARD_MANIFEST.json (committed) pins sha256 for re-verification.
 _cards/
+# extraction receipts carry third-party-derived claim text + quotes -- kept local until
+# the run completes and the aggregated (summary-only) scorecard_result.json is the committed artifact.
+extraction/
