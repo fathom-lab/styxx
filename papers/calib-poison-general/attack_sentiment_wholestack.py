@@ -56,12 +56,12 @@ def frozen_stack_read(model, tok, layer_dirs, scan, evl):
     return float(np.mean([SYK.auroc(res[L] @ layer_dirs[L], e_y) for L in scan]))
 
 
-def train_wholestack(base_reload, tok, attack, layer_dirs_np, scan, lam, seed, steps, yids_t, nids_t):
+def train_wholestack(base_reload, tok, attack, layer_dirs_np, scan, lam, seed, steps, yids_t, nids_t, rank=16):
     import torch
     from peft import LoraConfig, get_peft_model
     torch.manual_seed(seed); np.random.seed(seed)
     model = get_peft_model(base_reload(), LoraConfig(
-        r=16, lora_alpha=32, lora_dropout=0.0, bias="none", target_modules=TARGETS))
+        r=rank, lora_alpha=2 * rank, lora_dropout=0.0, bias="none", target_modules=TARGETS))
     model.config.use_cache = False
     model.enable_input_require_grads()
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
@@ -118,6 +118,7 @@ def main() -> int:
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     ap = argparse.ArgumentParser(); ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--rank", type=int, default=16)
     a = ap.parse_args()
     steps = 20 if a.smoke else STEPS
     lambdas = [1.0] if a.smoke else LAMBDAS
@@ -147,7 +148,7 @@ def main() -> int:
     points = []
     for seed in seeds:
         for lam in lambdas:
-            model = train_wholestack(base_reload, tok, attack, layer_dirs, SCAN, lam, seed, steps, yids_t, nids_t)
+            model = train_wholestack(base_reload, tok, attack, layer_dirs, SCAN, lam, seed, steps, yids_t, nids_t, rank=a.rank)
             naive = AT.naive_relock(model, tok, attack, evl)
             priv, rand = AT.private_audit(model, tok, calib, evl)
             beh = AT.behavioral_acc(model, tok, evl, yids, nids)
@@ -183,11 +184,11 @@ def main() -> int:
     result = {"what": "calibration-poisoning generalization -- sentiment Stage-2b WHOLE-STACK attack",
               "verdict": verdict,
               "prereg": "papers/calib-poison-general/PREREG_calib_poison_sentiment_wholestack_2026_07_09.md",
-              "model": MODEL, "scan": SCAN, "scrub": "all scan layers", "lambdas": lambdas,
+              "model": MODEL, "scan": SCAN, "scrub": "all scan layers", "lora_r": a.rank, "lambdas": lambdas,
               "seeds": seeds, "steps": steps, "clean_private_auroc": round(clean_priv, 4),
               "clean_behavioral_acc": round(clean_beh, 4), "clean_frozen_stack_read": round(clean_stack, 4),
               "clean_guard_ok": bool(guard_ok), "points": points}
-    suffix = "_SMOKE_INVALID" if a.smoke else ""
+    suffix = "_SMOKE_INVALID" if a.smoke else (f"_r{a.rank}" if a.rank != 16 else "")
     (HERE / f"attack_sentiment_wholestack_result{suffix}.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(f"\nSTAGE-2b VERDICT: {verdict}", flush=True)
     return 0
