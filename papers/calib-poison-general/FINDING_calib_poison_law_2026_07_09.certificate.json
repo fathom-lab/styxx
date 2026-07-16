@@ -1,0 +1,359 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_calib_poison_law_2026_07_09.md",
+  "document_sha256": "00b9752914d8b0872311e79a61ee32823cadd7ad05893bb67aed7848cf678a70",
+  "receipts_sha256": {
+    "foundation_refusal_result.json": "dd71b97f4fa00783da8253ce916990b0db6a6e563251fe805dc9f1e237271e9c",
+    "foundation_sentiment_v2_result.json": "587e732d1c3d9528428b10e67cba6857582aab3f30a6dea6a21f035164388783",
+    "attack_sentiment_result.json": "94fdea16c9fcfdc9fb7121cbc2b658bc66d7949364224e865b5ff7cb3d3f7ab2",
+    "attack_sentiment_wholestack_result.json": "f396d0a7c1f6dd5a454b02d4f2a0e5d52357b1e83307cf60ef0485fd94abced6",
+    "attack_sentiment_wholestack_result_r64.json": "f6b45247d53ab895645e89195d27aea5fdea4eb29873759f153fc855b6cbca3a",
+    "foundation_result.json": "b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05",
+    "attack_sweep_result.json": "95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 9,
+      "token": "10.5281"
+    },
+    {
+      "line": 17,
+      "token": "0"
+    },
+    {
+      "line": 29,
+      "token": "2"
+    },
+    {
+      "line": 34,
+      "token": "16"
+    },
+    {
+      "line": 35,
+      "token": "16"
+    },
+    {
+      "line": 36,
+      "token": "64"
+    },
+    {
+      "line": 36,
+      "token": "4"
+    },
+    {
+      "line": 38,
+      "token": "0.60"
+    },
+    {
+      "line": 44,
+      "token": "1"
+    },
+    {
+      "line": 44,
+      "token": "2"
+    },
+    {
+      "line": 51,
+      "token": "4"
+    },
+    {
+      "line": 58,
+      "token": "0"
+    },
+    {
+      "line": 67,
+      "token": "64"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "The flagship (Fathom v28, DOI 10.5281/zenodo.21263158) established, on *honesty*, that an apparent",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**Regime 0 \u2014 no auditable structure (refusal \u2192 UNTESTABLE).** Harmful/benign refusal is a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "surface/lexical property: its read is trivially separable (AUROC 1.000 at every layer, including the",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 19,
+      "token": "0.667",
+      "value": 0.667,
+      "decimals": 3,
+      "context": "earliest) and the model's behavioral judgment is near-chance (0.667 / 0.500). There is no graded",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 19,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "earliest) and the model's behavioral judgment is near-chance (0.667 / 0.500). There is no graded",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.meta-llama/Llama-3.2-1B-Instruct.behavioral_refusal_acc"
+    },
+    {
+      "line": 24,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "**Regime 1 \u2014 fragile probe, full poisoning (honesty).** The honesty read is graded (clean ~0.85) and",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 24,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "**Regime 1 \u2014 fragile probe, full poisoning (honesty).** The honesty read is graded (clean ~0.85) and",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 26,
+      "token": "0.46",
+      "value": 0.46,
+      "decimals": 2,
+      "context": "(attacker-calibrated) re-lock to chance (~0.46\u20130.51) while the private (clean-calibrated) re-lock",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[1].rand_auroc"
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**Regime 2 \u2014 robust probe, poisoning floors (sentiment).** The sentiment read is graded and stronger",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0.954",
+      "value": 0.954,
+      "decimals": 3,
+      "context": "(clean 0.954) with a real behavioral judgment (0.845). Escalating the attacker never fully poisons it:",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 30,
+      "token": "0.845",
+      "value": 0.845,
+      "decimals": 3,
+      "context": "(clean 0.954) with a real behavioral judgment (0.845). Escalating the attacker never fully poisons it:",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 34,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "| single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 34,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "| single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | single-layer r=16 | 0.72\u20130.78 | 0.85\u20130.89 |",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 35,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "0.616",
+      "value": 0.616,
+      "decimals": 3,
+      "context": "| whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[2].naive_relock_auroc"
+    },
+    {
+      "line": 35,
+      "token": "0.730",
+      "value": 0.73,
+      "decimals": 3,
+      "context": "| whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=16 | 0.616\u20130.626 | 0.730\u20130.764 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result.json:points[0].private_relock_auroc"
+    },
+    {
+      "line": 36,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "| whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.642",
+      "value": 0.642,
+      "decimals": 3,
+      "context": "| whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result_r64.json:points[3].naive_relock_auroc"
+    },
+    {
+      "line": 36,
+      "token": "0.760",
+      "value": 0.76,
+      "decimals": 3,
+      "context": "| whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "binding_context": "| attacker | naive re-lock (poisoned) | private re-lock (clean-calibrated) | | whole-stack r=64 (4\u00d7 capacity) | 0.642\u20130.651 | 0.760\u20130.799 |",
+      "status": "VERIFIED",
+      "receipt_ref": "attack_sentiment_wholestack_result_r64.json:points[3].private_relock_auroc"
+    },
+    {
+      "line": 38,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "The naive read floors in the low-to-mid 0.6s and never reaches the 0.60 collapse bar; quadrupling",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 44,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "exists (regimes 1 and 2), the private re-lock beats the naive re-lock in every cell, every attack",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "exists (regimes 1 and 2), the private re-lock beats the naive re-lock in every cell, every attack",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "how strong the representation is: a fragile probe (honesty, clean ~0.85) collapses to chance under",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.behavioral_sentiment_acc"
+    },
+    {
+      "line": 50,
+      "token": "0.954",
+      "value": 0.954,
+      "decimals": 3,
+      "context": "a single-layer attack; a robust probe (sentiment, clean 0.954) floors above chance even under a",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_sentiment_v2_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 51,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "whole-stack 4\u00d7-capacity attack. Full poisoning is not all-or-nothing; it is a robustness-graded",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "gradiently represented (regime 0 is out), and the private-calibration defense holds across the board \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "All results are `Qwen2.5-1.5B` (sentiment/refusal) plus the 1\u20131.5B honesty families; linear probes;",
+      "status": "VERIFIED",
+      "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
+    },
+    {
+      "line": 67,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "knowledge-preserving LoRA attackers (r\u226464); small evaluation sets. The floor is demonstrated for this",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
