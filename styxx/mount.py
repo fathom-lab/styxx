@@ -304,6 +304,70 @@ class ConscienceMount:
         return self
 
     # -- certificate ---------------------------------------------------------------------------
+    def certify_admissibility(self, positive_states: np.ndarray, null_states: np.ndarray, *,
+                              axis: Optional[str] = None, fire_threshold: Optional[float] = None,
+                              claim: int = +1, **kw):
+        """Two-sided admissibility certification of THIS mount's own probe, on its own deployed
+        score (styxx.admissibility.instrument_admissibility) — is the mounted conscience SENSITIVE
+        (fires on episodes where the target construct is present) AND SPECIFIC (quiet on episodes
+        where it is absent)?
+
+        positive_states: (n, d) agent hidden states where the target construct is KNOWN-PRESENT
+            (e.g. lying/deceptive episodes for a truth axis — the substrate sits on the pole the
+            conscience is deployed to flag). Label 1.
+        null_states: (m, d) states where the construct is KNOWN-ABSENT (honest episodes). Label 0.
+        axis: which mounted axis to certify (defaults to the sole axis; required when several).
+        fire_threshold: the DEPLOYMENT firing threshold, in the same units as the certified score
+            (the divergence margin, z-units). THE INTENDED USAGE is to pass the axis's calibrated
+            tau after `calibrate_threshold(...)` — i.e. `fire_threshold=mount.axes[name].tau` —
+            which certifies the exact operating point the mount deploys (a catch fires when
+            margin > tau, identically in `read()` and in this test). If None, the admissibility
+            primitive derives a descriptive threshold and HONESTLY caps the verdict at
+            ADMISSIBLE_SENSITIVITY_ONLY (specificity untested) — never bare ADMISSIBLE.
+        claim: the asserted polarity under which the conscience is certified (+1 = the agent
+            asserts the `high_means` pole, the flagship lie-catch regime; -1 = asserts the
+            negative pole, e.g. "safe" on a danger axis).
+        **kw: forwarded to instrument_admissibility (k_perm, seed, alpha, auroc_floor, max_fire,
+            receipts, out_path).
+
+        SCORE REUSE + ORIENTATION (documented, not re-derived): the certified score is the mount's
+        own deployed detection statistic — the divergence MARGIN into the claim's wrong side,
+        computed from the existing read path `MountedAxis.z` exactly as `calibrate_threshold`
+        does: margin = -z for claim +1 (and +z for claim -1). `read()` catches when z < -tau,
+        i.e. margin > tau. A WORKING conscience probe therefore scores HIGHER on target-present
+        (positive) episodes, so expect="higher_on_positive". No scoring is reimplemented; a new
+        scorer here would certify a different instrument than the one deployed.
+
+        Returns the AdmissibilityReport; the report + certificate are also stored on the mount and
+        folded into `certificate()` under "instrument_admissibility". Read-only and fail-open: a
+        measurement over caller-supplied states; `read()` and the mounted axes are not modified.
+        """
+        from styxx.admissibility import instrument_admissibility  # lazy, like attach_erasure_resistance
+        if claim not in (1, -1):
+            raise ValueError(f"claim must be +1 or -1; got {claim!r}")
+        if axis is None:
+            if len(self.axes) != 1:
+                raise ValueError(f"mount has {len(self.axes)} axes; pass axis=<name> "
+                                 f"(one of {sorted(self.axes)})")
+            axis = next(iter(self.axes))
+        ax = self.axes[axis]
+        sign = -1.0 if claim > 0 else 1.0     # margin into the claim's wrong side (calibrate_threshold's convention)
+        pos_margin = sign * ax.z(positive_states).reshape(-1)
+        null_margin = sign * ax.z(null_states).reshape(-1)
+        scores = np.concatenate([pos_margin, null_margin])
+        labels = np.concatenate([np.ones(len(pos_margin), dtype=int),
+                                 np.zeros(len(null_margin), dtype=int)])
+        rep = instrument_admissibility(scores=scores, labels=labels,
+                                       expect="higher_on_positive",
+                                       fire_threshold=fire_threshold, **kw)
+        rep.instrument = (f"styxx.mount axis '{axis}' (high_means={ax.high_means!r}) — divergence "
+                          f"margin under claim {claim:+d}, via MountedAxis.z")
+        cert = rep.certificate()
+        if not hasattr(self, "_admissibility"):
+            self._admissibility = {}
+        self._admissibility[axis] = {"report": rep, "certificate": cert, "claim": int(claim)}
+        return rep
+
     def attach_erasure_resistance(self, repo_root=".") -> "ConscienceMount":
         """Attach the erasure-resistance certificate (styxx.ladder) to this mount's certificate:
         the removal-class robustness evidence for the instrument family — what survived verifiable
@@ -318,6 +382,7 @@ class ConscienceMount:
 
     def certificate(self, *, agent_id: str = "", reference_id: str = "") -> dict:
         er = getattr(self, "_erasure_resistance", None)
+        adm = getattr(self, "_admissibility", None)
         return {
             "instrument": "styxx.mount v0",
             "prereg": "papers/conscience-mount/PREREG_mount_v0_2026_06_12.md",
@@ -347,6 +412,30 @@ class ConscienceMount:
                                 "subspace erasure."),
                  "full": er}
                 if er is not None else None),
+            "instrument_admissibility": (
+                {"summary": {name: {"verdict": e["report"].admissibility_verdict,
+                                    "admissible": e["report"].admissible,
+                                    "sensitive": e["report"].sensitive,
+                                    "specific": e["report"].specific,
+                                    "threshold_derived": e["report"].threshold_derived,
+                                    "discrim": e["report"].discrim,
+                                    "sensitivity_p": e["report"].sensitivity_p,
+                                    "fire_rate": e["report"].fire_rate,
+                                    "fire_threshold": e["report"].fire_threshold,
+                                    "n_positive": e["report"].n_positive,
+                                    "n_null": e["report"].n_null,
+                                    "claim": e["claim"]}
+                             for name, e in adm.items()},
+                 "scope_note": ("two-sided admissibility (styxx.admissibility) of THIS mount's own "
+                                "deployed score — the divergence margin — on the caller-supplied "
+                                "positive/null episodes. specific=None + verdict "
+                                "ADMISSIBLE_SENSITIVITY_ONLY means no deployment fire_threshold was "
+                                "supplied, so specificity is UNTESTED (the honest cap, not a pass); "
+                                "pass the calibrated tau for the full two-sided verdict. Scoped to "
+                                "the states supplied — it does not transfer to other agents, layers, "
+                                "or registers."),
+                 "full": {name: e["certificate"] for name, e in adm.items()}}
+                if adm else None),
             "axes_refused": REFUSALS,
             "scope": ("Read-only conscience mount: reads borrowed value axes on an agent's last-token "
                       "hidden states and flags output-vs-substrate divergence. Linear, whitened, "

@@ -14,9 +14,7 @@ import copy
 import json
 
 import numpy as np
-import pytest
 
-from styxx import admissibility
 from styxx.admissibility import (
     instrument_admissibility,
     slope_permutation_null,

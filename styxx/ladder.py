@@ -29,11 +29,12 @@ CLI: python -m styxx.ladder [--root PATH] [--json]
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-__all__ = ["Rung", "RUNGS", "load_receipt", "parity_attribution", "report", "verify"]
+__all__ = ["Rung", "RUNGS", "load_receipt", "parity_attribution", "admissibility_line_item",
+           "report", "verify"]
 
 
 @dataclass(frozen=True)
@@ -135,6 +136,38 @@ def parity_attribution(root: Path) -> dict:
                        "(fit on the attacker's own poisoned split); the residual is the privacy term"}
 
 
+# the canonical on-disk home for the flagship probe's two-sided admissibility certificate
+# (issued via ConscienceMount.certify_admissibility -> report.certificate(out_path=...))
+ADMISSIBILITY_RECEIPT = "papers/conscience-mount/mount_admissibility_certificate.json"
+
+
+def admissibility_line_item(root: Path | str = ".") -> dict:
+    """The two-sided admissibility line item: is the flagship probe itself SENSITIVE and SPECIFIC
+    on its own score (styxx.admissibility)? Surfaces the canonical certificate when it exists on
+    disk, and says so honestly when it has not been issued yet — mirroring parity_attribution's
+    receipts-in/dict-out discipline (never hardcoded, never silently absent)."""
+    p = Path(root) / ADMISSIBILITY_RECEIPT
+    reading = ("two-sided instrument admissibility of the flagship mount probe on its OWN deployed "
+               "score (divergence margin): sensitive on target-present episodes AND specific on "
+               "target-absent ones; styxx.admissibility")
+    if not p.exists():
+        return {"status": "not yet issued",
+                "expected_receipt": ADMISSIBILITY_RECEIPT,
+                "how": ("ConscienceMount.certify_admissibility(positive_states, null_states, "
+                        "fire_threshold=<calibrated tau>) then report.certificate(out_path=...)"),
+                "reading": reading}
+    cert = json.loads(p.read_text(encoding="utf-8"))
+    return {"status": "issued",
+            "receipt": ADMISSIBILITY_RECEIPT,
+            "verdict": cert.get("admissibility_verdict"),
+            "admissible": cert.get("admissible"),
+            "threshold_derived": cert.get("specificity", {}).get("threshold_derived"),
+            "discrim": cert.get("sensitivity", {}).get("discrim"),
+            "fire_rate": cert.get("specificity", {}).get("fire_rate"),
+            "verify": "python -m styxx.admissibility --verify " + ADMISSIBILITY_RECEIPT,
+            "reading": reading}
+
+
 def report(root: Path | str = ".") -> dict:
     """Assemble the full ladder report from the canonical receipts: per-rung verdict + decisive
     reads + the mandatory parity-attribution line item. Pure receipts in, dict out."""
@@ -165,6 +198,7 @@ def report(root: Path | str = ".") -> dict:
                      "tracked in papers/PROGRAM_BACKLOG.md (B6, B7, accumulating eraser)",
         "rungs": rungs_out,
         "parity_attribution": parity_attribution(root),
+        "instrument_admissibility": admissibility_line_item(root),
         "all_verdicts_canonical": all(r["verdict_matches_canonical"] for r in rungs_out),
     }
 
@@ -369,6 +403,13 @@ def _main() -> int:
     print(f"\n  mandatory line item -- parity attribution: median capacity share "
           f"{pa['median_capacity_share']} over {pa['n_cells']} admissible cells")
     print(f"  ({pa['reading']})")
+    ia = rep["instrument_admissibility"]
+    if ia["status"] == "issued":
+        print(f"\n  line item -- instrument admissibility: {ia['verdict']} "
+              f"(discrim {ia['discrim']}, fire_rate {ia['fire_rate']})")
+    else:
+        print("\n  line item -- instrument admissibility: not yet issued "
+              f"(expected at {ia['expected_receipt']})")
     return 0
 
 
