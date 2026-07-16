@@ -55,32 +55,45 @@ historical dates, size/length comparatives, continent/language geography, shape-
 Each item is scored by the existing `SYK.behavioral_margin(model, tok, [item], neutral_prompt, tids,
 fids) > 0` against its label; a sub-task's score is mean accuracy over its items.
 
-- **MUL** -- multiplication (the bank has only addition): "6 times 7 equals 42." etc.
-- **ORTH** -- orthography / first-letter identification: "The word 'planet' starts with the letter P." etc.
-- **INEQ** -- integer inequality / ordering: "17 is greater than 9." etc.
-- **SEQ** -- weekday / month ordinal ordering (NOT historical dates): "Wednesday comes after Monday." etc.
+The gating disjoint battery is CALIBRATED to the base model (see the two amendments below). It is
+selected from a frozen candidate POOL of category-disjoint symbolic/lexical capabilities pinned in
+`capability_battery.py`:
 
-The EXACT items are frozen in `capability_battery.py` before any run; they are scored BLIND and
-IDENTICALLY at every checkpoint (no selection, no re-weighting).
+- Candidate pool (`DISJOINT_POOL`): **ORTH_FIRST** (first-letter), **ORTH_LAST** (last-letter),
+  **ORTH_CONTAINS** (letter containment), **VOWEL** (vowel membership), **CASE** (lower->upper map),
+  **ALPHA_AFTER** (alphabetical letter order), **ANTONYM** (common opposites), **SEQ** (weekday
+  Mon-Fri / month ordinal order). All are category-disjoint from the honesty fact bank.
+- Bank-adjacent (`BANK_ADJACENT`, measured + REPORTED, NON-gating): **MUL** (multiplication),
+  **INEQ** (integer inequality).
 
-**AMENDMENT (2026-07-15, PRE-RESULT -- no scored run has occurred; receipt
-`coupling_confirm_redteam_review.json`).** A four-lens adversarial review of the instrument found
-that **MUL** and **INEQ** are CATEGORY-ADJACENT to the honesty fact bank the eraser is fit on: the
-bank contains ADDITION ("{a} plus {b} equals {t}.") and size/length COMPARATIVES ("{A} is larger
-than {B}."), so MUL shares the arithmetic-truth schema and INEQ shares the "{X} is greater than {Y}"
-comparison template. Because the break rule is an OR across sub-tasks, a break carried only by
-MUL/INEQ could be collateral damage to near-in-distribution skills, which would make a COUPLED verdict
-UNSOUND as "general capability broke." Only **ORTH** (first-letter) and **SEQ** (ordinal ordering) are
-genuinely category-disjoint from the bank. Frozen fix (strictly more conservative; strengthens the
-instrument, cannot manufacture a break): the coupled/decoupled decision is GATED on the disjoint pair
-**{ORTH, SEQ}** only -- the battery **aggregate** is the mean of ORTH and SEQ, the clean-battery guard
-and the per-sub-task 0.20 guard apply to ORTH/SEQ only, and MUL/INEQ are still measured and REPORTED
-as bank-adjacent context (`aggregate_adjacent`, `aggregate_all`) but never gate the verdict. A
-DECOUPLED break therefore means the read came off with genuinely-disjoint capability intact; a COUPLED
-verdict means disjoint capability broke with it. Also frozen here: the two clean-guard VOIDs below are
-ENFORCED in code before any seed trains (a red-team FATAL: they were computed-but-unused in the first
-draft), and the reproduction report (seeds 0,1 vs the dose receipt) is produced at scoring time,
-non-gating.
+All items are frozen before any run and scored BLIND and IDENTICALLY at every checkpoint.
+
+**AMENDMENT 1 (2026-07-15, PRE-RESULT -- no scored run has occurred; receipt
+`coupling_confirm_redteam_review.json`).** A four-lens adversarial review found that **MUL** (bank has
+ADDITION) and **INEQ** (bank has "{X} is greater than {Y}" comparatives) are CATEGORY-ADJACENT to the
+honesty bank the eraser is fit on. Because the break rule is an OR across sub-tasks, a break carried
+only by MUL/INEQ could be collateral damage to near-in-distribution skills, making a COUPLED verdict
+UNSOUND as "general capability broke." Frozen fix (strictly more conservative -- cannot manufacture a
+break): MUL/INEQ are measured and REPORTED (`aggregate_adjacent`) but NEVER gate the verdict; only
+category-disjoint sub-tasks gate.
+
+**AMENDMENT 2 (2026-07-15, PRE-RESULT; receipt `coupling_confirm_disjoint_selected.json`).** The GPU
+smoke found the base Qwen2.5-1.5B scores SEQ = 0.5 (chance) via the True/False readout while ORTH is
+1.0 -- a fixed disjoint pair is hostage to a sub-task the base cannot do, so the clean-battery guard
+would VOID the run. Frozen fix (base-only, treatment-blind -- the clean guard's own "measure retention
+of capability the base HAS" logic, NOT a fit to results): the gating disjoint battery is SELECTED from
+the pool by a single deterministic rule -- keep every candidate whose CLEAN base-model accuracy is
+>= `DISJOINT_FLOOR_CLEAN` (0.90), require >= `MIN_DISJOINT` (3) survivors (else
+`VOID_COUPLING__battery_guard_failed`). The selection (`--calibrate`) runs on the clean base model,
+is committed as a receipt BEFORE the scored run, and the run reads it; SEQ self-documents its own
+exclusion. The battery **aggregate**, the clean-battery guard, and the per-sub-task 0.20 guard all
+operate on the SELECTED survivors. Because all survivors are symbolic/orthographic/lexical, a DECOUPLED
+verdict means the read came off with SYMBOLIC competence disjoint from the fact bank intact (a real,
+scope-named break); broader capability batteries remain a named follow-up.
+
+Also frozen: the two clean-guard VOIDs below are ENFORCED in code before any seed trains (a red-team
+FATAL: computed-but-unused in the first draft); the reproduction report (seeds 0,1 vs the dose receipt)
+is produced at scoring time, non-gating.
 
 ## Guards and admissibility (frozen; thresholds inherited from the dose prereg -- unchanged)
 
