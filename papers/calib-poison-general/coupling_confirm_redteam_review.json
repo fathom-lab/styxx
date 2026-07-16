@@ -1,0 +1,67 @@
+{
+  "what": "Pre-result adversarial review of the B2-coupling CONFIRMATION instrument (coupling_confirm.py + capability_battery.py + PREREG_B2_coupling_confirm_2026_07_15.md), before any scored run.",
+  "date": "2026-07-15",
+  "method": "Four independent skeptic agents, one lens each (code-fidelity, verdict/statistical soundness, battery-validity/confound, prereg-fidelity/honesty). Findings triaged and resolved before the scored run; discipline in the tradition of cycle 37 (b2_adaptive_redteam_review.json).",
+  "lenses": ["code_fidelity", "verdict_soundness", "battery_validity", "prereg_fidelity"],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "FATAL",
+      "raised_by": ["prereg_fidelity", "verdict_soundness", "code_fidelity"],
+      "summary": "The two frozen clean-run VOIDs (VOID_COUPLING__clean_guard_failed / __battery_guard_failed) were computed (guard_read/guard_battery) but never enforced; the verdict was produced regardless, so an inadmissible clean baseline could ship a coupled/decoupled/survives claim. Every sibling script short-circuits on the guard; this one dropped it.",
+      "resolution": "FIXED. Added guard_verdict(guard_read, guard_battery) and a short-circuit in run_real BEFORE any seed trains; both VOID strings now exist and gate. Added four --dry guard cases (read-fail, battery-fail, read-precedes-battery, both-pass). Confirmed on-device: the smoke's guard_battery=False was correctly caught."
+    },
+    {
+      "id": "F2",
+      "severity": "MAJOR",
+      "raised_by": ["battery_validity"],
+      "summary": "MUL (bank has ADDITION) and INEQ (bank has 'X is greater than Y' comparatives) are category-adjacent to the honesty fact bank the eraser is fit on. Because the break rule is OR-across-subtasks, a break carried only by MUL/INEQ could be collateral damage to near-in-distribution skills, making a COUPLED verdict unsound as 'general capability broke'. Only ORTH and SEQ are genuinely disjoint.",
+      "resolution": "FIXED (pre-result prereg AMENDMENT, strictly more conservative). The coupled/decoupled decision is now GATED on the disjoint pair {ORTH, SEQ} only: aggregate = mean(ORTH, SEQ); the clean-battery guard and the 0.20 per-sub-task guard apply to ORTH/SEQ only; MUL/INEQ are still measured and REPORTED (aggregate_adjacent, aggregate_all) but never gate the verdict. Amendment recorded in the prereg naming this review."
+    },
+    {
+      "id": "F3",
+      "severity": "MINOR",
+      "raised_by": ["verdict_soundness", "code_fidelity"],
+      "summary": "r* used input list order without a defensive sort by erased_rank (correct in-pipeline because the producer is monotone, but fragile to any reorder).",
+      "resolution": "FIXED. _verdict now sorts bit checkpoints by increasing erased_rank before selecting the first sub-survival crossing."
+    },
+    {
+      "id": "F4",
+      "severity": "MINOR",
+      "raised_by": ["verdict_soundness"],
+      "summary": "A missing clean_battery defaulted cap_broke to None -> outcome 'decoupled' (the extraordinary, claim-denting side) -- an asymmetric bias toward the break.",
+      "resolution": "FIXED. Missing clean battery now defaults to the CONSERVATIVE side (coupled = no-break-claim); it also never occurs given the guard-enforcement short-circuit."
+    },
+    {
+      "id": "F5",
+      "severity": "MINOR",
+      "raised_by": ["prereg_fidelity", "battery_validity"],
+      "summary": "The prereg promised a reproduction report (seeds 0,1 vs the dose receipt, |delta|<=0.02, non-gating) that was not implemented; prereg described ORTH as 'letter counts' while the frozen code uses 'first-letter'; selftest recomputed only MUL/INEQ labels.",
+      "resolution": "PARTIAL. Prereg ORTH wording corrected to 'first-letter'; selftest now recomputes ALL four sub-tasks' labels (58/58, incl. ORTH first-letter + SEQ within-year ordinal). Reproduction report is produced at SCORING time (non-gating) and noted as owed in the amended prereg."
+    },
+    {
+      "id": "F6",
+      "severity": "MINOR",
+      "raised_by": ["code_fidelity"],
+      "summary": "B2COUP was a module-level global set inside run_real (latent NoneType risk on external import); CELLS_CACHE resume had no try/except (a truncated final line would abort the whole resume); measure_battery re-exec'd the SYK module from disk every checkpoint.",
+      "resolution": "FIXED. b2_coupling_dose is loaded at module top (no global fragility); resume skips corrupt/truncated cache lines and recomputes that seed; SYK is cached once in capability_battery._syk()."
+    },
+    {
+      "id": "F7",
+      "severity": "MINOR",
+      "raised_by": ["battery_validity"],
+      "summary": "SEQ month items are within-calendar-year-convention-dependent; DECOUPLED's disjoint evidence is effectively ORTH+SEQ = 16 items (smaller than the four-sub-task framing implied).",
+      "resolution": "ACKNOWLEDGED. SEQ weekdays kept to Mon-Fri (convention-independent); month items scored under the within-year reading a 1.5B instruct model takes; the smaller disjoint-N is disclosed in the prereg's inference-bounds. No change."
+    }
+  ],
+  "single_variable_claim": "UPHELD on behaviour: coupling_confirm.train_accumulating is a faithful copy of b2_coupling_dose.train_accumulating; the only trajectory-relevant difference is the added CB.measure_battery call, which runs under torch.no_grad, touches no RNG, and restores model.train() -- it cannot perturb the training trajectory (verified by the code-fidelity lens).",
+  "on_device_smoke": {
+    "clean_private13": 0.9382,
+    "clean_eval_knowledge": 0.8182,
+    "clean_disjoint_battery_aggregate": 0.75,
+    "guard_read": true,
+    "guard_battery": false,
+    "consequence": "The base Qwen2.5-1.5B-Instruct scores 0.75 on the disjoint {ORTH,SEQ} battery, below the 0.80 CLEAN_AGG_FLOOR -> the real run would VOID_COUPLING__battery_guard_failed. The guard-enforcement fix (F1) works: the instrument refuses an inadmissible base rather than manufacturing a verdict. The scored run is BLOCKED pending a pre-result battery recalibration to the base model's actual disjoint capability (a fresh freeze), NOT launched."
+  },
+  "outcome": "Instrument hardened before any scored run. The scored 5-seed run is deliberately NOT launched: the disjoint battery as frozen is not cleared by the 1.5B base (0.75 < 0.80). Next: recalibrate the disjoint battery (more-reliable ORTH/SEQ items the base handles, or a base-measured floor), re-freeze, re-smoke, then launch."
+}

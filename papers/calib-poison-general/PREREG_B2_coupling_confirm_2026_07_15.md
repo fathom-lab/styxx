@@ -56,15 +56,31 @@ Each item is scored by the existing `SYK.behavioral_margin(model, tok, [item], n
 fids) > 0` against its label; a sub-task's score is mean accuracy over its items.
 
 - **MUL** -- multiplication (the bank has only addition): "6 times 7 equals 42." etc.
-- **ORTH** -- orthography / letter counts: "The word 'planet' has six letters." etc.
+- **ORTH** -- orthography / first-letter identification: "The word 'planet' starts with the letter P." etc.
 - **INEQ** -- integer inequality / ordering: "17 is greater than 9." etc.
 - **SEQ** -- weekday / month ordinal ordering (NOT historical dates): "Wednesday comes after Monday." etc.
 
-These are (a) general competences, deterministic to author and label; (b) categorically disjoint from
-the honesty semantic bank the eraser is trained on; (c) not plausibly carried by the rank-<=24
-honesty gold subspace the accumulator removes. The EXACT items are frozen in `capability_battery.py`
-before any run; they are scored BLIND and IDENTICALLY at every checkpoint (no selection, no
-re-weighting). The battery aggregate is the MEAN of the four sub-task accuracies.
+The EXACT items are frozen in `capability_battery.py` before any run; they are scored BLIND and
+IDENTICALLY at every checkpoint (no selection, no re-weighting).
+
+**AMENDMENT (2026-07-15, PRE-RESULT -- no scored run has occurred; receipt
+`coupling_confirm_redteam_review.json`).** A four-lens adversarial review of the instrument found
+that **MUL** and **INEQ** are CATEGORY-ADJACENT to the honesty fact bank the eraser is fit on: the
+bank contains ADDITION ("{a} plus {b} equals {t}.") and size/length COMPARATIVES ("{A} is larger
+than {B}."), so MUL shares the arithmetic-truth schema and INEQ shares the "{X} is greater than {Y}"
+comparison template. Because the break rule is an OR across sub-tasks, a break carried only by
+MUL/INEQ could be collateral damage to near-in-distribution skills, which would make a COUPLED verdict
+UNSOUND as "general capability broke." Only **ORTH** (first-letter) and **SEQ** (ordinal ordering) are
+genuinely category-disjoint from the bank. Frozen fix (strictly more conservative; strengthens the
+instrument, cannot manufacture a break): the coupled/decoupled decision is GATED on the disjoint pair
+**{ORTH, SEQ}** only -- the battery **aggregate** is the mean of ORTH and SEQ, the clean-battery guard
+and the per-sub-task 0.20 guard apply to ORTH/SEQ only, and MUL/INEQ are still measured and REPORTED
+as bank-adjacent context (`aggregate_adjacent`, `aggregate_all`) but never gate the verdict. A
+DECOUPLED break therefore means the read came off with genuinely-disjoint capability intact; a COUPLED
+verdict means disjoint capability broke with it. Also frozen here: the two clean-guard VOIDs below are
+ENFORCED in code before any seed trains (a red-team FATAL: they were computed-but-unused in the first
+draft), and the reproduction report (seeds 0,1 vs the dose receipt) is produced at scoring time,
+non-gating.
 
 ## Guards and admissibility (frozen; thresholds inherited from the dose prereg -- unchanged)
 
