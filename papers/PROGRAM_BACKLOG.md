@@ -50,6 +50,31 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 42 (2026-07-15, operator "make this groundbreaking" overnight) — built + red-teamed + base-calibrated the B2-coupling CONFIRMATION instrument and ARMED a hands-free chain to run it when the GPU frees. `INSTRUMENT_HARDENED + CHAIN_ARMED` (no scored verdict yet — a `sentiment_probe_parity` scored run holds the card; the hard rail forbids contending).**
+  Built `coupling_confirm.py` (5-seed harness on the `b2_coupling_dose` primitives + a per-checkpoint
+  capability-battery audit + multi-seed majority verdict + per-seed crash-safe checkpoint). A 4-lens
+  PRE-RESULT adversarial red-team (`coupling_confirm_redteam_review.json`) caught, and I fixed BEFORE
+  any GPU hour: **FATAL** — the two frozen clean-guard VOIDs were computed-but-never-enforced (now
+  short-circuit before any seed trains, +4 `--dry` guard cases); **MAJOR** — MUL/INEQ are
+  category-adjacent to the honesty fact bank so an OR-across-subtasks break could manufacture an
+  unsound COUPLED (now measured+reported but NON-gating); +6 MINORs. The GPU smoke then earned its
+  keep: base Qwen2.5-1.5B does **SEQ at chance (0.5)** via the T/F readout while ORTH first-letter is
+  1.0 → disjoint aggregate 0.75 < the 0.80 clean floor → the guard-enforcement fix correctly **VOIDs
+  rather than emit a bogus verdict**. Fixed pre-result (prereg **AMENDMENT 2**, base-only +
+  treatment-blind): `capability_battery.py` rewritten around a frozen candidate POOL of 8
+  category-disjoint symbolic/lexical sub-tasks; `select_disjoint()` keeps those the CLEAN base clears
+  at 0.90 (≥3 survivors else VOID); `--calibrate` freezes the selection as a receipt before the run.
+  `--selftest` 132/132 (all 10 sub-tasks' labels recomputed from ground truth); `--dry` 10/10; `pytest
+  tests -q` 1719 passed / 8 skipped; certify.py untouched. `coupling_confirm_watcher.py` launched
+  (WAITING_FOR_GPU) — **total-VRAM-gated** (per-process VRAM is [N/A] here; a per-process check would
+  false-positive "free" and contend), it runs `--calibrate → --smoke (guard check) → the scored 5-seed
+  run detached` the moment the card frees, STOPPING at the raw result (no auto-certify/commit — a
+  reviewed morning step). Commits `ad5b894`, `985f429`, `429d15b`. **MORNING NEXT:** read
+  `papers/calib-poison-general/_confirm_chain_status.json`; if the scored run ran, review the raw
+  `coupling_confirm_result.json` verdict, commit the frozen calibration receipt, add the seeds-0/1-vs-dose
+  reproduction report, write + certify `RESULT_B2_coupling_confirm_*` OATH-HELD, update this row. Do NOT
+  ship a RESULT from an unreviewed raw verdict.
+
 - **Cycle 41 (2026-07-15, autopilot + operator mid-cycle redirect) — two deliverables: (a) FROZE the B2-coupling CONFIRMATION prereg + its disjoint capability battery (the B4 strengthening the dose PARTIAL owed); (b) built a self-certifying ARTWORK at the operator's live direction. No scored run (deferred), no new FINDING/RESULT (nothing to certify). `PREREG_FROZEN + ART_SHIPPED`.**
   Orient found GPU free (207/8188 MiB, no scored run) and cycle 40's coupling result PARTIAL — its
   own named next step is more seeds at the knee + a capability battery replacing the single behavioral
