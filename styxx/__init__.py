@@ -356,6 +356,10 @@ from .sla import (
 from .compliance import compliance_report, ComplianceReport
 from .probe import probe, ProbeReport
 from .probe_validity import validate_probe, ProbeValidityReport  # is a probe tracking the concept or a surface artifact?
+from .admissibility import (  # is an instrument valid in BOTH directions (sensitive AND specific)? two-sided sibling of validate_probe
+    instrument_admissibility, AdmissibilityReport,
+    slope_permutation_null, verify_admissibility_certificate,
+)
 from .confound_audit import (  # is a SCORE riding a confound? + the ground-truth substrate gate
     audit_confound, ConfoundAuditReport, build_confound_grid,
     validate_against_ground_truth, cem_length_match,
@@ -779,6 +783,8 @@ __all__ = [
     "certify", "verify_certificate", "CertificateVerificationResult",
     "compliance_report", "probe", "calibrate",
     "validate_probe", "ProbeValidityReport",
+    "instrument_admissibility", "AdmissibilityReport",
+    "slope_permutation_null", "verify_admissibility_certificate",
     "audit_confound", "ConfoundAuditReport", "build_confound_grid",
     "validate_against_ground_truth", "cem_length_match",
     "audit_hf_model", "available_constructs",
