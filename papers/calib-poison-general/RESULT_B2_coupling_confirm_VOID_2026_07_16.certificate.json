@@ -1,0 +1,895 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+  "document_sha256": "5126ff891d9dd9c964fb697238aae0469f8a7b522435b51bb725b09c4438064d",
+  "receipts_sha256": {
+    "coupling_confirm_result.json": "f93111ac2cfb660f0d44b6e8a17c9751d4d6b2774613bb886ec1aac3f295df57",
+    "coupling_confirm_specificity.json": "fc01df8ce64fe19e52ae3ed9e6098b211d107f6ceb93c14a63acd87a0b7ad8de",
+    "coupling_confirm_disjoint_selected.json": "ec8b0390e3f628fc51f862175a9e017988fc69d717c4624dedc8ab6c81a4628f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 72,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "5"
+    },
+    {
+      "line": 14,
+      "token": "0"
+    },
+    {
+      "line": 39,
+      "token": "0.70"
+    },
+    {
+      "line": 63,
+      "token": "3"
+    },
+    {
+      "line": 64,
+      "token": "3"
+    },
+    {
+      "line": 64,
+      "token": "5"
+    },
+    {
+      "line": 108,
+      "token": "36"
+    },
+    {
+      "line": 108,
+      "token": "37"
+    },
+    {
+      "line": 109,
+      "token": "40"
+    },
+    {
+      "line": 119,
+      "token": "8"
+    },
+    {
+      "line": 120,
+      "token": "8"
+    },
+    {
+      "line": 120,
+      "token": "6"
+    },
+    {
+      "line": 128,
+      "token": "5"
+    },
+    {
+      "line": 132,
+      "token": "1"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "The frozen aggregate rule returned `COUPLED__erasure_bound_measured_1p5B`: n_admissible=5,",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:tally.n_admissible"
+    },
+    {
+      "line": 14,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "n_coupled=5, n_decoupled=0, every guard passed. Under the prereg's own decision procedure that is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "n_coupled=5, n_decoupled=0, every guard passed. Under the prereg's own decision procedure that is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "\"Reported, no bar\" -- the fixed-rank control arm, whose accumulated rank is pinned at 2 for the",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[0].erased_rank"
+    },
+    {
+      "line": 32,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| accumulate | 60 | 45 | 0.75 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | accumulate | 60 | 45 | 0.75 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate.bit_checkpoints"
+    },
+    {
+      "line": 32,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| accumulate | 60 | 45 | 0.75 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | accumulate | 60 | 45 | 0.75 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate.break_rule_fired"
+    },
+    {
+      "line": 32,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "| accumulate | 60 | 45 | 0.75 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | accumulate | 60 | 45 | 0.75 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.base_scores.ORTH_LAST"
+    },
+    {
+      "line": 33,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate.bit_checkpoints"
+    },
+    {
+      "line": 33,
+      "token": "35",
+      "value": 35.0,
+      "decimals": 0,
+      "context": "| fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_break_rate.break_rule_fired"
+    },
+    {
+      "line": 33,
+      "token": "0.5833",
+      "value": 0.5833,
+      "decimals": 4,
+      "context": "| fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "binding_context": "| arm | admissible checkpoints | break rule fired | rate | | fixed (dose never changes) | 60 | 35 | 0.5833 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[1].battery.aggregate"
+    },
+    {
+      "line": 39,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "or above the survival threshold of 0.70, i.e. the attack has removed nothing):",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "| accumulate | 52 | 37 | 0.7115 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | accumulate | 52 | 37 | 0.7115 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate_read_intact.checkpoints"
+    },
+    {
+      "line": 43,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "| accumulate | 52 | 37 | 0.7115 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | accumulate | 52 | 37 | 0.7115 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate_read_intact.break_rule_fired"
+    },
+    {
+      "line": 43,
+      "token": "0.7115",
+      "value": 0.7115,
+      "decimals": 4,
+      "context": "| accumulate | 52 | 37 | 0.7115 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | accumulate | 52 | 37 | 0.7115 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_break_rate_read_intact.rate"
+    },
+    {
+      "line": 44,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "| fixed | 54 | 31 | 0.5741 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | fixed | 54 | 31 | 0.5741 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_break_rate_read_intact.checkpoints"
+    },
+    {
+      "line": 44,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| fixed | 54 | 31 | 0.5741 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | fixed | 54 | 31 | 0.5741 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_break_rate_read_intact.break_rule_fired"
+    },
+    {
+      "line": 44,
+      "token": "0.5741",
+      "value": 0.5741,
+      "decimals": 4,
+      "context": "| fixed | 54 | 31 | 0.5741 |",
+      "binding_context": "| arm | read-intact checkpoints | break rule fired | rate | | fixed | 54 | 31 | 0.5741 |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_break_rate_read_intact.rate"
+    },
+    {
+      "line": 56,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.r_star"
+    },
+    {
+      "line": 56,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[3].step"
+    },
+    {
+      "line": 56,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.read_at_rstar"
+    },
+    {
+      "line": 56,
+      "token": "0.7083",
+      "value": 0.7083,
+      "decimals": 4,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.battery_at_rstar"
+    },
+    {
+      "line": 56,
+      "token": "0.7521",
+      "value": 0.7521,
+      "decimals": 4,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.fixed[3].private13"
+    },
+    {
+      "line": 56,
+      "token": "0.625",
+      "value": 0.625,
+      "decimals": 3,
+      "context": "| 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 0 | 8 | 75 | 0.671 | 0.7083 | 0.7521 | 0.625 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.selected_at_rstar.ANTONYM"
+    },
+    {
+      "line": 57,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.r_star"
+    },
+    {
+      "line": 57,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[3].step"
+    },
+    {
+      "line": 57,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.1.read_at_rstar"
+    },
+    {
+      "line": 57,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.base_scores.INEQ"
+    },
+    {
+      "line": 57,
+      "token": "0.7641",
+      "value": 0.7641,
+      "decimals": 4,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.1.accumulate[11].private13"
+    },
+    {
+      "line": 57,
+      "token": "0.9167",
+      "value": 0.9167,
+      "decimals": 4,
+      "context": "| 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 1 | 8 | 75 | 0.6756 | 0.875 | 0.7641 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.4.battery_at_rstar"
+    },
+    {
+      "line": 58,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.2.r_star"
+    },
+    {
+      "line": 58,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[2].step"
+    },
+    {
+      "line": 58,
+      "token": "0.6691",
+      "value": 0.6691,
+      "decimals": 4,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.2.read_at_rstar"
+    },
+    {
+      "line": 58,
+      "token": "0.8333",
+      "value": 0.8333,
+      "decimals": 4,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.2.battery_at_rstar"
+    },
+    {
+      "line": 58,
+      "token": "0.6811",
+      "value": 0.6811,
+      "decimals": 4,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.2.fixed[2].private13"
+    },
+    {
+      "line": 58,
+      "token": "0.7917",
+      "value": 0.7917,
+      "decimals": 4,
+      "context": "| 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 2 | 6 | 50 | 0.6691 | 0.8333 | 0.6811 | 0.7917 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.2.accumulate[8].battery.aggregate"
+    },
+    {
+      "line": 59,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.2.r_star"
+    },
+    {
+      "line": 59,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[2].step"
+    },
+    {
+      "line": 59,
+      "token": "0.6295",
+      "value": 0.6295,
+      "decimals": 4,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.read_at_rstar"
+    },
+    {
+      "line": 59,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.battery_at_rstar"
+    },
+    {
+      "line": 59,
+      "token": "0.6571",
+      "value": 0.6571,
+      "decimals": 4,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[8].frozen"
+    },
+    {
+      "line": 59,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "| 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 3 | 6 | 50 | 0.6295 | 0.6667 | 0.6571 | 0.6667 | yes |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.battery_at_rstar"
+    },
+    {
+      "line": 60,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.r_star"
+    },
+    {
+      "line": 60,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[3].step"
+    },
+    {
+      "line": 60,
+      "token": "0.6378",
+      "value": 0.6378,
+      "decimals": 4,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.4.read_at_rstar"
+    },
+    {
+      "line": 60,
+      "token": "0.9167",
+      "value": 0.9167,
+      "decimals": 4,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.4.battery_at_rstar"
+    },
+    {
+      "line": 60,
+      "token": "0.635",
+      "value": 0.635,
+      "decimals": 3,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[11].frozen"
+    },
+    {
+      "line": 60,
+      "token": "0.9167",
+      "value": 0.9167,
+      "decimals": 4,
+      "context": "| 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "binding_context": "| seed | r_star | step | accumulate read | accumulate battery | control read | control battery | control broke | | 4 | 8 | 75 | 0.6378 | 0.9167 | 0.635 | 0.9167 | no |",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.4.battery_at_rstar"
+    },
+    {
+      "line": 63,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "n_control_capability_broke=3 of n_seeds=5. Worse for the dose story: the control's READ also",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "crosses below the survival threshold in n_control_read_also_crossed=3 of n_seeds=5 (0.6811, 0.6571,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "crosses below the survival threshold in n_control_read_also_crossed=3 of n_seeds=5 (0.6811, 0.6571,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "0.6811",
+      "value": 0.6811,
+      "decimals": 4,
+      "context": "crosses below the survival threshold in n_control_read_also_crossed=3 of n_seeds=5 (0.6811, 0.6571,",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.2.fixed[2].private13"
+    },
+    {
+      "line": 64,
+      "token": "0.6571",
+      "value": 0.6571,
+      "decimals": 4,
+      "context": "crosses below the survival threshold in n_control_read_also_crossed=3 of n_seeds=5 (0.6811, 0.6571,",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[8].frozen"
+    },
+    {
+      "line": 65,
+      "token": "0.635",
+      "value": 0.635,
+      "decimals": 3,
+      "context": "0.635) -- a control that never accumulates a single extra direction reproduces the crossing the",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[11].frozen"
+    },
+    {
+      "line": 66,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "accumulating eraser is credited with. Seed 3 is the cleanest indictment: control read 0.6571 and",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[3]"
+    },
+    {
+      "line": 66,
+      "token": "0.6571",
+      "value": 0.6571,
+      "decimals": 4,
+      "context": "accumulating eraser is credited with. Seed 3 is the cleanest indictment: control read 0.6571 and",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[8].frozen"
+    },
+    {
+      "line": 67,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "control battery 0.6667 against the accumulate arm's 0.6295 and 0.6667 -- the same break, the same",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.battery_at_rstar"
+    },
+    {
+      "line": 67,
+      "token": "0.6295",
+      "value": 0.6295,
+      "decimals": 4,
+      "context": "control battery 0.6667 against the accumulate arm's 0.6295 and 0.6667 -- the same break, the same",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.read_at_rstar"
+    },
+    {
+      "line": 67,
+      "token": "0.6667",
+      "value": 0.6667,
+      "decimals": 4,
+      "context": "control battery 0.6667 against the accumulate arm's 0.6295 and 0.6667 -- the same break, the same",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.3.battery_at_rstar"
+    },
+    {
+      "line": 72,
+      "token": "0.5833",
+      "value": 0.5833,
+      "decimals": 4,
+      "context": "If the break rule fired independently at the control arm's own rate of 0.5833, the probability of",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[1].battery.aggregate"
+    },
+    {
+      "line": 75,
+      "token": "0.8035",
+      "value": 0.8035,
+      "decimals": 4,
+      "context": "across admissible checkpoints the accumulate arm's battery aggregate has mean 0.8035 and sd",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_battery_dispersion.mean"
+    },
+    {
+      "line": 76,
+      "token": "0.1399",
+      "value": 0.1399,
+      "decimals": 4,
+      "context": "0.1399 against a clean aggregate of 1.0, and the control arm's has mean 0.8625 and sd 0.1111 --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:accumulate_battery_dispersion.sd"
+    },
+    {
+      "line": 76,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "0.1399 against a clean aggregate of 1.0, and the control arm's has mean 0.8625 and sd 0.1111 --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 76,
+      "token": "0.8625",
+      "value": 0.8625,
+      "decimals": 4,
+      "context": "0.1399 against a clean aggregate of 1.0, and the control arm's has mean 0.8625 and sd 0.1111 --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_battery_dispersion.mean"
+    },
+    {
+      "line": 76,
+      "token": "0.1111",
+      "value": 0.1111,
+      "decimals": 4,
+      "context": "0.1399 against a clean aggregate of 1.0, and the control arm's has mean 0.8625 and sd 0.1111 --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_specificity.json:fixed_battery_dispersion.sd"
+    },
+    {
+      "line": 77,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "excursions to a minimum of 0.5 (accumulate) and 0.5417 (fixed) occur at ranks where nothing was",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.base_scores.SEQ"
+    },
+    {
+      "line": 77,
+      "token": "0.5417",
+      "value": 0.5417,
+      "decimals": 4,
+      "context": "excursions to a minimum of 0.5 (accumulate) and 0.5417 (fixed) occur at ranks where nothing was",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.1.accumulate[1].battery.aggregate"
+    },
+    {
+      "line": 84,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "calibration (the second amendment selected only sub-tasks the clean base clears at the floor of 0.90), a",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.floor"
+    },
+    {
+      "line": 86,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "problem. The selected battery is ANTONYM, ORTH_FIRST, VOWEL -- each scored 1.0 on the clean base,",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 87,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "aggregate 1.0, guards passed cleanly.",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 108,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "2. **It changes nothing else.** The 1.5B static (cycle 36), 1.5B adaptive (cycle 37) and 3B",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 108,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "2. **It changes nothing else.** The 1.5B static (cycle 36), 1.5B adaptive (cycle 37) and 3B",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 109,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "(cycle 40) SURVIVES results are untouched -- they concern attackers whose reads never crossed,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 118,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "The reproduction guard holds: seeds 0 and 1 land on the dose receipt's cells at matched rank --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[0]"
+    },
+    {
+      "line": 118,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "The reproduction guard holds: seeds 0 and 1 land on the dose receipt's cells at matched rank --",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 119,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "r_star=8 with reads 0.671 and 0.6756, the dose run's values to four decimals. The 5-seed run",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 119,
+      "token": "0.671",
+      "value": 0.671,
+      "decimals": 3,
+      "context": "r_star=8 with reads 0.671 and 0.6756, the dose run's values to four decimals. The 5-seed run",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.0.read_at_rstar"
+    },
+    {
+      "line": 119,
+      "token": "0.6756",
+      "value": 0.6756,
+      "decimals": 4,
+      "context": "r_star=8 with reads 0.671 and 0.6756, the dose run's values to four decimals. The 5-seed run",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:per_seed.1.read_at_rstar"
+    },
+    {
+      "line": 120,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "extends the crossing to all five seeds (r_star=8 on three, r_star=6 on two) and confirms the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 120,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "extends the crossing to all five seeds (r_star=8 on three, r_star=6 on two) and confirms the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 126,
+      "token": "0.9382",
+      "value": 0.9382,
+      "decimals": 4,
+      "context": "Clean read guard: clean private-13 0.9382 against the floor of 0.75. Clean battery guard: clean",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.clean_private13"
+    },
+    {
+      "line": 127,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "aggregate 1.0 against the floor of 0.80, every selected sub-task at 1.0 against the floor of",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 127,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "aggregate 1.0 against the floor of 0.80, every selected sub-task at 1.0 against the floor of",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:curves.0.accumulate[6].private13"
+    },
+    {
+      "line": 127,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "aggregate 1.0 against the floor of 0.80, every selected sub-task at 1.0 against the floor of",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:seeds[1]"
+    },
+    {
+      "line": 128,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "0.70. Power guard: n_admissible=5 against the minimum of 3. Base calibration excluded SEQ at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "0.5 and retained ANTONYM, ORTH_FIRST, VOWEL, each at 1.0. Clean knowledge 0.8182. The guards were",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_confirm_result.json:selection_meta.base_scores.SEQ"
+    },
+    {
+      "line": 132,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "## What cycle N+1 owes",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

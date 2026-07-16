@@ -50,6 +50,42 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 43 (2026-07-16, autopilot) — scored + reviewed the B2-coupling CONFIRMATION run the chain launched overnight. The frozen rule returned the program's FAVOURABLE verdict; the instrument does not earn it. `VOID_COUPLING__battery_lacks_dose_specificity` (RESULT OATH-HELD 72/0).**
+  Orient: chain status `SCORED_RUN_LAUNCHED`, run COMPLETE, GPU free, no contention. The frozen
+  aggregate rule returned `COUPLED__erasure_bound_measured_1p5B` — n_admissible=5, n_coupled=5,
+  n_decoupled=0, every guard green (clean private-13 0.9382 vs floor 0.75; clean battery aggregate
+  1.0 vs floor 0.80; power 5 vs min 3). Under the prereg that is a strict majority and the erasure
+  bound becomes a NUMBER. **Refused, and here is why:** the prereg's own "Reported, no bar" control —
+  the fixed-rank arm, dose pinned at rank 2 all run — was never asked whether the break rule can tell
+  dose from noise. It cannot. Applying the SAME frozen rule: it fires on 35/60 constant-dose control
+  checkpoints (rate 0.5833) and on 37/52 accumulate checkpoints **where the read is fully intact**
+  (0.7115) — capability "breaks" on three of four checkpoints where nothing has been removed. At the
+  matched r\* step the control ALSO registers a break in 3 of 5 seeds and its READ also crosses
+  survival in 3 of 5 seeds (0.6811 / 0.6571 / 0.635) — a control accumulating no extra direction
+  reproduces the crossing the eraser is credited with. Under a dose-free null at the control's own
+  rate, P(5 of 5 coupled) = 0.0675 — the verdict arrives too cheaply to be evidence.
+  **Root cause (the lesson):** the battery was disjoint (amendment 1), base-calibrated (amendment 2),
+  per-sub-task guarded — all correct, none load-bearing. It is measured through the **same True/False
+  margin readout the honesty LoRA perturbs wholesale**, so training degrades every sub-task at once, at
+  any dose. Excellent construct disjointness, ZERO dose specificity; only the second was the question.
+  A clean base score is necessary and nowhere near sufficient — what was owed and never frozen is a
+  NOISE FLOOR (the control's own break rate) as an admissibility gate on the rule itself.
+  **Post-hoc honesty:** no specificity bar was pre-committed, so this analysis is post-hoc — but it only
+  ever SUBTRACTS a favourable claim using the prereg's own control; the reverse (rescuing a missed bar)
+  stays forbidden. Untouched: the 1.5B static / 1.5B adaptive / 3B SURVIVES results (different
+  attackers, never gated on this battery). The dose `PARTIAL__coupling_seed_split` **remains the
+  program's standing position on coupling** — this run was its confirmation and does not resolve it.
+  Reproduced (no bar): seeds 0,1 land on the dose receipt at r\*=8, reads 0.671 / 0.6756, to four
+  decimals; the crossing extends to all five seeds and is robust and transient. `pytest tests -q` 1719
+  passed / 8 skipped; certify.py untouched → no validate_oath_v0 re-run owed.
+  **NEXT (new prereg required):** (a) a pre-committed SPECIFICITY bar — measure the control arm's break
+  rate first, battery inadmissible unless it clears it, no coupling verdict issues otherwise; (b) read
+  capability through a channel the honesty fine-tune does not move wholesale (generation-scored or
+  multiple-choice, not the shared T/F margin); (c) score coupling as a PAIRED accumulate-minus-fixed
+  contrast at matched step so the training effect differences out instead of being billed to the attack.
+  **The coupling question is OPEN; the erasure bound has no number. The paper stays blocked on the
+  coupling side** (B7 3B SURVIVES is unaffected).
+
 - **Cycle 42 (2026-07-15, operator "make this groundbreaking" overnight) — built + red-teamed + base-calibrated the B2-coupling CONFIRMATION instrument and ARMED a hands-free chain to run it when the GPU frees. `INSTRUMENT_HARDENED + CHAIN_ARMED` (no scored verdict yet — a `sentiment_probe_parity` scored run holds the card; the hard rail forbids contending).**
   Built `coupling_confirm.py` (5-seed harness on the `b2_coupling_dose` primitives + a per-checkpoint
   capability-battery audit + multi-seed majority verdict + per-seed crash-safe checkpoint). A 4-lens

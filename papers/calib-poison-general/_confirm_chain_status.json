@@ -1,0 +1,5 @@
+{
+  "stage": "SCORED_RUN_LAUNCHED",
+  "ts": "2026-07-15 23:46:20",
+  "note": "5-seed coupling confirmation training detached; raw result -> coupling_confirm_result.json. Morning: review the raw verdict, then write+certify RESULT and commit. No auto-certify/commit."
+}

@@ -1,0 +1,26 @@
+{
+  "selected_disjoint": [
+    "ANTONYM",
+    "ORTH_FIRST",
+    "VOWEL"
+  ],
+  "ok": true,
+  "floor": 0.9,
+  "min_disjoint": 3,
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_scores": {
+    "MUL": 1.0,
+    "INEQ": 0.875,
+    "ORTH_FIRST": 1.0,
+    "ORTH_LAST": 0.75,
+    "ORTH_CONTAINS": 0.75,
+    "VOWEL": 1.0,
+    "CASE": 0.875,
+    "ALPHA_AFTER": 0.875,
+    "ANTONYM": 1.0,
+    "SEQ": 0.5
+  },
+  "clean_private13": 0.9382,
+  "clean_knowledge": 0.8182,
+  "aggregate_selected": 1.0
+}

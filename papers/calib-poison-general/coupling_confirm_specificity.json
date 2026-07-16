@@ -1,0 +1,117 @@
+{
+  "what": "POST-HOC instrument-validity (dose specificity) analysis of the B2-coupling CONFIRMATION run",
+  "reads": "papers/calib-poison-general/coupling_confirm_result.json",
+  "prereg": "papers/calib-poison-general/PREREG_B2_coupling_confirm_2026_07_15.md",
+  "frozen_verdict_as_returned": "COUPLED__erasure_bound_measured_1p5B",
+  "selected_disjoint": [
+    "ANTONYM",
+    "ORTH_FIRST",
+    "VOWEL"
+  ],
+  "thresholds": {
+    "survival": 0.7,
+    "know_floor": 0.75,
+    "know_break_drop": 0.1,
+    "subtask_break_drop": 0.2
+  },
+  "accumulate_break_rate": {
+    "bit_checkpoints": 60,
+    "break_rule_fired": 45,
+    "rate": 0.75
+  },
+  "fixed_break_rate": {
+    "bit_checkpoints": 60,
+    "break_rule_fired": 35,
+    "rate": 0.5833
+  },
+  "accumulate_break_rate_read_intact": {
+    "checkpoints": 52,
+    "break_rule_fired": 37,
+    "rate": 0.7115
+  },
+  "fixed_break_rate_read_intact": {
+    "checkpoints": 54,
+    "break_rule_fired": 31,
+    "rate": 0.5741
+  },
+  "accumulate_battery_dispersion": {
+    "mean": 0.8035,
+    "sd": 0.1399,
+    "min": 0.5,
+    "max": 1.0
+  },
+  "fixed_battery_dispersion": {
+    "mean": 0.8625,
+    "sd": 0.1111,
+    "min": 0.5417,
+    "max": 1.0
+  },
+  "matched_step_control": {
+    "0": {
+      "r_star": 8,
+      "step": 75,
+      "accumulate_read": 0.671,
+      "accumulate_battery_agg": 0.7083,
+      "accumulate_broke": true,
+      "fixed_read": 0.7521,
+      "fixed_battery_agg": 0.625,
+      "fixed_broke": true,
+      "fixed_read_also_crossed_survival": false
+    },
+    "1": {
+      "r_star": 8,
+      "step": 75,
+      "accumulate_read": 0.6756,
+      "accumulate_battery_agg": 0.875,
+      "accumulate_broke": true,
+      "fixed_read": 0.7641,
+      "fixed_battery_agg": 0.9167,
+      "fixed_broke": false,
+      "fixed_read_also_crossed_survival": false
+    },
+    "2": {
+      "r_star": 6,
+      "step": 50,
+      "accumulate_read": 0.6691,
+      "accumulate_battery_agg": 0.8333,
+      "accumulate_broke": true,
+      "fixed_read": 0.6811,
+      "fixed_battery_agg": 0.7917,
+      "fixed_broke": true,
+      "fixed_read_also_crossed_survival": true
+    },
+    "3": {
+      "r_star": 6,
+      "step": 50,
+      "accumulate_read": 0.6295,
+      "accumulate_battery_agg": 0.6667,
+      "accumulate_broke": true,
+      "fixed_read": 0.6571,
+      "fixed_battery_agg": 0.6667,
+      "fixed_broke": true,
+      "fixed_read_also_crossed_survival": true
+    },
+    "4": {
+      "r_star": 8,
+      "step": 75,
+      "accumulate_read": 0.6378,
+      "accumulate_battery_agg": 0.9167,
+      "accumulate_broke": true,
+      "fixed_read": 0.635,
+      "fixed_battery_agg": 0.9167,
+      "fixed_broke": false,
+      "fixed_read_also_crossed_survival": true
+    }
+  },
+  "n_seeds": 5,
+  "n_control_capability_broke": 3,
+  "n_control_read_also_crossed": 3,
+  "null_model": {
+    "control_arm_fire_rate": 0.5833,
+    "n_coupled_observed": 5,
+    "p_all_seeds_coupled_under_control_rate": 0.0675,
+    "note": "P(every admissible seed reads as coupled) if the break rule fired independently at the control arm's own rate. A COUPLED verdict this likely under a dose-free null is not evidence of a dose effect."
+  },
+  "battery_has_dose_specificity": false,
+  "assessment": "NOT_SPECIFIC: the frozen capability-break rule fires on a majority of constant-dose control checkpoints and on a majority of checkpoints where the read is fully intact. 'Capability broke at r*' therefore does not attribute to removing the read, and the frozen COUPLED verdict is INADMISSIBLE as a measured erasure bound."
+}
