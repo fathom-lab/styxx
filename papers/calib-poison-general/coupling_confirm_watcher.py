@@ -38,25 +38,46 @@ def write_status(stage, **kw):
     print(f"[{_t()}] {stage} {kw}", flush=True)
 
 
-def gpu_free():
-    """True iff no compute app is using >= FREE_MIB and no OTHER python process is on the card."""
+def _other_training_python():
+    """True iff a python process OTHER than this watcher is running a GPU experiment script from this
+    dir (belt to the total-VRAM suspenders: per-process VRAM is permission-restricted here [N/A])."""
     try:
-        out = subprocess.run(["nvidia-smi", "--query-compute-apps=pid,used_memory",
-                              "--format=csv,noheader,nounits"], capture_output=True, text=True, timeout=30).stdout
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+             "Select-Object ProcessId,CommandLine | ConvertTo-Json -Compress"],
+            capture_output=True, text=True, timeout=30).stdout.strip()
+    except Exception:
+        return False
+    if not out:
+        return False
+    try:
+        data = json.loads(out)
+    except json.JSONDecodeError:
+        return False
+    procs = data if isinstance(data, list) else [data]
+    keys = ("sentiment_probe_parity", "b2_", "b7_", "coupling_confirm.py", "honesty_parity",
+            "attack_sweep", "adaptive_erasure", "subspace_erasure")
+    for p in procs:
+        pid = p.get("ProcessId"); cmd = (p.get("CommandLine") or "")
+        if pid and pid != SELF_PID and any(k in cmd for k in keys) and "watcher" not in cmd:
+            return True
+    return False
+
+
+def gpu_free():
+    """Free iff TOTAL GPU memory in use < FREE_MIB AND no other training-python is on the card.
+    Uses total memory.used (reliable) because per-process used_memory is [N/A] under this driver's
+    permissions -- a per-process check alone would false-positive 'free' while a run trains."""
+    try:
+        out = subprocess.run(["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+                             capture_output=True, text=True, timeout=30).stdout.strip()
+        used = int(out.splitlines()[0].strip())
     except Exception as e:
         print("nvidia-smi failed:", e, flush=True); return False
-    for line in out.strip().splitlines():
-        parts = [p.strip() for p in line.split(",")]
-        if len(parts) < 2:
-            continue
-        pid, mem = parts[0], parts[1]
-        try:
-            mem_i = int(mem)
-        except ValueError:
-            mem_i = 0            # "[N/A]" (permission) -> treat as unknown-small
-        if pid.isdigit() and int(pid) != SELF_PID and mem_i >= FREE_MIB:
-            return False
-    return True
+    if used >= FREE_MIB:
+        return False
+    return not _other_training_python()
 
 
 def run(stage, args, log_name, detach=False):
