@@ -1,0 +1,70 @@
+{
+  "what": "sentiment probe-parity control (privacy vs probe capacity)",
+  "verdict": "PARTIAL__privacy_minor_but_present",
+  "prereg": "papers/calib-poison-general/PREREG_sentiment_probe_parity_2026_07_09.md",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "deploy_layer": 22,
+  "lambdas": [
+    1.0,
+    3.0
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "steps": 300,
+  "n_calib": 110,
+  "n_attack": 220,
+  "parity_sub_n": 110,
+  "clean_private_auroc": 0.9619,
+  "clean_behavioral_acc": 0.8455,
+  "clean_guard_ok": true,
+  "median_baseline_gap": 0.1266,
+  "median_parity_gap": 0.0406,
+  "points": [
+    {
+      "seed": 0,
+      "lambda": 1.0,
+      "naive_dom_auroc": 0.767,
+      "parity_naive_auroc": 0.8375,
+      "private_auroc": 0.8894,
+      "behavioral_acc": 0.8818,
+      "baseline_gap": 0.1225,
+      "parity_gap": 0.052,
+      "capacity_share": 0.0705
+    },
+    {
+      "seed": 0,
+      "lambda": 3.0,
+      "naive_dom_auroc": 0.7805,
+      "parity_naive_auroc": 0.8434,
+      "private_auroc": 0.8928,
+      "behavioral_acc": 0.8727,
+      "baseline_gap": 0.1122,
+      "parity_gap": 0.0493,
+      "capacity_share": 0.0629
+    },
+    {
+      "seed": 1,
+      "lambda": 1.0,
+      "naive_dom_auroc": 0.7243,
+      "parity_naive_auroc": 0.8352,
+      "private_auroc": 0.8557,
+      "behavioral_acc": 0.8909,
+      "baseline_gap": 0.1314,
+      "parity_gap": 0.0205,
+      "capacity_share": 0.1109
+    },
+    {
+      "seed": 1,
+      "lambda": 3.0,
+      "naive_dom_auroc": 0.7286,
+      "parity_naive_auroc": 0.8275,
+      "private_auroc": 0.8593,
+      "behavioral_acc": 0.8818,
+      "baseline_gap": 0.1308,
+      "parity_gap": 0.0318,
+      "capacity_share": 0.099
+    }
+  ]
+}

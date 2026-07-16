@@ -2,19 +2,20 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_calib_poison_law_2026_07_09.md",
-  "document_sha256": "ca4ebee9ed815a7550295afd48f6dfd9b34f56302d80aeee24bd169d6729fbfd",
+  "document_sha256": "758132abc5ece112c3cb265bca35cf3fb88416c46f21e55b860168e9625a0c3d",
   "receipts_sha256": {
     "foundation_refusal_result.json": "dd71b97f4fa00783da8253ce916990b0db6a6e563251fe805dc9f1e237271e9c",
     "foundation_sentiment_v2_result.json": "587e732d1c3d9528428b10e67cba6857582aab3f30a6dea6a21f035164388783",
     "attack_sentiment_result.json": "94fdea16c9fcfdc9fb7121cbc2b658bc66d7949364224e865b5ff7cb3d3f7ab2",
     "attack_sentiment_wholestack_result.json": "f396d0a7c1f6dd5a454b02d4f2a0e5d52357b1e83307cf60ef0485fd94abced6",
     "attack_sentiment_wholestack_result_r64.json": "f6b45247d53ab895645e89195d27aea5fdea4eb29873759f153fc855b6cbca3a",
+    "sentiment_probe_parity_result.json": "fda3b0e464d1b95e1c217e5436d4ac90dbd1b637b364af3ebff574387d996f48",
     "foundation_result.json": "b1b1ca9991754691acef3f698c02ca3ffa259a367ae3ecb54e0cbb42e912bc05",
     "attack_sweep_result.json": "95678348448f1088b4ec032cc0c5c77ee874904005a3c4fbc9081d4a1707c237"
   },
   "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
-    "VERIFIED": 17,
+    "VERIFIED": 20,
     "ABSTAIN": 10,
     "UNGROUNDED": 0
   },
@@ -58,7 +59,7 @@
       "token": "4"
     },
     {
-      "line": 89,
+      "line": 91,
       "token": "64"
     }
   ],
@@ -299,7 +300,34 @@
       "receipt_ref": null
     },
     {
-      "line": 88,
+      "line": 68,
+      "token": "0.127",
+      "value": 0.127,
+      "decimals": 3,
+      "context": "0.127 gap into **~two-thirds probe capacity and ~one-third privacy**: the residual privacy effect",
+      "status": "VERIFIED",
+      "receipt_ref": "sentiment_probe_parity_result.json:median_baseline_gap"
+    },
+    {
+      "line": 69,
+      "token": "0.021",
+      "value": 0.021,
+      "decimals": 3,
+      "context": "(private \u2212 parity-naive) is positive in all four cells (0.021\u20130.052, median 0.041) but below the",
+      "status": "VERIFIED",
+      "receipt_ref": "sentiment_probe_parity_result.json:points[2].parity_gap"
+    },
+    {
+      "line": 69,
+      "token": "0.041",
+      "value": 0.041,
+      "decimals": 3,
+      "context": "(private \u2212 parity-naive) is positive in all four cells (0.021\u20130.052, median 0.041) but below the",
+      "status": "VERIFIED",
+      "receipt_ref": "sentiment_probe_parity_result.json:median_parity_gap"
+    },
+    {
+      "line": 90,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
@@ -308,7 +336,7 @@
       "receipt_ref": "foundation_refusal_result.json:models.Qwen/Qwen2.5-1.5B-Instruct.best_read_auroc"
     },
     {
-      "line": 89,
+      "line": 91,
       "token": "64",
       "value": 64.0,
       "decimals": 0,

@@ -63,12 +63,14 @@ every private > naive number in this arc — and in the flagship's `mount.relock
 "calibrate on unseen data" is mis-attributed: the operative fix would be "use a richer probe," and the
 privacy framing (including the shipped `mount.relock`) needs a scope correction.
 
-**The owed control (a NEW frozen prereg):** give the naive (poisoned-split) auditor the SAME probe
-family as the private auditor — DoM + logistic + whole-stack, fit on the attacker's own split — and
-re-measure the gap at probe parity. If a private > naive gap SURVIVES at equal probe capacity, privacy
-is real (and its size is the honest effect). If the gap collapses at parity, the phenomenon is probe
-capacity, not privacy, and two published papers get a scope note. This control gates any "defense
-generalizes" claim; it is the next run, and it takes priority over a v0.4 deposit.
+**The owed control — RAN, verdict PARTIAL** (`RESULT_sentiment_probe_parity_2026_07_09.md`,
+OATH-HELD). Giving the poisoned auditor the same rich probe family and fit size decomposes the median
+0.127 gap into **~two-thirds probe capacity and ~one-third privacy**: the residual privacy effect
+(private − parity-naive) is positive in all four cells (0.021–0.052, median 0.041) but below the
+pre-registered "privacy stands" bar. So privacy is REAL but MINOR; the majority of the "defense" is a
+richer probe. This puts a scope note on `mount.relock` and the read-neq-write defense
+(`SCOPE_NOTE_privacy_vs_capacity_2026_07_09.md`, operator-gated): the operative rule is "richer probe
+AND private split," not "private split" alone.
 
 ## Why this matters (what stands, pending the parity control)
 
@@ -93,11 +95,12 @@ control above.
 
 ## Disposition
 
-**Blocked on the parity control, NOT ready for a v0.4 deposit.** The next run is the probe-parity
-control (naive auditor upgraded to the private auditor's probe family); only its outcome decides
-whether the "law" is a robustness-graded *private-calibration* defense or a robustness-graded
-*probe-capacity* effect — and whether the flagship's privacy framing needs a scope note. Preregs,
-harnesses, result JSONs, and certificates are public at commit-level
+**Parity control RAN → verdict PARTIAL: the defense is majority probe capacity, minority (real)
+privacy.** So the honest v0.4 story is a two-part law — a firm robustness-graded *severity* axis, and
+a *defense* whose recovery is mostly a richer probe with a real but minor privacy residual. Any v0.4
+deposit must carry the scope note (`SCOPE_NOTE_privacy_vs_capacity_2026_07_09.md`) and is
+operator-gated. Owed to fully close: a matched honesty-side parity check in this harness family.
+Preregs, harnesses, result JSONs, and certificates are public at commit-level
 granularity under `papers/calib-poison-general/`.
 
 ---
