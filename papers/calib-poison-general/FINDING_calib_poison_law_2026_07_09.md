@@ -38,46 +38,73 @@ recovers — full calibration poisoning, defeated by private calibration. (Flags
 The naive read floors in the low-to-mid 0.6s and never reaches the 0.60 collapse bar; quadrupling
 attacker capacity does not lower it. Full poisoning does not reproduce on the robust probe.
 
-## The law (two axes, stated sharply)
+## The law (one axis firm, one axis CONFOUNDED — self-caught)
 
-1. **The private-calibration DEFENSE direction is universal.** Wherever an auditable representation
-   exists (regimes 1 and 2), the private re-lock beats the naive re-lock in every cell, every attack
-   strength, both constructs. The clean-calibrated read is systematically the more robust of the two.
-   This is what had to generalize for "calibrate on data the attacker did not see" to be a principle —
-   and it does.
-2. **Poisoning SEVERITY is graded by probe robustness.** How far the naive read can be poisoned tracks
-   how strong the representation is: a fragile probe (honesty, clean ~0.85) collapses to chance under
-   a single-layer attack; a robust probe (sentiment, clean 0.954) floors above chance even under a
-   whole-stack 4×-capacity attack. Full poisoning is not all-or-nothing; it is a robustness-graded
-   phenomenon.
+1. **Poisoning SEVERITY is graded by probe robustness (firm).** How far the naive read can be poisoned
+   tracks how strong the representation is: a fragile probe (honesty, clean ~0.85) collapses to chance
+   under a single-layer attack; a robust probe (sentiment, clean 0.954) floors above chance even under
+   a whole-stack 4×-capacity attack. This is a measurement of the *naive* auditor alone, so it carries
+   no cross-auditor confound. Full poisoning is not all-or-nothing; it is robustness-graded.
+2. **The private > naive gap is NOT yet attributable to privacy — a probe-capacity confound is live.**
+   In every cell the private re-lock beats the naive re-lock, and I initially read this as "the
+   private-calibration defense direction is universal." That claim is **not controlled.** In this
+   harness the naive auditor fits difference-of-means only; the private auditor fits difference-of-means
+   PLUS per-layer logistic PLUS a whole-stack concatenated logistic — a strictly richer probe family.
+   So private > naive conflates two variables: *privacy* (the clean split the attacker never saw) and
+   *probe capacity* (a better estimator). The gap could be entirely capacity. Until a parity control
+   removes the confound, the universal-defense claim is withdrawn.
 
-## Why this matters
+## CONFOUND — probe capacity vs privacy (load-bearing; back-propagates to the flagship)
 
-The audit rule is now a *principle with a boundary*, not a single result. For deployment: a substrate
-honesty (or value) monitor is robustly auditable **iff** the property is behaviorally grounded and
-gradiently represented (regime 0 is out), and the private-calibration defense holds across the board —
-its *direction* is universal. The severity axis says something new and practical: the more robustly a
-model represents a property, the harder an adversary must work to even partially poison its probe, and
-the further it stays from full collapse. Robust representations are not just easier to read — they are
-harder to poison.
+The intended variable is privacy: does calibrating on data the attacker did not see recover the read?
+But the auditor that has the private data ALSO has more probe capacity here. The two are entangled in
+every private > naive number in this arc — and in the flagship's `mount.relock` and the read-neq-write
+"private-calibration defense," which use the same DoM-vs-richer asymmetry. If the gap is capacity, then
+"calibrate on unseen data" is mis-attributed: the operative fix would be "use a richer probe," and the
+privacy framing (including the shipped `mount.relock`) needs a scope correction.
+
+**The owed control (a NEW frozen prereg):** give the naive (poisoned-split) auditor the SAME probe
+family as the private auditor — DoM + logistic + whole-stack, fit on the attacker's own split — and
+re-measure the gap at probe parity. If a private > naive gap SURVIVES at equal probe capacity, privacy
+is real (and its size is the honest effect). If the gap collapses at parity, the phenomenon is probe
+capacity, not privacy, and two published papers get a scope note. This control gates any "defense
+generalizes" claim; it is the next run, and it takes priority over a v0.4 deposit.
+
+## Why this matters (what stands, pending the parity control)
+
+What is firm: auditability requires a behaviorally-grounded, gradiently-represented property —
+surface/lexical properties (the refusal regime) are out; and how far a probe can be poisoned is graded
+by its robustness — fragile probes collapse, robust probes floor above chance even under the strongest
+whole-stack attack tried. That severity axis is a real, single-auditor result.
+
+What is NOT yet established: that a *private-calibration* defense is what recovers the read. The gap
+that motivated `mount.relock` and the read-neq-write defense is, in this harness, confounded with probe
+capacity. So the honest status is: the *phenomenon* (an auditor with clean data and a richer probe
+reads through the attack) is robust; the *attribution* to privacy is open until the parity control
+runs. The deployment claim "calibrate on data the attacker did not see" must wait behind that control.
 
 ## Honest bounds
 
 All results are `Qwen2.5-1.5B` (sentiment/refusal) plus the 1–1.5B honesty families; linear probes;
 knowledge-preserving LoRA attackers (r≤64); small evaluation sets. The floor is demonstrated for this
 attacker class, not proven against every attack; the three regimes are three constructs, not a survey.
-The law is a structured hypothesis with three grounded data points and a universal defense direction —
-strong enough to state, honest enough to bound.
+The severity axis is firm; the privacy-vs-capacity attribution is confounded and gated on the parity
+control above.
 
 ## Disposition
 
-Feeds a paper version (v0.4 / next Fathom deposit, operator's call): "When Can You Audit a Model's
-Mind? A robustness-graded law of substrate auditability," extending the honesty flagship to the
-general case. All preregs, harnesses, result JSONs, and certificates are public at commit-level
+**Blocked on the parity control, NOT ready for a v0.4 deposit.** The next run is the probe-parity
+control (naive auditor upgraded to the private auditor's probe family); only its outcome decides
+whether the "law" is a robustness-graded *private-calibration* defense or a robustness-graded
+*probe-capacity* effect — and whether the flagship's privacy framing needs a scope note. Preregs,
+harnesses, result JSONs, and certificates are public at commit-level
 granularity under `papers/calib-poison-general/`.
 
 ---
-*Two failures and a flagship turned out to be three regimes of one law: surface properties cannot be
-audited, fragile probes are fully poisoned, robust probes are only partially poisoned — and the
-private-calibration defense direction holds across all of it. We earned the boundary by running the
-escalation to a floor, not by asserting the trend.*
+*Two failures and a flagship turned out to be three regimes of one law on the severity axis: surface
+properties cannot be audited, fragile probes are fully poisoned, robust probes are only partially
+poisoned. And then, closing this note, the arc turned its discipline on itself: the defense half of
+the story — private > naive — is confounded with probe capacity in this very harness, so the
+"private-calibration defense" attribution is withdrawn until a parity control earns it back. We ran
+the escalation to a floor rather than assert the trend; we are naming the confound rather than bank
+the synthesis.*
