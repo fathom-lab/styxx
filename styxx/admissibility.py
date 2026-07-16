@@ -23,16 +23,24 @@ General by construction -- bring ANY instrument, ANY population:
         positive=erased_prompts,        # target-present-or-DESTROYED units (label 1)
         null=intact_prompts,            # target-ABSENT / control units (label 0)
         expect="lower_on_positive",     # a good capability battery scores the destroyed class LOWER
-    )
+        fire_threshold=0.5,             # YOUR deployment firing threshold -- required for full
+    )                                   # ADMISSIBLE; omit it and specificity is UNTESTED
+                                        # (verdict caps at ADMISSIBLE_SENSITIVITY_ONLY)
     print(rep.summary())
     cert = rep.certificate()            # groundable, re-verifiable from its own points
 
-Verdict logic (precedence: unmeasurable -> insensitive -> nonspecific -> ADMISSIBLE):
+Verdict logic (precedence: unmeasurable -> insensitive -> [sensitivity-only] -> nonspecific -> ADMISSIBLE):
   1. MEASURABLE  -- n_positive >= 2, n_null >= 2, scores non-degenerate; else VOID (unmeasurable).
-  2. SENSITIVE   -- discriminability (max(AUROC,1-AUROC)) >= auroc_floor AND a direction-agnostic
-                    permutation p < alpha AND the positive class actually falls on the `expect`
-                    side (the direction check that catches a sign-flipped instrument).
-  3. SPECIFIC    -- the false-alarm rate on the NULL population, at the firing threshold, <= max_fire.
+  2. SENSITIVE   -- discriminability (max(AUROC,1-AUROC)) >= auroc_floor AND a TWO-SIDED
+                    permutation p < alpha AND the positive class RANKS on the `expect` side
+                    (AUROC-based direction check -- same rank statistic as discrim/significance,
+                    so a rank-inverted instrument cannot slip through on a skewed mean).
+  3. SPECIFIC    -- the false-alarm rate on the NULL population, at a CALLER-SUPPLIED firing
+                    threshold, <= max_fire. If no fire_threshold is supplied the threshold is
+                    self-derived from the null's own percentile, which makes the fire-rate
+                    tautological (~5% by construction) -- specificity is then UNTESTED
+                    (specific=None) and the best attainable verdict is ADMISSIBLE_SENSITIVITY_ONLY,
+                    never bare ADMISSIBLE. Full ADMISSIBLE requires an explicit fire_threshold.
 
 Reuses the frozen crossmind primitives verbatim (`discrim`, `permutation_null`) -- do not re-derive
 the math. CPU-only: numpy + crossmind + stdlib. No sklearn, no torch.
@@ -128,17 +136,21 @@ def _mde_auroc(n_pos: int, n_null: int, alpha: float) -> float:
 
 
 def _sensitivity_p(scores: np.ndarray, labels: np.ndarray, seed: int, k_perm: int) -> float:
-    """Direction-AGNOSTIC permutation p-value for the separation.
+    """Direction-agnostic TWO-SIDED permutation p-value for the separation.
 
     `crossmind.permutation_null` is ONE-TAILED UPPER on the raw AUROC (p = (1+#{null>=obs})/(1+k)),
-    so it only tests "positive scores HIGHER". A working instrument may point either way, so we run
-    the same one-tailed test on the scores AND on their negation, and take the SMALLER p -- i.e. the
-    one-tailed test in whichever direction the data actually points. (Equivalent to orienting the
-    scores to the observed effect before the upper-tailed test.)"""
+    so it only tests "positive scores HIGHER". A working instrument may point either way, so the
+    same one-tailed test runs on the scores AND on their negation. Taking the bare minimum of the
+    two would be ANTI-conservative (a post-hoc direction pick doubles the false-positive rate to
+    ~2*alpha), so the min is Bonferroni-doubled into a proper two-sided p:
+
+        p_two_sided = min(1, 2 * min(p_hi, p_lo))
+
+    The gate stays at `alpha` -- the correction lives in the p, not the threshold."""
     s = np.asarray(scores, dtype=float)
     p_hi = permutation_null(s, labels, seed=seed, k_perm=k_perm)["p_value"]
     p_lo = permutation_null(-s, labels, seed=seed, k_perm=k_perm)["p_value"]
-    return float(min(p_hi, p_lo))
+    return float(min(1.0, 2.0 * min(p_hi, p_lo)))
 
 
 # --------------------------------------------------------------------------------------------
@@ -160,11 +172,12 @@ class AdmissibilityReport:
     n_positive: int
     n_null: int
     sensitive: bool
-    specific: bool
+    specific: Optional[bool]        # None = UNTESTED (threshold self-derived -> tautological fire-rate)
     measurable: bool
     admissible: bool
     admissibility_verdict: str
     notes: list = field(default_factory=list)
+    threshold_derived: bool = False  # True when fire_threshold was self-derived from the null (specificity untested)
     # carried for the certificate / recompute-verify (NOT part of the headline as_dict)
     scores: list = field(default_factory=list)
     labels: list = field(default_factory=list)
@@ -174,8 +187,9 @@ class AdmissibilityReport:
     receipts: Any = None
 
     _HEADLINE = ("discrim", "sensitivity_p", "direction_ok", "fire_rate", "fire_threshold",
-                 "min_detectable_effect", "n_positive", "n_null", "sensitive", "specific",
-                 "measurable", "admissible", "admissibility_verdict", "notes")
+                 "threshold_derived", "min_detectable_effect", "n_positive", "n_null",
+                 "sensitive", "specific", "measurable", "admissible", "admissibility_verdict",
+                 "notes")
 
     def as_dict(self) -> dict:
         return {k: getattr(self, k) for k in self._HEADLINE}
@@ -188,16 +202,23 @@ class AdmissibilityReport:
         floor = self.thresholds.get("auroc_floor", 0.70)
         alpha = self.thresholds.get("alpha", 0.05)
         max_fire = self.thresholds.get("max_fire", 0.15)
+        if self.threshold_derived:
+            spec_line = ("  specificity: UNTESTED (threshold self-derived — supply a deployment "
+                         "fire_threshold)  "
+                         f"[descriptive fire_rate {self.fire_rate:.3f} @ derived {self.fire_threshold:.3f} "
+                         "is tautological]")
+        else:
+            spec_line = (f"  specificity (fires on null):               fire_rate {self.fire_rate:.3f} "
+                         f"@ threshold {self.fire_threshold:.3f}   "
+                         f"[max_fire {max_fire:.2f} -> {'specific' if self.specific else 'NONSPECIFIC'}]")
         L = [
             f"INSTRUMENT ADMISSIBILITY: {self.admissibility_verdict}",
             f"  sensitivity (discrim, direction-agnostic): {self.discrim:.3f}   "
             f"[floor {floor:.2f} -> {'>= floor' if self.discrim >= floor else 'BELOW floor'}]",
-            f"    permutation p (oriented, min of +/-):    {self.sensitivity_p:.3f}   "
+            f"    permutation p (two-sided):               {self.sensitivity_p:.3f}   "
             f"[{'significant' if self.sensitivity_p < alpha else 'NOT above a random split'}]",
-            f"    direction on positive class:             [{dir_word}]",
-            f"  specificity (fires on null):               fire_rate {self.fire_rate:.3f} "
-            f"@ threshold {self.fire_threshold:.3f}   "
-            f"[max_fire {max_fire:.2f} -> {'specific' if self.specific else 'NONSPECIFIC'}]",
+            f"    direction on positive class (by rank):   [{dir_word}]",
+            spec_line,
             f"  measurable: {'yes' if self.measurable else 'NO'}  "
             f"(n_positive={self.n_positive}, n_null={self.n_null})",
             f"  min detectable effect (AUROC sep, ~80% power @ alpha, approx): "
@@ -268,28 +289,32 @@ def instrument_admissibility(*, scores: Optional[Sequence[float]] = None,
 
     notes: list = []
 
+    threshold_derived = fire_threshold is None
     if both:
-        # ---- SENSITIVITY: magnitude (direction-agnostic) + significance + the direction check ----
+        # ---- SENSITIVITY: magnitude (direction-agnostic) + two-sided significance + direction ----
+        a = float(auroc(scores_a, labels_a))
         d = float(discrim(scores_a, labels_a))                       # max(AUROC, 1-AUROC)
-        sens_p = _sensitivity_p(scores_a, labels_a, seed, k_perm)    # direction-agnostic perm p
-        pos_mean = float(scores_a[labels_a == 1].mean())
-        null_mean = float(scores_a[labels_a == 0].mean())
-        # DIRECTION CHECK -- confirm the positive class falls on the `expect` side. A sign-flipped
+        sens_p = _sensitivity_p(scores_a, labels_a, seed, k_perm)    # two-sided perm p (see helper)
+        # DIRECTION CHECK -- RANK-based, on the SAME statistic as discrim/significance: the AUROC.
+        # (A mean-based check can pass a rank-inverted instrument under skewed scores: a couple of
+        # huge outliers can drag the positive MEAN below the null while the positive class still
+        # ranks ABOVE it pair-wise. AUROC < 0.5 means the positive class ranks LOWER.) A sign-flipped
         # instrument has high `discrim` but reads the world backwards; it must NOT pass sensitivity.
-        direction_ok = (pos_mean < null_mean) if expect == "lower_on_positive" else (pos_mean > null_mean)
+        direction_ok = (a < 0.5) if expect == "lower_on_positive" else (a > 0.5)
 
         # ---- SPECIFICITY: false-alarm rate on the NULL population at the firing threshold ----
         null_scores = scores_a[labels_a == 0]
         fire_high = (expect == "higher_on_positive")   # a detector fires HIGH; a battery fires LOW
-        if fire_threshold is None:
-            # auto-derive a self-referential 5%-false-positive floor from the null itself: the
-            # percentile that leaves 5% of the null on the FIRING side. This makes the auto-threshold
-            # specific by construction; pass a real deployment `fire_threshold` for a load-bearing test.
+        if threshold_derived:
+            # No caller threshold. The null's own 5%/95% percentile is derived ONLY as a descriptive
+            # reference: measuring fire_rate on the SAME null that set the threshold is TAUTOLOGICAL
+            # (~5% <= max_fire by construction, for ANY instrument). Specificity is therefore
+            # UNTESTED in this mode (specific=None) and full ADMISSIBLE is unreachable -- the best
+            # attainable verdict is ADMISSIBLE_SENSITIVITY_ONLY. Supply a real deployment
+            # `fire_threshold` for a load-bearing specificity test.
             ft = float(np.percentile(null_scores, 95.0 if fire_high else 5.0))
-            derived = True
         else:
             ft = float(fire_threshold)
-            derived = False
         fired = (null_scores > ft) if fire_high else (null_scores < ft)
         fire_rate = float(np.mean(fired))
     else:
@@ -297,18 +322,20 @@ def instrument_admissibility(*, scores: Optional[Sequence[float]] = None,
         sens_p = float("nan")
         direction_ok = False
         ft = float(fire_threshold) if fire_threshold is not None else float("nan")
-        derived = fire_threshold is None
         fire_rate = float("nan")
 
-    # nan comparisons are False, so a class-empty / degenerate instrument fails both flags safely
+    # nan comparisons are False, so a class-empty / degenerate instrument fails the flags safely
     sensitive = bool(d >= auroc_floor and sens_p < alpha and direction_ok)
-    specific = bool(fire_rate <= max_fire)
-    admissible = bool(measurable and sensitive and specific)
+    # specific: None = UNTESTED (self-derived threshold); a bool ONLY under a caller threshold
+    specific: Optional[bool] = None if threshold_derived else bool(fire_rate <= max_fire)
+    admissible = bool(measurable and sensitive and specific is True)
 
     if not measurable:
         verdict = "VOID_INSTRUMENT__unmeasurable"
     elif not sensitive:
         verdict = "VOID_INSTRUMENT__insensitive"
+    elif threshold_derived:
+        verdict = "ADMISSIBLE_SENSITIVITY_ONLY"   # specificity untested: never bare ADMISSIBLE
     elif not specific:
         verdict = "VOID_INSTRUMENT__nonspecific"
     else:
@@ -323,17 +350,20 @@ def instrument_admissibility(*, scores: Optional[Sequence[float]] = None,
         if not non_degenerate:
             notes.append("scores are degenerate (a single value) -- no separation is measurable.")
     if both and (d >= auroc_floor) and not direction_ok:
-        notes.append("high discriminability but the positive class is on the WRONG side of `expect` "
-                     "-- a sign-flipped / inverted instrument; NOT sensitive.")
+        notes.append("high discriminability but the positive class RANKS on the WRONG side of `expect` "
+                     "(AUROC-based check) -- a sign-flipped / inverted instrument; NOT sensitive.")
     if verdict == "VOID_INSTRUMENT__insensitive" and direction_ok:
-        notes.append("separation is at/near chance or not significant against a permuted null.")
-    if not specific and both:
+        notes.append("separation is at/near chance or not significant against a permuted null "
+                     "(two-sided p).")
+    if specific is False and both:
         notes.append(f"fires on {fire_rate:.1%} of the NULL population (> max_fire {max_fire:.1%}) "
                      f"at threshold {ft:.4f} -- cries wolf.")
-    if derived and both:
+    if threshold_derived and both:
         side = "95th" if (expect == "higher_on_positive") else "5th"
-        notes.append(f"fire_threshold auto-derived as the {side} percentile of the null (self-referential "
-                     "5% false-positive floor); pass a deployment threshold for a load-bearing test.")
+        notes.append(f"specificity UNTESTED: fire_threshold was self-derived as the {side} percentile "
+                     "of the null itself, so its ~5% fire-rate is tautological -- it certifies nothing. "
+                     "Supply a deployment fire_threshold to test specificity and be eligible for full "
+                     "ADMISSIBLE.")
     if not admissible:
         notes.append(f"min detectable effect ~{mde:.3f} AUROC sep at this n (approx, ~80% power @ alpha={alpha}).")
 
@@ -347,6 +377,7 @@ def instrument_admissibility(*, scores: Optional[Sequence[float]] = None,
         n_positive=n_pos, n_null=n_null,
         sensitive=sensitive, specific=specific, measurable=measurable,
         admissible=admissible, admissibility_verdict=verdict, notes=notes,
+        threshold_derived=bool(threshold_derived),
         scores=[float(x) for x in scores_a.tolist()],
         labels=[int(x) for x in labels_a.tolist()],
         expect=expect,
@@ -387,8 +418,9 @@ def certificate(report: AdmissibilityReport, receipts: Any = None, out_path=None
         "specificity": {
             "fire_rate": report.fire_rate,
             "fire_threshold": report.fire_threshold,
+            "threshold_derived": report.threshold_derived,   # True -> fire_rate is tautological; specificity UNTESTED
             "max_fire": th.get("max_fire"),
-            "specific": report.specific,
+            "specific": report.specific,                     # None = untested (self-derived threshold)
         },
         "points": [{"unit_index": i, "score": float(s), "label": int(l)}
                    for i, (s, l) in enumerate(zip(report.scores, report.labels))],
@@ -406,15 +438,37 @@ def certificate(report: AdmissibilityReport, receipts: Any = None, out_path=None
     return cert
 
 
+def _stored_matches(stored, live, numeric: bool) -> bool:
+    """Compare a stored certificate value against a recomputed one. Numeric fields use
+    math.isclose(abs_tol=1e-6) with nan==nan treated as a match; everything else is exact equality
+    (None vs False is a MISMATCH -- untested is not the same claim as tested-and-failed)."""
+    if not numeric:
+        return stored == live
+    if stored is None or live is None:
+        return stored is live
+    try:
+        sf, lf = float(stored), float(live)
+    except (TypeError, ValueError):
+        return stored == live
+    if math.isnan(sf) and math.isnan(lf):
+        return True
+    return math.isclose(sf, lf, abs_tol=1e-6)
+
+
 def verify_admissibility_certificate(cert: dict | str | Path, root: Path | str = ".") -> dict:
     """Verify an admissibility certificate two ways:
 
       1. RECEIPT INTEGRITY (ladder-style) -- re-hash every path in `receipts_sha256` against the live
          tree and confirm it still matches (`ok`, `checked`, `mismatches`, `missing`).
       2. FAITHFULNESS (stronger than ladder) -- RERUN the two tests on the certificate's own stored
-         `points` at the recorded thresholds and confirm the recomputed `admissible` equals the stored
-         flag (`recomputed_admissible`, `faithful`). This recompute is only possible because the tests
-         are pure/CPU; it turns the certificate from an index into a self-checking artifact."""
+         `points` at the recorded thresholds and compare the recomputation against EVERY stored
+         headline: the verdict string, the sensitive/specific/direction_ok flags, and (isclose,
+         abs_tol=1e-6) discrim / sensitivity p / fire_rate -- not just the final `admissible` bool,
+         so a cert with a doctored metric but a consistent bool is still caught. Any mismatch lands
+         in `field_diffs` and flips `faithful` to False. When the certificate records
+         `threshold_derived: true` the recompute re-derives the threshold from the points (the
+         recorded value is descriptive, not caller-supplied), so specificity stays UNTESTED exactly
+         as certified. Possible because the tests are pure/CPU."""
     if isinstance(cert, (str, Path)):
         cert = json.loads(Path(cert).read_text(encoding="utf-8"))
     root = Path(root)
@@ -432,31 +486,51 @@ def verify_admissibility_certificate(cert: dict | str | Path, root: Path | str =
         if live != sha:
             mismatches.append({"receipt": rel, "recorded": sha, "live": live})
 
-    # 2. recompute the verdict from the stored points at the recorded thresholds
+    # 2. recompute from the stored points at the recorded thresholds; diff EVERY headline field
     pts = cert.get("points", [])
     scores = [p["score"] for p in pts]
     labels = [p["label"] for p in pts]
     sens = cert.get("sensitivity", {})
     spec = cert.get("specificity", {})
     th = cert.get("thresholds", {})
+    threshold_derived = bool(spec.get("threshold_derived"))
+    field_diffs: list = []
     if scores:
         rep = instrument_admissibility(
             scores=scores, labels=labels,
             expect=sens.get("expect", "lower_on_positive"),
-            fire_threshold=spec.get("fire_threshold"),   # the RESOLVED threshold -> deterministic match
+            # honor derived mode: re-derive from the points rather than treating the recorded
+            # descriptive threshold as caller-supplied -- otherwise the recompute would manufacture
+            # a "tested" specificity the certificate never claimed.
+            fire_threshold=None if threshold_derived else spec.get("fire_threshold"),
             auroc_floor=sens.get("auroc_floor", 0.70),
             alpha=sens.get("alpha", 0.05),
             max_fire=spec.get("max_fire", 0.15),
             k_perm=th.get("k_perm", 1000), seed=th.get("seed", 0),
         )
         recomputed_admissible = bool(rep.admissible)
+        comparisons = (
+            ("admissibility_verdict", cert.get("admissibility_verdict"), rep.admissibility_verdict, False),
+            ("admissible",            cert.get("admissible"),            rep.admissible,            False),
+            ("sensitive",             sens.get("sensitive"),             rep.sensitive,             False),
+            ("specific",              spec.get("specific"),              rep.specific,              False),
+            ("direction_ok",          sens.get("direction_ok"),          rep.direction_ok,          False),
+            ("discrim",               sens.get("discrim"),               rep.discrim,               True),
+            ("sensitivity_p",         sens.get("p_value"),               rep.sensitivity_p,         True),
+            ("fire_rate",             spec.get("fire_rate"),             rep.fire_rate,             True),
+        )
+        for name, stored, live_v, numeric in comparisons:
+            if not _stored_matches(stored, live_v, numeric):
+                field_diffs.append({"field": name, "stored": stored, "recomputed": live_v})
+        faithful = not field_diffs
     else:
         recomputed_admissible = False
-    faithful = bool(recomputed_admissible == bool(cert.get("admissible")))
+        faithful = bool(recomputed_admissible == bool(cert.get("admissible")))
 
     return {"ok": not mismatches and not missing, "checked": checked,
             "n_recorded": len(recorded), "mismatches": mismatches, "missing": missing,
-            "recomputed_admissible": recomputed_admissible, "faithful": faithful}
+            "recomputed_admissible": recomputed_admissible, "faithful": faithful,
+            "field_diffs": field_diffs}
 
 
 # --------------------------------------------------------------------------------------------
@@ -532,11 +606,13 @@ def _main() -> int:
         v = verify_admissibility_certificate(a.verify, a.root)
         print(f"receipts: checked {v['checked']}/{v['n_recorded']} -> {'OK (un-tampered)' if v['ok'] else 'DRIFT DETECTED'}")
         print(f"recompute: admissible={v['recomputed_admissible']} -> "
-              f"{'FAITHFUL (matches stored flag)' if v['faithful'] else 'UNFAITHFUL (stored flag != recompute)'}")
+              f"{'FAITHFUL (all stored fields match the recompute)' if v['faithful'] else 'UNFAITHFUL (stored fields != recompute)'}")
         for m in v["mismatches"]:
             print(f"  MISMATCH {m['receipt']}: recorded {m['recorded'][:12]} != live {m['live'][:12]}")
         for miss in v["missing"]:
             print(f"  MISSING  {miss}")
+        for fdiff in v["field_diffs"]:
+            print(f"  DIFF {fdiff['field']}: stored {fdiff['stored']!r} != recomputed {fdiff['recomputed']!r}")
         return 0 if (v["ok"] and v["faithful"]) else 1
 
     if a.certificate:
@@ -551,7 +627,9 @@ def _main() -> int:
         rep = instrument_admissibility(
             scores=scores, labels=labels,
             expect=sens.get("expect", "lower_on_positive"),
-            fire_threshold=spec.get("fire_threshold"),
+            # a derived threshold is descriptive, not caller-supplied: re-derive so specificity
+            # stays UNTESTED rather than being laundered into a "tested" claim by the re-derive
+            fire_threshold=None if spec.get("threshold_derived") else spec.get("fire_threshold"),
             auroc_floor=sens.get("auroc_floor", 0.70), alpha=sens.get("alpha", 0.05),
             max_fire=spec.get("max_fire", 0.15), k_perm=th.get("k_perm", 1000), seed=th.get("seed", 0),
         )
