@@ -187,12 +187,27 @@ class ConscienceMount:
         return self
 
     def calibrate_threshold(self, name: str, honest_states: np.ndarray, claims: Sequence[int], *,
-                            target_fpr: float = 0.01) -> "ConscienceMount":
+                            target_fpr: float = 0.01,
+                            conformal: "Optional[object]" = None) -> "ConscienceMount":
         """Set an axis's `tau` to hold the false-alarm rate at/below `target_fpr` on a LABELED HONEST set
         (states the agent answered truthfully, with the claims it made). Picks the smallest margin
         threshold such that at most `target_fpr` of honest items would be (wrongly) flagged. Use a held-out
-        honest set, not your test items, to get an honest operating point. Call after `calibrate`."""
+        honest set, not your test items, to get an honest operating point. Call after `calibrate`.
+
+        Transfer caveat: the rank rule (like any threshold) transfers only if `honest_states` are
+        EXCHANGEABLE with the states seen at deployment — a threshold calibrated on scores the probe was
+        FIT on is not (in-sample fit optimism; papers/read-neq-write retro-cert arc). For a finite-sample
+        transfer GUARANTEE on a fit-DISJOINT split, build a styxx.calibration.conformal_threshold (or
+        calibrate_transfer_safe) on the honest-margin scores and pass it as `conformal=`; its `tau` is then
+        adopted verbatim (clamped to >= 0 to match the margin convention). Default `conformal=None` keeps
+        the historical rank-rule behavior unchanged."""
         ax = self.axes[name]
+        if conformal is not None:
+            # adopt a transfer-safe operating point from styxx.calibration.ConformalThreshold. tau is in
+            # margin units (higher-fires: a catch fires when margin > tau); clamp to the >=0 convention
+            # the rank rule below also enforces.
+            ax.tau = float(max(0.0, float(conformal.tau)))
+            return self
         z = ax.z(honest_states).reshape(-1)
         cl = np.asarray(claims)
         # margin into the WRONG side per honest item (a catch fires when margin > tau)
@@ -306,7 +321,7 @@ class ConscienceMount:
     # -- certificate ---------------------------------------------------------------------------
     def certify_admissibility(self, positive_states: np.ndarray, null_states: np.ndarray, *,
                               axis: Optional[str] = None, fire_threshold: Optional[float] = None,
-                              claim: int = +1, **kw):
+                              claim: int = +1, conformal: "Optional[object]" = None, **kw):
         """Two-sided admissibility certification of THIS mount's own probe, on its own deployed
         score (styxx.admissibility.instrument_admissibility) — is the mounted conscience SENSITIVE
         (fires on episodes where the target construct is present) AND SPECIFIC (quiet on episodes
@@ -324,6 +339,14 @@ class ConscienceMount:
             margin > tau, identically in `read()` and in this test). If None, the admissibility
             primitive derives a descriptive threshold and HONESTLY caps the verdict at
             ADMISSIBLE_SENSITIVITY_ONLY (specificity untested) — never bare ADMISSIBLE.
+            TRANSFER CAVEAT: certifying at a threshold calibrated on the probe's OWN fit scores can
+            pass a specificity gate that does not hold on held-out negatives (in-sample fit optimism;
+            papers/read-neq-write retro-cert arc). Use a fit-DISJOINT calibration split.
+        conformal: an optional styxx.calibration.ConformalThreshold (the divergence margin is a
+            higher-fires detector, so build it with direction='higher_fires' on the axis's honest-
+            margin scores). When supplied, its `tau` is used as `fire_threshold` — a transfer-safe
+            operating point in place of a hand-picked one. Pass either `conformal` or `fire_threshold`,
+            not both. Default None preserves the existing behavior exactly.
         claim: the asserted polarity under which the conscience is certified (+1 = the agent
             asserts the `high_means` pole, the flagship lie-catch regime; -1 = asserts the
             negative pole, e.g. "safe" on a danger axis).
@@ -345,6 +368,10 @@ class ConscienceMount:
         from styxx.admissibility import instrument_admissibility  # lazy, like attach_erasure_resistance
         if claim not in (1, -1):
             raise ValueError(f"claim must be +1 or -1; got {claim!r}")
+        if conformal is not None:
+            if fire_threshold is not None:
+                raise ValueError("pass either `fire_threshold` or `conformal`, not both")
+            fire_threshold = float(conformal.tau)  # transfer-safe operating point from styxx.calibration
         if axis is None:
             if len(self.axes) != 1:
                 raise ValueError(f"mount has {len(self.axes)} axes; pass axis=<name> "

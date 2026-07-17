@@ -360,6 +360,9 @@ from .admissibility import (  # is an instrument valid in BOTH directions (sensi
     instrument_admissibility, AdmissibilityReport,
     slope_permutation_null, verify_admissibility_certificate,
 )
+from .calibration import (  # transfer-safe threshold calibration (conformal / beta-tolerance) with a fit-disjointness guard
+    conformal_threshold, ConformalThreshold, calibrate_transfer_safe,
+)
 from .confound_audit import (  # is a SCORE riding a confound? + the ground-truth substrate gate
     audit_confound, ConfoundAuditReport, build_confound_grid,
     validate_against_ground_truth, cem_length_match,
@@ -785,6 +788,7 @@ __all__ = [
     "validate_probe", "ProbeValidityReport",
     "instrument_admissibility", "AdmissibilityReport",
     "slope_permutation_null", "verify_admissibility_certificate",
+    "conformal_threshold", "ConformalThreshold", "calibrate_transfer_safe",
     "audit_confound", "ConfoundAuditReport", "build_confound_grid",
     "validate_against_ground_truth", "cem_length_match",
     "audit_hf_model", "available_constructs",
