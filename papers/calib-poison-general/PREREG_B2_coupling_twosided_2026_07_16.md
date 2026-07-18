@@ -753,3 +753,25 @@ claim that "the run cannot answer its own question" is WITHDRAWN.
   resolve how many sub-tasks the clean base clears, with the bar rule frozen BEFORE the count is
   read; and a one-seed `--smoke` (about 0.5-1.0 GPU-hour) to measure gen-channel per-item discordance,
   dispersion and guard-fire rates. Total under 1.5 GPU-hours; the scored run is unchanged.
+
+### R5.8 -- PRE-COMMITMENT BEFORE `--calibrate` (written and committed BEFORE the run)
+
+Panel #8 requires `--calibrate` before any freeze, and requires the bar rule to be frozen BEFORE the
+survivor count is read -- otherwise the threshold could be chosen knowing the item count it will be
+applied at, which is panel #6's threshold-provenance defect in a new costume.
+
+**Frozen here, before `--calibrate` has been executed and before any survivor count is known:**
+
+- `MIN_EFFECT_SLOPE` stays at **0.0152**. Panel #8 withdrew the proposed halving; the bar is NOT a
+  free parameter of this run and will not be revisited on the basis of the calibration outcome.
+- `DISJOINT_FLOOR_CLEAN` stays at **0.90** and `MIN_DISJOINT` stays at **3**. The realized selection
+  is whatever the clean base clears at that floor -- it is an OUTCOME of calibration, not a choice.
+- The reachable signal mapping is fixed as stated in R5.7: a seed paying the price of interest by
+  rank 8 sits at `0.0909 / 4 = 0.0227`, i.e. 1.50x the bar. This does not depend on the item count.
+- Whatever the survivor count turns out to be, the response is to REPORT the resulting operating
+  characteristic, not to adjust a threshold to meet it. If the realized power is inadequate the
+  admissible remedies are more ITEMS or a tighter STATISTIC (item-level pairing), never a lower bar.
+- `--calibrate` is base-only and treatment-blind (`run_calibrate`, `coupling_confirm_v4.py`): it
+  loads the base model, scores the clean generation battery, selects survivors above the floor, runs
+  the clean format-invariance check, and writes the frozen selection receipt. It trains nothing,
+  touches no arm, and can emit no verdict. An `ok=False` receipt is itself evidence and is kept.
