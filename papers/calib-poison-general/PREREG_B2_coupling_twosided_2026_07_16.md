@@ -13,8 +13,12 @@ the others stalled; the denominator is now the dose-admissible seed count, with 
 underpowered guard, and the trained-checkpoint format-invariance demotion is now a frozen numeric
 rule. THIRD REDESIGN 2026-07-18: pre-freeze panel #7 returned NO_GO_redesign on the proposed
 ESTIMATOR-admissibility gate (it emitted a constant, so it read nothing about the data); the
-replacement is implemented and the pre-run power arithmetic is stated -- see PANEL #7 DELTAS at the
-end of this document, which carries an OPERATOR DECISION REQUIRED BEFORE FREEZE.**
+replacement is implemented and green. Pre-freeze panel #8 then returned NO_GO_redesign on the v6
+POWER delta and WITHDREW it entirely: the power headline that motivated it had mapped the SIGNAL
+wrong, the selection-widening half was a no-op, and the bar-halving half would have fired a TERMINAL
+estimator VOID. Corrected position: with the bar UNCHANGED the design sits near or above the 0.80
+convention at a false-positive rate under 0.01. See PANEL #7 DELTAS and R5.7 at the end of this
+document. Eight pre-freeze kills, zero GPU hours spent.**
 
 ## The question (unchanged through four attempts)
 
@@ -679,3 +683,73 @@ threshold honest rather than a loosened bar.
 **This delta is NOT frozen and MUST NOT be run.** Changing a decision threshold is precisely the
 class of change that has been killed seven times in this arc when it went unpaneled. It requires its
 own pre-freeze adversarial panel before any freeze call.
+
+### R5.7 -- PANEL #8 WITHDRAWS R5.6 ENTIRELY, AND CORRECTS THE POWER HEADLINE
+
+Pre-freeze panel #8 (`_coupling_v6_panel8_2026_07_18.md`, receipts `_coupling_v6_panel8_findings.json`,
+run `wf_e3c44c04-55b`, 16 agents, 0 deaths, 36 findings, 11 fatals filed, 7 surviving independent
+refutation) returned NO_GO_redesign on R5.6. **Both proposed changes are dead, and the power headline
+that motivated them was wrong.** This is the eighth pre-freeze kill and the second in one day to kill
+a THRESHOLD move -- the class of change that would have been invisible after the run.
+
+**THE SIGNAL WAS MAPPED WRONG, and the structural zero cuts the OTHER way.** R5.4/R5.5 modelled the
+structural zero in the NOISE (slope SE = paired SD / 4) but not in the SIGNAL: the power model set the
+true slope equal to the bar, on the prereg's own conversion 0.0909 / (8 - 2) = 0.0152. That conversion
+assumes the price accumulates linearly from rank 2 -- **a world the structural zero makes UNREACHABLE.**
+The arms are bit-identical through step 24, so the dose has had zero training steps to act at the
+rank-4 checkpoint and `d(rank 4) = 0` necessarily. With fitted ranks {4, 6, 8} and rank 6 at zero
+leverage, a seed that pays the full price of interest by rank 8 therefore has a FITTED slope of
+`0.0909 / 4 = 0.0227 = 1.50x the bar` -- under a linear ramp from rank 4 and under a level drop at
+rank 8 alike. Verified both ways.
+
+**Consequently the symmetry ceiling does not bind.** It remains a true statement -- a rule firing when
+a majority of seeds exceed a bar has power near 0.5 when the true effect EQUALS the bar -- but the
+true effect is 1.5x the bar here, so the ceiling is not the operative constraint. Corrected power at
+the UNCHANGED bar, at the measured noise:
+
+| items | slope SE | bar | sensitivity at the price | false-positive |
+|---|---|---|---|---|
+| 48  | 0.0183 | 0.0152 | 0.727 | 0.034 |
+| 112 | 0.0125 | 0.0152 | 0.865 | 0.009 |
+| 224 | 0.0095 | 0.0152 | 0.929 | 0.001 |
+
+**The design is not badly underpowered.** At the realized item count it sits near or above the 0.80
+convention with a false-positive rate under 0.01, and it does so with the bar untouched. The earlier
+claim that "the run cannot answer its own question" is WITHDRAWN.
+
+**Why each half of R5.6 is dead:**
+1. **Widening the selection is a NO-OP.** `select_disjoint` (`capability_battery_gen.py:369-374`)
+   already returns EVERY sub-task clearing `DISJOINT_FLOOR_CLEAN`; `MIN_DISJOINT` only sets an `ok`
+   flag and never truncates. The harness has always selected all qualifying sub-tasks. The realized
+   item count is therefore whatever the clean base clears at 0.90 -- unknown until `--calibrate` runs,
+   NOT the 48 assumed throughout R5.4-R5.6.
+2. **Halving the bar is unnecessary AND dangerous.** Unnecessary: at the corrected signal mapping the
+   unchanged bar gives 0.865/0.009, which beats R5.6's own advertised point on BOTH legs. Dangerous:
+   `INJECTION_GRID` is denominated in multiples of `MIN_EFFECT_SLOPE` while the estimator pool's
+   dispersion is ABSOLUTE, so halving the bar doubles pool noise in grid units and halves the grid's
+   absolute reach -- driving `ESTIMATOR_MDE80` off the grid and firing
+   `VOID_COUPLING__estimator_insensitive`, which R5.3 makes TERMINAL. The delta would likely have
+   ended attempt 4 at the gate built to protect it.
+
+**Fixes now owed before any freeze (from panel #8, not yet implemented):**
+- Correct the MIN_EFFECT_SLOPE derivation prose: the bar's VALUE may stand, but the prereg must state
+  the reachable signal mapping (a paying seed sits at 1.5x the bar, not AT it) rather than the
+  unreachable rank-2 ramp.
+- Denominate `INJECTION_GRID` in ABSOLUTE slope units (or in multiples of the price-of-interest
+  slope) so the estimator gate stops being coupled to the decision bar. This is a latent fragility
+  even with the bar unchanged.
+- Drop `dose_slope` from the COUPLED verdict string and report `d8` beside it: the dose axis
+  contributes exactly one free point, so calling the statistic a dose response overstates it. This
+  SUBTRACTS a claim, which is the only post-hoc direction this program licenses.
+- Investigate item-level pairing (a per-item correctness bitvector plus a McNemar discordance
+  statistic). `measure_gen_subtask` discards the per-item vector, so `paired_delta` currently
+  differences two effectively independent binomials even though both arms answer the SAME items.
+  Panel #8 prices this at 1.7x tighter at 6% discordance and 2.4x at 3% -- the latter beats the entire
+  224-item expansion, at zero GPU, from a schema change.
+- Add `--dry` fixtures that can DETECT a threshold change. The suite currently returns 52/52 with
+  MIN_EFFECT_SLOPE halved, zero checks changing state, so "--dry 52/52" is not evidence about any
+  constant in this review.
+- Required measurements before freeze, both outcome-blind: `--calibrate` (about 0.1 GPU-hour) to
+  resolve how many sub-tasks the clean base clears, with the bar rule frozen BEFORE the count is
+  read; and a one-seed `--smoke` (about 0.5-1.0 GPU-hour) to measure gen-channel per-item discordance,
+  dispersion and guard-fire rates. Total under 1.5 GPU-hours; the scored run is unchanged.
