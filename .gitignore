@@ -138,3 +138,5 @@ benchmarks/data/deception/_negaug_acts_*.npz
 benchmarks/data/deception/_settling_*.npz
 papers/read-neq-write/_sweep_run.log
 papers/read-neq-write/*_SMOKE_INVALID*
+papers/**/*_DRY_INVALID*
+papers/**/*_selftest_INVALID*
