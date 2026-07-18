@@ -1,0 +1,180 @@
+{
+ "purpose": "pre-run power arithmetic for the coupling v4 dose-response estimator (panel #7 R5.4)",
+ "gpu_hours": 0,
+ "constants": {
+  "price_of_interest": 0.0909,
+  "min_effect_slope": 0.0152,
+  "rank_span": [
+   2,
+   8
+  ],
+  "fitted_ranks": [
+   4.0,
+   6.0,
+   8.0
+  ],
+  "n_seeds": 5,
+  "se_agg_prereg": 0.0722,
+  "n_items_min_selection": 48
+ },
+ "symmetry_ceiling": [
+  {
+   "slope_se": 0.051053,
+   "se_over_bar": 3.359,
+   "coupled": 0.165,
+   "bounded_null": 0.0768,
+   "partial": 0.7582
+  },
+  {
+   "slope_se": 0.025527,
+   "se_over_bar": 1.679,
+   "coupled": 0.3358,
+   "bounded_null": 0.2887,
+   "partial": 0.3755
+  },
+  {
+   "slope_se": 0.012763,
+   "se_over_bar": 0.84,
+   "coupled": 0.4835,
+   "bounded_null": 0.4868,
+   "partial": 0.0297
+  },
+  {
+   "slope_se": 0.006382,
+   "se_over_bar": 0.42,
+   "coupled": 0.4983,
+   "bounded_null": 0.5017,
+   "partial": 0.0
+  },
+  {
+   "slope_se": 0.002553,
+   "se_over_bar": 0.168,
+   "coupled": 0.5018,
+   "bounded_null": 0.4982,
+   "partial": 0.0
+  },
+  {
+   "slope_se": 0.000511,
+   "se_over_bar": 0.034,
+   "coupled": 0.4999,
+   "bounded_null": 0.5001,
+   "partial": 0.0
+  }
+ ],
+ "seed_sweep": [
+  {
+   "n_seeds": 3,
+   "coupled": 0.4135,
+   "bounded_null": 0.3283,
+   "partial": 0.2582
+  },
+  {
+   "n_seeds": 4,
+   "coupled": 0.2549,
+   "bounded_null": 0.1598,
+   "partial": 0.5852
+  },
+  {
+   "n_seeds": 5,
+   "coupled": 0.3333,
+   "bounded_null": 0.2907,
+   "partial": 0.376
+  },
+  {
+   "n_seeds": 7,
+   "coupled": 0.2692,
+   "bounded_null": 0.2589,
+   "partial": 0.4719
+  },
+  {
+   "n_seeds": 9,
+   "coupled": 0.2141,
+   "bounded_null": 0.2332,
+   "partial": 0.5527
+  },
+  {
+   "n_seeds": 11,
+   "coupled": 0.1718,
+   "bounded_null": 0.2105,
+   "partial": 0.6177
+  }
+ ],
+ "structural_reduction": {
+  "slope_equals": "d8 / 4",
+  "rank4_structural_zero": true,
+  "rank6_leverage": 0.0,
+  "bar_in_items": 3,
+  "n_items": 48,
+  "aggregate_lattice": 0.020833,
+  "note": "the rank-4 paired delta is exactly 0 because both arms train bit-identically through step 24; with fitted ranks 4,6,8 the OLS slope reduces to d8/4 and the whole per-seed verdict rests on ONE checkpoint comparison"
+ },
+ "decision_bar_pareto": [
+  {
+   "configuration": "as designed (48 items, prereg SE)",
+   "n_items": 48,
+   "se_agg": 0.0722,
+   "slope_se": 0.025527,
+   "best_bar": 0.01185,
+   "sensitivity_at_price": 0.3487,
+   "false_positive": 0.0665,
+   "clears_both_legs": false
+  },
+  {
+   "configuration": "as designed, SE at the 0.90 selection floor",
+   "n_items": 48,
+   "se_agg": 0.0433,
+   "slope_se": 0.015309,
+   "best_bar": 0.00883,
+   "sensitivity_at_price": 0.626,
+   "false_positive": 0.0594,
+   "clears_both_legs": false
+  },
+  {
+   "configuration": "all 7 disjoint sub-tasks (112 items)",
+   "n_items": 112,
+   "se_agg": 0.02835,
+   "slope_se": 0.010022,
+   "best_bar": 0.00618,
+   "sensitivity_at_price": 0.8865,
+   "false_positive": 0.0564,
+   "clears_both_legs": true
+  },
+  {
+   "configuration": "4x battery (192 items)",
+   "n_items": 192,
+   "se_agg": 0.02165,
+   "slope_se": 0.007655,
+   "best_bar": 0.00504,
+   "sensitivity_at_price": 0.9747,
+   "false_positive": 0.0536,
+   "clears_both_legs": true
+  },
+  {
+   "configuration": "9x battery (432 items)",
+   "n_items": 432,
+   "se_agg": 0.01443,
+   "slope_se": 0.005103,
+   "best_bar": 0.0058,
+   "sensitivity_at_price": 0.9997,
+   "false_positive": 0.0124,
+   "clears_both_legs": true
+  },
+  {
+   "configuration": "16x battery (768 items)",
+   "n_items": 768,
+   "se_agg": 0.01083,
+   "slope_se": 0.003827,
+   "best_bar": 0.00164,
+   "sensitivity_at_price": 1.0,
+   "false_positive": 0.0685,
+   "clears_both_legs": true
+  }
+ ],
+ "mde80": {
+  "slope": 0.03315,
+  "multiple_of_bar": 2.18,
+  "span_scale_bound": 0.1989,
+  "price_of_interest": 0.0909
+ },
+ "conclusion": "The design cannot answer its own question at conventional power. Power at the price of interest is bounded by ~0.5 by symmetry alone (the bar was placed exactly AT the price), lands near 0.24 at the prereg's own noise figure, and FALLS as seeds are added. The most likely single outcome of the scored run is PARTIAL. The only lever that raises power is a smaller per-checkpoint aggregate SE, i.e. more items per sub-task -- more GPU, not more seeds. Widening RANK_SPAN is not a legitimate lever: ranks 10-24 are the read-recovery region. This is knowable pre-freeze at zero GPU cost."
+}
