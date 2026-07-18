@@ -102,3 +102,44 @@ Attempt 4 is BLOCKED at its own clean admissibility gate. The standing position 
 unchanged: `PARTIAL__coupling_seed_split`. Static, adaptive and 3B erasure SURVIVES are untouched --
 none of them gate on this battery. Eight pre-freeze kills and one blocked calibration, still with no
 scored GPU run spent on attempt 4.
+
+## ADDENDUM (same day) -- the ANTONYM shortfall is STRUCTURAL, not a missing-variant defect
+
+An earlier note in this arc characterised ANTONYM_GEN's 0.8125 as partly a fixable authoring defect:
+the model answered "Cold" to the antonym of 'warm' against a gold of 'cool' and scored 0, so the
+obvious repair was to add 'cold' as an accepted variant. **That repair is impossible, and the reason
+is worth more than the repair.**
+
+`_STOPLIST` (13 words) bans any gold OR variant that is a high-frequency function-ish word, because
+such a word can be hit incidentally inside an 8-token decode and manufacture a FALSE CEILING -- the
+same false-insensitivity mechanism that killed attempt 3. Checked directly:
+
+```
+cold      in stoplist: True        kind      in stoplist: True
+```
+
+So for at least two items the most natural correct answer is UNACCEPTABLE BY CONSTRUCTION:
+- `warm -> cool`: a model answering "cold" is right and must still score 0.
+- `cruel -> gentle`: a model answering "kind" is right -- arguably more natural than the gold -- and
+  must still score 0.
+
+**The generalizable point: the stoplist guard and the antonym task are in direct conflict, because
+the natural antonyms of common adjectives ARE common adjectives.** The bank's own header comment
+records that eight golds were already reworded away from the stoplist (cold, down, sad, dry, short,
+late, full, old) -- that rewording moved the GOLD out of the stoplist but could not move the model's
+preferred ANSWER out of it. ANTONYM_GEN therefore has a score ceiling below the model's true ability
+that no variant list can lift.
+
+**Consequences.**
+1. ANTONYM_GEN is NOT a candidate for the gating pool. It is retained only as the selftest fixture
+   for the variant path (index 6, light -> dark/heavy), and is expected to sit under the floor.
+2. Families whose golds are LOW-FREQUENCY and specific -- capitals, chemical elements, ordinals,
+   inflected verb and noun forms, calendar successors -- are structurally immune to this conflict.
+   That is an additional, independent reason the re-authored families are better chosen than the
+   ones they replace, beyond the character-level-orthography result.
+3. Any new bank's variants must be stoplist-checked. The selftest's
+   `no_answer_in_function_word_stoplist` assertion is the backstop and will fail the build rather
+   than ship a banned variant.
+
+This SUBTRACTS a claim (the shortfall is not repairable), which is the only direction post-hoc
+analysis is licensed in this program.
