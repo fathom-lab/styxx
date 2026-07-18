@@ -1,0 +1,89 @@
+{
+  "selected_disjoint_gen": [
+    "PLURAL_GEN",
+    "SEQ_GEN"
+  ],
+  "ok": false,
+  "selection_ok": false,
+  "format_invariance_ok": true,
+  "floor": 0.9,
+  "min_disjoint": 3,
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "arms_key": "accumulate:acc=True:lam=1.0|fixed:acc=False:lam=1.0|posctl:acc=True:lam=0.0",
+  "base_scores_gen": {
+    "ORTH_FIRST_GEN": 0.875,
+    "ORTH_LAST_GEN": 0.25,
+    "CONTAINS_GEN": 0.5625,
+    "ANTONYM_GEN": 0.8125,
+    "ALPHA_GEN": 0.1875,
+    "PLURAL_GEN": 1.0,
+    "SEQ_GEN": 1.0,
+    "MUL_GEN": 1.0
+  },
+  "base_scores_tf": {
+    "MUL": 1.0,
+    "INEQ": 0.875,
+    "ORTH_FIRST": 1.0,
+    "ORTH_LAST": 0.75,
+    "ORTH_CONTAINS": 0.75,
+    "VOWEL": 1.0,
+    "CASE": 0.875,
+    "ALPHA_AFTER": 0.875,
+    "ANTONYM": 1.0,
+    "SEQ": 0.5
+  },
+  "clean_gen_guard_fires": {
+    "repetition": 0,
+    "echo": 2
+  },
+  "clean_private13": 0.9382,
+  "clean_knowledge": 0.8182,
+  "format_invariance_all_subtasks": {
+    "selected": [
+      "ALPHA_GEN",
+      "ANTONYM_GEN",
+      "CONTAINS_GEN",
+      "ORTH_FIRST_GEN",
+      "ORTH_LAST_GEN",
+      "PLURAL_GEN",
+      "SEQ_GEN"
+    ],
+    "aggregate_plain": 0.6696,
+    "aggregate_verbose": 0.6696,
+    "abs_delta": 0.0,
+    "per_subtask_plain": {
+      "ORTH_FIRST_GEN": 0.875,
+      "ORTH_LAST_GEN": 0.25,
+      "CONTAINS_GEN": 0.5625,
+      "ANTONYM_GEN": 0.8125,
+      "ALPHA_GEN": 0.1875,
+      "PLURAL_GEN": 1.0,
+      "SEQ_GEN": 1.0,
+      "MUL_GEN": 1.0
+    },
+    "per_subtask_verbose": {
+      "ORTH_FIRST_GEN": 0.8125,
+      "ORTH_LAST_GEN": 0.4375,
+      "CONTAINS_GEN": 0.375,
+      "ANTONYM_GEN": 0.75,
+      "ALPHA_GEN": 0.3125,
+      "PLURAL_GEN": 1.0,
+      "SEQ_GEN": 1.0,
+      "MUL_GEN": 1.0
+    },
+    "repetition_guard_fires_plain": 0,
+    "repetition_guard_fires_verbose": 0
+  },
+  "format_invariance_selected": {
+    "selected": [
+      "PLURAL_GEN",
+      "SEQ_GEN"
+    ],
+    "aggregate_plain": 1.0,
+    "aggregate_verbose": 1.0,
+    "abs_delta": 0.0
+  },
+  "format_invariance_max": 0.0722,
+  "format_invariance_max_fraction_of_price": 0.7943,
+  "aggregate_selected": 1.0
+}
