@@ -599,3 +599,67 @@ the headline. The alternative is a pre-freeze design change (widen the selection
 decision bar below the price of interest rather than at it), which is outcome-blind and cheap but
 changes what COUPLED asserts and therefore requires its own pre-freeze panel. This trade must be
 made before the GPU starts, not after.
+
+### R5.5 -- the noise is now MEASURED, not bounded (`estimator_noise_anchor.py`, zero GPU)
+
+R5.4's arithmetic rested on the prereg's own worst-case binomial bound sqrt(0.25/48) = 0.0722, and on
+an item-level model for what a bigger battery would buy. Both are now anchored in real data: the
+cycle-43 dose run (`coupling_confirm_result.json`) has the IDENTICAL experiment shape -- 5 seeds x
+{accumulate, fixed}, 13 checkpoints, accumulate ranks 2,4,...,24, fixed pinned at rank 2. Channel
+caveat stated plainly: that run scored the T/F battery, not the generation battery, so this anchors
+the NOISE SCALE and the structural facts, not the gen channel itself.
+
+- **The structural zero is CONFIRMED, 5 of 5 seeds.** The paired delta at step 25 (rank 4) is exactly
+  0.0000 in every seed. E3 is not a theoretical worry: the estimator really does reduce to `d8/4`,
+  one load-bearing checkpoint per seed.
+- **Realized within-seed paired-delta noise SD 0.1014 -> per-seed slope SE 0.0253 = 1.67x the bar.**
+  The prereg's own worst-case figure of 0.036 was conservative by about 1.4x. **The power problem
+  survives the correction:** the noise still exceeds the effect, and the symmetry ceiling caps power
+  near 0.5 regardless of noise for as long as the bar sits AT the price of interest.
+- **The cross-seed pool overstates the real estimator noise by 3.8x** (it is a between-seed contrast
+  standing in for a within-seed one; the exact zeros prove the arms share history). Running the
+  shipped gate's own draw rule on the realized pool does not reach MDE80 even at 8x the bar -- but
+  that is the CONSERVATIVE reading and must NOT be quoted as the expected outcome. Panel #7's
+  residual R-2 predicted exactly this and it is now measured.
+- **The noise is sampling-dominated: no irreducible trajectory floor is detectable.** The measured SD
+  inverts to a per-item accuracy of 0.856 under a pure item-sampling model. This SUSTAINS the
+  free-precision remedy -- more items really does shrink the noise as 1/sqrt(n), which was an
+  assumption in R5.4 and is now evidence.
+
+### R5.6 -- PROPOSED v6 DESIGN DELTA (NOT FROZEN, requires its own pre-freeze panel)
+
+The two changes below are jointly necessary and individually insufficient. Both are outcome-blind and
+derivable today; neither was chosen by looking at a result.
+
+1. **Select EVERY qualifying disjoint sub-task, not the minimum 3.** The pool holds 7 (112 items);
+   `MIN_DISJOINT = 3` (48 items) is a floor being used as a target. Cost is decode time only.
+   Projected per-seed slope SE: 0.0153 (1.01x bar) at 48 items -> 0.0100 (0.66x bar) at 112.
+2. **Place the decision bar at HALF the price-of-interest slope** (0.0076 rather than 0.0152). The
+   current design sets the decision threshold EQUAL to the effect it wants to detect, which is what
+   makes a paying seed a coin flip. The threshold's job is to control false firing; the price of
+   interest's job is to be the effect the design is POWERED against. Conflating them is the defect.
+
+Realized operating points, per-seed slope SE from R5.5, frozen COUPLED rule, 5 seeds:
+
+| items | bar | sensitivity at the price | false-positive | sensitivity at 2x price |
+|---|---|---|---|---|
+| 112 | 0.0152 (as designed) | 0.498 | 0.002 | 0.998 |
+| 112 | 0.0114 (3/4 price)   | 0.751 | 0.013 | 1.000 |
+| 112 | **0.0076 (1/2 price)** | **0.880** | **0.041** | **1.000** |
+| 112 | 0.0061 (2/5 price)   | 0.886 | 0.056 | 0.999 |
+| 48  | 0.0076 (1/2 price)   | 0.622 | 0.064 | 0.966 |
+| 48  | 0.0152 (as designed) | 0.464 | 0.021 | 0.961 |
+
+The chosen point sits on a PLATEAU (0.845 to 0.886 across bar fractions 0.6 down to 0.33), so it is
+not a knife-edge value tuned to a target -- which is the provenance property that matters. At 48
+items NO bar placement reaches 0.80, so widening the selection is not optional.
+
+**What this changes about the CLAIM, stated before the run:** COUPLED would assert a dose-graded
+price at or above HALF the minimum price of interest, not at or above the whole of it. That is a
+weaker per-seed assertion bought in exchange for actually being able to detect the price of interest
+(0.498 -> 0.880). The size of any detected price is carried by `ESTIMATOR_MDE80` from the shipped
+estimator gate, which is what makes the weaker threshold honest rather than a loosened bar.
+
+**This delta is NOT frozen and MUST NOT be run.** Changing a decision threshold is precisely the
+class of change that has been killed seven times in this arc when it went unpaneled. It requires its
+own pre-freeze adversarial panel before any freeze call.

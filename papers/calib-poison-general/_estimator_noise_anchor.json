@@ -1,0 +1,193 @@
+{
+ "source": "coupling_confirm_result.json (cycle 43 dose run, VOIDed)",
+ "channel_caveat": "scored on the T/F battery; v4 scores the generation battery. Same experiment shape and selection size; anchors the NOISE SCALE only.",
+ "selected": [
+  "ANTONYM",
+  "ORTH_FIRST",
+  "VOWEL"
+ ],
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "gpu_hours": 0,
+ "structural_zero_test": {
+  "per_seed": [
+   {
+    "seed": 0,
+    "d_step25": 0.0,
+    "d_step50": 0.25,
+    "d_step75": -0.0833
+   },
+   {
+    "seed": 1,
+    "d_step25": 0.0,
+    "d_step50": -0.0416,
+    "d_step75": 0.0417
+   },
+   {
+    "seed": 2,
+    "d_step25": 0.0,
+    "d_step50": -0.0416,
+    "d_step75": -0.125
+   },
+   {
+    "seed": 3,
+    "d_step25": 0.0,
+    "d_step50": 0.0,
+    "d_step75": 0.0417
+   },
+   {
+    "seed": 4,
+    "d_step25": 0.0,
+    "d_step50": -0.0417,
+    "d_step75": 0.0
+   }
+  ],
+  "n_exactly_zero": 5,
+  "n_seeds": 5,
+  "confirmed": true
+ },
+ "dispersion": {
+  "cross_seed_sd_at_matched_step": 0.09785,
+  "within_seed_sd_across_steps": 0.10764,
+  "prereg_worst_case_bound": 0.0722,
+  "realized_over_bound": 1.355
+ },
+ "realized_pool": {
+  "n_units": 10,
+  "n_dropped": 0,
+  "slopes": [
+   -0.104175,
+   -0.083325,
+   -0.0625,
+   -0.041675,
+   -0.010425,
+   0.052075,
+   0.0729,
+   0.09375,
+   0.1354,
+   0.177075
+  ],
+  "sd": 0.09707,
+  "sd_over_bar": 6.386,
+  "zero_slope_atom": 0.0,
+  "n_distinct": 10
+ },
+ "realized_mde80": {
+  "grid": [
+   0.5,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   8.0
+  ],
+  "recovery_curve": [
+   {
+    "k": 0.5,
+    "recovery": 0.0462
+   },
+   {
+    "k": 1.0,
+    "recovery": 0.0485
+   },
+   {
+    "k": 1.5,
+    "recovery": 0.0483
+   },
+   {
+    "k": 2.0,
+    "recovery": 0.066
+   },
+   {
+    "k": 2.5,
+    "recovery": 0.1037
+   },
+   {
+    "k": 3.0,
+    "recovery": 0.109
+   },
+   {
+    "k": 4.0,
+    "recovery": 0.2045
+   },
+   {
+    "k": 5.0,
+    "recovery": 0.2895
+   },
+   {
+    "k": 6.0,
+    "recovery": 0.5565
+   },
+   {
+    "k": 8.0,
+    "recovery": 0.7562
+   }
+  ],
+  "mde80_multiple_of_bar": null,
+  "span_scale_bound": null,
+  "price_of_interest": 0.0909,
+  "would_void_insensitive": true
+ },
+ "within_seed_paired_noise": {
+  "per_rank_cross_seed_sd": {
+   "4": 0.0,
+   "6": 0.12705,
+   "8": 0.0757
+  },
+  "paired_delta_sd_ranks_6_8": 0.10138,
+  "implied_slope_se": 0.02534,
+  "implied_slope_se_over_bar": 1.667,
+  "pool_slope_sd": 0.09707,
+  "pool_overstatement_factor": 3.83,
+  "note": "rank 4 excluded: it is the structural zero. The pool's MDE80 is an upper bound; this within-seed figure is the honest estimator noise, and the price-of-interest slope bar of 0.0152 sits BELOW it either way."
+ },
+ "noise_decomposition": {
+  "n_items_assumed": 24,
+  "measured_paired_sd": 0.10138,
+  "worst_case_sampling_component": 0.14434,
+  "irreducible_trajectory_component": 0.0,
+  "slope_se_floor_at_infinite_items": 0.0,
+  "slope_se_floor_over_bar": 0.0,
+  "note": "if the trajectory component is nonzero, 'add more battery items' cannot reach the bar; this SUBTRACTS the free-precision remedy proposed from the binomial model alone"
+ },
+ "projection": {
+  "implied_per_item_accuracy": 0.8559,
+  "rows": [
+   {
+    "configuration": "v4 gen battery, MIN_DISJOINT=3",
+    "n_items": 48,
+    "assumed_p": 0.9,
+    "paired_delta_sd": 0.06124,
+    "slope_se": 0.01531,
+    "slope_se_over_bar": 1.007
+   },
+   {
+    "configuration": "v4 gen battery, all 7 disjoint",
+    "n_items": 112,
+    "assumed_p": 0.9,
+    "paired_delta_sd": 0.04009,
+    "slope_se": 0.01002,
+    "slope_se_over_bar": 0.659
+   },
+   {
+    "configuration": "as measured, T/F channel",
+    "n_items": 24,
+    "assumed_p": 0.856,
+    "paired_delta_sd": 0.10138,
+    "slope_se": 0.02534,
+    "slope_se_over_bar": 1.667
+   }
+  ]
+ },
+ "conclusion": "Three things, and they do not all point the same way.\n  (a) CONFIRMED on real data: the rank-4 paired delta is exactly zero in 5 of 5 seeds, so the\n      estimator really does reduce to d8/4 -- one load-bearing checkpoint per seed.\n  (b) The realized within-seed slope SE is 0.0253 = 1.67x the decision bar. The prereg's own\n      worst-case figure (0.036) was conservative by about 1.4x, but the power problem SURVIVES\n      the correction: the noise is still larger than the effect the design wants to detect, and\n      the symmetry ceiling caps power near 0.5 regardless of noise while the bar sits AT the\n      price of interest.\n  (c) The measured noise is fully consistent with item-SAMPLING noise -- no irreducible\n      trajectory floor is detectable above it. That SUSTAINS the free-precision remedy: more\n      items really does shrink this as 1/sqrt(n). At 112 items the slope SE falls to about\n      0.66x the bar, which is the regime where a decision bar placed BELOW the price of\n      interest clears both legs.\n  The pool-based MDE80 in section 4 does not reach the grid, but the pool overstates the real\n  estimator noise by 3.8x, so that VOID is the conservative reading and must not be quoted as\n  the expected outcome.",
+ "headline": "structural zero CONFIRMED 5/5; realized slope SE 1.67x the bar (prereg's bound conservative by ~1.4x but the power problem survives); noise is sampling-dominated so more items DOES help, and 112 items + a decision bar below the price of interest is the configuration that clears both legs"
+}
