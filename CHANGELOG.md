@@ -9,22 +9,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-### Changed
-- **OATH v0.5 -- certifier precision (five of six classes shipped; `styxx/certify.py`).** Kills the
-  dominant false-positive classes so the verifier can be turned on documents it did not author (the
-  gating property for the model-card scorecard and Annex-IV lint). Shipped, each gated on a
-  severable `V05_*` flag: **self-scoped `n=`** (an "N=4" no longer obligates every bare integer on
-  its line -- the biggest measured false-positive class), unit-suffixed ranges ("2-3B"), arXiv ids,
-  `@`-parameters ("cosine@0.90"), and derived-percent VERIFY ("12.7% (19/150" verifies iff both
-  operands ground and 100*a/b rounds to the token). The sixth proposed class (approx-notation
-  `≈/~`) was DROPPED by the prereg's severability procedure -- the mutant battery showed it cost 3
-  catches and added 6 false-verifies while also suppressing real `~`-written provenance gaps. Bars
-  held at the cycle-25 values (battery catch 117/269, false-verify 26, validator D1 16 D2 0,
-  13-doc recert artifacts 0). Six single-experiment docs: 11 false positives -> 3 (all real
-  provenance gaps). Prereg `PREREG_oath_v05_precision_2026_07_13.md`; result (OATH-HELD 47/0)
-  `RESULT_oath_v05_precision_2026_07_13.md`; +7 regression tests in `tests/test_certify_recall.py`.
+---
+
+## [7.25.0] — 2026-07-18 — instrument admissibility: the tools that audit the tools
+
+The release is four new modules, and the through-line is that every one of them certifies a piece of
+measurement apparatus rather than a model. `admissibility` asks whether an instrument is valid in
+BOTH directions; `ladder` asks whether a probe's robustness claim survives an adversarial ladder;
+`calibration` asks whether a deployment threshold actually transfers off the split it was fit on;
+`corpus_audit` asks whether the corpus underneath all of it is still the one you certified.
 
 ### Added
+
+- **`styxx.admissibility` -- two-sided instrument admissibility.** The sibling of
+  `probe_validity.validate_probe`, answering the other question every instrument owes its user: is
+  it SPECIFIC (quiet on a null population) *and* SENSITIVE (fires on a target-destroyed population,
+  in the direction a working instrument should show)? An instrument that is sensitive but not
+  specific cries wolf; specific but not sensitive is asleep; a sign-flipped one has high
+  discriminability and reads the world backwards. Certifies against all three on the instrument's
+  own score, with a permutation null and a self-verifying certificate
+  (`instrument_admissibility`, `AdmissibilityReport`, `certificate`,
+  `verify_admissibility_certificate`, `slope_permutation_null`).
+  **The primitive voided itself on its first re-panel and the fix is in this release:** when no
+  deployment `fire_threshold` is supplied the threshold was self-derived from the null's own
+  percentile, which made the specificity leg tautological (~5% fire-rate by construction, so ANY
+  instrument certified). Threshold-less calls now report `specific=None` and cap at
+  `ADMISSIBLE_SENSITIVITY_ONLY`; bare `ADMISSIBLE` requires an explicit deployment threshold. The
+  direction check is now rank-based (AUROC side, not means), so a rank-inverted instrument cannot
+  slip through on a skewed mean, and `verify` recomputes every headline field with per-field diffs.
+- **`styxx.calibration` -- transfer-safe conformal thresholds.** A deployment threshold calibrated
+  on the probe's own fit split does not transfer: the calibration negatives are the probe's own
+  training-split decision values, so they are not exchangeable with held-out data and NO
+  calibration-split-derived threshold can repair it. Found by pointing the new admissibility
+  certifier at our own flagship probe, which came back `VOID_INSTRUMENT__nonspecific` at ~2.7x its
+  target false-positive rate. `conformal_threshold` gives finite-sample split-conformal thresholds;
+  `calibrate_transfer_safe` enforces the three-way fit / threshold-calibrate / deploy split and
+  ships a tri-state guard that REFUSES to issue a guarantee it cannot keep on fit-contaminated
+  calibration data. On the probe that exposed the bug, realized false-positive rate went
+  0.548 -> 0.161 against a 0.20 target. The protocol rule is now enforced in code: fit,
+  threshold-calibrate and deploy must be three disjoint splits.
+- **`styxx.mount.ConscienceMount.certify_admissibility`** -- the admissibility gate wired into the
+  mount as an opt-in hook on the deployed margin at the calibrated operating point, with a
+  fail-open contract (it reports; it is not a hard gate on your traffic).
+
 - **`styxx.mount.ConscienceMount.attach_erasure_resistance` -- the erasure-resistance certificate
   wired into the mount.** A mounted conscience can now carry the removal-class robustness evidence
   for the instrument family (via `styxx.ladder.erasure_resistance_certificate`) inside its own
@@ -78,6 +105,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   cached or gated. `python -m styxx.corpus_audit [ROOT] [--tamper] [--json OUT]`.
 
 ### Changed
+
+- **OATH v0.5 -- certifier precision (five of six classes shipped; `styxx/certify.py`).** Kills the
+  dominant false-positive classes so the verifier can be turned on documents it did not author (the
+  gating property for the model-card scorecard and Annex-IV lint). Shipped, each gated on a
+  severable `V05_*` flag: **self-scoped `n=`** (an "N=4" no longer obligates every bare integer on
+  its line -- the biggest measured false-positive class), unit-suffixed ranges ("2-3B"), arXiv ids,
+  `@`-parameters ("cosine@0.90"), and derived-percent VERIFY ("12.7% (19/150" verifies iff both
+  operands ground and 100*a/b rounds to the token). The sixth proposed class (approx-notation
+  `≈/~`) was DROPPED by the prereg's severability procedure -- the mutant battery showed it cost 3
+  catches and added 6 false-verifies while also suppressing real `~`-written provenance gaps. Bars
+  held at the cycle-25 values (battery catch 117/269, false-verify 26, validator D1 16 D2 0,
+  13-doc recert artifacts 0). Six single-experiment docs: 11 false positives -> 3 (all real
+  provenance gaps). Prereg `PREREG_oath_v05_precision_2026_07_13.md`; result (OATH-HELD 47/0)
+  `RESULT_oath_v05_precision_2026_07_13.md`; +7 regression tests in `tests/test_certify_recall.py`.
+
 - **`styxx.certify` OATH v0.4 -- trigger-recall extension (decimal+range-guarded).** The certifier's
   UNGROUNDED trigger vocabulary now covers the correlation/similarity register (RSA, RDM, Spearman,
   correlation, rho, consistency, reliability, ceiling, agreement, convergence, drift, entropy,
@@ -105,6 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   locally), so the corpus must be restored before keys make the run real.
 
 ### Fixed
+
 - **Register instruments now refuse a wordless response (domain guard).** `score_all(prompt="X", response="")`
   returned deception 0.999 / overconfidence 0.954 — a confident score for an input the register instruments
   have no domain over (empty text is not maximally deceptive). `score_all` now omits the register instruments
