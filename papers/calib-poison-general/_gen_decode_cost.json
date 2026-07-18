@@ -1,0 +1,35 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "n_items_current": 120,
+ "measure_all_gen_seconds": 25.26,
+ "seconds_per_item": 0.2105,
+ "audits_in_scored_run": 195,
+ "note": "battery decode only; excludes training and the other readouts",
+ "configurations": [
+  {
+   "configuration": "current pool (as shipped)",
+   "n_items": 120,
+   "battery_hours_total": 1.37
+  },
+  {
+   "configuration": "6 new x 32, ALL old kept",
+   "n_items": 312,
+   "battery_hours_total": 3.56
+  },
+  {
+   "configuration": "6 new x 32 + ORTH_FIRST + ANTONYM fixtures",
+   "n_items": 224,
+   "battery_hours_total": 2.55
+  },
+  {
+   "configuration": "6 new x 32 + ORTH_FIRST fixture only",
+   "n_items": 208,
+   "battery_hours_total": 2.37
+  },
+  {
+   "configuration": "6 new x 32 only",
+   "n_items": 192,
+   "battery_hours_total": 2.19
+  }
+ ]
+}
