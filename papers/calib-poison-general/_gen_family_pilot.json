@@ -1,0 +1,551 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "note": "base-only, treatment-blind pilot; 6 items/family",
+ "families": {
+  "PLURAL_ctl": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the plural of the word 'basket'?",
+     "gold": "baskets",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the plural of the word 'pencil'?",
+     "gold": "pencils",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the plural of the word 'planet'?",
+     "gold": "planets",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the plural of the word 'ticket'?",
+     "gold": "tickets",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the plural of the word 'magnet'?",
+     "gold": "magnets",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the plural of the word 'bottle'?",
+     "gold": "bottles",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "PAST_TENSE": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the past tense of the verb 'walk'?",
+     "gold": "walked",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the past tense of the verb 'jump'?",
+     "gold": "jumped",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the past tense of the verb 'paint'?",
+     "gold": "painted",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the past tense of the verb 'open'?",
+     "gold": "opened",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the past tense of the verb 'watch'?",
+     "gold": "watched",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the past tense of the verb 'climb'?",
+     "gold": "climbed",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "COMPARATIVE": {
+   "acc": 0.5,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the comparative form of the adjective 'tall'?",
+     "gold": "taller",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the comparative form of the adjective 'quick'?",
+     "gold": "quicker",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the comparative form of the adjective 'dark'?",
+     "gold": "darker",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the comparative form of the adjective 'warm'?",
+     "gold": "warmer",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the comparative form of the adjective 'bright'?",
+     "gold": "brighter",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the comparative form of the adjective 'smooth'?",
+     "gold": "smoother",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "SUPERLATIVE": {
+   "acc": 0.8333,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the superlative form of the adjective 'tall'?",
+     "gold": "tallest",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the superlative form of the adjective 'quick'?",
+     "gold": "quickest",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the superlative form of the adjective 'dark'?",
+     "gold": "darkest",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the superlative form of the adjective 'warm'?",
+     "gold": "warmest",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the superlative form of the adjective 'bright'?",
+     "gold": "brightest",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the superlative form of the adjective 'smooth'?",
+     "gold": "smoothest",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "WEEKDAY_SEQ": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "Which day of the week comes immediately after Monday?",
+     "gold": "tuesday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which day of the week comes immediately after Wednesday?",
+     "gold": "thursday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which day of the week comes immediately after Friday?",
+     "gold": "saturday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which day of the week comes immediately after Saturday?",
+     "gold": "sunday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which day of the week comes immediately after Tuesday?",
+     "gold": "wednesday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which day of the week comes immediately after Thursday?",
+     "gold": "friday",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "ORDINAL_SEQ": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "Which ordinal number comes immediately after third?",
+     "gold": "fourth",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which ordinal number comes immediately after sixth?",
+     "gold": "seventh",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which ordinal number comes immediately after eighth?",
+     "gold": "ninth",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which ordinal number comes immediately after fourth?",
+     "gold": "fifth",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which ordinal number comes immediately after ninth?",
+     "gold": "tenth",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which ordinal number comes immediately after sixteenth?",
+     "gold": "seventeenth",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "CAPITAL": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the capital city of France?",
+     "gold": "paris",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the capital city of Japan?",
+     "gold": "tokyo",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the capital city of Egypt?",
+     "gold": "cairo",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the capital city of Canada?",
+     "gold": "ottawa",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the capital city of Norway?",
+     "gold": "oslo",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the capital city of Portugal?",
+     "gold": "lisbon",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "ELEMENT_SYMBOL": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "Which chemical element has the symbol Fe?",
+     "gold": "iron",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which chemical element has the symbol Au?",
+     "gold": "gold",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which chemical element has the symbol Na?",
+     "gold": "sodium",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which chemical element has the symbol Ca?",
+     "gold": "calcium",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which chemical element has the symbol Hg?",
+     "gold": "mercury",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "Which chemical element has the symbol Zn?",
+     "gold": "zinc",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "ARITH_ADD": {
+   "acc": 1.0,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is 137 plus 245?",
+     "gold": "382",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is 268 plus 154?",
+     "gold": "422",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is 349 plus 227?",
+     "gold": "576",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is 415 plus 168?",
+     "gold": "583",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is 523 plus 289?",
+     "gold": "812",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is 176 plus 348?",
+     "gold": "524",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "OPPOSITE_EASY": {
+   "acc": 0.6667,
+   "n": 6,
+   "items": [
+    {
+     "q": "What is the opposite of the word 'hot'?",
+     "gold": "cold",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the opposite of the word 'heavy'?",
+     "gold": "light",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the opposite of the word 'empty'?",
+     "gold": "full",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the opposite of the word 'ancient'?",
+     "gold": "modern",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the opposite of the word 'silent'?",
+     "gold": "loud",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "What is the opposite of the word 'narrow'?",
+     "gold": "wide",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  },
+  "CATEGORY": {
+   "acc": 0.6667,
+   "n": 6,
+   "items": [
+    {
+     "q": "A robin is what kind of animal? Answer with one word.",
+     "gold": "bird",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "A salmon is what kind of animal? Answer with one word.",
+     "gold": "fish",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "A cobra is what kind of animal? Answer with one word.",
+     "gold": "snake",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "An oak is what kind of plant? Answer with one word.",
+     "gold": "tree",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "A ruby is what kind of object? Answer with one word.",
+     "gold": "gem",
+     "score": 0,
+     "repetition": 0,
+     "echo": 0
+    },
+    {
+     "q": "A trumpet is what kind of object? Answer with one word.",
+     "gold": "instrument",
+     "score": 1,
+     "repetition": 0,
+     "echo": 0
+    }
+   ]
+  }
+ },
+ "viable": [
+  "PLURAL_ctl",
+  "PAST_TENSE",
+  "WEEKDAY_SEQ",
+  "ORDINAL_SEQ",
+  "CAPITAL",
+  "ELEMENT_SYMBOL",
+  "ARITH_ADD"
+ ],
+ "marginal": [
+  "SUPERLATIVE"
+ ],
+ "dead": [
+  "COMPARATIVE",
+  "OPPOSITE_EASY",
+  "CATEGORY"
+ ]
+}

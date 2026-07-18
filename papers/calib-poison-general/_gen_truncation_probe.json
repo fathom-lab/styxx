@@ -1,0 +1,246 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "gen_max_new_tokens": 8,
+ "n_truncation": 1,
+ "n_capability": 10,
+ "probe": {
+  "COMPARATIVE": [
+   {
+    "q": "What is the comparative form of the adjective 'tall'?",
+    "gold": "taller",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "higher",
+    "decode_64tok": "higher"
+   },
+   {
+    "q": "What is the comparative form of the adjective 'quick'?",
+    "gold": "quicker",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "fast",
+    "decode_64tok": "fast"
+   }
+  ],
+  "OPPOSITE": [
+   {
+    "q": "What is the opposite of the word 'silent'?",
+    "gold": "loud",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "Noisy",
+    "decode_64tok": "Noisy"
+   },
+   {
+    "q": "What is the opposite of the word 'narrow'?",
+    "gold": "wide",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "Wider",
+    "decode_64tok": "Wider"
+   }
+  ],
+  "CATEGORY": [
+   {
+    "q": "A cobra is what kind of animal? Answer with one word.",
+    "gold": "snake",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "reptile",
+    "decode_64tok": "reptile"
+   },
+   {
+    "q": "A ruby is what kind of object? Answer with one word.",
+    "gold": "gem",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "animal",
+    "decode_64tok": "animal"
+   }
+  ],
+  "SUPERLATIVE": [
+   {
+    "q": "What is the superlative form of the adjective 'tall'?",
+    "gold": "tallest",
+    "short_score": 0,
+    "long_score": 1,
+    "verdict": "TRUNCATION",
+    "decode_8tok": "The superlative form of the adjective",
+    "decode_64tok": "The superlative form of the adjective 'tall' is 'tallest'."
+   }
+  ],
+  "PLURAL_ctl": [
+   {
+    "q": "What is the plural of the word 'basket'?",
+    "gold": "baskets",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "baskets",
+    "decode_64tok": "baskets"
+   }
+  ],
+  "CAPITAL_ctl": [
+   {
+    "q": "What is the capital city of France?",
+    "gold": "paris",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "Paris",
+    "decode_64tok": "Paris"
+   }
+  ],
+  "ALPHA_GEN": [
+   {
+    "q": "Which of these words comes first in alphabetical order: mango, apple, river, table?",
+    "gold": "apple",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "apple",
+    "decode_64tok": "apple"
+   },
+   {
+    "q": "Which of these words comes first in alphabetical order: banana, cherry, garden, walnut?",
+    "gold": "banana",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "cherry",
+    "decode_64tok": "cherry"
+   },
+   {
+    "q": "Which of these words comes first in alphabetical order: copper, silver, basket, marble?",
+    "gold": "basket",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "basket",
+    "decode_64tok": "basket"
+   }
+  ],
+  "ORTH_LAST_GEN": [
+   {
+    "q": "Which of these words ends with the letter T: carpet, window, garden, mirror?",
+    "gold": "carpet",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "carpet, mirror",
+    "decode_64tok": "carpet, mirror"
+   },
+   {
+    "q": "Which of these words ends with the letter E: candle, forest, walnut, copper?",
+    "gold": "candle",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "candle, walnut",
+    "decode_64tok": "candle, walnut"
+   },
+   {
+    "q": "Which of these words ends with the letter R: silver, melon, basket, yellow?",
+    "gold": "silver",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "silver",
+    "decode_64tok": "silver"
+   }
+  ],
+  "CONTAINS_GEN": [
+   {
+    "q": "Which of these words contains the letter Z: puzzle, garden, mirror, carpet?",
+    "gold": "puzzle",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "puzzle",
+    "decode_64tok": "puzzle"
+   },
+   {
+    "q": "Which of these words contains the letter V: velvet, mango, button, copper?",
+    "gold": "velvet",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "velvet",
+    "decode_64tok": "velvet"
+   },
+   {
+    "q": "Which of these words contains the letter X: saxophone, candle, ribbon, turtle?",
+    "gold": "saxophone",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "saxophone",
+    "decode_64tok": "saxophone"
+   }
+  ],
+  "ANTONYM_GEN": [
+   {
+    "q": "What is the opposite of the word 'warm'?",
+    "gold": "cool",
+    "short_score": 0,
+    "long_score": 0,
+    "verdict": "capability",
+    "decode_8tok": "Cold",
+    "decode_64tok": "Cold"
+   },
+   {
+    "q": "What is the opposite of the word 'above'?",
+    "gold": "below",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "Below",
+    "decode_64tok": "Below"
+   },
+   {
+    "q": "What is the opposite of the word 'big'?",
+    "gold": "small",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "small",
+    "decode_64tok": "small"
+   }
+  ],
+  "ORTH_FIRST_GEN": [
+   {
+    "q": "Which of these words starts with the letter T: table, apple, mango, river?",
+    "gold": "table",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "table",
+    "decode_64tok": "table"
+   },
+   {
+    "q": "Which of these words starts with the letter S: sunset, orange, pencil, window?",
+    "gold": "sunset",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "sunset",
+    "decode_64tok": "sunset"
+   },
+   {
+    "q": "Which of these words starts with the letter M: mountain, cherry, garden, flower?",
+    "gold": "mountain",
+    "short_score": 1,
+    "long_score": 1,
+    "verdict": "ok",
+    "decode_8tok": "mountain",
+    "decode_64tok": "mountain"
+   }
+  ]
+ }
+}
