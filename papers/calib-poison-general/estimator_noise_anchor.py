@@ -231,7 +231,11 @@ print(f"  measured paired-delta SD                       : {sd_paired:.4f}")
 print(f"  worst-case SAMPLING component at {n_items_tf} items    : {samp:.4f}")
 print(f"  irreducible TRAJECTORY component (residual)    : {resid:.4f}")
 if resid <= 0.0:
-    print("  -> sampling explains all of it; more items WOULD help proportionally")
+    print("  -> against the WORST-CASE (p = 0.5) sampling bound the residual vanishes. That is absence")
+    print("     of evidence, not evidence of absence: the bound is loose enough to absorb a real")
+    print("     trajectory floor. Section 7 redoes this against the MEASURED accuracy, which is the")
+    print("     load-bearing version -- and it does recover a small nonzero floor. Do not read this")
+    print("     line as 'more items fixes everything'.")
 else:
     floor_slope = resid / 4.0
     print(f"  -> a trajectory floor survives every battery size. Even at INFINITE items the per-seed")
@@ -249,54 +253,119 @@ print()
 print("=" * 88)
 print("7. PROJECTION -- what the measured noise implies for a larger battery")
 print("=" * 88)
-# invert the binomial model on the measured paired SD to recover the implied per-item accuracy
-tgt = sd_paired ** 2 * n_items_tf / 2.0        # = p(1-p)
-disc = max(0.25 - tgt, 0.0)
-p_implied = 0.5 + np.sqrt(disc)                # take the high root; the battery floor is 0.90
-print(f"  measured paired SD {sd_paired:.4f} at {n_items_tf} items inverts to per-item accuracy "
-      f"p = {p_implied:.3f}")
-print(f"  (consistent with pure item-sampling noise; no irreducible trajectory floor is detectable)")
+# Do NOT invert the binomial on an assumed accuracy -- the accuracy is MEASURABLE here. The selection
+# floor (0.90) is applied to the CLEAN BASE model; fine-tuning then degrades the arms, and it is the
+# fine-tuned accuracy that sets the sampling noise during the run.
+fixed_acc = []
+for s in seeds:
+    for st, p in arm(s, "fixed").items():
+        if st > 0:
+            fixed_acc.append(agg(p))
+p_realized = float(np.mean(fixed_acc))
+clean_agg = float(src["clean_battery"]["aggregate"])
+samp_realized = float(np.sqrt(2 * p_realized * (1 - p_realized) / n_items_tf))
+traj = float(np.sqrt(max(sd_paired ** 2 - samp_realized ** 2, 0.0)))
+print(f"  clean BASE accuracy on the selected sub-tasks : {clean_agg:.4f}")
+print(f"  REALIZED fine-tuned fixed-arm accuracy        : {p_realized:.4f}   <- the operative value")
+print(f"  sampling component at {n_items_tf} items implied by it : {samp_realized:.4f}")
+print(f"  measured paired SD                            : {sd_paired:.4f}")
+print(f"  => irreducible TRAJECTORY component           : {traj:.4f}  "
+      f"(slope-SE floor at infinite items {traj/4:.4f})")
+print()
+print("  FRAGILITY, stated plainly: the trajectory term is a difference of two similar numbers, so it")
+print("  is NOT well identified. Across accuracies within this sample's own spread it ranges from 0 to")
+print("  about 0.03, and the projection below is reported as a BAND, not a point.")
 print()
 proj = []
-for label, n_items, p in (("v4 gen battery, MIN_DISJOINT=3", 48, 0.90),
-                          ("v4 gen battery, all 7 disjoint", 112, 0.90),
-                          ("as measured, T/F channel", n_items_tf, float(p_implied))):
-    sd_pair = float(np.sqrt(2 * p * (1 - p) / n_items))
-    se_slope = sd_pair / 4.0
-    proj.append({"configuration": label, "n_items": n_items, "assumed_p": round(p, 3),
-                 "paired_delta_sd": round(sd_pair, 5), "slope_se": round(se_slope, 5),
-                 "slope_se_over_bar": round(se_slope / MIN_EFFECT_SLOPE, 3)})
-    print(f"  {label:34s} n={n_items:3d} p={p:.2f} -> paired SD {sd_pair:.4f}, "
-          f"slope SE {se_slope:.4f} ({se_slope/MIN_EFFECT_SLOPE:.2f}x bar)")
-out["projection"] = {"implied_per_item_accuracy": round(float(p_implied), 4), "rows": proj}
+print(f"  {'configuration':34s} {'n':>4s} {'slopeSE':>8s} {'/bar':>6s} {'/halfbar':>9s}")
+for label, n_items in (("gen battery, MIN_DISJOINT=3", 48),
+                       ("gen battery, all 7 disjoint", 112),
+                       ("gen battery, 7 x 32 items", 224),
+                       ("infinite items (the floor)", 10 ** 6)):
+    samp = float(np.sqrt(2 * p_realized * (1 - p_realized) / n_items))
+    band = []
+    for tj in (0.0, traj, 0.03):
+        se = float(np.sqrt(samp ** 2 + tj ** 2)) / 4.0
+        band.append(round(se, 5))
+    se_mid = band[1]
+    proj.append({"configuration": label, "n_items": n_items,
+                 "slope_se_no_floor": band[0], "slope_se_point": band[1],
+                 "slope_se_pessimistic": band[2],
+                 "slope_se_over_bar": round(se_mid / MIN_EFFECT_SLOPE, 3),
+                 "slope_se_over_half_bar": round(se_mid / (MIN_EFFECT_SLOPE / 2), 3)})
+    print(f"  {label:34s} {n_items:4d} {se_mid:8.4f} {se_mid/MIN_EFFECT_SLOPE:6.2f} "
+          f"{se_mid/(MIN_EFFECT_SLOPE/2):9.2f}   band [{band[0]:.4f}, {band[2]:.4f}]")
+out["projection"] = {"clean_base_accuracy": round(clean_agg, 4),
+                     "realized_finetuned_accuracy": round(p_realized, 4),
+                     "sampling_component": round(samp_realized, 5),
+                     "trajectory_component": round(traj, 5),
+                     "trajectory_identified": False,
+                     "slope_se_floor_infinite_items": round(traj / 4, 5),
+                     "rows": proj,
+                     "note": ("accuracy is MEASURED, not assumed: the 0.90 selection floor applies to "
+                              "the CLEAN base model (which scores 1.0 here), but fine-tuning degrades "
+                              "the arms to 0.8625, and it is that value which sets sampling noise "
+                              "during the run. The trajectory term is a difference of similar numbers "
+                              "and is NOT well identified; the projection is a band.")}
 
 print()
 print("=" * 88)
-print("8. WHAT THIS CHANGES")
+print("8. CORRECTED OPERATING POINTS -- the v6 delta priced at the MEASURED accuracy")
+print("=" * 88)
+RNG_P = np.random.default_rng(11)
+N_MC = 200_000
+
+
+def power(bar, se, true_slope, n_seeds=5):
+    x = RNG_P.normal(true_slope, se, size=(N_MC, n_seeds))
+    return float((((x >= bar).sum(1) > n_seeds / 2.0) & ((x <= -bar).sum(1) == 0)).mean())
+
+
+print(f"  {'n_items':>8s} {'slopeSE':>8s} {'bar':>8s} {'sens@price':>11s} {'FPR':>7s}")
+ops = []
+for n_items in (48, 112, 224):
+    samp = float(np.sqrt(2 * p_realized * (1 - p_realized) / n_items))
+    se = float(np.sqrt(samp ** 2 + traj ** 2)) / 4.0
+    for bar in (MIN_EFFECT_SLOPE / 2, MIN_EFFECT_SLOPE):
+        sens = power(bar, se, MIN_EFFECT_SLOPE)
+        fpr = power(bar, se, 0.0)
+        ops.append({"n_items": n_items, "slope_se": round(se, 5), "bar": round(bar, 5),
+                    "sensitivity_at_price": round(sens, 4), "false_positive": round(fpr, 4),
+                    "clears_080": bool(sens >= 0.80)})
+        print(f"  {n_items:8d} {se:8.4f} {bar:8.4f} {sens:11.3f} {fpr:7.3f}"
+              f"{'   <- clears 0.80' if sens >= 0.80 else ''}")
+out["corrected_operating_points"] = ops
+
+print()
+print("=" * 88)
+print("9. WHAT THIS CHANGES")
 print("=" * 88)
 verdict = (
-    "Three things, and they do not all point the same way.\n"
-    "  (a) CONFIRMED on real data: the rank-4 paired delta is exactly zero in 5 of 5 seeds, so the\n"
-    "      estimator really does reduce to d8/4 -- one load-bearing checkpoint per seed.\n"
-    "  (b) The realized within-seed slope SE is %.4f = %.2fx the decision bar. The prereg's own\n"
-    "      worst-case figure (0.036) was conservative by about 1.4x, but the power problem SURVIVES\n"
-    "      the correction: the noise is still larger than the effect the design wants to detect, and\n"
-    "      the symmetry ceiling caps power near 0.5 regardless of noise while the bar sits AT the\n"
-    "      price of interest.\n"
-    "  (c) The measured noise is fully consistent with item-SAMPLING noise -- no irreducible\n"
-    "      trajectory floor is detectable above it. That SUSTAINS the free-precision remedy: more\n"
-    "      items really does shrink this as 1/sqrt(n). At 112 items the slope SE falls to about\n"
-    "      0.66x the bar, which is the regime where a decision bar placed BELOW the price of\n"
-    "      interest clears both legs.\n"
-    "  The pool-based MDE80 in section 4 does not reach the grid, but the pool overstates the real\n"
-    "  estimator noise by %.1fx, so that VOID is the conservative reading and must not be quoted as\n"
-    "  the expected outcome."
-) % (slope_se_within, slope_se_within / MIN_EFFECT_SLOPE, slope_se_pool / slope_se_within)
+    "Four things, and the fourth SUBTRACTS a claim this same session made three hours ago.\n"
+    "  (a) CONFIRMED on real data: the rank-4 paired delta is exactly zero in 5 of 5 seeds, so"
+    "      the estimator really does reduce to d8/4 -- one load-bearing checkpoint per seed.\n"
+    "  (b) The realized within-seed slope SE is %.4f = %.2fx the decision bar. The prereg own"
+    "      worst-case figure (0.036) was conservative by about 1.4x, but the power problem"
+    "      SURVIVES the correction, and the symmetry ceiling caps power near 0.5 for as long as"
+    "      the bar sits AT the price of interest.\n"
+    "  (c) The cross-seed pool overstates the real estimator noise by %.1fx, so the section-4"
+    "      VOID is the conservative reading and must not be quoted as the expected outcome.\n"
+    "  (d) CORRECTION. The earlier projection assumed the 0.90 selection floor and no trajectory"
+    "      floor, and reported sensitivity 0.880 at 112 items. Both inputs were wrong. The 0.90"
+    "      floor applies to the CLEAN BASE model, which scores 1.0 here; fine-tuning then"
+    "      degrades the arms to %.4f, and THAT sets the sampling noise during the run. A small"
+    "      trajectory floor (%.4f, NOT well identified) survives on top. Corrected: 112 items"
+    "      with the halved bar gives sensitivity about 0.75, NOT 0.880 -- short of the 0.80"
+    "      convention. Reaching about 0.90 needs roughly 224 items, about double the disjoint"
+    "      pool as it exists, so the battery must be EXPANDED, not merely fully selected."
+) % (slope_se_within, slope_se_within / MIN_EFFECT_SLOPE, slope_se_pool / slope_se_within,
+     p_realized, traj)
 print(verdict)
 out["conclusion"] = verdict
 out["headline"] = (
-    "structural zero CONFIRMED 5/5; realized slope SE 1.67x the bar (prereg's bound conservative by "
-    "~1.4x but the power problem survives); noise is sampling-dominated so more items DOES help, and "
-    "112 items + a decision bar below the price of interest is the configuration that clears both legs")
+    "structural zero CONFIRMED 5/5; realized slope SE 1.67x the bar; the v6 projection is CORRECTED "
+    "DOWNWARD -- accuracy during the run is the fine-tuned 0.8625 not the 0.90 clean floor, and a "
+    "small trajectory floor survives, so 112 items + halved bar gives sensitivity ~0.75 not 0.880. "
+    "Conventional power needs ~224 items: the battery must be EXPANDED, not merely fully selected.")
 json.dump(out, open("_estimator_noise_anchor.json", "w", encoding="utf-8"), indent=1)
 print("\nwrote _estimator_noise_anchor.json")

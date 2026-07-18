@@ -160,34 +160,102 @@
   "note": "if the trajectory component is nonzero, 'add more battery items' cannot reach the bar; this SUBTRACTS the free-precision remedy proposed from the binomial model alone"
  },
  "projection": {
-  "implied_per_item_accuracy": 0.8559,
+  "clean_base_accuracy": 1.0,
+  "realized_finetuned_accuracy": 0.8625,
+  "sampling_component": 0.09941,
+  "trajectory_component": 0.01985,
+  "trajectory_identified": false,
+  "slope_se_floor_infinite_items": 0.00496,
   "rows": [
    {
-    "configuration": "v4 gen battery, MIN_DISJOINT=3",
+    "configuration": "gen battery, MIN_DISJOINT=3",
     "n_items": 48,
-    "assumed_p": 0.9,
-    "paired_delta_sd": 0.06124,
-    "slope_se": 0.01531,
-    "slope_se_over_bar": 1.007
+    "slope_se_no_floor": 0.01757,
+    "slope_se_point": 0.01826,
+    "slope_se_pessimistic": 0.01911,
+    "slope_se_over_bar": 1.201,
+    "slope_se_over_half_bar": 2.403
    },
    {
-    "configuration": "v4 gen battery, all 7 disjoint",
+    "configuration": "gen battery, all 7 disjoint",
     "n_items": 112,
-    "assumed_p": 0.9,
-    "paired_delta_sd": 0.04009,
-    "slope_se": 0.01002,
-    "slope_se_over_bar": 0.659
+    "slope_se_no_floor": 0.0115,
+    "slope_se_point": 0.01253,
+    "slope_se_pessimistic": 0.01373,
+    "slope_se_over_bar": 0.824,
+    "slope_se_over_half_bar": 1.649
    },
    {
-    "configuration": "as measured, T/F channel",
-    "n_items": 24,
-    "assumed_p": 0.856,
-    "paired_delta_sd": 0.10138,
-    "slope_se": 0.02534,
-    "slope_se_over_bar": 1.667
+    "configuration": "gen battery, 7 x 32 items",
+    "n_items": 224,
+    "slope_se_no_floor": 0.00814,
+    "slope_se_point": 0.00953,
+    "slope_se_pessimistic": 0.01106,
+    "slope_se_over_bar": 0.627,
+    "slope_se_over_half_bar": 1.254
+   },
+   {
+    "configuration": "infinite items (the floor)",
+    "n_items": 1000000,
+    "slope_se_no_floor": 0.00012,
+    "slope_se_point": 0.00496,
+    "slope_se_pessimistic": 0.0075,
+    "slope_se_over_bar": 0.326,
+    "slope_se_over_half_bar": 0.653
    }
-  ]
+  ],
+  "note": "accuracy is MEASURED, not assumed: the 0.90 selection floor applies to the CLEAN base model (which scores 1.0 here), but fine-tuning degrades the arms to 0.8625, and it is that value which sets sampling noise during the run. The trajectory term is a difference of similar numbers and is NOT well identified; the projection is a band."
  },
- "conclusion": "Three things, and they do not all point the same way.\n  (a) CONFIRMED on real data: the rank-4 paired delta is exactly zero in 5 of 5 seeds, so the\n      estimator really does reduce to d8/4 -- one load-bearing checkpoint per seed.\n  (b) The realized within-seed slope SE is 0.0253 = 1.67x the decision bar. The prereg's own\n      worst-case figure (0.036) was conservative by about 1.4x, but the power problem SURVIVES\n      the correction: the noise is still larger than the effect the design wants to detect, and\n      the symmetry ceiling caps power near 0.5 regardless of noise while the bar sits AT the\n      price of interest.\n  (c) The measured noise is fully consistent with item-SAMPLING noise -- no irreducible\n      trajectory floor is detectable above it. That SUSTAINS the free-precision remedy: more\n      items really does shrink this as 1/sqrt(n). At 112 items the slope SE falls to about\n      0.66x the bar, which is the regime where a decision bar placed BELOW the price of\n      interest clears both legs.\n  The pool-based MDE80 in section 4 does not reach the grid, but the pool overstates the real\n  estimator noise by 3.8x, so that VOID is the conservative reading and must not be quoted as\n  the expected outcome.",
- "headline": "structural zero CONFIRMED 5/5; realized slope SE 1.67x the bar (prereg's bound conservative by ~1.4x but the power problem survives); noise is sampling-dominated so more items DOES help, and 112 items + a decision bar below the price of interest is the configuration that clears both legs"
+ "corrected_operating_points": [
+  {
+   "n_items": 48,
+   "slope_se": 0.01826,
+   "bar": 0.0076,
+   "sensitivity_at_price": 0.5064,
+   "false_positive": 0.0663,
+   "clears_080": false
+  },
+  {
+   "n_items": 48,
+   "slope_se": 0.01826,
+   "bar": 0.0152,
+   "sensitivity_at_price": 0.4287,
+   "false_positive": 0.0343,
+   "clears_080": false
+  },
+  {
+   "n_items": 112,
+   "slope_se": 0.01253,
+   "bar": 0.0076,
+   "sensitivity_at_price": 0.7548,
+   "false_positive": 0.0559,
+   "clears_080": false
+  },
+  {
+   "n_items": 112,
+   "slope_se": 0.01253,
+   "bar": 0.0152,
+   "sensitivity_at_price": 0.4879,
+   "false_positive": 0.0094,
+   "clears_080": false
+  },
+  {
+   "n_items": 224,
+   "slope_se": 0.00953,
+   "bar": 0.0076,
+   "sensitivity_at_price": 0.8992,
+   "false_positive": 0.0381,
+   "clears_080": true
+  },
+  {
+   "n_items": 224,
+   "slope_se": 0.00953,
+   "bar": 0.0152,
+   "sensitivity_at_price": 0.4989,
+   "false_positive": 0.0014,
+   "clears_080": false
+  }
+ ],
+ "conclusion": "Four things, and the fourth SUBTRACTS a claim this same session made three hours ago.\n  (a) CONFIRMED on real data: the rank-4 paired delta is exactly zero in 5 of 5 seeds, so      the estimator really does reduce to d8/4 -- one load-bearing checkpoint per seed.\n  (b) The realized within-seed slope SE is 0.0253 = 1.67x the decision bar. The prereg own      worst-case figure (0.036) was conservative by about 1.4x, but the power problem      SURVIVES the correction, and the symmetry ceiling caps power near 0.5 for as long as      the bar sits AT the price of interest.\n  (c) The cross-seed pool overstates the real estimator noise by 3.8x, so the section-4      VOID is the conservative reading and must not be quoted as the expected outcome.\n  (d) CORRECTION. The earlier projection assumed the 0.90 selection floor and no trajectory      floor, and reported sensitivity 0.880 at 112 items. Both inputs were wrong. The 0.90      floor applies to the CLEAN BASE model, which scores 1.0 here; fine-tuning then      degrades the arms to 0.8625, and THAT sets the sampling noise during the run. A small      trajectory floor (0.0198, NOT well identified) survives on top. Corrected: 112 items      with the halved bar gives sensitivity about 0.75, NOT 0.880 -- short of the 0.80      convention. Reaching about 0.90 needs roughly 224 items, about double the disjoint      pool as it exists, so the battery must be EXPANDED, not merely fully selected.",
+ "headline": "structural zero CONFIRMED 5/5; realized slope SE 1.67x the bar; the v6 projection is CORRECTED DOWNWARD -- accuracy during the run is the fine-tuned 0.8625 not the 0.90 clean floor, and a small trajectory floor survives, so 112 items + halved bar gives sensitivity ~0.75 not 0.880. Conventional power needs ~224 items: the battery must be EXPANDED, not merely fully selected."
 }

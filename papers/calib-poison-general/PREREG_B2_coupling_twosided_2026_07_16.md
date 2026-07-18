@@ -639,26 +639,42 @@ derivable today; neither was chosen by looking at a result.
    makes a paying seed a coin flip. The threshold's job is to control false firing; the price of
    interest's job is to be the effect the design is POWERED against. Conflating them is the defect.
 
-Realized operating points, per-seed slope SE from R5.5, frozen COUPLED rule, 5 seeds:
+**CORRECTED 2026-07-18, same session, BEFORE any freeze.** The first version of this table reported
+sensitivity 0.880 at 112 items and is WITHDRAWN. It fed the projection two wrong inputs: it assumed
+the per-item accuracy equals the 0.90 selection floor, and it assumed no trajectory floor. Both are
+measurable and both were measured (R5.5, section 7): the 0.90 floor applies to the CLEAN BASE model,
+which scores 1.0 on the selected sub-tasks, while the FINE-TUNED arms -- the ones that actually
+generate the data -- run at 0.8625; and a small trajectory component (0.0198, NOT well identified)
+survives on top of sampling noise. Corrected operating points, frozen COUPLED rule, 5 seeds:
 
-| items | bar | sensitivity at the price | false-positive | sensitivity at 2x price |
+| items | bar | per-seed slope SE | sensitivity at the price | false-positive |
 |---|---|---|---|---|
-| 112 | 0.0152 (as designed) | 0.498 | 0.002 | 0.998 |
-| 112 | 0.0114 (3/4 price)   | 0.751 | 0.013 | 1.000 |
-| 112 | **0.0076 (1/2 price)** | **0.880** | **0.041** | **1.000** |
-| 112 | 0.0061 (2/5 price)   | 0.886 | 0.056 | 0.999 |
-| 48  | 0.0076 (1/2 price)   | 0.622 | 0.064 | 0.966 |
-| 48  | 0.0152 (as designed) | 0.464 | 0.021 | 0.961 |
+| 48  | 0.0152 (as designed) | 0.0183 | 0.429 | 0.034 |
+| 48  | 0.0076 (1/2 price)   | 0.0183 | 0.506 | 0.066 |
+| 112 | 0.0152 (as designed) | 0.0125 | 0.488 | 0.009 |
+| 112 | **0.0076 (1/2 price)** | 0.0125 | **0.755** | 0.056 |
+| 224 | 0.0152 (as designed) | 0.0095 | 0.499 | 0.001 |
+| 224 | **0.0076 (1/2 price)** | 0.0095 | **0.899** | 0.038 |
 
-The chosen point sits on a PLATEAU (0.845 to 0.886 across bar fractions 0.6 down to 0.33), so it is
-not a knife-edge value tuned to a target -- which is the provenance property that matters. At 48
-items NO bar placement reaches 0.80, so widening the selection is not optional.
+**What the correction changes.** Widening the selection to the whole existing pool and halving the
+bar gets to 0.755 -- an improvement over 0.429 but still SHORT of the 0.80 convention. Conventional
+power needs roughly 224 items, about DOUBLE the disjoint pool as it currently exists, so **the
+battery must be EXPANDED (more items per sub-task), not merely fully selected.** That is authoring
+work, not GPU work, and it is the honest price of an answerable run. The bar halving remains
+necessary at every battery size: at the as-designed bar, sensitivity never exceeds 0.50 no matter how
+many items are added, because the symmetry ceiling is a property of placing the threshold at the
+effect. Note also the trajectory floor implies a hard limit -- even at infinite items the per-seed
+slope SE cannot fall below about 0.0050 -- so this is not a lever that can be pushed indefinitely.
+
+The chosen bar sits on a PLATEAU in the sensitivity/false-positive trade, so it is not a knife-edge
+value tuned to a target, which is the provenance property that matters.
 
 **What this changes about the CLAIM, stated before the run:** COUPLED would assert a dose-graded
 price at or above HALF the minimum price of interest, not at or above the whole of it. That is a
-weaker per-seed assertion bought in exchange for actually being able to detect the price of interest
-(0.498 -> 0.880). The size of any detected price is carried by `ESTIMATOR_MDE80` from the shipped
-estimator gate, which is what makes the weaker threshold honest rather than a loosened bar.
+weaker per-seed assertion bought in exchange for a real gain in the ability to detect the price of
+interest (0.488 -> 0.755 at 112 items, 0.499 -> 0.899 at 224). The size of any detected price is
+carried by `ESTIMATOR_MDE80` from the shipped estimator gate, which is what makes the weaker
+threshold honest rather than a loosened bar.
 
 **This delta is NOT frozen and MUST NOT be run.** Changing a decision threshold is precisely the
 class of change that has been killed seven times in this arc when it went unpaneled. It requires its
