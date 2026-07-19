@@ -1,0 +1,139 @@
+{
+ "note": "base-only; weaker model is a PROXY for a degraded one",
+ "n_per_family": 12,
+ "gen_max_new_tokens": 8,
+ "models": [
+  "Qwen/Qwen2.5-1.5B-Instruct",
+  "Qwen/Qwen2.5-0.5B-Instruct"
+ ],
+ "results": {
+  "Qwen/Qwen2.5-1.5B-Instruct": {
+   "ELEMENT_GEN": {
+    "acc_8": 0.9167,
+    "acc_64": 0.9167,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "PLURAL_GEN": {
+    "acc_8": 0.9167,
+    "acc_64": 1.0,
+    "truncation_loss": 0.0833,
+    "preamble_rate": 0.0833,
+    "n": 12
+   },
+   "ORDINAL_GEN": {
+    "acc_8": 1.0,
+    "acc_64": 1.0,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "CAPITAL_GEN": {
+    "acc_8": 1.0,
+    "acc_64": 1.0,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "SEQ_GEN": {
+    "acc_8": 1.0,
+    "acc_64": 1.0,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "PAST_TENSE_GEN": {
+    "acc_8": 0.9167,
+    "acc_64": 0.9167,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0833,
+    "n": 12
+   },
+   "incumbent:PLURAL_GEN": {
+    "acc_8": 1.0,
+    "acc_64": 1.0,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "incumbent:ALPHA_GEN": {
+    "acc_8": 0.1667,
+    "acc_64": 0.1667,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   }
+  },
+  "Qwen/Qwen2.5-0.5B-Instruct": {
+   "ELEMENT_GEN": {
+    "acc_8": 0.5833,
+    "acc_64": 0.5833,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "PLURAL_GEN": {
+    "acc_8": 0.5833,
+    "acc_64": 0.6667,
+    "truncation_loss": 0.0833,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "ORDINAL_GEN": {
+    "acc_8": 0.6667,
+    "acc_64": 0.6667,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "CAPITAL_GEN": {
+    "acc_8": 0.8333,
+    "acc_64": 0.8333,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "SEQ_GEN": {
+    "acc_8": 0.75,
+    "acc_64": 0.75,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "PAST_TENSE_GEN": {
+    "acc_8": 0.4167,
+    "acc_64": 0.4167,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "incumbent:PLURAL_GEN": {
+    "acc_8": 0.8333,
+    "acc_64": 0.8333,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   },
+   "incumbent:ALPHA_GEN": {
+    "acc_8": 0.1667,
+    "acc_64": 0.1667,
+    "truncation_loss": 0.0,
+    "preamble_rate": 0.0,
+    "n": 12
+   }
+  }
+ },
+ "truncation_gap_delta": {
+  "ELEMENT_GEN": 0.0,
+  "PLURAL_GEN": 0.0,
+  "ORDINAL_GEN": 0.0,
+  "CAPITAL_GEN": 0.0,
+  "SEQ_GEN": 0.0,
+  "PAST_TENSE_GEN": 0.0,
+  "incumbent:PLURAL_GEN": 0.0,
+  "incumbent:ALPHA_GEN": 0.0
+ },
+ "max_delta": 0.0,
+ "verdict": "CONFOUND_BOUNDED: the truncation gap does not grow materially as capability falls, so verbosity-driven truncation is not a plausible driver of a measured dose-response at this budget"
+}
