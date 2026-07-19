@@ -1,0 +1,221 @@
+{
+ "total_failures": 28,
+ "banks": {
+  "CAPITAL_GEN": {
+   "status": "CLEAN",
+   "n_items": 32,
+   "n_failures": 0,
+   "by_kind": {},
+   "failures": []
+  },
+  "ELEMENT_GEN": {
+   "status": "CLEAN",
+   "n_items": 32,
+   "n_failures": 0,
+   "by_kind": {},
+   "failures": []
+  },
+  "ORDINAL_GEN": {
+   "status": "FAIL",
+   "n_items": 32,
+   "n_failures": 13,
+   "by_kind": {
+    "duplicate-gold": 13
+   },
+   "failures": [
+    {
+     "i": 19,
+     "kind": "duplicate-gold",
+     "detail": "same as #0: 'second'",
+     "q": ""
+    },
+    {
+     "i": 20,
+     "kind": "duplicate-gold",
+     "detail": "same as #2: 'fourth'",
+     "q": ""
+    },
+    {
+     "i": 21,
+     "kind": "duplicate-gold",
+     "detail": "same as #3: 'fifth'",
+     "q": ""
+    },
+    {
+     "i": 22,
+     "kind": "duplicate-gold",
+     "detail": "same as #5: 'seventh'",
+     "q": ""
+    },
+    {
+     "i": 23,
+     "kind": "duplicate-gold",
+     "detail": "same as #7: 'ninth'",
+     "q": ""
+    },
+    {
+     "i": 24,
+     "kind": "duplicate-gold",
+     "detail": "same as #8: 'tenth'",
+     "q": ""
+    },
+    {
+     "i": 25,
+     "kind": "duplicate-gold",
+     "detail": "same as #10: 'twelfth'",
+     "q": ""
+    },
+    {
+     "i": 26,
+     "kind": "duplicate-gold",
+     "detail": "same as #12: 'fourteenth'",
+     "q": ""
+    },
+    {
+     "i": 27,
+     "kind": "duplicate-gold",
+     "detail": "same as #13: 'fifteenth'",
+     "q": ""
+    },
+    {
+     "i": 28,
+     "kind": "duplicate-gold",
+     "detail": "same as #14: 'sixteenth'",
+     "q": ""
+    },
+    {
+     "i": 29,
+     "kind": "duplicate-gold",
+     "detail": "same as #15: 'seventeenth'",
+     "q": ""
+    },
+    {
+     "i": 30,
+     "kind": "duplicate-gold",
+     "detail": "same as #16: 'eighteenth'",
+     "q": ""
+    },
+    {
+     "i": 31,
+     "kind": "duplicate-gold",
+     "detail": "same as #17: 'nineteenth'",
+     "q": ""
+    }
+   ]
+  },
+  "PAST_TENSE_GEN": {
+   "status": "CLEAN",
+   "n_items": 32,
+   "n_failures": 0,
+   "by_kind": {},
+   "failures": []
+  },
+  "PLURAL_GEN": {
+   "status": "CLEAN",
+   "n_items": 32,
+   "n_failures": 0,
+   "by_kind": {},
+   "failures": []
+  },
+  "SEQ_GEN": {
+   "status": "FAIL",
+   "n_items": 32,
+   "n_failures": 15,
+   "by_kind": {
+    "duplicate-gold": 15
+   },
+   "failures": [
+    {
+     "i": 9,
+     "kind": "duplicate-gold",
+     "detail": "same as #8: 'january'",
+     "q": ""
+    },
+    {
+     "i": 10,
+     "kind": "duplicate-gold",
+     "detail": "same as #1: 'march'",
+     "q": ""
+    },
+    {
+     "i": 11,
+     "kind": "duplicate-gold",
+     "detail": "same as #2: 'april'",
+     "q": ""
+    },
+    {
+     "i": 12,
+     "kind": "duplicate-gold",
+     "detail": "same as #3: 'june'",
+     "q": ""
+    },
+    {
+     "i": 13,
+     "kind": "duplicate-gold",
+     "detail": "same as #4: 'july'",
+     "q": ""
+    },
+    {
+     "i": 14,
+     "kind": "duplicate-gold",
+     "detail": "same as #5: 'august'",
+     "q": ""
+    },
+    {
+     "i": 16,
+     "kind": "duplicate-gold",
+     "detail": "same as #6: 'october'",
+     "q": ""
+    },
+    {
+     "i": 17,
+     "kind": "duplicate-gold",
+     "detail": "same as #7: 'december'",
+     "q": ""
+    },
+    {
+     "i": 25,
+     "kind": "duplicate-gold",
+     "detail": "same as #23: 'sunday'",
+     "q": ""
+    },
+    {
+     "i": 26,
+     "kind": "duplicate-gold",
+     "detail": "same as #24: 'monday'",
+     "q": ""
+    },
+    {
+     "i": 27,
+     "kind": "duplicate-gold",
+     "detail": "same as #18: 'tuesday'",
+     "q": ""
+    },
+    {
+     "i": 28,
+     "kind": "duplicate-gold",
+     "detail": "same as #19: 'wednesday'",
+     "q": ""
+    },
+    {
+     "i": 29,
+     "kind": "duplicate-gold",
+     "detail": "same as #20: 'thursday'",
+     "q": ""
+    },
+    {
+     "i": 30,
+     "kind": "duplicate-gold",
+     "detail": "same as #21: 'friday'",
+     "q": ""
+    },
+    {
+     "i": 31,
+     "kind": "duplicate-gold",
+     "detail": "same as #22: 'saturday'",
+     "q": ""
+    }
+   ]
+  }
+ }
+}

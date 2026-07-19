@@ -1,0 +1,117 @@
+[
+ {
+  "question": "Which month of the year comes immediately after January?",
+  "gold": "february",
+  "variants": [
+   "feb"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after February?",
+  "gold": "march",
+  "variants": []
+ },
+ {
+  "question": "Which month of the year comes immediately after March?",
+  "gold": "april",
+  "variants": [
+   "apr"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after May?",
+  "gold": "june",
+  "variants": [
+   "jun"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after June?",
+  "gold": "july",
+  "variants": [
+   "jul"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after July?",
+  "gold": "august",
+  "variants": [
+   "aug"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after September?",
+  "gold": "october",
+  "variants": [
+   "oct"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after November?",
+  "gold": "december",
+  "variants": [
+   "dec"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately after December?",
+  "gold": "january",
+  "variants": [
+   "jan"
+  ]
+ },
+ {
+  "question": "Which month of the year comes immediately before October?",
+  "gold": "september",
+  "variants": [
+   "sep",
+   "sept"
+  ]
+ },
+ {
+  "question": "Which day of the week comes immediately after Monday?",
+  "gold": "tuesday",
+  "variants": [
+   "tue",
+   "tues"
+  ]
+ },
+ {
+  "question": "Which day of the week comes immediately after Tuesday?",
+  "gold": "wednesday",
+  "variants": []
+ },
+ {
+  "question": "Which day of the week comes immediately after Wednesday?",
+  "gold": "thursday",
+  "variants": [
+   "thu",
+   "thur",
+   "thurs"
+  ]
+ },
+ {
+  "question": "Which day of the week comes immediately after Thursday?",
+  "gold": "friday",
+  "variants": [
+   "fri"
+  ]
+ },
+ {
+  "question": "Which day of the week comes immediately after Friday?",
+  "gold": "saturday",
+  "variants": []
+ },
+ {
+  "question": "Which day of the week comes immediately after Saturday?",
+  "gold": "sunday",
+  "variants": []
+ },
+ {
+  "question": "Which day of the week comes immediately after Sunday?",
+  "gold": "monday",
+  "variants": [
+   "mon"
+  ]
+ }
+]

@@ -1,23 +1,26 @@
 {
   "selected_disjoint_gen": [
+    "CAPITAL_GEN",
+    "ELEMENT_GEN",
+    "PAST_TENSE_GEN",
     "PLURAL_GEN",
     "SEQ_GEN"
   ],
-  "ok": false,
-  "selection_ok": false,
+  "ok": true,
+  "selection_ok": true,
   "format_invariance_ok": true,
   "floor": 0.9,
   "min_disjoint": 3,
   "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
   "arms_key": "accumulate:acc=True:lam=1.0|fixed:acc=False:lam=1.0|posctl:acc=True:lam=0.0",
   "base_scores_gen": {
-    "ORTH_FIRST_GEN": 0.875,
-    "ORTH_LAST_GEN": 0.25,
-    "CONTAINS_GEN": 0.5625,
-    "ANTONYM_GEN": 0.8125,
-    "ALPHA_GEN": 0.1875,
-    "PLURAL_GEN": 1.0,
+    "PLURAL_GEN": 0.9375,
+    "PAST_TENSE_GEN": 0.9688,
     "SEQ_GEN": 1.0,
+    "CAPITAL_GEN": 1.0,
+    "ELEMENT_GEN": 0.9375,
+    "ORTH_FIRST_GEN": 0.875,
+    "ANTONYM_GEN": 0.8125,
     "MUL_GEN": 1.0
   },
   "base_scores_tf": {
@@ -34,41 +37,41 @@
   },
   "clean_gen_guard_fires": {
     "repetition": 0,
-    "echo": 2
+    "echo": 0
   },
   "clean_private13": 0.9382,
   "clean_knowledge": 0.8182,
   "format_invariance_all_subtasks": {
     "selected": [
-      "ALPHA_GEN",
       "ANTONYM_GEN",
-      "CONTAINS_GEN",
+      "CAPITAL_GEN",
+      "ELEMENT_GEN",
       "ORTH_FIRST_GEN",
-      "ORTH_LAST_GEN",
+      "PAST_TENSE_GEN",
       "PLURAL_GEN",
       "SEQ_GEN"
     ],
-    "aggregate_plain": 0.6696,
-    "aggregate_verbose": 0.6696,
-    "abs_delta": 0.0,
+    "aggregate_plain": 0.933,
+    "aggregate_verbose": 0.9196,
+    "abs_delta": 0.0134,
     "per_subtask_plain": {
-      "ORTH_FIRST_GEN": 0.875,
-      "ORTH_LAST_GEN": 0.25,
-      "CONTAINS_GEN": 0.5625,
-      "ANTONYM_GEN": 0.8125,
-      "ALPHA_GEN": 0.1875,
-      "PLURAL_GEN": 1.0,
+      "PLURAL_GEN": 0.9375,
+      "PAST_TENSE_GEN": 0.9688,
       "SEQ_GEN": 1.0,
+      "CAPITAL_GEN": 1.0,
+      "ELEMENT_GEN": 0.9375,
+      "ORTH_FIRST_GEN": 0.875,
+      "ANTONYM_GEN": 0.8125,
       "MUL_GEN": 1.0
     },
     "per_subtask_verbose": {
-      "ORTH_FIRST_GEN": 0.8125,
-      "ORTH_LAST_GEN": 0.4375,
-      "CONTAINS_GEN": 0.375,
-      "ANTONYM_GEN": 0.75,
-      "ALPHA_GEN": 0.3125,
       "PLURAL_GEN": 1.0,
+      "PAST_TENSE_GEN": 1.0,
       "SEQ_GEN": 1.0,
+      "CAPITAL_GEN": 1.0,
+      "ELEMENT_GEN": 0.875,
+      "ORTH_FIRST_GEN": 0.8125,
+      "ANTONYM_GEN": 0.75,
       "MUL_GEN": 1.0
     },
     "repetition_guard_fires_plain": 0,
@@ -76,14 +79,17 @@
   },
   "format_invariance_selected": {
     "selected": [
+      "CAPITAL_GEN",
+      "ELEMENT_GEN",
+      "PAST_TENSE_GEN",
       "PLURAL_GEN",
       "SEQ_GEN"
     ],
-    "aggregate_plain": 1.0,
-    "aggregate_verbose": 1.0,
-    "abs_delta": 0.0
+    "aggregate_plain": 0.9688,
+    "aggregate_verbose": 0.975,
+    "abs_delta": 0.0062
   },
   "format_invariance_max": 0.0722,
   "format_invariance_max_fraction_of_price": 0.7943,
-  "aggregate_selected": 1.0
+  "aggregate_selected": 0.9688
 }

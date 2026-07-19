@@ -1,4 +1,4 @@
-# Generation-battery re-authoring -- STATUS: authored, reviewed, NOT integrated
+# Generation-battery re-authoring -- RESOLVED: integrated, selftest green, calibration passes
 
 **2026-07-18. Zero GPU spent on this step beyond two base-only probes. Nothing frozen, nothing
 integrated, `capability_battery_gen.py` is UNCHANGED on disk.**
@@ -85,3 +85,68 @@ the three dead orthographic families on top would cost 3.56. Those three (ALPHA 
 0.2500, CONTAINS 0.5625) can never be selected, so they are pure cost and should be dropped.
 ORTH_FIRST_GEN and ANTONYM_GEN are retained regardless of selection: the selftest uses them as
 fixtures for the echo guard (the only list-format family) and the variant path.
+
+---
+
+## RESOLVED (same night) -- INTEGRATED, SELFTEST GREEN, CALIBRATION PASSES, RUN UNBLOCKED
+
+Everything above describes the draft state. It is now integrated. `_gen_integrate.py` performed the
+splice; `_gen_bank_validate.py` pre-verified the banks before it.
+
+**Design settled by measurement:**
+- ADDED, all validated CLEAN: PAST_TENSE_GEN (32), CAPITAL_GEN (32), ELEMENT_GEN (32).
+- REPLACED: PLURAL_GEN (32).
+- TRIMMED: SEQ_GEN to its 17 DISTINCT-gold facts. 12 months + 7 days give only 19 adjacencies, so
+  padding to 32 forced logical inverses that are not independent measurements, and independence is
+  what the power arithmetic assumes.
+- DROPPED: ALPHA_GEN, ORTH_LAST_GEN, CONTAINS_GEN -- at or near the floor, never selectable, so pure
+  decode cost. ALPHA sits at 0.167 on BOTH a 1.5B and a 0.5B: pinned, no signal in either direction.
+- NOT ADDED: ORDINAL_GEN -- duplicates SEQ_GEN's construct, 13 of 32 items were logical inverses
+  sharing a gold, and its golds ('second', 'third') carry incidental-containment risk.
+- RETAINED as fixtures: ORTH_FIRST_GEN, ANTONYM_GEN. Both measured under the floor and correctly
+  excluded by selection; they exist to exercise the echo guard (the only list-format family) and the
+  variant path.
+
+**Verification, in order:**
+- `_gen_bank_validate.py`: 4 banks CLEAN outright; the only failures were duplicate golds in SEQ and
+  ORDINAL, which drove the trim and the drop. No predicate-mismatch, no stoplist violation, no
+  short answer, no answer-in-question anywhere in the integrated set.
+- `--selftest`: **813/813**, up from 649/649. Every one of the 145 new items had its gold RECOMPUTED
+  from its own predicate. Zero non-ASCII.
+- `--dry`: 52/52 still green; the harness is unaffected.
+- `--calibrate`: **ok=True, selection_ok=True, fi_ok=True.**
+
+```
+survivors = ['CAPITAL_GEN','ELEMENT_GEN','PAST_TENSE_GEN','PLURAL_GEN','SEQ_GEN']
+SEQ 1.0000  CAPITAL 1.0000  PAST_TENSE 0.9688  PLURAL 0.9375  ELEMENT 0.9375
+excluded: ORTH_FIRST 0.8750, ANTONYM 0.8125     selected aggregate 0.9688
+format-invariance delta 0.0062 (max 0.0722)     guard fires: 0 repetition, 0 echo
+```
+
+Five survivors against `MIN_DISJOINT=3`. **The run is no longer blocked.**
+
+**Realized power at the selection, unchanged bar, corrected signal mapping:**
+
+| trajectory floor | slope SE | vs bar | sensitivity | false-positive |
+|---|---|---|---|---|
+| 0.0000 | 0.0053 | 0.35x | 0.996 | 0.000 |
+| 0.0198 (est) | 0.0072 | 0.48x | 0.973 | 0.000 |
+| 0.0300 | 0.0092 | 0.60x | 0.937 | 0.001 |
+| 0.0500 | 0.0136 | 0.89x | 0.840 | 0.013 |
+
+Robust across the whole band the trajectory floor could occupy. The gain comes from two places: 145
+selected items instead of 48, and a clean aggregate of 0.9688 instead of ~0.86, which cuts the
+binomial variance sharply. Note the binding constraint has now MOVED -- sampling SD is 0.0211 against
+a trajectory floor around 0.0198, so further item growth has diminishing returns and the
+seed-trajectory term dominates.
+
+**What is still owed before a freeze.** This is a calibration pass, not a licence to run:
+1. The 33 review defects were addressed by SELECTION (drop ORDINAL, trim SEQ) and by validation, not
+   by item-level repair. The four CLEAN banks were validated mechanically, but the reviewers' MINOR
+   flags on them -- over-permissive variants ('delhi' for New Delhi), the ELEMENT symbol-derivability
+   observation -- were NOT individually adjudicated.
+2. `--calibrate` does not validate golds. A gold wrong in the same direction the base model is wrong
+   still reads as capability failure.
+3. The trajectory floor remains unidentified; the power table is a band, not a point.
+4. Panel #8's other owed items are untouched: absolute-denominate `INJECTION_GRID`, drop `dose_slope`
+   from the COUPLED verdict string, add `--dry` fixtures that can detect a threshold change.

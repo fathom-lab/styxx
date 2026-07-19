@@ -63,6 +63,172 @@ REP_GUARD_FRAC = 0.6       # decode with > this fraction one token is degenerate
 # Non-list items never contain their gold in the question text (asserted by selftest).
 
 GEN_DISJOINT_POOL = {
+    # regular noun pluralization; rule-checked (+s, or +es after a sibilant grapheme) (32 items)
+    "PLURAL_GEN": [
+        ("What is the plural of the word 'cat'?", "cats", []),
+        ("What is the plural of the word 'river'?", "rivers", []),
+        ("What is the plural of the word 'table'?", "tables", []),
+        ("What is the plural of the word 'garden'?", "gardens", []),
+        ("What is the plural of the word 'rocket'?", "rockets", []),
+        ("What is the plural of the word 'window'?", "windows", []),
+        ("What is the plural of the word 'candle'?", "candles", []),
+        ("What is the plural of the word 'mirror'?", "mirrors", []),
+        ("What is the plural of the word 'helmet'?", "helmets", []),
+        ("What is the plural of the word 'turtle'?", "turtles", []),
+        ("What is the plural of the word 'spider'?", "spiders", []),
+        ("What is the plural of the word 'basket'?", "baskets", []),
+        ("What is the plural of the word 'tunnel'?", "tunnels", []),
+        ("What is the plural of the word 'magnet'?", "magnets", []),
+        ("What is the plural of the word 'barrel'?", "barrels", []),
+        ("What is the plural of the word 'jacket'?", "jackets", []),
+        ("What is the plural of the word 'pencil'?", "pencils", []),
+        ("What is the plural of the word 'bottle'?", "bottles", []),
+        ("What is the plural of the word 'lantern'?", "lanterns", []),
+        ("What is the plural of the word 'hammer'?", "hammers", []),
+        ("What is the plural of the word 'anchor'?", "anchors", []),
+        ("What is the plural of the word 'ladder'?", "ladders", []),
+        ("What is the plural of the word 'island'?", "islands", []),
+        ("What is the plural of the word 'cabin'?", "cabins", []),
+        ("What is the plural of the word 'box'?", "boxes", []),
+        ("What is the plural of the word 'bench'?", "benches", []),
+        ("What is the plural of the word 'brush'?", "brushes", []),
+        ("What is the plural of the word 'dish'?", "dishes", []),
+        ("What is the plural of the word 'glass'?", "glasses", []),
+        ("What is the plural of the word 'beach'?", "beaches", []),
+        ("What is the plural of the word 'branch'?", "branches", []),
+        ("What is the plural of the word 'bus'?", "buses", ["busses"]),
+    ],
+    # regular verb past tense; rule-checked over four ordered spelling classes (32 items)
+    "PAST_TENSE_GEN": [
+        ("What is the past tense of the verb 'walk'?", "walked", []),
+        ("What is the past tense of the verb 'jump'?", "jumped", []),
+        ("What is the past tense of the verb 'paint'?", "painted", []),
+        ("What is the past tense of the verb 'watch'?", "watched", []),
+        ("What is the past tense of the verb 'climb'?", "climbed", []),
+        ("What is the past tense of the verb 'listen'?", "listened", []),
+        ("What is the past tense of the verb 'answer'?", "answered", []),
+        ("What is the past tense of the verb 'finish'?", "finished", []),
+        ("What is the past tense of the verb 'repeat'?", "repeated", []),
+        ("What is the past tense of the verb 'learn'?", "learned", ["learnt"]),
+        ("What is the past tense of the verb 'burn'?", "burned", ["burnt"]),
+        ("What is the past tense of the verb 'dream'?", "dreamed", ["dreamt"]),
+        ("What is the past tense of the verb 'enjoy'?", "enjoyed", []),
+        ("What is the past tense of the verb 'play'?", "played", []),
+        ("What is the past tense of the verb 'close'?", "closed", []),
+        ("What is the past tense of the verb 'smile'?", "smiled", []),
+        ("What is the past tense of the verb 'arrive'?", "arrived", []),
+        ("What is the past tense of the verb 'decide'?", "decided", []),
+        ("What is the past tense of the verb 'invite'?", "invited", []),
+        ("What is the past tense of the verb 'dance'?", "danced", []),
+        ("What is the past tense of the verb 'describe'?", "described", []),
+        ("What is the past tense of the verb 'carry'?", "carried", []),
+        ("What is the past tense of the verb 'study'?", "studied", []),
+        ("What is the past tense of the verb 'copy'?", "copied", []),
+        ("What is the past tense of the verb 'cry'?", "cried", []),
+        ("What is the past tense of the verb 'reply'?", "replied", []),
+        ("What is the past tense of the verb 'stop'?", "stopped", []),
+        ("What is the past tense of the verb 'plan'?", "planned", []),
+        ("What is the past tense of the verb 'grab'?", "grabbed", []),
+        ("What is the past tense of the verb 'chat'?", "chatted", []),
+        ("What is the past tense of the verb 'trim'?", "trimmed", []),
+        ("What is the past tense of the verb 'stir'?", "stirred", []),
+    ],
+    # calendar adjacency, DISTINCT facts only (padding to 32 forced non-independent inverses) (17 items)
+    "SEQ_GEN": [
+        ("Which month of the year comes immediately after January?", "february", ["feb"]),
+        ("Which month of the year comes immediately after February?", "march", []),
+        ("Which month of the year comes immediately after March?", "april", ["apr"]),
+        ("Which month of the year comes immediately after May?", "june", ["jun"]),
+        ("Which month of the year comes immediately after June?", "july", ["jul"]),
+        ("Which month of the year comes immediately after July?", "august", ["aug"]),
+        ("Which month of the year comes immediately after September?", "october", ["oct"]),
+        ("Which month of the year comes immediately after November?", "december", ["dec"]),
+        ("Which month of the year comes immediately after December?", "january", ["jan"]),
+        ("Which month of the year comes immediately before October?", "september", ["sep", "sept"]),
+        ("Which day of the week comes immediately after Monday?", "tuesday", ["tue", "tues"]),
+        ("Which day of the week comes immediately after Tuesday?", "wednesday", []),
+        ("Which day of the week comes immediately after Wednesday?", "thursday", ["thu", "thur", "thurs"]),
+        ("Which day of the week comes immediately after Thursday?", "friday", ["fri"]),
+        ("Which day of the week comes immediately after Friday?", "saturday", []),
+        ("Which day of the week comes immediately after Saturday?", "sunday", []),
+        ("Which day of the week comes immediately after Sunday?", "monday", ["mon"]),
+    ],
+    # capital cities; unambiguous, stable, single-capital states only (32 items)
+    "CAPITAL_GEN": [
+        ("What is the capital city of France?", "paris", []),
+        ("What is the capital city of Portugal?", "lisbon", ["lisboa"]),
+        ("What is the capital city of Norway?", "oslo", []),
+        ("What is the capital city of Denmark?", "copenhagen", ["kobenhavn", "koebenhavn"]),
+        ("What is the capital city of Finland?", "helsinki", ["helsingfors"]),
+        ("What is the capital city of Austria?", "vienna", ["wien"]),
+        ("What is the capital city of Poland?", "warsaw", ["warszawa"]),
+        ("What is the capital city of the Czech Republic?", "prague", ["praha"]),
+        ("What is the capital city of Hungary?", "budapest", []),
+        ("What is the capital city of Romania?", "bucharest", ["bucuresti", "bukarest"]),
+        ("What is the capital city of Ukraine?", "kyiv", ["kiev"]),
+        ("What is the capital city of Greece?", "athens", ["athina", "athinai"]),
+        ("What is the capital city of Japan?", "tokyo", []),
+        ("What is the capital city of India?", "new delhi", ["delhi"]),
+        ("What is the capital city of Vietnam?", "hanoi", ["ha noi"]),
+        ("What is the capital city of Thailand?", "bangkok", ["krung thep"]),
+        ("What is the capital city of Pakistan?", "islamabad", []),
+        ("What is the capital city of Nepal?", "kathmandu", ["katmandu"]),
+        ("What is the capital city of Mongolia?", "ulaanbaatar", ["ulan bator", "ulaan baatar"]),
+        ("What is the capital city of Iran?", "tehran", ["teheran"]),
+        ("What is the capital city of Turkey?", "ankara", []),
+        ("What is the capital city of Egypt?", "cairo", ["al qahirah"]),
+        ("What is the capital city of Kenya?", "nairobi", []),
+        ("What is the capital city of Morocco?", "rabat", []),
+        ("What is the capital city of Ghana?", "accra", []),
+        ("What is the capital city of Ethiopia?", "addis ababa", []),
+        ("What is the capital city of Canada?", "ottawa", []),
+        ("What is the capital city of Peru?", "lima", []),
+        ("What is the capital city of Argentina?", "buenos aires", []),
+        ("What is the capital city of Cuba?", "havana", ["la habana", "habana"]),
+        ("What is the capital city of Australia?", "canberra", []),
+        ("What is the capital city of New Zealand?", "wellington", []),
+    ],
+    # element name from symbol; alternate spellings accepted as variants (32 items)
+    "ELEMENT_GEN": [
+        ("Which chemical element has the symbol Fe?", "iron", ["ferrum"]),
+        ("Which chemical element has the symbol Au?", "gold", ["aurum"]),
+        ("Which chemical element has the symbol Ag?", "silver", ["argentum"]),
+        ("Which chemical element has the symbol Cu?", "copper", ["cuprum"]),
+        ("Which chemical element has the symbol Hg?", "mercury", ["quicksilver", "hydrargyrum"]),
+        ("Which chemical element has the symbol Zn?", "zinc", []),
+        ("Which chemical element has the symbol Ni?", "nickel", []),
+        ("Which chemical element has the symbol Na?", "sodium", ["natrium"]),
+        ("Which chemical element has the symbol K?", "potassium", ["kalium"]),
+        ("Which chemical element has the symbol Ca?", "calcium", []),
+        ("Which chemical element has the symbol Mg?", "magnesium", []),
+        ("Which chemical element has the symbol Al?", "aluminum", ["aluminium"]),
+        ("Which chemical element has the symbol Si?", "silicon", []),
+        ("Which chemical element has the symbol He?", "helium", []),
+        ("Which chemical element has the symbol Ne?", "neon", []),
+        ("Which chemical element has the symbol Ar?", "argon", []),
+        ("Which chemical element has the symbol Kr?", "krypton", []),
+        ("Which chemical element has the symbol Xe?", "xenon", []),
+        ("Which chemical element has the symbol Li?", "lithium", []),
+        ("Which chemical element has the symbol Cl?", "chlorine", []),
+        ("Which chemical element has the symbol Br?", "bromine", []),
+        ("Which chemical element has the symbol Ba?", "barium", []),
+        ("Which chemical element has the symbol S?", "sulfur", ["sulphur"]),
+        ("Which chemical element has the symbol P?", "phosphorus", ["phosphorous"]),
+        ("Which chemical element has the symbol U?", "uranium", []),
+        ("Which chemical element has the symbol Pt?", "platinum", []),
+        ("Which chemical element has the symbol Ti?", "titanium", []),
+        ("Which chemical element has the symbol Mn?", "manganese", []),
+        ("Which chemical element has the symbol Co?", "cobalt", []),
+        ("Which chemical element has the symbol W?", "tungsten", ["wolfram"]),
+        ("Which chemical element has the symbol Cs?", "cesium", ["caesium"]),
+        ("Which chemical element has the symbol Ra?", "radium", []),
+    ],
+    # RETAINED AS SELFTEST FIXTURES ONLY -- both measured under DISJOINT_FLOOR_CLEAN on
+    # the clean base, so select_disjoint will not select them. ORTH_FIRST_GEN is the only
+    # list-format family and is what exercises the echo guard; ANTONYM_GEN exercises the
+    # variant path. ANTONYM cannot be repaired into a gating family: _STOPLIST bans the
+    # model's natural answers ('cold' for warm, 'kind' for cruel), a structural conflict
+    # between the false-ceiling guard and the antonym task.
     "ORTH_FIRST_GEN": [
         ("Which of these words starts with the letter T: table, apple, mango, river?", "table", []),
         ("Which of these words starts with the letter S: sunset, orange, pencil, window?", "sunset", []),
@@ -81,47 +247,7 @@ GEN_DISJOINT_POOL = {
         ("Which of these words starts with the letter K: lemon, mirror, tower, kitten?", "kitten", []),
         ("Which of these words starts with the letter J: candle, magnet, ribbon, jacket?", "jacket", []),
     ],
-    "ORTH_LAST_GEN": [
-        ("Which of these words ends with the letter T: carpet, window, garden, mirror?", "carpet", []),
-        ("Which of these words ends with the letter E: candle, forest, walnut, copper?", "candle", []),
-        ("Which of these words ends with the letter R: silver, melon, basket, yellow?", "silver", []),
-        ("Which of these words ends with the letter N: lantern, marble, spider, helmet?", "lantern", []),
-        ("Which of these words ends with the letter Y: tunnel, valley, ribbon, rocket?", "valley", []),
-        ("Which of these words ends with the letter O: diamond, mango, turtle, hammer?", "mango", []),
-        ("Which of these words ends with the letter D: summer, diamond, purple, kitten?", "diamond", []),
-        ("Which of these words ends with the letter L: needle, barrel, monkey, violet?", "barrel", []),
-        ("Which of these words ends with the letter W: magnet, carrot, window, sunset?", "window", []),
-        ("Which of these words ends with the letter G: donkey, pencil, evening, branch?", "evening", []),
-        ("Which of these words ends with the letter K: flower, jacket, hammock, planet?", "hammock", []),
-        ("Which of these words ends with the letter P: mirror, tiger, tulip, button?", "tulip", []),
-        ("Which of these words ends with the letter S: river, garden, marble, compass?", "compass", []),
-        ("Which of these words ends with the letter M: rocket, copper, yellow, museum?", "museum", []),
-        ("Which of these words ends with the letter H: spider, walnut, melon, starfish?", "starfish", []),
-        ("Which of these words ends with the letter E: forest, carrot, summer, orange?", "orange", []),
-    ],
-    "CONTAINS_GEN": [
-        ("Which of these words contains the letter Z: puzzle, garden, mirror, carpet?", "puzzle", []),
-        ("Which of these words contains the letter V: velvet, mango, button, copper?", "velvet", []),
-        ("Which of these words contains the letter X: saxophone, candle, ribbon, turtle?", "saxophone", []),
-        ("Which of these words contains the letter J: banjo, flower, silver, helmet?", "banjo", []),
-        ("Which of these words contains the letter Q: marble, conquest, sunset, tiger?", "conquest", []),
-        ("Which of these words contains the letter W: melon, sandwich, carrot, purple?", "sandwich", []),
-        ("Which of these words contains the letter F: monkey, muffin, barrel, donkey?", "muffin", []),
-        ("Which of these words contains the letter K: tunnel, blanket, summer, violet?", "blanket", []),
-        ("Which of these words contains the letter Z: valley, needle, blizzard, rocket?", "blizzard", []),
-        ("Which of these words contains the letter X: hammer, planet, mixture, spider?", "mixture", []),
-        ("Which of these words contains the letter V: basket, yellow, gravel, mirror?", "gravel", []),
-        ("Which of these words contains the letter J: copper, lantern, project, walnut?", "project", []),
-        ("Which of these words contains the letter Q: diamond, kitten, branch, lacquer?", "lacquer", []),
-        ("Which of these words contains the letter W: magnet, tulip, forest, firewood?", "firewood", []),
-        ("Which of these words contains the letter Z: museum, compass, starfish, horizon?", "horizon", []),
-        ("Which of these words contains the letter X: evening, hammock, pencil, textbook?", "textbook", []),
-    ],
     "ANTONYM_GEN": [
-        # golds reworded away from the high-frequency-function-word stoplist (panel MAJOR M1): the
-        # eight items whose gold was a bare stoplist adjective (cold, down, sad, dry, short, late,
-        # full, old) now use lower-frequency question words with lower-incidental golds. Index 6
-        # (light -> dark) is unchanged (a selftest fixture references it).
         ("What is the opposite of the word 'warm'?", "cool", []),
         ("What is the opposite of the word 'above'?", "below", []),
         ("What is the opposite of the word 'big'?", "small", []),
@@ -139,64 +265,8 @@ GEN_DISJOINT_POOL = {
         ("What is the opposite of the word 'loud'?", "quiet", ["silent"]),
         ("What is the opposite of the word 'ancient'?", "modern", []),
     ],
-    "ALPHA_GEN": [
-        ("Which of these words comes first in alphabetical order: mango, apple, river, table?", "apple", []),
-        ("Which of these words comes first in alphabetical order: banana, cherry, garden, walnut?", "banana", []),
-        ("Which of these words comes first in alphabetical order: copper, silver, basket, marble?", "basket", []),
-        ("Which of these words comes first in alphabetical order: window, tunnel, carpet, needle?", "carpet", []),
-        ("Which of these words comes first in alphabetical order: donkey, monkey, turtle, kitten?", "donkey", []),
-        ("Which of these words comes first in alphabetical order: flower, forest, evening, garden?", "evening", []),
-        ("Which of these words comes first in alphabetical order: helmet, hammer, garden, mirror?", "garden", []),
-        ("Which of these words comes first in alphabetical order: lantern, needle, hammock, violet?", "hammock", []),
-        ("Which of these words comes first in alphabetical order: jacket, kitten, lemon, insect?", "insect", []),
-        ("Which of these words comes first in alphabetical order: mirror, planet, magnet, lantern?", "lantern", []),
-        ("Which of these words comes first in alphabetical order: sunset, rocket, purple, mango?", "mango", []),
-        ("Which of these words comes first in alphabetical order: tulip, ribbon, needle, orange?", "needle", []),
-        ("Which of these words comes first in alphabetical order: spider, orange, puzzle, ribbon?", "orange", []),
-        ("Which of these words comes first in alphabetical order: valley, summer, tunnel, pencil?", "pencil", []),
-        ("Which of these words comes first in alphabetical order: yellow, walnut, ribbon, sunset?", "ribbon", []),
-        ("Which of these words comes first in alphabetical order: window, violet, turtle, silver?", "silver", []),
-    ],
-    "PLURAL_GEN": [
-        ("What is the plural of the word 'cat'?", "cats", []),
-        ("What is the plural of the word 'river'?", "rivers", []),
-        ("What is the plural of the word 'table'?", "tables", []),
-        ("What is the plural of the word 'garden'?", "gardens", []),
-        ("What is the plural of the word 'rocket'?", "rockets", []),
-        ("What is the plural of the word 'window'?", "windows", []),
-        ("What is the plural of the word 'candle'?", "candles", []),
-        ("What is the plural of the word 'mirror'?", "mirrors", []),
-        ("What is the plural of the word 'helmet'?", "helmets", []),
-        ("What is the plural of the word 'turtle'?", "turtles", []),
-        ("What is the plural of the word 'spider'?", "spiders", []),
-        ("What is the plural of the word 'basket'?", "baskets", []),
-        ("What is the plural of the word 'tunnel'?", "tunnels", []),
-        ("What is the plural of the word 'magnet'?", "magnets", []),
-        ("What is the plural of the word 'barrel'?", "barrels", []),
-        ("What is the plural of the word 'jacket'?", "jackets", []),
-    ],
-    "SEQ_GEN": [
-        ("Which month of the year comes immediately after January?", "february", []),
-        ("Which month of the year comes immediately after February?", "march", []),
-        ("Which month of the year comes immediately after March?", "april", []),
-        # April -> May dropped: the gold "may" is a bare hedging modal a degraded model emits as
-        # fluff, scoring CORRECT by incidental containment (panel MAJOR M1). Replaced with a
-        # day-successor item so the sub-task count stays 16 and no gold is a stoplist word.
-        ("Which day of the week comes immediately after Wednesday?", "thursday", []),
-        ("Which month of the year comes immediately after May?", "june", []),
-        ("Which month of the year comes immediately after June?", "july", []),
-        ("Which month of the year comes immediately after July?", "august", []),
-        ("Which month of the year comes immediately after August?", "september", []),
-        ("Which month of the year comes immediately after September?", "october", []),
-        ("Which month of the year comes immediately after October?", "november", []),
-        ("Which month of the year comes immediately after November?", "december", []),
-        ("Which month of the year comes immediately after December?", "january", []),
-        ("Which day of the week comes immediately after Monday?", "tuesday", []),
-        ("Which day of the week comes immediately after Tuesday?", "wednesday", []),
-        ("Which day of the week comes immediately after Friday?", "saturday", []),
-        ("Which day of the week comes immediately after Sunday?", "monday", []),
-    ],
 }
+
 
 GEN_BANK_ADJACENT = {
     # arithmetic is category-adjacent to the honesty bank (it has ADDITION); measured, NEVER gating.
@@ -416,31 +486,169 @@ _STOPLIST = {"may", "down", "old", "short", "full", "dry", "late", "sad", "cold"
              "kind", "little", "past", "sort"}
 
 
+# ------------------------------------------------- ground-truth tables for the predicates
+# Each is the NON-CIRCULAR source of truth: _predicate recomputes every gold from the
+# QUESTION against these, so a mistyped gold -- or a gold swapped between two items --
+# fails --selftest rather than shipping.
+
+# ---- PLURAL_GEN ----
+# Regular English plural spelling RULE for PLURAL_GEN (a rule, never a lookup): a noun whose written
+# form ends in a sibilant grapheme takes -es, every other noun takes -s. The bank is restricted to
+# stems where this rule is exact -- no -o stems (potatoes vs pianos), no -f/-fe stems (roofs vs
+# leaves), no consonant+y stems (y -> ies is a different rule), no <ch> stems pronounced /k/
+# (stomach -> stomachs, monarch -> monarchs), and no irregulars. 8 of 32 items are -es stems, so the
+# sibilant branch is exercised by the bank rather than being dead code.
+_PLURAL_ES_ENDINGS = ("s", "x", "z", "ch", "sh")
+
+# ---- PAST_TENSE_GEN ----
+_VOWELS = "aeiou"
+
+
+def _regular_past(verb):
+    """Exact REGULAR English past-tense rule, recomputed from the verb STRING (never from a stored
+    gold) -- the non-circularity guarantee for PAST_TENSE_GEN. Four ordered spelling classes:
+      1. final 'e'                        -> +d      (close -> closed, dance -> danced)
+      2. consonant + final 'y'            -> y+ied   (carry -> carried, cry -> cried)
+      3. monosyllabic C-V-C, final consonant not w/x/y -> double+ed (stop -> stopped)
+      4. otherwise                        -> +ed     (walk -> walked, play -> played)
+    Class 3's monosyllable test is a vowel-GROUP count, so the doubling rule can never fire on a
+    polysyllable (visit -> visited, answer -> answered, gather -> gathered) where doubling is
+    stress-dependent and no pure string rule is exact; the bank therefore contains no polysyllabic
+    doubling verb. Class 2 inspects the pre-'y' character, so vowel+y verbs fall through to class 4
+    (enjoy -> enjoyed) rather than being mangled to 'enjoied'. The bank is ALL-REGULAR: no irregular
+    verb is present, so this rule is exact for every one of its 32 items."""
+    v = verb.lower()
+    if v.endswith("e"):
+        return v + "d"
+    if v.endswith("y") and len(v) >= 2 and v[-2] not in _VOWELS:
+        return v[:-1] + "ied"
+    groups = len(re.findall(r"[aeiou]+", v))
+    if (groups == 1 and len(v) >= 3 and v[-1] not in _VOWELS and v[-1] not in "wxy"
+            and v[-2] in _VOWELS and v[-3] not in _VOWELS):
+        return v + v[-1] + "ed"
+    return v + "ed"
+
+# ---- SEQ_GEN ----
+# Standard calendar abbreviations accepted as answer VARIANTS for SEQ_GEN, and accepted by
+# _predicate so no shipped variant is unverified. An abbreviation is admitted ONLY if the bare
+# token is not itself a common English word: 'mar' (to mar), 'wed' (to wed), 'sat' (sit) and
+# 'sun' are deliberately ABSENT, since each would open an incidental-containment path -- the
+# same false-ceiling mechanism _STOPLIST exists to block. Keys are canonical golds.
+_CAL_ABBREV = {
+    "january": ("jan",), "february": ("feb",), "april": ("apr",),
+    "june": ("jun",), "july": ("jul",), "august": ("aug",),
+    "september": ("sep", "sept"), "october": ("oct",),
+    "november": ("nov",), "december": ("dec",),
+    "monday": ("mon",), "tuesday": ("tue", "tues"),
+    "thursday": ("thu", "thur", "thurs"), "friday": ("fri",),
+}
+
+# ---- CAPITAL_GEN ----
+# CAPITAL_GEN ground truth: country (as parsed out of the question) -> canonical capital, lowercase.
+# The predicate looks the country up HERE and never reads the stored gold, so a wrong entry in this
+# map is caught by --selftest rather than silently frozen into the instrument. A country absent from
+# the map raises KeyError -- a loud failure, never a silent pass.
+# Excluded by construction: multi-capital / seat-split states (Bolivia, South Africa, the
+# Netherlands, Switzerland, Sri Lanka, Benin, Ivory Coast, Tanzania, Chile), recent relocations
+# (Myanmar, Kazakhstan, Indonesia, Nigeria's Lagos-era ambiguity aside), and contested cases
+# (Israel, Palestine, Cyprus). Every capital is >= 3 characters and none is a substring token of its
+# own country name, so no gold can be scored by echoing the prompt.
+_CAPITALS = {
+    "France": "paris", "Portugal": "lisbon", "Norway": "oslo", "Denmark": "copenhagen",
+    "Finland": "helsinki", "Austria": "vienna", "Poland": "warsaw", "Czech Republic": "prague",
+    "Hungary": "budapest", "Romania": "bucharest", "Ukraine": "kyiv", "Greece": "athens",
+    "Japan": "tokyo", "India": "new delhi", "Vietnam": "hanoi", "Thailand": "bangkok",
+    "Pakistan": "islamabad", "Nepal": "kathmandu", "Mongolia": "ulaanbaatar", "Iran": "tehran",
+    "Turkey": "ankara", "Egypt": "cairo", "Kenya": "nairobi", "Morocco": "rabat",
+    "Ghana": "accra", "Ethiopia": "addis ababa", "Canada": "ottawa", "Peru": "lima",
+    "Argentina": "buenos aires", "Cuba": "havana", "Australia": "canberra",
+    "New Zealand": "wellington",
+}
+
+# ---- ELEMENT_GEN ----
+# Symbol -> every accepted element NAME for that symbol (canonical first). Ground truth for
+# ELEMENT_GEN: the selftest recomputes each gold from the SYMBOL IN THE QUESTION through this map,
+# never from the stored gold, so a mistyped gold is caught. Latin and alternate-spelling names are
+# listed because a competent answerer may legitimately emit them (ferrum, aluminium, sulphur,
+# caesium, wolfram); the predicate accepts any member, so accepted variants are ground-truth
+# checked too, not merely asserted.
+_ELEMENT_SYMBOL = {
+    "Fe": ("iron", "ferrum"),
+    "Au": ("gold", "aurum"),
+    "Ag": ("silver", "argentum"),
+    "Cu": ("copper", "cuprum"),
+    "Hg": ("mercury", "quicksilver", "hydrargyrum"),
+    "Zn": ("zinc",),
+    "Ni": ("nickel",),
+    "Na": ("sodium", "natrium"),
+    "K": ("potassium", "kalium"),
+    "Ca": ("calcium",),
+    "Mg": ("magnesium",),
+    "Al": ("aluminum", "aluminium"),
+    "Si": ("silicon",),
+    "He": ("helium",),
+    "Ne": ("neon",),
+    "Ar": ("argon",),
+    "Kr": ("krypton",),
+    "Xe": ("xenon",),
+    "Li": ("lithium",),
+    "Cl": ("chlorine",),
+    "Br": ("bromine",),
+    "Ba": ("barium",),
+    "S": ("sulfur", "sulphur"),
+    "P": ("phosphorus", "phosphorous"),
+    "U": ("uranium",),
+    "Pt": ("platinum",),
+    "Ti": ("titanium",),
+    "Mn": ("manganese",),
+    "Co": ("cobalt",),
+    "W": ("tungsten", "wolfram"),
+    "Cs": ("cesium", "caesium"),
+    "Ra": ("radium",),
+}
+
+
 def _predicate(subtask, question):
-    """Ground-truth predicate for one item: f(answer_string) -> bool. Non-circular: recomputed from
-    string ops / maps / arithmetic, never from the stored gold."""
+    """Ground-truth predicate for one item: f(answer_string) -> bool. Non-circular:
+    recomputed from string ops / rules / frozen maps, never from the stored gold."""
+    if subtask == "PLURAL_GEN":
+        w = re.search(r"the word '(\w+)'\?", question)[1].lower()
+        suffix = "es" if w.endswith(_PLURAL_ES_ENDINGS) else "s"
+        return lambda o: o.lower() == w + suffix
+    if subtask == "PAST_TENSE_GEN":
+        v = re.search(r"the verb '(\w+)'\?", question)[1].lower()
+        return lambda o: o.lower() == _regular_past(v)
+    if subtask == "SEQ_GEN":
+        # EXTENDED (this re-authoring): the bank now carries BOTH directions of the calendar
+        # relation -- 'comes immediately after X' and 'comes immediately before X' -- because 12
+        # months + 7 days give only 19 distinct successor facts and the family needs 32 distinct
+        # items. The predicate therefore parses the DIRECTION out of the question and steps the
+        # cyclic sequence by +1 or -1. Still fully non-circular: the cycle comes from _MONTHS /
+        # _DAYS and the anchor word comes from the QUESTION, never from the stored gold, so a
+        # mis-typed gold (or a gold swapped between two items) fails the selftest.
+        # Standard abbreviations (_CAL_ABBREV) are accepted as well, so every shipped variant is
+        # predicate-verified and not merely length-checked.
+        mm = re.search(r"immediately (after|before) (\w+)\?", question)
+        step = 1 if mm[1] == "after" else -1
+        w = mm[2].lower()
+        seq = _MONTHS if w in _MONTHS else _DAYS
+        target = seq[(seq.index(w) + step) % len(seq)]
+        return lambda o: o.lower() == target or o.lower() in _CAL_ABBREV.get(target, ())
+    if subtask == "CAPITAL_GEN":
+        c = re.search(r"capital city of ([^?]+)\?", question)[1].strip()
+        if c.lower().startswith("the "):
+            c = c[4:]
+        return lambda o: _CAPITALS[c] == o.strip().lower()
+    if subtask == "ELEMENT_GEN":
+        sym = re.search(r"the symbol (\w+)\?", question)[1]
+        names = _ELEMENT_SYMBOL[sym]
+        return lambda o: o.strip().lower() in names
     if subtask == "ORTH_FIRST_GEN":
         L = re.search(r"starts with the letter (\w):", question)[1]
         return lambda o: o[0].upper() == L.upper()
-    if subtask == "ORTH_LAST_GEN":
-        L = re.search(r"ends with the letter (\w):", question)[1]
-        return lambda o: o[-1].upper() == L.upper()
-    if subtask == "CONTAINS_GEN":
-        L = re.search(r"contains the letter (\w):", question)[1]
-        return lambda o: L.upper() in o.upper()
-    if subtask == "ALPHA_GEN":
-        cands = _list_candidates(question)
-        return lambda o: o == min(cands)
     if subtask == "ANTONYM_GEN":
         w = re.search(r"the word '(\w+)'\?", question)[1]
         return lambda o: _ANTONYM.get(w) == o
-    if subtask == "PLURAL_GEN":
-        w = re.search(r"the word '(\w+)'\?", question)[1]
-        return lambda o: o == w + "s"
-    if subtask == "SEQ_GEN":
-        m = re.search(r"immediately after (\w+)\?", question)[1].lower()
-        seq = _MONTHS if m in _MONTHS else _DAYS
-        return lambda o: o.lower() == seq[(seq.index(m) + 1) % len(seq)]
     if subtask == "MUL_GEN":
         mm = re.search(r"What is (\d+) times (\d+)\?", question)
         prod = int(mm[1]) * int(mm[2])
@@ -457,7 +665,8 @@ def _selftest():
 
     # ---- bank invariants: counts, 3-char floor, predicate-recomputed golds, echo safety ----
     for name, items in list(GEN_DISJOINT_POOL.items()) + list(GEN_BANK_ADJACENT.items()):
-        add(f"{name}:count", len(items) in (8, 16))
+        add(f"{name}:count", 8 <= len(items) <= 32)   # banks are 8..32; a truncated or
+        # empty bank still fails, but the floor no longer hard-codes two legal sizes
         for q, gold, variants in items:
             tag = f"{name}:{q[:44]}"
             answers = [gold] + list(variants)
@@ -569,13 +778,18 @@ def _selftest():
     add("subtractive:guard_excl_removes_zeroed_items", abs(r["acc_guard_excl"] - 1.0) < 1e-9)
 
     # ---- selection / guard / paired delta (bars passed in, never stored here) ----
-    base = {"ORTH_FIRST_GEN": 1.0, "ORTH_LAST_GEN": 0.9375, "CONTAINS_GEN": 0.875,
-            "ANTONYM_GEN": 1.0, "ALPHA_GEN": 0.8125, "PLURAL_GEN": 0.9375, "SEQ_GEN": 1.0,
+    # synthetic scores over the CURRENT pool: three straddle the floor (0.9375 keeps, 0.90 keeps as
+    # an inclusive boundary, 0.875/0.8125 drop) so the fixture exercises selection AT the bar rather
+    # than merely far from it. The two retained fixture families are scored under the floor here,
+    # which is also where the clean base actually puts them.
+    base = {"PLURAL_GEN": 0.9375, "PAST_TENSE_GEN": 0.90, "SEQ_GEN": 1.0,
+            "CAPITAL_GEN": 0.9375, "ELEMENT_GEN": 0.875,
+            "ORTH_FIRST_GEN": 0.875, "ANTONYM_GEN": 0.8125,
             "MUL_GEN": 1.0}
     sel, okk = select_disjoint(base, floor=0.90, need=3)
     add("select:keeps_at_floor",
-        sel == sorted(["ORTH_FIRST_GEN", "ORTH_LAST_GEN", "ANTONYM_GEN", "PLURAL_GEN", "SEQ_GEN"]))
-    add("select:excludes_below_floor", "CONTAINS_GEN" not in sel and "ALPHA_GEN" not in sel)
+        sel == sorted(["PLURAL_GEN", "PAST_TENSE_GEN", "SEQ_GEN", "CAPITAL_GEN"]))
+    add("select:excludes_below_floor", "ELEMENT_GEN" not in sel and "ANTONYM_GEN" not in sel)
     add("select:excludes_bank_adjacent", "MUL_GEN" not in sel)
     add("select:ok", okk is True)
     add("select:too_few_not_ok", select_disjoint({"SEQ_GEN": 1.0}, floor=0.90, need=3)[1] is False)
