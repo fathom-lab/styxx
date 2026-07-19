@@ -1,0 +1,273 @@
+{
+ "constants": {
+  "pi_true": 0.35,
+  "alphas": [
+   0.15,
+   0.2,
+   0.1,
+   0.18
+  ],
+  "betas": [
+   0.85,
+   0.8,
+   0.9,
+   0.78
+  ],
+  "n_real": 6000,
+  "n_anchor": 400,
+  "seed": 0,
+  "bars": {
+   "pi_tol_good": 0.03,
+   "pi_tol_fail": 0.1,
+   "alpha_tol": 0.03,
+   "gate": 0.15
+  }
+ },
+ "results": {
+  "R1": {
+   "ds": {
+    "pi": 0.3470132374837788,
+    "alpha": [
+     0.1508694836587004,
+     0.20005464510185433,
+     0.10383400828369058,
+     0.18798627229573278
+    ],
+    "beta": [
+     0.8467041769560345,
+     0.8069825625841439,
+     0.911678286547249,
+     0.7811828388884573
+    ]
+   },
+   "anchored": {
+    "pi": 0.35223065377922264,
+    "ci": [
+     0.331033405863914,
+     0.3776546314635218
+    ],
+    "verdict": "ESTIMATED"
+   },
+   "mv": {
+    "pi": 0.31133333333333335
+   }
+  },
+  "R2_sweep": [
+   {
+    "rho": 0.15,
+    "ds_pi": 0.3746416051037484,
+    "ds_err": 0.02464160510374841,
+    "anchored_pi": 0.33414074321091886,
+    "anchored_err": 0.015859256789081122,
+    "anchored_ci": [
+     0.29850584021972326,
+     0.3754303549718701
+    ],
+    "ci_covers": true,
+    "anchored_alpha_err": 0.0,
+    "informativeness": 0.4575,
+    "corr_detected": true,
+    "cov_neg_offdiag": [
+     0.023872180451127798,
+     0.01721177944862154,
+     0.012456140350877195,
+     0.029636591478696753,
+     0.03834586466165414,
+     0.048145363408521304
+    ]
+   },
+   {
+    "rho": 0.3,
+    "ds_pi": 0.4230854191681558,
+    "ds_err": 0.07308541916815581,
+    "anchored_pi": 0.30662698282894346,
+    "anchored_err": 0.043373017171056516,
+    "anchored_ci": [
+     0.25557541591737826,
+     0.354986302058609
+    ],
+    "ci_covers": true,
+    "anchored_alpha_err": 0.0,
+    "informativeness": 0.295,
+    "corr_detected": true,
+    "cov_neg_offdiag": [
+     0.031472431077694214,
+     0.04419172932330832,
+     0.02127819548872178,
+     0.04348997493734336,
+     0.026390977443609024,
+     0.027142857142857118
+    ]
+   },
+   {
+    "rho": 0.45,
+    "ds_pi": 0.477657575439579,
+    "ds_err": 0.127657575439579,
+    "anchored_pi": 0.39261150738136213,
+    "anchored_err": 0.04261150738136216,
+    "anchored_ci": [
+     0.30374929320050437,
+     0.4832037430837466
+    ],
+    "ci_covers": true,
+    "anchored_alpha_err": 0.0,
+    "informativeness": 0.1825,
+    "corr_detected": true,
+    "cov_neg_offdiag": [
+     0.047399749373433574,
+     0.040225563909774435,
+     0.04028822055137844,
+     0.05882205513784455,
+     0.03635338345864667,
+     0.049473684210526316
+    ]
+   }
+  ],
+  "R3_sweep": [
+   {
+    "sync": 0.08,
+    "ds_pi": 0.388634999127912,
+    "ds_err": 0.03863499912791202,
+    "anchored_pi": 0.36230566474900855,
+    "anchored_err": 0.012305664749008571
+   },
+   {
+    "sync": 0.15,
+    "ds_pi": 0.433153127463458,
+    "ds_err": 0.08315312746345804,
+    "anchored_pi": 0.3527769449536474,
+    "anchored_err": 0.002776944953647442
+   }
+  ],
+  "R4": {
+   "anchored": {
+    "verdict": "VOID_PANEL__uninformative",
+    "pi": null,
+    "kept": [
+     false,
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  "R5": {
+   "anchored_pi": 0.2812263513502836,
+   "err": 0.06877364864971636,
+   "bound": 0.16666666666666666,
+   "naive_bias": 0.04099999999999998,
+   "licensing_says_correct": false
+  },
+  "R6": {
+   "true_correlated": {
+    "pi": 0.45,
+    "alpha": [
+     0.15,
+     0.18,
+     0.12
+    ],
+    "beta": [
+     0.85,
+     0.8,
+     0.9
+    ],
+    "rho_shared": 0.35
+   },
+   "equivalent_independent": {
+    "pi": 0.45572414203577055,
+    "alpha": [
+     0.19639838869381931,
+     0.218573075320584,
+     0.17650135071713494
+    ],
+    "beta": [
+     0.7923216375544517,
+     0.7569347771681867,
+     0.8249882795919024
+    ]
+   },
+   "max_cell_gap": 2.7755575615628914e-17,
+   "alpha_discrepancy": 0.05650135071713494,
+   "pi_discrepancy": 0.005724142035770541,
+   "witness_holds": true
+  }
+ },
+ "checks": [
+  {
+   "check": "R1:ds_recovers_under_own_assumption",
+   "ok": true,
+   "detail": "DS pi 0.347 vs 0.35"
+  },
+  {
+   "check": "R1:anchored_recovers",
+   "ok": true,
+   "detail": "anchored pi 0.352"
+  },
+  {
+   "check": "R1:no_false_correlation_alarm",
+   "ok": true,
+   "detail": "no corr flagged on indep panel"
+  },
+  {
+   "check": "R2:ds_fails_the_same_bar_anchored_meets",
+   "ok": true,
+   "detail": "DS err at rho .30/.45: 0.073/0.128 vs bar 0.03"
+  },
+  {
+   "check": "R2:ds_bias_grows_with_dose",
+   "ok": true,
+   "detail": "DS err [0.025, 0.073, 0.128]"
+  },
+  {
+   "check": "R2:anchored_ci_covers_at_every_dose",
+   "ok": true,
+   "detail": "covers [True, True, True]"
+  },
+  {
+   "check": "R2:anchored_beats_ds_where_ds_misses",
+   "ok": true,
+   "detail": "anchored [0.016, 0.043, 0.043] vs DS [0.025, 0.073, 0.128]"
+  },
+  {
+   "check": "R2:anchored_detects_correlation",
+   "ok": true,
+   "detail": "detected at rho [0.15, 0.3, 0.45]"
+  },
+  {
+   "check": "R3:ds_fails_the_same_bar_anchored_meets",
+   "ok": true,
+   "detail": "DS err [0.039, 0.083]"
+  },
+  {
+   "check": "R3:ds_bias_grows_with_dose",
+   "ok": true,
+   "detail": "[0.039, 0.083]"
+  },
+  {
+   "check": "R3:anchored_flat_across_dose",
+   "ok": true,
+   "detail": "anchored err [0.012, 0.003]"
+  },
+  {
+   "check": "R4:refuses",
+   "ok": true,
+   "detail": "VOID_PANEL__uninformative"
+  },
+  {
+   "check": "R5:degradation_within_bound",
+   "ok": true,
+   "detail": "err 0.069 <= bound 0.167+0.03"
+  },
+  {
+   "check": "R5:error_is_material_and_disclosed",
+   "ok": true,
+   "detail": "mismatch DOES hurt (0.069) -- the scope limit is real, not decorative"
+  },
+  {
+   "check": "R6:witness",
+   "ok": true,
+   "detail": "cell gap 2.78e-17, alpha discrepancy 0.057, pi discrepancy 0.006"
+  }
+ ],
+ "all_ok": true
+}
