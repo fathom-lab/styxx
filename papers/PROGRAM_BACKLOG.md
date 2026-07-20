@@ -50,6 +50,42 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 46 (2026-07-20, operator-directed) — the Stage-A RE-PANEL ran (inline, disclosed) and did its job: fatal-fix set CONFIRMED, but the R8 layer's green is DRAW-FRAGILE and its scope had a hole. `NO_GO_freeze__repanel_F1_F2` — the freeze stays blocked, honestly.**
+  Protocol per `_stage_a_panel_2026_07_19.md` path-back; settled items not re-litigated; burials
+  not re-opened. DISCLOSED: the 3-lens subagent fleet was blocked at spawn (session limit), so
+  the same probe program ran INLINE — weakens the confirmations' independence, strengthens
+  nothing about the adverse findings (author-run probes that break the author's code). Probe
+  script + receipts committed (`_repanel_probes_2026_07_20.py` / `_repanel_probe_receipts_2026_07_20.json`), fresh seeds only.
+  **HELD under attack:** refusal two-sided (extreme pi 0.02/0.98 ESTIMATED, not voided); the
+  R8d recovered-or-flagged gate survived 7 fresh misspecified-key attacks (every err>0.03 case
+  misfit 11–28, every in-band case err≤0.025 — no silent window in the subset/partial family);
+  CI coverage spot 0.933/0.933 (pi/s, 30 reps); fixes 1/2/4 mechanics.
+  **F1 (FATAL, scope):** y-CORRELATED all-judge keys defeat the (pi,s) model silently —
+  key-on-positives: pi 0.3055 (err 0.044, DOWNWARD=favourable), misfit 2.70 inside the clean
+  band (2.0–5.3). The citable surface said "all-judge keys"; the math needs truth-independence.
+  Same defect class as the original panel's F1. **Scope corrections landed** (header +
+  docstring: all-judge TRUTH-INDEPENDENT).
+  **F2 (FATAL, stability):** the R8/R3 point-recovery bars are single-draw passes — 4 of 8
+  fresh replicates exceed the 0.03 bar (clean-seed phantom s 0.048 with err 0.038; dose 0.05
+  err 0.0425; dose 0.15 err 0.0668; dose 0.01 err 0.080, knob noise-dominated below ~0.05).
+  The scored 6-for-6 green is lucky-draw-compatible. The property the estimator HOLDS is CI
+  coverage ~0.93. This is the panel's fix 9 ("one draw licenses nothing") demonstrated against
+  the checks added after it was filed.
+  **F3 (MAJOR):** silent contamination window — 10% detector pooling into negatives: err 0.048
+  at misfit 4.8 INSIDE the clean band, favourable direction; refusal fires nowhere below 50%.
+  Misfit needs a calibrated NULL before any gate leans on it. **F4 (MAJOR):** anchor-beta
+  pessimism absorbed as phantom sync (s 0.136, err 0.060, silent). **F5 (MAJOR):** 3-SE alpha
+  bar is ~3x coarser than pi-materiality (detects 0.058 shift; 0.018 already moves pi 0.03).
+  **F6/F7 (MINOR):** s_at_grid_edge computed but dropped from stored records; profile WLS not
+  clearly better than a 4-line all-fire plug-in (value = refusal+misfit machinery, not point
+  accuracy).
+  Verified: pytest **1773 passed / 8 skipped**; py_compile clean; scored artifact untouched;
+  check logic untouched (scope/docstring corrections only).
+  *Next (the gate on any freeze):* replicate-rate machinery — rate-based R8a/R8b/R3 bars,
+  deaf-panel VOID rate, CI coverage as a rate, calibrated misfit null. Then remaining majors.
+  Stage-B threat model additions: y-correlated keys unpriced; anchor-beta pessimism bound;
+  labeled-slice alpha bound.
+
 - **Cycle 45 (2026-07-20, operator-directed) — R8: the sync-corrected anchored estimator. R3's replacement claim SURVIVED on every frozen bar; Stage A runs GREEN (32/32); the re-panel is unblocked. `SURVIVED__stage_a_green` (FINDING OATH-HELD 25 verified / 0 contradicted).**
   The design was forced by cycle 44's kill #2: a constructed detector stratum's fire rate estimates
   a constructed population, never the wild sync rate — so the panel's suggested detector-fire-rate

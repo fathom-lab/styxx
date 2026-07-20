@@ -39,9 +39,16 @@ test -- the panel of 2026-07-19 found the previous header claiming more than the
      identifiable from the ORGANIC data even when no anchor stratum can see the key (a constructed
      detector's fire rate estimates a constructed population, never the wild rate -- cycle 44's
      kill #2). Two-sided: the knob must find the planted dose AND refuse to invent sync on clean
-     or merely-correlated panels AND not defeat the fix-3 refusal. Scope: all-judge keys only;
-     partial-strength and subset keys are covered by a recovered-or-flagged gate whose only
-     failing outcome is a silent confident wrong number.
+     or merely-correlated panels AND not defeat the fix-3 refusal. Scope: all-judge,
+     TRUTH-INDEPENDENT keys only -- the re-panel (_stage_a_repanel_2026_07_20.md) exhibits
+     y-CORRELATED all-judge keys defeating the model silently in the favourable direction
+     (err ~0.044 at misfit inside the clean band), and anchor-beta PESSIMISM absorbed as phantom
+     sync (s_hat 0.136, err 0.060, silent); neither channel is priced here. Partial-strength and
+     subset keys are covered by a recovered-or-flagged gate whose only failing outcome is a
+     silent confident wrong number (held under 7 fresh re-panel attacks). The point-recovery
+     bars passed on the scored draw but are DRAW-FRAGILE (re-panel F2: 4 of 8 fresh replicates
+     exceed the 0.03 bar); the property the estimator actually holds is CI coverage ~0.93.
+     Replicate-rate bars are owed before any freeze.
   R4 REFUSAL (two-sided admissibility): a panel of deaf judges (beta ~= alpha) must produce
      VOID_PANEL__uninformative, never a number. A gate that cannot refuse is not a gate. This is a
      single-draw fixture; the deaf-panel VOID RATE over seeds is owed (panel fix 8).
@@ -341,8 +348,11 @@ def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT):
     kill #2: a constructed detector stratum's fire rate estimates a CONSTRUCTED population, never
     the wild sync rate -- so the only label-free source of s is the organic moment system itself.
     An all-judge key adds the same +s intercept to every moment; with anchors pinning A_k and B_k
-    the system is overdetermined in (pi, s). Scope: ALL-JUDGE keys; partial-strength and subset
-    keys are covered only by the recovered-or-flagged gate (R8d).
+    the system is overdetermined in (pi, s). Scope: ALL-JUDGE, TRUTH-INDEPENDENT keys -- the +s
+    intercept derivation assumes the key fires independently of Y, and the re-panel shows
+    y-correlated keys defeat the fit silently (favourable direction) while anchor-beta pessimism
+    is absorbed as phantom sync; see _stage_a_repanel_2026_07_20.md F1/F4. Partial-strength and
+    subset keys are covered only by the recovered-or-flagged gate (R8d).
 
     This does NOT replace anchored() -- every settled 1-parameter result stands on its own path."""
     n, J = V.shape
