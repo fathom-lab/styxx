@@ -1,0 +1,428 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_r8_sync_corrected_2026_07_20.md",
+  "document_sha256": "fca804d4713533ab3187053a74c03198a4e2919b31925de00ff215fdc52b1d34",
+  "receipts_sha256": {
+    "anchored_stage_a_result.json": "0f8092a1865a7db3bf536d83a517661b723d3f64576bd1faac6e54bd296a0660"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 25,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "5"
+    },
+    {
+      "line": 4,
+      "token": "12"
+    },
+    {
+      "line": 4,
+      "token": "13"
+    },
+    {
+      "line": 4,
+      "token": "14"
+    },
+    {
+      "line": 8,
+      "token": "32"
+    },
+    {
+      "line": 12,
+      "token": "44"
+    },
+    {
+      "line": 17,
+      "token": "2"
+    },
+    {
+      "line": 17,
+      "token": "1"
+    },
+    {
+      "line": 41,
+      "token": "0.029"
+    },
+    {
+      "line": 43,
+      "token": "0.067"
+    },
+    {
+      "line": 48,
+      "token": "5"
+    },
+    {
+      "line": 67,
+      "token": "32"
+    },
+    {
+      "line": 68,
+      "token": "44"
+    },
+    {
+      "line": 69,
+      "token": "1"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ prereg 88faba2 (R8 + panel fixes 5/12/13/14)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ prereg 88faba2 (R8 + panel fixes 5/12/13/14)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ prereg 88faba2 (R8 + panel fixes 5/12/13/14)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ prereg 88faba2 (R8 + panel fixes 5/12/13/14)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "verdict: **SURVIVED -- all 32 checks green, all_ok true.** The re-panel is unblocked.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "Cycle 44 buried R3's flatness claim (algebraic cancellation from a contaminated stratum) and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "(pi, s) system stays overdetermined at J + C(J,2) + 1 equations. The prereg named the burial,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 17,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(pi, s) system stays overdetermined at J + C(J,2) + 1 equations. The prereg named the burial,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.08",
+      "value": 0.08,
+      "decimals": 2,
+      "context": "`anchored_stage_a_result.json`: at wild sync 0.08 with clean anchors, the sync-corrected arm",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].sync"
+    },
+    {
+      "line": 25,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "returns pi 0.3555832086189043 (true 0.35) with s_hat 0.074; at sync 0.15, pi 0.32129036253941684",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.pi_true"
+    },
+    {
+      "line": 25,
+      "token": "0.074",
+      "value": 0.074,
+      "decimals": 3,
+      "context": "returns pi 0.3555832086189043 (true 0.35) with s_hat 0.074; at sync 0.15, pi 0.32129036253941684",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].sync_corrected.s"
+    },
+    {
+      "line": 25,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "returns pi 0.3555832086189043 (true 0.35) with s_hat 0.074; at sync 0.15, pi 0.32129036253941684",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.alphas[0]"
+    },
+    {
+      "line": 28,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "check rather than a silence. At the smallest dose, 0.05, the corrected arm reads pi",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].cov_neg_offdiag[5]"
+    },
+    {
+      "line": 29,
+      "token": "0.076",
+      "value": 0.076,
+      "decimals": 3,
+      "context": "0.3335963347527957 and s_hat 0.076; on the R7e stratified twin, whose ambient sync is 0.02, it",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R8.R8b_dose005.s"
+    },
+    {
+      "line": 29,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "0.3335963347527957 and s_hat 0.076; on the R7e stratified twin, whose ambient sync is 0.02, it",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.bars.s_null"
+    },
+    {
+      "line": 32,
+      "token": "0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "**The knob refuses what it must refuse.** On the clean panel s_hat is 0.000 and the corrected pi",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.seed"
+    },
+    {
+      "line": 33,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "matches the 1-parameter estimate to three decimals; under the bad-day factor at rho 0.30, s_hat",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].anchored_ci[0]"
+    },
+    {
+      "line": 34,
+      "token": "0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "is again 0.000 -- correlation is not laundered into sync, because the anchor-measured pair",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.seed"
+    },
+    {
+      "line": 40,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "**Misspecified keys do not produce silent numbers.** A partial-strength key (p 0.7) is absorbed",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[1].sync_corrected.lack_of_fit.chi2_per_df"
+    },
+    {
+      "line": 41,
+      "token": "0.029",
+      "value": 0.029,
+      "decimals": 3,
+      "context": "almost correctly (pi error 0.029) with the misfit already elevated at 7.600948667895569 against a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.067",
+      "value": 0.067,
+      "decimals": 3,
+      "context": "0.4169669801543717, error 0.067 -- and is caught only by the misfit, 52.872862527515636. That",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "**The alpha docstring claim finally earned its keep** (panel fix 5). De-tautologized against the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "organic realized alpha: anchored transfer errors 0.017/0.022/0.019 across the rho sweep, inside",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].anchored_alpha_err"
+    },
+    {
+      "line": 49,
+      "token": "0.022",
+      "value": 0.022,
+      "decimals": 3,
+      "context": "organic realized alpha: anchored transfer errors 0.017/0.022/0.019 across the rho sweep, inside",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[1].anchored_alpha_err"
+    },
+    {
+      "line": 49,
+      "token": "0.019",
+      "value": 0.019,
+      "decimals": 3,
+      "context": "organic realized alpha: anchored transfer errors 0.017/0.022/0.019 across the rho sweep, inside",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[2].anchored_alpha_err"
+    },
+    {
+      "line": 50,
+      "token": "0.062",
+      "value": 0.062,
+      "decimals": 3,
+      "context": "3 binomial SEs at every dose, while DS's alpha errors run 0.062/0.125/0.181 -- beyond ALPHA_TOL",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].ds_alpha_err"
+    },
+    {
+      "line": 50,
+      "token": "0.125",
+      "value": 0.125,
+      "decimals": 3,
+      "context": "3 binomial SEs at every dose, while DS's alpha errors run 0.062/0.125/0.181 -- beyond ALPHA_TOL",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[1].ds_alpha_err"
+    },
+    {
+      "line": 50,
+      "token": "0.181",
+      "value": 0.181,
+      "decimals": 3,
+      "context": "3 binomial SEs at every dose, while DS's alpha errors run 0.062/0.125/0.181 -- beyond ALPHA_TOL",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[2].ds_alpha_err"
+    },
+    {
+      "line": 51,
+      "token": "0.45",
+      "value": 0.45,
+      "decimals": 2,
+      "context": "at rho 0.45 and beyond the anchored error at both correlated doses. The sentence the panel said",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[2].rho"
+    },
+    {
+      "line": 56,
+      "token": "0.076",
+      "value": 0.076,
+      "decimals": 3,
+      "context": "- s_hat runs slightly hot at low dose (0.076 for 0.05, 0.074 for 0.08) and slightly hot at",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R8.R8b_dose005.s"
+    },
+    {
+      "line": 56,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "- s_hat runs slightly hot at low dose (0.076 for 0.05, 0.074 for 0.08) and slightly hot at",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].cov_neg_offdiag[5]"
+    },
+    {
+      "line": 56,
+      "token": "0.074",
+      "value": 0.074,
+      "decimals": 3,
+      "context": "- s_hat runs slightly hot at low dose (0.076 for 0.05, 0.074 for 0.08) and slightly hot at",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].sync_corrected.s"
+    },
+    {
+      "line": 56,
+      "token": "0.08",
+      "value": 0.08,
+      "decimals": 2,
+      "context": "- s_hat runs slightly hot at low dose (0.076 for 0.05, 0.074 for 0.08) and slightly hot at",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].sync"
+    },
+    {
+      "line": 57,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "0.15 (0.178). Inside the frozen S_TOL 0.03 everywhere, but the small-dose bias direction is",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.alphas[0]"
+    },
+    {
+      "line": 57,
+      "token": "0.178",
+      "value": 0.178,
+      "decimals": 3,
+      "context": "0.15 (0.178). Inside the frozen S_TOL 0.03 everywhere, but the small-dose bias direction is",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[1].sync_corrected.s"
+    },
+    {
+      "line": 57,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "0.15 (0.178). Inside the frozen S_TOL 0.03 everywhere, but the small-dose bias direction is",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.bars.pi_tol_good"
+    },
+    {
+      "line": 67,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "Stage A: **all 32 checks green**, including the complete fatal-fix set from the 2026-07-19 panel",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 68,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "re-measured on identical draws (R1-R7 reproduce cycle 44's realizations draw-for-draw by the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "prereg's stream discipline). The panel's re-panel protocol -- fixes 1-4 landed, run green,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

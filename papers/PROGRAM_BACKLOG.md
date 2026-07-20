@@ -50,6 +50,34 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 45 (2026-07-20, operator-directed) — R8: the sync-corrected anchored estimator. R3's replacement claim SURVIVED on every frozen bar; Stage A runs GREEN (32/32); the re-panel is unblocked. `SURVIVED__stage_a_green` (FINDING OATH-HELD 25 verified / 0 contradicted).**
+  The design was forced by cycle 44's kill #2: a constructed detector stratum's fire rate estimates
+  a constructed population, never the wild sync rate — so the panel's suggested detector-fire-rate
+  correction is unworkable, and the only label-free source of s is the **organic moment system
+  itself**. An all-judge master key adds the same +s intercept to every anchor-pinned moment
+  (first, pairwise, all-fire): a two-parameter (pi, s) profile-WLS stays overdetermined at
+  J + C(J,2) + 1 equations. Prereg `88faba2` named the cycle-44 burial (flatness is NOT
+  resurrected), froze every bar, and committed before the scored run; stream discipline made
+  R1–R7 reproduce cycle 44's realizations **draw-for-draw**.
+  **Scored (all frozen bars met):** sync-corrected pi 0.356 / 0.321 at wild doses 0.08 / 0.15
+  (1-param defect at the same draws: 0.082 / 0.162, now its own passing dose-response check);
+  s_hat 0.074 / 0.178; smallest dose 0.05 → pi err 0.016, s_hat 0.076; R7e's ambient 0.02 →
+  s_hat 0.012. **Two-sided:** s_hat = 0.000 on the clean panel AND at rho 0.30 (correlation is
+  not laundered into sync — the anchor pair-moments already carry it), and the fix-3 refusal
+  survives the second parameter (s ≥ 0 cannot explain targets below the contaminated alpha;
+  pooled data still VOIDs at unclipped −0.363). **Misspecified keys produce no silent numbers:**
+  partial-strength p 0.7 → pi err 0.029, misfit 7.6 vs clean 2.8; judge-subset key defeats the
+  point estimate (err 0.067) and is caught ONLY by misfit 52.9 → Stage B must treat elevated
+  lack-of-fit as disqualifying, not decorative. **Panel majors landed with it:** fix 5 — the
+  de-tautologized alpha claim is now EARNED (anchored transfer 0.017/0.022/0.019 within 3 SE;
+  DS alpha err 0.062/0.125/0.181, past ALPHA_TOL at rho 0.45); fixes 12/13/14 (dead line,
+  vestigial bars, one-sided dose-growth). Detector construction strength is now a preregistered
+  parameter (trip 0.80 → min z 23.1; ambient licenses nothing, per cycle 44).
+  Verified: pytest **1773 passed / 8 skipped**; py_compile clean; certify.py untouched.
+  *Next:* re-panel on the fatal fixtures (protocol now satisfiable); remaining majors (R5
+  licensing fork, R2 rename, R4 partial-keep + VOID rate, replicate-rate CI coverage,
+  partial-strength arms); Stage-B prereg obligations. Freeze = operator's call.
+
 - **Cycle 44 (2026-07-20, autopilot, operator-directed) — anchored-validity Stage A: landed the panel's fatal fix set 1–4. The fixes work, and two of the claims they were sent to protect died on contact. `FIXES_LANDED__stage_a_NOT_green` (FINDING OATH-HELD 15 verified / 0 contradicted).**
   Orient: no GPU or python contention; branch `paper/anchored-validity`; the 2026-07-19 panel had
   returned **NO_GO** with 2 surviving fatals (EX1 beta-channel inexpressible, F1 sync-on-real-only)

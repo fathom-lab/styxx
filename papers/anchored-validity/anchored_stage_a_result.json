@@ -18,9 +18,11 @@
   "seed": 0,
   "bars": {
    "pi_tol_good": 0.03,
-   "pi_tol_fail": 0.1,
    "alpha_tol": 0.03,
-   "gate": 0.15
+   "gate": 0.15,
+   "s_tol": 0.03,
+   "s_null": 0.02,
+   "detector_trip": 0.8
   }
  },
  "results": {
@@ -71,7 +73,15 @@
      0.3754303549718701
     ],
     "ci_covers": true,
-    "anchored_alpha_err": 0.0,
+    "realized_alpha": [
+     0.2372752595593821,
+     0.26209166877690554,
+     0.17523423651557357,
+     0.2636110407698151
+    ],
+    "anchored_alpha_err": 0.017265763484426433,
+    "anchored_alpha_transfer_ok": true,
+    "ds_alpha_err": 0.06230294905507994,
     "informativeness": 0.4575,
     "corr_detected": true,
     "cov_neg_offdiag": [
@@ -94,7 +104,15 @@
      0.354986302058609
     ],
     "ci_covers": true,
-    "anchored_alpha_err": 0.0,
+    "realized_alpha": [
+     0.28025316455696203,
+     0.33139240506329115,
+     0.2518987341772152,
+     0.2977215189873418
+    ],
+    "anchored_alpha_err": 0.02224683544303796,
+    "anchored_alpha_transfer_ok": true,
+    "ds_alpha_err": 0.12474478995745436,
     "informativeness": 0.295,
     "corr_detected": true,
     "cov_neg_offdiag": [
@@ -117,7 +135,15 @@
      0.4832037430837466
     ],
     "ci_covers": true,
-    "anchored_alpha_err": 0.0,
+    "realized_alpha": [
+     0.36963269529229176,
+     0.4073978272115882,
+     0.3287635799275737,
+     0.3792033109156751
+    ],
+    "anchored_alpha_err": 0.018763579927573715,
+    "anchored_alpha_transfer_ok": true,
+    "ds_alpha_err": 0.1809384959805522,
     "informativeness": 0.1825,
     "corr_detected": true,
     "cov_neg_offdiag": [
@@ -138,21 +164,38 @@
     "anchored_verdict": "ESTIMATED",
     "anchored_pi": 0.4323057567403998,
     "anchored_err": 0.0823057567403998,
+    "sync_corrected": {
+     "verdict": "ESTIMATED",
+     "pi": 0.3555832086189043,
+     "ci": [
+      0.3128753936726863,
+      0.4004784200304874
+     ],
+     "s": 0.074,
+     "s_ci": [
+      0.034,
+      0.114
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 1.3053287165415446,
+      "n_moments": 11
+     }
+    },
     "garbage": {
      "fire_rate": [
-      0.2125,
-      0.2525,
-      0.1475,
-      0.23
+      0.8275,
+      0.83,
+      0.82,
+      0.83
      ],
      "z_vs_inert_alpha": [
-      2.0081905361990984,
-      1.955853733121121,
-      2.281968464681477,
-      1.7549261915501548
+      25.532495523558605,
+      23.261672908168546,
+      30.002318937097833,
+      24.194684338915955
      ],
-     "all_fire_rate": 0.075,
-     "master_key_detected": false
+     "all_fire_rate": 0.8,
+     "master_key_detected": true
     },
     "lack_of_fit": {
      "chi2_per_df": 2.411948038973146,
@@ -169,21 +212,38 @@
     "anchored_verdict": "ESTIMATED",
     "anchored_pi": 0.5118554515367725,
     "anchored_err": 0.1618554515367725,
+    "sync_corrected": {
+     "verdict": "ESTIMATED",
+     "pi": 0.32129036253941684,
+     "ci": [
+      0.26735431996104736,
+      0.36812998317229345
+     ],
+     "s": 0.178,
+     "s_ci": [
+      0.14200000000000002,
+      0.21904999999999997
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 0.6818869568330815,
+      "n_moments": 11
+     }
+    },
     "garbage": {
      "fire_rate": [
-      0.27,
-      0.295,
-      0.23,
-      0.2825
+      0.8475,
+      0.8425,
+      0.8225,
+      0.8275
      ],
      "z_vs_inert_alpha": [
-      4.1136772264801955,
-      2.780261900500164,
-      5.03079249037793,
-      4.414509067877784
+      27.339780731125774,
+      23.149955950106886,
+      29.74524815160074,
+      25.708101761416817
      ],
-     "all_fire_rate": 0.1225,
-     "master_key_detected": false
+     "all_fire_rate": 0.8,
+     "master_key_detected": true
     },
     "lack_of_fit": {
      "chi2_per_df": 10.396495885437435,
@@ -457,6 +517,84 @@
      "err": 0.0271912776602396
     }
    }
+  },
+  "R8": {
+   "R8e_pooled": {
+    "verdict": "VOID_ANCHORS__nonexchangeable",
+    "pi": null,
+    "pi_unclipped": -0.3631756408775868,
+    "ci_unclipped": [
+     -0.5132177305542825,
+     -0.2377033863864894
+    ],
+    "s": 0.0
+   },
+   "R8e_stratified": {
+    "verdict": "ESTIMATED",
+    "pi": 0.36534061592159883,
+    "ci": [
+     0.315316646321283,
+     0.3886327585611691
+    ],
+    "s": 0.012,
+    "s_ci": [
+     0.0,
+     0.05504999999999995
+    ],
+    "lack_of_fit": {
+     "chi2_per_df": 3.8284927758816756,
+     "n_moments": 11
+    }
+   },
+   "R8a_clean": {
+    "pi_1param": 0.33313114660621446,
+    "pi_sync": 0.3330700182982612,
+    "s": 0.0,
+    "s_ci": [
+     0.0,
+     0.04504999999999995
+    ],
+    "lack_of_fit": {
+     "chi2_per_df": 2.804406982968762,
+     "n_moments": 11
+    }
+   },
+   "R8b_dose005": {
+    "verdict": "ESTIMATED",
+    "pi": 0.3335963347527957,
+    "ci": [
+     0.2838498218796542,
+     0.37015914362826646
+    ],
+    "s": 0.076,
+    "s_ci": [
+     0.04,
+     0.12104999999999995
+    ]
+   },
+   "R8c_rho030": {
+    "pi_1param": 0.38253449717537563,
+    "pi_sync": 0.3826946700362355,
+    "s": 0.0
+   },
+   "R8d_partial_strength": {
+    "verdict": "ESTIMATED",
+    "pi": 0.37928120051712094,
+    "s": 0.004,
+    "lack_of_fit": {
+     "chi2_per_df": 7.600948667895569,
+     "n_moments": 11
+    }
+   },
+   "R8d_judge_subset": {
+    "verdict": "ESTIMATED",
+    "pi": 0.4169669801543717,
+    "s": 0.0,
+    "lack_of_fit": {
+     "chi2_per_df": 52.872862527515636,
+     "n_moments": 11
+    }
+   }
   }
  },
  "checks": [
@@ -486,6 +624,16 @@
    "detail": "DS err [0.025, 0.073, 0.128]"
   },
   {
+   "check": "R2:anchored_alpha_transfers_to_organic",
+   "ok": true,
+   "detail": "max err [0.017, 0.022, 0.019] within 3 SE at every dose"
+  },
+  {
+   "check": "R2:ds_alpha_wrong_where_correlated",
+   "ok": true,
+   "detail": "ds alpha err [0.062, 0.125, 0.181] vs anchored [0.017, 0.022, 0.019] (bar 0.03 at rho .45)"
+  },
+  {
    "check": "R2:anchored_ci_covers_at_every_dose",
    "ok": true,
    "detail": "covers [True, True, True]"
@@ -511,14 +659,24 @@
    "detail": "[0.039, 0.077]"
   },
   {
-   "check": "R3:garbage_stratum_prices_the_master_key",
-   "ok": false,
-   "detail": "all-fire [0.075, 0.122], min z [1.8, 2.8]"
+   "check": "R3:uncorrected_bias_grows_with_dose",
+   "ok": true,
+   "detail": "1-param err [0.082, 0.162] -- the defect is the claim now; silence about it was the old bug"
   },
   {
-   "check": "R3:anchored_flat_across_dose",
-   "ok": false,
-   "detail": "anchored err [0.0823057567403998, 0.1618554515367725]"
+   "check": "R3:detector_at_construction_strength_prices_the_key",
+   "ok": true,
+   "detail": "min z [23.3, 23.1] at trip 0.8"
+  },
+  {
+   "check": "R3:sync_corrected_recovers_pi",
+   "ok": true,
+   "detail": "pi [0.356, 0.321] vs 0.35"
+  },
+  {
+   "check": "R3:sync_corrected_recovers_dose",
+   "ok": true,
+   "detail": "s_hat [0.074, 0.178] vs doses [0.08, 0.15]"
   },
   {
    "check": "R4:refuses",
@@ -564,7 +722,42 @@
    "check": "R7e:stratified_twin_recovers_the_same_data",
    "ok": true,
    "detail": "ESTIMATED pi 0.3771912776602396 err 0.0271912776602396 -- the refusal is data-driven, not a constant"
+  },
+  {
+   "check": "R8e:refusal_survives_the_second_parameter",
+   "ok": true,
+   "detail": "VOID_ANCHORS__nonexchangeable (unclipped -0.363, CI [-0.513, -0.238])"
+  },
+  {
+   "check": "R8e:stratified_twin_estimates_the_ambient_sync",
+   "ok": true,
+   "detail": "pi 0.365 (true 0.35), s_hat 0.012 (true 0.02)"
+  },
+  {
+   "check": "R8a:no_phantom_sync_on_the_clean_panel",
+   "ok": true,
+   "detail": "s 0.000 <= 0.02, |pi_sync - pi_1param| 0.000 <= 0.015, pi err 0.017 <= 0.03"
+  },
+  {
+   "check": "R8b:recovers_at_the_smallest_dose",
+   "ok": true,
+   "detail": "pi 0.3335963347527957 err 0.016, s_hat 0.076 vs 0.05"
+  },
+  {
+   "check": "R8c:sync_knob_does_not_eat_correlation",
+   "ok": true,
+   "detail": "s 0.000 <= 0.02, |pi_sync - pi_1param| 0.000 <= 0.02"
+  },
+  {
+   "check": "R8d:partial_strength_key_recovered_or_flagged",
+   "ok": true,
+   "detail": "pi 0.37928120051712094 err 0.029, misfit 7.6 vs clean 2.8"
+  },
+  {
+   "check": "R8d:judge_subset_key_recovered_or_flagged",
+   "ok": true,
+   "detail": "pi 0.4169669801543717 err 0.067, misfit 52.9 vs clean 2.8"
   }
  ],
- "all_ok": false
+ "all_ok": true
 }
