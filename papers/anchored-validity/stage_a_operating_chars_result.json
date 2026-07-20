@@ -1,0 +1,283 @@
+{
+ "prereg": "PREREG_R9_operating_characteristics_2026_07_20.md",
+ "design": {
+  "alphas": [
+   0.15,
+   0.2,
+   0.1,
+   0.18
+  ],
+  "betas": [
+   0.85,
+   0.8,
+   0.9,
+   0.78
+  ],
+  "pi": 0.35,
+  "n": 6000,
+  "k_anchor": 400,
+  "seed_bases": {
+   "clean_cal": 10000,
+   "clean_val": 20000,
+   "rho30": 30000,
+   "sync05": 40000,
+   "sync15": 50000,
+   "sync02": 60000,
+   "deaf": 70000,
+   "contam10": 80000,
+   "keypos": 90000,
+   "betaplus": 100000,
+   "oneparam_rho30": 110000
+  },
+  "R": {
+   "clean": 100,
+   "rho": 80,
+   "sync": 80,
+   "sync02": 60,
+   "deaf": 60,
+   "viol": 50,
+   "op": 80
+  },
+  "nominal_fa": 0.05,
+  "s_null": 0.02
+ },
+ "gates": [
+  {
+   "gate": "G1:coverage_clean_in_band",
+   "ok": false,
+   "detail": "167/200 = 0.835 wilson [0.777, 0.88]"
+  },
+  {
+   "gate": "G1:coverage_rho30_sync_in_band",
+   "ok": false,
+   "detail": "70/80 = 0.875 wilson [0.785, 0.931]"
+  },
+  {
+   "gate": "G1:coverage_sync05_in_band",
+   "ok": true,
+   "detail": "73/80 = 0.912 wilson [0.83, 0.957]"
+  },
+  {
+   "gate": "G1:coverage_sync15_in_band",
+   "ok": true,
+   "detail": "75/80 = 0.938 wilson [0.862, 0.973]"
+  },
+  {
+   "gate": "G1:coverage_rho30_oneparam_in_band",
+   "ok": true,
+   "detail": "74/80 = 0.925 wilson [0.846, 0.965]"
+  },
+  {
+   "gate": "G2:misfit_false_alarm_calibrated",
+   "ok": true,
+   "detail": "threshold 6.193 (95th pct of cal), achieved 0.090 on validation (9/100), nominal 0.05"
+  },
+  {
+   "gate": "G3:deaf_void_rate",
+   "ok": true,
+   "detail": "plain gate 58/60 = 0.967 (noise-margin variant 60/60 = 1.000, unbarred)"
+  },
+  {
+   "gate": "G4:clean_false_refusal",
+   "ok": true,
+   "detail": "0/200 = 0.000"
+  }
+ ],
+ "characteristics": {
+  "misfit_null": {
+   "threshold_95": 6.19273753216957,
+   "achieved_fa": 0.09,
+   "cal_misfit_quantiles": {
+    "p50": 2.388012210539838,
+    "p95": 6.19273753216957,
+    "p99": 9.236504778265177
+   },
+   "note": "design-point-specific; Stage B owes its own calibration"
+  },
+  "clean": {
+   "phantom_sync_rate": 0.24,
+   "phantom_sync_wilson": [
+    0.1860652685202468,
+    0.3037346545572801
+   ],
+   "false_refusal_rate": 0.0,
+   "err": {
+    "median": 0.01285244029247512,
+    "p90": 0.033371473072628666
+   },
+   "coverage": {
+    "n_estimated": 200,
+    "covered": 167,
+    "rate": 0.835,
+    "wilson": [
+     0.7773410172613647,
+     0.8800321587733603
+    ]
+   }
+  },
+  "rho30": {
+   "sync_arm": {
+    "median": 0.02521170324433411,
+    "p90": 0.06950801331927287,
+    "n": 80,
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 70,
+     "rate": 0.875,
+     "wilson": [
+      0.7849700281693438,
+      0.9306651696322249
+     ]
+    }
+   },
+   "oneparam_arm": {
+    "median": 0.023439187108724946,
+    "p90": 0.05188167216208002,
+    "n": 80,
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 74,
+     "rate": 0.925,
+     "wilson": [
+      0.8458779990261992,
+      0.9651752251489122
+     ]
+    }
+   }
+  },
+  "sync_doses": {
+   "0.02": {
+    "median": 0.015617704791155818,
+    "p90": 0.047868070002991384,
+    "n": 60,
+    "s_median": 0.026000000000000002,
+    "s_detection_power": {
+     "detected": 17,
+     "n": 60,
+     "rate": 0.2833333333333333,
+     "wilson": [
+      0.1850667860430859,
+      0.40767525049735165
+     ]
+    },
+    "coverage": {
+     "n_estimated": 60,
+     "covered": 49,
+     "rate": 0.8166666666666667,
+     "wilson": [
+      0.7008000677353371,
+      0.8944231096286387
+     ]
+    }
+   },
+   "0.05": {
+    "median": 0.01456586210872235,
+    "p90": 0.04164356608368445,
+    "n": 80,
+    "s_median": 0.056,
+    "s_detection_power": {
+     "detected": 56,
+     "n": 80,
+     "rate": 0.7,
+     "wilson": [
+      0.5923163971203269,
+      0.789355708373843
+     ]
+    },
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 73,
+     "rate": 0.9125,
+     "wilson": [
+      0.8302301722291654,
+      0.95696854535256
+     ]
+    }
+   },
+   "0.15": {
+    "median": 0.015717087774489574,
+    "p90": 0.03788276466955036,
+    "n": 80,
+    "s_median": 0.152,
+    "s_detection_power": {
+     "detected": 80,
+     "n": 80,
+     "rate": 1.0,
+     "wilson": [
+      0.954180263735425,
+      1.0
+     ]
+    },
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 75,
+     "rate": 0.9375,
+     "wilson": [
+      0.8618967084664824,
+      0.9730110223020145
+     ]
+    }
+   }
+  },
+  "deaf": {
+   "void_rate_plain": 0.9666666666666667,
+   "void_wilson": [
+    0.8863601247107462,
+    0.9908108735098498
+   ],
+   "void_rate_noise_margin": 1.0
+  },
+  "violations": {
+   "contam10": {
+    "n": 50,
+    "misfit_power": 0.36,
+    "misfit_power_wilson": [
+     0.24138562967182875,
+     0.49859237989698046
+    ],
+    "silent_wrong_rate": 0.64,
+    "silent_wrong_wilson": [
+     0.5014076201030195,
+     0.7586143703281711
+    ],
+    "void_rate": 0.0,
+    "median": 0.08196718812128986,
+    "p90": 0.10168828027070263
+   },
+   "key_on_pos": {
+    "n": 50,
+    "misfit_power": 0.04,
+    "misfit_power_wilson": [
+     0.011038652660826577,
+     0.13460337877954667
+    ],
+    "silent_wrong_rate": 0.74,
+    "silent_wrong_wilson": [
+     0.6044657801100008,
+     0.8412862034863262
+    ],
+    "void_rate": 0.0,
+    "median": 0.04513819736331606,
+    "p90": 0.0726626428344947
+   },
+   "beta_plus10": {
+    "n": 50,
+    "misfit_power": 0.12,
+    "misfit_power_wilson": [
+     0.05617523710624646,
+     0.23805078886623582
+    ],
+    "silent_wrong_rate": 0.88,
+    "silent_wrong_wilson": [
+     0.7619492111337642,
+     0.9438247628937535
+    ],
+    "void_rate": 0.0,
+    "median": 0.09294269945007733,
+    "p90": 0.11700454129201228
+   }
+  },
+  "grid_edge_rate_all_families": 0.0
+ },
+ "all_gates_ok": false
+}

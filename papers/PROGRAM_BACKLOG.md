@@ -50,6 +50,35 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 47 (2026-07-20, operator-directed "push the tech to another level") — R9: THE DATASHEET. The instrument now ships with measured operating characteristics — and the datasheet withholds two of eight seals. `DATASHEET_SHIPPED__2_gates_closed_negative` (FINDING OATH-HELD 42 verified / 0 contradicted).**
+  The level-up chosen: not a flashier estimator — **instruments that know themselves**. Prereg
+  `2e881c9` froze eleven replicate families (~790 reps, disjoint seed bases), calibration-shaped
+  GATES (coverage bands, false-alarm at nominal, refusal rates) and unbarred CHARACTERISTICS
+  (performance is measured, never gated — a gate the performance could never fail is not a gate).
+  Discharges panel fix 9 (sync arm), fix 8's VOID-rate half, re-panel F2/F3/F6. 73s CPU.
+  **CLOSED_NEGATIVE (2):** sync-arm pi-CI coverage 0.835 [0.777, 0.880] on clean (band
+  [0.90, 0.99]) and 0.875 at rho 0.30 — the boundary pathology: percentile bootstrap with s
+  pinned at 0 distorts the companion interval. Mechanism diagnosed in the same table: coverage
+  is NOMINAL where s is interior (0.912 @ dose 0.05, 0.938 @ 0.15) and the 1-param arm on the
+  same rho fixtures covers 0.925. Narrow repair licensed: fall back to the 1-param CI at
+  s_hat=0, or boundary-aware bootstrap; re-gate G1.
+  **PASSED (6):** misfit false-alarm calibrated 0.090 (split-sample, thr 6.19); deaf VOID 0.967
+  plain / **1.000 noise-margin** (adopt the panel's noise-margin gate); false-refusal **0/200**;
+  sync-dose coverage in band; 1-param coverage in band.
+  **The Stage-B-shaping numbers:** misfit power vs the re-panel's silent violations = 0.36
+  (contam10, silent-wrong 0.64), **0.04** (y-correlated key, silent-wrong 0.74), 0.12
+  (beta-pessimism, silent-wrong 0.88) — smooth violations CANNOT be policed statistically;
+  anchor CONSTRUCTION (ladders, labeled slices, provenance) must carry that load, now a
+  requirement with rates, not advice. Phantom-sync rate 0.24 [0.186, 0.304] (cycle-45's s=0.000
+  was a favourable draw; damage bounded — clean err p90 0.0334). s-detection power 0.283/0.700/
+  1.000 at doses 0.02/0.05/0.15 (below ~5% key rate, absence of evidence isn't evidence of
+  absence, with numbers). Grid-edge rate 0.0; edge flag wired in R9 records.
+  Verified: pytest **1773 passed / 8 skipped**; py_compile clean; certify.py untouched; Stage-A
+  check logic untouched.
+  *Next:* (1) the boundary repair + G1 re-gate; (2) noise-margin gate adoption; (3) Stage-B
+  prereg with construction-borne defenses and its own misfit-null calibration. Freeze =
+  operator's call on the datasheet as it stands, withheld seals included.
+
 - **Cycle 46 (2026-07-20, operator-directed) — the Stage-A RE-PANEL ran (inline, disclosed) and did its job: fatal-fix set CONFIRMED, but the R8 layer's green is DRAW-FRAGILE and its scope had a hole. `NO_GO_freeze__repanel_F1_F2` — the freeze stays blocked, honestly.**
   Protocol per `_stage_a_panel_2026_07_19.md` path-back; settled items not re-litigated; burials
   not re-opened. DISCLOSED: the 3-lens subagent fleet was blocked at spawn (session limit), so

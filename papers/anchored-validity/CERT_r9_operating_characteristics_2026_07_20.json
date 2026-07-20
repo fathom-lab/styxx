@@ -1,0 +1,529 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_r9_operating_characteristics_2026_07_20.md",
+  "document_sha256": "18a776a9294a0a07c0fa3f006e4491def1453254bd6bb98c6ebda7b61f289ff0",
+  "receipts_sha256": {
+    "stage_a_operating_chars_result.json": "e8a698505185f00c7b957d5359a4d28ee250822e9123dc7e06793931e8b4e07f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "200"
+    },
+    {
+      "line": 20,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 25,
+      "token": "0.12"
+    },
+    {
+      "line": 26,
+      "token": "1.000"
+    },
+    {
+      "line": 38,
+      "token": "575"
+    },
+    {
+      "line": 38,
+      "token": "11"
+    },
+    {
+      "line": 46,
+      "token": "0.000"
+    },
+    {
+      "line": 70,
+      "token": "0"
+    },
+    {
+      "line": 73,
+      "token": "1.000"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 15,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "boundary.** Clean-panel pi-CI coverage measured 0.835 with Wilson interval [0.777, 0.880] over",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 15,
+      "token": "0.777",
+      "value": 0.777,
+      "decimals": 3,
+      "context": "boundary.** Clean-panel pi-CI coverage measured 0.835 with Wilson interval [0.777, 0.880] over",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.wilson[0]"
+    },
+    {
+      "line": 15,
+      "token": "0.880",
+      "value": 0.88,
+      "decimals": 3,
+      "context": "boundary.** Clean-panel pi-CI coverage measured 0.835 with Wilson interval [0.777, 0.880] over",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.wilson[1]"
+    },
+    {
+      "line": 16,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "200 replicates -- decisively below the frozen [0.90, 0.99] band, upper edge included. At rho",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "200 replicates -- decisively below the frozen [0.90, 0.99] band, upper edge included. At rho",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.betas[2]"
+    },
+    {
+      "line": 16,
+      "token": "0.99",
+      "value": 0.99,
+      "decimals": 2,
+      "context": "200 replicates -- decisively below the frozen [0.90, 0.99] band, upper edge included. At rho",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.deaf.void_wilson[1]"
+    },
+    {
+      "line": 17,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "0.30 the sync arm covers 0.875. Both clauses are CLOSED_NEGATIVE. The mechanism is visible in",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.phantom_sync_wilson[1]"
+    },
+    {
+      "line": 18,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "the same table: wherever true s is INTERIOR the coverage is nominal (0.912 at dose 0.05, 0.938",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 18,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "the same table: wherever true s is INTERIOR the coverage is nominal (0.912 at dose 0.05, 0.938",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.nominal_fa"
+    },
+    {
+      "line": 18,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "the same table: wherever true s is INTERIOR the coverage is nominal (0.912 at dose 0.05, 0.938",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.15.coverage.rate"
+    },
+    {
+      "line": 19,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "at dose 0.15), and the one-parameter arm on the very same rho fixtures covers 0.925. The",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.alphas[0]"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "percentile bootstrap of a parameter pinned at s = 0 distorts the companion interval -- a known",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "when s_hat = 0, report the one-parameter interval (which covers), or a boundary-aware bootstrap.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.090",
+      "value": 0.09,
+      "decimals": 3,
+      "context": "**What passed:** misfit false-alarm calibrated at 0.090 on held-out clean replicates (band",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.misfit_null.achieved_fa"
+    },
+    {
+      "line": 25,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "[0.01, 0.12], threshold 6.19273753216957 = the calibration set's 95th percentile); deaf-panel",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.betas[0]"
+    },
+    {
+      "line": 25,
+      "token": "0.12",
+      "value": 0.12,
+      "decimals": 2,
+      "context": "[0.01, 0.12], threshold 6.19273753216957 = the calibration set's 95th percentile); deaf-panel",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "VOID rate 0.967 under the plain gate -- and 1.000 under the noise-margin gate the original",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 26,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "VOID rate 0.967 under the plain gate -- and 1.000 under the noise-margin gate the original",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "panel proposed, which the datasheet now recommends adopting; false-refusal rate 0/200 -- the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 27,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "panel proposed, which the datasheet now recommends adopting; false-refusal rate 0/200 -- the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 35,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "the re-panel exhibited: 0.36 against ten-percent anchor contamination (silent-wrong rate 0.64,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.contam10.misfit_power"
+    },
+    {
+      "line": 35,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "the re-panel exhibited: 0.36 against ten-percent anchor contamination (silent-wrong rate 0.64,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.contam10.silent_wrong_rate"
+    },
+    {
+      "line": 36,
+      "token": "0.082",
+      "value": 0.082,
+      "decimals": 3,
+      "context": "median pi error 0.082); 0.04 against the y-correlated key (silent-wrong 0.74, median error",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.contam10.median"
+    },
+    {
+      "line": 36,
+      "token": "0.04",
+      "value": 0.04,
+      "decimals": 2,
+      "context": "median pi error 0.082); 0.04 against the y-correlated key (silent-wrong 0.74, median error",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.p90"
+    },
+    {
+      "line": 36,
+      "token": "0.74",
+      "value": 0.74,
+      "decimals": 2,
+      "context": "median pi error 0.082); 0.04 against the y-correlated key (silent-wrong 0.74, median error",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.key_on_pos.silent_wrong_rate"
+    },
+    {
+      "line": 37,
+      "token": "0.0451",
+      "value": 0.0451,
+      "decimals": 4,
+      "context": "0.0451); 0.12 against anchor-beta pessimism (silent-wrong 0.88, median error 0.0929). Misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.key_on_pos.median"
+    },
+    {
+      "line": 37,
+      "token": "0.12",
+      "value": 0.12,
+      "decimals": 2,
+      "context": "0.0451); 0.12 against anchor-beta pessimism (silent-wrong 0.88, median error 0.0929). Misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.beta_plus10.misfit_power"
+    },
+    {
+      "line": 37,
+      "token": "0.88",
+      "value": 0.88,
+      "decimals": 2,
+      "context": "0.0451); 0.12 against anchor-beta pessimism (silent-wrong 0.88, median error 0.0929). Misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.wilson[1]"
+    },
+    {
+      "line": 37,
+      "token": "0.0929",
+      "value": 0.0929,
+      "decimals": 4,
+      "context": "0.0451); 0.12 against anchor-beta pessimism (silent-wrong 0.88, median error 0.0929). Misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.beta_plus10.median"
+    },
+    {
+      "line": 38,
+      "token": "575",
+      "value": 575.0,
+      "decimals": 0,
+      "context": "catches gross structure (the specialist at 575, subset keys at 11-28 in the re-panel) and is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "catches gross structure (the specialist at 575, subset keys at 11-28 in the re-panel) and is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "0.24",
+      "value": 0.24,
+      "decimals": 2,
+      "context": "**The phantom-sync rate is 0.24** (Wilson [0.186, 0.304]): on a quarter of clean panels the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.phantom_sync_rate"
+    },
+    {
+      "line": 45,
+      "token": "0.186",
+      "value": 0.186,
+      "decimals": 3,
+      "context": "**The phantom-sync rate is 0.24** (Wilson [0.186, 0.304]): on a quarter of clean panels the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.phantom_sync_wilson[0]"
+    },
+    {
+      "line": 45,
+      "token": "0.304",
+      "value": 0.304,
+      "decimals": 3,
+      "context": "**The phantom-sync rate is 0.24** (Wilson [0.186, 0.304]): on a quarter of clean panels the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.phantom_sync_wilson[1]"
+    },
+    {
+      "line": 46,
+      "token": "0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "knob reads s above S_NULL. The scored Stage-A pass at s = 0.000 was a favourable draw, as the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 47,
+      "token": "0.0129",
+      "value": 0.0129,
+      "decimals": 4,
+      "context": "re-panel suspected. The damage is bounded -- clean median pi error 0.0129, ninetieth percentile",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.err.median"
+    },
+    {
+      "line": 48,
+      "token": "0.0334",
+      "value": 0.0334,
+      "decimals": 4,
+      "context": "0.0334 -- but the two-sided claim must now be quoted at its measured strength, not its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.err.p90"
+    },
+    {
+      "line": 52,
+      "token": "0.283",
+      "value": 0.283,
+      "decimals": 3,
+      "context": "is 0.283 at dose 0.02, 0.700 at dose 0.05, 1.000 at dose 0.15. Below roughly a five percent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.02.s_detection_power.rate"
+    },
+    {
+      "line": 52,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "is 0.283 at dose 0.02, 0.700 at dose 0.05, 1.000 at dose 0.15. Below roughly a five percent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.s_null"
+    },
+    {
+      "line": 52,
+      "token": "0.700",
+      "value": 0.7,
+      "decimals": 3,
+      "context": "is 0.283 at dose 0.02, 0.700 at dose 0.05, 1.000 at dose 0.15. Below roughly a five percent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.rho30.sync_arm.coverage.covered"
+    },
+    {
+      "line": 52,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "is 0.283 at dose 0.02, 0.700 at dose 0.05, 1.000 at dose 0.15. Below roughly a five percent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.nominal_fa"
+    },
+    {
+      "line": 52,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "is 0.283 at dose 0.02, 0.700 at dose 0.05, 1.000 at dose 0.15. Below roughly a five percent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.R.clean"
+    },
+    {
+      "line": 55,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "**Grid-edge rate 0.0** across all families at this design point; the edge flag is wired into",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:design.nominal_fa"
+    },
+    {
+      "line": 61,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "(0/200), a deaf-panel gate that voids at 0.967-1.000, calibrated self-distrust with a stated",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 61,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "(0/200), a deaf-panel gate that voids at 0.967-1.000, calibrated self-distrust with a stated",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 62,
+      "token": "0.090",
+      "value": 0.09,
+      "decimals": 3,
+      "context": "false-alarm rate (0.090), stated coverage in its trustworthy region (0.912-0.938 where s is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.misfit_null.achieved_fa"
+    },
+    {
+      "line": 62,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "false-alarm rate (0.090), stated coverage in its trustworthy region (0.912-0.938 where s is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 63,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "interior), stated coverage failure at its boundary (0.835, withheld seal), and stated blindness",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 64,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "(silent-wrong 0.64-0.88 against smooth violations). No prior artifact in this program could",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.violations.contam10.silent_wrong_rate"
+    },
+    {
+      "line": 70,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "1. The boundary repair (fall back to the one-parameter interval at s_hat = 0, or a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 73,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "2. Adopt the noise-margin informativeness gate (measured 1.000 VOID on deaf panels vs 0.967",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 73,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "2. Adopt the noise-margin informativeness gate (measured 1.000 VOID on deaf panels vs 0.967",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.deaf.void_rate_plain"
+    }
+  ]
+}
