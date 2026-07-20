@@ -27,12 +27,21 @@ test -- the panel of 2026-07-19 found the previous header claiming more than the
      CI-coverage standard, not to the 0.03 point bar it also misses at rho .30/.45. DS bias exceeds
      0.10 only at rho=0.45, a dose added post-measurement.
   R3 SYNCHRONIZED FAILURE (the master-key case): a fraction of items triggers ALL judges to fire
-     regardless of truth. DS reads the agreement as signal and is confidently wrong. The anchored
-     side's surviving claim is the DETECTOR one -- a garbage stratum built to trip the key fires
-     every judge at a rate no inert negative anchor explains. Pricing it requires the key to fire ON
-     THE ANCHORS; R7c exhibits the sync-on-real-only case where it does not and the stratum is
-     silent. The pre-fix "anchored is flat across the dose" reading was an algebraic artifact of
-     pooling the sync-bearing stratum into the rate estimation (see the R3 comment).
+     regardless of truth. DS reads the agreement as signal and is confidently wrong. The old
+     "anchored is flat across the dose" claim is BURIED (cycle 44: it was algebraic cancellation
+     from a contaminated stratum, see the R3 comment) and is not resurrected here. The replacement,
+     preregistered in PREREG_R8_sync_corrected_2026_07_20.md: (a) the 1-parameter estimator's
+     dose-growing bias is the EXPECTED defect, checked as such; (b) a detector stratum at the
+     preregistered construction strength prices the key's existence (ambient-rate strata license
+     nothing, proven cycle 44); (c) the SYNC-CORRECTED arm recovers both pi and the dose.
+  R8 SYNC-CORRECTED ARM (added 2026-07-20, its own prereg): a two-parameter (pi, s) moment system
+     -- an all-judge key adds the same +s intercept to every anchor-pinned moment, so s is
+     identifiable from the ORGANIC data even when no anchor stratum can see the key (a constructed
+     detector's fire rate estimates a constructed population, never the wild rate -- cycle 44's
+     kill #2). Two-sided: the knob must find the planted dose AND refuse to invent sync on clean
+     or merely-correlated panels AND not defeat the fix-3 refusal. Scope: all-judge keys only;
+     partial-strength and subset keys are covered by a recovered-or-flagged gate whose only
+     failing outcome is a silent confident wrong number.
   R4 REFUSAL (two-sided admissibility): a panel of deaf judges (beta ~= alpha) must produce
      VOID_PANEL__uninformative, never a number. A gate that cannot refuse is not a gate. This is a
      single-draw fixture; the deaf-panel VOID RATE over seeds is owed (panel fix 8).
@@ -70,24 +79,36 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 
 # ----------------------------------------------------------------- frozen constants (Stage A bars)
+# fix 13: PI_TOL_FAIL is DELETED -- it was advertised in the bars block and gated nothing.
 PI_TOL_GOOD = 0.03        # an estimator "recovers" prevalence within this
-PI_TOL_FAIL = 0.10        # an estimator is "biased" beyond this
-ALPHA_TOL = 0.03          # per-judge error-rate recovery bar
+ALPHA_TOL = 0.03          # DS-side per-judge alpha-error bar (wired in R2, fix 5/13)
 INFORMATIVENESS_GATE = 0.15   # beta-alpha below this -> judge excluded; all excluded -> VOID
 N_REAL = 6000             # unlabeled items per scenario
 N_ANCHOR = 400            # per anchor stratum (K >= 1/(4*eps^2) gives eps ~ 0.025 at 400)
 N_BOOT = 300              # bootstrap resamples for the anchored CI
 SEED = 0
+# R8 (PREREG_R8_sync_corrected_2026_07_20.md, frozen before the scored run):
+S_TOL = 0.03              # sync-rate recovery tolerance
+S_NULL = 0.02             # max phantom sync on sync-free fixtures (two-sided admissibility)
+DETECTOR_TRIP = 0.80      # detector-stratum construction strength -- a preregistered design
+                          # parameter; cycle 44 proved an ambient-rate stratum licenses nothing
 
 
 # ----------------------------------------------------------------------------- panel simulator
-def simulate_panel(rng, n, pi, alphas, betas, rho_shared=0.0, sync_frac=0.0):
+def simulate_panel(rng, n, pi, alphas, betas, rho_shared=0.0, sync_frac=0.0,
+                   sync_strength=1.0, sync_judges=None):
     """Verdict matrix (n x J) from a panel with a SHARED latent failure factor.
 
     Error model per item: with prob rho_shared a shared 'bad day' latent fires and every judge's
     error probability is inflated toward 1 (errors become common-mode); with prob sync_frac the
     item is a 'master key' that makes EVERY judge fire regardless of truth (the arXiv:2507.08794
-    mechanism). Both violate conditional independence; neither is observable from agreement alone."""
+    mechanism). Both violate conditional independence; neither is observable from agreement alone.
+
+    sync_strength / sync_judges (R8d): a key may fire each judge only with prob p < 1, or hit a
+    SUBSET of judges. Defaults reproduce the original all-judge full-strength key draw-for-draw
+    (no rng consumption changes). fix 12: the dead pre-overwrite bad-day formula that used to sit
+    here is deleted -- it consumed no draws, encoded an abandoned model, and reviving it would
+    have desynchronized simulator and R6 witness (which hard-codes the live model)."""
     J = len(alphas)
     y = (rng.random(n) < pi).astype(int)
     V = np.empty((n, J), dtype=int)
@@ -95,11 +116,11 @@ def simulate_panel(rng, n, pi, alphas, betas, rho_shared=0.0, sync_frac=0.0):
     sync = rng.random(n) < sync_frac
     for j in range(J):
         p_fire = np.where(y == 1, betas[j], alphas[j]).astype(float)
-        p_fire = np.where(shared, np.clip(p_fire + 0.5 * (1 - p_fire) * np.sign(0.5 - p_fire) * -2 + 0.0, 0, 1), p_fire)
         # shared 'bad day': push toward firing errors -- misfire on negatives, miss on positives
         p_bad = np.where(y == 1, betas[j] * 0.35, alphas[j] + 0.55 * (1 - alphas[j]))
-        p_fire = np.where(shared, p_bad, np.where(y == 1, betas[j], alphas[j]))
-        p_fire = np.where(sync, 1.0, p_fire)
+        p_fire = np.where(shared, p_bad, p_fire)
+        if sync_judges is None or j in sync_judges:
+            p_fire = np.where(sync, sync_strength, p_fire)
         V[:, j] = (rng.random(n) < p_fire).astype(int)
     return y, V
 
@@ -274,6 +295,82 @@ def anchored(V, neg, pos, rng, garbage=None, gate=INFORMATIVENESS_GATE, n_boot=N
             "cov_neg_offdiag": off0.tolist(), **base}
 
 
+# --------------------------------------------------- R8: the sync-corrected anchored estimator
+_S_GRID = np.arange(0.0, 0.6 + 1e-12, 0.002)
+
+
+def _moment_system_full(Vr, negr, posr, idx):
+    """Raw (A, B, t, w) for the two-parameter (pi, s) model. Rows: kept-judge first moments,
+    kept-pair second moments, plus the ALL-KEPT-FIRE moment -- where an all-judge master key is
+    most visible, because A and B are small products there and the +s intercept dominates."""
+    av, bv = negr.mean(0), posr.mean(0)
+    A, B, t, w = [], [], [], []
+    for j in idx:
+        A.append(av[j]); B.append(bv[j])
+        t.append(Vr[:, j].mean()); w.append(len(Vr) / max(Vr[:, j].var() + 1e-9, 1e-9))
+    for ii in range(len(idx)):
+        for jj in range(ii + 1, len(idx)):
+            i, j = idx[ii], idx[jj]
+            A.append((negr[:, i] * negr[:, j]).mean()); B.append((posr[:, i] * posr[:, j]).mean())
+            pv = Vr[:, i] * Vr[:, j]
+            t.append(pv.mean()); w.append(len(Vr) / max(pv.var() + 1e-9, 1e-9))
+    allv = Vr[:, idx].prod(1)
+    A.append(negr[:, idx].prod(1).mean()); B.append(posr[:, idx].prod(1).mean())
+    t.append(allv.mean()); w.append(len(Vr) / max(allv.var() + 1e-9, 1e-9))
+    return np.asarray(A), np.asarray(B), np.asarray(t), np.asarray(w)
+
+
+def _solve_pi_s(A, B, t, w, s_grid=_S_GRID):
+    """Profile WLS for m_k = s + (1-s)*(A_k + pi*d_k): for each s on the frozen grid, pi has a
+    1-D WLS closed form; take the (pi, s) minimizing the weighted residual. pi is UNCLIPPED (the
+    refusal branch must see impossibility); s >= 0 by construction -- it is a rate, not a free
+    sign, so it cannot 'explain' targets that sit BELOW the anchor-predicted floor."""
+    d = B - A
+    one_s = 1.0 - s_grid
+    ts = t[None, :] - s_grid[:, None] - one_s[:, None] * A[None, :]
+    denom = np.maximum(one_s * (w * d * d).sum(), 1e-12)
+    pi_s = (ts @ (w * d)) / denom
+    m = s_grid[:, None] + one_s[:, None] * (A[None, :] + pi_s[:, None] * d[None, :])
+    cost = ((m - t[None, :]) ** 2 * w[None, :]).sum(1)
+    k = int(np.argmin(cost))
+    return float(pi_s[k]), float(s_grid[k]), float(cost[k])
+
+
+def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT):
+    """The SYNC-CORRECTED anchored estimator (R8, its own prereg). Rationale, per cycle 44's
+    kill #2: a constructed detector stratum's fire rate estimates a CONSTRUCTED population, never
+    the wild sync rate -- so the only label-free source of s is the organic moment system itself.
+    An all-judge key adds the same +s intercept to every moment; with anchors pinning A_k and B_k
+    the system is overdetermined in (pi, s). Scope: ALL-JUDGE keys; partial-strength and subset
+    keys are covered only by the recovered-or-flagged gate (R8d).
+
+    This does NOT replace anchored() -- every settled 1-parameter result stands on its own path."""
+    n, J = V.shape
+    a_hat = neg.mean(0); b_hat = pos.mean(0)
+    keep = (b_hat - a_hat) >= gate
+    base = {"alpha": a_hat.tolist(), "beta": b_hat.tolist(), "kept": keep.tolist()}
+    if not np.any(keep):
+        return {"verdict": "VOID_PANEL__uninformative", "pi": None, "s": None, **base}
+    idx = np.where(keep)[0]
+    A, B, t, w = _moment_system_full(V, neg, pos, idx)
+    pi_raw, s_hat, cost = _solve_pi_s(A, B, t, w)
+    lof = {"chi2_per_df": cost / max(len(A) - 2, 1), "n_moments": int(len(A))}
+    bp, bs = [], []
+    for _ in range(n_boot):
+        bi = rng.integers(0, n, n); bn = rng.integers(0, len(neg), len(neg))
+        bz = rng.integers(0, len(pos), len(pos))
+        p_, s_, _ = _solve_pi_s(*_moment_system_full(V[bi], neg[bn], pos[bz], idx))
+        bp.append(p_); bs.append(s_)
+    plo, phi = (float(x) for x in np.percentile(bp, [2.5, 97.5]))
+    slo, shi = (float(x) for x in np.percentile(bs, [2.5, 97.5]))
+    out = {"pi_unclipped": pi_raw, "ci_unclipped": [plo, phi], "s": s_hat, "s_ci": [slo, shi],
+           "s_at_grid_edge": bool(s_hat >= _S_GRID[-1] - 1e-9), "lack_of_fit": lof, **base}
+    if (pi_raw < 0.0 and phi < 0.0) or (pi_raw > 1.0 and plo > 1.0):
+        return {"verdict": "VOID_ANCHORS__nonexchangeable", "pi": None, **out}
+    return {"verdict": "ESTIMATED", "pi": float(np.clip(pi_raw, 0, 1)),
+            "ci": [float(np.clip(plo, 0, 1)), float(np.clip(phi, 0, 1))], **out}
+
+
 # ------------------------------------------------------------------- R6: unidentifiability witness
 def unidentifiability_witness(rng):
     """Constructive core of the theorem: a CORRELATED 3-judge model and an INDEPENDENT model with
@@ -326,6 +423,9 @@ def unidentifiability_witness(rng):
 # ----------------------------------------------------------------------------------- scenarios
 def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
     rng = np.random.default_rng(seed)
+    # stream discipline (prereg R8): every NEW consumer draws from rng_boot or from the main
+    # stream strictly after R7, so R1-R7 reproduce cycle 44's realizations draw-for-draw.
+    rng_boot = np.random.default_rng(seed + 7919)
     if fast:
         n_real, n_anchor = 1500, 150
     alphas = [0.15, 0.20, 0.10, 0.18]
@@ -333,8 +433,9 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
     PI = 0.35
     out = {"constants": {"pi_true": PI, "alphas": alphas, "betas": betas,
                          "n_real": n_real, "n_anchor": n_anchor, "seed": seed,
-                         "bars": {"pi_tol_good": PI_TOL_GOOD, "pi_tol_fail": PI_TOL_FAIL,
-                                  "alpha_tol": ALPHA_TOL, "gate": INFORMATIVENESS_GATE}},
+                         "bars": {"pi_tol_good": PI_TOL_GOOD, "alpha_tol": ALPHA_TOL,
+                                  "gate": INFORMATIVENESS_GATE, "s_tol": S_TOL,
+                                  "s_null": S_NULL, "detector_trip": DETECTOR_TRIP}},
            "results": {}, "checks": []}
     ok_all = True
 
@@ -393,22 +494,44 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
     for rho in (0.15, 0.30, 0.45):
         y, V, neg, pos = scenario(rho=rho)
         ds = dawid_skene(V); an = anchored(V, neg, pos, rng)
-        realized_alpha = neg.mean(0)
+        # fix 5: the alpha-transfer diagnostic was a tautology -- realized_alpha = neg.mean(0)
+        # compared to a_hat = neg.mean(0) is 0.0 by arithmetic identity, so the one field that
+        # could have measured anchor->organic alpha transfer measured nothing. Compare against
+        # the ORGANIC realized alpha (oracle y, licensed in sim), per judge, under a noise-aware
+        # bar of 3 binomial SEs -- a flat 0.03 on a max over 4 judges at K=400 fails by noise
+        # alone about half the time, which is fix 9's lesson applied rather than repeated.
+        realized_alpha = V[y == 0].mean(0)
+        a_hat = np.asarray(an["alpha"])
+        a_se = np.sqrt(np.maximum(a_hat * (1 - a_hat), 1e-12) / n_anchor
+                       + np.maximum(realized_alpha * (1 - realized_alpha), 1e-12) / max((y == 0).sum(), 1))
         r2.append({"rho": rho, "ds_pi": ds["pi"], "ds_err": abs(ds["pi"] - PI),
                    "anchored_pi": an["pi"], "anchored_err": abs(an["pi"] - PI),
                    "anchored_ci": an["ci"], "ci_covers": bool(an["ci"][0] <= PI <= an["ci"][1]),
-                   "anchored_alpha_err": float(np.max(np.abs(np.array(an["alpha"]) - realized_alpha))),
+                   "realized_alpha": realized_alpha.tolist(),
+                   "anchored_alpha_err": float(np.max(np.abs(a_hat - realized_alpha))),
+                   "anchored_alpha_transfer_ok": bool(np.all(np.abs(a_hat - realized_alpha) <= 3 * a_se)),
+                   "ds_alpha_err": float(np.max(np.abs(np.asarray(ds["alpha"]) - realized_alpha))),
                    "informativeness": float(np.min(pos.mean(0) - neg.mean(0))),
                    "corr_detected": an["corr_detected_neg"],
                    "cov_neg_offdiag": an["cov_neg_offdiag"]})
         print(f"   rho {rho:.2f}: DS err {r2[-1]['ds_err']:.3f} | anchored err "
               f"{r2[-1]['anchored_err']:.3f} CI {np.round(an['ci'],3).tolist()} covers "
-              f"{r2[-1]['ci_covers']} | min-inf {r2[-1]['informativeness']:.2f}")
+              f"{r2[-1]['ci_covers']} | min-inf {r2[-1]['informativeness']:.2f} | alpha "
+              f"anch {r2[-1]['anchored_alpha_err']:.3f} ds {r2[-1]['ds_alpha_err']:.3f}")
     out["results"]["R2_sweep"] = r2
     add("R2:ds_fails_the_same_bar_anchored_meets", all(x["ds_err"] > PI_TOL_GOOD for x in r2[1:]),
         f"DS err at rho .30/.45: {r2[1]['ds_err']:.3f}/{r2[2]['ds_err']:.3f} vs bar {PI_TOL_GOOD}")
-    add("R2:ds_bias_grows_with_dose", r2[0]["ds_err"] < r2[1]["ds_err"] < r2[2]["ds_err"] + 0.005,
+    # fix 14: one-sided -- 'grows with dose' must not pass when the bias slightly fell
+    add("R2:ds_bias_grows_with_dose",
+        r2[0]["ds_err"] + 0.005 < r2[1]["ds_err"] and r2[1]["ds_err"] + 0.005 < r2[2]["ds_err"],
         f"DS err {[round(x['ds_err'],3) for x in r2]}")
+    add("R2:anchored_alpha_transfers_to_organic", all(x["anchored_alpha_transfer_ok"] for x in r2),
+        f"max err {[round(x['anchored_alpha_err'],3) for x in r2]} within 3 SE at every dose")
+    add("R2:ds_alpha_wrong_where_correlated",
+        r2[2]["ds_alpha_err"] > ALPHA_TOL and
+        all(x["ds_alpha_err"] > x["anchored_alpha_err"] for x in r2[1:]),
+        f"ds alpha err {[round(x['ds_alpha_err'],3) for x in r2]} vs anchored "
+        f"{[round(x['anchored_alpha_err'],3) for x in r2]} (bar {ALPHA_TOL} at rho .45)")
     # under the shared factor the anchored estimator loses PRECISION (informativeness shrinks, so
     # variance inflates by the 1/gap^2 law verified in the spike-in sim) but must stay HONEST: its
     # own CI must cover truth at every dose, and it must beat DS wherever DS misses the bar. A
@@ -428,34 +551,50 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
     # property of the estimator. Fix 4 forbids that pooling: inert negatives estimate the rates, the
     # sync-bearing garbage stratum only reports a fire rate. R3's flatness claim is therefore back
     # under test, and this file does not get to assume the answer.
-    print("== R3 SYNCHRONIZED FAILURE -- dose-response in the master-key fraction (stratified) ==")
+    # R3 REPLACEMENT (prereg R8; the flatness claim is buried CLOSED_NEGATIVE, cycle 44 eec82e5,
+    # and is NOT resurrected). The 1-parameter estimator's dose-growing bias is now the EXPECTED
+    # defect with its own check; recovery is claimed only for the sync-corrected arm; the detector
+    # stratum runs at the preregistered construction strength DETECTOR_TRIP, because cycle 44
+    # proved an ambient-rate stratum licenses nothing.
+    print("== R3 SYNCHRONIZED FAILURE -- master-key dose-response, stratified + sync-corrected ==")
     r3 = []
     for sync in (0.08, 0.15):
         y, V, neg, pos = scenario(sync=sync, anchor_sync=0.0)   # inert anchors, sync in the wild
-        garb = garbage_stratum(sync)                            # detector stratum sees the key
+        garb = garbage_stratum(DETECTOR_TRIP)                   # constructed to TRIP, not to sample
         ds = dawid_skene(V); an = anchored(V, neg, pos, rng, garbage=garb)
+        asy = anchored_sync(V, neg, pos, rng_boot)
         r3.append({"sync": sync, "ds_pi": ds["pi"], "ds_err": abs(ds["pi"] - PI),
                    "anchored_verdict": an["verdict"], "anchored_pi": an["pi"],
                    "anchored_err": None if an["pi"] is None else abs(an["pi"] - PI),
+                   "sync_corrected": {k: asy.get(k) for k in
+                                      ("verdict", "pi", "ci", "s", "s_ci", "lack_of_fit")},
                    "garbage": an["garbage"], "lack_of_fit": an.get("lack_of_fit")})
-        print(f"   sync {sync:.2f}: DS err {r3[-1]['ds_err']:.3f} | anchored {an['verdict']} "
-              f"err {r3[-1]['anchored_err']} | garbage all-fire "
-              f"{an['garbage']['all_fire_rate']:.3f} detected {an['garbage']['master_key_detected']}")
+        print(f"   sync {sync:.2f}: DS err {r3[-1]['ds_err']:.3f} | 1-param err "
+              f"{r3[-1]['anchored_err']} | sync-corrected pi {asy['pi']} s {asy['s']} | "
+              f"garbage all-fire {an['garbage']['all_fire_rate']:.3f} "
+              f"minz {min(an['garbage']['z_vs_inert_alpha']):.1f}")
     out["results"]["R3_sweep"] = r3
     add("R3:ds_fails_the_same_bar_anchored_meets", all(x["ds_err"] > PI_TOL_GOOD for x in r3),
         f"DS err {[round(x['ds_err'],3) for x in r3]}")
-    add("R3:ds_bias_grows_with_dose", r3[0]["ds_err"] < r3[1]["ds_err"] + 0.005,
+    add("R3:ds_bias_grows_with_dose", r3[0]["ds_err"] + 0.005 < r3[1]["ds_err"],
         f"{[round(x['ds_err'],3) for x in r3]}")
-    # the claim that survives stratification is the DETECTOR one: the garbage stratum prices the
-    # master key -- it fires every judge at a rate no inert negative anchor explains.
-    add("R3:garbage_stratum_prices_the_master_key",
+    add("R3:uncorrected_bias_grows_with_dose",
+        all(x["anchored_err"] is not None for x in r3) and
+        r3[0]["anchored_err"] + 0.005 < r3[1]["anchored_err"],
+        f"1-param err {[None if x['anchored_err'] is None else round(x['anchored_err'],3) for x in r3]}"
+        f" -- the defect is the claim now; silence about it was the old bug")
+    add("R3:detector_at_construction_strength_prices_the_key",
         all(x["garbage"]["master_key_detected"] for x in r3),
-        f"all-fire {[round(x['garbage']['all_fire_rate'],3) for x in r3]}, "
-        f"min z {[round(min(x['garbage']['z_vs_inert_alpha']),1) for x in r3]}")
-    # unchanged in wording, now measured WITHOUT the contaminated-anchor cancellation
-    add("R3:anchored_flat_across_dose",
-        all(x["anchored_err"] is not None and x["anchored_err"] <= PI_TOL_GOOD for x in r3),
-        f"anchored err {[x['anchored_err'] for x in r3]}")
+        f"min z {[round(min(x['garbage']['z_vs_inert_alpha']),1) for x in r3]} at trip {DETECTOR_TRIP}")
+    add("R3:sync_corrected_recovers_pi",
+        all(x["sync_corrected"]["pi"] is not None and
+            abs(x["sync_corrected"]["pi"] - PI) <= PI_TOL_GOOD for x in r3),
+        f"pi {[None if x['sync_corrected']['pi'] is None else round(x['sync_corrected']['pi'],3) for x in r3]}"
+        f" vs {PI}")
+    add("R3:sync_corrected_recovers_dose",
+        all(x["sync_corrected"]["s"] is not None and
+            abs(x["sync_corrected"]["s"] - x["sync"]) <= S_TOL for x in r3),
+        f"s_hat {[x['sync_corrected']['s'] for x in r3]} vs doses {[x['sync'] for x in r3]}")
 
     print("== R4 REFUSAL: deaf panel (beta ~= alpha) must VOID, never a number ==")
     y4, V4 = simulate_panel(rng, n_real, PI, [0.45] * 4, [0.52] * 4)
@@ -550,6 +689,7 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
                      V, pooled_neg, pos)
     fe_ok = fixture("R7e_stratified_POSTFIX", "same data, detector stratum separated",
                     V, neg, pos, garb_=detector)
+    r7e_frozen = (V, neg, pos, pooled_neg)      # R8e re-analyzes this exact data, no fresh draws
     out["results"]["R7"] = {"control_lack_of_fit": control_lof, "fixtures": r7}
 
     add("R7:misfit_exceeds_control_on_every_nonexchangeable_fixture",
@@ -569,6 +709,98 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
         fe_ok["verdict"] == "ESTIMATED" and fe_ok["err"] is not None and fe_ok["err"] <= PI_TOL_GOOD,
         f"{fe_ok['verdict']} pi {fe_ok['pi']} err {fe_ok['err']} -- the refusal is data-driven, "
         f"not a constant")
+
+    # ---------------------------------------------------------------------------------------- R8
+    # THE SYNC-CORRECTED ARM (PREREG_R8_sync_corrected_2026_07_20.md, frozen before this run).
+    # All fixtures here draw from the main stream AFTER R7 or re-analyze R7e's saved data, so
+    # nothing above this line felt these additions.
+    print("== R8 SYNC-CORRECTED ARM (prereg 2026-07-20) ==")
+    r8 = {}
+
+    # R8e first: the refusal pair on R7e's EXACT data. s >= 0 cannot rescue targets that sit
+    # below the contaminated anchor alpha, so the second parameter must not defeat the refusal;
+    # and the stratified twin's organic sync IS 0.02, so the new arm should read it.
+    V7, neg7, pos7, pooled7 = r7e_frozen
+    s_bad = anchored_sync(V7, pooled7, pos7, rng_boot)
+    s_ok = anchored_sync(V7, neg7, pos7, rng_boot)
+    r8["R8e_pooled"] = {k: s_bad.get(k) for k in ("verdict", "pi", "pi_unclipped", "ci_unclipped", "s")}
+    r8["R8e_stratified"] = {k: s_ok.get(k) for k in ("verdict", "pi", "ci", "s", "s_ci", "lack_of_fit")}
+    print(f"   R8e pooled: {s_bad['verdict']} unclipped {s_bad['pi_unclipped']:.3f} | "
+          f"stratified: {s_ok['verdict']} pi {s_ok['pi']} s {s_ok['s']}")
+    add("R8e:refusal_survives_the_second_parameter",
+        s_bad["verdict"] == "VOID_ANCHORS__nonexchangeable" and s_bad["pi"] is None,
+        f"{s_bad['verdict']} (unclipped {s_bad['pi_unclipped']:.3f}, "
+        f"CI {[round(x,3) for x in s_bad['ci_unclipped']]})")
+    add("R8e:stratified_twin_estimates_the_ambient_sync",
+        s_ok["verdict"] == "ESTIMATED" and abs(s_ok["pi"] - PI) <= PI_TOL_GOOD
+        and abs(s_ok["s"] - 0.02) <= 0.02,
+        f"pi {s_ok['pi']:.3f} (true {PI}), s_hat {s_ok['s']:.3f} (true 0.02)")
+
+    # R8a: no phantom sync -- the knob's two-sided admissibility. A parameter that invents sync
+    # on a clean panel is a misfit-laundering device and fails here.
+    y, V, neg, pos = scenario()
+    a1 = anchored(V, neg, pos, rng)
+    a2 = anchored_sync(V, neg, pos, rng_boot)
+    r8["R8a_clean"] = {"pi_1param": a1["pi"], "pi_sync": a2["pi"], "s": a2["s"],
+                       "s_ci": a2["s_ci"], "lack_of_fit": a2["lack_of_fit"]}
+    print(f"   R8a clean: s {a2['s']:.3f}, pi {a2['pi']:.3f} vs 1-param {a1['pi']:.3f}")
+    add("R8a:no_phantom_sync_on_the_clean_panel",
+        a2["s"] <= S_NULL and abs(a2["pi"] - a1["pi"]) <= 0.015 and abs(a2["pi"] - PI) <= PI_TOL_GOOD,
+        f"s {a2['s']:.3f} <= {S_NULL}, |pi_sync - pi_1param| {abs(a2['pi'] - a1['pi']):.3f} <= 0.015, "
+        f"pi err {abs(a2['pi'] - PI):.3f} <= {PI_TOL_GOOD}")
+
+    # R8b: smallest dose
+    y, V, neg, pos = scenario(sync=0.05, anchor_sync=0.0)
+    a5 = anchored_sync(V, neg, pos, rng_boot)
+    r8["R8b_dose005"] = {k: a5.get(k) for k in ("verdict", "pi", "ci", "s", "s_ci")}
+    print(f"   R8b sync 0.05: pi {a5['pi']} s {a5['s']}")
+    add("R8b:recovers_at_the_smallest_dose",
+        a5["pi"] is not None and abs(a5["pi"] - PI) <= PI_TOL_GOOD and abs(a5["s"] - 0.05) <= S_TOL,
+        f"pi {a5['pi']} err {None if a5['pi'] is None else round(abs(a5['pi'] - PI),3)}, "
+        f"s_hat {a5['s']} vs 0.05")
+
+    # R8c: correlation is not sync -- the bad-day factor lives in the anchor-measured pair
+    # moments, so s must not absorb it (exchangeable anchors share rho here).
+    y, V, neg, pos = scenario(rho=0.30)
+    c1 = anchored(V, neg, pos, rng)
+    c2 = anchored_sync(V, neg, pos, rng_boot)
+    r8["R8c_rho030"] = {"pi_1param": c1["pi"], "pi_sync": c2["pi"], "s": c2["s"]}
+    print(f"   R8c rho 0.30: s {c2['s']:.3f}, pi {c2['pi']:.3f} vs 1-param {c1['pi']:.3f}")
+    add("R8c:sync_knob_does_not_eat_correlation",
+        c2["s"] <= S_NULL and abs(c2["pi"] - c1["pi"]) <= 0.02,
+        f"s {c2['s']:.3f} <= {S_NULL}, |pi_sync - pi_1param| {abs(c2['pi'] - c1['pi']):.3f} <= 0.02")
+
+    # R8d: misspecified keys -- recovered or FLAGGED; the only failing outcome is a silent
+    # confident wrong number. (Single-draw ordinal misfit comparison; replicate version owed
+    # under panel fix 9.)
+    clean_misfit = a2["lack_of_fit"]["chi2_per_df"]
+
+    def rec_or_flag(res):
+        if res["pi"] is None:
+            return True                        # an explicit refusal IS a flag
+        return (abs(res["pi"] - PI) <= PI_TOL_GOOD
+                or res["lack_of_fit"]["chi2_per_df"] > clean_misfit)
+
+    yq, Vq = simulate_panel(rng, n_real, PI, alphas, betas, 0.0, 0.15, sync_strength=0.7)
+    negq = make_anchors(rng, n_anchor, "neg", alphas, betas)
+    posq = make_anchors(rng, n_anchor, "pos", alphas, betas)
+    q = anchored_sync(Vq, negq, posq, rng_boot)
+    r8["R8d_partial_strength"] = {k: q.get(k) for k in ("verdict", "pi", "s", "lack_of_fit")}
+    ys, Vs = simulate_panel(rng, n_real, PI, alphas, betas, 0.0, 0.15, sync_judges=(0, 1))
+    negs = make_anchors(rng, n_anchor, "neg", alphas, betas)
+    poss = make_anchors(rng, n_anchor, "pos", alphas, betas)
+    sj = anchored_sync(Vs, negs, poss, rng_boot)
+    r8["R8d_judge_subset"] = {k: sj.get(k) for k in ("verdict", "pi", "s", "lack_of_fit")}
+    print(f"   R8d p=0.7: {q['verdict']} pi {q['pi']} s {q['s']} misfit "
+          f"{q['lack_of_fit']['chi2_per_df']:.1f} | subset(0,1): {sj['verdict']} pi {sj['pi']} "
+          f"s {sj['s']} misfit {sj['lack_of_fit']['chi2_per_df']:.1f} | clean ref {clean_misfit:.1f}")
+    add("R8d:partial_strength_key_recovered_or_flagged", rec_or_flag(q),
+        f"pi {q['pi']} err {None if q['pi'] is None else round(abs(q['pi'] - PI),3)}, misfit "
+        f"{q['lack_of_fit']['chi2_per_df']:.1f} vs clean {clean_misfit:.1f}")
+    add("R8d:judge_subset_key_recovered_or_flagged", rec_or_flag(sj),
+        f"pi {sj['pi']} err {None if sj['pi'] is None else round(abs(sj['pi'] - PI),3)}, misfit "
+        f"{sj['lack_of_fit']['chi2_per_df']:.1f} vs clean {clean_misfit:.1f}")
+    out["results"]["R8"] = r8
 
     out["all_ok"] = ok_all
     return out
