@@ -41,6 +41,9 @@ def q(xs, p):
     return float(np.percentile(np.asarray(xs, float), p)) if len(xs) else None
 
 
+FALLBACK = False   # R10: set by --v2; same seeds, repaired intervals, paired re-gate
+
+
 def sync_rep(seed, *, organic_alphas=None, organic_betas=None, rho=0.0, sync=0.0,
              viol=None, n_boot=200):
     """One replicate of the sync-corrected instrument. Anchors are always clean of sync and
@@ -64,11 +67,13 @@ def sync_rep(seed, *, organic_alphas=None, organic_betas=None, rho=0.0, sync=0.0
         det = A.make_anchors(rng, K, "neg", ALPHAS, BETAS, 0.0, 0.80)
         k_in = int(0.10 * K)
         neg = np.vstack([neg[:-k_in], det[:k_in]])
-    r = A.anchored_sync(V, neg, pos, np.random.default_rng(seed + 7_000_000), n_boot=n_boot)
+    r = A.anchored_sync(V, neg, pos, np.random.default_rng(seed + 7_000_000), n_boot=n_boot,
+                        boundary_fallback=FALLBACK)
     return {"verdict": r["verdict"], "pi": r.get("pi"), "ci": r.get("ci"),
             "s": r.get("s"), "s_ci": r.get("s_ci"),
             "misfit": r["lack_of_fit"]["chi2_per_df"] if r.get("lack_of_fit") else None,
-            "edge": bool(r.get("s_at_grid_edge", False))}
+            "edge": bool(r.get("s_at_grid_edge", False)),
+            "ci_source": r.get("ci_source")}
 
 
 def oneparam_rep(seed, rho):
@@ -231,13 +236,21 @@ def run(smoke=False):
 
 
 def main():
+    global FALLBACK
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="reduced-R smoke; *_SMOKE_INVALID only")
+    ap.add_argument("--v2", action="store_true",
+                    help="R10 paired re-gate: boundary_fallback=True, same seeds, own result file")
     args = ap.parse_args()
+    FALLBACK = bool(args.v2)
     t0 = time.time()
     out = run(smoke=args.smoke)
-    name = ("stage_a_operating_chars_SMOKE_INVALID.json" if args.smoke
-            else "stage_a_operating_chars_result.json")
+    out["design"]["boundary_fallback"] = FALLBACK
+    if args.smoke:
+        name = "stage_a_operating_chars_SMOKE_INVALID.json"
+    else:
+        name = ("stage_a_operating_chars_v2_result.json" if args.v2
+                else "stage_a_operating_chars_result.json")
     dest = HERE / name
     dest.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(f"\n{'SMOKE (INVALID)' if args.smoke else 'RESULT'}: all_gates_ok={out['all_gates_ok']} "

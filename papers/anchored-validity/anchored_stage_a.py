@@ -343,7 +343,8 @@ def _solve_pi_s(A, B, t, w, s_grid=_S_GRID):
     return float(pi_s[k]), float(s_grid[k]), float(cost[k])
 
 
-def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT):
+def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT,
+                  boundary_fallback=False):
     """The SYNC-CORRECTED anchored estimator (R8, its own prereg). Rationale, per cycle 44's
     kill #2: a constructed detector stratum's fire rate estimates a CONSTRUCTED population, never
     the wild sync rate -- so the only label-free source of s is the organic moment system itself.
@@ -365,16 +366,28 @@ def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT):
     A, B, t, w = _moment_system_full(V, neg, pos, idx)
     pi_raw, s_hat, cost = _solve_pi_s(A, B, t, w)
     lof = {"chi2_per_df": cost / max(len(A) - 2, 1), "n_moments": int(len(A))}
-    bp, bs = [], []
+    bp, bs, bp1 = [], [], []
     for _ in range(n_boot):
         bi = rng.integers(0, n, n); bn = rng.integers(0, len(neg), len(neg))
         bz = rng.integers(0, len(pos), len(pos))
         p_, s_, _ = _solve_pi_s(*_moment_system_full(V[bi], neg[bn], pos[bz], idx))
         bp.append(p_); bs.append(s_)
+        if boundary_fallback:
+            bp1.append(_solve_pi_raw(*_moment_system(V[bi], neg[bn], pos[bz], idx)))
     plo, phi = (float(x) for x in np.percentile(bp, [2.5, 97.5]))
     slo, shi = (float(x) for x in np.percentile(bs, [2.5, 97.5]))
+    ci_source = "profile_bootstrap"
+    # R10 boundary repair (prereg): at s_hat = 0 the two-parameter model DEGENERATES to the
+    # one-parameter model, and R9 measured the profile bootstrap undercovering exactly there
+    # (0.835/0.875 vs nominal 0.912-0.938 where s is interior; 1-param covers 0.925 on the same
+    # fixtures). At the boundary the pi interval is therefore taken from the ONE-PARAMETER
+    # solutions on the SAME resamples. Point estimates, s inference, misfit: untouched.
+    if boundary_fallback and s_hat == 0.0:
+        plo, phi = (float(x) for x in np.percentile(bp1, [2.5, 97.5]))
+        ci_source = "oneparam_boundary_fallback"
     out = {"pi_unclipped": pi_raw, "ci_unclipped": [plo, phi], "s": s_hat, "s_ci": [slo, shi],
-           "s_at_grid_edge": bool(s_hat >= _S_GRID[-1] - 1e-9), "lack_of_fit": lof, **base}
+           "s_at_grid_edge": bool(s_hat >= _S_GRID[-1] - 1e-9), "lack_of_fit": lof,
+           "ci_source": ci_source, **base}
     if (pi_raw < 0.0 and phi < 0.0) or (pi_raw > 1.0 and plo > 1.0):
         return {"verdict": "VOID_ANCHORS__nonexchangeable", "pi": None, **out}
     return {"verdict": "ESTIMATED", "pi": float(np.clip(pi_raw, 0, 1)),
