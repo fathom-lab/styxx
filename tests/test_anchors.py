@@ -37,9 +37,10 @@ def test_clean_panel_estimates_and_reports_regime():
     r = audit_panel(V, neg, pos, n_boot=80, null_sims=0, seed=0)
     assert r["verdict"] == "ESTIMATED"
     assert abs(r["pi"] - PI) < 0.08
-    assert r["regime"] in ("boundary", "small_activation", "interior")
+    assert r["regime"] in ("not_activated", "activated")
     assert r["coverage_note"]
-    assert r["ci_source"] in ("oneparam_boundary_fallback", "profile_bootstrap")
+    assert r["ci_source"] == "selective_bootstrap"
+    assert r["misfit"]["tau_source"] == "design_point_default"
     assert r["ci"][0] <= r["pi"] <= r["ci"][1]
 
 
@@ -70,6 +71,7 @@ def test_sync_dose_is_priced():
     neg, pos = make_anchors(9)
     r = audit_panel(V, neg, pos, n_boot=80, null_sims=0, seed=0)
     assert r["verdict"] == "ESTIMATED"
+    assert r["activated"] is True and r["regime"] == "activated"
     assert abs(r["s"] - 0.15) < 0.08
     assert abs(r["pi"] - PI) < 0.10
 
@@ -85,11 +87,12 @@ def test_garbage_stratum_is_diagnostic_only():
 
 
 def test_misfit_null_flags_gross_violation_not_clean():
-    # clean panel: p should be unremarkable
+    # clean panel: p should be unremarkable, and tau should come from the per-dataset null
     _, V = make_panel(13)
     neg, pos = make_anchors(14)
     r_clean = audit_panel(V, neg, pos, n_boot=40, null_sims=60, seed=0)
     assert r_clean["misfit"]["null_p"] > 0.05
+    assert r_clean["misfit"]["tau_source"] == "per_dataset_null"
     # gross structure: judge 0 is a specialist -- sharp on anchors, deaf on organic items
     ob = BETAS.copy(); ob[0] = ALPHAS[0]
     _, V2 = make_panel(15, betas=ob)

@@ -1,0 +1,528 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_r11_selective_activation_2026_07_20.md",
+  "document_sha256": "ea0f660300fb766bb50799bcdb8d12dfec6d135934a149f9743846114752e331",
+  "receipts_sha256": {
+    "stage_a_operating_chars_v3_result.json": "5029c4bfa28b1c05efa8c86925f912e073249ac636e6fda839b871286b12759a",
+    "stage_a_operating_chars_result.json": "e8a698505185f00c7b957d5359a4d28ee250822e9123dc7e06793931e8b4e07f",
+    "stage_a_operating_chars_v2_result.json": "103729d2f0da70fc2d83dee8e70c0d7144ebe8913a147630256da5376bf86ed4"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 46,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "0"
+    },
+    {
+      "line": 56,
+      "token": "0"
+    },
+    {
+      "line": 60,
+      "token": "1780"
+    },
+    {
+      "line": 60,
+      "token": "8"
+    },
+    {
+      "line": 64,
+      "token": "4"
+    },
+    {
+      "line": 64,
+      "token": "6000"
+    },
+    {
+      "line": 64,
+      "token": "400"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "R11 gates the activation on evidence -- improvement = cost(s=0) - cost(s_hat) from one profile",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "- clean-validation coverage **0.95** (Wilson [0.888, 0.978]; was 0.835 in R9, 0.850 in R10)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 23,
+      "token": "0.888",
+      "value": 0.888,
+      "decimals": 3,
+      "context": "- clean-validation coverage **0.95** (Wilson [0.888, 0.978]; was 0.835 in R9, 0.850 in R10)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.wilson[0]"
+    },
+    {
+      "line": 23,
+      "token": "0.978",
+      "value": 0.978,
+      "decimals": 3,
+      "context": "- clean-validation coverage **0.95** (Wilson [0.888, 0.978]; was 0.835 in R9, 0.850 in R10)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.wilson[1]"
+    },
+    {
+      "line": 23,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "- clean-validation coverage **0.95** (Wilson [0.888, 0.978]; was 0.835 in R9, 0.850 in R10)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 23,
+      "token": "0.850",
+      "value": 0.85,
+      "decimals": 3,
+      "context": "- clean-validation coverage **0.95** (Wilson [0.888, 0.978]; was 0.835 in R9, 0.850 in R10)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.betas[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.963",
+      "value": 0.963,
+      "decimals": 3,
+      "context": "- rho-0.30 coverage **0.963** (Wilson [0.895, 0.987]; was 0.875, then 0.863)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.rho30.sync_arm.coverage.rate"
+    },
+    {
+      "line": 24,
+      "token": "0.895",
+      "value": 0.895,
+      "decimals": 3,
+      "context": "- rho-0.30 coverage **0.963** (Wilson [0.895, 0.987]; was 0.875, then 0.863)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.rho30.sync_arm.coverage.wilson[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.987",
+      "value": 0.987,
+      "decimals": 3,
+      "context": "- rho-0.30 coverage **0.963** (Wilson [0.895, 0.987]; was 0.875, then 0.863)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.rho30.sync_arm.coverage.wilson[1]"
+    },
+    {
+      "line": 24,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "- rho-0.30 coverage **0.963** (Wilson [0.895, 0.987]; was 0.875, then 0.863)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.rho30.sync_arm.coverage.rate"
+    },
+    {
+      "line": 24,
+      "token": "0.863",
+      "value": 0.863,
+      "decimals": 3,
+      "context": "- rho-0.30 coverage **0.963** (Wilson [0.895, 0.987]; was 0.875, then 0.863)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.rho30.sync_arm.coverage.rate"
+    },
+    {
+      "line": 26,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "And nothing else regressed: sync-dose coverage 0.912 / 0.938, one-parameter arm 0.925, misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 26,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "And nothing else regressed: sync-dose coverage 0.912 / 0.938, one-parameter arm 0.925, misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.15.coverage.rate"
+    },
+    {
+      "line": 26,
+      "token": "0.925",
+      "value": 0.925,
+      "decimals": 3,
+      "context": "And nothing else regressed: sync-dose coverage 0.912 / 0.938, one-parameter arm 0.925, misfit",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.rho30.oneparam_arm.coverage.rate"
+    },
+    {
+      "line": 27,
+      "token": "0.100",
+      "value": 0.1,
+      "decimals": 3,
+      "context": "false-alarm 0.100 (band [0.01, 0.12]), deaf VOID 0.967 plain / 1.000 noise-margin,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.alphas[2]"
+    },
+    {
+      "line": 27,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "false-alarm 0.100 (band [0.01, 0.12]), deaf VOID 0.967 plain / 1.000 noise-margin,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.err.median"
+    },
+    {
+      "line": 27,
+      "token": "0.12",
+      "value": 0.12,
+      "decimals": 2,
+      "context": "false-alarm 0.100 (band [0.01, 0.12]), deaf VOID 0.967 plain / 1.000 noise-margin,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.beta_plus10.p90"
+    },
+    {
+      "line": 27,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "false-alarm 0.100 (band [0.01, 0.12]), deaf VOID 0.967 plain / 1.000 noise-margin,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 27,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "false-alarm 0.100 (band [0.01, 0.12]), deaf VOID 0.967 plain / 1.000 noise-margin,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.02.s_detection_power.detected"
+    },
+    {
+      "line": 28,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "false-refusal 0/200, and the new G5 -- clean activation rate 0.020 on validation, inside its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 28,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "false-refusal 0/200, and the new G5 -- clean activation rate 0.020 on validation, inside its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 28,
+      "token": "0.020",
+      "value": 0.02,
+      "decimals": 3,
+      "context": "false-refusal 0/200, and the new G5 -- clean activation rate 0.020 on validation, inside its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.s_null"
+    },
+    {
+      "line": 29,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "[0.01, 0.12] band.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.err.median"
+    },
+    {
+      "line": 29,
+      "token": "0.12",
+      "value": 0.12,
+      "decimals": 2,
+      "context": "[0.01, 0.12] band.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.beta_plus10.p90"
+    },
+    {
+      "line": 32,
+      "token": "0.0074",
+      "value": 0.0074,
+      "decimals": 4,
+      "context": "0.0074 and ninetieth-percentile 0.0212 (from 0.0129 / 0.0334 pre-selection); the phantom rate",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.err.median"
+    },
+    {
+      "line": 32,
+      "token": "0.0212",
+      "value": 0.0212,
+      "decimals": 4,
+      "context": "0.0074 and ninetieth-percentile 0.0212 (from 0.0129 / 0.0334 pre-selection); the phantom rate",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.err.p90"
+    },
+    {
+      "line": 32,
+      "token": "0.0129",
+      "value": 0.0129,
+      "decimals": 4,
+      "context": "0.0074 and ninetieth-percentile 0.0212 (from 0.0129 / 0.0334 pre-selection); the phantom rate",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.err.median"
+    },
+    {
+      "line": 32,
+      "token": "0.0334",
+      "value": 0.0334,
+      "decimals": 4,
+      "context": "0.0074 and ninetieth-percentile 0.0212 (from 0.0129 / 0.0334 pre-selection); the phantom rate",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.err.p90"
+    },
+    {
+      "line": 33,
+      "token": "0.24",
+      "value": 0.24,
+      "decimals": 2,
+      "context": "above S_NULL collapsed from 0.24 to 0.035.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.contam10.misfit_power_wilson[0]"
+    },
+    {
+      "line": 38,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "where: activation power against a true all-judge key is 0.30 at wild rate 0.02, 0.7125 at 0.05,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.activation.power_by_dose.0.02.rate"
+    },
+    {
+      "line": 38,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "where: activation power against a true all-judge key is 0.30 at wild rate 0.02, 0.7125 at 0.05,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.s_null"
+    },
+    {
+      "line": 38,
+      "token": "0.7125",
+      "value": 0.7125,
+      "decimals": 4,
+      "context": "where: activation power against a true all-judge key is 0.30 at wild rate 0.02, 0.7125 at 0.05,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.activation.power_by_dose.0.05.rate"
+    },
+    {
+      "line": 38,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "where: activation power against a true all-judge key is 0.30 at wild rate 0.02, 0.7125 at 0.05,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.nominal_fa"
+    },
+    {
+      "line": 39,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "1.00 at 0.15. At dose 0.02 the estimator usually declines to activate (s median 0.0), and its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.02.s_detection_power.detected"
+    },
+    {
+      "line": 39,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "1.00 at 0.15. At dose 0.02 the estimator usually declines to activate (s median 0.0), and its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.s_null"
+    },
+    {
+      "line": 39,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "1.00 at 0.15. At dose 0.02 the estimator usually declines to activate (s median 0.0), and its",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.nominal_fa"
+    },
+    {
+      "line": 40,
+      "token": "0.983",
+      "value": 0.983,
+      "decimals": 3,
+      "context": "selection-aware interval still covers 0.983 -- the honest posture at a dose it cannot resolve.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.02.coverage.rate"
+    },
+    {
+      "line": 41,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "At dose 0.05 the ninetieth-percentile error widens to 0.0565 (from 0.0416 unselected) with",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.nominal_fa"
+    },
+    {
+      "line": 41,
+      "token": "0.0565",
+      "value": 0.0565,
+      "decimals": 4,
+      "context": "At dose 0.05 the ninetieth-percentile error widens to 0.0565 (from 0.0416 unselected) with",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.05.p90"
+    },
+    {
+      "line": 41,
+      "token": "0.0416",
+      "value": 0.0416,
+      "decimals": 4,
+      "context": "At dose 0.05 the ninetieth-percentile error widens to 0.0565 (from 0.0416 unselected) with",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.sync_doses.0.05.p90"
+    },
+    {
+      "line": 45,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "The smooth-violation blindness is unchanged and restated: misfit power 0.06 (y-correlated key),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.05.p90"
+    },
+    {
+      "line": 46,
+      "token": "0.18",
+      "value": 0.18,
+      "decimals": 2,
+      "context": "0.18 (beta optimism), 0.36 (contamination); silent-wrong rates 0.60 / 0.82 / 0.64. Those risks",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.alphas[3]"
+    },
+    {
+      "line": 46,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "0.18 (beta optimism), 0.36 (contamination); silent-wrong rates 0.60 / 0.82 / 0.64. Those risks",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.contam10.misfit_power"
+    },
+    {
+      "line": 46,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "0.18 (beta optimism), 0.36 (contamination); silent-wrong rates 0.60 / 0.82 / 0.64. Those risks",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.key_on_pos.silent_wrong_rate"
+    },
+    {
+      "line": 46,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "0.18 (beta optimism), 0.36 (contamination); silent-wrong rates 0.60 / 0.82 / 0.64. Those risks",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.beta_plus10.silent_wrong_rate"
+    },
+    {
+      "line": 48,
+      "token": "0.76",
+      "value": 0.76,
+      "decimals": 2,
+      "context": "required. Notably, the y-correlated key ACTIVATES the s parameter 0.76 of the time and the beta",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.contam10.silent_wrong_wilson[1]"
+    },
+    {
+      "line": 49,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "optimism 1.00: activation is not authentication, and the scope statement says so.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.02.s_detection_power.detected"
+    },
+    {
+      "line": 56,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "with the design-point value as the `null_sims=0` fallback). The regime vocabulary is now",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "1780",
+      "value": 1780.0,
+      "decimals": 0,
+      "context": "**1780 passed / 8 skipped**.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "**1780 passed / 8 skipped**.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 64,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Every rate above is measured at ONE design point (J=4, n=6000, K=400, the Stage-A alphas and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "6000",
+      "value": 6000.0,
+      "decimals": 0,
+      "context": "Every rate above is measured at ONE design point (J=4, n=6000, K=400, the Stage-A alphas and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "400",
+      "value": 400.0,
+      "decimals": 0,
+      "context": "Every rate above is measured at ONE design point (J=4, n=6000, K=400, the Stage-A alphas and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

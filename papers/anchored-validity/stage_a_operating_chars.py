@@ -211,11 +211,12 @@ def run(smoke=False):
          f"(noise-margin variant {void_nm_k}/{len(deaf)} = {void_nm_k / len(deaf):.3f}, unbarred)")
     gate("G4:clean_false_refusal", refuse_k / len(clean) <= 0.02,
          f"{refuse_k}/{len(clean)} = {refuse_k / len(clean):.3f}")
+    activation_block = None
     if SELECTIVE_TAU is not None:
         act_k = sum(1 for r in val if r.get("activated"))
         gate("G5:clean_activation_rate_calibrated", 0.01 <= act_k / len(val) <= 0.12,
              f"validation {act_k}/{len(val)} = {act_k / len(val):.3f} (nominal 0.05 by tau)")
-        out["characteristics"]["activation"] = {
+        activation_block = {
             "tau": SELECTIVE_TAU,
             "clean_val_rate": act_k / len(val),
             "clean_cal_rate": sum(1 for r in cal if r.get("activated")) / len(cal),
@@ -276,6 +277,8 @@ def run(smoke=False):
                                            + contam + keypos + betap if r["edge"])
                                        / len(clean + rho_sync + s05 + s15 + s02 + contam
                                              + keypos + betap)}
+    if activation_block is not None:      # merge AFTER the dict assignment (fixes a clobber
+        out["characteristics"]["activation"] = activation_block   # that dropped this block)
     out["all_gates_ok"] = ok_all
     return out
 

@@ -50,6 +50,37 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 49 (2026-07-20, operator-directed "keep going hard") — R11 SELECTIVE ACTIVATION seals the datasheet: NINE GATES, NINE SEALS. `styxx.anchors` adopts it with per-dataset tau. `SURVIVED__datasheet_fully_sealed` (FINDING OATH-HELD 46 verified / 0 contradicted — lane record).**
+  The repair R10's decomposition licensed: gate the activation on EVIDENCE (improvement =
+  cost(s=0)−cost(s_hat) from one profile solve; tau = cal-set 95th pct, 14.239 at this design
+  point) and make **the bootstrap mimic the selection** — every resample re-selects under the
+  same tau, so the interval prices selection uncertainty, the thing both prior constructions
+  ignored. Prereg `PREREG_R11_*` froze the estimator, the gates, AND the consequence rules
+  before the run.
+  **The two seals withheld through two attempts, now granted:** clean-validation coverage
+  **0.95** [0.888, 0.978] (was 0.835 → 0.850) and rho-0.30 **0.963** [0.895, 0.987] (was 0.875
+  → 0.863). Nothing regressed: sync doses 0.912/0.938, 1-param 0.925, misfit FA 0.100, deaf
+  0.967/1.000, false-refusal 0/200, clean activation rate 0.020 (G5, in band). Selection also
+  SHARPENED the estimator: clean err med/p90 0.0074/0.0212 (from 0.0129/0.0334); phantom rate
+  0.24 → 0.035.
+  **The trade-off, measured not feared:** activation power 0.30/0.71/1.00 at doses
+  0.02/0.05/0.15 — below ~5% key rate, absence of activation is not evidence of absence; at
+  0.02 the estimator declines to activate and its selection-aware interval covers 0.983 (the
+  honest posture at a dose it cannot resolve). Smooth-violation blindness restated: misfit
+  power 0.06/0.18/0.36, silent-wrong 0.60–0.82 — construction-borne, unchanged. **Activation
+  is not authentication** (y-correlated key activates s 0.76 of the time): scope says so.
+  **Adoption per the frozen rule:** `audit_panel()` default = selective activation; tau
+  per-dataset from the parametric-bootstrap null (design-point fallback documented); regimes
+  `not_activated`/`activated` each quoting measured coverage. Tests updated (7 checks incl.
+  tau sourcing + planted-dose activation); suite **1780 passed / 8 skipped**. One harness
+  output-assembly bug (clobbered activation block) fixed and the deterministic run repeated —
+  gates identical.
+  *Next:* STAGE B — the prereg can now cite a fully-sealed instrument. Real Qwen judges, 8GB,
+  label-free; obligations assembled across all three panels + the v3 datasheet. Also owed:
+  remaining Stage-A majors (R5 fork, R2 rename, R4 partial-keep); fresh-seed (non-paired)
+  datasheet confirmation belongs to Stage B's own calibration. Operator-gated: freeze, release
+  of styxx.anchors.
+
 - **Cycle 48 (2026-07-20, operator-directed "make the impossible possible") — R10 boundary repair CLOSED_NEGATIVE with a sharper mechanism; the instrument GRADUATES into the package anyway, weaknesses printed on it: `styxx.anchors.audit_panel()`.**
   **R10 (prereg first, paired re-gate, same seeds):** the one-parameter boundary fallback missed
   its frozen prediction — clean coverage 0.835→0.850, rho30 0.875→0.863; both seals stay

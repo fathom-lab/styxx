@@ -1,0 +1,324 @@
+{
+ "prereg": "PREREG_R9_operating_characteristics_2026_07_20.md",
+ "design": {
+  "alphas": [
+   0.15,
+   0.2,
+   0.1,
+   0.18
+  ],
+  "betas": [
+   0.85,
+   0.8,
+   0.9,
+   0.78
+  ],
+  "pi": 0.35,
+  "n": 6000,
+  "k_anchor": 400,
+  "seed_bases": {
+   "clean_cal": 10000,
+   "clean_val": 20000,
+   "rho30": 30000,
+   "sync05": 40000,
+   "sync15": 50000,
+   "sync02": 60000,
+   "deaf": 70000,
+   "contam10": 80000,
+   "keypos": 90000,
+   "betaplus": 100000,
+   "oneparam_rho30": 110000
+  },
+  "R": {
+   "clean": 100,
+   "rho": 80,
+   "sync": 80,
+   "sync02": 60,
+   "deaf": 60,
+   "viol": 50,
+   "op": 80
+  },
+  "nominal_fa": 0.05,
+  "s_null": 0.02,
+  "selective_tau": 14.239037302137804,
+  "boundary_fallback": false,
+  "selective": true
+ },
+ "gates": [
+  {
+   "gate": "G1:coverage_clean_validation_in_band",
+   "ok": true,
+   "detail": "95/100 = 0.95 wilson [0.888, 0.978]"
+  },
+  {
+   "gate": "G1:coverage_rho30_sync_in_band",
+   "ok": true,
+   "detail": "77/80 = 0.963 wilson [0.895, 0.987]"
+  },
+  {
+   "gate": "G1:coverage_sync05_in_band",
+   "ok": true,
+   "detail": "73/80 = 0.912 wilson [0.83, 0.957]"
+  },
+  {
+   "gate": "G1:coverage_sync15_in_band",
+   "ok": true,
+   "detail": "75/80 = 0.938 wilson [0.862, 0.973]"
+  },
+  {
+   "gate": "G1:coverage_rho30_oneparam_in_band",
+   "ok": true,
+   "detail": "74/80 = 0.925 wilson [0.846, 0.965]"
+  },
+  {
+   "gate": "G2:misfit_false_alarm_calibrated",
+   "ok": true,
+   "detail": "threshold 5.575 (95th pct of cal), achieved 0.100 on validation (10/100), nominal 0.05"
+  },
+  {
+   "gate": "G3:deaf_void_rate",
+   "ok": true,
+   "detail": "plain gate 58/60 = 0.967 (noise-margin variant 60/60 = 1.000, unbarred)"
+  },
+  {
+   "gate": "G4:clean_false_refusal",
+   "ok": true,
+   "detail": "0/200 = 0.000"
+  },
+  {
+   "gate": "G5:clean_activation_rate_calibrated",
+   "ok": true,
+   "detail": "validation 2/100 = 0.020 (nominal 0.05 by tau)"
+  }
+ ],
+ "characteristics": {
+  "misfit_null": {
+   "threshold_95": 5.574602320310815,
+   "achieved_fa": 0.1,
+   "cal_misfit_quantiles": {
+    "p50": 2.378214185464782,
+    "p95": 5.574602320310815,
+    "p99": 9.12129551751164
+   },
+   "note": "design-point-specific; Stage B owes its own calibration"
+  },
+  "clean": {
+   "phantom_sync_rate": 0.035,
+   "phantom_sync_wilson": [
+    0.017055324637357105,
+    0.07047146086668134
+   ],
+   "false_refusal_rate": 0.0,
+   "err": {
+    "median": 0.007391497201830577,
+    "p90": 0.021232511019665605
+   },
+   "coverage": {
+    "n_estimated": 100,
+    "covered": 95,
+    "rate": 0.95,
+    "wilson": [
+     0.8882480347279118,
+     0.9784566385436864
+    ]
+   }
+  },
+  "rho30": {
+   "sync_arm": {
+    "median": 0.019518022210359892,
+    "p90": 0.052336651956089296,
+    "n": 80,
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 77,
+     "rate": 0.9625,
+     "wilson": [
+      0.8954510802560568,
+      0.9871656636992113
+     ]
+    }
+   },
+   "oneparam_arm": {
+    "median": 0.023439187108724946,
+    "p90": 0.05188167216208002,
+    "n": 80,
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 74,
+     "rate": 0.925,
+     "wilson": [
+      0.8458779990261992,
+      0.9651752251489122
+     ]
+    }
+   }
+  },
+  "sync_doses": {
+   "0.02": {
+    "median": 0.021447905165421333,
+    "p90": 0.047470312034356706,
+    "n": 60,
+    "s_median": 0.0,
+    "s_detection_power": {
+     "detected": 1,
+     "n": 60,
+     "rate": 0.016666666666666666,
+     "wilson": [
+      0.002948083860873682,
+      0.08855338226779477
+     ]
+    },
+    "coverage": {
+     "n_estimated": 60,
+     "covered": 59,
+     "rate": 0.9833333333333333,
+     "wilson": [
+      0.9114466177322051,
+      0.9970519161391262
+     ]
+    }
+   },
+   "0.05": {
+    "median": 0.02232090122549893,
+    "p90": 0.056474794975298316,
+    "n": 80,
+    "s_median": 0.056,
+    "s_detection_power": {
+     "detected": 8,
+     "n": 80,
+     "rate": 0.1,
+     "wilson": [
+      0.05154699917768554,
+      0.18510878983397458
+     ]
+    },
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 73,
+     "rate": 0.9125,
+     "wilson": [
+      0.8302301722291654,
+      0.95696854535256
+     ]
+    }
+   },
+   "0.15": {
+    "median": 0.015717087774489574,
+    "p90": 0.03788276466955036,
+    "n": 80,
+    "s_median": 0.152,
+    "s_detection_power": {
+     "detected": 80,
+     "n": 80,
+     "rate": 1.0,
+     "wilson": [
+      0.954180263735425,
+      1.0
+     ]
+    },
+    "coverage": {
+     "n_estimated": 80,
+     "covered": 75,
+     "rate": 0.9375,
+     "wilson": [
+      0.8618967084664824,
+      0.9730110223020145
+     ]
+    }
+   }
+  },
+  "deaf": {
+   "void_rate_plain": 0.9666666666666667,
+   "void_wilson": [
+    0.8863601247107462,
+    0.9908108735098498
+   ],
+   "void_rate_noise_margin": 1.0
+  },
+  "violations": {
+   "contam10": {
+    "n": 50,
+    "misfit_power": 0.36,
+    "misfit_power_wilson": [
+     0.24138562967182875,
+     0.49859237989698046
+    ],
+    "silent_wrong_rate": 0.64,
+    "silent_wrong_wilson": [
+     0.5014076201030195,
+     0.7586143703281711
+    ],
+    "void_rate": 0.0,
+    "median": 0.08196718812128986,
+    "p90": 0.10168828027070263
+   },
+   "key_on_pos": {
+    "n": 50,
+    "misfit_power": 0.06,
+    "misfit_power_wilson": [
+     0.020614596364630478,
+     0.16217343370877002
+    ],
+    "silent_wrong_rate": 0.6,
+    "silent_wrong_wilson": [
+     0.4618118910275937,
+     0.7239181021375425
+    ],
+    "void_rate": 0.0,
+    "median": 0.04513819736331606,
+    "p90": 0.0726626428344947
+   },
+   "beta_plus10": {
+    "n": 50,
+    "misfit_power": 0.18,
+    "misfit_power_wilson": [
+     0.0977008273245379,
+     0.3079631945470261
+    ],
+    "silent_wrong_rate": 0.82,
+    "silent_wrong_wilson": [
+     0.6920368054529739,
+     0.902299172675462
+    ],
+    "void_rate": 0.0,
+    "median": 0.09294269945007733,
+    "p90": 0.11700454129201228
+   }
+  },
+  "grid_edge_rate_all_families": 0.0,
+  "activation": {
+   "tau": 14.239037302137804,
+   "clean_val_rate": 0.02,
+   "clean_cal_rate": 0.05,
+   "power_by_dose": {
+    "0.02": {
+     "rate": 0.3,
+     "wilson": [
+      0.19898010252726892,
+      0.42508946966390415
+     ]
+    },
+    "0.05": {
+     "rate": 0.7125,
+     "wilson": [
+      0.6053944721715182,
+      0.8001321399160374
+     ]
+    },
+    "0.15": {
+     "rate": 1.0,
+     "wilson": [
+      0.954180263735425,
+      1.0
+     ]
+    }
+   },
+   "viol_rates": {
+    "contam10": 0.0,
+    "key_on_pos": 0.76,
+    "beta_plus10": 1.0
+   }
+  }
+ },
+ "all_gates_ok": true
+}
