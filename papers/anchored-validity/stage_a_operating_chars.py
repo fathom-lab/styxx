@@ -42,6 +42,7 @@ def q(xs, p):
 
 
 FALLBACK = False   # R10: set by --v2; same seeds, repaired intervals, paired re-gate
+SELECTIVE_TAU = None   # R11: set by --v3 (computed in-run from the calibration set)
 
 
 def sync_rep(seed, *, organic_alphas=None, organic_betas=None, rho=0.0, sync=0.0,
@@ -67,13 +68,33 @@ def sync_rep(seed, *, organic_alphas=None, organic_betas=None, rho=0.0, sync=0.0
         det = A.make_anchors(rng, K, "neg", ALPHAS, BETAS, 0.0, 0.80)
         k_in = int(0.10 * K)
         neg = np.vstack([neg[:-k_in], det[:k_in]])
-    r = A.anchored_sync(V, neg, pos, np.random.default_rng(seed + 7_000_000), n_boot=n_boot,
-                        boundary_fallback=FALLBACK)
+    if SELECTIVE_TAU is not None:
+        r = A.anchored_selective(V, neg, pos, np.random.default_rng(seed + 7_000_000),
+                                 tau=SELECTIVE_TAU, n_boot=n_boot)
+    else:
+        r = A.anchored_sync(V, neg, pos, np.random.default_rng(seed + 7_000_000), n_boot=n_boot,
+                            boundary_fallback=FALLBACK)
     return {"verdict": r["verdict"], "pi": r.get("pi"), "ci": r.get("ci"),
             "s": r.get("s"), "s_ci": r.get("s_ci"),
             "misfit": r["lack_of_fit"]["chi2_per_df"] if r.get("lack_of_fit") else None,
             "edge": bool(r.get("s_at_grid_edge", False)),
-            "ci_source": r.get("ci_source")}
+            "ci_source": r.get("ci_source"), "activated": r.get("activated")}
+
+
+def compute_tau(reps):
+    """R11: tau = 95th percentile of point-fit improvements on the clean CALIBRATION seeds.
+    Cheap pass, no bootstrap; frozen by procedure in the prereg."""
+    imps = []
+    for i in range(reps):
+        seed = SEED_BASE["clean_cal"] + i
+        rng = np.random.default_rng(seed)
+        y, V = A.simulate_panel(rng, N, PI, ALPHAS, BETAS)
+        neg = A.make_anchors(rng, K, "neg", ALPHAS, BETAS)
+        pos = A.make_anchors(rng, K, "pos", ALPHAS, BETAS)
+        imp = A.selective_improvement(V, neg, pos)
+        if imp is not None:
+            imps.append(imp)
+    return float(np.percentile(imps, 95))
 
 
 def oneparam_rep(seed, rho):
@@ -128,6 +149,12 @@ def run(smoke=False):
         out["gates"].append({"gate": name, "ok": bool(cond), "detail": detail})
         print(f"  [{'OK ' if cond else 'FAIL'}] {name}: {detail}")
 
+    global SELECTIVE_TAU
+    if SELECTIVE_TAU is not None:                    # --v3: freeze tau from cal point-fits first
+        SELECTIVE_TAU = compute_tau(R["clean"])
+        out["design"]["selective_tau"] = SELECTIVE_TAU
+        print(f"== R11 tau frozen from calibration point-fits: {SELECTIVE_TAU:.3f} ==")
+
     print("== OC1 clean: calibration + validation ==")
     cal = family("clean_cal", R["clean"], lambda s: sync_rep(s))
     val = family("clean_val", R["clean"], lambda s: sync_rep(s))
@@ -161,12 +188,15 @@ def run(smoke=False):
 
     # ------------------------------------------------------------------------------- gates
     print("== GATES (calibration-shaped, frozen in the prereg) ==")
-    cov_clean = coverage(clean)
+    # R11: tau reuses the calibration set, so the clean gate moves to VALIDATION only
+    # (disclosed in the prereg); cal coverage is reported unbarred.
+    cov_clean = coverage(val if SELECTIVE_TAU is not None else clean)
     cov_rho = coverage(rho_sync)
     cov_05 = coverage(s05)
     cov_15 = coverage(s15)
     cov_1p = coverage(rho_1p)
-    for tag, cov in (("clean", cov_clean), ("rho30_sync", cov_rho), ("sync05", cov_05),
+    clean_tag = "clean_validation" if SELECTIVE_TAU is not None else "clean"
+    for tag, cov in ((clean_tag, cov_clean), ("rho30_sync", cov_rho), ("sync05", cov_05),
                      ("sync15", cov_15), ("rho30_oneparam", cov_1p)):
         gate(f"G1:coverage_{tag}_in_band",
              cov["rate"] is not None and 0.90 <= cov["rate"] <= 0.99,
@@ -181,6 +211,21 @@ def run(smoke=False):
          f"(noise-margin variant {void_nm_k}/{len(deaf)} = {void_nm_k / len(deaf):.3f}, unbarred)")
     gate("G4:clean_false_refusal", refuse_k / len(clean) <= 0.02,
          f"{refuse_k}/{len(clean)} = {refuse_k / len(clean):.3f}")
+    if SELECTIVE_TAU is not None:
+        act_k = sum(1 for r in val if r.get("activated"))
+        gate("G5:clean_activation_rate_calibrated", 0.01 <= act_k / len(val) <= 0.12,
+             f"validation {act_k}/{len(val)} = {act_k / len(val):.3f} (nominal 0.05 by tau)")
+        out["characteristics"]["activation"] = {
+            "tau": SELECTIVE_TAU,
+            "clean_val_rate": act_k / len(val),
+            "clean_cal_rate": sum(1 for r in cal if r.get("activated")) / len(cal),
+            "power_by_dose": {d: {"rate": sum(1 for r in recs if r.get("activated")) / len(recs),
+                                  "wilson": wilson(sum(1 for r in recs if r.get("activated")),
+                                                   len(recs))}
+                              for d, recs in (("0.02", s02), ("0.05", s05), ("0.15", s15))},
+            "viol_rates": {v: sum(1 for r in recs if r.get("activated")) / len(recs)
+                           for v, recs in (("contam10", contam), ("key_on_pos", keypos),
+                                           ("beta_plus10", betap))}}
 
     # ---------------------------------------------------------------- characteristics (no bars)
     def err_stats(recs, truth=PI):
@@ -236,18 +281,25 @@ def run(smoke=False):
 
 
 def main():
-    global FALLBACK
+    global FALLBACK, SELECTIVE_TAU
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="reduced-R smoke; *_SMOKE_INVALID only")
     ap.add_argument("--v2", action="store_true",
                     help="R10 paired re-gate: boundary_fallback=True, same seeds, own result file")
+    ap.add_argument("--v3", action="store_true",
+                    help="R11 selective activation: tau from cal set, same seeds, own result file")
     args = ap.parse_args()
     FALLBACK = bool(args.v2)
+    if args.v3:
+        SELECTIVE_TAU = -1.0   # sentinel: run() computes the real tau from the cal set
     t0 = time.time()
     out = run(smoke=args.smoke)
     out["design"]["boundary_fallback"] = FALLBACK
+    out["design"]["selective"] = bool(args.v3)
     if args.smoke:
         name = "stage_a_operating_chars_SMOKE_INVALID.json"
+    elif args.v3:
+        name = "stage_a_operating_chars_v3_result.json"
     else:
         name = ("stage_a_operating_chars_v2_result.json" if args.v2
                 else "stage_a_operating_chars_result.json")

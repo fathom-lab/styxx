@@ -327,11 +327,9 @@ def _moment_system_full(Vr, negr, posr, idx):
     return np.asarray(A), np.asarray(B), np.asarray(t), np.asarray(w)
 
 
-def _solve_pi_s(A, B, t, w, s_grid=_S_GRID):
-    """Profile WLS for m_k = s + (1-s)*(A_k + pi*d_k): for each s on the frozen grid, pi has a
-    1-D WLS closed form; take the (pi, s) minimizing the weighted residual. pi is UNCLIPPED (the
-    refusal branch must see impossibility); s >= 0 by construction -- it is a rate, not a free
-    sign, so it cannot 'explain' targets that sit BELOW the anchor-predicted floor."""
+def _profile(A, B, t, w, s_grid=_S_GRID):
+    """The full profile: pi(s) and cost(s) for every grid point. One solve powers everything --
+    the 2-param argmin, the s=0 (OFF-model) column, and the selection statistic."""
     d = B - A
     one_s = 1.0 - s_grid
     ts = t[None, :] - s_grid[:, None] - one_s[:, None] * A[None, :]
@@ -339,8 +337,80 @@ def _solve_pi_s(A, B, t, w, s_grid=_S_GRID):
     pi_s = (ts @ (w * d)) / denom
     m = s_grid[:, None] + one_s[:, None] * (A[None, :] + pi_s[:, None] * d[None, :])
     cost = ((m - t[None, :]) ** 2 * w[None, :]).sum(1)
+    return pi_s, cost
+
+
+def _solve_pi_s(A, B, t, w, s_grid=_S_GRID):
+    """Profile WLS for m_k = s + (1-s)*(A_k + pi*d_k): for each s on the frozen grid, pi has a
+    1-D WLS closed form; take the (pi, s) minimizing the weighted residual. pi is UNCLIPPED (the
+    refusal branch must see impossibility); s >= 0 by construction -- it is a rate, not a free
+    sign, so it cannot 'explain' targets that sit BELOW the anchor-predicted floor."""
+    pi_s, cost = _profile(A, B, t, w, s_grid)
     k = int(np.argmin(cost))
     return float(pi_s[k]), float(s_grid[k]), float(cost[k])
+
+
+def selective_improvement(V, neg, pos, gate=INFORMATIVENESS_GATE):
+    """Point-fit selection statistic only (no bootstrap): cost(s=0) - cost(s_hat) on the
+    11-moment system. Used by the R11 harness to freeze tau from the calibration set."""
+    a_hat, b_hat = neg.mean(0), pos.mean(0)
+    keep = (b_hat - a_hat) >= gate
+    if not np.any(keep):
+        return None
+    idx = np.where(keep)[0]
+    _, cost = _profile(*_moment_system_full(V, neg, pos, idx))
+    return float(cost[0] - cost.min())
+
+
+def anchored_selective(V, neg, pos, rng, tau, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT):
+    """R11: the SELECTIVE-ACTIVATION estimator (prereg 2026-07-20). R10's decomposition showed
+    the coverage miss lives in phantom ACTIVATION -- on most clean panels the profile fit engages
+    a small spurious s that drags pi, and no interval accounted for the selection. Here s is
+    engaged only on EVIDENCE (improvement > tau), and THE BOOTSTRAP MIMICS THE SELECTION: every
+    resample applies the same tau and contributes the pi of ITS selected model, so the interval
+    prices selection uncertainty. A pre-test estimator -- characterized under the full battery
+    before any seal or package default changes; do not trust it past its measured rates."""
+    n, J = V.shape
+    a_hat, b_hat = neg.mean(0), pos.mean(0)
+    keep = (b_hat - a_hat) >= gate
+    base = {"alpha": a_hat.tolist(), "beta": b_hat.tolist(), "kept": keep.tolist(),
+            "tau": float(tau)}
+    if not np.any(keep):
+        return {"verdict": "VOID_PANEL__uninformative", "pi": None, "s": None, **base}
+    idx = np.where(keep)[0]
+    A, B, t, w = _moment_system_full(V, neg, pos, idx)
+    pi_s, cost = _profile(A, B, t, w)
+    k = int(np.argmin(cost))
+    improvement = float(cost[0] - cost[k])
+    activated = bool(improvement > tau and _S_GRID[k] > 0)
+    if activated:
+        pi_raw, s_hat, c_sel, dof = float(pi_s[k]), float(_S_GRID[k]), float(cost[k]), 2
+    else:
+        pi_raw, s_hat, c_sel, dof = float(pi_s[0]), 0.0, float(cost[0]), 1
+    lof = {"chi2_per_df": c_sel / max(len(A) - dof, 1), "n_moments": int(len(A))}
+
+    bp, bs = [], []
+    for _ in range(n_boot):
+        bi = rng.integers(0, n, n); bn = rng.integers(0, len(neg), len(neg))
+        bz = rng.integers(0, len(pos), len(pos))
+        Ab, Bb, tb, wb = _moment_system_full(V[bi], neg[bn], pos[bz], idx)
+        ps, cs = _profile(Ab, Bb, tb, wb)
+        kb = int(np.argmin(cs))
+        if float(cs[0] - cs[kb]) > tau and _S_GRID[kb] > 0:
+            bp.append(float(ps[kb])); bs.append(float(_S_GRID[kb]))
+        else:
+            bp.append(float(ps[0])); bs.append(0.0)
+    plo, phi = (float(x) for x in np.percentile(bp, [2.5, 97.5]))
+    slo, shi = (float(x) for x in np.percentile(bs, [2.5, 97.5]))
+    out = {"pi_unclipped": pi_raw, "ci_unclipped": [plo, phi], "s": s_hat, "s_ci": [slo, shi],
+           "activated": activated, "improvement": improvement,
+           "boot_activation_rate": float(np.mean([1.0 if x > 0 else 0.0 for x in bs])),
+           "s_at_grid_edge": bool(s_hat >= _S_GRID[-1] - 1e-9), "lack_of_fit": lof,
+           "ci_source": "selective_bootstrap", **base}
+    if (pi_raw < 0.0 and phi < 0.0) or (pi_raw > 1.0 and plo > 1.0):
+        return {"verdict": "VOID_ANCHORS__nonexchangeable", "pi": None, **out}
+    return {"verdict": "ESTIMATED", "pi": float(np.clip(pi_raw, 0, 1)),
+            "ci": [float(np.clip(plo, 0, 1)), float(np.clip(phi, 0, 1))], **out}
 
 
 def anchored_sync(V, neg, pos, rng, gate=INFORMATIVENESS_GATE, n_boot=N_BOOT,
