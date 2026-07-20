@@ -1,0 +1,312 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_r10_boundary_repair_2026_07_20.md",
+  "document_sha256": "a77b2ad8dfc55a4ddb46300a11c4605154a342affe6abaaa2d365244bb97a8e7",
+  "receipts_sha256": {
+    "stage_a_operating_chars_v2_result.json": "103729d2f0da70fc2d83dee8e70c0d7144ebe8913a147630256da5376bf86ed4",
+    "stage_a_operating_chars_result.json": "e8a698505185f00c7b957d5359a4d28ee250822e9123dc7e06793931e8b4e07f",
+    "r10_boundary_decomposition_receipt.json": "bfa9c991fac3a84853ef3bdb3f2ad04b5cce5e02d31d5a4b1e50f4da79bcac1e"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "0.850"
+    },
+    {
+      "line": 28,
+      "token": "0"
+    },
+    {
+      "line": 28,
+      "token": "200"
+    },
+    {
+      "line": 31,
+      "token": "0"
+    },
+    {
+      "line": 52,
+      "token": "95"
+    },
+    {
+      "line": 61,
+      "token": "1780"
+    },
+    {
+      "line": 61,
+      "token": "8"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "The prereg predicted G1 clean and G1 rho30-sync would enter the [0.90, 0.99] band under the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:design.betas[2]"
+    },
+    {
+      "line": 16,
+      "token": "0.99",
+      "value": 0.99,
+      "decimals": 2,
+      "context": "The prereg predicted G1 clean and G1 rho30-sync would enter the [0.90, 0.99] band under the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.deaf.void_wilson[1]"
+    },
+    {
+      "line": 17,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "one-parameter boundary fallback. They did not: clean coverage moved 0.835 -> 0.850 (Wilson",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 17,
+      "token": "0.850",
+      "value": 0.85,
+      "decimals": 3,
+      "context": "one-parameter boundary fallback. They did not: clean coverage moved 0.835 -> 0.850 (Wilson",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.794",
+      "value": 0.794,
+      "decimals": 3,
+      "context": "[0.794, 0.893]) and rho30 moved 0.875 -> 0.863. Both clauses remain CLOSED_NEGATIVE. Every",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.clean.coverage.wilson[0]"
+    },
+    {
+      "line": 18,
+      "token": "0.893",
+      "value": 0.893,
+      "decimals": 3,
+      "context": "[0.794, 0.893]) and rho30 moved 0.875 -> 0.863. Both clauses remain CLOSED_NEGATIVE. Every",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.clean.coverage.wilson[1]"
+    },
+    {
+      "line": 18,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "[0.794, 0.893]) and rho30 moved 0.875 -> 0.863. Both clauses remain CLOSED_NEGATIVE. Every",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.rho30.sync_arm.coverage.rate"
+    },
+    {
+      "line": 19,
+      "token": "0.090",
+      "value": 0.09,
+      "decimals": 3,
+      "context": "other gate was arithmetically or empirically unchanged, as predicted: misfit false-alarm 0.090,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.misfit_null.achieved_fa"
+    },
+    {
+      "line": 20,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "deaf VOID 0.967 plain / 1.000 noise-margin, false-refusal 0/200, interior-dose coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 20,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "deaf VOID 0.967 plain / 1.000 noise-margin, false-refusal 0/200, interior-dose coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.sync_doses.0.15.s_detection_power.rate"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "deaf VOID 0.967 plain / 1.000 noise-margin, false-refusal 0/200, interior-dose coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 20,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "deaf VOID 0.967 plain / 1.000 noise-margin, false-refusal 0/200, interior-dose coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 21,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "0.912 / 0.938, one-parameter coverage 0.925.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 21,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "0.912 / 0.938, one-parameter coverage 0.925.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.sync_doses.0.15.coverage.rate"
+    },
+    {
+      "line": 25,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "Paired per-replicate analysis of the same 200 clean panels, saved as",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 28,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **Boundary regime (s_hat = 0): 83 of 200 replicates.** The fallback DOES repair it --",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "83",
+      "value": 83.0,
+      "decimals": 0,
+      "context": "- **Boundary regime (s_hat = 0): 83 of 200 replicates.** The fallback DOES repair it --",
+      "status": "VERIFIED",
+      "receipt_ref": "r10_boundary_decomposition_receipt.json:boundary_regime.n"
+    },
+    {
+      "line": 28,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "- **Boundary regime (s_hat = 0): 83 of 200 replicates.** The fallback DOES repair it --",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **Small-activation regime (s_hat > 0): 117 replicates.** Mean spurious s_hat",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "117",
+      "value": 117.0,
+      "decimals": 0,
+      "context": "- **Small-activation regime (s_hat > 0): 117 replicates.** Mean spurious s_hat",
+      "status": "VERIFIED",
+      "receipt_ref": "r10_boundary_decomposition_receipt.json:small_activation_regime.n"
+    },
+    {
+      "line": 49,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "deaf-VOID 1.000 vs 0.967 plain), a PER-DATASET misfit null by parametric bootstrap (the piece",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.sync_doses.0.15.s_detection_power.rate"
+    },
+    {
+      "line": 49,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "deaf-VOID 1.000 vs 0.967 plain), a PER-DATASET misfit null by parametric bootstrap (the piece",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 52,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "attached to every estimate**. A result from `audit_panel` does not say \"95 percent interval\";",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "coverage MEASURED for that regime at the Stage-A design point (~0.90 / ~0.81 / 0.91-0.94),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:design.betas[2]"
+    },
+    {
+      "line": 54,
+      "token": "0.81",
+      "value": 0.81,
+      "decimals": 2,
+      "context": "coverage MEASURED for that regime at the Stage-A design point (~0.90 / ~0.81 / 0.91-0.94),",
+      "status": "VERIFIED",
+      "receipt_ref": "r10_boundary_decomposition_receipt.json:small_activation_regime.coverage_profile_ci"
+    },
+    {
+      "line": 54,
+      "token": "0.91",
+      "value": 0.91,
+      "decimals": 2,
+      "context": "coverage MEASURED for that regime at the Stage-A design point (~0.90 / ~0.81 / 0.91-0.94),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v2_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 55,
+      "token": "0.81",
+      "value": 0.81,
+      "decimals": 2,
+      "context": "sourcing the receipts. The small-activation regime's 0.81 is printed, not hidden -- the",
+      "status": "VERIFIED",
+      "receipt_ref": "r10_boundary_decomposition_receipt.json:small_activation_regime.coverage_profile_ci"
+    },
+    {
+      "line": 61,
+      "token": "1780",
+      "value": 1780.0,
+      "decimals": 0,
+      "context": "structure, determinism). Full suite: **1780 passed / 8 skipped**.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "structure, determinism). Full suite: **1780 passed / 8 skipped**.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

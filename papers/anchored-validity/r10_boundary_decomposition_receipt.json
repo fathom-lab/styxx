@@ -1,0 +1,25 @@
+{
+ "design": {
+  "n": 6000,
+  "k": 400,
+  "pi": 0.35,
+  "seed_bases": [
+   10000,
+   20000
+  ],
+  "reps": 200
+ },
+ "boundary_regime": {
+  "n": 83,
+  "coverage_fallback_ci": 0.9036144578313253,
+  "coverage_profile_ci": 0.8674698795180723,
+  "mean_pi_err": 0.009429490849400852
+ },
+ "small_activation_regime": {
+  "n": 117,
+  "coverage_profile_ci": 0.811965811965812,
+  "mean_s_hat": 0.018324786324786322,
+  "mean_pi_err": 0.019653822603409584
+ },
+ "note": "clean OC1 panels, paired; fallback applies only in the boundary regime"
+}

@@ -50,6 +50,33 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 48 (2026-07-20, operator-directed "make the impossible possible") — R10 boundary repair CLOSED_NEGATIVE with a sharper mechanism; the instrument GRADUATES into the package anyway, weaknesses printed on it: `styxx.anchors.audit_panel()`.**
+  **R10 (prereg first, paired re-gate, same seeds):** the one-parameter boundary fallback missed
+  its frozen prediction — clean coverage 0.835→0.850, rho30 0.875→0.863; both seals stay
+  withheld. The paired decomposition (`r10_boundary_decomposition_receipt.json`) found the REAL
+  mechanism: the fallback works in its regime (boundary reps 0.867→**0.904**, in band) but only
+  83/200 clean reps sit at s_hat=0 — the other 117 ACTIVATE a tiny phantom s (mean 0.018) that
+  drags pi (mean err 0.020 vs 0.009) and covers 0.812. The miss lives in the ACTIVATION, not
+  the boundary. Licensed next repair: SELECTIVE ACTIVATION (engage s only on evidence) — a
+  pre-test estimator needing its own characterization run; not attempted, because a missed
+  frozen prediction buys diagnosis, not a second unregistered swing.
+  **The graduation (the ambitious half, delivered):** `styxx/anchors.py` ships `audit_panel()` —
+  the first judge-panel auditor that returns either a prevalence wrapped in its own MEASURED
+  operating characteristics or a refusal that names why. Innovations landing in-package:
+  (1) **regime-keyed measured coverage on every estimate** — results don't say "95% CI", they
+  say which regime the fit landed in (boundary/small-activation/interior) and quote the
+  coverage measured for that regime (~0.90 / ~0.81 / 0.91–0.94), the 0.81 printed, not hidden;
+  (2) **per-dataset misfit null** by parametric bootstrap (calibrated false-alarm; power scope
+  stated: gross structure only, smooth violations must be excluded by anchor construction);
+  (3) noise-margin informativeness gate (measured deaf-VOID 1.000); (4) both refusal classes +
+  stratified detector accounting. Contract enforced by `tests/test_anchors.py` (7 behavioral
+  checks, first-run green). Suite **1780 passed / 8 skipped** (was 1773 — the module adds 7).
+  FINDING OATH-HELD 22/0. No version bump, no release — operator-gated as always.
+  *Next:* selective-activation prereg + characterization (the last path to 8/8 seals); Stage-B
+  prereg (real Qwen judges, construction-borne defenses per the measured rates); remaining
+  majors. The larger picture now has a shape: Stage B on real judges is the "impossible→
+  possible" cash-out, and the package module is what it lands in.
+
 - **Cycle 47 (2026-07-20, operator-directed "push the tech to another level") — R9: THE DATASHEET. The instrument now ships with measured operating characteristics — and the datasheet withholds two of eight seals. `DATASHEET_SHIPPED__2_gates_closed_negative` (FINDING OATH-HELD 42 verified / 0 contradicted).**
   The level-up chosen: not a flashier estimator — **instruments that know themselves**. Prereg
   `2e881c9` froze eleven replicate families (~790 reps, disjoint seed bases), calibration-shaped
