@@ -40,16 +40,23 @@
      0.7811828388884573
     ]
    },
+   "mv": {
+    "pi": 0.31133333333333335
+   },
    "anchored": {
     "pi": 0.35223065377922264,
     "ci": [
      0.331033405863914,
      0.3776546314635218
     ],
-    "verdict": "ESTIMATED"
-   },
-   "mv": {
-    "pi": 0.31133333333333335
+    "verdict": "ESTIMATED",
+    "lack_of_fit": {
+     "chi2_per_df": 2.160505472921252,
+     "n_moments": 10,
+     "implied_pi_min": 0.32492211838006224,
+     "implied_pi_max": 0.3659531090723751,
+     "implied_pi_spread": 0.04103099069231286
+    }
    }
   },
   "R2_sweep": [
@@ -128,15 +135,63 @@
     "sync": 0.08,
     "ds_pi": 0.388634999127912,
     "ds_err": 0.03863499912791202,
-    "anchored_pi": 0.36230566474900855,
-    "anchored_err": 0.012305664749008571
+    "anchored_verdict": "ESTIMATED",
+    "anchored_pi": 0.4323057567403998,
+    "anchored_err": 0.0823057567403998,
+    "garbage": {
+     "fire_rate": [
+      0.2125,
+      0.2525,
+      0.1475,
+      0.23
+     ],
+     "z_vs_inert_alpha": [
+      2.0081905361990984,
+      1.955853733121121,
+      2.281968464681477,
+      1.7549261915501548
+     ],
+     "all_fire_rate": 0.075,
+     "master_key_detected": false
+    },
+    "lack_of_fit": {
+     "chi2_per_df": 2.411948038973146,
+     "n_moments": 10,
+     "implied_pi_min": 0.4138271604938271,
+     "implied_pi_max": 0.44890510948905105,
+     "implied_pi_spread": 0.03507794899522393
+    }
    },
    {
     "sync": 0.15,
-    "ds_pi": 0.433153127463458,
-    "ds_err": 0.08315312746345804,
-    "anchored_pi": 0.3527769449536474,
-    "anchored_err": 0.002776944953647442
+    "ds_pi": 0.4268545946486976,
+    "ds_err": 0.07685459464869765,
+    "anchored_verdict": "ESTIMATED",
+    "anchored_pi": 0.5118554515367725,
+    "anchored_err": 0.1618554515367725,
+    "garbage": {
+     "fire_rate": [
+      0.27,
+      0.295,
+      0.23,
+      0.2825
+     ],
+     "z_vs_inert_alpha": [
+      4.1136772264801955,
+      2.780261900500164,
+      5.03079249037793,
+      4.414509067877784
+     ],
+     "all_fire_rate": 0.1225,
+     "master_key_detected": false
+    },
+    "lack_of_fit": {
+     "chi2_per_df": 10.396495885437435,
+     "n_moments": 10,
+     "implied_pi_min": 0.46203995793901154,
+     "implied_pi_max": 0.558530183727034,
+     "implied_pi_spread": 0.09649022578802247
+    }
    }
   ],
   "R4": {
@@ -152,10 +207,10 @@
    }
   },
   "R5": {
-   "anchored_pi": 0.2812263513502836,
-   "err": 0.06877364864971636,
+   "anchored_pi": 0.2948164239078639,
+   "err": 0.05518357609213609,
    "bound": 0.16666666666666666,
-   "naive_bias": 0.04099999999999998,
+   "naive_bias": 0.04166666666666663,
    "licensing_says_correct": false
   },
   "R6": {
@@ -178,7 +233,7 @@
     "alpha": [
      0.19639838869381931,
      0.218573075320584,
-     0.17650135071713494
+     0.17650135071713488
     ],
     "beta": [
      0.7923216375544517,
@@ -187,9 +242,221 @@
     ]
    },
    "max_cell_gap": 2.7755575615628914e-17,
-   "alpha_discrepancy": 0.05650135071713494,
+   "alpha_discrepancy": 0.056501350717134885,
    "pi_discrepancy": 0.005724142035770541,
    "witness_holds": true
+  },
+  "R7": {
+   "control_lack_of_fit": {
+    "chi2_per_df": 2.160505472921252,
+    "n_moments": 10,
+    "implied_pi_min": 0.32492211838006224,
+    "implied_pi_max": 0.3659531090723751,
+    "implied_pi_spread": 0.04103099069231286
+   },
+   "fixtures": {
+    "R7a_uniform_channel_gain": {
+     "note": "organic betas 0.10 below anchor betas",
+     "verdict": "ESTIMATED",
+     "pi": 0.28702039531361484,
+     "pi_unclipped": 0.28702039531361484,
+     "ci": [
+      0.26742352883572723,
+      0.30532083367087637
+     ],
+     "ci_unclipped": [
+      0.26742352883572723,
+      0.30532083367087637
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 4.97605075044547,
+      "n_moments": 10,
+      "implied_pi_min": 0.26666666666666666,
+      "implied_pi_max": 0.3284237726098192,
+      "implied_pi_spread": 0.061757105943152535
+     },
+     "garbage": null,
+     "err": 0.06297960468638514
+    },
+    "R7b_one_of_J_specialist": {
+     "note": "judge 0 organic beta == alpha",
+     "verdict": "ESTIMATED",
+     "pi": 0.13062274694953335,
+     "pi_unclipped": 0.13062274694953335,
+     "ci": [
+      0.11140946987921473,
+      0.15108742234675773
+     ],
+     "ci_unclipped": [
+      0.11140946987921473,
+      0.15108742234675773
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 636.4179608606257,
+      "n_moments": 10,
+      "implied_pi_min": -0.06717948717948717,
+      "implied_pi_max": 0.37913486005089053,
+      "implied_pi_spread": 0.4463143472303777
+     },
+     "garbage": null,
+     "err": 0.21937725305046663
+    },
+    "R7c_sync_on_real_only": {
+     "note": "sync 0.15 organic, clean anchors",
+     "verdict": "ESTIMATED",
+     "pi": 0.50295935085716,
+     "pi_unclipped": 0.50295935085716,
+     "ci": [
+      0.47991453117490424,
+      0.529212937809569
+     ],
+     "ci_unclipped": [
+      0.47991453117490424,
+      0.529212937809569
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 12.23368622840806,
+      "n_moments": 10,
+      "implied_pi_min": 0.44126984126984137,
+      "implied_pi_max": 0.5431524547803618,
+      "implied_pi_spread": 0.10188261351052041
+     },
+     "garbage": {
+      "fire_rate": [
+       0.1425,
+       0.225,
+       0.0775,
+       0.1675
+      ],
+      "z_vs_inert_alpha": [
+       0.41070489320639136,
+       -0.41931393468876677,
+       -2.3393012907199315,
+       -0.1882483221340038
+      ],
+      "all_fire_rate": 0.005,
+      "master_key_detected": false
+     },
+     "err": 0.15295935085716006
+    },
+    "R7d_anchor_rate_mismatch": {
+     "note": "anchor sync 0.15 >> organic 0.02",
+     "verdict": "ESTIMATED",
+     "pi": 0.22382999700586934,
+     "pi_unclipped": 0.22382999700586934,
+     "ci": [
+      0.1769352947128591,
+      0.27093311856525754
+     ],
+     "ci_unclipped": [
+      0.1769352947128591,
+      0.27093311856525754
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 9.268299542088332,
+      "n_moments": 10,
+      "implied_pi_min": 0.1858156028368795,
+      "implied_pi_max": 0.28035914702581366,
+      "implied_pi_spread": 0.09454354418893415
+     },
+     "garbage": null,
+     "err": 0.12617000299413064
+    },
+    "R7e_detector_pooled_PREFIX": {
+     "note": "garbage pooled into negative anchors",
+     "verdict": "VOID_ANCHORS__nonexchangeable",
+     "pi": null,
+     "pi_unclipped": -0.3405988011328714,
+     "ci": null,
+     "ci_unclipped": [
+      -0.4839271119166536,
+      -0.21262255959379806
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 95.06400409915085,
+      "n_moments": 10,
+      "implied_pi_min": -0.7767068273092367,
+      "implied_pi_max": -0.09841269841269838,
+      "implied_pi_spread": 0.6782941288965383
+     },
+     "garbage": null,
+     "err": null
+    },
+    "R7e_stratified_POSTFIX": {
+     "note": "same data, detector stratum separated",
+     "verdict": "ESTIMATED",
+     "pi": 0.3771912776602396,
+     "pi_unclipped": 0.3771912776602396,
+     "ci": [
+      0.35044043378315265,
+      0.3986712486456289
+     ],
+     "ci_unclipped": [
+      0.35044043378315265,
+      0.3986712486456289
+     ],
+     "kept": [
+      true,
+      true,
+      true,
+      true
+     ],
+     "lack_of_fit": {
+      "chi2_per_df": 3.7643233266255702,
+      "n_moments": 10,
+      "implied_pi_min": 0.3385767790262172,
+      "implied_pi_max": 0.3969057665260197,
+      "implied_pi_spread": 0.05832898749980253
+     },
+     "garbage": {
+      "fire_rate": [
+       0.8225,
+       0.8325,
+       0.7975,
+       0.8375
+      ],
+      "z_vs_inert_alpha": [
+       23.251436962466247,
+       23.26703999200395,
+       27.81702041765304,
+       25.70106053559518
+      ],
+      "all_fire_rate": 0.7825,
+      "master_key_detected": true
+     },
+     "err": 0.0271912776602396
+    }
+   }
   }
  },
  "checks": [
@@ -236,17 +503,22 @@
   {
    "check": "R3:ds_fails_the_same_bar_anchored_meets",
    "ok": true,
-   "detail": "DS err [0.039, 0.083]"
+   "detail": "DS err [0.039, 0.077]"
   },
   {
    "check": "R3:ds_bias_grows_with_dose",
    "ok": true,
-   "detail": "[0.039, 0.083]"
+   "detail": "[0.039, 0.077]"
+  },
+  {
+   "check": "R3:garbage_stratum_prices_the_master_key",
+   "ok": false,
+   "detail": "all-fire [0.075, 0.122], min z [1.8, 2.8]"
   },
   {
    "check": "R3:anchored_flat_across_dose",
-   "ok": true,
-   "detail": "anchored err [0.012, 0.003]"
+   "ok": false,
+   "detail": "anchored err [0.0823057567403998, 0.1618554515367725]"
   },
   {
    "check": "R4:refuses",
@@ -256,18 +528,43 @@
   {
    "check": "R5:degradation_within_bound",
    "ok": true,
-   "detail": "err 0.069 <= bound 0.167+0.03"
+   "detail": "err 0.055 <= bound 0.167+0.03"
   },
   {
    "check": "R5:error_is_material_and_disclosed",
    "ok": true,
-   "detail": "mismatch DOES hurt (0.069) -- the scope limit is real, not decorative"
+   "detail": "mismatch DOES hurt (0.055) -- the scope limit is real, not decorative"
   },
   {
    "check": "R6:witness",
    "ok": true,
    "detail": "cell gap 2.78e-17, alpha discrepancy 0.057, pi discrepancy 0.006"
+  },
+  {
+   "check": "R7:misfit_exceeds_control_on_every_nonexchangeable_fixture",
+   "ok": true,
+   "detail": "misfits [5.0, 636.4, 12.2, 9.3] vs control 2.2"
+  },
+  {
+   "check": "R7a:channel_gain_biases_pi_downward",
+   "ok": true,
+   "detail": "pi 0.28702039531361484 vs true 0.35 -- favourable-direction bias, the Stage-B scope limit"
+  },
+  {
+   "check": "R7c:clean_anchors_CANNOT_price_the_master_key",
+   "ok": true,
+   "detail": "garbage stratum silent -- R3's pricing headline is licensed for ANCHOR-BORNE sync only"
+  },
+  {
+   "check": "R7e:refusal_branch_fires_on_pooled_detector",
+   "ok": true,
+   "detail": "VOID_ANCHORS__nonexchangeable (unclipped pi -0.341, CI [-0.484, -0.213])"
+  },
+  {
+   "check": "R7e:stratified_twin_recovers_the_same_data",
+   "ok": true,
+   "detail": "ESTIMATED pi 0.3771912776602396 err 0.0271912776602396 -- the refusal is data-driven, not a constant"
   }
  ],
- "all_ok": true
+ "all_ok": false
 }

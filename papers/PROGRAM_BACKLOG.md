@@ -50,6 +50,45 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 44 (2026-07-20, autopilot, operator-directed) — anchored-validity Stage A: landed the panel's fatal fix set 1–4. The fixes work, and two of the claims they were sent to protect died on contact. `FIXES_LANDED__stage_a_NOT_green` (FINDING OATH-HELD 15 verified / 0 contradicted).**
+  Orient: no GPU or python contention; branch `paper/anchored-validity`; the 2026-07-19 panel had
+  returned **NO_GO** with 2 surviving fatals (EX1 beta-channel inexpressible, F1 sync-on-real-only)
+  and named fixes 1–4 as the gate on a re-panel. Landed exactly that set, plus the two honesty
+  repairs that cannot ship knowingly false (fix 10 header rewrite, fix 11 disclosure clause). The
+  major set 5–9, 12–15 stays OWED and untouched — one cycle, one item.
+  **The prereg came first:** commit `f8bede3` froze the code AND its ordinal prediction before any
+  scored run existed — *misfit strictly exceeds the exchangeable control on every non-exchangeable
+  fixture*. It held (control 2.161; fixtures 4.976 / 636.418 / 12.234 / 9.268).
+  **Each fix demonstrably reads the data.** fix 1 made the beta channel expressible at all
+  (`alpha_shift` is a no-op on a positive anchor) — organic sensitivity 0.10 below the anchors' now
+  drives pi to 0.287 against a true 0.35, biased **downward, favourable to the audited system**.
+  fix 3 replaced a terminal clip that laundered impossibility into `pi_hat=0.000` — the unclipped
+  solution now returns `VOID_ANCHORS__nonexchangeable` at −0.341, bootstrap [−0.484, −0.213].
+  fix 4 stopped detector strata from estimating error rates. The R7e pair runs **both accountings
+  over identical data**: pooled refuses, stratified recovers pi 0.377 (err 0.027, inside the 0.03
+  bar) — so neither branch can pass by firing on a constant.
+  **The two kills, both caused by fix 4, neither rescued:**
+  (i) **R3's "anchored is flat across the master-key dose" was algebra, not an estimator property.**
+  The pre-fix fixture handed the same sync-bearing stratum to `make_anchors` and to the rate
+  estimation, making anchor rates s+(1−s)a and s+(1−s)b — the (1−s) factor cancels exactly out of the
+  WLS ratio. Under correct accounting: error **0.0823 / 0.1619** against a 0.03 bar (the pre-fix
+  committed run recorded 0.012 / 0.003). **CLOSED_NEGATIVE**, retiring a claim standing since `e1ce286`.
+  (ii) **The detector stratum does not price the master key at the ambient rate** — min z 1.75 / 2.78
+  against a 3-sigma bar, on all-fire 0.075 / 0.1225. A garbage stratum that merely samples the wild
+  sync rate is not a detector; the R7e stratum built to trip at 0.80 clears. Recorded as a Stage-B
+  construction constraint, **bar not moved**.
+  **Consequence:** the re-panel cannot run — its own protocol requires fixes 1–4 green and Stage A is
+  `all_ok=false`. R3's anchored headline is now scoped twice: anchors price a master key only when it
+  fires ON the anchors (R7c: clean anchors → `master_key_detected` false, organic error 0.153) AND
+  when the stratum trips far above ambient. DS-side results untouched (DS error 0.039 / 0.077 across
+  doses; R1/R2/R4/R5/R6 unchanged and green). The misfit statistic ships **reported and not gating** —
+  a single-draw ordinal comparison is under-powered and Stage B may not lean on it.
+  Verified: `pytest tests -q` **1773 passed / 8 skipped**; `py_compile` clean; `certify.py` untouched
+  → no `validate_oath_v0` re-run owed.
+  *Next:* prereg R3's replacement claim (correct using the detector fire-rate, or refuse when the
+  garbage stratum trips — do not restate flatness); freeze detector-stratum construction strength as
+  a Stage-B parameter; then the major set 5–9, 12–15; only then re-panel.
+
 - **Cycle 43 (2026-07-16, autopilot) — scored + reviewed the B2-coupling CONFIRMATION run the chain launched overnight. The frozen rule returned the program's FAVOURABLE verdict; the instrument does not earn it. `VOID_COUPLING__battery_lacks_dose_specificity` (RESULT OATH-HELD 72/0).**
   Orient: chain status `SCORED_RUN_LAUNCHED`, run COMPLETE, GPU free, no contention. The frozen
   aggregate rule returned `COUPLED__erasure_bound_measured_1p5B` — n_admissible=5, n_coupled=5,

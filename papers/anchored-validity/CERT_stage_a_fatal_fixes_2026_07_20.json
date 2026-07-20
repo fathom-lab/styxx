@@ -1,0 +1,390 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_stage_a_fatal_fixes_2026_07_20.md",
+  "document_sha256": "afb66f9e9b959280bfab5cd53753293e381a2cd4b129596da0caeb5d2afb5f03",
+  "receipts_sha256": {
+    "anchored_stage_a_result.json": "ed0684c7662b383a36cbdc4eb20493bf403ebe88268ae4bbf66d890254009ea8"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 18,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "1"
+    },
+    {
+      "line": 4,
+      "token": "11"
+    },
+    {
+      "line": 14,
+      "token": "1"
+    },
+    {
+      "line": 19,
+      "token": "2"
+    },
+    {
+      "line": 20,
+      "token": "4"
+    },
+    {
+      "line": 26,
+      "token": "1"
+    },
+    {
+      "line": 33,
+      "token": "2"
+    },
+    {
+      "line": 38,
+      "token": "3"
+    },
+    {
+      "line": 42,
+      "token": "0"
+    },
+    {
+      "line": 42,
+      "token": "1"
+    },
+    {
+      "line": 44,
+      "token": "4"
+    },
+    {
+      "line": 46,
+      "token": "0.03"
+    },
+    {
+      "line": 61,
+      "token": "4"
+    },
+    {
+      "line": 63,
+      "token": "0.003"
+    },
+    {
+      "line": 67,
+      "token": "3"
+    },
+    {
+      "line": 88,
+      "token": "1"
+    },
+    {
+      "line": 96,
+      "token": "5"
+    },
+    {
+      "line": 96,
+      "token": "12"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ fixes 1-4 + fix 10/11",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ fixes 1-4 + fix 10/11",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R1.anchored.lack_of_fit.n_moments"
+    },
+    {
+      "line": 4,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "subject: `papers/anchored-validity/anchored_stage_a.py` @ fixes 1-4 + fix 10/11",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "The panel of 2026-07-19 returned NO_GO with two surviving fatals and named fixes 1-4 as the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Stage A did not come back green. `anchored_stage_a_result.json` carries `all_ok` false on 2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "checks, and both failures are caused by the fixes themselves -- specifically by fix 4, the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "**fix 1 (beta channel).** `make_anchors()` gains `beta_shift`; the sensitivity channel of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "for a positive anchor, which fires at beta. R7a now drives it: with organic sensitivities 0.10",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.alphas[2]"
+    },
+    {
+      "line": 29,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "below the anchors', the estimator returns pi 0.28702039531361484 against a true 0.35, an error",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.pi_true"
+    },
+    {
+      "line": 33,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "**fix 2 (fixtures).** Four fixtures, all four confirming the panel's read. Per",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "**fix 3 (the refusal branch).** The terminal clip in `solve_pi` turned an observable impossibility",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "0.000",
+      "value": 0.0,
+      "decimals": 3,
+      "context": "into pi_hat 0.000 with a tight CI. The weighted-least-squares solution is now unclipped, and the",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.seed"
+    },
+    {
+      "line": 42,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "interval, -0.4839271119166536 to -0.21262255959379806, never reaches back inside [0,1].",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "interval, -0.4839271119166536 to -0.21262255959379806, never reaches back inside [0,1].",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "**fix 4 (stratified accounting).** Detector strata no longer estimate error rates. The two-sided",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "returns pi 0.3771912776602396, an error of 0.0271912776602396 inside the 0.03 recovery bar. A",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "2.161",
+      "value": 2.161,
+      "decimals": 3,
+      "context": "`anchored_stage_a_result.json` against a control of 2.161 -- 4.976, 636.418, 12.234, 9.268. It",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R1.anchored.lack_of_fit.chi2_per_df"
+    },
+    {
+      "line": 52,
+      "token": "4.976",
+      "value": 4.976,
+      "decimals": 3,
+      "context": "`anchored_stage_a_result.json` against a control of 2.161 -- 4.976, 636.418, 12.234, 9.268. It",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R7.fixtures.R7a_uniform_channel_gain.lack_of_fit.chi2_per_df"
+    },
+    {
+      "line": 52,
+      "token": "636.418",
+      "value": 636.418,
+      "decimals": 3,
+      "context": "`anchored_stage_a_result.json` against a control of 2.161 -- 4.976, 636.418, 12.234, 9.268. It",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R7.fixtures.R7b_one_of_J_specialist.lack_of_fit.chi2_per_df"
+    },
+    {
+      "line": 52,
+      "token": "12.234",
+      "value": 12.234,
+      "decimals": 3,
+      "context": "`anchored_stage_a_result.json` against a control of 2.161 -- 4.976, 636.418, 12.234, 9.268. It",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R7.fixtures.R7c_sync_on_real_only.lack_of_fit.chi2_per_df"
+    },
+    {
+      "line": 61,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "doing the work. Under the accounting fix 4 mandates, `anchored_stage_a_result.json` reports",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "0.012",
+      "value": 0.012,
+      "decimals": 3,
+      "context": "a bar of 0.03. The pre-fix committed run recorded 0.012 and 0.003 for the same scenario. This is",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R2_sweep[0].cov_neg_offdiag[2]"
+    },
+    {
+      "line": 63,
+      "token": "0.003",
+      "value": 0.003,
+      "decimals": 3,
+      "context": "a bar of 0.03. The pre-fix committed run recorded 0.012 and 0.003 for the same scenario. This is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "every judge to fire on garbage more than 3 sigma above its inert-negative alpha. Measured: minimum",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 68,
+      "token": "1.75",
+      "value": 1.75,
+      "decimals": 2,
+      "context": "z of 1.75 and 2.78, on all-fire rates of 0.075 and 0.1225. It fails. The cause is a real design",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].garbage.z_vs_inert_alpha[3]"
+    },
+    {
+      "line": 68,
+      "token": "2.78",
+      "value": 2.78,
+      "decimals": 2,
+      "context": "z of 1.75 and 2.78, on all-fire rates of 0.075 and 0.1225. It fails. The cause is a real design",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[1].garbage.z_vs_inert_alpha[1]"
+    },
+    {
+      "line": 68,
+      "token": "0.075",
+      "value": 0.075,
+      "decimals": 3,
+      "context": "z of 1.75 and 2.78, on all-fire rates of 0.075 and 0.1225. It fails. The cause is a real design",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].garbage.all_fire_rate"
+    },
+    {
+      "line": 70,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "sync rate is not a detector. The R7e stratum, built to trip at 0.80, does clear -- which is the",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:constants.betas[1]"
+    },
+    {
+      "line": 82,
+      "token": "0.039",
+      "value": 0.039,
+      "decimals": 3,
+      "context": "The DS-side results are untouched -- `anchored_stage_a_result.json` still carries DS error 0.039",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[0].ds_err"
+    },
+    {
+      "line": 83,
+      "token": "0.077",
+      "value": 0.077,
+      "decimals": 3,
+      "context": "and 0.077 across the master-key doses, and the R1/R2/R4/R5/R6 checks are unchanged and green. The",
+      "status": "VERIFIED",
+      "receipt_ref": "anchored_stage_a_result.json:results.R3_sweep[1].ds_err"
+    },
+    {
+      "line": 88,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "The re-panel the panel scoped cannot run on this state: its own protocol says fixes 1-4 land and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 96,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "3. The major set (panel fixes 5-9, 12-15) is still entirely owed, including the tautological R2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 96,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "3. The major set (panel fixes 5-9, 12-15) is still entirely owed, including the tautological R2",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
