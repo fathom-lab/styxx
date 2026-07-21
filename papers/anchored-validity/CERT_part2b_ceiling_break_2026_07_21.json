@@ -1,0 +1,135 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_part2b_ceiling_break_2026_07_21.md",
+  "document_sha256": "fd58f31758cfc6aa691eb81271e99278a507109276e215f0f65b4142c6a96d16",
+  "receipts_sha256": {
+    "p2e_single_judge_receipt.json": "9532c0b1b79ebe5d33d04af998925a720cd62bbd0ff5417395a30a6d46b77df8",
+    "corpus_label_oracle_receipt.json": "ed5856e6c80bf5e7f98d894acff23605d62ebf89dee6a526fbfc35c7d62a34ef"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 1,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "0"
+    },
+    {
+      "line": 6,
+      "token": "200"
+    },
+    {
+      "line": 18,
+      "token": "15"
+    },
+    {
+      "line": 18,
+      "token": "19"
+    },
+    {
+      "line": 18,
+      "token": "16"
+    },
+    {
+      "line": 18,
+      "token": "20"
+    },
+    {
+      "line": 28,
+      "token": "1"
+    },
+    {
+      "line": 29,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`p2e_judge_sheet.txt`, `corpus_label_oracle_receipt.json` (chain_xl labels oracle-verified 0/200",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "`p2e_judge_sheet.txt`, `corpus_label_oracle_receipt.json` (chain_xl labels oracle-verified 0/200",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "15 to 19 height relations among 16 to 20 people, sentence order shuffled, four distractor",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "19",
+      "value": 19.0,
+      "decimals": 0,
+      "context": "15 to 19 height relations among 16 to 20 people, sentence order shuffled, four distractor",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "15 to 19 height relations among 16 to 20 people, sentence order shuffled, four distractor",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "15 to 19 height relations among 16 to 20 people, sentence order shuffled, four distractor",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(transitive-closure) at 0 mismatches before the sheet shipped.",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].mismatches"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "break one. Under the prereg's frozen outcomes this is neither outcome 1 (ceiling stands, which",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "required all four judges) nor outcome 2 (ceiling breaks); it is the block, reported as issued.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

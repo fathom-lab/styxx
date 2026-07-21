@@ -1,0 +1,30 @@
+{
+ "prereg": "PREREG_part2b_ceiling_break_2026_07_21.md",
+ "status": "RESOURCE_BLOCKED_no_scored_audit",
+ "judges_completed": 1,
+ "judges_failed_on_credits": 3,
+ "completed_persona": "casual",
+ "organic_n": 200,
+ "organic_correct": 200,
+ "organic_false_fire_y0": 0.0,
+ "organic_sensitivity_y1": 1.0,
+ "anchor_strata": {
+  "neg_anchor": {
+   "n": 60,
+   "correct": 60
+  },
+  "pos_anchor": {
+   "n": 60,
+   "correct": 60
+  },
+  "ladder_neg_anchor": {
+   "n": 60,
+   "correct": 60
+  },
+  "ladder_pos_anchor": {
+   "n": 60,
+   "correct": 60
+  }
+ },
+ "note": "one judge is not a panel; audit_panel needs >=2. No audit run. Datum only."
+}
