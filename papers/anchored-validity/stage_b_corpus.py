@@ -82,26 +82,91 @@ def _consistent(rng, kind, s, hard):
             else f"in {s['c']}, {s['n']} is employed as a {s['j']}.")
 
 
-def build_corpus(seed, n_organic=240, k_anchor=80, pi=0.35, hard_frac=0.5):
+# ------------------------------------------------- hardening arc: two more task families
+def _fact_numeric(rng):
+    o, c, n = rng.choice(OBJECTS), rng.choice(CITIES), int(rng.integers(12, 96))
+    return ("count", {"o": o, "c": c, "n": n}, f"the {c} depot logged {n} crates of {o}s.")
+
+
+def _contra_numeric(rng, kind, s, hard):
+    m = int(s["n"] + rng.integers(3, 30))
+    if hard:
+        return f"the ledger at the {s['c']} depot shows {m} crates of {s['o']}s, recounted twice."
+    return f"the {s['c']} depot logged {m} crates of {s['o']}s."
+
+
+def _consist_numeric(rng, kind, s, hard):
+    if hard:
+        return (f"after two recounts, the {s['c']} tally for {s['o']}s still stood at "
+                f"{s['n']} crates.")
+    return f"{s['n']} crates of {s['o']}s were logged at the {s['c']} depot."
+
+
+def _fact_temporal(rng):
+    n = rng.choice(NAMES)
+    c1, c2 = (str(x) for x in rng.choice(CITIES, size=2, replace=False))
+    return ("order", {"n": n, "c1": c1, "c2": c2}, f"{n} visited {c1} before {c2}.")
+
+
+def _contra_temporal(rng, kind, s, hard):
+    if hard:
+        return f"{s['c1']} came only after {s['c2']} on {s['n']}'s route."
+    return f"{s['n']} visited {s['c2']} before {s['c1']}."
+
+
+def _consist_temporal(rng, kind, s, hard):
+    if hard:
+        return f"by the time {s['n']} reached {s['c2']}, {s['c1']} was already behind them."
+    return f"{s['c2']} was visited by {s['n']} after {s['c1']}."
+
+
+_FAMS = {"attr": (_fact, _contradiction, _consistent),
+         "numeric": (_fact_numeric, _contra_numeric, _consist_numeric),
+         "temporal": (_fact_temporal, _contra_temporal, _consist_temporal)}
+
+
+def build_corpus(seed, n_organic=240, k_anchor=80, pi=0.35, hard_frac=0.5,
+                 family="attr", anchor_style="blatant"):
     """Returns (items, truth): items = [{id, A, B}], truth = {id: y} for organic; anchors carry
-    role 'neg_anchor'/'pos_anchor' in a separate list. Judges see items only."""
+    role 'neg_anchor'/'pos_anchor' in a separate list. Judges see items only.
+
+    family: 'attr' (original), 'numeric', 'temporal'. Defaults reproduce the frozen rung-1/2
+    corpora byte-for-byte.
+
+    anchor_style (the hardening arc's REPAIR arm): 'blatant' = the gold-question ends (neg =
+    verbatim pair, pos = direct negation) that rung 1 measured licensing nothing;
+    'ladder' = anchors drawn from the SAME generator and difficulty mix as the organic items
+    (consistent items as negatives, contradiction items as positives, medium+hard) -- still
+    auditor-constructible without labels, because the generator plants the label by
+    construction; the difference is that ladder anchors can EXHIBIT the judges' organic
+    failure modes."""
     rng = np.random.default_rng(seed)
+    fact, contra, consist = _FAMS[family]
     organic, anchors, truth = [], [], {}
     for i in range(n_organic):
-        kind, s, A = _fact(rng)
+        kind, s, A = fact(rng)
         y = int(rng.random() < pi)
         hard = bool(rng.random() < hard_frac)
-        B = _contradiction(rng, kind, s, hard) if y else _consistent(rng, kind, s, hard)
+        B = contra(rng, kind, s, hard) if y else consist(rng, kind, s, hard)
         iid = f"org_{seed}_{i:04d}"
         organic.append({"id": iid, "A": A, "B": B})
         truth[iid] = y
     for i in range(k_anchor):
-        kind, s, A = _fact(rng)
-        anchors.append({"id": f"neg_{seed}_{i:04d}", "A": A, "B": A, "role": "neg_anchor"})
+        kind, s, A = fact(rng)
+        if anchor_style == "ladder":
+            hard = bool(rng.random() < hard_frac)
+            B = consist(rng, kind, s, hard)
+        else:
+            B = A
+        anchors.append({"id": f"neg_{seed}_{i:04d}", "A": A, "B": B, "role": "neg_anchor"})
     for i in range(k_anchor):
-        kind, s, A = _fact(rng)
-        anchors.append({"id": f"pos_{seed}_{i:04d}", "A": A,
-                        "B": "it is not true that " + A[:-1] + ".", "role": "pos_anchor"})
+        kind, s, A = fact(rng)
+        if anchor_style == "ladder":
+            hard = bool(rng.random() < hard_frac)
+            B = contra(rng, kind, s, hard)
+        else:
+            B = "it is not true that " + A[:-1] + "."
+        anchors.append({"id": f"pos_{seed}_{i:04d}", "A": A, "B": B, "role": "pos_anchor"})
     return organic, anchors, truth
 
 
