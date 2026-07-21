@@ -1,0 +1,131 @@
+{
+ "prereg": "PREREG_STAGE_B_rung1_2026_07_20.md (rung 2 section)",
+ "panel": "four fresh-context Claude persona subagents, arm's-length",
+ "n_organic": 238,
+ "k_neg": 80,
+ "k_pos": 80,
+ "dropped_items": 2,
+ "parse": {
+  "logician": {
+   "parsed": 400,
+   "missing": 0,
+   "missing_ids": []
+  },
+  "casual": {
+   "parsed": 398,
+   "missing": 2,
+   "missing_ids": [
+    "org_7001_0194",
+    "org_7001_0031"
+   ]
+  },
+  "analyst": {
+   "parsed": 400,
+   "missing": 0,
+   "missing_ids": []
+  },
+  "checker": {
+   "parsed": 400,
+   "missing": 0,
+   "missing_ids": []
+  }
+ },
+ "pi_true_realized": 0.3025210084033613,
+ "audit": {
+  "verdict": "ESTIMATED",
+  "pi": 0.3025210084033613,
+  "ci": [
+   0.2436974789915966,
+   0.35514705882352926
+  ],
+  "regime": "not_activated",
+  "s": 0.0,
+  "s_ci": [
+   0.0,
+   0.0
+  ],
+  "activated": false,
+  "misfit": {
+   "chi2_per_df": 0.0,
+   "tau": 0.24356281052932693,
+   "tau_source": "per_dataset_null",
+   "null_p": 1.0,
+   "null_sims": 200,
+   "flag": false,
+   "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+  },
+  "kept": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "alpha": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "beta": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "coverage_note": "s not activated (evidence below tau): selection-aware interval; measured coverage 0.95 on clean validation panels at the Stage-A design point"
+ },
+ "audit_covered": true,
+ "audit_err": 0.0,
+ "mv_pi": 0.3025210084033613,
+ "mv_err": 0.0,
+ "anchor_alpha": [
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "anchor_beta": [
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "organic_alpha": [
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "organic_beta": [
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "delta_alpha_anchor_minus_organic": [
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "delta_beta_anchor_minus_organic": [
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "judge_accuracy_vs_constructed_truth": [
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "error_correlation_offdiag_y0": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "prereg": "PREREG_STAGE_B_rung1_2026_07_20.md",
+ "n_replicates": 15,
+ "gates": [
+  {
+   "gate": "B1:deaf_arm_voids",
+   "ok": true,
+   "detail": "15/15 deaf replicates VOID"
+  },
+  {
+   "gate": "B2:label_free_honesty",
+   "ok": false,
+   "detail": "coverage 0/15 ESTIMATED replicates (bar 12/15); verdicts 15/15 ESTIMATED"
+  },
+  {
+   "gate": "B3:stratified_accounting",
+   "ok": true,
+   "detail": "structural: harness passes only inert anchor strata; no garbage stratum exists in rung 1 and no anchor is pooled by label into organic moments"
+  }
+ ],
+ "characteristics": {
+  "audit_err": {
+   "median": 0.4658313137742731,
+   "p90": 0.5130352779045776,
+   "n": 15
+  },
+  "audit_pi": [
+   0.8818,
+   0.8602,
+   0.812,
+   0.8624,
+   0.8084,
+   0.8555,
+   0.8745,
+   0.7863,
+   0.8237,
+   0.8033,
+   0.8035,
+   0.8387,
+   0.8012,
+   0.7989,
+   0.8303
+  ],
+  "pi_true": [
+   0.3833,
+   0.3833,
+   0.3542,
+   0.3292,
+   0.3625,
+   0.4083,
+   0.3708,
+   0.3625,
+   0.3083,
+   0.3375,
+   0.4083,
+   0.3292,
+   0.3167,
+   0.3458,
+   0.4083
+  ],
+  "covered": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "comparators": {
+   "mv_err": {
+    "median": 0.5541666666666667
+   },
+   "ds_err": {
+    "median": 0.5541668167125043
+   },
+   "semisup_ds_err": {
+    "median": 0.5391580218621203
+   }
+  },
+  "s_activation_rate": 0.0,
+  "misfit_flag_rate": 0.9333333333333333,
+  "kept_judges_mode": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "delta_alpha_anchor_minus_organic_mean": [
+   -0.6261486478781381,
+   -0.4766718993741549,
+   -0.44608777622855744,
+   -0.2825727562328959
+  ],
+  "delta_beta_anchor_minus_organic_mean": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "organic_alpha_mean": [
+   0.6594819812114713,
+   0.8975052327074882,
+   0.8569211095618906,
+   0.9834060895662293
+  ],
+  "anchor_alpha_mean": [
+   0.03333333333333334,
+   0.42083333333333334,
+   0.4108333333333333,
+   0.7008333333333334
+  ]
+ },
+ "all_gates_ok": false
+}

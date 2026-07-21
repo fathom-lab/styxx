@@ -50,6 +50,34 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 50 (2026-07-20, operator-directed "let's do it, then use it on yourself") — STAGE B lands both rungs in one day. Rung 1 (real Qwen panel): `B2 CLOSED_NEGATIVE 0/15` — gold-style anchors license NOTHING on a real panel — **and the instrument flagged its own failure 14/15**. Rung 2 (Claude self-audit): a perfect panel, priced exactly. Both FINDINGs OATH-HELD (27/0, 11/0).**
+  **Rung 1** (prereg `f6470e8` + pre-run amendment; 15 replicates, Qwen2.5-3B ×4 personas,
+  both-true phrasing): B1 **PASS 15/15** deaf-arm VOIDs (content-free real judges cannot get a
+  number); B2 **CLOSED_NEGATIVE** — 15/15 ESTIMATED, coverage **0/15**, audit pi 0.786–0.882 vs
+  true 0.308–0.408, median err 0.4658. Mechanism measured: sensitivity gap 0.0 (judges catch
+  every negation) but organic false-fire 0.659–0.983 vs anchor 0.033–0.701 (Δα −0.28…−0.63) —
+  "different words = incompatible" is structurally INVISIBLE to verbatim gold pairs. No
+  estimator survives from inside: MV 0.554, DS 0.554, anchors-in-hand DS 0.539, anchored 0.466
+  (least wrong, still hopeless). **The flag worked:** per-dataset misfit null flagged 14/15
+  (one silent); s never activated (0/15, correct — activation ≠ authentication); noise-margin
+  gate dropped the worst judge. The crowdsourcing gold-question practice, transplanted to LLM
+  judges, measured licensing nothing — anchor construction is the load-bearing wall.
+  **Rung 2** (arm's-length: 4 fresh-context Claude persona subagents, 400 shuffled items, no
+  labels/repo/session access; transcription trust boundary disclosed in
+  `rung2_receipt_provenance.md`): the panel was PERFECT — 4×1.0 accuracy over 1,592 judgments,
+  and three personas returned BYTE-IDENTICAL verdict sequences (persona diversity ≠ error
+  diversity; a frontier model in costumes is one judge). The label-free audit returned pi
+  **0.3025210084033613 = true prevalence to machine precision**, CI covering, s idle, misfit
+  0.0 at null p 1.0 — every honesty mechanism idled correctly. Demonstration-grade per prereg;
+  the corpus that breaks 3B is decidable at ceiling by the audited family → a Claude-stressing
+  rung needs a harder ladder.
+  Verified: pytest **1780 passed / 8 skipped**; certify.py untouched.
+  *Next — the HARDENING ARC (the groundbreaking-claim path, operator-gated):* reproduce anchor
+  non-transfer across models (7B cached; frontier via subagent protocol), task families, and
+  ≥1 in-the-wild eval setup; show the graded-ladder anchor repair closes the measured gap;
+  then the paper decision vs the bar (new tool = styxx.anchors ✓; discovery candidate =
+  anchor non-transfer). Also owed: remaining Stage-A majors; harder Claude ladder.
+
 - **Cycle 49 (2026-07-20, operator-directed "keep going hard") — R11 SELECTIVE ACTIVATION seals the datasheet: NINE GATES, NINE SEALS. `styxx.anchors` adopts it with per-dataset tau. `SURVIVED__datasheet_fully_sealed` (FINDING OATH-HELD 46 verified / 0 contradicted — lane record).**
   The repair R10's decomposition licensed: gate the activation on EVIDENCE (improvement =
   cost(s=0)−cost(s_hat) from one profile solve; tau = cal-set 95th pct, 14.239 at this design

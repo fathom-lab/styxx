@@ -1,0 +1,420 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_stage_b_rung1_2026_07_20.md",
+  "document_sha256": "e51e513c08b9ddeb03f89ba96aa6e1a385a9b5387fdb7fe10738884295395442",
+  "receipts_sha256": {
+    "stage_b_rung1_result.json": "e28475f3ccc392d12176507c9b2ec150afa9e1d2faba44a728483de079b165dc"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 27,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "1"
+    },
+    {
+      "line": 5,
+      "token": "1"
+    },
+    {
+      "line": 10,
+      "token": "0"
+    },
+    {
+      "line": 10,
+      "token": "15"
+    },
+    {
+      "line": 12,
+      "token": "14"
+    },
+    {
+      "line": 20,
+      "token": "0"
+    },
+    {
+      "line": 22,
+      "token": "1"
+    },
+    {
+      "line": 48,
+      "token": "14"
+    },
+    {
+      "line": 51,
+      "token": "14"
+    },
+    {
+      "line": 51,
+      "token": "15"
+    },
+    {
+      "line": 60,
+      "token": "14"
+    },
+    {
+      "line": 63,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "# FINDING -- Stage B rung 1: gold-style anchors license nothing on a real panel, and the instrument said so itself",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B-Instruct, greedy, both-true phrasing per amendment 1), 15 preregistered replicates.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B-Instruct, greedy, both-true phrasing per amendment 1), 15 preregistered replicates.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 10,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "verdict: **B2 CLOSED_NEGATIVE -- coverage 0 of 15, exactly the outcome the amendment named as",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "verdict: **B2 CLOSED_NEGATIVE -- coverage 0 of 15, exactly the outcome the amendment named as",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "own self-distrust flagged the failure in 14 of 15 replicates.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "own self-distrust flagged the failure in 14 of 15 replicates.**",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 16,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "- **B1 PASS -- the refusal is real on real judges.** All 15 deaf-arm replicates (same",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 17,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "personas, redacted content) returned VOID: 15/15. A content-free LLM judge panel cannot get",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 19,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "- **B2 CLOSED_NEGATIVE -- total.** All 15 main-arm replicates returned ESTIMATED; the interval",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 20,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "covered the true prevalence in 0 of 15. Audit pi ran 0.7863-0.8818 against true prevalences",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.7863",
+      "value": 0.7863,
+      "decimals": 4,
+      "context": "covered the true prevalence in 0 of 15. Audit pi ran 0.7863-0.8818 against true prevalences",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.audit_pi[7]"
+    },
+    {
+      "line": 21,
+      "token": "0.3083",
+      "value": 0.3083,
+      "decimals": 4,
+      "context": "of 0.3083-0.4083; median error 0.4658, ninetieth percentile 0.513.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.pi_true[8]"
+    },
+    {
+      "line": 21,
+      "token": "0.4658",
+      "value": 0.4658,
+      "decimals": 4,
+      "context": "of 0.3083-0.4083; median error 0.4658, ninetieth percentile 0.513.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.audit_err.median"
+    },
+    {
+      "line": 22,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **B3 PASS** (structural; no detector stratum exists in rung 1).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "sensitivity gap is 0.0 on all four judges. The false-fire side is the whole story: mean",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.s_activation_rate"
+    },
+    {
+      "line": 29,
+      "token": "0.659",
+      "value": 0.659,
+      "decimals": 3,
+      "context": "organic false-fire rates 0.659 / 0.898 / 0.857 / 0.983 -- the judges call \"incompatible\" on",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.organic_alpha_mean[0]"
+    },
+    {
+      "line": 29,
+      "token": "0.898",
+      "value": 0.898,
+      "decimals": 3,
+      "context": "organic false-fire rates 0.659 / 0.898 / 0.857 / 0.983 -- the judges call \"incompatible\" on",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.organic_alpha_mean[1]"
+    },
+    {
+      "line": 29,
+      "token": "0.857",
+      "value": 0.857,
+      "decimals": 3,
+      "context": "organic false-fire rates 0.659 / 0.898 / 0.857 / 0.983 -- the judges call \"incompatible\" on",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.organic_alpha_mean[2]"
+    },
+    {
+      "line": 29,
+      "token": "0.983",
+      "value": 0.983,
+      "decimals": 3,
+      "context": "organic false-fire rates 0.659 / 0.898 / 0.857 / 0.983 -- the judges call \"incompatible\" on",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.organic_alpha_mean[3]"
+    },
+    {
+      "line": 31,
+      "token": "0.033",
+      "value": 0.033,
+      "decimals": 3,
+      "context": "negative anchors show only 0.033 / 0.421 / 0.411 / 0.701. Mean anchor-minus-organic alpha",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.anchor_alpha_mean[0]"
+    },
+    {
+      "line": 31,
+      "token": "0.421",
+      "value": 0.421,
+      "decimals": 3,
+      "context": "negative anchors show only 0.033 / 0.421 / 0.411 / 0.701. Mean anchor-minus-organic alpha",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.anchor_alpha_mean[1]"
+    },
+    {
+      "line": 31,
+      "token": "0.411",
+      "value": 0.411,
+      "decimals": 3,
+      "context": "negative anchors show only 0.033 / 0.421 / 0.411 / 0.701. Mean anchor-minus-organic alpha",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.anchor_alpha_mean[2]"
+    },
+    {
+      "line": 32,
+      "token": "-0.626",
+      "value": -0.626,
+      "decimals": 3,
+      "context": "gaps: -0.626 / -0.477 / -0.446 / -0.283. A verbatim pair cannot exhibit the judges' actual",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.delta_alpha_anchor_minus_organic_mean[0]"
+    },
+    {
+      "line": 32,
+      "token": "-0.477",
+      "value": -0.477,
+      "decimals": 3,
+      "context": "gaps: -0.626 / -0.477 / -0.446 / -0.283. A verbatim pair cannot exhibit the judges' actual",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.delta_alpha_anchor_minus_organic_mean[1]"
+    },
+    {
+      "line": 32,
+      "token": "-0.446",
+      "value": -0.446,
+      "decimals": 3,
+      "context": "gaps: -0.626 / -0.477 / -0.446 / -0.283. A verbatim pair cannot exhibit the judges' actual",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.delta_alpha_anchor_minus_organic_mean[2]"
+    },
+    {
+      "line": 38,
+      "token": "0.5542",
+      "value": 0.5542,
+      "decimals": 4,
+      "context": "No estimator survives it from the inside: majority vote median error 0.5542, Dawid-Skene",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.comparators.mv_err.median"
+    },
+    {
+      "line": 39,
+      "token": "0.5542",
+      "value": 0.5542,
+      "decimals": 4,
+      "context": "0.5542, anchors-in-hand semi-supervised DS 0.5392, the anchored audit 0.4658 -- least wrong",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.comparators.mv_err.median"
+    },
+    {
+      "line": 39,
+      "token": "0.5392",
+      "value": 0.5392,
+      "decimals": 4,
+      "context": "0.5542, anchors-in-hand semi-supervised DS 0.5392, the anchored audit 0.4658 -- least wrong",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.comparators.semisup_ds_err.median"
+    },
+    {
+      "line": 39,
+      "token": "0.4658",
+      "value": 0.4658,
+      "decimals": 4,
+      "context": "0.5542, anchors-in-hand semi-supervised DS 0.5392, the anchored audit 0.4658 -- least wrong",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.audit_err.median"
+    },
+    {
+      "line": 41,
+      "token": "0.701",
+      "value": 0.701,
+      "decimals": 3,
+      "context": "0.701, was dropped in the modal replicate) and it cannot repair non-transfer.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.anchor_alpha_mean[3]"
+    },
+    {
+      "line": 45,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "The sync parameter never activated (0/15 -- correct; no master key exists here, and activation",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.s_activation_rate"
+    },
+    {
+      "line": 45,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "The sync parameter never activated (0/15 -- correct; no master key exists here, and activation",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 48,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "are silent -- flagged 14 of 15 replicates: the anchor-implied moment system could not be",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "are silent -- flagged 14 of 15 replicates: the anchor-implied moment system could not be",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 51,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "semantics (elevated misfit disqualifies the estimate) would have discarded 14 of these 15",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "semantics (elevated misfit disqualifies the estimate) would have discarded 14 of these 15",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "its own inadmissibility here at 14/15. Not licensed: any generalization past this task, this",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "and the graded-ladder anchor repair shown to close the measured gap). Rung 2's companion",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
