@@ -60,6 +60,16 @@ load-bearing assumption: alpha/beta gaps between anchors and organic items bias 
 audited system's favour and are only partially detectable. This module never blesses -- it
 estimates with stated characteristics, flags, or refuses.
 
+STAGE-B FIELD RESULTS (real correlated weak-judge panel, four constructed task families,
+receipts in papers/anchored-validity/): blatant gold anchors (verbatim pairs, direct
+negations) produced label-free coverage 0/15 in EVERY family, with the misfit flag firing
+anywhere from 15/15 to 1/15 of wrong replicates depending on how smoothly the violation bends
+the moments -- build your anchors from the same generating process as the work items, or they
+certify nothing. Ladder anchors answered correctly in BOTH directions: restoring calibrated
+coverage 13/13 when exactly one informative judge existed, and refusing (VOID 14/15) when
+honest anchors revealed no judge was informative at all. A frontier panel under the same
+protocol was priced exactly, at ceiling, on every sheet tested.
+
 Deterministic given `seed`. Pure numpy. Stage-A provenance: fathom-lab/styxx
 branch paper/anchored-validity (harness `papers/anchored-validity/anchored_stage_a.py`).
 """

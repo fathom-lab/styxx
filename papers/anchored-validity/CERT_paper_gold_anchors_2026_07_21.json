@@ -1,0 +1,685 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "PAPER_gold_anchors_license_nothing_2026_07_21.md",
+  "document_sha256": "a2961cc5fe7ca20e3465cede096a1183eaa731547dd3c44bbd3d2d99cd8966c8",
+  "receipts_sha256": {
+    "stage_a_operating_chars_v3_result.json": "5029c4bfa28b1c05efa8c86925f912e073249ac636e6fda839b871286b12759a",
+    "stage_a_operating_chars_result.json": "e8a698505185f00c7b957d5359a4d28ee250822e9123dc7e06793931e8b4e07f",
+    "stage_b_rung1_result.json": "e28475f3ccc392d12176507c9b2ec150afa9e1d2faba44a728483de079b165dc",
+    "stage_b_hardening_result.json": "968303153292104ed0d3602d22f29f2ef666f62c508c23abcb1c7cd8c65b0ab0",
+    "stage_b_part2a_result.json": "2bed23209670ab7abdb93b241f0374f607a6439289fbcc8afeac704f7d77bdaa",
+    "corpus_label_oracle_receipt.json": "ed5856e6c80bf5e7f98d894acff23605d62ebf89dee6a526fbfc35c7d62a34ef",
+    "rung2_audit_result.json": "99612985511901b287538c0168b37e137a9d4e33dfb40b89c31ca5df3834abb6",
+    "p2d_audit_result.json": "a0315eb79f40dce7d2ed40d0630ccf4920c0a39a1e5a2d9019e2112e791f8b92"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 60,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 60,
+      "token": "0.30"
+    },
+    {
+      "line": 62,
+      "token": "1.000"
+    },
+    {
+      "line": 83,
+      "token": "66"
+    },
+    {
+      "line": 83,
+      "token": "98"
+    },
+    {
+      "line": 89,
+      "token": "90"
+    },
+    {
+      "line": 89,
+      "token": "90"
+    },
+    {
+      "line": 93,
+      "token": "14"
+    },
+    {
+      "line": 102,
+      "token": "0.63"
+    },
+    {
+      "line": 137,
+      "token": "8"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "every estimator tested: label-free coverage 0/15 in every family, while the same panel is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 19,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "every estimator tested: label-free coverage 0/15 in every family, while the same panel is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 21,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "calibrated misfit flag fired on 15/15 replicates in one family and 1/15 in another. The",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 21,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "calibrated misfit flag fired on 15/15 replicates in one family and 1/15 in another. The",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "calibrated misfit flag fired on 15/15 replicates in one family and 1/15 in another. The",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.15.s_detection_power.rate"
+    },
+    {
+      "line": 21,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "calibrated misfit flag fired on 15/15 replicates in one family and 1/15 in another. The",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "directions \u2014 restoring calibrated coverage 13/13 when exactly one informative judge existed,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 24,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "directions \u2014 restoring calibrated coverage 13/13 when exactly one informative judge existed,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 25,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "and REFUSING (14/15 VOID) when honest anchors revealed that no judge was informative at all.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.verdicts.VOID_PANEL__uninformative"
+    },
+    {
+      "line": 25,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "and REFUSING (14/15 VOID) when honest anchors revealed that no judge was informative at all.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 59,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "interval coverage 0.95 on clean validation panels (Wilson [0.888, 0.978]), 0.963 under a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 59,
+      "token": "0.888",
+      "value": 0.888,
+      "decimals": 3,
+      "context": "interval coverage 0.95 on clean validation panels (Wilson [0.888, 0.978]), 0.963 under a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.wilson[0]"
+    },
+    {
+      "line": 59,
+      "token": "0.978",
+      "value": 0.978,
+      "decimals": 3,
+      "context": "interval coverage 0.95 on clean validation panels (Wilson [0.888, 0.978]), 0.963 under a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.wilson[1]"
+    },
+    {
+      "line": 59,
+      "token": "0.963",
+      "value": 0.963,
+      "decimals": 3,
+      "context": "interval coverage 0.95 on clean validation panels (Wilson [0.888, 0.978]), 0.963 under a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.rho30.sync_arm.coverage.rate"
+    },
+    {
+      "line": 60,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "rho=0.30 shared failure factor, 0.912 and 0.938 at planted master-key rates 0.05 and 0.15;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 60,
+      "token": "0.912",
+      "value": 0.912,
+      "decimals": 3,
+      "context": "rho=0.30 shared failure factor, 0.912 and 0.938 at planted master-key rates 0.05 and 0.15;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.05.coverage.rate"
+    },
+    {
+      "line": 60,
+      "token": "0.938",
+      "value": 0.938,
+      "decimals": 3,
+      "context": "rho=0.30 shared failure factor, 0.912 and 0.938 at planted master-key rates 0.05 and 0.15;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.15.coverage.rate"
+    },
+    {
+      "line": 60,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "rho=0.30 shared failure factor, 0.912 and 0.938 at planted master-key rates 0.05 and 0.15;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.nominal_fa"
+    },
+    {
+      "line": 60,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "rho=0.30 shared failure factor, 0.912 and 0.938 at planted master-key rates 0.05 and 0.15;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.alphas[0]"
+    },
+    {
+      "line": 61,
+      "token": "0.090",
+      "value": 0.09,
+      "decimals": 3,
+      "context": "misfit false-alarm 0.090 on held-out clean replicates; deaf-panel VOID rate 0.967 under the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.misfit_null.achieved_fa"
+    },
+    {
+      "line": 61,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "misfit false-alarm 0.090 on held-out clean replicates; deaf-panel VOID rate 0.967 under the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.deaf.void_rate_plain"
+    },
+    {
+      "line": 62,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "plain informativeness gate and 1.000 under the noise-margin gate the instrument ships with;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "refusal false-fire 0/200; clean activation rate 0.020. Activation power against a true",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 63,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "refusal false-fire 0/200; clean activation rate 0.020. Activation power against a true",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.n_estimated"
+    },
+    {
+      "line": 64,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.activation.power_by_dose.0.02.rate"
+    },
+    {
+      "line": 64,
+      "token": "0.7125",
+      "value": 0.7125,
+      "decimals": 4,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.activation.power_by_dose.0.05.rate"
+    },
+    {
+      "line": 64,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.sync_doses.0.02.s_detection_power.detected"
+    },
+    {
+      "line": 64,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.s_null"
+    },
+    {
+      "line": 64,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.nominal_fa"
+    },
+    {
+      "line": 64,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "all-judge key: 0.30 / 0.7125 / 1.00 at wild rates 0.02 / 0.05 / 0.15 \u2014 below roughly a",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.alphas[0]"
+    },
+    {
+      "line": 66,
+      "token": "0.835",
+      "value": 0.835,
+      "decimals": 3,
+      "context": "constructions failed their coverage gates (0.835 and 0.850 on clean panels) and are on the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 66,
+      "token": "0.850",
+      "value": 0.85,
+      "decimals": 3,
+      "context": "constructions failed their coverage gates (0.835 and 0.850 on clean panels) and are on the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.betas[0]"
+    },
+    {
+      "line": 80,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 80,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 80,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 80,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 80,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 80,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 80,
+      "token": "0.4658",
+      "value": 0.4658,
+      "decimals": 4,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.audit_err.median"
+    },
+    {
+      "line": 80,
+      "token": "0.2774",
+      "value": 0.2774,
+      "decimals": 4,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.numeric_blatant.audit_err.median"
+    },
+    {
+      "line": 80,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "0/15, 0/15, 0/15, 0/15. Median audit errors 0.4658 (attribute), 0.2774 (numeric), 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.temporal_blatant.audit_err.median"
+    },
+    {
+      "line": 81,
+      "token": "-0.9992",
+      "value": -0.9992,
+      "decimals": 4,
+      "context": "(temporal \u2014 one judge's anchor-to-organic false-fire gap reached -0.9992), 0.4444 (chains).",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.temporal_blatant.mean_delta_alpha[0]"
+    },
+    {
+      "line": 81,
+      "token": "0.4444",
+      "value": 0.4444,
+      "decimals": 4,
+      "context": "(temporal \u2014 one judge's anchor-to-organic false-fire gap reached -0.9992), 0.4444 (chains).",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.audit_err.median"
+    },
+    {
+      "line": 83,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "organic sensitivity gap 0.0) and false-fire on 66 to 98 percent of REPHRASED-consistent",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:design.alphas[0]"
+    },
+    {
+      "line": 83,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "organic sensitivity gap 0.0) and false-fire on 66 to 98 percent of REPHRASED-consistent",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 83,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "organic sensitivity gap 0.0) and false-fire on 66 to 98 percent of REPHRASED-consistent",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 86,
+      "token": "0.55",
+      "value": 0.55,
+      "decimals": 2,
+      "context": "and Dawid-Skene sit at median errors 0.55 to 0.60, semi-supervised DS with the gold answers",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.comparators.mv_err.median"
+    },
+    {
+      "line": 86,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "and Dawid-Skene sit at median errors 0.55 to 0.60, semi-supervised DS with the gold answers",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.violations.key_on_pos.silent_wrong_rate"
+    },
+    {
+      "line": 87,
+      "token": "0.53",
+      "value": 0.53,
+      "decimals": 2,
+      "context": "in hand 0.53 to 0.54, and the anchored audit is least wrong and still hopeless. The deaf",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.comparators_median_err.ss_ds"
+    },
+    {
+      "line": 87,
+      "token": "0.54",
+      "value": 0.54,
+      "decimals": 2,
+      "context": "in hand 0.53 to 0.54, and the anchored audit is least wrong and still hopeless. The deaf",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.comparators.semisup_ds_err.median"
+    },
+    {
+      "line": 89,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "90/90 replicates across the entire program: a content-free panel cannot extract a number.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "90/90 replicates across the entire program: a content-free panel cannot extract a number.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 92,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "sealed datasheet showed smooth violations evade internal-consistency checks \u2014 fired on 15/15",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 92,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "sealed datasheet showed smooth violations evade internal-consistency checks \u2014 fired on 15/15",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 93,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "wrong estimates in the numeric family, 14/15 in the attribute family, and 0/15 (temporal),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "wrong estimates in the numeric family, 14/15 in the attribute family, and 0/15 (temporal),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 93,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "wrong estimates in the numeric family, 14/15 in the attribute family, and 0/15 (temporal),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.false_refusal_rate"
+    },
+    {
+      "line": 93,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "wrong estimates in the numeric family, 14/15 in the attribute family, and 0/15 (temporal),",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 94,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "1/15 (chains) in the others: violations that bend every moment coherently leave nothing for",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 102,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "anchor-to-organic false-fire gap from 0.63 to 0.0322 (attribute) and to 0.0078 (chains). What",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 102,
+      "token": "0.0322",
+      "value": 0.0322,
+      "decimals": 4,
+      "context": "anchor-to-organic false-fire gap from 0.63 to 0.0322 (attribute) and to 0.0078 (chains). What",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.max_abs_mean_delta_alpha"
+    },
+    {
+      "line": 102,
+      "token": "0.0078",
+      "value": 0.0078,
+      "decimals": 4,
+      "context": "anchor-to-organic false-fire gap from 0.63 to 0.0322 (attribute) and to 0.0078 (chains). What",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.max_abs_mean_delta_alpha"
+    },
+    {
+      "line": 106,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "judge restored coverage 13/13 at median error 0.0626. On the chain family they revealed that",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 106,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "judge restored coverage 13/13 at median error 0.0626. On the chain family they revealed that",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 107,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "NO judge was informative, and the instrument refused: VOID 14/15 \u2014 an outcome named in the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.verdicts.VOID_PANEL__uninformative"
+    },
+    {
+      "line": 107,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "NO judge was informative, and the instrument refused: VOID 14/15 \u2014 an outcome named in the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 120,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "scored 1.0 on all four personas, and the label-free audit priced it exactly: estimate equal",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_a_operating_chars_v3_result.json:characteristics.clean.coverage.rate"
+    },
+    {
+      "line": 129,
+      "token": "36,720",
+      "value": 36720.0,
+      "decimals": 0,
+      "context": "Every organic and anchor label in every scored corpus \u2014 36,720 items \u2014 was re-derived from",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:total_items"
+    },
+    {
+      "line": 137,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Scope, stated plainly: one weak-judge base model carries the kill (an 8 GB device ceiling;",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
