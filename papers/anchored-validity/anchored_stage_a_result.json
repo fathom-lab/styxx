@@ -91,7 +91,12 @@
      0.029636591478696753,
      0.03834586466165414,
      0.048145363408521304
-    ]
+    ],
+    "ds_ci": [
+     0.3555647614498556,
+     0.39101757960359496
+    ],
+    "ds_ci_covers": false
    },
    {
     "rho": 0.3,
@@ -122,7 +127,12 @@
      0.04348997493734336,
      0.026390977443609024,
      0.027142857142857118
-    ]
+    ],
+    "ds_ci": [
+     0.40083945358611844,
+     0.4439792483863872
+    ],
+    "ds_ci_covers": false
    },
    {
     "rho": 0.45,
@@ -153,7 +163,12 @@
      0.05882205513784455,
      0.03635338345864667,
      0.049473684210526316
-    ]
+    ],
+    "ds_ci": [
+     0.4472446836344972,
+     0.5082615992374462
+    ],
+    "ds_ci_covers": false
    }
   ],
   "R3_sweep": [
@@ -595,6 +610,80 @@
      "n_moments": 11
     }
    }
+  },
+  "R5b": {
+   "alpha_pessimism": [
+    {
+     "dose": 0.05,
+     "err": 0.03789216080717128,
+     "bound": 0.08333333333333333,
+     "naive_bias": 0.04366666666666663,
+     "licensed": false,
+     "realized_correct": true,
+     "tightness": 0.4547059296860554
+    },
+    {
+     "dose": 0.1,
+     "err": 0.06729466348778151,
+     "bound": 0.16666666666666666,
+     "naive_bias": 0.03749999999999998,
+     "licensed": false,
+     "realized_correct": false,
+     "tightness": 0.4037679809266891
+    },
+    {
+     "dose": 0.15,
+     "err": 0.11540902428798314,
+     "bound": 0.24999999999999994,
+     "naive_bias": 0.04299999999999998,
+     "licensed": false,
+     "realized_correct": false,
+     "tightness": 0.46163609715193266
+    }
+   ],
+   "beta_optimism": [
+    {
+     "dose": 0.05,
+     "err": 0.04762376551061459,
+     "bound": 0.08333333333333333,
+     "naive_bias": 0.07883333333333331,
+     "licensed": false,
+     "realized_correct": true,
+     "tightness": 0.5714851861273751
+    },
+    {
+     "dose": 0.1,
+     "err": 0.0737860533995568,
+     "bound": 0.16666666666666666,
+     "naive_bias": 0.09366666666666662,
+     "licensed": false,
+     "realized_correct": true,
+     "tightness": 0.44271632039734077
+    },
+    {
+     "dose": 0.15,
+     "err": 0.10750052019453843,
+     "bound": 0.24999999999999994,
+     "naive_bias": 0.1308333333333333,
+     "licensed": false,
+     "realized_correct": true,
+     "tightness": 0.43000208077815383
+    }
+   ]
+  },
+  "R4b": {
+   "verdict": "ESTIMATED",
+   "pi": 0.36161436500341065,
+   "ci": [
+    0.3257344985542203,
+    0.3948619375017931
+   ],
+   "kept": [
+    true,
+    true,
+    false,
+    true
+   ]
   }
  },
  "checks": [
@@ -614,7 +703,7 @@
    "detail": "no corr flagged on indep panel"
   },
   {
-   "check": "R2:ds_fails_the_same_bar_anchored_meets",
+   "check": "R2:ds_misses_the_recovery_bar",
    "ok": true,
    "detail": "DS err at rho .30/.45: 0.073/0.128 vs bar 0.03"
   },
@@ -647,6 +736,11 @@
    "check": "R2:anchored_detects_correlation",
    "ok": true,
    "detail": "detected at rho [0.15, 0.3, 0.45]"
+  },
+  {
+   "check": "R2:ds_ci_fails_coverage_where_anchored_covers",
+   "ok": true,
+   "detail": "DS CI covers at rho .30/.45: False/False (anchored covers all doses, gated above)"
   },
   {
    "check": "R3:ds_fails_the_same_bar_anchored_meets",
@@ -757,7 +851,32 @@
    "check": "R8d:judge_subset_key_recovered_or_flagged",
    "ok": true,
    "detail": "pi 0.4169669801543717 err 0.067, misfit 52.9 vs clean 2.8"
+  },
+  {
+   "check": "R5b:degradation_within_bound",
+   "ok": true,
+   "detail": "errs [0.038, 0.067, 0.115, 0.048, 0.074, 0.108] vs bounds [0.083, 0.167, 0.25, 0.083, 0.167, 0.25]+0.03"
+  },
+  {
+   "check": "R5b:degradation_grows_with_dose",
+   "ok": true,
+   "detail": "alpha [0.038, 0.067, 0.115], beta [0.048, 0.074, 0.108]"
+  },
+  {
+   "check": "R5b:fork_is_two_sided",
+   "ok": false,
+   "detail": "licensed+correct cells 0, unlicensed cells 6 of 6"
+  },
+  {
+   "check": "R4b:deaf_judges_dropped",
+   "ok": false,
+   "detail": "kept [True, True, False, True]"
+  },
+  {
+   "check": "R4b:subset_recovers",
+   "ok": true,
+   "detail": "ESTIMATED pi 0.362 ci [0.326, 0.395]"
   }
  ],
- "all_ok": true
+ "all_ok": false
 }
