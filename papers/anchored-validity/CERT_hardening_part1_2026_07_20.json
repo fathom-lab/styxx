@@ -1,0 +1,376 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_hardening_part1_2026_07_20.md",
+  "document_sha256": "525ddd954c2ca50f93ad9f8ea2211cb1db9370e36fc797511884fb1fc2773a9d",
+  "receipts_sha256": {
+    "stage_b_hardening_result.json": "968303153292104ed0d3602d22f29f2ef666f62c508c23abcb1c7cd8c65b0ab0",
+    "stage_b_rung1_result.json": "e28475f3ccc392d12176507c9b2ec150afa9e1d2faba44a728483de079b165dc"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "1"
+    },
+    {
+      "line": 5,
+      "token": "4"
+    },
+    {
+      "line": 25,
+      "token": "0.10"
+    },
+    {
+      "line": 25,
+      "token": "0.63"
+    },
+    {
+      "line": 35,
+      "token": "45"
+    },
+    {
+      "line": 35,
+      "token": "45"
+    },
+    {
+      "line": 58,
+      "token": "4"
+    },
+    {
+      "line": 59,
+      "token": "2"
+    },
+    {
+      "line": 59,
+      "token": "45"
+    },
+    {
+      "line": 59,
+      "token": "1"
+    },
+    {
+      "line": 61,
+      "token": "8"
+    },
+    {
+      "line": 62,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "subject: hardening arc part 1 -- transfer of anchor non-transfer to two new task families, and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "the same-generator ladder repair, on the identical broken panel (Qwen2.5-3B x 4 personas).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 15,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "NEW task families, coverage is 0/15 on both. Numeric consistency: median audit error 0.2774,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.misfit_flag_rate"
+    },
+    {
+      "line": 15,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "NEW task families, coverage is 0/15 on both. Numeric consistency: median audit error 0.2774,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.deaf_void"
+    },
+    {
+      "line": 15,
+      "token": "0.2774",
+      "value": 0.2774,
+      "decimals": 4,
+      "context": "NEW task families, coverage is 0/15 on both. Numeric consistency: median audit error 0.2774,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.numeric_blatant.audit_err.median"
+    },
+    {
+      "line": 16,
+      "token": "-0.3189",
+      "value": -0.3189,
+      "decimals": 4,
+      "context": "mean anchor-minus-organic alpha gaps -0.3189 to -0.571. Temporal ordering: median error 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.numeric_blatant.mean_delta_alpha[0]"
+    },
+    {
+      "line": 16,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "mean anchor-minus-organic alpha gaps -0.3189 to -0.571. Temporal ordering: median error 0.65",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.temporal_blatant.audit_err.median"
+    },
+    {
+      "line": 17,
+      "token": "-0.9992",
+      "value": -0.9992,
+      "decimals": 4,
+      "context": "-- the worst measured anywhere in this program -- with one judge's gap at -0.9992: its anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.temporal_blatant.mean_delta_alpha[0]"
+    },
+    {
+      "line": 25,
+      "token": "0.0322",
+      "value": 0.0322,
+      "decimals": 4,
+      "context": "delta_alpha| 0.0322 against the 0.10 bar (blatant had measured up to 0.63), and coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.max_abs_mean_delta_alpha"
+    },
+    {
+      "line": 25,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "delta_alpha| 0.0322 against the 0.10 bar (blatant had measured up to 0.63), and coverage",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "delta_alpha| 0.0322 against the 0.10 bar (blatant had measured up to 0.63), and coverage",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "13/13 among ESTIMATED replicates with median error 0.0626, versus zero-of-fifteen coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 26,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "13/13 among ESTIMATED replicates with median error 0.0626, versus zero-of-fifteen coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.n_estimated"
+    },
+    {
+      "line": 26,
+      "token": "0.0626",
+      "value": 0.0626,
+      "decimals": 4,
+      "context": "13/13 among ESTIMATED replicates with median error 0.0626, versus zero-of-fifteen coverage",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.audit_err.median"
+    },
+    {
+      "line": 27,
+      "token": "0.4658",
+      "value": 0.4658,
+      "decimals": 4,
+      "context": "and median error 0.4658 for the same panel and task under gold anchors (rung-1 receipt). The two non-ESTIMATED",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:characteristics.audit_err.median"
+    },
+    {
+      "line": 31,
+      "token": "0.867",
+      "value": 0.867,
+      "decimals": 3,
+      "context": "gate kept the logician judge in 0.867 of replicates and the other three personas in 0.0 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.kept_rate_per_judge[0]"
+    },
+    {
+      "line": 31,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "gate kept the logician judge in 0.867 of replicates and the other three personas in 0.0 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.misfit_flag_rate"
+    },
+    {
+      "line": 35,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "correctly discarded. Every deaf arm VOIDed, 45/45 across all three arms.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "correctly discarded. Every deaf arm VOIDed, 45/45 across all three arms.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "numeric family it flagged 15/15 wrong estimates; on the temporal family it flagged 0/15 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.deaf_void"
+    },
+    {
+      "line": 40,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "numeric family it flagged 15/15 wrong estimates; on the temporal family it flagged 0/15 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.deaf_void"
+    },
+    {
+      "line": 40,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "numeric family it flagged 15/15 wrong estimates; on the temporal family it flagged 0/15 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.misfit_flag_rate"
+    },
+    {
+      "line": 40,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "numeric family it flagged 15/15 wrong estimates; on the temporal family it flagged 0/15 --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.deaf_void"
+    },
+    {
+      "line": 41,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "fifteen silently-confident errors of median size 0.65, because a violation that bends every",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.temporal_blatant.audit_err.median"
+    },
+    {
+      "line": 49,
+      "token": "0.567",
+      "value": 0.567,
+      "decimals": 3,
+      "context": "Comparators under repair: majority vote and DS stay hopeless (median 0.567) and",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.comparators_median_err.mv"
+    },
+    {
+      "line": 50,
+      "token": "0.314",
+      "value": 0.314,
+      "decimals": 3,
+      "context": "anchors-in-hand semi-supervised DS improves only to 0.314 -- the ladder helps it too, but",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.comparators_median_err.ss_ds"
+    },
+    {
+      "line": 52,
+      "token": "0.0626",
+      "value": 0.0626,
+      "decimals": 4,
+      "context": "0.0626 with per-judge exclusion is not a small edge; it is the difference between an",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_hardening_result.json:arms.repair_ladder_attr.audit_err.median"
+    },
+    {
+      "line": 58,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(Qwen2.5-3B x 4 personas at the amendment-1 operating point), one frontier panel in the easy",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "regime (rung 2), 45 hardening replicates plus the 15 of rung 1, every gate preregistered and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "regime (rung 2), 45 hardening replicates plus the 15 of rung 1, every gate preregistered and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "regime (rung 2), 45 hardening replicates plus the 15 of rung 1, every gate preregistered and",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_rung1_result.json:n_replicates"
+    },
+    {
+      "line": 59,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "regime (rung 2), 45 hardening replicates plus the 15 of rung 1, every gate preregistered and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "(the 8 GB card holds nothing above 3B in fp16), any in-the-wild evaluation setup, and a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "frontier panel under genuine stress. Those are hardening part 2, and they are the distance",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

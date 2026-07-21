@@ -50,6 +50,30 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 51 (2026-07-20, operator-directed "let's finish this end to end") — HARDENING PART 1: ALL SEVEN GATES GREEN. The kill generalizes (0/15 × two new families), the LADDER REPAIRS it (13/13 coverage, Δα 0.63→0.0322), and the repair works BY REFUSING. `SURVIVED__claim_earned_at_scope` (FINDING OATH-HELD 22/0).**
+  Prereg `4185274` frozen with the refusal-resolution note pre-run; 45 replicates, same broken
+  3B panel. **H3 TRANSFER (prediction met exactly):** numeric coverage 0/15 (err med 0.2774,
+  Δα to −0.571), temporal 0/15 (err med **0.65** — worst in program; one judge Δα −0.9992).
+  Three task families now: gold anchors license nothing. **H2 REPAIR (both halves):**
+  same-generator ladder anchors → max |mean Δα| **0.0322** (bar 0.10) and coverage **13/13**
+  ESTIMATED, err med 0.0626 (vs 0/15 @ 0.4658 under gold). Two honest VOIDs. **The mechanism:
+  honest anchors reveal 3 of 4 judges as uninformative** (kept rates 0.867/0/0/0 — gold
+  anchors had cleared all four); restored coverage = an audit of the one real judge with the
+  costumes discarded. Deaf VOID **45/45**. **The nuance that travels with the claim:** the
+  misfit flag caught numeric 15/15 and temporal **0/15** — fifteen silently-confident 0.65
+  errors; smooth-violation blindness demonstrated across families at full strength. THE FLAG
+  IS A BONUS, THE LADDER IS THE DEFENSE — and the ladder costs nothing but honesty in how the
+  gold set is built. Comparators under repair: MV/DS 0.567, anchors-in-hand DS 0.314 vs
+  anchored 0.0626 — refusal semantics is the difference between an instrument and an average.
+  Verified: pytest **1780/8**; certify.py untouched. Operator brief shipped
+  (`docs/OPERATOR_BRIEF_2026_07_20.md`): the two remaining buttons are RELEASE and
+  DISTRIBUTION.
+  *Next (part 2, the distance to the field-level claim):* model generality (needs >8GB or
+  quantization or API), ≥1 in-the-wild eval setup, frontier panel under genuine stress. The
+  paper decision goes to the operator with part 1 in hand: tool ✓ (styxx.anchors, sealed),
+  discovery candidate ✓ at constructed-corpus scope (anchor non-transfer + ladder repair +
+  refusal mechanism), generality gap named.
+
 - **Cycle 50 (2026-07-20, operator-directed "let's do it, then use it on yourself") — STAGE B lands both rungs in one day. Rung 1 (real Qwen panel): `B2 CLOSED_NEGATIVE 0/15` — gold-style anchors license NOTHING on a real panel — **and the instrument flagged its own failure 14/15**. Rung 2 (Claude self-audit): a perfect panel, priced exactly. Both FINDINGs OATH-HELD (27/0, 11/0).**
   **Rung 1** (prereg `f6470e8` + pre-run amendment; 15 replicates, Qwen2.5-3B ×4 personas,
   both-true phrasing): B1 **PASS 15/15** deaf-arm VOIDs (content-free real judges cannot get a
