@@ -155,6 +155,59 @@ def _consist_chain(rng, kind, s, hard):
     return f"{ppl[j]} is shorter than {ppl[i]}."
 
 
+XLNAMES = NAMES + ["tomas breve", "isolde marn", "felix quandt", "petra osgood",
+                   "casimir holt", "wren dalloway", "sabine krue", "artem villo",
+                   "greta funes", "leopold ash", "mira contell", "yusuf brand",
+                   "odile ferran", "bram silvers", "carys venn"]
+
+
+def _fact_chain_xl(rng):
+    """Part-2b ceiling-break family: 12-16 people (XL name pool, used by THIS family only so
+    every previously scored corpus reproduces byte-identically), shuffled sentence order, plus
+    four DISTRACTOR people attached by one relation each -- assembly load without touching
+    decidability of chain-member queries."""
+    L = int(rng.integers(12, 17))
+    ppl = [str(x) for x in rng.choice(XLNAMES, size=L + 4, replace=False)]
+    chain, extras = ppl[:L], ppl[L:]
+    stmts = []
+    for i in range(L - 1):
+        if rng.random() < 0.5:
+            stmts.append(f"{chain[i]} is taller than {chain[i + 1]}")
+        else:
+            stmts.append(f"{chain[i + 1]} is shorter than {chain[i]}")
+    for e in extras:
+        k = int(rng.integers(0, L))
+        if rng.random() < 0.5:
+            stmts.append(f"{e} is taller than {chain[k]}")
+        else:
+            stmts.append(f"{e} is shorter than {chain[k]}")
+    order = rng.permutation(len(stmts))
+    A = ". ".join(stmts[i] for i in order) + "."
+    return ("chain", {"ppl": chain}, A)
+
+
+def _pick_far(rng, L):
+    i = int(rng.integers(0, L - 3))
+    j = int(rng.integers(i + 3, L))
+    return i, j
+
+
+def _contra_chain_xl(rng, kind, s, hard):
+    ppl = s["ppl"]
+    i, j = _pick_far(rng, len(ppl))
+    if rng.random() < 0.5:
+        return f"{ppl[j]} is taller than {ppl[i]}."
+    return f"{ppl[i]} is shorter than {ppl[j]}."
+
+
+def _consist_chain_xl(rng, kind, s, hard):
+    ppl = s["ppl"]
+    i, j = _pick_far(rng, len(ppl))
+    if rng.random() < 0.5:
+        return f"{ppl[i]} is taller than {ppl[j]}."
+    return f"{ppl[j]} is shorter than {ppl[i]}."
+
+
 def _fact_chain_shuffled_range(lo, hi):
     """Deconfounded chain (part-2a amendment 1): same relations, SENTENCE ORDER SHUFFLED, so
     surface position no longer tracks rank and endpoint queries require genuine transitive
@@ -175,7 +228,8 @@ _FAMS = {"attr": (_fact, _contradiction, _consistent),
          "chain": (_fact_chain_range(3, 6), _contra_chain, _consist_chain),
          "chain_long": (_fact_chain_range(6, 9), _contra_chain, _consist_chain),
          "chain_long_shuffled": (_fact_chain_shuffled_range(6, 9), _contra_chain,
-                                 _consist_chain)}
+                                 _consist_chain),
+         "chain_xl": (_fact_chain_xl, _contra_chain_xl, _consist_chain_xl)}
 
 
 def build_corpus(seed, n_organic=240, k_anchor=80, pi=0.35, hard_frac=0.5,
