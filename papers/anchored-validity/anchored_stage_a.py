@@ -584,8 +584,10 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
     # Stage B's bars get frozen BEFORE its run, per the program rails.
     print("== R2 CORRELATED PANEL -- dose-response in the shared-factor strength rho ==")
     r2 = []
+    r2_panels = []
     for rho in (0.15, 0.30, 0.45):
         y, V, neg, pos = scenario(rho=rho)
+        r2_panels.append(V)
         ds = dawid_skene(V); an = anchored(V, neg, pos, rng)
         # fix 5: the alpha-transfer diagnostic was a tautology -- realized_alpha = neg.mean(0)
         # compared to a_hat = neg.mean(0) is 0.0 by arithmetic identity, so the one field that
@@ -612,7 +614,7 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
               f"{r2[-1]['ci_covers']} | min-inf {r2[-1]['informativeness']:.2f} | alpha "
               f"anch {r2[-1]['anchored_alpha_err']:.3f} ds {r2[-1]['ds_alpha_err']:.3f}")
     out["results"]["R2_sweep"] = r2
-    add("R2:ds_fails_the_same_bar_anchored_meets", all(x["ds_err"] > PI_TOL_GOOD for x in r2[1:]),
+    add("R2:ds_misses_the_recovery_bar", all(x["ds_err"] > PI_TOL_GOOD for x in r2[1:]),
         f"DS err at rho .30/.45: {r2[1]['ds_err']:.3f}/{r2[2]['ds_err']:.3f} vs bar {PI_TOL_GOOD}")
     # fix 14: one-sided -- 'grows with dose' must not pass when the bias slightly fell
     add("R2:ds_bias_grows_with_dose",
@@ -636,6 +638,22 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
         f"anchored {[round(x['anchored_err'],3) for x in r2]} vs DS {[round(x['ds_err'],3) for x in r2]}")
     add("R2:anchored_detects_correlation", all(x["corr_detected"] for x in r2[1:]),
         f"detected at rho {[x['rho'] for x in r2 if x['corr_detected']]}")
+    # fix 7 (prereg 2026-07-21): DS gets a bootstrap CI from a DEDICATED rng (stream-safe);
+    # "confidently wrong" becomes a checked sentence -- the DS interval must MISS truth at the
+    # correlated doses where the anchored interval covers.
+    rng_ds = np.random.default_rng(seed + 40009)
+    for x, Vd in zip(r2, r2_panels):
+        boots = []
+        for _ in range(150):
+            bi = rng_ds.integers(0, len(Vd), len(Vd))
+            boots.append(dawid_skene(Vd[bi])["pi"])
+        lo, hi = (float(v) for v in np.percentile(boots, [2.5, 97.5]))
+        x["ds_ci"] = [lo, hi]
+        x["ds_ci_covers"] = bool(lo <= PI <= hi)
+    add("R2:ds_ci_fails_coverage_where_anchored_covers",
+        (not r2[1]["ds_ci_covers"]) and (not r2[2]["ds_ci_covers"]),
+        f"DS CI covers at rho .30/.45: {r2[1]['ds_ci_covers']}/{r2[2]['ds_ci_covers']} "
+        f"(anchored covers all doses, gated above)")
 
     # STRATIFIED (fix 4). The pre-fix R3 handed the SAME sync-bearing stratum to make_anchors and to
     # the rate estimation, so a_hat = s + (1-s)a and b_hat = s + (1-s)b, and the WLS ratio
@@ -894,6 +912,55 @@ def run(n_real=N_REAL, n_anchor=N_ANCHOR, seed=SEED, fast=False):
         f"pi {sj['pi']} err {None if sj['pi'] is None else round(abs(sj['pi'] - PI),3)}, misfit "
         f"{sj['lack_of_fit']['chi2_per_df']:.1f} vs clean {clean_misfit:.1f}")
     out["results"]["R8"] = r8
+
+    # ------------------------------------------------------------------------------ R5b, R4b
+    # THE LAST STAGE-A MAJORS (prereg 2026-07-21; panel fixes 6 and 8). Placed after R8 so
+    # every prior block re-evaluates on identical draws.
+    print("== R5b LICENSING FORK -- dose-response, two channels (fix 6) ==")
+    r5b = {"alpha_pessimism": [], "beta_optimism": []}
+    min_inf = float(np.min(np.array(betas) - np.array(alphas)))
+    for d in (0.05, 0.10, 0.15):
+        for chan, kw in (("alpha_pessimism", {"ashift": d}),
+                         ("beta_optimism", {"organic_betas": [b - d for b in betas]})):
+            y, V, neg, pos = scenario(**kw)
+            an = anchored(V, neg, pos, rng)
+            err = abs(an["pi"] - PI) if an["pi"] is not None else None
+            naive = abs(majority_vote(V)["pi"] - PI)
+            bound = d / min_inf
+            r5b[chan].append({"dose": d, "err": err, "bound": bound, "naive_bias": naive,
+                              "licensed": bool(bound < naive),
+                              "realized_correct": (None if err is None else bool(err < naive)),
+                              "tightness": (None if err is None else err / bound)})
+    out["results"]["R5b"] = r5b
+    cells = r5b["alpha_pessimism"] + r5b["beta_optimism"]
+    add("R5b:degradation_within_bound",
+        all(c["err"] is not None and c["err"] <= c["bound"] + 0.03 for c in cells),
+        f"errs {[None if c['err'] is None else round(c['err'],3) for c in cells]} vs bounds "
+        f"{[round(c['bound'],3) for c in cells]}+0.03")
+    add("R5b:degradation_grows_with_dose",
+        all(r5b[ch][0]["err"] + 0.005 < r5b[ch][2]["err"] for ch in r5b),
+        f"alpha {[round(c['err'],3) for c in r5b['alpha_pessimism']]}, "
+        f"beta {[round(c['err'],3) for c in r5b['beta_optimism']]}")
+    add("R5b:fork_is_two_sided",
+        any(c["licensed"] and c["realized_correct"] for c in cells)
+        and any(not c["licensed"] for c in cells),
+        f"licensed+correct cells {sum(1 for c in cells if c['licensed'] and c['realized_correct'])}, "
+        f"unlicensed cells {sum(1 for c in cells if not c['licensed'])} of {len(cells)}")
+
+    print("== R4b PARTIAL-KEEP -- mixed panel, the idx-subset path under test (fix 8) ==")
+    mal, mbe = [0.15, 0.20, 0.45, 0.45], [0.85, 0.80, 0.52, 0.52]
+    y4b, V4b = simulate_panel(rng, n_real, PI, mal, mbe)
+    neg4b = make_anchors(rng, n_anchor, "neg", mal, mbe)
+    pos4b = make_anchors(rng, n_anchor, "pos", mal, mbe)
+    an4b = anchored(V4b, neg4b, pos4b, rng)
+    out["results"]["R4b"] = {k: an4b.get(k) for k in ("verdict", "pi", "ci", "kept")}
+    add("R4b:deaf_judges_dropped", an4b["kept"] == [True, True, False, False],
+        f"kept {an4b['kept']}")
+    add("R4b:subset_recovers",
+        an4b["verdict"] == "ESTIMATED" and an4b["pi"] is not None
+        and abs(an4b["pi"] - PI) <= 0.05 and an4b["ci"][0] <= PI <= an4b["ci"][1],
+        f"{an4b['verdict']} pi {None if an4b['pi'] is None else round(an4b['pi'],3)} "
+        f"ci {None if not an4b.get('ci') else [round(x,3) for x in an4b['ci']]}")
 
     out["all_ok"] = ok_all
     return out
