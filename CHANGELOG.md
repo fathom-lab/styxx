@@ -11,6 +11,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.26.0] — 2026-07-20 — anchors: the auditor of the judges
+
+One new module, and it audits the layer everyone now trusts by default: LLM judge panels.
+
+### Added
+
+- **`styxx.anchors`** — label-free judge-panel auditing with anchored identification.
+  `audit_panel(V, neg, pos)` takes a verdict matrix and two known-label anchor strata and
+  returns either a prevalence estimate wrapped in its own MEASURED operating characteristics,
+  or a refusal that names why (`VOID_PANEL__uninformative` for panels no judge of which clears
+  the noise-margin informativeness gate; `VOID_ANCHORS__nonexchangeable` when the unclipped
+  solution is impossible and the anchors cannot be reconciled with the data). Estimates carry:
+  a selection-aware bootstrap interval (the selective-activation estimator, characterization
+  sealed 9/9 at the Stage-A design point), a regime-keyed coverage note quoting rates measured
+  on the characterization runs rather than nominal levels, a per-dataset misfit p-value from a
+  parametric-bootstrap null with its power scope stated, and an explicit scope block. The
+  master-key parameter prices ALL-JUDGE TRUTH-INDEPENDENT synchronized failures only, and the
+  docstring says so.
+- Behavioral contract in `tests/test_anchors.py` (clean recovery with regime reporting, deaf
+  VOID, contamination refusal, sync-dose pricing, detector-stratum non-contamination, misfit
+  null discrimination, determinism).
+
+### Receipts (papers/anchored-validity, branch history)
+
+The module ships with its evidence: the sealed operating-characteristics datasheet
+(9/9 calibration gates), and the Stage-B arc on real panels — gold-style anchors (verbatim
+pairs, direct negations) measured licensing NOTHING about organic error rates across three
+task families on a real correlated Qwen panel (coverage 0/15 in every family), while
+same-generator graded-ladder anchors close the anchor-organic alpha gap (0.63 -> 0.03) and
+restore label-free coverage (13/13) — by correctly revealing three of the four judges as
+uninformative. The misfit flag catches gross violations and is measured BLIND to smooth ones:
+the flag is a bonus, the ladder is the defense. A frontier-model panel audited at
+arm's length was priced exactly. Every finding OATH-certified against its receipts.
+
+---
+
 ## [7.25.0] — 2026-07-18 — instrument admissibility: the tools that audit the tools
 
 The release is four new modules, and the through-line is that every one of them certifies a piece of
