@@ -120,9 +120,46 @@ def _consist_temporal(rng, kind, s, hard):
     return f"{s['c2']} was visited by {s['n']} after {s['c1']}."
 
 
+def _fact_chain_range(lo, hi):
+    """Transitivity chains: L people in a strict height order, stated pairwise with mixed
+    phrasing direction. The DIFFICULTY DIAL is the inference distance: contradictions and
+    consistents at 'hard' use the chain ENDPOINTS (L-1 hops of transitive reasoning), at
+    'medium' an adjacent pair (1 hop). Blatant anchors stay 1-hop; the organic hard end is
+    arbitrarily deep -- a ladder that can stress judges the other families cannot."""
+    def fact(rng):
+        L = int(rng.integers(lo, hi))
+        ppl = [str(x) for x in rng.choice(NAMES, size=L, replace=False)]
+        stmts = []
+        for i in range(L - 1):
+            if rng.random() < 0.5:
+                stmts.append(f"{ppl[i]} is taller than {ppl[i + 1]}")
+            else:
+                stmts.append(f"{ppl[i + 1]} is shorter than {ppl[i]}")
+        return ("chain", {"ppl": ppl}, ". ".join(stmts) + ".")
+    return fact
+
+
+def _contra_chain(rng, kind, s, hard):
+    ppl = s["ppl"]
+    i, j = (0, len(ppl) - 1) if hard else (0, 1)
+    if rng.random() < 0.5:
+        return f"{ppl[j]} is taller than {ppl[i]}."
+    return f"{ppl[i]} is shorter than {ppl[j]}."
+
+
+def _consist_chain(rng, kind, s, hard):
+    ppl = s["ppl"]
+    i, j = (0, len(ppl) - 1) if hard else (0, 1)
+    if rng.random() < 0.5:
+        return f"{ppl[i]} is taller than {ppl[j]}."
+    return f"{ppl[j]} is shorter than {ppl[i]}."
+
+
 _FAMS = {"attr": (_fact, _contradiction, _consistent),
          "numeric": (_fact_numeric, _contra_numeric, _consist_numeric),
-         "temporal": (_fact_temporal, _contra_temporal, _consist_temporal)}
+         "temporal": (_fact_temporal, _contra_temporal, _consist_temporal),
+         "chain": (_fact_chain_range(3, 6), _contra_chain, _consist_chain),
+         "chain_long": (_fact_chain_range(6, 9), _contra_chain, _consist_chain)}
 
 
 def build_corpus(seed, n_organic=240, k_anchor=80, pi=0.35, hard_frac=0.5,

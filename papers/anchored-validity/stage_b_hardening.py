@@ -21,6 +21,8 @@ ARMS = [
     {"arm": "repair_ladder_attr", "family": "attr", "anchor_style": "ladder", "base": 4000},
     {"arm": "numeric_blatant", "family": "numeric", "anchor_style": "blatant", "base": 5000},
     {"arm": "temporal_blatant", "family": "temporal", "anchor_style": "blatant", "base": 6000},
+    {"arm": "chain_blatant", "family": "chain", "anchor_style": "blatant", "base": 8000},
+    {"arm": "chain_ladder", "family": "chain", "anchor_style": "ladder", "base": 8500},
 ]
 R = 15
 N_ORG, K_ANCHOR, PI_TRUE = 240, 80, 0.35
