@@ -50,6 +50,27 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 53 (2026-07-21, operator-directed "go" + "proper due diligence") — PART 2a + DUE DILIGENCE: the kill's FOURTH family (0/15, SILENT), the ladder that REFUSES (and is right to), a frontier ceiling EARNED by deconfounding, and a 36,720-label oracle audit with zero mismatches. `P2K_CONFIRMED + REFUSAL_RESOLUTION + CEILING_EARNED + FOUNDATION_CERTIFIED` (FINDING OATH-HELD 27/0).**
+  **Due diligence changed the claims:** (1) label oracle re-derived every label in every scored
+  corpus from item text alone — 36,720/0/0; (2) **self-caught confound** — ordered chain
+  statements made multi-hop queries positionally shortcuttable; the frontier ceiling was
+  DEMOTED in the prereg amendment before the deconfounded run, which then EARNED it (shuffled
+  chains, 4×1.0, audit exact pi 0.35 = truth). Four-way persona byte-identity now held on
+  three sheets. **Chain kill (family four): 0/15 and SILENT** — misfit flag 1/15 (vs numeric's
+  15/15): four families, one sentence — gold anchors license nothing, and sometimes nothing
+  warns you. **Chain ladder = the pre-named REFUSAL RESOLUTION:** Δα closes to 0.0078 and
+  honest anchors reveal NO informative judge — VOID 14/15 (scored CLOSED_NEGATIVE per frozen
+  H2, reported as what it is). **The ladder's two outcomes complete each other:** attr → one
+  real judge found → coverage 13/13; chain → no real judge → refusal. Gold anchors certified
+  garbage in both cases. *The honest gold set doesn't merely fix the estimate; it tells you
+  whether you have a panel at all.* Deaf 30/30 (90/90 lifetime). API arm BLOCKED on credits
+  (named). Suite 1780/8 (one provenance-detector red fixed by syncing the stale local install
+  post-release — the detector working as designed).
+  *Next:* the paper decision (tool 7.26.0 released ✓ + discovery: anchor non-transfer with
+  refusal-resolution mechanism + silent-kill scope + due-diligence record = strongest bar case
+  yet); DISTRIBUTION (operator); residuals: API credits, in-the-wild eval, frontier-stressing
+  ladder (constructed tasks exhausted at ceiling — likely needs naturalistic material).
+
 - **Cycle 51 (2026-07-20, operator-directed "let's finish this end to end") — HARDENING PART 1: ALL SEVEN GATES GREEN. The kill generalizes (0/15 × two new families), the LADDER REPAIRS it (13/13 coverage, Δα 0.63→0.0322), and the repair works BY REFUSING. `SURVIVED__claim_earned_at_scope` (FINDING OATH-HELD 22/0).**
   Prereg `4185274` frozen with the refusal-resolution note pre-run; 45 replicates, same broken
   3B panel. **H3 TRANSFER (prediction met exactly):** numeric coverage 0/15 (err med 0.2774,

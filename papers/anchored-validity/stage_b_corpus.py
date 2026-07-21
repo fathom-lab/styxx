@@ -155,11 +155,27 @@ def _consist_chain(rng, kind, s, hard):
     return f"{ppl[j]} is shorter than {ppl[i]}."
 
 
+def _fact_chain_shuffled_range(lo, hi):
+    """Deconfounded chain (part-2a amendment 1): same relations, SENTENCE ORDER SHUFFLED, so
+    surface position no longer tracks rank and endpoint queries require genuine transitive
+    assembly. The positional-shortcut confound in the ordered variant was self-caught in the
+    due-diligence pass and is disclosed in the prereg amendment."""
+    base = _fact_chain_range(lo, hi)
+    def fact(rng):
+        kind, s, A = base(rng)
+        stmts = A.rstrip(".").split(". ")
+        order = rng.permutation(len(stmts))
+        return (kind, s, ". ".join(stmts[i] for i in order) + ".")
+    return fact
+
+
 _FAMS = {"attr": (_fact, _contradiction, _consistent),
          "numeric": (_fact_numeric, _contra_numeric, _consist_numeric),
          "temporal": (_fact_temporal, _contra_temporal, _consist_temporal),
          "chain": (_fact_chain_range(3, 6), _contra_chain, _consist_chain),
-         "chain_long": (_fact_chain_range(6, 9), _contra_chain, _consist_chain)}
+         "chain_long": (_fact_chain_range(6, 9), _contra_chain, _consist_chain),
+         "chain_long_shuffled": (_fact_chain_shuffled_range(6, 9), _contra_chain,
+                                 _consist_chain)}
 
 
 def build_corpus(seed, n_organic=240, k_anchor=80, pi=0.35, hard_frac=0.5,

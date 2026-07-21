@@ -1,0 +1,382 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_hardening_part2a_2026_07_21.md",
+  "document_sha256": "2ab20a48bc5eb083a17c04db429b9b06dd6d38ddd679d333e840e5413f6c88ef",
+  "receipts_sha256": {
+    "stage_b_part2a_result.json": "2bed23209670ab7abdb93b241f0374f607a6439289fbcc8afeac704f7d77bdaa",
+    "corpus_label_oracle_receipt.json": "ed5856e6c80bf5e7f98d894acff23605d62ebf89dee6a526fbfc35c7d62a34ef"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 27,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 9,
+      "token": "1"
+    },
+    {
+      "line": 14,
+      "token": "36,720"
+    },
+    {
+      "line": 44,
+      "token": "0.0078"
+    },
+    {
+      "line": 44,
+      "token": "0.10"
+    },
+    {
+      "line": 51,
+      "token": "13"
+    },
+    {
+      "line": 54,
+      "token": "30"
+    },
+    {
+      "line": 54,
+      "token": "30"
+    },
+    {
+      "line": 54,
+      "token": "90"
+    },
+    {
+      "line": 54,
+      "token": "90"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 9,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "prereg: `PREREG_hardening_part2a_2026_07_21.md` incl. amendment 1, every element frozen before",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "verdict: **kill transfer CONFIRMED on family four (0/15, silent); ladder arm resolves as the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.covered"
+    },
+    {
+      "line": 11,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "verdict: **kill transfer CONFIRMED on family four (0/15, silent); ladder arm resolves as the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 12,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "REFUSAL RESOLUTION named pre-run (14/15 VOID -- scored CLOSED_NEGATIVE under the frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.verdicts.VOID_PANEL__uninformative"
+    },
+    {
+      "line": 12,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "REFUSAL RESOLUTION named pre-run (14/15 VOID -- scored CLOSED_NEGATIVE under the frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 14,
+      "token": "36,720",
+      "value": 36720.0,
+      "decimals": 0,
+      "context": "foundation certified at 36,720 labels, zero mismatches.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "36,720",
+      "value": 36720.0,
+      "decimals": 0,
+      "context": "36,720 items -- was re-derived from item text alone by independent decision logic (formal",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:total_items"
+    },
+    {
+      "line": 26,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "The frontier panel's perfect score on the ordered sheet (arm c: accuracy 1.0 x 4, audit exact)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.kept_rate_per_judge[0]"
+    },
+    {
+      "line": 26,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "The frontier panel's perfect score on the ordered sheet (arm c: accuracy 1.0 x 4, audit exact)",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:frontier_arms.c_ordered.byte_identical_personas"
+    },
+    {
+      "line": 29,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "shortcut (statement order shuffled, oracle-verified): all four personas again 1.0 across 200",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.kept_rate_per_judge[0]"
+    },
+    {
+      "line": 29,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "shortcut (statement order shuffled, oracle-verified): all four personas again 1.0 across 200",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:frontier_arms.c_ordered.n_organic"
+    },
+    {
+      "line": 30,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "organics, audit exact -- pi 0.35 equal to truth, error 0.0, interval covering. **The ceiling is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:frontier_arms.d_deconfounded.pi_true_realized"
+    },
+    {
+      "line": 30,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "organics, audit exact -- pi 0.35 equal to truth, error 0.0, interval covering. **The ceiling is",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.covered"
+    },
+    {
+      "line": 36,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**The kill transfers to family four, and this one is silent.** Blatant anchors, coverage 0/15,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.covered"
+    },
+    {
+      "line": 36,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "**The kill transfers to family four, and this one is silent.** Blatant anchors, coverage 0/15,",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 37,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "median audit error 0.44438775510204104 -- and the misfit flag fired on only 1 of 15 replicates",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.audit_err.n"
+    },
+    {
+      "line": 37,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "median audit error 0.44438775510204104 -- and the misfit flag fired on only 1 of 15 replicates",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.audit_err.n"
+    },
+    {
+      "line": 38,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "(rate 0.0666...): unlike the numeric family (flagged 15/15), the chain violation bends the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 38,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "(rate 0.0666...): unlike the numeric family (flagged 15/15), the chain violation bends the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 41,
+      "token": "0.596",
+      "value": 0.596,
+      "decimals": 3,
+      "context": "as always worse: majority vote 0.596, Dawid-Skene 0.599, anchors-in-hand DS 0.531.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.comparators_median_err.mv"
+    },
+    {
+      "line": 41,
+      "token": "0.599",
+      "value": 0.599,
+      "decimals": 3,
+      "context": "as always worse: majority vote 0.596, Dawid-Skene 0.599, anchors-in-hand DS 0.531.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.comparators_median_err.ds"
+    },
+    {
+      "line": 44,
+      "token": "0.0078",
+      "value": 0.0078,
+      "decimals": 4,
+      "context": "same-generator ladder anchors the anchor-organic alpha gap closes to 0.0078 (bar 0.10, passed)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 44,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "same-generator ladder anchors the anchor-organic alpha gap closes to 0.0078 (bar 0.10, passed)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "noise-margin gate kept even the best judge in only 1 of 15 replicates, and the verdict was",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.kept_rate_per_judge[0]"
+    },
+    {
+      "line": 46,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "noise-margin gate kept even the best judge in only 1 of 15 replicates, and the verdict was",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.verdicts.ESTIMATED"
+    },
+    {
+      "line": 47,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "VOID_PANEL__uninformative 14 of 15 times. Under the frozen H2 coverage clause this scores",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.verdicts.VOID_PANEL__uninformative"
+    },
+    {
+      "line": 47,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "VOID_PANEL__uninformative 14 of 15 times. Under the frozen H2 coverage clause this scores",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.deaf_void"
+    },
+    {
+      "line": 49,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "REFUSAL RESOLUTION. Set beside part 1, the ladder's two outcomes complete each other. On the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_ladder.n_estimated"
+    },
+    {
+      "line": 51,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "13/13. On the chain family, ladder anchors found NO real judge and refused to emit a number.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "VOIDed 30/30 across both chain arms; 90/90 lifetime.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "VOIDed 30/30 across both chain arms; 90/90 lifetime.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "VOIDed 30/30 across both chain arms; 90/90 lifetime.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "VOIDed 30/30 across both chain arms; 90/90 lifetime.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "anchors license nothing (coverage 0/15 in every family), the failure is silent whenever the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.covered"
+    },
+    {
+      "line": 59,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "anchors license nothing (coverage 0/15 in every family), the failure is silent whenever the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.n_estimated"
+    },
+    {
+      "line": 60,
+      "token": "0.07",
+      "value": 0.07,
+      "decimals": 2,
+      "context": "violation is smooth (flag rates 0.07-1.0, never assume the high end), and same-generator",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_part2a_result.json:arms.chain_blatant.misfit_flag_rate"
+    }
+  ]
+}

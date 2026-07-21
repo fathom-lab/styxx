@@ -44,3 +44,22 @@ casual — the kill configuration exists and the panel is even sicker here than 
 Characteristics unbarred everywhere: delta_alpha/beta, misfit flag rates, comparators, kept
 patterns, per-hop error rates on (c) if errors exist. Smoke only to *_SMOKE_INVALID*; missed
 bars CLOSED_NEGATIVE verbatim; no bar moves after the first scored token.
+
+## AMENDMENT 1 (2026-07-21, due diligence — before the deconfounded run; recorded pre-result)
+
+Two additions from the due-diligence pass:
+
+1. LABEL ORACLE (receipt: corpus_label_oracle_receipt.json): every organic and anchor label in
+   every scored corpus of cycles 50-53 (36,720 items across all seeds) re-derived from item
+   text alone by independent decision logic — formal transitive-closure oracle for the chain
+   families, slot/number/form oracles for the others. Zero mismatches, zero undecidable.
+
+2. SELF-CAUGHT CONFOUND, and the demotion it forces: arm (c)'s chain statements are emitted in
+   CHAIN ORDER, so surface position tracks rank and the endpoint queries are solvable by a
+   positional shortcut with no transitive reasoning. The frontier panel's perfect score on arm
+   (c) therefore does NOT establish "ceiling under 5-7 hops of load" — only ceiling on a
+   positionally-shortcuttable task. The FINDING will say so. Arm (d) is added, frozen here
+   BEFORE its run: chain_long_shuffled (statement order randomized — rank assembly then
+   requires genuine chaining), seed 9101, otherwise identical to arm (c) including the
+   demonstration-grade single-run scope and the transcription trust boundary. All three
+   pre-named outcomes for (c) apply to (d) verbatim. No other bar or arm changes.

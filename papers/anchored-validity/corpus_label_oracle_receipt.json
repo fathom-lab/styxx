@@ -1,0 +1,79 @@
+{
+ "checked": [
+  {
+   "family": "attr",
+   "style": "blatant",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "attr",
+   "style": "blatant",
+   "n_seeds": 1,
+   "items": 400,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "attr",
+   "style": "ladder",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "numeric",
+   "style": "blatant",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "temporal",
+   "style": "blatant",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "chain",
+   "style": "blatant",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "chain",
+   "style": "ladder",
+   "n_seeds": 15,
+   "items": 6000,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "chain_long",
+   "style": "blatant",
+   "n_seeds": 1,
+   "items": 320,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  }
+ ],
+ "total_items": 36720,
+ "total_mismatches": 0,
+ "total_undecidable": 0
+}

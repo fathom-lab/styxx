@@ -1,0 +1,55 @@
+{
+ "prereg": "PREREG_hardening_part2a_2026_07_21.md arm (c)",
+ "panel": "four fresh-context Claude persona subagents, arm's-length, chain_long hard_frac 1.0",
+ "n_organic": 200,
+ "k_neg": 60,
+ "k_pos": 60,
+ "pi_true_realized": 0.32,
+ "judge_accuracy": [
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "byte_identical_personas": 4,
+ "audit": {
+  "verdict": "ESTIMATED",
+  "pi": 0.32,
+  "ci": [
+   0.24999999999999997,
+   0.385
+  ],
+  "regime": "not_activated",
+  "s": 0.0,
+  "misfit": {
+   "chi2_per_df": 0.0,
+   "tau": 0.43202199232373856,
+   "tau_source": "per_dataset_null",
+   "null_p": 1.0,
+   "null_sims": 200,
+   "flag": false,
+   "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+  },
+  "kept": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "alpha": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "beta": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "coverage_note": "s not activated (evidence below tau): selection-aware interval; measured coverage 0.95 on clean validation panels at the Stage-A design point"
+ },
+ "audit_covered": true,
+ "audit_err": 0.0
+}
