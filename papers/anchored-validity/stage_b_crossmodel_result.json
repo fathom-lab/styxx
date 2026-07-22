@@ -1,0 +1,758 @@
+{
+ "prereg": "PREREG_part2c_crossmodel_2026_07_21.md",
+ "n_replicates": 12,
+ "models": [
+  "0.5B",
+  "1.5B",
+  "3B",
+  "7B4b"
+ ],
+ "kill_judges": [
+  "1.5B",
+  "3B"
+ ],
+ "gates": [
+  {
+   "gate": "X1:deaf_void",
+   "ok": true,
+   "detail": "12/12 deaf VOID"
+  },
+  {
+   "gate": "X2:kill_transfers",
+   "ok": true,
+   "detail": "blatant coverage 0/12 ESTIMATED (<= 3)"
+  },
+  {
+   "gate": "X3:ladder_does_right",
+   "ok": false,
+   "detail": "(a) est 12 cov 12 kill-dropped 0 | (b) VOID 0/12 -> pass_a=False pass_b=False"
+  }
+ ],
+ "rows": [
+  {
+   "seed": 12001,
+   "pi_true": 0.31,
+   "judge_acc": [
+    0.89,
+    0.595,
+    0.52,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.4788111880784617,
+    "ci": [
+     0.4075587530437436,
+     0.5521384067205243
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 45.3858527909645,
+     "tau": 0.43301524950408327,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.33409412427216106,
+    "ci": [
+     0.17099442498773054,
+     0.3949195742499796
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.602695965572814,
+     "tau": 7.615713028882169,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.417910447761194,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12002,
+   "pi_true": 0.415,
+   "judge_acc": [
+    0.815,
+    0.68,
+    0.58,
+    1.0
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5720293739301553,
+    "ci": [
+     0.5054548894080951,
+     0.6423774398319798
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 29.159774018188177,
+     "tau": 0.46042804418289224,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.4022396995466724,
+    "ci": [
+     0.31734534424559396,
+     0.4815434576261941
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.5488492226659117,
+     "tau": 9.504886557570735,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.5124378109452736,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12003,
+   "pi_true": 0.34,
+   "judge_acc": [
+    0.825,
+    0.615,
+    0.53,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5250679727046844,
+    "ci": [
+     0.4505844195012034,
+     0.6058484657812913
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 47.41658452385594,
+     "tau": 0.38691250537278915,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.298138383653413,
+    "ci": [
+     0.21774606776382852,
+     0.3833358081777426
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 1.2812768060188438,
+     "tau": 5.510021798272474,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.12437810945273632,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12004,
+   "pi_true": 0.355,
+   "judge_acc": [
+    0.845,
+    0.64,
+    0.535,
+    1.0
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.527486457207815,
+    "ci": [
+     0.46399639208400845,
+     0.6006693456581426
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 38.77044795294284,
+     "tau": 0.3999934378179645,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.3863024674735978,
+    "ci": [
+     0.2522330840595142,
+     0.4655826596979601
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.31367355920224016,
+     "tau": 10.039868340587068,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.6268656716417911,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12005,
+   "pi_true": 0.37,
+   "judge_acc": [
+    0.81,
+    0.645,
+    0.57,
+    0.985
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5310268718234925,
+    "ci": [
+     0.45341149981528434,
+     0.6015516056831633
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 39.60933625116032,
+     "tau": 0.39962684294642525,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.35289086106262163,
+    "ci": [
+     0.2441453885440196,
+     0.41795895439377767
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.2753054561273322,
+     "tau": 6.601050277471109,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.7213930348258707,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12006,
+   "pi_true": 0.36,
+   "judge_acc": [
+    0.84,
+    0.655,
+    0.545,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5304482569947304,
+    "ci": [
+     0.4520796356653341,
+     0.6128527125918795
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 39.85147772978306,
+     "tau": 0.435658457069646,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.28908470026687133,
+    "ci": [
+     0.18756671614708578,
+     0.44049961608742266
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.29929508567501156,
+     "tau": 8.610987206839077,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.6368159203980099,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12007,
+   "pi_true": 0.38,
+   "judge_acc": [
+    0.815,
+    0.655,
+    0.565,
+    0.99
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5509836748699153,
+    "ci": [
+     0.47774447321872526,
+     0.6266217253243944
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 40.02653642776699,
+     "tau": 0.40714868340370414,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.3893201973539359,
+    "ci": [
+     0.24254692222181873,
+     0.45547914048317734
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.2864901309237799,
+     "tau": 11.92917518351398,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.835820895522388,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12008,
+   "pi_true": 0.29,
+   "judge_acc": [
+    0.875,
+    0.635,
+    0.55,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.44135507177337857,
+    "ci": [
+     0.3787999429262922,
+     0.5051108731984959
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 40.1866099595265,
+     "tau": 0.4002205486882785,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.29939061922468274,
+    "ci": [
+     0.16833875320330227,
+     0.360745161258984
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.1400051316696753,
+     "tau": 8.077171704600742,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.9601990049751243,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12009,
+   "pi_true": 0.38,
+   "judge_acc": [
+    0.84,
+    0.64,
+    0.57,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5507600215193876,
+    "ci": [
+     0.47556993059917807,
+     0.6167896685819477
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 37.65733860095071,
+     "tau": 0.48546138123981064,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.4110624945873117,
+    "ci": [
+     0.23701011595090923,
+     0.47484516546282546
+    ],
+    "kept": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.6915594110873035,
+     "tau": 6.948925639936565,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.32338308457711445,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12010,
+   "pi_true": 0.405,
+   "judge_acc": [
+    0.825,
+    0.655,
+    0.62,
+    0.99
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5635994828069567,
+    "ci": [
+     0.49305042090817797,
+     0.6315789959639699
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 33.305269104721745,
+     "tau": 0.4315574093403349,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.38452886859479635,
+    "ci": [
+     0.30576157546219934,
+     0.46953924319170826
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 1.2617922014832497,
+     "tau": 5.369378810542113,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.13930348258706468,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12011,
+   "pi_true": 0.355,
+   "judge_acc": [
+    0.815,
+    0.665,
+    0.56,
+    0.995
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5119374416120474,
+    "ci": [
+     0.43926955304539456,
+     0.5869456851207335
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 35.283767940730286,
+     "tau": 0.41695777023087677,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.3572678333594866,
+    "ci": [
+     0.2748068053360035,
+     0.4449383139704832
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 1.5575761434979971,
+     "tau": 6.768514276157731,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.12437810945273632,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12012,
+   "pi_true": 0.38,
+   "judge_acc": [
+    0.86,
+    0.675,
+    0.565,
+    0.98
+   ],
+   "blatant": {
+    "verdict": "ESTIMATED",
+    "pi": 0.5330387361694966,
+    "ci": [
+     0.4611674404170412,
+     0.6044538536659484
+    ],
+    "kept": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 38.443744989167755,
+     "tau": 0.3490807402011098,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.004975124378109453,
+     "null_sims": 200,
+     "flag": true,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "blatant_cov": false,
+   "ladder": {
+    "verdict": "ESTIMATED",
+    "pi": 0.3813875908571573,
+    "ci": [
+     0.18563037242700386,
+     0.44107279852979825
+    ],
+    "kept": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "misfit": {
+     "chi2_per_df": 0.4782933415239351,
+     "tau": 8.207855950031906,
+     "tau_source": "per_dataset_null",
+     "null_p": 0.5572139303482587,
+     "null_sims": 200,
+     "flag": false,
+     "flag_scope": "calibrated false-alarm; measured power is high vs gross structure only -- smooth violations (y-correlated keys, beta optimism, moderate contamination) are mostly SILENT: exclude them by anchor construction"
+    }
+   },
+   "ladder_cov": true,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  }
+ ],
+ "all_gates_ok": false,
+ "aggregates": {
+  "ladder_median_err": 0.018790135171291023,
+  "blatant_median_err": 0.1649190299509771,
+  "ladder_coverage": 12,
+  "blatant_coverage": 0,
+  "kill_judge_organic_false_fire_mean": {
+   "1.5B": 0.554381592317837,
+   "3B": 0.6909610445292604
+  },
+  "mean_judge_accuracy": [
+   0.8379166666666665,
+   0.6462499999999999,
+   0.5591666666666666,
+   0.9929166666666666
+  ]
+ }
+}

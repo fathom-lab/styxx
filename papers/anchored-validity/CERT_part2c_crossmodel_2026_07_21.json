@@ -1,0 +1,271 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_part2c_crossmodel_2026_07_21.md",
+  "document_sha256": "70b4d0d8d684b8553d86502c52944d77c6d0409b46d8a938e734356b10564695",
+  "receipts_sha256": {
+    "stage_b_crossmodel_result.json": "7dea239e65eb932bc68e0163f01a6e0a1a8a2bbb62b6c3cebd504e81f4aefcbc"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "48"
+    },
+    {
+      "line": 19,
+      "token": "0.48"
+    },
+    {
+      "line": 20,
+      "token": "0.31"
+    },
+    {
+      "line": 46,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "`p2c_crossmodel_cache.jsonl` (48 model-seed verdict caches).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "verdict: **X2-KILL CONFIRMED on a heterogeneous panel (coverage 0/12); X1 deaf-refusal 12/12;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.blatant_coverage"
+    },
+    {
+      "line": 9,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "verdict: **X2-KILL CONFIRMED on a heterogeneous panel (coverage 0/12); X1 deaf-refusal 12/12;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 9,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "verdict: **X2-KILL CONFIRMED on a heterogeneous panel (coverage 0/12); X1 deaf-refusal 12/12;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 9,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "verdict: **X2-KILL CONFIRMED on a heterogeneous panel (coverage 0/12); X1 deaf-refusal 12/12;",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 17,
+      "token": "0.838",
+      "value": 0.838,
+      "decimals": 3,
+      "context": "with genuinely less-correlated errors and mixed capability: mean organic accuracy 0.838 /",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.mean_judge_accuracy[0]"
+    },
+    {
+      "line": 18,
+      "token": "0.646",
+      "value": 0.646,
+      "decimals": 3,
+      "context": "0.646 / 0.559 / 0.993 for 0.5B / 1.5B / 3B / 7B. Under blatant gold anchors the panel's",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.mean_judge_accuracy[1]"
+    },
+    {
+      "line": 18,
+      "token": "0.559",
+      "value": 0.559,
+      "decimals": 3,
+      "context": "0.646 / 0.559 / 0.993 for 0.5B / 1.5B / 3B / 7B. Under blatant gold anchors the panel's",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.mean_judge_accuracy[2]"
+    },
+    {
+      "line": 18,
+      "token": "0.993",
+      "value": 0.993,
+      "decimals": 3,
+      "context": "0.646 / 0.559 / 0.993 for 0.5B / 1.5B / 3B / 7B. Under blatant gold anchors the panel's",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.mean_judge_accuracy[3]"
+    },
+    {
+      "line": 19,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "label-free coverage is 0/12, biased upward (pi typically 0.48-0.57 against true prevalences",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.blatant_coverage"
+    },
+    {
+      "line": 19,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "label-free coverage is 0/12, biased upward (pi typically 0.48-0.57 against true prevalences",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 19,
+      "token": "0.48",
+      "value": 0.48,
+      "decimals": 2,
+      "context": "label-free coverage is 0/12, biased upward (pi typically 0.48-0.57 against true prevalences",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.31",
+      "value": 0.31,
+      "decimals": 2,
+      "context": "0.31-0.42): the informativeness gate correctly drops the anchor-blind 0.5B and keeps 1.5B, 3B,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "and 7B -- but 1.5B and 3B look competent on the gold items (anchor sensitivity ~1.0) while",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.mean_judge_accuracy[3]"
+    },
+    {
+      "line": 25,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "sanity set. The deaf arm refused 12/12. Anchor non-transfer is not an artifact of persona",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 36,
+      "token": "0.554",
+      "value": 0.554,
+      "decimals": 3,
+      "context": "of 0.554 and 0.691 respectively -- and the moment system SUBTRACTED that measured rate rather than requiring the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.kill_judge_organic_false_fire_mean.1.5B"
+    },
+    {
+      "line": 36,
+      "token": "0.691",
+      "value": 0.691,
+      "decimals": 3,
+      "context": "of 0.554 and 0.691 respectively -- and the moment system SUBTRACTED that measured rate rather than requiring the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.kill_judge_organic_false_fire_mean.3B"
+    },
+    {
+      "line": 37,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "judges be discarded. The result: ladder coverage 12/12, median prevalence error 0.019, against",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 37,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "judges be discarded. The result: ladder coverage 12/12, median prevalence error 0.019, against",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 37,
+      "token": "0.019",
+      "value": 0.019,
+      "decimals": 3,
+      "context": "judges be discarded. The result: ladder coverage 12/12, median prevalence error 0.019, against",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.ladder_median_err"
+    },
+    {
+      "line": 38,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "the blatant arm's 0/12 and 0.165 on the identical verdicts. The ladder did not need to know",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.blatant_coverage"
+    },
+    {
+      "line": 38,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "the blatant arm's 0/12 and 0.165 on the identical verdicts. The ladder did not need to know",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 38,
+      "token": "0.165",
+      "value": 0.165,
+      "decimals": 3,
+      "context": "the blatant arm's 0/12 and 0.165 on the identical verdicts. The ladder did not need to know",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:aggregates.blatant_median_err"
+    },
+    {
+      "line": 46,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "12 replicates), and the licensed follow-up is a re-specified gate -- ladder coverage >= 10/12",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    },
+    {
+      "line": 46,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "12 replicates), and the licensed follow-up is a re-specified gate -- ladder coverage >= 10/12",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "12 replicates), and the licensed follow-up is a re-specified gate -- ladder coverage >= 10/12",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_result.json:n_replicates"
+    }
+  ]
+}
