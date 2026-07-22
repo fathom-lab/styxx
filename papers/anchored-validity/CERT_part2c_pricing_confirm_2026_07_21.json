@@ -1,0 +1,87 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_part2c_pricing_confirm_2026_07_21.md",
+  "document_sha256": "a727fca9bfb330447bf28230163e128289a76bf72a18a4fceada44fb3e980226",
+  "receipts_sha256": {
+    "stage_b_crossmodel_pricing_result.json": "f9e530d3e16c34541e70b78eae3e1793e5b91f1245d315f58211467e691b9846"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "12013"
+    },
+    {
+      "line": 8,
+      "token": "12001"
+    },
+    {
+      "line": 26,
+      "token": "0.08"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "12013",
+      "value": 12013.0,
+      "decimals": 0,
+      "context": "(12013-12024), the gate the drop-based X3 could not credit, frozen before the run.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 8,
+      "token": "12001",
+      "value": 12001.0,
+      "decimals": 0,
+      "context": "prereg: `PREREG_part2c_pricing_confirm_2026_07_21.md` (frozen; motivating seeds 12001-12012",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.158",
+      "value": 0.158,
+      "decimals": 3,
+      "context": "prevalence error of 0.158 -- the two capable-looking judges (1.5B, 3B) pass the sanity checks and drag the audit.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_pricing_result.json:blatant_median_err"
+    },
+    {
+      "line": 25,
+      "token": "0.027",
+      "value": 0.027,
+      "decimals": 3,
+      "context": "ladder median error 0.027, a margin of 0.131 below the blatant arm on the same replicates --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_pricing_result.json:ladder_median_err"
+    },
+    {
+      "line": 25,
+      "token": "0.131",
+      "value": 0.131,
+      "decimals": 3,
+      "context": "ladder median error 0.027, a margin of 0.131 below the blatant arm on the same replicates --",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_crossmodel_pricing_result.json:err_margin"
+    },
+    {
+      "line": 26,
+      "token": "0.08",
+      "value": 0.08,
+      "decimals": 2,
+      "context": "clearing the preregistered 0.08 margin with room. The ladder did not need to identify which",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+ "prereg": "PREREG_part2c_pricing_confirm_2026_07_21.md",
+ "seeds": [
+  12013,
+  12014,
+  12015,
+  12016,
+  12017,
+  12018,
+  12019,
+  12020,
+  12021,
+  12022,
+  12023,
+  12024
+ ],
+ "n_replicates": 12,
+ "gates": [
+  {
+   "gate": "PC1:kill_replicates",
+   "ok": true,
+   "detail": "blatant coverage 0/12 ESTIMATED (<= 3)"
+  },
+  {
+   "gate": "PC2:pricing_recovers",
+   "ok": true,
+   "detail": "ladder cov 12/12 (>=10, >=8 est), ladder err 0.027184816242050797 vs blatant 0.15806928698529082, margin 0.131 (>= 0.08)"
+  },
+  {
+   "gate": "PC3:deaf_void",
+   "ok": true,
+   "detail": "12/12 deaf VOID"
+  }
+ ],
+ "rows": [
+  {
+   "seed": 12013,
+   "pi_true": 0.365,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.519640320382387,
+   "blatant_cov": false,
+   "blatant_err": 0.15464032038238706,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.32799816328753323,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.03700183671246676,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12014,
+   "pi_true": 0.375,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5287999108528447,
+   "blatant_cov": false,
+   "blatant_err": 0.15379991085284472,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.3328135413526632,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.04218645864733678,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12015,
+   "pi_true": 0.335,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5181484116768705,
+   "blatant_cov": false,
+   "blatant_err": 0.18314841167687052,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.30246119162339064,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.032538808376609385,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12016,
+   "pi_true": 0.305,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.4980237688084076,
+   "blatant_cov": false,
+   "blatant_err": 0.1930237688084076,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.33819565929953876,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.03319565929953877,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12017,
+   "pi_true": 0.37,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.582909425489769,
+   "blatant_cov": false,
+   "blatant_err": 0.212909425489769,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.36133459383088923,
+   "ladder_kept": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.008665406169110768,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12018,
+   "pi_true": 0.335,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5251922910435874,
+   "blatant_cov": false,
+   "blatant_err": 0.19019229104358742,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.31841227013337564,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.01658772986662438,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12019,
+   "pi_true": 0.385,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5368814581083904,
+   "blatant_cov": false,
+   "blatant_err": 0.15188145810839038,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.34419028761829445,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.040809712381705554,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12020,
+   "pi_true": 0.345,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.504456570652437,
+   "blatant_cov": false,
+   "blatant_err": 0.159456570652437,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.3668308241074922,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.021830824107492208,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12021,
+   "pi_true": 0.335,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.4823338759683111,
+   "blatant_cov": false,
+   "blatant_err": 0.1473338759683111,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.33863270880779817,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.003632708807798146,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12022,
+   "pi_true": 0.36,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5109856498599826,
+   "blatant_cov": false,
+   "blatant_err": 0.15098564985998264,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.31752513089926027,
+   "ladder_kept": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.04247486910073972,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12023,
+   "pi_true": 0.355,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5426500230287366,
+   "blatant_cov": false,
+   "blatant_err": 0.18765002302873657,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.35737546164013007,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.002375461640130083,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  },
+  {
+   "seed": 12024,
+   "pi_true": 0.345,
+   "blatant_verdict": "ESTIMATED",
+   "blatant_pi": 0.5016820033181446,
+   "blatant_cov": false,
+   "blatant_err": 0.15668200331814464,
+   "ladder_verdict": "ESTIMATED",
+   "ladder_pi": 0.33549294210505104,
+   "ladder_kept": [
+    true,
+    true,
+    false,
+    true
+   ],
+   "ladder_cov": true,
+   "ladder_err": 0.009507057894948934,
+   "deaf_verdict": "VOID_PANEL__uninformative"
+  }
+ ],
+ "ladder_median_err": 0.027184816242050797,
+ "blatant_median_err": 0.15806928698529082,
+ "err_margin": 0.13088447074324003,
+ "all_gates_ok": true
+}
