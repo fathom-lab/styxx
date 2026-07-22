@@ -50,6 +50,29 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 59 (2026-07-22, autopilot; operator mid-cycle: "creatively break the ceiling every time") — PART 2d: the cross-model PRICING result re-run on a SECOND task family (numeric). Pricing is a property of the INSTRUMENT, not the attr corpus. `SURVIVED__pricing_transfers_to_numeric` (FINDING OATH-HELD 3/0).**
+  Cycle 58's last open model-generality sub-item was "a second task family for the pricing gate
+  (currently attr only)". This cycle re-ran the identical part-2c apparatus — byte-identical judge,
+  prompt, decoding, four-model panel (Qwen2.5 0.5B/1.5B/3B/7B-4bit), and gates — on the **numeric**
+  family, fresh disjoint seeds 12013–12024, PD1/PD2/PD3 copied verbatim from the attr confirmation
+  (bars NOT moved). Prereg + harness frozen and committed (`d26560b`) before any judge ran; GPU
+  smoke timed the panel (7B-4bit ~106 s/seed) before the ~25 min scored judge run; crash-safe cache.
+  **All three gates pass:** PD1 kill transfers (blatant coverage **0/12** ESTIMATED, median err
+  0.140 — three judges near chance ~0.65, the 7B judge perfect, gold certifies the broken majority);
+  PD2 pricing recovers, both halves (ladder **12/12** ESTIMATED and covered, median err 0.016,
+  margin **0.124** clearing the frozen 0.08 bar, **0** ladder VOID — no refusal, the ladder priced
+  all four); PD3 deaf **12/12** VOID. Numeric ladder error (0.016) is even below attr's (0.027) at a
+  comparable margin. **The model-generality residual is closed on its last sub-item:** anchor
+  non-transfer + ladder pricing now hold across four base models (14× size range) AND two independent
+  task families. Label oracle re-derived both scored numeric arms with 0 mismatches (45,360 labels).
+  pytest **1780 passed / 8 skipped**; py_compile clean; certify.py untouched (no validate_oath_v0
+  re-run owed). Commits `d26560b` (prereg+harness), results below.
+  *Next:* a third family (temporal) would generalize further (one GPU judge run each); the paper's
+  model-generality section can now state pricing across four models and two task families. Residuals
+  unchanged and named: genuine frontier panel (Fable credits), in-the-wild eval. **Operator button
+  DISTRIBUTION (arXiv) remains the only open action.** Optional lower-rank: fold two-family pricing
+  into the styxx.anchors docstring at next release (operator-gated).
+
 - **Cycle 53 (2026-07-21, operator-directed "go" + "proper due diligence") — PART 2a + DUE DILIGENCE: the kill's FOURTH family (0/15, SILENT), the ladder that REFUSES (and is right to), a frontier ceiling EARNED by deconfounding, and a 36,720-label oracle audit with zero mismatches. `P2K_CONFIRMED + REFUSAL_RESOLUTION + CEILING_EARNED + FOUNDATION_CERTIFIED` (FINDING OATH-HELD 27/0).**
   **Due diligence changed the claims:** (1) label oracle re-derived every label in every scored
   corpus from item text alone — 36,720/0/0; (2) **self-caught confound** — ordered chain

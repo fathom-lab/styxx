@@ -1,0 +1,74 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_part2d_pricing_second_family_2026_07_22.md",
+  "document_sha256": "f7ebf7e2dc12e23afc927086eb7a134d18d734b79cde9b98345eec6da44cdac9",
+  "receipts_sha256": {
+    "stage_b_fam2_numeric_pricing_result.json": "3204c7814af3180a22442f4f154d32b7d701ead9918e819c56eaec047184001b"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 28,
+      "token": "0.08"
+    },
+    {
+      "line": 39,
+      "token": "58"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 24,
+      "token": "0.140",
+      "value": 0.14,
+      "decimals": 3,
+      "context": "at a median prevalence error of 0.140 -- three judges sit near chance and one is perfect, and",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_numeric_pricing_result.json:blatant_median_err"
+    },
+    {
+      "line": 27,
+      "token": "0.016",
+      "value": 0.016,
+      "decimals": 3,
+      "context": "covered, at a ladder median error of 0.016 -- a margin of 0.124 below the blatant arm on the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_numeric_pricing_result.json:ladder_median_err"
+    },
+    {
+      "line": 27,
+      "token": "0.124",
+      "value": 0.124,
+      "decimals": 3,
+      "context": "covered, at a ladder median error of 0.016 -- a margin of 0.124 below the blatant arm on the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_numeric_pricing_result.json:err_margin"
+    },
+    {
+      "line": 28,
+      "token": "0.08",
+      "value": 0.08,
+      "decimals": 2,
+      "context": "same replicates, clearing the preregistered 0.08 bar. No ladder replicate refused; the ladder",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "at cycle 58 is closed on its last open sub-item: anchor non-transfer and the ladder's corrective",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

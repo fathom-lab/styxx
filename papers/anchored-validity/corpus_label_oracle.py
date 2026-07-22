@@ -115,6 +115,10 @@ SCORED = [
     ("chain", "ladder", list(range(8501, 8516)), {}),                    # part 2a
     ("chain_long", "blatant", [9001], {"n_organic": 200, "k_anchor": 60,
                                        "hard_frac": 1.0}),               # part 2a frontier
+    ("numeric", "blatant", list(range(12013, 12025)),
+     {"n_organic": 200, "k_anchor": 80}),                               # part 2d 2nd family
+    ("numeric", "ladder", list(range(12013, 12025)),
+     {"n_organic": 200, "k_anchor": 80}),                               # part 2d 2nd family
 ]
 
 
