@@ -23,7 +23,7 @@ MODELS = [("0.5B", "Qwen/Qwen2.5-0.5B-Instruct", False),
           ("3B", "Qwen/Qwen2.5-3B-Instruct", False),
           ("7B4b", "Qwen/Qwen2.5-7B-Instruct", True)]
 KILL_JUDGES = {"1.5B", "3B"}          # named in the prereg from diagnostics
-SEEDS = list(range(12001, 12013))     # R=12
+SEEDS = list(range(12001, 12025))     # R=12 motivating + R=12 pricing-confirm
 N_ORG, K_ANCHOR, PI = 200, 80, 0.35
 CACHE = HERE / "p2c_crossmodel_cache.jsonl"
 
