@@ -50,6 +50,34 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 60 (2026-07-23, autopilot) — PART 2e: the pricing gate on the THIRD task family (temporal) — the pre-named smooth-violation KILL PATH. `CLOSED_NEGATIVE__ladder_refuses_on_temporal` (FINDING OATH-HELD verified=12 abstained=10 contradicted=0). Pricing is SCOPED; refusal is not.**
+  Temporal was chosen adversarially, not as a victory lap: it is the smooth-violation family that
+  on the same-model 3B panel (cycle 51) produced the program's worst gold-anchor errors (0.65) and
+  SILENCED the misfit flag (0/15 vs numeric's 15/15). The prereg (`a99df1e`, frozen before any
+  judge ran, PD1/PD2/PD3 inherited verbatim, zero harness changes — the part-2d harness run with
+  `--family temporal`) named the exact kill: if temporal violations are smoothly wrong in a
+  judge-consistent way, the honest ladder inherits the blindness and VOIDs rather than prices. **It
+  did.** PD1 **PASS** (kill transfers: blatant coverage **0/12**, median err **0.652** — the worst
+  in the program; gold anchors drive pi to **1.0** vs true ~0.31, certifying the broken panel with
+  maximal confidence). PD2 **MISS** (ladder `VOID_PANEL__uninformative` **12/12**: the four judges
+  score at/below chance on the before/after task, no judge clears the informativeness gate, the
+  honest ladder refuses to average garbage — logged CLOSED_NEGATIVE, not rescued). PD3 **PASS**
+  (deaf **12/12** VOID). **Temporal joins chain (cycle 53) as the SECOND refusal family.** The four
+  families now partition cleanly: where an informative judge exists (attr, numeric) the ladder
+  **PRICES**; where none does under honest anchors (chain, temporal) the ladder **REFUSES** — and
+  it never certifies garbage. The sharper alignment: the two families where gold anchors are most
+  dangerous (temporal, chain — silent flags, worst errors) are exactly the two where the honest
+  ladder refuses. The paper's model-generality claim tightens honestly to a **repair-or-refuse**
+  instrument, not a universal repair. Temporal labels re-derived by the oracle (4320 blatant + 4320
+  ladder, 0 mismatches, 0 undecidable). pytest **1780 passed / 8 skipped**; py_compile clean;
+  certify.py untouched (no `validate_oath_v0` re-run owed). Commits `a99df1e` (prereg), `9b5f42f`
+  (result), pushed to `paper/anchored-validity`.
+  *Next:* the four-family PRICE/REFUSE partition (attr+numeric price · chain+temporal refuse) is now
+  a paper-ready result and belongs in the model-generality section as the scope statement. A
+  genuinely-informative-but-hard family (would the ladder price where a real judge is buried under
+  noise?) would sharpen the boundary. Residuals unchanged and named: genuine frontier panel (Fable
+  credits), in-the-wild eval. Operator button DISTRIBUTION (arXiv) remains the only open action.
+
 - **Cycle 59 (2026-07-22, autopilot; operator mid-cycle: "creatively break the ceiling every time") — PART 2d: the cross-model PRICING result re-run on a SECOND task family (numeric). Pricing is a property of the INSTRUMENT, not the attr corpus. `SURVIVED__pricing_transfers_to_numeric` (FINDING OATH-HELD 3/0).**
   Cycle 58's last open model-generality sub-item was "a second task family for the pricing gate
   (currently attr only)". This cycle re-ran the identical part-2c apparatus — byte-identical judge,
