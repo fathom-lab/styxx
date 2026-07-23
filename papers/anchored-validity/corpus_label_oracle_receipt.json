@@ -89,9 +89,27 @@
    "mismatches": 0,
    "undecidable": 0,
    "examples": []
+  },
+  {
+   "family": "temporal",
+   "style": "blatant",
+   "n_seeds": 12,
+   "items": 4320,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
+  },
+  {
+   "family": "temporal",
+   "style": "ladder",
+   "n_seeds": 12,
+   "items": 4320,
+   "mismatches": 0,
+   "undecidable": 0,
+   "examples": []
   }
  ],
- "total_items": 45360,
+ "total_items": 54000,
  "total_mismatches": 0,
  "total_undecidable": 0
 }

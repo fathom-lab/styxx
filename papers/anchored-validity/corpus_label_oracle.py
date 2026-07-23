@@ -119,6 +119,10 @@ SCORED = [
      {"n_organic": 200, "k_anchor": 80}),                               # part 2d 2nd family
     ("numeric", "ladder", list(range(12013, 12025)),
      {"n_organic": 200, "k_anchor": 80}),                               # part 2d 2nd family
+    ("temporal", "blatant", list(range(12013, 12025)),
+     {"n_organic": 200, "k_anchor": 80}),                               # part 2e 3rd family
+    ("temporal", "ladder", list(range(12013, 12025)),
+     {"n_organic": 200, "k_anchor": 80}),                               # part 2e 3rd family
 ]
 
 

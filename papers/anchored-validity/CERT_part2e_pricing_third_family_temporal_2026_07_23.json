@@ -1,0 +1,260 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_part2e_pricing_third_family_temporal_2026_07_23.md",
+  "document_sha256": "b58c5ea7acc923f00fbc697e21bf1a6aff6ffe123b4c8c6e012be62482cfe725",
+  "receipts_sha256": {
+    "stage_b_fam2_temporal_pricing_result.json": "66ad44e78ffaf97755d4177b75da4f4f53084904c7bb9dac8bbb668a4fdc952e",
+    "corpus_label_oracle_receipt.json": "7ff3e92032ac60a3351b09940b26a632d5eeb0c9631e41df78d3678b33f4110f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 12,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 21,
+      "token": "51"
+    },
+    {
+      "line": 22,
+      "token": "0"
+    },
+    {
+      "line": 27,
+      "token": "0"
+    },
+    {
+      "line": 31,
+      "token": "0.31"
+    },
+    {
+      "line": 37,
+      "token": "8"
+    },
+    {
+      "line": 38,
+      "token": "10"
+    },
+    {
+      "line": 45,
+      "token": "53"
+    },
+    {
+      "line": 45,
+      "token": "14"
+    },
+    {
+      "line": 57,
+      "token": "4320"
+    },
+    {
+      "line": 57,
+      "token": "4320"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 21,
+      "token": "51",
+      "value": 51.0,
+      "decimals": 0,
+      "context": "the smooth-violation family, the one that on the same-model 3B panel (cycle 51) produced the worst",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "gold-anchor errors in the program and SILENCED the misfit flag (0/15, versus numeric's 15/15). The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "gold-anchor errors in the program and SILENCED the misfit flag (0/15, versus numeric's 15/15). The",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].n_seeds"
+    },
+    {
+      "line": 22,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "gold-anchor errors in the program and SILENCED the misfit flag (0/15, versus numeric's 15/15). The",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].n_seeds"
+    },
+    {
+      "line": 22,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "gold-anchor errors in the program and SILENCED the misfit flag (0/15, versus numeric's 15/15). The",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].n_seeds"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- PD1, the kill transfers: **PASS.** Blatant gold anchors yield coverage 0/12 across all twelve",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- PD1, the kill transfers: **PASS.** Blatant gold anchors yield coverage 0/12 across all twelve",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:n_replicates"
+    },
+    {
+      "line": 28,
+      "token": "0.652",
+      "value": 0.652,
+      "decimals": 3,
+      "context": "replicates, at a blatant median prevalence error of 0.652 -- the largest gold-anchor error the",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:blatant_median_err"
+    },
+    {
+      "line": 30,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "anchors certify the broken panel with maximal confidence, driving the estimate to pi 1.0 against",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[1].n_seeds"
+    },
+    {
+      "line": 31,
+      "token": "0.31",
+      "value": 0.31,
+      "decimals": 2,
+      "context": "a true prevalence near 0.31 (everything a contradiction). Gold anchors license nothing on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- PD2, the pricing claim: **MISS.** The ladder returns VOID_PANEL__uninformative on 12/12",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:n_replicates"
+    },
+    {
+      "line": 33,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- PD2, the pricing claim: **MISS.** The ladder returns VOID_PANEL__uninformative on 12/12",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:n_replicates"
+    },
+    {
+      "line": 37,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "average garbage, declines to certify. This misses the frozen PD2 bar (needs >=8 ESTIMATED and",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 38,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "ladder coverage >=10/12) and is logged as CLOSED_NEGATIVE, not rescued.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 38,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "ladder coverage >=10/12) and is logged as CLOSED_NEGATIVE, not rescued.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:n_replicates"
+    },
+    {
+      "line": 39,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "- PD3, the refusal reality: **PASS.** Every deaf replicate VOID, 12/12.",
+      "status": "VERIFIED",
+      "receipt_ref": "stage_b_fam2_temporal_pricing_result.json:n_replicates"
+    },
+    {
+      "line": 45,
+      "token": "53",
+      "value": 53.0,
+      "decimals": 0,
+      "context": "right thing, not a defect. Temporal now joins chain (cycle 53, ladder VOID 14/15) as the second",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "right thing, not a defect. Temporal now joins chain (cycle 53, ladder VOID 14/15) as the second",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "right thing, not a defect. Temporal now joins chain (cycle 53, ladder VOID 14/15) as the second",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].n_seeds"
+    },
+    {
+      "line": 57,
+      "token": "4320",
+      "value": 4320.0,
+      "decimals": 0,
+      "context": "temporal oracle with zero mismatches (`corpus_label_oracle_receipt.json`, 4320 blatant + 4320",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "4320",
+      "value": 4320.0,
+      "decimals": 0,
+      "context": "temporal oracle with zero mismatches (`corpus_label_oracle_receipt.json`, 4320 blatant + 4320",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "ladder items, 0 undecidable). Scope, stated plainly: one model family across four sizes, three",
+      "status": "VERIFIED",
+      "receipt_ref": "corpus_label_oracle_receipt.json:checked[0].undecidable"
+    }
+  ]
+}
