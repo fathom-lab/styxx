@@ -1,0 +1,416 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_selective_escalation_2026_07_24.md",
+  "document_sha256": "00ef01f12d7acb8eb0ac14dc37b46a44ac8cd767d501f6d012d9ddf163dbd91c",
+  "receipts_sha256": {
+    "selective_escalation_result.json": "88eff9c5ac4931da1d3b4b41673caf7a03b7f5746cefa9919e62dd438221d448"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 15,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "20,233"
+    },
+    {
+      "line": 7,
+      "token": "0"
+    },
+    {
+      "line": 7,
+      "token": "67"
+    },
+    {
+      "line": 7,
+      "token": "68"
+    },
+    {
+      "line": 14,
+      "token": "0.15"
+    },
+    {
+      "line": 20,
+      "token": "68"
+    },
+    {
+      "line": 35,
+      "token": "64"
+    },
+    {
+      "line": 39,
+      "token": "88"
+    },
+    {
+      "line": 39,
+      "token": "12"
+    },
+    {
+      "line": 46,
+      "token": "68"
+    },
+    {
+      "line": 55,
+      "token": "65"
+    },
+    {
+      "line": 56,
+      "token": "66"
+    },
+    {
+      "line": 65,
+      "token": "64"
+    },
+    {
+      "line": 69,
+      "token": "68"
+    },
+    {
+      "line": 75,
+      "token": "20,233"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "20,233",
+      "value": 20233.0,
+      "decimals": 0,
+      "context": "`selective_escalation_result.json`. Agent Qwen2.5-0.5B, tier-1 Qwen2.5-3B, retrieval over 20,233",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced fresh items, 0 overlap with cycles 67 or 68**.**",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_items"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced fresh items, 0 overlap with cycles 67 or 68**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced fresh items, 0 overlap with cycles 67 or 68**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced fresh items, 0 overlap with cycles 67 or 68**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "binding_context": "| gate | outcome | | HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "binding_context": "| gate | outcome | | HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "binding_context": "| gate | outcome | | HV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, escalated subset 30 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:selective.n_escalated"
+    },
+    {
+      "line": 14,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **HG1 selective escalation earns its slice** | **FAIL** -- gain 0.06666666666666676 vs a 0.15 bar |",
+      "binding_context": "| gate | outcome | | **HG1 selective escalation earns its slice** | **FAIL** -- gain 0.06666666666666676 vs a 0.15 bar |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "0.57",
+      "value": 0.57,
+      "decimals": 2,
+      "context": "| **HG2 accuracy not degraded** | **FAIL** -- final 0.57 vs tier-1 answered 0.6363636363636364 |",
+      "binding_context": "| gate | outcome | | **HG2 accuracy not degraded** | **FAIL** -- final 0.57 vs tier-1 answered 0.6363636363636364 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:final.accuracy"
+    },
+    {
+      "line": 16,
+      "token": "0.57",
+      "value": 0.57,
+      "decimals": 2,
+      "context": "| HG3 beats stubborn | PASS -- 0.57 vs 0.47 |",
+      "binding_context": "| gate | outcome | | HG3 beats stubborn | PASS -- 0.57 vs 0.47 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:final.accuracy"
+    },
+    {
+      "line": 16,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "| HG3 beats stubborn | PASS -- 0.57 vs 0.47 |",
+      "binding_context": "| gate | outcome | | HG3 beats stubborn | PASS -- 0.57 vs 0.47 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:final.stubborn_accuracy"
+    },
+    {
+      "line": 20,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "The prereg required the indiscriminate arm -- cycle 68's design -- to be computed on the same pool",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| **selective** (escalate only where the rule did not fire) | 30 | **0.06666666666666676** | **0.57** |",
+      "binding_context": "| arm | items escalated | paired gain | final accuracy | | **selective** (escalate only where the rule did not fire) | 30 | **0.06666666666666676** | **0.57** |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:selective.n_escalated"
+    },
+    {
+      "line": 26,
+      "token": "0.57",
+      "value": 0.57,
+      "decimals": 2,
+      "context": "| **selective** (escalate only where the rule did not fire) | 30 | **0.06666666666666676** | **0.57** |",
+      "binding_context": "| arm | items escalated | paired gain | final accuracy | | **selective** (escalate only where the rule did not fire) | 30 | **0.06666666666666676** | **0.57** |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:final.accuracy"
+    },
+    {
+      "line": 27,
+      "token": "33",
+      "value": 33.0,
+      "decimals": 0,
+      "context": "| **indiscriminate** (escalate on the whole slice) | 33 | **0.09090909090909094** | **0.58** |",
+      "binding_context": "| arm | items escalated | paired gain | final accuracy | | **indiscriminate** (escalate on the whole slice) | 33 | **0.09090909090909094** | **0.58** |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.n_adjudicated_on_slice"
+    },
+    {
+      "line": 27,
+      "token": "0.58",
+      "value": 0.58,
+      "decimals": 2,
+      "context": "| **indiscriminate** (escalate on the whole slice) | 33 | **0.09090909090909094** | **0.58** |",
+      "binding_context": "| arm | items escalated | paired gain | final accuracy | | **indiscriminate** (escalate on the whole slice) | 33 | **0.09090909090909094** | **0.58** |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.final_accuracy"
+    },
+    {
+      "line": 29,
+      "token": "0.0909",
+      "value": 0.0909,
+      "decimals": 4,
+      "context": "**Selecting made both numbers worse.** The gain fell from 0.0909 to 0.0667 and final accuracy fell",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.paired_gain"
+    },
+    {
+      "line": 29,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "**Selecting made both numbers worse.** The gain fell from 0.0909 to 0.0667 and final accuracy fell",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:selective.paired_gain"
+    },
+    {
+      "line": 30,
+      "token": "0.58",
+      "value": 0.58,
+      "decimals": 2,
+      "context": "from 0.58 to 0.57. The signal did not merely fail to identify where retrieval helps -- it",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.final_accuracy"
+    },
+    {
+      "line": 35,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "The selector was \"the cycle-62 rule did not fire\", justified by cycle 64's measurement that the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "On that pool the conditions ran roughly 88/12, so \"did not fire\" overwhelmingly meant *the agent",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "On that pool the conditions ran roughly 88/12, so \"did not fire\" overwhelmingly meant *the agent",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "The irony is precise and worth recording: **the balanced design introduced in cycle 68 to remove a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "signal rather than a re-weighting of this one. Combined with cycle 65 (family diversity) and cycle",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 56,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "66 (scale), that is the third escalation route to close.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "HG2 compared the loop's **full-coverage** accuracy (over all 100 items, since this design always",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_items"
+    },
+    {
+      "line": 61,
+      "token": "0.22",
+      "value": 0.22,
+      "decimals": 2,
+      "context": "emits a fallback) against tier-1's accuracy **on the subset it chose to answer** (coverage 0.22). A",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:tier1.coverage"
+    },
+    {
+      "line": 65,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "like (matched coverage, as cycle 64 did) rather than repeat this construction.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "0.57",
+      "value": 0.57,
+      "decimals": 2,
+      "context": "HG3 passed: the loop beats the stubborn baseline 0.57 vs 0.47. And nothing here touches cycle 68's",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:final.accuracy"
+    },
+    {
+      "line": 69,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "HG3 passed: the loop beats the stubborn baseline 0.57 vs 0.47. And nothing here touches cycle 68's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 75,
+      "token": "20,233",
+      "value": 20233.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B tier-1, dense retrieval over 20,233 passages, 100 balanced fresh SQuAD items",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 75,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B tier-1, dense retrieval over 20,233 passages, 100 balanced fresh SQuAD items",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_items"
+    },
+    {
+      "line": 76,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.82 of items. Third disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+    },
+    {
+      "line": 76,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.82 of items. Third disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:n_wrong_push"
+    },
+    {
+      "line": 76,
+      "token": "0.82",
+      "value": 0.82,
+      "decimals": 2,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.82 of items. Third disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:retrieval_quality.gold_in_topk_rate"
+    }
+  ]
+}

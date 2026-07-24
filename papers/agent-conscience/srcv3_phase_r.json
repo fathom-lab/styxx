@@ -1,0 +1,602 @@
+[
+ {
+  "i": 0,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 1,
+  "ret_adjudicates": true,
+  "ret_pick": "antigens",
+  "gold_in_topk": true
+ },
+ {
+  "i": 2,
+  "ret_adjudicates": true,
+  "ret_pick": "a Scottish Parliament",
+  "gold_in_topk": true
+ },
+ {
+  "i": 3,
+  "ret_adjudicates": true,
+  "ret_pick": "Principles of Geology",
+  "gold_in_topk": true
+ },
+ {
+  "i": 4,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 5,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 6,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 7,
+  "ret_adjudicates": true,
+  "ret_pick": "Abstract",
+  "gold_in_topk": true
+ },
+ {
+  "i": 8,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 9,
+  "ret_adjudicates": true,
+  "ret_pick": "Immunology",
+  "gold_in_topk": true
+ },
+ {
+  "i": 10,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 11,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 12,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 13,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 14,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 15,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 16,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 17,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 18,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 19,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 20,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 21,
+  "ret_adjudicates": true,
+  "ret_pick": "1598",
+  "gold_in_topk": true
+ },
+ {
+  "i": 22,
+  "ret_adjudicates": true,
+  "ret_pick": "Water (H2O)",
+  "gold_in_topk": true
+ },
+ {
+  "i": 23,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 24,
+  "ret_adjudicates": true,
+  "ret_pick": "Galileo\u7ea0\u6b63\u4e86\u4f3d\u5229\u7565\u7684\u7269\u7406\u5b66\u3002",
+  "gold_in_topk": true
+ },
+ {
+  "i": 25,
+  "ret_adjudicates": true,
+  "ret_pick": "Oxygen",
+  "gold_in_topk": true
+ },
+ {
+  "i": 26,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 27,
+  "ret_adjudicates": true,
+  "ret_pick": "Paris",
+  "gold_in_topk": true
+ },
+ {
+  "i": 28,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 29,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 30,
+  "ret_adjudicates": true,
+  "ret_pick": "tentacles",
+  "gold_in_topk": true
+ },
+ {
+  "i": 31,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 32,
+  "ret_adjudicates": true,
+  "ret_pick": "Sacramento",
+  "gold_in_topk": true
+ },
+ {
+  "i": 33,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 34,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 35,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 36,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 37,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 38,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 39,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 40,
+  "ret_adjudicates": true,
+  "ret_pick": "Paris",
+  "gold_in_topk": true
+ },
+ {
+  "i": 41,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 42,
+  "ret_adjudicates": true,
+  "ret_pick": "the Atlantic Ocean",
+  "gold_in_topk": true
+ },
+ {
+  "i": 43,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 44,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 45,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 46,
+  "ret_adjudicates": true,
+  "ret_pick": "January",
+  "gold_in_topk": true
+ },
+ {
+  "i": 47,
+  "ret_adjudicates": true,
+  "ret_pick": "Orientalism",
+  "gold_in_topk": true
+ },
+ {
+  "i": 48,
+  "ret_adjudicates": true,
+  "ret_pick": "enzymes",
+  "gold_in_topk": true
+ },
+ {
+  "i": 49,
+  "ret_adjudicates": true,
+  "ret_pick": "Internal combustion engines",
+  "gold_in_topk": true
+ },
+ {
+  "i": 50,
+  "ret_adjudicates": true,
+  "ret_pick": "1941",
+  "gold_in_topk": true
+ },
+ {
+  "i": 51,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 52,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 53,
+  "ret_adjudicates": true,
+  "ret_pick": "energy content",
+  "gold_in_topk": true
+ },
+ {
+  "i": 54,
+  "ret_adjudicates": true,
+  "ret_pick": "the d'Hondt method",
+  "gold_in_topk": true
+ },
+ {
+  "i": 55,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 56,
+  "ret_adjudicates": true,
+  "ret_pick": "their own militia",
+  "gold_in_topk": true
+ },
+ {
+  "i": 57,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 58,
+  "ret_adjudicates": true,
+  "ret_pick": "1951",
+  "gold_in_topk": true
+ },
+ {
+  "i": 59,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 60,
+  "ret_adjudicates": true,
+  "ret_pick": "12%",
+  "gold_in_topk": true
+ },
+ {
+  "i": 61,
+  "ret_adjudicates": true,
+  "ret_pick": "adjustable spring-loaded",
+  "gold_in_topk": true
+ },
+ {
+  "i": 62,
+  "ret_adjudicates": true,
+  "ret_pick": "Cameron",
+  "gold_in_topk": true
+ },
+ {
+  "i": 63,
+  "ret_adjudicates": true,
+  "ret_pick": "fifteen",
+  "gold_in_topk": true
+ },
+ {
+  "i": 64,
+  "ret_adjudicates": true,
+  "ret_pick": "Henry Laurens",
+  "gold_in_topk": true
+ },
+ {
+  "i": 65,
+  "ret_adjudicates": true,
+  "ret_pick": "Kabaty",
+  "gold_in_topk": true
+ },
+ {
+  "i": 66,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 67,
+  "ret_adjudicates": true,
+  "ret_pick": "\u00a321,000",
+  "gold_in_topk": true
+ },
+ {
+  "i": 68,
+  "ret_adjudicates": true,
+  "ret_pick": "$105 billion",
+  "gold_in_topk": true
+ },
+ {
+  "i": 69,
+  "ret_adjudicates": true,
+  "ret_pick": "nitroaereus",
+  "gold_in_topk": true
+ },
+ {
+  "i": 70,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 71,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 72,
+  "ret_adjudicates": true,
+  "ret_pick": "Prime ideals",
+  "gold_in_topk": true
+ },
+ {
+  "i": 73,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 74,
+  "ret_adjudicates": true,
+  "ret_pick": "Iraq",
+  "gold_in_topk": false
+ },
+ {
+  "i": 75,
+  "ret_adjudicates": true,
+  "ret_pick": "Treaty of Logstown",
+  "gold_in_topk": true
+ },
+ {
+  "i": 76,
+  "ret_adjudicates": true,
+  "ret_pick": "Jean Ribault",
+  "gold_in_topk": true
+ },
+ {
+  "i": 77,
+  "ret_adjudicates": true,
+  "ret_pick": "Hoesung Lee",
+  "gold_in_topk": true
+ },
+ {
+  "i": 78,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 79,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 80,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 81,
+  "ret_adjudicates": true,
+  "ret_pick": "flattened",
+  "gold_in_topk": true
+ },
+ {
+  "i": 82,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 83,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 84,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 85,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 86,
+  "ret_adjudicates": true,
+  "ret_pick": "a restaurant",
+  "gold_in_topk": true
+ },
+ {
+  "i": 87,
+  "ret_adjudicates": true,
+  "ret_pick": "catalytic cascade",
+  "gold_in_topk": true
+ },
+ {
+  "i": 88,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 89,
+  "ret_adjudicates": true,
+  "ret_pick": "aspirational consumption",
+  "gold_in_topk": true
+ },
+ {
+  "i": 90,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 91,
+  "ret_adjudicates": true,
+  "ret_pick": "two",
+  "gold_in_topk": true
+ },
+ {
+  "i": 92,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 93,
+  "ret_adjudicates": true,
+  "ret_pick": "biomass",
+  "gold_in_topk": true
+ },
+ {
+  "i": 94,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 95,
+  "ret_adjudicates": true,
+  "ret_pick": "special training",
+  "gold_in_topk": true
+ },
+ {
+  "i": 96,
+  "ret_adjudicates": true,
+  "ret_pick": "one-half mile",
+  "gold_in_topk": true
+ },
+ {
+  "i": 97,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 98,
+  "ret_adjudicates": true,
+  "ret_pick": "1849",
+  "gold_in_topk": true
+ },
+ {
+  "i": 99,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ }
+]
