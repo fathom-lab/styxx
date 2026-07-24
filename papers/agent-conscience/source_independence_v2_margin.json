@@ -1,0 +1,14 @@
+{
+ "note": "deterministic derivation from source_independence_v2_result.json; no new generation",
+ "slice_size": 77,
+ "retrieval_rescued": 43,
+ "model_rescued": 10,
+ "retrieval_rescued_accuracy": 0.8837209302325582,
+ "fallback_accuracy_same_items": 0.813953488372093,
+ "fg3_paired_gain": 0.06976744186046513,
+ "fg3_bar": 0.15,
+ "fg4_separation": 0.4285714285714285,
+ "fg4_bar": 0.15,
+ "cycle67_unscored_model_coabstention": 0.953757225433526,
+ "cycle67_unscored_retrieval_coabstention": 0.3005780346820809
+}

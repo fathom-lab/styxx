@@ -1,0 +1,522 @@
+[
+ {
+  "i": 0,
+  "t2a": "Rhine",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 1,
+  "t2a": "IgG",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 2,
+  "t2a": "Infinite",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 3,
+  "t2a": "Newton",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 4,
+  "t2a": "Characters.",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 5,
+  "t2a": "St. Johns River",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 6,
+  "t2a": "General public",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 7,
+  "t2a": "Photons",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 8,
+  "t2a": "Ukraine",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 9,
+  "t2a": "Economist",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 10,
+  "t2a": "1665-1666",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 11,
+  "t2a": "1788",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 12,
+  "t2a": "Union",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 13,
+  "t2a": "T\u00f6regene Khatun",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 14,
+  "t2a": "Africa",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 15,
+  "t2a": "Los Angeles",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 16,
+  "t2a": "Four.",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 17,
+  "t2a": "1767",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 18,
+  "t2a": "Vapor",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 19,
+  "t2a": "Water",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 20,
+  "t2a": "n",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 21,
+  "t2a": "Knowledge School",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 22,
+  "t2a": "August",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 23,
+  "t2a": "Genghis Khan",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 24,
+  "t2a": "Desert",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 25,
+  "t2a": "European Court of Justice",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 26,
+  "t2a": "Brazil",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 27,
+  "t2a": "NASA",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 28,
+  "t2a": "14 AD",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 29,
+  "t2a": "1066",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 30,
+  "t2a": "Newton's first law.",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 31,
+  "t2a": "Gaelic",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 32,
+  "t2a": "Wavy lines",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 33,
+  "t2a": "Taoism",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 34,
+  "t2a": "Wales",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 35,
+  "t2a": "Scandinavia",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 36,
+  "t2a": "algae",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 37,
+  "t2a": "1981",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 38,
+  "t2a": "Seismic",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 39,
+  "t2a": "Yo-Yo Ma",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 40,
+  "t2a": "Mucus",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 41,
+  "t2a": "2",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 42,
+  "t2a": "Bonaventura Cavalieri",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 43,
+  "t2a": "Isaac Newton",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 44,
+  "t2a": "Warszawa",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 45,
+  "t2a": "1206",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 46,
+  "t2a": "Monopsony",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 47,
+  "t2a": "New South Wales",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 48,
+  "t2a": "France",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 49,
+  "t2a": "Yellow Fever",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 50,
+  "t2a": "Istanbul",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 51,
+  "t2a": "Strong",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 52,
+  "t2a": "Dianne Feinstein",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 53,
+  "t2a": "Crystals",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 54,
+  "t2a": "Expanded significantly",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 55,
+  "t2a": "Progressive taxation",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 56,
+  "t2a": "Baden-W\u00fcrttemberg",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 57,
+  "t2a": "1931",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 58,
+  "t2a": "May 15, 1825",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 59,
+  "t2a": "Peripteroic",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 60,
+  "t2a": "I couldn't find the specific information.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 61,
+  "t2a": "Oil ring gap.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 62,
+  "t2a": "Attila the Hun",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 63,
+  "t2a": "Sandy",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 64,
+  "t2a": "Catholics",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 65,
+  "t2a": "The California Central Pacific Railroad.",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 66,
+  "t2a": "Francis Marion",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 67,
+  "t2a": "Yellow fever epidemic",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 68,
+  "t2a": "Internal combustion engines",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 69,
+  "t2a": "N/A",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 70,
+  "t2a": "Free",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 71,
+  "t2a": "Companies.",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 72,
+  "t2a": "I don't have information on the case.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 73,
+  "t2a": "Standard gauge",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 74,
+  "t2a": "Satellite imagery",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 75,
+  "t2a": "Scotland",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 76,
+  "t2a": "Pressure",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 77,
+  "t2a": "13.8%",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 78,
+  "t2a": "The House of Commons.",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 79,
+  "t2a": "Oceans.",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 80,
+  "t2a": "I'm sorry, I can't provide an answer to that question as I do",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 81,
+  "t2a": "Units.",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 82,
+  "t2a": "Not available",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 83,
+  "t2a": "1859",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 84,
+  "t2a": "Newton's third law.",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 85,
+  "t2a": "Ozone",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 86,
+  "t2a": "Axis powers",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 87,
+  "t2a": "2019",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 88,
+  "t2a": "Double bond",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 89,
+  "t2a": "Perfect numbers",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 90,
+  "t2a": "1957",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 91,
+  "t2a": "40",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 92,
+  "t2a": "Digital Video Recording (DVR)",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 93,
+  "t2a": "Baroque",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 94,
+  "t2a": "Geophysicists",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 95,
+  "t2a": "Steam locomotives",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 96,
+  "t2a": "Kublai Khan",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 97,
+  "t2a": "Regulatory T cells",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 98,
+  "t2a": "Below",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 99,
+  "t2a": "'Pax Mongolica'",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 100,
+  "t2a": "Alison Johnstone",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 101,
+  "t2a": "2005",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 102,
+  "t2a": "35%",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 103,
+  "t2a": "Exploitation",
+  "t2a_stability": 0.5555555555555556
+ }
+]

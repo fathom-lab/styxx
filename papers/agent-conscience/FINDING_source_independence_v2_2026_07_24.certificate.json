@@ -1,0 +1,314 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_source_independence_v2_2026_07_24.md",
+  "document_sha256": "e33df75b25395280bafa25800aec9c1c2bcf36b5f8db89f823853e9b7360423d",
+  "receipts_sha256": {
+    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
+    "source_independence_v2_margin.json": "0da9bd965810e4c8f8b821727c795230efdd39db05eb8bdceac56dd80ad2c80d",
+    "source_independence_result.json": "02b9d9f8eafa40944c822cef11c5026d5b8c41e2e4c67095944b028d20e05cbb"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 13,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "0"
+    },
+    {
+      "line": 7,
+      "token": "67"
+    },
+    {
+      "line": 17,
+      "token": "0.15"
+    },
+    {
+      "line": 28,
+      "token": "0.15"
+    },
+    {
+      "line": 31,
+      "token": "65"
+    },
+    {
+      "line": 31,
+      "token": "66"
+    },
+    {
+      "line": 35,
+      "token": "65"
+    },
+    {
+      "line": 35,
+      "token": "66"
+    },
+    {
+      "line": 38,
+      "token": "67"
+    },
+    {
+      "line": 47,
+      "token": "0.15"
+    },
+    {
+      "line": 55,
+      "token": "0.1739"
+    },
+    {
+      "line": 83,
+      "token": "20,233"
+    },
+    {
+      "line": 83,
+      "token": "104"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "104",
+      "value": 104.0,
+      "decimals": 0,
+      "context": "tier-2b dense retrieval, **104 balanced fresh SQuAD items, 0 overlap with cycle 67**.**",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:n_items"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "tier-2b dense retrieval, **104 balanced fresh SQuAD items, 0 overlap with cycle 67**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "tier-2b dense retrieval, **104 balanced fresh SQuAD items, 0 overlap with cycle 67**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "| FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "binding_context": "| gate | outcome | | FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "| FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "binding_context": "| gate | outcome | | FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "| FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "binding_context": "| gate | outcome | | FV1 power | 52 WRONG_PUSH / 52 RIGHT_PUSH, slice 77 |",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:tier1.slice_size"
+    },
+    {
+      "line": 17,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "| **FG4 source independence** | **PASS** -- separation 0.4286 against a 0.15 bar |",
+      "binding_context": "| gate | outcome | | **FG4 source independence** | **PASS** -- separation 0.4286 against a 0.15 bar |",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_margin.json:fg4_separation"
+    },
+    {
+      "line": 17,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **FG4 source independence** | **PASS** -- separation 0.4286 against a 0.15 bar |",
+      "binding_context": "| gate | outcome | | **FG4 source independence** | **PASS** -- separation 0.4286 against a 0.15 bar |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "- separation **0.4286**, nearly three times the frozen 0.15 bar",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_margin.json:fg4_separation"
+    },
+    {
+      "line": 28,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "- separation **0.4286**, nearly three times the frozen 0.15 bar",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "ignorance measured in cycles 65 and 66 was a fact about *language models*, not about the items.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "ignorance measured in cycles 65 and 66 was a fact about *language models*, not about the items.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "architectural diversity (cycle 65) and 2x scale (cycle 66) both failed to.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "architectural diversity (cycle 65) and 2x scale (cycle 66) both failed to.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "Retrieval quality was sound (gold in top-5 on 0.875 of items, 0.8571428571428571 on the slice), so",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:retrieval_quality.gold_in_topk_rate"
+    },
+    {
+      "line": 38,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "the contrast is not an index artifact. And cycle 67's withheld observations (model 0.9538 vs",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.9538",
+      "value": 0.9538,
+      "decimals": 4,
+      "context": "the contrast is not an index artifact. And cycle 67's withheld observations (model 0.9538 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_margin.json:cycle67_unscored_model_coabstention"
+    },
+    {
+      "line": 39,
+      "token": "0.3006",
+      "value": 0.3006,
+      "decimals": 4,
+      "context": "retrieval 0.3006) were directionally right -- withholding them cost nothing and bought the rigour",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_margin.json:cycle67_unscored_retrieval_coabstention"
+    },
+    {
+      "line": 44,
+      "token": "43",
+      "value": 43.0,
+      "decimals": 0,
+      "context": "Retrieval rescued **43/77** of the declined slice -- a large haul -- and scored",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.rescued"
+    },
+    {
+      "line": 44,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "Retrieval rescued **43/77** of the declined slice -- a large haul -- and scored",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:tier1.slice_size"
+    },
+    {
+      "line": 47,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "0.15 bar.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "0.1739",
+      "value": 0.1739,
+      "decimals": 4,
+      "context": "0.1739 there). Half these items are RIGHT_PUSH, where the pressured answer is the truth and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "0.4416",
+      "value": 0.4416,
+      "decimals": 4,
+      "context": "lower than across model architectures or scales (0.4416 vs 0.8701), replicated on items that did",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
+    },
+    {
+      "line": 63,
+      "token": "0.8701",
+      "value": 0.8701,
+      "decimals": 4,
+      "context": "lower than across model architectures or scales (0.4416 vs 0.8701), replicated on items that did",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
+    },
+    {
+      "line": 83,
+      "token": "20,233",
+      "value": 20233.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B tier-1, 3B model tier-2, dense retrieval over 20,233 passages, 104 balanced SQuAD",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 83,
+      "token": "104",
+      "value": 104.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B tier-1, 3B model tier-2, dense retrieval over 20,233 passages, 104 balanced SQuAD",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

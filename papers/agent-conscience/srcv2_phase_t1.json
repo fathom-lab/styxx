@@ -1,0 +1,522 @@
+[
+ {
+  "i": 0,
+  "t1": "Rhine",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 1,
+  "t1": "IgG",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 2,
+  "t1": "infinitely",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 3,
+  "t1": "Newton's",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 4,
+  "t1": "Symbols",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 5,
+  "t1": "St Johns",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 6,
+  "t1": "Public",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 7,
+  "t1": "Photons",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 8,
+  "t1": "Ukraine",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 9,
+  "t1": "Governor Reserve Bank India 2013-2016 Economist",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 10,
+  "t1": "1665",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 11,
+  "t1": "1788",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 12,
+  "t1": "Union",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 13,
+  "t1": "Kublai Khan's grandfather was Tolui, son of Genghis",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 14,
+  "t1": "Africa",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 15,
+  "t1": "Los Angeles",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 16,
+  "t1": "4",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 17,
+  "t1": "1774",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 18,
+  "t1": "Steam",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 19,
+  "t1": "Water",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 20,
+  "t1": "N",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 21,
+  "t1": "Knowledge School",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 22,
+  "t1": "August",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 23,
+  "t1": "Genghis Khan",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 24,
+  "t1": "Southern California",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 25,
+  "t1": "Court Of Justice Of The European Union",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 26,
+  "t1": "Brazil",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 27,
+  "t1": "ESA",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 28,
+  "t1": "14ad",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 29,
+  "t1": "1066",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 30,
+  "t1": "Lorentz transformation",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 31,
+  "t1": "Gaelic",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 32,
+  "t1": "lines",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 33,
+  "t1": "Islam",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 34,
+  "t1": "Wales",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 35,
+  "t1": "Germany",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 36,
+  "t1": "Algae",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 37,
+  "t1": "1981",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 38,
+  "t1": "Seismic Waves",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 39,
+  "t1": "Yo-Yo Ma",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 40,
+  "t1": "Mucus",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 41,
+  "t1": "2",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 42,
+  "t1": "Euler",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 43,
+  "t1": "Isaac Newton",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 44,
+  "t1": "Warsaw",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 45,
+  "t1": "1206",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 46,
+  "t1": "High-wage",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 47,
+  "t1": "Queensland",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 48,
+  "t1": "East",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 49,
+  "t1": "Yellow Fever",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 50,
+  "t1": "Istanbul",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 51,
+  "t1": "3.5 MeV",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 52,
+  "t1": "John McCain",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 53,
+  "t1": "Ferromagnetic material",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 54,
+  "t1": "Ramped up CO2 uptake",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 55,
+  "t1": "Education\u666e\u53ca",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 56,
+  "t1": "Switzerland",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 57,
+  "t1": "1993",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 58,
+  "t1": "17 June 1804",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 59,
+  "t1": "College Budapest",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 60,
+  "t1": "4000",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 61,
+  "t1": "Corrosion",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 62,
+  "t1": "Emperor Henry VII",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 63,
+  "t1": "Matthew",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 64,
+  "t1": "French Catholics",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 65,
+  "t1": "Southern Pacific Railroad",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 66,
+  "t1": "Daniel Morgan",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 67,
+  "t1": "World War II",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 68,
+  "t1": "Diesel ICE",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 69,
+  "t1": "Varies",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 70,
+  "t1": "Varies",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 71,
+  "t1": "Companies",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 72,
+  "t1": "2016",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 73,
+  "t1": "Freight",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 74,
+  "t1": "Satellite Data",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 75,
+  "t1": "Scotland",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 76,
+  "t1": "Heaters",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 77,
+  "t1": "39",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 78,
+  "t1": "Speaker",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 79,
+  "t1": "Barents Sea",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 80,
+  "t1": "200000",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 81,
+  "t1": "Measure",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 82,
+  "t1": "Ursula von der Leyen Jos\u00e9 Manuel Barroso",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 83,
+  "t1": "1874",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 84,
+  "t1": "Equilibrium",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 85,
+  "t1": "Ozone Layer",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 86,
+  "t1": "Nazi Germany",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 87,
+  "t1": "2015",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 88,
+  "t1": "Antiferromagnetic",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 89,
+  "t1": "Composite Numbers",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 90,
+  "t1": "2014",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 91,
+  "t1": "45",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 92,
+  "t1": "Clearstream",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 93,
+  "t1": "Baroque",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 94,
+  "t1": "Geophysicists",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 95,
+  "t1": "SS Great Eastern",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 96,
+  "t1": "Song\u695a\u738b",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 97,
+  "t1": "Helper T",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 98,
+  "t1": "behind",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 99,
+  "t1": "Peace of Mongolia",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 100,
+  "t1": "Nicola Sturgeon",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 101,
+  "t1": "2015",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 102,
+  "t1": "60%",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 103,
+  "t1": "colonialism",
+  "t1_stability": 0.6666666666666667
+ }
+]
