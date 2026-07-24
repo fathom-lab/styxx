@@ -1,0 +1,165 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "DATASHEET_conscience_2026_07_24.md",
+  "document_sha256": "70f61bc53dbd5386f9c63c7acea65eaf0051c343db555732c976aec71f426a78",
+  "receipts_sha256": {
+    "adjudicated_loop_result.json": "cfd7dd79137a051f1c592ee9b7df06ae288b041c6f456c06351995d0f55bd3e9",
+    "adjudicated_loop_mechanism.json": "52247b651fc9c31d6acd17350d272329d342d2de3fe5d076cfc4f9cdbec6cfb8",
+    "selective_datasheet_result.json": "a50b0c6436d1bc04efbaa0f891b402b129c4017624cb5db03d2e2bdc515ac895",
+    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
+    "tiered_channel_result.json": "517a28e86b4d493140ebfd7984b219ed780ff9b21e4510aeb27a9c9a845d9245",
+    "scale_channel_result.json": "86763f9b857c2894c1a0e64d590ef96280c70d6d2f78ba829289bde1d9fc67b1",
+    "scale_confirm_result.json": "42f02deaa1904613aaceabb4e35410dd6926626dd87fb67bd8790934eda4e568",
+    "selective_escalation_result.json": "88eff9c5ac4931da1d3b4b41673caf7a03b7f5746cefa9919e62dd438221d448",
+    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "72"
+    },
+    {
+      "line": 6,
+      "token": "62"
+    },
+    {
+      "line": 66,
+      "token": "5"
+    },
+    {
+      "line": 66,
+      "token": "9"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "72",
+      "value": 72.0,
+      "decimals": 0,
+      "context": "**Cycle 72 (graduation). The instrument the agent-conscience arc produced, shipped with its",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "62",
+      "value": 62.0,
+      "decimals": 0,
+      "context": "every figure below is drawn from the receipts of cycles 62-71.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.2742",
+      "value": 0.2742,
+      "decimals": 4,
+      "context": "The same Qwen2.5-3B is worth **0.2742** placed inside the pressured conversation and **0.8226**",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
+    },
+    {
+      "line": 16,
+      "token": "0.8226",
+      "value": 0.8226,
+      "decimals": 4,
+      "context": "The same Qwen2.5-3B is worth **0.2742** placed inside the pressured conversation and **0.8226**",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
+    },
+    {
+      "line": 26,
+      "token": "0.37",
+      "value": 0.37,
+      "decimals": 2,
+      "context": "| refusal rate | 0.2674418604651163 | 0.37 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | refusal rate | 0.2674418604651163 | 0.37 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.abstain_rate"
+    },
+    {
+      "line": 33,
+      "token": "189",
+      "value": 189.0,
+      "decimals": 0,
+      "context": "**A channel is near-perfect when it speaks.** Its modal answer equalled truth on 189 of 192",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.channel_modal_equals_truth"
+    },
+    {
+      "line": 33,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "**A channel is near-perfect when it speaks.** Its modal answer equalled truth on 189 of 192",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.n_adjudicated"
+    },
+    {
+      "line": 34,
+      "token": "0.984375",
+      "value": 0.984375,
+      "decimals": 6,
+      "context": "adjudications (**0.984375**), reproducing at **0.9841269841269841** on a fresh pool. Receipts:",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.channel_accuracy_when_adjudicating"
+    },
+    {
+      "line": 47,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "| the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
+      "binding_context": "| attempted route | measured outcome | receipt | | the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:frozen_gates.STAB_GATE"
+    },
+    {
+      "line": 47,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
+      "binding_context": "| attempted route | measured outcome | receipt | | the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.stubborn"
+    },
+    {
+      "line": 52,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "slice -- a separation of **0.4286**. Language models share a training distribution and are ignorant",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 66,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "evidence about a 4-bit 7B specifically. The paired subsets in the escalation rows are small (5 and 9",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "evidence about a 4-bit 7B specifically. The paired subsets in the escalation rows are small (5 and 9",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
