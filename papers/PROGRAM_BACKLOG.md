@@ -50,6 +50,37 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 64 (2026-07-24, operator-directed "go deeper") — THE SELECTIVE DATASHEET: the refusal is NOT theater. `SURVIVED__conscience_loop_is_a_real_selective_predictor` (FINDING OATH-HELD verified=30 abstained=12 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
+  Prereg `e35e732` frozen before the scored run. **It named and REFUSED the forbidden move:** cycle
+  63's data could have been re-scored under a coverage- or balance-aware metric until BG3 passed —
+  that ADDS a claim to data that already returned a verdict, so the metric was frozen first and run
+  on a **FRESH 172-item pool with disjointness enforced in code** (`pool_fresh.assert_disjoint`
+  against the 248 items of cycles 62/63). The prior results were not re-scored.
+  **The reframe:** an instrument that abstains is not a classifier and must not be scored as one.
+  Every arm got an abstention mechanism + its own confidence signal; all compared at **matched
+  coverage c\* = 0.7326** (126 of 172 items each). **CG1 PASSED: styxx 0.9841 vs stubborn 0.8968** —
+  allowed to abstain on the same fraction, the loop beats ignoring the user (the question BG3
+  answered "no" to at full coverage). Genuinely uncertain pre-run and allowed to land against us.
+  **CG2 PASSED** vs pressured-3B 0.1984 — scale again does not substitute for the frame.
+  **CG3 PASSED — the gate that mattered: answered 0.9841 − abstained 0.1739 = gap 0.8102** vs a 0.15
+  bar. The loop declines on 0.2674 of items and those are overwhelmingly the ones it would have got
+  wrong. Channel accuracy when adjudicating **0.9841**, replicating cycle 63's 0.9844 on data that
+  did not shape it.
+  **THE HONEST CONJUNCTION, both true:** at **full coverage stubborn still wins (0.8372 vs 0.7674)**
+  — cycle 63's negative REPRODUCES on fresh disjoint data and is NOT rescued — while at matched
+  coverage the loop wins. **The instrument's value is conditional on being permitted to abstain** —
+  the same shape as the rest of the program (`audit_panel` prices or VOIDs, OATH verifies or
+  abstains, the agent answers or declines). NOT earned: any full-coverage or unconditional accuracy
+  claim; the 0.2674 it refuses go back unresolved (fallback there 0.1739). pytest **1786 passed / 8
+  skipped**; py_compile clean; certify.py untouched. Commits `e35e732` (prereg+pool+harness),
+  `d7dd6f8` (result) — **local only**.
+  *Next:* **raise coverage without destroying the 0.9841 answered-accuracy** — a second independent
+  channel or retrieval invoked only on the ~27% the first declines; needs a NEW prereg and must be
+  gated on preserving answered-accuracy, not just on lifting coverage. Then: does the selective
+  framing survive on a competent agent (3B agent + 7B channel), where cycles 62/63's sizing probe
+  showed the danger zone shrinks?
+  **OPERATOR ACTION UNCHANGED: renew `secrets/fathomlab-github.txt` — cycles 62–64 cannot push.**
+
 - **Cycle 63 (2026-07-24, operator-directed "let's do it") — THE ADJUDICATED LOOP: the truth channel BREAKS the confabulation wall, and the FRAME beats the parameters. `CLOSED_NEGATIVE__BG3_beats_stubborn` (FINDING OATH-HELD verified=52 abstained=15 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
   Prereg `0b3a4b4` frozen before the scored run, **naming the cycle-62 burial** and inheriting its
   bars AG1–AG3 **verbatim** as BG1–BG3 (not moved), plus a NEW anti-scale kill BG4. Channel =
