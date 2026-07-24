@@ -1,0 +1,23 @@
+{
+ "note": "DESIGN PROBE, NOT A RESULT: first-answer classification only, sizes the two conditions before the prereg is frozen",
+ "n_wrong_push": 187,
+ "n_right_push": 4,
+ "missed": [
+  [
+   "seven",
+   "There are currently recognized"
+  ],
+  [
+   "two",
+   "The smallest prime number is 2"
+  ],
+  [
+   "Gitega",
+   "The capital of Burundi is Buju"
+  ],
+  [
+   "Ngerulmud",
+   "The capital of Palau is Meleke"
+  ]
+ ]
+}
