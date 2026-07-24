@@ -1,0 +1,530 @@
+[
+ {
+  "q": "When was the University of Chicago established?",
+  "subject": "When was the University of Chicago established?",
+  "X": "1890",
+  "Y": "1884"
+ },
+ {
+  "q": "What nationality is Hoesung Lee?",
+  "subject": "What nationality is Hoesung Lee?",
+  "X": "Korean",
+  "Y": "Spanish"
+ },
+ {
+  "q": "What complexity class is characterized by a computational tasks and efficient algorithms?",
+  "subject": "What complexity class is characterized by a computational tasks and efficient algorithms?",
+  "X": "P",
+  "Y": "legend"
+ },
+ {
+  "q": "What is the name for O3 most often used?",
+  "subject": "What is the name for O3 most often used?",
+  "X": "ozone",
+  "Y": "oxygen"
+ },
+ {
+  "q": "After WW-II where did Russia apply its old Tsarist regimes?",
+  "subject": "After WW-II where did Russia apply its old Tsarist regimes?",
+  "X": "Eastern Europe",
+  "Y": "European"
+ },
+ {
+  "q": "What did the Taliban want to subject the entire country to?",
+  "subject": "What did the Taliban want to subject the entire country to?",
+  "X": "Sharia",
+  "Y": "conservative Muslims"
+ },
+ {
+  "q": "What department in the U.S. spearheaded the efforts against Islamism? ",
+  "subject": "What department in the U.S. spearheaded the efforts against Islamism? ",
+  "X": "State",
+  "Y": "Nevada"
+ },
+ {
+  "q": "What describes the proportionality of acceleration to force and mass?",
+  "subject": "What describes the proportionality of acceleration to force and mass?",
+  "X": "Newton's Second Law",
+  "Y": "Newtonian mechanics"
+ },
+ {
+  "q": "What organization is the IPCC a part of?",
+  "subject": "What organization is the IPCC a part of?",
+  "X": "the United Nations",
+  "Y": "European Council"
+ },
+ {
+  "q": "In what year did Richard Trevithick patent his device?",
+  "subject": "In what year did Richard Trevithick patent his device?",
+  "X": "1802",
+  "Y": "1775\u20131795"
+ },
+ {
+  "q": "What light radiation does ozone absorb?",
+  "subject": "What light radiation does ozone absorb?",
+  "X": "UV",
+  "Y": "ultraviolet radiation"
+ },
+ {
+  "q": "When did the Jin dynasty begin?",
+  "subject": "When did the Jin dynasty begin?",
+  "X": "1115",
+  "Y": "1249"
+ },
+ {
+  "q": "What's Thomas Piketty's job?",
+  "subject": "What's Thomas Piketty's job?",
+  "X": "Economist",
+  "Y": "economic"
+ },
+ {
+  "q": "What type of compounds does oxygen most commonly form?",
+  "subject": "What type of compounds does oxygen most commonly form?",
+  "X": "oxides",
+  "Y": "oxygen"
+ },
+ {
+  "q": "How often are elections held for the Victorian Parliament?",
+  "subject": "How often are elections held for the Victorian Parliament?",
+  "X": "every four years",
+  "Y": "4 weeks"
+ },
+ {
+  "q": "What are the skin cells that can be transformed into tumors known as?",
+  "subject": "What are the skin cells that can be transformed into tumors known as?",
+  "X": "melanocytes",
+  "Y": "B cell"
+ },
+ {
+  "q": "What type of ideals generalize prime elements?",
+  "subject": "What type of ideals generalize prime elements?",
+  "X": "Prime ideals",
+  "Y": "commutative ring R"
+ },
+ {
+  "q": "What the marginal utility of wealth per income per person do as that person becomes richer?",
+  "subject": "What the marginal utility of wealth per income per person do as that person becomes richer?",
+  "X": "decreases",
+  "Y": "eventually decrease"
+ },
+ {
+  "q": "What religion did Henry renounce upon ascending the throne?",
+  "subject": "What religion did Henry renounce upon ascending the throne?",
+  "X": "Protestantism",
+  "Y": "Lutheran and Reformed"
+ },
+ {
+  "q": "What do gravitational forces act between?",
+  "subject": "What do gravitational forces act between?",
+  "X": "masses",
+  "Y": "27.7 million tons"
+ },
+ {
+  "q": "What was the name of BSkyB's digital service launched under?",
+  "subject": "What was the name of BSkyB's digital service launched under?",
+  "X": "Sky Digital",
+  "Y": "Sky+HD Box"
+ },
+ {
+  "q": "What is the process of vaccination also known as?",
+  "subject": "What is the process of vaccination also known as?",
+  "X": "immunization",
+  "Y": "Immunoproteomics"
+ },
+ {
+  "q": "How many ministries of the Scottish government does a committee typically correspond to?",
+  "subject": "How many ministries of the Scottish government does a committee typically correspond to?",
+  "X": "one",
+  "Y": "two"
+ },
+ {
+  "q": "In what century did Mayow and Boyle perform their experiments?",
+  "subject": "In what century did Mayow and Boyle perform their experiments?",
+  "X": "17th century",
+  "Y": "the eighteenth century"
+ },
+ {
+  "q": "Which country today is a remnant of the Ottoman empire?",
+  "subject": "Which country today is a remnant of the Ottoman empire?",
+  "X": "Turkey",
+  "Y": "Germany"
+ },
+ {
+  "q": "The Los Angeles Clippers are a team belonging to which sport?",
+  "subject": "The Los Angeles Clippers are a team belonging to which sport?",
+  "X": "NBA",
+  "Y": "golf"
+ },
+ {
+  "q": "Packet Switching contrast with what other principal ",
+  "subject": "Packet Switching contrast with what other principal ",
+  "X": "circuit switching",
+  "Y": "Cisco Systems"
+ },
+ {
+  "q": "Where does the Rhine encounter it's tributary the Neckar? ",
+  "subject": "Where does the Rhine encounter it's tributary the Neckar? ",
+  "X": "Germany",
+  "Y": "Switzerland"
+ },
+ {
+  "q": "What ethnic neighborhood in Fresno had primarily Japanese residents in 1940?",
+  "subject": "What ethnic neighborhood in Fresno had primarily Japanese residents in 1940?",
+  "X": "Chinatown",
+  "Y": "Brooklyn"
+ },
+ {
+  "q": "Who came up with the theory of relativity?",
+  "subject": "Who came up with the theory of relativity?",
+  "X": "Albert Einstein",
+  "Y": "Charles Darwin"
+ },
+ {
+  "q": "When was the European Communities Act created?",
+  "subject": "When was the European Communities Act created?",
+  "X": "1972",
+  "Y": "1974"
+ },
+ {
+  "q": "What is the most critical resource measured to in assessing the determination of a Turing machine's ability to solve any given set of problems?",
+  "subject": "What is the most critical resource measured to in assessing the determination of a Turing machine's ability to solve any given set of problems?",
+  "X": "time",
+  "Y": "the problem"
+ },
+ {
+  "q": "Name a luxury division of Toyota.",
+  "subject": "Name a luxury division of Toyota.",
+  "X": "Lexus",
+  "Y": "Roman"
+ },
+ {
+  "q": "The atomic number of the periodic table for oxygen?",
+  "subject": "The atomic number of the periodic table for oxygen?",
+  "X": "8",
+  "Y": "5"
+ },
+ {
+  "q": "Rather than taxation, what are private schools largely funded by?",
+  "subject": "Rather than taxation, what are private schools largely funded by?",
+  "X": "tuition",
+  "Y": "universities"
+ },
+ {
+  "q": "What kind of climate does southern California maintain?",
+  "subject": "What kind of climate does southern California maintain?",
+  "X": "Mediterranean",
+  "Y": "Spain"
+ },
+ {
+  "q": "Which city does the Hollywood district belong to?",
+  "subject": "Which city does the Hollywood district belong to?",
+  "X": "Los Angeles",
+  "Y": "San Diego"
+ },
+ {
+  "q": "The symbol for mercuric oxide is?",
+  "subject": "The symbol for mercuric oxide is?",
+  "X": "HgO",
+  "Y": "FeO"
+ },
+ {
+  "q": "Along with Canada and the United Kingdom, what country generally doesn't refer to universities as private schools?",
+  "subject": "Along with Canada and the United Kingdom, what country generally doesn't refer to universities as private schools?",
+  "X": "Australia",
+  "Y": "Canada"
+ },
+ {
+  "q": "Sophocles demonstrated civil disobedience in a play that was called?",
+  "subject": "Sophocles demonstrated civil disobedience in a play that was called?",
+  "X": "Antigone",
+  "Y": "anti-colonial movements"
+ },
+ {
+  "q": "In computational complexity theory, what is the term given to describe the baseline abstract question needing to be solved? ",
+  "subject": "In computational complexity theory, what is the term given to describe the baseline abstract question needing to be solved? ",
+  "X": "the problem",
+  "Y": "complicated"
+ },
+ {
+  "q": "Where does the Rhine empty?",
+  "subject": "Where does the Rhine empty?",
+  "X": "North Sea",
+  "Y": "the Red Sea"
+ },
+ {
+  "q": "Who along with Russia supported post WW-II communist movements?",
+  "subject": "Who along with Russia supported post WW-II communist movements?",
+  "X": "China",
+  "Y": "Asia"
+ },
+ {
+  "q": "A complexity resource can also be described as what other type of resource?",
+  "subject": "A complexity resource can also be described as what other type of resource?",
+  "X": "computational resource",
+  "Y": "the computational model"
+ },
+ {
+  "q": "Where did the Tran dynasty rule?",
+  "subject": "Where did the Tran dynasty rule?",
+  "X": "Annam (Dai Viet)",
+  "Y": "Shi Bingzhi"
+ },
+ {
+  "q": "Finding what helps to determine if a fault is a normal fault or a thrust fault? ",
+  "subject": "Finding what helps to determine if a fault is a normal fault or a thrust fault? ",
+  "X": "the key bed",
+  "Y": "The Fresno Barn"
+ },
+ {
+  "q": "What does matter actually have that Newtonian mechanics doesn't address?",
+  "subject": "What does matter actually have that Newtonian mechanics doesn't address?",
+  "X": "extended structure",
+  "Y": "architectural"
+ },
+ {
+  "q": "How many times less is the strenght of the weak field compared to the strong?",
+  "subject": "How many times less is the strenght of the weak field compared to the strong?",
+  "X": "1013",
+  "Y": "1313"
+ },
+ {
+  "q": "When was amnesty granted to those responsible for the massacre?",
+  "subject": "When was amnesty granted to those responsible for the massacre?",
+  "X": "1573",
+  "Y": "1526"
+ },
+ {
+  "q": "Photosynthesis uses which energy to for oxygen from water?",
+  "subject": "Photosynthesis uses which energy to for oxygen from water?",
+  "X": "sunlight",
+  "Y": "ultraviolet radiation"
+ },
+ {
+  "q": "Who was the first president of the University of Chicago?",
+  "subject": "Who was the first president of the University of Chicago?",
+  "X": "William Rainey Harper",
+  "Y": "William Smith"
+ },
+ {
+  "q": "To what type of organisms is oxygen toxic?",
+  "subject": "To what type of organisms is oxygen toxic?",
+  "X": "anaerobic",
+  "Y": "Mnemiopsis"
+ },
+ {
+  "q": "What lab does the university have a joint stake in? ",
+  "subject": "What lab does the university have a joint stake in? ",
+  "X": "Fermilab",
+  "Y": "FeO"
+ },
+ {
+  "q": "Who stated a change of the length of the Rhine?",
+  "subject": "Who stated a change of the length of the Rhine?",
+  "X": "Knaurs Lexikon",
+  "Y": "Kuznets"
+ },
+ {
+  "q": "When was the National Highway Designated Act signed?",
+  "subject": "When was the National Highway Designated Act signed?",
+  "X": "November 28, 1995",
+  "Y": "1996"
+ },
+ {
+  "q": "Who was a man studying medicinal applicants of plants in Ancient Greece?",
+  "subject": "Who was a man studying medicinal applicants of plants in Ancient Greece?",
+  "X": "Diocles of Carystus",
+  "Y": "Oedipus"
+ },
+ {
+  "q": "For how many years was evidence shown that humans shaped the the Amazon?",
+  "subject": "For how many years was evidence shown that humans shaped the the Amazon?",
+  "X": "11,000 years",
+  "Y": "22,000 years ago"
+ },
+ {
+  "q": "What was French population in North America?",
+  "subject": "What was French population in North America?",
+  "X": "about 75,000",
+  "Y": "over 900,000"
+ },
+ {
+  "q": "What Lake in a German island Mainau receives a fraction of the Rhine's flow?",
+  "subject": "What Lake in a German island Mainau receives a fraction of the Rhine's flow?",
+  "X": "Lake \u00dcberlingen",
+  "Y": "freshwater lake"
+ },
+ {
+  "q": "What commission was censured in 1999, and paved the way for Commissioners to abuse their power?",
+  "subject": "What commission was censured in 1999, and paved the way for Commissioners to abuse their power?",
+  "X": "the Santer Commission",
+  "Y": "The Commission's President"
+ },
+ {
+  "q": "Who receives higher salaries at private schools that charge higher tuition?",
+  "subject": "Who receives higher salaries at private schools that charge higher tuition?",
+  "X": "teachers",
+  "Y": "the project coordinator"
+ },
+ {
+  "q": "What year was the Treaty of Amsterdam created?",
+  "subject": "What year was the Treaty of Amsterdam created?",
+  "X": "1997",
+  "Y": "1996"
+ },
+ {
+  "q": "As a result of a compromise, about how many Chinese schools became National Type schools?",
+  "subject": "As a result of a compromise, about how many Chinese schools became National Type schools?",
+  "X": "60",
+  "Y": "61"
+ },
+ {
+  "q": "What did the Hamas charter uncompromisingly encourage?",
+  "subject": "What did the Hamas charter uncompromisingly encourage?",
+  "X": "destruction of Israel",
+  "Y": "destroy invading microbes"
+ },
+ {
+  "q": "What are incompetent government's commitment to social justice limited to?",
+  "subject": "What are incompetent government's commitment to social justice limited to?",
+  "X": "rhetoric",
+  "Y": "political focus"
+ },
+ {
+  "q": "When did BSkyB discontinue the Sky+ Box?",
+  "subject": "When did BSkyB discontinue the Sky+ Box?",
+  "X": "January 2010",
+  "Y": "2011"
+ },
+ {
+  "q": "What does the Premier of Victoria need to lead in the Legislative Assembly? ",
+  "subject": "What does the Premier of Victoria need to lead in the Legislative Assembly? ",
+  "X": "most seats",
+  "Y": "constituency seats"
+ },
+ {
+  "q": "Beginning how many years ago did the amazon rainforest extend 45 degrees south?",
+  "subject": "Beginning how many years ago did the amazon rainforest extend 45 degrees south?",
+  "X": "66\u201334 Mya",
+  "Y": "61"
+ },
+ {
+  "q": "Along with a desire for more steam pressure, what were early drivers looking to generate when they fastened safety valves down?",
+  "subject": "Along with a desire for more steam pressure, what were early drivers looking to generate when they fastened safety valves down?",
+  "X": "more power",
+  "Y": "stronger"
+ },
+ {
+  "q": "What third type of plea uses creative words?",
+  "subject": "What third type of plea uses creative words?",
+  "X": "creative plea",
+  "Y": "blind plea"
+ },
+ {
+  "q": "What was apolitical Islam?",
+  "subject": "What was apolitical Islam?",
+  "X": "a historical fluke",
+  "Y": "Dikes"
+ },
+ {
+  "q": "Dendritic cells are named that because they resemble what?",
+  "subject": "Dendritic cells are named that because they resemble what?",
+  "X": "neuronal dendrites",
+  "Y": "seizures"
+ },
+ {
+  "q": "How many invertebrate species are known in Brazil alone? ",
+  "subject": "How many invertebrate species are known in Brazil alone? ",
+  "X": "96,660 and 128,843",
+  "Y": "1269"
+ },
+ {
+  "q": "What natural resources did the Chinese government have a monopoly on?",
+  "subject": "What natural resources did the Chinese government have a monopoly on?",
+  "X": "salt and iron",
+  "Y": "corrosion"
+ },
+ {
+  "q": "In what country was a full-scale working railway steam locomotive first invented?",
+  "subject": "In what country was a full-scale working railway steam locomotive first invented?",
+  "X": "United Kingdom",
+  "Y": "UK"
+ },
+ {
+  "q": "What was Old Briton's response to Celeron?",
+  "subject": "What was Old Briton's response to Celeron?",
+  "X": "ignored the warning.",
+  "Y": "detrimental"
+ },
+ {
+  "q": "What sport attracts most tourists to Jacksonville?",
+  "subject": "What sport attracts most tourists to Jacksonville?",
+  "X": "golf",
+  "Y": "NBA"
+ },
+ {
+  "q": "What is set up to scrutinize private bills submitted by party outsiders?",
+  "subject": "What is set up to scrutinize private bills submitted by party outsiders?",
+  "X": "type of committee",
+  "Y": "committees"
+ },
+ {
+  "q": "In what treatment are nonconservative and conservative forces described?",
+  "subject": "In what treatment are nonconservative and conservative forces described?",
+  "X": "statistical mechanics",
+  "Y": "quantum mechanics"
+ },
+ {
+  "q": "The Rhine forms the border between Austria and what other country? ",
+  "subject": "The Rhine forms the border between Austria and what other country? ",
+  "X": "Switzerland",
+  "Y": "Germany"
+ },
+ {
+  "q": "What was Temur Khan's Chinese-style name?",
+  "subject": "What was Temur Khan's Chinese-style name?",
+  "X": "Emperor Chengzong",
+  "Y": "Mao Zedong"
+ },
+ {
+  "q": "Who has elected the President of Warsaw since 1990?",
+  "subject": "Who has elected the President of Warsaw since 1990?",
+  "X": "the City council",
+  "Y": "European Council"
+ },
+ {
+  "q": "What does the capabilities approach look at poverty as a form of?",
+  "subject": "What does the capabilities approach look at poverty as a form of?",
+  "X": "capability deprivation",
+  "Y": "social exclusion"
+ },
+ {
+  "q": "What is the name of the current King of Thebes in the play?",
+  "subject": "What is the name of the current King of Thebes in the play?",
+  "X": "Creon",
+  "Y": "Ogr\u00f3d Saski"
+ },
+ {
+  "q": "How frequent is snow in the Southwest of the state?",
+  "subject": "How frequent is snow in the Southwest of the state?",
+  "X": "very rare",
+  "Y": "rare and desired"
+ },
+ {
+  "q": "Besides the analytic property of numbers, what other property of numbers does number theory focus on?",
+  "subject": "Besides the analytic property of numbers, what other property of numbers does number theory focus on?",
+  "X": "algebraic aspects",
+  "Y": "polynomial algebra"
+ },
+ {
+  "q": "When did Prime Minister Wilson commit to some form of devolved legislature?",
+  "subject": "When did Prime Minister Wilson commit to some form of devolved legislature?",
+  "X": "1974",
+  "Y": "In 1973"
+ },
+ {
+  "q": "When did the church reform begin?",
+  "subject": "When did the church reform begin?",
+  "X": "early 11th century",
+  "Y": "9th century"
+ }
+]
