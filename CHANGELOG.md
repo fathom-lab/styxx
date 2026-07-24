@@ -11,6 +11,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.27.0] — 2026-07-23 — anchors: the anchor threshold, as a design-time instrument
+
+`styxx.anchors` gains the "anchor threshold" as three closed-form, dependency-light functions:
+how many known-label anchors you need before "no detection" of a shared, all-judge,
+truth-independent blind spot actually means something. Backs Section 7 of "Gold Anchors License
+Nothing" (Fathom v30) and its real-judge demonstration.
+
+### Added
+
+- **`styxx.anchors.blindspot_power(K, *, J, fp_rate, trap_rate=…|p_alt=…, alpha=0.05)`** — exact
+  power to detect an all-judge shared blind spot from `K` known-label anchors, via the count of
+  unanimous-wrong anchors, using the standard most-powerful one-sided binomial test. Returns the
+  null/alternative unanimous-wrong probabilities, the single-anchor likelihood ratio, the critical
+  count, the achieved type-I rate, and the power.
+- **`styxx.anchors.min_anchors_for_power(target_power, …)`** — smallest anchor budget that reaches
+  a target power against a given blind spot (e.g. ~15 known-negatives for 0.90 power at the J=3
+  design point).
+- **`styxx.anchors.anchor_lr(…)`** — single-anchor likelihood ratio of one unanimous-wrong
+  known-negative (blind-spot vs benign).
+- All three are surfaced at the top level (`styxx.blindspot_power`, etc.) and covered by six new
+  behavioral tests. The functions use the tight standard test; note this is strictly more powerful
+  than the conservative rejection region used in the exploratory receipt (the paper's earlier
+  power table is a valid lower bound).
+
+---
+
 ## [7.26.0] — 2026-07-20 — anchors: the auditor of the judges
 
 One new module, and it audits the layer everyone now trusts by default: LLM judge panels.
