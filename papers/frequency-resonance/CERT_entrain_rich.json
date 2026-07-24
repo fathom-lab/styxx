@@ -1,0 +1,702 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_entrain_rich_2026_07_23.md",
+  "document_sha256": "19f3d15d0f43b78af7c1e92f5681a0060a54c48abcd0fea586b9b7f490dee9f5",
+  "receipts_sha256": {
+    "entrain_rich_result.json": "50c3c5913e085f8377d2f23e1fd3257d62a07934d40b1fd2ca047d8a240c18ec"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 37,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "8"
+    },
+    {
+      "line": 1,
+      "token": "4"
+    },
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 4,
+      "token": "3"
+    },
+    {
+      "line": 4,
+      "token": "1500"
+    },
+    {
+      "line": 5,
+      "token": "8"
+    },
+    {
+      "line": 6,
+      "token": "+0.10"
+    },
+    {
+      "line": 11,
+      "token": "+0.040"
+    },
+    {
+      "line": 12,
+      "token": "50"
+    },
+    {
+      "line": 12,
+      "token": "8"
+    },
+    {
+      "line": 12,
+      "token": "4"
+    },
+    {
+      "line": 21,
+      "token": "100"
+    },
+    {
+      "line": 25,
+      "token": "23"
+    },
+    {
+      "line": 25,
+      "token": "7"
+    },
+    {
+      "line": 26,
+      "token": "50"
+    },
+    {
+      "line": 29,
+      "token": "8"
+    },
+    {
+      "line": 31,
+      "token": "+0.1703"
+    },
+    {
+      "line": 31,
+      "token": "0.10"
+    },
+    {
+      "line": 31,
+      "token": "+0.0847"
+    },
+    {
+      "line": 32,
+      "token": "0.10"
+    },
+    {
+      "line": 33,
+      "token": "4"
+    },
+    {
+      "line": 33,
+      "token": "+0.1286"
+    },
+    {
+      "line": 39,
+      "token": "8"
+    },
+    {
+      "line": 39,
+      "token": "64"
+    },
+    {
+      "line": 39,
+      "token": "8"
+    },
+    {
+      "line": 39,
+      "token": "7"
+    },
+    {
+      "line": 40,
+      "token": "0"
+    },
+    {
+      "line": 41,
+      "token": "0.0"
+    },
+    {
+      "line": 48,
+      "token": "400"
+    },
+    {
+      "line": 48,
+      "token": "+0.120"
+    },
+    {
+      "line": 48,
+      "token": "3"
+    },
+    {
+      "line": 53,
+      "token": "4"
+    },
+    {
+      "line": 55,
+      "token": "8"
+    },
+    {
+      "line": 55,
+      "token": "96"
+    },
+    {
+      "line": 55,
+      "token": "3"
+    },
+    {
+      "line": 56,
+      "token": "50"
+    },
+    {
+      "line": 57,
+      "token": "4"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "# RESULT \u2014 ENTRAIN-RICH: WEAK at D=8, GREENLIGHT at D=4 \u2014 the detector IS the bottleneck \u2014 2026-07-23",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 1,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "# RESULT \u2014 ENTRAIN-RICH: WEAK at D=8, GREENLIGHT at D=4 \u2014 the detector IS the bottleneck \u2014 2026-07-23",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`run_entrain_rich.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 4,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`run_entrain_rich.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "`run_entrain_rich.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "steps, RTX 4070. **Verdict: WEAK** at the pre-registered primary D=8 \u2014 real, mechanism-tied, below the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 6,
+      "token": "+0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "strict +0.10 bar.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "+0.040",
+      "value": 0.04,
+      "decimals": 3,
+      "context": "short window** roughly **doubles** the captured adaptation advantage \u2014 from +0.040 (KILL) to **+0.085**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "short window** roughly **doubles** the captured adaptation advantage \u2014 from +0.040 (KILL) to **+0.085**",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_minus_static"
+    },
+    {
+      "line": 12,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(50% of the oracle ceiling) at D=8, and to **+0.1286 at D=4, where it beats even the diverse-bank",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "(50% of the oracle ceiling) at D=8, and to **+0.1286 at D=4, where it beats even the diverse-bank",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "+0.1286",
+      "value": 0.1286,
+      "decimals": 4,
+      "context": "(50% of the oracle ceiling) at D=8, and to **+0.1286 at D=4, where it beats even the diverse-bank",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_advantage_by_D.4"
+    },
+    {
+      "line": 12,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(50% of the oracle ceiling) at D=8, and to **+0.1286 at D=4, where it beats even the diverse-bank",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.4.static"
+    },
+    {
+      "line": 21,
+      "token": "0.375",
+      "value": 0.375,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.4.rich"
+    },
+    {
+      "line": 21,
+      "token": "0.351",
+      "value": 0.351,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.4.oracle"
+    },
+    {
+      "line": 21,
+      "token": "+0.1286",
+      "value": 0.1286,
+      "decimals": 4,
+      "context": "| 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_advantage_by_D.4"
+    },
+    {
+      "line": 21,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "| 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | 4 | 0.247 | 0.375 | 0.351 | **+0.1286** | >100% (beats oracle) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:config.primary_d"
+    },
+    {
+      "line": 22,
+      "token": "0.460",
+      "value": 0.46,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.8.static"
+    },
+    {
+      "line": 22,
+      "token": "0.545",
+      "value": 0.545,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.8.rich"
+    },
+    {
+      "line": 22,
+      "token": "0.631",
+      "value": 0.631,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:drift.8.oracle"
+    },
+    {
+      "line": 22,
+      "token": "+0.0847",
+      "value": 0.0847,
+      "decimals": 4,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_minus_static"
+    },
+    {
+      "line": 22,
+      "token": "49.7",
+      "value": 49.7,
+      "decimals": 1,
+      "context": "| **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | capture of oracle | | **8** (primary) | 0.460 | 0.545 | 0.631 | **+0.0847** | **49.7%** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.capture_frac"
+    },
+    {
+      "line": 25,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "`\u03c9\u0302=angle(z\u00b7z*)` captured 23% (`RESULT_entrainment`, KILL); the windowed conv (`KW=7`) captures",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "`\u03c9\u0302=angle(z\u00b7z*)` captured 23% (`RESULT_entrainment`, KILL); the windowed conv (`KW=7`) captures",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "**50%** (this result, WEAK). No-harm on fixed period: **+0.0858** (well above \u22120.03 \u2014 entrainment does",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 26,
+      "token": "+0.0858",
+      "value": 0.0858,
+      "decimals": 4,
+      "context": "**50%** (this result, WEAK). No-harm on fixed period: **+0.0858** (well above \u22120.03 \u2014 entrainment does",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.noharm"
+    },
+    {
+      "line": 26,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "**50%** (this result, WEAK). No-harm on fixed period: **+0.0858** (well above \u22120.03 \u2014 entrainment does",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:config.periods[0]"
+    },
+    {
+      "line": 29,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "## The frozen gate (primary D=8)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "+0.1703",
+      "value": 0.1703,
+      "decimals": 4,
+      "context": "`oracle\u2212static = +0.1703 \u2265 0.10` \u2192 positive control fires. `rich\u2212static = +0.0847`, capture `0.4974`.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "`oracle\u2212static = +0.1703 \u2265 0.10` \u2192 positive control fires. `rich\u2212static = +0.0847`, capture `0.4974`.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "+0.0847",
+      "value": 0.0847,
+      "decimals": 4,
+      "context": "`oracle\u2212static = +0.1703 \u2265 0.10` \u2192 positive control fires. `rich\u2212static = +0.0847`, capture `0.4974`.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "0.4974",
+      "value": 0.4974,
+      "decimals": 4,
+      "context": "`oracle\u2212static = +0.1703 \u2265 0.10` \u2192 positive control fires. `rich\u2212static = +0.0847`, capture `0.4974`.",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.capture_frac"
+    },
+    {
+      "line": 32,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "`adv < 0.10` \u2192 **WEAK** (real but sub-threshold). Not a GREENLIGHT \u2014 the frozen bar is not moved to",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "rescue it. At D=4 (in the pre-registered sweep, reported not headline): `rich\u2212static = +0.1286`,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "+0.1286",
+      "value": 0.1286,
+      "decimals": 4,
+      "context": "rescue it. At D=4 (in the pre-registered sweep, reported not headline): `rich\u2212static = +0.1286`,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "RICH adds params (D=8: 5652 vs STATIC 2052 \u2014 the Conv1d(64\u21928, k=7) is ~3.6k). These are",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "5652",
+      "value": 5652.0,
+      "decimals": 0,
+      "context": "RICH adds params (D=8: 5652 vs STATIC 2052 \u2014 the Conv1d(64\u21928, k=7) is ~3.6k). These are",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:params.8.rich"
+    },
+    {
+      "line": 39,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "RICH adds params (D=8: 5652 vs STATIC 2052 \u2014 the Conv1d(64\u21928, k=7) is ~3.6k). These are",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "RICH adds params (D=8: 5652 vs STATIC 2052 \u2014 the Conv1d(64\u21928, k=7) is ~3.6k). These are",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "RICH adds params (D=8: 5652 vs STATIC 2052 \u2014 the Conv1d(64\u21928, k=7) is ~3.6k). These are",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**mechanism-gated**: at `\u03ba=0` the conv output never reaches \u03b8, so RICH is bit-for-bit STATIC",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "(red-team `max|\u0394|=0.0`). The extra params can affect the output through **exactly one channel** \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 42,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "learned frequency adaptation \u2014 so the +0.085 is a clean causal measurement of *the mechanism*, not of",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_minus_static"
+    },
+    {
+      "line": 48,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "This is the discipline catching an over-optimistic smoke (1 seed/400 steps read +0.120; the honest 3",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:config.seeds[1]"
+    },
+    {
+      "line": 48,
+      "token": "400",
+      "value": 400.0,
+      "decimals": 0,
+      "context": "This is the discipline catching an over-optimistic smoke (1 seed/400 steps read +0.120; the honest 3",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "+0.120",
+      "value": 0.12,
+      "decimals": 3,
+      "context": "This is the discipline catching an over-optimistic smoke (1 seed/400 steps read +0.120; the honest 3",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "This is the discipline catching an over-optimistic smoke (1 seed/400 steps read +0.120; the honest 3",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "seeds/1500 steps read +0.085) \u2014 the second such catch this session. But it also **converts the ENTRAIN",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:config.steps"
+    },
+    {
+      "line": 49,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "seeds/1500 steps read +0.085) \u2014 the second such catch this session. But it also **converts the ENTRAIN",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.rich_minus_static"
+    },
+    {
+      "line": 50,
+      "token": "+0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "KILL into a real, bounded positive**: the mechanism is sound, the prize (oracle +0.17) is genuinely",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_rich_result.json:gate.oracle_minus_static"
+    },
+    {
+      "line": 53,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "sequences, strongest under mode scarcity (clean win at D=4), detector-limited at a comfortable budget.\"",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). Open: a still-richer detector (does capture keep",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). Open: a still-richer detector (does capture keep",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). Open: a still-richer detector (does capture keep",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 56,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "climbing toward the oracle past 50%?), a param-matched wider-static efficiency control, and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "mode-scarcity regime where the D=4 win lives.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

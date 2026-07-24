@@ -1,0 +1,72 @@
+{
+  "config": {
+    "steps": 1500,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "L": 96,
+    "seg_len": 32,
+    "periods": [
+      3,
+      12
+    ],
+    "kappa_max": 0.1,
+    "conv_kw": 7,
+    "d_sweep": [
+      4,
+      8
+    ],
+    "primary_d": 8
+  },
+  "params": {
+    "4": {
+      "static": 1384,
+      "rich": 3184,
+      "oracle": 1384
+    },
+    "8": {
+      "static": 2052,
+      "rich": 5652,
+      "oracle": 2052
+    }
+  },
+  "drift": {
+    "4": {
+      "static": 0.24663065373897552,
+      "rich": 0.37521106998125714,
+      "oracle": 0.35126110911369324
+    },
+    "8": {
+      "static": 0.4604337016741435,
+      "rich": 0.5451151927312216,
+      "oracle": 0.6306845943133036
+    }
+  },
+  "fixed": {
+    "4": {
+      "static": 0.2516241470972697,
+      "rich": 0.3671008547147115,
+      "oracle": 0.3256966173648834
+    },
+    "8": {
+      "static": 0.45649829506874084,
+      "rich": 0.5422741969426473,
+      "oracle": 0.5999887188275655
+    }
+  },
+  "gate": {
+    "d": 8,
+    "rich_minus_static": 0.0847,
+    "oracle_minus_static": 0.1703,
+    "capture_frac": 0.4974,
+    "rich_advantage_by_D": {
+      "4": 0.1286,
+      "8": 0.0847
+    },
+    "noharm": 0.0858,
+    "verdict": "WEAK",
+    "why": "At D=8, rich-static=+0.085 (in [0.05,0.10) or capture<50% of +0.170): real but sub-threshold. improvement over the single-projection KILL, but not a greenlight."
+  }
+}

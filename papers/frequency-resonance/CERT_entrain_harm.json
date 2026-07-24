@@ -1,0 +1,601 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_entrain_harm_2026_07_23.md",
+  "document_sha256": "0993d430c3023bfdf141486b215a07bbe49b3c2a8849561eba8ef1c04cd3fe9c",
+  "receipts_sha256": {
+    "entrain_harm_result.json": "ffe91f274db4dfe0ae06be2465b51d4853ac3848ec69eb72da6619699dac158d"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 33,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 4,
+      "token": "3"
+    },
+    {
+      "line": 4,
+      "token": "1500"
+    },
+    {
+      "line": 11,
+      "token": "1"
+    },
+    {
+      "line": 12,
+      "token": "+0.085"
+    },
+    {
+      "line": 12,
+      "token": "50"
+    },
+    {
+      "line": 12,
+      "token": "8"
+    },
+    {
+      "line": 22,
+      "token": "+0.1703"
+    },
+    {
+      "line": 22,
+      "token": "0.0132"
+    },
+    {
+      "line": 22,
+      "token": "0.05"
+    },
+    {
+      "line": 27,
+      "token": "8"
+    },
+    {
+      "line": 31,
+      "token": "+130"
+    },
+    {
+      "line": 31,
+      "token": "23"
+    },
+    {
+      "line": 32,
+      "token": "+0.085"
+    },
+    {
+      "line": 32,
+      "token": "50"
+    },
+    {
+      "line": 33,
+      "token": "1"
+    },
+    {
+      "line": 36,
+      "token": "8"
+    },
+    {
+      "line": 37,
+      "token": "8"
+    },
+    {
+      "line": 39,
+      "token": "4"
+    },
+    {
+      "line": 39,
+      "token": "+0.129"
+    },
+    {
+      "line": 43,
+      "token": "+0.110"
+    },
+    {
+      "line": 44,
+      "token": "0.037"
+    },
+    {
+      "line": 44,
+      "token": "+0.040"
+    },
+    {
+      "line": 45,
+      "token": "+0.120"
+    },
+    {
+      "line": 45,
+      "token": "+0.085"
+    },
+    {
+      "line": 45,
+      "token": "+0.110"
+    },
+    {
+      "line": 46,
+      "token": "4"
+    },
+    {
+      "line": 52,
+      "token": "50"
+    },
+    {
+      "line": 53,
+      "token": "4"
+    },
+    {
+      "line": 58,
+      "token": "8"
+    },
+    {
+      "line": 58,
+      "token": "96"
+    },
+    {
+      "line": 58,
+      "token": "3"
+    },
+    {
+      "line": 59,
+      "token": "4"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`run_entrain_harm.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 4,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`run_entrain_harm.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 4,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "`run_entrain_harm.py` (parallel scan; red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds, 1500",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "bar. It captured **1%** of the oracle gap (+0.002), *worse* than the simple one-layer windowed conv",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "+0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "bar. It captured **1%** of the oracle gap (+0.002), *worse* than the simple one-layer windowed conv",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.4.static"
+    },
+    {
+      "line": 12,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "(+0.085, 50%), despite **8\u00d7 the parameters** (16,661 vs 2,052). The adaptive-frequency dose-response is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(+0.085, 50%), despite **8\u00d7 the parameters** (16,661 vs 2,052). The adaptive-frequency dose-response is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "(+0.085, 50%), despite **8\u00d7 the parameters** (16,661 vs 2,052). The adaptive-frequency dose-response is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "16,661",
+      "value": 16661.0,
+      "decimals": 0,
+      "context": "(+0.085, 50%), despite **8\u00d7 the parameters** (16,661 vs 2,052). The adaptive-frequency dose-response is",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:params.8.harm"
+    },
+    {
+      "line": 19,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.4.static"
+    },
+    {
+      "line": 19,
+      "token": "0.265",
+      "value": 0.265,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.4.harm"
+    },
+    {
+      "line": 19,
+      "token": "0.351",
+      "value": 0.351,
+      "decimals": 3,
+      "context": "| 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.4.oracle"
+    },
+    {
+      "line": 19,
+      "token": "+0.0181",
+      "value": 0.0181,
+      "decimals": 4,
+      "context": "| 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | 4 | 0.247 | 0.265 | 0.351 | +0.0181 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:gate.harm_advantage_by_D.4"
+    },
+    {
+      "line": 20,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:config.primary_d"
+    },
+    {
+      "line": 20,
+      "token": "0.460",
+      "value": 0.46,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.8.static"
+    },
+    {
+      "line": 20,
+      "token": "0.463",
+      "value": 0.463,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.8.harm"
+    },
+    {
+      "line": 20,
+      "token": "0.631",
+      "value": 0.631,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.8.oracle"
+    },
+    {
+      "line": 20,
+      "token": "+0.0022",
+      "value": 0.0022,
+      "decimals": 4,
+      "context": "| **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "binding_context": "| D | STATIC | HARM (deep conv + spread) | ORACLE | HARM\u2212STATIC | | **8** (primary) | 0.460 | 0.463 | 0.631 | **+0.0022** |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+    },
+    {
+      "line": 22,
+      "token": "+0.1703",
+      "value": 0.1703,
+      "decimals": 4,
+      "context": "`oracle\u2212static = +0.1703` (positive control fires), `capture = 0.0132`, `adv < 0.05` \u2192 **KILL**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.0132",
+      "value": 0.0132,
+      "decimals": 4,
+      "context": "`oracle\u2212static = +0.1703` (positive control fires), `capture = 0.0132`, `adv < 0.05` \u2192 **KILL**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "`oracle\u2212static = +0.1703` (positive control fires), `capture = 0.0132`, `adv < 0.05` \u2192 **KILL**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Adaptive-frequency advantage over static at D=8, by detector:",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "+130",
+      "value": 130.0,
+      "decimals": 0,
+      "context": "| single projection | ~+130 | +0.040 | 23% | KILL |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | single projection | ~+130 | +0.040 | 23% | KILL |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "+0.040",
+      "value": 0.04,
+      "decimals": 3,
+      "context": "| single projection | ~+130 | +0.040 | 23% | KILL |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | single projection | ~+130 | +0.040 | 23% | KILL |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:config.d_sweep[0]"
+    },
+    {
+      "line": 31,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "| single projection | ~+130 | +0.040 | 23% | KILL |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | single projection | ~+130 | +0.040 | 23% | KILL |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "| **windowed conv (1-layer)** | ~+3.6k | **+0.085** | **50%** | **WEAK (best)** |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | **windowed conv (1-layer)** | ~+3.6k | **+0.085** | **50%** | **WEAK (best)** |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| **windowed conv (1-layer)** | ~+3.6k | **+0.085** | **50%** | **WEAK (best)** |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | **windowed conv (1-layer)** | ~+3.6k | **+0.085** | **50%** | **WEAK (best)** |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "+0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "| deep conv + harmonic spread | ~+14.6k | +0.002 | 1% | KILL |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | deep conv + harmonic spread | ~+14.6k | +0.002 | 1% | KILL |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:drift.4.static"
+    },
+    {
+      "line": 33,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| deep conv + harmonic spread | ~+14.6k | +0.002 | 1% | KILL |",
+      "binding_context": "| detector | params (extra) | HARM/RICH\u2212STATIC | capture of oracle | verdict | | deep conv + harmonic spread | ~+14.6k | +0.002 | 1% | KILL |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "deeper, better-inductive-bias detector fails to train usefully at this budget: 8\u00d7 the params buy",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "nothing, and it lands at static. A clean flagship win at the comfortable D=8 budget does **not** exist",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "(D=4, where the windowed conv hit +0.129).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "+0.129",
+      "value": 0.129,
+      "decimals": 3,
+      "context": "(D=4, where the windowed conv hit +0.129).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "+0.110",
+      "value": 0.11,
+      "decimals": 3,
+      "context": "Its smoke read **+0.110** (GREENLIGHT); the full 3-seed / 1500-step run reads **+0.002** (KILL) \u2014 the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "+0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "Its smoke read **+0.110** (GREENLIGHT); the full 3-seed / 1500-step run reads **+0.002** (KILL) \u2014 the",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+    },
+    {
+      "line": 44,
+      "token": "0.037",
+      "value": 0.037,
+      "decimals": 3,
+      "context": "**third** over-optimistic smoke the frozen gate has overturned this session (ENTRAIN \u22120.037\u2192+0.040,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "+0.040",
+      "value": 0.04,
+      "decimals": 3,
+      "context": "**third** over-optimistic smoke the frozen gate has overturned this session (ENTRAIN \u22120.037\u2192+0.040,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "+0.120",
+      "value": 0.12,
+      "decimals": 3,
+      "context": "RICH +0.120\u2192+0.085, HARM +0.110\u2192+0.002). No bar was moved. This was pre-committed as the **last**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "+0.085",
+      "value": 0.085,
+      "decimals": 3,
+      "context": "RICH +0.120\u2192+0.085, HARM +0.110\u2192+0.002). No bar was moved. This was pre-committed as the **last**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "+0.110",
+      "value": 0.11,
+      "decimals": 3,
+      "context": "RICH +0.120\u2192+0.085, HARM +0.110\u2192+0.002). No bar was moved. This was pre-committed as the **last**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "+0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "RICH +0.120\u2192+0.085, HARM +0.110\u2192+0.002). No bar was moved. This was pre-committed as the **last**",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+    },
+    {
+      "line": 46,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "detector swing; there is **no detector #4** fished to cross the bar. The 3-point non-monotone",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 52,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "gives an SSM a real edge, best captured by a simple windowed detector (~50% of the oracle prize,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 53,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "WEAK), strongest under mode-scarcity (clean win at D=4) \u2014 and it does not reach a clean flagship at a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). What remains genuinely open is not \"a bigger",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). What remains genuinely open is not \"a bigger",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Scope: toy (D\u22648, L=96, integer symbols, 3 seeds). What remains genuinely open is not \"a bigger",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "detector\" (falsified here) but a different regime \u2014 the mode-scarcity budget where the D=4 win lives,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

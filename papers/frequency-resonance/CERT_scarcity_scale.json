@@ -1,0 +1,735 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_scarcity_scale_2026_07_23.md",
+  "document_sha256": "6ea8d22d900aba1cbde9ffe948fb36fdc5debcfd626269ef534f736139b8a312",
+  "receipts_sha256": {
+    "scarcity_scale_result.json": "be257e253bae2a3c8b9827e7264f30505fbd60c55a2076bcfffe63b367c56b59"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 39,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 4,
+      "token": "3"
+    },
+    {
+      "line": 5,
+      "token": "4"
+    },
+    {
+      "line": 10,
+      "token": "192"
+    },
+    {
+      "line": 10,
+      "token": "4"
+    },
+    {
+      "line": 11,
+      "token": "+0.129"
+    },
+    {
+      "line": 11,
+      "token": "4"
+    },
+    {
+      "line": 11,
+      "token": "96"
+    },
+    {
+      "line": 11,
+      "token": "12"
+    },
+    {
+      "line": 19,
+      "token": "0.0355"
+    },
+    {
+      "line": 19,
+      "token": "+0.005"
+    },
+    {
+      "line": 20,
+      "token": "0.0425"
+    },
+    {
+      "line": 20,
+      "token": "+0.0683"
+    },
+    {
+      "line": 21,
+      "token": "0.1231"
+    },
+    {
+      "line": 21,
+      "token": "+0.081"
+    },
+    {
+      "line": 22,
+      "token": "0.1286"
+    },
+    {
+      "line": 22,
+      "token": "+0.148"
+    },
+    {
+      "line": 23,
+      "token": "12"
+    },
+    {
+      "line": 23,
+      "token": "0.1376"
+    },
+    {
+      "line": 23,
+      "token": "+0.237"
+    },
+    {
+      "line": 25,
+      "token": "2"
+    },
+    {
+      "line": 25,
+      "token": "0.036"
+    },
+    {
+      "line": 25,
+      "token": "4"
+    },
+    {
+      "line": 25,
+      "token": "0.043"
+    },
+    {
+      "line": 25,
+      "token": "6"
+    },
+    {
+      "line": 25,
+      "token": "0.123"
+    },
+    {
+      "line": 25,
+      "token": "8"
+    },
+    {
+      "line": 25,
+      "token": "0.129"
+    },
+    {
+      "line": 25,
+      "token": "12"
+    },
+    {
+      "line": 25,
+      "token": "0.138"
+    },
+    {
+      "line": 29,
+      "token": "4"
+    },
+    {
+      "line": 30,
+      "token": "+0.068"
+    },
+    {
+      "line": 30,
+      "token": "0.10"
+    },
+    {
+      "line": 31,
+      "token": "4"
+    },
+    {
+      "line": 33,
+      "token": "+0.237"
+    },
+    {
+      "line": 33,
+      "token": "12"
+    },
+    {
+      "line": 41,
+      "token": "4"
+    },
+    {
+      "line": 43,
+      "token": "8"
+    },
+    {
+      "line": 52,
+      "token": "3"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`run_scarcity_scale.py` (parallel scan, red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 4,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`run_scarcity_scale.py` (parallel scan, red-team `scan==seq`, `\u03ba=0==STATIC` bit-for-bit). 3 seeds,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "1500 steps, RTX 4070. **Frozen verdict: ABSTAIN** at the pre-registered starved D=4 \u2014 and the full",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:config.steps"
+    },
+    {
+      "line": 5,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "1500 steps, RTX 4070. **Frozen verdict: ABSTAIN** at the pre-registered starved D=4 \u2014 and the full",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "On a harder, longer drifting task (L=192, 4 segments, periods [3,20]), the windowed-conv",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 10,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "On a harder, longer drifting task (L=192, 4 segments, periods [3,20]), the windowed-conv",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "On a harder, longer drifting task (L=192, 4 segments, periods [3,20]), the windowed-conv",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:config.periods[0]"
+    },
+    {
+      "line": 10,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "On a harder, longer drifting task (L=192, 4 segments, periods [3,20]), the windowed-conv",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:config.periods[1]"
+    },
+    {
+      "line": 11,
+      "token": "+0.129",
+      "value": 0.129,
+      "decimals": 3,
+      "context": "adaptive-frequency detector \u2014 which won **+0.129** at D=4 on the easy task (L=96, periods [3,12]) \u2014 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "adaptive-frequency detector \u2014 which won **+0.129** at D=4 on the easy task (L=96, periods [3,12]) \u2014 is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "adaptive-frequency detector \u2014 which won **+0.129** at D=4 on the easy task (L=96, periods [3,12]) \u2014 is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 11,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "adaptive-frequency detector \u2014 which won **+0.129** at D=4 on the easy task (L=96, periods [3,12]) \u2014 is",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:config.periods[0]"
+    },
+    {
+      "line": 11,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "adaptive-frequency detector \u2014 which won **+0.129** at D=4 on the easy task (L=96, periods [3,12]) \u2014 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "0.149",
+      "value": 0.149,
+      "decimals": 3,
+      "context": "| 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.2.static"
+    },
+    {
+      "line": 19,
+      "token": "0.113",
+      "value": 0.113,
+      "decimals": 3,
+      "context": "| 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.2.rich"
+    },
+    {
+      "line": 19,
+      "token": "0.154",
+      "value": 0.154,
+      "decimals": 3,
+      "context": "| 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.2.oracle"
+    },
+    {
+      "line": 19,
+      "token": "0.0355",
+      "value": 0.0355,
+      "decimals": 4,
+      "context": "| 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "+0.005",
+      "value": 0.005,
+      "decimals": 3,
+      "context": "| 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 2 | 0.149 | 0.113 | 0.154 | \u22120.0355 | +0.005 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:config.primary_d"
+    },
+    {
+      "line": 20,
+      "token": "0.198",
+      "value": 0.198,
+      "decimals": 3,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.4.static"
+    },
+    {
+      "line": 20,
+      "token": "0.155",
+      "value": 0.155,
+      "decimals": 3,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.4.rich"
+    },
+    {
+      "line": 20,
+      "token": "0.266",
+      "value": 0.266,
+      "decimals": 3,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.4.oracle"
+    },
+    {
+      "line": 20,
+      "token": "0.0425",
+      "value": 0.0425,
+      "decimals": 4,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "+0.0683",
+      "value": 0.0683,
+      "decimals": 4,
+      "context": "| **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | **4** (primary) | 0.198 | 0.155 | 0.266 | **\u22120.0425** | +0.0683 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "0.295",
+      "value": 0.295,
+      "decimals": 3,
+      "context": "| 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.6.static"
+    },
+    {
+      "line": 21,
+      "token": "0.172",
+      "value": 0.172,
+      "decimals": 3,
+      "context": "| 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.6.rich"
+    },
+    {
+      "line": 21,
+      "token": "0.377",
+      "value": 0.377,
+      "decimals": 3,
+      "context": "| 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.6.oracle"
+    },
+    {
+      "line": 21,
+      "token": "0.1231",
+      "value": 0.1231,
+      "decimals": 4,
+      "context": "| 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "+0.081",
+      "value": 0.081,
+      "decimals": 3,
+      "context": "| 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 6 | 0.295 | 0.172 | 0.377 | \u22120.1231 | +0.081 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.354",
+      "value": 0.354,
+      "decimals": 3,
+      "context": "| 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.8.static"
+    },
+    {
+      "line": 22,
+      "token": "0.225",
+      "value": 0.225,
+      "decimals": 3,
+      "context": "| 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.8.rich"
+    },
+    {
+      "line": 22,
+      "token": "0.502",
+      "value": 0.502,
+      "decimals": 3,
+      "context": "| 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.8.oracle"
+    },
+    {
+      "line": 22,
+      "token": "0.1286",
+      "value": 0.1286,
+      "decimals": 4,
+      "context": "| 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "+0.148",
+      "value": 0.148,
+      "decimals": 3,
+      "context": "| 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 8 | 0.354 | 0.225 | 0.502 | \u22120.1286 | +0.148 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.405",
+      "value": 0.405,
+      "decimals": 3,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.12.static"
+    },
+    {
+      "line": 23,
+      "token": "0.267",
+      "value": 0.267,
+      "decimals": 3,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.12.rich"
+    },
+    {
+      "line": 23,
+      "token": "0.642",
+      "value": 0.642,
+      "decimals": 3,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scarcity_scale_result.json:drift.12.oracle"
+    },
+    {
+      "line": 23,
+      "token": "0.1376",
+      "value": 0.1376,
+      "decimals": 4,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "+0.237",
+      "value": 0.237,
+      "decimals": 3,
+      "context": "| 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "binding_context": "| D | STATIC | RICH (conv) | ORACLE | RICH\u2212STATIC | ORACLE\u2212STATIC | | 12 | 0.405 | 0.267 | 0.642 | \u22120.1376 | +0.237 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.036",
+      "value": 0.036,
+      "decimals": 3,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.123",
+      "value": 0.123,
+      "decimals": 3,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.129",
+      "value": 0.129,
+      "decimals": 3,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.138",
+      "value": 0.138,
+      "decimals": 3,
+      "context": "Scarcity curve `RICH\u2212STATIC` by D: `{2: \u22120.036, 4: \u22120.043, 6: \u22120.123, 8: \u22120.129, 12: \u22120.138}`.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "1. **The frozen gate ABSTAINS.** At the pre-registered starved D=4, the positive control is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "+0.068",
+      "value": 0.068,
+      "decimals": 3,
+      "context": "sub-threshold on this harder task (`oracle\u2212static = +0.068 < 0.10`), so by the frozen rule the test",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "sub-threshold on this harder task (`oracle\u2212static = +0.068 < 0.10`), so by the frozen rule the test",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "cannot license a verdict at D=4 \u2014 no claim is drawn there.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "+0.237",
+      "value": 0.237,
+      "decimals": 3,
+      "context": "(up to `+0.237` at D=12) \u2014 adaptation is worth a great deal on the harder task \u2014 yet the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "(up to `+0.237` at D=12) \u2014 adaptation is worth a great deal on the harder task \u2014 yet the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "The one clean adaptive-frequency win (D=4, easy task) was **fragile**: it does not survive a longer",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "deeper detector collapses) and the WEAK D=8 result, the adaptive-frequency story is now bounded on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "the resonance profiler. Scope: toy drifting task, 3 seeds. This result and its receipt are",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

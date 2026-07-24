@@ -1,0 +1,399 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_pmnist_ablation_2026_07_23.md",
+  "document_sha256": "2e5154efc55ec18d59de0f4e8ec23d2a8fb6c7f1f9a7588d7deaa6fa5430e741",
+  "receipts_sha256": {
+    "pmnist_ablation_result.json": "afcb005316baa9fb9f2459c8db8565ce4e449e8b0ac28ae74a550c1a79563adc"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "7.6"
+    },
+    {
+      "line": 5,
+      "token": "2"
+    },
+    {
+      "line": 12,
+      "token": "7.6"
+    },
+    {
+      "line": 12,
+      "token": "+4.1"
+    },
+    {
+      "line": 23,
+      "token": "+0.3122"
+    },
+    {
+      "line": 24,
+      "token": "0"
+    },
+    {
+      "line": 31,
+      "token": "94.3"
+    },
+    {
+      "line": 34,
+      "token": "7.6"
+    },
+    {
+      "line": 35,
+      "token": "94"
+    },
+    {
+      "line": 36,
+      "token": "61"
+    },
+    {
+      "line": 37,
+      "token": "92"
+    },
+    {
+      "line": 39,
+      "token": "+0.131"
+    },
+    {
+      "line": 51,
+      "token": "64"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "7.6",
+      "value": 7.6,
+      "decimals": 1,
+      "context": "# RESULT \u2014 permuted-MNIST oscillation ablation: the gap WIDENS 7.6\u00d7 \u2014 2026-07-23",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "red-team-verified). 2 seeds, 4000 steps, RTX 4070. **Verdict: OSCILLATION LOAD-BEARING; WIDENS vs",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "4000",
+      "value": 4000.0,
+      "decimals": 0,
+      "context": "red-team-verified). 2 seeds, 4000 steps, RTX 4070. **Verdict: OSCILLATION LOAD-BEARING; WIDENS vs",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.steps"
+    },
+    {
+      "line": 11,
+      "token": "92.0",
+      "value": 92.0,
+      "decimals": 1,
+      "context": "model reaches **92.0%** while a bit-for-bit-identical decay model is stuck at **60.7%** \u2014 a **+31.2-point**",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.free_acc"
+    },
+    {
+      "line": 11,
+      "token": "60.7",
+      "value": 60.7,
+      "decimals": 1,
+      "context": "model reaches **92.0%** while a bit-for-bit-identical decay model is stuck at **60.7%** \u2014 a **+31.2-point**",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.clamped_acc"
+    },
+    {
+      "line": 12,
+      "token": "7.6",
+      "value": 7.6,
+      "decimals": 1,
+      "context": "gap, **7.6\u00d7 the +4.1 points** measured on sequential MNIST. When locality can no longer substitute for",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "+4.1",
+      "value": 4.1,
+      "decimals": 1,
+      "context": "gap, **7.6\u00d7 the +4.1 points** measured on sequential MNIST. When locality can no longer substitute for",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| arm | seed 0 | seed 1 | mean |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.seeds[0]"
+    },
+    {
+      "line": 18,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| arm | seed 0 | seed 1 | mean |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 20,
+      "token": "0.9240",
+      "value": 0.924,
+      "decimals": 4,
+      "context": "| **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:test_acc.free[0]"
+    },
+    {
+      "line": 20,
+      "token": "0.9150",
+      "value": 0.915,
+      "decimals": 4,
+      "context": "| **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:test_acc.free[1]"
+    },
+    {
+      "line": 20,
+      "token": "0.9195",
+      "value": 0.9195,
+      "decimals": 4,
+      "context": "| **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **FREE** (\u03b8 learnable, oscillatory) | 0.9240 | 0.9150 | **0.9195** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.free_acc"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.seeds[0]"
+    },
+    {
+      "line": 21,
+      "token": "0.5529",
+      "value": 0.5529,
+      "decimals": 4,
+      "context": "| **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:test_acc.clamped[0]"
+    },
+    {
+      "line": 21,
+      "token": "0.6617",
+      "value": 0.6617,
+      "decimals": 4,
+      "context": "| **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:test_acc.clamped[1]"
+    },
+    {
+      "line": 21,
+      "token": "0.6073",
+      "value": 0.6073,
+      "decimals": 4,
+      "context": "| **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "binding_context": "| arm | seed 0 | seed 1 | mean | | **CLAMPED** (\u03b8\u22610, pure decay) | 0.5529 | 0.6617 | **0.6073** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.clamped_acc"
+    },
+    {
+      "line": 23,
+      "token": "+0.3122",
+      "value": 0.3122,
+      "decimals": 4,
+      "context": "`FREE \u2212 CLAMPED = +0.3122`. Matched-param (101,002 vs 100,810) and RNG-matched; the single knob is \u03b8.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "101,002",
+      "value": 101002.0,
+      "decimals": 0,
+      "context": "`FREE \u2212 CLAMPED = +0.3122`. Matched-param (101,002 vs 100,810) and RNG-matched; the single knob is \u03b8.",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.params.free"
+    },
+    {
+      "line": 23,
+      "token": "100,810",
+      "value": 100810.0,
+      "decimals": 0,
+      "context": "`FREE \u2212 CLAMPED = +0.3122`. Matched-param (101,002 vs 100,810) and RNG-matched; the single knob is \u03b8.",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.params.clamped"
+    },
+    {
+      "line": 24,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Within-model reliance: clamping the trained FREE model's \u03b8\u21920 in place drops it to **0.1027** (chance),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.1027",
+      "value": 0.1027,
+      "decimals": 4,
+      "context": "Within-model reliance: clamping the trained FREE model's \u03b8\u21920 in place drops it to **0.1027** (chance),",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.free_within_model_theta_clamped_acc"
+    },
+    {
+      "line": 25,
+      "token": "+0.8168",
+      "value": 0.8168,
+      "decimals": 4,
+      "context": "a reliance of **+0.8168**.",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.oscillation_reliance_within_model"
+    },
+    {
+      "line": 31,
+      "token": "+0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "| sequential MNIST (has locality) | +0.0408 | yes-ish (94.3%) |",
+      "binding_context": "| task | oscillation gap (FREE \u2212 CLAMPED) | decay model can do it? | | sequential MNIST (has locality) | +0.0408 | yes-ish (94.3%) |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.smnist_gap"
+    },
+    {
+      "line": 31,
+      "token": "94.3",
+      "value": 94.3,
+      "decimals": 1,
+      "context": "| sequential MNIST (has locality) | +0.0408 | yes-ish (94.3%) |",
+      "binding_context": "| task | oscillation gap (FREE \u2212 CLAMPED) | decay model can do it? | | sequential MNIST (has locality) | +0.0408 | yes-ish (94.3%) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "+0.3122",
+      "value": 0.3122,
+      "decimals": 4,
+      "context": "| **permuted MNIST (no locality)** | **+0.3122** | **no (60.7%)** |",
+      "binding_context": "| task | oscillation gap (FREE \u2212 CLAMPED) | decay model can do it? | | **permuted MNIST (no locality)** | **+0.3122** | **no (60.7%)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.free_minus_clamped"
+    },
+    {
+      "line": 32,
+      "token": "60.7",
+      "value": 60.7,
+      "decimals": 1,
+      "context": "| **permuted MNIST (no locality)** | **+0.3122** | **no (60.7%)** |",
+      "binding_context": "| task | oscillation gap (FREE \u2212 CLAMPED) | decay model can do it? | | **permuted MNIST (no locality)** | **+0.3122** | **no (60.7%)** |",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.clamped_acc"
+    },
+    {
+      "line": 34,
+      "token": "7.6",
+      "value": 7.6,
+      "decimals": 1,
+      "context": "The gap **widens 7.6\u00d7**. Two causal facts make this decisive and *not* a smoke artifact: (i) on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "94",
+      "value": 94.0,
+      "decimals": 0,
+      "context": "sequential MNIST a decay model reaches 94% by exploiting adjacent-pixel structure, so the oscillation",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "gap is small; (ii) remove that crutch (permute) and the decay model collapses to 61% while the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "oscillatory model still reaches 92% \u2014 the oscillation *is* the long-range mechanism. Unlike the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "+0.131",
+      "value": 0.131,
+      "decimals": 3,
+      "context": "smoke (+0.131) to full training (+0.312), because the decay model plateaus while the oscillatory one",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "+0.312",
+      "value": 0.312,
+      "decimals": 3,
+      "context": "smoke (+0.131) to full training (+0.312), because the decay model plateaus while the oscillatory one",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:result.free_minus_clamped"
+    },
+    {
+      "line": 51,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "Scope: `H=64`, three blocks, 4000 steps, two seeds, one permutation (`perm_seed` 1234). A permutation-averaged",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 51,
+      "token": "4000",
+      "value": 4000.0,
+      "decimals": 0,
+      "context": "Scope: `H=64`, three blocks, 4000 steps, two seeds, one permutation (`perm_seed` 1234). A permutation-averaged",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.steps"
+    },
+    {
+      "line": 51,
+      "token": "1234",
+      "value": 1234.0,
+      "decimals": 0,
+      "context": "Scope: `H=64`, three blocks, 4000 steps, two seeds, one permutation (`perm_seed` 1234). A permutation-averaged",
+      "status": "VERIFIED",
+      "receipt_ref": "pmnist_ablation_result.json:config.perm_seed"
+    }
+  ]
+}

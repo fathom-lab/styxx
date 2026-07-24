@@ -1,0 +1,41 @@
+{
+  "config": {
+    "task": "permuted-MNIST",
+    "perm_seed": 1234,
+    "T": 784,
+    "H": 64,
+    "d_ssm": 64,
+    "blocks": 3,
+    "steps": 4000,
+    "seeds": [
+      0,
+      1
+    ],
+    "lr": 0.003,
+    "wd": 0.01,
+    "params": {
+      "free": 101002,
+      "clamped": 100810
+    }
+  },
+  "test_acc": {
+    "free": [
+      0.924,
+      0.915
+    ],
+    "clamped": [
+      0.5529,
+      0.6617
+    ]
+  },
+  "result": {
+    "free_acc": 0.9195,
+    "clamped_acc": 0.6073,
+    "free_minus_clamped": 0.3122,
+    "smnist_gap": 0.0408,
+    "sharpening_vs_smnist": "WIDENS vs sMNIST",
+    "free_within_model_theta_clamped_acc": 0.1027,
+    "oscillation_reliance_within_model": 0.8168,
+    "verdict": "OSCILLATION LOAD-BEARING"
+  }
+}

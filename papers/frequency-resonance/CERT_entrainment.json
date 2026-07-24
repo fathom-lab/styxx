@@ -1,0 +1,702 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_entrainment_2026_07_23.md",
+  "document_sha256": "60c4d8786d44098ce28bb07be01199915607d6089a63e8858382646cffadc686",
+  "receipts_sha256": {
+    "entrainment_result.json": "83be08c11ca60ac8b0919467f9dc1925c31b9e36550296fc5761f9a30fc62803"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 29,
+    "ABSTAIN": 31,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 5,
+      "token": "3"
+    },
+    {
+      "line": 5,
+      "token": "4070"
+    },
+    {
+      "line": 12,
+      "token": "4"
+    },
+    {
+      "line": 12,
+      "token": "8"
+    },
+    {
+      "line": 13,
+      "token": "16"
+    },
+    {
+      "line": 20,
+      "token": "+0.104"
+    },
+    {
+      "line": 22,
+      "token": "16"
+    },
+    {
+      "line": 22,
+      "token": "0.0863"
+    },
+    {
+      "line": 22,
+      "token": "+0.217"
+    },
+    {
+      "line": 24,
+      "token": "8"
+    },
+    {
+      "line": 26,
+      "token": "8"
+    },
+    {
+      "line": 27,
+      "token": "8"
+    },
+    {
+      "line": 27,
+      "token": "+144"
+    },
+    {
+      "line": 32,
+      "token": "8"
+    },
+    {
+      "line": 32,
+      "token": "+0.1703"
+    },
+    {
+      "line": 32,
+      "token": "0.10"
+    },
+    {
+      "line": 34,
+      "token": "+0.0396"
+    },
+    {
+      "line": 34,
+      "token": "0.05"
+    },
+    {
+      "line": 34,
+      "token": "23"
+    },
+    {
+      "line": 39,
+      "token": "0.0863"
+    },
+    {
+      "line": 41,
+      "token": "4"
+    },
+    {
+      "line": 41,
+      "token": "69"
+    },
+    {
+      "line": 41,
+      "token": "4"
+    },
+    {
+      "line": 42,
+      "token": "8"
+    },
+    {
+      "line": 46,
+      "token": "16"
+    },
+    {
+      "line": 58,
+      "token": "2605.09742"
+    },
+    {
+      "line": 67,
+      "token": "16"
+    },
+    {
+      "line": 67,
+      "token": "96"
+    },
+    {
+      "line": 67,
+      "token": "3"
+    },
+    {
+      "line": 70,
+      "token": "4"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`run_entrain_timing.py` (parallel-scan recurrence, red-team-verified `scan==seq` and `\u03ba=0==STATIC`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "bit-for-bit). 3 seeds, 1500 steps, RTX 4070 Laptop. **Verdict: KILL** at the pre-registered primary",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "bit-for-bit). 3 seeds, 1500 steps, RTX 4070 Laptop. **Verdict: KILL** at the pre-registered primary",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:config.steps"
+    },
+    {
+      "line": 5,
+      "token": "4070",
+      "value": 4070.0,
+      "decimals": 0,
+      "context": "bit-for-bit). 3 seeds, 1500 steps, RTX 4070 Laptop. **Verdict: KILL** at the pre-registered primary",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "effect is *real but confined to severe mode scarcity* (D=4), vanishes at D=8, and *reverses* (hurts)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "effect is *real but confined to severe mode scarcity* (D=4), vanishes at D=8, and *reverses* (hurts)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "when the bank is rich (D=16) \u2014 a monotone, mechanistically-coherent decay that sits below the frozen",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "| 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.4.static"
+    },
+    {
+      "line": 20,
+      "token": "0.318",
+      "value": 0.318,
+      "decimals": 3,
+      "context": "| 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.4.entrain"
+    },
+    {
+      "line": 20,
+      "token": "0.351",
+      "value": 0.351,
+      "decimals": 3,
+      "context": "| 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.4.oracle"
+    },
+    {
+      "line": 20,
+      "token": "+0.0718",
+      "value": 0.0718,
+      "decimals": 4,
+      "context": "| 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.entrain_advantage_by_D.4"
+    },
+    {
+      "line": 20,
+      "token": "+0.104",
+      "value": 0.104,
+      "decimals": 3,
+      "context": "| 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 4  | 0.247 | 0.318 | 0.351 | **+0.0718** | +0.104 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:config.primary_d"
+    },
+    {
+      "line": 21,
+      "token": "0.460",
+      "value": 0.46,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.static"
+    },
+    {
+      "line": 21,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.entrain"
+    },
+    {
+      "line": 21,
+      "token": "0.631",
+      "value": 0.631,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.oracle"
+    },
+    {
+      "line": 21,
+      "token": "+0.0396",
+      "value": 0.0396,
+      "decimals": 4,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.primary.entrain_minus_static"
+    },
+    {
+      "line": 21,
+      "token": "+0.1703",
+      "value": 0.1703,
+      "decimals": 4,
+      "context": "| **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | **8** (primary) | 0.460 | 0.500 | 0.631 | **+0.0396** | +0.1703 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
+    },
+    {
+      "line": 22,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.678",
+      "value": 0.678,
+      "decimals": 3,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.16.static"
+    },
+    {
+      "line": 22,
+      "token": "0.592",
+      "value": 0.592,
+      "decimals": 3,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.16.entrain"
+    },
+    {
+      "line": 22,
+      "token": "0.895",
+      "value": 0.895,
+      "decimals": 3,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.16.oracle"
+    },
+    {
+      "line": 22,
+      "token": "0.0863",
+      "value": 0.0863,
+      "decimals": 4,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "+0.217",
+      "value": 0.217,
+      "decimals": 3,
+      "context": "| 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "binding_context": "| D (modes) | STATIC | ENTRAIN | ORACLE (pos. ctrl) | ENTRAIN\u2212STATIC | ORACLE\u2212STATIC | | 16 | 0.678 | 0.592 | 0.895 | **\u22120.0863** | +0.217 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Floor / context (D=8): CLAMPED (pure decay) 0.348 \u2014 oscillation clearly beats decay. TRANSFORMER",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.348",
+      "value": 0.348,
+      "decimals": 3,
+      "context": "Floor / context (D=8): CLAMPED (pure decay) 0.348 \u2014 oscillation clearly beats decay. TRANSFORMER",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.clamped"
+    },
+    {
+      "line": 25,
+      "token": "0.916",
+      "value": 0.916,
+      "decimals": 3,
+      "context": "(attention, context only, **not** gated) 0.916 \u2014 dominates all recurrent arms. No-harm (fixed",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:transformer.drift"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "period, D=8): ENTRAIN\u2212STATIC = **+0.0304** (\u2265 \u22120.03, passes \u2014 entrainment does not break the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "+0.0304",
+      "value": 0.0304,
+      "decimals": 4,
+      "context": "period, D=8): ENTRAIN\u2212STATIC = **+0.0304** (\u2265 \u22120.03, passes \u2014 entrainment does not break the",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.noharm_fixed_entrain_minus_static"
+    },
+    {
+      "line": 26,
+      "token": "0.03",
+      "value": 0.03,
+      "decimals": 2,
+      "context": "period, D=8): ENTRAIN\u2212STATIC = **+0.0304** (\u2265 \u22120.03, passes \u2014 entrainment does not break the",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.noharm_fixed_entrain_minus_static"
+    },
+    {
+      "line": 27,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "stationary case). STATIC vs ENTRAIN are matched-param (D=8: 2052 vs 2196, the +144 = the detector",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "2196",
+      "value": 2196.0,
+      "decimals": 0,
+      "context": "stationary case). STATIC vs ENTRAIN are matched-param (D=8: 2052 vs 2196, the +144 = the detector",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:params.8.entrain"
+    },
+    {
+      "line": 27,
+      "token": "+144",
+      "value": 144.0,
+      "decimals": 0,
+      "context": "stationary case). STATIC vs ENTRAIN are matched-param (D=8: 2052 vs 2196, the +144 = the detector",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "Primary D=8: `oracle\u2212static = +0.1703 \u2265 0.10` \u2192 the positive control **fires** (a diverse bank",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "+0.1703",
+      "value": 0.1703,
+      "decimals": 4,
+      "context": "Primary D=8: `oracle\u2212static = +0.1703 \u2265 0.10` \u2192 the positive control **fires** (a diverse bank",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "Primary D=8: `oracle\u2212static = +0.1703 \u2265 0.10` \u2192 the positive control **fires** (a diverse bank",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "+0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "locked to the true drifting period is worth +0.17, so adaptation is genuinely rewarded \u2014 no",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
+    },
+    {
+      "line": 34,
+      "token": "+0.0396",
+      "value": 0.0396,
+      "decimals": 4,
+      "context": "ABSTAIN). `entrain\u2212static = +0.0396 < 0.05` \u2192 **KILL**: the learnable loop captures only **23%** of",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "ABSTAIN). `entrain\u2212static = +0.0396 < 0.05` \u2192 **KILL**: the learnable loop captures only **23%** of",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "ABSTAIN). `entrain\u2212static = +0.0396 < 0.05` \u2192 **KILL**: the learnable loop captures only **23%** of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "+0.0718",
+      "value": 0.0718,
+      "decimals": 4,
+      "context": "The advantage falls monotonically with the mode budget \u2014 `{D4: +0.0718, D8: +0.0396, D16: \u22120.0863}`",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.entrain_advantage_by_D.4"
+    },
+    {
+      "line": 39,
+      "token": "+0.0396",
+      "value": 0.0396,
+      "decimals": 4,
+      "context": "The advantage falls monotonically with the mode budget \u2014 `{D4: +0.0718, D8: +0.0396, D16: \u22120.0863}`",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.primary.entrain_minus_static"
+    },
+    {
+      "line": 39,
+      "token": "0.0863",
+      "value": 0.0863,
+      "decimals": 4,
+      "context": "The advantage falls monotonically with the mode budget \u2014 `{D4: +0.0718, D8: +0.0396, D16: \u22120.0863}`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "at the extreme-starved D=4 it beats static by +0.072 and captures ~69% of the oracle gap. But D=4 is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "+0.072",
+      "value": 0.072,
+      "decimals": 3,
+      "context": "at the extreme-starved D=4 it beats static by +0.072 and captures ~69% of the oracle gap. But D=4 is",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.entrain_advantage_by_D.4"
+    },
+    {
+      "line": 41,
+      "token": "69",
+      "value": 69.0,
+      "decimals": 0,
+      "context": "at the extreme-starved D=4 it beats static by +0.072 and captures ~69% of the oracle gap. But D=4 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "at the extreme-starved D=4 it beats static by +0.072 and captures ~69% of the oracle gap. But D=4 is",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 42,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "the pre-registered *fallback* (used only if the positive control failed at D=8, which it did not),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "into a *penalty* once the static bank has enough modes (D=16), because the noisy single-projection",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "0.351",
+      "value": 0.351,
+      "decimals": 3,
+      "context": "The **oracle ceiling is real and grows with D**: ORACLE reaches 0.351, 0.631, 0.895 against STATIC's",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.4.oracle"
+    },
+    {
+      "line": 49,
+      "token": "0.631",
+      "value": 0.631,
+      "decimals": 3,
+      "context": "The **oracle ceiling is real and grows with D**: ORACLE reaches 0.351, 0.631, 0.895 against STATIC's",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.oracle"
+    },
+    {
+      "line": 49,
+      "token": "0.895",
+      "value": 0.895,
+      "decimals": 3,
+      "context": "The **oracle ceiling is real and grows with D**: ORACLE reaches 0.351, 0.631, 0.895 against STATIC's",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.16.oracle"
+    },
+    {
+      "line": 50,
+      "token": "0.247",
+      "value": 0.247,
+      "decimals": 3,
+      "context": "0.247, 0.460, 0.678 \u2014 the gap a bank locked to the true timescale opens over the static bank *widens*",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.4.static"
+    },
+    {
+      "line": 50,
+      "token": "0.460",
+      "value": 0.46,
+      "decimals": 3,
+      "context": "0.247, 0.460, 0.678 \u2014 the gap a bank locked to the true timescale opens over the static bank *widens*",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.8.static"
+    },
+    {
+      "line": 50,
+      "token": "0.678",
+      "value": 0.678,
+      "decimals": 3,
+      "context": "0.247, 0.460, 0.678 \u2014 the gap a bank locked to the true timescale opens over the static bank *widens*",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:drift.16.static"
+    },
+    {
+      "line": 58,
+      "token": "2605.09742",
+      "value": 2605.09742,
+      "decimals": 5,
+      "context": "This corroborates **TIDES** (arXiv 2605.09742), which put input-dependence on the decay/step-size",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 67,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, L=96, integer-symbol streams, 3 seeds). The KILL is specific to **this detector** \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 67,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, L=96, integer-symbol streams, 3 seeds). The KILL is specific to **this detector** \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 67,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, L=96, integer-symbol streams, 3 seeds). The KILL is specific to **this detector** \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 70,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "multi-projection analytic signal) is the one lever not pulled here, and the D=4 niche + the large",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

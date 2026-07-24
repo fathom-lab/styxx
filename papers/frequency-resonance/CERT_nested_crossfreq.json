@@ -1,0 +1,550 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_nested_crossfreq_2026_07_23.md",
+  "document_sha256": "8a99f2fc89360704a4ef565352bdb60997dee5e8c0c7556fd0b5df823ab68e78",
+  "receipts_sha256": {
+    "nest_capacity_result.json": "75679b6740a4fbd1a7f59b68f902c288ca9bbb55cff8c58ae2a24284812d0145"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 30,
+    "ABSTAIN": 19,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 4,
+      "token": "0"
+    },
+    {
+      "line": 5,
+      "token": "3"
+    },
+    {
+      "line": 13,
+      "token": "5"
+    },
+    {
+      "line": 22,
+      "token": "16"
+    },
+    {
+      "line": 25,
+      "token": "8"
+    },
+    {
+      "line": 26,
+      "token": "8"
+    },
+    {
+      "line": 28,
+      "token": "8"
+    },
+    {
+      "line": 30,
+      "token": "+0.1825"
+    },
+    {
+      "line": 30,
+      "token": "0.05"
+    },
+    {
+      "line": 31,
+      "token": "+0.0091"
+    },
+    {
+      "line": 31,
+      "token": "0.02"
+    },
+    {
+      "line": 32,
+      "token": "5"
+    },
+    {
+      "line": 32,
+      "token": "2"
+    },
+    {
+      "line": 32,
+      "token": "8"
+    },
+    {
+      "line": 39,
+      "token": "16"
+    },
+    {
+      "line": 42,
+      "token": "8"
+    },
+    {
+      "line": 51,
+      "token": "0.58"
+    },
+    {
+      "line": 56,
+      "token": "16"
+    },
+    {
+      "line": 56,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 4,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`run_nest_capacity.py` (parallel-scan recurrence; red-team `scan==seq`, `\u03b1=0==FLAT` bit-for-bit,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "oracle slotting one-hot). 3 seeds, 3000 steps, RTX 4070. **Verdict: KILL** at the pre-registered",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "3000",
+      "value": 3000.0,
+      "decimals": 0,
+      "context": "oracle slotting one-hot). 3 seeds, 3000 steps, RTX 4070. **Verdict: KILL** at the pre-registered",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:config.steps"
+    },
+    {
+      "line": 12,
+      "token": "+0.183",
+      "value": 0.183,
+      "decimals": 3,
+      "context": "headroom is real (doubling modes buys **+0.183**), but explicit nesting captures essentially none of",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:gate.wide_minus_flat"
+    },
+    {
+      "line": 13,
+      "token": "+0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "it (**+0.009**, ~5%). The flat learnable oscillatory bank is already at the phase-multiplexing",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:acc_by_K.16.nest.2"
+    },
+    {
+      "line": 13,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "it (**+0.009**, ~5%). The flat learnable oscillatory bank is already at the phase-multiplexing",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:config.primary_d"
+    },
+    {
+      "line": 21,
+      "token": "0.376",
+      "value": 0.376,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:acc_by_K.8.oracle.5"
+    },
+    {
+      "line": 21,
+      "token": "0.385",
+      "value": 0.385,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.8.nest"
+    },
+    {
+      "line": 21,
+      "token": "0.385",
+      "value": 0.385,
+      "decimals": 3,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.8.nest"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.8.flat"
+    },
+    {
+      "line": 21,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | **8** (primary) | 0.376 | 0.385 | 0.385 | 0 / 0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.8.flat"
+    },
+    {
+      "line": 22,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.558",
+      "value": 0.558,
+      "decimals": 3,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.flat"
+    },
+    {
+      "line": 22,
+      "token": "0.578",
+      "value": 0.578,
+      "decimals": 3,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.nest"
+    },
+    {
+      "line": 22,
+      "token": "0.678",
+      "value": 0.678,
+      "decimals": 3,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.oracle"
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:config.kgrid[1]"
+    },
+    {
+      "line": 22,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "binding_context": "| D | FLAT | NEST | ORACLE (slotting) | kcap (flat/nest) | | 16 | 0.558 | 0.578 | 0.678 | 3 / 3 |",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:config.kgrid[1]"
+    },
+    {
+      "line": 24,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Positive control **WIDE** = FLAT with twice the mode budget (16 modes): mean-acc **0.558** (kcap 3). Context: CLAMPED",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:wide.d"
+    },
+    {
+      "line": 24,
+      "token": "0.558",
+      "value": 0.558,
+      "decimals": 3,
+      "context": "Positive control **WIDE** = FLAT with twice the mode budget (16 modes): mean-acc **0.558** (kcap 3). Context: CLAMPED",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.flat"
+    },
+    {
+      "line": 24,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Positive control **WIDE** = FLAT with twice the mode budget (16 modes): mean-acc **0.558** (kcap 3). Context: CLAMPED",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.16.flat"
+    },
+    {
+      "line": 25,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "(decay, D=8) 0.344; TRANSFORMER (attention) **0.980**, kcap **10** \u2014 dominates every recurrent arm, as",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "0.344",
+      "value": 0.344,
+      "decimals": 3,
+      "context": "(decay, D=8) 0.344; TRANSFORMER (attention) **0.980**, kcap **10** \u2014 dominates every recurrent arm, as",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.8.clamped"
+    },
+    {
+      "line": 25,
+      "token": "0.980",
+      "value": 0.98,
+      "decimals": 3,
+      "context": "(decay, D=8) 0.344; TRANSFORMER (attention) **0.980**, kcap **10** \u2014 dominates every recurrent arm, as",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:transformer.mean_acc"
+    },
+    {
+      "line": 25,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "(decay, D=8) 0.344; TRANSFORMER (attention) **0.980**, kcap **10** \u2014 dominates every recurrent arm, as",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:transformer.kcap"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "everywhere in this arc. FLAT vs NEST matched-param (D=8: 2116 vs 2126) and matched-compute.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "2116",
+      "value": 2116.0,
+      "decimals": 0,
+      "context": "everywhere in this arc. FLAT vs NEST matched-param (D=8: 2116 vs 2126) and matched-compute.",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:params.8.flat"
+    },
+    {
+      "line": 26,
+      "token": "2126",
+      "value": 2126.0,
+      "decimals": 0,
+      "context": "everywhere in this arc. FLAT vs NEST matched-param (D=8: 2116 vs 2126) and matched-compute.",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:params.8.nest"
+    },
+    {
+      "line": 28,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "## The frozen gate (primary D=8)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "+0.1825",
+      "value": 0.1825,
+      "decimals": 4,
+      "context": "`wide\u2212flat = +0.1825 \u2265 0.05` \u2192 capacity **headroom fires** (more modes genuinely buy capacity, so the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 30,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "`wide\u2212flat = +0.1825 \u2265 0.05` \u2192 capacity **headroom fires** (more modes genuinely buy capacity, so the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "+0.0091",
+      "value": 0.0091,
+      "decimals": 4,
+      "context": "task can detect a capacity gain). `nest\u2212flat = +0.0091 < 0.02` \u2192 **KILL**: explicit nesting captures",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "task can detect a capacity gain). `nest\u2212flat = +0.0091 < 0.02` \u2192 **KILL**: explicit nesting captures",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "only **5%** of the headroom a 2\u00d7-wider bank buys. The slotting-oracle diagnostic at D=8 is `+0.0095`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "only **5%** of the headroom a 2\u00d7-wider bank buys. The slotting-oracle diagnostic at D=8 is `+0.0095`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "only **5%** of the headroom a 2\u00d7-wider bank buys. The slotting-oracle diagnostic at D=8 is `+0.0095`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "+0.0095",
+      "value": 0.0095,
+      "decimals": 4,
+      "context": "only **5%** of the headroom a 2\u00d7-wider bank buys. The slotting-oracle diagnostic at D=8 is `+0.0095`",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:gate.slotting_oracle_minus_flat"
+    },
+    {
+      "line": 39,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "At **D=16** (modes \u2265 items for small K), the picture is not flat-zero: NEST reaches mean-acc 0.578",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 39,
+      "token": "0.578",
+      "value": 0.578,
+      "decimals": 3,
+      "context": "At **D=16** (modes \u2265 items for small K), the picture is not flat-zero: NEST reaches mean-acc 0.578",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.nest"
+    },
+    {
+      "line": 40,
+      "token": "0.558",
+      "value": 0.558,
+      "decimals": 3,
+      "context": "against FLAT's 0.558, and the perfect-slotting ORACLE reaches 0.678 (kcap 4 vs FLAT's 3). So",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.flat"
+    },
+    {
+      "line": 40,
+      "token": "0.678",
+      "value": 0.678,
+      "decimals": 3,
+      "context": "against FLAT's 0.558, and the perfect-slotting ORACLE reaches 0.678 (kcap 4 vs FLAT's 3). So",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:mean_acc.16.oracle"
+    },
+    {
+      "line": 40,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "against FLAT's 0.558, and the perfect-slotting ORACLE reaches 0.678 (kcap 4 vs FLAT's 3). So",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.16.oracle"
+    },
+    {
+      "line": 40,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "against FLAT's 0.558, and the perfect-slotting ORACLE reaches 0.678 (kcap 4 vs FLAT's 3). So",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.16.flat"
+    },
+    {
+      "line": 42,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "coupling captures only a sliver of the oracle's margin, and at the registered D=8 budget it is null. The consistent story across D: **capacity is bought by more",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 51,
+      "token": "0.980",
+      "value": 0.98,
+      "decimals": 3,
+      "context": "learns for free. Attention remains the dominant mechanism for this capacity task (0.980 vs \u22640.58",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:transformer.mean_acc"
+    },
+    {
+      "line": 51,
+      "token": "0.58",
+      "value": 0.58,
+      "decimals": 2,
+      "context": "learns for free. Attention remains the dominant mechanism for this capacity task (0.980 vs \u22640.58",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, K\u226410, integer symbols, 3 seeds). The KILL is for the **SSM-native operationalization**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, K\u226410, integer symbols, 3 seeds). The KILL is for the **SSM-native operationalization**",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "Toy scale (D\u226416, K\u226410, integer symbols, 3 seeds). The KILL is for the **SSM-native operationalization**",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:kcap.16.flat"
+    }
+  ]
+}
