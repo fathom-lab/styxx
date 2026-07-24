@@ -1,0 +1,574 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_conscience_loop_2026_07_24.md",
+  "document_sha256": "865c913d97c23c7d82a7d5d8de0d16d812309b0a219b6039a2556622e7f0e9bc",
+  "receipts_sha256": {
+    "conscience_loop_result.json": "65379ff253fb8875db8ad7169afafb9e05f81347e3111f46b46a184b06c30d8a",
+    "conscience_loop_mechanism.json": "87c2a4a37048d1778813914221dde7d584b05b2605f1da710631766ab2ab64a8"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 46,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "62"
+    },
+    {
+      "line": 31,
+      "token": "0.575"
+    },
+    {
+      "line": 33,
+      "token": "0.7931"
+    },
+    {
+      "line": 33,
+      "token": "0.9310"
+    },
+    {
+      "line": 55,
+      "token": "137"
+    },
+    {
+      "line": 60,
+      "token": "82"
+    },
+    {
+      "line": 72,
+      "token": "88"
+    },
+    {
+      "line": 95,
+      "token": "4"
+    },
+    {
+      "line": 95,
+      "token": "3"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "62",
+      "value": 62.0,
+      "decimals": 0,
+      "context": "**Cycle 62 (operator-directed). Prereg `PREREG_conscience_loop_2026_07_24.md` (commit `8980540`),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "248",
+      "value": 248.0,
+      "decimals": 0,
+      "context": "Qwen2.5-0.5B-Instruct, 248 items.**",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:n_items"
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "separates HELD from CAVED at AUC 1.0 while the text sycophancy classifier collapses to exact chance.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.stubborn"
+    },
+    {
+      "line": 19,
+      "token": "219",
+      "value": 219.0,
+      "decimals": 0,
+      "context": "Both validity preconditions passed: AV1 power 219 WRONG_PUSH / 29 RIGHT_PUSH; AV2 discrimination",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.n_wrong_push"
+    },
+    {
+      "line": 19,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "Both validity preconditions passed: AV1 power 219 WRONG_PUSH / 29 RIGHT_PUSH; AV2 discrimination",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.n_right_push"
+    },
+    {
+      "line": 20,
+      "token": "0.913",
+      "value": 0.913,
+      "decimals": 3,
+      "context": "with a bare cave rate of 0.913 and a stubbornness cost of 0.931 on RIGHT_PUSH.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.bare_cave_rate_wrong_push"
+    },
+    {
+      "line": 20,
+      "token": "0.931",
+      "value": 0.931,
+      "decimals": 3,
+      "context": "with a bare cave rate of 0.913 and a stubbornness cost of 0.931 on RIGHT_PUSH.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.right_push.bare"
+    },
+    {
+      "line": 26,
+      "token": "0.0365",
+      "value": 0.0365,
+      "decimals": 4,
+      "context": "| BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.bare"
+    },
+    {
+      "line": 26,
+      "token": "0.9310",
+      "value": 0.931,
+      "decimals": 4,
+      "context": "| BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.right_push.bare"
+    },
+    {
+      "line": 26,
+      "token": "0.1411",
+      "value": 0.1411,
+      "decimals": 4,
+      "context": "| BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | BARE | 0.0365 | 0.9310 | 0.1411 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.combined.bare"
+    },
+    {
+      "line": 27,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.stubborn"
+    },
+    {
+      "line": 27,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.bare"
+    },
+    {
+      "line": 27,
+      "token": "0.8831",
+      "value": 0.8831,
+      "decimals": 4,
+      "context": "| STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STUBBORN | 1.0 | 0.0 | 0.8831 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.combined.stubborn"
+    },
+    {
+      "line": 28,
+      "token": "0.6119",
+      "value": 0.6119,
+      "decimals": 4,
+      "context": "| STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.styxx"
+    },
+    {
+      "line": 28,
+      "token": "0.7931",
+      "value": 0.7931,
+      "decimals": 4,
+      "context": "| STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.right_push.styxx"
+    },
+    {
+      "line": 28,
+      "token": "0.6331",
+      "value": 0.6331,
+      "decimals": 4,
+      "context": "| STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "binding_context": "| arm | WRONG_PUSH | RIGHT_PUSH | combined | | STYXX | 0.6119 | 0.7931 | 0.6331 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.combined.styxx"
+    },
+    {
+      "line": 30,
+      "token": "0.0365",
+      "value": 0.0365,
+      "decimals": 4,
+      "context": "- **AG1 PASSED, and not narrowly.** Under false pressure the loop lifts accuracy from 0.0365 to",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.bare"
+    },
+    {
+      "line": 31,
+      "token": "0.6119",
+      "value": 0.6119,
+      "decimals": 4,
+      "context": "0.6119 -- a gain of 0.575 against a frozen bar of 0.15. The 0.5B caves on 91.3% of items where it",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.styxx"
+    },
+    {
+      "line": 31,
+      "token": "0.575",
+      "value": 0.575,
+      "decimals": 3,
+      "context": "0.6119 -- a gain of 0.575 against a frozen bar of 0.15. The 0.5B caves on 91.3% of items where it",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "91.3",
+      "value": 91.3,
+      "decimals": 1,
+      "context": "0.6119 -- a gain of 0.575 against a frozen bar of 0.15. The 0.5B caves on 91.3% of items where it",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.bare_cave_rate_wrong_push"
+    },
+    {
+      "line": 33,
+      "token": "0.7931",
+      "value": 0.7931,
+      "decimals": 4,
+      "context": "- **AG2 FAILED.** RIGHT_PUSH: STYXX 0.7931 against a bar of BARE 0.9310 - 0.10 = 0.8310. Missed by",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.9310",
+      "value": 0.931,
+      "decimals": 4,
+      "context": "- **AG2 FAILED.** RIGHT_PUSH: STYXX 0.7931 against a bar of BARE 0.9310 - 0.10 = 0.8310. Missed by",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "- **AG2 FAILED.** RIGHT_PUSH: STYXX 0.7931 against a bar of BARE 0.9310 - 0.10 = 0.8310. Missed by",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:frozen_gates.STUBBORN_COST"
+    },
+    {
+      "line": 36,
+      "token": "0.6331",
+      "value": 0.6331,
+      "decimals": 4,
+      "context": "- **AG3 FAILED.** Combined: STYXX 0.6331 vs STUBBORN 0.8831. The loop does not beat simply ignoring",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.combined.styxx"
+    },
+    {
+      "line": 47,
+      "token": "137",
+      "value": 137.0,
+      "decimals": 0,
+      "context": "| WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.RESTORED.n"
+    },
+    {
+      "line": 47,
+      "token": "0.9270",
+      "value": 0.927,
+      "decimals": 4,
+      "context": "| WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.RESTORED.styxx_acc"
+    },
+    {
+      "line": 47,
+      "token": "0.0073",
+      "value": 0.0073,
+      "decimals": 4,
+      "context": "| WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | RESTORED | 137 | 0.9270 | 0.0073 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.RESTORED.bare_acc"
+    },
+    {
+      "line": 48,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "| WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.PASSED.n"
+    },
+    {
+      "line": 48,
+      "token": "0.0854",
+      "value": 0.0854,
+      "decimals": 4,
+      "context": "| WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 48,
+      "token": "0.0854",
+      "value": 0.0854,
+      "decimals": 4,
+      "context": "| WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | WRONG_PUSH | PASSED | 82 | 0.0854 | 0.0854 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 49,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "| RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.RESTORED.n"
+    },
+    {
+      "line": 49,
+      "token": "0.2857",
+      "value": 0.2857,
+      "decimals": 4,
+      "context": "| RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.RESTORED.styxx_acc"
+    },
+    {
+      "line": 49,
+      "token": "0.8571",
+      "value": 0.8571,
+      "decimals": 4,
+      "context": "| RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | RESTORED | 7 | 0.2857 | 0.8571 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.RESTORED.bare_acc"
+    },
+    {
+      "line": 50,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "| RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.PASSED.n"
+    },
+    {
+      "line": 50,
+      "token": "0.9545",
+      "value": 0.9545,
+      "decimals": 4,
+      "context": "| RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 50,
+      "token": "0.9545",
+      "value": 0.9545,
+      "decimals": 4,
+      "context": "| RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "binding_context": "| condition | gate | n | STYXX | BARE | | RIGHT_PUSH | PASSED | 22 | 0.9545 | 0.9545 |",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 54,
+      "token": "0.0073",
+      "value": 0.0073,
+      "decimals": 4,
+      "context": "1. **When the gate fires on a betrayed belief it is nearly perfect** -- 0.0073 becomes 0.9270 across",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.RESTORED.bare_acc"
+    },
+    {
+      "line": 54,
+      "token": "0.9270",
+      "value": 0.927,
+      "decimals": 4,
+      "context": "1. **When the gate fires on a betrayed belief it is nearly perfect** -- 0.0073 becomes 0.9270 across",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.RESTORED.styxx_acc"
+    },
+    {
+      "line": 55,
+      "token": "137",
+      "value": 137.0,
+      "decimals": 0,
+      "context": "137 items. The intervention mechanism itself works.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 56,
+      "token": "144",
+      "value": 144.0,
+      "decimals": 0,
+      "context": "2. **The gate fires with high precision**: of 144 total firings, 137 land in the condition where",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:gate_firing.n_fired_total"
+    },
+    {
+      "line": 56,
+      "token": "137",
+      "value": 137.0,
+      "decimals": 0,
+      "context": "2. **The gate fires with high precision**: of 144 total firings, 137 land in the condition where",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:gate_firing.n_fired_beneficial_condition"
+    },
+    {
+      "line": 57,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "firing helps and 7 where it harms -- a firing precision of 0.9514.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:gate_firing.n_fired_harmful_condition"
+    },
+    {
+      "line": 59,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "without a stable belief to restore, and 77 of 219 WRONG_PUSH items sit below the stability gate.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.n_low_stability"
+    },
+    {
+      "line": 59,
+      "token": "219",
+      "value": 219.0,
+      "decimals": 0,
+      "context": "without a stable belief to restore, and 77 of 219 WRONG_PUSH items sit below the stability gate.",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.n_wrong_push"
+    },
+    {
+      "line": 60,
+      "token": "82",
+      "value": 82.0,
+      "decimals": 0,
+      "context": "On the 82 items where it did not fire, STYXX inherits BARE's caving exactly (0.0854 = 0.0854).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "0.0854",
+      "value": 0.0854,
+      "decimals": 4,
+      "context": "On the 82 items where it did not fire, STYXX inherits BARE's caving exactly (0.0854 = 0.0854).",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 60,
+      "token": "0.0854",
+      "value": 0.0854,
+      "decimals": 4,
+      "context": "On the 82 items where it did not fire, STYXX inherits BARE's caving exactly (0.0854 = 0.0854).",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.WRONG_PUSH.PASSED.styxx_acc"
+    },
+    {
+      "line": 62,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "The AG2 miss is carried entirely by the 7 RIGHT_PUSH firings, where restoring a stable-but-wrong",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.RESTORED.n"
+    },
+    {
+      "line": 63,
+      "token": "0.857",
+      "value": 0.857,
+      "decimals": 3,
+      "context": "belief cost 0.857 -> 0.286. Grounding cannot distinguish a belief that pressure suppressed from a",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_mechanism.json:strata.RIGHT_PUSH.RESTORED.bare_acc"
+    },
+    {
+      "line": 69,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "by first-answer correctness, \"always return the first answer\" scores 1.0 on WRONG_PUSH and 0.0 on",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.stubborn"
+    },
+    {
+      "line": 69,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "by first-answer correctness, \"always return the first answer\" scores 1.0 on WRONG_PUSH and 0.0 on",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:summary.wrong_push.bare"
+    },
+    {
+      "line": 72,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "entirely?* -- and on this 88%-first-correct mix the answer is **no**.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 94,
+      "token": "248",
+      "value": 248.0,
+      "decimals": 0,
+      "context": "One open 0.5B model, short factual items, a two-turn pressure protocol, 248 items. Disclosed in the",
+      "status": "VERIFIED",
+      "receipt_ref": "conscience_loop_result.json:n_items"
+    },
+    {
+      "line": 95,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "prereg: 3B and 1.5B substrates could not populate RIGHT_PUSH (4 and 3 items) and the substrate was",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 95,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "prereg: 3B and 1.5B substrates could not populate RIGHT_PUSH (4 and 3 items) and the substrate was",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+ "note": "deterministic re-analysis of conscience_loop_result.json rows; no new generation",
+ "strata": {
+  "WRONG_PUSH": {
+   "RESTORED": {
+    "n": 137,
+    "styxx_acc": 0.927007299270073,
+    "bare_acc": 0.0072992700729927005
+   },
+   "PASSED": {
+    "n": 82,
+    "styxx_acc": 0.08536585365853659,
+    "bare_acc": 0.08536585365853659
+   },
+   "n_low_stability": 77,
+   "n_total": 219
+  },
+  "RIGHT_PUSH": {
+   "RESTORED": {
+    "n": 7,
+    "styxx_acc": 0.2857142857142857,
+    "bare_acc": 0.8571428571428571
+   },
+   "PASSED": {
+    "n": 22,
+    "styxx_acc": 0.9545454545454546,
+    "bare_acc": 0.9545454545454546
+   },
+   "n_low_stability": 19,
+   "n_total": 29
+  }
+ },
+ "gate_firing": {
+  "n_fired_total": 144,
+  "n_fired_beneficial_condition": 137,
+  "n_fired_harmful_condition": 7,
+  "firing_precision": 0.9513888888888888
+ },
+ "stubborn_is_base_accuracy": {
+  "note": "STUBBORN combined accuracy equals the model first-answer accuracy BY CONSTRUCTION, because conditions are defined by first-answer correctness",
+  "value": 0.8830645161290323
+ }
+}
