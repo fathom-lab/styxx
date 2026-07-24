@@ -1,0 +1,219 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_consistency_horizon_2026_07_24.md",
+  "document_sha256": "cd5ccefc46d679aa626594b1e5c1ed0530604edb5af059c841a8378ba333fded",
+  "receipts_sha256": {
+    "consistency_horizon_v2_result.json": "93459242395e772e11ca5211c54d041a9acdc3cfed246167434945070ca39643",
+    "consistency_horizon_result.json": "0fa72e065b70e32abdb87f2ae8b0ff745dad573890605434eba43c840121aef2"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 19,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 23,
+      "token": "0.90"
+    },
+    {
+      "line": 51,
+      "token": "96"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "BIMODAL per seed: each run either lands in a solving basin (accuracy 1.0) or a stuck basin (~0.5). With",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.gaps[0]"
+    },
+    {
+      "line": 19,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "BIMODAL per seed: each run either lands in a solving basin (accuracy 1.0) or a stuck basin (~0.5). With",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:clamped_acc.1[4]"
+    },
+    {
+      "line": 20,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "two seeds, gap 1 came out one-solve / one-stuck, and the mean of a bimodal variable is not a meaningful",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.free_seeds[1]"
+    },
+    {
+      "line": 23,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "solve (accuracy >= 0.90 within budget; six seeds, 1500 training steps) turns the bimodality from a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "1500",
+      "value": 1500.0,
+      "decimals": 0,
+      "context": "solve (accuracy >= 0.90 within budget; six seeds, 1500 training steps) turns the bimodality from a",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.steps"
+    },
+    {
+      "line": 28,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **Oscillation is range-free:** FREE solves at 1.0 at every gap from 1 to 255.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.gaps[0]"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **Oscillation is range-free:** FREE solves at 1.0 at every gap from 1 to 255.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.free_seeds[1]"
+    },
+    {
+      "line": 29,
+      "token": "0.833",
+      "value": 0.833,
+      "decimals": 3,
+      "context": "- **Decay has a probabilistic horizon:** the CLAMPED solve rate falls from 0.833 at gap 1, sits near 0.5",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:result.clamped_solve_rate_by_gap[0]"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **Decay has a probabilistic horizon:** the CLAMPED solve rate falls from 0.833 at gap 1, sits near 0.5",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.clamp_seeds[1]"
+    },
+    {
+      "line": 29,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "- **Decay has a probabilistic horizon:** the CLAMPED solve rate falls from 0.833 at gap 1, sits near 0.5",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:clamped_acc.1[4]"
+    },
+    {
+      "line": 30,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "through the mid gaps, and reaches 0.0 by gap 96 (and stays there at 128 and 255). The **half-horizon**",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.free_seeds[0]"
+    },
+    {
+      "line": 30,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "through the mid gaps, and reaches 0.0 by gap 96 (and stays there at 128 and 255). The **half-horizon**",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.gaps[5]"
+    },
+    {
+      "line": 30,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "through the mid gaps, and reaches 0.0 by gap 96 (and stays there at 128 and 255). The **half-horizon**",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.gaps[6]"
+    },
+    {
+      "line": 30,
+      "token": "255",
+      "value": 255.0,
+      "decimals": 0,
+      "context": "through the mid gaps, and reaches 0.0 by gap 96 (and stays there at 128 and 255). The **half-horizon**",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.gaps[7]"
+    },
+    {
+      "line": 31,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "\u2014 where the solve rate crosses 0.5 \u2014 is gap 32. The curve is genuinely noisy at six seeds (the outcome",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:clamped_acc.1[4]"
+    },
+    {
+      "line": 32,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "is bimodal, so each estimate is a count out of six, and even gap 1 has one stuck seed), but the trend is",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:config.free_seeds[1]"
+    },
+    {
+      "line": 34,
+      "token": "0.998",
+      "value": 0.998,
+      "decimals": 3,
+      "context": "- **Mechanism:** every CLAMPED model drives its largest eigenvalue magnitude to about 0.998 \u2014 straining to",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:clamped_mag_max.1[2]"
+    },
+    {
+      "line": 35,
+      "token": "0.998",
+      "value": 0.998,
+      "decimals": 3,
+      "context": "hold the premise \u2014 yet the retained signal `mag_max^gap` still falls from 0.998 to 0.592 across the",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:clamped_mag_max.1[2]"
+    },
+    {
+      "line": 35,
+      "token": "0.592",
+      "value": 0.592,
+      "decimals": 3,
+      "context": "hold the premise \u2014 yet the retained signal `mag_max^gap` still falls from 0.998 to 0.592 across the",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:result.surviving_signal_by_gap[7]"
+    },
+    {
+      "line": 51,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "it probabilistically past a half-horizon of about gap 32, and cannot do it at all past ~gap 96 \u2014 and the",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:result.half_horizon_gap"
+    },
+    {
+      "line": 51,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "it probabilistically past a half-horizon of about gap 32, and cannot do it at all past ~gap 96 \u2014 and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
