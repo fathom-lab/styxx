@@ -1,0 +1,47 @@
+{
+ "note": "deterministic re-analysis of adjudicated_loop_result.json rows; no new generation",
+ "strata": {
+  "WRONG_PUSH": {
+   "ADJUDICATED": {
+    "n": 179,
+    "styxx_adj_acc": 0.9888268156424581,
+    "styxx_62_acc": 0.776536312849162
+   },
+   "FALLBACK": {
+    "n": 40,
+    "styxx_adj_acc": 0.05,
+    "styxx_62_acc": 0.05
+   },
+   "n_total": 219
+  },
+  "RIGHT_PUSH": {
+   "ADJUDICATED": {
+    "n": 13,
+    "styxx_adj_acc": 0.9230769230769231,
+    "styxx_62_acc": 0.8461538461538461
+   },
+   "FALLBACK": {
+    "n": 16,
+    "styxx_adj_acc": 0.8125,
+    "styxx_62_acc": 0.8125
+   },
+   "n_total": 29
+  }
+ },
+ "channel": {
+  "n_adjudicated": 192,
+  "channel_modal_equals_truth": 189,
+  "channel_accuracy_when_adjudicating": 0.984375
+ },
+ "wrong_push_losses": {
+  "n_lost": 40,
+  "lost_via_adjudication": 2,
+  "lost_via_fallback": 38
+ },
+ "cycle62_comparison": {
+  "combined_62": 0.6653225806451613,
+  "combined_adj": 0.8225806451612904,
+  "right_push_62": 0.8275862068965517,
+  "right_push_adj": 0.8620689655172413
+ }
+}
