@@ -50,6 +50,35 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 61 (2026-07-24, autopilot) — the BURIED-JUDGE family: the boundary between PRICE and REFUSE, characterized rather than assumed. `SURVIVED__prices_where_covered_refuses_below_gate` (FINDING OATH-HELD verified=62 abstained=13 contradicted=0).**
+  Cycle 60's named next step: "a genuinely-informative-but-HARD family (real judge buried under
+  noise) would sharpen the price/refuse boundary". This is it, on the SEALED Stage-A DGP audited
+  by the SHIPPED `styxx.anchors.audit_panel` — nothing invented. One informative judge (alpha
+  0.30, beta 0.30+sep) among three deaf, honest exchangeable anchors, true separation swept
+  {0.00, 0.16, 0.22, 0.25, 0.28, 0.34, 0.40} through the effective noise-margin gate (~0.255 at
+  K=400), R=60/cell. Prereg `4be0433` frozen before the scored run. **The kill was LIVE, not a
+  victory lap:** near the gate the keep decision selects on the anchor draw, biasing the point
+  estimate (sep 0.22 priced pi_median 0.4274 off true 0.35) — PD_DANGER (any priced cell with
+  pi-CI coverage < 0.80 → CLOSED_NEGATIVE over-pricing) genuinely could have fired. **It did not.**
+  The verdict moves with the signal and the interval stays covered wherever it prices: deaf VOID
+  1.000; at the gate (sep 0.25) a near-even split — 31/60 priced with coverage 28/31 (0.903); sep
+  0.28 47/49; sep 0.34 58/60; sep 0.40 59/60. The selective bootstrap widens the near-gate interval
+  enough to price the selection uncertainty; the bias shrinks toward truth as separation grows
+  (pi_median 0.4274→0.3462→0.354→0.3443→0.3477). PD_MOVE / PD_DANGER / PD_HONEST all pass;
+  PD_BOUNDARY (reported) = 0.25 — coverage clears 0.90 at the very cell pricing first crosses 50%.
+  **The four-family partition is now complete in shape:** attr+numeric PRICE, chain+temporal
+  REFUSE, and the boundary between them is a covered-where-priced / VOID-below-gate transition, not
+  an assumption. certify.py untouched (no `validate_oath_v0` re-run owed); pytest **1786 passed / 8
+  skipped**; py_compile clean. Commits `4be0433` (prereg), `27be370` (result), pushed to
+  `paper/anchored-validity`.
+  *Next:* the boundary result belongs in the paper's model-generality section alongside the
+  partition (operator-gated). Scope is narrow and unchanged — single informative judge, honest
+  exchangeable anchors, simulation; the correlated multi-judge boundary and non-exchangeable-anchor
+  interaction are untouched and would be the next sharpening. Residuals unchanged: genuine frontier
+  panel (Fable credits), in-the-wild eval. Operator button DISTRIBUTION (arXiv) remains the only
+  open action. NOTE for orient: pre-existing uncommitted local state (frequency-resonance
+  entrainment files, p2c cache, disjoint-worlds notes) remains untouched — not this cycle to adjudicate.
+
 - **Cycle 60 (2026-07-23, autopilot) — PART 2e: the pricing gate on the THIRD task family (temporal) — the pre-named smooth-violation KILL PATH. `CLOSED_NEGATIVE__ladder_refuses_on_temporal` (FINDING OATH-HELD verified=12 abstained=10 contradicted=0). Pricing is SCOPED; refusal is not.**
   Temporal was chosen adversarially, not as a victory lap: it is the smooth-violation family that
   on the same-model 3B panel (cycle 51) produced the program's worst gold-anchor errors (0.65) and
