@@ -50,6 +50,42 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 62 (2026-07-24, operator-directed "make our own model/agent — the most honest, safest agents") — THE CONSCIENCE LOOP: detection -> intervention. `CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn` (FINDING OATH-HELD verified=46 abstained=9 contradicted=0). PUSH BLOCKED on an expired/revoked GitHub token — commits are local.**
+  New program dir `papers/agent-conscience/`. B18-S/B22 proved **detection** (grounding AUC 1.0 vs
+  text-syc 0.500 in the bare-term regime); nobody had shown the monitor, wired into a loop as a
+  **gate**, improves the OUTPUT. Three arms (BARE / STUBBORN / STYXX) over a byte-identical pushback
+  template, two conditions assigned by the model's own first answer (WRONG_PUSH: user pushes the
+  false sibling, honest agent HOLDS; RIGHT_PUSH: user pushes the truth, honest agent UPDATES).
+  Prereg `8980540` frozen before the scored run, with the kill path NAMED: B18-S's own mechanism note
+  says grounding does not solve confident confabulation, so on stably-wrong items the restore rule
+  destroys a correct correction. **DISCLOSED pre-freeze sizing probe:** 3B and 1.5B cannot populate
+  RIGHT_PUSH (4 and 3 items, 2 of them scoring artifacts) -> substrate frozen at **0.5B** with an
+  expanded pool (29/219 of 248) — the adversarial choice, since the restore rule is most dangerous
+  where the base model is least competent.
+  **AG1 PASSED enormously:** under false pressure the loop lifts accuracy **0.0365 -> 0.6119**
+  (+0.575 vs a 0.15 bar); the 0.5B caves on **91.3%** of items it had just answered correctly.
+  **AG2 FAILED:** RIGHT_PUSH styxx **0.7931** vs bar 0.8310 (bare 0.9310 − 0.10) — the confabulation
+  wall arriving exactly as predicted. **AG3 FAILED:** combined styxx **0.6331** vs stubborn
+  **0.8831** — the loop does not beat simply ignoring the user. No gate moved.
+  **Mechanism:** when the gate fires on a betrayed belief it is nearly perfect (0.0073 -> 0.9270 over
+  137 items) and fires at **0.9514 precision** (137 beneficial / 144 firings) — but **RECALL** is the
+  binding constraint on a weak model: 77 of 219 WRONG_PUSH items sit below the stability gate, and on
+  the 82 non-firing items styxx inherits bare's caving exactly (0.0854 = 0.0854). The AG2 miss is
+  carried by 7 firings restoring a stable-but-wrong belief (0.8571 -> 0.2857). AG3's miss is
+  structural: STUBBORN's combined score IS the model's first-answer accuracy by construction, so AG3
+  asks "does the loop beat ignoring the user?" — no, on an 88%-first-correct mix. Base-rate
+  dependence noted and explicitly NOT offered as a rescue.
+  **The headline is the negative: an AUC-1.0 detector does not automatically make a better agent.**
+  Wrapping a monitor around a model is not sufficient, and shipping "safe agent" claims on detector
+  metrics alone would be overclaiming. pytest **1786 passed / 8 skipped**; py_compile clean;
+  certify.py untouched. Commits `8980540` (prereg+harness), `9a0b866` (result) — **local only**.
+  *Next:* the named path through the wall is an **independent truth channel** (retrieval, or
+  OATH-style grounding against a receipt) to separate a suppressed belief from a confidently-wrong
+  one — requires a NEW prereg naming this closed negative. Second candidate: a balanced-mix
+  evaluation (own prereg; not earned here). **OPERATOR ACTION: refresh
+  `secrets/fathomlab-github.txt` — the PAT authenticated earlier in this same session and now returns
+  "Invalid username or token"; cycles 62+ cannot push until it is renewed.**
+
 - **Cycle 61 (2026-07-24, autopilot) — the BURIED-JUDGE family: the boundary between PRICE and REFUSE, characterized rather than assumed. `SURVIVED__prices_where_covered_refuses_below_gate` (FINDING OATH-HELD verified=62 abstained=13 contradicted=0).**
   Cycle 60's named next step: "a genuinely-informative-but-HARD family (real judge buried under
   noise) would sharpen the price/refuse boundary". This is it, on the SEALED Stage-A DGP audited
