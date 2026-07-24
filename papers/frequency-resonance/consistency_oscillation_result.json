@@ -1,0 +1,62 @@
+{
+  "config": {
+    "task": "delayed-consistency: cmp(claim==premise) vs claimonly control",
+    "T": 256,
+    "H": 64,
+    "d_ssm": 64,
+    "blocks": 3,
+    "steps": 5000,
+    "seeds": [
+      0,
+      1
+    ],
+    "n_train": 24000,
+    "n_test": 6000,
+    "conditions": [
+      "cmp-adj",
+      "cmp-long",
+      "claimonly-adj"
+    ]
+  },
+  "acc": {
+    "cmp_adj_free": [
+      1.0,
+      1.0
+    ],
+    "cmp_adj_clamped": [
+      1.0,
+      1.0
+    ],
+    "cmp_long_free": [
+      1.0,
+      1.0
+    ],
+    "cmp_long_clamped": [
+      0.4857,
+      0.4857
+    ],
+    "claimonly_adj_free": [
+      1.0,
+      1.0
+    ],
+    "claimonly_adj_clamped": [
+      1.0,
+      1.0
+    ]
+  },
+  "result": {
+    "cmp_adj_free": 1.0,
+    "cmp_adj_clamped": 1.0,
+    "cmp_long_free": 1.0,
+    "cmp_long_clamped": 0.4857,
+    "claimonly_free": 1.0,
+    "claimonly_clamped": 1.0,
+    "gap_adj": 0.0,
+    "gap_long": 0.5143,
+    "difference_in_differences": 0.5143,
+    "within_model_reliance_cmp_adj": 0.5143,
+    "within_model_reliance_cmp_long": 0.5143,
+    "positive_controls_fired": true,
+    "verdict": "SUPPORT__long_range_comparison_requires_oscillation"
+  }
+}

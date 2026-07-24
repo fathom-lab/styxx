@@ -1,0 +1,273 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_consistency_oscillation_2026_07_23.md",
+  "document_sha256": "f3b9215f0a7edb0b7ce3398ca9b998ade59e513f8693c61e2feb2d9da561273e",
+  "receipts_sha256": {
+    "consistency_oscillation_result.json": "7b4d0101f5c04af33b1642c6652adb18f049c9e125692be01df5e4cb669787f0"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "0"
+    },
+    {
+      "line": 12,
+      "token": "2"
+    },
+    {
+      "line": 12,
+      "token": "256"
+    },
+    {
+      "line": 23,
+      "token": "255"
+    },
+    {
+      "line": 27,
+      "token": "0"
+    },
+    {
+      "line": 32,
+      "token": "0"
+    },
+    {
+      "line": 35,
+      "token": "255"
+    },
+    {
+      "line": 35,
+      "token": "1"
+    },
+    {
+      "line": 52,
+      "token": "0"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "phase-clamp knob (FREE: theta learnable vs CLAMPED: theta==0, matched-param, RNG-matched, 2 seeds, T=256,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "phase-clamp knob (FREE: theta learnable vs CLAMPED: theta==0, matched-param, RNG-matched, 2 seeds, T=256,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "256",
+      "value": 256.0,
+      "decimals": 0,
+      "context": "phase-clamp knob (FREE: theta learnable vs CLAMPED: theta==0, matched-param, RNG-matched, 2 seeds, T=256,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "5000",
+      "value": 5000.0,
+      "decimals": 0,
+      "context": "5000 steps), with two controls that a decay model must pass for the test to be valid.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.steps"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **claim-only** (a lone input, no premise): FREE 1.0, CLAMPED 1.0 \u2014 a decay model reads an input fine.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **claim-only** (a lone input, no premise): FREE 1.0, CLAMPED 1.0 \u2014 a decay model reads an input fine.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **cmp-adjacent** (premise one step before the claim): FREE 1.0, CLAMPED 1.0, gap 0.0 \u2014 a decay model",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **cmp-adjacent** (premise one step before the claim): FREE 1.0, CLAMPED 1.0, gap 0.0 \u2014 a decay model",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 19,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "- **cmp-adjacent** (premise one step before the claim): FREE 1.0, CLAMPED 1.0, gap 0.0 \u2014 a decay model",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[0]"
+    },
+    {
+      "line": 23,
+      "token": "255",
+      "value": 255.0,
+      "decimals": 0,
+      "context": "- **cmp-long** (premise 255 steps before the claim): FREE 1.0, CLAMPED 0.4857 \u2014 the decay model collapses",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **cmp-long** (premise 255 steps before the claim): FREE 1.0, CLAMPED 0.4857 \u2014 the decay model collapses",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[1]"
+    },
+    {
+      "line": 23,
+      "token": "0.4857",
+      "value": 0.4857,
+      "decimals": 4,
+      "context": "- **cmp-long** (premise 255 steps before the claim): FREE 1.0, CLAMPED 0.4857 \u2014 the decay model collapses",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:acc.cmp_long_clamped[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.4857",
+      "value": 0.4857,
+      "decimals": 4,
+      "context": "to chance, both seeds landing on 0.4857 exactly, while the oscillatory model is perfect.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:acc.cmp_long_clamped[0]"
+    },
+    {
+      "line": 26,
+      "token": "0.5143",
+      "value": 0.5143,
+      "decimals": 4,
+      "context": "gap_long 0.5143, gap_adj 0.0, difference-in-differences 0.5143. The within-model post-hoc reliance agrees:",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:result.gap_long"
+    },
+    {
+      "line": 26,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "gap_long 0.5143, gap_adj 0.0, difference-in-differences 0.5143. The within-model post-hoc reliance agrees:",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[0]"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "clamping theta to 0 inside the trained FREE long-comparison model drops it by 0.5143, versus 0.0 on the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0.5143",
+      "value": 0.5143,
+      "decimals": 4,
+      "context": "clamping theta to 0 inside the trained FREE long-comparison model drops it by 0.5143, versus 0.0 on the",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:result.gap_long"
+    },
+    {
+      "line": 27,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "clamping theta to 0 inside the trained FREE long-comparison model drops it by 0.5143, versus 0.0 on the",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.seeds[0]"
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "With theta==0 a premise and a later claim land in the same readout direction as mag^gap times premise plus",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "claim. At gap 1 the four premise/claim cases separate by the magnitude of that sum, so a decay model",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:acc.claimonly_adj_free[0]"
+    },
+    {
+      "line": 35,
+      "token": "255",
+      "value": 255.0,
+      "decimals": 0,
+      "context": "premise is attenuated by mag^255; a decay model would need mag driven to 1 to preserve it, and 5000 steps",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "premise is attenuated by mag^255; a decay model would need mag driven to 1 to preserve it, and 5000 steps",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "5000",
+      "value": 5000.0,
+      "decimals": 0,
+      "context": "premise is attenuated by mag^255; a decay model would need mag driven to 1 to preserve it, and 5000 steps",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_oscillation_result.json:config.steps"
+    },
+    {
+      "line": 52,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "a DC constant that accumulated under theta==0 and masked the effect. The bias-free embedding makes the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
