@@ -1,0 +1,202 @@
+{
+ "prereg": "PREREG_buried_judge_2026_07_24.md",
+ "design": {
+  "pi": 0.35,
+  "n": 6000,
+  "k_anchor": 400,
+  "alpha_inform": 0.3,
+  "deaf": [
+   0.45,
+   0.5
+  ],
+  "sep_grid": [
+   0.0,
+   0.16,
+   0.22,
+   0.25,
+   0.28,
+   0.34,
+   0.4
+  ],
+  "R": 60,
+  "null_sims": 200,
+  "n_boot": 300,
+  "coverage_floor": 0.8,
+  "recover_target": 0.9,
+  "seed_base": 610000,
+  "instrument": "styxx.anchors.audit_panel"
+ },
+ "cells": {
+  "0.00": {
+   "sep": 0.0,
+   "summary": {
+    "n": 60,
+    "n_estimated": 0,
+    "estimated_rate": 0.0,
+    "n_void_panel": 60,
+    "void_rate": 1.0,
+    "n_void_anchors": 0,
+    "coverage_k": 0,
+    "coverage_n": 0,
+    "coverage_rate": null,
+    "coverage_wilson": null,
+    "pi_median": null,
+    "pi_p10": null,
+    "pi_p90": null,
+    "void_leak": 0
+   }
+  },
+  "0.16": {
+   "sep": 0.16,
+   "summary": {
+    "n": 60,
+    "n_estimated": 1,
+    "estimated_rate": 0.016666666666666666,
+    "n_void_panel": 59,
+    "void_rate": 0.9833333333333333,
+    "n_void_anchors": 0,
+    "coverage_k": 1,
+    "coverage_n": 1,
+    "coverage_rate": 1.0,
+    "coverage_wilson": [
+     0.20654329147389294,
+     1.0
+    ],
+    "pi_median": 0.34117647058823514,
+    "pi_p10": 0.34117647058823514,
+    "pi_p90": 0.34117647058823514,
+    "void_leak": 0
+   }
+  },
+  "0.22": {
+   "sep": 0.22,
+   "summary": {
+    "n": 60,
+    "n_estimated": 8,
+    "estimated_rate": 0.13333333333333333,
+    "n_void_panel": 52,
+    "void_rate": 0.8666666666666667,
+    "n_void_anchors": 0,
+    "coverage_k": 8,
+    "coverage_n": 8,
+    "coverage_rate": 1.0,
+    "coverage_wilson": [
+     0.6755843804891231,
+     1.0
+    ],
+    "pi_median": 0.42744963369963374,
+    "pi_p10": 0.334108604016861,
+    "pi_p90": 0.44699669966996697,
+    "void_leak": 0
+   }
+  },
+  "0.25": {
+   "sep": 0.25,
+   "summary": {
+    "n": 60,
+    "n_estimated": 31,
+    "estimated_rate": 0.5166666666666667,
+    "n_void_panel": 29,
+    "void_rate": 0.48333333333333334,
+    "n_void_anchors": 0,
+    "coverage_k": 28,
+    "coverage_n": 31,
+    "coverage_rate": 0.9032258064516129,
+    "coverage_wilson": [
+     0.7509971000182295,
+     0.966535963905356
+    ],
+    "pi_median": 0.3461773700305811,
+    "pi_p10": 0.2690909090909092,
+    "pi_p90": 0.4561728395061729,
+    "void_leak": 0
+   }
+  },
+  "0.28": {
+   "sep": 0.28,
+   "summary": {
+    "n": 60,
+    "n_estimated": 49,
+    "estimated_rate": 0.8166666666666667,
+    "n_void_panel": 11,
+    "void_rate": 0.18333333333333332,
+    "n_void_anchors": 0,
+    "coverage_k": 47,
+    "coverage_n": 49,
+    "coverage_rate": 0.9591836734693877,
+    "coverage_wilson": [
+     0.8628671652316889,
+     0.9887346030720717
+    ],
+    "pi_median": 0.3539823008849559,
+    "pi_p10": 0.27477124183006535,
+    "pi_p90": 0.42961708619374533,
+    "void_leak": 0
+   }
+  },
+  "0.34": {
+   "sep": 0.34,
+   "summary": {
+    "n": 60,
+    "n_estimated": 60,
+    "estimated_rate": 1.0,
+    "n_void_panel": 0,
+    "void_rate": 0.0,
+    "n_void_anchors": 0,
+    "coverage_k": 58,
+    "coverage_n": 60,
+    "coverage_rate": 0.9666666666666667,
+    "coverage_wilson": [
+     0.8863601247107462,
+     0.9908108735098498
+    ],
+    "pi_median": 0.34428124301363744,
+    "pi_p10": 0.28459147633623727,
+    "pi_p90": 0.4059535695310066,
+    "void_leak": 0
+   }
+  },
+  "0.40": {
+   "sep": 0.4,
+   "summary": {
+    "n": 60,
+    "n_estimated": 60,
+    "estimated_rate": 1.0,
+    "n_void_panel": 0,
+    "void_rate": 0.0,
+    "n_void_anchors": 0,
+    "coverage_k": 59,
+    "coverage_n": 60,
+    "coverage_rate": 0.9833333333333333,
+    "coverage_wilson": [
+     0.9114466177322051,
+     0.9970519161391262
+    ],
+    "pi_median": 0.347691227403699,
+    "pi_p10": 0.2917881565546341,
+    "pi_p90": 0.39994521148367307,
+    "void_leak": 0
+   }
+  }
+ },
+ "gates": [
+  {
+   "gate": "PD_MOVE",
+   "ok": true,
+   "detail": "deaf(sep0.00) void_rate 1.000>=0.90 AND strong(sep0.40) est_rate 1.000>=0.90"
+  },
+  {
+   "gate": "PD_DANGER",
+   "ok": true,
+   "detail": "priced cells (est_rate>=0.50): ['0.25', '0.28', '0.34', '0.40']; coverage<0.8 in: none"
+  },
+  {
+   "gate": "PD_HONEST",
+   "ok": true,
+   "detail": "void replicates emitting a pi: none"
+  }
+ ],
+ "pd_boundary_recoverable_sep": 0.25,
+ "verdict": "SURVIVED__prices_where_covered_refuses_below_gate",
+ "elapsed_s": 26.731565952301025
+}

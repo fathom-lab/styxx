@@ -1,0 +1,785 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_buried_judge_2026_07_24.md",
+  "document_sha256": "99da8d1004131f123e2e02766a5b06bd4ebbb3551b324e2ce245c553a7d15de3",
+  "receipts_sha256": {
+    "buried_judge_result.json": "ba2da193259a633c54b336247f17e7526c6af9026b69724c5cdb74567e83f07d"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 62,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "61"
+    },
+    {
+      "line": 10,
+      "token": "60"
+    },
+    {
+      "line": 15,
+      "token": "0.255"
+    },
+    {
+      "line": 15,
+      "token": "400"
+    },
+    {
+      "line": 16,
+      "token": "60"
+    },
+    {
+      "line": 33,
+      "token": "0.50"
+    },
+    {
+      "line": 37,
+      "token": "50"
+    },
+    {
+      "line": 41,
+      "token": "31"
+    },
+    {
+      "line": 41,
+      "token": "60"
+    },
+    {
+      "line": 49,
+      "token": "0.3462"
+    },
+    {
+      "line": 49,
+      "token": "0.354"
+    },
+    {
+      "line": 49,
+      "token": "0.3443"
+    },
+    {
+      "line": 49,
+      "token": "0.3477"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "**Cycle 61 (autopilot, 2026-07-24). Prereg `PREREG_buried_judge_2026_07_24.md` (commit `4be0433`),",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "Cycle 60 closed the four-family PRICE/REFUSE partition (attr + numeric price; chain + temporal",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "this one is built to sit on the boundary. A single informative judge (alpha 0.30, beta 0.30 + sep)",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.alpha_inform"
+    },
+    {
+      "line": 13,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "this one is built to sit on the boundary. A single informative judge (alpha 0.30, beta 0.30 + sep)",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.alpha_inform"
+    },
+    {
+      "line": 15,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "from deaf (0.00) through the effective noise-margin gate (~0.255 at K=400) to strong (0.40), at",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[0]"
+    },
+    {
+      "line": 15,
+      "token": "0.255",
+      "value": 0.255,
+      "decimals": 3,
+      "context": "from deaf (0.00) through the effective noise-margin gate (~0.255 at K=400) to strong (0.40), at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "400",
+      "value": 400.0,
+      "decimals": 0,
+      "context": "from deaf (0.00) through the effective noise-margin gate (~0.255 at K=400) to strong (0.40), at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "from deaf (0.00) through the effective noise-margin gate (~0.255 at K=400) to strong (0.40), at",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[6]"
+    },
+    {
+      "line": 16,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "R=60 replicates per cell.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "| 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[0]"
+    },
+    {
+      "line": 24,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[0]"
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.00 | 0.0 | 1.0 | -- (deaf, all refuse) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 25,
+      "token": "0.16",
+      "value": 0.16,
+      "decimals": 2,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.16 | 0.017 | 0.983 | 1/1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[1]"
+    },
+    {
+      "line": 25,
+      "token": "0.017",
+      "value": 0.017,
+      "decimals": 3,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.16 | 0.017 | 0.983 | 1/1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.16.summary.estimated_rate"
+    },
+    {
+      "line": 25,
+      "token": "0.983",
+      "value": 0.983,
+      "decimals": 3,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.16 | 0.017 | 0.983 | 1/1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.16.summary.void_rate"
+    },
+    {
+      "line": 25,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.16 | 0.017 | 0.983 | 1/1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 25,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 0.16 | 0.017 | 0.983 | 1/1 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.16 | 0.017 | 0.983 | 1/1 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 26,
+      "token": "0.22",
+      "value": 0.22,
+      "decimals": 2,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.22 | 0.133 | 0.867 | 8/8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[2]"
+    },
+    {
+      "line": 26,
+      "token": "0.133",
+      "value": 0.133,
+      "decimals": 3,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.22 | 0.133 | 0.867 | 8/8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.estimated_rate"
+    },
+    {
+      "line": 26,
+      "token": "0.867",
+      "value": 0.867,
+      "decimals": 3,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.22 | 0.133 | 0.867 | 8/8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.void_rate"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.22 | 0.133 | 0.867 | 8/8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.n_estimated"
+    },
+    {
+      "line": 26,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 0.22 | 0.133 | 0.867 | 8/8 |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.22 | 0.133 | 0.867 | 8/8 |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.n_estimated"
+    },
+    {
+      "line": 27,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[3]"
+    },
+    {
+      "line": 27,
+      "token": "0.517",
+      "value": 0.517,
+      "decimals": 3,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.estimated_rate"
+    },
+    {
+      "line": 27,
+      "token": "0.483",
+      "value": 0.483,
+      "decimals": 3,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.void_rate"
+    },
+    {
+      "line": 27,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.coverage_k"
+    },
+    {
+      "line": 27,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.n_estimated"
+    },
+    {
+      "line": 27,
+      "token": "0.903",
+      "value": 0.903,
+      "decimals": 3,
+      "context": "| 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.25 | 0.517 | 0.483 | 28/31 (coverage 0.903) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.coverage_rate"
+    },
+    {
+      "line": 28,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[4]"
+    },
+    {
+      "line": 28,
+      "token": "0.817",
+      "value": 0.817,
+      "decimals": 3,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.28.summary.estimated_rate"
+    },
+    {
+      "line": 28,
+      "token": "0.183",
+      "value": 0.183,
+      "decimals": 3,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.28.summary.void_rate"
+    },
+    {
+      "line": 28,
+      "token": "47",
+      "value": 47.0,
+      "decimals": 0,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.28.summary.coverage_k"
+    },
+    {
+      "line": 28,
+      "token": "49",
+      "value": 49.0,
+      "decimals": 0,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.28.summary.n_estimated"
+    },
+    {
+      "line": 28,
+      "token": "0.959",
+      "value": 0.959,
+      "decimals": 3,
+      "context": "| 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.28 | 0.817 | 0.183 | 47/49 (coverage 0.959) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.28.summary.coverage_rate"
+    },
+    {
+      "line": 29,
+      "token": "0.34",
+      "value": 0.34,
+      "decimals": 2,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[5]"
+    },
+    {
+      "line": 29,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 29,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[0]"
+    },
+    {
+      "line": 29,
+      "token": "58",
+      "value": 58.0,
+      "decimals": 0,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.34.summary.coverage_k"
+    },
+    {
+      "line": 29,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.R"
+    },
+    {
+      "line": 29,
+      "token": "0.967",
+      "value": 0.967,
+      "decimals": 3,
+      "context": "| 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.34 | 1.0 | 0.0 | 58/60 (coverage 0.967) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.coverage_wilson[1]"
+    },
+    {
+      "line": 30,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[6]"
+    },
+    {
+      "line": 30,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 30,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[0]"
+    },
+    {
+      "line": 30,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.16.summary.n_void_panel"
+    },
+    {
+      "line": 30,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.R"
+    },
+    {
+      "line": 30,
+      "token": "0.983",
+      "value": 0.983,
+      "decimals": 3,
+      "context": "| 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "binding_context": "| sep | ESTIMATED rate | VOID rate | pi-CI coverage (covered / estimated) | | 0.40 | 1.0 | 0.0 | 59/60 (coverage 0.983) |",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.16.summary.void_rate"
+    },
+    {
+      "line": 32,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "**PD_MOVE passed** (deaf VOID rate 1.0; strong ESTIMATED rate 1.0 -- the output reads the signal).",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 32,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "**PD_MOVE passed** (deaf VOID rate 1.0; strong ESTIMATED rate 1.0 -- the output reads the signal).",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.00.summary.void_rate"
+    },
+    {
+      "line": 33,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "**PD_DANGER passed**: every cell the ladder prices (ESTIMATED rate >= 0.50: sep 0.25, 0.28, 0.34,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 33,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "**PD_DANGER passed**: every cell the ladder prices (ESTIMATED rate >= 0.50: sep 0.25, 0.28, 0.34,",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[3]"
+    },
+    {
+      "line": 33,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "context": "**PD_DANGER passed**: every cell the ladder prices (ESTIMATED rate >= 0.50: sep 0.25, 0.28, 0.34,",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[4]"
+    },
+    {
+      "line": 33,
+      "token": "0.34",
+      "value": 0.34,
+      "decimals": 2,
+      "context": "**PD_DANGER passed**: every cell the ladder prices (ESTIMATED rate >= 0.50: sep 0.25, 0.28, 0.34,",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[5]"
+    },
+    {
+      "line": 34,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "0.40) keeps pi-CI coverage of the true 0.35 at or above 0.903 -- comfortably above the frozen 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[6]"
+    },
+    {
+      "line": 34,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "0.40) keeps pi-CI coverage of the true 0.35 at or above 0.903 -- comfortably above the frozen 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.pi"
+    },
+    {
+      "line": 34,
+      "token": "0.903",
+      "value": 0.903,
+      "decimals": 3,
+      "context": "0.40) keeps pi-CI coverage of the true 0.35 at or above 0.903 -- comfortably above the frozen 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.coverage_rate"
+    },
+    {
+      "line": 34,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "0.40) keeps pi-CI coverage of the true 0.35 at or above 0.903 -- comfortably above the frozen 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.coverage_floor"
+    },
+    {
+      "line": 37,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "is 0.25 -- coverage clears 0.90 at the very cell where pricing first crosses 50 percent.",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[3]"
+    },
+    {
+      "line": 37,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "is 0.25 -- coverage clears 0.90 at the very cell where pricing first crosses 50 percent.",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.recover_target"
+    },
+    {
+      "line": 37,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "is 0.25 -- coverage clears 0.90 at the very cell where pricing first crosses 50 percent.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "The sep 0.25 cell sits at the effective gate: 31/60 replicates cleared the noise-margin keep",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[3]"
+    },
+    {
+      "line": 41,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "The sep 0.25 cell sits at the effective gate: 31/60 replicates cleared the noise-margin keep",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 41,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "The sep 0.25 cell sits at the effective gate: 31/60 replicates cleared the noise-margin keep",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 42,
+      "token": "0.517",
+      "value": 0.517,
+      "decimals": 3,
+      "context": "(ESTIMATED rate 0.517) and 29/60 refused -- a near-even split driven by the anchor draw. That",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.estimated_rate"
+    },
+    {
+      "line": 42,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "(ESTIMATED rate 0.517) and 29/60 refused -- a near-even split driven by the anchor draw. That",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.n_void_panel"
+    },
+    {
+      "line": 42,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "(ESTIMATED rate 0.517) and 29/60 refused -- a near-even split driven by the anchor draw. That",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.R"
+    },
+    {
+      "line": 44,
+      "token": "0.22",
+      "value": 0.22,
+      "decimals": 2,
+      "context": "draw (kept only when beta_hat - alpha_hat is large), which biases the point estimate; at sep 0.22",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.sep_grid[2]"
+    },
+    {
+      "line": 45,
+      "token": "0.4274",
+      "value": 0.4274,
+      "decimals": 4,
+      "context": "the priced replicates' pi_median is 0.4274, off the true 0.35, showing the selection bias is real",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.pi_median"
+    },
+    {
+      "line": 45,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "the priced replicates' pi_median is 0.4274, off the true 0.35, showing the selection bias is real",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:design.pi"
+    },
+    {
+      "line": 48,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "cell is 28/31, and the bias visibly shrinks back toward truth as separation grows (pi_median 0.4274",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.coverage_k"
+    },
+    {
+      "line": 48,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "cell is 28/31, and the bias visibly shrinks back toward truth as separation grows (pi_median 0.4274",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.25.summary.n_estimated"
+    },
+    {
+      "line": 48,
+      "token": "0.4274",
+      "value": 0.4274,
+      "decimals": 4,
+      "context": "cell is 28/31, and the bias visibly shrinks back toward truth as separation grows (pi_median 0.4274",
+      "status": "VERIFIED",
+      "receipt_ref": "buried_judge_result.json:cells.0.22.summary.pi_median"
+    },
+    {
+      "line": 49,
+      "token": "0.3462",
+      "value": 0.3462,
+      "decimals": 4,
+      "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "0.354",
+      "value": 0.354,
+      "decimals": 3,
+      "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "0.3443",
+      "value": 0.3443,
+      "decimals": 4,
+      "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "0.3477",
+      "value": 0.3477,
+      "decimals": 4,
+      "context": "-> 0.3462 -> 0.354 -> 0.3443 -> 0.3477 across sep 0.22..0.40).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
