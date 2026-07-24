@@ -50,6 +50,32 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **ARC SUMMARY — THE AGENT-CONSCIENCE ARC CLOSES (cycles 62–71, 2026-07-24, operator-directed). All three model-side escalation routes dead; two mechanisms confirmed. Every FINDING OATH-HELD. PUSH BLOCKED (expired PAT) — ~31 commits local, bundle-backed.**
+  **CONFIRMED:** (a) **THE FRAME BEATS THE PARAMETERS** — the same Qwen2.5-3B is worth **0.2742**
+  used inside the pressure frame and **0.8226** queried outside it as an adjudicator (63, BG4).
+  (b) **SOURCE INDEPENDENCE** (68, fresh disjoint balanced): model channels co-abstain **0.8701**,
+  retrieval **0.4416**, separation **0.4286** vs a 0.15 bar — shared ignorance is a fact about
+  *language models sharing a training distribution*, not about items. (c) **SELECTIVE PREDICTION**
+  confirmed in a second domain (70): refusal informativeness gap **0.8102** → **0.4805**, both over
+  bar; it transfers **and degrades** — the cycle-64 magnitudes are a best case, not a datasheet.
+  **CLOSED WITH RECEIPTS — do not re-attempt:** detection≠intervention (62); **family diversity**
+  (65, co-abstention 0.8478); **scale** (66's 0.40-item pass **DEMOTED** by 71 — paired gain
+  **−0.4**, the 7B overwrote answers the loop already had right while abstaining on 0.9206 of the
+  slice); **selective gating on the loop's own signals** (69 — selection *anti-selected*, 0.0667 vs
+  0.0909 indiscriminate). **Model-side escalation is a closed direction; correction (as opposed to
+  coverage) needs a genuinely new signal.**
+  **Method lessons carried forward:** coverage alone is the wrong metric (71's EG1 *passed* while the
+  escalation was harmful — only the **paired** gate caught it); a **balanced** eval set can break a
+  signal calibrated on an unbalanced one (68's balancing inverted 69's selector); never compare
+  full-coverage accuracy against a high-precision subset (69's HG2 — my own bad gate, recorded so it
+  is not repeated); stratifying on a **deterministic greedy** covariate is sampling, not peeking;
+  import bars from the prior cycle's **module** so they provably cannot drift. Cycle 67 was an honest
+  **INVALID** whose spectacular unscored numbers were withheld — and 68 then replicated them
+  properly. pytest **1786 passed / 8 skipped** throughout; certify.py untouched.
+  *Next:* package the loop behind a public `styxx` API with its measured datasheet (the cycle-48
+  graduation precedent), or test frame-beats-parameters on a frontier adjudicator. **OPERATOR: renew
+  `secrets/fathomlab-github.txt` — cycles 62–71 cannot push.**
+
 - **Cycle 66 (2026-07-24, operator-directed "keep going") — DOES SCALE BUY COVERAGE? `SURVIVED__scale_buys_coverage` (FINDING OATH-HELD verified=33 abstained=13 contradicted=0) — **by four tenths of one item.** PUSH STILL BLOCKED.**
   The cycle-65 contrast with exactly one variable changed: 65 held scale fixed and varied FAMILY and
   failed; this holds family fixed and varies SCALE (Qwen2.5-7B-4bit vs the tier-1 3B). Everything
