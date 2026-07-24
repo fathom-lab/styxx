@@ -1,0 +1,626 @@
+[
+ {
+  "q": "Where do the branches Waal and Nederrijn-Lek discharge to?",
+  "subject": "Where do the branches Waal and Nederrijn-Lek discharge to?",
+  "X": "North Sea",
+  "Y": "seawater"
+ },
+ {
+  "q": "What antibody is transported from the mother to baby across the placenta?",
+  "subject": "What antibody is transported from the mother to baby across the placenta?",
+  "X": "IgG",
+  "Y": "the mesoglea"
+ },
+ {
+  "q": "How many prime numbers exist?",
+  "subject": "How many prime numbers exist?",
+  "X": "infinitely many",
+  "Y": "three"
+ },
+ {
+  "q": "Whose First Law of Motion says that unless acted upon be forces, objects would continue to move at a constant velocity?",
+  "subject": "Whose First Law of Motion says that unless acted upon be forces, objects would continue to move at a constant velocity?",
+  "X": "Newton",
+  "Y": "force"
+ },
+ {
+  "q": "What does a Turing machine handle on a strip of tape?",
+  "subject": "What does a Turing machine handle on a strip of tape?",
+  "X": "symbols",
+  "Y": "denoted scalar quantities"
+ },
+ {
+  "q": "What river runs alongside Jacksonville?",
+  "subject": "What river runs alongside Jacksonville?",
+  "X": "St. Johns",
+  "Y": "St. Elizabeth's"
+ },
+ {
+  "q": "Who are debates and meetings open to?",
+  "subject": "Who are debates and meetings open to?",
+  "X": "the public",
+  "Y": "a private member"
+ },
+ {
+  "q": "What are the wave-particles called that mediate all electromagnetic phenomena?",
+  "subject": "What are the wave-particles called that mediate all electromagnetic phenomena?",
+  "X": "photons",
+  "Y": "electromagnetic"
+ },
+ {
+  "q": "In 2004 the Orange revolution occurred in what country?",
+  "subject": "In 2004 the Orange revolution occurred in what country?",
+  "X": "Ukraine",
+  "Y": "Sweden"
+ },
+ {
+  "q": "What is Raghuram Rajan's career?",
+  "subject": "What is Raghuram Rajan's career?",
+  "X": "economist",
+  "Y": "economic"
+ },
+ {
+  "q": "When was the great plague of London?",
+  "subject": "When was the great plague of London?",
+  "X": "1665",
+  "Y": "1816"
+ },
+ {
+  "q": "When did Great Britain claim Australia? ",
+  "subject": "When did Great Britain claim Australia? ",
+  "X": "1788",
+  "Y": "1804"
+ },
+ {
+  "q": "Supplies from Jacksonville were in support of which faction in the Civil War?",
+  "subject": "Supplies from Jacksonville were in support of which faction in the Civil War?",
+  "X": "Confederate",
+  "Y": "civil rebellion"
+ },
+ {
+  "q": "Who was Kublai Khan's grandfather?",
+  "subject": "Who was Kublai Khan's grandfather?",
+  "X": "Genghis Khan",
+  "Y": "Kublai Khan"
+ },
+ {
+  "q": "Europe first colonized the Americas, then Asia, but what continent was third?",
+  "subject": "Europe first colonized the Americas, then Asia, but what continent was third?",
+  "X": "Africa",
+  "Y": "Algeria"
+ },
+ {
+  "q": "Century City is an example of a district that belongs to which city?",
+  "subject": "Century City is an example of a district that belongs to which city?",
+  "X": "Los Angeles",
+  "Y": "San Diego"
+ },
+ {
+  "q": "How many events occur in an engine cycle?",
+  "subject": "How many events occur in an engine cycle?",
+  "X": "four",
+  "Y": "three"
+ },
+ {
+  "q": "In what year did Joseph Priestley recognize oxygen?",
+  "subject": "In what year did Joseph Priestley recognize oxygen?",
+  "X": "1774",
+  "Y": "1804"
+ },
+ {
+  "q": "In the Rankine cycle, what does water turn into when heated?",
+  "subject": "In the Rankine cycle, what does water turn into when heated?",
+  "X": "steam",
+  "Y": "free"
+ },
+ {
+  "q": "What is the typical working fluid in a steam engine?",
+  "subject": "What is the typical working fluid in a steam engine?",
+  "X": "water",
+  "Y": "Science"
+ },
+ {
+  "q": "The integer factorization problem essentially seeks to determine if the value of of an input is less than what variable? ",
+  "subject": "The integer factorization problem essentially seeks to determine if the value of of an input is less than what variable? ",
+  "X": "k",
+  "Y": "70"
+ },
+ {
+  "q": "What is the English translation of Kunskapsskolan?",
+  "subject": "What is the English translation of Kunskapsskolan?",
+  "X": "The Knowledge School",
+  "Y": "curriculum"
+ },
+ {
+  "q": "What is Jacksonville's hottest month on average?",
+  "subject": "What is Jacksonville's hottest month on average?",
+  "X": "July",
+  "Y": "April through October"
+ },
+ {
+  "q": "Who used imperialism during their rule of the Mongol Empire?",
+  "subject": "Who used imperialism during their rule of the Mongol Empire?",
+  "X": "Genghis Khan",
+  "Y": "Kublai Khan"
+ },
+ {
+  "q": "Which region of California is Palm Springs located in?",
+  "subject": "Which region of California is Palm Springs located in?",
+  "X": "southern",
+  "Y": "North"
+ },
+ {
+  "q": "Within the EU, which court believes they have the final word deciding on EU's competence?",
+  "subject": "Within the EU, which court believes they have the final word deciding on EU's competence?",
+  "X": "Court of Justice",
+  "Y": "constitutional law"
+ },
+ {
+  "q": "In what country can most of the Amazon rainforest be found?",
+  "subject": "In what country can most of the Amazon rainforest be found?",
+  "X": "Brazil",
+  "Y": "Japan"
+ },
+ {
+  "q": "What organization runs the satellite that measured dust that landed on the Amazon?",
+  "subject": "What organization runs the satellite that measured dust that landed on the Amazon?",
+  "X": "NASA",
+  "Y": "Science"
+ },
+ {
+  "q": "When did Augustus die?",
+  "subject": "When did Augustus die?",
+  "X": "AD 14",
+  "Y": "13"
+ },
+ {
+  "q": "When was the Battle of Hastings?",
+  "subject": "When was the Battle of Hastings?",
+  "X": "1066",
+  "Y": "1206"
+ },
+ {
+  "q": "What law connects relative velocities with inertia?",
+  "subject": "What law connects relative velocities with inertia?",
+  "X": "Newton's First",
+  "Y": "Isaac Newton"
+ },
+ {
+  "q": "What language other than English has the Scottish Parliament had meetings in?",
+  "subject": "What language other than English has the Scottish Parliament had meetings in?",
+  "X": "Gaelic",
+  "Y": "Protestant"
+ },
+ {
+  "q": "Matter particles are shown as what kind of lines in a Feynman diagram?",
+  "subject": "Matter particles are shown as what kind of lines in a Feynman diagram?",
+  "X": "straight",
+  "Y": "ambiguous"
+ },
+ {
+  "q": "What religion did the Yuan discourage, to support Buddhism?",
+  "subject": "What religion did the Yuan discourage, to support Buddhism?",
+  "X": "Taoism",
+  "Y": "Islam"
+ },
+ {
+  "q": "In what constituent country of the United Kingdom is Merthyr Tydfil located?",
+  "subject": "In what constituent country of the United Kingdom is Merthyr Tydfil located?",
+  "X": "Wales",
+  "Y": "The UK"
+ },
+ {
+  "q": "Did the plague spread in Scandinavia or Germany first?",
+  "subject": "Did the plague spread in Scandinavia or Germany first?",
+  "X": "Scandinavia",
+  "Y": "Sweden"
+ },
+ {
+  "q": "Pollution of water by nitrates and phosphates will encourage the growth of what?",
+  "subject": "Pollution of water by nitrates and phosphates will encourage the growth of what?",
+  "X": "algae",
+  "Y": "seawater"
+ },
+ {
+  "q": "When was the British Nationality Act passed?",
+  "subject": "When was the British Nationality Act passed?",
+  "X": "1981",
+  "Y": "1978"
+ },
+ {
+  "q": "What types of waves do seismologists use to image the interior of the Earth?",
+  "subject": "What types of waves do seismologists use to image the interior of the Earth?",
+  "X": "seismic waves",
+  "Y": "electromagnetic"
+ },
+ {
+  "q": "What is the name of world renowned cellist is a former Harvard student?",
+  "subject": "What is the name of world renowned cellist is a former Harvard student?",
+  "X": "Yo Yo Ma",
+  "Y": "Daewoo"
+ },
+ {
+  "q": "What is secreted by the respiratory tract to trap microorganisms?",
+  "subject": "What is secreted by the respiratory tract to trap microorganisms?",
+  "X": "mucus",
+  "Y": "water"
+ },
+ {
+  "q": "How many atoms combine to form dioxygen?",
+  "subject": "How many atoms combine to form dioxygen?",
+  "X": "two atoms",
+  "Y": "unpaired electrons"
+ },
+ {
+  "q": "Besides Leibniz, what other mathematician proved the validity of Fermat's little theorem?",
+  "subject": "Besides Leibniz, what other mathematician proved the validity of Fermat's little theorem?",
+  "X": "Euler",
+  "Y": "E.I. du Pont"
+ },
+ {
+  "q": "Who expounded the Three Laws of Motion?",
+  "subject": "Who expounded the Three Laws of Motion?",
+  "X": "Isaac Newton",
+  "Y": "Newton's First"
+ },
+ {
+  "q": "What is Warsaw's name in the Polish language?",
+  "subject": "What is Warsaw's name in the Polish language?",
+  "X": "Warszawa",
+  "Y": "Warszowa"
+ },
+ {
+  "q": "When did Genghis Khan become Great Khan?",
+  "subject": "When did Genghis Khan become Great Khan?",
+  "X": "1206",
+  "Y": "1262"
+ },
+ {
+  "q": "What type of wages result from jobs where there is low supply but high demand?",
+  "subject": "What type of wages result from jobs where there is low supply but high demand?",
+  "X": "high",
+  "Y": "increased"
+ },
+ {
+  "q": "What state in Australia is the center of dairy farming?",
+  "subject": "What state in Australia is the center of dairy farming?",
+  "X": "Victoria",
+  "Y": "Brazil"
+ },
+ {
+  "q": "Which direction does two thirds of the Rhine flow outside of Germany?",
+  "subject": "Which direction does two thirds of the Rhine flow outside of Germany?",
+  "X": "west",
+  "Y": "North"
+ },
+ {
+  "q": "What virus did Walter Reed discover?",
+  "subject": "What virus did Walter Reed discover?",
+  "X": "yellow fever virus",
+  "Y": "yellow fever outbreaks"
+ },
+ {
+  "q": "What was the capital of the Ottoman empire?",
+  "subject": "What was the capital of the Ottoman empire?",
+  "X": "Istanbul",
+  "Y": "Ukraine"
+ },
+ {
+  "q": "What is the force between nucleons?",
+  "subject": "What is the force between nucleons?",
+  "X": "nuclear",
+  "Y": "Science"
+ },
+ {
+  "q": "Which Senator was a strong advocate for the Pico Act?",
+  "subject": "Which Senator was a strong advocate for the Pico Act?",
+  "X": "Milton Latham",
+  "Y": "M. Theo Kearney"
+ },
+ {
+  "q": "What is needed to pack electrons densely together?",
+  "subject": "What is needed to pack electrons densely together?",
+  "X": "energy",
+  "Y": "electric"
+ },
+ {
+  "q": "What did the Amazon rainforest do during the Middle Miocene?",
+  "subject": "What did the Amazon rainforest do during the Middle Miocene?",
+  "X": "It expanded",
+  "Y": "thermal expansion"
+ },
+ {
+  "q": "What leads to lower income inequality?",
+  "subject": "What leads to lower income inequality?",
+  "X": "redistribution mechanisms",
+  "Y": "economic"
+ },
+ {
+  "q": "Lake Constance separates the German state Bavaria from what other one?",
+  "subject": "Lake Constance separates the German state Bavaria from what other one?",
+  "X": "Baden-W\u00fcrttemberg",
+  "Y": "German army"
+ },
+ {
+  "q": "What flood impacted the Meuse?",
+  "subject": "What flood impacted the Meuse?",
+  "X": "St. Elizabeth's",
+  "Y": "St. Johns"
+ },
+ {
+  "q": "On what date did the first railway trip in the world occur?",
+  "subject": "On what date did the first railway trip in the world occur?",
+  "X": "21 February 1804",
+  "Y": "23 June 2005"
+ },
+ {
+  "q": "After what higher learning model was the school designed?",
+  "subject": "After what higher learning model was the school designed?",
+  "X": "English university model",
+  "Y": "The Knowledge School"
+ },
+ {
+  "q": "How many seats does the amphitheatre at Woodward park have?",
+  "subject": "How many seats does the amphitheatre at Woodward park have?",
+  "X": "2,500",
+  "Y": "833,500"
+ },
+ {
+  "q": "Along with wear, what development makes it difficult to seal the rotors in an engine that lacks pistons?",
+  "subject": "Along with wear, what development makes it difficult to seal the rotors in an engine that lacks pistons?",
+  "X": "thermal expansion",
+  "Y": "It expanded"
+ },
+ {
+  "q": "Who threw gold into the Rhine, according to legend?",
+  "subject": "Who threw gold into the Rhine, according to legend?",
+  "X": "Hagen",
+  "Y": "Masovian gothic"
+ },
+ {
+  "q": "What was the name of the storm that hit Jacksonville in May of 2012?",
+  "subject": "What was the name of the storm that hit Jacksonville in May of 2012?",
+  "X": "Tropical Storm Beryl",
+  "Y": "a storm"
+ },
+ {
+  "q": "What group killed thousands of Huguenots?",
+  "subject": "What group killed thousands of Huguenots?",
+  "X": "Catholics",
+  "Y": "Protestant"
+ },
+ {
+  "q": "What entity sparked the growth of Fresno Station?",
+  "subject": "What entity sparked the growth of Fresno Station?",
+  "X": "store",
+  "Y": "museum"
+ },
+ {
+  "q": "What Revolutionary War midnight rider was a Huguenot descendant?",
+  "subject": "What Revolutionary War midnight rider was a Huguenot descendant?",
+  "X": "Paul Revere",
+  "Y": "John Paul II"
+ },
+ {
+  "q": "Jacksonville began to suffer and decline after what major world event?",
+  "subject": "Jacksonville began to suffer and decline after what major world event?",
+  "X": "World War II",
+  "Y": "First World War."
+ },
+ {
+  "q": "Along with electric motors, what power sources overtook steam engines in the 20th century?",
+  "subject": "Along with electric motors, what power sources overtook steam engines in the 20th century?",
+  "X": "internal combustion engines",
+  "Y": "road engines"
+ },
+ {
+  "q": "How do the fees at former Model C schools compare to those at other schools?",
+  "subject": "How do the fees at former Model C schools compare to those at other schools?",
+  "X": "higher",
+  "Y": "increased"
+ },
+ {
+  "q": "How much does it cost to gain entry to a parliament meeting?",
+  "subject": "How much does it cost to gain entry to a parliament meeting?",
+  "X": "free",
+  "Y": "steam"
+ },
+ {
+  "q": "The design team is most commonly employed by who?",
+  "subject": "The design team is most commonly employed by who?",
+  "X": "the property owner",
+  "Y": "the mortgage banker"
+ },
+ {
+  "q": "What year did the the case go before the supreme court?",
+  "subject": "What year did the the case go before the supreme court?",
+  "X": "1978",
+  "Y": "1977"
+ },
+ {
+  "q": "What type of rail line is Pacific National?",
+  "subject": "What type of rail line is Pacific National?",
+  "X": "freight services",
+  "Y": "Middleton Railway"
+ },
+ {
+  "q": "What has been analyzed to compare Amazon rainfall in the past and present?",
+  "subject": "What has been analyzed to compare Amazon rainfall in the past and present?",
+  "X": "sediment deposits",
+  "Y": "sediment load"
+ },
+ {
+  "q": "Because speakers are drawn from across Scotland, what do the represent the balance of?",
+  "subject": "Because speakers are drawn from across Scotland, what do the represent the balance of?",
+  "X": "religious beliefs",
+  "Y": "religious freedom"
+ },
+ {
+  "q": "What components raise steam temperature above its saturated vapor point?",
+  "subject": "What components raise steam temperature above its saturated vapor point?",
+  "X": "superheaters",
+  "Y": "steam turbines"
+ },
+ {
+  "q": "What percentage of Scotland's voting population failed to actually vote?",
+  "subject": "What percentage of Scotland's voting population failed to actually vote?",
+  "X": "32.9%",
+  "Y": "around 34%"
+ },
+ {
+  "q": "Who does the Presiding Officer submit the final bill to?",
+  "subject": "Who does the Presiding Officer submit the final bill to?",
+  "X": "the Monarch",
+  "Y": "Louis XIV"
+ },
+ {
+  "q": "Where did the discharge from glaciers go in Europe in the last Ice Age?",
+  "subject": "Where did the discharge from glaciers go in Europe in the last Ice Age?",
+  "X": "Rhine",
+  "Y": "German army"
+ },
+ {
+  "q": "What was the number of customers that the BBC  reported had yet to receive the service due to failed deliveries?",
+  "subject": "What was the number of customers that the BBC  reported had yet to receive the service due to failed deliveries?",
+  "X": "17,000",
+  "Y": "21,000"
+ },
+ {
+  "q": "What function is used by algorithms to define measurements like time or space?",
+  "subject": "What function is used by algorithms to define measurements like time or space?",
+  "X": "bounding",
+  "Y": "another problem"
+ },
+ {
+  "q": "Who is the current President and the High Representative for Foreign and Security Policy?",
+  "subject": "Who is the current President and the High Representative for Foreign and Security Policy?",
+  "X": "Federica Mogherini",
+  "Y": "Sakya"
+ },
+ {
+  "q": "In what year did Harvard President Joseph Willard die?",
+  "subject": "In what year did Harvard President Joseph Willard die?",
+  "X": "1804",
+  "Y": "1884"
+ },
+ {
+  "q": "What is the equality of forces between two objects exerting force on each other??",
+  "subject": "What is the equality of forces between two objects exerting force on each other??",
+  "X": "magnitude",
+  "Y": "86 km"
+ },
+ {
+  "q": "_____ Helps the biospher from UV.",
+  "subject": "_____ Helps the biospher from UV.",
+  "X": "high-altitude ozone layer",
+  "Y": "greenhouse gas emissions"
+ },
+ {
+  "q": "After 1935, who would be forbidden to enter Rhineland?",
+  "subject": "After 1935, who would be forbidden to enter Rhineland?",
+  "X": "German army",
+  "Y": "Baden-W\u00fcrttemberg"
+ },
+ {
+  "q": "When was the paper published that the \"Millennial Northern Hemisphere temperature reconstruction\" graph was based on?",
+  "subject": "When was the paper published that the \"Millennial Northern Hemisphere temperature reconstruction\" graph was based on?",
+  "X": "1999",
+  "Y": "2004"
+ },
+ {
+  "q": "What is the term for the arrangement of two unpaired electrons in dioxygen?",
+  "subject": "What is the term for the arrangement of two unpaired electrons in dioxygen?",
+  "X": "spin triplet state",
+  "Y": "two atoms"
+ },
+ {
+  "q": "What are numbers greater than 1 that can be divided by 3 or more numbers called?",
+  "subject": "What are numbers greater than 1 that can be divided by 3 or more numbers called?",
+  "X": "composite number",
+  "Y": "Prime ideals"
+ },
+ {
+  "q": "In what year was the Joe and Rika Mansueto Library constructed?",
+  "subject": "In what year was the Joe and Rika Mansueto Library constructed?",
+  "X": "2011",
+  "Y": "2010"
+ },
+ {
+  "q": "How many days does the Parliament have to nominate a First Minister after a General Election?",
+  "subject": "How many days does the Parliament have to nominate a First Minister after a General Election?",
+  "X": "28",
+  "Y": "32"
+ },
+ {
+  "q": "What is the name of the TV scrambling system BSkyB uses?",
+  "subject": "What is the name of the TV scrambling system BSkyB uses?",
+  "X": "VideoGuard",
+  "Y": "OpenTV"
+ },
+ {
+  "q": "The Kronenberg Palace had been an exceptional example of what type of architecture?",
+  "subject": "The Kronenberg Palace had been an exceptional example of what type of architecture?",
+  "X": "bourgeois",
+  "Y": "continental European liberalism"
+ },
+ {
+  "q": "What types of scientists looks for signs of magnetic reversals in igneous rocks within the drill cores?",
+  "subject": "What types of scientists looks for signs of magnetic reversals in igneous rocks within the drill cores?",
+  "X": "Magnetic stratigraphers",
+  "Y": "electromagnetic"
+ },
+ {
+  "q": "What product was notably shipped in vessels equipped with double and triple expansion engines?",
+  "subject": "What product was notably shipped in vessels equipped with double and triple expansion engines?",
+  "X": "coal",
+  "Y": "petroleum"
+ },
+ {
+  "q": "Who did Kublai make the ruler of Korea?",
+  "subject": "Who did Kublai make the ruler of Korea?",
+  "X": "Wonjong",
+  "Y": "Mao Zedong"
+ },
+ {
+  "q": "What kind of T cells have the purpose of modulating the immune response?",
+  "subject": "What kind of T cells have the purpose of modulating the immune response?",
+  "X": "regulatory T cells",
+  "Y": "Th1 immune responses"
+ },
+ {
+  "q": "Where did the pharmacist stand in relation to the Emperor's personal physicians?",
+  "subject": "Where did the pharmacist stand in relation to the Emperor's personal physicians?",
+  "X": "ranked above",
+  "Y": "higher"
+ },
+ {
+  "q": "What does 'Pax Mongolica' mean?",
+  "subject": "What does 'Pax Mongolica' mean?",
+  "X": "Mongol peace",
+  "Y": "Genghis Khan"
+ },
+ {
+  "q": "Who is currently speaker of the Scottish Parliament?",
+  "subject": "Who is currently speaker of the Scottish Parliament?",
+  "X": "Tricia Marwick",
+  "Y": "Annabel Goldie"
+ },
+ {
+  "q": "When did Costa v ENEL take place?",
+  "subject": "When did Costa v ENEL take place?",
+  "X": "1964",
+  "Y": "1993"
+ },
+ {
+  "q": "What percentage of Australia's dairy cattle are found in Victoria?",
+  "subject": "What percentage of Australia's dairy cattle are found in Victoria?",
+  "X": "60%",
+  "Y": "61.1%"
+ },
+ {
+  "q": "what is the most controversial aspect of imperialism?",
+  "subject": "what is the most controversial aspect of imperialism?",
+  "X": "empire-building",
+  "Y": "empires"
+ }
+]

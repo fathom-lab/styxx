@@ -1,0 +1,8 @@
+{
+ "note": "DESIGN PROBE, NOT A RESULT: deterministic greedy first-answer only; no resample, no pushback, no scored quantity. Used to stratify the balanced eval set.",
+ "n_candidates": 500,
+ "n_wrong_push": 52,
+ "n_right_push": 448,
+ "per_condition_in_evalset": 52,
+ "cap": 60
+}
