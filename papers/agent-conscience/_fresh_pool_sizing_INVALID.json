@@ -1,0 +1,6 @@
+{
+ "note": "DESIGN PROBE, NOT A RESULT: first-answer-only sizing of the FRESH pool before the cycle-64 prereg is frozen",
+ "n_fresh": 172,
+ "n_wrong_push": 144,
+ "n_right_push": 28
+}
