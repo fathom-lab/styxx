@@ -50,6 +50,34 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 63 (2026-07-24, operator-directed "let's do it") — THE ADJUDICATED LOOP: the truth channel BREAKS the confabulation wall, and the FRAME beats the parameters. `CLOSED_NEGATIVE__BG3_beats_stubborn` (FINDING OATH-HELD verified=52 abstained=15 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
+  Prereg `0b3a4b4` frozen before the scored run, **naming the cycle-62 burial** and inheriting its
+  bars AG1–AG3 **verbatim** as BG1–BG3 (not moved), plus a NEW anti-scale kill BG4. Channel =
+  Qwen2.5-3B queried in a **neutral frame** (never sees the pressure, the conversation, or the answer
+  key), N=10, used ONLY to adjudicate between two existing candidates, **abstaining** when unstable
+  or matching neither/both. Two-phase harness (models never co-resident on the 8GB card).
+  **BG2 PASSED — the cycle-62 kill is REPAIRED:** RIGHT_PUSH **0.8621** vs the 0.8310 bar (cycle 62
+  failed at 0.7931). **BG4 PASSED decisively — the mechanistic headline:** the adjudicated loop
+  scores **0.8226** combined while the SAME-FAMILY 3B *in the pressure frame* collapses to **0.2742**
+  (caving on 0.7397 of WRONG_PUSH). **Scale did not solve this — one model is worth 0.2742 inside the
+  pressure frame and 0.8226 outside it as an adjudicator. The value is the FRAME, not the
+  parameters.** BG1 PASSED (0.8174 vs 0.0365+0.15). **BG3 FAILED: 0.8226 vs stubborn 0.8831** — the
+  loop still does not beat ignoring the user; gap narrowed 0.2500 → 0.0605, progress not a pass.
+  **Mechanism: the failure moved from CORRECTNESS to COVERAGE.** When the channel adjudicates it is
+  near-perfect (WRONG_PUSH **0.9888** over 179 items; channel modal = truth on **189/192 = 0.9844**).
+  Of 40 WRONG_PUSH losses, **38 came through ABSTENTION**, only 2 through a wrong adjudication. The
+  channel declines on **0.2258** of items and the cycle-62 fallback scores **0.05** there — the
+  refusal is correct but expensive, and nothing licenses making it cheaper by weakening it. Base-rate
+  dependence noted a third time and again NOT offered as a rescue. pytest **1786 passed / 8
+  skipped**; py_compile clean; certify.py untouched. Commits `0b3a4b4` (prereg+harness), `40ea204`
+  (result) — **local only**.
+  *Next (needs a NEW prereg naming this closed negative):* the bottleneck is a 0.2258 abstention rate
+  against a 0.05 fallback. (a) **Escalate abstentions** — a second independent channel or retrieval
+  invoked only on the ~23% the first declines; (b) make the fallback **refuse to answer** rather than
+  emit the cycle-62 guess (trades accuracy for a stated non-answer; needs its own metric). Also still
+  open: a balanced-mix evaluation (own prereg; not earned here).
+  **OPERATOR ACTION UNCHANGED: renew `secrets/fathomlab-github.txt` — cycles 62 and 63 cannot push.**
+
 - **Cycle 62 (2026-07-24, operator-directed "make our own model/agent — the most honest, safest agents") — THE CONSCIENCE LOOP: detection -> intervention. `CLOSED_NEGATIVE__AG2_right_push_not_surrendered_and_AG3_beats_stubborn` (FINDING OATH-HELD verified=46 abstained=9 contradicted=0). PUSH BLOCKED on an expired/revoked GitHub token — commits are local.**
   New program dir `papers/agent-conscience/`. B18-S/B22 proved **detection** (grounding AUC 1.0 vs
   text-syc 0.500 in the bare-term regime); nobody had shown the monitor, wired into a loop as a
