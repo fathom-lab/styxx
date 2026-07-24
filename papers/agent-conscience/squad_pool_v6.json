@@ -1,0 +1,602 @@
+[
+ {
+  "q": "What is the civil disobedience called where people refuse to be released?",
+  "subject": "What is the civil disobedience called where people refuse to be released?",
+  "X": "jail solidarity",
+  "Y": "Revolutionary civil disobedience"
+ },
+ {
+  "q": "What rainforest covers the majority of the Amazon basin in South America?",
+  "subject": "What rainforest covers the majority of the Amazon basin in South America?",
+  "X": "The Amazon rainforest",
+  "Y": "Africa"
+ },
+ {
+  "q": "Who elects the members of the European Parliament?",
+  "subject": "Who elects the members of the European Parliament?",
+  "X": "citizens",
+  "Y": "citizen's"
+ },
+ {
+  "q": "Oxygen exists in the atmosphere by way of what?",
+  "subject": "Oxygen exists in the atmosphere by way of what?",
+  "X": "carbon dioxide",
+  "Y": "Oxygen"
+ },
+ {
+  "q": "What are cancerous tumors of the skin known as?",
+  "subject": "What are cancerous tumors of the skin known as?",
+  "X": "melanomas",
+  "Y": "purple skin patches"
+ },
+ {
+  "q": "The West saw themselves as what compared to the east?",
+  "subject": "The West saw themselves as what compared to the east?",
+  "X": "progressive",
+  "Y": "libertarian"
+ },
+ {
+  "q": "What did al-Gama'a al-Islamiyya use to get its way?",
+  "subject": "What did al-Gama'a al-Islamiyya use to get its way?",
+  "X": "violence",
+  "Y": "internal strife"
+ },
+ {
+  "q": "When was the deportation of Acadians?",
+  "subject": "When was the deportation of Acadians?",
+  "X": "1755",
+  "Y": "1760"
+ },
+ {
+  "q": "What is Thomas B. Edsall's profession?",
+  "subject": "What is Thomas B. Edsall's profession?",
+  "X": "journalist",
+  "Y": "historians"
+ },
+ {
+  "q": "What do photocytes produce?",
+  "subject": "What do photocytes produce?",
+  "X": "bioluminescence",
+  "Y": "chemical"
+ },
+ {
+  "q": "Sky UK Limited is formerly known by what name?",
+  "subject": "Sky UK Limited is formerly known by what name?",
+  "X": "BSkyB",
+  "Y": "Sakya"
+ },
+ {
+  "q": "Where does HAMAS want to establish an Islamic state?",
+  "subject": "Where does HAMAS want to establish an Islamic state?",
+  "X": "Palestine",
+  "Y": "Islam"
+ },
+ {
+  "q": "Other than L.A. which other county do many people commute to?",
+  "subject": "Other than L.A. which other county do many people commute to?",
+  "X": "Orange",
+  "Y": "silver"
+ },
+ {
+  "q": "What rate of unionization do Scandinavian nations have?",
+  "subject": "What rate of unionization do Scandinavian nations have?",
+  "X": "high",
+  "Y": "lower"
+ },
+ {
+  "q": "What did the Islamic State proclaim itself in 2014?",
+  "subject": "What did the Islamic State proclaim itself in 2014?",
+  "X": "a caliphate",
+  "Y": "Islamic"
+ },
+ {
+  "q": "Which city is planned to be a part of the California High Speed Rail?",
+  "subject": "Which city is planned to be a part of the California High Speed Rail?",
+  "X": "Fresno",
+  "Y": "Los Angeles"
+ },
+ {
+  "q": "According to polynomial time reduction squaring can ultimately be logically reduced to what?",
+  "subject": "According to polynomial time reduction squaring can ultimately be logically reduced to what?",
+  "X": "multiplication",
+  "Y": "equality"
+ },
+ {
+  "q": "What are the anitmicrobial peptides secreted by the skin called?",
+  "subject": "What are the anitmicrobial peptides secreted by the skin called?",
+  "X": "\u03b2-defensins",
+  "Y": "interleukins"
+ },
+ {
+  "q": "What is the process in which neutrophils move towards the site of inflammation called?",
+  "subject": "What is the process in which neutrophils move towards the site of inflammation called?",
+  "X": "chemotaxis",
+  "Y": "calcitriol"
+ },
+ {
+  "q": "Generally speaking, what size are the earthquakes that hit southern California?",
+  "subject": "Generally speaking, what size are the earthquakes that hit southern California?",
+  "X": "small",
+  "Y": "largest"
+ },
+ {
+  "q": "What is one of the first responses the immune system has to infection?",
+  "subject": "What is one of the first responses the immune system has to infection?",
+  "X": "Inflammation",
+  "Y": "interleukin 1"
+ },
+ {
+  "q": "Who challenges the notion of the Kuznets curve hypothesis?",
+  "subject": "Who challenges the notion of the Kuznets curve hypothesis?",
+  "X": "Thomas Piketty",
+  "Y": "Charles L. Hutchinson"
+ },
+ {
+  "q": "What historical figure was Jacksonville named after?",
+  "subject": "What historical figure was Jacksonville named after?",
+  "X": "Andrew Jackson",
+  "Y": "Andrew Alper"
+ },
+ {
+  "q": "What is the active form of vitamin D known as?",
+  "subject": "What is the active form of vitamin D known as?",
+  "X": "calcitriol",
+  "Y": "antiparallel"
+ },
+ {
+  "q": "How much was the 1994 earthquake estimated to have cost?",
+  "subject": "How much was the 1994 earthquake estimated to have cost?",
+  "X": "$20 billion",
+  "Y": "$32 billion"
+ },
+ {
+  "q": "What is the atomic number of the element oxygen?",
+  "subject": "What is the atomic number of the element oxygen?",
+  "X": "8",
+  "Y": "eight"
+ },
+ {
+  "q": "Where does Hamas originate?",
+  "subject": "Where does Hamas originate?",
+  "X": "Palestine",
+  "Y": "Islam"
+ },
+ {
+  "q": "Who is the current Governor of Victoria?",
+  "subject": "Who is the current Governor of Victoria?",
+  "X": "Linda Dessau",
+  "Y": "cilia"
+ },
+ {
+  "q": "What brand of car is manufactured in Broadmeadows?",
+  "subject": "What brand of car is manufactured in Broadmeadows?",
+  "X": "Ford",
+  "Y": "Mustang I"
+ },
+ {
+  "q": "Who first fully explained the origins of magnetic and electric fields?",
+  "subject": "Who first fully explained the origins of magnetic and electric fields?",
+  "X": "James Clerk Maxwell",
+  "Y": "John Houghton"
+ },
+ {
+  "q": "Who gained control of Florida after the conclusion of the Revolutionary War?",
+  "subject": "Who gained control of Florida after the conclusion of the Revolutionary War?",
+  "X": "Spain",
+  "Y": "Spanish"
+ },
+ {
+  "q": "What is the parliamentary mace made of?",
+  "subject": "What is the parliamentary mace made of?",
+  "X": "silver",
+  "Y": "metals"
+ },
+ {
+  "q": "What doctrine did the doctrine of the Principles of Geology successfully promote?",
+  "subject": "What doctrine did the doctrine of the Principles of Geology successfully promote?",
+  "X": "uniformitarianism",
+  "Y": "anarchists"
+ },
+ {
+  "q": "What Swiss city was the center of the Calvinist movement?",
+  "subject": "What Swiss city was the center of the Calvinist movement?",
+  "X": "Geneva",
+  "Y": "Rhine Valley"
+ },
+ {
+  "q": "How is oxygen ranked as abundant in the universe?",
+  "subject": "How is oxygen ranked as abundant in the universe?",
+  "X": "third",
+  "Y": "three"
+ },
+ {
+  "q": "What force acted on bodies to retard their velocity?",
+  "subject": "What force acted on bodies to retard their velocity?",
+  "X": "friction",
+  "Y": "force"
+ },
+ {
+  "q": "What is the power-to-weight ratio of a steam plant compared to that of an internal combustion engine?",
+  "subject": "What is the power-to-weight ratio of a steam plant compared to that of an internal combustion engine?",
+  "X": "lower",
+  "Y": "high"
+ },
+ {
+  "q": "When was Montreal captured?",
+  "subject": "When was Montreal captured?",
+  "X": "1760",
+  "Y": "1700"
+ },
+ {
+  "q": "What political leaning does the Cato Institute have?",
+  "subject": "What political leaning does the Cato Institute have?",
+  "X": "libertarian",
+  "Y": "democratic"
+ },
+ {
+  "q": "Which organization released a California Earthquake forecast?",
+  "subject": "Which organization released a California Earthquake forecast?",
+  "X": "USGS",
+  "Y": "Dallas"
+ },
+ {
+  "q": "What continent are the Canarian Islands off the coast of?",
+  "subject": "What continent are the Canarian Islands off the coast of?",
+  "X": "Africa",
+  "Y": "Canada"
+ },
+ {
+  "q": "What was the first US state to have compulsory education?",
+  "subject": "What was the first US state to have compulsory education?",
+  "X": "Massachusetts",
+  "Y": "Boston metropolitan area"
+ },
+ {
+  "q": "Where is Energiprojekt AB based?",
+  "subject": "Where is Energiprojekt AB based?",
+  "X": "Sweden",
+  "Y": "Canada"
+ },
+ {
+  "q": "What is the most critical resource in the analysis of computational problems associated with non-deterministic Turing machines?",
+  "subject": "What is the most critical resource in the analysis of computational problems associated with non-deterministic Turing machines?",
+  "X": "time",
+  "Y": "Meuse"
+ },
+ {
+  "q": "What is the largest city in all of California?",
+  "subject": "What is the largest city in all of California?",
+  "X": "Los Angeles",
+  "Y": "New Orleans"
+ },
+ {
+  "q": "How many original treaties establishing the EU protected fundamental rights?",
+  "subject": "How many original treaties establishing the EU protected fundamental rights?",
+  "X": "None",
+  "Y": "two"
+ },
+ {
+  "q": "What process attributes new wealth to those that already have it?",
+  "subject": "What process attributes new wealth to those that already have it?",
+  "X": "Wealth concentration",
+  "Y": "economic"
+ },
+ {
+  "q": "What impact did the high school education movement have on the presence of skilled workers?",
+  "subject": "What impact did the high school education movement have on the presence of skilled workers?",
+  "X": "increase",
+  "Y": "lower"
+ },
+ {
+  "q": "What suffered considerably for Warsaw when it had an Eastern Bloc economy?",
+  "subject": "What suffered considerably for Warsaw when it had an Eastern Bloc economy?",
+  "X": "infrastructure",
+  "Y": "highways"
+ },
+ {
+  "q": "What is the Saxon Garden in Polish?",
+  "subject": "What is the Saxon Garden in Polish?",
+  "X": "Ogr\u00f3d Saski",
+  "Y": "Ogedei"
+ },
+ {
+  "q": "What did the Court of Justice reason were controlled in all member states in Josemans v Burgemeester van Maastricht?",
+  "subject": "What did the Court of Justice reason were controlled in all member states in Josemans v Burgemeester van Maastricht?",
+  "X": "narcotic drugs",
+  "Y": "only pharmacists"
+ },
+ {
+  "q": "What was the percentage of Germans attending private high schools in 2008?",
+  "subject": "What was the percentage of Germans attending private high schools in 2008?",
+  "X": "11.1",
+  "Y": "3.7"
+ },
+ {
+  "q": "Why is the final bill passed to the Monarch?",
+  "subject": "Why is the final bill passed to the Monarch?",
+  "X": "royal assent",
+  "Y": "confirmed and amended"
+ },
+ {
+  "q": "When using a probabilistic algorithm, how is the probability that the number is composite expressed mathematically?",
+  "subject": "When using a probabilistic algorithm, how is the probability that the number is composite expressed mathematically?",
+  "X": "1/(1-p)n",
+  "Y": "2p \u2212 1"
+ },
+ {
+  "q": "Ciliary rosettes pump water into what to control buoyancy?",
+  "subject": "Ciliary rosettes pump water into what to control buoyancy?",
+  "X": "the mesoglea",
+  "Y": "Meuse estuary"
+ },
+ {
+  "q": "What was the total nominal GDP of Warsaw in 2010?",
+  "subject": "What was the total nominal GDP of Warsaw in 2010?",
+  "X": "191.766 billion PLN",
+  "Y": "9.8 million"
+ },
+ {
+  "q": "What do larger fortunes generate?",
+  "subject": "What do larger fortunes generate?",
+  "X": "higher returns",
+  "Y": "lower incomes"
+ },
+ {
+  "q": "Where did the Rhine occupy during the Holocene?",
+  "subject": "Where did the Rhine occupy during the Holocene?",
+  "X": "Late-Glacial valley",
+  "Y": "Last Glacial Maximum"
+ },
+ {
+  "q": "How many miles does the dust travels over the Atlantic Ocean?",
+  "subject": "How many miles does the dust travels over the Atlantic Ocean?",
+  "X": "1,600 miles",
+  "Y": "3 miles"
+ },
+ {
+  "q": "What schools do preparatory schools prepare British children to attend?",
+  "subject": "What schools do preparatory schools prepare British children to attend?",
+  "X": "public",
+  "Y": "private"
+ },
+ {
+  "q": "Some people describe what between individuals or groups as imperialism or colonialism?",
+  "subject": "Some people describe what between individuals or groups as imperialism or colonialism?",
+  "X": "internal strife",
+  "Y": "violence"
+ },
+ {
+  "q": "What does the transport and storage demand for safety in dealing with oxygen?",
+  "subject": "What does the transport and storage demand for safety in dealing with oxygen?",
+  "X": "special training",
+  "Y": "vocational"
+ },
+ {
+  "q": "In what year was the school renamed as Harvard College?",
+  "subject": "In what year was the school renamed as Harvard College?",
+  "X": "1639",
+  "Y": "1629"
+ },
+ {
+  "q": "Issues dealt with at Westminster are not ones who is able to deal with?",
+  "subject": "Issues dealt with at Westminster are not ones who is able to deal with?",
+  "X": "Scottish Parliament",
+  "Y": "Scotland Act 1998"
+ },
+ {
+  "q": "Who does the wage gap between genders provide an advantage?",
+  "subject": "Who does the wage gap between genders provide an advantage?",
+  "X": "males",
+  "Y": "The individual"
+ },
+ {
+  "q": "The oil crisis caused oil companies to increase oil supplies in which area?",
+  "subject": "The oil crisis caused oil companies to increase oil supplies in which area?",
+  "X": "Arctic",
+  "Y": "northwestern Russia"
+ },
+ {
+  "q": "What type of assistance to out of town students is the Muslim Brotherhood known for?",
+  "subject": "What type of assistance to out of town students is the Muslim Brotherhood known for?",
+  "X": "housing",
+  "Y": "infrastructure"
+ },
+ {
+  "q": "What are one of the key cell types of the adaptive immune system?",
+  "subject": "What are one of the key cell types of the adaptive immune system?",
+  "X": "T cells",
+  "Y": "Th1 immune responses"
+ },
+ {
+  "q": "What types of work did the Han do in Central Asia?",
+  "subject": "What types of work did the Han do in Central Asia?",
+  "X": "artisans and farmers",
+  "Y": "soy farmers"
+ },
+ {
+  "q": "Agassiz's approach to science combined observation and what?",
+  "subject": "Agassiz's approach to science combined observation and what?",
+  "X": "intuition",
+  "Y": "economic"
+ },
+ {
+  "q": "What was Dalton's erroneous formula for water?",
+  "subject": "What was Dalton's erroneous formula for water?",
+  "X": "HO",
+  "Y": "L"
+ },
+ {
+  "q": "Which hall was used as Parliament's principle committee room?",
+  "subject": "Which hall was used as Parliament's principle committee room?",
+  "X": "main",
+  "Y": "major"
+ },
+ {
+  "q": "What did the the Europeans think the peoples in the tropics were in need of?",
+  "subject": "What did the the Europeans think the peoples in the tropics were in need of?",
+  "X": "guidance",
+  "Y": "aided"
+ },
+ {
+  "q": "The Maroons compete in what league division?",
+  "subject": "The Maroons compete in what league division?",
+  "X": "NCAA's Division III",
+  "Y": "Pac-12"
+ },
+ {
+  "q": "Assuming p is a prime other than 2 or 5, then, according to Fermat's theorem, what type of decimal will 1/p always be?",
+  "subject": "Assuming p is a prime other than 2 or 5, then, according to Fermat's theorem, what type of decimal will 1/p always be?",
+  "X": "a recurring decimal",
+  "Y": "multiplication"
+ },
+ {
+  "q": "How are the certain costs which are difficult to avoid shared?",
+  "subject": "How are the certain costs which are difficult to avoid shared?",
+  "X": "by everyone",
+  "Y": "a majority"
+ },
+ {
+  "q": "What extinction event might have created some conditions allowing the expansion of the amazon rainforest?",
+  "subject": "What extinction event might have created some conditions allowing the expansion of the amazon rainforest?",
+  "X": "Cretaceous\u2013Paleogene extinction event",
+  "Y": "fossil sequences"
+ },
+ {
+  "q": "When was there a reduction in the number of Scottish MPs?",
+  "subject": "When was there a reduction in the number of Scottish MPs?",
+  "X": "2005",
+  "Y": "2004"
+ },
+ {
+  "q": "How many seats are in the debating chamber?",
+  "subject": "How many seats are in the debating chamber?",
+  "X": "131",
+  "Y": "1303"
+ },
+ {
+  "q": "Complexity theory classifies problems based on what primary attribute?",
+  "subject": "Complexity theory classifies problems based on what primary attribute?",
+  "X": "difficulty",
+  "Y": "failed"
+ },
+ {
+  "q": "What had Bhutto planned on banning within six months, before he was overthrown?",
+  "subject": "What had Bhutto planned on banning within six months, before he was overthrown?",
+  "X": "alcohol and nightclubs",
+  "Y": "festivals"
+ },
+ {
+  "q": "What term best describes southern California's collection of landscapes?",
+  "subject": "What term best describes southern California's collection of landscapes?",
+  "X": "varied",
+  "Y": "non-specific"
+ },
+ {
+  "q": "Health problems were lower in places with higher levels of what?",
+  "subject": "Health problems were lower in places with higher levels of what?",
+  "X": "equality",
+  "Y": "multiplication"
+ },
+ {
+  "q": "What type of person can not be attributed civil disobedience?",
+  "subject": "What type of person can not be attributed civil disobedience?",
+  "X": "head of government",
+  "Y": "union government"
+ },
+ {
+  "q": "Savannah areas expanded over the last how many years?",
+  "subject": "Savannah areas expanded over the last how many years?",
+  "X": "34 million years",
+  "Y": "515 million years"
+ },
+ {
+  "q": "Which khanates had converted to Islam?",
+  "subject": "Which khanates had converted to Islam?",
+  "X": "western",
+  "Y": "northwest"
+ },
+ {
+  "q": "Who was the ruling class ahead of the Normans?",
+  "subject": "Who was the ruling class ahead of the Normans?",
+  "X": "Anglo-Saxons",
+  "Y": "The British Empire"
+ },
+ {
+  "q": "What contributed to water pollution in the Rhine? ",
+  "subject": "What contributed to water pollution in the Rhine? ",
+  "X": "plants and factories",
+  "Y": "artisans and farmers"
+ },
+ {
+  "q": "What do progressive moderates of Islam seek to separate?",
+  "subject": "What do progressive moderates of Islam seek to separate?",
+  "X": "religion from politics",
+  "Y": "non-political Islam"
+ },
+ {
+  "q": "What is the Royal Castle the most interesting example of?",
+  "subject": "What is the Royal Castle the most interesting example of?",
+  "X": "mannerist architecture",
+  "Y": "architects"
+ },
+ {
+  "q": "By how many kilometers does the traveling salesman problem seek to classify a route between the 15 largest cities in Germany?",
+  "subject": "By how many kilometers does the traveling salesman problem seek to classify a route between the 15 largest cities in Germany?",
+  "X": "2000",
+  "Y": "1999"
+ },
+ {
+  "q": "What body in India provides policy directions to schools?",
+  "subject": "What body in India provides policy directions to schools?",
+  "X": "union government",
+  "Y": "head of government"
+ },
+ {
+  "q": "How many rows of combs are there?",
+  "subject": "How many rows of combs are there?",
+  "X": "eight rows",
+  "Y": "8"
+ },
+ {
+  "q": "Which month is the first in the year Parliament takes a two week vacation?",
+  "subject": "Which month is the first in the year Parliament takes a two week vacation?",
+  "X": "April",
+  "Y": "May 2013"
+ },
+ {
+  "q": "Why would one want to give more punishment?",
+  "subject": "Why would one want to give more punishment?",
+  "X": "likelihood of repeating",
+  "Y": "a recurring decimal"
+ },
+ {
+  "q": "What are the exceptions in the constitution  that require special considerations to amend?",
+  "subject": "What are the exceptions in the constitution  that require special considerations to amend?",
+  "X": "\"entrenched\" provisions",
+  "Y": "\"semi-legal\""
+ },
+ {
+  "q": "What did the Rhine branch off to form in Austria?",
+  "subject": "What did the Rhine branch off to form in Austria?",
+  "X": "small islands",
+  "Y": "the Pacific"
+ },
+ {
+  "q": "When is the first reference in history to Warsaw?",
+  "subject": "When is the first reference in history to Warsaw?",
+  "X": "1313",
+  "Y": "1303"
+ },
+ {
+  "q": "What is the type of oxygen production for emergency oxygen in airlines?",
+  "subject": "What is the type of oxygen production for emergency oxygen in airlines?",
+  "X": "chemical",
+  "Y": "metals"
+ },
+ {
+  "q": "How long would the invasion of the Middle East have to last in order to develop renewable resources?",
+  "subject": "How long would the invasion of the Middle East have to last in order to develop renewable resources?",
+  "X": "10 years",
+  "Y": "2009"
+ }
+]
