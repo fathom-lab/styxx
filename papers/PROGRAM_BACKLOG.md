@@ -50,6 +50,38 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 65 (2026-07-24, operator-directed "keep going") — THE TIERED CHANNEL: the hard items are hard for BOTH families. `CLOSED_NEGATIVE__DG1_coverage_rises` (FINDING OATH-HELD verified=19 abstained=9 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
+  Prereg `9676929` frozen before any tier-2 result existed, implementing cycle 64's named step under
+  the constraint that note demanded — **gated on PRESERVING answered-accuracy, not merely on lifting
+  coverage** (DG2). Tier-2 = **Llama-3.2-3B: a DIFFERENT FAMILY at the SAME parameter scale** as the
+  tier-1 Qwen2.5-3B, chosen so a rescue could not be attributed to scale; Qwen2.5-7B was in cache and
+  deliberately NOT used because it would confound independence with capability.
+  **DG1 FAILED: final coverage 0.7733 vs tier-1's 0.7326 — a rise of only 0.0407 against the +0.05
+  bar, missed by 0.0093.** Bar not moved. **DG2 PASSED: answered accuracy 0.9850** vs a 0.9341 bar —
+  it *rose* from 0.9841, so escalation did NOT buy coverage with the refusal's own errors. **DG3
+  PASSED strongly:** on the 7 rescued items tier-2 scored **1.0** vs **0.4286** for the fallback on
+  those SAME items (paired gain 0.5714). **DG4 PASSED:** 0.9850 vs stubborn 0.8797 at 0.7733.
+  **MECHANISM — the reason DG1 failed IS the finding:** tier-2 abstained on **0.8478** of tier-1's
+  abstention slice (rescuing 7 of 46), the channels **agreed 0.9837** where both spoke, and tier-2
+  alone looks almost identical to tier-1 alone (coverage 0.7558 vs 0.7326, accuracy 0.9923 vs
+  0.9841). The abstention slice is not "items this channel is unsure about" — it is items that are
+  **genuinely HARD**, and architectural independence does not dissolve them. **Extends cycle 50's
+  "persona diversity is not error diversity": FAMILY diversity at matched scale is not much error
+  diversity either — the correlation lives in item difficulty, not model identity.**
+  **EARNED:** tiered escalation is **SAFE** (composes without degrading). **KILLED:** the scaling
+  story that coverage can be bought by stacking independent same-scale channels. pytest **1786 passed
+  / 8 skipped** on a clean run; py_compile clean; certify.py untouched. Disclosed: one concurrent
+  background run reported 1 failure that did not reproduce and whose name was lost to output
+  truncation — spun out as a separate flaky-test task, not waved away. Commits `9676929` (prereg),
+  `42e548b` (result) — **local only**.
+  *Next (new prereg required):* the bottleneck is **shared ignorance**, so the fix must supply
+  different **KNOWLEDGE**, not a different architecture — (a) retrieval against a corpus, the only
+  channel that can know something neither model does; (b) genuine capability escalation (7B/frontier).
+  **Honest reversal to carry:** cycle 63 showed scale was NOT the source of the tier-1 win, and this
+  cycle shows family diversity is NOT the source of coverage — which makes **scale the next live
+  hypothesis for coverage specifically**.
+  **OPERATOR ACTION UNCHANGED: renew `secrets/fathomlab-github.txt` — cycles 62–65 cannot push.**
+
 - **Cycle 64 (2026-07-24, operator-directed "go deeper") — THE SELECTIVE DATASHEET: the refusal is NOT theater. `SURVIVED__conscience_loop_is_a_real_selective_predictor` (FINDING OATH-HELD verified=30 abstained=12 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
   Prereg `e35e732` frozen before the scored run. **It named and REFUSED the forbidden move:** cycle
   63's data could have been re-scored under a coverage- or balance-aware metric until BG3 passed —
