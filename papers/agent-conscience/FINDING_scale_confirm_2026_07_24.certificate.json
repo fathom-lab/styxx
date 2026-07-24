@@ -1,0 +1,529 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_scale_confirm_2026_07_24.md",
+  "document_sha256": "9d26e1bd095b1ee92e8436461f9eebb1263888617aec617f8a1371062bd7c5db",
+  "receipts_sha256": {
+    "scale_confirm_result.json": "42f02deaa1904613aaceabb4e35410dd6926626dd87fb67bd8790934eda4e568",
+    "scale_channel_result.json": "86763f9b857c2894c1a0e64d590ef96280c70d6d2f78ba829289bde1d9fc67b1",
+    "scale_channel_margin.json": "6d1d90b144cb78978b9f772234d6b72c49aaa70681364f2ab2f28a6fbb75f330",
+    "tiered_channel_result.json": "517a28e86b4d493140ebfd7984b219ed780ff9b21e4510aeb27a9c9a845d9245",
+    "selective_escalation_result.json": "88eff9c5ac4931da1d3b4b41673caf7a03b7f5746cefa9919e62dd438221d448",
+    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 18,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "0"
+    },
+    {
+      "line": 7,
+      "token": "67"
+    },
+    {
+      "line": 22,
+      "token": "66"
+    },
+    {
+      "line": 30,
+      "token": "66"
+    },
+    {
+      "line": 35,
+      "token": "66"
+    },
+    {
+      "line": 35,
+      "token": "0.0568"
+    },
+    {
+      "line": 37,
+      "token": "65"
+    },
+    {
+      "line": 38,
+      "token": "68"
+    },
+    {
+      "line": 40,
+      "token": "66"
+    },
+    {
+      "line": 46,
+      "token": "66"
+    },
+    {
+      "line": 53,
+      "token": "66"
+    },
+    {
+      "line": 61,
+      "token": "65"
+    },
+    {
+      "line": 61,
+      "token": "0.8478"
+    },
+    {
+      "line": 62,
+      "token": "66"
+    },
+    {
+      "line": 62,
+      "token": "71"
+    },
+    {
+      "line": 63,
+      "token": "69"
+    },
+    {
+      "line": 65,
+      "token": "68"
+    },
+    {
+      "line": 71,
+      "token": "66"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "**88 balanced SQuAD items, 0 overlap with the pools of cycles 67-70**.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:n_items"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "**88 balanced SQuAD items, 0 overlap with the pools of cycles 67-70**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "**88 balanced SQuAD items, 0 overlap with the pools of cycles 67-70**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "| EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "binding_context": "| gate | outcome | | EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "| EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "binding_context": "| gate | outcome | | EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "| EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "binding_context": "| gate | outcome | | EV1 power | 44 WRONG_PUSH / 44 RIGHT_PUSH, slice 63 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:tier1.slice_size"
+    },
+    {
+      "line": 15,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "| EG2 accuracy preserved | **PASS** -- 0.7 vs tier-1 0.72 |",
+      "binding_context": "| gate | outcome | | EG2 accuracy preserved | **PASS** -- 0.7 vs tier-1 0.72 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 15,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "| EG2 accuracy preserved | **PASS** -- 0.7 vs tier-1 0.72 |",
+      "binding_context": "| gate | outcome | | EG2 accuracy preserved | **PASS** -- 0.7 vs tier-1 0.72 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 16,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "| **EG3 earns its slice (paired)** | **FAIL** -- rescued 0.6 vs fallback 1.0 on the same items |",
+      "binding_context": "| gate | outcome | | **EG3 earns its slice (paired)** | **FAIL** -- rescued 0.6 vs fallback 1.0 on the same items |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.tier2_accuracy"
+    },
+    {
+      "line": 16,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **EG3 earns its slice (paired)** | **FAIL** -- rescued 0.6 vs fallback 1.0 on the same items |",
+      "binding_context": "| gate | outcome | | **EG3 earns its slice (paired)** | **FAIL** -- rescued 0.6 vs fallback 1.0 on the same items |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 17,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "| **EG4 beats stubborn** | **FAIL** -- 0.7 vs 0.7, a tie against a strict-inequality bar |",
+      "binding_context": "| gate | outcome | | **EG4 beats stubborn** | **FAIL** -- 0.7 vs 0.7, a tie against a strict-inequality bar |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 17,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "| **EG4 beats stubborn** | **FAIL** -- 0.7 vs 0.7, a tie against a strict-inequality bar |",
+      "binding_context": "| gate | outcome | | **EG4 beats stubborn** | **FAIL** -- 0.7 vs 0.7, a tie against a strict-inequality bar |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 22,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "grounds that cycle 66's own measured picture (7B abstaining on 0.8043 of the slice, agreeing with",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.8043",
+      "value": 0.8043,
+      "decimals": 4,
+      "context": "grounds that cycle 66's own measured picture (7B abstaining on 0.8043 of the slice, agreeing with",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:cycle66_reference.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 23,
+      "token": "0.9919",
+      "value": 0.9919,
+      "decimals": 4,
+      "context": "the 3B on 0.9919) described two models behaving as one instrument. **That prediction held**, and it",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "line": 26,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "The failure is worse than \"no gain\". On the 5 items the 7B rescued, it scored **0.6** where the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 26,
+      "token": "0.6",
+      "value": 0.6,
+      "decimals": 1,
+      "context": "The failure is worse than \"no gain\". On the 5 items the 7B rescued, it scored **0.6** where the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.tier2_accuracy"
+    },
+    {
+      "line": 27,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "fallback on **those same items** scored **1.0** -- a paired gain of **-0.4**. The escalation did not",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 27,
+      "token": "-0.4",
+      "value": -0.4,
+      "decimals": 1,
+      "context": "fallback on **those same items** scored **1.0** -- a paired gain of **-0.4**. The escalation did not",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.paired_gain"
+    },
+    {
+      "line": 30,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "Tier-2 also abstained on **0.9206349206349207** of the slice -- *more* co-abstention than cycle 66",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "EG1 passed here more comfortably than it did in cycle 66 (a rise of 0.0568 against the bar, versus a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.0568",
+      "value": 0.0568,
+      "decimals": 4,
+      "context": "EG1 passed here more comfortably than it did in cycle 66 (a rise of 0.0568 against the bar, versus a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "margin of 0.40 items) -- and yet the escalation was actively harmful. **A coverage metric would have",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:margin_in_items"
+    },
+    {
+      "line": 37,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "called this an improvement.** The paired gate is what caught it, which is the whole reason cycle 65",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "introduced a paired construction and cycle 68 refused to accept rescue counts as value.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "The honest decomposition of cycle 66's headline: *\"scale buys coverage\"* narrowly replicates, and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "The rescued subsets are tiny on both sides -- **5** items here, 9 in cycle 66. Neither paired number",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 45,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "The rescued subsets are tiny on both sides -- **5** items here, 9 in cycle 66. Neither paired number",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:cycle66_reference.n_rescued"
+    },
+    {
+      "line": 46,
+      "token": "-0.4",
+      "value": -0.4,
+      "decimals": 1,
+      "context": "is well powered, and this cycle's -0.4 is as noisy an estimate as cycle 66's +0.5714 was. What is",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.paired_gain"
+    },
+    {
+      "line": 46,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "is well powered, and this cycle's -0.4 is as noisy an estimate as cycle 66's +0.5714 was. What is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "+0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "is well powered, and this cycle's -0.4 is as noisy an estimate as cycle 66's +0.5714 was. What is",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.paired_gain"
+    },
+    {
+      "line": 48,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "channel declines on 0.80-0.92 of the slice its smaller sibling declined, and on the handful it does",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:cycle66_reference.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 53,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "Cycle 66's `SURVIVED__scale_buys_coverage` is **demoted**: it was a 0.40-item pass, its own finding",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "| family diversity (different family, same scale) | 65 | co-abstention 0.8478, coverage gate failed |",
+      "binding_context": "| route | cycle | outcome | | family diversity (different family, same scale) | 65 | co-abstention 0.8478, coverage gate failed |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "0.8478",
+      "value": 0.8478,
+      "decimals": 4,
+      "context": "| family diversity (different family, same scale) | 65 | co-abstention 0.8478, coverage gate failed |",
+      "binding_context": "| route | cycle | outcome | | family diversity (different family, same scale) | 65 | co-abstention 0.8478, coverage gate failed |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 62,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "| scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "binding_context": "| route | cycle | outcome | | scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "71",
+      "value": 71.0,
+      "decimals": 0,
+      "context": "| scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "binding_context": "| route | cycle | outcome | | scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "-0.4",
+      "value": -0.4,
+      "decimals": 1,
+      "context": "| scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "binding_context": "| route | cycle | outcome | | scale (same family, 2x) | 66 + 71 | thin pass, then paired gain -0.4 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:rescue.paired_gain"
+    },
+    {
+      "line": 63,
+      "token": "69",
+      "value": 69.0,
+      "decimals": 0,
+      "context": "| selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "binding_context": "| route | cycle | outcome | | selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 63,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "| selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "binding_context": "| route | cycle | outcome | | selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:selective.paired_gain"
+    },
+    {
+      "line": 63,
+      "token": "0.0909",
+      "value": 0.0909,
+      "decimals": 4,
+      "context": "| selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "binding_context": "| route | cycle | outcome | | selective gating on the loop's own signals | 69 | selection anti-selected (0.0667 vs 0.0909) |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.paired_gain"
+    },
+    {
+      "line": 65,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "The only mechanism in the arc that ever moved the number remains **source independence** (cycle 68,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 66,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "separation 0.4286, confirmed on fresh disjoint balanced items) -- and cycle 70 showed the retrieval",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 66,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "separation 0.4286, confirmed on fresh disjoint balanced items) -- and cycle 70 showed the retrieval",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:stubborn_at_retrieval_coverage.n"
+    },
+    {
+      "line": 71,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B tier-1, 7B-4bit tier-2 (4-bit forced by the 8GB card, as in cycle 66, so this remains",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 72,
+      "token": "88",
+      "value": 88.0,
+      "decimals": 0,
+      "context": "evidence about a 4-bit 7B), 88 balanced SQuAD items, two-turn pressure. Fifth disjoint pool,",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_confirm_result.json:n_items"
+    }
+  ]
+}

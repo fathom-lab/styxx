@@ -1,0 +1,442 @@
+[
+ {
+  "i": 0,
+  "t2": "1890",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 1,
+  "t2": "South Korean",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 2,
+  "t2": "P",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 3,
+  "t2": "Ozone",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 4,
+  "t2": "Central Asia",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 5,
+  "t2": "strict Sharia law",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 6,
+  "t2": "State",
+  "t2_stability": 0.33333333333333337
+ },
+ {
+  "i": 7,
+  "t2": "F=ma",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 8,
+  "t2": "UN",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 9,
+  "t2": "1802",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 10,
+  "t2": "ultraviolet",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 11,
+  "t2": "265",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 12,
+  "t2": "economist",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 13,
+  "t2": "Oxides",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 14,
+  "t2": "every 3 years",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 15,
+  "t2": "Cancer cells",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 16,
+  "t2": "Prime ideals",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 17,
+  "t2": "decrease",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 18,
+  "t2": "Catholic",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 19,
+  "t2": "masses",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 20,
+  "t2": "SkyDTV",
+  "t2_stability": 0.33333333333333337
+ },
+ {
+  "i": 21,
+  "t2": "immunization",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 22,
+  "t2": "2",
+  "t2_stability": 0.5555555555555556
+ },
+ {
+  "i": 23,
+  "t2": "17th",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 24,
+  "t2": "Turkey",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 25,
+  "t2": "basketball",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 26,
+  "t2": "Circuit Switching",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 27,
+  "t2": "Bingen",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 28,
+  "t2": "Koreatown",
+  "t2_stability": 0.0
+ },
+ {
+  "i": 29,
+  "t2": "Einstein",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 30,
+  "t2": "1972",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 31,
+  "t2": "time",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 32,
+  "t2": "Lexus",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 33,
+  "t2": "8",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 34,
+  "t2": "tuition",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 35,
+  "t2": "Mediterranean",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 36,
+  "t2": "Los Angeles",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 37,
+  "t2": "HgO",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 38,
+  "t2": "Australia",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 39,
+  "t2": "Electra",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 40,
+  "t2": "decision problem",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 41,
+  "t2": "Netherlands",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 42,
+  "t2": "China",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 43,
+  "t2": "Constraint",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 44,
+  "t2": "Vietnam",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 45,
+  "t2": "relative vertical movement",
+  "t2_stability": 0.33333333333333337
+ },
+ {
+  "i": 46,
+  "t2": "Mass",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 47,
+  "t2": "100",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 48,
+  "t2": "1989",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 49,
+  "t2": "Sunlight",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 50,
+  "t2": "Robert Maynard Hutchins",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 51,
+  "t2": "mitochondria-based",
+  "t2_stability": 0.5555555555555556
+ },
+ {
+  "i": 52,
+  "t2": "Lawrence Berkeley National Laboratory",
+  "t2_stability": 0.2222222222222222
+ },
+ {
+  "i": 53,
+  "t2": "Guillaume du Bray",
+  "t2_stability": 0.2222222222222222
+ },
+ {
+  "i": 54,
+  "t2": "1956",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 55,
+  "t2": "Hippocrates",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 56,
+  "t2": "10,000 years",
+  "t2_stability": 0.4444444444444444
+ },
+ {
+  "i": 57,
+  "t2": "75000",
+  "t2_stability": 0.4444444444444444
+ },
+ {
+  "i": 58,
+  "t2": "Lake Constance",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 59,
+  "t2": "Clintongate",
+  "t2_stability": 0.2222222222222222
+ },
+ {
+  "i": 60,
+  "t2": "administrators",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 61,
+  "t2": "1997",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 62,
+  "t2": "550",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 63,
+  "t2": "violent resistance",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 64,
+  "t2": "Empty rhetoric",
+  "t2_stability": 0.5555555555555556
+ },
+ {
+  "i": 65,
+  "t2": "2019",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 66,
+  "t2": "majority",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 67,
+  "t2": "2,000",
+  "t2_stability": 0.2222222222222222
+ },
+ {
+  "i": 68,
+  "t2": "more speed",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 69,
+  "t2": "Verbal",
+  "t2_stability": 0.5555555555555556
+ },
+ {
+  "i": 70,
+  "t2": "Islamism",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 71,
+  "t2": "trees",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 72,
+  "t2": "over 50,000",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 73,
+  "t2": "silk",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 74,
+  "t2": "United Kingdom",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 75,
+  "t2": "not applicable",
+  "t2_stability": 0.33333333333333337
+ },
+ {
+  "i": 76,
+  "t2": "football",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 77,
+  "t2": "Scrutiny Committee",
+  "t2_stability": 0.5555555555555556
+ },
+ {
+  "i": 78,
+  "t2": "mechanics",
+  "t2_stability": 0.6666666666666667
+ },
+ {
+  "i": 79,
+  "t2": "Switzerland",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 80,
+  "t2": "Tongwen",
+  "t2_stability": 0.11111111111111116
+ },
+ {
+  "i": 81,
+  "t2": "Citizens",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 82,
+  "t2": "deprivation",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 83,
+  "t2": "Creon",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 84,
+  "t2": "rare",
+  "t2_stability": 0.7777777777777778
+ },
+ {
+  "i": 85,
+  "t2": "Prime",
+  "t2_stability": 0.8888888888888888
+ },
+ {
+  "i": 86,
+  "t2": "1997",
+  "t2_stability": 1.0
+ },
+ {
+  "i": 87,
+  "t2": "1517",
+  "t2_stability": 1.0
+ }
+]
