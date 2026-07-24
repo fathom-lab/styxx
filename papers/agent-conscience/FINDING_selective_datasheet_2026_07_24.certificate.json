@@ -1,0 +1,456 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_selective_datasheet_2026_07_24.md",
+  "document_sha256": "294d7f5b19da17a77a3d262aeb86b30034862e673d773c12304824807dea910c",
+  "receipts_sha256": {
+    "selective_datasheet_result.json": "a50b0c6436d1bc04efbaa0f891b402b129c4017624cb5db03d2e2bdc515ac895"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 30,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "64"
+    },
+    {
+      "line": 7,
+      "token": "248"
+    },
+    {
+      "line": 7,
+      "token": "62"
+    },
+    {
+      "line": 11,
+      "token": "63"
+    },
+    {
+      "line": 20,
+      "token": "0.7326"
+    },
+    {
+      "line": 26,
+      "token": "0.7326"
+    },
+    {
+      "line": 34,
+      "token": "63"
+    },
+    {
+      "line": 39,
+      "token": "0.15"
+    },
+    {
+      "line": 42,
+      "token": "63"
+    },
+    {
+      "line": 42,
+      "token": "0.9844"
+    },
+    {
+      "line": 45,
+      "token": "63"
+    },
+    {
+      "line": 60,
+      "token": "63"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "**Cycle 64 (operator-directed \"go deeper\"). Prereg `PREREG_selective_datasheet_2026_07_24.md`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "`selective_datasheet_result.json`. Agent Qwen2.5-0.5B, channel Qwen2.5-3B, **172 FRESH items,",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:n_items"
+    },
+    {
+      "line": 7,
+      "token": "248",
+      "value": 248.0,
+      "decimals": 0,
+      "context": "verified disjoint** from the 248 items of cycles 62/63.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "62",
+      "value": 62.0,
+      "decimals": 0,
+      "context": "verified disjoint** from the 248 items of cycles 62/63.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "Cycle 63 closed `CLOSED_NEGATIVE__BG3_beats_stubborn` with its failure relocated from correctness to",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.7326",
+      "value": 0.7326,
+      "decimals": 4,
+      "context": "**matched coverage** `c* = 0.7326`, the loop's own adjudication rate.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "126",
+      "value": 126.0,
+      "decimals": 0,
+      "context": "At matched coverage (126 of 172 items for every arm):",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.n"
+    },
+    {
+      "line": 24,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "At matched coverage (126 of 172 items for every arm):",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:n_items"
+    },
+    {
+      "line": 26,
+      "token": "0.7326",
+      "value": 0.7326,
+      "decimals": 4,
+      "context": "| arm | accuracy @ c* = 0.7326 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "| **STYXX_ADJ** | **0.9841** |",
+      "binding_context": "| arm | accuracy @ c* = 0.7326 | | **STYXX_ADJ** | **0.9841** |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 29,
+      "token": "0.8968",
+      "value": 0.8968,
+      "decimals": 4,
+      "context": "| STUBBORN | 0.8968 |",
+      "binding_context": "| arm | accuracy @ c* = 0.7326 | | STUBBORN | 0.8968 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.stubborn.accuracy"
+    },
+    {
+      "line": 30,
+      "token": "0.1984",
+      "value": 0.1984,
+      "decimals": 4,
+      "context": "| BARE_LARGE (3B pressured) | 0.1984 |",
+      "binding_context": "| arm | accuracy @ c* = 0.7326 | | BARE_LARGE (3B pressured) | 0.1984 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.bare_large.accuracy"
+    },
+    {
+      "line": 31,
+      "token": "0.1587",
+      "value": 0.1587,
+      "decimals": 4,
+      "context": "| BARE_SMALL (0.5B pressured) | 0.1587 |",
+      "binding_context": "| arm | accuracy @ c* = 0.7326 | | BARE_SMALL (0.5B pressured) | 0.1587 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.bare_small.accuracy"
+    },
+    {
+      "line": 33,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "- **CG1 PASSED**: 0.9841 vs STUBBORN's 0.8968. Allowed to abstain on the same fraction of items, the",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 34,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "loop beats ignoring the user -- the question cycle 63 answered \"no\" to at full coverage.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "- **CG2 PASSED**: 0.9841 vs 0.1984 for a pressured 3B at the same coverage. Scale again does not",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 35,
+      "token": "0.1984",
+      "value": 0.1984,
+      "decimals": 4,
+      "context": "- **CG2 PASSED**: 0.9841 vs 0.1984 for a pressured 3B at the same coverage. Scale again does not",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.bare_large.accuracy"
+    },
+    {
+      "line": 37,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "- **CG3 PASSED, and this was the gate that mattered.** Accuracy on ANSWERED items 0.9841 against",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 38,
+      "token": "0.1739",
+      "value": 0.1739,
+      "decimals": 4,
+      "context": "0.1739 on ABSTAINED items (scored via the fallback answer it would otherwise have emitted): an",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.accuracy_abstained_via_fallback"
+    },
+    {
+      "line": 39,
+      "token": "0.8102",
+      "value": 0.8102,
+      "decimals": 4,
+      "context": "informativeness gap of **0.8102** against a 0.15 bar. **The refusal is not theater.** The loop",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.informativeness_gap"
+    },
+    {
+      "line": 39,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "informativeness gap of **0.8102** against a 0.15 bar. **The refusal is not theater.** The loop",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 40,
+      "token": "0.2674",
+      "value": 0.2674,
+      "decimals": 4,
+      "context": "declines on 0.2674 of items, and those are overwhelmingly the items it would have gotten wrong.",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.abstain_rate"
+    },
+    {
+      "line": 42,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "The channel was correct on 0.9841 of the items it adjudicated -- replicating cycle 63's 0.9844 on",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 42,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "The channel was correct on 0.9841 of the items it adjudicated -- replicating cycle 63's 0.9844 on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.9844",
+      "value": 0.9844,
+      "decimals": 4,
+      "context": "The channel was correct on 0.9841 of the items it adjudicated -- replicating cycle 63's 0.9844 on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 45,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "## The honest picture: cycle 63's negative REPLICATES, and is not overturned",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "0.8372",
+      "value": 0.8372,
+      "decimals": 4,
+      "context": "| STUBBORN | 0.8372 |",
+      "binding_context": "| arm | full-coverage accuracy | | STUBBORN | 0.8372 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.stubborn"
+    },
+    {
+      "line": 52,
+      "token": "0.7674",
+      "value": 0.7674,
+      "decimals": 4,
+      "context": "| STYXX_ADJ | 0.7674 |",
+      "binding_context": "| arm | full-coverage accuracy | | STYXX_ADJ | 0.7674 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.styxx_adj"
+    },
+    {
+      "line": 53,
+      "token": "0.6221",
+      "value": 0.6221,
+      "decimals": 4,
+      "context": "| STYXX_62 (no channel) | 0.6221 |",
+      "binding_context": "| arm | full-coverage accuracy | | STYXX_62 (no channel) | 0.6221 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.styxx_62"
+    },
+    {
+      "line": 54,
+      "token": "0.2093",
+      "value": 0.2093,
+      "decimals": 4,
+      "context": "| BARE_LARGE | 0.2093 |",
+      "binding_context": "| arm | full-coverage accuracy | | BARE_LARGE | 0.2093 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.bare_large"
+    },
+    {
+      "line": 55,
+      "token": "0.1628",
+      "value": 0.1628,
+      "decimals": 4,
+      "context": "| BARE_SMALL | 0.1628 |",
+      "binding_context": "| arm | full-coverage accuracy | | BARE_SMALL | 0.1628 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.bare_small"
+    },
+    {
+      "line": 59,
+      "token": "0.7674",
+      "value": 0.7674,
+      "decimals": 4,
+      "context": "- **Forced to answer everything, the loop loses to ignoring the user** (0.7674 vs 0.8372) --",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.styxx_adj"
+    },
+    {
+      "line": 59,
+      "token": "0.8372",
+      "value": 0.8372,
+      "decimals": 4,
+      "context": "- **Forced to answer everything, the loop loses to ignoring the user** (0.7674 vs 0.8372) --",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.stubborn"
+    },
+    {
+      "line": 60,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "cycle 63's BG3 negative reproduces on fresh, disjoint data and is NOT rescued.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "- **Allowed to refuse, the loop wins** (0.9841 vs 0.8968 at matched coverage).",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 61,
+      "token": "0.8968",
+      "value": 0.8968,
+      "decimals": 4,
+      "context": "- **Allowed to refuse, the loop wins** (0.9841 vs 0.8968 at matched coverage).",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.stubborn.accuracy"
+    },
+    {
+      "line": 72,
+      "token": "0.8102",
+      "value": 0.8102,
+      "decimals": 4,
+      "context": "its abstention carries large, measured information about its own error (gap 0.8102).",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.informativeness_gap"
+    },
+    {
+      "line": 75,
+      "token": "0.2674",
+      "value": 0.2674,
+      "decimals": 4,
+      "context": "unconditionally. The 0.2674 of items it refuses are not answered by anything here -- they are",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.abstain_rate"
+    },
+    {
+      "line": 77,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "without destroying the 0.9841 answered-accuracy remains open and unattempted.",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 81,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "0.5B agent, 3B channel, 172 fresh short-factual items (element symbols, chemical formulas, official",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:n_items"
+    },
+    {
+      "line": 82,
+      "token": "144",
+      "value": 144.0,
+      "decimals": 0,
+      "context": "languages, currencies, US state capitals), 144 WRONG_PUSH / 28 RIGHT_PUSH, two-turn pressure. No",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:n_wrong_push"
+    },
+    {
+      "line": 82,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "languages, currencies, US state capitals), 144 WRONG_PUSH / 28 RIGHT_PUSH, two-turn pressure. No",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:n_right_push"
+    }
+  ]
+}
