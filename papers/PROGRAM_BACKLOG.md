@@ -50,6 +50,32 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 66 (2026-07-24, operator-directed "keep going") — DOES SCALE BUY COVERAGE? `SURVIVED__scale_buys_coverage` (FINDING OATH-HELD verified=33 abstained=13 contradicted=0) — **by four tenths of one item.** PUSH STILL BLOCKED.**
+  The cycle-65 contrast with exactly one variable changed: 65 held scale fixed and varied FAMILY and
+  failed; this holds family fixed and varies SCALE (Qwen2.5-7B-4bit vs the tier-1 3B). Everything
+  else byte-identical. Bars EG1–EG4 inherited verbatim by **importing the constants from the cycle-65
+  module** so they provably could not drift. Both outcomes pre-committed (`5a56908`).
+  **All four gates pass:** EG1 coverage 0.7849 vs tier-1 0.7326; EG2 answered accuracy **0.9852**
+  (above tier-1's 0.9841); EG3 rescued 1.0 vs fallback 0.3333 paired; EG4 0.9852 vs stubborn 0.8741.
+  **THE MARGIN, stated with the verdict: coverage rose 0.0523 against a 0.05 bar → pass margin
+  0.0023 = 0.40 items of 172.** Tier-2 rescued **9** of the 46-slice where cycle 65 rescued **7** —
+  the whole difference between SURVIVED and CLOSED_NEGATIVE is **two items**. Cycle 46's F2 already
+  wrote the rule (single-draw tight-margin passes are lucky-draw-compatible; "one draw licenses
+  nothing") and it applies to a favourable result exactly as to an adverse one — gate recorded as
+  passed because bars move in neither direction, claim licensed accordingly small, confirmation owed.
+  **QUALITATIVE PICTURE UNCHANGED FROM THE CLOSED NEGATIVE:** a model with >2× the parameters, same
+  family, still declines on **0.8043** of the items its smaller sibling declined (65: 0.8478) and
+  **agrees 0.9919** where both speak (65: 0.9837) — *higher* agreement than the cross-family channel.
+  Tier-2 alone: coverage 0.7674 at accuracy 1.0. **Shared ignorance survives its own test — ~4/5 of
+  the slice is unreachable by either escalation route.** NOT earned: any claim scale solves coverage.
+  Disclosed: 4-bit forced by the 8GB card ⇒ evidence about a 4-bit 7B, not 7B. pytest **1786 passed /
+  8 skipped**; certify.py untouched. Commits `5a56908` (prereg), `d3ba627` (result) — **local only**.
+  *Next:* **RETRIEVAL.** The prereg pre-committed that an EG1 failure would foreclose model-stacking
+  and leave retrieval the only live candidate; EG1 passed by 0.40 items, so **the practical
+  conclusion is the one a failure would have delivered** — only EXTERNAL KNOWLEDGE reaches the
+  remaining ~80%. The next prereg must name this thin margin as motivation, not treat scale as solved.
+  Owed: fresh-pool confirmation for this pass AND for cycle 64; flaky-test identification; PAT renewal.
+
 - **Cycle 65 (2026-07-24, operator-directed "keep going") — THE TIERED CHANNEL: the hard items are hard for BOTH families. `CLOSED_NEGATIVE__DG1_coverage_rises` (FINDING OATH-HELD verified=19 abstained=9 contradicted=0). PUSH STILL BLOCKED on the expired PAT.**
   Prereg `9676929` frozen before any tier-2 result existed, implementing cycle 64's named step under
   the constraint that note demanded — **gated on PRESERVING answered-accuracy, not merely on lifting
