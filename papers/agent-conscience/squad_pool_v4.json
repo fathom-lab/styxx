@@ -1,0 +1,602 @@
+[
+ {
+  "q": "What term resulted from Dioscorides' book?",
+  "subject": "What term resulted from Dioscorides' book?",
+  "X": "materia medica",
+  "Y": "Lorelei"
+ },
+ {
+  "q": "The Rhine forms an inland delta into which lake?",
+  "subject": "The Rhine forms an inland delta into which lake?",
+  "X": "Lake Constance",
+  "Y": "Lake \u00dcberlingen"
+ },
+ {
+  "q": "James Hutton published a 2 volume version of his theories in what year?",
+  "subject": "James Hutton published a 2 volume version of his theories in what year?",
+  "X": "1795",
+  "Y": "1798"
+ },
+ {
+  "q": "Which area of China did Japan conquer in 1931?",
+  "subject": "Which area of China did Japan conquer in 1931?",
+  "X": "Manchuria",
+  "Y": "Beijing"
+ },
+ {
+  "q": "What type of cells engulf or eat pathogens and foreign particles?",
+  "subject": "What type of cells engulf or eat pathogens and foreign particles?",
+  "X": "phagocytes",
+  "Y": "Neutrophils and macrophages"
+ },
+ {
+  "q": "Phagocytes can be called to a specific location by what?",
+  "subject": "Phagocytes can be called to a specific location by what?",
+  "X": "cytokines",
+  "Y": "interleukin 1"
+ },
+ {
+  "q": "To where did Ethelred flee?",
+  "subject": "To where did Ethelred flee?",
+  "X": "Normandy",
+  "Y": "France"
+ },
+ {
+  "q": "What type of numbers are always multiples of 2?",
+  "subject": "What type of numbers are always multiples of 2?",
+  "X": "even numbers",
+  "Y": "eight"
+ },
+ {
+  "q": "Where were the Germanic tribes originally located?",
+  "subject": "Where were the Germanic tribes originally located?",
+  "X": "Scandinavia",
+  "Y": "Greenland"
+ },
+ {
+  "q": "In what sector are jobs beginning to decrease?",
+  "subject": "In what sector are jobs beginning to decrease?",
+  "X": "manufacturing",
+  "Y": "business"
+ },
+ {
+  "q": "What magnetic character do triplet O2 have?",
+  "subject": "What magnetic character do triplet O2 have?",
+  "X": "paramagnetic",
+  "Y": "perpendicular"
+ },
+ {
+  "q": "How do centripetal forces act in relation to vectors of velocity?",
+  "subject": "How do centripetal forces act in relation to vectors of velocity?",
+  "X": "perpendicular",
+  "Y": "magnitude and direction"
+ },
+ {
+  "q": "AC and NC are complexity classes typically associated with what type of circuit?",
+  "subject": "AC and NC are complexity classes typically associated with what type of circuit?",
+  "X": "Boolean",
+  "Y": "Chemical"
+ },
+ {
+  "q": "What mountainous region is Lake Constance by?",
+  "subject": "What mountainous region is Lake Constance by?",
+  "X": "Alps",
+  "Y": "Sicily"
+ },
+ {
+  "q": "Southern California's economy can be described as one of the largest in the United States and what other characteristic?",
+  "subject": "Southern California's economy can be described as one of the largest in the United States and what other characteristic?",
+  "X": "diverse",
+  "Y": "ambiguity"
+ },
+ {
+  "q": "What was the primary race of students attending Christian academies after the Brown decision?",
+  "subject": "What was the primary race of students attending Christian academies after the Brown decision?",
+  "X": "white",
+  "Y": "citrus"
+ },
+ {
+  "q": "What theory best explains gravity?",
+  "subject": "What theory best explains gravity?",
+  "X": "general relativity",
+  "Y": "time or space"
+ },
+ {
+  "q": "Antigone was a play made by whom?",
+  "subject": "Antigone was a play made by whom?",
+  "X": "Sophocles",
+  "Y": "a statocyst"
+ },
+ {
+  "q": "What other catalysts can be used to produce oxygen?",
+  "subject": "What other catalysts can be used to produce oxygen?",
+  "X": "Chemical",
+  "Y": "liquid"
+ },
+ {
+  "q": "What river originally bounded the Duchy",
+  "subject": "What river originally bounded the Duchy",
+  "X": "Seine",
+  "Y": "France"
+ },
+ {
+  "q": "Who is seen as the ultimate climate change authority?",
+  "subject": "Who is seen as the ultimate climate change authority?",
+  "X": "IPCC",
+  "Y": "Legislative Council"
+ },
+ {
+  "q": "What is the main executive body of the EU?",
+  "subject": "What is the main executive body of the EU?",
+  "X": "The European Commission",
+  "Y": "the European Community"
+ },
+ {
+  "q": "If there is a conflict between EU law and national law, which law take precedence?",
+  "subject": "If there is a conflict between EU law and national law, which law take precedence?",
+  "X": "EU law",
+  "Y": "The European Commission"
+ },
+ {
+  "q": "What process is responsible for the planet's oxygen content?",
+  "subject": "What process is responsible for the planet's oxygen content?",
+  "X": "photosynthesis",
+  "Y": "Oxygen"
+ },
+ {
+  "q": "Where was Friedrich Ratzel born?",
+  "subject": "Where was Friedrich Ratzel born?",
+  "X": "Germany",
+  "Y": "France"
+ },
+ {
+  "q": "What is the only form potential energy can change into?",
+  "subject": "What is the only form potential energy can change into?",
+  "X": "kinetic",
+  "Y": "chemical energy"
+ },
+ {
+  "q": "What do the top 400 richest Americans have more of than half of all Americans combined?",
+  "subject": "What do the top 400 richest Americans have more of than half of all Americans combined?",
+  "X": "wealth",
+  "Y": "financial assets"
+ },
+ {
+  "q": "In what century was quantum mechanics made? ",
+  "subject": "In what century was quantum mechanics made? ",
+  "X": "20th",
+  "Y": "late 19th"
+ },
+ {
+  "q": "In private schools, what language are classes taught in?",
+  "subject": "In private schools, what language are classes taught in?",
+  "X": "English",
+  "Y": "British"
+ },
+ {
+  "q": "What researcher first used the word oxygen ?",
+  "subject": "What researcher first used the word oxygen ?",
+  "X": "Antoine Lavoisier",
+  "Y": "Marquis de Vaudreuil."
+ },
+ {
+  "q": "What is one type of public key cryptography algorithm?",
+  "subject": "What is one type of public key cryptography algorithm?",
+  "X": "RSA",
+  "Y": "Economist"
+ },
+ {
+  "q": "What is an example of a virus that uses antigenic variation?",
+  "subject": "What is an example of a virus that uses antigenic variation?",
+  "X": "HIV",
+  "Y": "microbes"
+ },
+ {
+  "q": "What culture did the Normans combine with in Ireland?",
+  "subject": "What culture did the Normans combine with in Ireland?",
+  "X": "Irish",
+  "Y": "British"
+ },
+ {
+  "q": "What is the Rhine called in Dutch?",
+  "subject": "What is the Rhine called in Dutch?",
+  "X": "Rijn",
+  "Y": "Hoek van Holland"
+ },
+ {
+  "q": "What field of computer science analyzes all possible algorithms in aggregate to determine the resource requirements needed to solve to a given problem?  ",
+  "subject": "What field of computer science analyzes all possible algorithms in aggregate to determine the resource requirements needed to solve to a given problem?  ",
+  "X": "computational complexity theory",
+  "Y": "complexity classes"
+ },
+ {
+  "q": "What form of oxygen is composed of three oxygen atoms?",
+  "subject": "What form of oxygen is composed of three oxygen atoms?",
+  "X": "ozone",
+  "Y": "Oxygen"
+ },
+ {
+  "q": "What was Warsaw the most diverse of in Poland?",
+  "subject": "What was Warsaw the most diverse of in Poland?",
+  "X": "city",
+  "Y": "Los Angeles"
+ },
+ {
+  "q": "What profession does Simon Kuznets have?",
+  "subject": "What profession does Simon Kuznets have?",
+  "X": "Economist",
+  "Y": "Milton Friedman"
+ },
+ {
+  "q": "Where do scientists think all of the plagues originated from?",
+  "subject": "Where do scientists think all of the plagues originated from?",
+  "X": "China",
+  "Y": "Asia"
+ },
+ {
+  "q": "The function of long-lived memory cells is an example of what kind of immune response?",
+  "subject": "The function of long-lived memory cells is an example of what kind of immune response?",
+  "X": "adaptive",
+  "Y": "recognition"
+ },
+ {
+  "q": "Is the output of a functional problem typically characterized by a simple or complex answer?",
+  "subject": "Is the output of a functional problem typically characterized by a simple or complex answer?",
+  "X": "complex",
+  "Y": "Type I"
+ },
+ {
+  "q": "What is the chemical that mediates Type 1 hypersensitivity?",
+  "subject": "What is the chemical that mediates Type 1 hypersensitivity?",
+  "X": "IgE",
+  "Y": "complex"
+ },
+ {
+  "q": "Besides viniculture, what is the other dominate economic sector in the middle rhine?",
+  "subject": "Besides viniculture, what is the other dominate economic sector in the middle rhine?",
+  "X": "tourism",
+  "Y": "Tours"
+ },
+ {
+  "q": "The Ottoman empire controlled territory on three continents, Africa, Asia and which other?",
+  "subject": "The Ottoman empire controlled territory on three continents, Africa, Asia and which other?",
+  "X": "Europe",
+  "Y": "Germany"
+ },
+ {
+  "q": "In Nepalese private schools, what is the primary language of instruction?",
+  "subject": "In Nepalese private schools, what is the primary language of instruction?",
+  "X": "English",
+  "Y": "British"
+ },
+ {
+  "q": "Which newspaper defined southern California?",
+  "subject": "Which newspaper defined southern California?",
+  "X": "Los Angeles Times",
+  "Y": "San Diego"
+ },
+ {
+  "q": "What is the name of the post-independence government school system in Malaysia?",
+  "subject": "What is the name of the post-independence government school system in Malaysia?",
+  "X": "National School",
+  "Y": "College"
+ },
+ {
+  "q": "What is the largest city of Poland?",
+  "subject": "What is the largest city of Poland?",
+  "X": "Warsaw",
+  "Y": "underground leader Pi\u0142sudski"
+ },
+ {
+  "q": "What kind of needlework was used in the creation of the Bayeux Tapestry?",
+  "subject": "What kind of needlework was used in the creation of the Bayeux Tapestry?",
+  "X": "embroidery",
+  "Y": "lace"
+ },
+ {
+  "q": "What is the usual form of the government's wealth redistribution? ",
+  "subject": "What is the usual form of the government's wealth redistribution? ",
+  "X": "taxation",
+  "Y": "steeper tax"
+ },
+ {
+  "q": "How sure did the statement say scientists were that temperatures would keep rising?",
+  "subject": "How sure did the statement say scientists were that temperatures would keep rising?",
+  "X": "at least 90%",
+  "Y": "over 60 percent"
+ },
+ {
+  "q": "Who formed the universal theory of gravitation?",
+  "subject": "Who formed the universal theory of gravitation?",
+  "X": "Isaac Newton",
+  "Y": "Albert Einstein"
+ },
+ {
+  "q": "What is PPP?",
+  "subject": "What is PPP?",
+  "X": "Public-Private Partnering",
+  "Y": "government-owned"
+ },
+ {
+  "q": "What was one of the Norman's major exports?",
+  "subject": "What was one of the Norman's major exports?",
+  "X": "fighting horsemen",
+  "Y": "cattle"
+ },
+ {
+  "q": "What does the minister who was the catalyst of the Members Business do by speaking after everyone else?",
+  "subject": "What does the minister who was the catalyst of the Members Business do by speaking after everyone else?",
+  "X": "winds up",
+  "Y": "turbine"
+ },
+ {
+  "q": "What other scientist influence Frank Burnet when he was formulating his theory of immunity?",
+  "subject": "What other scientist influence Frank Burnet when he was formulating his theory of immunity?",
+  "X": "Niels Jerne",
+  "Y": "Daniel Andrews"
+ },
+ {
+  "q": "What compounds are released by injured or infected cells, triggering inflammation?",
+  "subject": "What compounds are released by injured or infected cells, triggering inflammation?",
+  "X": "eicosanoids and cytokines",
+  "Y": "interleukin 1"
+ },
+ {
+  "q": "With what European country did the Huguenots feel kinship for emigration to?",
+  "subject": "With what European country did the Huguenots feel kinship for emigration to?",
+  "X": "Dutch Republic",
+  "Y": "Netherlands"
+ },
+ {
+  "q": "When did Robert Crispin go up against the Turks?",
+  "subject": "When did Robert Crispin go up against the Turks?",
+  "X": "1060s",
+  "Y": "1072"
+ },
+ {
+  "q": "If input size is is equal to n, what can respectively be assumed is the function of n?",
+  "subject": "If input size is is equal to n, what can respectively be assumed is the function of n?",
+  "X": "the time taken",
+  "Y": "Decision Time"
+ },
+ {
+  "q": "How many bodies of water makes up Lake Constance? ",
+  "subject": "How many bodies of water makes up Lake Constance? ",
+  "X": "three",
+  "Y": "four"
+ },
+ {
+  "q": "What does Rajan feel has created deep financial fault lines?",
+  "subject": "What does Rajan feel has created deep financial fault lines?",
+  "X": "systematic economic inequalities",
+  "Y": "Wealth concentration"
+ },
+ {
+  "q": "In which year did the newspaper define southern California?",
+  "subject": "In which year did the newspaper define southern California?",
+  "X": "1900",
+  "Y": "1906"
+ },
+ {
+  "q": "What are the total number of votes to be counted during the voting process?",
+  "subject": "What are the total number of votes to be counted during the voting process?",
+  "X": "352",
+  "Y": "325"
+ },
+ {
+  "q": "Why do police and fire services fall under the purview of the Scottish Parliament?",
+  "subject": "Why do police and fire services fall under the purview of the Scottish Parliament?",
+  "X": "automatically devolved",
+  "Y": "developed"
+ },
+ {
+  "q": "What do Cydippids use to capture their prey?",
+  "subject": "What do Cydippids use to capture their prey?",
+  "X": "colloblasts",
+  "Y": "ctenophores"
+ },
+ {
+  "q": "Why has Warsaw seen many improvements over the past decade?",
+  "subject": "Why has Warsaw seen many improvements over the past decade?",
+  "X": "solid economic growth",
+  "Y": "Economist"
+ },
+ {
+  "q": "Where does southern California's megalopolis standard in terms of population nationwide?",
+  "subject": "Where does southern California's megalopolis standard in terms of population nationwide?",
+  "X": "third",
+  "Y": "three"
+ },
+ {
+  "q": "What is one result of civil rebellion?",
+  "subject": "What is one result of civil rebellion?",
+  "X": "destructive",
+  "Y": "wrecking"
+ },
+ {
+  "q": "What scientific field's theory has received contributions from the steam engine?",
+  "subject": "What scientific field's theory has received contributions from the steam engine?",
+  "X": "thermodynamic",
+  "Y": "heat and pressure"
+ },
+ {
+  "q": "Where is the Apache Point Observatory located?",
+  "subject": "Where is the Apache Point Observatory located?",
+  "X": "Sunspot, New Mexico",
+  "Y": "solar"
+ },
+ {
+  "q": "What component of water is more soluble than nitrogen?",
+  "subject": "What component of water is more soluble than nitrogen?",
+  "X": "Oxygen",
+  "Y": "ozone"
+ },
+ {
+  "q": "What was the Yuan's Persian ally?",
+  "subject": "What was the Yuan's Persian ally?",
+  "X": "the Ilkhanate",
+  "Y": "the Mughal state"
+ },
+ {
+  "q": "What is the concrete choice typically assumed by most complexity-theoretic theorems?",
+  "subject": "What is the concrete choice typically assumed by most complexity-theoretic theorems?",
+  "X": "input encoding",
+  "Y": "inputs"
+ },
+ {
+  "q": "For what nation did Ribault initially claim what is now Jacksonville?",
+  "subject": "For what nation did Ribault initially claim what is now Jacksonville?",
+  "X": "France",
+  "Y": "Germany"
+ },
+ {
+  "q": "At what rate is Orange County developing its business centers?",
+  "subject": "At what rate is Orange County developing its business centers?",
+  "X": "rapidly",
+  "Y": "gradual"
+ },
+ {
+  "q": "The spin of what can produce a magnetic effect to oxygen molecules?",
+  "subject": "The spin of what can produce a magnetic effect to oxygen molecules?",
+  "X": "unpaired electrons",
+  "Y": "electronegativity"
+ },
+ {
+  "q": "What did Basset analyze before coming to his conclusions?",
+  "subject": "What did Basset analyze before coming to his conclusions?",
+  "X": "nineteenth-century cartographic techniques",
+  "Y": "late 19th century"
+ },
+ {
+  "q": "What elements from the rift system in the Alpine orogeny in Southwest Germany?",
+  "subject": "What elements from the rift system in the Alpine orogeny in Southwest Germany?",
+  "X": "Upper Rhine Graben",
+  "Y": "Rhine Valley"
+ },
+ {
+  "q": "One of FIS' agenda items was to force women to start doing what?",
+  "subject": "One of FIS' agenda items was to force women to start doing what?",
+  "X": "staying home",
+  "Y": "rest"
+ },
+ {
+  "q": "Who first proved Bertrand's postulate?",
+  "subject": "Who first proved Bertrand's postulate?",
+  "X": "Chebyshev",
+  "Y": "chemotaxis"
+ },
+ {
+  "q": "Does the new deal include Video on demand and High Definition?",
+  "subject": "Does the new deal include Video on demand and High Definition?",
+  "X": "no",
+  "Y": "one"
+ },
+ {
+  "q": "What do the three richest people in the world posses more of than the lowest 48 nations together?",
+  "subject": "What do the three richest people in the world posses more of than the lowest 48 nations together?",
+  "X": "financial assets",
+  "Y": "wealth"
+ },
+ {
+  "q": "What is an example of an immunosuppressive drug that prevents T cell activity by altering signal transduction pathways?",
+  "subject": "What is an example of an immunosuppressive drug that prevents T cell activity by altering signal transduction pathways?",
+  "X": "cyclosporin",
+  "Y": "cytokines"
+ },
+ {
+  "q": "Which French composer wrote ametrical music using prime numbers?",
+  "subject": "Which French composer wrote ametrical music using prime numbers?",
+  "X": "Olivier Messiaen",
+  "Y": "Adolf Galland"
+ },
+ {
+  "q": "Who was in charge of the papal army in the War of Barbastro?",
+  "subject": "Who was in charge of the papal army in the War of Barbastro?",
+  "X": "William of Montreuil",
+  "Y": "Governor Vaudreuil"
+ },
+ {
+  "q": "How much was the emergency aid to Israel?",
+  "subject": "How much was the emergency aid to Israel?",
+  "X": "$2.2 billion",
+  "Y": "2 million"
+ },
+ {
+  "q": "Within the 30 days how many digiboxes had been sold?",
+  "subject": "Within the 30 days how many digiboxes had been sold?",
+  "X": "100,000",
+  "Y": "10,000"
+ },
+ {
+  "q": "The point at which different radiometric isotopes stop diffusing into and out of the crystal lattice is called what?",
+  "subject": "The point at which different radiometric isotopes stop diffusing into and out of the crystal lattice is called what?",
+  "X": "particular closure temperature",
+  "Y": "latent heat"
+ },
+ {
+  "q": "When was the French colony in modern day Brazil founded?",
+  "subject": "When was the French colony in modern day Brazil founded?",
+  "X": "1555",
+  "Y": "1249"
+ },
+ {
+  "q": "In what sense must you be observing the curvature of space-time?",
+  "subject": "In what sense must you be observing the curvature of space-time?",
+  "X": "global",
+  "Y": "Europe"
+ },
+ {
+  "q": "What is the system by which prokaryotes retain phage gene fragments that they have previously come in contact with?",
+  "subject": "What is the system by which prokaryotes retain phage gene fragments that they have previously come in contact with?",
+  "X": "CRISPR",
+  "Y": "microbes"
+ },
+ {
+  "q": "In what state is oxygen shipped in bulk?",
+  "subject": "In what state is oxygen shipped in bulk?",
+  "X": "liquid",
+  "Y": "Chemical"
+ },
+ {
+  "q": "What does motion at a constant velocity equal?",
+  "subject": "What does motion at a constant velocity equal?",
+  "X": "rest",
+  "Y": "staying home"
+ },
+ {
+  "q": "What substance is used to make high quality liquid O2?",
+  "subject": "What substance is used to make high quality liquid O2?",
+  "X": "liquefied air",
+  "Y": "compressed gas"
+ },
+ {
+  "q": "What changes the mineral content of a rock?",
+  "subject": "What changes the mineral content of a rock?",
+  "X": "heat and pressure",
+  "Y": "thermodynamic"
+ },
+ {
+  "q": "The frequent availability of what substance allowed land-based steam engines to exhaust a great deal of steam?",
+  "subject": "The frequent availability of what substance allowed land-based steam engines to exhaust a great deal of steam?",
+  "X": "feed water",
+  "Y": "agriculture"
+ },
+ {
+  "q": "What is the term for wind-blown dust in a tundra?",
+  "subject": "What is the term for wind-blown dust in a tundra?",
+  "X": "loess",
+  "Y": "rest"
+ },
+ {
+  "q": "What is the number of plant species in economics and social interest?",
+  "subject": "What is the number of plant species in economics and social interest?",
+  "X": "438,000",
+  "Y": "40,000"
+ },
+ {
+  "q": "Where did Mongke Khan attack the Song dynasty?",
+  "subject": "Where did Mongke Khan attack the Song dynasty?",
+  "X": "southern China",
+  "Y": "Beijing"
+ }
+]
