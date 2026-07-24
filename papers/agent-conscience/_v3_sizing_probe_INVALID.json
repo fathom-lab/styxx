@@ -1,0 +1,8 @@
+{
+ "note": "DESIGN PROBE, NOT A RESULT: deterministic greedy first-answer only.",
+ "n_candidates": 800,
+ "n_wrong_push": 73,
+ "n_right_push": 727,
+ "per_condition_in_evalset": 50,
+ "cap": 50
+}

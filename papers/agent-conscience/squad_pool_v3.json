@@ -1,0 +1,602 @@
+[
+ {
+  "q": "The Port of Long Beach belongs to which region of California?",
+  "subject": "The Port of Long Beach belongs to which region of California?",
+  "X": "Southern",
+  "Y": "North"
+ },
+ {
+  "q": "The immune system also produces what molecules in order to allow for tumor destruction by the complement system?",
+  "subject": "The immune system also produces what molecules in order to allow for tumor destruction by the complement system?",
+  "X": "antibodies",
+  "Y": "antigens"
+ },
+ {
+  "q": "What act sets forth the functions of the Scottish Parliament?",
+  "subject": "What act sets forth the functions of the Scottish Parliament?",
+  "X": "Scotland Act 1998",
+  "Y": "a Scottish Parliament"
+ },
+ {
+  "q": "First published by Sir Charles Lyell in 1830 this book was called what? ",
+  "subject": "First published by Sir Charles Lyell in 1830 this book was called what? ",
+  "X": "Principles of Geology",
+  "Y": "tectonic subsidence"
+ },
+ {
+  "q": "What is the most common cause of injury on site?",
+  "subject": "What is the most common cause of injury on site?",
+  "X": "Falls",
+  "Y": "valleys"
+ },
+ {
+  "q": "NP complete problems contain the lowest likelihood of being located in what problem class?",
+  "subject": "NP complete problems contain the lowest likelihood of being located in what problem class?",
+  "X": "NP",
+  "Y": "thanks"
+ },
+ {
+  "q": "The cities of Los Angeles and San Diego are a part of which state?",
+  "subject": "The cities of Los Angeles and San Diego are a part of which state?",
+  "X": "California",
+  "Y": "Los Angeles"
+ },
+ {
+  "q": "Is a problem instance typically characterized as abstract or concrete?",
+  "subject": "Is a problem instance typically characterized as abstract or concrete?",
+  "X": "concrete",
+  "Y": "chemical"
+ },
+ {
+  "q": "What was the name of the experiment that tested how life originated?",
+  "subject": "What was the name of the experiment that tested how life originated?",
+  "X": "Miller\u2013Urey experiment",
+  "Y": "elementary particles"
+ },
+ {
+  "q": "What field involves the study of the immune system?",
+  "subject": "What field involves the study of the immune system?",
+  "X": "Immunology",
+  "Y": "antigens"
+ },
+ {
+  "q": "What bacteria lives inside a protective capsule that serves to prevent cell lysis?",
+  "subject": "What bacteria lives inside a protective capsule that serves to prevent cell lysis?",
+  "X": "Mycobacterium tuberculosis",
+  "Y": "bacteriophages"
+ },
+ {
+  "q": "Who has the role of holding the Scottish Government to account?",
+  "subject": "Who has the role of holding the Scottish Government to account?",
+  "X": "Scottish Parliament",
+  "Y": "Westminster"
+ },
+ {
+  "q": "Who is the Costa Rican President that went to Harvard?",
+  "subject": "Who is the Costa Rican President that went to Harvard?",
+  "X": "Jos\u00e9 Mar\u00eda Figueres",
+  "Y": "Tatiana Kuplich"
+ },
+ {
+  "q": "What was the steam engine an important component of?",
+  "subject": "What was the steam engine an important component of?",
+  "X": "Industrial Revolution",
+  "Y": "Singing Revolution"
+ },
+ {
+  "q": "What year was the Maastricht treaty signed?",
+  "subject": "What year was the Maastricht treaty signed?",
+  "X": "1992",
+  "Y": "1989"
+ },
+ {
+  "q": "Who patented a steam engine in 1781?",
+  "subject": "Who patented a steam engine in 1781?",
+  "X": "James Watt",
+  "Y": "James Wolfe"
+ },
+ {
+  "q": "What is the comparison in price between Australian private schools versus public?",
+  "subject": "What is the comparison in price between Australian private schools versus public?",
+  "X": "more expensive",
+  "Y": "more equally"
+ },
+ {
+  "q": "What is the largest city the Rhine runs through? ",
+  "subject": "What is the largest city the Rhine runs through? ",
+  "X": "Cologne, Germany",
+  "Y": "Paris"
+ },
+ {
+  "q": "When was the defeat of Napoleonic France?",
+  "subject": "When was the defeat of Napoleonic France?",
+  "X": "1815",
+  "Y": "1862"
+ },
+ {
+  "q": "What is an example of major civil disobedience in South Africa?",
+  "subject": "What is an example of major civil disobedience in South Africa?",
+  "X": "apartheid",
+  "Y": "African-American"
+ },
+ {
+  "q": "Which is older the British Empire or the Ethiopian Empire?",
+  "subject": "Which is older the British Empire or the Ethiopian Empire?",
+  "X": "Ethiopian Empire",
+  "Y": "empires"
+ },
+ {
+  "q": "When did Henry issue the Edict of Nantes?",
+  "subject": "When did Henry issue the Edict of Nantes?",
+  "X": "1598",
+  "Y": "1596"
+ },
+ {
+  "q": "Electrolysis of what can be used to produce oxygen and hydrogen?",
+  "subject": "Electrolysis of what can be used to produce oxygen and hydrogen?",
+  "X": "water",
+  "Y": "wet"
+ },
+ {
+  "q": "What was free movement increasingly based on?",
+  "subject": "What was free movement increasingly based on?",
+  "X": "citizenship",
+  "Y": "private citizen"
+ },
+ {
+  "q": "Whose work  corrected Aristotle's physics in the seventeenth century?",
+  "subject": "Whose work  corrected Aristotle's physics in the seventeenth century?",
+  "X": "Galileo Galilei",
+  "Y": "Leonardo da Vinci"
+ },
+ {
+  "q": "What does photosynthesis release into the Earth's atmosphere?",
+  "subject": "What does photosynthesis release into the Earth's atmosphere?",
+  "X": "oxygen",
+  "Y": "oxides"
+ },
+ {
+  "q": "What form do complex Gaussian integers have? ",
+  "subject": "What form do complex Gaussian integers have? ",
+  "X": "a + bi",
+  "Y": "protein A"
+ },
+ {
+  "q": "Jean De Rely's illustrated French-language scriptures were first published in what city?",
+  "subject": "Jean De Rely's illustrated French-language scriptures were first published in what city?",
+  "X": "Paris",
+  "Y": "Seine"
+ },
+ {
+  "q": "What were the fossils that were found to represent ctenphores missing that current ctenphora have?",
+  "subject": "What were the fossils that were found to represent ctenphores missing that current ctenphora have?",
+  "X": "tentacles",
+  "Y": "jellyfish"
+ },
+ {
+  "q": "What Harvard Alumni was the Palestine Prime Minister?",
+  "subject": "What Harvard Alumni was the Palestine Prime Minister?",
+  "X": "Benjamin Netanyahu",
+  "Y": "President Mahmoud Ahmadinejad"
+ },
+ {
+  "q": "What is formed when a phagosome fuses with a lysosome?",
+  "subject": "What is formed when a phagosome fuses with a lysosome?",
+  "X": "phagolysosome",
+  "Y": "tentacles"
+ },
+ {
+  "q": "What house was the site of a weaving school in Canterbury?",
+  "subject": "What house was the site of a weaving school in Canterbury?",
+  "X": "The Weavers",
+  "Y": "Eleutherian gunpowder mills"
+ },
+ {
+  "q": "What is the population of the second largest city in California?",
+  "subject": "What is the population of the second largest city in California?",
+  "X": "1.3 million",
+  "Y": "9.8 million"
+ },
+ {
+  "q": "School desegregation in the United States led to an increased number of students of what ethnicity in public schools?",
+  "subject": "School desegregation in the United States led to an increased number of students of what ethnicity in public schools?",
+  "X": "African-American",
+  "Y": "apartheid"
+ },
+ {
+  "q": "What helps to unleash the productivity ability of the poor?",
+  "subject": "What helps to unleash the productivity ability of the poor?",
+  "X": "education",
+  "Y": "curriculum"
+ },
+ {
+  "q": "When did Western forces invade Iraq?",
+  "subject": "When did Western forces invade Iraq?",
+  "X": "2003",
+  "Y": "2005"
+ },
+ {
+  "q": "Bacteria often secrete what kind of proteins to ingest a physical barrier?",
+  "subject": "Bacteria often secrete what kind of proteins to ingest a physical barrier?",
+  "X": "enzymes",
+  "Y": "protein A"
+ },
+ {
+  "q": "The word imperialism has it's origins in which ancient language? ",
+  "subject": "The word imperialism has it's origins in which ancient language? ",
+  "X": "Latin",
+  "Y": "Spanish"
+ },
+ {
+  "q": "What is a fundamentalist interpretation of Islam called?",
+  "subject": "What is a fundamentalist interpretation of Islam called?",
+  "X": "Wahhabism",
+  "Y": "an Islamic state"
+ },
+ {
+  "q": "What party had a victory in the 2015 UK election?",
+  "subject": "What party had a victory in the 2015 UK election?",
+  "X": "the Conservative",
+  "Y": "conservative Muslims"
+ },
+ {
+  "q": "The Center in Paris is located near what river?",
+  "subject": "The Center in Paris is located near what river?",
+  "X": "Seine",
+  "Y": "Paris"
+ },
+ {
+  "q": "When a pathogen has been eaten by a phagocyte it becomes trapped in what vesicle?",
+  "subject": "When a pathogen has been eaten by a phagocyte it becomes trapped in what vesicle?",
+  "X": "phagosome",
+  "Y": "tentacles"
+ },
+ {
+  "q": "The region spans starting at islands found in which body of water?",
+  "subject": "The region spans starting at islands found in which body of water?",
+  "X": "Pacific Ocean",
+  "Y": "the Red Sea"
+ },
+ {
+  "q": "What occurs after a dive in which a diver decompresses too quickly?",
+  "subject": "What occurs after a dive in which a diver decompresses too quickly?",
+  "X": "Decompression sickness",
+  "Y": "incapacitation"
+ },
+ {
+  "q": " When was the Single European Act made?",
+  "subject": " When was the Single European Act made?",
+  "X": "1986",
+  "Y": "1985"
+ },
+ {
+  "q": "In what part of the 19th century were steam turbines introduced?",
+  "subject": "In what part of the 19th century were steam turbines introduced?",
+  "X": "late",
+  "Y": "15"
+ },
+ {
+  "q": "What month is the warmest in Fresno?",
+  "subject": "What month is the warmest in Fresno?",
+  "X": "July",
+  "Y": "22 May 2006"
+ },
+ {
+  "q": "Which book by Edward Said portrayed the east as being the \"others?\"",
+  "subject": "Which book by Edward Said portrayed the east as being the \"others?\"",
+  "X": "Orientalism",
+  "Y": "Confucian"
+ },
+ {
+  "q": "What protein does Staphylococcus aureus produce to make antibodies ineffective?",
+  "subject": "What protein does Staphylococcus aureus produce to make antibodies ineffective?",
+  "X": "protein A",
+  "Y": "enzymes"
+ },
+ {
+  "q": "What type of engines became popular for power generation after piston steam engines?",
+  "subject": "What type of engines became popular for power generation after piston steam engines?",
+  "X": "steam turbines",
+  "Y": "gas turbines"
+ },
+ {
+  "q": "When did Maududi found the Jamaat-e-Islami party?",
+  "subject": "When did Maududi found the Jamaat-e-Islami party?",
+  "X": "1941",
+  "Y": "September 1939"
+ },
+ {
+  "q": "The black plague ravaged Europe for three years followed by what country?",
+  "subject": "The black plague ravaged Europe for three years followed by what country?",
+  "X": "Russia",
+  "Y": "Canada"
+ },
+ {
+  "q": "What kind of measurements define accelerlations?",
+  "subject": "What kind of measurements define accelerlations?",
+  "X": "kinematic",
+  "Y": "friction"
+ },
+ {
+  "q": "What characteristic of oxygen makes it necessary to life?",
+  "subject": "What characteristic of oxygen makes it necessary to life?",
+  "X": "energy content",
+  "Y": "net mechanical energy"
+ },
+ {
+  "q": "What method is used for tallying votes in the second vote of the ballot?",
+  "subject": "What method is used for tallying votes in the second vote of the ballot?",
+  "X": "the d'Hondt method",
+  "Y": "an algorithm"
+ },
+ {
+  "q": "In the definition based off the mountain range, which region would the desert portions of north Los Angeles County be included in?",
+  "subject": "In the definition based off the mountain range, which region would the desert portions of north Los Angeles County be included in?",
+  "X": "southern",
+  "Y": "North"
+ },
+ {
+  "q": "How did the Huguenots defend themselves?",
+  "subject": "How did the Huguenots defend themselves?",
+  "X": "their own militia",
+  "Y": "domestic Islamists"
+ },
+ {
+  "q": "Which timeline is further expanded in the fourth scale?",
+  "subject": "Which timeline is further expanded in the fourth scale?",
+  "X": "Quaternary",
+  "Y": "a recurring decimal"
+ },
+ {
+  "q": "When did the Warsaw area enlargement take place?",
+  "subject": "When did the Warsaw area enlargement take place?",
+  "X": "1951",
+  "Y": "1946"
+ },
+ {
+  "q": "What kind of deprivation results in diminished immune response and lower antibody production?",
+  "subject": "What kind of deprivation results in diminished immune response and lower antibody production?",
+  "X": "sleep deprivation",
+  "Y": "Decompression sickness"
+ },
+ {
+  "q": "How much of Poland's national income does Warsaw produce?",
+  "subject": "How much of Poland's national income does Warsaw produce?",
+  "X": "12%",
+  "Y": "17%"
+ },
+ {
+  "q": "What type of valve is used by recent safety valves?",
+  "subject": "What type of valve is used by recent safety valves?",
+  "X": "adjustable spring-loaded",
+  "Y": "spring reaction force"
+ },
+ {
+  "q": "Who congratulated the SNP while vowing to campaign against their referendum?",
+  "subject": "Who congratulated the SNP while vowing to campaign against their referendum?",
+  "X": "Cameron",
+  "Y": "Westminster"
+ },
+ {
+  "q": "How many fraternities are apart of the university?",
+  "subject": "How many fraternities are apart of the university?",
+  "X": "fifteen",
+  "Y": "15"
+ },
+ {
+  "q": "What signer of the Articles of Confederation was descended from Huguenots?",
+  "subject": "What signer of the Articles of Confederation was descended from Huguenots?",
+  "X": "Henry Laurens",
+  "Y": "Lauren Oliver"
+ },
+ {
+  "q": "What forest is by Warsaw's southern border?",
+  "subject": "What forest is by Warsaw's southern border?",
+  "X": "Kabaty",
+  "Y": "Kublai Khan"
+ },
+ {
+  "q": "In which year did the newspaper change its previous definition?",
+  "subject": "In which year did the newspaper change its previous definition?",
+  "X": "1999",
+  "Y": "1997"
+ },
+ {
+  "q": "What is the upper range of annual fees for non-boarding students in British public schools?",
+  "subject": "What is the upper range of annual fees for non-boarding students in British public schools?",
+  "X": "\u00a321,000",
+  "Y": "$40,000"
+ },
+ {
+  "q": "How much potential economic growth could the United States amass if everyone went through more schooling?",
+  "subject": "How much potential economic growth could the United States amass if everyone went through more schooling?",
+  "X": "$105 billion",
+  "Y": "$32 billion"
+ },
+ {
+  "q": "What is consumed in both combustion and respiration?",
+  "subject": "What is consumed in both combustion and respiration?",
+  "X": "nitroaereus",
+  "Y": "Mnemiopsis"
+ },
+ {
+  "q": "When did this attempt take place?",
+  "subject": "When did this attempt take place?",
+  "X": "1560",
+  "Y": "fifteen"
+ },
+ {
+  "q": "What is the translation of Siebengebirge?",
+  "subject": "What is the translation of Siebengebirge?",
+  "X": "dragons rock",
+  "Y": "dragonnades"
+ },
+ {
+  "q": "What are the points of algebro-geometric objects?",
+  "subject": "What are the points of algebro-geometric objects?",
+  "X": "Prime ideals",
+  "Y": "irreducible elements"
+ },
+ {
+  "q": "Reduction essentially takes one problem and converts into what?",
+  "subject": "Reduction essentially takes one problem and converts into what?",
+  "X": "another problem",
+  "Y": "fixed"
+ },
+ {
+  "q": "Where did American troops remain stationed after Saddam's defeat?",
+  "subject": "Where did American troops remain stationed after Saddam's defeat?",
+  "X": "in the kingdom",
+  "Y": "kingdoms"
+ },
+ {
+  "q": "What agreement was made for trade with natives and British?",
+  "subject": "What agreement was made for trade with natives and British?",
+  "X": "Treaty of Logstown",
+  "Y": "counties or powiats"
+ },
+ {
+  "q": "Who mapped the St. Johns River in 1562?",
+  "subject": "Who mapped the St. Johns River in 1562?",
+  "X": "Jean Ribault",
+  "Y": "Robert Guiscard"
+ },
+ {
+  "q": "Who is the chair of the IPCC?",
+  "subject": "Who is the chair of the IPCC?",
+  "X": "Hoesung Lee",
+  "Y": "Yuan T. Lee"
+ },
+ {
+  "q": "Who did the army siege belong to?",
+  "subject": "Who did the army siege belong to?",
+  "X": "Jani Beg",
+  "Y": "Lauren Oliver"
+ },
+ {
+  "q": "While competition between workers drives down wages for jobs with a high supply of worker, whose competition drives wages up for the inverse?",
+  "subject": "While competition between workers drives down wages for jobs with a high supply of worker, whose competition drives wages up for the inverse?",
+  "X": "employers",
+  "Y": "Unemployment"
+ },
+ {
+  "q": "How was the school able to bring aboard the best talented students?",
+  "subject": "How was the school able to bring aboard the best talented students?",
+  "X": "identify, recruit",
+  "Y": "identity"
+ },
+ {
+  "q": "What was happening to subscriber numbers in other areas of europe?",
+  "subject": "What was happening to subscriber numbers in other areas of europe?",
+  "X": "flattened",
+  "Y": "Bent Rhine"
+ },
+ {
+  "q": "When was the French and Indian War?",
+  "subject": "When was the French and Indian War?",
+  "X": "1754\u20131763",
+  "Y": "1740s"
+ },
+ {
+  "q": "A single line connects San Bernardino, Riverside and what other county?",
+  "subject": "A single line connects San Bernardino, Riverside and what other county?",
+  "X": "Orange",
+  "Y": "green"
+ },
+ {
+  "q": "What park is close to John Lennon street?",
+  "subject": "What park is close to John Lennon street?",
+  "X": "Park Ujazdowski",
+  "Y": "Roeding Park"
+ },
+ {
+  "q": "What was the naval base called?",
+  "subject": "What was the naval base called?",
+  "X": "Dyrrachium",
+  "Y": "Karakorum"
+ },
+ {
+  "q": "What is located on the site of The Weaving House currently?",
+  "subject": "What is located on the site of The Weaving House currently?",
+  "X": "a restaurant",
+  "Y": "business"
+ },
+ {
+  "q": "What type of cascade results when complement proteins bind to microbes and activate their protease activity?",
+  "subject": "What type of cascade results when complement proteins bind to microbes and activate their protease activity?",
+  "X": "catalytic cascade",
+  "Y": "enzymes"
+ },
+ {
+  "q": "Is it easier or harder to change EU law than stay the same?",
+  "subject": "Is it easier or harder to change EU law than stay the same?",
+  "X": "harder",
+  "Y": "more equally"
+ },
+ {
+  "q": "What is the term when middle income earners aspire to obtain the same standards of living as people wealthier than themselves?",
+  "subject": "What is the term when middle income earners aspire to obtain the same standards of living as people wealthier than themselves?",
+  "X": "aspirational consumption",
+  "Y": "cellular respiration"
+ },
+ {
+  "q": "How many of Jacksonville's city residents are younger than 18?",
+  "subject": "How many of Jacksonville's city residents are younger than 18?",
+  "X": "23.9%",
+  "Y": "49.6%"
+ },
+ {
+  "q": "If a force is pointing horizontally to the northeast, how many forces can you split the force into?",
+  "subject": "If a force is pointing horizontally to the northeast, how many forces can you split the force into?",
+  "X": "two",
+  "Y": "1"
+ },
+ {
+  "q": "In what year was the charter granted for Harvard Corporation?",
+  "subject": "In what year was the charter granted for Harvard Corporation?",
+  "X": "1650",
+  "Y": "350"
+ },
+ {
+  "q": "Along with solar, coal and nuclear, what sort of plants notable use the Rankine process?",
+  "subject": "Along with solar, coal and nuclear, what sort of plants notable use the Rankine process?",
+  "X": "biomass",
+  "Y": "energy content"
+ },
+ {
+  "q": "What is the original meaning of the word Norman?",
+  "subject": "What is the original meaning of the word Norman?",
+  "X": "Viking",
+  "Y": "Scandinavia"
+ },
+ {
+  "q": "To reduce the chances of combustion ___ is required for safely handeling pure O.",
+  "subject": "To reduce the chances of combustion ___ is required for safely handeling pure O.",
+  "X": "special training",
+  "Y": "guidance"
+ },
+ {
+  "q": "How far is Fresno City College from the Tower District?",
+  "subject": "How far is Fresno City College from the Tower District?",
+  "X": "one-half mile",
+  "Y": "15 kilometres"
+ },
+ {
+  "q": "Who was made rich and prosperous prior to World War 1",
+  "subject": "Who was made rich and prosperous prior to World War 1",
+  "X": "many imperial powers",
+  "Y": "empires"
+ },
+ {
+  "q": "In what year was the Corliss engine patented?",
+  "subject": "In what year was the Corliss engine patented?",
+  "X": "1849",
+  "Y": "1850s"
+ },
+ {
+  "q": "Which Californio is located in the upper part?",
+  "subject": "Which Californio is located in the upper part?",
+  "X": "Monterey",
+  "Y": "California"
+ }
+]
