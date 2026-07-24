@@ -1,0 +1,164 @@
+{
+  "config": {
+    "T": 256,
+    "loads": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "positions": [
+      251,
+      249,
+      247,
+      245
+    ],
+    "steps": 2000,
+    "free_seeds": [
+      0,
+      1
+    ],
+    "clamp_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "solve_threshold": 0.8,
+    "axes": {
+      "R": "conjunction of comparisons",
+      "S": "storage + selection (control)"
+    }
+  },
+  "free_acc": {
+    "R1": [
+      1.0,
+      1.0
+    ],
+    "R2": [
+      1.0,
+      1.0
+    ],
+    "R3": [
+      1.0,
+      1.0
+    ],
+    "R4": [
+      1.0,
+      1.0
+    ],
+    "S1": [
+      1.0,
+      1.0
+    ],
+    "S2": [
+      1.0,
+      1.0
+    ],
+    "S3": [
+      1.0,
+      1.0
+    ],
+    "S4": [
+      1.0,
+      1.0
+    ]
+  },
+  "clamped_acc": {
+    "R1": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "R2": [
+      1.0,
+      1.0,
+      0.496,
+      1.0,
+      0.504
+    ],
+    "R3": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5082
+    ],
+    "R4": [
+      1.0,
+      1.0,
+      0.4932,
+      1.0,
+      1.0
+    ],
+    "S1": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "S2": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "S3": [
+      0.7528,
+      0.8777,
+      1.0,
+      0.9547,
+      0.9195
+    ],
+    "S4": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.8445
+    ]
+  },
+  "result": {
+    "loads": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "clamped_solve_relational": [
+      1.0,
+      0.6,
+      0.8,
+      0.8
+    ],
+    "clamped_solve_storage": [
+      1.0,
+      1.0,
+      0.8,
+      1.0
+    ],
+    "free_solve_relational": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "free_solve_storage": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "relational_drop": 0.2,
+    "storage_drop": 0.0,
+    "free_range_free": true,
+    "headroom_at_load1": true,
+    "monotone_within_tol": true,
+    "verdict": "PARTIAL__reported_verbatim"
+  }
+}
