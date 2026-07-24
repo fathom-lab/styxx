@@ -1,0 +1,118 @@
+{
+  "config": {
+    "judges": [
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite",
+      "qwen2.5-3b",
+      "qwen2.5-1.5b"
+    ],
+    "prevalences": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "seeds": [
+      13001,
+      13002,
+      13003,
+      13004,
+      13005,
+      13006,
+      13007,
+      13008,
+      13009,
+      13010,
+      13011,
+      13012,
+      13013,
+      13014,
+      13015
+    ],
+    "n_org": 60,
+    "n_anch": 20,
+    "filtered_n": 668,
+    "pool_n": 230
+  },
+  "preconditions": {
+    "parse_rate": {
+      "gemini-2.5-flash": 0.9304,
+      "gemini-2.5-flash-lite": 1.0,
+      "qwen2.5-3b": 1.0,
+      "qwen2.5-1.5b": 1.0
+    },
+    "valid_judges": [
+      "gemini-2.5-flash-lite",
+      "qwen2.5-3b",
+      "qwen2.5-1.5b"
+    ],
+    "gold_pos_sensitivity": {
+      "gemini-2.5-flash": 1.0,
+      "gemini-2.5-flash-lite": 1.0,
+      "qwen2.5-3b": 1.0,
+      "qwen2.5-1.5b": 0.95
+    },
+    "sensitivity_fired": true,
+    "organic_disagreement_frac": 0.69
+  },
+  "forks": {
+    "verdict": "PARTIAL__reported_verbatim",
+    "kills": 1,
+    "refutes": 1,
+    "degens": 0
+  },
+  "fn_rate_on_imitative_falsehoods": {
+    "gemini-2.5-flash-lite": 0.08,
+    "qwen2.5-3b": 0.1,
+    "qwen2.5-1.5b": 0.72
+  },
+  "per_prevalence": {
+    "0.3": {
+      "n_eval": 15,
+      "buckets": {
+        "gold": {
+          "covers": 14,
+          "miss": 1,
+          "void": 0
+        },
+        "ladder": {
+          "covers": 15,
+          "miss": 0,
+          "void": 0
+        }
+      },
+      "gold_median_miss": 0.127
+    },
+    "0.5": {
+      "n_eval": 15,
+      "buckets": {
+        "gold": {
+          "covers": 8,
+          "miss": 7,
+          "void": 0
+        },
+        "ladder": {
+          "covers": 15,
+          "miss": 0,
+          "void": 0
+        }
+      },
+      "gold_median_miss": 0.1545
+    },
+    "0.7": {
+      "n_eval": 15,
+      "buckets": {
+        "gold": {
+          "covers": 1,
+          "miss": 14,
+          "void": 0
+        },
+        "ladder": {
+          "covers": 15,
+          "miss": 0,
+          "void": 0
+        }
+      },
+      "gold_median_miss": 0.2493
+    }
+  }
+}

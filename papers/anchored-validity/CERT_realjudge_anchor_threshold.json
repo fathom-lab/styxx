@@ -1,0 +1,463 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_realjudge_anchor_threshold_2026_07_23.md",
+  "document_sha256": "e26ee9164c4a287fe26af407dde9c4f902c2ce599edb0d8fe2653e0237769184",
+  "receipts_sha256": {
+    "realjudge_anchor_threshold_result.json": "a54497bb465f0f0eacc35de5cf03580c5c66d10fa4d695f04f9503caa9583587"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 33,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 19,
+      "token": "7"
+    },
+    {
+      "line": 26,
+      "token": "3"
+    },
+    {
+      "line": 30,
+      "token": "0.15"
+    },
+    {
+      "line": 52,
+      "token": "3"
+    },
+    {
+      "line": 57,
+      "token": "5"
+    },
+    {
+      "line": 57,
+      "token": "10"
+    },
+    {
+      "line": 57,
+      "token": "15"
+    },
+    {
+      "line": 57,
+      "token": "20"
+    },
+    {
+      "line": 57,
+      "token": "25"
+    },
+    {
+      "line": 78,
+      "token": "7"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "The all-judge shared blind spot \u00a77 addresses \u2014 the only failure majority-vote consensus cannot see \u2014",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "| heterogeneous | Gemini-flash-lite + Qwen-3B + Qwen-1.5B (cross-family) | 0.02 | \u2014 (boundary, cached) |",
+      "binding_context": "| panel | construction | unanimous-wrong on imitative falsehoods | positive control G0 | | heterogeneous | Gemini-flash-lite + Qwen-3B + Qwen-1.5B (cross-family) | 0.02 | \u2014 (boundary, cached) |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:boundary_heterogeneous.org_pos_unanimous_wrong"
+    },
+    {
+      "line": 26,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| homogeneous, strong | Qwen2.5-3B-Instruct \u00d7 3 prompt paraphrases | 0.06 | did NOT fire \u2192 ABSTAIN |",
+      "binding_context": "| panel | construction | unanimous-wrong on imitative falsehoods | positive control G0 | | homogeneous, strong | Qwen2.5-3B-Instruct \u00d7 3 prompt paraphrases | 0.06 | did NOT fire \u2192 ABSTAIN |",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 26,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "| homogeneous, strong | Qwen2.5-3B-Instruct \u00d7 3 prompt paraphrases | 0.06 | did NOT fire \u2192 ABSTAIN |",
+      "binding_context": "| panel | construction | unanimous-wrong on imitative falsehoods | positive control G0 | | homogeneous, strong | Qwen2.5-3B-Instruct \u00d7 3 prompt paraphrases | 0.06 | did NOT fire \u2192 ABSTAIN |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen3b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| homogeneous, weak | Qwen2.5-1.5B-Instruct \u00d7 3 prompt paraphrases | 0.64 | fired \u2192 demonstration |",
+      "binding_context": "| panel | construction | unanimous-wrong on imitative falsehoods | positive control G0 | | homogeneous, weak | Qwen2.5-1.5B-Instruct \u00d7 3 prompt paraphrases | 0.64 | fired \u2192 demonstration |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.Kstar_min_anchors_0.90"
+    },
+    {
+      "line": 27,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "| homogeneous, weak | Qwen2.5-1.5B-Instruct \u00d7 3 prompt paraphrases | 0.64 | fired \u2192 demonstration |",
+      "binding_context": "| panel | construction | unanimous-wrong on imitative falsehoods | positive control G0 | | homogeneous, weak | Qwen2.5-1.5B-Instruct \u00d7 3 prompt paraphrases | 0.64 | fired \u2192 demonstration |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 29,
+      "token": "0.06",
+      "value": 0.06,
+      "decimals": 2,
+      "context": "The gate discriminates: the strong homogeneous panel **abstained** (unanimous-wrong 0.06, below the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen3b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 30,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "0.15 bar), so G0 is a real control, not a rubber stamp. Heterogeneity and model strength are each",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Preconditions clean: verdict parse rate 1.0 on both classes; benign unanimous-wrong on blatantly",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 37,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "incorrect answers 0.0 (the weak model nails blatant items, so the benign contrast is valid). Per-judge",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:boundary_heterogeneous.org_pos_unanimous_wrong"
+    },
+    {
+      "line": 38,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "error on imitative falsehoods was high across all three paraphrases (0.72 / 0.66 / 1.0), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.f_perjudge_trap[0]"
+    },
+    {
+      "line": 38,
+      "token": "0.66",
+      "value": 0.66,
+      "decimals": 2,
+      "context": "error on imitative falsehoods was high across all three paraphrases (0.72 / 0.66 / 1.0), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.f_perjudge_trap[1]"
+    },
+    {
+      "line": 38,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "error on imitative falsehoods was high across all three paraphrases (0.72 / 0.66 / 1.0), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 39,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "unanimous-wrong rate was 0.64 \u2014 a strong, real, shared blind spot.",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 42,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "panel agrees with itself at rate 0.64 while majority vote calls the false answer \"correct\" 0.74 of",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 42,
+      "token": "0.74",
+      "value": 0.74,
+      "decimals": 2,
+      "context": "panel agrees with itself at rate 0.64 while majority vote calls the false answer \"correct\" 0.74 of",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G1_consensus_blind.majority_calls_trap_correct"
+    },
+    {
+      "line": 44,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "is actively misled. The trap vote-count histogram is over-concentrated at unanimity (0.64 at \"all",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 45,
+      "token": "0.4993",
+      "value": 0.4993,
+      "decimals": 4,
+      "context": "three say correct\") versus an independent panel at the same marginals (0.4993), the signature of a",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G1_consensus_blind.indep_matched_marginal_hist[3]"
+    },
+    {
+      "line": 46,
+      "token": "0.299",
+      "value": 0.299,
+      "decimals": 3,
+      "context": "shared trap. (The frozen matched-marginal TV distance is 0.299, above the 0.10 line \u2014 meaning the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G1_consensus_blind.tv_real_vs_independent"
+    },
+    {
+      "line": 46,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "shared trap. (The frozen matched-marginal TV distance is 0.299, above the 0.10 line \u2014 meaning the",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G1_consensus_blind.trap_votecount_hist_correct[2]"
+    },
+    {
+      "line": 51,
+      "token": "0.0667",
+      "value": 0.0667,
+      "decimals": 4,
+      "context": "benign per-judge error 0.0667 and the measured unanimous-wrong probability 0.64,",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.f_benign_mean"
+    },
+    {
+      "line": 51,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "benign per-judge error 0.0667 and the measured unanimous-wrong probability 0.64,",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 52,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "`min_anchors_for_power` at a ninety-percent power target returns K* = 3 known-label anchors. Drawn by bootstrap from the real",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 53,
+      "token": "0.64",
+      "value": 0.64,
+      "decimals": 2,
+      "context": "pool of imitative falsehoods (measured unanimous-wrong rate 0.64), three anchors detect the blind",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.tau_hat_unanimous_wrong"
+    },
+    {
+      "line": 54,
+      "token": "0.9587",
+      "value": 0.9587,
+      "decimals": 4,
+      "context": "spot with empirical power 0.9587 against the tool's predicted 0.9533. Across the graded budgets the empirical",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.empirical_power_at_Kstar"
+    },
+    {
+      "line": 55,
+      "token": "0.0005",
+      "value": 0.0005,
+      "decimals": 4,
+      "context": "power tracks the closed-form prediction with mean-absolute-error 0.0005:",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.curve_mae"
+    },
+    {
+      "line": 57,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| K anchors | 5 | 10 | 15 | 20 | 25 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| K anchors | 5 | 10 | 15 | 20 | 25 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| K anchors | 5 | 10 | 15 | 20 | 25 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| K anchors | 5 | 10 | 15 | 20 | 25 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "| K anchors | 5 | 10 | 15 | 20 | 25 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "0.994",
+      "value": 0.994,
+      "decimals": 3,
+      "context": "| predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.power_curve[1].predicted_power"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | predicted power | 0.994 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 60,
+      "token": "0.9962",
+      "value": 0.9962,
+      "decimals": 4,
+      "context": "| empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.power_curve[1].empirical_power"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 60,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "binding_context": "| K anchors | 5 | 10 | 15 | 20 | 25 | | empirical power | 0.9962 | 1.0 | 1.0 | 1.0 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.parse_rate.gold_pos"
+    },
+    {
+      "line": 70,
+      "token": "0.0005",
+      "value": 0.0005,
+      "decimals": 4,
+      "context": "prediction (MAE 0.0005) because temperature-0 verdicts make each anchor a fixed trap-or-not draw \u2014 so",
+      "status": "VERIFIED",
+      "receipt_ref": "realjudge_anchor_threshold_result.json:panels.qwen1.5b.G2_demonstration.curve_mae"
+    },
+    {
+      "line": 78,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "On real model verdicts, the anchor threshold behaves exactly as \u00a77 predicts: invisible-to-consensus",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

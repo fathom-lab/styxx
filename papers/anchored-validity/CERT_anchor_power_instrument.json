@@ -1,0 +1,480 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_anchor_power_instrument_2026_07_23.md",
+  "document_sha256": "9237ca234453db1344b2446ed73eeea0a594c041d93494a5059e8a13ed09d114",
+  "receipts_sha256": {
+    "anchor_power_result.json": "b243e53da5a6106d205fe7337f1dca93cbf8496af0b87ccb8c08c2cec2caadfa",
+    "anchor_threshold_result.json": "09a35ada0ccf697372ff9677b22f8d9d924babae7c4279569e2523da3f27a0fc"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 27,
+    "ABSTAIN": 16,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 25,
+      "token": "3"
+    },
+    {
+      "line": 36,
+      "token": "1"
+    },
+    {
+      "line": 36,
+      "token": "3"
+    },
+    {
+      "line": 36,
+      "token": "5"
+    },
+    {
+      "line": 36,
+      "token": "10"
+    },
+    {
+      "line": 36,
+      "token": "20"
+    },
+    {
+      "line": 36,
+      "token": "30"
+    },
+    {
+      "line": 36,
+      "token": "50"
+    },
+    {
+      "line": 55,
+      "token": "20"
+    },
+    {
+      "line": 55,
+      "token": "90"
+    },
+    {
+      "line": 62,
+      "token": "1"
+    },
+    {
+      "line": 62,
+      "token": "3"
+    },
+    {
+      "line": 62,
+      "token": "5"
+    },
+    {
+      "line": 62,
+      "token": "10"
+    },
+    {
+      "line": 62,
+      "token": "20"
+    },
+    {
+      "line": 62,
+      "token": "30"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 25,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "## The design point (J=3 correlated weak panel)",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0.1",
+      "value": 0.1,
+      "decimals": 1,
+      "context": "Three judges; per-judge false-positive rate on a known-negative 0.1 under independence; 15% of",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:design_point.fp_rate"
+    },
+    {
+      "line": 27,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "Three judges; per-judge false-positive rate on a known-negative 0.1 under independence; 15% of",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:design_point.trap_rate"
+    },
+    {
+      "line": 28,
+      "token": "0.0961",
+      "value": 0.0961,
+      "decimals": 4,
+      "context": "true negatives are shared traps (all judges wrong); non-trap negatives at 0.0961; level 0.05.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:design_point.fp_rate_alt"
+    },
+    {
+      "line": 30,
+      "token": "150.8",
+      "value": 150.8,
+      "decimals": 1,
+      "context": "single-anchor likelihood ratio: 150.8 \u2014 matched to the frozen receipt (continuity with the",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:single_anchor_lr"
+    },
+    {
+      "line": 36,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 38,
+      "token": "0.1508",
+      "value": 0.1508,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.1"
+    },
+    {
+      "line": 38,
+      "token": "0.3875",
+      "value": 0.3875,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.3"
+    },
+    {
+      "line": 38,
+      "token": "0.5583",
+      "value": 0.5583,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.5"
+    },
+    {
+      "line": 38,
+      "token": "0.8049",
+      "value": 0.8049,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.10"
+    },
+    {
+      "line": 38,
+      "token": "0.9619",
+      "value": 0.9619,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.20"
+    },
+    {
+      "line": 38,
+      "token": "0.9926",
+      "value": 0.9926,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.30"
+    },
+    {
+      "line": 38,
+      "token": "0.9997",
+      "value": 0.9997,
+      "decimals": 4,
+      "context": "| power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "binding_context": "| K anchors | 1 | 3 | 5 | 10 | 20 | 30 | 50 | | power | 0.1508 | 0.3875 | 0.5583 | 0.8049 | 0.9619 | 0.9926 | 0.9997 |",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.50"
+    },
+    {
+      "line": 40,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "minimum known-negative anchors for 0.90 power: 15.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_threshold_result.json:benign.s"
+    },
+    {
+      "line": 41,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "minimum known-negative anchors for 0.95 power: 19.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.30"
+    },
+    {
+      "line": 55,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "- The paper's \"~20-30 anchors for >90% power\" tightens to 15 anchors for 0.90 power under the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 55,
+      "token": "90",
+      "value": 90.0,
+      "decimals": 0,
+      "context": "- The paper's \"~20-30 anchors for >90% power\" tightens to 15 anchors for 0.90 power under the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "- The paper's \"~20-30 anchors for >90% power\" tightens to 15 anchors for 0.90 power under the",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:min_anchors_power_0.90"
+    },
+    {
+      "line": 55,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "- The paper's \"~20-30 anchors for >90% power\" tightens to 15 anchors for 0.90 power under the",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_threshold_result.json:benign.s"
+    },
+    {
+      "line": 57,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "- The exploratory table reported single-anchor power 0.0, which contradicted its own",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:design_point.alpha"
+    },
+    {
+      "line": 58,
+      "token": "0.1508",
+      "value": 0.1508,
+      "decimals": 4,
+      "context": "single-anchor-is-a-smoking-gun headline; the shipped single-anchor power is 0.1508, consistent",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_tight_by_K.1"
+    },
+    {
+      "line": 59,
+      "token": "150.8",
+      "value": 150.8,
+      "decimals": 1,
+      "context": "with the 150.8 likelihood ratio.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:single_anchor_lr"
+    },
+    {
+      "line": 62,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:design_point.alpha"
+    },
+    {
+      "line": 62,
+      "token": "0.0613",
+      "value": 0.0613,
+      "decimals": 4,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.3"
+    },
+    {
+      "line": 62,
+      "token": "0.1662",
+      "value": 0.1662,
+      "decimals": 4,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.5"
+    },
+    {
+      "line": 62,
+      "token": "0.4585",
+      "value": 0.4585,
+      "decimals": 4,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.10"
+    },
+    {
+      "line": 62,
+      "token": "0.8267",
+      "value": 0.8267,
+      "decimals": 4,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.20"
+    },
+    {
+      "line": 62,
+      "token": "0.953",
+      "value": 0.953,
+      "decimals": 3,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.30"
+    },
+    {
+      "line": 62,
+      "token": "0.9972",
+      "value": 0.9972,
+      "decimals": 4,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.50"
+    },
+    {
+      "line": 62,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "record: 0.0 / 0.0613 / 0.1662 / 0.4585 / 0.8267 / 0.953 / 0.9972 at K = 1 / 3 / 5 / 10 / 20 / 30 / 50.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 75,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "power dominates the conservative bound at every K, the 0.90/0.95 budgets, monotonicity in effect",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_threshold_result.json:benign.s"
+    },
+    {
+      "line": 75,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "power dominates the conservative bound at every K, the 0.90/0.95 budgets, monotonicity in effect",
+      "status": "VERIFIED",
+      "receipt_ref": "anchor_power_result.json:power_conservative_by_K_section7.30"
+    }
+  ]
+}

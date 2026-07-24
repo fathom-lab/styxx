@@ -1,0 +1,33 @@
+{
+  "design_point": {
+    "J": 3,
+    "fp_rate": 0.1,
+    "trap_rate": 0.15,
+    "fp_rate_alt": 0.0961,
+    "alpha": 0.05
+  },
+  "single_anchor_lr": 150.8,
+  "power_tight_by_K": {
+    "1": 0.1508,
+    "3": 0.3875,
+    "5": 0.5583,
+    "10": 0.8049,
+    "20": 0.9619,
+    "30": 0.9926,
+    "50": 0.9997
+  },
+  "power_conservative_by_K_section7": {
+    "1": 0.0,
+    "3": 0.0613,
+    "5": 0.1662,
+    "10": 0.4585,
+    "20": 0.8267,
+    "30": 0.953,
+    "50": 0.9972
+  },
+  "correction_favourable_all_K": true,
+  "single_anchor_lr_matches_section7": true,
+  "min_anchors_power_0.90": 15,
+  "min_anchors_power_0.95": 19,
+  "single_anchor_power": 0.1508
+}

@@ -1,0 +1,29 @@
+{
+  "match_residual": 1.36e-14,
+  "benign": {
+    "prevalence": 0.4,
+    "s": 0.9,
+    "f": 0.1
+  },
+  "malign": {
+    "prevalence": 0.3042,
+    "s": 0.8507,
+    "f": 0.0961,
+    "tau": 0.15
+  },
+  "prevalence_diff": 0.0958,
+  "majority_rate_A": 0.4056,
+  "majority_rate_B": 0.4056,
+  "p_unanimous_wrong_benign": 0.001,
+  "p_unanimous_wrong_malign": 0.1508,
+  "single_anchor_LR": 150.8,
+  "power_by_K": {
+    "1": 0.0,
+    "3": 0.0613,
+    "5": 0.1662,
+    "10": 0.4585,
+    "20": 0.8267,
+    "30": 0.953,
+    "50": 0.9972
+  }
+}

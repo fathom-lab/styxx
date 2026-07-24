@@ -1,0 +1,130 @@
+{
+  "prereg": "PREREG_realjudge_anchor_threshold_2026_07_23",
+  "boundary_heterogeneous": {
+    "source": "EXPLORE_realjudge_blindspot_2026_07_23 (cached cross-family panel)",
+    "org_pos_unanimous_wrong": 0.02,
+    "gold_pos_unanimous_wrong": 0.0,
+    "note": "heterogeneous panel has no all-judge shared blind spot; consensus not blind"
+  },
+  "panels": {
+    "qwen1.5b": {
+      "tag": "qwen1.5b",
+      "parse_rate": {
+        "gold_pos": 1.0,
+        "org_pos": 1.0
+      },
+      "n_gold_pos": 20,
+      "n_org_pos": 50,
+      "f_perjudge_benign": [
+        0.05,
+        0.0,
+        0.15
+      ],
+      "f_benign_mean": 0.0667,
+      "benign_unanimous_wrong": 0.0,
+      "f_perjudge_trap": [
+        0.72,
+        0.66,
+        1.0
+      ],
+      "tau_hat_unanimous_wrong": 0.64,
+      "G0_positive_control_fired": true,
+      "G1_consensus_blind": {
+        "majority_calls_trap_correct": 0.74,
+        "raw_inter_judge_agreement": 0.64,
+        "trap_votecount_hist_correct": [
+          0.0,
+          0.26,
+          0.1,
+          0.64
+        ],
+        "indep_matched_marginal_hist": [
+          0.0088,
+          0.1017,
+          0.3902,
+          0.4993
+        ],
+        "tv_real_vs_independent": 0.299,
+        "note": "high agreement + majority-calls-trap-correct => a consensus/agreement confidence signal is high while the panel is wrong; the blind spot is invisible to consensus"
+      },
+      "G2_demonstration": {
+        "f_benign": 0.0667,
+        "tau_hat": 0.64,
+        "Kstar_min_anchors_0.90": 3,
+        "predicted_power_at_Kstar": 0.9533,
+        "empirical_power_at_Kstar": 0.9587,
+        "pool_unanimous_wrong": "32/50",
+        "power_curve": [
+          {
+            "K": 3,
+            "reject_at": 1,
+            "predicted_power": 0.9533,
+            "empirical_power": 0.9587,
+            "abs_err": 0.0054
+          },
+          {
+            "K": 5,
+            "reject_at": 1,
+            "predicted_power": 0.994,
+            "empirical_power": 0.9962,
+            "abs_err": 0.0023
+          },
+          {
+            "K": 10,
+            "reject_at": 1,
+            "predicted_power": 1.0,
+            "empirical_power": 1.0,
+            "abs_err": 0.0
+          },
+          {
+            "K": 15,
+            "reject_at": 1,
+            "predicted_power": 1.0,
+            "empirical_power": 1.0,
+            "abs_err": 0.0
+          },
+          {
+            "K": 20,
+            "reject_at": 1,
+            "predicted_power": 1.0,
+            "empirical_power": 1.0,
+            "abs_err": 0.0
+          },
+          {
+            "K": 25,
+            "reject_at": 1,
+            "predicted_power": 1.0,
+            "empirical_power": 1.0,
+            "abs_err": 0.0
+          }
+        ],
+        "curve_mae": 0.0005
+      },
+      "verdict": "DEMONSTRATED__anchors_detect_real_blind_spot_at_predicted_budget"
+    },
+    "qwen3b": {
+      "tag": "qwen3b",
+      "parse_rate": {
+        "gold_pos": 1.0,
+        "org_pos": 1.0
+      },
+      "n_gold_pos": 20,
+      "n_org_pos": 50,
+      "f_perjudge_benign": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "f_benign_mean": 0.0,
+      "benign_unanimous_wrong": 0.0,
+      "f_perjudge_trap": [
+        0.1,
+        0.1,
+        0.24
+      ],
+      "tau_hat_unanimous_wrong": 0.06,
+      "G0_positive_control_fired": false,
+      "verdict": "ABSTAIN__no_shared_blind_spot"
+    }
+  }
+}

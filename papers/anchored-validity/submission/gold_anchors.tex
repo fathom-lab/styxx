@@ -1,0 +1,264 @@
+\documentclass[11pt]{article}
+
+% --- arXiv-safe preamble (no exotic packages / fonts) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}   % scalable Latin Modern (required for microtype font expansion)
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true, linkcolor=black, citecolor=black,
+  urlcolor=[rgb]{0.15,0.35,0.55}, pdftitle={Gold Anchors License Nothing},
+  pdfauthor={Alex Rodabaugh}
+}
+
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em   % absorb rare overfull lines from long \texttt identifiers
+
+\title{\textbf{Gold Anchors License Nothing:}\\[2pt]
+\large label-free auditing of LLM judge panels, an instrument that refuses,\\
+and the measured failure of sanity checks}
+
+\author{Alex Rodabaugh\\ \small Fathom Lab \\ \small \texttt{styxx.anchors} (styxx 7.26.0, PyPI)}
+
+\date{2026-07-21}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+LLM judge panels are the de facto measurement apparatus of modern AI evaluation, and the de facto
+validation of those judges is a set of blatant sanity checks: exact-duplicate pairs, direct
+negations, honeypots---the crowdsourcing gold-question practice, transplanted. We built a label-free
+auditor for judge panels (anchored moment identification with refusal semantics and measured
+operating characteristics), sealed its own datasheet on simulation (nine of nine calibration gates),
+and then ran the measurement the practice assumes away: do blatant gold checks license the numbers a
+panel produces on real work? Across four constructed task families on a real correlated weak-judge
+panel, the answer is \emph{no} at effect sizes that destroy every estimator tested: label-free
+coverage $0/15$ in every family, while the same panel is flawless on the gold items. The failure is
+\emph{silent} whenever the violation is smooth---our calibrated misfit flag fired on $15/15$
+replicates in one family and $1/15$ in another. The repair is construction, not statistics: anchor
+strata drawn from the same generating process as the work items (``ladder anchors'') gave the correct
+answer in both of its possible directions---restoring calibrated coverage $13/13$ when exactly one
+informative judge existed, and \textsc{refusing} ($14/15$ \textsc{void}) when honest anchors revealed
+that no judge was informative at all. Gold anchors certified garbage in both cases. A frontier-model
+panel audited at arm's length under the same protocol was priced exactly, at ceiling, on every sheet
+including a deconfounded multi-hop task---locating the danger zone in the weak-to-mid judge tier,
+which is precisely the tier deployed for cheap bulk evaluation. The honest gold set does not merely
+fix the estimate; it tells you whether you have a panel at all. Two extensions close the
+constructed-corpus gap. On a real heterogeneous judge panel (a frontier API judge and local models)
+grading TruthfulQA, gold-anchor validity proves prevalence-dependent---it licenses correct numbers when
+the failure is rare and misses it by up to $0.249$ as the failure becomes common, while ladder anchors
+cover the truth at every prevalence. And we sharpen the impossibility itself: two panels identical to
+$1.36\times10^{-14}$ on unlabeled data---one sound, one unanimously wrong on a slice of items---are
+separated by a single known-negative (a $150.8\times$ likelihood ratio) and caught with better than
+$90\%$ power by roughly $15$ known-negatives under the standard test we ship. We then confirm the
+threshold on real model verdicts, where a detectable shared blind spot arises exactly when judges share
+a base model---a weak homogeneous panel is unanimously wrong on $0.64$ of imitative falsehoods, and $3$
+known-label anchors detect it. The price of seeing a shared blind spot is not labels but a handful of
+known-negatives.
+\end{abstract}
+
+\section{The impossibility, and what breaks it}
+
+Every ground-truth-free evaluator-accuracy estimator in the literature---Dawid--Skene (1979) through
+its modern weak-supervision descendants---requires conditional independence of judge errors given the
+true label, or a modeled correlation graph. Panels of LLM judges violate this by construction: shared
+base models, shared prompt templates, shared vulnerabilities. At three judges the confusion is
+exact---a correlated panel and an independent panel can induce identical joint verdict distributions
+on unlabeled data (exhibited constructively in our Stage-A witness; the equivalence is generic at
+that panel size). Known-label anchors break the impossibility: items whose truth holds by
+construction make per-judge error rates and error correlations observable, replacing the independence
+assumption with an anchor-exchangeability assumption. The entire content of this paper is that the
+exchangeability assumption is where the danger lives, that the standard practice violates it
+silently, and that an instrument can be built to price, flag, and refuse accordingly.
+
+\section{The instrument and its sealed datasheet}
+
+\texttt{styxx.anchors.audit\_panel(V, neg, pos)} consumes an $n\times J$ verdict matrix and two anchor
+strata and returns either a refusal that names why (\texttt{VOID\_PANEL\_\_\allowbreak uninformative};
+\texttt{VOID\_ANCHORS\_\_\allowbreak nonexchangeable} when the unclipped solution is impossible---never a clipped
+confident number) or an estimate wrapped in its own measured operating characteristics: a
+selection-aware bootstrap interval (the sync parameter activates only on evidence, and every bootstrap
+resample re-selects, so the interval prices selection uncertainty), a regime-keyed coverage note
+quoting measured rather than nominal rates, and a per-dataset misfit $p$-value from a
+parametric-bootstrap null with its power scope stated.
+
+The characterization run sealed all nine calibration gates at the Stage-A design point: interval
+coverage $0.95$ on clean validation panels (Wilson $[0.888, 0.978]$), $0.963$ under a $\rho=0.30$
+shared failure factor, $0.912$ and $0.938$ at planted master-key rates $0.05$ and $0.15$; misfit
+false-alarm $0.090$ on held-out clean replicates; deaf-panel \textsc{void} rate $0.967$ under the
+plain informativeness gate and $1.000$ under the noise-margin gate the instrument ships with; refusal
+false-fire $0/200$; clean activation rate $0.020$. Activation power against a true all-judge key:
+$0.30 / 0.7125 / 1.00$ at wild rates $0.02 / 0.05 / 0.15$---below roughly a five-percent key rate,
+absence of activation is not evidence of absence. Two prior interval constructions failed their
+coverage gates ($0.835$ and $0.850$ on clean panels) and are on the public record as
+\textsc{closed\_negative} with the diagnosed mechanism; the selection-aware construction is the one
+that sealed.
+
+\section{The kill: gold anchors on a real panel}
+
+The panel: four prompt-personas of a small instruction-tuned model (Qwen2.5-3B-Instruct, greedy), a
+real correlated panel of the kind deployed for bulk evaluation. The corpora: constructed-truth
+contradiction detection in four families (attribute facts, numeric consistency, temporal ordering,
+transitivity chains), each with a graded difficulty ladder, with truth held out from the judges. The
+gold anchors: verbatim pairs (negatives) and direct negations (positives)---the blatant ends an
+auditor can always construct.
+
+Fifteen preregistered replicates per family. Label-free coverage of the true prevalence: $0/15$,
+$0/15$, $0/15$, $0/15$. Median audit errors $0.4658$ (attribute), $0.2774$ (numeric), $0.65$
+(temporal---one judge's anchor-to-organic false-fire gap reached $-0.9992$), $0.4444$ (chains). The
+mechanism is measured, not argued: the judges catch every planted negation (anchor-to-organic
+sensitivity gap $0.0$) and false-fire on $66$ to $98$ percent of \textsc{rephrased}-consistent organic
+items---``different words means different claims''---a failure mode a verbatim pair is structurally
+incapable of exhibiting. No estimator survives from the inside: majority vote and Dawid--Skene sit at
+median errors $0.55$ to $0.60$, semi-supervised DS with the gold answers in hand $0.53$ to $0.54$, and
+the anchored audit is least wrong and still hopeless. The deaf control---the same personas judging
+redacted content---was refused by the instrument in $90/90$ replicates across the entire program: a
+content-free panel cannot extract a number.
+
+The silence is the sharpest edge. The calibrated misfit flag---built precisely because the sealed
+datasheet showed smooth violations evade internal-consistency checks---fired on $15/15$ wrong
+estimates in the numeric family, $14/15$ in the attribute family, and $0/15$ (temporal), $1/15$
+(chains) in the others: violations that bend every moment coherently leave nothing for a label-free
+check to see. Four families, one sentence: gold anchors license nothing, and sometimes nothing warns
+you.
+
+\section{The repair: ladders that estimate, and ladders that refuse}
+
+Anchor strata drawn from the same generator and difficulty mix as the organic items---still
+constructible without labels, because the constructor plants the truth---close the measured
+anchor-to-organic false-fire gap from $0.63$ to $0.0322$ (attribute) and to $0.0078$ (chains). What
+happens next depends on what honest anchors reveal, and the instrument answered correctly in both
+directions. On the attribute family they exposed three of the four personas as uninformative (the
+plain gold anchors had certified all four) and the audit of the one real judge restored coverage
+$13/13$ at median error $0.0626$. On the chain family they revealed that \emph{no} judge was
+informative, and the instrument refused: \textsc{void} $14/15$---an outcome named in the
+preregistration before the run, scored \textsc{closed\_negative} under its frozen coverage clause, and
+reported as what it is. The honest gold set does not merely fix the estimate; it tells you whether you
+have a panel at all.
+
+\section{The frontier control, and a confound we caught ourselves}
+
+The same arm's-length protocol (fresh-context judge sessions receiving only the task and the shuffled
+items; every verdict logged verbatim; the transcription trust boundary disclosed) was run on four
+personas of a frontier model. On every sheet---the attribute corpus, ordered multi-hop chains, and
+chains \textsc{deconfounded} after we caught our own generator emitting statements in rank order
+(making multi-hop queries positionally shortcuttable; the overclaim was demoted in a preregistration
+amendment before the corrected run)---the frontier panel scored $1.0$ on all four personas, and the
+label-free audit priced it exactly: estimate equal to the held-out truth to machine precision,
+interval covering, every honesty mechanism idle. Twice more the four personas returned byte-identical
+verdict sequences, as they had on the first sheet: persona diversity is not error diversity; a
+frontier model in costumes is one judge, which is exactly the correlated world this instrument
+assumes. The danger zone for anchor non-transfer is the weak-to-mid judge tier.
+
+\section{In the wild: a real heterogeneous panel, and a prevalence-dependent licence}
+
+We ran the audit against its named residual---a real deployed panel, not a constructed one. A
+heterogeneous panel (a frontier API judge and two local instruction-tuned models:
+\texttt{gemini-2.5-flash-lite}, \texttt{Qwen2.5-3B-Instruct}, \texttt{Qwen2.5-1.5B-Instruct}; a fourth
+judge, \texttt{gemini-2.5-flash}, was voided at a $0.9304$ parse rate---a thinking-model truncation, a
+harness limitation disclosed, not a judging result) graded TruthfulQA for factual correctness, whose
+imitative falsehoods are the panel's real, un-injected failure mode. Positive class: the answer is
+incorrect. Fifteen preregistered replicates at each of three true prevalences; gold anchors (blatant
+true / absurd) versus ladder anchors (held-out real ``Best Incorrect Answer''s). The design was
+adversarially reviewed before freezing (it caught a fatal we would otherwise have shipped---a single
+model in personas is byte-identical and would VOID both arms, reporting degeneracy as if it were a
+kill). The sensitivity control fired (every judge flagged the blatant-absurd positives at $\geq 0.95$)
+and the panel was not rank-1 (cross-judge disagreement $0.69$).
+
+The result is a mechanism the constructed corpora could not show: \textbf{gold-anchor validity is
+prevalence-dependent.} As the true rate of incorrect answers rose across $0.30 / 0.50 / 0.70$, the
+gold-anchored audit covered the truth in $14$, $8$, and $1$ of $15$ replicates, its median miss growing
+to $0.249$; the ladder-anchored audit covered in $15$, $15$, and $15$. The reason is measured: the
+judges' false-negative rate on imitative falsehoods is $0.08$ (flash-lite), $0.10$ (Qwen-3B), and
+$0.72$ (Qwen-1.5B), so blatant gold anchors---on which every judge is near-perfect---report an
+over-confident calibration that diverges from truth only once enough items are exposed to the weak
+judge's real miss rate. Under the frozen forks this is a PARTIAL, not a kill: the strict bar (a
+confident gold miss of at least $0.15$ with the ladder still covering, at two of the three prevalences)
+cleared only at $0.70$, so no kill is claimed and the pattern is reported verbatim. The in-the-wild
+lesson is the paper's thesis with a condition attached---gold's licence is prevalence-conditional; the
+honest ladder's is not, and it repaired the estimate in the wild ($45/45$) exactly as in simulation.
+The weak judge carries the failure, locating the danger empirically in the same weak-to-mid tier the
+constructed kill implicated.
+
+\section{The anchor threshold: the price of catching a shared blind spot}
+
+The impossibility in Section~1 is an impossibility about the unlabeled \emph{marginal}; we make its
+escape quantitative. Construct two exchangeable three-judge worlds whose unlabeled verdict
+distributions are identical to $1.36\times10^{-14}$---one benign (independent judges, true prevalence
+$0.400$) and one malign (a shared blind spot: all three judges unanimously wrong on $15\%$ of the true
+negatives; true prevalence $0.304$). They are genuinely different worlds---prevalence differs by
+$0.096$---that no unlabeled statistic can separate: the majority-vote positive rate is $0.4056$ in both,
+so every label-free estimator returns the same answer for the sound panel and the secretly-broken one.
+
+A known-negative breaks it, because the \emph{class-conditional}---what a known-negative samples---is
+exactly where the worlds diverge. The probability that a known-negative is unanimously mis-voted is
+$0.0010$ in the benign world and $0.1508$ in the malign one: a single unanimous-wrong known-negative
+carries a $150.8\times$ likelihood ratio for a shared blind spot. Under the standard most-powerful
+one-sided test on the unanimous-wrong count---which we ship as \texttt{styxx.anchors.blindspot\_power}
+and \texttt{min\_anchors\_for\_power}---roughly $15$ known-negatives give better than $90\%$ power to
+detect the malign world. An earlier, stricter rejection region put that count near $30$, a valid lower
+bound we now tighten; the same conservatism had assigned a single anchor power $0.0$, contradicting its
+own $150.8\times$ likelihood ratio, whereas the standard test correctly makes one anchor already
+informative. The price of catching a unanimous-confident-wrong panel---the failure that unlabeled
+evaluation cannot see at any sample size, and the one that most endangers a safety eval---is not labels;
+it is a handful of known-negatives. (Exchangeable $J{=}3$; the mechanism is transparent,
+$\text{LR} = \tau / f^{J}$, so the numbers illustrate a clear law, not yet a general theorem---arbitrary
+$J$ and a finite-anchor interval on the recovered prevalence are the next rungs.)
+
+We then took the threshold out of simulation and onto real model verdicts (local Qwen judges grading
+TruthfulQA; imitative falsehoods as the candidate blind spot, blatant errors as the benign probe). A
+detectable all-judge blind spot appears exactly where the theory demands---a homogeneous panel of a weak
+model---and nowhere else: the unanimous-wrong rate on imitative falsehoods is $0.64$ for one weak model
+run under three prompt paraphrases, $0.06$ for a stronger model under the same paraphrases, and $0.02$
+for a heterogeneous cross-family panel. Heterogeneity and model strength each defend consensus; shared
+weakness does not. Where the blind spot fires, the panel agrees with itself $0.64$ of the time while
+majority-voting the false answer correct $0.74$ of the time---a self-agreeing panel that is confidently
+wrong, invisible to any consensus heuristic. Fed the measured error rates,
+\texttt{min\_anchors\_for\_power} returns $K^{*}{=}3$ known-label anchors for $90\%$ power, and on the
+real pool three anchors detect the blind spot at empirical power $0.959$ against the predicted $0.953$.
+The anchor threshold is not a simulation artifact; it is a usable instrument that bites precisely when
+judges share a base model---the correlated-failure danger this paper names throughout.
+
+\section{Foundation, scope, residuals}
+
+Every organic and anchor label in every scored corpus---$36{,}720$ items---was re-derived from item
+text alone by independent decision logic (a formal transitive-closure oracle for chains; slot, number,
+and form oracles for the rest): zero mismatches, zero undecidable. All gates preregistered with frozen
+bars; every miss reported verbatim; the program's public record across this arc includes two interval
+constructions closed negative, a repair closed negative with its mechanism decomposed, a refusal
+resolution, and one self-caught confound demoted in writing before its corrected experiment ran.
+
+Scope, stated plainly: one weak-judge base model carries the kill (an 8~GB device ceiling; the
+cross-vendor API arm is recorded as blocked on credits); all corpora are constructed; the frontier tier
+is measured only at ceiling because constructed ladders exhaust there. The named residuals---API-tier
+model generality, at least one in-the-wild evaluation setup where practitioners actually salt gold
+checks, and a naturalistic frontier-stressing ladder---bound the claim; they do not soften what is
+measured inside it.
+
+\section{Reproducibility}
+
+\texttt{pip install styxx} ($7.26.0$ or later); repository \texttt{fathom-lab/styxx},
+\texttt{papers/anchored-validity/}. Preregistrations, harnesses, seeds, checkpoints, per-judge verdict
+receipts, oracle receipts, and OATH certificates for every finding are committed. The instrument that
+produced these numbers ships with its weaknesses printed on the label, and this document was
+number-verified by the same certifier that polices the rest of the program.
+
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+{\small\noindent Every number in this document is bound to a committed receipt and machine-verified by
+\texttt{styxx.certify}; preregistrations were frozen and committed before every scored run, and the
+negative and refused outcomes above are reported under their frozen bars. Passing an audit is
+necessary, not sufficient: \emph{the method can only void an eval, never bless one.}}
+
+\end{document}

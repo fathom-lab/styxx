@@ -1,0 +1,573 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_inthewild_truthfulqa_2026_07_23.md",
+  "document_sha256": "b2db87978aa0fff3f7699ee3f2906b13f33fd8615aa83b0d35e7476ed742c40e",
+  "receipts_sha256": {
+    "inthewild_truthfulqa_result.json": "2a4871404fbc359d9591f3fe93a8e5b3d88999110dfc2619424947ee0b18117b"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 33,
+    "ABSTAIN": 18,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "2"
+    },
+    {
+      "line": 5,
+      "token": "3"
+    },
+    {
+      "line": 13,
+      "token": "45"
+    },
+    {
+      "line": 13,
+      "token": "45"
+    },
+    {
+      "line": 18,
+      "token": "0.95"
+    },
+    {
+      "line": 21,
+      "token": "3"
+    },
+    {
+      "line": 23,
+      "token": "0.95"
+    },
+    {
+      "line": 23,
+      "token": "0.95"
+    },
+    {
+      "line": 24,
+      "token": "0.15"
+    },
+    {
+      "line": 27,
+      "token": "3"
+    },
+    {
+      "line": 35,
+      "token": "0.70"
+    },
+    {
+      "line": 35,
+      "token": "13"
+    },
+    {
+      "line": 36,
+      "token": "0.15"
+    },
+    {
+      "line": 36,
+      "token": "10"
+    },
+    {
+      "line": 36,
+      "token": "0.30"
+    },
+    {
+      "line": 36,
+      "token": "10"
+    },
+    {
+      "line": 44,
+      "token": "0"
+    },
+    {
+      "line": 60,
+      "token": "45"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "PARTIAL** under the frozen forks \u2014 the strict KILL bar (failure at >=2 of 3 prevalences) was met at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "PARTIAL** under the frozen forks \u2014 the strict KILL bar (failure at >=2 of 3 prevalences) was met at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "0.249",
+      "value": 0.249,
+      "decimals": 3,
+      "context": "miss it by up to **0.249** **as the failure becomes common** \u2014 while honest ladder anchors track the",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.7.gold_median_miss"
+    },
+    {
+      "line": 13,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "truth **perfectly at every prevalence (45/45)**. Gold-anchor validity is prevalence-dependent; the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "truth **perfectly at every prevalence (45/45)**. Gold-anchor validity is prevalence-dependent; the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.9304",
+      "value": 0.9304,
+      "decimals": 4,
+      "context": "- **Parse-rate:** gemini-2.5-flash **0.9304 -> VOIDED** (< 0.95). Disclosure: this is a *harness*",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.parse_rate.gemini-2.5-flash"
+    },
+    {
+      "line": 18,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "- **Parse-rate:** gemini-2.5-flash **0.9304 -> VOIDED** (< 0.95). Disclosure: this is a *harness*",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "about its judging. flash-lite / qwen-3b / qwen-1.5b = 1.0. **Audited panel = the 3 valid judges.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "INCORRECT at >= 0.95 (flash 1.0, flash-lite 1.0, qwen-3b 1.0, qwen-1.5b 0.95). The probe is not deaf.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "INCORRECT at >= 0.95 (flash 1.0, flash-lite 1.0, qwen-3b 1.0, qwen-1.5b 0.95). The probe is not deaf.",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.parse_rate.gemini-2.5-flash-lite"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "INCORRECT at >= 0.95 (flash 1.0, flash-lite 1.0, qwen-3b 1.0, qwen-1.5b 0.95). The probe is not deaf.",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.parse_rate.gemini-2.5-flash-lite"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "INCORRECT at >= 0.95 (flash 1.0, flash-lite 1.0, qwen-3b 1.0, qwen-1.5b 0.95). The probe is not deaf.",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.parse_rate.gemini-2.5-flash-lite"
+    },
+    {
+      "line": 23,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "INCORRECT at >= 0.95 (flash 1.0, flash-lite 1.0, qwen-3b 1.0, qwen-1.5b 0.95). The probe is not deaf.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.69",
+      "value": 0.69,
+      "decimals": 2,
+      "context": "- **Diversity:** organic cross-judge disagreement 0.69 (>= 0.15) -> the panel is not rank-1; the audit",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.organic_disagreement_frac"
+    },
+    {
+      "line": 24,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "- **Diversity:** organic cross-judge disagreement 0.69 (>= 0.15) -> the panel is not rank-1; the audit",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "## The measurement (15 replicates x 3 prevalence points)",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 27,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "## The measurement (15 replicates x 3 prevalence points)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:config.prevalences[0]"
+    },
+    {
+      "line": 31,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.buckets.gold.covers"
+    },
+    {
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.gold_pos_sensitivity.gemini-2.5-flash"
+    },
+    {
+      "line": 31,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.buckets.gold.void"
+    },
+    {
+      "line": 31,
+      "token": "0.127",
+      "value": 0.127,
+      "decimals": 3,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.gold_median_miss"
+    },
+    {
+      "line": 31,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 31,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.30 | 14 / 1 / 0 | 0.127 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 32,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:config.prevalences[1]"
+    },
+    {
+      "line": 32,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.5.buckets.gold.covers"
+    },
+    {
+      "line": 32,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.5.buckets.gold.miss"
+    },
+    {
+      "line": 32,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.buckets.gold.void"
+    },
+    {
+      "line": 32,
+      "token": "0.1545",
+      "value": 0.1545,
+      "decimals": 4,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.5.gold_median_miss"
+    },
+    {
+      "line": 32,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 32,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.50 | 8 / 7 / 0 | 0.1545 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 33,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:config.prevalences[2]"
+    },
+    {
+      "line": 33,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:preconditions.parse_rate.gemini-2.5-flash-lite"
+    },
+    {
+      "line": 33,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.buckets.gold.covers"
+    },
+    {
+      "line": 33,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.buckets.gold.void"
+    },
+    {
+      "line": 33,
+      "token": "0.2493",
+      "value": 0.2493,
+      "decimals": 4,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.7.gold_median_miss"
+    },
+    {
+      "line": 33,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 33,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "binding_context": "| true prevalence | GOLD covers / miss / void | GOLD median miss | LADDER covers | | 0.70 | 1 / 14 / 0 | 0.2493 | 15 / 15 |",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.3.n_eval"
+    },
+    {
+      "line": 35,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "Frozen forks: KILL at one of the three prevalences (only p=0.70 clears gold-miss>=13 &",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "Frozen forks: KILL at one of the three prevalences (only p=0.70 clears gold-miss>=13 &",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "median-miss>=0.15 & ladder-covers>=10), REFUTED at one of the three (only p=0.30 has gold-covers>=10),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "median-miss>=0.15 & ladder-covers>=10), REFUTED at one of the three (only p=0.30 has gold-covers>=10),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "median-miss>=0.15 & ladder-covers>=10), REFUTED at one of the three (only p=0.30 has gold-covers>=10),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 36,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "median-miss>=0.15 & ladder-covers>=10), REFUTED at one of the three (only p=0.30 has gold-covers>=10),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "0.08",
+      "value": 0.08,
+      "decimals": 2,
+      "context": "is **flash-lite 0.08, qwen-3b 0.10, qwen-1.5b 0.72** \u2014 two decent judges and one weak one. Blatant gold",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:fn_rate_on_imitative_falsehoods.gemini-2.5-flash-lite"
+    },
+    {
+      "line": 43,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "is **flash-lite 0.08, qwen-3b 0.10, qwen-1.5b 0.72** \u2014 two decent judges and one weak one. Blatant gold",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:fn_rate_on_imitative_falsehoods.qwen2.5-3b"
+    },
+    {
+      "line": 43,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "is **flash-lite 0.08, qwen-3b 0.10, qwen-1.5b 0.72** \u2014 two decent judges and one weak one. Blatant gold",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:fn_rate_on_imitative_falsehoods.qwen2.5-1.5b"
+    },
+    {
+      "line": 44,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "anchors (obvious true / absurd false) put every judge at ~0 error, so the audit infers \"the panel is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "0.249",
+      "value": 0.249,
+      "decimals": 3,
+      "context": "gold-anchored estimate drifts \u2014 to a 0.249 median miss at p=0.70. **Ladder anchors** \u2014 real held-out",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:per_prevalence.0.7.gold_median_miss"
+    },
+    {
+      "line": 57,
+      "token": "0.72",
+      "value": 0.72,
+      "decimals": 2,
+      "context": "does **not** collapse \u2014 the weak judge (qwen-1.5b, FN 0.72) carries the failure, and gold hides it only",
+      "status": "VERIFIED",
+      "receipt_ref": "inthewild_truthfulqa_result.json:fn_rate_on_imitative_falsehoods.qwen2.5-1.5b"
+    },
+    {
+      "line": 60,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "headline. The instrument's own repair \u2014 ladder anchors \u2014 worked in the wild, covering 45/45.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

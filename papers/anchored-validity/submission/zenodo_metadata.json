@@ -1,0 +1,32 @@
+{
+  "_note": "Zenodo deposition metadata for the Gold Anchors paper. OPERATOR CONFIRMS author name/ORCID, license, and the Fathom series version number, then deposits as a NEW VERSION of concept 10.5281/zenodo.19326174 (never a standalone record). Agent does NOT deposit.",
+  "metadata": {
+    "upload_type": "publication",
+    "publication_type": "article",
+    "title": "Gold Anchors License Nothing: label-free auditing of LLM judge panels, an instrument that refuses, and the measured failure of sanity checks",
+    "creators": [
+      { "name": "Rodabaugh, Alex", "affiliation": "Fathom Lab", "orcid": "OPERATOR_TO_FILL" }
+    ],
+    "description": "<p>LLM judge panels are the de facto measurement apparatus of modern AI evaluation, and the de facto validation of those judges is a set of blatant sanity checks: exact-duplicate pairs, direct negations, honeypots &mdash; the crowdsourcing gold-question practice, transplanted. We built a label-free auditor for judge panels (anchored moment identification with refusal semantics and measured operating characteristics), sealed its own datasheet on simulation (nine of nine calibration gates), and then ran the measurement the practice assumes away: do blatant gold checks license the numbers a panel produces on real work? Across four constructed task families on a real correlated weak-judge panel, the answer is <em>no</em> at effect sizes that destroy every estimator tested: label-free coverage 0/15 in every family, while the same panel is flawless on the gold items. The failure is <em>silent</em> whenever the violation is smooth. The repair is construction, not statistics: anchor strata drawn from the same generating process as the work items (&ldquo;ladder anchors&rdquo;) restore calibrated coverage 13/13 when exactly one informative judge exists, and <strong>refuse</strong> (14/15 VOID) when honest anchors reveal no informative judge at all. A frontier-model panel audited at arm&rsquo;s length was priced exactly at ceiling. The method can only <em>void</em> an eval, never <em>bless</em> one. Instrument: <code>styxx.anchors</code> (styxx 7.26.0, PyPI). Every number is bound to a committed receipt and machine-verified by <code>styxx.certify</code>; preregistrations were frozen before every scored run.</p>",
+    "keywords": [
+      "LLM-as-a-judge",
+      "evaluation validity",
+      "label-free evaluation",
+      "weak supervision",
+      "Dawid-Skene",
+      "judge error correlation",
+      "AI safety",
+      "measurement without ground truth",
+      "construct validity"
+    ],
+    "notes": "OATH-certified 60/0. Preregistered; frozen bars; negative and refused outcomes reported under their frozen bars. Reproducibility: pip install styxx (7.26.0+); repository fathom-lab/styxx, papers/anchored-validity/. Companion Colab reproducer included.",
+    "access_right": "open",
+    "license": "OPERATOR_TO_CHOOSE (suggest cc-by-4.0)",
+    "version": "OPERATOR_TO_SET (next Fathom series version; prior: v26 calibration-poisoning 10.5281/zenodo.21241185, v28 read-neq-write 10.5281/zenodo.21263158)",
+    "related_identifiers": [
+      { "relation": "isVersionOf", "identifier": "10.5281/zenodo.19326174", "scheme": "doi" },
+      { "relation": "isSupplementTo", "identifier": "https://github.com/fathom-lab/styxx", "scheme": "url" },
+      { "relation": "references", "identifier": "https://pypi.org/project/styxx/", "scheme": "url" }
+    ]
+  }
+}
