@@ -1,0 +1,1402 @@
+[
+ {
+  "q": "What mathematician was also apart of the university's faculty?",
+  "subject": "What mathematician was also apart of the university's faculty?",
+  "X": "Alberto Calder\u00f3n",
+  "Y": "John D. Rockefeller",
+  "sim": 0.43436557054519653
+ },
+ {
+  "q": "How many MSPs are there?",
+  "subject": "How many MSPs are there?",
+  "X": "129",
+  "Y": "1253",
+  "sim": 0.6604731678962708
+ },
+ {
+  "q": "What is the second most abundant element?",
+  "subject": "What is the second most abundant element?",
+  "X": "helium",
+  "Y": "oxygen",
+  "sim": 0.5046353340148926
+ },
+ {
+  "q": "Who provides the bill of quantities?",
+  "subject": "Who provides the bill of quantities?",
+  "X": "a quantity surveyor",
+  "Y": "contractors",
+  "sim": 0.5150007009506226
+ },
+ {
+  "q": "Who did Dinwiddie order to address French in Virginia territory?",
+  "subject": "Who did Dinwiddie order to address French in Virginia territory?",
+  "X": "Major George Washington",
+  "Y": "John D. Rockefeller",
+  "sim": 0.5037293434143066
+ },
+ {
+  "q": "Colonies were a sign of what amongst European countries?",
+  "subject": "Colonies were a sign of what amongst European countries?",
+  "X": "prestige",
+  "Y": "charter",
+  "sim": 0.41167694330215454
+ },
+ {
+  "q": "What French City was New Rochelle named after?",
+  "subject": "What French City was New Rochelle named after?",
+  "X": "La Rochelle",
+  "Y": "SoCal",
+  "sim": 0.4873332381248474
+ },
+ {
+  "q": "What characteristic best describes the agricultural regions that could be found?",
+  "subject": "What characteristic best describes the agricultural regions that could be found?",
+  "X": "richest",
+  "Y": "economist",
+  "sim": 0.5484441518783569
+ },
+ {
+  "q": "What career does Joseph Stiglitz have?",
+  "subject": "What career does Joseph Stiglitz have?",
+  "X": "Economist",
+  "Y": "economic",
+  "sim": 0.9999999403953552
+ },
+ {
+  "q": "What was the Dutch leader's religious affiliation?",
+  "subject": "What was the Dutch leader's religious affiliation?",
+  "X": "Calvinist",
+  "Y": "Protestantism",
+  "sim": 0.4722684621810913
+ },
+ {
+  "q": "Southern Californian communities are well known to be large, spread - out, and what other characteristic?",
+  "subject": "Southern Californian communities are well known to be large, spread - out, and what other characteristic?",
+  "X": "suburban",
+  "Y": "unincorporated suburbs",
+  "sim": 0.564315915107727
+ },
+ {
+  "q": "How many rooms does the Warsaw Historical Museum have?",
+  "subject": "How many rooms does the Warsaw Historical Museum have?",
+  "X": "60",
+  "Y": "50",
+  "sim": 1.0000003576278687
+ },
+ {
+  "q": "In what year was the first commercial steam powered device invented?",
+  "subject": "In what year was the first commercial steam powered device invented?",
+  "X": "1698",
+  "Y": "1550",
+  "sim": 0.7153953313827515
+ },
+ {
+  "q": "The Los Angeles Rams are an example of what kind of sports team?",
+  "subject": "The Los Angeles Rams are an example of what kind of sports team?",
+  "X": "NFL",
+  "Y": "Jacksonville",
+  "sim": 0.49177634716033936
+ },
+ {
+  "q": "When was this edict declared?",
+  "subject": "When was this edict declared?",
+  "X": "1685",
+  "Y": "1368\u20131644",
+  "sim": 0.5174421072006226
+ },
+ {
+  "q": "Who took Isaacs place as Provost in 2016?",
+  "subject": "Who took Isaacs place as Provost in 2016?",
+  "X": "Robert Zimmer",
+  "Y": "Robert of Jumi\u00e8ges",
+  "sim": 0.5921536684036255
+ },
+ {
+  "q": "Who is required to verify and have existing utility lines marked?",
+  "subject": "Who is required to verify and have existing utility lines marked?",
+  "X": "contractors",
+  "Y": "Construction",
+  "sim": 0.6371448636054993
+ },
+ {
+  "q": "What channels were removed from the network in March of 2007?",
+  "subject": "What channels were removed from the network in March of 2007?",
+  "X": "basic channels",
+  "Y": "telecommunications",
+  "sim": 0.4579131007194519
+ },
+ {
+  "q": "When was Isiah Bowman appointed to President Wilson's Inquiry?",
+  "subject": "When was Isiah Bowman appointed to President Wilson's Inquiry?",
+  "X": "1917",
+  "Y": "1945",
+  "sim": 0.6794878244400024
+ },
+ {
+  "q": "What is the only divisor besides 1 that a prime number can have?",
+  "subject": "What is the only divisor besides 1 that a prime number can have?",
+  "X": "itself",
+  "Y": "reversed",
+  "sim": 0.4326084852218628
+ },
+ {
+  "q": "Who led the North American Huguenot colonial expedition?",
+  "subject": "Who led the North American Huguenot colonial expedition?",
+  "X": "Jess\u00e9 de Forest",
+  "Y": "Alberto Calder\u00f3n",
+  "sim": 0.4176626205444336
+ },
+ {
+  "q": "Where was the measurment for the standard gravity on Earth taken?",
+  "subject": "Where was the measurment for the standard gravity on Earth taken?",
+  "X": "sea level",
+  "Y": "seafloor spreading",
+  "sim": 0.5311936140060425
+ },
+ {
+  "q": "How fast is pharmacy informatics growing?",
+  "subject": "How fast is pharmacy informatics growing?",
+  "X": "quickly",
+  "Y": "rapid combustion",
+  "sim": 0.5078713893890381
+ },
+ {
+  "q": "Under what law is value of a worker determined?",
+  "subject": "Under what law is value of a worker determined?",
+  "X": "supply and demand",
+  "Y": "economic",
+  "sim": 0.5851985216140747
+ },
+ {
+  "q": "In which etude of Neumes rythmiques do the primes 41, 43, 47 and 53 appear in?",
+  "subject": "In which etude of Neumes rythmiques do the primes 41, 43, 47 and 53 appear in?",
+  "X": "the third \u00e9tude",
+  "Y": "three",
+  "sim": 0.4565039277076721
+ },
+ {
+  "q": "What has successfully dealt with ozone depletion?",
+  "subject": "What has successfully dealt with ozone depletion?",
+  "X": "the Montreal Protocol",
+  "Y": "User Datagram Protocol",
+  "sim": 0.4081611633300781
+ },
+ {
+  "q": "What type of number theory utilizes and studies prime ideals?",
+  "subject": "What type of number theory utilizes and studies prime ideals?",
+  "X": "algebraic number theory",
+  "Y": "modular exponentiation",
+  "sim": 0.5089296102523804
+ },
+ {
+  "q": "In May 2002, where would you go to address the Parliament?",
+  "subject": "In May 2002, where would you go to address the Parliament?",
+  "X": "University of Aberdeen",
+  "Y": "University of Paris",
+  "sim": 0.4859354794025421
+ },
+ {
+  "q": "In what year was the South African Schools Act passed?",
+  "subject": "In what year was the South African Schools Act passed?",
+  "X": "1996",
+  "Y": "2003",
+  "sim": 0.7399221658706665
+ },
+ {
+  "q": "What is the name of the property that designates a number as being prime or not?",
+  "subject": "What is the name of the property that designates a number as being prime or not?",
+  "X": "primality",
+  "Y": "Prime ideals",
+  "sim": 0.5369703769683838
+ },
+ {
+  "q": "In what complexity class do complement problems of NP problems exist?",
+  "subject": "In what complexity class do complement problems of NP problems exist?",
+  "X": "co-NP",
+  "Y": "global",
+  "sim": 0.4806191921234131
+ },
+ {
+  "q": "Where did Johnson stop?",
+  "subject": "Where did Johnson stop?",
+  "X": "Fort William Henry",
+  "Y": "Inland Empire",
+  "sim": 0.3640177845954895
+ },
+ {
+  "q": "What did Virgin Media concentrate on instead of offering linear channels?",
+  "subject": "What did Virgin Media concentrate on instead of offering linear channels?",
+  "X": "Video On Demand",
+  "Y": "VideoGuard UK",
+  "sim": 0.9999999403953552
+ },
+ {
+  "q": "What is the name of the desert near the border of Nevada?",
+  "subject": "What is the name of the desert near the border of Nevada?",
+  "X": "Mojave Desert",
+  "Y": "Oahu",
+  "sim": 0.4725748896598816
+ },
+ {
+  "q": "Does the residential architecture of the Tower District compare or contrast with other part of Fresno?",
+  "subject": "Does the residential architecture of the Tower District compare or contrast with other part of Fresno?",
+  "X": "contrasts",
+  "Y": "intuition",
+  "sim": 0.3330025374889374
+ },
+ {
+  "q": "Where did water to the east of the Amazon drainage basin flow towards?",
+  "subject": "Where did water to the east of the Amazon drainage basin flow towards?",
+  "X": "the Atlantic",
+  "Y": "Europe",
+  "sim": 0.5502775311470032
+ },
+ {
+  "q": "What are phytoplankton?",
+  "subject": "What are phytoplankton?",
+  "X": "planktonic plants",
+  "Y": "ctenophores and cnidarians",
+  "sim": 0.35799166560173035
+ },
+ {
+  "q": "What was the ideal duty of a Newcomen engine?",
+  "subject": "What was the ideal duty of a Newcomen engine?",
+  "X": "7 million",
+  "Y": "10 million",
+  "sim": 0.8320334553718567
+ },
+ {
+  "q": "The academic body of the university is made up of how many divisions of graduate?",
+  "subject": "The academic body of the university is made up of how many divisions of graduate?",
+  "X": "four",
+  "Y": "three",
+  "sim": 1.0
+ },
+ {
+  "q": "How are decisions made on behave of the EU made?",
+  "subject": "How are decisions made on behave of the EU made?",
+  "X": "simple majority vote",
+  "Y": "Scottish Parliament",
+  "sim": 0.40849626064300537
+ },
+ {
+  "q": "The majority of building construction jobs are what?",
+  "subject": "The majority of building construction jobs are what?",
+  "X": "small renovations",
+  "Y": "Construction",
+  "sim": 0.43879765272140503
+ },
+ {
+  "q": "How many firms were existing in 2005?",
+  "subject": "How many firms were existing in 2005?",
+  "X": "667,000 firms",
+  "Y": "7 million",
+  "sim": 0.5234842896461487
+ },
+ {
+  "q": "What  former administrative building was used for the MSP's offices?",
+  "subject": "What  former administrative building was used for the MSP's offices?",
+  "X": "Lothian Regional Council",
+  "Y": "Scottish Parliament",
+  "sim": 0.4917651414871216
+ },
+ {
+  "q": "Over how many studies have shown that violence is more common in societies with income differences?",
+  "subject": "Over how many studies have shown that violence is more common in societies with income differences?",
+  "X": "fifty",
+  "Y": "50",
+  "sim": 0.9102029800415039
+ },
+ {
+  "q": "When did Jamaa Islamiya renounce violence?",
+  "subject": "When did Jamaa Islamiya renounce violence?",
+  "X": "in 2003",
+  "Y": "1989",
+  "sim": 0.8596104383468628
+ },
+ {
+  "q": "What UN resolution endorsed the IPCC?",
+  "subject": "What UN resolution endorsed the IPCC?",
+  "X": "Resolution 43/53",
+  "Y": "60",
+  "sim": 0.3359226584434509
+ },
+ {
+  "q": "In what decade was seafloor spreading discovered? ",
+  "subject": "In what decade was seafloor spreading discovered? ",
+  "X": "the 1960s",
+  "Y": "the 1970s",
+  "sim": 0.8142446279525757
+ },
+ {
+  "q": "When was Spanish takeover of Louisiana Territory complete?",
+  "subject": "When was Spanish takeover of Louisiana Territory complete?",
+  "X": "1769",
+  "Y": "1815",
+  "sim": 0.5568198561668396
+ },
+ {
+  "q": "During the compression stage of the Rankine cycle, what state is the working fluid in?",
+  "subject": "During the compression stage of the Rankine cycle, what state is the working fluid in?",
+  "X": "liquid",
+  "Y": "Chemical",
+  "sim": 1.0000001192092896
+ },
+ {
+  "q": "What is the name of the alphabet is most commonly used in a problem instance?",
+  "subject": "What is the name of the alphabet is most commonly used in a problem instance?",
+  "X": "binary alphabet",
+  "Y": "User Datagram Protocol",
+  "sim": 0.2852824330329895
+ },
+ {
+  "q": "In what part of the city did residents suffer from a lack of city services?",
+  "subject": "In what part of the city did residents suffer from a lack of city services?",
+  "X": "unincorporated suburbs",
+  "Y": "suburban",
+  "sim": 0.564315915107727
+ },
+ {
+  "q": "When did the German army reoccupy Rhineland?",
+  "subject": "When did the German army reoccupy Rhineland?",
+  "X": "1936",
+  "Y": "1939",
+  "sim": 0.7539265155792236
+ },
+ {
+  "q": "How was the efficiency of a steam engine typically evaluated?",
+  "subject": "How was the efficiency of a steam engine typically evaluated?",
+  "X": "duty",
+  "Y": "wars",
+  "sim": 0.48728978633880615
+ },
+ {
+  "q": "By sunlight, what compound did  Priestley concentrate on to make the gas he called \"dephlogisticated air\"?",
+  "subject": "By sunlight, what compound did  Priestley concentrate on to make the gas he called \"dephlogisticated air\"?",
+  "X": "mercuric oxide (HgO)",
+  "Y": "Liquid oxygen",
+  "sim": 0.4359745979309082
+ },
+ {
+  "q": "How else can petrologists understand the pressures at which different mineral phases appear?",
+  "subject": "How else can petrologists understand the pressures at which different mineral phases appear?",
+  "X": "pressure physical experiments",
+  "Y": "helium",
+  "sim": 0.2993689775466919
+ },
+ {
+  "q": "What is one part of the innate immune system that doesn't attack microbes directly?",
+  "subject": "What is one part of the innate immune system that doesn't attack microbes directly?",
+  "X": "Natural killer cells",
+  "Y": "immune surveillance",
+  "sim": 0.39732545614242554
+ },
+ {
+  "q": "What was the seat of former party leader David McLetchie?",
+  "subject": "What was the seat of former party leader David McLetchie?",
+  "X": "Edinburgh Pentlands",
+  "Y": "Scottish Parliament",
+  "sim": 0.5223983526229858
+ },
+ {
+  "q": "What river does Warsaw straddle?",
+  "subject": "What river does Warsaw straddle?",
+  "X": "Vistula River",
+  "Y": "The Trout River",
+  "sim": 0.8496420383453369
+ },
+ {
+  "q": "What type of topological systems are found in numbers in Victoria?",
+  "subject": "What type of topological systems are found in numbers in Victoria?",
+  "X": "river systems",
+  "Y": "The Trout River",
+  "sim": 0.590903103351593
+ },
+ {
+  "q": "What did the result of the SNP majority allow a referendum be held on?",
+  "subject": "What did the result of the SNP majority allow a referendum be held on?",
+  "X": "Scottish independence",
+  "Y": "Scottish Parliament",
+  "sim": 0.6562540531158447
+ },
+ {
+  "q": "What is one of the most dangerous occupations in the world?",
+  "subject": "What is one of the most dangerous occupations in the world?",
+  "X": "Construction",
+  "Y": "contractors",
+  "sim": 0.6371448636054993
+ },
+ {
+  "q": "What was the name given to the undergraduate college's liberal-arts curriculum?",
+  "subject": "What was the name given to the undergraduate college's liberal-arts curriculum?",
+  "X": "the Common Core",
+  "Y": "essentials",
+  "sim": 0.39325177669525146
+ },
+ {
+  "q": "What is another term for the pivot mounting?",
+  "subject": "What is another term for the pivot mounting?",
+  "X": "trunnion",
+  "Y": "ONdigital",
+  "sim": 0.4140967130661011
+ },
+ {
+  "q": "Which cidippid is used as a description on ctenophores in most textbooks?",
+  "subject": "Which cidippid is used as a description on ctenophores in most textbooks?",
+  "X": "Pleurobrachia",
+  "Y": "Cestum veneris",
+  "sim": 0.382878839969635
+ },
+ {
+  "q": "When was the Riemann hypothesis proposed?",
+  "subject": "When was the Riemann hypothesis proposed?",
+  "X": "1859",
+  "Y": "1851",
+  "sim": 0.5989842414855957
+ },
+ {
+  "q": "Other than for its resort feel, what is Palm Springs popular for?",
+  "subject": "Other than for its resort feel, what is Palm Springs popular for?",
+  "X": "open spaces",
+  "Y": "time or space",
+  "sim": 0.4826110303401947
+ },
+ {
+  "q": "Other than the San Diego metropolitan area, what other area are the communities along Interstates 15 and 215 connected with?",
+  "subject": "Other than the San Diego metropolitan area, what other area are the communities along Interstates 15 and 215 connected with?",
+  "X": "Inland Empire",
+  "Y": "the state",
+  "sim": 0.5047697424888611
+ },
+ {
+  "q": "How many species of bird and mammals are there in the Amazon region?",
+  "subject": "How many species of bird and mammals are there in the Amazon region?",
+  "X": "2,000",
+  "Y": "100,000",
+  "sim": 0.7689404487609863
+ },
+ {
+  "q": "When will Ford's manufacturing plants close?",
+  "subject": "When will Ford's manufacturing plants close?",
+  "X": "October 2016",
+  "Y": "1972",
+  "sim": 0.6509100198745728
+ },
+ {
+  "q": "What kind of company is Sky UK Limited?",
+  "subject": "What kind of company is Sky UK Limited?",
+  "X": "telecommunications",
+  "Y": "basic channels",
+  "sim": 0.4579131007194519
+ },
+ {
+  "q": "What did BSkyB name their interactive service?",
+  "subject": "What did BSkyB name their interactive service?",
+  "X": "Sky Active",
+  "Y": "Sky UK Limited",
+  "sim": 0.615668773651123
+ },
+ {
+  "q": "How can function problems typically be restated?",
+  "subject": "How can function problems typically be restated?",
+  "X": "decision problems",
+  "Y": "problem instance",
+  "sim": 0.4624207019805908
+ },
+ {
+  "q": "Who was one of the most famous people born in Warsaw?",
+  "subject": "Who was one of the most famous people born in Warsaw?",
+  "X": "Maria Sk\u0142odowska-Curie",
+  "Y": "miasto sto\u0142eczne Warszawa",
+  "sim": 0.6619045734405518
+ },
+ {
+  "q": "What is the name of matters outside the legislative ability of the Scottish Parliament?",
+  "subject": "What is the name of matters outside the legislative ability of the Scottish Parliament?",
+  "X": "Reserved",
+  "Y": "Extension",
+  "sim": 0.4020107686519623
+ },
+ {
+  "q": "Why is Warsaw's flora very rich in species?",
+  "subject": "Why is Warsaw's flora very rich in species?",
+  "X": "location of Warsaw",
+  "Y": "Warsaw Escarpment",
+  "sim": 0.7364974021911621
+ },
+ {
+  "q": "What was the most important discovery that led to the understanding that Earth's lithosphere is separated into tectonic plates?",
+  "subject": "What was the most important discovery that led to the understanding that Earth's lithosphere is separated into tectonic plates?",
+  "X": "seafloor spreading",
+  "Y": "sea level",
+  "sim": 0.5311936140060425
+ },
+ {
+  "q": "Why did al-Qaeda tell ISIL to take a hike?",
+  "subject": "Why did al-Qaeda tell ISIL to take a hike?",
+  "X": "notorious intransigence",
+  "Y": "unidirectional",
+  "sim": 0.3420618176460266
+ },
+ {
+  "q": "What is Harvard's total financial aid reserves?",
+  "subject": "What is Harvard's total financial aid reserves?",
+  "X": "$159 million",
+  "Y": "$230 million",
+  "sim": 0.7792339324951172
+ },
+ {
+  "q": "How long has free movement and trade been central to European development?",
+  "subject": "How long has free movement and trade been central to European development?",
+  "X": "1957",
+  "Y": "1950s",
+  "sim": 0.7285894155502319
+ },
+ {
+  "q": "What type of process is the oxygen cycle?",
+  "subject": "What type of process is the oxygen cycle?",
+  "X": "biogeochemical",
+  "Y": "dioxygen",
+  "sim": 0.46555450558662415
+ },
+ {
+  "q": "For what reason would someone avoid crimes while protesting?",
+  "subject": "For what reason would someone avoid crimes while protesting?",
+  "X": "avoiding attribution",
+  "Y": "Indirect civil disobedience",
+  "sim": 0.3870023190975189
+ },
+ {
+  "q": "The fact that not all fossils may be found globally at the same time causes the principle to become what?",
+  "subject": "The fact that not all fossils may be found globally at the same time causes the principle to become what?",
+  "X": "complex",
+  "Y": "Type I",
+  "sim": 0.49594810605049133
+ },
+ {
+  "q": "Within what variable is L constrained according to the space hierarchy theorem?",
+  "subject": "Within what variable is L constrained according to the space hierarchy theorem?",
+  "X": "PSPACE",
+  "Y": "open spaces",
+  "sim": 0.4531586170196533
+ },
+ {
+  "q": "Which Florida city has the biggest population?",
+  "subject": "Which Florida city has the biggest population?",
+  "X": "Jacksonville",
+  "Y": "San Diego",
+  "sim": 0.5114019513130188
+ },
+ {
+  "q": "What was Isiah Bowman nick name, as known by the public.",
+  "subject": "What was Isiah Bowman nick name, as known by the public.",
+  "X": "Wilson's geographer",
+  "Y": "Robert of Jumi\u00e8ges",
+  "sim": 0.3702372908592224
+ },
+ {
+  "q": "Of what does the covalent double bond result from ?",
+  "subject": "Of what does the covalent double bond result from ?",
+  "X": "molecular orbitals",
+  "Y": "oxygen and hydrogen",
+  "sim": 0.2942928671836853
+ },
+ {
+  "q": "Who explored Ohio territory in 1750?",
+  "subject": "Who explored Ohio territory in 1750?",
+  "X": "Christopher Gist",
+  "Y": "Giovanni Branca",
+  "sim": 0.4604259133338928
+ },
+ {
+  "q": "Where in Warsaw are patriotic and political objects connected with Poland's struggles for Independence found?",
+  "subject": "Where in Warsaw are patriotic and political objects connected with Poland's struggles for Independence found?",
+  "X": "Museum of Independence",
+  "Y": "independent",
+  "sim": 0.4484022259712219
+ },
+ {
+  "q": "What major conquest did Tancred play a roll in?",
+  "subject": "What major conquest did Tancred play a roll in?",
+  "X": "Jerusalem",
+  "Y": "Oahu",
+  "sim": 0.5460501909255981
+ },
+ {
+  "q": "What is polish for \"mermaid\"?",
+  "subject": "What is polish for \"mermaid\"?",
+  "X": "syrenka",
+  "Y": "Maria Sk\u0142odowska-Curie",
+  "sim": 0.4226435422897339
+ },
+ {
+  "q": "What minor amount of liquid oxygen was produced by early French experimenters?",
+  "subject": "What minor amount of liquid oxygen was produced by early French experimenters?",
+  "X": "few drops",
+  "Y": "fell significantly",
+  "sim": 0.5223695039749146
+ },
+ {
+  "q": "some debate that there is a correlation between capitalism, imperialism, and what?",
+  "subject": "some debate that there is a correlation between capitalism, imperialism, and what?",
+  "X": "aristocracy",
+  "Y": "administration",
+  "sim": 0.4608507752418518
+ },
+ {
+  "q": "Salafism posits that democracy is responsible for what type of horrible events of the 20th century?",
+  "subject": "Salafism posits that democracy is responsible for what type of horrible events of the 20th century?",
+  "X": "wars",
+  "Y": "Vietnam War",
+  "sim": 0.6640996932983398
+ },
+ {
+  "q": "Unsurprisingly, the mujahideen's victory against the Soviets in the 1980s failed to produce what?",
+  "subject": "Unsurprisingly, the mujahideen's victory against the Soviets in the 1980s failed to produce what?",
+  "X": "justice and prosperity",
+  "Y": "economic",
+  "sim": 0.5362932085990906
+ },
+ {
+  "q": "what is the fee range for accessing BSkyB's EPG?",
+  "subject": "what is the fee range for accessing BSkyB's EPG?",
+  "X": "\u00a315\u2013100,000",
+  "Y": "$159 million",
+  "sim": 0.5956090688705444
+ },
+ {
+  "q": "By how much did Harvard management reduce its South Africa holdings in response to pressure?",
+  "subject": "By how much did Harvard management reduce its South Africa holdings in response to pressure?",
+  "X": "$230 million",
+  "Y": "$159 million",
+  "sim": 0.7792339324951172
+ },
+ {
+  "q": "What is another term for university-preparatory schools?",
+  "subject": "What is another term for university-preparatory schools?",
+  "X": "prep schools",
+  "Y": "University of Paris",
+  "sim": 0.3756203055381775
+ },
+ {
+  "q": "Who ranked Warsaw as the 32nd most liveable city in the world?",
+  "subject": "Who ranked Warsaw as the 32nd most liveable city in the world?",
+  "X": "Economist Intelligence Unit",
+  "Y": "economists",
+  "sim": 0.6912381052970886
+ },
+ {
+  "q": "How many Americans are richer than more than half of all citizens?",
+  "subject": "How many Americans are richer than more than half of all citizens?",
+  "X": "400",
+  "Y": "100",
+  "sim": 0.6400958299636841
+ },
+ {
+  "q": "The idea of acquired immunity in jawed vertebrates is the basis of what medical treatment?",
+  "subject": "The idea of acquired immunity in jawed vertebrates is the basis of what medical treatment?",
+  "X": "vaccination",
+  "Y": "immune surveillance",
+  "sim": 0.5604544878005981
+ },
+ {
+  "q": "How high do plague fevers run?",
+  "subject": "How high do plague fevers run?",
+  "X": "100\u2013106 \u00b0F",
+  "Y": "115 \u00b0F",
+  "sim": 0.8667012453079224
+ },
+ {
+  "q": "What church runs some private schools in Victoria?",
+  "subject": "What church runs some private schools in Victoria?",
+  "X": "Roman Catholic Church",
+  "Y": "Catholics",
+  "sim": 0.8211777210235596
+ },
+ {
+  "q": "Where did he begin teaching?",
+  "subject": "Where did he begin teaching?",
+  "X": "Rotterdam",
+  "Y": "the Dutch Republic",
+  "sim": 0.638086199760437
+ },
+ {
+  "q": "What is the largest sensory feature of the ctenophora?",
+  "subject": "What is the largest sensory feature of the ctenophora?",
+  "X": "aboral organ",
+  "Y": "Abercynon",
+  "sim": 0.35839059948921204
+ },
+ {
+  "q": "Which directive mentioned was created in 1994?",
+  "subject": "Which directive mentioned was created in 1994?",
+  "X": "Works Council Directive",
+  "Y": "Civil Service Tribunal",
+  "sim": 0.3884938359260559
+ },
+ {
+  "q": "How much did the population of Victoria increase in ten years after the discovery of gold?",
+  "subject": "How much did the population of Victoria increase in ten years after the discovery of gold?",
+  "X": "sevenfold",
+  "Y": "six",
+  "sim": 0.4969181716442108
+ },
+ {
+  "q": "What is the nickname for the Delta in the Netherlands?",
+  "subject": "What is the nickname for the Delta in the Netherlands?",
+  "X": "Rhine Delta",
+  "Y": "Lower Rhine",
+  "sim": 0.7303084135055542
+ },
+ {
+  "q": "Who made up 19% of the student body in the 2012 Spring Quarter? ",
+  "subject": "Who made up 19% of the student body in the 2012 Spring Quarter? ",
+  "X": "international students",
+  "Y": "tuition",
+  "sim": 0.47425377368927
+ },
+ {
+  "q": "Who had mathmatical insite?",
+  "subject": "Who had mathmatical insite?",
+  "X": "Sir Isaac Newton",
+  "Y": "Galileo",
+  "sim": 0.9259657859802246
+ },
+ {
+  "q": "In what year of 20th century, did Harvard release an important document about education in America?",
+  "subject": "In what year of 20th century, did Harvard release an important document about education in America?",
+  "X": "1945",
+  "Y": "the 1940s",
+  "sim": 0.7734122276306152
+ },
+ {
+  "q": "When did Western governments support fledgling Islamists?",
+  "subject": "When did Western governments support fledgling Islamists?",
+  "X": "During the 1970s",
+  "Y": "late 1970s",
+  "sim": 0.9344174861907959
+ },
+ {
+  "q": "What additional srevice did BSkyB offer besides HD channels that they claimed offered \"substantially more value\"?",
+  "subject": "What additional srevice did BSkyB offer besides HD channels that they claimed offered \"substantially more value\"?",
+  "X": "Video On Demand",
+  "Y": "VideoGuard UK",
+  "sim": 0.9999999403953552
+ },
+ {
+  "q": "Trial division involves dividing n by every integer m greater than what?",
+  "subject": "Trial division involves dividing n by every integer m greater than what?",
+  "X": "greater than 1",
+  "Y": "positive",
+  "sim": 0.4632386267185211
+ },
+ {
+  "q": "The largest construction projects are known as what?",
+  "subject": "The largest construction projects are known as what?",
+  "X": "megaprojects",
+  "Y": "global",
+  "sim": 0.3767133355140686
+ },
+ {
+  "q": "In a computational problem, what can be described as a string over an alphabet?",
+  "subject": "In a computational problem, what can be described as a string over an alphabet?",
+  "X": "problem instance",
+  "Y": "solution",
+  "sim": 0.5354726910591125
+ },
+ {
+  "q": "What does Yeke Mongghul Ulus mean?",
+  "subject": "What does Yeke Mongghul Ulus mean?",
+  "X": "Great Mongol State",
+  "Y": "Mongols and Semuren",
+  "sim": 0.6140010356903076
+ },
+ {
+  "q": "In the Rankine cycle, in what state is the working fluid received in the condenser?",
+  "subject": "In the Rankine cycle, in what state is the working fluid received in the condenser?",
+  "X": "liquid",
+  "Y": "Chemical",
+  "sim": 1.0000001192092896
+ },
+ {
+  "q": "Besides viniculture, what's a dominant economic sector of the Middle Rhine?",
+  "subject": "Besides viniculture, what's a dominant economic sector of the Middle Rhine?",
+  "X": "tourism",
+  "Y": "Hollywood",
+  "sim": 1.0
+ },
+ {
+  "q": "How much of Jacksonville is made up of water?",
+  "subject": "How much of Jacksonville is made up of water?",
+  "X": "13.34%",
+  "Y": "2.7%",
+  "sim": 0.8025946617126465
+ },
+ {
+  "q": "This causes the rock unit as a whole to become longer and thinner. ",
+  "subject": "This causes the rock unit as a whole to become longer and thinner. ",
+  "X": "Extension",
+  "Y": "reduction",
+  "sim": 0.43573176860809326
+ },
+ {
+  "q": "Who was Ralph in charge of being at war with?",
+  "subject": "Who was Ralph in charge of being at war with?",
+  "X": "the Welsh",
+  "Y": "Wales",
+  "sim": 0.8014852404594421
+ },
+ {
+  "q": "When was Dali conquered by the Yuan?",
+  "subject": "When was Dali conquered by the Yuan?",
+  "X": "1253",
+  "Y": "1313",
+  "sim": 0.7184705138206482
+ },
+ {
+  "q": "What conjecture holds that there is an infinite amount of twin primes?",
+  "subject": "What conjecture holds that there is an infinite amount of twin primes?",
+  "X": "twin prime conjecture",
+  "Y": "primality",
+  "sim": 0.5209000110626221
+ },
+ {
+  "q": "Which park is home to the Kearney Mansion?",
+  "subject": "Which park is home to the Kearney Mansion?",
+  "X": "Kearney Park",
+  "Y": "Edinburgh Pentlands",
+  "sim": 0.512050986289978
+ },
+ {
+  "q": "What is the oldest known rock in the world?",
+  "subject": "What is the oldest known rock in the world?",
+  "X": "Acasta gneiss",
+  "Y": "Aare",
+  "sim": 0.48951199650764465
+ },
+ {
+  "q": "What type of correlation was used previously to help date rock formations?",
+  "subject": "What type of correlation was used previously to help date rock formations?",
+  "X": "stratigraphic correlation",
+  "Y": "Magnetic stratigraphers",
+  "sim": 0.5655899047851562
+ },
+ {
+  "q": "What kind of universities is the region famous for?",
+  "subject": "What kind of universities is the region famous for?",
+  "X": "research",
+  "Y": "evidence",
+  "sim": 0.5225218534469604
+ },
+ {
+  "q": "What was Ban Ki-Moon the Secretary General of?",
+  "subject": "What was Ban Ki-Moon the Secretary General of?",
+  "X": "the United Nations",
+  "Y": "Africa",
+  "sim": 0.5328097343444824
+ },
+ {
+  "q": "What did France offer that was rare by imperial standards?",
+  "subject": "What did France offer that was rare by imperial standards?",
+  "X": "assimilation",
+  "Y": "Aboriginal",
+  "sim": 0.4116024374961853
+ },
+ {
+  "q": "What type of income is the vast majority of the population dependent on?",
+  "subject": "What type of income is the vast majority of the population dependent on?",
+  "X": "wage or salary",
+  "Y": "wages and profits",
+  "sim": 0.6982741355895996
+ },
+ {
+  "q": "The Bank of America Tower was previously known as what?",
+  "subject": "The Bank of America Tower was previously known as what?",
+  "X": "Barnett Center",
+  "Y": "an assembly center",
+  "sim": 0.4442126154899597
+ },
+ {
+  "q": "Melatonin during sleep can actively counteract the production of what?",
+  "subject": "Melatonin during sleep can actively counteract the production of what?",
+  "X": "free radical production",
+  "Y": "free trade",
+  "sim": 0.3717224597930908
+ },
+ {
+  "q": "Case complexity likelihoods provide variable probabilities of what general measure? ",
+  "subject": "Case complexity likelihoods provide variable probabilities of what general measure? ",
+  "X": "complexity measure",
+  "Y": "complicated definitions",
+  "sim": 0.31160813570022583
+ },
+ {
+  "q": "How many seats must a political party have to be represented on the Parliamentary Bureau?",
+  "subject": "How many seats must a political party have to be represented on the Parliamentary Bureau?",
+  "X": "five",
+  "Y": "Six",
+  "sim": 1.0
+ },
+ {
+  "q": "What is the largest ctenophore?",
+  "subject": "What is the largest ctenophore?",
+  "X": "Cestum veneris",
+  "Y": "C\u00e9vennes",
+  "sim": 0.55206698179245
+ },
+ {
+  "q": "What do David Castlles-Quintana and Vicente Royuela do for a living?",
+  "subject": "What do David Castlles-Quintana and Vicente Royuela do for a living?",
+  "X": "economists",
+  "Y": "economic",
+  "sim": 0.8677065968513489
+ },
+ {
+  "q": "What type of impact does opportunity-based entrepreneurship tend to have on economic growth?",
+  "subject": "What type of impact does opportunity-based entrepreneurship tend to have on economic growth?",
+  "X": "positive",
+  "Y": "declines",
+  "sim": 0.4671138525009155
+ },
+ {
+  "q": "What school model is Sweden notable for?",
+  "subject": "What school model is Sweden notable for?",
+  "X": "voucher",
+  "Y": "tuition",
+  "sim": 0.40503990650177
+ },
+ {
+  "q": "What person helped establish the school with a donation?",
+  "subject": "What person helped establish the school with a donation?",
+  "X": "John D. Rockefeller",
+  "Y": "richest",
+  "sim": 0.5107111930847168
+ },
+ {
+  "q": "What kind of service is the SkyDrive Service?",
+  "subject": "What kind of service is the SkyDrive Service?",
+  "X": "cloud storage",
+  "Y": "digital terrestrial",
+  "sim": 0.3110806941986084
+ },
+ {
+  "q": "How would one describe the summers in Fresno?",
+  "subject": "How would one describe the summers in Fresno?",
+  "X": "hot and dry",
+  "Y": "temperate",
+  "sim": 0.4120721220970154
+ },
+ {
+  "q": "Who wrote the book \"Capital in the Twenty-First Century\"?",
+  "subject": "Who wrote the book \"Capital in the Twenty-First Century\"?",
+  "X": "Thomas Piketty",
+  "Y": "John Houghton",
+  "sim": 0.46321409940719604
+ },
+ {
+  "q": "Why was Polonia relegated from the country's top flight in 2013?",
+  "subject": "Why was Polonia relegated from the country's top flight in 2013?",
+  "X": "disastrous financial situation",
+  "Y": "economic",
+  "sim": 0.46666228771209717
+ },
+ {
+  "q": "Who were exempt from the Ministry of Justice?",
+  "subject": "Who were exempt from the Ministry of Justice?",
+  "X": "Mongols and Semuren",
+  "Y": "Great Mongol State",
+  "sim": 0.6140010356903076
+ },
+ {
+  "q": "The adaptive immune system recognizes non-self antigens during a process called what?",
+  "subject": "The adaptive immune system recognizes non-self antigens during a process called what?",
+  "X": "antigen presentation",
+  "Y": "Immunoproteomics",
+  "sim": 0.5201895236968994
+ },
+ {
+  "q": "By decreasing resistance to blood flow in the lungs, what organ's workload  can be eased?",
+  "subject": "By decreasing resistance to blood flow in the lungs, what organ's workload  can be eased?",
+  "X": "heart",
+  "Y": "fire",
+  "sim": 0.44496792554855347
+ },
+ {
+  "q": "Who designed the golf course located at the Sunnyside Country Club?",
+  "subject": "Who designed the golf course located at the Sunnyside Country Club?",
+  "X": "William P. Bell",
+  "Y": "Robert of Jumi\u00e8ges",
+  "sim": 0.40562641620635986
+ },
+ {
+  "q": "What does southern California have a reputation for?",
+  "subject": "What does southern California have a reputation for?",
+  "X": "high growth rates",
+  "Y": "economic",
+  "sim": 0.4305194020271301
+ },
+ {
+  "q": "What did article 65 of the ECSC ban?",
+  "subject": "What did article 65 of the ECSC ban?",
+  "X": "cartels",
+  "Y": "terrorist groups",
+  "sim": 0.41790783405303955
+ },
+ {
+  "q": "What hypothesis is associated with the complexity class of P viewed as a mathematical abstraction with efficient algorithmic functionality?",
+  "subject": "What hypothesis is associated with the complexity class of P viewed as a mathematical abstraction with efficient algorithmic functionality?",
+  "X": "Cobham\u2013Edmonds thesis",
+  "Y": "Neoclassical economics",
+  "sim": 0.4110921621322632
+ },
+ {
+  "q": "When was the Duchy of Normandy founded?",
+  "subject": "When was the Duchy of Normandy founded?",
+  "X": "911",
+  "Y": "six",
+  "sim": 0.453438937664032
+ },
+ {
+  "q": "Where does two thirds of the Rhine flow outside of Germany?",
+  "subject": "Where does two thirds of the Rhine flow outside of Germany?",
+  "X": "Waal",
+  "Y": "semantical",
+  "sim": 0.39462214708328247
+ },
+ {
+  "q": "What is the most feared condition that divers want to avoid?",
+  "subject": "What is the most feared condition that divers want to avoid?",
+  "X": "Acute oxygen toxicity",
+  "Y": "higher oxygen content",
+  "sim": 0.5378424525260925
+ },
+ {
+  "q": "Informal imperialism is still dominant; however, less what?",
+  "subject": "Informal imperialism is still dominant; however, less what?",
+  "X": "direct",
+  "Y": "external",
+  "sim": 0.44059354066848755
+ },
+ {
+  "q": "How high are Victoria's alpine regions?",
+  "subject": "How high are Victoria's alpine regions?",
+  "X": "2,000 m",
+  "Y": "10,000",
+  "sim": 0.7689404487609863
+ },
+ {
+  "q": "What is the edge of the moraine plateau called?",
+  "subject": "What is the edge of the moraine plateau called?",
+  "X": "Warsaw Escarpment",
+  "Y": "location of Warsaw",
+  "sim": 0.7364974021911621
+ },
+ {
+  "q": "What contributed to the decreased inequality between trained and untrained workers?",
+  "subject": "What contributed to the decreased inequality between trained and untrained workers?",
+  "X": "period of compression",
+  "Y": "entire length",
+  "sim": 0.27790358662605286
+ },
+ {
+  "q": "What types of houses are designed by Fresno architects?",
+  "subject": "What types of houses are designed by Fresno architects?",
+  "X": "Storybook houses",
+  "Y": "the key bed",
+  "sim": 0.33151689171791077
+ },
+ {
+  "q": "What philosophy of thought  addresses wealth inequality?",
+  "subject": "What philosophy of thought  addresses wealth inequality?",
+  "X": "Neoclassical economics",
+  "Y": "economists",
+  "sim": 0.702323317527771
+ },
+ {
+  "q": "Philo of Byzantium ____ surmised that air converted to fire",
+  "subject": "Philo of Byzantium ____ surmised that air converted to fire",
+  "X": "incorrectly",
+  "Y": "reversed",
+  "sim": 0.4995192885398865
+ },
+ {
+  "q": "Compounding was not popular in the construction of what machines?",
+  "subject": "Compounding was not popular in the construction of what machines?",
+  "X": "railway locomotives",
+  "Y": "steamboats",
+  "sim": 0.5039137601852417
+ },
+ {
+  "q": "When did Warsaw become the center of the Congress Poland?",
+  "subject": "When did Warsaw become the center of the Congress Poland?",
+  "X": "1815",
+  "Y": "1816",
+  "sim": 0.7474068403244019
+ },
+ {
+  "q": "What amendment to the United States Constitution governs government funding of religious schools?",
+  "subject": "What amendment to the United States Constitution governs government funding of religious schools?",
+  "X": "First",
+  "Y": "fourth",
+  "sim": 0.49476009607315063
+ },
+ {
+  "q": "If the apparant force of two fermions is repulsive, what is the spin function?",
+  "subject": "If the apparant force of two fermions is repulsive, what is the spin function?",
+  "X": "parallel",
+  "Y": "direct",
+  "sim": 0.39415740966796875
+ },
+ {
+  "q": "What is the usual source of heat for boiling water in the steam engine?",
+  "subject": "What is the usual source of heat for boiling water in the steam engine?",
+  "X": "burning combustible materials",
+  "Y": "external combustion",
+  "sim": 0.6622976660728455
+ },
+ {
+  "q": "What monarchy did western troops protect?",
+  "subject": "What monarchy did western troops protect?",
+  "X": "Saudi",
+  "Y": "Muslims",
+  "sim": 0.9999998807907104
+ },
+ {
+  "q": "What is the name of the Egyptian papyrus that suggests that they may have had knowledge of prime numbers?",
+  "subject": "What is the name of the Egyptian papyrus that suggests that they may have had knowledge of prime numbers?",
+  "X": "the Rhind papyrus",
+  "Y": "Hero of Alexandria",
+  "sim": 0.34546101093292236
+ },
+ {
+  "q": "What type of defense is sometimes used in court by protestors?",
+  "subject": "What type of defense is sometimes used in court by protestors?",
+  "X": "competing harms defense",
+  "Y": "dangerous by-products",
+  "sim": 0.3890354037284851
+ },
+ {
+  "q": "What does the Beroe eat? ",
+  "subject": "What does the Beroe eat? ",
+  "X": "other ctenophores",
+  "Y": "ctenophores and cnidarians",
+  "sim": 0.7735772132873535
+ },
+ {
+  "q": "What has partical physics made to describe sub-atomic forces?",
+  "subject": "What has partical physics made to describe sub-atomic forces?",
+  "X": "Standard Model",
+  "Y": "prestige",
+  "sim": 0.294278621673584
+ },
+ {
+  "q": "Granting what status would allow private non-religious schools in the US to receive public funds?",
+  "subject": "Granting what status would allow private non-religious schools in the US to receive public funds?",
+  "X": "charter",
+  "Y": "telecommunications",
+  "sim": 0.45032617449760437
+ },
+ {
+  "q": "What is the highest peak in Victoria?",
+  "subject": "What is the highest peak in Victoria?",
+  "X": "Mount Bogong",
+  "Y": "the Philippines",
+  "sim": 0.3554868698120117
+ },
+ {
+  "q": "Where is Samuel Marsden Collegiate School located?",
+  "subject": "Where is Samuel Marsden Collegiate School located?",
+  "X": "Wellington",
+  "Y": "Wales",
+  "sim": 0.4692397117614746
+ },
+ {
+  "q": "According to the Princeton Review where has Harvard ranked as a \"Dream College\" in 2013",
+  "subject": "According to the Princeton Review where has Harvard ranked as a \"Dream College\" in 2013",
+  "X": "second most commonly",
+  "Y": "fourth",
+  "sim": 0.35886943340301514
+ },
+ {
+  "q": "In which direction does the west side of Fresno neighborhood lie to the 99 freeway?",
+  "subject": "In which direction does the west side of Fresno neighborhood lie to the 99 freeway?",
+  "X": "southwest",
+  "Y": "the West Side",
+  "sim": 0.6096915006637573
+ },
+ {
+  "q": "What was the average family size?",
+  "subject": "What was the average family size?",
+  "X": "3.62",
+  "Y": "60",
+  "sim": 0.5218684077262878
+ },
+ {
+  "q": "What are the antimicrobial peptides that are the main form of invertebrate systemic immunity called?",
+  "subject": "What are the antimicrobial peptides that are the main form of invertebrate systemic immunity called?",
+  "X": "defensins",
+  "Y": "trunnion",
+  "sim": 0.6840536594390869
+ },
+ {
+  "q": "Who disliked the affiliate program?",
+  "subject": "Who disliked the affiliate program?",
+  "X": "passed",
+  "Y": "final",
+  "sim": 0.4756731390953064
+ },
+ {
+  "q": "Who did the Han Chinese want to help the Mongols fight?",
+  "subject": "Who did the Han Chinese want to help the Mongols fight?",
+  "X": "the Jin",
+  "Y": "Wonjong",
+  "sim": 0.4308524429798126
+ },
+ {
+  "q": "What is the process by which the immune system identifies tumors called?",
+  "subject": "What is the process by which the immune system identifies tumors called?",
+  "X": "immune surveillance",
+  "Y": "adaptive immune system",
+  "sim": 0.6494327187538147
+ },
+ {
+  "q": "Where was the location of the 2003 Rose revolution?",
+  "subject": "Where was the location of the 2003 Rose revolution?",
+  "X": "Georgia",
+  "Y": "the state",
+  "sim": 0.5223770141601562
+ },
+ {
+  "q": "Who led a Mongol attack on the Song dynasty?",
+  "subject": "Who led a Mongol attack on the Song dynasty?",
+  "X": "M\u00f6ngke Khan",
+  "Y": "Buyantu Khan",
+  "sim": 0.6654967069625854
+ },
+ {
+  "q": "Which company did Mrs Foster work for?",
+  "subject": "Which company did Mrs Foster work for?",
+  "X": "British Gas plc",
+  "Y": "the UK government",
+  "sim": 0.45296525955200195
+ },
+ {
+  "q": "Southern California is second to which island in terms of famous serf breaks?",
+  "subject": "Southern California is second to which island in terms of famous serf breaks?",
+  "X": "Oahu",
+  "Y": "Jerusalem",
+  "sim": 0.5460501909255981
+ },
+ {
+  "q": "In what part of the United States did many students migrate to Christian academies during the desegregation period?",
+  "subject": "In what part of the United States did many students migrate to Christian academies during the desegregation period?",
+  "X": "South",
+  "Y": "north",
+  "sim": 0.6775414347648621
+ },
+ {
+  "q": "How many academic minors does the university grant in total?",
+  "subject": "How many academic minors does the university grant in total?",
+  "X": "28",
+  "Y": "30",
+  "sim": 0.7969620227813721
+ },
+ {
+  "q": "The transportation law allows personal aircraft to share the roadways with what?",
+  "subject": "The transportation law allows personal aircraft to share the roadways with what?",
+  "X": "automobiles",
+  "Y": "large cars",
+  "sim": 1.0000001192092896
+ },
+ {
+  "q": "What is the central business district of San Diego?",
+  "subject": "What is the central business district of San Diego?",
+  "X": "Downtown San Diego",
+  "Y": "In bays",
+  "sim": 0.8252903819084167
+ },
+ {
+  "q": "What was the newer county added to the list?",
+  "subject": "What was the newer county added to the list?",
+  "X": "Imperial",
+  "Y": "Inland Empire",
+  "sim": 0.4643262028694153
+ },
+ {
+  "q": "What was Kublai Khan's relation to Ogedei Khan?",
+  "subject": "What was Kublai Khan's relation to Ogedei Khan?",
+  "X": "nephew",
+  "Y": "fire",
+  "sim": 0.3764418661594391
+ },
+ {
+  "q": "Who described a steam turbine in 1629?",
+  "subject": "Who described a steam turbine in 1629?",
+  "X": "Giovanni Branca",
+  "Y": "Christopher Gist",
+  "sim": 0.4604259133338928
+ },
+ {
+  "q": "What class of T cells recognizes intact antigens that are not associated with MHC receptors?",
+  "subject": "What class of T cells recognizes intact antigens that are not associated with MHC receptors?",
+  "X": "\u03b3\u03b4 T cells",
+  "Y": "V\u03b39/V\u03b42 T cells",
+  "sim": 0.7766358852386475
+ },
+ {
+  "q": "What immune system is activated by the innate response?",
+  "subject": "What immune system is activated by the innate response?",
+  "X": "adaptive immune system",
+  "Y": "immune surveillance",
+  "sim": 0.6494327187538147
+ },
+ {
+  "q": "Which theory suggested people in the tropics were uncivilized?",
+  "subject": "Which theory suggested people in the tropics were uncivilized?",
+  "X": "environmental determinism",
+  "Y": "the journal Nature",
+  "sim": 0.38560354709625244
+ },
+ {
+  "q": "What is a chemical secreted by tumors that suppresses the immune response?",
+  "subject": "What is a chemical secreted by tumors that suppresses the immune response?",
+  "X": "cytokine TGF-\u03b2",
+  "Y": "\u03b3\u03b4 T cells",
+  "sim": 0.3188772201538086
+ },
+ {
+  "q": "What did Aristotle refer to forced motion as?",
+  "subject": "What did Aristotle refer to forced motion as?",
+  "X": "unnatural",
+  "Y": "reversed",
+  "sim": 0.42734387516975403
+ },
+ {
+  "q": "How many lines run out of Downtown Los Angeles?",
+  "subject": "How many lines run out of Downtown Los Angeles?",
+  "X": "Six",
+  "Y": "five",
+  "sim": 0.9999998211860657
+ },
+ {
+  "q": "Who sets the work agenda and allocates time in the chamber?",
+  "subject": "Who sets the work agenda and allocates time in the chamber?",
+  "X": "the Parliamentary Bureau",
+  "Y": "the UK government",
+  "sim": 0.613332986831665
+ },
+ {
+  "q": "Where is the Rhine? ",
+  "subject": "Where is the Rhine? ",
+  "X": "Europe",
+  "Y": "France",
+  "sim": 0.7932621240615845
+ },
+ {
+  "q": "What forces should serve as a brake on wealth concentration?",
+  "subject": "What forces should serve as a brake on wealth concentration?",
+  "X": "market",
+  "Y": "economic",
+  "sim": 0.6233983039855957
+ }
+]
