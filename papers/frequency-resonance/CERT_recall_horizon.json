@@ -1,0 +1,129 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "RESULT_recall_horizon_2026_07_24.md",
+  "document_sha256": "2f397eac4e042e5f5bd47fcc7275bc550066489609dcab417c2c1693960d8d1b",
+  "receipts_sha256": {
+    "recall_horizon_result.json": "ed6cb26a07388545da980964432bdf0be2ff0fa5f9fcaa7a85da9e3f71e93327",
+    "consistency_horizon_v2_result.json": "93459242395e772e11ca5211c54d041a9acdc3cfed246167434945070ca39643"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "16"
+    },
+    {
+      "line": 18,
+      "token": "255"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "canonical SSM benchmark of delayed K-way RECALL (K=16, chance 0.0625): retrieve which of sixteen values",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "0.0625",
+      "value": 0.0625,
+      "decimals": 4,
+      "context": "canonical SSM benchmark of delayed K-way RECALL (K=16, chance 0.0625): retrieve which of sixteen values",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:config.chance"
+    },
+    {
+      "line": 14,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "(half-horizon near gap 32). It does not.",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:result.half_horizon_gap"
+    },
+    {
+      "line": 17,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "CLAMPED \u03b8\u22610, matched, RNG-matched), the CLAMPED decay model solves recall at 1.0 at every gap from 1 to",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:config.clamp_seeds[0]"
+    },
+    {
+      "line": 17,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "CLAMPED \u03b8\u22610, matched, RNG-matched), the CLAMPED decay model solves recall at 1.0 at every gap from 1 to",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:config.gaps[0]"
+    },
+    {
+      "line": 17,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "CLAMPED \u03b8\u22610, matched, RNG-matched), the CLAMPED decay model solves recall at 1.0 at every gap from 1 to",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:config.clamp_seeds[1]"
+    },
+    {
+      "line": 18,
+      "token": "255",
+      "value": 255.0,
+      "decimals": 0,
+      "context": "255 \u2014 all five seeds, every gap, no exception \u2014 exactly matching the oscillatory FREE model, which is also",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 19,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0 everywhere. There is no finite half-horizon. This directly contradicts the frozen prediction, and it",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:config.gaps[0]"
+    },
+    {
+      "line": 25,
+      "token": "32",
+      "value": 32.0,
+      "decimals": 0,
+      "context": "horizon: its solve probability fell with distance, half-horizon near gap 32",
+      "status": "VERIFIED",
+      "receipt_ref": "consistency_horizon_v2_result.json:result.half_horizon_gap"
+    },
+    {
+      "line": 30,
+      "token": "0.998",
+      "value": 0.998,
+      "decimals": 3,
+      "context": "The decay model even drives `mag_max` to ~0.998 and retains 0.635 of the signal at the largest gap; but recall",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:clamped_mag_max.1[1]"
+    },
+    {
+      "line": 30,
+      "token": "0.635",
+      "value": 0.635,
+      "decimals": 3,
+      "context": "The decay model even drives `mag_max` to ~0.998 and retains 0.635 of the signal at the largest gap; but recall",
+      "status": "VERIFIED",
+      "receipt_ref": "recall_horizon_result.json:result.surviving_signal_by_gap[6]"
+    }
+  ]
+}
