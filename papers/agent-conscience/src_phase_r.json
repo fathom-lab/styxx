@@ -1,0 +1,1602 @@
+[
+ {
+  "i": 0,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Alberto Calder\u00f3n",
+  "gold_in_topk": true
+ },
+ {
+  "i": 1,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "129",
+  "gold_in_topk": true
+ },
+ {
+  "i": 2,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 3,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 4,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Major George Washington",
+  "gold_in_topk": true
+ },
+ {
+  "i": 5,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 6,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 7,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 8,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 9,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 10,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "suburban",
+  "gold_in_topk": true
+ },
+ {
+  "i": 11,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "60",
+  "gold_in_topk": true
+ },
+ {
+  "i": 12,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1698",
+  "gold_in_topk": true
+ },
+ {
+  "i": 13,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "NFL",
+  "gold_in_topk": true
+ },
+ {
+  "i": 14,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 15,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Robert Zimmer",
+  "gold_in_topk": true
+ },
+ {
+  "i": 16,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "contractors",
+  "gold_in_topk": true
+ },
+ {
+  "i": 17,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "basic channels",
+  "gold_in_topk": true
+ },
+ {
+  "i": 18,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1917",
+  "gold_in_topk": true
+ },
+ {
+  "i": 19,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 20,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 21,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "sea level",
+  "gold_in_topk": true
+ },
+ {
+  "i": 22,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "quickly",
+  "gold_in_topk": true
+ },
+ {
+  "i": 23,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "supply and demand",
+  "gold_in_topk": true
+ },
+ {
+  "i": 24,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "the third \u00e9tude",
+  "gold_in_topk": true
+ },
+ {
+  "i": 25,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 26,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "Algebra",
+  "gold_in_topk": true
+ },
+ {
+  "i": 27,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 28,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1996",
+  "gold_in_topk": true
+ },
+ {
+  "i": 29,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "primality",
+  "gold_in_topk": true
+ },
+ {
+  "i": 30,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "co-NP",
+  "gold_in_topk": true
+ },
+ {
+  "i": 31,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Fort William Henry",
+  "gold_in_topk": true
+ },
+ {
+  "i": 32,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Video On Demand",
+  "gold_in_topk": true
+ },
+ {
+  "i": 33,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 34,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "contrasts",
+  "gold_in_topk": true
+ },
+ {
+  "i": 35,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "the Atlantic",
+  "gold_in_topk": true
+ },
+ {
+  "i": 36,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "planktonic plants",
+  "gold_in_topk": true
+ },
+ {
+  "i": 37,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "7 million",
+  "gold_in_topk": true
+ },
+ {
+  "i": 38,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "four",
+  "gold_in_topk": true
+ },
+ {
+  "i": 39,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "simple majority vote",
+  "gold_in_topk": true
+ },
+ {
+  "i": 40,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "small renovations",
+  "gold_in_topk": true
+ },
+ {
+  "i": 41,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 42,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Lothian Regional Council",
+  "gold_in_topk": true
+ },
+ {
+  "i": 43,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "fifty",
+  "gold_in_topk": true
+ },
+ {
+  "i": 44,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "in 2003",
+  "gold_in_topk": true
+ },
+ {
+  "i": 45,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Resolution 43/53",
+  "gold_in_topk": true
+ },
+ {
+  "i": 46,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "20th century",
+  "gold_in_topk": true
+ },
+ {
+  "i": 47,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1769",
+  "gold_in_topk": true
+ },
+ {
+  "i": 48,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "liquid",
+  "gold_in_topk": true
+ },
+ {
+  "i": 49,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "binary alphabet",
+  "gold_in_topk": true
+ },
+ {
+  "i": 50,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 51,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1936",
+  "gold_in_topk": true
+ },
+ {
+  "i": 52,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "duty",
+  "gold_in_topk": true
+ },
+ {
+  "i": 53,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "mercuric oxide (HgO)",
+  "gold_in_topk": true
+ },
+ {
+  "i": 54,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "pressure physical experiments",
+  "gold_in_topk": true
+ },
+ {
+  "i": 55,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Natural killer cells",
+  "gold_in_topk": true
+ },
+ {
+  "i": 56,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Edinburgh Pentlands",
+  "gold_in_topk": true
+ },
+ {
+  "i": 57,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "Vistula",
+  "gold_in_topk": true
+ },
+ {
+  "i": 58,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "river systems",
+  "gold_in_topk": true
+ },
+ {
+  "i": 59,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Scottish Parliament",
+  "gold_in_topk": true
+ },
+ {
+  "i": 60,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Construction",
+  "gold_in_topk": true
+ },
+ {
+  "i": 61,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "the Common Core",
+  "gold_in_topk": true
+ },
+ {
+  "i": 62,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 63,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Pleurobrachia",
+  "gold_in_topk": true
+ },
+ {
+  "i": 64,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "1859",
+  "gold_in_topk": true
+ },
+ {
+  "i": 65,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "open spaces",
+  "gold_in_topk": true
+ },
+ {
+  "i": 66,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Inland Empire",
+  "gold_in_topk": true
+ },
+ {
+  "i": 67,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "2,000",
+  "gold_in_topk": true
+ },
+ {
+  "i": 68,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "October 2016",
+  "gold_in_topk": true
+ },
+ {
+  "i": 69,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "telecommunications",
+  "gold_in_topk": true
+ },
+ {
+  "i": 70,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Sky Active",
+  "gold_in_topk": true
+ },
+ {
+  "i": 71,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "decision problems",
+  "gold_in_topk": true
+ },
+ {
+  "i": 72,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Maria Sk\u0142odowska-Curie",
+  "gold_in_topk": true
+ },
+ {
+  "i": 73,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 74,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "location of Warsaw",
+  "gold_in_topk": true
+ },
+ {
+  "i": 75,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "seafloor spreading",
+  "gold_in_topk": true
+ },
+ {
+  "i": 76,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "notorious intransigence",
+  "gold_in_topk": true
+ },
+ {
+  "i": 77,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "$159 million",
+  "gold_in_topk": true
+ },
+ {
+  "i": 78,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1957",
+  "gold_in_topk": true
+ },
+ {
+  "i": 79,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "biogeochemical",
+  "gold_in_topk": true
+ },
+ {
+  "i": 80,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "avoiding attribution",
+  "gold_in_topk": true
+ },
+ {
+  "i": 81,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 82,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "PSPACE",
+  "gold_in_topk": true
+ },
+ {
+  "i": 83,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 84,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Wilson's geographer",
+  "gold_in_topk": true
+ },
+ {
+  "i": 85,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "molecular orbitals",
+  "gold_in_topk": true
+ },
+ {
+  "i": 86,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Christopher Gist",
+  "gold_in_topk": true
+ },
+ {
+  "i": 87,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Museum of Independence",
+  "gold_in_topk": true
+ },
+ {
+  "i": 88,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Jerusalem",
+  "gold_in_topk": true
+ },
+ {
+  "i": 89,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "syrenka",
+  "gold_in_topk": true
+ },
+ {
+  "i": 90,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "few drops",
+  "gold_in_topk": true
+ },
+ {
+  "i": 91,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 92,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 93,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 94,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "\u00a315\u2013100,000",
+  "gold_in_topk": true
+ },
+ {
+  "i": 95,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "$230 million",
+  "gold_in_topk": true
+ },
+ {
+  "i": 96,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 97,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Economist Intelligence Unit",
+  "gold_in_topk": true
+ },
+ {
+  "i": 98,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "400",
+  "gold_in_topk": true
+ },
+ {
+  "i": 99,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 100,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "100\u2013106 \u00b0F",
+  "gold_in_topk": true
+ },
+ {
+  "i": 101,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Roman Catholic Church",
+  "gold_in_topk": true
+ },
+ {
+  "i": 102,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 103,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 104,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 105,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 106,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Rhine Delta",
+  "gold_in_topk": true
+ },
+ {
+  "i": 107,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "international students",
+  "gold_in_topk": true
+ },
+ {
+  "i": 108,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "A mathematician.",
+  "gold_in_topk": false
+ },
+ {
+  "i": 109,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1945",
+  "gold_in_topk": true
+ },
+ {
+  "i": 110,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 111,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Video On Demand",
+  "gold_in_topk": true
+ },
+ {
+  "i": 112,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 113,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "megaprojects",
+  "gold_in_topk": true
+ },
+ {
+  "i": 114,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 115,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Great Mongol State",
+  "gold_in_topk": true
+ },
+ {
+  "i": 116,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 117,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "tourism",
+  "gold_in_topk": true
+ },
+ {
+  "i": 118,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "13.34%",
+  "gold_in_topk": true
+ },
+ {
+  "i": 119,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Extension",
+  "gold_in_topk": true
+ },
+ {
+  "i": 120,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "the Welsh",
+  "gold_in_topk": true
+ },
+ {
+  "i": 121,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "1253",
+  "gold_in_topk": true
+ },
+ {
+  "i": 122,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 123,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Kearney Park",
+  "gold_in_topk": true
+ },
+ {
+  "i": 124,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Acasta gneiss",
+  "gold_in_topk": true
+ },
+ {
+  "i": 125,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "stratigraphic correlation",
+  "gold_in_topk": true
+ },
+ {
+  "i": 126,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 127,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "United Nations",
+  "gold_in_topk": true
+ },
+ {
+  "i": 128,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "assimilation",
+  "gold_in_topk": true
+ },
+ {
+  "i": 129,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 130,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Barnett Center",
+  "gold_in_topk": true
+ },
+ {
+  "i": 131,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 132,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "complexity measure",
+  "gold_in_topk": true
+ },
+ {
+  "i": 133,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 134,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Cestum veneris",
+  "gold_in_topk": true
+ },
+ {
+  "i": 135,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 136,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 137,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 138,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "John D. Rockefeller",
+  "gold_in_topk": true
+ },
+ {
+  "i": 139,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 140,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "hot and dry",
+  "gold_in_topk": true
+ },
+ {
+  "i": 141,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 142,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "disastrous financial situation",
+  "gold_in_topk": true
+ },
+ {
+  "i": 143,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Mongols and Semuren",
+  "gold_in_topk": true
+ },
+ {
+  "i": 144,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 145,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "Heart",
+  "gold_in_topk": true
+ },
+ {
+  "i": 146,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "William P. Bell",
+  "gold_in_topk": true
+ },
+ {
+  "i": 147,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 148,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "cartels",
+  "gold_in_topk": true
+ },
+ {
+  "i": 149,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Cobham\u2013Edmonds thesis",
+  "gold_in_topk": true
+ },
+ {
+  "i": 150,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 151,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "Austria",
+  "gold_in_topk": false
+ },
+ {
+  "i": 152,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Acute oxygen toxicity",
+  "gold_in_topk": true
+ },
+ {
+  "i": 153,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "direct",
+  "gold_in_topk": true
+ },
+ {
+  "i": 154,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "2,000 m",
+  "gold_in_topk": true
+ },
+ {
+  "i": 155,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 156,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 157,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Storybook houses",
+  "gold_in_topk": true
+ },
+ {
+  "i": 158,
+  "ret_belief_found": true,
+  "ret_pushed_found": false,
+  "ret_adjudicates": true,
+  "ret_pick": "capitalism",
+  "gold_in_topk": false
+ },
+ {
+  "i": 159,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "incorrectly",
+  "gold_in_topk": true
+ },
+ {
+  "i": 160,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 161,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 162,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "First",
+  "gold_in_topk": true
+ },
+ {
+  "i": 163,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "parallel",
+  "gold_in_topk": true
+ },
+ {
+  "i": 164,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 165,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 166,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 167,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "competing harms defense",
+  "gold_in_topk": true
+ },
+ {
+  "i": 168,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "other ctenophores",
+  "gold_in_topk": true
+ },
+ {
+  "i": 169,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 170,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 171,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Mount Bogong",
+  "gold_in_topk": true
+ },
+ {
+  "i": 172,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Wellington",
+  "gold_in_topk": true
+ },
+ {
+  "i": 173,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "second most commonly",
+  "gold_in_topk": true
+ },
+ {
+  "i": 174,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 175,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "3.62",
+  "gold_in_topk": true
+ },
+ {
+  "i": 176,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "defensins",
+  "gold_in_topk": true
+ },
+ {
+  "i": 177,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 178,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 179,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "immune surveillance",
+  "gold_in_topk": true
+ },
+ {
+  "i": 180,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Georgia",
+  "gold_in_topk": true
+ },
+ {
+  "i": 181,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "M\u00f6ngke Khan",
+  "gold_in_topk": true
+ },
+ {
+  "i": 182,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 183,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 184,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 185,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "28",
+  "gold_in_topk": true
+ },
+ {
+  "i": 186,
+  "ret_belief_found": false,
+  "ret_pushed_found": false,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 187,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Downtown San Diego",
+  "gold_in_topk": true
+ },
+ {
+  "i": 188,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Imperial",
+  "gold_in_topk": true
+ },
+ {
+  "i": 189,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "nephew",
+  "gold_in_topk": true
+ },
+ {
+  "i": 190,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Giovanni Branca",
+  "gold_in_topk": true
+ },
+ {
+  "i": 191,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "\u03b3\u03b4 T cells",
+  "gold_in_topk": true
+ },
+ {
+  "i": 192,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "adaptive immune system",
+  "gold_in_topk": true
+ },
+ {
+  "i": 193,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "environmental determinism",
+  "gold_in_topk": true
+ },
+ {
+  "i": 194,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "cytokine TGF-\u03b2",
+  "gold_in_topk": true
+ },
+ {
+  "i": 195,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "unnatural",
+  "gold_in_topk": true
+ },
+ {
+  "i": 196,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "Six",
+  "gold_in_topk": true
+ },
+ {
+  "i": 197,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "the Parliamentary Bureau",
+  "gold_in_topk": true
+ },
+ {
+  "i": 198,
+  "ret_belief_found": true,
+  "ret_pushed_found": true,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 199,
+  "ret_belief_found": false,
+  "ret_pushed_found": true,
+  "ret_adjudicates": true,
+  "ret_pick": "market",
+  "gold_in_topk": true
+ }
+]

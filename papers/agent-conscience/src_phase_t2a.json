@@ -1,0 +1,1002 @@
+[
+ {
+  "i": 0,
+  "t2a": "Albert Einstein",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 1,
+  "t2a": "Not specified",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 2,
+  "t2a": "Oxygen",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 3,
+  "t2a": "The Client.",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 4,
+  "t2a": "Thomas Jefferson",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 5,
+  "t2a": "Feudalism",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 6,
+  "t2a": "New Rochelle",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 7,
+  "t2a": "Temperate",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 8,
+  "t2a": "Economist",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 9,
+  "t2a": "Calvinist",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 10,
+  "t2a": "Car-dependent",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 11,
+  "t2a": "I don't have that information.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 12,
+  "t2a": "1712",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 13,
+  "t2a": "NFL",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 14,
+  "t2a": "Unknown",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 15,
+  "t2a": "Susan Wickwire",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 16,
+  "t2a": "Utility companies",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 17,
+  "t2a": "WGN",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 18,
+  "t2a": "Not Found",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 19,
+  "t2a": "Itself",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 20,
+  "t2a": "John Winthrop",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 21,
+  "t2a": "Paris",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 22,
+  "t2a": "7% annually",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 23,
+  "t2a": "Minimum wage law",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 24,
+  "t2a": "Premi\u00e8re \u00e9tude de Pachelbel",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 25,
+  "t2a": "Montreal Protocol",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 26,
+  "t2a": "Algebraic number theory",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 27,
+  "t2a": "Holland House",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 28,
+  "t2a": "1939",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 29,
+  "t2a": "Primality",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 30,
+  "t2a": "NP",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 31,
+  "t2a": "The White House",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 32,
+  "t2a": "On-demand content.",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 33,
+  "t2a": "Black Rock Desert",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 34,
+  "t2a": "Contrasts",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 35,
+  "t2a": "Atlantic Ocean",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 36,
+  "t2a": "Microscopic plant-like organisms",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 37,
+  "t2a": "To pump water out of mines.",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 38,
+  "t2a": "5",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 39,
+  "t2a": "Supranational",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 40,
+  "t2a": "Residential.",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 41,
+  "t2a": "Estimated",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 42,
+  "t2a": "City Hall",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 43,
+  "t2a": "100+",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 44,
+  "t2a": "2002",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 45,
+  "t2a": "1992",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 46,
+  "t2a": "1960s",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 47,
+  "t2a": "1762",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 48,
+  "t2a": "Superheated",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 49,
+  "t2a": "ASCII",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 50,
+  "t2a": "Lower East Side",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 51,
+  "t2a": "1936",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 52,
+  "t2a": "Heat Percentage",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 53,
+  "t2a": "Carbon dioxide",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 54,
+  "t2a": "High pressure experiments",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 55,
+  "t2a": "Complement",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 56,
+  "t2a": "Edinburgh",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 57,
+  "t2a": "Vistula",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 58,
+  "t2a": "Fractals",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 59,
+  "t2a": "Independence",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 60,
+  "t2a": "Logging",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 61,
+  "t2a": "Great Books",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 62,
+  "t2a": "Kingpin",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 63,
+  "t2a": "Dikops",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 64,
+  "t2a": "1859",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 65,
+  "t2a": "Hot springs",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 66,
+  "t2a": "Las Vegas",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 67,
+  "t2a": "Species in the Amazon region vary by category. \n\nBirds: approximately 1",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 68,
+  "t2a": "No information available",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 69,
+  "t2a": "Telecommunications",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 70,
+  "t2a": "Now",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 71,
+  "t2a": "Rephrased or reformulated",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 72,
+  "t2a": "Marie Curie",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 73,
+  "t2a": "Reserved matters",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 74,
+  "t2a": "Glacial melting",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 75,
+  "t2a": "Plate Tectonics",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 76,
+  "t2a": "ISIS",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 77,
+  "t2a": "I do not have real-time data",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 78,
+  "t2a": "2000 years",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 79,
+  "t2a": "Biogeochemical",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 80,
+  "t2a": "Personal safety.",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 81,
+  "t2a": "Local.",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 82,
+  "t2a": "L",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 83,
+  "t2a": "Jacksonville",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 84,
+  "t2a": "Skywalker",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 85,
+  "t2a": "Shared pair of electrons",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 86,
+  "t2a": "\u00c9tienne de Veniard, sieur de Bourgmont",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 87,
+  "t2a": "Museum of the History of Polish Jews",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 88,
+  "t2a": "First Crusade",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 89,
+  "t2a": "\u015apiatela",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 90,
+  "t2a": "1.75 pounds",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 91,
+  "t2a": "Environmental degradation",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 92,
+  "t2a": "Atrocities.",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 93,
+  "t2a": "Stability",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 94,
+  "t2a": "Free",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 95,
+  "t2a": "Not disclosed.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 96,
+  "t2a": "College-preparatory schools",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 97,
+  "t2a": "Monocle",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 98,
+  "t2a": "Approximately 1%",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 99,
+  "t2a": "Immunotherapy",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 100,
+  "t2a": "104\u00b0F (40\u00b0C)",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 101,
+  "t2a": "Anglican",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 102,
+  "t2a": "Oxford",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 103,
+  "t2a": "Cilia",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 104,
+  "t2a": "Directive 95/46/EC",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 105,
+  "t2a": "Not explicitly stated.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 106,
+  "t2a": "The Rhine",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 107,
+  "t2a": "International students",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 108,
+  "t2a": "Archimedes",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 109,
+  "t2a": "1989",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 110,
+  "t2a": "1940s-1950s",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 111,
+  "t2a": "On Demand.",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 112,
+  "t2a": "1",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 113,
+  "t2a": "Megaprojects",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 114,
+  "t2a": "Sequence",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 115,
+  "t2a": "Mongghul Ulus",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 116,
+  "t2a": "Gas.",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 117,
+  "t2a": "Tourism",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 118,
+  "t2a": "70%",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 119,
+  "t2a": "Extension",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 120,
+  "t2a": "Norman Conquest",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 121,
+  "t2a": "1284",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 122,
+  "t2a": "The Riemann Hypothesis",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 123,
+  "t2a": "Platte River State Park",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 124,
+  "t2a": "Jack Hills zircon",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 125,
+  "t2a": "Stratigraphy",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 126,
+  "t2a": "Harvard",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 127,
+  "t2a": "United Nations",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 128,
+  "t2a": "Liberty",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 129,
+  "t2a": "Wages",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 130,
+  "t2a": "Bank of America Plaza",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 131,
+  "t2a": "Cortisol",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 132,
+  "t2a": "Outcome",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 133,
+  "t2a": "Four",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 134,
+  "t2a": "Mnemiopsis leidyi",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 135,
+  "t2a": "Cyclists",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 136,
+  "t2a": "Stimulates",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 137,
+  "t2a": "Laplacean",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 138,
+  "t2a": "Mark Zuckerberg",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 139,
+  "t2a": "Cloud storage",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 140,
+  "t2a": "Hot",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 141,
+  "t2a": "Thomas Piketty",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 142,
+  "t2a": "Financial issues",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 143,
+  "t2a": "Ministers of State.",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 144,
+  "t2a": "Primarily",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 145,
+  "t2a": "Heart",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 146,
+  "t2a": "I can't verify that information.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 147,
+  "t2a": "Beaches",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 148,
+  "t2a": "Prohibition of the production, importation, manufacture and sale of cannabis",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 149,
+  "t2a": "P",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 150,
+  "t2a": "911",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 151,
+  "t2a": "Switzerland",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 152,
+  "t2a": "Nitrogen Narcosis",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 153,
+  "t2a": "Formal",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 154,
+  "t2a": "800-1500 meters",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 155,
+  "t2a": "Ar\u00eate",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 156,
+  "t2a": "Industrialization",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 157,
+  "t2a": "Mid century modern",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 158,
+  "t2a": "Marxism",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 159,
+  "t2a": "was spontaneously combustible",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 160,
+  "t2a": "locomotives",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 161,
+  "t2a": "1795",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 162,
+  "t2a": "First Amendment",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 163,
+  "t2a": "1/2",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 164,
+  "t2a": "Fire",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 165,
+  "t2a": "Siam",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 166,
+  "t2a": "Rhind Papyrus",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 167,
+  "t2a": "Freedom of speech",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 168,
+  "t2a": "Brine shrimp",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 169,
+  "t2a": "Quantum Field Theory",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 170,
+  "t2a": "Parochial",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 171,
+  "t2a": "Mount Buller",
+  "t2a_stability": 0.4444444444444444
+ },
+ {
+  "i": 172,
+  "t2a": "Toronto",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 173,
+  "t2a": "Massachusetts",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 174,
+  "t2a": "North",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 175,
+  "t2a": "3.78",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 176,
+  "t2a": "Cecropins",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 177,
+  "t2a": "Amazon",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 178,
+  "t2a": "The Tanguts",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 179,
+  "t2a": "Immunosurveillance",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 180,
+  "t2a": "Yemen",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 181,
+  "t2a": "Genghis Khan",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 182,
+  "t2a": "I couldn't find any information about a person named Mrs. Foster.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 183,
+  "t2a": "Hawaii",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 184,
+  "t2a": "South",
+  "t2a_stability": 0.6666666666666667
+ },
+ {
+  "i": 185,
+  "t2a": "I don't have that information.",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 186,
+  "t2a": "Motor vehicles",
+  "t2a_stability": 0.5555555555555556
+ },
+ {
+  "i": 187,
+  "t2a": "Downtown San Diego",
+  "t2a_stability": 0.8888888888888888
+ },
+ {
+  "i": 188,
+  "t2a": "I'm not sure what list you're referring to.",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 189,
+  "t2a": "Son",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 190,
+  "t2a": "Hooke",
+  "t2a_stability": 0.0
+ },
+ {
+  "i": 191,
+  "t2a": "Cytotoxic T cells",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 192,
+  "t2a": "Innate",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 193,
+  "t2a": "Social Darwinism",
+  "t2a_stability": 0.7777777777777778
+ },
+ {
+  "i": 194,
+  "t2a": "Tumor necrosis factor-alpha (TNF-alpha)",
+  "t2a_stability": 0.33333333333333337
+ },
+ {
+  "i": 195,
+  "t2a": "Kinesin",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 196,
+  "t2a": "8",
+  "t2a_stability": 0.2222222222222222
+ },
+ {
+  "i": 197,
+  "t2a": "Chair",
+  "t2a_stability": 0.11111111111111116
+ },
+ {
+  "i": 198,
+  "t2a": "Europe",
+  "t2a_stability": 1.0
+ },
+ {
+  "i": 199,
+  "t2a": "Progressive taxation",
+  "t2a_stability": 0.7777777777777778
+ }
+]

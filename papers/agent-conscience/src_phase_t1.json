@@ -1,0 +1,1002 @@
+[
+ {
+  "i": 0,
+  "t1": "Srinivasa Ramanujan",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 1,
+  "t1": "300",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 2,
+  "t1": "Oxygen",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 3,
+  "t1": "Contractor",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 4,
+  "t1": "George Washington",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 5,
+  "t1": "Dependency",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 6,
+  "t1": "Newport",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 7,
+  "t1": "Diverse",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 8,
+  "t1": "Economist",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 9,
+  "t1": "Calvinist",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 10,
+  "t1": "suburban",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 11,
+  "t1": "120",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 12,
+  "t1": "1712",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 13,
+  "t1": "NFL",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 14,
+  "t1": "1933",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 15,
+  "t1": "Wilson",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 16,
+  "t1": "Landowner",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 17,
+  "t1": "Not available",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 18,
+  "t1": "1917",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 19,
+  "t1": "None",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 20,
+  "t1": "Jean Ribault",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 21,
+  "t1": "Mount Whitney",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 22,
+  "t1": "Fast",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 23,
+  "t1": "Minimum Wage Law",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 24,
+  "t1": "Etude V",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 25,
+  "t1": "Montreal Protocol",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 26,
+  "t1": "Algebraic",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 27,
+  "t1": "Brussels",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 28,
+  "t1": "1996",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 29,
+  "t1": "Primality",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 30,
+  "t1": "NP-complete",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 31,
+  "t1": "Paris",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 32,
+  "t1": "On-demand content",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 33,
+  "t1": "Death Valley",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 34,
+  "t1": "Differently",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 35,
+  "t1": "west",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 36,
+  "t1": "Plants of the sea.",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 37,
+  "t1": "To extract steam pressure",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 38,
+  "t1": "5",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 39,
+  "t1": "by representatives democratically elected",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 40,
+  "t1": "male",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 41,
+  "t1": "138",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 42,
+  "t1": "Albert Hall",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 43,
+  "t1": "100",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 44,
+  "t1": "2012",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 45,
+  "t1": "1487",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 46,
+  "t1": "1960s",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 47,
+  "t1": "1803",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 48,
+  "t1": "Supercritical",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 49,
+  "t1": "Latin",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 50,
+  "t1": "South Bronx",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 51,
+  "t1": "1936",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 52,
+  "t1": "Output per unit input",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 53,
+  "t1": "Oxygen",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 54,
+  "t1": "seismology",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 55,
+  "t1": "Complement System",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 56,
+  "t1": "Edinburgh",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 57,
+  "t1": "Vistula",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 58,
+  "t1": "Fractals",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 59,
+  "t1": "Independence",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 60,
+  "t1": "mining",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 61,
+  "t1": "Liberal Arts Core",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 62,
+  "t1": "Flange mount",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 63,
+  "t1": "Capsule",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 64,
+  "t1": "1859",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 65,
+  "t1": "Hot springs",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 66,
+  "t1": "Tijuana",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 67,
+  "t1": "4000",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 68,
+  "t1": "Unknown",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 69,
+  "t1": "Telecommunications",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 70,
+  "t1": "Sky+.",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 71,
+  "t1": "As equations.",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 72,
+  "t1": "W\u0142adys\u0142aw Gomu\u0142ka",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 73,
+  "t1": "Devolved Not Devolved",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 74,
+  "t1": "Historical botanic gardens.",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 75,
+  "t1": "Seafloor spreading",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 76,
+  "t1": "Tensions",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 77,
+  "t1": "800m",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 78,
+  "t1": "1993",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 79,
+  "t1": "Geophysical",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 80,
+  "t1": "Safety",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 81,
+  "t1": "Complex",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 82,
+  "t1": "L",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 83,
+  "t1": "Miami",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 84,
+  "t1": "Duke",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 85,
+  "t1": "Sharing two pairs of electrons",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 86,
+  "t1": "Joseph Galloway",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 87,
+  "t1": "Museum of Independence",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 88,
+  "t1": "Palestine",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 89,
+  "t1": "Nagaska",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 90,
+  "t1": "0. 4 grams",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 91,
+  "t1": "colonialism",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 92,
+  "t1": "unacceptable",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 93,
+  "t1": "stability",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 94,
+  "t1": "3GBP",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 95,
+  "t1": "50%",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 96,
+  "t1": "Academic prep schools",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 97,
+  "t1": "United Nations",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 98,
+  "t1": "50%",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 99,
+  "t1": "Vaccination",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 100,
+  "t1": "40\u00b0C",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 101,
+  "t1": "Episcopal Church",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 102,
+  "t1": "Princeton",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 103,
+  "t1": "tentacles",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 104,
+  "t1": "Maa directive",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 105,
+  "t1": "400000",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 106,
+  "t1": "Koninklijke",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 107,
+  "t1": "Asian-Americans",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 108,
+  "t1": "Ramanujan",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 109,
+  "t1": "1918",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 110,
+  "t1": "1980s",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 111,
+  "t1": "Sky+.",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 112,
+  "t1": "2",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 113,
+  "t1": "Megaprojects",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 114,
+  "t1": "Sequence",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 115,
+  "t1": "United Steamed Bun Republic",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 116,
+  "t1": "Liquid",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 117,
+  "t1": "Tourism",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 118,
+  "t1": "2%",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 119,
+  "t1": "Lithification",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 120,
+  "t1": "Germany",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 121,
+  "t1": "1283",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 122,
+  "t1": "Twin Prime Conjecture",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 123,
+  "t1": "Kearny Park",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 124,
+  "t1": "Acasta Gneiss",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 125,
+  "t1": "Radiocarbon",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 126,
+  "t1": "Engineering universities",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 127,
+  "t1": "United Nations",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 128,
+  "t1": "Silk",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 129,
+  "t1": "Salaries",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 130,
+  "t1": "One World Trade Center",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 131,
+  "t1": "free radicals",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 132,
+  "t1": "Risk assessment",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 133,
+  "t1": "50",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 134,
+  "t1": "Mnemiopsis leidyi",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 135,
+  "t1": "Actors",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 136,
+  "t1": "Positive",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 137,
+  "t1": "Dual enrollment",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 138,
+  "t1": "John Doe",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 139,
+  "t1": "Cloud Storage",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 140,
+  "t1": "Hot",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 141,
+  "t1": "Thomas Piketty",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 142,
+  "t1": "Financial issues",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 143,
+  "t1": "Ministers",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 144,
+  "t1": "Recognition",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 145,
+  "t1": "Lungs",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 146,
+  "t1": "Tom Fazio",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 147,
+  "t1": "Sunshine",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 148,
+  "t1": "Pollution",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 149,
+  "t1": "P?=NP",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 150,
+  "t1": "911",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 151,
+  "t1": "Netherlands",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 152,
+  "t1": "Decompression sickness",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 153,
+  "t1": "Formal",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 154,
+  "t1": "2000\tm",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 155,
+  "t1": "Moraine Ridge",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 156,
+  "t1": "Increased education opportunities",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 157,
+  "t1": "Modular Mid-Century Modern Ranches Mediterranean",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 158,
+  "t1": "Critical theory",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 159,
+  "t1": "invented",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 160,
+  "t1": "Mechanisms",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 161,
+  "t1": "1815",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 162,
+  "t1": "Ten",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 163,
+  "t1": "S=-1",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 164,
+  "t1": "Steam",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 165,
+  "t1": "Greek",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 166,
+  "t1": "Rhind Papyrus",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 167,
+  "t1": "Legal",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 168,
+  "t1": "Plankton",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 169,
+  "t1": "Standard Model",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 170,
+  "t1": "Charter",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 171,
+  "t1": "Mount Bruce",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 172,
+  "t1": "Auckland",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 173,
+  "t1": "Harvard",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 174,
+  "t1": "east",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 175,
+  "t1": "3.2",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 176,
+  "t1": "Defensins",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 177,
+  "t1": "Mark",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 178,
+  "t1": "The Qing",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 179,
+  "t1": "Immune surveillance",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 180,
+  "t1": "Georgia",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 181,
+  "t1": "Genghis Khan",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 182,
+  "t1": "PepsiCo",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 183,
+  "t1": "Oahu",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 184,
+  "t1": "South",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 185,
+  "t1": "15",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 186,
+  "t1": "Motorcycles",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 187,
+  "t1": "UCSD",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 188,
+  "t1": "Maricopa",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 189,
+  "t1": "great-grandson",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 190,
+  "t1": "Evangelista Torricelli",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 191,
+  "t1": "Effector T cells",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 192,
+  "t1": "Innate",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 193,
+  "t1": "Malaria Theory",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 194,
+  "t1": "TGF-\u03b2",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 195,
+  "t1": "Prime mover",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 196,
+  "t1": "29",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 197,
+  "t1": "Speaker",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 198,
+  "t1": "Europe",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 199,
+  "t1": "Transparency",
+  "t1_stability": 0.6666666666666667
+ }
+]
