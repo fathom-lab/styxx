@@ -75,9 +75,11 @@ branch paper/anchored-validity (harness `papers/anchored-validity/anchored_stage
 """
 from __future__ import annotations
 
+import math
+
 import numpy as np
 
-__all__ = ["audit_panel"]
+__all__ = ["audit_panel", "anchor_lr", "blindspot_power", "min_anchors_for_power"]
 
 INFORMATIVENESS_GATE = 0.15
 _S_GRID = np.arange(0.0, 0.6 + 1e-12, 0.002)
@@ -244,3 +246,144 @@ def audit_panel(V, neg, pos, *, garbage=None, gate=INFORMATIVENESS_GATE, n_boot=
             "scope": ("s prices ALL-JUDGE TRUTH-INDEPENDENT keys only; anchor exchangeability "
                       "is load-bearing; see styxx.anchors module docstring for measured "
                       "operating characteristics"), **base}
+
+
+# ---------------------------------------------------------------------------
+# THE ANCHOR THRESHOLD -- design-time power for catching a shared blind spot.
+#
+# audit_panel prices a shared, truth-independent, all-judge failure ONLY when enough anchors are
+# present; below that budget, absence of activation is not evidence of absence (measured: activation
+# power 0.30/0.71/1.00 at wild key rates 0.02/0.05/0.15 at the Stage-A design point). This block
+# answers the design-time question the datasheet raises: HOW MANY known-negative anchors do you need
+# before absence-of-detection means something?
+#
+# The impossibility is a statement about the UNLABELED MARGINAL: a synchronized (all-judge,
+# truth-independent) blind spot and a benign independent panel can induce identical vote-count
+# distributions on unlabeled data, so every consensus estimator (Dawid-Skene onward) is blind to it.
+# The class-conditional marginal is where the worlds diverge: a KNOWN-NEGATIVE on which every judge
+# votes "positive" is, under independence, a ~f**J event; under a blind spot it is common. Counting
+# unanimous-wrong known-negatives is therefore the probe, and its power is an exact binomial.
+#
+# Test convention: the STANDARD most-powerful one-sided test -- reject "benign" iff the count of
+# unanimous-wrong anchors X >= c, where c is the SMALLEST count with P(X >= c | benign) <= alpha.
+# (The 2026-07-23 exploratory receipt anchor_threshold_result.json used a conservative variant --
+# reject iff X > c -- which controls type-I identically but understates power; its power table is a
+# valid LOWER BOUND. This shipped instrument reports the standard, tight power, so its threshold is
+# lower than that exploratory table -- e.g. ~15 known-negatives for 0.90 power, not ~20-30 -- and its
+# single-anchor case is nonzero, consistent with the single-anchor likelihood ratio.)
+# ---------------------------------------------------------------------------
+
+def _binom_pmf(k, n, p):
+    """P(X = k) for X ~ Binom(n, p), via log-gamma (stable for large n)."""
+    if p <= 0.0:
+        return 1.0 if k == 0 else 0.0
+    if p >= 1.0:
+        return 1.0 if k == n else 0.0
+    if k < 0 or k > n:
+        return 0.0
+    logp = (math.lgamma(n + 1) - math.lgamma(k + 1) - math.lgamma(n - k + 1)
+            + k * math.log(p) + (n - k) * math.log1p(-p))
+    return math.exp(logp)
+
+
+def _binom_sf(c, n, p):
+    """P(X >= c) for X ~ Binom(n, p), summed on the lower tail 0..c-1 (c is small when p is)."""
+    if c <= 0:
+        return 1.0
+    if c > n:
+        return 0.0
+    lower = 0.0
+    for k in range(c):
+        lower += _binom_pmf(k, n, p)
+        if lower >= 1.0:
+            return 0.0
+    return max(0.0, 1.0 - lower)
+
+
+def _critical_count(n, p0, alpha):
+    """Smallest c >= 1 with P(X >= c | Binom(n, p0)) <= alpha, i.e. the rejection threshold of the
+    most-powerful level-alpha one-sided test. Returns n + 1 if no rejection region clears alpha."""
+    surv = 1.0                        # P(X >= 0) = 1
+    for c in range(n + 1):
+        if surv <= alpha:
+            return c
+        surv -= _binom_pmf(c, n, p0)  # now surv = P(X >= c + 1)
+    return n + 1
+
+
+def _blindspot_probs(J, fp_rate, trap_rate, p_alt, fp_rate_alt):
+    """P(a known-negative is unanimously mis-voted 'positive') under benign vs blind-spot worlds.
+    benign: J independent judges each false-positive at fp_rate -> fp_rate**J.
+    blind spot: a fraction trap_rate of negatives are traps (all judges wrong); the rest behave
+    benignly at fp_rate_alt (defaults to fp_rate). Pass p_alt to set the alt probability directly."""
+    if not (0.0 < fp_rate < 1.0):
+        raise ValueError("fp_rate must be in (0, 1)")
+    if J < 1:
+        raise ValueError("J (number of judges) must be >= 1")
+    p0 = fp_rate ** J
+    if p_alt is not None:
+        p1 = float(p_alt)
+    else:
+        if trap_rate is None:
+            raise ValueError("provide trap_rate (fraction of negatives that are shared traps) "
+                             "or p_alt (the alternative unanimous-wrong probability) directly")
+        if not (0.0 <= trap_rate <= 1.0):
+            raise ValueError("trap_rate must be in [0, 1]")
+        fa = fp_rate if fp_rate_alt is None else fp_rate_alt
+        p1 = trap_rate + (1.0 - trap_rate) * (fa ** J)
+    if not (0.0 < p1 <= 1.0):
+        raise ValueError("alternative unanimous-wrong probability out of (0, 1]")
+    return p0, p1
+
+
+def anchor_lr(*, J, fp_rate, trap_rate=None, p_alt=None, fp_rate_alt=None):
+    """Likelihood ratio of ONE known-negative that every judge mis-votes 'positive', blind-spot vs
+    benign: p1 / p0. A single unanimous-wrong known-negative is a smoking gun exactly when this is
+    large (e.g. J=3, fp_rate=0.10, trap_rate=0.15 -> ~150x). See module ANCHOR THRESHOLD block."""
+    p0, p1 = _blindspot_probs(J, fp_rate, trap_rate, p_alt, fp_rate_alt)
+    return float("inf") if p0 <= 0.0 else p1 / p0
+
+
+def blindspot_power(K, *, J, fp_rate, trap_rate=None, p_alt=None, fp_rate_alt=None, alpha=0.05):
+    """Power to DETECT a shared (all-judge, truth-independent) blind spot from K known-negative
+    anchors, via the count of unanimous-wrong anchors, using the standard most-powerful one-sided
+    binomial test at level `alpha`.
+
+    Parameters (keyword-only): K anchors; J judges; fp_rate = per-judge false-positive rate on a
+    known-negative under independence; and the alternative, EITHER as trap_rate (fraction of true
+    negatives that are shared traps, with non-traps at fp_rate_alt or fp_rate) OR as p_alt (the
+    alternative unanimous-wrong probability) directly.
+
+    Returns a dict: p_null, p_alt, single_anchor_lr, reject_at (critical count c; None if no
+    level-alpha rejection region exists at this K), alpha_actual (the achieved type-I rate, <=
+    alpha), and power. Closed-form and deterministic."""
+    p0, p1 = _blindspot_probs(J, fp_rate, trap_rate, p_alt, fp_rate_alt)
+    K = int(K)
+    if K < 1:
+        raise ValueError("K (number of known-negative anchors) must be >= 1")
+    c = _critical_count(K, p0, alpha)
+    if c > K:
+        reject_at, power, alpha_actual = None, 0.0, 0.0
+    else:
+        reject_at, power, alpha_actual = c, _binom_sf(c, K, p1), _binom_sf(c, K, p0)
+    return {"K": K, "p_null": p0, "p_alt": p1,
+            "single_anchor_lr": float("inf") if p0 <= 0.0 else p1 / p0,
+            "reject_at": reject_at, "alpha": alpha, "alpha_actual": alpha_actual,
+            "power": float(power)}
+
+
+def min_anchors_for_power(target_power, *, J, fp_rate, trap_rate=None, p_alt=None,
+                          fp_rate_alt=None, alpha=0.05, k_max=100000):
+    """Smallest number of known-negative anchors K at which the level-alpha test first reaches
+    `target_power` against the specified blind spot. (Power is not strictly monotone in K -- each
+    time the critical count steps up it can dip -- so this returns the first crossing, the smallest
+    sufficient budget.) Returns a dict with K and the full blindspot_power report at that K, or
+    raises ValueError if k_max is reached without meeting the target."""
+    if not (0.0 < target_power < 1.0):
+        raise ValueError("target_power must be in (0, 1)")
+    for K in range(1, int(k_max) + 1):
+        r = blindspot_power(K, J=J, fp_rate=fp_rate, trap_rate=trap_rate, p_alt=p_alt,
+                            fp_rate_alt=fp_rate_alt, alpha=alpha)
+        if r["power"] >= target_power:
+            return {"K": K, "target_power": target_power, **r}
+    raise ValueError(f"target_power {target_power} not reached within k_max={k_max} anchors")

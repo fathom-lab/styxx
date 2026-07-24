@@ -379,6 +379,8 @@ from .ci import regression_test, create_baseline, Baseline, RegressionResult
 from .provenance import certify, verify as verify_certificate, CognitiveCertificate, VerificationResult as CertificateVerificationResult
 from . import parrhesia  # noqa: F401  (expose styxx.parrhesia — verifiable honesty receipts)
 from .parrhesia import issue_receipt, verify_receipt, HonestyReceipt
+from . import anchors  # noqa: F401  (expose styxx.anchors — label-free judge-panel auditing + anchor-threshold power)
+from .anchors import audit_panel, anchor_lr, blindspot_power, min_anchors_for_power
 # NOTE: provenance.verify (certificate verifier → VerificationResult.valid) is
 # aliased to verify_certificate so it does not clobber styxx.verify — the
 # trust-layer response verifier (→ Verdict) from .verify (imported below).

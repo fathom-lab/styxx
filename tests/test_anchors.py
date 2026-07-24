@@ -3,7 +3,9 @@
 import numpy as np
 import pytest
 
-from styxx.anchors import audit_panel
+from styxx.anchors import (
+    audit_panel, anchor_lr, blindspot_power, min_anchors_for_power,
+)
 
 ALPHAS = np.array([0.15, 0.20, 0.10, 0.18])
 BETAS = np.array([0.85, 0.80, 0.90, 0.78])
@@ -108,3 +110,56 @@ def test_determinism():
     r1 = audit_panel(V, neg, pos, n_boot=40, null_sims=0, seed=5)
     r2 = audit_panel(V, neg, pos, n_boot=40, null_sims=0, seed=5)
     assert r1["pi"] == r2["pi"] and r1["ci"] == r2["ci"] and r1["s"] == r2["s"]
+
+
+# --- anchor-threshold instrument (design-time power for catching a shared blind spot) ---
+# section-7 design point: J=3, per-judge fp 0.10, 15% shared traps, non-trap fp 0.0961.
+DP = dict(J=3, fp_rate=0.10, trap_rate=0.15, fp_rate_alt=0.0961)
+
+
+def test_single_anchor_lr_matches_frozen_receipt():
+    # the frozen receipt (anchor_threshold_result.json) reports 150.8x; convention-independent
+    assert abs(anchor_lr(**DP) - 150.8) < 0.05
+
+
+def test_blindspot_power_is_closed_form_and_tight():
+    # standard most-powerful test: at this design point c=1 for K<=50, so power = P(X>=1|p_alt)
+    r = blindspot_power(20, **DP)
+    assert r["reject_at"] == 1
+    assert r["alpha_actual"] <= 0.05                       # valid level-alpha test
+    assert abs(r["power"] - 0.9619) < 1e-3
+    # single anchor is a smoking gun: nonzero power, unlike the conservative section-7 lower bound
+    assert blindspot_power(1, **DP)["power"] > 0.0
+
+
+def test_tight_power_dominates_conservative_lower_bound():
+    # the shipped (tight) power must never fall below the frozen conservative receipt
+    conservative = {1: 0.0, 3: 0.0613, 5: 0.1662, 10: 0.4585, 20: 0.8267, 30: 0.953, 50: 0.9972}
+    for K, lo in conservative.items():
+        assert blindspot_power(K, **DP)["power"] >= lo - 1e-9
+
+
+def test_min_anchors_for_power_is_tighter_than_paper():
+    m90 = min_anchors_for_power(0.90, **DP)
+    assert m90["K"] == 15 and m90["power"] >= 0.90
+    assert min_anchors_for_power(0.95, **DP)["K"] == 19
+    # monotone in the target: a higher bar never needs fewer anchors
+    assert min_anchors_for_power(0.95, **DP)["K"] >= m90["K"]
+
+
+def test_power_increases_with_lr():
+    # a bigger shared blind spot (higher trap rate) is easier to catch at fixed K
+    weak = blindspot_power(10, J=3, fp_rate=0.10, trap_rate=0.05)["power"]
+    strong = blindspot_power(10, J=3, fp_rate=0.10, trap_rate=0.40)["power"]
+    assert strong > weak
+
+
+def test_p_alt_direct_and_input_validation():
+    # passing p_alt directly bypasses the trap model and agrees with the derived form
+    p_alt = 0.15 + 0.85 * 0.0961 ** 3
+    assert abs(blindspot_power(20, J=3, fp_rate=0.10, p_alt=p_alt)["power"]
+               - blindspot_power(20, **DP)["power"]) < 1e-12
+    with pytest.raises(ValueError):
+        blindspot_power(20, J=3, fp_rate=0.10)                  # neither trap_rate nor p_alt
+    with pytest.raises(ValueError):
+        min_anchors_for_power(0.99999, J=3, fp_rate=0.10, trap_rate=0.15, k_max=5)  # unreachable
