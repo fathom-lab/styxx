@@ -1,0 +1,602 @@
+[
+ {
+  "i": 0,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 1,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 2,
+  "ret_adjudicates": true,
+  "ret_pick": "1785",
+  "gold_in_topk": true
+ },
+ {
+  "i": 3,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 4,
+  "ret_adjudicates": true,
+  "ret_pick": "Bacteria",
+  "gold_in_topk": true
+ },
+ {
+  "i": 5,
+  "ret_adjudicates": true,
+  "ret_pick": "interleukin 1",
+  "gold_in_topk": true
+ },
+ {
+  "i": 6,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 7,
+  "ret_adjudicates": true,
+  "ret_pick": "eight",
+  "gold_in_topk": false
+ },
+ {
+  "i": 8,
+  "ret_adjudicates": true,
+  "ret_pick": "Europe",
+  "gold_in_topk": true
+ },
+ {
+  "i": 9,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 10,
+  "ret_adjudicates": true,
+  "ret_pick": "perpendicular",
+  "gold_in_topk": true
+ },
+ {
+  "i": 11,
+  "ret_adjudicates": true,
+  "ret_pick": "magnitude and direction",
+  "gold_in_topk": true
+ },
+ {
+  "i": 12,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 13,
+  "ret_adjudicates": true,
+  "ret_pick": "Swiss Alps",
+  "gold_in_topk": true
+ },
+ {
+  "i": 14,
+  "ret_adjudicates": true,
+  "ret_pick": "diverse",
+  "gold_in_topk": true
+ },
+ {
+  "i": 15,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 16,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 17,
+  "ret_adjudicates": true,
+  "ret_pick": "Sophocles",
+  "gold_in_topk": true
+ },
+ {
+  "i": 18,
+  "ret_adjudicates": true,
+  "ret_pick": "liquid",
+  "gold_in_topk": true
+ },
+ {
+  "i": 19,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 20,
+  "ret_adjudicates": true,
+  "ret_pick": "Intergovernmental Panel on Climate Change (IPCC)",
+  "gold_in_topk": true
+ },
+ {
+  "i": 21,
+  "ret_adjudicates": true,
+  "ret_pick": "European Parliament",
+  "gold_in_topk": true
+ },
+ {
+  "i": 22,
+  "ret_adjudicates": true,
+  "ret_pick": "The European Commission",
+  "gold_in_topk": true
+ },
+ {
+  "i": 23,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 24,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 25,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 26,
+  "ret_adjudicates": true,
+  "ret_pick": "financial assets",
+  "gold_in_topk": true
+ },
+ {
+  "i": 27,
+  "ret_adjudicates": true,
+  "ret_pick": "20th century",
+  "gold_in_topk": true
+ },
+ {
+  "i": 28,
+  "ret_adjudicates": true,
+  "ret_pick": "English",
+  "gold_in_topk": true
+ },
+ {
+  "i": 29,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 30,
+  "ret_adjudicates": true,
+  "ret_pick": "RSA",
+  "gold_in_topk": true
+ },
+ {
+  "i": 31,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 32,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 33,
+  "ret_adjudicates": true,
+  "ret_pick": "Rijn",
+  "gold_in_topk": true
+ },
+ {
+  "i": 34,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 35,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 36,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 37,
+  "ret_adjudicates": true,
+  "ret_pick": "economist",
+  "gold_in_topk": true
+ },
+ {
+  "i": 38,
+  "ret_adjudicates": true,
+  "ret_pick": "Asia",
+  "gold_in_topk": true
+ },
+ {
+  "i": 39,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 40,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 41,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 42,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 43,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 44,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 45,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 46,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 47,
+  "ret_adjudicates": true,
+  "ret_pick": "Warsaw",
+  "gold_in_topk": true
+ },
+ {
+  "i": 48,
+  "ret_adjudicates": true,
+  "ret_pick": "Embroidery",
+  "gold_in_topk": true
+ },
+ {
+  "i": 49,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 50,
+  "ret_adjudicates": true,
+  "ret_pick": "at least 90%",
+  "gold_in_topk": true
+ },
+ {
+  "i": 51,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 52,
+  "ret_adjudicates": true,
+  "ret_pick": "Public-Private Partnering",
+  "gold_in_topk": true
+ },
+ {
+  "i": 53,
+  "ret_adjudicates": true,
+  "ret_pick": "fighting horsemen",
+  "gold_in_topk": true
+ },
+ {
+  "i": 54,
+  "ret_adjudicates": true,
+  "ret_pick": "winds up",
+  "gold_in_topk": true
+ },
+ {
+  "i": 55,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 56,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 57,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 58,
+  "ret_adjudicates": true,
+  "ret_pick": "1060s",
+  "gold_in_topk": true
+ },
+ {
+  "i": 59,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 60,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 61,
+  "ret_adjudicates": true,
+  "ret_pick": "systematic economic inequalities",
+  "gold_in_topk": true
+ },
+ {
+  "i": 62,
+  "ret_adjudicates": true,
+  "ret_pick": "1900",
+  "gold_in_topk": true
+ },
+ {
+  "i": 63,
+  "ret_adjudicates": true,
+  "ret_pick": "one vote",
+  "gold_in_topk": false
+ },
+ {
+  "i": 64,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 65,
+  "ret_adjudicates": true,
+  "ret_pick": "colloblasts",
+  "gold_in_topk": true
+ },
+ {
+  "i": 66,
+  "ret_adjudicates": true,
+  "ret_pick": "solid economic growth",
+  "gold_in_topk": true
+ },
+ {
+  "i": 67,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 68,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 69,
+  "ret_adjudicates": true,
+  "ret_pick": "thermodynamic",
+  "gold_in_topk": true
+ },
+ {
+  "i": 70,
+  "ret_adjudicates": true,
+  "ret_pick": "Sunspot, New Mexico",
+  "gold_in_topk": true
+ },
+ {
+  "i": 71,
+  "ret_adjudicates": true,
+  "ret_pick": "Oxygen",
+  "gold_in_topk": true
+ },
+ {
+  "i": 72,
+  "ret_adjudicates": true,
+  "ret_pick": "the Ilkhanate",
+  "gold_in_topk": true
+ },
+ {
+  "i": 73,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 74,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 75,
+  "ret_adjudicates": true,
+  "ret_pick": "rapidly",
+  "gold_in_topk": true
+ },
+ {
+  "i": 76,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 77,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 78,
+  "ret_adjudicates": true,
+  "ret_pick": "Upper Rhine Graben",
+  "gold_in_topk": true
+ },
+ {
+  "i": 79,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 80,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 81,
+  "ret_adjudicates": true,
+  "ret_pick": "no",
+  "gold_in_topk": true
+ },
+ {
+  "i": 82,
+  "ret_adjudicates": true,
+  "ret_pick": "financial assets",
+  "gold_in_topk": true
+ },
+ {
+  "i": 83,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 84,
+  "ret_adjudicates": true,
+  "ret_pick": "Olivier Messiaen",
+  "gold_in_topk": true
+ },
+ {
+  "i": 85,
+  "ret_adjudicates": true,
+  "ret_pick": "William of Montreuil",
+  "gold_in_topk": true
+ },
+ {
+  "i": 86,
+  "ret_adjudicates": true,
+  "ret_pick": "$2.2 billion",
+  "gold_in_topk": true
+ },
+ {
+  "i": 87,
+  "ret_adjudicates": true,
+  "ret_pick": "100,000",
+  "gold_in_topk": true
+ },
+ {
+  "i": 88,
+  "ret_adjudicates": true,
+  "ret_pick": "particular closure temperature",
+  "gold_in_topk": true
+ },
+ {
+  "i": 89,
+  "ret_adjudicates": true,
+  "ret_pick": "1555",
+  "gold_in_topk": true
+ },
+ {
+  "i": 90,
+  "ret_adjudicates": true,
+  "ret_pick": "global",
+  "gold_in_topk": true
+ },
+ {
+  "i": 91,
+  "ret_adjudicates": true,
+  "ret_pick": "CRISPR",
+  "gold_in_topk": true
+ },
+ {
+  "i": 92,
+  "ret_adjudicates": true,
+  "ret_pick": "liquid",
+  "gold_in_topk": true
+ },
+ {
+  "i": 93,
+  "ret_adjudicates": true,
+  "ret_pick": "rest",
+  "gold_in_topk": true
+ },
+ {
+  "i": 94,
+  "ret_adjudicates": true,
+  "ret_pick": "liquefied air",
+  "gold_in_topk": true
+ },
+ {
+  "i": 95,
+  "ret_adjudicates": true,
+  "ret_pick": "heat and pressure",
+  "gold_in_topk": true
+ },
+ {
+  "i": 96,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": true
+ },
+ {
+  "i": 97,
+  "ret_adjudicates": false,
+  "ret_pick": null,
+  "gold_in_topk": false
+ },
+ {
+  "i": 98,
+  "ret_adjudicates": true,
+  "ret_pick": "438,000",
+  "gold_in_topk": true
+ },
+ {
+  "i": 99,
+  "ret_adjudicates": true,
+  "ret_pick": "southern China",
+  "gold_in_topk": true
+ }
+]

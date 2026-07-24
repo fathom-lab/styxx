@@ -1,0 +1,502 @@
+[
+ {
+  "i": 0,
+  "t1": "Materia Medica",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 1,
+  "t1": "Lake Constance",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 2,
+  "t1": "1785",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 3,
+  "t1": "Manchuria",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 4,
+  "t1": "Macrophages",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 5,
+  "t1": "Chemotaxis",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 6,
+  "t1": "Denmark",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 7,
+  "t1": "Even",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 8,
+  "t1": "Europe",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 9,
+  "t1": "Manufacturing",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 10,
+  "t1": "Paramagnetic",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 11,
+  "t1": "Perpendicularly",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 12,
+  "t1": "Boolean circuits",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 13,
+  "t1": "Bavarian Alps",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 14,
+  "t1": "dynamic",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 15,
+  "t1": "White",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 16,
+  "t1": "General Relativity",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 17,
+  "t1": "Sophocles",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 18,
+  "t1": "Electrolysis",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 19,
+  "t1": "Seine",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 20,
+  "t1": "James Hansen",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 21,
+  "t1": "European Commission",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 22,
+  "t1": "EU law",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 23,
+  "t1": "photosynthesis",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 24,
+  "t1": "Braunlage",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 25,
+  "t1": "Kinetic",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 26,
+  "t1": "Wealth",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 27,
+  "t1": "20th",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 28,
+  "t1": "English",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 29,
+  "t1": "Joseph Louis Gay-Lussac",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 30,
+  "t1": "RSA",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 31,
+  "t1": "Herpes simplex virus",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 32,
+  "t1": "Irish",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 33,
+  "t1": "Rijn",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 34,
+  "t1": "Algorithm analysis",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 35,
+  "t1": "Ozone",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 36,
+  "t1": "district",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 37,
+  "t1": "Economist",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 38,
+  "t1": "Egypt",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 39,
+  "t1": "Immunological memory",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 40,
+  "t1": "simple",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 41,
+  "t1": "IgE",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 42,
+  "t1": "Tourism",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 43,
+  "t1": "Europe",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 44,
+  "t1": "English",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 45,
+  "t1": "Los Angeles Times",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 46,
+  "t1": "National System",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 47,
+  "t1": "Warsaw",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 48,
+  "t1": "Embroidery",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 49,
+  "t1": "Fiscal Policy",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 50,
+  "t1": "Very confident.",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 51,
+  "t1": "Isaac Newton",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 52,
+  "t1": "Purchasing Power Parity",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 53,
+  "t1": "Wine",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 54,
+  "t1": "Highlight",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 55,
+  "t1": "Paul Ehrlich",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 56,
+  "t1": "Prostaglandins",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 57,
+  "t1": "France",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 58,
+  "t1": "1809",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 59,
+  "t1": "O(n)",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 60,
+  "t1": "3",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 61,
+  "t1": "Globalization",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 62,
+  "t1": "1941",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 63,
+  "t1": "500",
+  "t1_stability": 0.33333333333333337
+ },
+ {
+  "i": 64,
+  "t1": "Devolution",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 65,
+  "t1": "cilia",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 66,
+  "t1": "Infrastructure investments.",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 67,
+  "t1": "Los Angeles metropolitan area",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 68,
+  "t1": "Social upheaval",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 69,
+  "t1": "Thermodynamics",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 70,
+  "t1": "New Mexico",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 71,
+  "t1": "Oxygen",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 72,
+  "t1": "Toghtekin Chaghatai",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 73,
+  "t1": "P\u2260NP",
+  "t1_stability": 0.6666666666666667
+ },
+ {
+  "i": 74,
+  "t1": "France",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 75,
+  "t1": "20%",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 76,
+  "t1": "Magnetic field",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 77,
+  "t1": "Data",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 78,
+  "t1": "Gneiss",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 79,
+  "t1": "Hockey",
+  "t1_stability": 0.5555555555555556
+ },
+ {
+  "i": 80,
+  "t1": "Sierpi\u0144ski",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 81,
+  "t1": "No",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 82,
+  "t1": "Wealth",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 83,
+  "t1": "Tacrolimus",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 84,
+  "t1": "Ibert",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 85,
+  "t1": "King James II of Aragon",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 86,
+  "t1": "3000000000",
+  "t1_stability": 0.11111111111111116
+ },
+ {
+  "i": 87,
+  "t1": "250",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 88,
+  "t1": "closure temperature",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 89,
+  "t1": "1550",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 90,
+  "t1": "General relativity",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 91,
+  "t1": "CRISPR",
+  "t1_stability": 0.4444444444444444
+ },
+ {
+  "i": 92,
+  "t1": "Texas",
+  "t1_stability": 0.8888888888888888
+ },
+ {
+  "i": 93,
+  "t1": "zero",
+  "t1_stability": 0.7777777777777778
+ },
+ {
+  "i": 94,
+  "t1": "Deionized Water",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 95,
+  "t1": "Weathering",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 96,
+  "t1": "Water",
+  "t1_stability": 1.0
+ },
+ {
+  "i": 97,
+  "t1": "Silt Storm",
+  "t1_stability": 0.2222222222222222
+ },
+ {
+  "i": 98,
+  "t1": "267",
+  "t1_stability": 0.0
+ },
+ {
+  "i": 99,
+  "t1": "Japan",
+  "t1_stability": 0.5555555555555556
+ }
+]

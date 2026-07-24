@@ -1,0 +1,350 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_selective_confirm_2026_07_24.md",
+  "document_sha256": "069e3a513f3320bbd6caea7c57a0dadaabed9e06a772fc69286623b0dbe1e303",
+  "receipts_sha256": {
+    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
+    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
+    "selective_datasheet_result.json": "a50b0c6436d1bc04efbaa0f891b402b129c4017624cb5db03d2e2bdc515ac895"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 14,
+    "ABSTAIN": 15,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "20,233"
+    },
+    {
+      "line": 7,
+      "token": "0"
+    },
+    {
+      "line": 7,
+      "token": "67"
+    },
+    {
+      "line": 7,
+      "token": "68"
+    },
+    {
+      "line": 7,
+      "token": "69"
+    },
+    {
+      "line": 15,
+      "token": "0.15"
+    },
+    {
+      "line": 19,
+      "token": "64"
+    },
+    {
+      "line": 24,
+      "token": "64"
+    },
+    {
+      "line": 29,
+      "token": "64"
+    },
+    {
+      "line": 30,
+      "token": "68"
+    },
+    {
+      "line": 41,
+      "token": "64"
+    },
+    {
+      "line": 41,
+      "token": "70"
+    },
+    {
+      "line": 56,
+      "token": "68"
+    },
+    {
+      "line": 74,
+      "token": "20,233"
+    },
+    {
+      "line": 77,
+      "token": "64"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "20,233",
+      "value": 20233.0,
+      "decimals": 0,
+      "context": "`selective_confirm_result.json`. Agent Qwen2.5-0.5B, tier-1 Qwen2.5-3B, retrieval over 20,233",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced SQuAD items, 0 overlap with the pools of cycles 67, 68 and 69**.**",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_items"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced SQuAD items, 0 overlap with the pools of cycles 67, 68 and 69**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced SQuAD items, 0 overlap with the pools of cycles 67, 68 and 69**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced SQuAD items, 0 overlap with the pools of cycles 67, 68 and 69**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "69",
+      "value": 69.0,
+      "decimals": 0,
+      "context": "passages, **100 balanced SQuAD items, 0 overlap with the pools of cycles 67, 68 and 69**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 9,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "## Result -- all three gates pass at matched coverage 0.63",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:matched_coverage_c_star"
+    },
+    {
+      "line": 13,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "binding_context": "| gate | outcome | | IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "binding_context": "| gate | outcome | | IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 13,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "| IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "binding_context": "| gate | outcome | | IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.answered"
+    },
+    {
+      "line": 13,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "| IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "binding_context": "| gate | outcome | | IV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH, 63 answered, 37 abstained |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.abstained"
+    },
+    {
+      "line": 15,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **IG2 refusal is informative** | **PASS** -- gap 0.4804804804804805 against a 0.15 bar |",
+      "binding_context": "| gate | outcome | | **IG2 refusal is informative** | **PASS** -- gap 0.4804804804804805 against a 0.15 bar |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "factual items (cycle 64) and it holds on SQuAD, on a pool built to be disjoint from every previous",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "The prereg named a specific failure risk: cycle 64's gap rested on a regime where the fallback on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "0.1739",
+      "value": 0.1739,
+      "decimals": 4,
+      "context": "abstained items scored 0.1739, while the source-independence cycle had measured the SQuAD",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.accuracy_abstained_via_fallback"
+    },
+    {
+      "line": 29,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "**It did not.** The fallback on abstained items came in at 0.2972972972972973 -- close to cycle 64's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "regime, not to cycle 68's. The reason is a distinction the pre-run worry blurred: that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "| quantity | cycle 64 (factual) | cycle 70 (SQuAD) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "| quantity | cycle 64 (factual) | cycle 70 (SQuAD) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "| coverage | 0.7325581395348837 | 0.63 |",
+      "binding_context": "| quantity | cycle 64 (factual) | cycle 70 (SQuAD) | | coverage | 0.7325581395348837 | 0.63 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:matched_coverage_c_star"
+    },
+    {
+      "line": 55,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "The source mix is TIER1 25, RETRIEVAL 38, ABSTAIN 37. **The retrieval channel answers more items",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:source_mix.TIER1"
+    },
+    {
+      "line": 55,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "The source mix is TIER1 25, RETRIEVAL 38, ABSTAIN 37. **The retrieval channel answers more items",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:source_mix.RETRIEVAL"
+    },
+    {
+      "line": 56,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "than the model channel does.** That is the operational shadow of cycle 68's confirmed FG4 result --",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "20,233",
+      "value": 20233.0,
+      "decimals": 0,
+      "context": "0.5B agent, Qwen2.5-3B tier-1, dense retrieval over 20,233 passages, 100 balanced SQuAD items",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "0.5B agent, Qwen2.5-3B tier-1, dense retrieval over 20,233 passages, 100 balanced SQuAD items",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_items"
+    },
+    {
+      "line": 75,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.88 of items. Fourth disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 75,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.88 of items. Fourth disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:n_wrong_push"
+    },
+    {
+      "line": 75,
+      "token": "0.88",
+      "value": 0.88,
+      "decimals": 2,
+      "context": "(50/50), two-turn pressure, gold in top-5 on 0.88 of items. Fourth disjoint pool, stratified on a",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:retrieval_quality.gold_in_topk_rate"
+    },
+    {
+      "line": 77,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "64, with IG2's bar imported directly from that module so it could not drift. No frontier model, no",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
