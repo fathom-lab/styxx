@@ -1,0 +1,862 @@
+[
+ {
+  "i": 0,
+  "adj3": "Montpelier",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 1,
+  "adj3": "Augusta",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 2,
+  "adj3": "Dover",
+  "adj3_stability": 0.5555555555555556
+ },
+ {
+  "i": 3,
+  "adj3": "Juneau",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 4,
+  "adj3": "Carson City",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 5,
+  "adj3": "Pierre",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 6,
+  "adj3": "Bismarck",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 7,
+  "adj3": "Jefferson City",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 8,
+  "adj3": "Frankfort",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 9,
+  "adj3": "Montgomery",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 10,
+  "adj3": "Jackson",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 11,
+  "adj3": "Little Rock",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 12,
+  "adj3": "Des Moines",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 13,
+  "adj3": "Topeka",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 14,
+  "adj3": "Lincoln",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 15,
+  "adj3": "Helena",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 16,
+  "adj3": "Cheyenne",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 17,
+  "adj3": "Boise",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 18,
+  "adj3": "Salt Lake City",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 19,
+  "adj3": "Santa Fe",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 20,
+  "adj3": "Portland",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 21,
+  "adj3": "Olympia",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 22,
+  "adj3": "Springfield",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 23,
+  "adj3": "Detroit",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 24,
+  "adj3": "Madison",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 25,
+  "adj3": "Saint Paul",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 26,
+  "adj3": "Harrisburg",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 27,
+  "adj3": "Albany",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 28,
+  "adj3": "Trenton",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 29,
+  "adj3": "Richmond",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 30,
+  "adj3": "Raleigh",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 31,
+  "adj3": "Columbia",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 32,
+  "adj3": "Tallahassee",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 33,
+  "adj3": "Baton Rouge",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 34,
+  "adj3": "Austin",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 35,
+  "adj3": "Sacramento",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 36,
+  "adj3": "Hartford",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 37,
+  "adj3": "Providence",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 38,
+  "adj3": "Concord",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 39,
+  "adj3": "Charleston",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 40,
+  "adj3": "Annapolis",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 41,
+  "adj3": "Honolulu",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 42,
+  "adj3": "Columbus",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 43,
+  "adj3": "Indianapolis",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 44,
+  "adj3": "Atlanta",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 45,
+  "adj3": "Nashville",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 46,
+  "adj3": "Oklahoma City",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 47,
+  "adj3": "Denver",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 48,
+  "adj3": "Phoenix",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 49,
+  "adj3": "Boston",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 50,
+  "adj3": "CaO",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 51,
+  "adj3": "Fe2O3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 52,
+  "adj3": "N2O",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 53,
+  "adj3": "CH3COOH",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 54,
+  "adj3": "SO2",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 55,
+  "adj3": "HCl",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 56,
+  "adj3": "NaOH",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 57,
+  "adj3": "KOH",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 58,
+  "adj3": "MgO",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 59,
+  "adj3": "SiO2",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 60,
+  "adj3": "H3PO4",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 61,
+  "adj3": "C6H6",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 62,
+  "adj3": "C3H8",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 63,
+  "adj3": "C4H10",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 64,
+  "adj3": "C3H6O",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 65,
+  "adj3": "CO(NH2)2",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 66,
+  "adj3": "Be",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 67,
+  "adj3": "Co",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 68,
+  "adj3": "Ca",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 69,
+  "adj3": "Y",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 70,
+  "adj3": "Tc",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 71,
+  "adj3": "In",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 72,
+  "adj3": "Te",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 73,
+  "adj3": "La",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 74,
+  "adj3": "Ce",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 75,
+  "adj3": "Pr",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 76,
+  "adj3": "Pm",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 77,
+  "adj3": "Gd",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 78,
+  "adj3": "Tb",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 79,
+  "adj3": "Tm",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 80,
+  "adj3": "Ta",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 81,
+  "adj3": "Re",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 82,
+  "adj3": "Tl",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 83,
+  "adj3": "Po",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 84,
+  "adj3": "At",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 85,
+  "adj3": "Rn",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 86,
+  "adj3": "Fr",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 87,
+  "adj3": "Ra",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 88,
+  "adj3": "Ac",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 89,
+  "adj3": "Th",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 90,
+  "adj3": "Pa",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 91,
+  "adj3": "Np",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 92,
+  "adj3": "Pu",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 93,
+  "adj3": "Am",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 94,
+  "adj3": "Cm",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 95,
+  "adj3": "Bk",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 96,
+  "adj3": "Cf",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 97,
+  "adj3": "Es",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 98,
+  "adj3": "Fm",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 99,
+  "adj3": "Md",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 100,
+  "adj3": "Noemi",
+  "adj3_stability": 0.4444444444444444
+ },
+ {
+  "i": 101,
+  "adj3": "Lr",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 102,
+  "adj3": "NaCl",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 103,
+  "adj3": "CH4",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 104,
+  "adj3": "NH3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 105,
+  "adj3": "O3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 106,
+  "adj3": "C6H12O6",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 107,
+  "adj3": "H2SO4",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 108,
+  "adj3": "CO",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 109,
+  "adj3": "H2O2",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 110,
+  "adj3": "HNO3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 111,
+  "adj3": "C2H5OH",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 112,
+  "adj3": "NaHCO3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 113,
+  "adj3": "CaCO3",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 114,
+  "adj3": "German",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 115,
+  "adj3": "Arabic",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 116,
+  "adj3": "Persian",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 117,
+  "adj3": "Hebrew",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 118,
+  "adj3": "Urdu",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 119,
+  "adj3": "Bengali",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 120,
+  "adj3": "Vietnamese",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 121,
+  "adj3": "Thai",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 122,
+  "adj3": "Greek",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 123,
+  "adj3": "Turkish",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 124,
+  "adj3": "Polish",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 125,
+  "adj3": "Romanian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 126,
+  "adj3": "Bulgarian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 127,
+  "adj3": "Croatian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 128,
+  "adj3": "Serbian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 129,
+  "adj3": "Albanian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 130,
+  "adj3": "Finnish",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 131,
+  "adj3": "Estonian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 132,
+  "adj3": "Icelandic",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 133,
+  "adj3": "Amharic",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 134,
+  "adj3": "Somali",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 135,
+  "adj3": "Khmer",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 136,
+  "adj3": "Burmese",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 137,
+  "adj3": "Nepali",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 138,
+  "adj3": "Sinhala",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 139,
+  "adj3": "Malagasy",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 140,
+  "adj3": "Mongolian",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 141,
+  "adj3": "Lao kip",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 142,
+  "adj3": "Riel",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 143,
+  "adj3": "Burma Kyat",
+  "adj3_stability": 0.6666666666666667
+ },
+ {
+  "i": 144,
+  "adj3": "Tughrik",
+  "adj3_stability": 0.6666666666666667
+ },
+ {
+  "i": 145,
+  "adj3": "Afghani",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 146,
+  "adj3": "Iraqi dinar",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 147,
+  "adj3": "Kuwaiti dinar",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 148,
+  "adj3": "Qarar",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 149,
+  "adj3": "Omani rial",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 150,
+  "adj3": "Jordanian dinar",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 151,
+  "adj3": "Lebanese pound",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 152,
+  "adj3": "Libyan dinar",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 153,
+  "adj3": "TND",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 154,
+  "adj3": "Dinar",
+  "adj3_stability": 0.6666666666666667
+ },
+ {
+  "i": 155,
+  "adj3": "Sudanese pound",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 156,
+  "adj3": "Tanzanian shilling",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 157,
+  "adj3": "USh",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 158,
+  "adj3": "Zambian Kwacha",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 159,
+  "adj3": "Kwacha",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 160,
+  "adj3": "Kwanza",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 161,
+  "adj3": "Metical",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 162,
+  "adj3": "Malagasy Ariary",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 163,
+  "adj3": "Rwandan franc",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 164,
+  "adj3": "Gourde",
+  "adj3_stability": 1.0
+ },
+ {
+  "i": 165,
+  "adj3": "Quetzal",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 166,
+  "adj3": "Honduran lempira",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 167,
+  "adj3": "Cordoba",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 168,
+  "adj3": "Col\u00f3n",
+  "adj3_stability": 0.33333333333333337
+ },
+ {
+  "i": 169,
+  "adj3": "Balboa",
+  "adj3_stability": 0.7777777777777778
+ },
+ {
+  "i": 170,
+  "adj3": "Guaran\u00ed",
+  "adj3_stability": 0.8888888888888888
+ },
+ {
+  "i": 171,
+  "adj3": "Boliviano",
+  "adj3_stability": 0.8888888888888888
+ }
+]

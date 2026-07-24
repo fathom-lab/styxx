@@ -1,0 +1,508 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_scale_channel_2026_07_24.md",
+  "document_sha256": "671d055595eb3d010f56e7c0d4ccb2836c3f2508375661959455a014fe971ef2",
+  "receipts_sha256": {
+    "scale_channel_result.json": "86763f9b857c2894c1a0e64d590ef96280c70d6d2f78ba829289bde1d9fc67b1",
+    "scale_channel_margin.json": "6d1d90b144cb78978b9f772234d6b72c49aaa70681364f2ab2f28a6fbb75f330",
+    "tiered_channel_result.json": "517a28e86b4d493140ebfd7984b219ed780ff9b21e4510aeb27a9c9a845d9245"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 33,
+    "ABSTAIN": 13,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "66"
+    },
+    {
+      "line": 10,
+      "token": "0.0407"
+    },
+    {
+      "line": 19,
+      "token": "46"
+    },
+    {
+      "line": 31,
+      "token": "65"
+    },
+    {
+      "line": 34,
+      "token": "46"
+    },
+    {
+      "line": 42,
+      "token": "65"
+    },
+    {
+      "line": 44,
+      "token": "65"
+    },
+    {
+      "line": 44,
+      "token": "66"
+    },
+    {
+      "line": 48,
+      "token": "46"
+    },
+    {
+      "line": 69,
+      "token": "65"
+    },
+    {
+      "line": 69,
+      "token": "66"
+    },
+    {
+      "line": 79,
+      "token": "80"
+    },
+    {
+      "line": 84,
+      "token": "64"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "**Cycle 66 (operator-directed \"keep going\"). Prereg `PREREG_scale_channel_2026_07_24.md`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "tier-1 Qwen2.5-3B, tier-2 **Qwen2.5-7B-Instruct (4-bit)**, 172 items.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:n_items"
+    },
+    {
+      "line": 10,
+      "token": "0.0407",
+      "value": 0.0407,
+      "decimals": 4,
+      "context": "The prior cycle held scale fixed and varied family (Llama-3.2-3B): coverage rose only 0.0407 and the gate",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "| EV1 slice power | 46 items |",
+      "binding_context": "| gate | outcome | | EV1 slice power | 46 items |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.7849",
+      "value": 0.7849,
+      "decimals": 4,
+      "context": "| **EG1 coverage rises** | **PASS** -- final 0.7849 vs tier-1 0.7326 |",
+      "binding_context": "| gate | outcome | | **EG1 coverage rises** | **PASS** -- final 0.7849 vs tier-1 0.7326 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.coverage"
+    },
+    {
+      "line": 20,
+      "token": "0.7326",
+      "value": 0.7326,
+      "decimals": 4,
+      "context": "| **EG1 coverage rises** | **PASS** -- final 0.7849 vs tier-1 0.7326 |",
+      "binding_context": "| gate | outcome | | **EG1 coverage rises** | **PASS** -- final 0.7849 vs tier-1 0.7326 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:tier1.coverage"
+    },
+    {
+      "line": 21,
+      "token": "0.9852",
+      "value": 0.9852,
+      "decimals": 4,
+      "context": "| EG2 answered accuracy preserved | PASS -- 0.9852, above tier-1's 0.9841 |",
+      "binding_context": "| gate | outcome | | EG2 answered accuracy preserved | PASS -- 0.9852, above tier-1's 0.9841 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 21,
+      "token": "0.9841",
+      "value": 0.9841,
+      "decimals": 4,
+      "context": "| EG2 answered accuracy preserved | PASS -- 0.9852, above tier-1's 0.9841 |",
+      "binding_context": "| gate | outcome | | EG2 answered accuracy preserved | PASS -- 0.9852, above tier-1's 0.9841 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 22,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| EG3 tier-2 earns its slice (paired) | PASS -- rescued 1.0 vs fallback 0.3333 on the same items |",
+      "binding_context": "| gate | outcome | | EG3 tier-2 earns its slice (paired) | PASS -- rescued 1.0 vs fallback 0.3333 on the same items |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 22,
+      "token": "0.3333",
+      "value": 0.3333,
+      "decimals": 4,
+      "context": "| EG3 tier-2 earns its slice (paired) | PASS -- rescued 1.0 vs fallback 0.3333 on the same items |",
+      "binding_context": "| gate | outcome | | EG3 tier-2 earns its slice (paired) | PASS -- rescued 1.0 vs fallback 0.3333 on the same items |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 23,
+      "token": "0.9852",
+      "value": 0.9852,
+      "decimals": 4,
+      "context": "| EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "binding_context": "| gate | outcome | | EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 23,
+      "token": "0.8741",
+      "value": 0.8741,
+      "decimals": 4,
+      "context": "| EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "binding_context": "| gate | outcome | | EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.stubborn_at_final_coverage.accuracy"
+    },
+    {
+      "line": 23,
+      "token": "0.7849",
+      "value": 0.7849,
+      "decimals": 4,
+      "context": "| EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "binding_context": "| gate | outcome | | EG4 beats ignoring the user | PASS -- 0.9852 vs 0.8741 at coverage 0.7849 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.coverage"
+    },
+    {
+      "line": 28,
+      "token": "0.0023",
+      "value": 0.0023,
+      "decimals": 4,
+      "context": "## The margin: 0.0023, which is four tenths of one item",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:margin_over_bar"
+    },
+    {
+      "line": 30,
+      "token": "0.0523",
+      "value": 0.0523,
+      "decimals": 4,
+      "context": "Coverage rose 0.0523 against a 0.05 bar. **The pass margin is 0.0023 -- 0.40 items out of 172.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:coverage_rise"
+    },
+    {
+      "line": 30,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "Coverage rose 0.0523 against a 0.05 bar. **The pass margin is 0.0023 -- 0.40 items out of 172.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:eg1_bar"
+    },
+    {
+      "line": 30,
+      "token": "0.0023",
+      "value": 0.0023,
+      "decimals": 4,
+      "context": "Coverage rose 0.0523 against a 0.05 bar. **The pass margin is 0.0023 -- 0.40 items out of 172.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:margin_over_bar"
+    },
+    {
+      "line": 30,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "Coverage rose 0.0523 against a 0.05 bar. **The pass margin is 0.0023 -- 0.40 items out of 172.**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:margin_in_items"
+    },
+    {
+      "line": 31,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "Tier-2 rescued **9** items of the 46-item slice where cycle 65's different-family channel rescued",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 31,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "Tier-2 rescued **9** items of the 46-item slice where cycle 65's different-family channel rescued",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "This program has already written the rule for reading a number like that. Cycle 46's F2 found that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "Everything that made cycle 65 a negative is still true here:",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "0.8478",
+      "value": 0.8478,
+      "decimals": 4,
+      "context": "| tier-2 abstention on tier-1's slice | 0.8478 | **0.8043** |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | tier-2 abstention on tier-1's slice | 0.8478 | **0.8043** |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.cycle65_reference_same_scale_diff_family.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 46,
+      "token": "0.8043",
+      "value": 0.8043,
+      "decimals": 4,
+      "context": "| tier-2 abstention on tier-1's slice | 0.8478 | **0.8043** |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | tier-2 abstention on tier-1's slice | 0.8478 | **0.8043** |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 47,
+      "token": "0.9837",
+      "value": 0.9837,
+      "decimals": 4,
+      "context": "| agreement where both channels speak | 0.9837 | **0.9919** |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | agreement where both channels speak | 0.9837 | **0.9919** |",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "line": 47,
+      "token": "0.9919",
+      "value": 0.9919,
+      "decimals": 4,
+      "context": "| agreement where both channels speak | 0.9837 | **0.9919** |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | agreement where both channels speak | 0.9837 | **0.9919** |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "line": 48,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "| items rescued of 46 | 7 | 9 |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | items rescued of 46 | 7 | 9 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "| items rescued of 46 | 7 | 9 |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | items rescued of 46 | 7 | 9 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.cycle65_reference_same_scale_diff_family.n_rescued"
+    },
+    {
+      "line": 48,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "| items rescued of 46 | 7 | 9 |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | items rescued of 46 | 7 | 9 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 49,
+      "token": "0.7733",
+      "value": 0.7733,
+      "decimals": 4,
+      "context": "| final coverage | 0.7733 | 0.7849 |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | final coverage | 0.7733 | 0.7849 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.cycle65_reference_same_scale_diff_family.final_coverage"
+    },
+    {
+      "line": 49,
+      "token": "0.7849",
+      "value": 0.7849,
+      "decimals": 4,
+      "context": "| final coverage | 0.7733 | 0.7849 |",
+      "binding_context": "| quantity | cycle 65 (diff family, same scale) | cycle 66 (same family, larger scale) | | final coverage | 0.7733 | 0.7849 |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.coverage"
+    },
+    {
+      "line": 51,
+      "token": "0.8043",
+      "value": 0.8043,
+      "decimals": 4,
+      "context": "A model with more than twice the parameters, from the same family, still declines on **0.8043** of",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 52,
+      "token": "0.9919",
+      "value": 0.9919,
+      "decimals": 4,
+      "context": "the items its smaller sibling declined, and agrees with it on **0.9919** of the items where both",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "line": 54,
+      "token": "0.7674",
+      "value": 0.7674,
+      "decimals": 4,
+      "context": "0.7674 at accuracy 1.0: excellent when it speaks, and still silent about a quarter of the pool.",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.tier2_alone_coverage"
+    },
+    {
+      "line": 54,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "0.7674 at accuracy 1.0: excellent when it speaks, and still silent about a quarter of the pool.",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 64,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "(9 rescues vs 7), and it does so safely -- answered accuracy rose rather than fell (0.9852), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:controls_reported_not_gated.cycle65_reference_same_scale_diff_family.n_rescued"
+    },
+    {
+      "line": 64,
+      "token": "0.9852",
+      "value": 0.9852,
+      "decimals": 4,
+      "context": "(9 rescues vs 7), and it does so safely -- answered accuracy rose rather than fell (0.9852), and the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 67,
+      "token": "0.0523",
+      "value": 0.0523,
+      "decimals": 4,
+      "context": "**Not earned:** any claim that scale solves coverage. It moved coverage 0.0523 at more than double",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_margin.json:coverage_rise"
+    },
+    {
+      "line": 68,
+      "token": "0.8043",
+      "value": 0.8043,
+      "decimals": 4,
+      "context": "the parameters, cleared the bar by four tenths of an item, and left 0.8043 of the slice untouched.",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 69,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "The honest one-line summary of cycles 65 and 66 together is: **model-side escalation, whether by",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "The honest one-line summary of cycles 65 and 66 together is: **model-side escalation, whether by",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 79,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "the one a failure would have delivered**: the remaining ~80% of the slice is shared ignorance, and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 84,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "Also owed: a fresh-pool confirmation, both for this cycle's thin pass and for cycle 64's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "0.5B agent, Qwen2.5-3B tier-1, Qwen2.5-7B-4bit tier-2, 172 items on the cycle-64 pool (the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:n_items"
+    }
+  ]
+}

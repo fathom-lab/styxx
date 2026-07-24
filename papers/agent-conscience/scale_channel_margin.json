@@ -1,0 +1,14 @@
+{
+ "note": "deterministic derivation from scale_channel_result.json and tiered_channel_result.json; no new generation",
+ "eg1_bar": 0.05,
+ "tier1_coverage": 0.7325581395348837,
+ "final_coverage": 0.7848837209302325,
+ "coverage_rise": 0.05232558139534882,
+ "margin_over_bar": 0.0023255813953488164,
+ "margin_in_items": 0.3999999999999964,
+ "n_items": 172,
+ "cycle65_coverage_rise": 0.04069767441860472,
+ "rescued_this_cycle": 9,
+ "rescued_cycle65": 7,
+ "rescue_difference_items": 2
+}
