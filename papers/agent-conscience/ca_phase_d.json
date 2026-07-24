@@ -1,0 +1,1502 @@
+[
+ {
+  "i": 0,
+  "samples": [
+   "Sitdown Strike",
+   "sit-in",
+   "sit-in",
+   "Hunger strike",
+   "sit-in",
+   "Holding",
+   "sit-down strike",
+   "Hunger strike",
+   "sit-in",
+   "sit-in"
+  ]
+ },
+ {
+  "i": 1,
+  "samples": [
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest",
+   "Amazon Rainforest"
+  ]
+ },
+ {
+  "i": 2,
+  "samples": [
+   "citizens",
+   "voters",
+   "citizens",
+   "voters",
+   "citizens",
+   "voters",
+   "citizens",
+   "citizens",
+   "citizens",
+   "citizens"
+  ]
+ },
+ {
+  "i": 3,
+  "samples": [
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis",
+   "photosynthesis"
+  ]
+ },
+ {
+  "i": 4,
+  "samples": [
+   "Skin cancer",
+   "Skin cancer",
+   "Malignant melanoma",
+   "Malignant melanoma",
+   "Malignant melanoma",
+   "Malignant melanoma",
+   "skinsarcoma",
+   "Skin cancer",
+   "Malignant melanoma",
+   "Malignant melanoma"
+  ]
+ },
+ {
+  "i": 5,
+  "samples": [
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior",
+   "superior"
+  ]
+ },
+ {
+  "i": 6,
+  "samples": [
+   "terrorism",
+   "attacks",
+   "violence",
+   "kidnappings",
+   "violence",
+   "terrorism",
+   "terrorism",
+   "terrorism",
+   "violence",
+   "violence"
+  ]
+ },
+ {
+  "i": 7,
+  "samples": [
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763",
+   "1755-1763"
+  ]
+ },
+ {
+  "i": 8,
+  "samples": [
+   "journalist",
+   "Journalist",
+   "journalist",
+   "journalist",
+   "journalist",
+   "journalist",
+   "journalist",
+   "journalist",
+   "journalist",
+   "journalist"
+  ]
+ },
+ {
+  "i": 9,
+  "samples": [
+   "chlorophyll",
+   "chlorophyll",
+   "chlorophyll",
+   "chlorophyll",
+   "chlorophyll",
+   "photosynthesis",
+   "oxygen",
+   "chlorophyll",
+   "chlorophyll",
+   "glucose"
+  ]
+ },
+ {
+  "i": 10,
+  "samples": [
+   "British Sky Broadcasting",
+   "British Sky Broadcasting Ltd",
+   "British Sky Broadcasting Ltd",
+   "British Sky Broadcasting Group",
+   "BT Vision",
+   "British Sky Broadcasting",
+   "British Sky Broadcasting Group",
+   "BSkyB",
+   "BSkyB",
+   "British Sky Broadcasting Group"
+  ]
+ },
+ {
+  "i": 11,
+  "samples": [
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine"
+  ]
+ },
+ {
+  "i": 12,
+  "samples": [
+   "Orange",
+   "Orange",
+   "Orange",
+   "Orange",
+   "Los Angeles County",
+   "Los Angeles",
+   "Orange",
+   "Orange",
+   "Orange",
+   "Orange"
+  ]
+ },
+ {
+  "i": 13,
+  "samples": [
+   "70%",
+   "70%",
+   "65%",
+   "70%",
+   "60%-80%",
+   "60%",
+   "70%",
+   "70%-80%",
+   "60%-80%",
+   "70%"
+  ]
+ },
+ {
+  "i": 14,
+  "samples": [
+   "Caliphate",
+   "caliphate",
+   "caliphate",
+   "Caliphate",
+   "Caliphate",
+   "Caliphate",
+   "Caliphate",
+   "caliphate",
+   "caliphate",
+   "Caliphate"
+  ]
+ },
+ {
+  "i": 15,
+  "samples": [
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles"
+  ]
+ },
+ {
+  "i": 16,
+  "samples": [
+   "Multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "multiplication",
+   "Multiplication"
+  ]
+ },
+ {
+  "i": 17,
+  "samples": [
+   "defensins",
+   "defensins",
+   "Defensins",
+   "defensins",
+   "defensins",
+   "llamas",
+   "ceramides",
+   "defensins",
+   "cerulocytes",
+   "cerulalein"
+  ]
+ },
+ {
+  "i": 18,
+  "samples": [
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis",
+   "chemotaxis"
+  ]
+ },
+ {
+  "i": 19,
+  "samples": [
+   "moderate",
+   "moderate",
+   "range from 2 to 6",
+   "smaller than magnitude 6",
+   "ranges from 2 to 6",
+   "moderate",
+   "ranges from 2 to 6",
+   "ranges_from_2_to_6",
+   "moderate",
+   "moderate"
+  ]
+ },
+ {
+  "i": 20,
+  "samples": [
+   "inflammatory response",
+   "Inflammation",
+   "Inflammation",
+   "Inflammation",
+   "Inflammation",
+   "Inflammation",
+   "Inflammation",
+   "Inflammation",
+   "Inflammatory response",
+   "Inflammatory response"
+  ]
+ },
+ {
+  "i": 21,
+  "samples": [
+   "Critics",
+   "critics",
+   "critics",
+   "Critics",
+   "Anti-Kuznets curve",
+   "Critics",
+   "Critics",
+   "critics",
+   "Critics",
+   "critics"
+  ]
+ },
+ {
+  "i": 22,
+  "samples": [
+   "Andrew Jackson",
+   "Jackson",
+   "Andrew Jackson",
+   "Andrew Jackson",
+   "Jackson",
+   "Jackson",
+   "Andrew Jackson",
+   "Andrew Jackson",
+   "Jackson",
+   "Andrew Jackson"
+  ]
+ },
+ {
+  "i": 23,
+  "samples": [
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol",
+   "Calcitriol"
+  ]
+ },
+ {
+  "i": 24,
+  "samples": [
+   "2000000000",
+   "6000000",
+   "2000000000",
+   "2000000000",
+   "2 billion Dollars",
+   "2000000000",
+   "6 billion USD",
+   "5 billion dollars",
+   "6 billion",
+   "6 billion dollars"
+  ]
+ },
+ {
+  "i": 25,
+  "samples": [
+   "8",
+   "8",
+   "8",
+   "8",
+   "8",
+   "8",
+   "8",
+   "8",
+   "8",
+   "8"
+  ]
+ },
+ {
+  "i": 26,
+  "samples": [
+   "Palestine",
+   "Gaza",
+   "Palestine",
+   "Palestine",
+   "Gaza",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Palestine",
+   "Gaza"
+  ]
+ },
+ {
+  "i": 27,
+  "samples": [
+   "Jaclyn Doyle",
+   "Daniel Andrews",
+   "Daniel Andrews",
+   "Jaclyn Bowen",
+   "Daniel Andrews",
+   "Daniel Andrews",
+   "Eugene Skewes-Smith",
+   "Eugene Fusconi",
+   "Jaclyn Smith",
+   "Jaclyn Brophy"
+  ]
+ },
+ {
+  "i": 28,
+  "samples": [
+   "Holden",
+   "Volkswagen",
+   "Volkswagen",
+   "Volkswagen",
+   "Ford",
+   "Volkswagen",
+   "Volkswagen",
+   "Volkswagen",
+   "Volkswagen",
+   "Volkswagen"
+  ]
+ },
+ {
+  "i": 29,
+  "samples": [
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "maxwell",
+   "Maxwell"
+  ]
+ },
+ {
+  "i": 30,
+  "samples": [
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain",
+   "Spain"
+  ]
+ },
+ {
+  "i": 31,
+  "samples": [
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal"
+  ]
+ },
+ {
+  "i": 32,
+  "samples": [
+   "uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism",
+   "Uniformitarianism",
+   "uniformitarianism",
+   "uniformitarianism"
+  ]
+ },
+ {
+  "i": 33,
+  "samples": [
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva",
+   "Geneva"
+  ]
+ },
+ {
+  "i": 34,
+  "samples": [
+   "5th",
+   "5th",
+   "5th",
+   "4",
+   "5th",
+   "5th",
+   "5th",
+   "5th",
+   "5th",
+   "5th"
+  ]
+ },
+ {
+  "i": 35,
+  "samples": [
+   "friction",
+   "Friction",
+   "friction",
+   "friction",
+   "friction",
+   "friction",
+   "friction",
+   "friction",
+   "drag",
+   "Friction"
+  ]
+ },
+ {
+  "i": 36,
+  "samples": [
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower",
+   "lower"
+  ]
+ },
+ {
+  "i": 37,
+  "samples": [
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760",
+   "1760"
+  ]
+ },
+ {
+  "i": 38,
+  "samples": [
+   "Libertarian",
+   "Libertarian",
+   "Libertarian",
+   "Libertarian",
+   "Libertarian",
+   "Libertarian",
+   "libertarian",
+   "libertarian",
+   "Libertarian",
+   "libertarian"
+  ]
+ },
+ {
+  "i": 39,
+  "samples": [
+   "CGS",
+   "CGS",
+   "CAEarthquakes.gov",
+   "CAEWS",
+   "CASeis",
+   "CGS",
+   "CASEI",
+   "CGS",
+   "CAEarthQuakeWG",
+   "CGS"
+  ]
+ },
+ {
+  "i": 40,
+  "samples": [
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa",
+   "Africa"
+  ]
+ },
+ {
+  "i": 41,
+  "samples": [
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts",
+   "Massachusetts"
+  ]
+ },
+ {
+  "i": 42,
+  "samples": [
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden",
+   "Sweden"
+  ]
+ },
+ {
+  "i": 43,
+  "samples": [
+   "time",
+   "time",
+   "time",
+   "Time",
+   "time",
+   "time",
+   "time",
+   "Time",
+   "time",
+   "time"
+  ]
+ },
+ {
+  "i": 44,
+  "samples": [
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles",
+   "Los Angeles"
+  ]
+ },
+ {
+  "i": 45,
+  "samples": [
+   "10",
+   "9",
+   "10",
+   "1",
+   "5",
+   "1",
+   "None",
+   "1",
+   "4",
+   "5"
+  ]
+ },
+ {
+  "i": 46,
+  "samples": [
+   "compound interest",
+   "accumulation",
+   "accumulation",
+   "accumulation",
+   "compound interest",
+   "accumulation",
+   "compound interest",
+   "rent-seeking",
+   "rent-seeking",
+   "accumulation"
+  ]
+ },
+ {
+  "i": 47,
+  "samples": [
+   "positive",
+   "Increased",
+   "Increased",
+   "positive",
+   "Increased",
+   "increased",
+   "increased",
+   "increased",
+   "Increased",
+   "increased"
+  ]
+ },
+ {
+  "i": 48,
+  "samples": [
+   "standard of living",
+   "GDP",
+   "Standard of living",
+   "Standard of living",
+   "standard of living",
+   "living standards",
+   "standard of living",
+   "Living standards",
+   "Standard of living",
+   "freedom"
+  ]
+ },
+ {
+  "i": 49,
+  "samples": [
+   "Ogr\u00f3d Saksonski",
+   "Ogr\u00f3d Sachsski",
+   "Ogr\u00f3d Sachsenhaus\u0435\u043d Siege\u52d2",
+   "Ogr\u00f3d Saks\u00f3w",
+   "Ogr\u00f3d Saski",
+   "Ogr\u00f3d Saksonski",
+   "Ogr\u00f3d Sajski",
+   "Ogr\u00f3d Saksowny",
+   "Ogr\u00f3d Szaxonowy",
+   "Ogr\u00f3d Saks\u00f3w"
+  ]
+ },
+ {
+  "i": 50,
+  "samples": [
+   "marijuana",
+   "marijuana",
+   "marijuana",
+   "marijuana",
+   "marijuana",
+   "public sector wages",
+   "marijuana",
+   "marijuana",
+   "marijuana",
+   "marijuana"
+  ]
+ },
+ {
+  "i": 51,
+  "samples": [
+   "27%",
+   "10%",
+   "23%",
+   "13%",
+   "27%",
+   "10%",
+   "13%",
+   "5%",
+   "13%",
+   "5%"
+  ]
+ },
+ {
+  "i": 52,
+  "samples": [
+   "royal assent",
+   "royalty",
+   "royal assent",
+   "Royal Assent",
+   "royal assent",
+   "Royal Assent",
+   "royalty",
+   "Royal Assent",
+   "royal assent",
+   "Royal Assent"
+  ]
+ },
+ {
+  "i": 53,
+  "samples": [
+   "p",
+   "Pcomposite",
+   "P(composite)",
+   "p",
+   "p",
+   "p",
+   "p",
+   "p",
+   "p",
+   "Pcomposite"
+  ]
+ },
+ {
+  "i": 54,
+  "samples": [
+   "eye lens",
+   "eye lens",
+   "eye lens",
+   "eye lens",
+   "eyelids",
+   "zebrafish",
+   "zebrafish",
+   "zebrafish",
+   "zebrafish",
+   "eyes"
+  ]
+ },
+ {
+  "i": 55,
+  "samples": [
+   "145.9 billion PLN",
+   "80.6 billion PLN",
+   "63.4 billion euros",
+   "68.9 billion PLN",
+   "80.9 billionz\u0142",
+   "76.4 billionz\u0142",
+   "34.9 billion USD",
+   "50.7 billion USD",
+   "65000 million PLN",
+   "76.4 billion PLN"
+  ]
+ },
+ {
+  "i": 56,
+  "samples": [
+   "Wealth",
+   "Wealth",
+   "wealth",
+   "Investment",
+   "Wealth",
+   "investment",
+   "investments",
+   "investments",
+   "Wealth",
+   "capital"
+  ]
+ },
+ {
+  "i": 57,
+  "samples": [
+   "Netherlands",
+   "Netherlands",
+   "Netherlands",
+   "Netherlands",
+   "Netherlands",
+   "Netherlands",
+   "Netherlands",
+   "Western Europe",
+   "Netherlands",
+   "Europe"
+  ]
+ },
+ {
+  "i": 58,
+  "samples": [
+   "1,000-3,000",
+   "Thousands",
+   "3,000",
+   "3,000",
+   "3,000",
+   "3,000 miles",
+   "1000",
+   "Typically, dust can travel up to 6,000 miles.",
+   "1,000",
+   "3,000"
+  ]
+ },
+ {
+  "i": 59,
+  "samples": [
+   "university",
+   "public schools",
+   "public schools",
+   "public schools",
+   "public schools",
+   "university",
+   "university",
+   "public schools",
+   "universities",
+   "public schools"
+  ]
+ },
+ {
+  "i": 60,
+  "samples": [
+   "power dynamic",
+   "dominance",
+   "dominance",
+   "power imbalance",
+   "power",
+   "power struggles",
+   "power dynamics",
+   "Power relationships",
+   "power relations",
+   "power imbalance"
+  ]
+ },
+ {
+  "i": 61,
+  "samples": [
+   "high-pressure cylinders",
+   "Pressure",
+   "Pressure vessels",
+   "Pressure vessel",
+   "cryogenic storage",
+   "Pressure tanks",
+   "Pressure",
+   "Pressure vessel",
+   "regulated",
+   "Pressure vessel"
+  ]
+ },
+ {
+  "i": 62,
+  "samples": [
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636",
+   "1636"
+  ]
+ },
+ {
+  "i": 63,
+  "samples": [
+   "non-UK residents",
+   "non-UK residents",
+   "foreign nations",
+   "foreign governments",
+   "non-UK residents",
+   "foreign governments",
+   "non-UK residents",
+   "non-Westminster authorities",
+   "non-UK residents",
+   "local matters"
+  ]
+ },
+ {
+  "i": 64,
+  "samples": [
+   "employers",
+   "employers",
+   "Employers",
+   "employers",
+   "women",
+   "women",
+   "employers",
+   "women",
+   "Women",
+   "women"
+  ]
+ },
+ {
+  "i": 65,
+  "samples": [
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East",
+   "Middle East"
+  ]
+ },
+ {
+  "i": 66,
+  "samples": [
+   "Scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships",
+   "scholarships"
+  ]
+ },
+ {
+  "i": 67,
+  "samples": [
+   "T cells",
+   "T cells",
+   "T cells",
+   "T cells",
+   "T cells",
+   "T cells",
+   "T cells",
+   "T-cells",
+   "T cells",
+   "T cells"
+  ]
+ },
+ {
+  "i": 68,
+  "samples": [
+   "Silk trade",
+   "trade",
+   "Trade",
+   "Silk trade",
+   "trade",
+   "trade",
+   "trade",
+   "trade",
+   "Trade",
+   "Silk trade"
+  ]
+ },
+ {
+  "i": 69,
+  "samples": [
+   "theory",
+   "theory",
+   "natural history",
+   "speculation",
+   "taxonomy",
+   "theory",
+   "taxonomy",
+   "theory",
+   "theory",
+   "hypothesis testing"
+  ]
+ },
+ {
+  "i": 70,
+  "samples": [
+   "HO",
+   "2H2O",
+   "HO",
+   "HO",
+   "2H2O",
+   "2H2O",
+   "HO",
+   "HO",
+   "HO",
+   "2H2O"
+  ]
+ },
+ {
+  "i": 71,
+  "samples": [
+   "King's Hall",
+   "Green Room",
+   "Red Chamber",
+   "King's Hall",
+   "King's Hall",
+   "Jersey Room",
+   "Jama Masjid Hall",
+   "Green Room",
+   "King's Hall",
+   "Green Room"
+  ]
+ },
+ {
+  "i": 72,
+  "samples": [
+   "civilization",
+   "civilization",
+   "civilization",
+   "civilizing",
+   "civilization",
+   "white man's burden",
+   "civilizing",
+   "civilization",
+   "civilizing",
+   "white man's burden"
+  ]
+ },
+ {
+  "i": 73,
+  "samples": [
+   "MLL",
+   "National League",
+   "FirstDivision",
+   "NFL",
+   "National Football League",
+   "NFL",
+   "National League",
+   "NFL",
+   "National Football League",
+   "NFL"
+  ]
+ },
+ {
+  "i": 74,
+  "samples": [
+   "cyclic",
+   "cyclic",
+   "cyclic",
+   "repeating",
+   "cyclical",
+   "cyclic",
+   "repeating",
+   "repeating",
+   "cyclic",
+   "cyclic"
+  ]
+ },
+ {
+  "i": 75,
+  "samples": [
+   "proration",
+   "prorated",
+   "proration",
+   "proration",
+   "Allocated",
+   "apportioned",
+   "apportioned",
+   "Sunk cost",
+   "proration",
+   "jointly"
+  ]
+ },
+ {
+  "i": 76,
+  "samples": [
+   "Cretaceous-Paleogene",
+   "Cretaceous-Paleogene",
+   "\u6050\u9f99\u706d\u7edd\u4e8b\u4ef6",
+   "Pliocene-Pleistocene extinctions",
+   "Pleistocene",
+   "Pleistocene extinction",
+   "Cretaceous-Paleogene",
+   "Pleistocene Extinction",
+   "Paleocene-Eocene Thermal Maximum",
+   "Pleistocene Extinction"
+  ]
+ },
+ {
+  "i": 77,
+  "samples": [
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010",
+   "2010"
+  ]
+ },
+ {
+  "i": 78,
+  "samples": [
+   "65",
+   "65",
+   "65",
+   "65",
+   "65",
+   "650",
+   "65",
+   "65",
+   "65",
+   "650"
+  ]
+ },
+ {
+  "i": 79,
+  "samples": [
+   "timeiciency",
+   "computational difficulty",
+   "Time complexity",
+   "computational difficulty",
+   "computational difficulty",
+   "computational difficulty",
+   "timeolvable",
+   "computational difficulty",
+   "computational difficulty",
+   "Time complexity"
+  ]
+ },
+ {
+  "i": 80,
+  "samples": [
+   "Alcohol",
+   "alcohol",
+   "alcohol",
+   "alcohol",
+   "blissfully ignorant",
+   "alcohol",
+   "Blasphemous cartoons",
+   "alcohol",
+   "alcohol",
+   "alcohol"
+  ]
+ },
+ {
+  "i": 81,
+  "samples": [
+   "Riparian zone",
+   "Biosphere",
+   "Transverse Los Angeles Mountains",
+   "\u591a\u6837\u6027\u7684",
+   "Biodiversity",
+   "Transverse Range System",
+   "\u591a\u6837\u5316",
+   "Biosphere",
+   "Transverse Range System",
+   "Biosphere"
+  ]
+ },
+ {
+  "i": 82,
+  "samples": [
+   "green space",
+   "green space",
+   "greenspace",
+   "green spaces",
+   "green spaces",
+   "green spaces",
+   "green space",
+   "green spaces",
+   "green spaces",
+   "green space"
+  ]
+ },
+ {
+  "i": 83,
+  "samples": [
+   "compliant",
+   "obedient person",
+   "non-human entity",
+   "not willing to break laws for a cause",
+   "not willing to break laws for a cause",
+   "notorious",
+   "compliant",
+   "obedient",
+   "non-human entity",
+   "not willing to break laws for a cause"
+  ]
+ },
+ {
+  "i": 84,
+  "samples": [
+   "20",
+   "100",
+   "100",
+   "100",
+   "100",
+   "80",
+   "100",
+   "100",
+   "100",
+   "100"
+  ]
+ },
+ {
+  "i": 85,
+  "samples": [
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate",
+   "Ilkhanate"
+  ]
+ },
+ {
+  "i": 86,
+  "samples": [
+   "Saxons",
+   "Britons",
+   "Saxons",
+   "Vikings",
+   "Vikings",
+   "Vikings",
+   "Saxons",
+   "Saxons",
+   "Saxons",
+   "Saxons"
+  ]
+ },
+ {
+  "i": 87,
+  "samples": [
+   "industrial waste",
+   "industrial waste",
+   "industrial waste",
+   "industrial waste",
+   "industrial waste",
+   "industrial runoff",
+   "industrial waste",
+   "industrial waste",
+   "industrial waste",
+   "industrial waste"
+  ]
+ },
+ {
+  "i": 88,
+  "samples": [
+   "religion from politics",
+   "sharia from state law",
+   "sharia from state law",
+   "religion from politics",
+   "Islam from extremism",
+   "religion from politics",
+   "religion from politics",
+   "religion from politics",
+   "Islam from politics",
+   "religion from politics"
+  ]
+ },
+ {
+  "i": 89,
+  "samples": [
+   "Gothic architecture",
+   "Renaissance architecture",
+   "Renaissance architecture",
+   "architecture",
+   "Gothic architecture",
+   "Architecture",
+   "Gothic architecture",
+   "architecture",
+   "architecture",
+   "Architecture"
+  ]
+ },
+ {
+  "i": 90,
+  "samples": [
+   "15",
+   "shortest",
+   "shortest",
+   "1500",
+   "4263",
+   "3497",
+   "shortest",
+   "Shortest",
+   "shortest",
+   "Shortest"
+  ]
+ },
+ {
+  "i": 91,
+  "samples": [
+   "CBSE",
+   "CBSE",
+   "UGC",
+   "NCERT",
+   "CBSE",
+   "CBSE",
+   "UGC",
+   "CBSE",
+   "CBSE",
+   "CBSE"
+  ]
+ },
+ {
+  "i": 92,
+  "samples": [
+   "2",
+   "25",
+   "3",
+   "3",
+   "25",
+   "48",
+   "3",
+   "8",
+   "3",
+   "2"
+  ]
+ },
+ {
+  "i": 93,
+  "samples": [
+   "January",
+   "January",
+   "January",
+   "January",
+   "January",
+   "January",
+   "January",
+   "January",
+   "January",
+   "January"
+  ]
+ },
+ {
+  "i": 94,
+  "samples": [
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline",
+   "discipline"
+  ]
+ },
+ {
+  "i": 95,
+  "samples": [
+   "Prohibition Clause",
+   "Prohibition clause",
+   "Prohibition Clause",
+   "prohibition amendments",
+   "prohibition amendments",
+   "prohibition clause",
+   "Prohibition Clause",
+   "Prohibition clause",
+   "Prohibition clauses",
+   "prohibition clauses"
+  ]
+ },
+ {
+  "i": 96,
+  "samples": [
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube",
+   "Danube"
+  ]
+ },
+ {
+  "i": 97,
+  "samples": [
+   "1307",
+   "1309",
+   "1309",
+   "1309",
+   "1309",
+   "1309",
+   "1309",
+   "1307",
+   "1309",
+   "1309"
+  ]
+ },
+ {
+  "i": 98,
+  "samples": [
+   "Chemical",
+   "Chemical",
+   "Chemicaloxidationreaction",
+   "Chemical",
+   "Chemical",
+   "Chemical",
+   "Chemical",
+   "Chemical",
+   "Chemical",
+   "Chemicaloxidation"
+  ]
+ },
+ {
+  "i": 99,
+  "samples": [
+   "years",
+   "impossible to determine",
+   "Not applicable",
+   "Several decades",
+   "years",
+   "impractical",
+   "Several decades",
+   "years",
+   "decades",
+   "years"
+  ]
+ }
+]

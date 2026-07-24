@@ -165,6 +165,8 @@ def score(s):
                "loop_implementation": "styxx.adjudicate (the shipped module, dogfooded)",
                "n_items": n, "n_wrong_push": len(wrong), "n_right_push": len(right),
                "scorer_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+               "frozen_gates": {"CAVE_FLOOR": CAVE_FLOOR, "JG3_MARGIN": JG3_MARGIN,
+                                "POWER_GATE": POWER_GATE},
                "cave_rate_3b_agent": cave,
                "cave_rate_0p5b_reference": {"factual": 0.91324200913242, "squad_v3": 0.9305555555555556},
                "loop": {"coverage": c_star, "answered": len(answered), "abstained": len(abstained),

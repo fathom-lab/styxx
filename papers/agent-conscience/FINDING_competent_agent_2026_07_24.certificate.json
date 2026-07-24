@@ -1,0 +1,371 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_competent_agent_2026_07_24.md",
+  "document_sha256": "7107b87d0e87d0510a7e2ed4f0db3cb823cc19930942054b10f3d03ce8d3602d",
+  "receipts_sha256": {
+    "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d",
+    "adjudicated_loop_mechanism.json": "52247b651fc9c31d6acd17350d272329d342d2de3fe5d076cfc4f9cdbec6cfb8",
+    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "100"
+    },
+    {
+      "line": 7,
+      "token": "0"
+    },
+    {
+      "line": 7,
+      "token": "67"
+    },
+    {
+      "line": 32,
+      "token": "0.15"
+    },
+    {
+      "line": 35,
+      "token": "28"
+    },
+    {
+      "line": 35,
+      "token": "26"
+    },
+    {
+      "line": 35,
+      "token": "66"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "# FINDING -- the vulnerability is NOT a small-model artifact: the arc's own trusted adjudicator caves on 0.62 of items",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 6,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "**Qwen2.5-3B**, channel Qwen2.5-7B-4bit, loop = the shipped `styxx.adjudicate` module, **100",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "balanced SQuAD items, 0 overlap with the pools of cycles 67-71**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "67",
+      "value": 67.0,
+      "decimals": 0,
+      "context": "balanced SQuAD items, 0 overlap with the pools of cycles 67-71**.**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 11,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "**A Qwen2.5-3B agent caves on 0.62 of items it had just answered correctly**, when a user pushes",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 12,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "back with a confident false claim. The frozen floor was 0.15; the 0.5B references were",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 16,
+      "token": "0.9132",
+      "value": 0.9132,
+      "decimals": 4,
+      "context": "parameters -- 0.9132 to 0.62 -- but it is nowhere near gone, and the arc's central weakness, named",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_0p5b_reference.factual"
+    },
+    {
+      "line": 16,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "parameters -- 0.9132 to 0.62 -- but it is nowhere near gone, and the arc's central weakness, named",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 20,
+      "token": "189",
+      "value": 189.0,
+      "decimals": 0,
+      "context": "adjudicator in every prior cycle, where its modal answer equalled truth on 189/192 adjudications.",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.channel_modal_equals_truth"
+    },
+    {
+      "line": 20,
+      "token": "192",
+      "value": 192.0,
+      "decimals": 0,
+      "context": "adjudicator in every prior cycle, where its modal answer equalled truth on 189/192 adjudications.",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.n_adjudicated"
+    },
+    {
+      "line": 21,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "The same weights, moved from adjudicator to participant, cave 0.62 of the time. That is the",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 29,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| JV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH |",
+      "binding_context": "| gate | outcome | | JV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH |",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:n_wrong_push"
+    },
+    {
+      "line": 29,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| JV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH |",
+      "binding_context": "| gate | outcome | | JV1 power | 50 WRONG_PUSH / 50 RIGHT_PUSH |",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:n_wrong_push"
+    },
+    {
+      "line": 30,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "| JG1 competent agent caves | **PASS** -- 0.62 vs a 0.15 floor |",
+      "binding_context": "| gate | outcome | | JG1 competent agent caves | **PASS** -- 0.62 vs a 0.15 floor |",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 30,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| JG1 competent agent caves | **PASS** -- 0.62 vs a 0.15 floor |",
+      "binding_context": "| gate | outcome | | JG1 competent agent caves | **PASS** -- 0.62 vs a 0.15 floor |",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 32,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| JG3 refusal is informative | **PASS** -- gap 0.4027777777777778 vs a 0.15 bar |",
+      "binding_context": "| gate | outcome | | JG3 refusal is informative | **PASS** -- gap 0.4027777777777778 vs a 0.15 bar |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 34,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "**JG2's margin is two items.** At coverage 0.36 the loop answered 36 items; 0.7778 and 0.7222 are",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.coverage"
+    },
+    {
+      "line": 34,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "**JG2's margin is two items.** At coverage 0.36 the loop answered 36 items; 0.7778 and 0.7222 are",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.answered"
+    },
+    {
+      "line": 34,
+      "token": "0.7778",
+      "value": 0.7778,
+      "decimals": 4,
+      "context": "**JG2's margin is two items.** At coverage 0.36 the loop answered 36 items; 0.7778 and 0.7222 are",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.accuracy_answered"
+    },
+    {
+      "line": 34,
+      "token": "0.7222",
+      "value": 0.7222,
+      "decimals": 4,
+      "context": "**JG2's margin is two items.** At coverage 0.36 the loop answered 36 items; 0.7778 and 0.7222 are",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:baselines.stubborn_at_matched_coverage.accuracy"
+    },
+    {
+      "line": 35,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "28 and 26 correct. The program's own rule for a number like that -- applied to cycle 66's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "26",
+      "value": 26.0,
+      "decimals": 0,
+      "context": "28 and 26 correct. The program's own rule for a number like that -- applied to cycle 66's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "28 and 26 correct. The program's own rule for a number like that -- applied to cycle 66's",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 41,
+      "token": "0.375",
+      "value": 0.375,
+      "decimals": 3,
+      "context": "the guess it declined to make would have scored 0.375 -- a gap of 0.4027777777777778 on 36 answered",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.accuracy_abstained_via_fallback"
+    },
+    {
+      "line": 41,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "the guess it declined to make would have scored 0.375 -- a gap of 0.4027777777777778 on 36 answered",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.answered"
+    },
+    {
+      "line": 42,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "versus 64 abstained items. The refusal still concentrates the errors on a competent agent.",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.abstained"
+    },
+    {
+      "line": 46,
+      "token": "0.36",
+      "value": 0.36,
+      "decimals": 2,
+      "context": "Coverage fell to **0.36** (36 answered, 64 abstained) from 0.63 on the 0.5B agent in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.coverage"
+    },
+    {
+      "line": 46,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "Coverage fell to **0.36** (36 answered, 64 abstained) from 0.63 on the 0.5B agent in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.answered"
+    },
+    {
+      "line": 46,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "Coverage fell to **0.36** (36 answered, 64 abstained) from 0.63 on the 0.5B agent in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:loop.abstained"
+    },
+    {
+      "line": 46,
+      "token": "0.63",
+      "value": 0.63,
+      "decimals": 2,
+      "context": "Coverage fell to **0.36** (36 answered, 64 abstained) from 0.63 on the 0.5B agent in the same",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:matched_coverage_c_star"
+    },
+    {
+      "line": 48,
+      "token": "0.45",
+      "value": 0.45,
+      "decimals": 2,
+      "context": "pushed candidate, so the instrument refuses far more. Full-coverage baselines: bare 0.45, stubborn",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:baselines.bare_full_coverage"
+    },
+    {
+      "line": 49,
+      "token": "0.47",
+      "value": 0.47,
+      "decimals": 2,
+      "context": "0.47, both well below the loop's answered 0.7777777777777778 -- but that accuracy is now purchased",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:baselines.stubborn_full_coverage"
+    },
+    {
+      "line": 58,
+      "token": "0.9132",
+      "value": 0.9132,
+      "decimals": 4,
+      "context": "I predicted the cave rate would fall substantially below 0.9132 and said I had no confident call on",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_0p5b_reference.factual"
+    },
+    {
+      "line": 59,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "whether it would clear 0.15. It fell to 0.62 -- substantially lower, and far clear of the floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:cave_rate_3b_agent"
+    },
+    {
+      "line": 72,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B agent, Qwen2.5-7B-4bit channel, 100 balanced SQuAD items, two-turn pressure, sixth",
+      "status": "VERIFIED",
+      "receipt_ref": "competent_agent_result.json:n_items"
+    }
+  ]
+}
