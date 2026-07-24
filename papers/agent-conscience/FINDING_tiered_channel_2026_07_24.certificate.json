@@ -1,0 +1,309 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_tiered_channel_2026_07_24.md",
+  "document_sha256": "afea512be3943a3020b41c2a1e4d0404dd536294b48a31a7448b1a9abe8808dd",
+  "receipts_sha256": {
+    "tiered_channel_result.json": "517a28e86b4d493140ebfd7984b219ed780ff9b21e4510aeb27a9c9a845d9245"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 19,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "65"
+    },
+    {
+      "line": 10,
+      "token": "64"
+    },
+    {
+      "line": 10,
+      "token": "0.2674"
+    },
+    {
+      "line": 19,
+      "token": "0.0407"
+    },
+    {
+      "line": 20,
+      "token": "+0.05"
+    },
+    {
+      "line": 22,
+      "token": "0.9341"
+    },
+    {
+      "line": 42,
+      "token": "50"
+    },
+    {
+      "line": 55,
+      "token": "0.0407"
+    },
+    {
+      "line": 67,
+      "token": "63"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "**Cycle 65 (operator-directed \"keep going\"). Prereg `PREREG_tiered_channel_2026_07_24.md`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "tier-1 channel Qwen2.5-3B, tier-2 channel **Llama-3.2-3B** (different family, same scale), 172 items.**",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:n_items"
+    },
+    {
+      "line": 10,
+      "token": "64",
+      "value": 64.0,
+      "decimals": 0,
+      "context": "Cycle 64 left the loop refusing 0.2674 of items, with its own next-step note demanding that any",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 10,
+      "token": "0.2674",
+      "value": 0.2674,
+      "decimals": 4,
+      "context": "Cycle 64 left the loop refusing 0.2674 of items, with its own next-step note demanding that any",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "This cycle escalates the 46 items tier-1 declined to a second channel chosen so a rescue could not",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:tier1.n_abstained"
+    },
+    {
+      "line": 19,
+      "token": "0.7733",
+      "value": 0.7733,
+      "decimals": 4,
+      "context": "- **DG1 FAILED.** Final coverage 0.7733 against tier-1's 0.7326 -- a rise of only 0.0407, short of",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:final.coverage"
+    },
+    {
+      "line": 19,
+      "token": "0.7326",
+      "value": 0.7326,
+      "decimals": 4,
+      "context": "- **DG1 FAILED.** Final coverage 0.7733 against tier-1's 0.7326 -- a rise of only 0.0407, short of",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:tier1.coverage"
+    },
+    {
+      "line": 19,
+      "token": "0.0407",
+      "value": 0.0407,
+      "decimals": 4,
+      "context": "- **DG1 FAILED.** Final coverage 0.7733 against tier-1's 0.7326 -- a rise of only 0.0407, short of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "+0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "the frozen +0.05 bar. Missed by 0.0093. Per the frozen mapping this is CLOSED_NEGATIVE; the bar",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.9850",
+      "value": 0.985,
+      "decimals": 4,
+      "context": "- **DG2 PASSED.** Final answered accuracy 0.9850 against a 0.9341 bar -- it did not merely hold, it",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 22,
+      "token": "0.9341",
+      "value": 0.9341,
+      "decimals": 4,
+      "context": "- **DG2 PASSED.** Final answered accuracy 0.9850 against a 0.9341 bar -- it did not merely hold, it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "- **DG3 PASSED, strongly.** On the 7 items tier-2 rescued it scored 1.0, against 0.4286 for the",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **DG3 PASSED, strongly.** On the 7 items tier-2 rescued it scored 1.0, against 0.4286 for the",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:tier1.answered_accuracy"
+    },
+    {
+      "line": 24,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "- **DG3 PASSED, strongly.** On the 7 items tier-2 rescued it scored 1.0, against 0.4286 for the",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.fallback_accuracy_same_items"
+    },
+    {
+      "line": 26,
+      "token": "0.9850",
+      "value": 0.985,
+      "decimals": 4,
+      "context": "- **DG4 PASSED.** 0.9850 vs STUBBORN's 0.8797 at the same 0.7733 coverage.",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 26,
+      "token": "0.8797",
+      "value": 0.8797,
+      "decimals": 4,
+      "context": "- **DG4 PASSED.** 0.9850 vs STUBBORN's 0.8797 at the same 0.7733 coverage.",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:controls_reported_not_gated.stubborn_at_final_coverage.accuracy"
+    },
+    {
+      "line": 26,
+      "token": "0.7733",
+      "value": 0.7733,
+      "decimals": 4,
+      "context": "- **DG4 PASSED.** 0.9850 vs STUBBORN's 0.8797 at the same 0.7733 coverage.",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:final.coverage"
+    },
+    {
+      "line": 32,
+      "token": "0.8478",
+      "value": 0.8478,
+      "decimals": 4,
+      "context": "- **Tier-2 abstained on 0.8478 of tier-1's abstention slice** -- it rescued 7 of 46. A different",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 32,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "- **Tier-2 abstained on 0.8478 of tier-1's abstention slice** -- it rescued 7 of 46. A different",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.n_rescued"
+    },
+    {
+      "line": 34,
+      "token": "0.9837",
+      "value": 0.9837,
+      "decimals": 4,
+      "context": "- **Where both channels adjudicated, they agreed 0.9837 of the time.**",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:controls_reported_not_gated.both_adjudicated_agreement_rate"
+    },
+    {
+      "line": 35,
+      "token": "0.7558",
+      "value": 0.7558,
+      "decimals": 4,
+      "context": "- **Tier-2 alone looks almost exactly like tier-1 alone**: coverage 0.7558 vs 0.7326, accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:controls_reported_not_gated.tier2_alone_coverage"
+    },
+    {
+      "line": 35,
+      "token": "0.7326",
+      "value": 0.7326,
+      "decimals": 4,
+      "context": "- **Tier-2 alone looks almost exactly like tier-1 alone**: coverage 0.7558 vs 0.7326, accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:tier1.coverage"
+    },
+    {
+      "line": 36,
+      "token": "0.9923",
+      "value": 0.9923,
+      "decimals": 4,
+      "context": "0.9923 vs 0.9841.",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:controls_reported_not_gated.tier2_alone_accuracy"
+    },
+    {
+      "line": 42,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "This extends a result this program already owns. Cycle 50 measured that *persona* diversity is not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "0.9850",
+      "value": 0.985,
+      "decimals": 4,
+      "context": "slightly improved -- answered accuracy (0.9850), and when the second channel did speak on the",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:final.answered_accuracy"
+    },
+    {
+      "line": 55,
+      "token": "0.0407",
+      "value": 0.0407,
+      "decimals": 4,
+      "context": "channels. It bought 0.0407 and failed its gate. **Coverage is bounded by item difficulty, not by",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "63",
+      "value": 63.0,
+      "decimals": 0,
+      "context": "(cycle 63's BG4), and now shows family diversity is *not* the source of coverage -- which makes",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 72,
+      "token": "172",
+      "value": 172.0,
+      "decimals": 0,
+      "context": "0.5B agent, two 3B channels, 172 items, two-turn pressure. **This was the motivating run and it",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:n_items"
+    }
+  ]
+}

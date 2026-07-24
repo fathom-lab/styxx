@@ -1,0 +1,862 @@
+[
+ {
+  "i": 0,
+  "adj2": "Montpelier",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 1,
+  "adj2": "Augusta",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 2,
+  "adj2": "Dover",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 3,
+  "adj2": "Juneau",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 4,
+  "adj2": "Carson City",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 5,
+  "adj2": "Pierre",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 6,
+  "adj2": "Bismarck",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 7,
+  "adj2": "Jefferson City",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 8,
+  "adj2": "Frankfort",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 9,
+  "adj2": "Montgomery",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 10,
+  "adj2": "Jackson",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 11,
+  "adj2": "Little Rock",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 12,
+  "adj2": "Des Moines",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 13,
+  "adj2": "Topeka",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 14,
+  "adj2": "Lincoln",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 15,
+  "adj2": "Helena",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 16,
+  "adj2": "Cheyenne",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 17,
+  "adj2": "Boise",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 18,
+  "adj2": "Salt Lake City",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 19,
+  "adj2": "Santa Fe",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 20,
+  "adj2": "Salem",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 21,
+  "adj2": "Olympia",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 22,
+  "adj2": "Springfield",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 23,
+  "adj2": "Lansing",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 24,
+  "adj2": "Madison",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 25,
+  "adj2": "St. Paul",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 26,
+  "adj2": "Harrisburg",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 27,
+  "adj2": "Albany",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 28,
+  "adj2": "Trenton",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 29,
+  "adj2": "Richmond",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 30,
+  "adj2": "Raleigh",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 31,
+  "adj2": "Columbia",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 32,
+  "adj2": "Tallahassee",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 33,
+  "adj2": "Baton Rouge",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 34,
+  "adj2": "Austin",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 35,
+  "adj2": "Sacramento",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 36,
+  "adj2": "Hartford",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 37,
+  "adj2": "Providence",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 38,
+  "adj2": "Concord",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 39,
+  "adj2": "Charleston",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 40,
+  "adj2": "Annapolis",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 41,
+  "adj2": "Honolulu",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 42,
+  "adj2": "Columbus",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 43,
+  "adj2": "Indianapolis",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 44,
+  "adj2": "Atlanta",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 45,
+  "adj2": "Nashville",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 46,
+  "adj2": "Oklahoma City",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 47,
+  "adj2": "Denver",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 48,
+  "adj2": "Phoenix",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 49,
+  "adj2": "Boston",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 50,
+  "adj2": "CaO",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 51,
+  "adj2": "Fe2O3\u00b7nH2O",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 52,
+  "adj2": "N2O",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 53,
+  "adj2": "CH3COOH",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 54,
+  "adj2": "SO2",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 55,
+  "adj2": "HCl",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 56,
+  "adj2": "NaOH",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 57,
+  "adj2": "KOH",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 58,
+  "adj2": "MgO",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 59,
+  "adj2": "SiO2",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 60,
+  "adj2": "H\u2083PO\u2084",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 61,
+  "adj2": "C6H6",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 62,
+  "adj2": "C3H8",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 63,
+  "adj2": "C4H10",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 64,
+  "adj2": "(CH\u2083)\u2082CO",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 65,
+  "adj2": "CO(NH2)2",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 66,
+  "adj2": "Be",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 67,
+  "adj2": "Co",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 68,
+  "adj2": "Ca",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 69,
+  "adj2": "Y",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 70,
+  "adj2": "Tc",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 71,
+  "adj2": "In",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 72,
+  "adj2": "Te",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 73,
+  "adj2": "La",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 74,
+  "adj2": "Ce",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 75,
+  "adj2": "Pr",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 76,
+  "adj2": "Pm",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 77,
+  "adj2": "Gd",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 78,
+  "adj2": "Tb",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 79,
+  "adj2": "Tm",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 80,
+  "adj2": "Ta",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 81,
+  "adj2": "Re",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 82,
+  "adj2": "Tl",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 83,
+  "adj2": "Po",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 84,
+  "adj2": "At",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 85,
+  "adj2": "Rn",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 86,
+  "adj2": "Fr",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 87,
+  "adj2": "Ra",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 88,
+  "adj2": "Ac",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 89,
+  "adj2": "Th",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 90,
+  "adj2": "Pa",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 91,
+  "adj2": "Np",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 92,
+  "adj2": "Pu",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 93,
+  "adj2": "Am",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 94,
+  "adj2": "Cm",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 95,
+  "adj2": "Bk",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 96,
+  "adj2": "Cf",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 97,
+  "adj2": "Es",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 98,
+  "adj2": "Fn",
+  "adj2_stability": 0.4444444444444444
+ },
+ {
+  "i": 99,
+  "adj2": "Md",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 100,
+  "adj2": "No",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 101,
+  "adj2": "Lr",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 102,
+  "adj2": "NaCl",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 103,
+  "adj2": "CH4",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 104,
+  "adj2": "NH3",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 105,
+  "adj2": "O3",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 106,
+  "adj2": "C6H12O6",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 107,
+  "adj2": "H2SO4",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 108,
+  "adj2": "CO",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 109,
+  "adj2": "H2O2",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 110,
+  "adj2": "HNO3",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 111,
+  "adj2": "C2H5OH",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 112,
+  "adj2": "NaHCO3",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 113,
+  "adj2": "CaCO3",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 114,
+  "adj2": "German",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 115,
+  "adj2": "Arabic",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 116,
+  "adj2": "Persian",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 117,
+  "adj2": "Hebrew",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 118,
+  "adj2": "Urdu",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 119,
+  "adj2": "Bengali",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 120,
+  "adj2": "Vietnamese",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 121,
+  "adj2": "Thai",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 122,
+  "adj2": "Greek",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 123,
+  "adj2": "Turkish",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 124,
+  "adj2": "Polish",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 125,
+  "adj2": "Romanian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 126,
+  "adj2": "Bulgarian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 127,
+  "adj2": "Croatian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 128,
+  "adj2": "Serbian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 129,
+  "adj2": "Albanian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 130,
+  "adj2": "Finnish",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 131,
+  "adj2": "Estonian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 132,
+  "adj2": "Icelandic",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 133,
+  "adj2": "Amharic",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 134,
+  "adj2": "Somali",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 135,
+  "adj2": "Khmer",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 136,
+  "adj2": "Burmese",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 137,
+  "adj2": "Nepali",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 138,
+  "adj2": "Sinhala",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 139,
+  "adj2": "Malagasy",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 140,
+  "adj2": "Mongolian",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 141,
+  "adj2": "Lao Kip",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 142,
+  "adj2": "Riel",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 143,
+  "adj2": "Kyat",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 144,
+  "adj2": "Mongolian T\u00f6gr\u00f6g",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 145,
+  "adj2": "Afghan Afghani",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 146,
+  "adj2": "Iraqi dinar",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 147,
+  "adj2": "Kuwaiti Dinar",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 148,
+  "adj2": "Qatari riyal",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 149,
+  "adj2": "Omani rial",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 150,
+  "adj2": "Jordanian Dinar",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 151,
+  "adj2": "Lebanese pound",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 152,
+  "adj2": "Libyan dinar",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 153,
+  "adj2": "Tunisian dinar",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 154,
+  "adj2": "Dinar",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 155,
+  "adj2": "Sudanese Pound",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 156,
+  "adj2": "Tanzanian shilling",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 157,
+  "adj2": "Ugandan Shilling",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 158,
+  "adj2": "Zambian kwacha",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 159,
+  "adj2": "Malawi Kwacha",
+  "adj2_stability": 0.5555555555555556
+ },
+ {
+  "i": 160,
+  "adj2": "Kwanza",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 161,
+  "adj2": "Metical",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 162,
+  "adj2": "Ariary",
+  "adj2_stability": 0.5555555555555556
+ },
+ {
+  "i": 163,
+  "adj2": "RWF",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 164,
+  "adj2": "Haitian Gourde",
+  "adj2_stability": 0.7777777777777778
+ },
+ {
+  "i": 165,
+  "adj2": "Quetzal",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 166,
+  "adj2": "Lempira",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 167,
+  "adj2": "Cordoba",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 168,
+  "adj2": "Costa Rican Col\u00f3n",
+  "adj2_stability": 0.6666666666666667
+ },
+ {
+  "i": 169,
+  "adj2": "US dollar",
+  "adj2_stability": 0.8888888888888888
+ },
+ {
+  "i": 170,
+  "adj2": "Guarani",
+  "adj2_stability": 1.0
+ },
+ {
+  "i": 171,
+  "adj2": "Boliviano",
+  "adj2_stability": 0.6666666666666667
+ }
+]
