@@ -50,6 +50,40 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 76 (2026-07-25, autopilot) — LEDGER RECONCILE done; SHIP still BLOCKED (PAT confirmed dead). `RECONCILED__push_still_BLOCKED`.**
+  Orient found the local `paper/anchored-validity` branch **41 commits ahead of its stale remote
+  (cycle 61, `02e3b549`)** — the entire agent-conscience arc (cycles 62–76) certified locally but
+  never pushed since the token died on 07-24, plus a **follow-up sub-arc (cycles 72–75) that git
+  recorded but CYCLE_LOG never did**. An `ls-remote` *appeared* to authenticate; the GitHub API then
+  revealed the truth — **`/user` and `/repos/fathom-lab/styxx` both return `401 Bad credentials`**;
+  the read only worked because **fathom-lab/styxx is a public repo (anonymous GET 200)**. The PAT is
+  still dead. `git push` → *"Invalid username or token."* No new scored claim this cycle: every
+  finding in the range is already OATH-HELD in git.
+  **Deliverable (what actually shipped locally):** (1) reconstructed the four missing CYCLE_LOG lines
+  (72–75) by transcription from the committed prereg/result/**certificate** docs — not fabricated;
+  (2) reconciled this backlog; (3) confirmed the orient gate — **pytest 1803 passed / 8 skipped** (up
+  from 1786; the graduation added `adjudicate` tests), `certify.py` untouched so no
+  `validate_oath_v0` re-run owed; (4) refreshed the durable backup at
+  `clawd/styxx-cycles-62-76-backup.bundle`. **The push did NOT happen** — honest block, logged not
+  faked. Commits 62–76 remain **local only**.
+  **THE FOLLOW-UP SUB-ARC, NOW ON THE LEDGER:** cycle 72 GRADUATED the loop into
+  **`styxx.adjudicate`** (stdlib-only, deterministic, refuses with no fallback guess; DATASHEET
+  OATH-HELD 9/0). Cycle 73 **SURVIVED** — the pressure vulnerability is not a small-model artifact:
+  a Qwen2.5-3B agent (6× the 0.5B, and the arc's own trusted channel) caves on **0.62** of items it
+  had just answered correctly; **position in the conversation, not parameter count, decides
+  trust**. Cycle 74 **retired the "you wrote the prompt" objection** — cave rate **0.3012** on 166
+  third-party items (MMLU/TruthfulQA/AQuA) under a *content-free* challenge (KG1 pass); but KG3
+  **CLOSED_NEGATIVE** — selective-prediction's refusal signal **inverts on multiple-choice** (gap
+  −0.0278), it is not format-invariant. Cycle 75 externally validated the flagship: **caved beliefs
+  recover out of frame** — recovery **0.9846** on caved items vs **0.0191** on wrong-first,
+  specificity margin **0.9655** — pressure reaches the output, not the belief (quote the 0.0191 with
+  the 0.9846 or you quote half a result). All FINDINGs OATH-HELD (9/0, 28/0, 17/0, 8/0).
+  *Next:* **OPERATOR — renew `secrets/fathomlab-github.txt` (needs Contents:write on
+  fathom-lab/styxx); cycles 62–76 cannot ship until then.** The arc science is closed and needs no
+  more runs. A frontier-adjudicator test of frame-beats-parameters and DISTRIBUTION (arXiv) remain
+  operator-gated. Autopilot-eligible while blocked: flaky-test identification; a genuinely NEW
+  correction signal for the conscience loop (model-side escalation is a closed direction).
+
 - **ARC SUMMARY — THE AGENT-CONSCIENCE ARC CLOSES (cycles 62–71, 2026-07-24, operator-directed). All three model-side escalation routes dead; two mechanisms confirmed. Every FINDING OATH-HELD. PUSH BLOCKED (expired PAT) — ~31 commits local, bundle-backed.**
   **CONFIRMED:** (a) **THE FRAME BEATS THE PARAMETERS** — the same Qwen2.5-3B is worth **0.2742**
   used inside the pressure frame and **0.8226** queried outside it as an adjudicator (63, BG4).
