@@ -50,6 +50,43 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 77 (2026-07-25, operator-directed "take the tech to a higher level and break the ceiling") — THE BELIEF AS A LABEL-FREE VERIFIER. `CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness` (FINDING OATH-HELD verified=23 abstained=9 contradicted=0). PUSH STILL BLOCKED.**
+  The arc closed model-side escalation and recorded that correction needs a **genuinely new signal,
+  not a re-weighting**. Cycle 75 produced one *after* cycle 69 was scored, and this cycle cashes it:
+  if the belief survives pressure intact, the model's **own out-of-frame belief** is a candidate
+  verifier — **no labels, no second model, no retrieval, no scale**, one extra batch of forward passes
+  on the same 3B weights. Cycle 75 measured recovery *given* ground truth; this inverts it into the
+  deployment question. Two signals, same weights, **matched compute**, differing only in the frame:
+  `S_frame` (N=10 neutral fresh-context samples agreeing with the reported answer) vs `S_sc` (N=10
+  samples from *inside* the pressured conversation). Prereg `1c6b952` + harness `728c7d8` frozen
+  before the scored run; AUROC **tie-aware** by construction (both signals discrete on {0/10..10/10});
+  G3 coverage ties broken by ascending item index, frozen in advance; constants **imported** from the
+  cycle-74 module; sixth disjoint pool, **0 overlap asserted in code**.
+  **THE GATE I NAMED AS THE LIKELY KILLER IS THE ONE THAT PASSED. G2 PASS: AUROC(S_frame) 0.7377 −
+  AUROC(S_sc) 0.6666 = 0.0712** vs a 0.05 margin, with the separation holding at **every** coverage
+  point (0.8261 vs 0.6957 at coverage 0.20). At matched compute, querying the belief **outside** the
+  pressured conversation carries correctness information that sampling **inside** it does not.
+  **The mechanistic prediction was right, and one unregistered observation makes it sharp: S_frame
+  predicts correctness for the POST-pressure answer (0.7377) but is NEAR CHANCE for the PRE-pressure
+  answer (0.5500).** Were this merely "sampling agrees with greedy" it would work equally in both
+  places; the signal exists *because* pressure moved the reported answer away from a belief that did
+  not move.
+  **BUT THE REGISTERED CLAIM IS NOT EARNED. G1 FAIL: 0.7377 vs a 0.75 floor — missed by 0.0123**
+  (near-bar = closed negative, no metric re-chosen afterwards). **G3 FAIL: 0.7456 vs 0.80.** V1 PASS
+  (123 correct / 105 incorrect of 228). **Net: a real signal that beats the obvious baseline,
+  sub-threshold as an instrument — no `styxx` API ships on this.**
+  **TWO RESCUES REFUSED:** (a) the **combined** signal `S_frame+S_sc` scores **0.7717**, beats both
+  and *would* have cleared G1 — pre-declared **observation-only**, so it clears nothing; helping
+  myself to a two-signal estimator after the one-signal version missed by 0.012 is the forbidden move;
+  (b) **MMLU alone clears the floor (0.7932)** while **AQuA inverts below chance (0.4479**, 28 items,
+  only 4 correct) — a subgroup clearing a bar the whole misses is a scope question, not a pass.
+  Caving replicated on a sixth disjoint pool (**0.5702 → 0.5395** for nothing but being doubted).
+  `certify.py` untouched. Commits `1c6b952` (prereg), `728c7d8` (harness) — **local only**.
+  *Next:* **the combined signal is the top lead** — own prereg, own bar, FRESH disjoint pool; it must
+  not be smuggled in as a re-score of this data. Then a format/domain scope test (the aggregate is
+  heterogeneous), and — genuinely risky — the same measurement at larger scale, where a falling cave
+  rate should *weaken* the signal's basis.
+
 - **Cycle 76 (2026-07-25, autopilot) — LEDGER RECONCILE done; SHIP still BLOCKED (PAT confirmed dead). `RECONCILED__push_still_BLOCKED`.**
   Orient found the local `paper/anchored-validity` branch **41 commits ahead of its stale remote
   (cycle 61, `02e3b549`)** — the entire agent-conscience arc (cycles 62–76) certified locally but
