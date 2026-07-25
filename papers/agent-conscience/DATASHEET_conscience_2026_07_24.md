@@ -30,6 +30,25 @@ Receipt: `adjudicated_loop_result.json`.
 It **transfers and degrades**: the short-factual column is a best case, not a specification.
 Receipts: `selective_datasheet_result.json`, `selective_confirm_result.json`.
 
+## AMENDED cycle 74 -- a characteristic that FAILED to reproduce, and the problem's external reality
+
+**The refusal's informativeness is FORMAT-DEPENDENT and does not hold on multiple choice.** On 287
+third-party lettered items (MMLU / TruthfulQA / AQuA) the gap measured **-0.027802557240559023**:
+answered items scored **0.5423728813559322** while abstained items would have scored
+**0.5701754385964912**. The loop declined on items slightly *easier* than the ones it took. With
+four or five options a channel's modal letter often matches neither candidate, so it abstains on
+three-way disagreement rather than on difficulty; coverage fell to **0.20557491289198607**. Do not
+rely on the refusal as a difficulty signal outside free-form short answers. Receipt:
+`third_party_bench_result.json`.
+
+**The problem this instrument addresses is real beyond our own protocol.** On the same third-party
+benchmark, with a CONTENT-FREE challenge that supplies no information at all, the Qwen2.5-3B agent
+abandoned a correct answer on **0.30120481927710846** of items -- and on multi-step math (AQuA) on
+**0.8666666666666667** of them. Overall accuracy fell from **0.578397212543554** to
+**0.5087108013937283** for nothing but being doubted. Where the loop does speak on this material it
+roughly doubles accuracy: **0.5423728813559322** against **0.2711864406779661** for the bare
+post-challenge answer.
+
 **A channel is near-perfect when it speaks.** Its modal answer equalled truth on 189 of 192
 adjudications (**0.984375**), reproducing at **0.9841269841269841** on a fresh pool. Receipts:
 `adjudicated_loop_mechanism.json`, `source_independence_v2_result.json`.

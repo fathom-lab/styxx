@@ -1,0 +1,208 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_third_party_bench_2026_07_24.md",
+  "document_sha256": "613496e19939fda2d331b03fd138f4b6cddd8f362e4fa5b4330b1f4a0bf8c1e0",
+  "receipts_sha256": {
+    "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4",
+    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
+    "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 81,
+      "token": "10"
+    },
+    {
+      "line": 82,
+      "token": "15"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "287",
+      "value": 287.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B, channel Qwen2.5-7B-4bit, loop = the shipped `styxx.adjudicate`, **287 scored items from",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:n_scored"
+    },
+    {
+      "line": 11,
+      "token": "166",
+      "value": 166.0,
+      "decimals": 0,
+      "context": "**KG1 PASSED: cave rate 0.30120481927710846** on 166 initially-correct items.",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:n_initially_correct"
+    },
+    {
+      "line": 29,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "| aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.n"
+    },
+    {
+      "line": 29,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "| aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | aqua_mc | 37 | 15 | **0.8666666666666667** |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.n_initially_correct"
+    },
+    {
+      "line": 30,
+      "token": "143",
+      "value": 143.0,
+      "decimals": 0,
+      "context": "| mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.n"
+    },
+    {
+      "line": 30,
+      "token": "85",
+      "value": 85.0,
+      "decimals": 0,
+      "context": "| mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | mmlu_mc_cot | 143 | 85 | 0.27058823529411763 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.mmlu_mc_cot.n_initially_correct"
+    },
+    {
+      "line": 31,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "| truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.truthful_qa_mc.n"
+    },
+    {
+      "line": 31,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "| truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "binding_context": "| dataset | n | initially correct | cave rate | | truthful_qa_mc | 107 | 66 | 0.21212121212121213 |",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.truthful_qa_mc.n_initially_correct"
+    },
+    {
+      "line": 34,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "answer when doubted. The n is small (15 initially correct) and the number is noisy, but the ordering",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.n_initially_correct"
+    },
+    {
+      "line": 49,
+      "token": "0.8102",
+      "value": 0.8102,
+      "decimals": 4,
+      "context": "This is the reverse of every prior measurement of this property (0.8102 factual, 0.4805 SQuAD,",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:cycle64_reference.gap"
+    },
+    {
+      "line": 49,
+      "token": "0.4805",
+      "value": 0.4805,
+      "decimals": 4,
+      "context": "This is the reverse of every prior measurement of this property (0.8102 factual, 0.4805 SQuAD,",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.informativeness_gap"
+    },
+    {
+      "line": 53,
+      "token": "59",
+      "value": 59.0,
+      "decimals": 0,
+      "context": "than on difficulty. Coverage collapsed to 0.20557491289198607 accordingly -- 59 answered against",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:loop.answered"
+    },
+    {
+      "line": 54,
+      "token": "228",
+      "value": 228.0,
+      "decimals": 0,
+      "context": "228 abstained.",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:loop.abstained"
+    },
+    {
+      "line": 65,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "I predicted the cave rate would fall below the 0.62 measured under our own protocol and said I had",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_3b_squad"
+    },
+    {
+      "line": 66,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "no confident call on the 0.15 floor. It fell to 0.30120481927710846 -- below 0.62, comfortably clear",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 66,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "no confident call on the 0.15 floor. It fell to 0.30120481927710846 -- below 0.62, comfortably clear",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_3b_squad"
+    },
+    {
+      "line": 80,
+      "token": "287",
+      "value": 287.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B agent, Qwen2.5-7B-4bit channel, 287 scored multiple-choice items across three families,",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:n_scored"
+    },
+    {
+      "line": 81,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "one content-free challenge turn, greedy answer decoding with N=10 sampled belief distributions.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 82,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "Small per-dataset cells (AQuA n=15 initially correct) are noisy and reported as such.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
