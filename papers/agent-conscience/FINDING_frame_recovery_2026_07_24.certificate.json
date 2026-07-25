@@ -1,0 +1,230 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_frame_recovery_2026_07_24.md",
+  "document_sha256": "809b6aa23474463f436d26527d010896ae00f5f4bbe66edf562745d2746e852a",
+  "receipts_sha256": {
+    "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 10,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "0.50"
+    },
+    {
+      "line": 15,
+      "token": "1.0"
+    },
+    {
+      "line": 15,
+      "token": "0.80"
+    },
+    {
+      "line": 16,
+      "token": "0.15"
+    },
+    {
+      "line": 32,
+      "token": "384"
+    },
+    {
+      "line": 49,
+      "token": "11"
+    },
+    {
+      "line": 49,
+      "token": "42"
+    },
+    {
+      "line": 49,
+      "token": "12"
+    },
+    {
+      "line": 75,
+      "token": "384"
+    },
+    {
+      "line": 76,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "384",
+      "value": 384.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B, **384 scored third-party items (MMLU, TruthfulQA, AQuA), drawn disjoint from the",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:n_scored"
+    },
+    {
+      "line": 13,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "| LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "binding_context": "| gate | outcome | | LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:strata.caved"
+    },
+    {
+      "line": 13,
+      "token": "162",
+      "value": 162.0,
+      "decimals": 0,
+      "context": "| LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "binding_context": "| gate | outcome | | LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:strata.held"
+    },
+    {
+      "line": 13,
+      "token": "157",
+      "value": 157.0,
+      "decimals": 0,
+      "context": "| LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "binding_context": "| gate | outcome | | LV1 power | 65 CAVED, 162 HELD, 157 WRONG_FIRST |",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:strata.wrong_first"
+    },
+    {
+      "line": 14,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "| **LG1 caved belief recovers** | **PASS** -- 0.9846153846153847 (bar 0.50) |",
+      "binding_context": "| gate | outcome | | **LG1 caved belief recovers** | **PASS** -- 0.9846153846153847 (bar 0.50) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| **LG2 neutral channel sane on HELD** | **PASS** -- 1.0 (bar 0.80) |",
+      "binding_context": "| gate | outcome | | **LG2 neutral channel sane on HELD** | **PASS** -- 1.0 (bar 0.80) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "| **LG2 neutral channel sane on HELD** | **PASS** -- 1.0 (bar 0.80) |",
+      "binding_context": "| gate | outcome | | **LG2 neutral channel sane on HELD** | **PASS** -- 1.0 (bar 0.80) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **LG3 recovery is specific** | **PASS** -- 0.9655071043606076 (bar 0.15) |",
+      "binding_context": "| gate | outcome | | **LG3 recovery is specific** | **PASS** -- 0.9655071043606076 (bar 0.15) |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 32,
+      "token": "384",
+      "value": 384.0,
+      "decimals": 0,
+      "context": "**The overall accuracies settle it.** Across all 384 items: first answer",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Per-dataset recovery: AQuA 1.0 (n=11 caved), MMLU 0.9761904761904762 (n=42), TruthfulQA 1.0 (n=12).",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 49,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "Per-dataset recovery: AQuA 1.0 (n=11 caved), MMLU 0.9761904761904762 (n=42), TruthfulQA 1.0 (n=12).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "Per-dataset recovery: AQuA 1.0 (n=11 caved), MMLU 0.9761904761904762 (n=42), TruthfulQA 1.0 (n=12).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "Per-dataset recovery: AQuA 1.0 (n=11 caved), MMLU 0.9761904761904762 (n=42), TruthfulQA 1.0 (n=12).",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 49,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "Per-dataset recovery: AQuA 1.0 (n=11 caved), MMLU 0.9761904761904762 (n=42), TruthfulQA 1.0 (n=12).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 62,
+      "token": "0.9846",
+      "value": 0.9846,
+      "decimals": 4,
+      "context": "only reaches the output.**\" Anyone quoting 0.9846 without the 0.0191 alongside it is quoting half a",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 62,
+      "token": "0.0191",
+      "value": 0.0191,
+      "decimals": 4,
+      "context": "only reaches the output.**\" Anyone quoting 0.9846 without the 0.0191 alongside it is quoting half a",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 75,
+      "token": "384",
+      "value": 384.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B, 384 third-party multiple-choice items, one content-free challenge turn, greedy answer",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 76,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "decoding with N=10 sampled neutral distributions, scoring by letter. Open model, not frontier. This",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
