@@ -50,6 +50,38 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 80 (2026-07-26, operator-directed "break the ceiling and go deeper") — THE SCALE TEST: the foundation SURVIVES 7B, and the belief does not move at all. `SURVIVED__vulnerability_and_recovery_hold_at_7B` (FINDING OATH-HELD verified=30 abstained=2 contradicted=0). PUSH STILL BLOCKED — but the login mystery is SOLVED (see blocked note).**
+  The arc's honest generality test: every load-bearing number rested on agents ≤3B, and the
+  deflationary outcome (a 7B that barely caves ⇒ the phenomenon is a small-model regime) was
+  **pre-committed as a first-class verdict at near even odds**. Agent Qwen2.5-7B-Instruct-4bit,
+  ninth disjoint pool (SEED 800000), cycle-74 caving design + cycle-75 recovery design, every floor
+  imported (CAVE_FLOOR from 73; LG1/LG2/LG3+POWER from 75; QuantLoopModel from 66). Prereg `9c1301e`.
+  **SG1 PASS — THE DEFLATION DID NOT HAPPEN: cave rate 0.2615** on 195 initially-correct items vs
+  the 0.15 floor; accuracy 0.6747 → 0.5952 for nothing but a content-free "Are you sure?". At 7B
+  the vulnerability is no longer even declining much (3B third-party ran 0.3012). **SG2 PASS AT
+  CEILING, AND THE CEILING IS THE FINDING: recovery 1.0 / held-sanity 1.0 / wrong-first 0.0 /
+  specificity 1.0.** Stated before anyone over-reads it: this is NOT truth-finding — the per-item
+  records show the 7B out-of-frame belief is **essentially deterministic and equal to the first
+  answer** (neutral samples overwhelmingly unanimous; modal = first on all but a handful) — so
+  out-of-frame querying returns *whatever the belief was*; wrong beliefs stay wrong at exactly 0.0.
+  Pressure reaches the output, not the belief — the arc's mechanism in its cleanest form yet.
+  **THE ONE-SENTENCE HEADLINE: scale makes the belief MORE stable while leaving the caving barely
+  changed — the gap between what the model knows and what it says under pressure WIDENS with
+  scale.** Disclosed: rescue rate 0.2979 (pressure flips both ways — flips-not-net); AQuA caves at
+  0.5 vs ~0.24 for the retrieval-shaped families (reasoning caves cheaper, stable across scales);
+  the 4-bit caveat travels with the peakedness observation. **Same session: the owed cycle-65
+  flaky-test debt CLOSED** — 6 full-suite runs under concurrent GPU load (CUDA masked), 1803/8
+  green ×6; hunted, not reproduced, bounded-effort null. Commits `9c1301e` (prereg), `0f73372`
+  (result) — **local only**.
+  *Next (each needs its own prereg):* (a) a **7B datasheet rung** for the shipped `styxx.adjudicate`
+  (graduation-style, no new experiment); (b) the belief-vs-report divergence detector **re-tested at
+  7B** — a *different* measurement than the one that died at 3B (the 7B belief is nearly noiseless);
+  must name the cycle-79 burial and carry a fresh bar; (c) the **reasoning-vs-retrieval cave-rate
+  mechanism** study (stable across scales). **OPERATOR/login: the org owner is a SECOND GitHub
+  account, username `fathomlab` (created 2026-04-13, 7 min before the org), almost certainly on
+  Aerodabaugh@gmail.com — check Chrome for a live session, else password-reset that address;
+  `heyzoos123-blip` is pull-only and cannot ship the 50 local commits.**
+
 - **Cycle 79 (2026-07-26, operator-directed "take everything to the next level") — THE ASYMPTOTE OF THE BELIEF SIGNAL: the ceiling was real, the line CLOSES. `CLOSED_NEGATIVE__belief_asymptote_below_floor` (FINDING OATH-HELD verified=17 abstained=5 contradicted=0). PUSH STILL BLOCKED.**
   Cycle 78's G2 established the belief is where the information is and licensed exactly one
   non-re-weighting continuation: **sweep the sampling budget N on the neutral belief alone.**
