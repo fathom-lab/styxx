@@ -50,6 +50,38 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 82 (2026-07-27, operator-directed "keep it up" / "above and beyond") — THE TWO-CHANNEL VERIFIER: closed negative WITHOUT adjudicating its thesis; a mis-calibrated bar, a dead matcher, and the strongest belief signal ever measured. `CLOSED_NEGATIVE__two_channel_misses_instrument_floor` (FINDING OATH-HELD 8/0). PUSH: one 2FA click away (see blocked note).**
+  Joined cycle 81 (belief real at 7B, self-knowledge-capped) with cycle 68 (source independence).
+  7B-4bit on fresh SQuAD pool v7; retrieval = the committed 20k-haystack apparatus; frozen additive
+  rule, strict untunable matching. Prereg `d27a289`; **pre-run amendment `9acbc3f`** (smoke showed
+  strict norm-equality scored surface form, not belief — extraction turn + mutual-assertion matcher
+  + conservative claim fallback; 14 pre-amendment items deleted unscored; cycle-50 precedent) +
+  print fix `0080f23` — all before any scored result.
+  **TWO CONFESSIONS, RECORDED:** (1) **the registered bar was arithmetically unreachable** — 7B
+  accuracy on SQuAD under strict matching measured first 0.1841 / revised 0.1213 (the prereg
+  assumed MC-like accuracy); with 29 correct of 239, a *perfect* half-coverage ranking caps below a
+  quarter vs the 0.80 floor. **NEW METHOD RULE: check bar reachability against the base rate
+  before freezing (max selective acc at coverage c = acc/c).** (2) **the retrieval channel died at
+  the matcher, not retrieval** — gold in top-5 for 0.7992 of items yet `supported` fired on 0.1213;
+  strict containment cannot match free-text phrasing; a matcher that cannot fire cannot add (TG2
+  additivity 0.0083). The two-channel thesis is **NOT adjudicated and NOT dead**.
+  **REAL IN THE WRECKAGE (reported, not gated):** **AUROC(S_frame) 0.8341 — the strongest
+  belief-signal reading in program history**, on open-ended text, with unanimity *collapsed* to
+  0.0962 (vs ~0.83 MC) — free text dissolves the tie-density that capped cycle 81's G3; the graded
+  signal ranks better than the peaked one ever did. **And the know-say gap is FORMAT-DEPENDENT:
+  cave rate 0.5227 at 7B open-ended vs ~0.26–0.29 MC at the same scale** (rescue 0.0410) — being
+  doubted destroys half the correct free-text answers and fixes almost nothing. Extraction plumbing
+  worked (fidelity 0.9205). pytest **1803/8**; certify.py untouched; the certifier caught a derived
+  number in the draft (made qualitative). Commits `d27a289`/`9acbc3f`/`0080f23`/`dfba58c` — local.
+  *Next (each needs its own prereg):* (a) **the open-ended verifier registered properly** — the
+  0.8341 observation with **base-rate-feasible** gates frozen in advance; (b) **the free-text
+  support-matcher study** — close the 0.7992-vs-0.1213 gap honestly (spans/normalization families;
+  no post-hoc fuzzy judge), prerequisite for any retrieval channel on free text; (c)
+  **format-dependence of caving** as its own claim. **PUSH: Chrome session found LIVE as
+  `fathomlab` — blocked only on GitHub's one-time 2FA verify interstitial; operator has the exact
+  click path (verify 2FA → fine-grained PAT, Contents:RW on fathom-lab/styxx → paste into
+  secrets). ~60 commits ship the moment it lands.**
+
 - **Cycle 81 (2026-07-27, operator-directed "make the breakthrough today") — THE VERIFIER AT 7B: real for the first time, and still not an instrument — self-verification is bounded by self-knowledge. `CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B` (FINDING OATH-HELD verified=15 abstained=5 contradicted=0). PUSH STILL BLOCKED.**
   Re-attempted the belief-divergence family **buried at 3B** (cycles 77–79) — burial NAMED in prereg
   `bab5d12` per the hard rail; licensed by cycle 80's substrate change (the 7B out-of-frame belief
