@@ -50,6 +50,35 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 78 (2026-07-26, autopilot — cycle 77's named top lead) — THE COMBINED SIGNAL ON ITS OWN BAR. `CLOSED_NEGATIVE__combined_signal_does_not_predict_correctness` (FINDING OATH-HELD verified=32 abstained=15 contradicted=0). PUSH STILL BLOCKED.**
+  Cycle 77 closed the single out-of-frame belief signal negative (AUROC 0.7377 < 0.75) and noted,
+  **observation-only**, that the combined signal `S_frame + S_sc` scored **0.7717** on that one pool
+  and *would* have cleared the floor — the two-signal rescue the program forbids taking after the
+  fact. The non-forbidden move is this cycle: give COMBINED **its own prereg, its own bar, and a
+  FRESH disjoint pool** (SEED 780000, 0 overlap with cycles 74/75/77 asserted in code). All gate
+  constants and scoring helpers **imported from the cycle-77 module** so they cannot drift. Prereg
+  `d9f1029` frozen before the scored run.
+  **ALL THREE GATES FAILED.** **G1 FAIL: AUROC(COMBINED) 0.7460 vs the 0.75 floor — missed by
+  0.0040**, *narrower* than the single signal it was meant to rescue; the 0.7717 was
+  pool-770000-specific and did not replicate. **G2 FAIL — the load-bearing kill, and it landed:
+  AUROC(COMBINED) 0.7460 − AUROC(S_frame@20) 0.7173 = 0.0288 vs a 0.05 margin.** At **matched
+  compute** (a fixed 20-sample budget), splitting across the pressured and neutral frames beats
+  spending it all on the belief alone by only 0.0288 — the in-frame batch adds real but small
+  information, not enough to justify computing it. **The honest instrument is to sample the neutral
+  belief more and drop the in-frame batch.** G3 FAIL: selective accuracy 0.7155 vs a 0.80 floor.
+  **The frame MECHANISM is intact** (S_frame@10 0.7187 still beats S_sc@10 0.6339; combined lives on
+  the post-pressure answer 0.7460 vs pre-pressure 0.6218) — it is sub-threshold at this scale/format,
+  not absent, and combining the frames does not fix that. **The belief-divergence line is now CLOSED
+  NEGATIVE TWICE** (single signal 77, combined signal 78). pytest **1803 passed / 8 skipped** at
+  orient; certify.py untouched (no `validate_oath_v0` re-run owed); py_compile clean. Commits
+  `d9f1029` (prereg), `93569f1` (result) — **local only**.
+  *Next (each needs its own prereg):* the belief-divergence family is closed twice — **do NOT
+  re-attempt a third re-weighting of S_frame/S_sc.** (a) The **honest fallback G2 points to**: spend
+  the whole sampling budget on the neutral belief (`S_frame@N`) and sweep N upward — a scaling
+  question, not a new estimator; may or may not clear 0.75. (b) The same measurement at a **larger
+  model scale**, where a falling cave rate should weaken the signal's basis — a genuine risk to the
+  approach. **OPERATOR still owes PAT renewal to ship cycles 62–78.**
+
 - **Cycle 77 (2026-07-25, operator-directed "take the tech to a higher level and break the ceiling") — THE BELIEF AS A LABEL-FREE VERIFIER. `CLOSED_NEGATIVE__belief_divergence_does_not_predict_correctness` (FINDING OATH-HELD verified=23 abstained=9 contradicted=0). PUSH STILL BLOCKED.**
   The arc closed model-side escalation and recorded that correction needs a **genuinely new signal,
   not a re-weighting**. Cycle 75 produced one *after* cycle 69 was scored, and this cycle cashes it:
