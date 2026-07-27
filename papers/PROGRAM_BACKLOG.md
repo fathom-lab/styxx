@@ -50,6 +50,35 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 81 IN FLIGHT (2026-07-27, operator-directed "make the breakthrough today") — THE LABEL-FREE VERIFIER AT 7B. Prereg `bab5d12` committed; scored run `run_verifier_7b.py a` EXECUTING (phase-A JSONL `v7_phase_a.jsonl` live). Do NOT contend — GPU occupied by this scored run; its result is owed to the firing that scores the completed run, not to any interstitial tick.**
+  Re-attempts the belief-divergence verifier family (closed at 3B/MC across cycles 77–79 with a
+  measured asymptote ~0.74 < 0.75) on the material difference the closure demanded: the SUBSTRATE.
+  Cycle 80 measured the 7B out-of-frame belief to be essentially deterministic — a different
+  information regime than the noisy 3B belief whose ceiling killed the family. Bars imported verbatim
+  from the cycle-77 module (G1 0.75 / G2 0.05 / G3 0.80 — the exact floors it died under); fresh
+  TENTH pool SEED 810000, 0 overlap asserted in code. Disclosed reconnaissance on the cycle-80
+  records (AUROC ~0.78, selective ~0.79) licensed spending the day and nothing else; G3's estimate
+  sits UNDER its floor so the most likely negative is pre-committed as a full closed negative, and a
+  G1 miss spends the re-attempt clause (family then closed at both measured scales). Result pending.
+
+- **Cycle 81-housekeeping (2026-07-27, autopilot interstitial firing) — NON-CONTENDING BUNDLE REFRESH. `BLOCKED_NONCONTENDING__bundle_refreshed`.**
+  A scheduled autopilot tick fired while cycle 81's scored run was mid-flight (phase A actively
+  writing). Per the hard rail (never contend with a scored run) it started NO GPU/API experiment and
+  did not touch the run's files. The one owed, $0, non-contending item — the durable disaster-recovery
+  bundle — was stale: the newest `styxx-cycles-62-80-backup.bundle` predates the cycle-81 prereg
+  commit `bab5d12`, so the only backup of the 52 local-only commits (still unshippable, PAT dead)
+  omitted the newest committed object. Refreshed to `clawd/styxx-cycles-62-81-backup.bundle` (thin,
+  base `02e3b549` = cycle-61 remote tip recoverable from the public remote; 52 commits;
+  `git bundle verify` → okay). Push re-confirmed BLOCKED this firing: GitHub API `/user` → **401 Bad
+  credentials** (PAT dead since 07-24, unchanged). No `.py` touched, no new FINDING/RESULT doc,
+  `certify.py` untouched → no py_compile/certify/`validate_oath_v0` owed; full pytest deliberately NOT
+  run (would contend for CPU with the live scored run; last gate 1803/8 green ×6 at cycle 80).
+  *Next:* the firing that finds `run_verifier_7b.py` COMPLETE scores cycle 81 against the frozen
+  `bab5d12` bars (near-bar = CLOSED_NEGATIVE; a G1 miss closes the belief-divergence family at both
+  measured scales), certifies the FINDING OATH-HELD, commits, and logs the cycle-81 result line.
+  **OPERATOR: PAT still dead — cycles 62–81 cannot ship; login recovery path = the `fathomlab` account
+  on Aerodabaugh@gmail.com (see cycle 80 blocked note).**
+
 - **Cycle 80 (2026-07-26, operator-directed "break the ceiling and go deeper") — THE SCALE TEST: the foundation SURVIVES 7B, and the belief does not move at all. `SURVIVED__vulnerability_and_recovery_hold_at_7B` (FINDING OATH-HELD verified=30 abstained=2 contradicted=0). PUSH STILL BLOCKED — but the login mystery is SOLVED (see blocked note).**
   The arc's honest generality test: every load-bearing number rested on agents ≤3B, and the
   deflationary outcome (a 7B that barely caves ⇒ the phenomenon is a small-model regime) was
