@@ -1,0 +1,228 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_verifier_at_7b_2026_07_27.md",
+  "document_sha256": "294160c51904f45d39d39f1bac9f795d99076a94469e082e7eb0017e34c7eb79",
+  "receipts_sha256": {
+    "verifier_7b_result.json": "db9a32f22f9d80506df0caacf35115f00d2edd8518fd78b0d3c6a80ddbf6e002"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 22,
+      "token": "0.75"
+    },
+    {
+      "line": 45,
+      "token": "62"
+    },
+    {
+      "line": 46,
+      "token": "81"
+    },
+    {
+      "line": 76,
+      "token": "78"
+    },
+    {
+      "line": 82,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "235",
+      "value": 235.0,
+      "decimals": 0,
+      "context": "Qwen2.5-7B-Instruct in 4-bit, 235 scored third-party items, tenth disjoint pool, 0 overlap with",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:n_scored"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "Qwen2.5-7B-Instruct in 4-bit, 235 scored third-party items, tenth disjoint pool, 0 overlap with",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:per_item[0].i"
+    },
+    {
+      "line": 12,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "**G3 FAILED: selective accuracy 0.7796610169491526 over the top half by S_frame, against the 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:frozen_gates.G3_FLOOR"
+    },
+    {
+      "line": 22,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "- **G1 PASSED: AUROC(S_frame) = 0.7596743574766355** against the 0.75 floor. Across the entire 3B",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 42,
+      "token": "0.78",
+      "value": 0.78,
+      "decimals": 2,
+      "context": "near 0.78 at every coverage \u2014 the instrument cannot rank *within* its confident stratum, and about",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:selective_accuracy_at_G3_coverage.s_frame"
+    },
+    {
+      "line": 45,
+      "token": "62",
+      "value": 62.0,
+      "decimals": 0,
+      "context": "**This is the confabulation wall, rediscovered from the other side.** Cycle 62 measured that the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "81",
+      "value": 81.0,
+      "decimals": 0,
+      "context": "restore-gate fails on stably-wrong beliefs; cycle 81 measures that the verifier fails on exactly the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "the model's stable beliefs \u2014 here just under the 0.80 floor, so the instrument bar is missed for a",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:frozen_gates.G3_FLOOR"
+    },
+    {
+      "line": 62,
+      "token": "110",
+      "value": 110.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 110 | 57 | 0.8156239655743132 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `mmlu_mc_cot` | 110 | 57 | 0.8156239655743132 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.mmlu_mc_cot.n"
+    },
+    {
+      "line": 62,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 110 | 57 | 0.8156239655743132 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `mmlu_mc_cot` | 110 | 57 | 0.8156239655743132 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.mmlu_mc_cot.n_correct"
+    },
+    {
+      "line": 63,
+      "token": "95",
+      "value": 95.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 95 | 61 | 0.757473481195757 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `truthful_qa_mc` | 95 | 61 | 0.757473481195757 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.truthful_qa_mc.n"
+    },
+    {
+      "line": 63,
+      "token": "61",
+      "value": 61.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 95 | 61 | 0.757473481195757 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `truthful_qa_mc` | 95 | 61 | 0.757473481195757 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.truthful_qa_mc.n_correct"
+    },
+    {
+      "line": 64,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 30 | 10 | 0.4425 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `aqua_mc` | 30 | 10 | 0.4425 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.aqua_mc.n"
+    },
+    {
+      "line": 64,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 30 | 10 | 0.4425 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `aqua_mc` | 30 | 10 | 0.4425 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:n_samples_per_frame"
+    },
+    {
+      "line": 64,
+      "token": "0.4425",
+      "value": 0.4425,
+      "decimals": 4,
+      "context": "| `aqua_mc` | 30 | 10 | 0.4425 |",
+      "binding_context": "| dataset | n | n correct | AUROC(S_frame) | | `aqua_mc` | 30 | 10 | 0.4425 |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:not_gated.by_dataset.aqua_mc.auroc_frame"
+    },
+    {
+      "line": 76,
+      "token": "78",
+      "value": 78.0,
+      "decimals": 0,
+      "context": "combined signal (closed at 3B by cycle 78) is reported for continuity at 0.7704439252336449 and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 82,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "letter; N=10 per frame; greedy reported answers; 235 scored, 5 excluded unparseable (rule",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 82,
+      "token": "235",
+      "value": 235.0,
+      "decimals": 0,
+      "context": "letter; N=10 per frame; greedy reported answers; 235 scored, 5 excluded unparseable (rule",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:n_scored"
+    },
+    {
+      "line": 82,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "letter; N=10 per frame; greedy reported answers; 235 scored, 5 excluded unparseable (rule",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:n_unparsed_excluded"
+    },
+    {
+      "line": 83,
+      "token": "406",
+      "value": 406.0,
+      "decimals": 0,
+      "context": "pre-specified); 406 candidates skipped as already scored to keep the pool disjoint. Nothing",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:n_skipped_as_already_scored"
+    }
+  ]
+}
