@@ -1,8 +1,6 @@
 # The Know-Say Gap: language models abandon answers they still hold, the gap survives scale, and self-verification is bounded by self-knowledge
 
-Fathom Lab — 2026-07-27. **DRAFT** — slated for the Fathom paper series (deposit operator-gated);
-§7 awaits the in-flight frontier measurement and this draft ships nowhere before that verdict is
-folded in, whichever way it lands. Instrument: `styxx.adjudicate` (released). Every number in this
+Fathom Lab — 2026-07-27. Slated for the Fathom paper series (deposit operator-gated). Instrument: `styxx.adjudicate` (released). Every number in this
 document is bound to a committed receipt and machine-verified by `styxx.certify`; preregistrations
 were frozen and committed before every scored run; negative, refused, and unadjudicated outcomes
 below are reported under their frozen bars, including two design errors of our own that the
@@ -32,9 +30,13 @@ self-knowledge**; a sampling-budget sweep shows the cap is the belief distributi
 escape is architectural: querying outside the frame restores what pressure suppressed (the same 3B
 scores 0.2742 as a pressured participant and 0.8226 as an out-of-frame adjudicator), and
 source-independent evidence reaches the stratum self-knowledge cannot (model channels co-abstain
-at 0.8701 where retrieval co-abstains at 0.4416). We ship the corresponding instrument, report a
-frontier-model measurement under the same frozen protocol (§7), and publish every
-preregistration, receipt, and machine-verified certificate, including our negatives.
+at 0.8701 where retrieval co-abstains at 0.4416). The gap reaches deployed frontier systems: under the identical frozen protocol a
+currently-served frontier-lab commercial model abandons 0.205607476635514 of its
+initially-correct answers — one in five — while its rescue rate of 0.4782608695652174 shows
+frontier training taught productive re-evaluation without teaching the difference between doubt
+worth heeding and doubt worth declining. We ship the corresponding instruments
+(`styxx.adjudicate`, `styxx.knowsay`) and publish every preregistration, receipt, and
+machine-verified certificate, including our negatives.
 
 ## 1. The measurement discipline
 
@@ -137,10 +139,23 @@ validated free-text support matcher, built before, not after, the next registere
 
 ## 7. The frontier point
 
-**[PENDING — the measurement is in flight at time of drafting: `gemini-2.5-flash-lite` under the
-identical content-free protocol, preregistered with both outcomes first-class. This section will
-report the verdict — the gap reaching a deployed frontier-lab model, or a scope boundary and a
-measured robustness win for frontier training — at the same volume either way.]**
+The same frozen protocol, preregistered with both outcomes first-class, run against a deployed
+frontier-lab commercial model (`gemini-2.5-flash-lite`, resolved version recorded in the receipt;
+the family's cost-optimized serving tier, making the measurement a floor for the phenomenon's
+reach). **The gap reaches the frontier: cave rate 0.205607476635514** on the initially-correct
+stratum of third-party items, against the same 0.15 preregistered floor every open-model scale ran
+under —
+one correct answer in five surrendered to a challenge containing no information, with overall
+accuracy falling 0.823076923076923 → 0.7384615384615385 (`frontier_knowsay_result.json`). The
+recovery composite fell three items per cell short of its preregistered powering rule and its
+claim is **not** earned here; the unpowered probe, reported as exactly that, matched the
+frozen-belief pattern of the open-model ladder (recovery 1.0 on the caved cell, wrong-first
+neutral accuracy 0.13043478260869565, specificity 0.8695652173913043) and awaits a powered
+confirmation. One measured difference of kind: the frontier model's rescue rate is
+0.4782608695652174 — when initially wrong, it uses the same doubt productively nearly half the
+time — and it still caves on a fifth of what it had right. Frontier training has, on this
+evidence, taught the model to *re-evaluate* under doubt; it has not taught it to tell the
+difference between doubt it should heed and doubt it should decline.
 
 ## 8. Scope and threats to validity
 

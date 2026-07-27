@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "PAPER_knowsay_gap_2026_07_27.md",
-  "document_sha256": "ca1a21eef052561ee12d9f903f5ca61b8e4f0080af0e84b55c9e96305741e602",
+  "document_sha256": "c3a776085e6d299966fc085fc767b63d8a809e414ce307b32cebe359325efc05",
   "receipts_sha256": {
     "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4",
     "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d",
@@ -15,29 +15,26 @@
     "two_channel_result.json": "0b7f947eb0d4dc2d79ca7be81cbb425b65e0e2ccb17b0f7f183befee0bf396aa",
     "self_verification_result.json": "be0ff9eb32443cb356d854c55151f4629e9a593d244d8d644b68971fb3b2cf4f",
     "conscience_loop_result.json": "65379ff253fb8875db8ad7169afafb9e05f81347e3111f46b46a184b06c30d8a",
-    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7"
+    "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
+    "frontier_knowsay_result.json": "9c87a33b07842bd8f6ba508bd6c4000f286f8fb6132070e05c7e55659734d0a4"
   },
   "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
-    "VERIFIED": 27,
-    "ABSTAIN": 2,
+    "VERIFIED": 29,
+    "ABSTAIN": 1,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
     {
-      "line": 36,
-      "token": "7"
-    },
-    {
-      "line": 95,
+      "line": 97,
       "token": "7"
     }
   ],
   "ledger": [
     {
-      "line": 18,
+      "line": 16,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -46,7 +43,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 22,
+      "line": 20,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -55,7 +52,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 22,
+      "line": 20,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -64,7 +61,7 @@
       "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
     },
     {
-      "line": 28,
+      "line": 26,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -73,7 +70,7 @@
       "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR"
     },
     {
-      "line": 33,
+      "line": 31,
       "token": "0.2742",
       "value": 0.2742,
       "decimals": 4,
@@ -82,7 +79,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
     },
     {
-      "line": 33,
+      "line": 31,
       "token": "0.8226",
       "value": 0.8226,
       "decimals": 4,
@@ -91,34 +88,25 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
-      "line": 35,
+      "line": 33,
       "token": "0.8701",
       "value": 0.8701,
       "decimals": 4,
-      "context": "at 0.8701 where retrieval co-abstains at 0.4416). We ship the corresponding instrument, report a",
+      "context": "at 0.8701 where retrieval co-abstains at 0.4416). The gap reaches deployed frontier systems: under the identical frozen protocol a",
       "status": "VERIFIED",
       "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
     },
     {
-      "line": 35,
+      "line": 33,
       "token": "0.4416",
       "value": 0.4416,
       "decimals": 4,
-      "context": "at 0.8701 where retrieval co-abstains at 0.4416). We ship the corresponding instrument, report a",
+      "context": "at 0.8701 where retrieval co-abstains at 0.4416). The gap reaches deployed frontier systems: under the identical frozen protocol a",
       "status": "VERIFIED",
       "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
     },
     {
-      "line": 36,
-      "token": "7",
-      "value": 7.0,
-      "decimals": 0,
-      "context": "frontier-model measurement under the same frozen protocol (\u00a77), and publish every",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 55,
+      "line": 57,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -127,7 +115,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 58,
+      "line": 60,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
@@ -136,7 +124,7 @@
       "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
     },
     {
-      "line": 60,
+      "line": 62,
       "token": "0.9132",
       "value": 0.9132,
       "decimals": 4,
@@ -145,7 +133,7 @@
       "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_0p5b_factual"
     },
     {
-      "line": 60,
+      "line": 62,
       "token": "0.62",
       "value": 0.62,
       "decimals": 2,
@@ -154,7 +142,7 @@
       "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_3b_squad"
     },
     {
-      "line": 68,
+      "line": 70,
       "token": "0.5",
       "value": 0.5,
       "decimals": 1,
@@ -163,7 +151,7 @@
       "receipt_ref": "third_party_bench_result.json:accuracy.revised"
     },
     {
-      "line": 81,
+      "line": 83,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -172,7 +160,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 81,
+      "line": 83,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -181,7 +169,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 81,
+      "line": 83,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -190,7 +178,7 @@
       "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "0.2742",
       "value": 0.2742,
       "decimals": 4,
@@ -199,7 +187,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
     },
     {
-      "line": 84,
+      "line": 86,
       "token": "0.8226",
       "value": 0.8226,
       "decimals": 4,
@@ -208,7 +196,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
-      "line": 90,
+      "line": 92,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -217,7 +205,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 91,
+      "line": 93,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -226,7 +214,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "7",
       "value": 7.0,
       "decimals": 0,
@@ -235,7 +223,7 @@
       "receipt_ref": null
     },
     {
-      "line": 101,
+      "line": 103,
       "token": "0.7377",
       "value": 0.7377,
       "decimals": 4,
@@ -244,7 +232,7 @@
       "receipt_ref": "belief_asymptote_result.json:auroc_by_n.20"
     },
     {
-      "line": 101,
+      "line": 103,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -253,7 +241,7 @@
       "receipt_ref": "verifier_7b_result.json:frozen_gates.G1_FLOOR"
     },
     {
-      "line": 110,
+      "line": 112,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -262,7 +250,7 @@
       "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR"
     },
     {
-      "line": 123,
+      "line": 125,
       "token": "0.8701",
       "value": 0.8701,
       "decimals": 4,
@@ -271,7 +259,7 @@
       "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
     },
     {
-      "line": 124,
+      "line": 126,
       "token": "0.4416",
       "value": 0.4416,
       "decimals": 4,
@@ -280,7 +268,7 @@
       "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
     },
     {
-      "line": 128,
+      "line": 130,
       "token": "0.2973",
       "value": 0.2973,
       "decimals": 4,
@@ -289,13 +277,31 @@
       "receipt_ref": "selective_confirm_result.json:loop.accuracy_abstained_via_fallback"
     },
     {
-      "line": 129,
+      "line": 131,
       "token": "0.7778",
       "value": 0.7778,
       "decimals": 4,
       "context": "scores 0.7778). Our attempt to complete the pair \u2014 belief-agreement for ranking plus retrieval on",
       "status": "VERIFIED",
       "receipt_ref": "competent_agent_result.json:loop.accuracy_answered"
+    },
+    {
+      "line": 146,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "stratum of third-party items, against the same 0.15 preregistered floor every open-model scale ran",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 152,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "frozen-belief pattern of the open-model ladder (recovery 1.0 on the caved cell, wrong-first",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:recovery_on_caved"
     }
   ]
 }
