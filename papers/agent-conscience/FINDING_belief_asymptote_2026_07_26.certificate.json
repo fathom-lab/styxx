@@ -1,0 +1,245 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_belief_asymptote_2026_07_26.md",
+  "document_sha256": "40839f63bd972b87c80543ebb72fdc7d448d6a9b18d1d793b55a53fb23a9e192",
+  "receipts_sha256": {
+    "belief_asymptote_result.json": "6f5d53333244977b1d8bfeedc6b3fde144acc52d163562dafb712475ae32b17c"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 14,
+      "token": "80"
+    },
+    {
+      "line": 15,
+      "token": "40"
+    },
+    {
+      "line": 33,
+      "token": "80"
+    },
+    {
+      "line": 56,
+      "token": "80"
+    },
+    {
+      "line": 58,
+      "token": "80"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "226",
+      "value": 226.0,
+      "decimals": 0,
+      "context": "Qwen2.5-3B-Instruct, 226 scored third-party items (MMLU / TruthfulQA / AQuA), eighth disjoint pool,",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:n_scored"
+    },
+    {
+      "line": 14,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "**G1 FAILED: AUROC(S_frame@80) = 0.7394054395951929 against the frozen 0.75 floor.**",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 14,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "**G1 FAILED: AUROC(S_frame@80) = 0.7394054395951929 against the frozen 0.75 floor.**",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:frozen_gates.G1_FLOOR"
+    },
+    {
+      "line": 15,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "**G2 (the frozen saturation rule) says the miss is terminal: AUROC@80 \u2212 AUROC@40 =",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 16,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "0.002609108159392748, under the 0.01 SAT_DELTA \u2014 the curve is SATURATED.** Per the pre-committed",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:frozen_gates.SAT_DELTA"
+    },
+    {
+      "line": 33,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "**G3 also FAILED:** selective accuracy 0.7699115044247787 over the top half by S_frame@80, against a",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 34,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "0.80 floor. (At 0.20 coverage it reaches 0.8444444444444444 \u2014 reported, not gated, and consistent",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:frozen_gates.G3_FLOOR"
+    },
+    {
+      "line": 34,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "0.80 floor. (At 0.20 coverage it reaches 0.8444444444444444 \u2014 reported, not gated, and consistent",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.coverage_curve[0].coverage"
+    },
+    {
+      "line": 46,
+      "token": "0.74",
+      "value": 0.74,
+      "decimals": 2,
+      "context": "2. That information is **capped near 0.74 AUROC** at this scale/format, and the cap is a property of",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:auroc_by_n.10"
+    },
+    {
+      "line": 50,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "3. Therefore no estimator built from these two sampling channels clears 0.75 here. **The family is",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:frozen_gates.G1_FLOOR"
+    },
+    {
+      "line": 56,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "Per-dataset AUROC(S_frame@80) repeats the arc's heterogeneity pattern a third time:",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 58,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "| dataset | n | n correct | AUROC@80 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 60,
+      "token": "109",
+      "value": 109.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 109 | 66 | 0.77184637068358 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `mmlu_mc_cot` | 109 | 66 | 0.77184637068358 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.mmlu_mc_cot.n"
+    },
+    {
+      "line": 60,
+      "token": "66",
+      "value": 66.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 109 | 66 | 0.77184637068358 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `mmlu_mc_cot` | 109 | 66 | 0.77184637068358 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.mmlu_mc_cot.n_correct"
+    },
+    {
+      "line": 61,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 86 | 49 | 0.7010479867622724 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `truthful_qa_mc` | 86 | 49 | 0.7010479867622724 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.truthful_qa_mc.n"
+    },
+    {
+      "line": 61,
+      "token": "49",
+      "value": 49.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 86 | 49 | 0.7010479867622724 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `truthful_qa_mc` | 86 | 49 | 0.7010479867622724 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.truthful_qa_mc.n_correct"
+    },
+    {
+      "line": 62,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 31 | 9 | 0.48484848484848486 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `aqua_mc` | 31 | 9 | 0.48484848484848486 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.aqua_mc.n"
+    },
+    {
+      "line": 62,
+      "token": "9",
+      "value": 9.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 31 | 9 | 0.48484848484848486 |",
+      "binding_context": "| dataset | n | n correct | AUROC@80 | | `aqua_mc` | 31 | 9 | 0.48484848484848486 |",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:not_gated.by_dataset.aqua_mc.n_correct"
+    },
+    {
+      "line": 84,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "`n_neutral` 80 samples per item drawn in chunks, prefix rule for S_frame@N frozen in the prereg;",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:n_neutral"
+    },
+    {
+      "line": 85,
+      "token": "226",
+      "value": 226.0,
+      "decimals": 0,
+      "context": "greedy reported answers; 226 items scored, 14 excluded for an unparseable letter (disclosed; the",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:n_scored"
+    },
+    {
+      "line": 85,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "greedy reported answers; 226 items scored, 14 excluded for an unparseable letter (disclosed; the",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:n_unparsed_excluded"
+    },
+    {
+      "line": 86,
+      "token": "154",
+      "value": 154.0,
+      "decimals": 0,
+      "context": "exclusion rule pre-specified in the harness); 154 candidate items skipped as already scored in",
+      "status": "VERIFIED",
+      "receipt_ref": "belief_asymptote_result.json:n_skipped_as_already_scored"
+    }
+  ]
+}
