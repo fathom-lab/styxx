@@ -1,0 +1,510 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_combined_signal_2026_07_26.md",
+  "document_sha256": "3f8a1a60c71a99fadad4e60e9feb22ec4d07b45876353b1d98860a4610b0c1d7",
+  "receipts_sha256": {
+    "combined_signal_result.json": "a7b46fc7295c3a3afaabbc5b70ebc06e6f9b0e7609a9cb5ec459ac984d5d2c40"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 32,
+    "ABSTAIN": 15,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "74"
+    },
+    {
+      "line": 7,
+      "token": "75"
+    },
+    {
+      "line": 17,
+      "token": "0.7717"
+    },
+    {
+      "line": 28,
+      "token": "20"
+    },
+    {
+      "line": 32,
+      "token": "77"
+    },
+    {
+      "line": 36,
+      "token": "20"
+    },
+    {
+      "line": 41,
+      "token": "10"
+    },
+    {
+      "line": 41,
+      "token": "10"
+    },
+    {
+      "line": 49,
+      "token": "75"
+    },
+    {
+      "line": 55,
+      "token": "20"
+    },
+    {
+      "line": 69,
+      "token": "77"
+    },
+    {
+      "line": 72,
+      "token": "0.7717"
+    },
+    {
+      "line": 77,
+      "token": "74"
+    },
+    {
+      "line": 77,
+      "token": "75"
+    },
+    {
+      "line": 106,
+      "token": "77"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "233",
+      "value": 233.0,
+      "decimals": 0,
+      "context": "`combined_signal_result.json`. Agent Qwen2.5-3B-Instruct, 233 scored third-party items",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_scored"
+    },
+    {
+      "line": 7,
+      "token": "74",
+      "value": 74.0,
+      "decimals": 0,
+      "context": "(MMLU / TruthfulQA / AQuA), fresh pool disjoint from cycles 74, 75 and 77 with 0 overlap asserted in",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "(MMLU / TruthfulQA / AQuA), fresh pool disjoint from cycles 74, 75 and 77 with 0 overlap asserted in",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "(MMLU / TruthfulQA / AQuA), fresh pool disjoint from cycles 74, 75 and 77 with 0 overlap asserted in",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].i"
+    },
+    {
+      "line": 7,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "(MMLU / TruthfulQA / AQuA), fresh pool disjoint from cycles 74, 75 and 77 with 0 overlap asserted in",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].s_frame10"
+    },
+    {
+      "line": 12,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "The prior cycle closed the single out-of-frame belief signal negative, just under the 0.75 floor, and",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:frozen_gates.G1_FLOOR"
+    },
+    {
+      "line": 16,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "**G1 FAILED. AUROC(COMBINED) = 0.7460493280165411 against a frozen 0.75 floor \u2014 missed by",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:frozen_gates.G1_FLOOR"
+    },
+    {
+      "line": 17,
+      "token": "0.7717",
+      "value": 0.7717,
+      "decimals": 4,
+      "context": "0.0039506719834589.** The cycle-77 0.7717 was pool-770000-specific; on fresh data the combined",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 25,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "**matched compute** \u2014 with a fixed budget of 20 sampled passes, does splitting them across the two",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[20].i"
+    },
+    {
+      "line": 26,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "frames (10 neutral + 10 in-frame = COMBINED) beat spending all 20 on the belief alone (`S_frame@20`)?",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[10].i"
+    },
+    {
+      "line": 26,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "frames (10 neutral + 10 in-frame = COMBINED) beat spending all 20 on the belief alone (`S_frame@20`)?",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[10].i"
+    },
+    {
+      "line": 26,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "frames (10 neutral + 10 in-frame = COMBINED) beat spending all 20 on the belief alone (`S_frame@20`)?",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_neutral"
+    },
+    {
+      "line": 26,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "frames (10 neutral + 10 in-frame = COMBINED) beat spending all 20 on the belief alone (`S_frame@20`)?",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_neutral"
+    },
+    {
+      "line": 28,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "**G2 FAILED: AUROC(COMBINED) 0.7460493280165411 \u2212 AUROC(S_frame@20) 0.7172869590902378 =",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 29,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "0.02876236892630335, against a 0.05 margin.** The in-frame batch adds a little \u2014 a real but small",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:frozen_gates.G2_MARGIN"
+    },
+    {
+      "line": 32,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "in-frame batch.** This is the recommendation cycle 77 flagged as the danger and it is now the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "0.80 floor (`S_frame@20` there: 0.6724137931034483).",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:frozen_gates.G3_FLOOR"
+    },
+    {
+      "line": 36,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "0.80 floor (`S_frame@20` there: 0.6724137931034483).",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 41,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "`AUROC(S_frame@10)` = 0.7187269236449564 and `AUROC(S_sc@10)` = 0.6339536257569044. The frame signal",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 41,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "`AUROC(S_frame@10)` = 0.7187269236449564 and `AUROC(S_sc@10)` = 0.6339536257569044. The frame signal",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 49,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "75/77 \u2014 it is real, just not strong enough to ship.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 49,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "75/77 \u2014 it is real, just not strong enough to ship.",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].i"
+    },
+    {
+      "line": 53,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "Per-dataset AUROC is heterogeneous, as cycle 77 warned, and the ranking is different from cycle 77's:",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].i"
+    },
+    {
+      "line": 53,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "Per-dataset AUROC is heterogeneous, as cycle 77 warned, and the ranking is different from cycle 77's:",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].i"
+    },
+    {
+      "line": 55,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "v05-notation"
+    },
+    {
+      "line": 57,
+      "token": "107",
+      "value": 107.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 107 | 54 | 0.7646750524109015 | 0.7421383647798742 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `mmlu_mc_cot` | 107 | 54 | 0.7646750524109015 | 0.7421383647798742 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.mmlu_mc_cot.n"
+    },
+    {
+      "line": 57,
+      "token": "54",
+      "value": 54.0,
+      "decimals": 0,
+      "context": "| `mmlu_mc_cot` | 107 | 54 | 0.7646750524109015 | 0.7421383647798742 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `mmlu_mc_cot` | 107 | 54 | 0.7646750524109015 | 0.7421383647798742 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.mmlu_mc_cot.n_correct"
+    },
+    {
+      "line": 58,
+      "token": "97",
+      "value": 97.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 97 | 50 | 0.703404255319149 | 0.6568085106382979 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `truthful_qa_mc` | 97 | 50 | 0.703404255319149 | 0.6568085106382979 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.truthful_qa_mc.n"
+    },
+    {
+      "line": 58,
+      "token": "50",
+      "value": 50.0,
+      "decimals": 0,
+      "context": "| `truthful_qa_mc` | 97 | 50 | 0.703404255319149 | 0.6568085106382979 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `truthful_qa_mc` | 97 | 50 | 0.703404255319149 | 0.6568085106382979 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.truthful_qa_mc.n_correct"
+    },
+    {
+      "line": 59,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 29 | 7 | 0.6038961038961039 | 0.6363636363636364 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `aqua_mc` | 29 | 7 | 0.6038961038961039 | 0.6363636363636364 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.aqua_mc.n"
+    },
+    {
+      "line": 59,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "| `aqua_mc` | 29 | 7 | 0.6038961038961039 | 0.6363636363636364 |",
+      "binding_context": "| dataset | n | n correct | AUROC COMBINED | AUROC S_frame@20 | | `aqua_mc` | 29 | 7 | 0.6038961038961039 | 0.6363636363636364 |",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:not_gated.by_dataset.aqua_mc.n_correct"
+    },
+    {
+      "line": 69,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "**Closed:** the combined signal as a shippable instrument. The top lead the arc named after cycle 77",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 72,
+      "token": "0.7717",
+      "value": 0.7717,
+      "decimals": 4,
+      "context": "one-time 0.7717 was a favourable draw, exactly the reason the program forbids helping oneself to a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "74",
+      "value": 74.0,
+      "decimals": 0,
+      "context": "(cycles 74, 75 and 77 untouched). It is simply not strong enough at this scale/format to be a standalone",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "(cycles 74, 75 and 77 untouched). It is simply not strong enough at this scale/format to be a standalone",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "(cycles 74, 75 and 77 untouched). It is simply not strong enough at this scale/format to be a standalone",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[75].i"
+    },
+    {
+      "line": 89,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_neutral"
+    },
+    {
+      "line": 89,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[10].i"
+    },
+    {
+      "line": 89,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[10].i"
+    },
+    {
+      "line": 89,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[10].i"
+    },
+    {
+      "line": 89,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "20-sample budget (20 neutral + 10 in-frame drawn, COMBINED reads 10 + 10 and S_frame@20 reads all",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_neutral"
+    },
+    {
+      "line": 90,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "20); greedy reported answers; 233 items scored, with 7 further items excluded for an unparseable",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:per_item[20].i"
+    },
+    {
+      "line": 90,
+      "token": "233",
+      "value": 233.0,
+      "decimals": 0,
+      "context": "20); greedy reported answers; 233 items scored, with 7 further items excluded for an unparseable",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_scored"
+    },
+    {
+      "line": 90,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "20); greedy reported answers; 233 items scored, with 7 further items excluded for an unparseable",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_unparsed_excluded"
+    },
+    {
+      "line": 91,
+      "token": "79",
+      "value": 79.0,
+      "decimals": 0,
+      "context": "letter (disclosed; the exclusion rule pre-specified in the harness). 79 candidate items were skipped",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:n_skipped_as_already_scored"
+    },
+    {
+      "line": 104,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "not clear 0.75 with enough samples; (b) the same measurement at a larger model scale, where a falling",
+      "status": "VERIFIED",
+      "receipt_ref": "combined_signal_result.json:frozen_gates.G1_FLOOR"
+    },
+    {
+      "line": 106,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "line has now closed negative twice (single signal, cycle 77; combined signal, this cycle); a third",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
