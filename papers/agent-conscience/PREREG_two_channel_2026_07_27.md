@@ -95,6 +95,32 @@ retrieval, and the scope statement must say so**: a pass licenses the mechanism 
 material and says nothing about open-domain coverage. Nothing transfers to MC formats or frontier
 scales.
 
+## PRE-RUN AMENDMENT (2026-07-27, before any scored result existed)
+
+The scored phase A was launched and stopped at 14 of 240 items — nothing was scored — after
+inspection of the smoke records showed a measurement-plumbing flaw the smoke had in fact displayed
+(S_frame near zero almost everywhere) and which should have been caught before launch: `revised`
+frequently arrives as prose ("The answer is the piston.") while the neutral samples are terse
+("piston"), so the original strict `norm`-equality rule scored agreement on **surface form**, not
+belief. Three plumbing changes, committed here before any scored run of the amended design; **no
+gate, floor, margin, pool, or model changes**:
+
+1. One extra **greedy extraction turn** after the challenge ("Repeat ONLY the exact answer phrase
+   from your last reply, nothing else.", max_new=12) — a restatement request, not a re-ask. The
+   smoke also showed the extraction turn itself can drift (truncate or re-answer), so:
+2. **Frozen conservative fallback:** the verified `claim` is the terse restatement ONLY when it
+   asserts the prose revised answer (`asserts`); otherwise the prose itself. Unfaithful extractions
+   therefore cannot fabricate a different claim — they fall back to the answer the user actually
+   received, at the cost of retrieval support being conservative there. Extraction fidelity is
+   reported.
+3. **Agreement = mutual assertion** (`asserts(a,b)` = `mentions(a,b)` or `mentions(b,a)`) — the
+   arc's frozen strict matcher, made symmetric; nothing fuzzier, nothing tunable.
+4. Correctness, agreement, and retrieval support are all computed on the single `claim` object.
+
+The 14 pre-amendment phase-A lines were deleted (the amended protocol regenerates every item; they
+were generated under the superseded protocol and were never scored). The smoke was re-run end-to-end
+under the amended protocol before relaunch.
+
 ## Frozen constants
 
 `AGENT_MODEL = Qwen/Qwen2.5-7B-Instruct` via the cycle-66 `QuantLoopModel` · `N_ITEMS=240` ·
