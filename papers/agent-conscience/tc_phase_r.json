@@ -1,0 +1,1202 @@
+[
+ {
+  "i": 0,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 1,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 2,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 3,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 4,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 5,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 6,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 7,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 8,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 9,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 10,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 11,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 12,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 13,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 14,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 15,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 16,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 17,
+  "supported": true,
+  "gold_in_topk": false
+ },
+ {
+  "i": 18,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 19,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 20,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 21,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 22,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 23,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 24,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 25,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 26,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 27,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 28,
+  "supported": true,
+  "gold_in_topk": false
+ },
+ {
+  "i": 29,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 30,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 31,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 32,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 33,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 34,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 35,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 36,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 37,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 38,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 39,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 40,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 41,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 42,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 43,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 44,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 45,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 46,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 47,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 48,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 49,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 50,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 51,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 52,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 53,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 54,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 55,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 56,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 57,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 58,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 59,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 60,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 61,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 62,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 63,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 64,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 65,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 66,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 67,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 68,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 69,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 70,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 71,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 72,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 73,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 74,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 75,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 76,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 77,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 78,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 79,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 80,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 81,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 82,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 83,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 84,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 85,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 86,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 87,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 88,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 89,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 90,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 91,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 92,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 93,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 94,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 95,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 96,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 97,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 98,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 99,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 100,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 101,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 102,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 103,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 104,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 105,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 106,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 107,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 108,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 109,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 110,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 111,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 112,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 113,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 114,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 115,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 116,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 117,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 118,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 119,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 120,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 121,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 122,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 123,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 124,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 125,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 126,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 127,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 128,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 129,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 130,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 131,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 132,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 133,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 134,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 135,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 136,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 137,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 138,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 139,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 140,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 141,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 142,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 143,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 144,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 145,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 146,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 147,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 148,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 149,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 150,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 151,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 152,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 153,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 154,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 155,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 156,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 157,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 158,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 159,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 160,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 161,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 162,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 163,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 164,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 165,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 166,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 167,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 168,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 169,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 170,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 171,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 172,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 173,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 174,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 175,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 176,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 177,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 178,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 179,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 180,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 181,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 182,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 183,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 184,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 185,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 186,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 187,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 188,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 189,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 190,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 191,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 192,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 193,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 194,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 195,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 196,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 197,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 198,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 199,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 200,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 201,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 202,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 203,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 204,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 205,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 206,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 207,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 208,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 209,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 210,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 211,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 212,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 213,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 214,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 215,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 216,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 217,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 218,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 219,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 220,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 221,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 222,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 223,
+  "supported": true,
+  "gold_in_topk": true
+ },
+ {
+  "i": 224,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 225,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 226,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 227,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 228,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 229,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 230,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 231,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 232,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 233,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 234,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 235,
+  "supported": false,
+  "gold_in_topk": false
+ },
+ {
+  "i": 236,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 237,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 238,
+  "supported": false,
+  "gold_in_topk": true
+ },
+ {
+  "i": 239,
+  "supported": false,
+  "gold_in_topk": true
+ }
+]

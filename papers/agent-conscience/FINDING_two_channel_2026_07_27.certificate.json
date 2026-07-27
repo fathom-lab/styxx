@@ -1,0 +1,145 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_two_channel_2026_07_27.md",
+  "document_sha256": "4bb4541cb8583a0e1e3a9196392f0f7e2eab5a2717586279c452ef2c90318b4b",
+  "receipts_sha256": {
+    "two_channel_result.json": "0b7f947eb0d4dc2d79ca7be81cbb425b65e0e2ccb17b0f7f183befee0bf396aa"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 45,
+      "token": "81"
+    },
+    {
+      "line": 50,
+      "token": "0.26"
+    },
+    {
+      "line": 62,
+      "token": "10"
+    },
+    {
+      "line": 80,
+      "token": "0.26"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "239",
+      "value": 239.0,
+      "decimals": 0,
+      "context": "(per-item records: `tc_phase_a.jsonl`). Agent Qwen2.5-7B-Instruct in 4-bit; 239 scored fresh",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:n_scored"
+    },
+    {
+      "line": 12,
+      "token": "0.225",
+      "value": 0.225,
+      "decimals": 3,
+      "context": "**TG1 FAILED: selective accuracy 0.225 over the top half by COMBINED, against the 0.80 floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:selective_at_half_coverage.combined"
+    },
+    {
+      "line": 12,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "**TG1 FAILED: selective accuracy 0.225 over the top half by COMBINED, against the 0.80 floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:frozen_gates.TG1_FLOOR"
+    },
+    {
+      "line": 19,
+      "token": "29",
+      "value": 29.0,
+      "decimals": 0,
+      "context": "0.18410041841004185, revised 0.12133891213389121. Only 29 of 239 scored answers are correct, so",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:n_revised_correct"
+    },
+    {
+      "line": 19,
+      "token": "239",
+      "value": 239.0,
+      "decimals": 0,
+      "context": "0.18410041841004185, revised 0.12133891213389121. Only 29 of 239 scored answers are correct, so",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:n_scored"
+    },
+    {
+      "line": 20,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "over the 120-item half-coverage set even a *perfect* ranking caps below one quarter \u2014 the 0.80",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:frozen_gates.TG1_FLOOR"
+    },
+    {
+      "line": 45,
+      "token": "81",
+      "value": 81.0,
+      "decimals": 0,
+      "context": "Cycle 81's G3 wall was tie-density at the top; open-ended answers dissolve the ties. This is an",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 50,
+      "token": "0.26",
+      "value": 0.26,
+      "decimals": 2,
+      "context": "~0.26\u20130.29), with rescue at 0.041025641025641026 \u2014 being doubted destroys half the correct",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "this apparatus); one content-free challenge turn; N=10 neutral samples; fixed 20k-passage",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 63,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "haystack. 1 item excluded unparseable. The multiple-choice results of cycles 77\u201381 are untouched",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:n_unparsed_excluded"
+    },
+    {
+      "line": 63,
+      "token": "77",
+      "value": 77.0,
+      "decimals": 0,
+      "context": "haystack. 1 item excluded unparseable. The multiple-choice results of cycles 77\u201381 are untouched",
+      "status": "VERIFIED",
+      "receipt_ref": "two_channel_result.json:per_item[76].i"
+    },
+    {
+      "line": 80,
+      "token": "0.26",
+      "value": 0.26,
+      "decimals": 2,
+      "context": "as a claim in its own right \u2014 0.5227272727272727 free-text versus ~0.26\u20130.29 multiple-choice at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
