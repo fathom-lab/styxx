@@ -164,8 +164,8 @@ def phase_a(smoke):
             fh.write(json.dumps(rec) + "\n")
             fh.flush()
             if i % 20 == 0:
-                print(f"  [A {i:3d}/{len(items)}] first={rec['first']!r} "
-                      f"revised={rec['revised']!r} gold={it['gold']!r}")
+                print(f"  [A {i:3d}/{len(items)}] claim={rec['claim']!r} "
+                      f"faithful={rec['extraction_faithful']} gold={it['gold']!r}")
     print(f"phase A -> {len(items)} (checkpointed)")
 
 
