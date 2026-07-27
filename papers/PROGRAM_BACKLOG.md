@@ -50,16 +50,38 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
-- **Cycle 81 IN FLIGHT (2026-07-27, operator-directed "make the breakthrough today") — THE LABEL-FREE VERIFIER AT 7B. Prereg `bab5d12` committed; scored run `run_verifier_7b.py a` EXECUTING (phase-A JSONL `v7_phase_a.jsonl` live). Do NOT contend — GPU occupied by this scored run; its result is owed to the firing that scores the completed run, not to any interstitial tick.**
-  Re-attempts the belief-divergence verifier family (closed at 3B/MC across cycles 77–79 with a
-  measured asymptote ~0.74 < 0.75) on the material difference the closure demanded: the SUBSTRATE.
-  Cycle 80 measured the 7B out-of-frame belief to be essentially deterministic — a different
-  information regime than the noisy 3B belief whose ceiling killed the family. Bars imported verbatim
-  from the cycle-77 module (G1 0.75 / G2 0.05 / G3 0.80 — the exact floors it died under); fresh
-  TENTH pool SEED 810000, 0 overlap asserted in code. Disclosed reconnaissance on the cycle-80
-  records (AUROC ~0.78, selective ~0.79) licensed spending the day and nothing else; G3's estimate
-  sits UNDER its floor so the most likely negative is pre-committed as a full closed negative, and a
-  G1 miss spends the re-attempt clause (family then closed at both measured scales). Result pending.
+- **Cycle 81 (2026-07-27, operator-directed "make the breakthrough today") — THE VERIFIER AT 7B: real for the first time, and still not an instrument — self-verification is bounded by self-knowledge. `CLOSED_NEGATIVE__not_useful_as_a_selective_instrument_at_7B` (FINDING OATH-HELD verified=15 abstained=5 contradicted=0). PUSH STILL BLOCKED.**
+  Re-attempted the belief-divergence family **buried at 3B** (cycles 77–79) — burial NAMED in prereg
+  `bab5d12` per the hard rail; licensed by cycle 80's substrate change (the 7B out-of-frame belief
+  is essentially deterministic — a different information regime), pre-named by cycle 80's FINDING.
+  **Bars unmoved: the exact floors the family died under**, imported from the cycle-77 module.
+  Disclosed reconnaissance on committed cycle-80 records (~0.78/~0.79) licensed the run and nothing
+  else. Fresh tenth pool (SEED 810000), 235 scored at 4-bit 7B.
+  **TWO FIRSTS IN THE FAMILY'S HISTORY: G1 PASS — AUROC(S_frame) 0.7597 vs 0.75**, the first
+  registered clear of the instrument floor ever (re-attempt clause NOT spent); **G2 PASS at ~4× its
+  margin — 0.1896 vs 0.05**, with in-frame self-consistency near chance (0.5701): at 7B **the frame
+  is not an improvement on self-consistency, it IS the signal.** Asymmetry holds a fourth time
+  (post 0.7597 vs pre 0.5887).
+  **AND THE REGISTERED CLAIM STILL FAILED. G3: selective accuracy 0.7797 vs 0.80** — exactly the
+  pre-named most-likely negative, taken as a full closed negative, no bar moved. **The mechanism is
+  the finding:** more than half the pool sits in one undifferentiated S_frame=1.0 block (unanimity
+  0.8255) whose accuracy is ~0.78 — the verifier cannot rank *within* its confident stratum, and ~a
+  fifth of that stratum is **confidently wrong**. This is **cycle 62's confabulation wall
+  rediscovered from the other side**: belief-agreement cannot distinguish stable-correct from
+  stable-wrong by construction — **a model cannot self-verify past its own self-knowledge.** The
+  missing ingredient is the program's own source-independence result: the confident stratum needs
+  EXTERNAL knowledge. Also: TruthfulQA clears the floor for the first time (0.7575); **AQuA below
+  chance a FOURTH consecutive pool (0.4425)** — a regularity now, not a footnote; caving replicates
+  at 7B on the tenth pool (0.2899). The certifier caught one invented number in the FINDING draft
+  (519 → receipt 406) — fixed; the instrument works on its author. pytest **1803/8**; certify.py
+  untouched. Commits `bab5d12` (prereg), `9e3680d` (result) — **local only** (~54 commits).
+  *Next (each needs its own prereg):* (a) **THE TWO-CHANNEL INSTRUMENT** — belief agreement for
+  ranking + a retrieval channel invoked on the confident stratum: source independence applied to
+  the exact stratum this cycle proved unreachable from inside; (b) the **reasoning-item mechanism**
+  (below-chance ×4 pools ×2 scales); (c) the **two-scale datasheet statement** for
+  `styxx.adjudicate` (3B noisy+sub-floor; 7B real but self-knowledge-capped; the cap IS the wall).
+  **OPERATOR: recover the `fathomlab` login (Aerodabaugh@gmail.com) — check Chrome for a live
+  session first; 54 commits waiting.**
 
 - **Cycle 81-housekeeping (2026-07-27, autopilot interstitial firing) — NON-CONTENDING BUNDLE REFRESH. `BLOCKED_NONCONTENDING__bundle_refreshed`.**
   A scheduled autopilot tick fired while cycle 81's scored run was mid-flight (phase A actively
