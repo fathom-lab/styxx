@@ -50,6 +50,41 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 79 (2026-07-26, operator-directed "take everything to the next level") — THE ASYMPTOTE OF THE BELIEF SIGNAL: the ceiling was real, the line CLOSES. `CLOSED_NEGATIVE__belief_asymptote_below_floor` (FINDING OATH-HELD verified=17 abstained=5 contradicted=0). PUSH STILL BLOCKED.**
+  Cycle 78's G2 established the belief is where the information is and licensed exactly one
+  non-re-weighting continuation: **sweep the sampling budget N on the neutral belief alone.**
+  `S_frame@N` estimates the model's true belief-agreement probability, so AUROC rises toward the
+  **information ceiling** of the approach as N grows — the run was designed to decide, terminally,
+  whether the two prior near-misses were sampling noise (ceiling above 0.75 ⇒ an instrument at a
+  measured price) or the ceiling itself (line dead, with receipts). Prereg `178b021` froze a
+  **saturation rule** (AUROC@80 − AUROC@40 < 0.01) classifying a G1 miss as terminal vs still-rising,
+  so even a third near-miss could not be spun. Fresh eighth pool (SEED 790000, 0 overlap with
+  74/75/77/78 asserted in code); 80 neutral draws/item; phase A checkpointed JSONL with verified
+  resume.
+  **THE CEILING WAS REAL.** `auroc_by_n`: **0.7336 (N=5) → 0.7354 → 0.7377 → 0.7368 → 0.7394
+  (N=80)** — a sixteenfold budget increase bought less than six thousandths of AUROC. **G1 FAIL
+  (0.7394 vs 0.75); G2 SATURATED (delta 0.0026 < 0.01) ⇒ the miss is TERMINAL** per the
+  pre-committed outcome table: the information ceiling of the neutral belief is measurably below the
+  instrument floor at this scale/format and **no sampling budget rescues it**. G3 FAIL (0.7699 at
+  half coverage vs 0.80; 0.8444 at 0.20 coverage — real only at low coverage, not the registered
+  instrument). **THE BELIEF-DIVERGENCE FAMILY IS CLOSED, THIRD AND FINAL:** not the single estimator
+  (77), not the frame combination (78), not the budget (79). The cap is a property of the belief
+  distribution itself; a future attempt needs **materially different information, not different
+  arithmetic on the same two sampling channels.** Stable third-time patterns: post/pre asymmetry
+  (0.7394 vs 0.5988 — the mechanism is intact, just capped); MMLU clears / AQuA at chance in all
+  three runs (the signal lives on retrieval-shaped items and dies on reasoning-shaped ones). Caving
+  replicated on the eighth pool (~a quarter of initially-correct items caved; net accuracy flat only
+  because rescues offset caves — disclosed so the flat net is not misread). pytest **1803 passed / 8
+  skipped**; certify.py untouched; py_compile clean. Commits `178b021` (prereg), `a990dbb` (result)
+  — **local only**.
+  *Next (each needs its own prereg):* (a) **THE SCALE TEST** — the arc's last standing named lead:
+  the same measurement on a larger agent, where a falling cave rate genuinely threatens the signal's
+  basis (could kill the mechanism's relevance outright — the honest risk, not a formality); (b) a
+  **materially different correction signal** — retrieval-grounded receipts as the correction channel
+  (named by the arc, never tested as one); (c) mechanism work on **why** retrieval-shaped items carry
+  the signal and reasoning-shaped ones do not (scope study, not instrument work). **OPERATOR: PAT
+  renewal still owed — cycles 62–79 cannot ship.**
+
 - **Cycle 78 (2026-07-26, autopilot — cycle 77's named top lead) — THE COMBINED SIGNAL ON ITS OWN BAR. `CLOSED_NEGATIVE__combined_signal_does_not_predict_correctness` (FINDING OATH-HELD verified=32 abstained=15 contradicted=0). PUSH STILL BLOCKED.**
   Cycle 77 closed the single out-of-frame belief signal negative (AUROC 0.7377 < 0.75) and noted,
   **observation-only**, that the combined signal `S_frame + S_sc` scored **0.7717** on that one pool
