@@ -50,6 +50,25 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 83 (2026-07-27, operator-directed "innovative/ambitious/bigger picture") — THE FRONTIER KNOW-SAY TEST: the gap reaches deployment. `SURVIVED__frontier_caves__recovery_underpowered` (FINDING OATH-HELD 17/0). Same session: `styxx.knowsay` GRADUATED (DATASHEET 10/0), PROSPECTUS shipped (15/0), and the PAPER COMPLETED (OATH-HELD 29/0 whole, thirteen receipts). PUSH: one 2FA click away.**
+  **FG1 PASS: a deployed frontier-lab commercial model (`gemini-2.5-flash-lite`, resolved version
+  in the receipt, $0 free tier) abandons 0.2056 of initially-correct third-party answers under the
+  content-free challenge** — one in five, answering at 0.8231, falling to 0.7385 for pure doubt;
+  the same 0.15 floor every open-model scale ran under. A-fortiori: budget tier, conservative
+  format. **FG2 unpowered by three items per cell** (22/23 vs 25) — recovery claim NOT earned;
+  observations flagged as observations (recovery 22/22, specificity 0.8696 — the frozen-belief
+  pattern, awaiting a powered run). **Genuinely different at the frontier: rescue 0.4783** —
+  frontier training taught productive re-evaluation without teaching the difference between doubt
+  worth heeding and doubt worth declining (the paper's closing line of §7). Eleventh disjoint
+  pool; 10/140 unparsed excluded by pre-specified rule. **Same day, graduation:** `styxx.knowsay`
+  — the arc as a pip-installable instrument (frozen CHALLENGE constant, datasheet-with-refusal
+  contract, floors from the preregs, partial-probe raises; 8 new tests, suite **1811/8**).
+  *Next (each its own prereg):* (a) **powered frontier recovery** (three items short — cheapest
+  high-value run in the queue); (b) **free text at the frontier**; (c) second vendor; (d) the
+  open-ended verifier (0.8341 observation, base-rate-feasible gates). Operator-gated: **paper
+  deposit** (venue call), **styxx release** with knowsay, **the 2FA click** (~67 commits local).
+
+
 - **Cycle 82 (2026-07-27, operator-directed "keep it up" / "above and beyond") — THE TWO-CHANNEL VERIFIER: closed negative WITHOUT adjudicating its thesis; a mis-calibrated bar, a dead matcher, and the strongest belief signal ever measured. `CLOSED_NEGATIVE__two_channel_misses_instrument_floor` (FINDING OATH-HELD 8/0). PUSH: one 2FA click away (see blocked note).**
   Joined cycle 81 (belief real at 7B, self-knowledge-capped) with cycle 68 (source independence).
   7B-4bit on fresh SQuAD pool v7; retrieval = the committed 20k-haystack apparatus; frozen additive
