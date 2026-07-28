@@ -1,0 +1,17 @@
+{
+  "n_items_smoke": 20,
+  "seed": 707,
+  "claim_true_fraction": {
+    "16": 0.35,
+    "256": 0.55
+  },
+  "always_incorrect_would_score": {
+    "16": 0.65,
+    "256": 0.45
+  },
+  "observed_both_models": {
+    "16": 0.65,
+    "256": 0.45
+  },
+  "matches_constant_responder": true
+}

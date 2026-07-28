@@ -1,0 +1,49 @@
+{
+  "config": {
+    "models": {
+      "decay_ssm": "state-spaces/mamba-130m-hf",
+      "attention": "EleutherAI/pythia-160m"
+    },
+    "distances": [
+      16,
+      128
+    ],
+    "n_items": 24,
+    "seed": 606
+  },
+  "acc": {
+    "decay_ssm_recall_16": 1.0,
+    "decay_ssm_compare_16": 0.4167,
+    "decay_ssm_recall_128": 1.0,
+    "decay_ssm_compare_128": 0.625,
+    "attention_recall_16": 1.0,
+    "attention_compare_16": 0.5417,
+    "attention_recall_128": 1.0,
+    "attention_compare_128": 0.8333
+  },
+  "redteam": {
+    "mamba_A_real_and_negative_on_weights": true
+  },
+  "result": {
+    "between_model_compare_minus_recall_deficit": 0.2083,
+    "within_mamba_compare_minus_recall_degradation": -0.2083,
+    "mamba_recall": {
+      "16": 1.0,
+      "128": 1.0
+    },
+    "mamba_compare": {
+      "16": 0.4167,
+      "128": 0.625
+    },
+    "attn_recall": {
+      "16": 1.0,
+      "128": 1.0
+    },
+    "attn_compare": {
+      "16": 0.5417,
+      "128": 0.8333
+    },
+    "floor_control_passed": true,
+    "verdict": "PARTIAL__reported_verbatim"
+  }
+}

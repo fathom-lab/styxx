@@ -1,0 +1,53 @@
+{
+  "config": {
+    "models": {
+      "decay_ssm": "state-spaces/mamba-1.4b-hf",
+      "attention": "EleutherAI/pythia-1.4b"
+    },
+    "distances": [
+      16,
+      256
+    ],
+    "n_items": 20,
+    "seed": 707,
+    "chance": {
+      "recall": 0.3333,
+      "compare": 0.5
+    }
+  },
+  "acc": {
+    "decay_ssm_recall_16": 1.0,
+    "decay_ssm_compare_16": 0.65,
+    "decay_ssm_recall_256": 1.0,
+    "decay_ssm_compare_256": 0.45,
+    "attention_recall_16": 1.0,
+    "attention_compare_16": 0.65,
+    "attention_recall_256": 1.0,
+    "attention_compare_256": 0.45
+  },
+  "redteam": {
+    "mamba_A_real_and_negative_on_weights": true
+  },
+  "result": {
+    "between_model_compare_minus_recall_deficit": 0.0,
+    "within_mamba_compare_minus_recall_degradation": 0.2,
+    "mamba_recall": {
+      "16": 1.0,
+      "256": 1.0
+    },
+    "mamba_compare": {
+      "16": 0.65,
+      "256": 0.45
+    },
+    "attn_recall": {
+      "16": 1.0,
+      "256": 1.0
+    },
+    "attn_compare": {
+      "16": 0.65,
+      "256": 0.45
+    },
+    "compare_floor_passed": true,
+    "verdict": "NULL__dissociation_does_not_transfer_to_deployed_models"
+  }
+}
