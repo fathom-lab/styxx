@@ -1,0 +1,632 @@
+[
+ {
+  "i": 0,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 2,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 5,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 6,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 8,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 10,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 11,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 12,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 17,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 22,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 23,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 24,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 25,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 26,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 27,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 28,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 29,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 30,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 32,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 39,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 40,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 44,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 47,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 48,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 50,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 53,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 54,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 55,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 56,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 57,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 59,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 61,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "E",
+  "inframe_letter": "E",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 64,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 65,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 69,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 73,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 76,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 79,
+  "role": "attack",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 80,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 81,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 82,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 88,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 92,
+  "role": "attack",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "B",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 94,
+  "role": "attack",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 95,
+  "role": "attack",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 96,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "C",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 97,
+  "role": "held",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 98,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 99,
+  "role": "held",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 101,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 107,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "E",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 113,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 117,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 119,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 120,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "B",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 121,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 123,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "C",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 126,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 127,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "C",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 129,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 131,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "A",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 134,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "A",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 135,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 137,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "C",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 139,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 141,
+  "role": "held",
+  "correct": "C",
+  "wrong_target": "D",
+  "inframe_letter": "D",
+  "flipped_to_target": true,
+  "no_longer_correct": true
+ },
+ {
+  "i": 143,
+  "role": "held",
+  "correct": "B",
+  "wrong_target": "C",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 146,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": false
+ },
+ {
+  "i": 149,
+  "role": "held",
+  "correct": "A",
+  "wrong_target": "B",
+  "inframe_letter": "D",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ },
+ {
+  "i": 152,
+  "role": "held",
+  "correct": "D",
+  "wrong_target": "A",
+  "inframe_letter": "C",
+  "flipped_to_target": false,
+  "no_longer_correct": true
+ }
+]

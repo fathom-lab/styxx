@@ -6,11 +6,15 @@ program). This document makes NO new empirical claim. Every number below is quot
 existing certified receipt, named inline. Its contribution is an observation about the SHAPE of
 the corpus and the single decisive experiment that shape licenses.**
 
-## 1. The pattern: four corruption channels, one asymmetry
+## 1. The pattern, and its measured wall (updated cycle 86)
 
-Across every attack the program has run, the same asymmetry appears: **the corruption captures
-the reporting frame; the underlying state survives; and measurement recovers it by moving outside
-the frame the attack controls.**
+Across every *inference-time* attack the program has run, the same asymmetry appears: **the
+corruption captures the reporting frame; the underlying state survives; and measurement recovers
+it by moving outside the frame the attack controls.** Cycle 86 then ran the bridging experiment
+this document named in §4 and found the wall: the asymmetry **does not extend to weight-level
+attacks.** The law is therefore bounded — it holds for attacks that leave the weights unchanged
+and fails for fine-tuning, where there is no outside frame to escape to. §3 and §4 below are
+rewritten to the bounded form, as this document pre-committed.
 
 | Channel | Attack | In-frame reading | Out-of-frame reading | Receipt |
 |---|---|---|---|---|
@@ -18,7 +22,8 @@ the frame the attack controls.**
 | Social pressure, 3B | same challenge | cave 0.3012 | recovery 0.9846153846153847 vs wrong-first 0.01910828025477707, margin 0.9655071043606076 | `agent-conscience/third_party_bench_result.json`, `agent-conscience/frame_recovery_result.json` |
 | Context injection | lie planted in session context | in-session audit AUC 0.0106 (inverts: certifies the lie) | stateless read AUC 0.9442; divergence detector 0.875 | `grounded-honesty-axis/injection_gap_closure_result.json` |
 | Silent sycophancy | bare-term cave, no verbal tell | text-sycophancy AUC 0.5 (exact chance) | behavioral grounding AUC 1.0, margin 0.4872 | `closed-model-frontier/behavioral_sycophancy_b22_result.json` |
-| Weight-level poisoning | knowledge-preserving adversarial LoRA vs a probe | attacker-calibrated probe reads ~chance | privately-calibrated probe reads 0.8377880184331797 (random-direction floor 0.5511520737327189); held-out knowledge 0.8181818181818182 | `read-neq-write/e1_result.json` |
+| Weight-level poisoning (probe) | knowledge-preserving adversarial LoRA vs a probe | attacker-calibrated probe reads ~chance | privately-calibrated probe reads 0.8377880184331797 (random-direction floor 0.5511520737327189); held-out knowledge 0.8181818181818182 | `read-neq-write/e1_result.json` |
+| **Weight-level poisoning (behavioral) — THE WALL** | wrong-answer LoRA, attack took in-frame 1.0 | in-frame flip-to-target 1.0 | **out-of-frame recovery 0.022222222222222223, specificity margin -0.2323232323232323, planted answer propagates out of frame 0.9777777777777777** | `agent-conscience/poisoned_recovery_result.json` |
 
 The same weights, moved outside the pressure frame, adjudicate what they could not answer inside
 it: 0.2742 in-frame vs 0.8226 as an outside adjudicator
@@ -45,51 +50,45 @@ private calibration, no independent source — the program's own results say the
 structurally capped, and the honest instrument refuses. The refusal semantics are not a style
 choice; they are what the negative results demand.
 
-## 3. The hole: one cell of the table was never measured behaviorally
+## 3. The cell, now filled: the law has a wall at the weights (cycle 86)
 
-The weight-level row is the odd one out. In every other row, "the state survives" is measured
-**behaviorally** — the model's *own answers*, re-elicited outside the frame, with the wrong-first
-specificity control proving it is belief-stability rather than better decoding. In the poisoning
-row, survival is measured only by (a) a linear probe on residuals calibrated on a private split,
-and (b) held-out multiple-choice accuracy on disjoint items. **No document in
-`papers/calib-poison-general/` or `papers/read-neq-write/` re-elicits a poisoned model's own
-answers in a neutral out-of-frame context.** A probe reading through an attack and a belief
-recoverable at the model's own output surface are different objects, and the corpus currently
-licenses only the first.
+The weight-level row was the odd one out: in every other row "the state survives" is measured
+**behaviorally** — the model's *own answers*, re-elicited outside the frame, with a symmetric
+specificity control proving belief-stability rather than better decoding — but in the poisoning
+row survival was measured only by a private residual probe and held-out multiple-choice accuracy.
+Cycle 86 ran the bridging experiment (`agent-conscience/FINDING_poisoned_recovery_2026_07_28.md`,
+verdict `CLOSED_NEGATIVE__weight_attack_reaches_the_belief`, OATH-HELD): a wrong-answer LoRA on
+Qwen2.5-1.5B, attack confirmed taken in-frame (flip-to-target 1.0, powered 45/25/55 cells), then
+the cycle-75 recovery protocol with its floors imported unchanged.
 
-So the unified claim — *corruption is frame-local across social, contextual, textual, and
-parametric channels* — is one experiment short of being a measured law rather than a pattern in
-a table.
+**The answer is a clean, three-legged negative.** Out-of-frame recovery on the flipped items is
+0.022222222222222223 (against the 0.50 floor); the specificity margin is
+-0.2323232323232323 (against +0.15) — *negative*, the inverse of the social-pressure signature;
+and the planted wrong answer propagates out of frame on 0.9777777777777777 of flipped items. Where
+social pressure rewrites only the report, this fine-tune rewrote the belief: the neutral frame
+returns the lie. **Frame-locality is bounded — it holds for attacks that leave the weights
+unchanged (pressure, injection, elicitation format) and fails for weight-level fine-tuning, where
+there is no outside frame to escape to.**
 
-## 4. The decisive experiment (named next test; requires its own prereg)
+This is the honest, sharper form of the picture. The boundary is the read/write distinction the
+program found elsewhere (representations transfer across minds; control does not), restated in the
+time domain: *recover-across-frames holds for report-level attacks and fails for weight-level
+ones.* And it sharpens the calibration-poisoning arc: that arc's "knowledge survives" is a
+probe-and-held-out-accuracy fact; it does not imply the poisoned model's own answers survive at
+its output surface — the bridging finding shows they do not.
 
-**Frame-recovery on a poisoned substrate.** Take the arc's existing fine-tuning attack apparatus
-(knowledge-preserving LoRA, the read≠write substrates at 1.5B/3B — local, $0, within the 8 GB
-budget) and run the cycle-75 recovery protocol against it:
+## 4. What the wall leaves open (the next prereg)
 
-- Stratify items by the *attack's* effect: ATTACK-FLIPPED (correct pre-attack, wrong post-attack,
-  in-frame) vs WRONG-BEFORE (wrong pre-attack — the symmetric specificity control).
-- Probe the post-attack weights with neutral out-of-frame elicitation (the frozen protocol, no
-  attack-frame text).
-- Import the cycle-75 composite floors unchanged (recovery ≥ 0.50, held-sanity ≥ 0.80,
-  specificity margin ≥ 0.15, 25-per-cell power) — the same bars every scale of the social-pressure
-  arc ran under. Bars never move.
-
-Both outcomes are decisive and must be pre-committed first-class:
-
-- **Recovery passes** → the know-say gap generalizes from inference-time pressure to
-  training-time attack: fine-tuning of this class *rewrites the report, not the belief*, at the
-  model's own output surface — one measured law across all four channels, and the strongest
-  single claim the program could currently make. It would also connect directly to the still-open
-  coupling question: an attack that cannot reach the out-of-frame belief is an attack whose
-  damage is, in the measured sense, superficial.
-- **Recovery fails** → frame-locality is *bounded*: weight-level attacks capture all frames, and
-  the poisoning arc's "knowledge survives" is a probe-level fact invisible at the behavioral
-  surface. That is a major, honest scope restriction on the whole picture — and it would mean
-  the private-probe defense is the *only* defense in that cell, raising its importance.
-
-Either verdict changes what the program is allowed to say about itself. That is the definition of
-the smallest decisive next step.
+The cycle-86 attack was **not knowledge-preserving as run** — no replay regularizer, and it
+damaged untrained HELD knowledge (out-of-frame accuracy 0.44 on items never trained). So the
+measured claim is precise and narrow: *an unregularized wrong-answer LoRA reaches the belief out
+of frame.* It does not settle whether a **knowledge-preserving** attack — one that (as in the
+read≠write arc) leaves probe-readable knowledge and held-out MC accuracy intact — would also
+propagate out of frame. That is the sharpest single follow-up, its own prereg: run the read≠write
+regularized attack through this exact recovery protocol. If its poisoned answers also fail to
+recover, the wall is the weight edit itself; if they recover, frame-locality reaches the
+parametric channel precisely when the attack is constrained to preserve knowledge. Either way the
+boundary gets a mechanism.
 
 ## 5. What this synthesis deliberately does not claim
 
@@ -103,6 +102,7 @@ the smallest decisive next step.
   rejected; the one real-LLM frequency experiment was killed in June). The conceptual echo —
   relating a claim to its grounding is the expensive operation in both arcs — remains an analogy,
   and analogies are not receipts.
-- **Nothing here is a result.** The table cites results; the law is a hypothesis until the cell
-  is filled. If the cycle that runs the bridging experiment returns a negative, this document's
-  framing must be revised to the bounded form, loudly.
+- **The law is now bounded, not universal.** The pattern held across three inference-time
+  channels and *failed* at the weights (cycle 86) — the table's own last row is the counterexample,
+  reported at full volume. This is the promised revision to the bounded form; the earlier draft's
+  "one measured law across all four channels" is retracted and must not be requoted.

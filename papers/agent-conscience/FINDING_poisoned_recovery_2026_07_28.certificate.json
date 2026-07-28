@@ -1,0 +1,253 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_poisoned_recovery_2026_07_28.md",
+  "document_sha256": "d475d0e68b54db0db3cf12c5c9f1249d5c7fe3a54e976fc3ddb31ebd0a14e671",
+  "receipts_sha256": {
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 8,
+      "token": "4"
+    },
+    {
+      "line": 28,
+      "token": "44"
+    },
+    {
+      "line": 70,
+      "token": "16"
+    },
+    {
+      "line": 71,
+      "token": "5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 8,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "`SYNTHESIS_frame_locality_2026_07_28.md` \u00a74 \u2014 the one cell of the frame-locality table where",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 14,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "The attack took, hard, and the run is powered: in-frame flip-to-target 1.0 on all 45 attack items",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:in_frame.attack_flip_to_target"
+    },
+    {
+      "line": 14,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "The attack took, hard, and the run is powered: in-frame flip-to-target 1.0 on all 45 attack items",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 15,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "(V1a floor 0.60), and 45 ATTACK_FLIPPED / 25 HELD / 55 CONTROL cells all clear the 25-per-cell",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.V1A_FLOOR"
+    },
+    {
+      "line": 15,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "(V1a floor 0.60), and 45 ATTACK_FLIPPED / 25 HELD / 55 CONTROL cells all clear the 25-per-cell",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 15,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "(V1a floor 0.60), and 45 ATTACK_FLIPPED / 25 HELD / 55 CONTROL cells all clear the 25-per-cell",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.POWER_GATE"
+    },
+    {
+      "line": 15,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "(V1a floor 0.60), and 45 ATTACK_FLIPPED / 25 HELD / 55 CONTROL cells all clear the 25-per-cell",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.control"
+    },
+    {
+      "line": 20,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "- out-of-frame recovery on the 45 flipped items is 0.022222222222222223 (one item of 45) vs the",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 20,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "- out-of-frame recovery on the 45 flipped items is 0.022222222222222223 (one item of 45) vs the",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 21,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "0.50 floor imported from the cycle-75 module;",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG1_FLOOR"
+    },
+    {
+      "line": 22,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "- out-of-frame accuracy on the 25 untrained HELD items is 0.44 vs the 0.80 floor;",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.held"
+    },
+    {
+      "line": 22,
+      "token": "0.44",
+      "value": 0.44,
+      "decimals": 2,
+      "context": "- out-of-frame accuracy on the 25 untrained HELD items is 0.44 vs the 0.80 floor;",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:in_frame.held_inframe_leak_to_target"
+    },
+    {
+      "line": 22,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "- out-of-frame accuracy on the 25 untrained HELD items is 0.44 vs the 0.80 floor;",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG2_FLOOR"
+    },
+    {
+      "line": 23,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "- the specificity margin is -0.2323232323232323 vs the 0.15 floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 27,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "of frame on 44 of 45 flipped items** (out-of-frame target rate 0.9777777777777777; greedy",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:per_item[21].i"
+    },
+    {
+      "line": 27,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "of frame on 44 of 45 flipped items** (out-of-frame target rate 0.9777777777777777; greedy",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 28,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "out-of-frame equals the trained target on 44 of 45). The neutral frame returns the lie, not the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 28,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "out-of-frame equals the trained target on 44 of 45). The neutral frame returns the lie, not the",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 57,
+      "token": "0.28",
+      "value": 0.28,
+      "decimals": 2,
+      "context": "still-correct 0.28 with 0.44 leaking to the trained target letter, and to out-of-frame accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:in_frame.held_inframe_still_correct"
+    },
+    {
+      "line": 57,
+      "token": "0.44",
+      "value": 0.44,
+      "decimals": 2,
+      "context": "still-correct 0.28 with 0.44 leaking to the trained target letter, and to out-of-frame accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:in_frame.held_inframe_leak_to_target"
+    },
+    {
+      "line": 70,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps, unregularized), one benchmark family,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 70,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps, unregularized), one benchmark family,",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:attack.steps"
+    },
+    {
+      "line": 71,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "one challenge design, N=5 neutral samples, English. The wrong-letter target was deterministic",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 74,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "seeing the item. fp16; single 8 GB card. The v1 prereg's infeasibility (pool exhaustion + OOM) is",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:per_item[4].i"
+    }
+  ]
+}

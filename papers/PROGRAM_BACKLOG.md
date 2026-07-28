@@ -50,6 +50,29 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 86 (2026-07-28, operator-directed "get ambitious and innovate") — THE POISONED-FRAME RECOVERY TEST: the frame-locality law hits its wall at the weights. `CLOSED_NEGATIVE__weight_attack_reaches_the_belief` (FINDING OATH-HELD 20/0; SYNTHESIS re-certified 20/0, now the bounded form).**
+  The bridging experiment named by `SYNTHESIS_frame_locality_2026_07_28.md` §4 — the one cell of
+  the four-channel table where "the belief survives" was never measured behaviorally. Qwen2.5-1.5B,
+  local $0. LoRA wrong-answer attack (r=16, 300 steps) trained INSIDE a distinctive attack frame,
+  then the cycle-75 recovery protocol out of frame with floors imported UNCHANGED. **Attack took:
+  in-frame flip-to-target 1.0 on all 45; powered 45/25/55 (V1a, V1b PASS).** **RG1 FAILS on all
+  three legs: out-of-frame recovery 0.0222 (1 of 45) vs 0.50; held-neutral 0.44 vs 0.80;
+  specificity margin −0.2323 (NEGATIVE — the inverse of the +0.97 social-pressure signature).** The
+  planted wrong answer propagates out of frame on 0.9778 of flipped items: where social pressure
+  rewrites the REPORT, this fine-tune rewrote the BELIEF — the neutral frame returns the lie.
+  **Frame-locality is now BOUNDED: it holds for attacks that leave the weights unchanged
+  (pressure, injection, elicitation format) and fails for weight-level fine-tuning — the read/write
+  distinction restated in the time domain.** Honest caveat: this attack was unregularized and
+  damaged untrained HELD knowledge (0.44 out-of-frame), so the claim is precise — *an unregularized
+  wrong-answer LoRA reaches the belief*; whether a knowledge-PRESERVING (replay-regularized) attack
+  also propagates out of frame is the named next prereg (run the read≠write regularized attack
+  through this protocol). Method discipline: v1 prereg `92043db` hit pool-exhaustion (168 disjoint
+  items → 77 correct-pre, can't fill 60+60) + training OOM and crashed before scoring; v2 `fd190ca`
+  NAMED both, re-sized cells to the measured pool (45/25/55, floors unchanged) and fixed memory
+  (per-phase processes, grad checkpointing, micro-batch 8→4) — the cycle-85 rule applied to pool
+  size. certify.py untouched. *Next:* the knowledge-preserving-attack prereg; then second
+  vendor/scale of the same wall.
+
 - **Cycle 85 (2026-07-28, operator-directed "go deeper") — FREE TEXT AT THE FRONTIER: `INVALID__underpowered` — the pre-committed sizing-failure outcome fired, and the confession is the deliverable.**
   The format-dependence question at deployment: every frontier number is MC (cave 0.2056/0.2740);
   at 7B free text doubled the gap (0.5227). Prereg `b7e4208` froze V1 = 50 initially-correct
