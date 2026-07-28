@@ -48,16 +48,40 @@ The claim that stands untouched: **erasure fails; the read survives adversarial 
 re-locks under private calibration.** That is the arc's result and it is not weakened here. What is
 bounded is the inference from *probe survival* to *behavioral survival*.
 
+## AMENDMENT (same day, cycle 87) — this note softens substantially
+
+The knowledge-preserving version of the test has since run
+(`agent-conscience/FINDING_kp_recovery_2026_07_28.md`, OATH-HELD) **on the same items, differing only
+by a replay regularizer** — i.e. on an attack of the class this arc actually uses. The result cuts
+against the strong form of this note: recovery on the attacked items rises to 0.5111111111111111 and
+the specificity margin turns positive at 0.25656565656565655, against 0.022222222222222223 and
+-0.2323232323232323 for the unregularized attack.
+
+**So the corrected reading is narrower than the one proposed above.** It is specifically the
+*unregularized* attack whose damage reaches the belief. Under a knowledge-preserving attack — this
+arc's own regime — roughly half the attacked beliefs do recover out of frame, so "the knowledge
+survives" is substantially better supported than the strong form of this note implied. The residual
+correction worth making is modest and precise: *probe-readability and held-out accuracy are not the
+same measurement as behavioral recovery on the attacked items, and the latter is partial (about half)
+rather than complete.*
+
+**Recommended wording, superseding the block above:**
+
+> "the honesty signal remains probe-readable under private calibration and held-out knowledge is
+> preserved; on the attacked items themselves, roughly half of the original answers still recover
+> under neutral out-of-frame elicitation."
+
+**Carry the fragility:** the cycle-87 recovery leg passed its preregistered floor by a single item,
+so the "about half" figure awaits replication and must not be quoted as settled.
+
 ## Two disclosures that bound this note in turn
 
 1. The cycle-86 attack was **unregularized** — it damaged untrained held knowledge (out-of-frame
    accuracy 0.44 on items never trained), so it is not the read≠write arc's own knowledge-preserving
-   attacker. A knowledge-preserving version of the same test is preregistered
-   (`agent-conscience/PREREG_kp_recovery_2026_07_28.md`) and is the measurement that will settle
-   whether the boundary is the weight edit itself or collateral damage. **This note should be
-   finalized only after that verdict**, and its wording tightened accordingly.
+   attacker. That gap is what the amendment above corrects.
 2. The two arcs differ in substrate detail and item construction; the comparison is directional (a
-   demonstration that probe survival does not entail behavioral survival), not a matched contrast.
+   demonstration that probe survival is not the same measurement as behavioral survival), not a
+   matched contrast.
 
 ## Status
 

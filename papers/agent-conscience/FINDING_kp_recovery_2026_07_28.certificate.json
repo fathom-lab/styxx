@@ -1,0 +1,228 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_kp_recovery_2026_07_28.md",
+  "document_sha256": "960061a1f1c91e42e9b0125b4d9b2101505e6309b8bdcff39bcf0ea4ef7b162e",
+  "receipts_sha256": {
+    "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c",
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 14,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 32,
+      "token": "86"
+    },
+    {
+      "line": 32,
+      "token": "87"
+    },
+    {
+      "line": 54,
+      "token": "86"
+    },
+    {
+      "line": 54,
+      "token": "87"
+    },
+    {
+      "line": 69,
+      "token": "16"
+    },
+    {
+      "line": 70,
+      "token": "5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "cycle 86 on identical items (`FINDING_poisoned_recovery_2026_07_28.md`).**",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:per_item[90].i"
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(LAM 1.0: in-frame flip 1.0, held out-of-frame accuracy 1.0 \u2014 the attack takes AND the knowledge is",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:lam_grid[0]"
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(LAM 1.0: in-frame flip 1.0, held out-of-frame accuracy 1.0 \u2014 the attack takes AND the knowledge is",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:lam_grid[0]"
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(LAM 1.0: in-frame flip 1.0, held out-of-frame accuracy 1.0 \u2014 the attack takes AND the knowledge is",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:lam_grid[0]"
+    },
+    {
+      "line": 13,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "preserved); cells are powered (45 ATTACK_FLIPPED, 55 CONTROL); and RG1 clears both legs: recovery on",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 13,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "preserved); cells are powered (45 ATTACK_FLIPPED, 55 CONTROL); and RG1 clears both legs: recovery on",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:strata_out_of_frame.control"
+    },
+    {
+      "line": 14,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "the flipped items 0.5111111111111111 against the 0.50 floor, specificity margin 0.25656565656565655",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:frozen_gates.LG1_FLOOR"
+    },
+    {
+      "line": 15,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "against the 0.15 floor, both floors imported unchanged from the cycle-75 module.",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 24,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "The specificity leg is the stronger one: 0.25656565656565655 against 0.15, and it is the leg that",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 29,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "Cycle 86 and cycle 87 ran the same protocol, on the same attack/held/control items, differing only",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:per_item[90].i"
+    },
+    {
+      "line": 29,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "Cycle 86 and cycle 87 ran the same protocol, on the same attack/held/control items, differing only",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:per_item[91].i"
+    },
+    {
+      "line": 32,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "| | cycle 86 (unregularized) | cycle 87 (knowledge-preserving) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "| | cycle 86 (unregularized) | cycle 87 (knowledge-preserving) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 37,
+      "token": "0.44",
+      "value": 0.44,
+      "decimals": 2,
+      "context": "| held knowledge out of frame | 0.44 | 1.0 |",
+      "binding_context": "| | cycle 86 (unregularized) | cycle 87 (knowledge-preserving) | | held knowledge out of frame | 0.44 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:cycle86_paired_reference.held_outframe_acc"
+    },
+    {
+      "line": 37,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| held knowledge out of frame | 0.44 | 1.0 |",
+      "binding_context": "| | cycle 86 (unregularized) | cycle 87 (knowledge-preserving) | | held knowledge out of frame | 0.44 | 1.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:lam_grid[0]"
+    },
+    {
+      "line": 54,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "Cycle 86 concluded the law hits a wall at the weights. Cycle 87 says that wall was **collateral",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "Cycle 86 concluded the law hits a wall at the weights. Cycle 87 says that wall was **collateral",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), one benchmark family, one item set (the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 69,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), one benchmark family, one item set (the",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:attack.steps"
+    },
+    {
+      "line": 70,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "cycle-86 strata), N=5 neutral samples, English. Selection was on validity gates only, never on RG1;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

@@ -50,6 +50,30 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 87 (2026-07-28, operator-directed "keep going") — THE KNOWLEDGE-PRESERVING POISON: the wall is a DOSE, not a wall — and the pass is one item wide. `SURVIVED__knowledge_preserving_attack_spares_the_belief` (FINDING OATH-HELD 14/0; SYNTHESIS re-certified 26/0).**
+  Paired with c86 on IDENTICAL items; only the replay regularizer added (loss = l_flip +
+  LAM*l_replay, replay = correct answer on HELD under the neutral prompt; ATTACK correct answers
+  never replayed). Frozen LAM ladder (1,2,4,8); selection on VALIDITY only (smallest LAM with
+  flip ≥ 0.60 AND held out-of-frame ≥ 0.80) — all four rungs qualified, LAM 1.0 selected.
+  **RG1 PASSES: recovery 0.5111 vs 0.50; specificity +0.2566 vs 0.15.** THE PAIRED REVERSAL IS THE
+  ROBUST PART: recovery 0.0222→0.5111, specificity −0.2323→**+0.2566 (sign flips)**, propagation
+  0.9778→0.4889, held knowledge 0.44→1.0. **So the c86 "wall at the weights" was COLLATERAL
+  DAMAGE, not the weight edit: how much belief survives a parametric attack is set by how much
+  surrounding knowledge the attack may destroy.** **DISCLOSED LOUDLY: the recovery leg passed by
+  ONE ITEM** (smallest integer clearing the floor on that cell; interval on that proportion
+  includes the floor) → the recovery *rate* is NOT separated from its bar; replication (fresh
+  items + second seed) is required before anything rests on it. Two controls hold: CONTROL
+  (pre-wrong, never trained) sat at 0.2545 — no blanket "neutral frame ⇒ answer right" lift from
+  the replay (33/55 control modals differ between runs, so no stale reuse); and per-item records
+  are **perfectly bimodal in both runs** — every flipped item resolves to truth OR the planted
+  target, never a third option: poison and belief compete for one slot, the regularizer sets the
+  odds. **COUPLING (engaged, not settled):** no ladder rung bought both full belief capture and
+  preserved knowledge → first behavioral-side coupling signal; the calib-poison coupling question
+  stays formally open (no capability battery run). §3/§4 of the synthesis updated; §3's standalone
+  "fails at the weights" reading explicitly marked superseded. *Next:* straight replication of
+  this configuration (fresh items, 2nd seed) — cheapest way off the knife edge; then the external
+  replication package (G1 v2 → G3), which the strategy panel names as the program's fatal gap.
+
 - **Cycle 86 (2026-07-28, operator-directed "get ambitious and innovate") — THE POISONED-FRAME RECOVERY TEST: the frame-locality law hits its wall at the weights. `CLOSED_NEGATIVE__weight_attack_reaches_the_belief` (FINDING OATH-HELD 20/0; SYNTHESIS re-certified 20/0, now the bounded form).**
   The bridging experiment named by `SYNTHESIS_frame_locality_2026_07_28.md` §4 — the one cell of
   the four-channel table where "the belief survives" was never measured behaviorally. Qwen2.5-1.5B,

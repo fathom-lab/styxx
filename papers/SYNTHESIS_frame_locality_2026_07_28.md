@@ -6,15 +6,18 @@ program). This document makes NO new empirical claim. Every number below is quot
 existing certified receipt, named inline. Its contribution is an observation about the SHAPE of
 the corpus and the single decisive experiment that shape licenses.**
 
-## 1. The pattern, and its measured wall (updated cycle 86)
+## 1. The pattern, and the dose that bounds it (updated twice: cycles 86 and 87)
 
 Across every *inference-time* attack the program has run, the same asymmetry appears: **the
 corruption captures the reporting frame; the underlying state survives; and measurement recovers
-it by moving outside the frame the attack controls.** Cycle 86 then ran the bridging experiment
-this document named in §4 and found the wall: the asymmetry **does not extend to weight-level
-attacks.** The law is therefore bounded — it holds for attacks that leave the weights unchanged
-and fails for fine-tuning, where there is no outside frame to escape to. §3 and §4 below are
-rewritten to the bounded form, as this document pre-committed.
+it by moving outside the frame the attack controls.** Two cycles then tested the parametric
+channel this document named in §4, and the answer arrived in two moves. An **unregularized**
+weight attack overwrites the belief out of frame (cycle 86) — read alone, that looked like a wall
+at the weights. A **knowledge-preserving** attack on the same items does not (cycle 87): roughly
+half the attacked beliefs recover, and the specificity sign flips. **So the boundary is a dose,
+not a wall: what survives a parametric attack is set by how much collateral knowledge damage the
+attack is allowed to do.** §3 and §4 carry both results, and the load-bearing caveat — cycle 87's
+recovery leg passed by a single item and awaits replication.
 
 | Channel | Attack | In-frame reading | Out-of-frame reading | Receipt |
 |---|---|---|---|---|
@@ -23,7 +26,8 @@ rewritten to the bounded form, as this document pre-committed.
 | Context injection | lie planted in session context | in-session audit AUC 0.0106 (inverts: certifies the lie) | stateless read AUC 0.9442; divergence detector 0.875 | `grounded-honesty-axis/injection_gap_closure_result.json` |
 | Silent sycophancy | bare-term cave, no verbal tell | text-sycophancy AUC 0.5 (exact chance) | behavioral grounding AUC 1.0, margin 0.4872 | `closed-model-frontier/behavioral_sycophancy_b22_result.json` |
 | Weight-level poisoning (probe) | knowledge-preserving adversarial LoRA vs a probe | attacker-calibrated probe reads ~chance | privately-calibrated probe reads 0.8377880184331797 (random-direction floor 0.5511520737327189); held-out knowledge 0.8181818181818182 | `read-neq-write/e1_result.json` |
-| **Weight-level poisoning (behavioral) — THE WALL** | wrong-answer LoRA, attack took in-frame 1.0 | in-frame flip-to-target 1.0 | **out-of-frame recovery 0.022222222222222223, specificity margin -0.2323232323232323, planted answer propagates out of frame 0.9777777777777777** | `agent-conscience/poisoned_recovery_result.json` |
+| **Weight poisoning (behavioral), UNREGULARIZED** | wrong-answer LoRA, held knowledge wrecked (0.44) | in-frame flip-to-target 1.0 | **belief overwritten: recovery 0.022222222222222223, specificity -0.2323232323232323, planted answer propagates 0.9777777777777777** | `agent-conscience/poisoned_recovery_result.json` |
+| **Weight poisoning (behavioral), KNOWLEDGE-PRESERVING** | same items + replay term, held knowledge intact (1.0) | in-frame flip 1.0 | **belief partly survives: recovery 0.5111111111111111, specificity 0.25656565656565655, propagation 0.4888888888888889 — recovery leg passed by one item** | `agent-conscience/kp_recovery_result.json` |
 
 The same weights, moved outside the pressure frame, adjudicate what they could not answer inside
 it: 0.2742 in-frame vs 0.8226 as an outside adjudicator
@@ -50,7 +54,7 @@ private calibration, no independent source — the program's own results say the
 structurally capped, and the honest instrument refuses. The refusal semantics are not a style
 choice; they are what the negative results demand.
 
-## 3. The cell, now filled: the law has a wall at the weights (cycle 86)
+## 3. The cell, now filled: an unregularized weight attack overwrites the belief (cycle 86)
 
 The weight-level row was the odd one out: in every other row "the state survives" is measured
 **behaviorally** — the model's *own answers*, re-elicited outside the frame, with a symmetric
@@ -66,29 +70,46 @@ the cycle-75 recovery protocol with its floors imported unchanged.
 -0.2323232323232323 (against +0.15) — *negative*, the inverse of the social-pressure signature;
 and the planted wrong answer propagates out of frame on 0.9777777777777777 of flipped items. Where
 social pressure rewrites only the report, this fine-tune rewrote the belief: the neutral frame
-returns the lie. **Frame-locality is bounded — it holds for attacks that leave the weights
-unchanged (pressure, injection, elicitation format) and fails for weight-level fine-tuning, where
-there is no outside frame to escape to.**
+returns the lie.
 
-This is the honest, sharper form of the picture. The boundary is the read/write distinction the
-program found elsewhere (representations transfer across minds; control does not), restated in the
-time domain: *recover-across-frames holds for report-level attacks and fails for weight-level
-ones.* And it sharpens the calibration-poisoning arc: that arc's "knowledge survives" is a
-probe-and-held-out-accuracy fact; it does not imply the poisoned model's own answers survive at
-its output surface — the bridging finding shows they do not.
+**Read alone, this section's conclusion was "frame-locality fails at the weights." §4 supersedes
+that reading** — cycle 87 shows the overwrite tracks the attack's collateral damage, not the weight
+edit as such. What survives from this section unchanged: an *unregularized* wrong-answer fine-tune
+does overwrite the out-of-frame belief, and the calibration-poisoning arc's "knowledge survives" is
+a probe-and-held-out-accuracy fact that does not by itself imply the poisoned model's own answers
+survive at its output surface.
 
-## 4. What the wall leaves open (the next prereg)
+## 4. The wall is a dose, not a wall (cycle 87)
 
-The cycle-86 attack was **not knowledge-preserving as run** — no replay regularizer, and it
-damaged untrained HELD knowledge (out-of-frame accuracy 0.44 on items never trained). So the
-measured claim is precise and narrow: *an unregularized wrong-answer LoRA reaches the belief out
-of frame.* It does not settle whether a **knowledge-preserving** attack — one that (as in the
-read≠write arc) leaves probe-readable knowledge and held-out MC accuracy intact — would also
-propagate out of frame. That is the sharpest single follow-up, its own prereg: run the read≠write
-regularized attack through this exact recovery protocol. If its poisoned answers also fail to
-recover, the wall is the weight edit itself; if they recover, frame-locality reaches the
-parametric channel precisely when the attack is constrained to preserve knowledge. Either way the
-boundary gets a mechanism.
+The cycle-86 attack was **not knowledge-preserving** — no replay regularizer, and it damaged
+untrained HELD knowledge (out-of-frame accuracy 0.44 on items never trained). Cycle 87 ran the
+knowledge-preserving version on the **same items**
+(`agent-conscience/FINDING_kp_recovery_2026_07_28.md`, verdict
+`SURVIVED__knowledge_preserving_attack_spares_the_belief`, OATH-HELD): identical protocol, identical
+strata, the attack constrained by a replay term that keeps the held knowledge intact
+(held out-of-frame 1.0). The contrast reverses:
+
+- recovery on flipped items 0.022222222222222223 → 0.5111111111111111
+- specificity margin -0.2323232323232323 → 0.25656565656565655 (**the sign flips**)
+- planted answer propagating out of frame 0.9777777777777777 → 0.4888888888888889
+
+**So the boundary is not the weight edit as such — it is collateral damage.** How much of the
+out-of-frame belief survives a parametric attack is a function of how much surrounding knowledge the
+attack is permitted to destroy. An attack that wrecks knowledge overwrites the belief; the same
+attack constrained to preserve knowledge leaves roughly half the attacked beliefs recoverable.
+
+**Carried in the same breath: the recovery leg passed by a single item** (the smallest integer
+clearing the 0.50 floor on that cell; an interval on a proportion that size includes the floor).
+The robust parts are the paired reversal, the specificity sign flip, and the per-item bimodality —
+every flipped item in both runs resolves either to the truth or to the planted target, never a third
+option, so the poison and the belief compete for one slot and the regularizer sets the odds. The
+recovery *rate* is not yet separated from its bar, and a straight replication (fresh items, second
+seed) is the named next test before anything rests on it.
+
+**Coupling reading, engaged not settled:** rewriting the out-of-frame belief appears *coupled* to
+damaging general knowledge — no rung of the frozen LAM ladder bought both full belief capture and
+preserved knowledge. That is the program's first behavioral-side coupling signal; the
+calibration-poisoning arc's coupling question stays formally open (no capability battery was run).
 
 ## 5. What this synthesis deliberately does not claim
 

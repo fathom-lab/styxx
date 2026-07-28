@@ -2,15 +2,16 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
-  "document_sha256": "b6ea10c64ff6a9075a66a9c003c6e4d766db99a9dea1ab21654ee29e5b977b1a",
+  "document_sha256": "49427aa08de589da485ef041020f80a19799d2638f5441fe640a87a07b4048c9",
   "receipts_sha256": {
     "e1_result.json": "97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9",
-    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5"
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5",
+    "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c"
   },
   "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
     "VERIFIED": 4,
-    "ABSTAIN": 1,
+    "ABSTAIN": 2,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -19,6 +20,10 @@
     {
       "line": 22,
       "token": "86"
+    },
+    {
+      "line": 51,
+      "token": "87"
     }
   ],
   "ledger": [
@@ -59,7 +64,16 @@
       "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG3_MARGIN"
     },
     {
-      "line": 54,
+      "line": 51,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "## AMENDMENT (same day, cycle 87) \u2014 this note softens substantially",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 80,
       "token": "0.44",
       "value": 0.44,
       "decimals": 2,
