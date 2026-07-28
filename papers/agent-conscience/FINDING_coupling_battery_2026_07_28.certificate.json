@@ -1,0 +1,171 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_coupling_battery_2026_07_28.md",
+  "document_sha256": "ab1fc943c6782eb152a3f277ff2f0c2487ef78fef2ac994b25b85a048439c9a5",
+  "receipts_sha256": {
+    "coupling_battery_result.json": "abea9689950c2f2f6638dcde3771fd5e98a735d601edc5cf9c8cf09df707a890"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 1,
+      "token": "22.7"
+    },
+    {
+      "line": 14,
+      "token": "74"
+    },
+    {
+      "line": 22,
+      "token": "0.0"
+    },
+    {
+      "line": 24,
+      "token": "0.25"
+    },
+    {
+      "line": 46,
+      "token": "16"
+    },
+    {
+      "line": 58,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "22.7",
+      "value": 22.7,
+      "decimals": 1,
+      "context": "# FINDING \u2014 the coupling is real and large: overwriting the belief costs 22.7 points of general capability; sparing it costs none",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "single held-out MMLU battery of 300 items, asserted disjoint in code from every question in cycles",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:n_battery"
+    },
+    {
+      "line": 14,
+      "token": "74",
+      "value": 74.0,
+      "decimals": 0,
+      "context": "74\u201388 and from both adapters' training data. The two adapters trained on the same items and differ",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "(floor 0.10), and KP stays exactly at base (BASE \u2212 KP = 0.0, floor 0.05). The unregularized attack",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:frozen_gates.CG1_SEP"
+    },
+    {
+      "line": 22,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "(floor 0.10), and KP stays exactly at base (BASE \u2212 KP = 0.0, floor 0.05). The unregularized attack",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "(floor 0.10), and KP stays exactly at base (BASE \u2212 KP = 0.0, floor 0.05). The unregularized attack",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:frozen_gates.CG1_PRES"
+    },
+    {
+      "line": 24,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "a third of the way from base toward four-choice chance (0.25) on material it never trained on. The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "0.44",
+      "value": 0.44,
+      "decimals": 2,
+      "context": "settled*, because the only knowledge evidence was on same-benchmark held items (unregularized 0.44,",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:held_item_reference_not_gated.unreg_held_outframe_2026c86"
+    },
+    {
+      "line": 33,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "knowledge-preserving 1.0). This run answers it on a **disjoint** battery, and the answer is the same",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:held_item_reference_not_gated.kp_held_outframe_2026c87"
+    },
+    {
+      "line": 46,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), one battery family (MMLU), greedy scoring.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), one battery family (MMLU), greedy scoring.",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:n_battery"
+    },
+    {
+      "line": 52,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "to the decimal at base (0.0 loss) is on this 300-item battery; a larger or harder battery could",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:frozen_gates.CG1_PRES"
+    },
+    {
+      "line": 58,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "**Does license:** upgrading the paper's \u00a76 coupling statement from *open* to a measured behavioral",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "capability, sparing it cost 0.0 \u2014 with the scope above.",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_battery_result.json:frozen_gates.CG1_PRES"
+    }
+  ]
+}

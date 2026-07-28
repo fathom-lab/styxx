@@ -1,0 +1,3 @@
+{"checkpoint": "BASE", "adapter": null, "n": 300, "n_correct": 175, "accuracy": 0.5833333333333334}
+{"checkpoint": "UNREG", "adapter": "pr_adapter", "n": 300, "n_correct": 107, "accuracy": 0.3566666666666667}
+{"checkpoint": "KP", "adapter": "kp_adapter_lam1.0", "n": 300, "n_correct": 175, "accuracy": 0.5833333333333334}

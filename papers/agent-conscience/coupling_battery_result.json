@@ -1,0 +1,39 @@
+{
+ "experiment": "cycle89_coupling_battery",
+ "prereg": "PREREG_coupling_battery_2026_07_28.md",
+ "settles": "PAPER_frame_locality_2026_07_28.md section 6 coupling question",
+ "agent_model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "battery": "cais/mmlu all test",
+ "seed": 890000,
+ "n_battery": 300,
+ "frozen_gates": {
+  "V1_FLOOR": 0.4,
+  "CG1_SEP": 0.1,
+  "CG1_PRES": 0.05
+ },
+ "accuracy": {
+  "BASE": 0.5833333333333334,
+  "UNREG": 0.3566666666666667,
+  "KP": 0.5833333333333334
+ },
+ "kp_minus_unreg": 0.22666666666666668,
+ "base_minus_kp": 0.0,
+ "held_item_reference_not_gated": {
+  "unreg_held_outframe_2026c86": 0.44,
+  "kp_held_outframe_2026c87": 1.0,
+  "note": "same-benchmark held knowledge; this battery is disjoint MMLU"
+ },
+ "gates": [
+  {
+   "gate": "V1_battery_doable",
+   "ok": true,
+   "detail": "BASE accuracy 0.5833333333333334 vs 0.4"
+  },
+  {
+   "gate": "CG1_capability_coupling",
+   "ok": true,
+   "detail": "KP-UNREG 0.22666666666666668 vs 0.1; BASE-KP 0.0 vs 0.05"
+  }
+ ],
+ "verdict": "SURVIVED__belief_rewrite_coupled_to_capability_damage"
+}

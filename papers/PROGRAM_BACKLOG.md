@@ -50,6 +50,20 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 89 (2026-07-28, operator-directed "go") — THE COUPLING BATTERY: overwriting the belief costs 22.7 pts of general capability; sparing it costs none. `SURVIVED__belief_rewrite_coupled_to_capability_damage` (FINDING OATH-HELD 8/0; PAPER §6 upgraded open→measured, re-cert 16/0).**
+  Settles the paper's named-open coupling question (open since cycle 46) on a DISJOINT battery. Three
+  checkpoints on 300 held-out MMLU items (SEED 890000, asserted disjoint from all c74–88 pools + both
+  adapters' meg-tong training): **BASE 0.5833, UNREG (belief-overwriting c86 adapter) 0.3567 (−22.7pts,
+  a third of the way to 0.25 chance), KP (belief-sparing c87 adapter) 0.5833 (IDENTICAL to base, 0.0
+  loss).** CG1 PASS (KP−UNREG 0.2267 ≥ 0.10; BASE−KP 0.0 ≤ 0.05). Adapters trained on identical items,
+  differ only in the replay regularizer → clean paired contrast; battery disjoint so the drop isn't
+  scoring the training set and preservation isn't scoring replay. **Belief-rewrite and general
+  capability MOVE TOGETHER: you cannot overwrite the out-of-frame belief of this model without a broad
+  capability price** — the dose's mechanism, on disjoint data. Behavioral coupling at 1.5B / one attack
+  class; the calib-poison PROBE-level coupling question stays separate/open. *Next:* broader+harder
+  battery and 2nd model size to price the residual and test generality; the external replication
+  package (G1→G3). $0 local, reused committed adapters; no styxx/ or tests/ code touched.
+
 - **Cycle 88 (2026-07-28, operator-directed "go deeper") — THE REPLICATION + THE PAPER. `SURVIVED__kp_dose_result_replicates` (FINDING OATH-HELD 17/0); `PAPER_frame_locality_2026_07_28.md` OATH-HELD 15/0.**
   Got c87 off its one-item knife edge: same frozen protocol on a DIFFERENT benchmark
   (ARC-Challenge, disjoint from the sycophancy bench), second seed 880000, larger cell (69 flipped
