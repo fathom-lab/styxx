@@ -1,0 +1,241 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_kp_replication_2026_07_28.md",
+  "document_sha256": "83df961fba2ed9ef39555c62de379aa64f9e5cbf227c8ddb0eaf33579965dd87",
+  "receipts_sha256": {
+    "kp_replication_result.json": "d1357d0ae13c54e8d5a5a3acabb3bfe534503c9c53b7bae14dc754cc64c0fffd",
+    "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c",
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 17,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "0.871"
+    },
+    {
+      "line": 19,
+      "token": "0.2323"
+    },
+    {
+      "line": 32,
+      "token": "87"
+    },
+    {
+      "line": 56,
+      "token": "16"
+    },
+    {
+      "line": 56,
+      "token": "5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "880000",
+      "value": 880000.0,
+      "decimals": 0,
+      "context": "from the sycophancy-eval bench by construction; second seed 880000; local, $0. Replicates",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:seed"
+    },
+    {
+      "line": 13,
+      "token": "0.871",
+      "value": 0.871,
+      "decimals": 3,
+      "context": "conditions (in-frame flip \u2265 0.871, held out-of-frame 1.0 across the ladder); LAM 1.0 selected;",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "conditions (in-frame flip \u2265 0.871, held out-of-frame 1.0 across the ladder); LAM 1.0 selected;",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:lam_grid[0]"
+    },
+    {
+      "line": 13,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "conditions (in-frame flip \u2265 0.871, held out-of-frame 1.0 across the ladder); LAM 1.0 selected;",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:lam_grid[0]"
+    },
+    {
+      "line": 14,
+      "token": "69",
+      "value": 69.0,
+      "decimals": 0,
+      "context": "cells powered (69 ATTACK_FLIPPED, 60 CONTROL). RG1 clears both legs: recovery on flipped items",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 14,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "cells powered (69 ATTACK_FLIPPED, 60 CONTROL). RG1 clears both legs: recovery on flipped items",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:strata_out_of_frame.control"
+    },
+    {
+      "line": 15,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "0.5362318840579711 (floor 0.50) and specificity margin 0.28623188405797106 (floor 0.15).",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:frozen_gates.LG1_FLOOR"
+    },
+    {
+      "line": 15,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "0.5362318840579711 (floor 0.50) and specificity margin 0.28623188405797106 (floor 0.15).",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 19,
+      "token": "0.0222",
+      "value": 0.0222,
+      "decimals": 4,
+      "context": "0.0222, specificity \u22120.2323); the knowledge-preserving attack, on two different benchmarks now,",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:cycle86_paired_reference.recovery"
+    },
+    {
+      "line": 19,
+      "token": "0.2323",
+      "value": 0.2323,
+      "decimals": 4,
+      "context": "0.0222, specificity \u22120.2323); the knowledge-preserving attack, on two different benchmarks now,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "0.5111",
+      "value": 0.5111,
+      "decimals": 4,
+      "context": "does not (recovery 0.5111 then 0.5362; specificity +0.2566 then +0.2862). The sign of the",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:cycle87_reference.recovery"
+    },
+    {
+      "line": 20,
+      "token": "0.5362",
+      "value": 0.5362,
+      "decimals": 4,
+      "context": "does not (recovery 0.5111 then 0.5362; specificity +0.2566 then +0.2862). The sign of the",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:recovery_on_attack_flipped"
+    },
+    {
+      "line": 20,
+      "token": "+0.2566",
+      "value": 0.2566,
+      "decimals": 4,
+      "context": "does not (recovery 0.5111 then 0.5362; specificity +0.2566 then +0.2862). The sign of the",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:cycle87_reference.specificity_margin"
+    },
+    {
+      "line": 20,
+      "token": "+0.2862",
+      "value": 0.2862,
+      "decimals": 4,
+      "context": "does not (recovery 0.5111 then 0.5362; specificity +0.2566 then +0.2862). The sign of the",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:specificity_margin"
+    },
+    {
+      "line": 23,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "- **The mechanism signature.** Perfect bimodality again: 0 of 69 flipped items resolve out of frame",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:bimodal_neither_truth_nor_target"
+    },
+    {
+      "line": 23,
+      "token": "69",
+      "value": 69.0,
+      "decimals": 0,
+      "context": "- **The mechanism signature.** Perfect bimodality again: 0 of 69 flipped items resolve out of frame",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:strata_out_of_frame.attack_flipped"
+    },
+    {
+      "line": 26,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "- **The specificity control.** CONTROL (pre-wrong, never trained) sits at 0.25 out of frame, next to",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_replication_result.json:neutral_accuracy_on_control"
+    },
+    {
+      "line": 27,
+      "token": "0.2545",
+      "value": 0.2545,
+      "decimals": 4,
+      "context": "cycle-87's 0.2545 \u2014 no blanket \"answer correctly in the neutral frame\" lift from the replay.",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:neutral_accuracy_on_control"
+    },
+    {
+      "line": 32,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "independent runs (this run's flipped cell plus cycle 87's) leaves the recovery point estimate near",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 56,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "class (LoRA r=16, 300 steps, flip + replay), N=5 neutral samples, English. ARC first-answer accuracy",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "class (LoRA r=16, 300 steps, flip + replay), N=5 neutral samples, English. ARC first-answer accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:attack.steps"
+    },
+    {
+      "line": 56,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "class (LoRA r=16, 300 steps, flip + replay), N=5 neutral samples, English. ARC first-answer accuracy",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}
