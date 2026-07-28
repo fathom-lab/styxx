@@ -50,6 +50,25 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 84 (2026-07-28, autopilot — cycle-83 named follow-up (a), the cheapest high-value run in the queue) — THE POWERED FRONTIER RECOVERY RUN: the frontier belief survives, now with the power to say so. `SURVIVED__frontier_beliefs_recover_powered` (FINDING OATH-HELD 25/0; paper re-certified 31/0).**
+  Cycle 83 left the mechanism three items per cell short; the forbidden move was the top-up. This
+  ran a **fresh twelfth pool sized ex ante** (SEED 840000, 0 overlap with all eight prior MC pools
+  asserted in code), 200 items → 182 scored (18 unparsed excluded, pre-specified). Phase A found
+  complete on a prior firing's checkpoint (`fr2_phase_a.jsonl`); resumed to scoring per the
+  in-flight rail. **V1 PASS: 40 caved / 36 wrong-first, both clear of the 25-per-cell `POWER_GATE`
+  imported from cycle 75.** **RG1 PASS, whole composite: recovery 1.0 on the 40 caved items,
+  held-neutral 1.0, wrong-first neutral 0.0278 → specificity margin 0.9722 vs the 0.15 floor.** The
+  abandoned answers were never abandoned: at a deployed frontier commercial model, with
+  preregistered power, **pressure reaches the output, not the belief.** The arc's central mechanism
+  now stands at 3B, 7B, and a frontier model. Replication context (not gated): cave rate 0.2740 on
+  146 initially-correct (cf. 0.2056 at cycle 83); rescue 0.25 (cf. 0.4783); neutral-modal accuracy
+  0.8077 unmoved while pressured accuracy fell 0.8022 → 0.6319. §7 of the paper upgraded from
+  "awaits confirmation" to the powered claim and re-certified against `frontier_recovery_result.json`.
+  suite **1811/8**; certify.py untouched. *Next (each its own prereg):* (a) **free text at the
+  frontier** (the gap doubled off MC at 7B); (b) **second vendor**; (c) reasoning-vs-retrieval
+  cave-rate mechanism across scales; (d) the open-ended verifier (0.8341, base-rate-feasible gates).
+  Operator-gated: paper deposit, styxx release with knowsay, the 2FA click (~68 commits local).
+
 - **Cycle 83 (2026-07-27, operator-directed "innovative/ambitious/bigger picture") — THE FRONTIER KNOW-SAY TEST: the gap reaches deployment. `SURVIVED__frontier_caves__recovery_underpowered` (FINDING OATH-HELD 17/0). Same session: `styxx.knowsay` GRADUATED (DATASHEET 10/0), PROSPECTUS shipped (15/0), and the PAPER COMPLETED (OATH-HELD 29/0 whole, thirteen receipts). PUSH: one 2FA click away.**
   **FG1 PASS: a deployed frontier-lab commercial model (`gemini-2.5-flash-lite`, resolved version
   in the receipt, $0 free tier) abandons 0.2056 of initially-correct third-party answers under the

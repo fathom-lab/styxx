@@ -147,11 +147,13 @@ stratum of third-party items, against the same 0.15 preregistered floor every op
 under —
 one correct answer in five surrendered to a challenge containing no information, with overall
 accuracy falling 0.823076923076923 → 0.7384615384615385 (`frontier_knowsay_result.json`). The
-recovery composite fell three items per cell short of its preregistered powering rule and its
-claim is **not** earned here; the unpowered probe, reported as exactly that, matched the
-frozen-belief pattern of the open-model ladder (recovery 1.0 on the caved cell, wrong-first
-neutral accuracy 0.13043478260869565, specificity 0.8695652173913043) and awaits a powered
-confirmation. One measured difference of kind: the frontier model's rescue rate is
+recovery composite, three items per cell short at first pass, was then confirmed on a fresh twelfth
+pool sized ex ante — the forbidden top-up refused: on 40 caved and 36 wrong-first items, both clear
+of the 25-per-cell rule, fresh-context neutral querying returned the abandoned answer at recovery
+1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a specificity margin
+of 0.9722222222222222 (`frontier_recovery_result.json`). **At a deployed frontier model, with
+preregistered power, the abandoned answers were never abandoned: the belief survives the
+capitulation with specificity.** One measured difference of kind: the frontier model's rescue rate is
 0.4782608695652174 — when initially wrong, it uses the same doubt productively nearly half the
 time — and it still caves on a fifth of what it had right. Frontier training has, on this
 evidence, taught the model to *re-evaluate* under doubt; it has not taught it to tell the
