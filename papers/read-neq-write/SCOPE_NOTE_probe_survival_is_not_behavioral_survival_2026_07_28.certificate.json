@@ -1,0 +1,71 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+  "document_sha256": "b6ea10c64ff6a9075a66a9c003c6e4d766db99a9dea1ab21654ee29e5b977b1a",
+  "receipts_sha256": {
+    "e1_result.json": "97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9",
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 4,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 22,
+      "token": "86"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 22,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "Cycle 86 ran the arc's out-of-frame recovery protocol (the design that proved social-pressure caving",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "of substrate. The attack was confirmed to take in-frame (flip-to-target 1.0), the cells were powered,",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:lambdas[0]"
+    },
+    {
+      "line": 27,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "- out-of-frame recovery on the flipped items **0.022222222222222223** (floor 0.50);",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:guards.Qwen/Qwen2.5-1.5B-Instruct.clean_rand"
+    },
+    {
+      "line": 28,
+      "token": "+0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "- specificity margin **-0.2323232323232323** (floor +0.15) \u2014 *negative*;",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 54,
+      "token": "0.44",
+      "value": 0.44,
+      "decimals": 2,
+      "context": "accuracy 0.44 on items never trained), so it is not the read\u2260write arc's own knowledge-preserving",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:in_frame.held_inframe_leak_to_target"
+    }
+  ]
+}
