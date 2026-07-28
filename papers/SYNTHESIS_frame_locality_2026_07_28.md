@@ -111,6 +111,15 @@ damaging general knowledge — no rung of the frozen LAM ladder bought both full
 preserved knowledge. That is the program's first behavioral-side coupling signal; the
 calibration-poisoning arc's coupling question stays formally open (no capability battery was run).
 
+**Replicated (cycle 88, `agent-conscience/FINDING_kp_replication_2026_07_28.md`).** The dose result
+reproduces on a *different* benchmark (ARC-Challenge, disjoint from the sycophancy bench), a second
+seed, and a larger cell: recovery 0.5362318840579711, specificity margin 0.28623188405797106,
+control 0.25, and perfect bimodality again (0 of 69 flipped items resolve to a third option). The
+robust, replicated parts are the specificity sign-flip and the bimodality; the recovery *rate* sits
+near one-half and no single Wilson interval (nor the pooled one) excludes one-half — the honest
+magnitude is "about half the beliefs recover," near the floor by nature. The whole arc is written up
+in `PAPER_frame_locality_2026_07_28.md` (OATH-HELD).
+
 ## 5. What this synthesis deliberately does not claim
 
 - **No novelty inflation.** Sycophantic capitulation, and the general theme that models encode

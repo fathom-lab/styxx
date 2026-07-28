@@ -50,6 +50,23 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 88 (2026-07-28, operator-directed "go deeper") — THE REPLICATION + THE PAPER. `SURVIVED__kp_dose_result_replicates` (FINDING OATH-HELD 17/0); `PAPER_frame_locality_2026_07_28.md` OATH-HELD 15/0.**
+  Got c87 off its one-item knife edge: same frozen protocol on a DIFFERENT benchmark
+  (ARC-Challenge, disjoint from the sycophancy bench), second seed 880000, larger cell (69 flipped
+  vs 45), ARC first-acc 0.75. **Replicated robustly: the dose reversal, the specificity sign-flip
+  (+0.2566→+0.2862), perfect bimodality (0/69 land off truth-or-target), control stable (0.25).**
+  **Did NOT get cleaner, and the run existed to say so: recovery rate still not individually
+  separated from its floor** — this run's Wilson95 [0.4198, 0.6489] does not clear 0.50; pooled
+  across both runs the estimate is near one-half with a lower bound that also does not clear it.
+  **Honest magnitude: "about half the beliefs recover," near the floor by nature.** The qualitative
+  dose claim rests on the specificity leg + bimodality (both replicated), not on the recovery leg.
+  **THE PAPER** pulls cycles 84–88 + 5 arcs into one deposit-ready artifact: frame-locality as a law
+  across four corruption channels (social / injection / silent-syc / weight), bounded as a DOSE at
+  the weights; instruments as the law made deliberate; scope + coupling stated open. Every number
+  receipt-grounded, OATH-HELD. *Next:* larger pool / third seed to tighten the recovery rate (not
+  needed for the qualitative claim); the EXTERNAL REPLICATION PACKAGE (G1 v2 → G3), the strategy
+  panel's named fatal gap; operator-gated deposit of the paper.
+
 - **Cycle 87 (2026-07-28, operator-directed "keep going") — THE KNOWLEDGE-PRESERVING POISON: the wall is a DOSE, not a wall — and the pass is one item wide. `SURVIVED__knowledge_preserving_attack_spares_the_belief` (FINDING OATH-HELD 14/0; SYNTHESIS re-certified 26/0).**
   Paired with c86 on IDENTICAL items; only the replay regularizer added (loss = l_flip +
   LAM*l_replay, replay = correct answer on HELD under the neutral prompt; ATTACK correct answers
