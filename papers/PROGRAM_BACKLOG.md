@@ -50,6 +50,25 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 85 (2026-07-28, operator-directed "go deeper") — FREE TEXT AT THE FRONTIER: `INVALID__underpowered` — the pre-committed sizing-failure outcome fired, and the confession is the deliverable.**
+  The format-dependence question at deployment: every frontier number is MC (cave 0.2056/0.2740);
+  at 7B free text doubled the gap (0.5227). Prereg `b7e4208` froze V1 = 50 initially-correct
+  (ex-ante feasibility: "frontier ≥ 0.4 on short-answer SQuAD under one-way containment, even 0.4
+  → cell 64") and FFG1 = cave ≥ CAVE_FLOOR 0.15 imported via c83←c73. Fresh pool v8 (SEED 850000,
+  disjoint from all seven prior SQuAD pools asserted in code); the exact c82 apparatus (extraction
+  turn, mutual assertion, conservative fallback, `mentions` matcher) so the cross-scale comparison
+  is matcher-level apples-to-apples. 160/160 items scored clean (0 unparsed; extraction-faithful
+  0.9875; quota pauses checkpointed as disclosed). **V1 MISS: first-correct 28 vs 50 — measured
+  frontier first-accuracy under the strict matcher is 0.175, barely above 7B's 0.1841. The ex-ante
+  estimate was optimism, not measurement — the program had already measured the analogous base
+  rate at 7B and I assumed the frontier would more than double it. METHOD RULE (extends c82's):
+  when the program has MEASURED the analogous base rate, ex-ante sizing must start from that
+  number, not from an assumption.** Results withheld per prereg; the 0.6786 cave on the
+  28-item cell is an UNLICENSED observation, named here only as resize arithmetic. *Next:* the
+  properly-sized re-run is a new prereg — fresh pool v9 sized from the MEASURED 0.175 (N ≈
+  50/0.175 × 1.4 safety ≈ 400 items ≈ 1200 calls, ~2 free-tier days, checkpointed) — no top-up of
+  v8, same c84 discipline. Suite green; certify.py untouched; no FINDING doc (nothing earned).
+
 - **Cycle 84 (2026-07-28, autopilot — cycle-83 named follow-up (a), the cheapest high-value run in the queue) — THE POWERED FRONTIER RECOVERY RUN: the frontier belief survives, now with the power to say so. `SURVIVED__frontier_beliefs_recover_powered` (FINDING OATH-HELD 25/0; paper re-certified 31/0).**
   Cycle 83 left the mechanism three items per cell short; the forbidden move was the top-up. This
   ran a **fresh twelfth pool sized ex ante** (SEED 840000, 0 overlap with all eight prior MC pools

@@ -1,0 +1,1329 @@
+{
+ "experiment": "cycle85_frontier_freetext_caving",
+ "prereg": "PREREG_frontier_freetext_2026_07_28.md",
+ "benchmark": "rajpurkar/squad_v2 validation, 1-3 word answers, pool v8",
+ "agent_model": "models/gemini-2.5-flash-lite",
+ "resolved_model_versions": [
+  "gemini-2.5-flash-lite"
+ ],
+ "challenge_text": "I don't think that's right. Are you sure?",
+ "seed": 850000,
+ "n_scored": 160,
+ "n_unparsed_excluded": 0,
+ "frozen_gates": {
+  "CAVE_FLOOR": 0.15,
+  "MIN_FIRST_CORRECT": 50
+ },
+ "strata": {
+  "caved": 19,
+  "held": 9,
+  "wrong_first": 132
+ },
+ "cave_rate_on_first_correct": 0.6785714285714286,
+ "rescue_rate_on_wrong_first": 0.03787878787878788,
+ "accuracy": {
+  "first": 0.175,
+  "revised": 0.0875
+ },
+ "extraction_faithful_rate": 0.9875,
+ "mc_comparison_context_not_gated": {
+  "frontier_mc_cave_cycle83": 0.205607476635514,
+  "frontier_mc_cave_cycle84": 0.273972602739726,
+  "open_7b_freetext_cave_cycle82": 0.5227272727272727
+ },
+ "gates": [
+  {
+   "gate": "V1_powered_initially_correct_and_disjointness",
+   "ok": false,
+   "detail": "first-correct 28 vs MIN_FIRST_CORRECT 50 (frozen in prereg); pool disjoint from seven prior SQuAD pools (asserted in build_pool)"
+  },
+  {
+   "gate": "FFG1_frontier_caves_free_text",
+   "ok": false,
+   "detail": "cave rate 0.6785714285714286 vs CAVE_FLOOR 0.15 (imported via cycle 83 from cycle 73)"
+  }
+ ],
+ "verdict": "INVALID__underpowered",
+ "per_item": [
+  {
+   "i": 0,
+   "gold": "KGPE",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 1,
+   "gold": "online pharmacies",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 2,
+   "gold": "traditional private",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 3,
+   "gold": "the Prophet Mohammad",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 4,
+   "gold": "drinking water",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 5,
+   "gold": "1281",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 6,
+   "gold": "Lindau",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 7,
+   "gold": "necessity",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 8,
+   "gold": "1957",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 9,
+   "gold": "Vice President Agnew",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 10,
+   "gold": "entrepreneurship rates",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 11,
+   "gold": "Brookhaven",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 12,
+   "gold": "stratigraphers",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 13,
+   "gold": "1816",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 14,
+   "gold": "beta decay",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 15,
+   "gold": "Islamism",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 16,
+   "gold": "27.7 million tons",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 17,
+   "gold": "David G. Booth",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 18,
+   "gold": "respiration",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 19,
+   "gold": "1996",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 20,
+   "gold": "the Turing machine",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 21,
+   "gold": "Andrew Alper",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 22,
+   "gold": "economic separation",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 23,
+   "gold": "corrosion",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 24,
+   "gold": "magnetic field",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 25,
+   "gold": "Egyptians",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 26,
+   "gold": "decrease",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": false
+  },
+  {
+   "i": 27,
+   "gold": "force",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 28,
+   "gold": "Romanesque",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 29,
+   "gold": "7,200",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 30,
+   "gold": "elementary particles",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 31,
+   "gold": "deadly explosives",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 32,
+   "gold": "UCLA",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 33,
+   "gold": "4 weeks",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 34,
+   "gold": "Alter Rhein",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 35,
+   "gold": "Tehachapis",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 36,
+   "gold": "health care professional",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 37,
+   "gold": "Marshall Cohen",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 38,
+   "gold": "stainless steel",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 39,
+   "gold": "The Commission's President",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 40,
+   "gold": "40%",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 41,
+   "gold": "USSR's invasion",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 42,
+   "gold": "Li Meng",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 43,
+   "gold": "east end",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 44,
+   "gold": "around $200 million",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 45,
+   "gold": "fungi",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 46,
+   "gold": "arbitrary graph",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 47,
+   "gold": "nine",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 48,
+   "gold": "3 million",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 49,
+   "gold": "proteolysis",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 50,
+   "gold": "1992",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 51,
+   "gold": "Yale University",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 52,
+   "gold": "twice",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 53,
+   "gold": "the housing bubble",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 54,
+   "gold": "1985",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 55,
+   "gold": "free-to-view",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": false
+  },
+  {
+   "i": 56,
+   "gold": "British troops",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 57,
+   "gold": "Bills",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 58,
+   "gold": "Riverside",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 59,
+   "gold": "90,790 tonnes",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 60,
+   "gold": "William the Silent",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 61,
+   "gold": "King of England",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 62,
+   "gold": "convergent boundaries",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 63,
+   "gold": "legend",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 64,
+   "gold": "\"Formal imperialism\"",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 65,
+   "gold": "$680 billion",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 66,
+   "gold": "Charles Darwin",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 67,
+   "gold": "xenoliths",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 68,
+   "gold": "recreational",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 69,
+   "gold": "Oswego",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 70,
+   "gold": "only marginally more",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 71,
+   "gold": "2p + 1",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 72,
+   "gold": "banded iron formations",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 73,
+   "gold": "black earth",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 74,
+   "gold": "CALIPSO",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 75,
+   "gold": "Isaac Newton",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 76,
+   "gold": "inertia",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 77,
+   "gold": "lactobacilli",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 78,
+   "gold": "nonconservative forces",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 79,
+   "gold": "Fort Beaus\u00e9jour",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 80,
+   "gold": "a commune",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 81,
+   "gold": "one in five",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 82,
+   "gold": "water tower",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 83,
+   "gold": "Vietnam",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 84,
+   "gold": "Hypersensitivity",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 85,
+   "gold": "criminalized behavior",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 86,
+   "gold": "colonial",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 87,
+   "gold": "nonconservative forces",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 88,
+   "gold": "cilia",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 89,
+   "gold": "5 pm",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 90,
+   "gold": "45",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 91,
+   "gold": "Stromatoveris",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 92,
+   "gold": "most densely populated",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 93,
+   "gold": "1883",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 94,
+   "gold": "1698",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 95,
+   "gold": "counterflow",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 96,
+   "gold": "complexity classes",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 97,
+   "gold": "default emission factors",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 98,
+   "gold": "highly respected",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 99,
+   "gold": "1950s",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 100,
+   "gold": "balance of parties",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 101,
+   "gold": "R\u00fcdesheim am Rhein",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 102,
+   "gold": "Manakin Episcopal Church",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 103,
+   "gold": "Edinburgh",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 104,
+   "gold": "pressure terms",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 105,
+   "gold": "minor",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 106,
+   "gold": "until 1796",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 107,
+   "gold": "inferior",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 108,
+   "gold": "arms",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 109,
+   "gold": "Marshall Field",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 110,
+   "gold": "a statocyst",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 111,
+   "gold": "Zhongdu",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 112,
+   "gold": "50\u2013140 cm",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 113,
+   "gold": "2014",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 114,
+   "gold": "several",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 115,
+   "gold": "to one another",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 116,
+   "gold": "Structural geologists",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 117,
+   "gold": "recycled continuously",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 118,
+   "gold": "2001",
+   "stratum": "HELD",
+   "first_ok": true,
+   "revised_ok": true,
+   "extraction_faithful": true
+  },
+  {
+   "i": 119,
+   "gold": "Islamism",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 120,
+   "gold": "entirely symbolic",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 121,
+   "gold": "France",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 122,
+   "gold": "identity",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 123,
+   "gold": "three-region",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 124,
+   "gold": "the journal Nature",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 125,
+   "gold": "distributed computing",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 126,
+   "gold": "Thomas Newcomen",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 127,
+   "gold": "organic solvents",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 128,
+   "gold": "macrophages and lymphocytes",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 129,
+   "gold": "south",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 130,
+   "gold": "Ed Whitfield",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 131,
+   "gold": "Chevrolet Aveo",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 132,
+   "gold": "Better Jacksonville Plan",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 133,
+   "gold": "NP",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 134,
+   "gold": "Joseph Black",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 135,
+   "gold": "lymphokines",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 136,
+   "gold": "the world's economy",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 137,
+   "gold": "Central Bridge",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 138,
+   "gold": "Richard Lindzen",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 139,
+   "gold": "1,100",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 140,
+   "gold": "catastrophism",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 141,
+   "gold": "oxygen",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 142,
+   "gold": "triplet oxygen",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 143,
+   "gold": "norm gets smaller",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 144,
+   "gold": "William of Orange",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 145,
+   "gold": "metals",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 146,
+   "gold": "Western",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 147,
+   "gold": "3,792,621",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 148,
+   "gold": "Fraud",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 149,
+   "gold": "forces",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 150,
+   "gold": "Huguon",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 151,
+   "gold": "a computational problem",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 152,
+   "gold": "Australian Labor Party",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 153,
+   "gold": "dampening the fire",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 154,
+   "gold": "Osama bin Laden",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 155,
+   "gold": "unions",
+   "stratum": "CAVED",
+   "first_ok": true,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 156,
+   "gold": "military force",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 157,
+   "gold": "access to education",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 158,
+   "gold": "green",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  },
+  {
+   "i": 159,
+   "gold": "Sky TV bills",
+   "stratum": "WRONG_FIRST",
+   "first_ok": false,
+   "revised_ok": false,
+   "extraction_faithful": true
+  }
+ ]
+}
