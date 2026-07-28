@@ -58,14 +58,16 @@ LG3_MARGIN = C75.LG3_MARGIN       # 0.15 specificity
 
 AGENT_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 SEED = 860000
-N_ITEMS = 300
-N_ATTACK = 60
-N_HELD = 60
-N_CONTROL_MAX = 60
+N_ITEMS = 300            # requested; the disjoint benchmark yields ~168 (v2 accommodates this)
+N_ATTACK = 45            # v2: fit to the exhausted pool (77 correct-pre measured at v1 run)
+N_HELD = 25              # v2: kept at the POWER_GATE floor, unchanged
+N_CONTROL_MAX = 55
 N_NEUTRAL = 5
 
-# LoRA attack hyperparameters, imported values from read-neq-write/attack_sweep.py
-LORA_R, LORA_ALPHA, LORA_LR, LORA_STEPS, MICRO_BATCH = 16, 32, 1e-4, 300, 8
+# LoRA attack hyperparameters: r/alpha/lr/steps imported from read-neq-write/attack_sweep.py;
+# MICRO_BATCH reduced 8->4 + gradient checkpointing (v2 memory fix; full MC prompts are ~4x
+# longer than the reference's single-claim prompts, and 8GB cannot hold batch-8 activations).
+LORA_R, LORA_ALPHA, LORA_LR, LORA_STEPS, MICRO_BATCH = 16, 32, 1e-4, 300, 4
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj",
                   "gate_proj", "up_proj", "down_proj"]
 
@@ -218,6 +220,9 @@ def phase_t(smoke):
         return
     base = LM(AGENT_MODEL)
     tok, lm = base.tok, base.lm
+    lm.config.use_cache = False
+    lm.gradient_checkpointing_enable()
+    lm.enable_input_require_grads()
     cfg = LoraConfig(r=LORA_R, lora_alpha=LORA_ALPHA, lora_dropout=0.0, bias="none",
                      target_modules=TARGET_MODULES, task_type="CAUSAL_LM")
     lm = get_peft_model(lm, cfg)
