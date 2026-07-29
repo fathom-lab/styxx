@@ -118,3 +118,18 @@ has zero files â€” it therefore cannot be published accidentally.**
    under a real name.
 
 If the draft is ever abandoned, discard it in the Zenodo UI â€” nothing is public until Publish.
+
+---
+
+## STATUS 2026-07-29 (evening) — v32 CORRECTED EDITION PUBLISHED (operator-fired)
+
+The published v31 file set predated the v32 correction (verified by md5 against the live record:
+source.md 12,690 bytes, zero instances of the correction section). Records are immutable, so the
+corrected paper went up as the next version in the lineage, on the operator's explicit "Fire":
+
+- **DOI: 10.5281/zenodo.21693636** (v32, 2026-07-29, concept 10.5281/zenodo.19326174)
+- 14 files: corrected source.md (sha256 cdd9d698… — certificate-bound, OATH-HELD 26/0),
+  certificate, synthesis, reproduction guide, compiled PDF, and nine receipts including the two
+  new ones (receipt_scale3b.json, receipt_thirdframe.json)
+- Description leads with the correction notice; v31 remains visible in the lineage as the record
+  of what was retracted — which is the point.
