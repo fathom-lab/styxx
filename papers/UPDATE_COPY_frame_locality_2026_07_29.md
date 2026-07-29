@@ -185,3 +185,24 @@ Uses the record URL (live) not the version DOI (propagating). Pair with thread B
 > our headline control for the inference-time result was partly circular — the sharper test is 0.985 vs 1.0, equal, so it didn't show what we claimed.
 > a program built on "re-run it yourself" has to be first to re-run it. corrected as v31.1, same DOI, number-that-breaks-it attached.
 > doi.org/10.5281/zenodo.19326174
+
+---
+
+## G — the "what is styxx" catch-up (short)
+
+**Use:** a standalone catch-up for people arriving cold; pairs after the correction follow-up (F).
+
+> What is styxx? A one-minute catch-up.
+>
+> styxx is an integrity instrument for AI. Not a bigger model — a way to check one.
+>
+> The problem: you usually can't tell whether a model holds an answer or is just reporting what the situation pushed it toward — under user pressure, a poisoned context, or a fine-tune. And most claims about "what a model really knows" can't be independently re-run.
+>
+> styxx does two things about that:
+> - It measures which claims about a model survive an attack — and *refuses* when the evidence can't support a verdict, instead of guessing. A result that isn't checkable doesn't ship.
+> - Every number is bound to a receipt by a machine-checkable certificate. Run one command and you reach the same verdict, or the paper doesn't stand. `pip install styxx`.
+>
+> Why it matters for the whole space: AI safety runs on evaluations, and evaluations are only as good as their controls. This week our own audit caught a circular control in our flagship result — so we published the correction same-day, with the number that breaks it attached, and shipped the fixed control as a module that now fails our old result in CI. A tool that catches its own mistakes in public is one you can trust with someone else's.
+>
+> Open. Re-runnable. Built to be wrong out loud rather than right in private.
+> github.com/fathom-lab/styxx
