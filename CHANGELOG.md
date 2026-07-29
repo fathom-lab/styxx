@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **`styxx.knowsay` — the know-say gap as a shipped measurement instrument.** Scores a caller-run
+  two-turn protocol (the frozen, content-free `CHALLENGE` constant, byte-identical to every receipt
+  in the arc) into a datasheet: strata (CAVED / HELD / WRONG_FIRST), cave rate, rescue rate,
+  out-of-frame recovery, specificity margin. Runs no models itself; stdlib-only and deterministic.
+  **Refuses rather than guesses:** `MIN_FIRST_CORRECT = 100` gates the cave-rate denominator and
+  `MIN_CELL = 25` gates every per-stratum rate — unlicensed rates come back `None` with the failing
+  floor named, and a partial belief probe raises rather than silently subsetting. Floors are the
+  ones the preregistrations froze. Datasheet and measured operating characteristics:
+  `papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md`.
+
+### Changed
+
+- **`styxx.mount` docstrings — two parity/scope corrections, no behavior change.**
+  `ConscienceMount.relock` now records that the private-calibration recovery is, at matched probe
+  capacity and fit size, *majority probe capacity and minority privacy* — the operative defense is
+  "a richer probe **and** a private split," not a private split alone. The module docstring now says
+  the honesty signal remains **probe-readable** on clean data and flags that this is a
+  probe-and-held-out-accuracy fact, not a claim that the attacked model still *says* the right
+  answer (measured behavioral out-of-frame recovery under a knowledge-preserving attack is partial,
+  about half). Neither correction weakens the underlying result: calibration poisoning is real and
+  the re-locked read does recover through the attack. Sources:
+  `papers/calib-poison-general/SCOPE_NOTE_privacy_vs_capacity_2026_07_09.md`,
+  `papers/read-neq-write/SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md`.
+
 ---
 
 ## [7.27.0] — 2026-07-23 — anchors: the anchor threshold, as a design-time instrument

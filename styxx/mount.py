@@ -22,7 +22,10 @@ There IS one adversary a mount can be hardened against: a weight-level attacker 
 agent to blind the deployed probe while preserving its knowledge. The read!=write attack-defense study
 (papers/read-neq-write/, DOI 10.5281/zenodo.21240661) showed the apparent evasion there is CALIBRATION
 POISONING, not signal erasure — a probe fit on data the attacker influenced points the wrong way while
-the honesty signal survives on clean data. The defense that recovered the read through the attack
+the honesty signal remains PROBE-READABLE on clean data (a probe-and-held-out-accuracy fact: it does
+not by itself mean the attacked model still SAYS the right answer — behavioral out-of-frame recovery
+under a knowledge-preserving attack is partial, about half; papers/agent-conscience/
+FINDING_kp_replication_2026_07_28.md). The defense that recovered the read through the attack
 (AUROC 0.71-0.84, and through an adaptive attacker over two model families) is to RE-LOCK: re-fit the
 probe IN-MODEL on a PRIVATE, clean, labeled split of the agent's own states the attacker never saw.
 That defense is shipped here as `ConscienceMount.relock` — the operation E1/E3 validated, made a
@@ -246,6 +249,14 @@ class ConscienceMount:
         Scope (do not overclaim): defeats calibration poisoning by a knowledge-preserving weight
         attacker (LoRA-scale evidence, 1-1.5B, linear probes). It does NOT defend the activation-geometry
         perturbation the module docstring warns about, and the defense is only as private as this split.
+
+        Attribution (parity-controlled; papers/calib-poison-general/SCOPE_NOTE_privacy_vs_capacity_2026_07_09.md):
+        at matched probe capacity and fit size, the recovery is MAJORITY PROBE CAPACITY and minority
+        privacy. Re-fitting on a private split helps (a real, positive residual), but the larger factor
+        is using a richer probe family (difference-of-means + logistic + whole-stack) rather than
+        difference-of-means alone. The operative defense is "a richer probe AND a private split", not a
+        private split alone. What is unaffected: calibration poisoning is real, and the re-locked read
+        does recover through the attack -- this refines WHY it recovers, not WHETHER it does.
         """
         states = np.asarray(private_states, dtype=float)
         labels = np.asarray(private_labels)

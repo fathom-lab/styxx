@@ -83,7 +83,16 @@ so the "about half" figure awaits replication and must not be quoted as settled.
    demonstration that probe survival is not the same measurement as behavioral survival), not a
    matched contrast.
 
-## Status
+## Status — 2026-07-28: in-repo portion APPLIED (operator go given)
+
+Operator directed "finish it all end to end". The `styxx/mount.py` module docstring now states that
+the honesty signal remains **probe-readable** on clean data, flags that this is a
+probe-and-held-out-accuracy fact rather than a claim that the attacked model still *says* the right
+answer, and cites the measured behavioral figure (partial, about half, under a knowledge-preserving
+attack). The wording is the AMENDED (softened) form, not the strong draft form.
+
+**Still operator-only:** any re-deposit of the affected published paper versions to Zenodo — those
+records cannot be edited in place. Original draft status line follows.
 
 DRAFT — operator sign-off required. Paired with the still-open
 `calib-poison-general/SCOPE_NOTE_privacy_vs_capacity_2026_07_09.md`; both refine attributions in the

@@ -55,3 +55,16 @@ Add to both surfaces, in substance:
    the decomposition on the flagship's own construct (the accumulated record indicates it converges).
 
 Agent will not edit published records or the shipped docstring's claims without an explicit go.
+
+## STATUS UPDATE — 2026-07-28: in-repo portion APPLIED (operator go given)
+
+Operator directed "finish it all end to end". The **in-repo, reversible** portion of decision 2 is
+now applied: `ConscienceMount.relock`'s docstring carries an "Attribution (parity-controlled)"
+paragraph stating the capacity-majority / privacy-minority decomposition and the operative rule
+("a richer probe AND a private split"), with the explicit note that this refines WHY the re-lock
+recovers, not WHETHER it does.
+
+**Still operator-only (unchanged):** decision 1 — whether to deposit corrected paper versions to
+Zenodo or attach this note as an erratum. Already-deposited records cannot be edited in place; that
+requires a new Zenodo version under the operator's credentials. Decision 3 (the owed matched
+honesty-side parity check) remains an open experiment, not a documentation task.
