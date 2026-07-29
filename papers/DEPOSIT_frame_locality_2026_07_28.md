@@ -77,3 +77,44 @@ then deposit.**
 DEPOSIT PACKAGE READY — agent-prepared, operator-fired. The paper, certificate, synthesis, and all
 receipts are already public on the `paper/anchored-validity` branch of fathom-lab/styxx (tip
 `195762b`); depositing assigns the permanent citable DOI.
+
+---
+
+## STATUS 2026-07-28 — DRAFT CREATED IN THE CORRECT LINEAGE (agent), files + publish remain
+
+Operator asked for the deposit as **a new version of the existing series, not an orphan**. Done:
+
+- **Concept record: `19326174`** — the Fathom series (v30 = `21522035` sits under it). Confirmed by
+  API, not assumed.
+- **New version draft created: deposition `21659191`**, `conceptdoi 10.5281/zenodo.19326174`
+  inherited — so it cites as the next version of the same record, exactly as asked.
+- **Reserved version DOI: `10.5281/zenodo.21659191`** (activates on publish).
+- **Metadata SET** (mirrors v30's schema): title "Fathom v31 / styxx: Frame-Locality — Where
+  Corruption Captures a Language Model's Report, and Where It Reaches the Belief"; creator
+  "Rodabaugh, Alexander / Fathom Lab"; preprint; CC-BY-4.0; version `v31`; date 2026-07-28;
+  keywords; related identifiers (GitHub + PyPI). Description carries the abstract **including the
+  stated limits** (recovery rate near one-half; 1.5B / one attack class; coupling is behavioral).
+- **Edit link:** https://zenodo.org/deposit/21659191
+
+### What is NOT done, and why
+
+**File upload is blocked from this environment.** Both Zenodo upload paths fail here: the bucket
+`PUT` returns 400 "file upload transfer failed" and even a 4-byte probe returns **504 Gateway
+Time-out**; the multipart `POST` times out. JSON calls (new-version, metadata) work fine — the
+sandbox's egress does not carry request bodies to this host. This is an environment limit, not a
+Zenodo or credential problem. **The inherited v30 files were removed first, so the draft currently
+has zero files — it therefore cannot be published accidentally.**
+
+### Operator: two steps, ~2 minutes
+
+1. Open https://zenodo.org/deposit/21659191 and drag in:
+   - `papers/PAPER_frame_locality_2026_07_28.md` (upload as `source.md` to match series convention)
+   - `papers/PAPER_frame_locality_2026_07_28.certificate.json` (as `source.certificate.json`)
+   - `papers/SYNTHESIS_frame_locality_2026_07_28.md`
+   - `papers/REPRODUCTION_frame_locality_2026_07_28.md`
+   - optionally the six receipts listed in the manifest above, so the record is self-verifying
+2. **Read the paper once**, then press Publish. The pre-deposit checklist at the top of this file
+   still stands: it is receipt-certified but human-unreviewed, and publishing mints a permanent DOI
+   under a real name.
+
+If the draft is ever abandoned, discard it in the Zenodo UI — nothing is public until Publish.
