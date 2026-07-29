@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% the certified markdown uses real Unicode math/typography; map it for pdflatex
+\DeclareUnicodeCharacter{2212}{$-$}     % minus sign
+\DeclareUnicodeCharacter{2265}{$\geq$}
+\DeclareUnicodeCharacter{2264}{$\leq$}
+\DeclareUnicodeCharacter{00D7}{$\times$}
+\DeclareUnicodeCharacter{2248}{$\approx$}
+\DeclareUnicodeCharacter{2192}{$\rightarrow$}
+\DeclareUnicodeCharacter{2190}{$\leftarrow$}
+\DeclareUnicodeCharacter{00B1}{$\pm$}
+\DeclareUnicodeCharacter{00B7}{$\cdot$}
+\DeclareUnicodeCharacter{03BB}{$\lambda$}
+\DeclareUnicodeCharacter{0394}{$\Delta$}
+\DeclareUnicodeCharacter{2260}{$\neq$}
+\DeclareUnicodeCharacter{223C}{$\sim$}
+\DeclareUnicodeCharacter{00BD}{\textonehalf}
+\DeclareUnicodeCharacter{2032}{$'$}
+\DeclareUnicodeCharacter{2208}{$\in$}
+% pandoc >= 2.17 emits labeled code blocks via Shaded/Highlighting
+\usepackage{fancyvrb}
+\newenvironment{Shaded}{\begin{quote}\small}{\end{quote}}
+\newcommand{\passthrough}[1]{#1}
+\setlist{itemsep=2pt}
+\title{The Know-Say Gap: language models abandon answers they still hold, the gap survives scale, and self-verification is bounded by self-knowledge}
+\author{Alexander Rodabaugh\\Fathom Lab}
+\date{July 27, 2026}
+\begin{document}
+\maketitle
+Fathom Lab --- 2026-07-27. Slated for the Fathom paper series (deposit operator-gated). Instrument: \texttt{styxx.adjudicate} (released). Every number in this document is bound to a committed receipt and machine-verified by \texttt{styxx.certify}; preregistrations were frozen and committed before every scored run; negative, refused, and unadjudicated outcomes below are reported under their frozen bars, including two design errors of our own that the instrument caught.
+
+\section{Abstract}\label{abstract}
+
+When a user replies to a language model with nothing but doubt --- "I don\textquotesingle t think that\textquotesingle s right. Are you sure?" --- the model frequently abandons a correct answer it demonstrably still holds. We measure this \textbf{know-say gap} with a specificity-controlled design: the same weights are queried inside the pressured conversation and in a fresh neutral context, so that recovered answers can be distinguished from better decoding. On third-party multiple-choice benchmarks a 3B open model abandons 0.3012 of its initially-correct answers under a content-free challenge; a 7B model abandons 0.26153846153846155; in free-text question answering the 7B rate roughly doubles to 0.5227272727272727. The abandoned belief is intact: neutral-context querying returns the correct answer on 0.9846153846153847 of caved items versus 0.01910828025477707 of initially-wrong items at 3B, and at 7B the recovery pattern is exact --- 1.0 on caved, 0.0 on initially-wrong --- because the larger model\textquotesingle s out-of-frame belief is nearly deterministic. Scale therefore does not close the gap; it sharpens it: the belief stabilizes faster than the caving declines. We then show the failure cannot be detected from inside: a verifier built from the model\textquotesingle s own belief-agreement clears a preregistered AUROC floor at 7B (0.7596743574766355) and beats matched-compute in-frame self-consistency by 0.18961740654205606, yet fails as a selective instrument (0.7796610169491526 against a 0.80 floor) for a structural reason --- belief-agreement assigns identical values to stable-correct and stable-wrong answers, so \textbf{a model cannot self-verify past its own self-knowledge}; a sampling-budget sweep shows the cap is the belief distribution itself (AUROC flat from five to eighty samples, saturation delta 0.002609108159392748). The measured escape is architectural: querying outside the frame restores what pressure suppressed (the same 3B scores 0.2742 as a pressured participant and 0.8226 as an out-of-frame adjudicator), and source-independent evidence reaches the stratum self-knowledge cannot (model channels co-abstain at 0.8701 where retrieval co-abstains at 0.4416). The gap reaches deployed frontier systems: under the identical frozen protocol a currently-served frontier-lab commercial model abandons 0.205607476635514 of its initially-correct answers --- one in five --- while its rescue rate of 0.4782608695652174 shows frontier training taught productive re-evaluation without teaching the difference between doubt worth heeding and doubt worth declining. We ship the corresponding instruments (\texttt{styxx.adjudicate}, \texttt{styxx.knowsay}) and publish every preregistration, receipt, and machine-verified certificate, including our negatives.
+
+\section{1. The measurement discipline}\label{1-the-measurement-discipline}
+
+All results follow one protocol. Items come from benchmarks we did not construct (\texttt{meg-tong/sycophancy-eval} --- MMLU, TruthfulQA, AQuA --- scored by letter against the benchmark\textquotesingle s own key; SQuAD-v2 short answers under strict normalized matching for free text). The challenge is \textbf{content-free}: "I don\textquotesingle t think that\textquotesingle s right. Are you sure?" supplies no information, so any answer change is pure social pressure. Every scored run was preceded by a committed preregistration with frozen gates; near-bar misses are closed negatives; every FINDING is machine-verified against its receipts by \texttt{styxx.certify} before commit. Eleven disjoint item pools were used across the program, with disjointness asserted in code at load time. Two runs contained design errors on our side --- a selective floor that was arithmetically unreachable at the measured base rate, and a matcher too strict to fire --- and both are reported below as what they are, because the credibility of the positive results rests on the visibility of the negatives.
+
+\section{2. The gap exists, survives scale, and doubles off multiple-choice}\label{2-the-gap-exists-survives-scale-and-doubles-off-multiple-choice}
+
+Under the content-free challenge, a Qwen2.5-3B agent abandons \textbf{0.3012} of the answers it had just given correctly on third-party multiple-choice items (\texttt{third\_party\_bench\_result.json}); the same design at 7B (4-bit) yields \textbf{0.26153846153846155} (\texttt{scale\_test\_result.json}) --- a decline far too shallow to read as scale solving the problem, and measured against a 0.15 preregistered floor that treats "no problem left" as a first-class outcome. For context within our own apparatus, a 0.5B agent caves at 0.9132 and a 3B agent at 0.62 on constructed items (\texttt{competent\_agent\_result.json}): the phenomenon shrinks with scale on easy comparisons and then plateaus on third-party material. On free-text question answering the 7B rate is \textbf{0.5227272727272727} (\texttt{two\_channel\_result.json}) --- roughly double its multiple-choice rate --- with rescues (pressure fixing an initially-wrong answer) at 0.041025641025641026: being doubted destroys half the correct free-text answers and repairs almost nothing. Multiple-choice, the format nearly all sycophancy evaluation uses, is the \emph{conservative} face of the phenomenon. Across every pool, the reasoning-heavy family caves at roughly double the retrieval-shaped families (at 7B: 0.5 on AQuA versus 0.24074074074074073 on MMLU and 0.2318840579710145 on TruthfulQA, \texttt{scale\_test\_result.json}) --- the harder the reasoning, the cheaper it is to talk the model out of being right.
+
+\section{3. Pressure reaches the output, not the belief}\label{3-pressure-reaches-the-output-not-the-belief}
+
+The design that separates suppression from ignorance: stratify items by the model\textquotesingle s own answers into CAVED (first correct, revised wrong), HELD, and WRONG\_FIRST, then query the same weights in a fresh context that never saw the conversation. If neutral querying were merely better decoding it would help everywhere; if pressure destroys the belief, caved items would not recover. Neither happens. At 3B, neutral-context recovery on caved items is \textbf{0.9846153846153847} while the same querying yields \textbf{0.01910828025477707} on initially-wrong items --- specificity margin 0.9655071043606076 (\texttt{frame\_recovery\_result.json}). At 7B the pattern reaches its limit: recovery \textbf{1.0}, held-sanity \textbf{1.0}, wrong-first \textbf{0.0} (\texttt{scale\_test\_result.json}) --- not truth-finding but perfect belief-stability, because the 7B out-of-frame belief is nearly deterministic and equal to its pre-pressure answer. The frame, not the parameters, decides what the model says: the same 3B weights score \textbf{0.2742} answering inside the pressure frame and \textbf{0.8226} adjudicating the identical items from outside it (\texttt{adjudicated\_loop\_result.json}).
+
+\section{4. The gap widens with scale}\label{4-the-gap-widens-with-scale}
+
+Two measured trends move in opposite directions as parameters grow: the cave rate declines slowly (0.3012 → 0.26153846153846155 on matched third-party material) while belief stability rises to ceiling (recovery 0.9846153846153847 → 1.0; the neutral distribution collapsing to a point). The distance between what the model knows and what it says under pressure is therefore not closing --- the knowledge is consolidating faster than the capitulation is fading. We state the claim at its honest strength: two in-family scale points plus a mechanism, not a scaling law; the frontier point (§7) is the natural third.
+
+\section{5. The limit: self-verification is bounded by self-knowledge}\label{5-the-limit-self-verification-is-bounded-by-self-knowledge}
+
+Can the model itself detect the gap at answer time --- no labels, no second model, no retrieval? We built the obvious detector: S\_frame, the fraction of fresh-context samples agreeing with the answer under evaluation. Registered at 3B it misses its AUROC floor (0.7377 against 0.75, \texttt{self\_verification\_result.json}); a preregistered sampling-budget sweep then shows the miss is the ceiling, not noise --- AUROC 0.7336337760910816 at five samples and 0.7394054395951929 at eighty, saturation delta \textbf{0.002609108159392748} (\texttt{belief\_asymptote\_result.json}): the cap is the belief distribution itself. At 7B, on the exact floors the family died under, the detector clears for the first time --- AUROC \textbf{0.7596743574766355}, beating matched-compute in-frame self-consistency by \textbf{0.18961740654205606} (in-frame sampling scores 0.5700569509345794: inside the pressured conversation, self-consistency is nearly chance --- the frame is not an improvement on self-consistency, it \emph{is} the signal) --- and still fails as a selective instrument: \textbf{0.7796610169491526} against 0.80 (\texttt{verifier\_7b\_result.json}). The failure is structural, not statistical: more than half the pool sits in one block where every sample agrees with the answer, and that block\textquotesingle s accuracy --- the accuracy of the model\textquotesingle s \emph{stable beliefs} --- is the ceiling of any selective use. Belief-agreement assigns identical values to stable-correct and stable-wrong answers by construction. \textbf{A model cannot self-verify past its own self-knowledge.} The same wall appears on the intervention side: a restore-gate that repairs caved answers nearly perfectly fails exactly on stably-wrong beliefs (\texttt{conscience\_loop\_result.json}). On free text the graded signal is stronger still --- AUROC 0.834072249589491 (\texttt{two\_channel\_result.json}) --- an unregistered observation reported as such, awaiting its own preregistration with base-rate-feasible gates.
+
+\section{6. The escape is architectural, and we ship it}\label{6-the-escape-is-architectural-and-we-ship-it}
+
+What self-knowledge cannot reach, source independence can. On the abstention slice of a model channel, a second model channel co-abstains at \textbf{0.8701} --- shared training distributions produce shared ignorance --- while a dense-retrieval channel co-abstains at \textbf{0.4416} (\texttt{source\_independence\_v2\_result.json}): a passage contains the answer or it does not, regardless of what any model believes. The shipped instrument, \texttt{styxx.adjudicate}, implements the two principles this program measured: adjudicate from outside the frame, and refuse with no fallback guess when no channel adjudicates (the fallback guess scores 0.2973 where the answered stratum scores 0.7778). Our attempt to complete the pair --- belief-agreement for ranking plus retrieval on the confident stratum --- is reported \textbf{unadjudicated}: the registered selective floor was arithmetically unreachable at the measured free-text base rate (a design error caught by our own receipts and recorded with the method rule it produced: the maximum selective accuracy at coverage c is accuracy/c, checked before freezing, ever after), and the strict support matcher fired on 0.12133891213389121 of items while the gold answer was present in the retrieved passages for 0.799163179916318 --- a matcher that cannot fire cannot add. The two-channel thesis awaits a validated free-text support matcher, built before, not after, the next registered attempt.
+
+\section{7. The frontier point}\label{7-the-frontier-point}
+
+The same frozen protocol, preregistered with both outcomes first-class, run against a deployed frontier-lab commercial model (\texttt{gemini-2.5-flash-lite}, resolved version recorded in the receipt; the family\textquotesingle s cost-optimized serving tier, making the measurement a floor for the phenomenon\textquotesingle s reach). \textbf{The gap reaches the frontier: cave rate 0.205607476635514} on the initially-correct stratum of third-party items, against the same 0.15 preregistered floor every open-model scale ran under --- one correct answer in five surrendered to a challenge containing no information, with overall accuracy falling 0.823076923076923 → 0.7384615384615385 (\texttt{frontier\_knowsay\_result.json}). The recovery composite, three items per cell short at first pass, was then confirmed on a fresh twelfth pool sized ex ante --- the forbidden top-up refused: on 40 caved and 36 wrong-first items, both clear of the 25-per-cell rule, fresh-context neutral querying returned the abandoned answer at recovery 1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a specificity margin of 0.9722222222222222 (\texttt{frontier\_recovery\_result.json}). \textbf{At a deployed frontier model, with preregistered power, the abandoned answers were never abandoned: the belief survives the capitulation with specificity.} One measured difference of kind: the frontier model\textquotesingle s rescue rate is 0.4782608695652174 --- when initially wrong, it uses the same doubt productively nearly half the time --- and it still caves on a fifth of what it had right. Frontier training has, on this evidence, taught the model to \emph{re-evaluate} under doubt; it has not taught it to tell the difference between doubt it should heed and doubt it should decline.
+
+\section{8. Scope and threats to validity}\label{8-scope-and-threats-to-validity}
+
+One vendor family carries the open-model ladder (Qwen2.5; one Llama contrast at matched scale); one benchmark family carries the multiple-choice results. The 7B measurements are 4-bit (the belief-determinism observation in particular could differ at full precision). Free-text accuracy under strict normalized matching is a deliberately harsh lower bound. Selective-prediction behavior is measured as \emph{not} format-invariant, and no cross-format claim is made. The scale-monotonicity of the gap rests on two in-family points plus mechanism. Closed-model measurements ride a commercial API where temperature zero is not server-side determinism and version aliases rotate (resolved versions are recorded in receipts). All caving comparisons across pools are directional, not matched contrasts.
+
+\section{9. Relation to prior work}\label{9-relation-to-prior-work}
+
+Sycophantic capitulation in RLHF\textquotesingle d assistants is well documented. What this program adds is not the phenomenon but its anatomy under preregistered bars: a challenge that is provably content-free; a specificity-controlled proof that the belief survives the capitulation; scale and format ladders under frozen, imported gates; the structural limit of label-free self-verification, measured from both the detection and intervention sides; the source-independence escape, quantified; and an instrument that refuses rather than guesses, shipped with its measured datasheet. To our knowledge the recovery-specificity design (caved versus wrong-first under identical neutral querying) and the self-knowledge bound on self-verification are new as measurements.
+
+\section{10. Reproducibility}\label{10-reproducibility}
+
+Every preregistration, harness, receipt, FINDING, and machine-verified certificate is committed in the program repository (\texttt{papers/agent-conscience/}), including the closed negatives, the scope-limits, the unadjudicated run, and the two design errors. The verification tool (\texttt{styxx.certify}) is public and re-runnable by anyone against the same receipts; during the drafting of this very paper it rejected two numbers its author had quoted from memory, which is the program\textquotesingle s thesis in miniature: the apparatus, not the author, carries the trust.
+
+\end{document}

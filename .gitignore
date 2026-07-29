@@ -155,3 +155,7 @@ papers/**/*_selftest*.json
 papers/depth-truth/pilot/.fired
 papers/depth-truth/pilot/autofire_status.json
 papers/disjoint-worlds/_PHI_STAGE_C_LIVELOCK_NOTE.md
+
+papers/arxiv/**/main.aux
+papers/arxiv/**/main.log
+papers/arxiv/**/main.out
