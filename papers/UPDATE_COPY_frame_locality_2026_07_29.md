@@ -163,3 +163,25 @@ claim peer review or a scale the work doesn't have (1.5B, one attack class, on t
 > zenodo.org/records/21659191
 
 Uses the record URL (live) not the version DOI (propagating). Pair with thread B as replies if desired.
+
+---
+
+## F — the correction follow-up (v31.1, self-reported)
+
+**Context:** posted after an adversarial audit found the inference-time specificity control partly circular; corrected same-day as v31.1. Post the correction honestly; do NOT claim the weight channel survived until the third-frame re-test (cycle 92) returns a verdict.
+
+**Long form:**
+
+> Yesterday we posted frame-locality — a model can be made to *say* something false while still *holding* the true answer. Overnight we audited our own work and caught what a reviewer would: for the inference-time channels, our headline control was partly circular. The recovery query was the original question with the pressure removed, and we'd sorted items by that same question's answer. The sharper test — do items the model was talked out of recover differently than items it never doubted? — is 0.985 vs 1.0. Equal. So caving contributed no measurable signal.
+>
+> We corrected it publicly, same day, as v31.1 on the same DOI, with the number that breaks it attached: https://doi.org/10.5281/zenodo.19326174
+>
+> The premise of styxx is that a claim is worth only what someone can re-run. A program that says "don't trust me, re-run it" has to be first to re-run it and report what breaks. What still stands: the report is genuinely frame-dependent. The weight-level half is better-built and is being stress-tested against the same audit right now. If it survives we'll say so with numbers; if not we'll correct that too. The honest state of a real result isn't "solved" — it's "here's how far it holds, and here's where we're still checking."
+> github.com/fathom-lab/styxx
+
+**Tweet:**
+
+> we found a hole in our own paper overnight and published the correction same-day.
+> our headline control for the inference-time result was partly circular — the sharper test is 0.985 vs 1.0, equal, so it didn't show what we claimed.
+> a program built on "re-run it yourself" has to be first to re-run it. corrected as v31.1, same DOI, number-that-breaks-it attached.
+> doi.org/10.5281/zenodo.19326174
