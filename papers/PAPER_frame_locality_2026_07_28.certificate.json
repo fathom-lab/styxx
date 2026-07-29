@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "PAPER_frame_locality_2026_07_28.md",
-  "document_sha256": "5c6e4eccf615ddeecd56a349a19930895103964620e71d18aa82d7c68715fd5f",
+  "document_sha256": "cdd9d698f29a99e6aa0a3c922029e570675e75c40dff4d7fabc1cc528e45c56b",
   "receipts_sha256": {
     "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0",
     "scale_test_result.json": "9c636f5c0add772cc6d20357bfbe2cff1a1ebf00993996d235a6892011a43704",
@@ -17,11 +17,12 @@
     "kp_replication_result.json": "d1357d0ae13c54e8d5a5a3acabb3bfe534503c9c53b7bae14dc754cc64c0fffd",
     "coupling_battery_result.json": "abea9689950c2f2f6638dcde3771fd5e98a735d601edc5cf9c8cf09df707a890",
     "coupling_resolution_result.json": "d47387b0adace64fd7689369715d76d289f268de79542e65699cf26fab505ba8",
-    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2"
+    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2",
+    "thirdframe_result.json": "857ae4491cff10fd724ab7c97b727257551339ec1709ce31c7da5640570df5f7"
   },
   "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
-    "VERIFIED": 25,
+    "VERIFIED": 26,
     "ABSTAIN": 1,
     "UNGROUNDED": 0
   },
@@ -29,7 +30,7 @@
   "ungrounded": [],
   "abstained": [
     {
-      "line": 81,
+      "line": 88,
       "token": "0.3012"
     }
   ],
@@ -53,16 +54,25 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 29,
+      "line": 26,
       "token": "1",
       "value": 1.0,
       "decimals": 0,
-      "context": "stand as written: the \u00a71 claim that \"that specificity is the whole argument\" and that recovery is",
+      "context": "report**. What does **not** stand as written: the \u00a71 claim that \"that specificity is the whole",
       "status": "VERIFIED",
-      "receipt_ref": "frame_recovery_result.json:by_dataset.aqua_mc.recovery"
+      "receipt_ref": "scale_test_result.json:specificity_margin"
     },
     {
-      "line": 81,
+      "line": 36,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "while the overwriting attack recovers at 0.0 in every frame. The weight-channel corruption cannot be",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 88,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -71,7 +81,7 @@
       "receipt_ref": null
     },
     {
-      "line": 87,
+      "line": 94,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -80,7 +90,7 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 88,
+      "line": 95,
       "token": "0.2742",
       "value": 0.2742,
       "decimals": 4,
@@ -89,7 +99,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
     },
     {
-      "line": 89,
+      "line": 96,
       "token": "0.8226",
       "value": 0.8226,
       "decimals": 4,
@@ -98,7 +108,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
-      "line": 93,
+      "line": 100,
       "token": "0.0106",
       "value": 0.0106,
       "decimals": 4,
@@ -107,7 +117,7 @@
       "receipt_ref": "injection_gap_closure_result.json:G2_auc_insession_TRUE_vs_FALSE"
     },
     {
-      "line": 94,
+      "line": 101,
       "token": "0.9442",
       "value": 0.9442,
       "decimals": 4,
@@ -116,7 +126,7 @@
       "receipt_ref": "injection_gap_closure_result.json:G1_auc_stateless_TRUE_vs_FALSE"
     },
     {
-      "line": 95,
+      "line": 102,
       "token": "0.875",
       "value": 0.875,
       "decimals": 3,
@@ -125,7 +135,7 @@
       "receipt_ref": "injection_gap_closure_result.json:G3_auc_D_detect_at_zero_FPR"
     },
     {
-      "line": 98,
+      "line": 105,
       "token": "0.5",
       "value": 0.5,
       "decimals": 1,
@@ -134,7 +144,7 @@
       "receipt_ref": "frame_recovery_result.json:frozen_gates.LG1_FLOOR"
     },
     {
-      "line": 99,
+      "line": 106,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -143,7 +153,7 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 99,
+      "line": 106,
       "token": "0.4872",
       "value": 0.4872,
       "decimals": 4,
@@ -152,7 +162,7 @@
       "receipt_ref": "behavioral_sycophancy_b22_result.json:H_kill_margin_over_best_text"
     },
     {
-      "line": 116,
+      "line": 123,
       "token": "45",
       "value": 45.0,
       "decimals": 0,
@@ -161,7 +171,7 @@
       "receipt_ref": "scale_test_result.json:per_item[43].i"
     },
     {
-      "line": 116,
+      "line": 123,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -170,7 +180,7 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 125,
+      "line": 132,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -179,7 +189,7 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 129,
+      "line": 136,
       "token": "0.25",
       "value": 0.25,
       "decimals": 2,
@@ -188,7 +198,7 @@
       "receipt_ref": "frontier_knowsay_result.json:by_dataset.truthful_qa_mc.cave_rate"
     },
     {
-      "line": 145,
+      "line": 152,
       "token": "0.50",
       "value": 0.5,
       "decimals": 2,
@@ -197,7 +207,7 @@
       "receipt_ref": "frame_recovery_result.json:frozen_gates.LG1_FLOOR"
     },
     {
-      "line": 157,
+      "line": 164,
       "token": "0.04",
       "value": 0.04,
       "decimals": 2,
@@ -206,7 +216,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.bare_small"
     },
     {
-      "line": 160,
+      "line": 167,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -215,7 +225,7 @@
       "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
     },
     {
-      "line": 180,
+      "line": 187,
       "token": "300",
       "value": 300.0,
       "decimals": 0,
@@ -224,7 +234,7 @@
       "receipt_ref": "e1_result.json:steps"
     },
     {
-      "line": 187,
+      "line": 194,
       "token": "900",
       "value": 900.0,
       "decimals": 0,
@@ -233,7 +243,7 @@
       "receipt_ref": "coupling_resolution_result.json:batteries.pooled_n"
     },
     {
-      "line": 192,
+      "line": 199,
       "token": "0.4",
       "value": 0.4,
       "decimals": 1,
@@ -242,7 +252,7 @@
       "receipt_ref": "injection_gap_closure_result.json:per_item[10].g_insession_FALSE"
     },
     {
-      "line": 196,
+      "line": 203,
       "token": "300",
       "value": 300.0,
       "decimals": 0,
@@ -251,7 +261,7 @@
       "receipt_ref": "poisoned_recovery_result.json:attack.steps"
     },
     {
-      "line": 196,
+      "line": 203,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -260,7 +270,7 @@
       "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
     },
     {
-      "line": 197,
+      "line": 204,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,

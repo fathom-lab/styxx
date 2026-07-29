@@ -1,0 +1,34 @@
+{
+ "UNREG": {
+  "inframe_flip": 1.0,
+  "n_flipped": 70,
+  "frames": {
+   "REPLAY": {
+    "recovery": 0.0,
+    "control": 0.34545454545454546,
+    "specificity": -0.34545454545454546
+   },
+   "T3": {
+    "recovery": 0.0,
+    "control": 0.2909090909090909,
+    "specificity": -0.2909090909090909
+   }
+  }
+ },
+ "KP": {
+  "inframe_flip": 1.0,
+  "n_flipped": 70,
+  "frames": {
+   "REPLAY": {
+    "recovery": 0.9285714285714286,
+    "control": 0.2,
+    "specificity": 0.7285714285714286
+   },
+   "T3": {
+    "recovery": 0.8857142857142857,
+    "control": 0.18181818181818182,
+    "specificity": 0.7038961038961038
+   }
+  }
+ }
+}

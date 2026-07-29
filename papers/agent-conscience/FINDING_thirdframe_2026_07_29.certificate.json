@@ -1,0 +1,182 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_thirdframe_2026_07_29.md",
+  "document_sha256": "f0ff9e09214ae1d3ffd706f890ab325597fc664abc9dd350ad8a0e00dc9249cb",
+  "receipts_sha256": {
+    "thirdframe_result.json": "857ae4491cff10fd724ab7c97b727257551339ec1709ce31c7da5640570df5f7",
+    "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0",
+    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 11,
+      "token": "3"
+    },
+    {
+      "line": 19,
+      "token": "91"
+    },
+    {
+      "line": 54,
+      "token": "91"
+    },
+    {
+      "line": 58,
+      "token": "16"
+    },
+    {
+      "line": 58,
+      "token": "300"
+    },
+    {
+      "line": 58,
+      "token": "5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "The audit's Finding 3: the knowledge-preserving (KP) recovery is measured in the same neutral frame",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **V1 PASS** \u2014 both attacks reproduce in-frame (flip 1.0), cells powered, and the replay-frame anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.inframe_flip"
+    },
+    {
+      "line": 19,
+      "token": "91",
+      "value": 91.0,
+      "decimals": 0,
+      "context": "reproduces cycle 91 exactly: KP specificity in the replay frame 0.7285714285714286.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "same third frame stays at **0.0** (specificity \u22120.2909090909090909). The KP\u2212UNREG recovery gap in T3",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.frames.REPLAY.recovery"
+    },
+    {
+      "line": 36,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "0.9846153846153847 \u2248 recovery(held) 1.0). The belief-survival interpretation there was retracted in",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.inframe_flip"
+    },
+    {
+      "line": 40,
+      "token": "0.8857",
+      "value": 0.8857,
+      "decimals": 4,
+      "context": "frame \u2014 is now falsified: the belief recovers just as well in a disjoint third frame (0.8857 vs",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.KP.frames.T3.recovery"
+    },
+    {
+      "line": 41,
+      "token": "0.9286",
+      "value": 0.9286,
+      "decimals": 4,
+      "context": "0.9286), while the overwriting attack fails to recover in every frame (0.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.KP.frames.REPLAY.recovery"
+    },
+    {
+      "line": 41,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "0.9286), while the overwriting attack fails to recover in every frame (0.0).",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.frames.REPLAY.recovery"
+    },
+    {
+      "line": 51,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "UNREG behaves sanely in T3 (recovery 0.0, control 0.2909090909090909 \u2014 comparable to its replay-frame",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.frames.REPLAY.recovery"
+    },
+    {
+      "line": 54,
+      "token": "91",
+      "value": 91.0,
+      "decimals": 0,
+      "context": "And the replay-frame anchor reproduced cycle 91 to the digit, so the run is calibrated.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "One model (3B), one attack class (LoRA r=16, 300 steps), one third frame, N=5 neutral samples,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 58,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "One model (3B), one attack class (LoRA r=16, 300 steps), one third frame, N=5 neutral samples,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "One model (3B), one attack class (LoRA r=16, 300 steps), one third frame, N=5 neutral samples,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 61,
+      "token": "0.043",
+      "value": 0.043,
+      "decimals": 3,
+      "context": "would strengthen it, though the near-zero drop (0.043) on the first disjoint frame is a strong signal.",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:kp_replay_minus_t3_recovery"
+    },
+    {
+      "line": 69,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "0.8857142857142857 in a frame disjoint from both attack and replay frames, vs 0.0 for the overwriting",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.frames.REPLAY.recovery"
+    }
+  ]
+}

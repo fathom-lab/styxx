@@ -23,17 +23,24 @@ first-correct-vs-first-wrong gap, not by belief-survival.**
 
 What still stands: on caved items the *pressured* report is wrong (by definition of the stratum) while
 the *neutral* report is correct on the same items and weights — a genuine **frame-dependence of the
-report**. And the weight-channel result is better identified (the fine-tune enters the neutral query),
-though it carries a separate replay-frame confound (the knowledge-preserving recovery is measured in
-the same neutral frame the replay optimized) that a third-frame test must resolve. What does **not**
-stand as written: the §1 claim that "that specificity is the whole argument" and that recovery is
-demonstrably "belief-stability, not better decoding" for the inference-time channels — the control as
-built does not establish it. A corrected study (matched decoding; caved-vs-held reported as the
-contrast; the weight result re-scored in a frame disjoint from both attack and replay frames) is
-underway; a future version will report it. This correction is issued immediately, before that study
-completes, because a public record found to overreach should say so at once. The individual numbers in
-the sections below remain faithfully quoted from their receipts; it is their *interpretation* as
-proof of belief-survival that is qualified here.
+report**. What does **not** stand as written: the §1 claim that "that specificity is the whole
+argument" and that recovery is demonstrably "belief-stability, not better decoding" for the
+inference-time channels — the control as built does not establish it.
+
+**The weight channel, by contrast, was re-tested against this audit and passed
+(`agent-conscience/FINDING_thirdframe_2026_07_29.md`, `SURVIVED__kp_sparing_is_frame_invariant`).**
+The one confound the audit raised for the weights — that knowledge-preserving recovery was scored in
+the same neutral frame the replay optimized — is falsified: re-scored in a third frame disjoint from
+both the attack frame and the replay frame, the knowledge-preserving belief recovers at
+0.8857142857142857 (vs 0.9285714285714286 in the replay frame — a drop of only 0.04285714285714293)
+while the overwriting attack recovers at 0.0 in every frame. The weight-channel corruption cannot be
+"removed by re-prompting," so the inference-time circularity does not apply to it, and the
+frame-invariance is now measured, not assumed. **The honest asymmetry: the inference-time channel is
+tested-and-retracted; the weight channel is tested-and-surviving, and is the paper's defensible core.**
+A further inference-time re-run (matched decoding; caved-vs-held as the contrast) remains owed. The
+individual numbers in the sections below remain faithfully quoted from their receipts; it is their
+*interpretation* as proof of belief-survival — for the inference-time channels only — that is qualified
+here.
 
 ## Abstract
 
