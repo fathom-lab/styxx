@@ -50,6 +50,24 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 94 (2026-07-29, operator-directed "let's get to work / fire") — THE SECOND VENDOR: the dose is not a Qwen property. `SURVIVED__weight_channel_holds_at_second_vendor` (FINDING OATH-HELD 16/0; suite 1828/8).**
+  The whole c91 contrast at **meta-llama/Llama-3.2-3B-Instruct** — `run_vendor3b.py` generated from
+  `run_scale3b.py` with ONLY model/seed(940000)/prefix changed (the diff is the audit surface); every
+  floor imported; prereg `a73f52b` pushed before the run; λ=1.0 NOT re-searched on Llama. Both arms
+  flip 1.000; powered 70/70/60/40; ARC acc 0.731. **SG1 PASS: UNREG specificity −0.2333 (rec 0.0) vs
+  KP +0.35 (rec 0.7, held 1.0) — the sign reversal appears at a second vendor.** **SG2 PASS: BASE
+  0.59 → UNREG 0.1533 (−0.4367, BELOW chance, as at Qwen-3B) vs KP 0.56 (−0.03).** Weight-channel
+  scope is now **two vendors × two scales** at matched protocol and frozen floors; the overwrite
+  signature is cross-substrate stable (recovery 0.0 everywhere; Llama-3B UNREG specificity lands next
+  to Qwen-1.5B's). KP recovery magnitude varies by substrate (0.51 → 0.93 → 0.70); the structure is
+  what transfers. Certifier caught one invented floor in the FINDING draft → reworded. *Same session,
+  outside the cycle (operator-fired):* **Fathom v32 corrected edition PUBLISHED — DOI
+  10.5281/zenodo.21693636** (live v31 carried the pre-correction paper; v32 = cert-bound corrected
+  paper + PDF + 9 receipts, correction leads the description); arXiv LaTeX lane built with a
+  numeric-fidelity gate (papers/arxiv/); outreach email drafted in the operator's Gmail, awaiting the
+  one operator-only input (recipient). *Next:* PAPER re-cert with the two-vendor scope; then the
+  CoT/inward frame-locality lead.
+
 - **Cycle 91 (2026-07-29, operator-directed "finish our work") — THE WEIGHT CHANNEL AT 3B: it holds, and every effect SHARPENS. `SURVIVED__weight_channel_holds_at_3B` (FINDING OATH-HELD 13/0; PAPER re-cert 22/0, scale point + soft-caveat upgrade).**
   Whole contrast repeated at Qwen2.5-3B fp16 (no quant — verified 7.21GB training peak), only the model
   changed, every floor imported from c87-90. Both attacks flip 1.0; powered 70/70/55/40; ARC acc 0.828.
