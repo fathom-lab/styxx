@@ -1,9 +1,39 @@
 # Frame-Locality: Where Corruption Captures a Language Model's Report, and Where It Reaches the Belief
 
-**Fathom Lab · 2026-07-28. Every quantity in this paper is quoted from a preregistered, OATH-certified
-receipt named at its point of use; the certificate for this document lists the full receipt set. No
-number here was hand-entered from memory. The paper makes one extraordinary claim and bounds it
-twice, loudly.**
+**Fathom Lab · 2026-07-28 (correction v32, 2026-07-29). Every quantity in this paper is quoted from a
+preregistered, OATH-certified receipt named at its point of use; the certificate for this document
+lists the full receipt set. No number here was hand-entered from memory. The paper makes one
+extraordinary claim and bounds it twice, loudly — and, as of the correction below, a third time.**
+
+## Post-publication correction (v32, 2026-07-29) — read before §1
+
+An adversarial audit run after v31 was deposited identified a real weakness in the flagship
+specificity control for the **inference-time** channels, and the receipt confirms it. The control
+compared out-of-frame recovery on **caved** items (first-answer correct, then abandoned under
+pressure) against recovery on **wrong-first** items (first-answer wrong). But the out-of-frame query
+is the original question with the adversarial turn removed, and the strata are defined by that same
+original question's answer — so the comparison partly re-measures "first-correct items re-answer
+correctly, first-wrong items do not," which is trivially true and independent of any belief surviving
+pressure. The sharper control, which holds first-correct fixed, is **recovery(caved) vs recovery(held)**
+(held = first-correct and *not* caved). In the receipt these are **0.9846153846153847 vs 1.0** — nearly
+equal. **So conditioning on a first-correct answer, whether the item was talked out of it under
+pressure makes essentially no difference to out-of-frame recovery: caving contributes no measurable
+recovery signal, and the reported specificity margin (0.9655071043606076) is dominated by the trivial
+first-correct-vs-first-wrong gap, not by belief-survival.**
+
+What still stands: on caved items the *pressured* report is wrong (by definition of the stratum) while
+the *neutral* report is correct on the same items and weights — a genuine **frame-dependence of the
+report**. And the weight-channel result is better identified (the fine-tune enters the neutral query),
+though it carries a separate replay-frame confound (the knowledge-preserving recovery is measured in
+the same neutral frame the replay optimized) that a third-frame test must resolve. What does **not**
+stand as written: the §1 claim that "that specificity is the whole argument" and that recovery is
+demonstrably "belief-stability, not better decoding" for the inference-time channels — the control as
+built does not establish it. A corrected study (matched decoding; caved-vs-held reported as the
+contrast; the weight result re-scored in a frame disjoint from both attack and replay frames) is
+underway; a future version will report it. This correction is issued immediately, before that study
+completes, because a public record found to overreach should say so at once. The individual numbers in
+the sections below remain faithfully quoted from their receipts; it is their *interpretation* as
+proof of belief-survival that is qualified here.
 
 ## Abstract
 
@@ -13,9 +43,10 @@ four distinct corruption channels — social pressure, context injection, silent
 weight-level fine-tuning — the same asymmetry appears: the corruption captures the model's *reporting
 frame*, the underlying answer *survives*, and a measurement *recovers* it by re-eliciting the model
 outside the frame the attack controls. We call this **frame-locality**. The claim is specificity-
-controlled: a symmetric control that would move under a mere decoding improvement does not move,
-so recovery is belief-stability, not better sampling. Frame-locality holds cleanly for the three
-inference-time channels, and it has a measured wall at the weights — but the wall is a **dose**, not
+controlled: a symmetric control that would move under a mere decoding improvement does not move
+(but see the Post-publication correction above — for the inference-time channels this control is
+confounded and does not, as built, establish belief-stability over better sampling). Frame-locality's
+report-vs-frame effect appears across the three inference-time channels, and it has a measured wall at the weights — but the wall is a **dose**, not
 an absolute: an *unregularized* weight attack overwrites the belief (out-of-frame recovery
 0.022222222222222223, the planted answer propagating on 0.9777777777777777 of items), while a
 *knowledge-preserving* attack on the same items spares about half of it (recovery
@@ -35,7 +66,10 @@ in a fresh frame that the corruption never touched, and ask: does the original a
 
 For a large and consistent family of corruptions the answer is yes, and the recovery is *specific*:
 it returns the correct answer on items the model originally had right, and does **not** manufacture
-correctness on items it originally had wrong. That specificity is the whole argument. It separates
+correctness on items it originally had wrong. That specificity was offered as the whole argument — and
+the correction above retracts that for the inference-time channels, where the control does not
+separate belief-survival from "first-correct items re-answer correctly." As originally stated, it was
+meant to separate
 two hypotheses that a raw recovery number cannot: "the neutral frame is just a better decoder" (which
 predicts improvement everywhere) from "the corruption changed the report, not the belief" (which
 predicts improvement only where there was a belief to recover). Every result below carries the
