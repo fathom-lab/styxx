@@ -1,0 +1,231 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_scale3b_2026_07_29.md",
+  "document_sha256": "7f1c23fd64e1a099f797110416c961bf10d845856f09f0f37faf9f869e4cdbee",
+  "receipts_sha256": {
+    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2",
+    "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c",
+    "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 13,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 6,
+      "token": "8"
+    },
+    {
+      "line": 6,
+      "token": "7.21"
+    },
+    {
+      "line": 12,
+      "token": "87"
+    },
+    {
+      "line": 57,
+      "token": "16"
+    },
+    {
+      "line": 57,
+      "token": "300"
+    },
+    {
+      "line": 58,
+      "token": "1.0"
+    },
+    {
+      "line": 61,
+      "token": "70"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 6,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "to fit the 8 GB card at 7.21 GB training peak). Tests the frame-locality paper's weight-channel scope",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "7.21",
+      "value": 7.21,
+      "decimals": 2,
+      "context": "to fit the 8 GB card at 7.21 GB training peak). Tests the frame-locality paper's weight-channel scope",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 7,
+      "token": "86",
+      "value": 86.0,
+      "decimals": 0,
+      "context": "(all of cycles 86\u201390 are 1.5B). Local, $0.**",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:per_item[90].i"
+    },
+    {
+      "line": 12,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "imported from cycles 87\u201390. Both attacks took in-frame (flip 1.0); cells are powered (70 flipped each,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "imported from cycles 87\u201390. Both attacks took in-frame (flip 1.0); cells are powered (70 flipped each,",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:lam"
+    },
+    {
+      "line": 12,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "imported from cycles 87\u201390. Both attacks took in-frame (flip 1.0); cells are powered (70 flipped each,",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.UNREG.n_flipped"
+    },
+    {
+      "line": 13,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "55 control, 40 held); ARC first-answer accuracy 0.8281. All three gates pass, and not marginally:",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:cells.control"
+    },
+    {
+      "line": 13,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "55 control, 40 held); ARC first-answer accuracy 0.8281. All three gates pass, and not marginally:",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:cells.held"
+    },
+    {
+      "line": 15,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **V1 PASS** \u2014 both attacks flip, cells powered, KP preserves held knowledge (held out-of-frame 1.0),",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:lam"
+    },
+    {
+      "line": 18,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "margin **\u22120.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.UNREG.recovery"
+    },
+    {
+      "line": 20,
+      "token": "0.2",
+      "value": 0.2,
+      "decimals": 1,
+      "context": "0.9285714285714286, control 0.2). The sign reversal between the two attacks \u2014 the claim \u2014 is present",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 24,
+      "token": "0.04",
+      "value": 0.04,
+      "decimals": 2,
+      "context": "general capability \u2014 *below* four-choice chance \u2014 versus the sparing attack's 0.04 residual. The",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:kp_capability_residual"
+    },
+    {
+      "line": 25,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "separation between the two attacks' capability costs clears the 0.10 floor several times over.",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:frozen_gates.SG2_DROP"
+    },
+    {
+      "line": 36,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "went 0.9846153846153847 at 3B \u2192 1.0 at 7B \u2014 the belief gets *more* stably recoverable as models grow.",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:lam"
+    },
+    {
+      "line": 52,
+      "token": "0.93",
+      "value": 0.93,
+      "decimals": 2,
+      "context": "0.93 at 3B, consistent with the belief becoming more recoverable as models grow. The 1.5B figure is not",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.recovery"
+    },
+    {
+      "line": 57,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Two model sizes now (1.5B, 3B), one family (Qwen2.5), one attack class (LoRA r=16, 300 steps), fp16 at",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "Two model sizes now (1.5B, 3B), one family (Qwen2.5), one attack class (LoRA r=16, 300 steps), fp16 at",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 58,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "both sizes (no quantization confound). `LAM = 1.0` was frozen from the 1.5B ladder and not re-searched",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "at 3B; it both flipped and preserved (held 1.0), so the knowledge-preserving attack transferred without",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:lam"
+    },
+    {
+      "line": 61,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "disjoint in code from all prior pools. The 3B recovery of 0.9285714285714286 is a single 3B draw on 70",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

@@ -21,9 +21,11 @@ an absolute: an *unregularized* weight attack overwrites the belief (out-of-fram
 *knowledge-preserving* attack on the same items spares about half of it (recovery
 0.5111111111111111, replicated on a fresh benchmark at 0.5362318840579711, specificity margin
 positive in both). How much of the belief a weight attack reaches is set by how much surrounding
-knowledge it is permitted to destroy. We are explicit about what is not settled: the recovery *rate*
-under a knowledge-preserving attack sits near one-half and no single interval excludes one-half; the
-substrate is one model family; and the coupling question the result touches is engaged, not closed.
+knowledge it is permitted to destroy. The knowledge-preserving recovery rate has a scale trajectory —
+about one-half at 1.5B, 0.9285714285714286 at 3B — so the belief is spared more completely as models
+grow. We are explicit about what is not settled: the substrate is one model family at two sizes; a
+scaling *law* would need more points; and the coupling question the result touches is now measured
+behaviorally but stays open at the probe level.
 
 ## 1. The claim
 
@@ -108,10 +110,21 @@ replicate across benchmark and seed. The *recovery rate*, however, sits near one
 individually separated from it. The replication run's Wilson interval on recovery (at the
 conventional level) is [0.4197820076036184, 0.6488600870236277]; its lower bound does not clear 0.50, and pooling the two
 runs leaves the estimate near one-half with an interval whose lower bound also does not clear it. The
-honest statement is therefore **"about half the beliefs recover"** — a magnitude near the floor, not
-a margin above it. That the fraction lands near a half is itself informative: the knowledge-preserving
-poison puts the neutral-frame belief in a near coin-flip between the truth it held and the lie it was
-trained, which is exactly the one-slot competition the bimodality reveals.
+honest statement at 1.5B is therefore **"about half the beliefs recover"** — a magnitude near the
+floor, not a margin above it. That the fraction lands near a half is itself informative: at 1.5B the
+knowledge-preserving poison puts the neutral-frame belief in a near coin-flip between the truth it held
+and the lie it was trained, which is exactly the one-slot competition the bimodality reveals.
+
+**This near-one-half figure is a property of the 1.5B model, not of the phenomenon.** Repeating the
+entire weight-channel contrast at 3B (`agent-conscience/FINDING_scale3b_2026_07_29.md`,
+`SURVIVED__weight_channel_holds_at_3B`, fp16, no quantization) sharpens every effect: the
+knowledge-preserving recovery rate rises to 0.9285714285714286, the specificity margins move to
+−0.36363636363636365 (overwriting) and +0.7285714285714285 (sparing), and the overwriting attack drives
+general capability to 0.18333333333333332 — below four-choice chance — versus a 0.04 residual for the
+sparing attack. So the recovery rate has a scale trajectory, 0.5111111111111111 at 1.5B →
+0.9285714285714286 at 3B, mirroring the social-pressure channel's own climb (0.9846153846153847 at 3B →
+1.0 at 7B): as models scale, attacks increasingly capture the report and leave the belief intact. The
+"about half" reading stands as what 1.5B does; it is not the phenomenon's ceiling.
 
 ## 5. The instruments are the law, made deliberate
 
@@ -130,9 +143,10 @@ the law demands when no outside frame exists.
 ## 6. Scope and what is not settled
 
 One model family (Qwen2.5) and one closed frontier model carry the results; the parametric channel is
-measured at 1.5B only, fp16, one attack class (LoRA, 300 steps). The recovery rate under a
-knowledge-preserving attack is near one-half and no interval excludes one-half — a larger pool or a
-third seed would tighten it, though the qualitative dose claim does not depend on it. The
+measured at 1.5B and 3B, fp16 at both (no quantization confound), one attack class (LoRA, 300 steps).
+Every effect is larger at 3B — the sign reversal, the coupling, and the recovery rate — so the two
+sizes are a consistent trajectory rather than a single point, though two in-family sizes are not a
+scaling law. The
 knowledge-preservation check shares its items with the replay set by construction (disclosed); the
 mechanism is measured only on never-replayed items. The **coupling question** the dose result touches
 — whether rewriting the out-of-frame belief is inseparable from damaging general capability — is now
@@ -147,8 +161,9 @@ together on this substrate: you cannot overwrite the out-of-frame belief without
 price — and **preserving the belief is cheap but not free.** (An earlier, lower-resolution battery of
 300 items put the sparing attack's cost at 0.0 and explicitly bounded that reading as "not provably
 exactly zero"; the higher-resolution run supersedes it, and the 0.0 figure should not be quoted.)
-This is a behavioral coupling result at 1.5B and one attack class; the calibration-poisoning arc's
-probe-level coupling question is a separate measurement and stays open.
+This is a behavioral coupling result at 1.5B and 3B (the coupling grows at 3B: BASE 0.6366666666666667
+→ overwriting 0.18333333333333332 versus sparing 0.5966666666666667) and one attack class; the
+calibration-poisoning arc's probe-level coupling question is a separate measurement and stays open.
 Cross-pool and cross-benchmark comparisons are
 directional, not matched contrasts. Sycophantic capitulation and the locality of knowledge edits are
 documented in prior literature; the contribution here is the specificity-controlled, preregistered

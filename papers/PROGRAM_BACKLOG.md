@@ -50,6 +50,20 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 91 (2026-07-29, operator-directed "finish our work") — THE WEIGHT CHANNEL AT 3B: it holds, and every effect SHARPENS. `SURVIVED__weight_channel_holds_at_3B` (FINDING OATH-HELD 13/0; PAPER re-cert 22/0, scale point + soft-caveat upgrade).**
+  Whole contrast repeated at Qwen2.5-3B fp16 (no quant — verified 7.21GB training peak), only the model
+  changed, every floor imported from c87-90. Both attacks flip 1.0; powered 70/70/55/40; ARC acc 0.828.
+  **SG1 PASS + SHARPER: UNREG specificity −0.3636 (rec 0.0), KP specificity +0.7286 (rec 0.9286)** vs
+  1.5B's −0.232/+0.257. **SG2 PASS + SHARPER: coupling BASE 0.6367 → UNREG 0.1833 (−0.4533, BELOW
+  chance) vs KP 0.5967 (−0.04).** **THE HEADLINE: the paper's softest number — KP recovery ~½ at 1.5B —
+  was a SMALL-MODEL ARTIFACT: 0.5111 (1.5B) → 0.9286 (3B).** Mirrors the social-pressure trajectory
+  (0.9846 @3B → 1.0 @7B): as models scale, attacks capture the REPORT and leave the BELIEF intact, the
+  gap widening with capability. Overwriting at 3B drives capability below random — even less surgical.
+  LAM=1.0 frozen from the 1.5B ladder transferred without tuning (KP held 1.0). Paper scope: 1.5B →
+  1.5B+3B, effects larger at 3B; recovery rate now stated with its trajectory. *Next:* the CoT/inward
+  frame-locality experiment (does a model's chain-of-thought lie vs its out-of-frame belief?) — the
+  genuinely novel lead. 7B needs 4-bit (quant confound, separate prereg). $0 local.
+
 - **Cycle 90 (2026-07-28, operator-directed "keep cooking") — PRICING THE RESIDUAL: the coupling GROWS at resolution, the "free" attack turns out to cost a little, and the damage is BROAD. `SURVIVED__coupling_replicates__NO_MATERIAL_RESIDUAL__BROAD` (FINDING OATH-HELD 8/0; PAPER §6 corrected + re-cert 20/0).**
   Evaluation-only (no training; reuses the committed c86/c87 adapters, so it cannot alter a prior
   result). 900 fresh items, TWO distributions (MMLU 600 + ARC-Challenge 300, SEED 900000, disjoint in
