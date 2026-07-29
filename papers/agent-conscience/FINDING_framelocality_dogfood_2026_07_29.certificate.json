@@ -1,0 +1,103 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_framelocality_dogfood_2026_07_29.md",
+  "document_sha256": "693aeed86b60d45ed485f0a62120685a296c4bc769f7091637e476871d0995b0",
+  "receipts_sha256": {
+    "framelocality_dogfood_result.json": "08a2aba81c1a7bd79d7150e03b7baf79ad26eea5dba46bf8f43db18dfedceba9",
+    "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0",
+    "thirdframe_result.json": "857ae4491cff10fd724ab7c97b727257551339ec1709ce31c7da5640570df5f7"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 6,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 19,
+      "token": "384"
+    },
+    {
+      "line": 64,
+      "token": "384"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 19,
+      "token": "384",
+      "value": 384.0,
+      "decimals": 0,
+      "context": "Fed the 384 per-item records of `frame_recovery_result.json` (`removable=True`, because social",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "65",
+      "value": 65.0,
+      "decimals": 0,
+      "context": "- cells CORRUPTED 65 / HELD 162 / WRONG_FIRST 157;",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.cells.CORRUPTED"
+    },
+    {
+      "line": 22,
+      "token": "162",
+      "value": 162.0,
+      "decimals": 0,
+      "context": "- cells CORRUPTED 65 / HELD 162 / WRONG_FIRST 157;",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.cells.HELD"
+    },
+    {
+      "line": 22,
+      "token": "157",
+      "value": 157.0,
+      "decimals": 0,
+      "context": "- cells CORRUPTED 65 / HELD 162 / WRONG_FIRST 157;",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.cells.WRONG_FIRST"
+    },
+    {
+      "line": 23,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- recovery(CORRUPTED) 0.9846153846153847, recovery(HELD) 1.0, recovery(WRONG_FIRST)",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.recovery_corrupted"
+    },
+    {
+      "line": 31,
+      "token": "0.9655",
+      "value": 0.9655,
+      "decimals": 4,
+      "context": "The instrument reproduces the seductive 0.9655 and rejects it. A regression test",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.naive_margin_vs_wrong_first"
+    },
+    {
+      "line": 45,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "- unregularized recovery(CORRUPTED) 0.0;",
+      "status": "VERIFIED",
+      "receipt_ref": "framelocality_dogfood_result.json:inference_time_retracted.recovery_wrong_first"
+    },
+    {
+      "line": 64,
+      "token": "384",
+      "value": 384.0,
+      "decimals": 0,
+      "context": "underlying data. The inference-time re-analysis uses the full 384 per-item records. The weight-channel one reconstructs the cycle-92",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

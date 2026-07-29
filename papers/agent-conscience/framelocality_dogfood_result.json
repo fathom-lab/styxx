@@ -1,0 +1,30 @@
+{
+ "experiment": "framelocality_dogfood_reanalysis",
+ "module": "styxx.framelocality",
+ "sources": [
+  "frame_recovery_result.json",
+  "thirdframe_result.json",
+  "s3_strata.json"
+ ],
+ "inference_time_retracted": {
+  "cells": {
+   "CORRUPTED": 65,
+   "HELD": 162,
+   "WRONG_FIRST": 157
+  },
+  "recovery_corrupted": 0.9846153846153847,
+  "recovery_held": 1.0,
+  "recovery_wrong_first": 0.01910828025477707,
+  "naive_margin_vs_wrong_first": 0.9655071043606076,
+  "discriminating_margin": -0.01538461538461533,
+  "removability": "REMOVABLE__recovery_may_be_statelessness",
+  "verdict": "NULL__corruption_adds_no_signal"
+ },
+ "weight_channel_between_arm": {
+  "knowledge_preserving_recovery_corrupted": 0.8857142857142857,
+  "unregularized_recovery_corrupted": 0.0,
+  "arm_margin": 0.8857142857142857,
+  "contrast": "between-arm (same items, attacks differing in one property)",
+  "verdict": "PROPERTY_DETERMINES_BELIEF_SURVIVAL"
+ }
+}
