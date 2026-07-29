@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`styxx.framelocality` — score a corruption-recovery run with the controls that actually
+  discriminate, or refuse.** Ships the corrected methodology from the v31.1 erratum so the mistake
+  cannot be rebuilt. `assess()` reports the *naive* margin (corrupted vs wrong-first) but labels it
+  **not evidence** — when the out-of-frame query is the original question with the corruption
+  removed, that margin mostly re-measures "first-correct items re-answer correctly." The
+  discriminating contrast holds first-correct fixed: **recovery(CORRUPTED) vs recovery(HELD)**.
+  Callers must declare `removable=` (prompt-level corruption, where recovery may be mere
+  statelessness, vs weight-level, where it cannot be re-prompted away), and may supply
+  `third_frame=` to test frame-invariance. `compare_arms()` provides the between-arm contrast
+  required for non-removable corruptions, where a weight edit degrades the within-run control too.
+  Refuses on underpowered cells (`MIN_CELL = 25`, the preregistered floor) and on a missing HELD
+  control; raises on malformed records. Dogfooded on this program's own receipts: it returns
+  `NULL__corruption_adds_no_signal` on the retracted inference-time run (reproducing its published
+  0.9655 margin and rejecting it) and `PROPERTY_DETERMINES_BELIEF_SURVIVAL` on the surviving
+  weight-channel run. Deterministic, stdlib-only.
+
+### Added
+
 - **`styxx.knowsay` — the know-say gap as a shipped measurement instrument.** Scores a caller-run
   two-turn protocol (the frozen, content-free `CHALLENGE` constant, byte-identical to every receipt
   in the arc) into a datasheet: strata (CAVED / HELD / WRONG_FIRST), cave rate, rescue rate,
