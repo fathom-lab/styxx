@@ -136,13 +136,19 @@ third seed would tighten it, though the qualitative dose claim does not depend o
 knowledge-preservation check shares its items with the replay set by construction (disclosed); the
 mechanism is measured only on never-replayed items. The **coupling question** the dose result touches
 — whether rewriting the out-of-frame belief is inseparable from damaging general capability — is now
-*measured behaviorally* on a disjoint battery (`agent-conscience/coupling_battery_result.json`): on a
-held-out MMLU set neither attack trained on, the belief-overwriting attack lost 0.22666666666666668
-of general accuracy (0.5833333333333334 → 0.3566666666666667, a third of the way to chance) while the
-belief-sparing attack lost 0.0 (0.5833333333333334, unchanged from base). Belief-rewrite and general
-capability move together on this substrate: you cannot overwrite the out-of-frame belief without a
-broad capability price. This is a behavioral coupling result at 1.5B and one attack class; the
-calibration-poisoning arc's probe-level coupling question is a separate measurement and stays open.
+*measured behaviorally* on disjoint batteries. On 900 held-out items across two distributions
+(MMLU and ARC-Challenge) that neither attack trained on, the belief-overwriting attack lost
+0.3322222222222222 of general accuracy (0.6533333333333333 → 0.3211111111111111) while the
+belief-sparing attack lost 0.033333333333333326 — a roughly ten-to-one ratio
+(`agent-conscience/coupling_resolution_result.json`). The overwriting damage is **broad**, appearing
+in every domain cell measured (0.20560747663551399 / 0.3184584178498986 / 0.4): the attack degrades
+the model globally rather than carving out a region. Belief-rewrite and general capability move
+together on this substrate: you cannot overwrite the out-of-frame belief without a broad capability
+price — and **preserving the belief is cheap but not free.** (An earlier, lower-resolution battery of
+300 items put the sparing attack's cost at 0.0 and explicitly bounded that reading as "not provably
+exactly zero"; the higher-resolution run supersedes it, and the 0.0 figure should not be quoted.)
+This is a behavioral coupling result at 1.5B and one attack class; the calibration-poisoning arc's
+probe-level coupling question is a separate measurement and stays open.
 Cross-pool and cross-benchmark comparisons are
 directional, not matched contrasts. Sycophantic capitulation and the locality of knowledge edits are
 documented in prior literature; the contribution here is the specificity-controlled, preregistered

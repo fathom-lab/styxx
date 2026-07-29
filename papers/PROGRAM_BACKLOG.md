@@ -50,6 +50,21 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 90 (2026-07-28, operator-directed "keep cooking") — PRICING THE RESIDUAL: the coupling GROWS at resolution, the "free" attack turns out to cost a little, and the damage is BROAD. `SURVIVED__coupling_replicates__NO_MATERIAL_RESIDUAL__BROAD` (FINDING OATH-HELD 8/0; PAPER §6 corrected + re-cert 20/0).**
+  Evaluation-only (no training; reuses the committed c86/c87 adapters, so it cannot alter a prior
+  result). 900 fresh items, TWO distributions (MMLU 600 + ARC-Challenge 300, SEED 900000, disjoint in
+  code from all prior pools + both adapters' training). Pooled: **BASE 0.6533 / UNREG 0.3211 / KP
+  0.6200.**
+  **C1 PASS and BIGGER: overwriting costs 0.3322** (vs 0.2267 on c89's single 300-item battery) — the
+  central result strengthened when tested harder. **C2 = THE CORRECTION: the belief-sparing attack is
+  NOT free — residual 0.0333**, below the 0.05 bound frozen in advance (label
+  `NO_MATERIAL_RESIDUAL`) but distinctly non-zero. **c89's 0.0 was resolution-limited exactly as its
+  own caveat warned; the 0.0 figure is retired and must not be quoted.** Ratio is ~10:1, not
+  infinite — which is what the mechanism predicts. **C3 = BROAD:** overwriting loses on every cell
+  (MMLU-STEM 0.2056 / MMLU-VERBAL 0.3185 / ARC 0.4000) — the attack degrades the model globally, it
+  is not surgical. *Next:* a SECOND MODEL SIZE is the remaining generality test (unrun); the external
+  replication package (G1→G3). $0 local.
+
 - **Cycle 89 (2026-07-28, operator-directed "go") — THE COUPLING BATTERY: overwriting the belief costs 22.7 pts of general capability; sparing it costs none. `SURVIVED__belief_rewrite_coupled_to_capability_damage` (FINDING OATH-HELD 8/0; PAPER §6 upgraded open→measured, re-cert 16/0).**
   Settles the paper's named-open coupling question (open since cycle 46) on a DISJOINT battery. Three
   checkpoints on 300 held-out MMLU items (SEED 890000, asserted disjoint from all c74–88 pools + both

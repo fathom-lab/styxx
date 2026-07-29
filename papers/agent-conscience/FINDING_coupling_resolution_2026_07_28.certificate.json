@@ -1,0 +1,211 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_coupling_resolution_2026_07_28.md",
+  "document_sha256": "0e94cfdcb9c1b2d5e25ee30b9213974672e9ac55a55fbcd7d70f494aa5d3e4c8",
+  "receipts_sha256": {
+    "coupling_resolution_result.json": "d47387b0adace64fd7689369715d76d289f268de79542e65699cf26fab505ba8",
+    "coupling_battery_result.json": "abea9689950c2f2f6638dcde3771fd5e98a735d601edc5cf9c8cf09df707a890"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 8,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 7,
+      "token": "87"
+    },
+    {
+      "line": 13,
+      "token": "900"
+    },
+    {
+      "line": 14,
+      "token": "900000"
+    },
+    {
+      "line": 20,
+      "token": "89"
+    },
+    {
+      "line": 24,
+      "token": "89"
+    },
+    {
+      "line": 51,
+      "token": "16"
+    },
+    {
+      "line": 51,
+      "token": "300"
+    },
+    {
+      "line": 51,
+      "token": "900"
+    },
+    {
+      "line": 63,
+      "token": "89"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "training; the committed cycle-86/87 adapters are reused unchanged), local, $0. Refines",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "900",
+      "value": 900.0,
+      "decimals": 0,
+      "context": "**KP** adapter \u2014 on 900 fresh items across two distributions (MMLU 600 + ARC-Challenge 300, seed",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "600",
+      "value": 600.0,
+      "decimals": 0,
+      "context": "**KP** adapter \u2014 on 900 fresh items across two distributions (MMLU 600 + ARC-Challenge 300, seed",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:batteries.MMLU"
+    },
+    {
+      "line": 13,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "**KP** adapter \u2014 on 900 fresh items across two distributions (MMLU 600 + ARC-Challenge 300, seed",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:batteries.ARC"
+    },
+    {
+      "line": 14,
+      "token": "900000",
+      "value": 900000.0,
+      "decimals": 0,
+      "context": "900000, disjoint in code from every prior pool and from both adapters' training data).",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "Pooled accuracy: **BASE 0.6533333333333333**, **UNREG 0.3211111111111111**, **KP 0.62**.",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:accuracy_pooled.KP"
+    },
+    {
+      "line": 19,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "loses **0.3322222222222222** of general capability against the 0.10 floor \u2014 up from the",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:frozen_gates.C1_DROP"
+    },
+    {
+      "line": 20,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "0.22666666666666668 measured on cycle 89's single 300-item battery. The central result is not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "**0.033333333333333326**, below the 0.05 bound frozen in advance (hence the label",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:frozen_gates.C2_RESIDUAL"
+    },
+    {
+      "line": 24,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "`NO_MATERIAL_RESIDUAL`) but **distinctly non-zero**. Cycle 89 measured this cost as exactly 0.0 and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 24,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "`NO_MATERIAL_RESIDUAL`) but **distinctly non-zero**. Cycle 89 measured this cost as exactly 0.0 and",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:frozen_gates.C2_RESIDUAL"
+    },
+    {
+      "line": 51,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), two benchmark families, greedy scoring, 900",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 51,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), two benchmark families, greedy scoring, 900",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "900",
+      "value": 900.0,
+      "decimals": 0,
+      "context": "One model (1.5B), one attack class (LoRA r=16, 300 steps), two benchmark families, greedy scoring, 900",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "below 0.05 at this power, and the measured point estimate is 0.033333333333333326. The STEM/VERBAL",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:frozen_gates.C2_RESIDUAL"
+    },
+    {
+      "line": 63,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "damage is broad across domains; and retiring the \"0.0\" figure from cycle 89 as resolution-limited.",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:frozen_gates.C2_RESIDUAL"
+    },
+    {
+      "line": 63,
+      "token": "89",
+      "value": 89.0,
+      "decimals": 0,
+      "context": "damage is broad across domains; and retiring the \"0.0\" figure from cycle 89 as resolution-limited.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
