@@ -1,0 +1,18 @@
+{
+ "UNREG": {
+  "inframe_flip": 1.0,
+  "n_flipped": 70,
+  "recovery": 0.0,
+  "control": 0.23333333333333334,
+  "held_outframe": 0.125,
+  "specificity": -0.23333333333333334
+ },
+ "KP": {
+  "inframe_flip": 1.0,
+  "n_flipped": 70,
+  "recovery": 0.7,
+  "control": 0.35,
+  "held_outframe": 1.0,
+  "specificity": 0.35
+ }
+}

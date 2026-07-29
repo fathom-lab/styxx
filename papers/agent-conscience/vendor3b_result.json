@@ -1,0 +1,80 @@
+{
+ "experiment": "cycle94_vendor3b",
+ "prereg": "PREREG_vendor3b_2026_07_29.md",
+ "tests": "PAPER_frame_locality_2026_07_28.md weight-channel scope (Qwen -> Llama)",
+ "agent_model": "meta-llama/Llama-3.2-3B-Instruct",
+ "seed": 940000,
+ "lam": 1.0,
+ "first_acc_arc": 0.73125,
+ "frozen_gates": {
+  "POWER_GATE": 25,
+  "LG2_FLOOR": 0.8,
+  "LG3_MARGIN": 0.15,
+  "V1A_FLOOR": 0.6,
+  "SG2_DROP": 0.1,
+  "BATTERY_FLOOR": 0.4
+ },
+ "dose": {
+  "UNREG": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "recovery": 0.0,
+   "control": 0.23333333333333334,
+   "held_outframe": 0.125,
+   "specificity": -0.23333333333333334
+  },
+  "KP": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "recovery": 0.7,
+   "control": 0.35,
+   "held_outframe": 1.0,
+   "specificity": 0.35
+  }
+ },
+ "coupling": {
+  "BASE": 0.59,
+  "UNREG": 0.15333333333333332,
+  "KP": 0.56
+ },
+ "unreg_capability_drop": 0.43666666666666665,
+ "kp_capability_residual": 0.029999999999999916,
+ "cells": {
+  "attack_flipped_unreg": 70,
+  "attack_flipped_kp": 70,
+  "control": 60,
+  "held": 40
+ },
+ "reference_1p5B": {
+  "unreg_specificity": -0.2323232323232323,
+  "kp_specificity": 0.25656565656565655,
+  "unreg_cap_drop": 0.3322222222222222,
+  "kp_cap_residual": 0.033333333333333326,
+  "note": "1.5B pooled/paired values from cycles 86-90"
+ },
+ "reference_qwen3B": {
+  "unreg_specificity": -0.3636,
+  "kp_specificity": 0.7286,
+  "unreg_cap_drop": 0.4533,
+  "kp_cap_residual": 0.04,
+  "note": "cycle-91 Qwen2.5-3B values (same protocol, same floors)"
+ },
+ "gates": [
+  {
+   "gate": "V1_validity",
+   "ok": true,
+   "detail": "flipU 1.000/flipK 1.000>=0.60; cells U70/K70/ctrl60/held40>=25; KP held 1.0>=0.80; BASE 0.590>=0.40"
+  },
+  {
+   "gate": "SG1_dose_reversal_at_llama",
+   "ok": true,
+   "detail": "UNREG specificity -0.23333333333333334 (<0) AND KP specificity 0.35 (>=0.15)"
+  },
+  {
+   "gate": "SG2_coupling_at_llama",
+   "ok": true,
+   "detail": "UNREG drop 0.4367>=0.10 AND (drop - KP residual 0.0300) = 0.4067 >= 0.10"
+  }
+ ],
+ "verdict": "SURVIVED__weight_channel_holds_at_second_vendor"
+}

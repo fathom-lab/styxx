@@ -1,0 +1,230 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_vendor3b_2026_07_29.md",
+  "document_sha256": "24d71529cfe738f45189563106e0d8fcbe713da3e92f070cc30ccf9290549577",
+  "receipts_sha256": {
+    "vendor3b_result.json": "65d3ea9673cea18772ad8ebe32be6fe5543059f1c07d4a1826c3733bdc8c65d7"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 16,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "75"
+    },
+    {
+      "line": 13,
+      "token": "87"
+    },
+    {
+      "line": 49,
+      "token": "1.0"
+    },
+    {
+      "line": 55,
+      "token": "16"
+    },
+    {
+      "line": 55,
+      "token": "300"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "75",
+      "value": 75.0,
+      "decimals": 0,
+      "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "87",
+      "value": 87.0,
+      "decimals": 0,
+      "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 13,
+      "token": "1.000",
+      "value": 1.0,
+      "decimals": 3,
+      "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:lam"
+    },
+    {
+      "line": 13,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "from cycles 75/87/89. Both attacks took in-frame (flip 1.000 each); cells are powered (70 flipped",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.UNREG.n_flipped"
+    },
+    {
+      "line": 14,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "per arm, 60 control, 40 held); ARC first-answer accuracy 0.73125. All three gates pass:",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:cells.control"
+    },
+    {
+      "line": 14,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "per arm, 60 control, 40 held); ARC first-answer accuracy 0.73125. All three gates pass:",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:cells.held"
+    },
+    {
+      "line": 17,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "knowledge out of frame at 1.0, BASE battery accuracy 0.59.",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:lam"
+    },
+    {
+      "line": 19,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "specificity margin **\u22120.23333333333333334** (recovery 0.0 on flipped items, control",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.UNREG.recovery"
+    },
+    {
+      "line": 20,
+      "token": "+0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "0.23333333333333334). The knowledge-preserving attack spares: specificity margin **+0.35**",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.KP.control"
+    },
+    {
+      "line": 21,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "(recovery 0.7, control 0.35). The sign reversal between the two attacks \u2014 the claim \u2014 is present",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:first_acc_arc"
+    },
+    {
+      "line": 21,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "(recovery 0.7, control 0.35). The sign reversal between the two attacks \u2014 the claim \u2014 is present",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.KP.control"
+    },
+    {
+      "line": 23,
+      "token": "0.59",
+      "value": 0.59,
+      "decimals": 2,
+      "context": "- **SG2 PASS \u2014 the coupling appears on Llama.** On a disjoint MMLU battery: BASE 0.59, UNREG",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:coupling.BASE"
+    },
+    {
+      "line": 27,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "the 0.10 floor several times over.",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:frozen_gates.SG2_DROP"
+    },
+    {
+      "line": 33,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "attack is 0.0 on every substrate tested; the overwriting attack drives held-out capability below",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.UNREG.recovery"
+    },
+    {
+      "line": 35,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "The knowledge-preserving recovery rate on Llama (0.7) sits between the Qwen 1.5B and Qwen 3B",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:first_acc_arc"
+    },
+    {
+      "line": 49,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "training recipe \u2014 is now tested and answered. The \u03bb = 1.0 setting, frozen from the Qwen 1.5B",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "Two vendors (Qwen2.5, Llama-3.2), 1.5B and 3B classes, one attack class (LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "Two vendors (Qwen2.5, Llama-3.2), 1.5B and 3B classes, one attack class (LoRA r=16, 300 steps,",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 59,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "preserving recovery on Llama (0.7 on 70 flipped items) is one draw, and in this design the recovery",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:first_acc_arc"
+    },
+    {
+      "line": 59,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "preserving recovery on Llama (0.7 on 70 flipped items) is one draw, and in this design the recovery",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.UNREG.n_flipped"
+    },
+    {
+      "line": 68,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "cross-substrate stability of the overwrite signature (recovery 0.0 everywhere tested, capability",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.UNREG.recovery"
+    }
+  ]
+}
