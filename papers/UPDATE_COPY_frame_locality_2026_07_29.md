@@ -1,10 +1,20 @@
 # styxx update copy — Frame-Locality (copy-paste, 2026-07-29)
 
-**Link status, read first.** The GitHub link is live now. The Zenodo DOI is **reserved but not
-published** (draft `21659191`, zero files) — `10.5281/zenodo.21659191` will 404 until you upload the
-files and press Publish. The **concept DOI** `10.5281/zenodo.19326174` resolves today but currently
-points at v30 (Gold Anchors), so do not use it for this post until v31 is live. Every number below
-is quoted from an OATH-certified receipt.
+**PUBLISHED 2026-07-29 — links are live.** Fathom v31 is on Zenodo with 11 files (paper,
+certificate, synthesis, reproduction guide, 7 receipts), in the existing Fathom lineage.
+
+- **Record:** https://zenodo.org/records/21659191
+- **Version DOI:** `10.5281/zenodo.21659191` — https://doi.org/10.5281/zenodo.21659191
+  *(DataCite propagation takes a few minutes after publish; if it 404s, use the concept DOI below,
+  which already resolves to this record.)*
+- **Concept DOI (always resolves to the latest version):** `10.5281/zenodo.19326174` —
+  https://doi.org/10.5281/zenodo.19326174
+- **Code + receipts:** https://github.com/fathom-lab/styxx
+
+Prefer the **concept DOI** in posts you want to stay correct as the series grows; prefer the
+**version DOI** in anything citing these exact numbers. Every number below is quoted from an
+OATH-certified receipt (the published certificate verifies 20 numeric claims, 0 ungrounded, against
+13 receipts).
 
 ---
 
@@ -28,7 +38,7 @@ is quoted from an OATH-certified receipt.
 > re-derives the verdict or the paper doesn't ship. Runs on a single 8GB consumer GPU.
 >
 > Paper, receipts, reproduction guide: github.com/fathom-lab/styxx
-> DOI: [PASTE 10.5281/zenodo.21659191 ONCE PUBLISHED]
+> DOI: 10.5281/zenodo.21659191
 
 ## B — thread version (X, 6 posts)
 
@@ -102,7 +112,7 @@ is quoted from an OATH-certified receipt.
 >
 > Paper, preregistrations, receipts, certificates and reproduction guide:
 > https://github.com/fathom-lab/styxx
-> DOI: [PASTE ONCE PUBLISHED]
+> DOI: https://doi.org/10.5281/zenodo.21659191
 
 ## D — one-liner (bio / repo header / talk slug)
 
@@ -111,17 +121,17 @@ is quoted from an OATH-certified receipt.
 
 ---
 
-## Publish-then-post sequence (2 minutes)
+## Deposit record (done)
 
-1. Open https://zenodo.org/deposit/21659191
-2. Upload the **current** files (the paper was re-certified twice after the draft was created — use
-   today's versions, not an earlier copy):
-   `papers/PAPER_frame_locality_2026_07_28.md` → as `source.md`;
-   `papers/PAPER_frame_locality_2026_07_28.certificate.json` → as `source.certificate.json`;
-   `papers/SYNTHESIS_frame_locality_2026_07_28.md`; `papers/REPRODUCTION_frame_locality_2026_07_28.md`
-3. Read the paper once. Press Publish. `10.5281/zenodo.21659191` goes live and the concept DOI
-   `10.5281/zenodo.19326174` starts resolving to v31.
-4. Paste the DOI into whichever post above you're using.
+Published 2026-07-29 as **Fathom v31**, a new version of concept record `19326174` — not an orphan.
+Uploaded: `source.md` (the paper), `source.certificate.json` (its OATH certificate, sha256-bound to
+the paper), the synthesis, the reproduction guide, and 7 result receipts, so the record is
+self-verifying. Confirmed before publishing: the certificate's `document_sha256` matches the
+uploaded paper byte-for-byte, verdict OATH-HELD, 20 verified / 0 ungrounded.
+
+**Post-publication note:** the paper was uploaded at its current state, which includes the cycle-90
+correction (the belief-sparing attack costs 0.033, not the retired 0.0). If a further cycle changes
+a number, the fix is a *new version* on the same concept record — never an edit in place.
 
 **Accuracy guardrails if you edit the copy:** keep "about half" for the knowledge-preserving
 recovery rate (its interval includes one-half); keep the 0.033 figure for the sparing attack's cost
