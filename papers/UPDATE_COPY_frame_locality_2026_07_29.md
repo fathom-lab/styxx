@@ -137,3 +137,29 @@ a number, the fix is a *new version* on the same concept record — never an edi
 recovery rate (its interval includes one-half); keep the 0.033 figure for the sparing attack's cost
 — do not round it to zero, the earlier 0.0 reading was resolution-limited and is retired; don't
 claim peer review or a scale the work doesn't have (1.5B, one attack class, on the weight channel).
+
+---
+
+## E — the tweet (single post)
+
+**Long form (X premium, ~500 chars):**
+
+> new from Fathom Lab: frame-locality
+>
+> you can make an LLM *say* something false while it still *holds* the true answer. corrupt it 4 ways — pressure, planted context, silent cave, fine-tune — and the attack captures what it reports, not what it knows. ask outside the frame, the answer comes back.
+>
+> overwrite the belief → costs 0.33 of general capability. preserve knowledge → costs 0.03. ~10:1.
+>
+> preregistered, every number re-runnable on one 8GB GPU 👇
+> zenodo.org/records/21659191
+
+**Tight (classic 280):**
+
+> you can make an LLM *say* something false while it still *holds* the true answer.
+>
+> corrupt it 4 ways, the attack always captures what it reports — not what it knows. ask outside the frame, the truth comes back.
+>
+> new from Fathom Lab, every number re-runnable:
+> zenodo.org/records/21659191
+
+Uses the record URL (live) not the version DOI (propagating). Pair with thread B as replies if desired.
