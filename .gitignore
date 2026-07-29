@@ -138,3 +138,20 @@ benchmarks/data/deception/_negaug_acts_*.npz
 benchmarks/data/deception/_settling_*.npz
 papers/read-neq-write/_sweep_run.log
 papers/read-neq-write/*_SMOKE_INVALID*
+
+# ── frame-locality arc: LoRA adapter weights (regenerable from prereg seeds; 70MB each) ──
+papers/**/*adapter*/
+# embedding / dataset caches (regenerable from the run scripts)
+papers/agent-conscience/squad_corpus*.json
+papers/agent-conscience/squad_corpus_emb.npy
+papers/frequency-resonance/_mnist.npz
+# per-run scratch: error logs, dry-run / selftest / fired markers, scratch scripts & notes
+papers/**/_*.err
+papers/**/_*.sh
+papers/**/_*smoke*
+papers/**/*_DRY_INVALID*
+papers/**/*_dry_INVALID*
+papers/**/*_selftest*.json
+papers/depth-truth/pilot/.fired
+papers/depth-truth/pilot/autofire_status.json
+papers/disjoint-worlds/_PHI_STAGE_C_LIVELOCK_NOTE.md
