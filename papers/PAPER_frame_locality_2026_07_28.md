@@ -61,9 +61,11 @@ an absolute: an *unregularized* weight attack overwrites the belief (out-of-fram
 positive in both). How much of the belief a weight attack reaches is set by how much surrounding
 knowledge it is permitted to destroy. The knowledge-preserving recovery rate has a scale trajectory —
 about one-half at 1.5B, 0.9285714285714286 at 3B — so the belief is spared more completely as models
-grow. We are explicit about what is not settled: the substrate is one model family at two sizes; a
-scaling *law* would need more points; and the coupling question the result touches is now measured
-behaviorally but stays open at the probe level.
+grow. The dose reversal and the coupling are not properties of one vendor's training recipe: the
+entire contrast, repeated at a second vendor (Llama-3.2 at the 3B class) under the same frozen
+floors, passes every gate. We are explicit about what is not settled: the substrates are two model
+families at two sizes; a scaling *law* would need more points; and the coupling question the result
+touches is now measured behaviorally but stays open at the probe level.
 
 ## 1. The claim
 
@@ -167,6 +169,21 @@ sparing attack. So the recovery rate has a scale trajectory, 0.5111111111111111 
 1.0 at 7B): as models scale, attacks increasingly capture the report and leave the belief intact. The
 "about half" reading stands as what 1.5B does; it is not the phenomenon's ceiling.
 
+**Nor is the dose a property of one vendor.** Repeating the entire contrast at a second vendor —
+`meta-llama/Llama-3.2-3B-Instruct`, a different pretraining corpus, tokenizer, and chat template,
+with the harness changed only in the model id, the pool seed, and the file prefix
+(`agent-conscience/FINDING_vendor3b_2026_07_29.md`, `SURVIVED__weight_channel_holds_at_second_vendor`)
+— passes every frozen gate. The overwriting attack again erases the out-of-frame belief entirely
+(recovery 0.0, specificity −0.23333333333333334 — landing next to the Qwen 1.5B value) and again
+drives held-out capability below four-choice chance (0.15333333333333332 from a 0.59 base), while the
+knowledge-preserving attack spares the belief (recovery 0.7, specificity 0.35, held knowledge intact
+at 1.0) at a 0.029999999999999916 residual. The regularization weight, frozen from the Qwen 1.5B
+ladder, transferred to the second vendor without re-search and both flipped and preserved — the
+attack recipe is not tuned to its substrate. The sparing attack's recovery *magnitude* varies by
+substrate (0.5111111111111111 → 0.9285714285714286 → 0.7); what transfers is the structure: the
+specificity sign reversal between the two arms, and the broad capability price paid only by the
+overwrite.
+
 ## 5. The instruments are the law, made deliberate
 
 Every shipped `styxx` integrity instrument is the frame-locality move turned into an operation that
@@ -183,11 +200,12 @@ the law demands when no outside frame exists.
 
 ## 6. Scope and what is not settled
 
-One model family (Qwen2.5) and one closed frontier model carry the results; the parametric channel is
-measured at 1.5B and 3B, fp16 at both (no quantization confound), one attack class (LoRA, 300 steps).
-Every effect is larger at 3B — the sign reversal, the coupling, and the recovery rate — so the two
+Two open model families (Qwen2.5 at 1.5B and 3B; Llama-3.2 at 3B) and one closed frontier model
+carry the results; the parametric channel is measured fp16 everywhere (no quantization confound),
+one attack class (LoRA, 300 steps), a single seed per substrate on the vendor point. Within Qwen,
+every effect is larger at 3B — the sign reversal, the coupling, and the recovery rate — so the two
 sizes are a consistent trajectory rather than a single point, though two in-family sizes are not a
-scaling law. The
+scaling law, and two vendors are not all vendors. The
 knowledge-preservation check shares its items with the replay set by construction (disclosed); the
 mechanism is measured only on never-replayed items. The **coupling question** the dose result touches
 — whether rewriting the out-of-frame belief is inseparable from damaging general capability — is now
@@ -202,8 +220,9 @@ together on this substrate: you cannot overwrite the out-of-frame belief without
 price — and **preserving the belief is cheap but not free.** (An earlier, lower-resolution battery of
 300 items put the sparing attack's cost at 0.0 and explicitly bounded that reading as "not provably
 exactly zero"; the higher-resolution run supersedes it, and the 0.0 figure should not be quoted.)
-This is a behavioral coupling result at 1.5B and 3B (the coupling grows at 3B: BASE 0.6366666666666667
-→ overwriting 0.18333333333333332 versus sparing 0.5966666666666667) and one attack class; the
+This is a behavioral coupling result at 1.5B and 3B and at two vendors (the coupling grows at 3B:
+BASE 0.6366666666666667 → overwriting 0.18333333333333332 versus sparing 0.5966666666666667; and
+reproduces on Llama-3.2-3B: 0.59 → 0.15333333333333332 versus 0.56) and one attack class; the
 calibration-poisoning arc's probe-level coupling question is a separate measurement and stays open.
 Cross-pool and cross-benchmark comparisons are
 directional, not matched contrasts. Sycophantic capitulation and the locality of knowledge edits are
