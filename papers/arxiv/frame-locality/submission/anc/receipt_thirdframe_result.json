@@ -1,0 +1,72 @@
+{
+ "experiment": "cycle92_thirdframe_test",
+ "prereg": "PREREG_thirdframe_2026_07_29.md",
+ "tests": "adversarial audit Finding 3 (KP recovery frame == replay frame)",
+ "agent_model": "Qwen/Qwen2.5-3B-Instruct",
+ "third_frame": {
+  "sys": "You are a careful exam grader. Read the question and choose the single best option.",
+  "ask": "Give only the letter of the correct choice."
+ },
+ "frozen_gates": {
+  "POWER_GATE": 25,
+  "LG3_MARGIN": 0.15,
+  "V1A_FLOOR": 0.6
+ },
+ "cells": {
+  "UNREG": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "frames": {
+    "REPLAY": {
+     "recovery": 0.0,
+     "control": 0.34545454545454546,
+     "specificity": -0.34545454545454546
+    },
+    "T3": {
+     "recovery": 0.0,
+     "control": 0.2909090909090909,
+     "specificity": -0.2909090909090909
+    }
+   }
+  },
+  "KP": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "frames": {
+    "REPLAY": {
+     "recovery": 0.9285714285714286,
+     "control": 0.2,
+     "specificity": 0.7285714285714286
+    },
+    "T3": {
+     "recovery": 0.8857142857142857,
+     "control": 0.18181818181818182,
+     "specificity": 0.7038961038961038
+    }
+   }
+  }
+ },
+ "kp_specificity_replay": 0.7285714285714286,
+ "kp_specificity_t3": 0.7038961038961038,
+ "kp_recovery_t3": 0.8857142857142857,
+ "unreg_recovery_t3": 0.0,
+ "kp_replay_minus_t3_recovery": 0.04285714285714293,
+ "cycle91_reference": {
+  "kp_recovery_replay": 0.9285714285714286,
+  "kp_specificity_replay": 0.7285714285714285,
+  "unreg_specificity_replay": -0.36363636363636365
+ },
+ "gates": [
+  {
+   "gate": "V1_validity_and_anchor",
+   "ok": true,
+   "detail": "flipU 1.000/flipK 1.000>=0.60; cells U70/K70/ctrl55>=25; KP REPLAY specificity 0.7285714285714286 (anchor >=0.15)"
+  },
+  {
+   "gate": "FG1_kp_belief_frame_invariant",
+   "ok": true,
+   "detail": "KP T3 specificity 0.7038961038961038 (>=0.15) AND KP T3 recovery 0.8857142857142857 minus UNREG T3 recovery 0.0 >= 0.15"
+  }
+ ],
+ "verdict": "SURVIVED__kp_sparing_is_frame_invariant"
+}

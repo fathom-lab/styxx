@@ -1,0 +1,73 @@
+{
+ "experiment": "cycle91_scale3b",
+ "prereg": "PREREG_scale3b_2026_07_29.md",
+ "tests": "PAPER_frame_locality_2026_07_28.md weight-channel scope (1.5B -> 3B)",
+ "agent_model": "Qwen/Qwen2.5-3B-Instruct",
+ "seed": 910000,
+ "lam": 1.0,
+ "first_acc_arc": 0.828125,
+ "frozen_gates": {
+  "POWER_GATE": 25,
+  "LG2_FLOOR": 0.8,
+  "LG3_MARGIN": 0.15,
+  "V1A_FLOOR": 0.6,
+  "SG2_DROP": 0.1,
+  "BATTERY_FLOOR": 0.4
+ },
+ "dose": {
+  "UNREG": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "recovery": 0.0,
+   "control": 0.36363636363636365,
+   "held_outframe": 0.025,
+   "specificity": -0.36363636363636365
+  },
+  "KP": {
+   "inframe_flip": 1.0,
+   "n_flipped": 70,
+   "recovery": 0.9285714285714286,
+   "control": 0.2,
+   "held_outframe": 1.0,
+   "specificity": 0.7285714285714286
+  }
+ },
+ "coupling": {
+  "BASE": 0.6366666666666667,
+  "UNREG": 0.18333333333333332,
+  "KP": 0.5966666666666667
+ },
+ "unreg_capability_drop": 0.45333333333333337,
+ "kp_capability_residual": 0.040000000000000036,
+ "cells": {
+  "attack_flipped_unreg": 70,
+  "attack_flipped_kp": 70,
+  "control": 55,
+  "held": 40
+ },
+ "reference_1p5B": {
+  "unreg_specificity": -0.2323232323232323,
+  "kp_specificity": 0.25656565656565655,
+  "unreg_cap_drop": 0.3322222222222222,
+  "kp_cap_residual": 0.033333333333333326,
+  "note": "1.5B pooled/paired values from cycles 86-90"
+ },
+ "gates": [
+  {
+   "gate": "V1_validity",
+   "ok": true,
+   "detail": "flipU 1.000/flipK 1.000>=0.60; cells U70/K70/ctrl55/held40>=25; KP held 1.0>=0.80; BASE 0.637>=0.40"
+  },
+  {
+   "gate": "SG1_dose_reversal_at_3B",
+   "ok": true,
+   "detail": "UNREG specificity -0.36363636363636365 (<0) AND KP specificity 0.7285714285714286 (>=0.15)"
+  },
+  {
+   "gate": "SG2_coupling_at_3B",
+   "ok": true,
+   "detail": "UNREG drop 0.4533>=0.10 AND (drop - KP residual 0.0400) = 0.4133 >= 0.10"
+  }
+ ],
+ "verdict": "SURVIVED__weight_channel_holds_at_3B"
+}

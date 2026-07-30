@@ -1,0 +1,91 @@
+{
+ "experiment": "cycle90_coupling_resolution",
+ "prereg": "PREREG_coupling_resolution_2026_07_28.md",
+ "refines": "FINDING_coupling_battery_2026_07_28.md",
+ "agent_model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "seed": 900000,
+ "batteries": {
+  "MMLU": 600,
+  "ARC": 300,
+  "pooled_n": 900
+ },
+ "frozen_gates": {
+  "V1_FLOOR": 0.4,
+  "C1_DROP": 0.1,
+  "C2_RESIDUAL": 0.05,
+  "C3_CELL": 0.05
+ },
+ "stem_keywords": [
+  "math",
+  "physics",
+  "chemistry",
+  "biology",
+  "computer",
+  "engineering",
+  "statistics",
+  "astronomy",
+  "electrical",
+  "machine"
+ ],
+ "accuracy_by_cell": {
+  "BASE": {
+   "MMLU_STEM": 0.5420560747663551,
+   "MMLU_VERBAL": 0.6146044624746451,
+   "ARC": 0.7566666666666667
+  },
+  "UNREG": {
+   "MMLU_STEM": 0.3364485981308411,
+   "MMLU_VERBAL": 0.2961460446247465,
+   "ARC": 0.3566666666666667
+  },
+  "KP": {
+   "MMLU_STEM": 0.5327102803738317,
+   "MMLU_VERBAL": 0.5740365111561866,
+   "ARC": 0.7266666666666667
+  }
+ },
+ "accuracy_pooled": {
+  "BASE": 0.6533333333333333,
+  "UNREG": 0.3211111111111111,
+  "KP": 0.62
+ },
+ "unreg_drop_pooled": 0.3322222222222222,
+ "kp_residual_pooled": 0.033333333333333326,
+ "unreg_loss_by_cell": {
+  "MMLU_STEM": 0.20560747663551399,
+  "MMLU_VERBAL": 0.3184584178498986,
+  "ARC": 0.4
+ },
+ "residual_label": "NO_MATERIAL_RESIDUAL",
+ "concentration_label": "BROAD",
+ "cycle89_reference": {
+  "BASE": 0.5833333333333334,
+  "UNREG": 0.3566666666666667,
+  "KP": 0.5833333333333334,
+  "n": 300,
+  "note": "lower-resolution single-battery reference"
+ },
+ "gates": [
+  {
+   "gate": "V1_batteries_doable",
+   "ok": true,
+   "detail": "BASE MMLU 0.6016666666666667 / ARC 0.7566666666666667 vs 0.4"
+  },
+  {
+   "gate": "C1_coupling_replicates",
+   "ok": true,
+   "detail": "BASE-UNREG pooled 0.3322222222222222 vs 0.1"
+  },
+  {
+   "gate": "C2_residual_label",
+   "ok": true,
+   "detail": "BASE-KP pooled 0.033333333333333326 vs bound 0.05 -> NO_MATERIAL_RESIDUAL"
+  },
+  {
+   "gate": "C3_concentration_label",
+   "ok": true,
+   "detail": "UNREG loss by cell {'MMLU_STEM': 0.20560747663551399, 'MMLU_VERBAL': 0.3184584178498986, 'ARC': 0.4} -> BROAD"
+  }
+ ],
+ "verdict": "SURVIVED__coupling_replicates__NO_MATERIAL_RESIDUAL__BROAD"
+}

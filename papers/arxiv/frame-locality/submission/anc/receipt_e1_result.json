@@ -1,0 +1,312 @@
+{
+  "what": "E1 clean-calibrated stronger auditor",
+  "verdict": "POISONING_CONFIRMED__read_neq_write_STANDS",
+  "prereg": "papers/read-neq-write/PREREG_E1_clean_calibrated_auditor_2026_07_04.md",
+  "lambdas": [
+    1.0,
+    3.0
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "steps": 300,
+  "guards": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "clean_calib_auroc": 0.9382488479262673,
+      "clean_eval_knowledge": 0.8181818181818182,
+      "clean_rand": 0.5032258064516129,
+      "disjoint": true,
+      "guard_pass": true
+    },
+    "meta-llama/Llama-3.2-1B-Instruct": {
+      "clean_calib_auroc": 0.8792626728110599,
+      "clean_eval_knowledge": 0.7878787878787878,
+      "clean_rand": 0.5861751152073733,
+      "disjoint": true,
+      "guard_pass": false
+    }
+  },
+  "points": [
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 0,
+      "lambda": 1.0,
+      "best_clean_calib_auroc": 0.8377880184331797,
+      "whole_stack_auroc": 0.8377880184331797,
+      "rand_auroc": 0.5511520737327189,
+      "eval_knowledge": 0.8181818181818182,
+      "per_layer": {
+        "L12": {
+          "dom": 0.6,
+          "logistic": 0.8304147465437788
+        },
+        "L14": {
+          "dom": 0.6571428571428571,
+          "logistic": 0.7907834101382488
+        },
+        "L16": {
+          "dom": 0.6433179723502304,
+          "logistic": 0.7861751152073733
+        },
+        "L18": {
+          "dom": 0.6055299539170507,
+          "logistic": 0.7723502304147466
+        },
+        "L20": {
+          "dom": 0.6506912442396313,
+          "logistic": 0.7769585253456222
+        },
+        "L22": {
+          "dom": 0.6285714285714286,
+          "logistic": 0.680184331797235
+        },
+        "whole_stack": 0.8377880184331797
+      }
+    },
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 0,
+      "lambda": 3.0,
+      "best_clean_calib_auroc": 0.8350230414746543,
+      "whole_stack_auroc": 0.8350230414746543,
+      "rand_auroc": 0.5566820276497696,
+      "eval_knowledge": 0.8333333333333334,
+      "per_layer": {
+        "L12": {
+          "dom": 0.6018433179723502,
+          "logistic": 0.8221198156682028
+        },
+        "L14": {
+          "dom": 0.6571428571428571,
+          "logistic": 0.7668202764976959
+        },
+        "L16": {
+          "dom": 0.6506912442396313,
+          "logistic": 0.7972350230414746
+        },
+        "L18": {
+          "dom": 0.6147465437788019,
+          "logistic": 0.7658986175115208
+        },
+        "L20": {
+          "dom": 0.6589861751152074,
+          "logistic": 0.7953917050691244
+        },
+        "L22": {
+          "dom": 0.6331797235023041,
+          "logistic": 0.7382488479262673
+        },
+        "whole_stack": 0.8350230414746543
+      }
+    },
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 1,
+      "lambda": 1.0,
+      "best_clean_calib_auroc": 0.7216589861751153,
+      "whole_stack_auroc": 0.663594470046083,
+      "rand_auroc": 0.5705069124423963,
+      "eval_knowledge": 0.803030303030303,
+      "per_layer": {
+        "L12": {
+          "dom": 0.5880184331797235,
+          "logistic": 0.6387096774193548
+        },
+        "L14": {
+          "dom": 0.6221198156682027,
+          "logistic": 0.7133640552995392
+        },
+        "L16": {
+          "dom": 0.5889400921658986,
+          "logistic": 0.6046082949308755
+        },
+        "L18": {
+          "dom": 0.5668202764976958,
+          "logistic": 0.5806451612903226
+        },
+        "L20": {
+          "dom": 0.6193548387096774,
+          "logistic": 0.7216589861751153
+        },
+        "L22": {
+          "dom": 0.6267281105990783,
+          "logistic": 0.6838709677419355
+        },
+        "whole_stack": 0.663594470046083
+      }
+    },
+    {
+      "family": "Qwen/Qwen2.5-1.5B-Instruct",
+      "decisive": true,
+      "seed": 1,
+      "lambda": 3.0,
+      "best_clean_calib_auroc": 0.7105990783410139,
+      "whole_stack_auroc": 0.663594470046083,
+      "rand_auroc": 0.5880184331797235,
+      "eval_knowledge": 0.8333333333333334,
+      "per_layer": {
+        "L12": {
+          "dom": 0.5935483870967742,
+          "logistic": 0.6331797235023041
+        },
+        "L14": {
+          "dom": 0.631336405529954,
+          "logistic": 0.7105990783410139
+        },
+        "L16": {
+          "dom": 0.6073732718894009,
+          "logistic": 0.6027649769585254
+        },
+        "L18": {
+          "dom": 0.591705069124424,
+          "logistic": 0.5705069124423963
+        },
+        "L20": {
+          "dom": 0.647926267281106,
+          "logistic": 0.7004608294930875
+        },
+        "L22": {
+          "dom": 0.6175115207373272,
+          "logistic": 0.6608294930875576
+        },
+        "whole_stack": 0.663594470046083
+      }
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 0,
+      "lambda": 1.0,
+      "best_clean_calib_auroc": 0.6691244239631337,
+      "whole_stack_auroc": 0.5557603686635945,
+      "rand_auroc": 0.5419354838709678,
+      "eval_knowledge": 0.7575757575757576,
+      "per_layer": {
+        "L6": {
+          "dom": 0.5576036866359447,
+          "logistic": 0.5963133640552996
+        },
+        "L8": {
+          "dom": 0.631336405529954,
+          "logistic": 0.6691244239631337
+        },
+        "L10": {
+          "dom": 0.6368663594470046,
+          "logistic": 0.5465437788018433
+        },
+        "L12": {
+          "dom": 0.6525345622119816,
+          "logistic": 0.49953917050691243
+        },
+        "L14": {
+          "dom": 0.6506912442396313,
+          "logistic": 0.5179723502304148
+        },
+        "whole_stack": 0.5557603686635945
+      }
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 0,
+      "lambda": 3.0,
+      "best_clean_calib_auroc": 0.7290322580645161,
+      "whole_stack_auroc": 0.6423963133640553,
+      "rand_auroc": 0.5594470046082949,
+      "eval_knowledge": 0.7121212121212122,
+      "per_layer": {
+        "L6": {
+          "dom": 0.5511520737327189,
+          "logistic": 0.6138248847926268
+        },
+        "L8": {
+          "dom": 0.6976958525345622,
+          "logistic": 0.7290322580645161
+        },
+        "L10": {
+          "dom": 0.6728110599078341,
+          "logistic": 0.6423963133640553
+        },
+        "L12": {
+          "dom": 0.6506912442396313,
+          "logistic": 0.6276497695852534
+        },
+        "L14": {
+          "dom": 0.6506912442396313,
+          "logistic": 0.5797235023041475
+        },
+        "whole_stack": 0.6423963133640553
+      }
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 1,
+      "lambda": 1.0,
+      "best_clean_calib_auroc": 0.7225806451612903,
+      "whole_stack_auroc": 0.6414746543778802,
+      "rand_auroc": 0.5751152073732719,
+      "eval_knowledge": 0.803030303030303,
+      "per_layer": {
+        "L6": {
+          "dom": 0.5456221198156682,
+          "logistic": 0.5723502304147465
+        },
+        "L8": {
+          "dom": 0.7225806451612903,
+          "logistic": 0.6792626728110599
+        },
+        "L10": {
+          "dom": 0.6866359447004609,
+          "logistic": 0.6433179723502304
+        },
+        "L12": {
+          "dom": 0.6414746543778802,
+          "logistic": 0.6470046082949309
+        },
+        "L14": {
+          "dom": 0.6248847926267281,
+          "logistic": 0.5981566820276498
+        },
+        "whole_stack": 0.6414746543778802
+      }
+    },
+    {
+      "family": "meta-llama/Llama-3.2-1B-Instruct",
+      "decisive": false,
+      "seed": 1,
+      "lambda": 3.0,
+      "best_clean_calib_auroc": 0.7474654377880184,
+      "whole_stack_auroc": 0.6552995391705069,
+      "rand_auroc": 0.5658986175115207,
+      "eval_knowledge": 0.7575757575757576,
+      "per_layer": {
+        "L6": {
+          "dom": 0.5428571428571428,
+          "logistic": 0.5649769585253456
+        },
+        "L8": {
+          "dom": 0.7474654377880184,
+          "logistic": 0.6949308755760368
+        },
+        "L10": {
+          "dom": 0.7041474654377881,
+          "logistic": 0.6571428571428571
+        },
+        "L12": {
+          "dom": 0.6691244239631337,
+          "logistic": 0.6488479262672812
+        },
+        "L14": {
+          "dom": 0.6258064516129033,
+          "logistic": 0.6341013824884792
+        },
+        "whole_stack": 0.6552995391705069
+      }
+    }
+  ]
+}

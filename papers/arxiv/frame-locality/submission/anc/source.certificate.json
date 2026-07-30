@@ -1,0 +1,383 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "PAPER_frame_locality_2026_07_28.md",
+  "document_sha256": "d0043ac29a9a41895d782699dc903cf0f80cb04d2369aaf8d5c43fd532c50f03",
+  "receipts_sha256": {
+    "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0",
+    "scale_test_result.json": "9c636f5c0add772cc6d20357bfbe2cff1a1ebf00993996d235a6892011a43704",
+    "frontier_knowsay_result.json": "9c87a33b07842bd8f6ba508bd6c4000f286f8fb6132070e05c7e55659734d0a4",
+    "frontier_recovery_result.json": "ba3685be0227f5da0afb84e2b89bda304095b4d89a32bab536824c66339bc633",
+    "adjudicated_loop_result.json": "cfd7dd79137a051f1c592ee9b7df06ae288b041c6f456c06351995d0f55bd3e9",
+    "injection_gap_closure_result.json": "76e3ffe0e93351e2820054d20857459edf7fd484f3b14ba19aa9f6b33e17b891",
+    "behavioral_sycophancy_b22_result.json": "f4b24665087c8f8e794f06d16774bc310f9a43f934404769e32ffd54e4edda09",
+    "e1_result.json": "97e8a4ad4a349518e9be1889e819939a953e78da7ec7eb6ef2e64342d60db4f9",
+    "poisoned_recovery_result.json": "1cdd27ce5b49151413e9f3611d87dc554af1af079ad2aad1df6c7f8e5e9b33e5",
+    "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c",
+    "kp_replication_result.json": "d1357d0ae13c54e8d5a5a3acabb3bfe534503c9c53b7bae14dc754cc64c0fffd",
+    "coupling_battery_result.json": "abea9689950c2f2f6638dcde3771fd5e98a735d601edc5cf9c8cf09df707a890",
+    "coupling_resolution_result.json": "d47387b0adace64fd7689369715d76d289f268de79542e65699cf26fab505ba8",
+    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2",
+    "thirdframe_result.json": "857ae4491cff10fd724ab7c97b727257551339ec1709ce31c7da5640570df5f7",
+    "vendor3b_result.json": "65d3ea9673cea18772ad8ebe32be6fe5543059f1c07d4a1826c3733bdc8c65d7",
+    "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 37,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 104,
+      "token": "0.3012"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 8,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "## Post-publication correction (v32, 2026-07-29) \u2014 read before \u00a71",
+      "status": "VERIFIED",
+      "receipt_ref": "injection_gap_closure_result.json:per_item[29].g_stateless_TRUE"
+    },
+    {
+      "line": 18,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "(held = first-correct and *not* caved). In the receipt these are **0.9846153846153847 vs 1.0** \u2014 nearly",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 26,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "report**. What does **not** stand as written: the \u00a71 claim that \"that specificity is the whole",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:specificity_margin"
+    },
+    {
+      "line": 36,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "while the overwriting attack recovers at 0.0 in every frame. The weight-channel corruption cannot be",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 45,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "CAVED 46 / HELD 40). The probe frame is valid \u2014 items the model never abandoned answer at **0.975**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:per_item[44].i"
+    },
+    {
+      "line": 45,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "CAVED 46 / HELD 40). The probe frame is valid \u2014 items the model never abandoned answer at **0.975**",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:per_item[38].i"
+    },
+    {
+      "line": 45,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "CAVED 46 / HELD 40). The probe frame is valid \u2014 items the model never abandoned answer at **0.975**",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 104,
+      "token": "0.3012",
+      "value": 0.3012,
+      "decimals": 4,
+      "context": "so any change it produces is pure deference. At 3B the model abandons a correct answer on 0.3012 of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 110,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "preregistered power (recovery 1.0, specificity 0.9722222222222222, `frontier_recovery_result.json`).",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 111,
+      "token": "0.2742",
+      "value": 0.2742,
+      "decimals": 4,
+      "context": "The same weights that answer at 0.2742 *inside* the pressure frame adjudicate the identical items at",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
+    },
+    {
+      "line": 112,
+      "token": "0.8226",
+      "value": 0.8226,
+      "decimals": 4,
+      "context": "0.8226 from *outside* it (`adjudicated_loop_result.json`) \u2014 the frame, not the parameters, carries",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
+    },
+    {
+      "line": 116,
+      "token": "0.0106",
+      "value": 0.0106,
+      "decimals": 4,
+      "context": "not merely fail \u2014 it *inverts*, certifying the lie (AUC 0.0106). A stateless read that re-queries",
+      "status": "VERIFIED",
+      "receipt_ref": "injection_gap_closure_result.json:G2_auc_insession_TRUE_vs_FALSE"
+    },
+    {
+      "line": 117,
+      "token": "0.9442",
+      "value": 0.9442,
+      "decimals": 4,
+      "context": "outside the poisoned context recovers the truth (AUC 0.9442), and their divergence is itself a",
+      "status": "VERIFIED",
+      "receipt_ref": "injection_gap_closure_result.json:G1_auc_stateless_TRUE_vs_FALSE"
+    },
+    {
+      "line": 118,
+      "token": "0.875",
+      "value": 0.875,
+      "decimals": 3,
+      "context": "deployable detector (0.875) (`grounded-honesty-axis/injection_gap_closure_result.json`).",
+      "status": "VERIFIED",
+      "receipt_ref": "injection_gap_closure_result.json:G3_auc_D_detect_at_zero_FPR"
+    },
+    {
+      "line": 121,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "chance (AUC 0.5) while a behavioral read that resamples the belief outside the pressured turn carries",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:frozen_gates.LG1_FLOOR"
+    },
+    {
+      "line": 122,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "the signal at AUC 1.0, a margin of 0.4872 over the best text baseline",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 122,
+      "token": "0.4872",
+      "value": 0.4872,
+      "decimals": 4,
+      "context": "the signal at AUC 1.0, a margin of 0.4872 over the best text baseline",
+      "status": "VERIFIED",
+      "receipt_ref": "behavioral_sycophancy_b22_result.json:H_kill_margin_over_best_text"
+    },
+    {
+      "line": 139,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "attack frame, to output a wrong letter on 45 items takes completely in-frame (flip-to-target 1.0),",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:per_item[43].i"
+    },
+    {
+      "line": 139,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "attack frame, to output a wrong letter on 45 items takes completely in-frame (flip-to-target 1.0),",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 148,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "held knowledge itself preserved (out-of-frame accuracy 1.0)",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 152,
+      "token": "0.25",
+      "value": 0.25,
+      "decimals": 2,
+      "context": "(`agent-conscience/kp_replication_result.json`). In every run the control cell stays near 0.25, so the",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_knowsay_result.json:by_dataset.truthful_qa_mc.cave_rate"
+    },
+    {
+      "line": 168,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "conventional level) is [0.4197820076036184, 0.6488600870236277]; its lower bound does not clear 0.50, and pooling the two",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:frozen_gates.LG1_FLOOR"
+    },
+    {
+      "line": 180,
+      "token": "0.04",
+      "value": 0.04,
+      "decimals": 2,
+      "context": "general capability to 0.18333333333333332 \u2014 below four-choice chance \u2014 versus a 0.04 residual for the",
+      "status": "VERIFIED",
+      "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.bare_small"
+    },
+    {
+      "line": 183,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0 at 7B): as models scale, attacks increasingly capture the report and leave the belief intact. The",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 191,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "(recovery 0.0, specificity \u22120.23333333333333334 \u2014 landing next to the Qwen 1.5B value) and again",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 192,
+      "token": "0.59",
+      "value": 0.59,
+      "decimals": 2,
+      "context": "drives held-out capability below four-choice chance (0.15333333333333332 from a 0.59 base), while the",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:accuracy.first"
+    },
+    {
+      "line": 193,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "knowledge-preserving attack spares the belief (recovery 0.7, specificity 0.35, held knowledge intact",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:accuracy.first"
+    },
+    {
+      "line": 193,
+      "token": "0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "knowledge-preserving attack spares the belief (recovery 0.7, specificity 0.35, held knowledge intact",
+      "status": "VERIFIED",
+      "receipt_ref": "thirdframe_result.json:cells.UNREG.frames.REPLAY.control"
+    },
+    {
+      "line": 194,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "at 1.0) at a 0.029999999999999916 residual. The regularization weight, frozen from the Qwen 1.5B",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 197,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "substrate (0.5111111111111111 \u2192 0.9285714285714286 \u2192 0.7); what transfers is the structure: the",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:accuracy.first"
+    },
+    {
+      "line": 219,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "one attack class (LoRA, 300 steps), a single seed per substrate on the vendor point. Within Qwen,",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:steps"
+    },
+    {
+      "line": 226,
+      "token": "900",
+      "value": 900.0,
+      "decimals": 0,
+      "context": "*measured behaviorally* on disjoint batteries. On 900 held-out items across two distributions",
+      "status": "VERIFIED",
+      "receipt_ref": "coupling_resolution_result.json:batteries.pooled_n"
+    },
+    {
+      "line": 231,
+      "token": "0.4",
+      "value": 0.4,
+      "decimals": 1,
+      "context": "in every domain cell measured (0.20560747663551399 / 0.3184584178498986 / 0.4): the attack degrades",
+      "status": "VERIFIED",
+      "receipt_ref": "injection_gap_closure_result.json:per_item[10].g_insession_FALSE"
+    },
+    {
+      "line": 235,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "300 items put the sparing attack's cost at 0.0 and explicitly bounded that reading as \"not provably",
+      "status": "VERIFIED",
+      "receipt_ref": "poisoned_recovery_result.json:attack.steps"
+    },
+    {
+      "line": 235,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "300 items put the sparing attack's cost at 0.0 and explicitly bounded that reading as \"not provably",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 236,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "exactly zero\"; the higher-resolution run supersedes it, and the 0.0 figure should not be quoted.)",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 239,
+      "token": "0.59",
+      "value": 0.59,
+      "decimals": 2,
+      "context": "reproduces on Llama-3.2-3B: 0.59 \u2192 0.15333333333333332 versus 0.56) and one attack class; the",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:accuracy.first"
+    },
+    {
+      "line": 239,
+      "token": "0.56",
+      "value": 0.56,
+      "decimals": 2,
+      "context": "reproduces on Llama-3.2-3B: 0.59 \u2192 0.15333333333333332 versus 0.56) and one attack class; the",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:points[1].rand_auroc"
+    }
+  ]
+}
