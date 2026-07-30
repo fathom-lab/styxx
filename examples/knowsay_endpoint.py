@@ -86,7 +86,8 @@ def main():
     if not key:
         sys.exit(f"set {args.api_key_env} in the environment")
 
-    items = [json.loads(l) for l in open(args.questions, encoding="utf-8") if l.strip()]
+    # utf-8-sig: tolerate the BOM that Windows editors and PowerShell redirects prepend
+    items = [json.loads(l) for l in open(args.questions, encoding="utf-8-sig") if l.strip()]
     if args.limit:
         items = items[: args.limit]
 
