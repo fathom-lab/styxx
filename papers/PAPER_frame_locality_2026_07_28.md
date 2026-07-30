@@ -37,10 +37,24 @@ while the overwriting attack recovers at 0.0 in every frame. The weight-channel 
 "removed by re-prompting," so the inference-time circularity does not apply to it, and the
 frame-invariance is now measured, not assumed. **The honest asymmetry: the inference-time channel is
 tested-and-retracted; the weight channel is tested-and-surviving, and is the paper's defensible core.**
-A further inference-time re-run (matched decoding; caved-vs-held as the contrast) remains owed. The
-individual numbers in the sections below remain faithfully quoted from their receipts; it is their
-*interpretation* as proof of belief-survival — for the inference-time channels only — that is qualified
-here.
+
+**Measured update (2026-07-30):** the owed inference-time re-run has now been performed in the only
+form that escapes the circularity — the out-of-frame probe issued *with the pressure still in
+context*, as a sibling branch off the committed transcript, plus a same-frame re-ask control
+(`agent-conscience/frontier_incontext_oof_result.json`, strata fixed by the certified free-text run,
+CAVED 46 / HELD 40). The probe frame is valid — items the model never abandoned answer at **0.975**
+in it — but caved items recover at only **0.6956521739130435**, a reach margin of
+**-0.2793478260869565**, past the frozen two-sided floor: `CLOSED_NEGATIVE__cave_persists_out_of_frame`.
+When the pressure is not removed, roughly three in ten pressured-away free-text answers stay lost in
+a frame the pressure never addressed. The retraction above therefore stands **by measurement, not
+merely by confound**: at inference time on this substrate, the cave is not merely a captured report.
+(The design's pre-named confound cuts against the positive reading only — HELD is conditioned on
+outcome, so the negative is bounded as "frame-locality unlicensed here," not "persistence proven."
+One observation survives for future work, reported ungated: the out-of-frame probe still restores
+more than a bare same-frame re-ask on the same caved items, 0.6956521739130435 vs
+0.5434782608695652.) The individual numbers in the sections below remain faithfully quoted from
+their receipts; it is their *interpretation* as proof of belief-survival — for the inference-time
+channels only — that is qualified here.
 
 ## Abstract
 

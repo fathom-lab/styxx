@@ -10,16 +10,22 @@ instrument caught.
 
 When a user replies to a language model with nothing but doubt — "I don't think that's right. Are
 you sure?" — the model frequently abandons a correct answer it demonstrably still holds. We
-measure this **know-say gap** with a specificity-controlled design: the same weights are queried
-inside the pressured conversation and in a fresh neutral context, so that recovered answers can be
-distinguished from better decoding. On third-party multiple-choice benchmarks a 3B open model
+measure this **know-say gap** by querying the same weights inside the pressured conversation and
+in a fresh neutral context: what the model *says* under pressure against what it *knows* without
+it. On third-party multiple-choice benchmarks a 3B open model
 abandons 0.3012 of its initially-correct answers under a content-free challenge; a 7B model
 abandons 0.26153846153846155; in free-text question answering the 7B rate roughly doubles to
-0.5227272727272727. The abandoned belief is intact: neutral-context querying returns the correct
+0.5227272727272727. The knowledge is still there when the pressure is absent: neutral-context
+querying returns the correct
 answer on 0.9846153846153847 of caved items versus 0.01910828025477707 of initially-wrong items at
 3B, and at 7B the recovery pattern is exact — 1.0 on caved, 0.0 on initially-wrong — because the
-larger model's out-of-frame belief is nearly deterministic. Scale therefore does not close the
-gap; it sharpens it: the belief stabilizes faster than the caving declines. We then show the
+larger model's out-of-frame belief is nearly deterministic. (The wrong-first control bounds
+parroting; it does not by itself distinguish belief-survival from statelessness, since the
+neutral query removes the pressure — the correction in §7 states what the discriminating
+contrast shows, and what a pressure-retained probe measured at the frontier: with the pressure
+still in context, caved free-text answers recover at 0.6956521739130435 against 0.975 for
+never-abandoned items — part of the belief goes down with the report.) Scale does not close the
+gap; it sharpens it: the out-of-frame belief stabilizes faster than the caving declines. We then show the
 failure cannot be detected from inside: a verifier built from the model's own belief-agreement
 clears a preregistered AUROC floor at 7B (0.7596743574766355) and beats matched-compute in-frame
 self-consistency by 0.18961740654205606, yet fails as a selective instrument (0.7796610169491526
@@ -150,10 +156,29 @@ accuracy falling 0.823076923076923 → 0.7384615384615385 (`frontier_knowsay_res
 recovery composite, three items per cell short at first pass, was then confirmed on a fresh twelfth
 pool sized ex ante — the forbidden top-up refused: on 40 caved and 36 wrong-first items, both clear
 of the 25-per-cell rule, fresh-context neutral querying returned the abandoned answer at recovery
-1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a specificity margin
-of 0.9722222222222222 (`frontier_recovery_result.json`). **At a deployed frontier model, with
-preregistered power, the abandoned answers were never abandoned: the belief survives the
-capitulation with specificity.** One measured difference of kind: the frontier model's rescue rate is
+1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a margin
+of 0.9722222222222222 (`frontier_recovery_result.json`).
+
+**Correction (2026-07-30) — the sentence that previously stood here claimed the belief "survives
+the capitulation with specificity." That interpretation is withdrawn**, for the same reason the
+companion frame-locality paper's inference-time control was retracted in its v31.1 erratum: the
+neutral query is a fresh context — the pressure removed — so recovery may measure statelessness,
+and the margin against the wrong-first control is the non-discriminating one. The contrast that
+discriminates holds first-correct fixed, and in the same receipt it is null: recovery on caved
+1.0 versus neutral accuracy on held 1.0 — caving contributed no measurable recovery signal beyond
+what any first-correct item shows (`frontier_recovery_result.json`;
+`styxx.framelocality.assess` returns exactly this reading from these records). What the composite
+does license: the *report* is frame-dependent — wrong under pressure, correct without it, on the
+same items and weights — and the wrong-first control bounds parroting. What it does not license:
+that the frontier belief demonstrably survives *while the pressure stands*. That stronger question
+has now been measured directly, in free text, with the pressure kept in context and a same-frame
+re-ask control (`frontier_incontext_oof_result.json`,
+`CLOSED_NEGATIVE__cave_persists_out_of_frame`): the probe frame reads never-abandoned items at
+0.975, but caved items recover at only 0.6956521739130435 — a reach margin of
+-0.2793478260869565 past the frozen two-sided floor. **Roughly three in ten pressured-away
+free-text answers stay lost in a frame the pressure never addressed. At the deployed frontier,
+the cave is not merely a captured report — under sustained in-context pressure, part of the
+belief goes down with it.** One measured difference of kind: the frontier model's rescue rate is
 0.4782608695652174 — when initially wrong, it uses the same doubt productively nearly half the
 time — and it still caves on a fifth of what it had right. Frontier training has, on this
 evidence, taught the model to *re-evaluate* under doubt; it has not taught it to tell the
@@ -186,17 +211,33 @@ measurements ride a commercial API where temperature zero is not server-side det
 version aliases rotate (resolved versions are recorded in receipts). All caving comparisons across
 pools are directional, not matched contrasts.
 
+**Interpretation boundary on "recovery" (added 2026-07-30, program-wide):** every fresh-context
+recovery number in this paper licenses the frame-dependence of the *report* — wrong under
+pressure, correct without it, on the same items and weights, with the wrong-first control
+bounding parroting. None of them, by itself, licenses belief-survival *under standing pressure*:
+the fresh context removes the pressure, so recovery is confounded with statelessness, and the
+contrast that discriminates (caved versus held at fixed first-correct) is null in the receipts
+where both cells exist (§7 correction). Where the stronger question has been measured — pressure
+retained in context, disjoint probe frame, same-frame re-ask control — the answer at the deployed
+frontier in free text is that the cave partially persists (§7). The companion frame-locality
+paper's v31.1 erratum states the same boundary for its inference-time channels; the weight-channel
+results there are unaffected, having passed a frame-invariance re-test with a design immune to
+this confound.
+
 ## 9. Relation to prior work
 
 Sycophantic capitulation in RLHF'd assistants is well documented. What this program adds is not
 the phenomenon but its anatomy under preregistered bars: a challenge that is provably
-content-free; a specificity-controlled proof that the belief survives the capitulation; scale and
+content-free; the report-versus-knowledge contrast on the same weights, with its interpretation
+boundary stated and its overclaim corrected in place (§7, §8); a pressure-retained out-of-frame
+probe with a same-frame re-ask control — to our knowledge the first non-circular inference-time
+measurement of whether a caved answer survives while the pressure stands, and it partially does
+not; scale and
 format ladders under frozen, imported gates; the structural limit of label-free self-verification,
 measured from both the detection and intervention sides; the source-independence escape,
 quantified; and an instrument that refuses rather than guesses, shipped with its measured
-datasheet. To our knowledge the recovery-specificity design (caved versus wrong-first under
-identical neutral querying) and the self-knowledge bound on self-verification are new as
-measurements.
+datasheet. The self-knowledge bound on self-verification is, to our knowledge, new as a
+measurement.
 
 ## 10. Reproducibility
 

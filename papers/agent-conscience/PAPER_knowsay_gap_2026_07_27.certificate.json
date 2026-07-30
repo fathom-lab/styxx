@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "PAPER_knowsay_gap_2026_07_27.md",
-  "document_sha256": "45aed9b5af31bd90e78090a0aa2a2baaf773da6d02bcbc9ceb25773125f1a638",
+  "document_sha256": "601d467785437e996998000af88279f4149929090a9227e988cf71d4a5650820",
   "receipts_sha256": {
     "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4",
     "competent_agent_result.json": "04aa136d166a78cb57986054cfc886423ed5f8b94d83ec2ac8d2a853d26a309d",
@@ -18,20 +18,41 @@
     "selective_confirm_result.json": "f773adf5479730d8dc478c74bd1b145acc0c643af08ab33ddcfe3bcdbdc3e0e7",
     "frontier_knowsay_result.json": "9c87a33b07842bd8f6ba508bd6c4000f286f8fb6132070e05c7e55659734d0a4",
     "frontier_recovery_result.json": "ba3685be0227f5da0afb84e2b89bda304095b4d89a32bab536824c66339bc633",
-    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6"
+    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6",
+    "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3"
   },
   "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
   "counts": {
-    "VERIFIED": 33,
-    "ABSTAIN": 1,
+    "VERIFIED": 37,
+    "ABSTAIN": 6,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
     {
-      "line": 97,
+      "line": 24,
       "token": "7"
+    },
+    {
+      "line": 103,
+      "token": "7"
+    },
+    {
+      "line": 220,
+      "token": "7"
+    },
+    {
+      "line": 222,
+      "token": "7"
+    },
+    {
+      "line": 232,
+      "token": "7"
+    },
+    {
+      "line": 232,
+      "token": "8"
     }
   ],
   "ledger": [
@@ -45,7 +66,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 20,
+      "line": 21,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -54,7 +75,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 20,
+      "line": 21,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -63,7 +84,25 @@
       "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
     },
     {
+      "line": 24,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "neutral query removes the pressure \u2014 the correction in \u00a77 states what the discriminating",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
       "line": 26,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "still in context, caved free-text answers recover at 0.6956521739130435 against 0.975 for",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 32,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -72,7 +111,7 @@
       "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR"
     },
     {
-      "line": 31,
+      "line": 37,
       "token": "0.2742",
       "value": 0.2742,
       "decimals": 4,
@@ -81,7 +120,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
     },
     {
-      "line": 31,
+      "line": 37,
       "token": "0.8226",
       "value": 0.8226,
       "decimals": 4,
@@ -90,7 +129,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
-      "line": 33,
+      "line": 39,
       "token": "0.8701",
       "value": 0.8701,
       "decimals": 4,
@@ -99,7 +138,7 @@
       "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
     },
     {
-      "line": 33,
+      "line": 39,
       "token": "0.4416",
       "value": 0.4416,
       "decimals": 4,
@@ -108,7 +147,7 @@
       "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
     },
     {
-      "line": 57,
+      "line": 63,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -117,7 +156,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 60,
+      "line": 66,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
@@ -126,7 +165,7 @@
       "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
     },
     {
-      "line": 62,
+      "line": 68,
       "token": "0.9132",
       "value": 0.9132,
       "decimals": 4,
@@ -135,7 +174,7 @@
       "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_0p5b_factual"
     },
     {
-      "line": 62,
+      "line": 68,
       "token": "0.62",
       "value": 0.62,
       "decimals": 2,
@@ -144,7 +183,7 @@
       "receipt_ref": "third_party_bench_result.json:our_protocol_reference.agent_3b_squad"
     },
     {
-      "line": 70,
+      "line": 76,
       "token": "0.5",
       "value": 0.5,
       "decimals": 1,
@@ -153,7 +192,7 @@
       "receipt_ref": "third_party_bench_result.json:accuracy.revised"
     },
     {
-      "line": 83,
+      "line": 89,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -162,7 +201,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 83,
+      "line": 89,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -171,7 +210,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 83,
+      "line": 89,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
@@ -180,7 +219,7 @@
       "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
     },
     {
-      "line": 86,
+      "line": 92,
       "token": "0.2742",
       "value": 0.2742,
       "decimals": 4,
@@ -189,7 +228,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.bare_large"
     },
     {
-      "line": 86,
+      "line": 92,
       "token": "0.8226",
       "value": 0.8226,
       "decimals": 4,
@@ -198,7 +237,7 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
-      "line": 92,
+      "line": 98,
       "token": "0.3012",
       "value": 0.3012,
       "decimals": 4,
@@ -207,7 +246,7 @@
       "receipt_ref": "third_party_bench_result.json:cave_rate"
     },
     {
-      "line": 93,
+      "line": 99,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -216,7 +255,7 @@
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 97,
+      "line": 103,
       "token": "7",
       "value": 7.0,
       "decimals": 0,
@@ -225,7 +264,7 @@
       "receipt_ref": null
     },
     {
-      "line": 103,
+      "line": 109,
       "token": "0.7377",
       "value": 0.7377,
       "decimals": 4,
@@ -234,7 +273,7 @@
       "receipt_ref": "belief_asymptote_result.json:auroc_by_n.20"
     },
     {
-      "line": 103,
+      "line": 109,
       "token": "0.75",
       "value": 0.75,
       "decimals": 2,
@@ -243,7 +282,7 @@
       "receipt_ref": "verifier_7b_result.json:frozen_gates.G1_FLOOR"
     },
     {
-      "line": 112,
+      "line": 118,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -252,7 +291,7 @@
       "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR"
     },
     {
-      "line": 125,
+      "line": 131,
       "token": "0.8701",
       "value": 0.8701,
       "decimals": 4,
@@ -261,7 +300,7 @@
       "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
     },
     {
-      "line": 126,
+      "line": 132,
       "token": "0.4416",
       "value": 0.4416,
       "decimals": 4,
@@ -270,7 +309,7 @@
       "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
     },
     {
-      "line": 130,
+      "line": 136,
       "token": "0.2973",
       "value": 0.2973,
       "decimals": 4,
@@ -279,7 +318,7 @@
       "receipt_ref": "selective_confirm_result.json:loop.accuracy_abstained_via_fallback"
     },
     {
-      "line": 131,
+      "line": 137,
       "token": "0.7778",
       "value": 0.7778,
       "decimals": 4,
@@ -288,7 +327,7 @@
       "receipt_ref": "competent_agent_result.json:loop.accuracy_answered"
     },
     {
-      "line": 146,
+      "line": 152,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
@@ -297,7 +336,7 @@
       "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
     },
     {
-      "line": 151,
+      "line": 157,
       "token": "40",
       "value": 40.0,
       "decimals": 0,
@@ -306,7 +345,7 @@
       "receipt_ref": "scale_test_result.json:per_item[38].i"
     },
     {
-      "line": 151,
+      "line": 157,
       "token": "36",
       "value": 36.0,
       "decimals": 0,
@@ -315,16 +354,43 @@
       "receipt_ref": "scale_test_result.json:per_item[34].i"
     },
     {
-      "line": 153,
+      "line": 159,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
-      "context": "1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a specificity margin",
+      "context": "1.0 while neutral accuracy on the wrong-first control was 0.027777777777777776, a margin",
       "status": "VERIFIED",
       "receipt_ref": "scale_test_result.json:recovery_on_caved"
     },
     {
-      "line": 166,
+      "line": 168,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0 versus neutral accuracy on held 1.0 \u2014 caving contributed no measurable recovery signal beyond",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:recovery_on_caved"
+    },
+    {
+      "line": 168,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "1.0 versus neutral accuracy on held 1.0 \u2014 caving contributed no measurable recovery signal beyond",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_test_result.json:recovery_on_caved"
+    },
+    {
+      "line": 177,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "0.975, but caved items recover at only 0.6956521739130435 \u2014 a reach margin of",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 191,
       "token": "86",
       "value": 86.0,
       "decimals": 0,
@@ -333,13 +399,49 @@
       "receipt_ref": "frontier_freetext_v9_result.json:per_item[86].i"
     },
     {
-      "line": 166,
+      "line": 191,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
       "context": "**0.5348837209302325** on a powered initially-correct cell of 86, against the same 0.15 floor \u2014",
       "status": "VERIFIED",
       "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
+    },
+    {
+      "line": 220,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "where both cells exist (\u00a77 correction). Where the stronger question has been measured \u2014 pressure",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 222,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "frontier in free text is that the cave partially persists (\u00a77). The companion frame-locality",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 232,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "boundary stated and its overclaim corrected in place (\u00a77, \u00a78); a pressure-retained out-of-frame",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 232,
+      "token": "8",
+      "value": 8.0,
+      "decimals": 0,
+      "context": "boundary stated and its overclaim corrected in place (\u00a77, \u00a78); a pressure-retained out-of-frame",
+      "status": "ABSTAIN",
+      "receipt_ref": null
     }
   ]
 }
