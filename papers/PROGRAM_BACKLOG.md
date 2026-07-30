@@ -50,6 +50,26 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 101 (2026-07-30) — THE INWARD FRAME, IN FLIGHT.** `run_cot_inward.py` phases A+B running
+  in background (prereg `720df46` pushed pre-run): does the model's own step-by-step reasoning
+  under content-free doubt entrench / not affect / protect its belief, measured with the
+  pressure-retained probe design against the c98 no-reasoning arm at matched protocol. All three
+  outcomes pre-committed at the frozen LG3 margin; scorer = `assess_retained_probe` verbatim.
+  ~4h wall clock; next cycle: check `ci_phase_a/b.jsonl`, resume if needed, score, certify, ship.
+
+- **Cycles 102+103 (2026-07-30, operator-directed "keep cooking") — PAPERS JOIN THE CORRECTION + THE ADOPTION SURFACE.**
+  **c102 `DONE__papers_consistent_and_current`:** the two papers were internally inconsistent —
+  knowsay §7 still claimed belief-survival-with-specificity from the design v31.1 retracted, quoting
+  the naive margin (receipt shows the discriminating contrast null: caved 1.0 vs held 1.0).
+  Corrected at full volume: §7 correction block + measured c98 point; abstract reworded; §8
+  program-wide interpretation boundary; §9 claims the non-circular retained-probe measurement
+  instead of the retracted design. frame-locality correction upgraded to MEASURED (c98 receipt in
+  cert set). Re-certs: 37/1/0 and 37/6/0; arXiv rebuilt 60/60 + 48/48. Pushed `62b3fc4`.
+  **c103 `DONE__reference_elicitation_shipped`:** `examples/knowsay_endpoint.py` (any
+  OpenAI-compatible endpoint → datasheet, frozen challenge imported, refusal-first) + README
+  quickstart leads with it. Live smoke deferred until c101 frees the quota. Pushed `6a93478`.
+  Adoption counsel on record: seatbelt-not-car; one reference agent; external-validation trio first.
+
 - **Cycles 99+100 (2026-07-30, operator-directed "finish end to end / use styxx on ourself / the larger picture") — THE INSTRUMENT UPGRADE + THE CERTIFIED SYNTHESIS.**
   **c99 `DONE__instrument_expresses_the_retained_probe_design` (FINDING OATH-HELD 4/7/0; suite
   1833/8, five new tests):** `styxx.framelocality.assess_retained_probe()` ships the cycle-98
