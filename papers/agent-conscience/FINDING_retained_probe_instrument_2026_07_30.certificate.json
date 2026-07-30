@@ -1,0 +1,149 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_retained_probe_instrument_2026_07_30.md",
+  "document_sha256": "9f45d6151f93d40ef2343ce8717505670ed0e4ded19e1d24bf650556b3bd5d21",
+  "receipts_sha256": {
+    "retained_probe_dogfood_result.json": "76ae32200600b5cf41ff40d5bfee8ac9f97f4a85aa2fdea3e632bf051d84f706",
+    "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 4,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 3,
+      "token": "99"
+    },
+    {
+      "line": 5,
+      "token": "98"
+    },
+    {
+      "line": 18,
+      "token": "0.8"
+    },
+    {
+      "line": 19,
+      "token": "0.15"
+    },
+    {
+      "line": 19,
+      "token": "0.15"
+    },
+    {
+      "line": 55,
+      "token": "98"
+    },
+    {
+      "line": 62,
+      "token": "98"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "99",
+      "value": 99.0,
+      "decimals": 0,
+      "context": "**Cycle 99 \u00b7 2026-07-30 \u00b7 `DONE__instrument_expresses_the_retained_probe_design`**",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 5,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "(cycle 98, certified) \u00b7 `styxx/framelocality.py` \u00b7 `tests/test_framelocality.py`",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "`styxx.framelocality.assess_retained_probe(records, *, reask=None, held_floor=0.8,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "reach_margin=0.15, frame_margin=0.15)` \u2014 the cycle-98 design as reusable API:",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "reach_margin=0.15, frame_margin=0.15)` \u2014 the cycle-98 design as reusable API:",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "- **The validity control is a gate:** recovery(HELD) below `held_floor` 0.8 returns",
+      "status": "VERIFIED",
+      "receipt_ref": "retained_probe_dogfood_result.json:assessment.held_floor"
+    },
+    {
+      "line": 29,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "`frame_margin` 0.15 or the verdict is `RESTORATION_NOT_FRAME_SPECIFIC`.",
+      "status": "VERIFIED",
+      "receipt_ref": "retained_probe_dogfood_result.json:assessment.frame_margin_floor"
+    },
+    {
+      "line": 40,
+      "token": "146",
+      "value": 146.0,
+      "decimals": 0,
+      "context": "`run_retained_probe_dogfood.py` feeds the new function the committed cycle-98 receipt's 146",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:n_probed"
+    },
+    {
+      "line": 43,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "on HELD 0.975, reach -0.2793478260869565, re-ask recovery on CAVED 0.5434782608695652, all",
+      "status": "VERIFIED",
+      "receipt_ref": "retained_probe_dogfood_result.json:assessment.recovery_held"
+    },
+    {
+      "line": 55,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "from the c93 dogfood), and retaining probe (`assess_retained_probe`, from cycle 98) \u2014 each",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 62,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "untouched. The dogfood reproduces cycle 98's verdict \u2014 it adds no new evidence about the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

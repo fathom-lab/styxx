@@ -1,0 +1,46 @@
+{
+ "experiment": "cycle99_retained_probe_dogfood",
+ "instrument": "styxx.framelocality.assess_retained_probe",
+ "input_receipt": "frontier_incontext_oof_result.json",
+ "n_records": 146,
+ "assessment": {
+  "n": 146,
+  "cells": {
+   "CORRUPTED": 46,
+   "HELD": 40,
+   "WRONG_FIRST": 60
+  },
+  "recovery_corrupted": 0.6956521739130435,
+  "recovery_held": 0.975,
+  "recovery_wrong_first": 0.05,
+  "probe_semantics": "CORRUPTION_RETAINED_AT_PROBE_TIME",
+  "naive_margin_vs_wrong_first": 0.6456521739130434,
+  "naive_margin_note": "NOT EVIDENCE of belief survival: this margin mostly re-measures that first-correct items re-answer correctly. Reported only so it is not quoted as a result.",
+  "held_floor": 0.8,
+  "reach_margin_floor": -0.15,
+  "frame_margin_floor": 0.15,
+  "min_cell": 25,
+  "reach": -0.2793478260869565,
+  "verdict": "CAVE_PERSISTS_OUT_OF_FRAME",
+  "confound_note": "HELD is conditioned on outcome, so CORRUPTED plausibly holds harder items and difficulty pushes this margin negative: this verdict means the frame-local claim is UNLICENSED here, not that persistence is affirmatively demonstrated.",
+  "reask": {
+   "n": 146,
+   "cells": {
+    "CORRUPTED": 46,
+    "HELD": 40,
+    "WRONG_FIRST": 60
+   },
+   "recovery_corrupted": 0.5434782608695652,
+   "recovery_held": 0.95,
+   "recovery_wrong_first": 0.016666666666666666
+  }
+ },
+ "reproduces_published": {
+  "recovery_oof_caved": 0.6956521739130435,
+  "recovery_oof_held": 0.975,
+  "reach_vs_published_margin": -0.2793478260869565,
+  "recovery_reask_caved": 0.5434782608695652,
+  "all_equal_to_receipt": true
+ },
+ "note": "deterministic re-analysis of the committed cycle-98 receipt; asserts equality to the digit with the published numbers, then requires the instrument's verdict to be the published negative"
+}

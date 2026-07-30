@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`styxx.framelocality.assess_retained_probe()` — the corruption-retaining probe design as
+  API.** `removable=` says where a corruption lives; it never said what the *probe* does with it.
+  When the out-of-frame query keeps the corruption in context and changes only the frame around
+  it (the cycle-98 design), the readings invert: recovery parity with HELD is the *positive*
+  reading (the corruption has no reach outside its frame) and a deficit is the corruption
+  following the model out of frame — a shape `assess()` cannot express. The new entry point gates
+  on the two controls that design needs: the probe frame must demonstrably read an unabandoned
+  belief (`INVALID__probe_frame_not_validated` below the frozen HELD floor — an invalid frame
+  licenses nothing in either direction), and the full frame-local claim requires a same-frame
+  re-ask control (`REACH_BOUNDED__no_reask_control` without it;
+  `RESTORATION_NOT_FRAME_SPECIFIC` when the bare re-ask restores as much). A negative carries
+  its confound in the output: HELD is conditioned on outcome, so `CAVE_PERSISTS_OUT_OF_FRAME`
+  reads channel-unlicensed, never persistence-demonstrated. Dogfooded on the program's own
+  cycle-98 receipts — reproduces the published frontier negative to the digit from raw rows —
+  and that shape is pinned in CI beside the v31-null pin.
+
 - **`styxx.framelocality` — score a corruption-recovery run with the controls that actually
   discriminate, or refuse.** Ships the corrected methodology from the v31.1 erratum so the mistake
   cannot be rebuilt. `assess()` reports the *naive* margin (corrupted vs wrong-first) but labels it
