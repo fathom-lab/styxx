@@ -1,0 +1,228 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_frontier_incontext_oof_2026_07_30.md",
+  "document_sha256": "6c813568f294b2f1eedfc058550534e8abff135a41e95c69b49909e018ae493f",
+  "receipts_sha256": {
+    "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3",
+    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 18,
+      "token": "980000"
+    },
+    {
+      "line": 78,
+      "token": "1"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "98",
+      "value": 98.0,
+      "decimals": 0,
+      "context": "**Cycle 98 \u00b7 2026-07-30 \u00b7 `CLOSED_NEGATIVE__cave_persists_out_of_frame`**",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[98].i"
+    },
+    {
+      "line": 6,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "`frontier_freetext_v9_result.json` + `ff9_phase_a.jsonl` (cycle 96, certified)",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[96].i"
+    },
+    {
+      "line": 14,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "same-frame re-ask as sibling branches off cycle 96's committed transcript",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[96].i"
+    },
+    {
+      "line": 17,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "certified cycle-96 run \u2014 CAVED 46 / HELD 40, with 60 of 312 WRONG_FIRST subsampled at seed",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.caved"
+    },
+    {
+      "line": 17,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "certified cycle-96 run \u2014 CAVED 46 / HELD 40, with 60 of 312 WRONG_FIRST subsampled at seed",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.held"
+    },
+    {
+      "line": 17,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "certified cycle-96 run \u2014 CAVED 46 / HELD 40, with 60 of 312 WRONG_FIRST subsampled at seed",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:cells.wrong_first_subsampled"
+    },
+    {
+      "line": 17,
+      "token": "312",
+      "value": 312.0,
+      "decimals": 0,
+      "context": "certified cycle-96 run \u2014 CAVED 46 / HELD 40, with 60 of 312 WRONG_FIRST subsampled at seed",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.wrong_first"
+    },
+    {
+      "line": 18,
+      "token": "980000",
+      "value": 980000.0,
+      "decimals": 0,
+      "context": "980000 \u2014 and re-verified item-by-item in code; 146 items, 0 unparsed.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "146",
+      "value": 146.0,
+      "decimals": 0,
+      "context": "980000 \u2014 and re-verified item-by-item in code; 146 items, 0 unparsed.",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[145].i"
+    },
+    {
+      "line": 18,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "980000 \u2014 and re-verified item-by-item in code; 146 items, 0 unparsed.",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:n_unparsed_excluded"
+    },
+    {
+      "line": 22,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "- **V1 PASS** \u2014 CAVED 46 and HELD 40 vs POWER_GATE 25 each; strata provenance asserted",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.caved"
+    },
+    {
+      "line": 22,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "- **V1 PASS** \u2014 CAVED 46 and HELD 40 vs POWER_GATE 25 each; strata provenance asserted",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:base_run.certified_strata.held"
+    },
+    {
+      "line": 22,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "- **V1 PASS** \u2014 CAVED 46 and HELD 40 vs POWER_GATE 25 each; strata provenance asserted",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:frozen_gates.POWER_GATE"
+    },
+    {
+      "line": 24,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "- **V2 PASS** \u2014 out-of-frame recovery on HELD 0.975 vs LG2_FLOOR 0.8. The grader frame reads",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 28,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "recovery on HELD 0.975) vs the \u22120.15 floor. The caved items recover materially less than",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 28,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "recovery on HELD 0.975) vs the \u22120.15 floor. The caved items recover materially less than",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:frozen_gates.LG3_MARGIN"
+    },
+    {
+      "line": 38,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "frame the pressure never addressed \u2014 while items that survived the pressure answer at 0.975",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 61,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "- Same-frame re-ask on HELD 0.95; WRONG_FIRST out-of-frame 0.05, re-ask",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:same_frame_reask_recovery.held"
+    },
+    {
+      "line": 61,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "- Same-frame re-ask on HELD 0.95; WRONG_FIRST out-of-frame 0.05, re-ask",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.wrong_first"
+    },
+    {
+      "line": 62,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "0.016666666666666666. Extraction-faithful 1.0 on both probe arms.",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 71,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "92) while the INFERENCE-TIME channel, given its first non-circular test, failed to license",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[92].i"
+    },
+    {
+      "line": 78,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "One frontier substrate, free text, one benchmark family (SQuAD v2 1-3 word answers), one",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
