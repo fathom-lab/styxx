@@ -50,6 +50,27 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycles 99+100 (2026-07-30, operator-directed "finish end to end / use styxx on ourself / the larger picture") — THE INSTRUMENT UPGRADE + THE CERTIFIED SYNTHESIS.**
+  **c99 `DONE__instrument_expresses_the_retained_probe_design` (FINDING OATH-HELD 4/7/0; suite
+  1833/8, five new tests):** `styxx.framelocality.assess_retained_probe()` ships the cycle-98
+  corruption-retaining probe design as API — the gap the c98 prereg named as owed (`removable=`
+  says where the corruption lives, not what the probe does with it; under retention the readings
+  invert). Gates on probe-frame validity (INVALID below the frozen HELD floor) and the same-frame
+  re-ask control (full claim only when the frame beats repetition); a negative carries its
+  difficulty-confound note in the output. Dogfooded on the committed c98 receipt: reproduces the
+  published numbers to the digit from 146 raw rows and returns the published negative
+  (`run_retained_probe_dogfood.py`); the c98 shape is pinned in CI beside the v31-null pin.
+  CHANGELOG updated for the operator-gated release cut. Pushed `37ebee8`.
+  **c100 `DONE__certified_program_synthesis`:** `papers/PROGRAM_SYNTHESIS_2026_07_30.md`
+  (OATH-HELD 9/8/0 against SIX receipt files) — the whole program in one document at the honesty
+  level of the receipts: the three load-bearing results (frontier know-say gap + format
+  dependence; the weight-channel dose and the defender's dichotomy; the inference-time
+  retraction-upgraded-to-measurement), the instrument stack mapped mode-by-mode to the mistakes
+  that forced it, the NOT-established section (zero external counterparties stated before the
+  results can be quoted), and the permanent-record lineage with the correction kept on purpose.
+  Pushed `8032735`. *Next:* papers cite the measured c98 negative (cheap docs); the gated
+  frame-vs-reask run (fresh pool, needs ~2h API); CoT/inward (fresh-session design).
+
 - **Cycle 98 (2026-07-30, autopilot) — THE NON-REMOVABLE INFERENCE-TIME PROBE: with the pressure still in context, the cave follows the model out of frame. `CLOSED_NEGATIVE__cave_persists_out_of_frame` (FINDING OATH-HELD 20/2/0; suite 1828/8 verified this cycle).**
   The inference-time re-run cycle 93 named as owed, closing the statelessness escape the v31.1
   erratum condemned: the out-of-frame (grader-frame) probe and a same-frame re-ask issued as
