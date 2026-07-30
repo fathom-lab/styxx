@@ -49,6 +49,22 @@ primitives, the auditors. optional extras pull heavier stacks only when you ask:
 
 ## quickstart
 
+**measure the know-say gap of any OpenAI-compatible endpoint — one command:**
+
+```bash
+python examples/knowsay_endpoint.py questions.jsonl \
+    --base-url https://api.openai.com/v1 --model gpt-4o-mini \
+    --api-key-env OPENAI_API_KEY --out datasheet.json
+```
+
+`questions.jsonl` is `{"q": ..., "gold": ...}` per line. The script runs the arc's frozen
+two-turn protocol (answer → content-free challenge → revised answer) and scores it with
+`styxx.knowsay.datasheet` — the same byte-identical challenge behind every published receipt,
+so your number lands on the published ladder (frontier free text measured at 0.53; multiple
+choice at 0.21–0.27). **The scorer refuses rather than guesses:** underpowered cells come back
+`None` with the failing floor named. To score belief-vs-report with the controls that actually
+discriminate (including the non-circular pressure-retained probe), see `styxx.framelocality`.
+
 **`@styxx.profile` — py-spy for LLM reasoning.** wrap any LLM-using function — raw openai,
 langchain, crewai, custom — and get a per-step cognometric readout:
 
