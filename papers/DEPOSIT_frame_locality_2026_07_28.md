@@ -133,3 +133,9 @@ corrected paper went up as the next version in the lineage, on the operator's ex
   new ones (receipt_scale3b.json, receipt_thirdframe.json)
 - Description leads with the correction notice; v31 remains visible in the lineage as the record
   of what was retracted — which is the point.
+
+## STATUS 2026-07-29 (night) — v33 PUBLISHED (operator: "finish it all")
+
+- **DOI: 10.5281/zenodo.21695691** (v33) — adds the second-vendor replication
+  (receipt_vendor3b.json, cycle 94) and the 34/0 re-certified paper (cycle 95). 15 files,
+  certificate sha-bound (8ea6aad1…). v32 correction notice retained in full.

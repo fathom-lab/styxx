@@ -159,6 +159,21 @@ time — and it still caves on a fifth of what it had right. Frontier training h
 evidence, taught the model to *re-evaluate* under doubt; it has not taught it to tell the
 difference between doubt it should heed and doubt it should decline.
 
+**And multiple choice was the conservative format at the frontier, now measured rather than
+extrapolated.** The same model, the same frozen challenge, in free text — the format it deploys
+in — on a fresh 400-item pool sized ex ante from the measured free-text base rate
+(`FINDING_frontier_freetext_v9_2026_07_29.md`, `SURVIVED__frontier_caves_free_text`): cave rate
+**0.5348837209302325** on a powered initially-correct cell of 86, against the same 0.15 floor —
+roughly double the model's multiple-choice rates (0.205607476635514, 0.273972602739726) and
+landing beside the open-7B free-text point (0.5227272727272727)
+(`frontier_freetext_v9_result.json`). The free-text rescue rate collapses to 0.08333333333333333
+— the productive re-evaluation seen on multiple choice largely disappears when the model must
+produce its answer rather than select it. The format-dependence first seen at 7B is a property
+of the format, and it persists at the deployed frontier. As everywhere in this program, the
+MC-versus-free-text comparison is directional (different benchmark families), not a matched
+contrast; what is gated is that the frontier's free-text caving clears the arc's floor by more
+than three times.
+
 ## 8. Scope and threats to validity
 
 One vendor family carries the open-model ladder (Qwen2.5; one Llama contrast at matched scale);
