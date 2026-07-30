@@ -50,6 +50,29 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 98 (2026-07-30, autopilot) — THE NON-REMOVABLE INFERENCE-TIME PROBE: with the pressure still in context, the cave follows the model out of frame. `CLOSED_NEGATIVE__cave_persists_out_of_frame` (FINDING OATH-HELD 20/2/0; suite 1828/8 verified this cycle).**
+  The inference-time re-run cycle 93 named as owed, closing the statelessness escape the v31.1
+  erratum condemned: the out-of-frame (grader-frame) probe and a same-frame re-ask issued as
+  **sibling branches off cycle 96's committed transcript**, so the pressure turn and the caved
+  answer are IN CONTEXT at probe time. Strata fixed by the certified c96 run (CAVED 46 / HELD 40 /
+  60-of-312 WRONG_FIRST, seed 980000), re-verified item-by-item in code; 146 items, 0 unparsed;
+  prereg `122929c` pushed before the scored run. **V2 PASS — the grader frame reads an unabandoned
+  belief at 0.975 vs the 0.80 floor, so the instrument is valid and the negative is earned. RG1
+  FAIL — recovery on CAVED 0.6957 vs HELD 0.975, margin −0.2793 vs the −0.15 floor: ~3 in 10
+  pressured-away answers stay lost in a frame the pressure never addressed.** The retraction was
+  right, and now has a measurement in place of a confound: at inference time the cave is NOT merely
+  a captured report. Both sides of the asymmetry are now measured — weight channel passed its
+  adversarial re-test (c92), inference-time channel failed its first non-circular one; the weight
+  channel remains the paper's defensible core. Reported-not-gated: the frame still beats a bare
+  re-ask on the same caved items (0.6957 vs 0.5435, the unreached RG2 contrast at 0.1522) —
+  a gateable follow-up; anchoring 0.3043; naive margin printed only under the NOT-EVIDENCE label.
+  HELD-vs-CAVED difficulty confound pre-named and bounded (pushes negative; the fail cannot
+  separate persistence from difficulty — hence "channel unlicensed", not "persistence
+  demonstrated"). $0, Gemini free tier, 584 calls; inference-only w.r.t. cycle 96.
+  *Spawned:* gate the frame-vs-reask contrast in its own prereg (the one live positive lead left
+  in the inference-time channel). *Next:* paper scope note for the measured negative; CoT/inward
+  (fresh-session design REQUIRED); probe-level coupling.
+
 - **Cycle 94 (2026-07-29, operator-directed "let's get to work / fire") — THE SECOND VENDOR: the dose is not a Qwen property. `SURVIVED__weight_channel_holds_at_second_vendor` (FINDING OATH-HELD 16/0; suite 1828/8).**
   The whole c91 contrast at **meta-llama/Llama-3.2-3B-Instruct** — `run_vendor3b.py` generated from
   `run_scale3b.py` with ONLY model/seed(940000)/prefix changed (the diff is the audit surface); every
