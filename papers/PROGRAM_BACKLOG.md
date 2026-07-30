@@ -50,6 +50,17 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 105 (2026-07-30) — THE POWERED INWARD RUN, IN FLIGHT.** The c96 repair pattern applied
+  to c101's refused question: fresh pool v10 (1100 items, tenth SQuAD pool, disjoint from nine
+  prior pools), sized ex ante from the measured base rates (expected caved ≈ 36 vs the 25 floor,
+  1.4 factor, no top-up). PG1 PRIMARY = within-arm `assess_retained_probe` verdict verbatim
+  (entrench = `CLOSED_NEGATIVE__reasoned_cave_has_reach`; frame-local-with-work = SURVIVED);
+  CG1 replicates the caving collapse two-sided (c101 fired one item above the floor — this
+  decides the boundary); AG1 vs c98 demoted to cross-pool directional secondary. Prereg
+  `53c179d`, apparatus + pool `1bc0895`, both pushed pre-result; smoke INVALID-only clean;
+  ~3,900 calls in background (~4–6h). Next firing: check `cip_phase_a/b.jsonl`, resume if
+  needed (`python run_cot_inward_powered.py a b`), score (`s`), certify, ship.
+
 - **Cycle 101 (2026-07-30) — THE INWARD FRAME: reasoning at the point of doubt collapses caving; the probe question refuses itself. `INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report` (FINDING OATH-HELD 20/0/0).**
   Scored under prereg `720df46`. First-accuracy 0.2161 IDENTICAL TO THE DIGIT with c96
   (byte-identical greedy first turns) — the arms share the same 86 initially-correct items.
