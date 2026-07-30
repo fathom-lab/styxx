@@ -1,0 +1,211 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "PROGRAM_SYNTHESIS_2026_07_30.md",
+  "document_sha256": "1c7feb078f85fdf53825388e100451a7af3d99e4c13ec18db7308d9e768381da",
+  "receipts_sha256": {
+    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6",
+    "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3",
+    "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2",
+    "vendor3b_result.json": "65d3ea9673cea18772ad8ebe32be6fe5543059f1c07d4a1826c3733bdc8c65d7",
+    "thirdframe_result.json": "857ae4491cff10fd724ab7c97b727257551339ec1709ce31c7da5640570df5f7",
+    "coupling_resolution_result.json": "d47387b0adace64fd7689369715d76d289f268de79542e65699cf26fab505ba8"
+  },
+  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "counts": {
+    "VERIFIED": 9,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 33,
+      "token": "0.15"
+    },
+    {
+      "line": 57,
+      "token": "900"
+    },
+    {
+      "line": 76,
+      "token": "10.5281"
+    },
+    {
+      "line": 122,
+      "token": "2"
+    },
+    {
+      "line": 143,
+      "token": "10.5281"
+    },
+    {
+      "line": 144,
+      "token": "10.5281"
+    },
+    {
+      "line": 144,
+      "token": "10.5281"
+    },
+    {
+      "line": 145,
+      "token": "10.5281"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 3,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "**Fathom Lab \u00b7 styxx machine-integrity program \u00b7 synthesis as of 2026-07-30 (cycle 100)**",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[100].i"
+    },
+    {
+      "line": 32,
+      "token": "398",
+      "value": 398.0,
+      "decimals": 0,
+      "context": "(`agent-conscience/frontier_freetext_v9_result.json`, 398 scored, first-accuracy",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:n_scored"
+    },
+    {
+      "line": 33,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "0.21608040201005024, gate FFG1 vs the 0.15 floor frozen three months of cycles earlier).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 46,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "flip to 1.0, but out of frame the unregularized attack leaves recovery 0.0 (specificity",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:extraction_faithful_rate"
+    },
+    {
+      "line": 46,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "flip to 1.0, but out of frame the unregularized attack leaves recovery 0.0 (specificity",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_freetext_v9_result.json:per_item[0].i"
+    },
+    {
+      "line": 54,
+      "token": "+0.35",
+      "value": 0.35,
+      "decimals": 2,
+      "context": "-0.23333333333333334 vs +0.35, KP recovery 0.7).",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:dose.KP.control"
+    },
+    {
+      "line": 54,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "-0.23333333333333334 vs +0.35, KP recovery 0.7).",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.caved"
+    },
+    {
+      "line": 57,
+      "token": "900",
+      "value": 900.0,
+      "decimals": 0,
+      "context": "(`agent-conscience/coupling_resolution_result.json`, 900 items, two distributions): base",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "0.033333333333333326, below the 0.05 material-residual bound frozen in advance but distinctly",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.wrong_first"
+    },
+    {
+      "line": 62,
+      "token": "0.59",
+      "value": 0.59,
+      "decimals": 2,
+      "context": "(coupling 0.6366666666666667 \u2192 0.18333333333333332 at Qwen-3B; 0.59 \u2192 0.15333333333333332 at",
+      "status": "VERIFIED",
+      "receipt_ref": "vendor3b_result.json:coupling.BASE"
+    },
+    {
+      "line": 76,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "statelessness \u2014 the control was circular (erratum DOI 10.5281/zenodo.21679805). The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 79,
+      "token": "0.975",
+      "value": 0.975,
+      "decimals": 3,
+      "context": "never abandoned answer at 0.975 in the probe frame \u2014 the instrument is valid \u2014 but caved items",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 122,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "## 4. What is NOT established (read this section before quoting section 2)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 143,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "Zenodo lineage (concept DOI 10.5281/zenodo.19326174): v31 \u2192 v31.1 correction",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 144,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "(10.5281/zenodo.21679805) \u2192 v32 corrected edition (10.5281/zenodo.21693636) \u2192 v33",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 144,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "(10.5281/zenodo.21679805) \u2192 v32 corrected edition (10.5281/zenodo.21693636) \u2192 v33",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 145,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "vendor-generality (10.5281/zenodo.21695691), each carrying the certified paper, its",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}
