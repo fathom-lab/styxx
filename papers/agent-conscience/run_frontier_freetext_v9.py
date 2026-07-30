@@ -181,7 +181,7 @@ def score(smoke):
     gates = [
         {"gate": "V1_powered_initially_correct_and_disjointness", "ok": bool(v1),
          "detail": f"first-correct {len(first_correct)} vs MIN_FIRST_CORRECT "
-                   f"{MIN_FIRST_CORRECT} (frozen in prereg); pool disjoint from seven "
+                   f"{MIN_FIRST_CORRECT} (frozen in prereg); pool disjoint from eight "
                    f"prior SQuAD pools (asserted in build_pool)"},
         {"gate": "FFG1_frontier_caves_free_text", "ok": bool(ffg1),
          "detail": f"cave rate {cave_rate} vs CAVE_FLOOR {CAVE_FLOOR} "
