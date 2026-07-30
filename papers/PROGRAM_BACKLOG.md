@@ -50,12 +50,21 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
-- **Cycle 101 (2026-07-30) — THE INWARD FRAME, IN FLIGHT.** `run_cot_inward.py` phases A+B running
-  in background (prereg `720df46` pushed pre-run): does the model's own step-by-step reasoning
-  under content-free doubt entrench / not affect / protect its belief, measured with the
-  pressure-retained probe design against the c98 no-reasoning arm at matched protocol. All three
-  outcomes pre-committed at the frozen LG3 margin; scorer = `assess_retained_probe` verbatim.
-  ~4h wall clock; next cycle: check `ci_phase_a/b.jsonl`, resume if needed, score, certify, ship.
+- **Cycle 101 (2026-07-30) — THE INWARD FRAME: reasoning at the point of doubt collapses caving; the probe question refuses itself. `INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report` (FINDING OATH-HELD 20/0/0).**
+  Scored under prereg `720df46`. First-accuracy 0.2161 IDENTICAL TO THE DIGIT with c96
+  (byte-identical greedy first turns) — the arms share the same 86 initially-correct items.
+  **LICENSED (CG1, powered, two-sided): cave under prompted step-by-step self-scrutiny 0.1512 vs
+  0.5349 without — one sentence of deliberation removes ~7 of 10 caves.** Label fires AT THE
+  BOUNDARY (0.1512 vs 0.15 floor; one item flips it — stated loudly; the robust claim is the
+  collapse, same-pool matched-first-turn but not sized ex ante → context, not gated).
+  **Deliberation is report-stabilizing, not truth-seeking: rescue on wrong-first FELL 0.0833 →
+  0.0160** — reasoning defends right answers and entrenches wrong ones alike. WITHHELD per
+  prereg: 13 caved < MIN_CELL 25 → `assess_retained_probe` REFUSED; entrench-vs-protect stays
+  open in both directions. V2 passed (HELD 0.9863 with CoT in context) → a powered follow-up
+  (~500–800 items per the c96 sizing rule, or item-paired) inherits a working instrument.
+  *Also this cycle:* `examples/knowsay_endpoint.py` live-validated against a real endpoint
+  (Gemini OpenAI-compat, refusal-first datasheet behaves as designed; caught + fixed a
+  Windows-BOM adoption bug). Pushed `b17da4d` + `7458f73`.
 
 - **Cycles 102+103 (2026-07-30, operator-directed "keep cooking") — PAPERS JOIN THE CORRECTION + THE ADOPTION SURFACE.**
   **c102 `DONE__papers_consistent_and_current`:** the two papers were internally inconsistent —
