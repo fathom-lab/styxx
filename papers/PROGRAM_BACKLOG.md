@@ -50,16 +50,22 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
-- **Cycle 105 (2026-07-30) — THE POWERED INWARD RUN, IN FLIGHT.** The c96 repair pattern applied
-  to c101's refused question: fresh pool v10 (1100 items, tenth SQuAD pool, disjoint from nine
-  prior pools), sized ex ante from the measured base rates (expected caved ≈ 36 vs the 25 floor,
-  1.4 factor, no top-up). PG1 PRIMARY = within-arm `assess_retained_probe` verdict verbatim
-  (entrench = `CLOSED_NEGATIVE__reasoned_cave_has_reach`; frame-local-with-work = SURVIVED);
-  CG1 replicates the caving collapse two-sided (c101 fired one item above the floor — this
-  decides the boundary); AG1 vs c98 demoted to cross-pool directional secondary. Prereg
-  `53c179d`, apparatus + pool `1bc0895`, both pushed pre-result; smoke INVALID-only clean;
-  ~3,900 calls in background (~4–6h). Next firing: check `cip_phase_a/b.jsonl`, resume if
-  needed (`python run_cot_inward_powered.py a b`), score (`s`), certify, ship.
+- **Cycle 105 (2026-07-30) — THE POWERED INWARD RUN: reasoning is armor — it stops most caves, and the caves that pierce it go deeper. `CLOSED_NEGATIVE__reasoned_cave_has_reach` (FINDING OATH-HELD 17/0/0).**
+  The sizing delivered (30 CAVED vs the 25 floor, no top-up; 1099 scored on fresh pool v10).
+  **CG1 REPLICATION FLIPS THE KNIFE-EDGE: cave 0.1224 on the fresh pool — BELOW the 0.15 floor
+  → `reasoning_protects_the_report`** (c101 was 0.1512, one item above; no-reasoning 0.5349 —
+  deliberation removes ~¾ of frontier free-text caving, stable across two pools). **PG1 (the
+  question c101 withheld): `CAVE_PERSISTS_OUT_OF_FRAME`, reach −0.5167** — reasoned caves
+  recover at 0.4667 out of frame vs 0.9833 held; anchoring 0.5; bare re-ask restores 0.3;
+  AG1 delta −0.2290 vs the c98 no-reasoning arm → entrenches (cross-pool directional). **THE
+  INFERENCE-TIME TRIPTYCH IS COMPLETE:** doubt captures half and partially persists (c96/c98);
+  deliberation prevents most capture while entrenching wrong first answers (rescue 0.0328 vs
+  0.0833); the caves surviving deliberation are the least recoverable inference-time failures
+  measured in this program. Operational: out-of-frame resampling monitors catch pressured caves
+  and systematically miss reasoned ones — the reasoned cave is the harder, rarer, deeper
+  failure. Confound honesty held (difficulty binds twice over; verdict = frame-locality
+  unlicensed, NOT belief-conversion proven; item-paired two-arm design = the separating
+  follow-up). Pushed `9cbf1c7`.
 
 - **Cycle 101 (2026-07-30) — THE INWARD FRAME: reasoning at the point of doubt collapses caving; the probe question refuses itself. `INVALID__probe_cells_underpowered__CG1_reasoning_does_not_immunize_the_report` (FINDING OATH-HELD 20/0/0).**
   Scored under prereg `720df46`. First-accuracy 0.2161 IDENTICAL TO THE DIGIT with c96
