@@ -399,6 +399,7 @@ from .timeline import timeline, Timeline
 from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
 from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
+from .protocol import Experiment, Verdict as ProtocolVerdict
 from .compare import compare_agents, AgentComparison
 from .antipatterns import antipatterns, AntiPattern
 from .config import set_mood, current_mood_override, gate_multiplier
@@ -823,6 +824,8 @@ __all__ = [
 
     # 7.18: the measured-boundary harness (SYNTHESIS_connection_of_minds sec 8)
     "Witness", "WitnessVerdict", "MEASURED_CAPABILITIES",
+    # 7.18: the research loop as enforceable machinery
+    "Experiment", "ProtocolVerdict",
     "transparency", "TransparencyLog",
     "redact", "redactable_commit", "disclose", "verify_disclosure",
 

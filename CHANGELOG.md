@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`styxx.protocol` — the research loop as enforceable machinery** (`Experiment`,
+  `ProtocolVerdict`). The witness harnesses the program's instruments; this harnesses its
+  *process*. An agent cannot score a run whose prereg isn't committed in git history (a
+  prereg on disk is a draft, not a freeze); gates parse from a fenced ```gates block in the
+  frozen document itself — there is no API to pass a bar at scoring time; verdicts walk the
+  frozen outcome table mechanically (the agent reports the verdict, it does not choose it);
+  smoke scoring is INVALID by type regardless of numbers; a non-total outcome table
+  surfaces as a prereg design bug instead of being guessed around; the gates-block sha256
+  and prereg commit travel with every verdict. Born the week the discipline earned it: two
+  same-day INVALIDs (b34 v1/v2) honored by convention — this makes the convention
+  machinery. 8 tests, all exercising the refusals, because the refusals are the product.
+
 - **`styxx.witness` — the measured-boundary harness** (`Witness`, `WitnessVerdict`,
   `MEASURED_CAPABILITIES`; specified by
   [SYNTHESIS_connection_of_minds_2026_08_01.md](papers/SYNTHESIS_connection_of_minds_2026_08_01.md) §8,
