@@ -1,0 +1,95 @@
+{
+  "prereg": "PREREG_b34_labelfree_nonlinear_2026_08_01.md",
+  "seed": 34,
+  "iters": 8,
+  "smoke": false,
+  "n_fit": 392,
+  "n_heldout": 70,
+  "chance": 0.0143,
+  "targets": {
+    "llama_1b": {
+      "MLF_top1": 0.1571,
+      "N0_top1": 0.0,
+      "R0_top1": 0.0,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.0663,
+        0.0816,
+        0.0765,
+        0.0918,
+        0.0867,
+        0.0867,
+        0.0969,
+        0.1046
+      ],
+      "R0_pseudo_pair_acc_by_iter": [
+        0.0051,
+        0.0102,
+        0.0051,
+        0.0051,
+        0.0077,
+        0.0051,
+        0.0051,
+        0.0051
+      ],
+      "x_chance_MLF": 11.0
+    },
+    "gemma_2b": {
+      "MLF_top1": 0.2571,
+      "N0_top1": 0.0143,
+      "R0_top1": 0.0,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.0714,
+        0.0918,
+        0.1276,
+        0.1531,
+        0.176,
+        0.1939,
+        0.2117,
+        0.2628
+      ],
+      "R0_pseudo_pair_acc_by_iter": [
+        0.0026,
+        0.0026,
+        0.0051,
+        0.0051,
+        0.0051,
+        0.0051,
+        0.0051,
+        0.0051
+      ],
+      "x_chance_MLF": 18.0
+    },
+    "qwen_1p5b": {
+      "MLF_top1": 0.1286,
+      "N0_top1": 0.0143,
+      "R0_top1": 0.0286,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.0255,
+        0.0383,
+        0.0383,
+        0.0408,
+        0.0408,
+        0.0434,
+        0.0408,
+        0.0383
+      ],
+      "R0_pseudo_pair_acc_by_iter": [
+        0.0051,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "x_chance_MLF": 9.0
+    }
+  },
+  "gates": {
+    "G0_machinery": false,
+    "G2_null": true,
+    "G1_bar": true
+  },
+  "verdict": "INVALID__pipeline_broken"
+}
