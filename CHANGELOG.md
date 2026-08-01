@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [7.28.0] — 2026-08-01 — the trust stack: seal · protocol · witness · OATH v0.6.2
 
 ### Added
 

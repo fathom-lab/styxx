@@ -1,0 +1,9 @@
+{
+  "hf": "google/gemma-2-2b-it",
+  "layer_B": 10,
+  "M0_linear_top1": 0.0143,
+  "M1_mlp_top1": 0.7857,
+  "N1_shuffled_top1": 0.0143,
+  "m1_train_loss": 0.32973,
+  "x_chance_M1": 55.0
+}

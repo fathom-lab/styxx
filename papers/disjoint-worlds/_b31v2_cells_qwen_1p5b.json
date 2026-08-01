@@ -1,0 +1,9 @@
+{
+  "hf": "Qwen/Qwen2.5-1.5B-Instruct",
+  "layer_B": 11,
+  "M0_linear_top1": 0.1143,
+  "M1_mlp_top1": 0.7,
+  "N1_shuffled_top1": 0.0143,
+  "m1_train_loss": 0.33922,
+  "x_chance_M1": 49.0
+}

@@ -1,0 +1,9 @@
+{
+  "hf": "meta-llama/Llama-3.2-1B-Instruct",
+  "layer_B": 6,
+  "M0_linear_top1": 0.3429,
+  "M1_mlp_top1": 0.8,
+  "N1_shuffled_top1": 0.0,
+  "m1_train_loss": 0.31784,
+  "x_chance_M1": 56.0
+}

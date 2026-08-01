@@ -400,7 +400,26 @@ from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
 from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
 from .protocol import Experiment, Verdict as ProtocolVerdict
-from .seal import seal, verify_seal, Seal
+
+
+def seal(*args, **kwargs):
+    """The trust seal for agent work — lazy import so ``python -m styxx.seal`` stays
+    warning-free (see styxx.seal for the full contract)."""
+    from .seal import seal as _seal
+    return _seal(*args, **kwargs)
+
+
+def verify_seal(*args, **kwargs):
+    """Re-derive a seal's content hash; True iff untampered (lazy, see styxx.seal)."""
+    from .seal import verify_seal as _verify
+    return _verify(*args, **kwargs)
+
+
+def __getattr__(name):
+    if name == "Seal":
+        from .seal import Seal
+        return Seal
+    raise AttributeError(f"module 'styxx' has no attribute {name!r}")
 from .compare import compare_agents, AgentComparison
 from .antipatterns import antipatterns, AntiPattern
 from .config import set_mood, current_mood_override, gate_multiplier
@@ -823,11 +842,11 @@ __all__ = [
     "extract_claims", "ExtractionReport",
     "attestation", "attest", "verify_attestation", "Attestation", "VerificationResult",
 
-    # 7.18: the measured-boundary harness (SYNTHESIS_connection_of_minds sec 8)
+    # 7.28: the measured-boundary harness (SYNTHESIS_connection_of_minds sec 8)
     "Witness", "WitnessVerdict", "MEASURED_CAPABILITIES",
-    # 7.18: the research loop as enforceable machinery
+    # 7.28: the research loop as enforceable machinery
     "Experiment", "ProtocolVerdict",
-    # 7.18: the trust seal for agent work
+    # 7.28: the trust seal for agent work
     "seal", "verify_seal", "Seal",
     "transparency", "TransparencyLog",
     "redact", "redactable_commit", "disclose", "verify_disclosure",
