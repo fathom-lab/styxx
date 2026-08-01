@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.29.3] — 2026-08-01 — the GitHub Action, the 30-second demo, legible silence
+
+### Added
+
+- **The GitHub Action** — `uses: fathom-lab/styxx@main`: every PR body gated against its
+  actual diff, checkout-free via the API, job-summary table + annotations. PR bodies are
+  read from the event file and never touch a shell. Fails only on CONTRADICTED (the class
+  with zero false accusations across both public validation corpora); `strict` and
+  `soft-fail` inputs for the adoption ramp; a failed diff-fetch warns and never fakes a
+  verdict.
+- **`python -m styxx.diffgate --demo`** — a bundled lying summary vs its bundled diff:
+  three lies named in ten seconds, no repo needed. The first run is never an empty PASS.
+- **Legible silence** — when zero claims extract, the CLI prints the closed template set
+  and an example checkable sentence: silence reads as scope, not weakness.
+
+### Fixed
+
+- `only_touches` prefix capture ate sentence-final periods ("under src/.") and cited
+  in-prefix files as outside their own prefix — caught by the demo itself; regression
+  test carries the catch.
+
 ## [7.29.2] — 2026-08-01 — diffgate validated against the live market; checkout-free gating
 
 ### Added

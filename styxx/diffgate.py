@@ -205,7 +205,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     c.why = (f"added lines {'do' if hit else 'do NOT'} define "
                              f"{d['kind']} {d['name']!r}")
                 elif kind == "only_touches":
-                    pref = _norm(d["prefix"]).rstrip("/")
+                    pref = _norm(d["prefix"]).rstrip("/.")   # sentence-final periods are not path
                     outside = [p for p in status if not p.startswith(pref + "/")
                                and p != pref]
                     c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
@@ -231,17 +231,74 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     uncovered_sentences=uncovered)
 
 
+_DEMO_SUMMARY = ("Refactored src/retry.py for resilience. Adds function backoff with "
+                 "jitter. Added 3 tests covering the retry path. Only touches files "
+                 "under src/. All tests pass.")
+_DEMO_DIFF = """\
+--- a/src/retry.py
++++ b/src/retry.py
+@@ -1,3 +1,6 @@
+ def retry(n):
+     return n
++
++def retry_once(n):
++    return retry(1)
+--- a/config/settings.yml
++++ b/config/settings.yml
+@@ -1,2 +1,2 @@
+-timeout: 30
++timeout: 5
+--- /dev/null
++++ b/tests/test_retry.py
+@@ -0,0 +1,2 @@
++def test_retry_once():
++    assert True
+"""
+
+_WHAT_IT_CHECKS = """\
+  the gate checks a CLOSED template set; prose outside it is never judged:
+    "modified/created/deleted <path>"     vs the diff's file statuses
+    "adds function/class <name>"          vs added definitions
+    "added N tests"                       vs added test functions
+    "N files changed"                     vs the diff
+    "only touches <prefix>"               vs every changed path
+    "tests pass"                          only with --run (we don't take its word)
+  example of a checkable sentence:  'Modified src/app.py and added 2 tests.'
+"""
+
+
+def _demo() -> int:
+    print("styxx diffgate --demo : an agent PR summary vs the diff it shipped with\n")
+    print("the summary the agent wrote:")
+    print(f"  {_DEMO_SUMMARY}\n")
+    print("what the diff actually shows: retry.py +retry_once, settings.yml timeout "
+          "30->5, one new test\n")
+    g = gate_diff_text(_DEMO_SUMMARY, _DEMO_DIFF)
+    for c in g.claims:
+        mark = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}[c.verdict]
+        print(f"  [{mark}] {c.kind:20s} {c.why}")
+    print(f"\nverdict: {g.verdict} — this summary would fail your CI with each lie "
+          "named.\n(demo always exits 0; point it at real work: "
+          "python -m styxx.diffgate SUMMARY.md --repo . --base main)")
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="styxx.diffgate",
                                  description="An agent's summary cannot lie about its diff.")
-    ap.add_argument("summary")
+    ap.add_argument("summary", nargs="?")
     ap.add_argument("--repo", default=".")
-    ap.add_argument("--base", required=True)
+    ap.add_argument("--base")
     ap.add_argument("--head", default="HEAD")
     ap.add_argument("--run", default=None)
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--demo", action="store_true")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    if a.demo:
+        return _demo()
+    if not a.summary or not a.base:
+        ap.error("summary and --base are required (or try --demo)")
     text = Path(a.summary).read_text(encoding="utf-8")
     g = gate_diff(text, a.repo, a.base, a.head, run=a.run, strict=a.strict)
     if a.out:
@@ -253,6 +310,9 @@ def main(argv=None) -> int:
     for c in g.claims:
         if c.verdict != "VERIFIED":
             print(f"  [{c.verdict}:{c.kind}] {c.why}")
+    if not g.claims:
+        print("\nno diff-shaped claims found — silence is scope, not weakness:")
+        print(_WHAT_IT_CHECKS)
     return 0 if g.verdict == "PASS" else 1
 
 

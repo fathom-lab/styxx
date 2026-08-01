@@ -116,3 +116,13 @@ def test_fixture_is_not_the_verb_fix(tmp_path):
     g = gate_diff("Exactly one fixture emits a request in missing_file.py behavior.",
                   tmp_path, base, "HEAD")
     assert not any(c.kind == "file_touched" for c in g.claims)
+
+
+def test_only_touches_prefix_survives_sentence_period(tmp_path):
+    # demo-caught: "under src/." captured the sentence period and accused src/ files
+    # of being outside src — the evidence line must never list an in-prefix path
+    base = _repo(tmp_path)
+    g = gate_diff("This change only touches files under src/. Nothing else moved.",
+                  tmp_path, base, "HEAD")
+    ot = [c for c in g.claims if c.kind == "only_touches"][0]
+    assert "src/app.py" not in ot.why      # in-prefix file never cited as outside
