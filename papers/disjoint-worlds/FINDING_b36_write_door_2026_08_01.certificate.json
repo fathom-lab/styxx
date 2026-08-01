@@ -1,0 +1,346 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b36_write_door_2026_08_01.md",
+  "document_sha256": "4a3783fae08a657ff3072cbed6cfcfd1882974aadadff827a3fbbb8e2d977f70",
+  "receipts_sha256": {
+    "b36_result.json": "0ecf0e57c485debb8a1bc24a6d438b1f5304f4c4f1cfb1de6c597f47d2777193",
+    "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865",
+    "b31v2_result.json": "21c6c89c3da7a87e520bc998e6c960e631d1ec1f5b751cb8f5ed53f85cccd4a8"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 23,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "0.15"
+    },
+    {
+      "line": 18,
+      "token": "0.15"
+    },
+    {
+      "line": 21,
+      "token": "0.10"
+    },
+    {
+      "line": 22,
+      "token": "0.70"
+    },
+    {
+      "line": 23,
+      "token": "0.40"
+    },
+    {
+      "line": 25,
+      "token": "16.0"
+    },
+    {
+      "line": 40,
+      "token": "3"
+    },
+    {
+      "line": 59,
+      "token": "392"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "readable content on the table (a target that read at exact chance read at 55\u00d7 chance through",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
+    },
+    {
+      "line": 17,
+      "token": "0.173",
+      "value": 0.173,
+      "decimals": 3,
+      "context": "| **native** (the target's own directions \u2014 the ceiling) | **0.173** | PC \u2265 0.15 | **PASS** |",
+      "binding_context": "| arm | mean steering gain | gate | | | **native** (the target's own directions \u2014 the ceiling) | **0.173** | PC \u2265 0.15 | **PASS** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:native_mean"
+    },
+    {
+      "line": 17,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **native** (the target's own directions \u2014 the ceiling) | **0.173** | PC \u2265 0.15 | **PASS** |",
+      "binding_context": "| arm | mean steering gain | gate | | | **native** (the target's own directions \u2014 the ceiling) | **0.173** | PC \u2265 0.15 | **PASS** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.0504",
+      "value": 0.0504,
+      "decimals": 4,
+      "context": "| **M1** paired MLP transfer (the attack) | **0.0504** | G1 \u2265 0.15 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | **M1** paired MLP transfer (the attack) | **0.0504** | G1 \u2265 0.15 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:m1_mean"
+    },
+    {
+      "line": 18,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **M1** paired MLP transfer (the attack) | **0.0504** | G1 \u2265 0.15 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | **M1** paired MLP transfer (the attack) | **0.0504** | G1 \u2265 0.15 | **FAIL** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.0353",
+      "value": 0.0353,
+      "decimals": 4,
+      "context": "| L1 paired linear transfer (comparator) | 0.0353 | \u2014 | \u2014 |",
+      "binding_context": "| arm | mean steering gain | gate | | | L1 paired linear transfer (comparator) | 0.0353 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:l1_mean"
+    },
+    {
+      "line": 20,
+      "token": "0.0217",
+      "value": 0.0217,
+      "decimals": 4,
+      "context": "| random unit direction (the null) | 0.0217 | \u2014 | \u2014 |",
+      "binding_context": "| arm | mean steering gain | gate | | | random unit direction (the null) | 0.0217 | \u2014 | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:random_mean"
+    },
+    {
+      "line": 21,
+      "token": "0.0286",
+      "value": 0.0286,
+      "decimals": 4,
+      "context": "| M1 - random | 0.0286 | G2 magnitude \u2265 0.10 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | M1 - random | 0.0286 | G2 magnitude \u2265 0.10 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:m1_minus_random"
+    },
+    {
+      "line": 21,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| M1 - random | 0.0286 | G2 magnitude \u2265 0.10 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | M1 - random | 0.0286 | G2 magnitude \u2265 0.10 | **FAIL** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.6571",
+      "value": 0.6571,
+      "decimals": 4,
+      "context": "| M1 beats random (sign rate) | 0.6571 | G2 sign \u2265 0.70 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | M1 beats random (sign rate) | 0.6571 | G2 sign \u2265 0.70 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:m1_sign_vs_random"
+    },
+    {
+      "line": 22,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| M1 beats random (sign rate) | 0.6571 | G2 sign \u2265 0.70 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | M1 beats random (sign rate) | 0.6571 | G2 sign \u2265 0.70 | **FAIL** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.291",
+      "value": 0.291,
+      "decimals": 3,
+      "context": "| NTE = M1 / native | 0.291 | G3 \u2265 0.40 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | NTE = M1 / native | 0.291 | G3 \u2265 0.40 | **FAIL** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:nte"
+    },
+    {
+      "line": 23,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "| NTE = M1 / native | 0.291 | G3 \u2265 0.40 | **FAIL** |",
+      "binding_context": "| arm | mean steering gain | gate | | | NTE = M1 / native | 0.291 | G3 \u2265 0.40 | **FAIL** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 25,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "70 held-out concepts, dose locked on native directions at \u03b1=16.0, finite-difference",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:n_heldout"
+    },
+    {
+      "line": 25,
+      "token": "16.0",
+      "value": 16.0,
+      "decimals": 1,
+      "context": "70 held-out concepts, dose locked on native directions at \u03b1=16.0, finite-difference",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.999",
+      "value": 0.999,
+      "decimals": 3,
+      "context": "direction stability 0.999 (the transfer method was not broken \u2014 the extracted directions are",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:eps_stability_mean"
+    },
+    {
+      "line": 31,
+      "token": "0.0245",
+      "value": 0.0245,
+      "decimals": 4,
+      "context": "Against the committed linear-map run at the same operating point (transfer 0.0245, NTE 0.114):",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+    },
+    {
+      "line": 31,
+      "token": "0.114",
+      "value": 0.114,
+      "decimals": 3,
+      "context": "Against the committed linear-map run at the same operating point (transfer 0.0245, NTE 0.114):",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.nte"
+    },
+    {
+      "line": 33,
+      "token": "0.0245",
+      "value": 0.0245,
+      "decimals": 4,
+      "context": "(0.0245 \u2192 0.0504) and lifted the fraction of native control recovered from 0.114 to 0.291.",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+    },
+    {
+      "line": 33,
+      "token": "0.0504",
+      "value": 0.0504,
+      "decimals": 4,
+      "context": "(0.0245 \u2192 0.0504) and lifted the fraction of native control recovered from 0.114 to 0.291.",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:m1_mean"
+    },
+    {
+      "line": 33,
+      "token": "0.114",
+      "value": 0.114,
+      "decimals": 3,
+      "context": "(0.0245 \u2192 0.0504) and lifted the fraction of native control recovered from 0.114 to 0.291.",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.nte"
+    },
+    {
+      "line": 38,
+      "token": "0.3429",
+      "value": 0.3429,
+      "decimals": 4,
+      "context": "model pair**, the same class of upgrade took *reading* from 0.3429 to 0.8000 \u2014 over a floor",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
+    },
+    {
+      "line": 38,
+      "token": "0.8000",
+      "value": 0.8,
+      "decimals": 4,
+      "context": "model pair**, the same class of upgrade took *reading* from 0.3429 to 0.8000 \u2014 over a floor",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
+    },
+    {
+      "line": 39,
+      "token": "0.0245",
+      "value": 0.0245,
+      "decimals": 4,
+      "context": "it cleared with room to spare \u2014 and took *writing* from 0.0245 to 0.0504, under a floor it",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+    },
+    {
+      "line": 39,
+      "token": "0.0504",
+      "value": 0.0504,
+      "decimals": 4,
+      "context": "it cleared with room to spare \u2014 and took *writing* from 0.0245 to 0.0504, under a floor it",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:m1_mean"
+    },
+    {
+      "line": 40,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "misses by 3\u00d7. Capacity multiplies both channels by about the same factor. Only one of them",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "0.71",
+      "value": 0.71,
+      "decimals": 2,
+      "context": "random null on 0.71 of concepts; under the MLP it beats it on 0.6571. Cross-run and",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.sign_rate"
+    },
+    {
+      "line": 57,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "layer pair (src 11 \u2192 dst 11, the committed steer-optimal point), one steering metric",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.qwen_1p5b.layer_B"
+    },
+    {
+      "line": 57,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "layer pair (src 11 \u2192 dst 11, the committed steer-optimal point), one steering metric",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.qwen_1p5b.layer_B"
+    },
+    {
+      "line": 58,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "(the committed `steer_gain` protocol: fixed carriers, greedy continuation, MiniLM concept-similarity gain over clean), 70 held-out concepts,",
+      "status": "VERIFIED",
+      "receipt_ref": "b36_result.json:n_heldout"
+    },
+    {
+      "line": 59,
+      "token": "392",
+      "value": 392.0,
+      "decimals": 0,
+      "context": "maximal supervision by design (392 true pairs \u2014 a null cannot be blamed on correspondence",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

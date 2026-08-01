@@ -1,0 +1,17 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b36_write_door_2026_08_01.md",
+  "document_sha256": "4a3783fae08a657ff3072cbed6cfcfd1882974aadadff827a3fbbb8e2d977f70",
+  "oath": {
+    "counts": {
+      "VERIFIED": 23,
+      "ABSTAIN": 8,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [],
+  "refusals": [],
+  "seal_sha256": "0ca94591e575e98ad93aacdcf7afe7d6048ab53d4d52b19461b51f03520c2b35"
+}
