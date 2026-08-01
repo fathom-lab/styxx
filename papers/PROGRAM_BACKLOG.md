@@ -50,6 +50,25 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 106 (2026-07-31, operator-directed "continue / dive deep") — THE INWARD ARC JOINS THE PAPER, AND THE CERTIFIER'S OWN BLINDSPOT IS CAUGHT ON THE WAY IN. `DONE__inward_arc_folded_and_recertified__oath_extractor_blindspot_found` (paper OATH-HELD **93/6/0**).**
+  The c105-named cheap certified path: c101+c105 folded into knowsay §7/§8 (deliberation removes
+  ~¾ of frontier free-text caving 0.5349→0.1512→0.1224 across two pools; rescue falls
+  0.0833→0.0160/0.0328 — armor, not truth-seeking; surviving caves recover out-of-frame at
+  0.4667 vs 0.9833 held, reach −0.5167; the measured monitor blindspot stated). **THE CATCH:
+  during re-cert, verified that the new load-bearing numbers actually entered the ledger — they
+  had NOT. `certify.py`'s SHA-scrub (`\b[0-9a-f]{7,64}\b`) eats the fractional part of ANY
+  decimal with ≥7 fractional digits, so every full-precision quote in the paper (56 tokens) was
+  invisible to extraction and certified-by-omission; prior verdicts (37/6, 38/6) were honest
+  about what the verifier saw, but the verifier could not see the headline numbers.** Fix
+  paper-side only (all 56 tokens → 4dp so they enter the ledger): VERIFIED 38→93, zero
+  ungrounded, same six section-number abstains. `certify.py` UNTOUCHED — the extractor fix is
+  **B33**, needing its own prereg + mutant battery per the v0.3–v0.5 precedent. arXiv package
+  rebuilt in lockstep: fidelity gate 57/57, 7 pages, anc/ now 18 receipts (+cot_inward,
+  +cot_inward_powered) all sha-matched to the new cert, condensed form abstract 1902 chars
+  (limit-checked), SUBMIT.md updated. *Next:* operator uploads both tarballs per SUBMIT.md
+  (knowsay now carries the inward arc — the c105 wait-condition is satisfied); B33; the
+  item-paired separating design if pursued.
+
 - **Cycle 105 (2026-07-30) — THE POWERED INWARD RUN: reasoning is armor — it stops most caves, and the caves that pierce it go deeper. `CLOSED_NEGATIVE__reasoned_cave_has_reach` (FINDING OATH-HELD 17/0/0).**
   The sizing delivered (30 CAVED vs the 25 floor, no top-up; 1099 scored on fresh pool v10).
   **CG1 REPLICATION FLIPS THE KNIFE-EDGE: cave 0.1224 on the fresh pool — BELOW the 0.15 floor
@@ -1686,6 +1705,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B11** | **Re-locking protocol** in STYXX_PROTOCOL: verifier-private calibration set spanning prime/abort/lie populations; layer+family search with a **permutation-corrected selection penalty** (refit_max over 28 layers is multiple-comparisons-inflated); certificate encodes calibration-SHA + selected layer + floor + PRIME/ABORT + re-locked-probe hash; **state=ABSTAIN when the deployment input is off-manifold** vs calibration (turn silent failure into honest abstention). | spec section + a runnable re-lock harness. | H | QUEUED |
 | **B12** | **The gamed-model probe-validity experiment** (capture-trust names it irreducible; never run): train the cooperative model to emit clean caving residuals to the FROZEN probe, then test whether audit-time RE-FIT still recovers. Decides whether the cooperative guarantee survives an adversarial-but-checkable insider. | measured EVADABLE/ROBUST for the gamed-model on the re-locked read. | H | QUEUED |
 | **B13** | **Harden all experiment scripts** (the smoke-artifact lesson): `--smoke` writes to a `_smoke`-suffixed file; in-code assert `chance_floor < reference signal` else emit `VOID-INSTRUMENT`; every result JSON carries the scorer SHA. | guard added to the v4+ template; lesson in RESEARCH_LOOP. | H | QUEUED |
+| **B33** | **OATH v0.6 — the SHA-scrub recall class** (caught cycle 106): `certify.py`'s `_SHAISH` scrub eats the fractional part of any decimal with ≥7 fractional digits, so full-precision quotes are invisible to extraction — certified-by-omission, the exact inverse of the oath. Candidate fixes: require ≥1 hex letter in the scrub match, or refuse the scrub when the match is preceded by `\d\.`. Corpus impact must be measured: re-run `corpus_audit` before/after and report every count shift. Also owed same prereg: float claim→field binding (the v0.4 named debt — line-224 class first-hit misattribution). | prereg + single-digit mutant battery per the v0.3–v0.5 precedent; no count regression on the battery; corpus-wide delta table published. | H | QUEUED |
 
 ## Tier 3 — the other rungs
 

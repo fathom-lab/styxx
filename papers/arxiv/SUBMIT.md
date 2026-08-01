@@ -45,24 +45,24 @@ one login and two uploads (~10 min each).
 ## Submission 2 — The Know-Say Gap
 
 - **Upload file:** `papers/arxiv/knowsay-gap/knowsay-gap-arxiv.tar.gz`
-  (main.tex + `anc/` with the OATH certificate and all 16 receipts)
-- **Verified:** compiles clean, 6 pages; fidelity gate 48/48 decimals.
+  (main.tex + `anc/` with the OATH certificate and all 18 receipts)
+- **Verified:** compiles clean, 7 pages; fidelity gate 57/57 decimals.
 - **Title:** The Know-Say Gap: language models abandon answers they still hold, the gap
   survives scale, and self-verification is bounded by self-knowledge
 - **Authors:** Alexander Rodabaugh (Fathom Lab)
 - **Primary category:** cs.LG · **cross-list:** cs.CL, cs.AI
-- **Comments field:** 6 pages. Machine-verifiable OATH certificate and all 16 preregistered
+- **Comments field:** 7 pages. Machine-verifiable OATH certificate and all 18 preregistered
   receipts included as ancillary files. Instruments released (styxx on PyPI). Open-model
   results reproduce on one 8 GB consumer GPU.
-- **Abstract (form field, 1539 chars):**
+- **Abstract (form field, 1902 chars):**
 
 > When a user replies with nothing but doubt -- "I don't think that's right. Are you sure?" --
 > language models frequently abandon correct answers. We measure this know-say gap by querying
 > the same weights inside the pressured conversation and in a neutral context: a 3B open model
 > abandons 0.3012 of its initially-correct answers under a content-free challenge, a 7B model
 > 0.2615, and in free text the 7B rate roughly doubles to 0.5227. The knowledge is still there
-> absent pressure (neutral recovery 0.9846 on caved items at 3B, exactly 1.0 at 7B); we state
-> the interpretation boundary explicitly and correct our own earlier overclaim in place: the
+> absent pressure (neutral recovery 0.9846 on caved items at 3B, exactly 1.0 at 7B); we
+> correct our own earlier overclaim in place: the
 > fresh-context design licenses frame-dependence of the report, not belief-survival under
 > standing pressure, and a non-circular pressure-retained probe at the deployed frontier
 > measures that caved answers partially stay lost (0.6957 vs 0.975 on never-abandoned items).
@@ -71,8 +71,13 @@ one login and two uploads (~10 min each).
 > selective instrument for a structural reason -- belief-agreement cannot separate stable-correct
 > from stable-wrong, so a model cannot self-verify past its own self-knowledge. The gap reaches
 > deployed frontier systems: a commercial model abandons 0.2056 of its correct answers on
-> multiple choice and 0.5349 in free text under the identical frozen challenge. All
-> preregistrations, receipts, and the machine-checkable certificate ship as ancillary files.
+> multiple choice and 0.5349 in free text under the identical frozen challenge. Demanded
+> step-by-step deliberation at the point of doubt removes roughly three quarters of that
+> free-text caving (0.5349 to 0.1224 across two pools) yet protects wrong first answers just
+> as faithfully, and the caves that survive it recover out-of-frame at only 0.4667 vs 0.9833
+> held: deliberation is armor for whatever was said first, not truth-seeking, and out-of-frame
+> resampling monitors miss reasoned caves. All preregistrations, receipts, and the
+> machine-checkable certificate ship as ancillary files.
 
 ---
 
