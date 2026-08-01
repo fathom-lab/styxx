@@ -1,0 +1,42 @@
+name: "styxx diffgate"
+description: >-
+  Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
+  PR body (or push commit message) and verifies each against the actual diff — checkout-free,
+  via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
+  summary and as an annotation. Validated on real agent-authored PRs with zero false
+  accusations before release (see the styxx CHANGELOG for the receipts).
+author: "Fathom Lab"
+branding:
+  icon: "shield"
+  color: "gray-dark"
+
+inputs:
+  strict:
+    description: "UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate"
+    required: false
+    default: "false"
+  soft-fail:
+    description: "report everything, never fail the job (adoption ramp)"
+    required: false
+    default: "false"
+  styxx-version:
+    description: "styxx version spec to install"
+    required: false
+    default: "styxx>=7.29.2"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+    - shell: bash
+      run: pip install --quiet "${{ inputs.styxx-version }}"
+    - shell: bash
+      env:
+        # the event payload path and token come from the runner; the PR body is read from
+        # the event FILE by python — attacker-controlled text never touches a shell
+        STYXX_STRICT: ${{ inputs.strict }}
+        STYXX_SOFT_FAIL: ${{ inputs.soft-fail }}
+        GH_TOKEN: ${{ github.token }}
+      run: python "${{ github.action_path }}/diffgate_action.py"
