@@ -1,0 +1,70 @@
+{
+  "prereg": "PREREG_b34v2_linear_seeded_2026_08_01.md",
+  "seed": 34,
+  "iters": 8,
+  "n_fit": 392,
+  "n_heldout": 70,
+  "chance": 0.0143,
+  "targets": {
+    "llama_1b": {
+      "linear_seed_acc": 0.2347,
+      "linear_top1": 0.3429,
+      "MLF_top1": 0.2,
+      "N0_top1": 0.0,
+      "R0_top1": 0.0,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.2347,
+        0.3138,
+        0.3265,
+        0.3469,
+        0.3469,
+        0.3469,
+        0.3469,
+        0.3469
+      ],
+      "x_chance_MLF": 14.0
+    },
+    "gemma_2b": {
+      "linear_seed_acc": 0.6122,
+      "linear_top1": 0.0143,
+      "MLF_top1": 0.6286,
+      "N0_top1": 0.0143,
+      "R0_top1": 0.0,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.6122,
+        0.7755,
+        0.824,
+        0.8418,
+        0.8418,
+        0.8418,
+        0.8418,
+        0.8418
+      ],
+      "x_chance_MLF": 44.0
+    },
+    "qwen_1p5b": {
+      "linear_seed_acc": 0.2423,
+      "linear_top1": 0.1,
+      "MLF_top1": 0.3429,
+      "N0_top1": 0.0143,
+      "R0_top1": 0.0286,
+      "MLF_pseudo_pair_acc_by_iter": [
+        0.2423,
+        0.2806,
+        0.2832,
+        0.2908,
+        0.2908,
+        0.2908,
+        0.2908,
+        0.2934
+      ],
+      "x_chance_MLF": 24.0
+    }
+  },
+  "gates": {
+    "G0_machinery": false,
+    "G2_null": true,
+    "G1_bar": true
+  },
+  "verdict": "INVALID__pipeline_broken"
+}
