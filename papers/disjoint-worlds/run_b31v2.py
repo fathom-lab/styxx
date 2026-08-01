@@ -14,6 +14,7 @@ model (`_b31v2_pts_*.npz`); `--smoke` runs 5 concepts and writes `_smoke`-suffix
 """
 from __future__ import annotations
 
+import gc
 import json
 import sys
 import time
@@ -34,6 +35,11 @@ from run_g0clear import CONCEPTS as FULL_CONCEPTS, split_concepts  # noqa: E402
 
 SMOKE = "--smoke" in sys.argv
 SUFFIX = "_smoke" if SMOKE else ""
+# --only TAG: process-isolation rail (the c86 lesson — both full launches were OS-killed at
+# the gemma shard load with llama artifacts still resident). Runs ONE target's extraction+
+# cells in its own process and banks a per-target JSON; a final no-flag pass assembles the
+# combined result from banked cells. Measurement/metric/gates untouched.
+ONLY = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
 SEED = 31
 SRC = "meta-llama/Llama-3.2-3B-Instruct"
 CACHE_A = HERE / "_rung2_ptsA_vecsA.npz"      # reuse the committed rung-2 extraction of A
@@ -132,6 +138,15 @@ def main():
                "chance": round(1 / len(fin), 4), "targets": {}}
 
     for tag, hf in TARGETS:
+        if ONLY and tag != ONLY:
+            continue
+        jpath = HERE / f"_b31v2_cells_{tag}{SUFFIX}.json"
+        if jpath.exists():
+            results["targets"][tag] = json.loads(jpath.read_text(encoding="utf-8"))
+            print(f">> {tag}: cells already banked — skip", flush=True)
+            continue
+        gc.collect()
+        torch.cuda.empty_cache()
         cpath = HERE / f"_b31v2_pts_{tag}{SUFFIX}.npz"
         t0 = time.time()
         nlB = AutoConfig.from_pretrained(hf).num_hidden_layers
@@ -172,10 +187,16 @@ def main():
         }
         print(f">> {tag}: M0={m0:.4f} M1={m1:.4f} N1={n1:.4f} "
               f"(chance {1/len(fin):.4f}) [{time.time()-t0:.0f}s]", flush=True)
+        jpath.write_text(json.dumps(results["targets"][tag], indent=2) + "\n", encoding="utf-8")
+        del m1_fn, n1_fn, tm
+        gc.collect()
+        torch.cuda.empty_cache()
 
     # ---- gates (frozen; smoke is INVALID-only) ----
     if SMOKE:
         results["verdict"] = "INVALID__smoke_plumbing_only"
+    elif len(results["targets"]) < len(TARGETS):
+        results["verdict"] = f"PARTIAL__{len(results['targets'])}_of_{len(TARGETS)}_targets_banked"
     else:
         t = results["targets"]
         chance = 1 / len(fin)
