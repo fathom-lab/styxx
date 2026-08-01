@@ -1,0 +1,42 @@
+[
+ {
+  "concept": "bolt",
+  "native": 0.0944,
+  "m1": 0.0075,
+  "l1": 0.032,
+  "random": -0.0131,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "apricot",
+  "native": 0.0972,
+  "m1": 0.0768,
+  "l1": 0.0482,
+  "random": 0.0231,
+  "eps_stability_cos": 0.9998
+ },
+ {
+  "concept": "watch",
+  "native": 0.0695,
+  "m1": 0.0438,
+  "l1": 0.0156,
+  "random": 0.0908,
+  "eps_stability_cos": 0.9957
+ },
+ {
+  "concept": "hatred",
+  "native": 0.3683,
+  "m1": 0.1397,
+  "l1": 0.1124,
+  "random": 0.0438,
+  "eps_stability_cos": 0.9994
+ },
+ {
+  "concept": "truth",
+  "native": 0.2609,
+  "m1": 0.0394,
+  "l1": 0.0496,
+  "random": 0.0244,
+  "eps_stability_cos": 0.9997
+ }
+]

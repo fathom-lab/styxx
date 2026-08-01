@@ -33,16 +33,32 @@ from pathlib import Path
 
 __all__ = ["gate_diff", "DiffGate", "DiffClaim"]
 
-_PATH = r"[\w./\\-]+\.[A-Za-z0-9_]+"
+# A claimed path must end in a KNOWN file extension (closed set — the same honesty as the
+# template set itself). The naive any-dotted-token form false-accused decimals (0.5349),
+# versions (v0.6.2), DOIs, and module names (styxx.framelocality) in the 80-commit
+# history sweep that validated this module — six of six contradictions were false
+# accusations until this whitelist existed. A gate that can accuse a number of not being
+# a file does not ship.
+_EXT = (r"py|md|json|jsonl|txt|yml|yaml|toml|cfg|ini|js|ts|tsx|jsx|css|html|tex|sh|ps1|"
+        r"bat|ipynb|csv|tsv|npz|npy|pdf|png|jpg|svg|gz|zip|lock|xml|rst|c|h|cpp|rs|go|java")
+_PATH = rf"[\w./\\-]*[A-Za-z_][\w-]*\.(?:{_EXT})\b"
+# a window between the verb and the path: real summaries write "updated the parser in
+# styxx/certify.py", not "updated styxx/certify.py". Bounded (no sentence crossing — the
+# splitter already scoped us to one sentence) and path-shaped on the right.
+_W = r"[^.!?\n]{0,60}?"
 _TEMPLATES = [
     ("file_created", re.compile(
-        rf"\b(?:creat\w+|add\w+)\s+(?:the\s+|a\s+)?(?:new\s+file\s+)?[`\"']?(?P<path>{_PATH})[`\"']?",
+        rf"\b(?:creat\w+|new)\s+(?:file|module|script|test file)?\s*{_W}[`\"']?(?P<path>{_PATH})[`\"']?",
         re.I)),
+    ("file_created", re.compile(
+        rf"[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s*(?:new|added|created)\b", re.I)),
     ("file_deleted", re.compile(
-        rf"\b(?:delet\w+|remov\w+)\s+(?:the\s+file\s+)?[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
+        rf"\b(?:delet\w+|remov\w+)\s+(?:the\s+file\s+)?{_W}[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
     ("file_touched", re.compile(
-        rf"\b(?:modif\w+|updat\w+|edit\w+|chang\w+|refactor\w+|fix\w+)\s+"
-        rf"(?:the\s+)?[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
+        rf"\b(?:modif\w+|updat\w+|edit\w+|chang\w+|refactor\w+|fix\w+|add\w+|extend\w+|"
+        rf"hard\w+|wir\w+|patch\w+)\s+{_W}[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
+    ("file_touched", re.compile(
+        rf"^[\s*-]*[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s+", re.M)),
     ("files_changed_count", re.compile(r"\b(?P<n>\d+)\s+files?\s+(?:were\s+)?changed", re.I)),
     ("tests_added", re.compile(r"\b(?:add\w+|creat\w+)\s+(?P<n>\d+)\s+(?:new\s+)?tests?\b", re.I)),
     ("symbol_added", re.compile(

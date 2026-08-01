@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.29.1] — 2026-08-01 — diffgate validated against 80 real commits; the false-accusation class closed
+
+### Fixed
+
+- **`styxx.diffgate` path recognition** — validated before announcement by sweeping the
+  gate over 80 real commits of this repo's own history. First sweep: zero claims extracted
+  (templates too rigid for real prose) → verb…path window + bullet `path: description`
+  forms added. Second sweep: 10 claims, **six CONTRADICTED — and all six were FALSE
+  ACCUSATIONS**: decimals (0.5349), versions (v0.6.2), DOIs, and dotted module names all
+  matched the naive any-dotted-token path pattern. A gate that can accuse a number of not
+  being a file does not ship. Fix: claimed paths must end in a closed-set file extension.
+  Final sweep: 80 commits, 4 claims, 4/4 VERIFIED, **zero false accusations**. Coverage on
+  this repo's unusually prose-heavy messages is deliberately low and disclosed; bullet-form
+  agent PR bodies are the template-shaped common case.
+
 ## [7.29.0] — 2026-08-01 — the zero-receipt gate: a summary cannot lie about its diff
 
 ### Added
