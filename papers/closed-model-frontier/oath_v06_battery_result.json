@@ -1,0 +1,158 @@
+{
+  "prereg": "PREREG_oath_v06_shascrub_recall_2026_07_31.md",
+  "seed": 1,
+  "n": 20,
+  "pool_size": 484,
+  "G1": {
+    "extracted": 19,
+    "bar": 18,
+    "pass": true
+  },
+  "G2": {
+    "caught_ungrounded": 2,
+    "bar": 16,
+    "pass": false
+  },
+  "items": [
+    {
+      "doc": "FINDING_combined_signal_2026_07_26.md",
+      "line": 41,
+      "token": "0.7187269236449564",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "FINDING_source_independence_v2_2026_07_24.md",
+      "line": 65,
+      "token": "0.8285714285714286",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "PROGRAM_SYNTHESIS_2026_07_30.md",
+      "line": 50,
+      "token": "0.8857142857142857",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    },
+    {
+      "doc": "PAPER_frame_locality_2026_07_28.md",
+      "line": 192,
+      "token": "0.15333333333333332",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    },
+    {
+      "doc": "PAPER_frame_locality_2026_07_28.md",
+      "line": 134,
+      "token": "0.5511520737327189",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    },
+    {
+      "doc": "DATASHEET_conscience_2026_07_24.md",
+      "line": 70,
+      "token": "0.8701298701298701",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "FINDING_coupling_resolution_2026_07_28.md",
+      "line": 62,
+      "token": "0.033333333333333326",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "FINDING_combined_signal_2026_07_26.md",
+      "line": 16,
+      "token": "0.7460493280165411",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "FINDING_self_verification_2026_07_25.md",
+      "line": 11,
+      "token": "0.737746806039489",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "PAPER_frame_locality_2026_07_28.md",
+      "line": 110,
+      "token": "0.9722222222222222",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    },
+    {
+      "doc": "FINDING_scale_test_2026_07_26.md",
+      "line": 53,
+      "token": "0.2978723404255319",
+      "extracted": true,
+      "mutant_status": "UNGROUNDED"
+    },
+    {
+      "doc": "FINDING_selective_confirm_2026_07_24.md",
+      "line": 43,
+      "token": "0.7325581395348837",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "FINDING_two_channel_2026_07_27.md",
+      "line": 77,
+      "token": "0.12133891213389121",
+      "extracted": true,
+      "mutant_status": "VERIFIED"
+    },
+    {
+      "doc": "FINDING_kp_recovery_2026_07_28.md",
+      "line": 46,
+      "token": "0.2545454545454545",
+      "extracted": true,
+      "mutant_status": "ABSTAIN"
+    },
+    {
+      "doc": "PAPER_frame_locality_2026_07_28.md",
+      "line": 179,
+      "token": "0.36363636363636365",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    },
+    {
+      "doc": "FINDING_cot_inward_powered_2026_07_30.md",
+      "line": 44,
+      "token": "0.2793478260869565",
+      "extracted": false,
+      "mutant_status": "NOT_EXTRACTED"
+    },
+    {
+      "doc": "FINDING_belief_asymptote_2026_07_26.md",
+      "line": 24,
+      "token": "0.7367963314358001",
+      "extracted": true,
+      "mutant_status": "VERIFIED"
+    },
+    {
+      "doc": "FINDING_selective_escalation_2026_07_24.md",
+      "line": 14,
+      "token": "0.06666666666666676",
+      "extracted": true,
+      "mutant_status": "VERIFIED"
+    },
+    {
+      "doc": "DATASHEET_conscience_2026_07_24.md",
+      "line": 37,
+      "token": "0.5423728813559322",
+      "extracted": true,
+      "mutant_status": "UNGROUNDED"
+    },
+    {
+      "doc": "SYNTHESIS_frame_locality_2026_07_28.md",
+      "line": 24,
+      "token": "0.205607476635514",
+      "extracted": true,
+      "mutant_status": "RECEIPTS_UNRESOLVED"
+    }
+  ]
+}
