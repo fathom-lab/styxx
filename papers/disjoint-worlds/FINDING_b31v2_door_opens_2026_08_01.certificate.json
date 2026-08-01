@@ -1,0 +1,370 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b31v2_door_opens_2026_08_01.md",
+  "document_sha256": "acd1a82b4aabe20a508eca32ffe45a6dd37d231af7fe0fbc42afd251f8fdf060",
+  "receipts_sha256": {
+    "b31v2_result.json": "21c6c89c3da7a87e520bc998e6c960e631d1ec1f5b751cb8f5ed53f85cccd4a8",
+    "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 20,
+    "ABSTAIN": 12,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 5,
+      "token": "462"
+    },
+    {
+      "line": 5,
+      "token": "0"
+    },
+    {
+      "line": 5,
+      "token": "392"
+    },
+    {
+      "line": 16,
+      "token": "0.53"
+    },
+    {
+      "line": 18,
+      "token": "5.5"
+    },
+    {
+      "line": 21,
+      "token": "70"
+    },
+    {
+      "line": 21,
+      "token": "1"
+    },
+    {
+      "line": 21,
+      "token": "70"
+    },
+    {
+      "line": 34,
+      "token": "2"
+    },
+    {
+      "line": 42,
+      "token": "392"
+    },
+    {
+      "line": 60,
+      "token": "400"
+    },
+    {
+      "line": 62,
+      "token": "80"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 5,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "`b31v2_result.json`. Seed 31; the committed N=462 battery, split_concepts(seed=0): 392 anchors",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:seed"
+    },
+    {
+      "line": 5,
+      "token": "462",
+      "value": 462.0,
+      "decimals": 0,
+      "context": "`b31v2_result.json`. Seed 31; the committed N=462 battery, split_concepts(seed=0): 392 anchors",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`b31v2_result.json`. Seed 31; the committed N=462 battery, split_concepts(seed=0): 392 anchors",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 5,
+      "token": "392",
+      "value": 392.0,
+      "decimals": 0,
+      "context": "`b31v2_result.json`. Seed 31; the committed N=462 battery, split_concepts(seed=0): 392 anchors",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 6,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "fit every map, 70 held-out concepts no map ever saw.",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:n_heldout"
+    },
+    {
+      "line": 12,
+      "token": "0.3429",
+      "value": 0.3429,
+      "decimals": 4,
+      "context": "| Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
+    },
+    {
+      "line": 12,
+      "token": "0.8000",
+      "value": 0.8,
+      "decimals": 4,
+      "context": "| Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.M1_mlp_top1"
+    },
+    {
+      "line": 12,
+      "token": "0.0000",
+      "value": 0.0,
+      "decimals": 4,
+      "context": "| Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.N1_shuffled_top1"
+    },
+    {
+      "line": 12,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "| Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Llama-3.2-1B (same family, G0) | 0.3429 | **0.8000** | 0.0000 | 56\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.x_chance_M1"
+    },
+    {
+      "line": 13,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "| **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:chance"
+    },
+    {
+      "line": 13,
+      "token": "0.7857",
+      "value": 0.7857,
+      "decimals": 4,
+      "context": "| **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.gemma_2b.M1_mlp_top1"
+    },
+    {
+      "line": 13,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "| **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:chance"
+    },
+    {
+      "line": 13,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "| **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | **gemma-2-2b (decisive cell, G1)** | **0.0143 = exact chance** | **0.7857** | 0.0143 | **55\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
+    },
+    {
+      "line": 14,
+      "token": "0.1143",
+      "value": 0.1143,
+      "decimals": 4,
+      "context": "| Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.qwen_1p5b.M0_linear_top1"
+    },
+    {
+      "line": 14,
+      "token": "0.7000",
+      "value": 0.7,
+      "decimals": 4,
+      "context": "| Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.qwen_1p5b.M1_mlp_top1"
+    },
+    {
+      "line": 14,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "| Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:chance"
+    },
+    {
+      "line": 14,
+      "token": "49",
+      "value": 49.0,
+      "decimals": 0,
+      "context": "| Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "binding_context": "| target | M0 linear | **M1 MLP** | N1 shuffled | M1 \u00d7 chance | | Qwen2.5-1.5B (context) | 0.1143 | **0.7000** | 0.0143 | 49\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.qwen_1p5b.x_chance_M1"
+    },
+    {
+      "line": 16,
+      "token": "0.8000",
+      "value": 0.8,
+      "decimals": 4,
+      "context": "- **G0 machinery: PASS** (0.8000 \u2265 0.53; the llama_1b cell reproduced identically across",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.llama_1b.M1_mlp_top1"
+    },
+    {
+      "line": 16,
+      "token": "0.53",
+      "value": 0.53,
+      "decimals": 2,
+      "context": "- **G0 machinery: PASS** (0.8000 \u2265 0.53; the llama_1b cell reproduced identically across",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "5.5",
+      "value": 5.5,
+      "decimals": 1,
+      "context": "- **G1 the door: PASS at 5.5\u00d7 its own gate** \u2014 gemma, the rung-2 existence proof that",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 19,
+      "token": "0.955",
+      "value": 0.955,
+      "decimals": 3,
+      "context": "isometry does not grade readability (RSA 0.955, linear read at exact chance), reads at",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.gemma_rsa"
+    },
+    {
+      "line": 20,
+      "token": "0.7857",
+      "value": 0.7857,
+      "decimals": 4,
+      "context": "**0.7857 top-1 over 70 held-out concepts** through a two-layer MLP fit on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.gemma_2b.M1_mlp_top1"
+    },
+    {
+      "line": 20,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "**0.7857 top-1 over 70 held-out concepts** through a two-layer MLP fit on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:n_heldout"
+    },
+    {
+      "line": 21,
+      "token": "55",
+      "value": 55.0,
+      "decimals": 0,
+      "context": "extractions. 55 of 70 foreign thoughts identified; binomial against chance 1/70 is",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
+    },
+    {
+      "line": 21,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "extractions. 55 of 70 foreign thoughts identified; binomial against chance 1/70 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "extractions. 55 of 70 foreign thoughts identified; binomial against chance 1/70 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "extractions. 55 of 70 foreign thoughts identified; binomial against chance 1/70 is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "Rung 2's falsified prediction (RSA should grade readability; it doesn't) now has a mechanism-",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "392",
+      "value": 392.0,
+      "decimals": 0,
+      "context": "1. **PAIRED anchors, by design.** M1 trains on 392 anchor *pairs* \u2014 this is the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 60,
+      "token": "400",
+      "value": 400.0,
+      "decimals": 0,
+      "context": "The telepathy-shaped claim now has an honest, measured form: **given ~400 paired concept",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 61,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "anchors, a small MLP decodes which of 70 held-out concepts a foreign mind is representing at",
+      "status": "VERIFIED",
+      "receipt_ref": "b31v2_result.json:n_heldout"
+    },
+    {
+      "line": 62,
+      "token": "80",
+      "value": 80.0,
+      "decimals": 0,
+      "context": "~80% top-1, across model families.** The witness/mount blindspot entry",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

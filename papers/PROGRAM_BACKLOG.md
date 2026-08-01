@@ -50,6 +50,23 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 109 (2026-08-01, operator-directed "yes let's go") — THE DOOR OPENS: cross-family content reading was capacity-limited, not bedrock. `DOOR_OPENS__content_capacity_limited` (FINDING OATH-HELD 20/12/0; all three frozen gates green).**
+  B31-v2 run under the day-old frozen prereg. **THE DECISIVE CELL: gemma-2-2b — the rung-2
+  existence proof that isometry does not grade readability (RSA 0.955, linear read at EXACT
+  chance) — reads at 0.7857 top-1 over 70 held-out concepts (55× chance) through a two-layer
+  MLP fit on the same extractions.** Same-family 0.3429→0.8000 (G0 ×3-reproduced); Qwen
+  0.1143→0.7000 (49×); the pairing-shuffled twin at exact chance everywhere (the lift is the
+  correspondence, not the architecture). The isometry puzzle resolves: RSA-visible geometry,
+  linearly-accessible content, and nonlinearly-accessible content dissociate — the warp
+  between families is real and learnable. HONEST BOUNDARIES stated in the FINDING: paired
+  anchors bound the CEILING (not a label-free protocol — rung-2 stands); read-only
+  (read≠write untouched); one source/seed/layer-rule, 70-way ID. Ops disclosure: two
+  supervised launches OS-killed at the gemma shard load → per-target process isolation +
+  detached execution (`c4b6d56`, the c86/c80 lessons), llama cell triple-reproduced across
+  launches as the regression evidence. Witness blindspot re-scoped to the deployed linear
+  class. *Spawned:* **B34** label-free nonlinear (recover the pairing unsupervised — the
+  actual telepathy bar); **B35** breadth/scale/stability. *Operator-gated unchanged.*
+
 - **Cycle 108 (2026-08-01, operator-directed "study it all / the connection of minds / make the impossible possible") — THE SYNTHESIS, THE WITNESS, AND THE DOOR. `DONE__connection_of_minds_synthesized__witness_shipped__b31v2_frozen` (SYNTHESIS OATH-HELD 36/5/0; witness 13 new tests, suite green).**
   The operator's directive taken the only way this program takes anything: by receipts.
   **THE SYNTHESIS** (`papers/SYNTHESIS_connection_of_minds_2026_08_01.md` + provenance
@@ -1764,7 +1781,9 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B28** | **Permutation-nulled + whitened off-diagonal independence** (spawned by cycle-2 PARTIAL-STRUCTURED). | spawned by axis-independence | H | **DONE — `WHITENING-RESOLVES`** (cycle 3). Raw cross-talk REAL+SPECIFIC (beats perm + random-dir nulls, p=0.001) but a pure COVARIANCE artifact: ZCA-whitening → off-diagonals to chance (0.55/0.55), diagonals perfect (0.97/1.0), directions exactly orthogonal. Clean orthonormal basis exists under a Mahalanobis readout; Gram-Schmidt corroborates. `FINDING_entanglement_resolution_2026_06_11.md` (OATH-HELD 28/0) |
 | **B29** | **Whitened readout in the MAPPED space + covariance robustness** (spawned by B28). | spawned by entanglement-resolution | H | **DONE — `BASIS-CLEARED`** (cycle 7). Mapped-space (shrunk) whitening pulls Llama's cycle-5 miss 0.6562→0.6059, stable 5/5 λ; full (truth×danger) basis clears cross-model (gemma/Llama/Qwen). Cycle-5 miss was a source-whitening artifact. `FINDING_mapped_whitening_2026_06_12.md` (OATH-HELD 39/0). Owed: wire mapped-space whitening into styxx.crossmind read-path (B32). |
 | **B32** | **styxx.crossmind read-path: mapped-space whitening for cross-model reads** (spawned by B29; surfaced as the one MAJOR by the 2026-06-12 adversarial audit). | spawned by mapped-whitening | M | **DONE** (audit cycle). Added `read_cross_model(reference_states, labels, state_map, target_states, mapped_anchors, shrink_lambda=0.5)` + `zca_shrink` to styxx.crossmind: whitens in the MAPPED-target metric (shrunk), fits the direction there, reads the target — the B29-correct cross-model recipe. `read` stays reference-metric for in-model. +2 tests (19 total); CHANGELOG updated. |
-| **B31** | **Heavy-machinery content transport** (spawned by cycle-6 CONTENT-WEAK): cross-model concept identity collapsed to chance through a label-free LINEAR map (anchor R²≈0.06, 40 anchors). Re-test with far more anchor concepts + a non-linear map; does cross-model CONTENT identity (not just value axes) ever transport? The only open door toward the telepathy-shaped claim. | spawned by concept-decode | M | **PREREG FROZEN — cycle 108** (`PREREG_b31v2_content_transport_2026_08_01.md`): M0 linear vs M1 MLP on the N=462 anchor battery; gemma-2-2b (the RSA-0.955 null) is the decisive cell; G1 = 10× chance opens the door, G3 = the pre-committed closed-negative (`cliff_not_capacity_limited_at_this_class`); pairing-shuffled specificity null. **Runs next firing.** |
+| **B31** | **Heavy-machinery content transport**: does cross-model CONTENT identity (not just value axes) ever transport? | spawned by concept-decode | M | **DONE — `DOOR_OPENS__content_capacity_limited` (cycle 109, FINDING OATH-HELD 20/12/0).** gemma (linear = exact chance at RSA 0.955) reads 0.7857 top-1/70 held-out (55×) through a 2-layer MLP on 392 paired anchors; shuffled-pairing null at chance everywhere; same-family 0.80. The cliff was the linear map class, not the minds. Paired-anchor ceiling result — the label-free question spawns B34. |
+| **B34** | **Label-free nonlinear content transport — the actual telepathy bar** (spawned by B31 DOOR_OPENS): can the anchor PAIRING itself be recovered unsupervised (cycle-consistency / vec2vec-grade objective) and still read held-out cross-family content ≫ chance? B31-v2 proves the information is present and alignable; this asks whether the correspondence is discoverable without labels. | spawned by b31v2 | H | QUEUED |
+| **B35** | **Content-transport breadth/scale/stability** (spawned by B31 DOOR_OPENS): open-vocabulary readout (beyond 70-way), second source model, seed/layer stability, scale curve. | spawned by b31v2 | M | QUEUED |
 | **B30** | **Build the RIGHT second axis — a content-DANGER coordinate** (spawned by cycle-4 HARM-AXIS-NULL). | spawned by conscience-coordinates | H | **PARTIAL-STRUCTURED (near-miss), cycle 5.** Danger axis clean+perfect+orthogonal (c_danger→H=1.0 gemma & both maps, cos −0.0, invariant to truth) — resolves HARM-AXIS-NULL (0.52→1.0). Compositional gate PASSES in gemma + Qwen-3B; primary Llama-3B misses c_truth_invariant_H 0.6562 vs 0.65 by 0.0062 → gate not met. Dangerous-misinfo decomposes (2-D 0.77–0.92 > 1-D falsity 0.52). Validates a directly-fit danger axis for styxx.crossmind. `FINDING_truth_danger_basis_2026_06_12.md` (OATH-HELD 34/0). Clean cross-model claim owed to **B29**. |
 | **B19** | Cross-family steering-validation of the live dissociation (currently Qwen-1.5B-live only): per-model dose/layer sweep. | R4 | M | QUEUED |
 | **B20** | Capture-trust: TEE (H100-CC) attestation prototype + crypto-binding L1.5 implementation. | R4 | L | BLOCKED (hardware) |

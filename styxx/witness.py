@@ -127,7 +127,10 @@ MEASURED_BLINDSPOTS: dict[str, dict] = {
     },
     "high_isometry_unreadability": {
         "statement": "representational similarity does not grade cross-model readability: "
-                     "the highest-RSA target read at exact chance",
+                     "the highest-RSA target read at exact chance THROUGH THE LABEL-FREE "
+                     "LINEAR CLASS the deployed instruments use; b31v2 showed a paired "
+                     "nonlinear map recovers that same target at 55x chance — the boundary "
+                     "is the map class, and this entry is scoped to the deployed one",
         "receipt": "papers/synthesis_minds_addendum.json",
     },
     "activation_geometry_adversary": {
