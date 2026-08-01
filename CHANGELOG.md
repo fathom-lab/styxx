@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **`styxx.seal` — the trust seal for agent work** (`seal`, `verify_seal`, `Seal`; CLI
+  `python -m styxx.seal DOC.md receipts... [--prereg P.md=R.json] [--out SEAL.json]`, exit
+  0/1 = a drop-in CI gate). Verification is the scarce primitive of the agent economy: an
+  agent hands over a deliverable and the receiver either trusts it or burns hours checking.
+  One call composes the shipped verifiers — every numeric claim OATH-certified against
+  receipts, every referenced prereg's result re-scored through its FROZEN gates block with
+  the claimed verdict required to match the frozen table's, the composite bound under a
+  content hash `verify_seal` re-derives. SEALED / SEALED_VACUOUS (nothing checkable — said
+  loudly, never silently) / REFUSED with the failing claim named. Inherits the OATH's
+  boundary verbatim: numeric claims and frozen-gate verdicts, never prose truth. Dogfooded
+  at birth on `FINDING_b31v2_door_opens` (SEALED, 20/12/0, zero refusals). 7 tests, all
+  refusal-shaped.
+
 - **`styxx.protocol` — the research loop as enforceable machinery** (`Experiment`,
   `ProtocolVerdict`). The witness harnesses the program's instruments; this harnesses its
   *process*. An agent cannot score a run whose prereg isn't committed in git history (a

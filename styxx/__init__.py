@@ -400,6 +400,7 @@ from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
 from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
 from .protocol import Experiment, Verdict as ProtocolVerdict
+from .seal import seal, verify_seal, Seal
 from .compare import compare_agents, AgentComparison
 from .antipatterns import antipatterns, AntiPattern
 from .config import set_mood, current_mood_override, gate_multiplier
@@ -826,6 +827,8 @@ __all__ = [
     "Witness", "WitnessVerdict", "MEASURED_CAPABILITIES",
     # 7.18: the research loop as enforceable machinery
     "Experiment", "ProtocolVerdict",
+    # 7.18: the trust seal for agent work
+    "seal", "verify_seal", "Seal",
     "transparency", "TransparencyLog",
     "redact", "redactable_commit", "disclose", "verify_disclosure",
 

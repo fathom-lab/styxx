@@ -1,0 +1,17 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b31v2_door_opens_2026_08_01.md",
+  "document_sha256": "acd1a82b4aabe20a508eca32ffe45a6dd37d231af7fe0fbc42afd251f8fdf060",
+  "oath": {
+    "counts": {
+      "VERIFIED": 20,
+      "ABSTAIN": 12,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [],
+  "refusals": [],
+  "seal_sha256": "117e59d5569603586b984253e3355076147c2b757d0a5f9a5fa6720658218b4e"
+}
