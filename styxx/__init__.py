@@ -415,10 +415,20 @@ def verify_seal(*args, **kwargs):
     return _verify(*args, **kwargs)
 
 
+def gate_diff(*args, **kwargs):
+    """The zero-receipt diff gate — an agent's summary cannot lie about its diff
+    (lazy, see styxx.diffgate for the closed template set and ceilings)."""
+    from .diffgate import gate_diff as _g
+    return _g(*args, **kwargs)
+
+
 def __getattr__(name):
     if name == "Seal":
         from .seal import Seal
         return Seal
+    if name == "DiffGate":
+        from .diffgate import DiffGate
+        return DiffGate
     raise AttributeError(f"module 'styxx' has no attribute {name!r}")
 from .compare import compare_agents, AgentComparison
 from .antipatterns import antipatterns, AntiPattern
@@ -848,6 +858,8 @@ __all__ = [
     "Experiment", "ProtocolVerdict",
     # 7.28: the trust seal for agent work
     "seal", "verify_seal", "Seal",
+    # 7.29: the zero-receipt diff gate
+    "gate_diff", "DiffGate",
     "transparency", "TransparencyLog",
     "redact", "redactable_commit", "disclose", "verify_disclosure",
 

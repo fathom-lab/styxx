@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.29.0] — 2026-08-01 — the zero-receipt gate: a summary cannot lie about its diff
+
+### Added
+
+- **`styxx.diffgate` — the trust stack pointed at UNMODIFIED agent work** (`gate_diff`,
+  `DiffGate`; CLI `python -m styxx.diffgate SUMMARY.md --repo . --base REF [--head REF]
+  [--run CMD] [--strict]`, exit 0/1). No receipts, no preregs, no cooperation from the
+  agent that wrote the summary: extract every diff-shaped claim from a PR body / commit
+  message / session report and verify it against what `git diff` actually says. Catches
+  "updated X" when X isn't in the diff, "adds function retry" when no added line defines
+  it, "added 5 tests" when the diff adds 2, "only touches docs/" when it edited source —
+  each CONTRADICTED with the evidence named. "Tests pass" is UNCHECKABLE without `--run`
+  (the gate does not take the agent's word for test results; `--strict` makes uncheckable
+  fatal). Construct ceiling inline: the template set is CLOSED; uncovered prose is counted,
+  never judged. Dogfooded on this repo's own release commit — honest summary PASS, seeded
+  lies caught and named. 9 tests, all catch-shaped.
+
 ## [7.28.0] — 2026-08-01 — the trust stack: seal · protocol · witness · OATH v0.6.2
 
 ### Added
