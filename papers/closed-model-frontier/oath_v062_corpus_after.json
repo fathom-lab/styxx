@@ -1,0 +1,2081 @@
+{
+  "summary": {
+    "root": "papers",
+    "n_certificates": 139,
+    "held": 98,
+    "failed": 14,
+    "unresolved": 27,
+    "verdict_changed": 14,
+    "receipt_drift": 1
+  },
+  "documents": [
+    {
+      "certificate": "BLOCKED_source_independence_2026_07_24.certificate.json",
+      "document": "BLOCKED_source_independence_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "DATASHEET_conscience_2026_07_24.certificate.json",
+      "document": "DATASHEET_conscience_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "DATASHEET_knowsay_2026_07_27.certificate.json",
+      "document": "DATASHEET_knowsay_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_adjudicated_loop_2026_07_24.certificate.json",
+      "document": "FINDING_adjudicated_loop_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 52,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_belief_asymptote_2026_07_26.certificate.json",
+      "document": "FINDING_belief_asymptote_2026_07_26.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_combined_signal_2026_07_26.certificate.json",
+      "document": "FINDING_combined_signal_2026_07_26.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_competent_agent_2026_07_24.certificate.json",
+      "document": "FINDING_competent_agent_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_conscience_loop_2026_07_24.certificate.json",
+      "document": "FINDING_conscience_loop_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 46,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_cot_inward_2026_07_30.certificate.json",
+      "document": "FINDING_cot_inward_2026_07_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_cot_inward_powered_2026_07_30.certificate.json",
+      "document": "FINDING_cot_inward_powered_2026_07_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_coupling_battery_2026_07_28.certificate.json",
+      "document": "FINDING_coupling_battery_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 13,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_coupling_resolution_2026_07_28.certificate.json",
+      "document": "FINDING_coupling_resolution_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_frame_recovery_2026_07_24.certificate.json",
+      "document": "FINDING_frame_recovery_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_framelocality_dogfood_2026_07_29.certificate.json",
+      "document": "FINDING_framelocality_dogfood_2026_07_29.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_frontier_freetext_v9_2026_07_29.certificate.json",
+      "document": "FINDING_frontier_freetext_v9_2026_07_29.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_frontier_incontext_oof_2026_07_30.certificate.json",
+      "document": "FINDING_frontier_incontext_oof_2026_07_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_frontier_knowsay_2026_07_27.certificate.json",
+      "document": "FINDING_frontier_knowsay_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_frontier_recovery_2026_07_27.certificate.json",
+      "document": "FINDING_frontier_recovery_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_kp_recovery_2026_07_28.certificate.json",
+      "document": "FINDING_kp_recovery_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_kp_replication_2026_07_28.certificate.json",
+      "document": "FINDING_kp_replication_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_poisoned_recovery_2026_07_28.certificate.json",
+      "document": "FINDING_poisoned_recovery_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_retained_probe_instrument_2026_07_30.certificate.json",
+      "document": "FINDING_retained_probe_instrument_2026_07_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 7,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_scale3b_2026_07_29.certificate.json",
+      "document": "FINDING_scale3b_2026_07_29.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_scale_channel_2026_07_24.certificate.json",
+      "document": "FINDING_scale_channel_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_scale_confirm_2026_07_24.certificate.json",
+      "document": "FINDING_scale_confirm_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_scale_test_2026_07_26.certificate.json",
+      "document": "FINDING_scale_test_2026_07_26.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 36,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_selective_confirm_2026_07_24.certificate.json",
+      "document": "FINDING_selective_confirm_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_selective_datasheet_2026_07_24.certificate.json",
+      "document": "FINDING_selective_datasheet_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_selective_escalation_2026_07_24.certificate.json",
+      "document": "FINDING_selective_escalation_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_self_verification_2026_07_25.certificate.json",
+      "document": "FINDING_self_verification_2026_07_25.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_source_independence_v2_2026_07_24.certificate.json",
+      "document": "FINDING_source_independence_v2_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_third_party_bench_2026_07_24.certificate.json",
+      "document": "FINDING_third_party_bench_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_thirdframe_2026_07_29.certificate.json",
+      "document": "FINDING_thirdframe_2026_07_29.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_tiered_channel_2026_07_24.certificate.json",
+      "document": "FINDING_tiered_channel_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_two_channel_2026_07_27.certificate.json",
+      "document": "FINDING_two_channel_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_vendor3b_2026_07_29.certificate.json",
+      "document": "FINDING_vendor3b_2026_07_29.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_verifier_at_7b_2026_07_27.certificate.json",
+      "document": "FINDING_verifier_at_7b_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 26,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "PAPER_knowsay_gap_2026_07_27.certificate.json",
+      "document": "PAPER_knowsay_gap_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 93,
+        "ABSTAIN": 6,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "PROSPECTUS_knowsay_2026_07_27.certificate.json",
+      "document": "PROSPECTUS_knowsay_2026_07_27.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 19,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_llm_breadth_2026_06_03.certificate.json",
+      "document": "RESULT_llm_breadth_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_ai_brain_2026_06_03.certificate.json",
+      "document": "RESULT_ai_brain_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_ai_brain_vision_2026_06_03.certificate.json",
+      "document": "RESULT_ai_brain_vision_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 2
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_ai_human_2026_06_03.certificate.json",
+      "document": "RESULT_ai_human_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 50,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_buried_judge_2026_07_24.certificate.json",
+      "document": "FINDING_buried_judge_2026_07_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 62,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "source.certificate.json",
+      "document": "source.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "stage_a_operating_chars_v3_result.json",
+        "stage_a_operating_chars_result.json",
+        "stage_b_rung1_result.json",
+        "stage_b_hardening_result.json",
+        "stage_b_part2a_result.json",
+        "corpus_label_oracle_receipt.json",
+        "rung2_audit_result.json",
+        "p2d_audit_result.json",
+        "inthewild_truthfulqa_result.json",
+        "anchor_threshold_result.json",
+        "anchor_power_result.json",
+        "realjudge_anchor_threshold_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "CAPSTONE_universal_mind_2026_06_10.certificate.json",
+      "document": "CAPSTONE_universal_mind_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "disjoint_worlds_rsa_result.json",
+        "real_convergence_confirm_result.json",
+        "necessity_attention_result.json",
+        "ai_human_result.json",
+        "ai_brain_result.json",
+        "ai_brain_vision_result.json",
+        "human_feature_result.json",
+        "cn_pooled_result.json",
+        "behavioral_sycophancy_b22_result.json",
+        "mind_v0_validation.json",
+        "oath_v0_validation.json",
+        "oath_corpus_attestation.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "source.certificate.json",
+      "document": "source.md",
+      "recorded_verdict": "OATH-HELD",
+      "status": "MISSING_DOC",
+      "live_verdict": null
+    },
+    {
+      "certificate": "source.certificate.json",
+      "document": "source.md",
+      "recorded_verdict": "OATH-HELD",
+      "status": "MISSING_DOC",
+      "live_verdict": null
+    },
+    {
+      "certificate": "DILIGENCE_cycle18_mutant_battery_2026_07_03.certificate.json",
+      "document": "DILIGENCE_cycle18_mutant_battery_2026_07_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 27,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_oath_v05_precision_2026_07_13.certificate.json",
+      "document": "RESULT_oath_v05_precision_2026_07_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 47,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_calib_poison_law_2026_07_09.certificate.json",
+      "document": "FINDING_calib_poison_law_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "foundation_result.json",
+        "attack_sweep_result.json"
+      ],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_attack_sentiment_PARTIAL_2026_07_09.certificate.json",
+      "document": "RESULT_attack_sentiment_PARTIAL_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 22,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_attack_sentiment_r64_2026_07_09.certificate.json",
+      "document": "RESULT_attack_sentiment_r64_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 41,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_attack_sentiment_wholestack_2026_07_09.certificate.json",
+      "document": "RESULT_attack_sentiment_wholestack_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 38,
+        "ABSTAIN": 26,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_attack_sentiment_wholestack_2026_07_10.certificate.json",
+      "document": "RESULT_attack_sentiment_wholestack_2026_07_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 60,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.certificate.json",
+      "document": "RESULT_B2_adaptive_erasure_SURVIVES_2026_07_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 100,
+        "ABSTAIN": 31,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_B2_coupling_confirm_VOID_2026_07_16.certificate.json",
+      "document": "RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 72,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.certificate.json",
+      "document": "RESULT_B2_coupling_dose_PARTIAL_2026_07_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 49,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.certificate.json",
+      "document": "RESULT_B2_subspace_erasure_SURVIVES_2026_07_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 74,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.certificate.json",
+      "document": "RESULT_B7_erasure_3b_SURVIVES_2026_07_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 92,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.certificate.json",
+      "document": "RESULT_foundation_refusal_UNTESTABLE_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 11,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.certificate.json",
+      "document": "RESULT_foundation_sentiment_UNTESTABLE_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.certificate.json",
+      "document": "RESULT_foundation_sentiment_v2_VALID_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 16,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_honesty_parity_confirm_2026_07_11.certificate.json",
+      "document": "RESULT_honesty_parity_confirm_2026_07_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 82,
+        "ABSTAIN": 25,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_honesty_parity_confirm_llama_2026_07_12.certificate.json",
+      "document": "RESULT_honesty_parity_confirm_llama_2026_07_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 73,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_honesty_parity_control_2026_07_11.certificate.json",
+      "document": "RESULT_honesty_parity_control_2026_07_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 68,
+        "ABSTAIN": 30,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_margin_parity_control_2026_07_10.certificate.json",
+      "document": "RESULT_margin_parity_control_2026_07_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "attack_sweep_result.json",
+        "foundation_result.json"
+      ],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 61,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_sentiment_probe_parity_2026_07_09.certificate.json",
+      "document": "RESULT_sentiment_probe_parity_2026_07_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_b22_nonacknowledged_caving_2026_06_09.certificate.json",
+      "document": "FINDING_b22_nonacknowledged_caving_2026_06_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 41,
+        "ABSTAIN": 24,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_b23_fable_2026_06_10.certificate.json",
+      "document": "FINDING_b23_fable_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.certificate.json",
+      "document": "FINDING_b24_whitebox_vs_behavioral_2026_06_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.certificate.json",
+      "document": "FINDING_behavioral_sycophancy_blackbox_2026_06_09.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "intent_metapc_3.json",
+        "intent_ladder_result.json"
+      ],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 27,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_oath_v04_float_binding_2026_07_03.certificate.json",
+      "document": "RESULT_oath_v04_float_binding_2026_07_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "cycle22_v04_battery_result.json",
+        "cycle22_v04_validation_result.json",
+        "cycle22_v03_baseline_battery_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "RESULT_oath_v04_recall_decimalguard_2026_07_04.certificate.json",
+      "document": "RESULT_oath_v04_recall_decimalguard_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "cycle25_decimalguard_battery_result.json",
+        "cycle25_decimalguard_g3_result.json",
+        "cycle22_v03_baseline_battery_result.json",
+        "cycle23_recall_battery_result.json",
+        "cycle24_rangeguard_battery_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "RESULT_oath_v04_recall_rangeguard_2026_07_04.certificate.json",
+      "document": "RESULT_oath_v04_recall_rangeguard_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "cycle24_rangeguard_battery_result.json",
+        "cycle24_rangeguard_g3_result.json",
+        "cycle23_recall_battery_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "RESULT_oath_v04_trigger_recall_2026_07_04.certificate.json",
+      "document": "RESULT_oath_v04_trigger_recall_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "cycle23_recall_battery_result.json",
+        "cycle23_g3_handcheck_result.json",
+        "cycle22_v03_baseline_battery_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDINGS_rhythm_substrate_2026_06_03.certificate.json",
+      "document": "FINDINGS_rhythm_substrate_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 21,
+        "ABSTAIN": 28,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "CONSCIENCE_MOUNT_ARC_2026_06_13.certificate.json",
+      "document": "CONSCIENCE_MOUNT_ARC_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "portable_values_refusal_result.json",
+        "axis_independence_result.json",
+        "entanglement_resolution_result.json",
+        "conscience_coordinates_result.json",
+        "truth_danger_basis_result.json",
+        "concept_decode_result.json",
+        "mapped_whitening_result.json",
+        "content_wall_result.json",
+        "mount_live_catch_result.json",
+        "mount_fpr_live_result.json",
+        "mount_regime_result.json",
+        "mount_gamed_result.json",
+        "mount_ensemble_result.json",
+        "mount_offmanifold_result.json",
+        "mount_offmanifold_v2_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_cot_ablation_b36_2026_06_14.certificate.json",
+      "document": "FINDING_mount_cot_ablation_b36_2026_06_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_cot_ablation_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_early_warning_b34_2026_06_13.certificate.json",
+      "document": "FINDING_mount_early_warning_b34_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_early_warning_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_ensemble_2026_06_13.certificate.json",
+      "document": "FINDING_mount_ensemble_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_ensemble_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_establish_b38_2026_06_14.certificate.json",
+      "document": "FINDING_mount_establish_b38_2026_06_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_establish_screen_diag_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_fpr_live_2026_06_12.certificate.json",
+      "document": "FINDING_mount_fpr_live_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_fpr_live_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_freeform_b35_2026_06_13.certificate.json",
+      "document": "FINDING_mount_freeform_b35_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_freeform_early_warning_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_gamed_2026_06_13.certificate.json",
+      "document": "FINDING_mount_gamed_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_gamed_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_inert_calibration_b37_2026_06_14.certificate.json",
+      "document": "FINDING_mount_inert_calibration_b37_2026_06_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_inert_calibration_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_live_catch_2026_06_12.certificate.json",
+      "document": "FINDING_mount_live_catch_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_live_catch_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_offmanifold_2026_06_13.certificate.json",
+      "document": "FINDING_mount_offmanifold_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_offmanifold_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_offmanifold_v2_2026_06_13.certificate.json",
+      "document": "FINDING_mount_offmanifold_v2_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_offmanifold_v2_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_regime_2026_06_13.certificate.json",
+      "document": "FINDING_mount_regime_2026_06_13.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_regime_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_mount_within_b39_2026_06_14.certificate.json",
+      "document": "FINDING_mount_within_b39_2026_06_14.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "mount_within_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_council_2026_05_25.certificate.json",
+      "document": "FINDING_council_2026_05_25.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 17,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_fame_vs_truth_2026_05_25.certificate.json",
+      "document": "FINDING_fame_vs_truth_2026_05_25.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_depth_does_not_predict_truth_2026_07_03.certificate.json",
+      "document": "FINDING_depth_does_not_predict_truth_2026_07_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "verdict.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "TICKET_readme_truth_in_advertising_2026_07_03.certificate.json",
+      "document": "TICKET_readme_truth_in_advertising_2026_07_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "verdict.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "FINDING_dogfood_2026_05_25.certificate.json",
+      "document": "FINDING_dogfood_2026_05_25.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 2,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_adversarial_curve_v3_2026_06_08.certificate.json",
+      "document": "FINDING_adversarial_curve_v3_2026_06_08.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 34,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_council_grounding_2026_05_28.certificate.json",
+      "document": "FINDING_council_grounding_2026_05_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 8,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_detection_locus_gpt_2026_05_30.certificate.json",
+      "document": "FINDING_detection_locus_gpt_2026_05_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "ATLAS_OF_MINDS_v0.certificate.json",
+      "document": "ATLAS_OF_MINDS_v0.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "behavioral_sycophancy_b22_result.json"
+      ],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "DEMO_meaning_diff_2026_06_10.certificate.json",
+      "document": "DEMO_meaning_diff_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 2,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 3
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_anatomy_v0_2026_06_10.certificate.json",
+      "document": "FINDING_anatomy_v0_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_anatomy_v2_2026_06_10.certificate.json",
+      "document": "FINDING_anatomy_v2_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "real_convergence_confirm_result.json"
+      ],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_gavagai_scale_2026_06_10.certificate.json",
+      "document": "FINDING_gavagai_scale_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 14,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_gavagai_v0_2026_06_10.certificate.json",
+      "document": "FINDING_gavagai_v0_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 11,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_gavagai_x_2026_06_10.certificate.json",
+      "document": "FINDING_gavagai_x_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "real_convergence_confirm_result.json"
+      ],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_matcher_v1_2026_06_10.certificate.json",
+      "document": "FINDING_matcher_v1_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_telepathy_v0_2026_06_10.certificate.json",
+      "document": "FINDING_telepathy_v0_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 7,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "PAPER_frame_locality_2026_07_28.certificate.json",
+      "document": "PAPER_frame_locality_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "frame_recovery_result.json",
+        "scale_test_result.json",
+        "frontier_knowsay_result.json",
+        "frontier_recovery_result.json",
+        "adjudicated_loop_result.json",
+        "injection_gap_closure_result.json",
+        "behavioral_sycophancy_b22_result.json",
+        "e1_result.json",
+        "poisoned_recovery_result.json",
+        "kp_recovery_result.json",
+        "kp_replication_result.json",
+        "coupling_battery_result.json",
+        "coupling_resolution_result.json",
+        "scale3b_result.json",
+        "thirdframe_result.json",
+        "vendor3b_result.json",
+        "frontier_incontext_oof_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "PROGRAM_SYNTHESIS_2026_07_30.certificate.json",
+      "document": "PROGRAM_SYNTHESIS_2026_07_30.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "frontier_freetext_v9_result.json",
+        "frontier_incontext_oof_result.json",
+        "scale3b_result.json",
+        "vendor3b_result.json",
+        "thirdframe_result.json",
+        "coupling_resolution_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    },
+    {
+      "certificate": "RESULT_E1_read_neq_write_STANDS_2026_07_04.certificate.json",
+      "document": "RESULT_E1_read_neq_write_STANDS_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 19,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E2_strong_attacker_2026_07_07.certificate.json",
+      "document": "RESULT_E2_strong_attacker_2026_07_07.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E2PRIME_replay_sweep_2026_07_07.certificate.json",
+      "document": "RESULT_E2PRIME_replay_sweep_2026_07_07.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 17,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E3_adaptive_STANDS_2026_07_04.certificate.json",
+      "document": "RESULT_E3_adaptive_STANDS_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.certificate.json",
+      "document": "RESULT_E3DPRIME_stronger_adaptive_2026_07_08.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 32,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E3PRIME_bite_verification_2026_07_07.certificate.json",
+      "document": "RESULT_E3PRIME_bite_verification_2026_07_07.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 28,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_E3TPRIME_pure_moving_2026_07_08.certificate.json",
+      "document": "RESULT_E3TPRIME_pure_moving_2026_07_08.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 54,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_foundation_2026_07_04.certificate.json",
+      "document": "RESULT_foundation_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 24,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_stage2_EVADABLE_2026_07_04.certificate.json",
+      "document": "RESULT_stage2_EVADABLE_2026_07_04.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 20,
+        "ABSTAIN": 8,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.certificate.json",
+      "document": "SCOPE_NOTE_probe_survival_is_not_behavioral_survival_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "poisoned_recovery_result.json",
+        "kp_recovery_result.json"
+      ],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 5,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 6
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_geometry_integrity_2026_06_03.certificate.json",
+      "document": "RESULT_geometry_integrity_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 9,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "RESULT_rhythm_rescue_2026_06_03.certificate.json",
+      "document": "RESULT_rhythm_rescue_2026_06_03.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 25,
+        "ABSTAIN": 15,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_axis_independence_2026_06_11.certificate.json",
+      "document": "FINDING_axis_independence_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_concept_decode_2026_06_12.certificate.json",
+      "document": "FINDING_concept_decode_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 22,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_conscience_coordinates_2026_06_11.certificate.json",
+      "document": "FINDING_conscience_coordinates_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 30,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_content_wall_2026_06_12.certificate.json",
+      "document": "FINDING_content_wall_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 14,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_entanglement_resolution_2026_06_11.certificate.json",
+      "document": "FINDING_entanglement_resolution_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 29,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_live_signature_mvp_2026_06_10.certificate.json",
+      "document": "FINDING_live_signature_mvp_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [
+        "live_signature_result.json"
+      ],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 3,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_mapped_whitening_2026_06_12.certificate.json",
+      "document": "FINDING_mapped_whitening_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 39,
+        "ABSTAIN": 13,
+        "UNGROUNDED": 1
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_portable_conscience_adversarial_ood_2026_06_11.certificate.json",
+      "document": "FINDING_portable_conscience_adversarial_ood_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 23,
+        "ABSTAIN": 0,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_portable_conscience_ood_2026_06_11.certificate.json",
+      "document": "FINDING_portable_conscience_ood_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 33,
+        "ABSTAIN": 5,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_portable_conscience_v0_2026_06_10.certificate.json",
+      "document": "FINDING_portable_conscience_v0_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-FAILED",
+      "counts": {
+        "VERIFIED": 15,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 3
+      },
+      "verdict_changed": true,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_portable_conscience_v2_2026_06_10.certificate.json",
+      "document": "FINDING_portable_conscience_v2_2026_06_10.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 12,
+        "ABSTAIN": 1,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_portable_values_refusal_2026_06_11.certificate.json",
+      "document": "FINDING_portable_values_refusal_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 42,
+        "ABSTAIN": 9,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_says_yes_knows_no_2026_06_11.certificate.json",
+      "document": "FINDING_says_yes_knows_no_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 10,
+        "ABSTAIN": 4,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_says_yes_knows_no_v3_2026_06_11.certificate.json",
+      "document": "FINDING_says_yes_knows_no_v3_2026_06_11.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 31,
+        "ABSTAIN": 10,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_truth_danger_basis_2026_06_12.certificate.json",
+      "document": "FINDING_truth_danger_basis_2026_06_12.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 35,
+        "ABSTAIN": 12,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "FINDING_promptopinion_2026_05_24.certificate.json",
+      "document": "FINDING_promptopinion_2026_05_24.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [],
+      "live_verdict": "OATH-HELD",
+      "counts": {
+        "VERIFIED": 18,
+        "ABSTAIN": 18,
+        "UNGROUNDED": 0
+      },
+      "verdict_changed": false,
+      "status": "OK"
+    },
+    {
+      "certificate": "SYNTHESIS_frame_locality_2026_07_28.certificate.json",
+      "document": "SYNTHESIS_frame_locality_2026_07_28.md",
+      "recorded_verdict": "OATH-HELD",
+      "receipt_drift": [],
+      "missing_receipts": [
+        "scale_test_result.json",
+        "frontier_knowsay_result.json",
+        "frontier_recovery_result.json",
+        "third_party_bench_result.json",
+        "frame_recovery_result.json",
+        "adjudicated_loop_result.json",
+        "source_independence_v2_result.json",
+        "injection_gap_closure_result.json",
+        "behavioral_sycophancy_b22_result.json",
+        "e1_result.json",
+        "poisoned_recovery_result.json",
+        "kp_recovery_result.json",
+        "kp_replication_result.json"
+      ],
+      "status": "NO_RECEIPTS",
+      "live_verdict": null
+    }
+  ]
+}

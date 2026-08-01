@@ -44,7 +44,11 @@ _NUM = re.compile(r"(?<![\w.])[-+]?\d{1,3}(?:,\d{3})+(?:\.\d+)?(?![\w.])|(?<![\w
 # numbers we never try to ground (calendar years, semver-ish, sha fragments are filtered by context)
 _YEAR = re.compile(r"^(19|20)\d{2}$")
 _DATEISH = re.compile(r"\d{4}[-_]\d{2}[-_]\d{2}")
-_SHAISH = re.compile(r"\b[0-9a-f]{7,64}\b")
+# v0.6.2 (PREREG_oath_v062_signed_extraction_2026_07_31): the scrub requires >=1 letter — an
+# all-digit span of >=7 chars is a decimal fraction / count / identifier, not a hash, and the
+# digit-only form was eating the fractional part of every full-precision decimal (>=7 fractional
+# digits), leaving them invisible to extraction: certified-by-omission, the inverse of the oath.
+_SHAISH = re.compile(r"\b(?=[0-9a-f]*[a-f])[0-9a-f]{7,64}\b")
 _VERSIONISH = re.compile(r"\bv?\d+\.\d+\.\d+\b")
 
 
@@ -73,6 +77,10 @@ def extract_numbers(text: str) -> list[dict]:
                 header_for[j + 1] = hdr   # 1-based line numbers
                 j += 1
     for ln_no, line in enumerate(lines, 1):
+        # v0.6.2 signed extraction: the typographic minus U+2212 becomes ASCII '-' so _NUM reads
+        # it as a sign — pre-fix, '−0.0154' extracted as POSITIVE 0.0154 and an accurate negative
+        # claim could be accused (the v0.6.1 G3 kill). En-dash ranges (U+2013) are untouched.
+        line = line.replace("−", "-")
         # drop fenced/sha/date/version spans from the searchable line
         scrub = _SHAISH.sub(" ", line)
         scrub = _DATEISH.sub(" ", scrub)
@@ -150,8 +158,14 @@ def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = Tru
     if doc_val == r_val:
         return True
     if doc_dec > 0:
-        tol = 0.5 * 10 ** (-doc_dec) + 1e-12
-        if abs(round(r_val, doc_dec) - doc_val) <= 1e-12 or abs(r_val - doc_val) <= tol:
+        # v0.6.2 epsilon hole (PREREG_oath_v062): the flat 1e-12 term is invisible at <=6
+        # decimals and fatal at 16 — it verified any mutation in fractional digits >=13 of a
+        # full-precision claim. Claims at <=12 decimals keep the historic tolerance
+        # byte-for-byte; claims at >=13 decimals get no epsilon subsidy (verbatim quotes still
+        # pass via exact equality above; the float64 floor at digit 16+ is disclosed, not hidden).
+        eps = 1e-12 if doc_dec <= 12 else 0.0
+        tol = 0.5 * 10 ** (-doc_dec) + eps
+        if abs(round(r_val, doc_dec) - doc_val) <= eps or abs(r_val - doc_val) <= tol:
             return True
     if allow_scaling:
         # percent <-> fraction (doc says 80%, receipt holds 0.80; or doc 0.8 vs receipt 80)
@@ -178,6 +192,10 @@ V05_ARXIV_ID = True           # class C: dddd.ddddd arXiv id -> ABSTAIN
 V05_AT_PARAM = True           # class D: @-glued parameter -> ABSTAIN
 V05_DERIVED_PCT = True        # class E: "12.7% (19/150" -> VERIFY iff both operands ground
 V05_SELF_SCOPED_N = True      # class F: n= obligates only its own glued token
+
+# v0.6.2 (PREREG_oath_v062_signed_extraction_2026_07_31) -- severable per the same procedure.
+V062_FLOAT_STEM_PREF = True   # attribution-only: prefer stem-binding receipt_ref for floats;
+                              # may reorder `hits`, never change a status (G5-gated)
 
 
 # ---------------------------------------------------------------- contradiction triggers
@@ -225,14 +243,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # design; its receipt is the PREREG document).
         # v0.3: rules test the FULL line — the display context truncates at 160 chars and a
         # disclosure note past that boundary was invisible to is_hist (caught in the D2 hand-check).
-        ctx = doc_lines[num["line"] - 1].strip()
+        # v0.6.2: same U+2212 normalization as extraction, so signed tokens are findable in ctx
+        ctx = doc_lines[num["line"] - 1].strip().replace("−", "-")
         bctx = num.get("binding_context", ctx)   # v0.3: table rows bind via their header too
         tok_at = ctx.find(num["token"])
         pre = ctx[max(0, tok_at - 18):tok_at] if tok_at >= 0 else ""
         # v0.3: a token at line start inherits the tail of the previous line as pre-context —
         # 'subclass AUC\n1.0)' wraps mid-sentence and the unit keyword must still bind.
         if 0 <= tok_at < 18 and num["line"] >= 2:
-            pre = (doc_lines[num["line"] - 2].strip()[-(18 - tok_at):] + " " + pre).strip()[-24:]
+            pre = (doc_lines[num["line"] - 2].strip().replace("−", "-")[-(18 - tok_at):]
+                   + " " + pre).strip()[-24:]
         post = ctx[tok_at + len(num["token"]):] if tok_at >= 0 else ""
         # v0.5 class A (approx-notation): ≈/~/∼ join the comparison class — a value the doc itself
         # marks approximate is not an exact-oath-swearable claim (PREREG_oath_v05_precision).
@@ -319,6 +339,18 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                         abs(round(100.0 * a_v / b_v, num["decimals"]) - num["value"]) < 1e-9:
                     derived_ref = (f"derived:{dm.group(1)}/{dm.group(2)}@"
                                    f"{a_ok[0][0]}:{a_ok[0][1]}|{b_ok[0][0]}:{b_ok[0][1]}")
+        # v0.6.2 float stem-preference (attribution-only, severable): when a float claim
+        # value-matches several leaves, record the hit whose path shares a word stem with the
+        # claim's binding context (the v0.3 count-binding stem test) over a coincidental first
+        # hit. STATUS untouched — a stable sort reorders `hits`, never empties it. Full
+        # claim->field binding for floats (status-level) remains the named v0.4 debt.
+        if V062_FLOAT_STEM_PREF and num["decimals"] > 0 and len(hits) > 1:
+            words = {w.lower().strip("'’") for w in re.findall(r"[A-Za-z][A-Za-z_-]{2,}", bctx)}
+            stems = {w[:4] for w in words} | {s[:4] for w in words for s in re.split(r"[-_]", w) if len(s) >= 3}
+            def _stem_ok(p):
+                segs = {s.lower() for seg in re.split(r"[.\[\]]", p) for s in re.split(r"[-_]", seg) if s}
+                return bool({s[:4] for s in segs if len(s) >= 3} & stems)
+            hits = sorted(hits, key=lambda h: (not _stem_ok(h[1]),))
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
         elif is_notation:

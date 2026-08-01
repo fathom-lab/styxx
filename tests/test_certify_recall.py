@@ -106,3 +106,67 @@ def test_v05_class_a_is_dropped():
     import styxx.certify as C
     assert C.V05_APPROX_NOTATION is False
     assert C.V05_SELF_SCOPED_N is True and C.V05_DERIVED_PCT is True
+
+
+# ---------------------------------------------------------------- OATH v0.6.2 pins
+# PREREG_oath_v062_signed_extraction_2026_07_31: SHA-scrub requires a letter (full-precision
+# decimal fractions extractable), the flat 1e-12 epsilon no longer subsidizes claims quoted at
+# >=13 decimals, and the typographic minus U+2212 is read as a sign.
+
+def test_v062_full_precision_decimal_extracted_and_verified(tmp_path):
+    # pre-v0.6.2 the 16-digit fraction was scrubbed as a sha and never extracted
+    assert _status(tmp_path, "The cave rate on first-correct was 0.5348837209302325 this run.",
+                   {"cave_rate_on_first_correct": 0.5348837209302325},
+                   "0.5348837209302325") == "VERIFIED"
+
+
+def test_v062_full_precision_mutant_ungrounded(tmp_path):
+    # digit-4 mutation of the same claim, trigger-bound line -> must be flagged
+    assert _status(tmp_path, "The cave rate on first-correct was 0.5341837209302325 this run.",
+                   {"cave_rate_on_first_correct": 0.5348837209302325},
+                   "0.5341837209302325") == "UNGROUNDED"
+
+
+def test_v062_epsilon_hole_closed_digit13(tmp_path):
+    # digit-13 mutation: pre-v0.6.2 the flat 1e-12 verified this; now it must not
+    assert _status(tmp_path, "The cave rate on first-correct was 0.5348837209302925 this run.",
+                   {"cave_rate_on_first_correct": 0.5348837209302325},
+                   "0.5348837209302925") == "UNGROUNDED"
+
+
+def test_v062_lettered_sha_still_scrubbed(tmp_path):
+    doc = tmp_path / "d.md"
+    doc.write_text("# t\n\npreamble line here.\n\ncommitted at 9cbf1c7 with rate 0.51 held.\n",
+                   encoding="utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_text(json.dumps({"rate": 0.51}), encoding="utf-8")
+    cert = certify_doc(doc, [rp])
+    toks = [e["token"] for e in cert["ledger"]]
+    assert "0.51" in toks
+    assert not any("9cbf1c7" in t for t in toks)
+
+
+def test_v062_low_precision_tolerance_unchanged(tmp_path):
+    # a 4dp quote of a full-precision receipt value keeps the historic rounding-aware pass
+    assert _status(tmp_path, "The cave rate on first-correct was 0.5349 this run.",
+                   {"cave_rate_on_first_correct": 0.5348837209302325},
+                   "0.5349") == "VERIFIED"
+
+
+def test_v062_unicode_minus_reads_as_sign(tmp_path):
+    # the v0.6.1 G3 kill: a U+2212-signed accurate claim must VERIFY against its negative leaf
+    assert _status(tmp_path,
+                   "discriminating margin − measured at −0.01538461538461533 vs held.",
+                   {"discriminating_margin": -0.01538461538461533},
+                   "-0.01538461538461533") == "VERIFIED"
+
+
+def test_v062_en_dash_range_second_half_not_extracted(tmp_path):
+    doc = tmp_path / "d.md"
+    doc.write_text("# t\n\npreamble line here.\n\nsee lines L27–31 for the rate 0.51 held.\n",
+                   encoding="utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_text(json.dumps({"rate": 0.51}), encoding="utf-8")
+    cert = certify_doc(doc, [rp])
+    toks = [e["token"] for e in cert["ledger"]]
+    assert "0.51" in toks and "31" not in toks
