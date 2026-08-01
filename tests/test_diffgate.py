@@ -98,3 +98,21 @@ def test_uncovered_prose_is_counted_not_judged(tmp_path):
                   tmp_path, base, "HEAD")
     assert g.verdict == "PASS"
     assert g.uncovered_sentences >= 1
+
+
+def test_added_section_bullet_is_not_a_created_file_claim(tmp_path):
+    # market-sweep catch (IBL5#1667): "`f.md`: Added the X section" means content added
+    # IN the file, not the file being added — must not accuse an M file of not being A
+    base = _repo(tmp_path)
+    g = gate_diff("- `src/app.py`: Added the retry section and guidance.",
+                  tmp_path, base, "HEAD")
+    assert not any(c.kind == "file_created" and c.verdict == "CONTRADICTED"
+                   for c in g.claims)
+
+
+def test_fixture_is_not_the_verb_fix(tmp_path):
+    # market-sweep catch (mcp-stdio#389): 'fixture ... path' fired file_touched via fix\w+
+    base = _repo(tmp_path)
+    g = gate_diff("Exactly one fixture emits a request in missing_file.py behavior.",
+                  tmp_path, base, "HEAD")
+    assert not any(c.kind == "file_touched" for c in g.claims)

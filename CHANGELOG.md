@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.29.2] — 2026-08-01 — diffgate validated against the live market; checkout-free gating
+
+### Added
+
+- **`gate_diff_text` / `parse_unified_diff`** — gate a summary against a RAW unified diff
+  (a webhook payload, GitHub's `.diff` URL) with no git checkout at all: the zero-receipt
+  promise taken literally.
+
+### Fixed
+
+- **Two false-accusation classes caught by sweeping 24 real agent-authored public PRs**
+  (bodies carrying the Claude Code marker, gated against their actual diffs): (1) the
+  bullet form ```path`: Added the X section`` means content added IN the file, not the
+  file being added — it no longer maps to a file-created claim; (2) ``fix\w+`` matched
+  the word *fixture* and manufactured phantom file-touched claims — verb forms pinned.
+  Post-fix sweeps: our 80-commit history 4/4 VERIFIED, the 24-PR market corpus 8/8
+  VERIFIED across 6 claim-bearing PRs — **zero false accusations on either corpus**.
+  Regression tests carry both catches by name.
+
 ## [7.29.1] — 2026-08-01 — diffgate validated against 80 real commits; the false-accusation class closed
 
 ### Fixed

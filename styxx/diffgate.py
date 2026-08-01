@@ -51,11 +51,11 @@ _TEMPLATES = [
         rf"\b(?:creat\w+|new)\s+(?:file|module|script|test file)?\s*{_W}[`\"']?(?P<path>{_PATH})[`\"']?",
         re.I)),
     ("file_created", re.compile(
-        rf"[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s*(?:new|added|created)\b", re.I)),
+        rf"[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s*(?:new|created)\b", re.I)),
     ("file_deleted", re.compile(
         rf"\b(?:delet\w+|remov\w+)\s+(?:the\s+file\s+)?{_W}[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
     ("file_touched", re.compile(
-        rf"\b(?:modif\w+|updat\w+|edit\w+|chang\w+|refactor\w+|fix\w+|add\w+|extend\w+|"
+        rf"\b(?:modif\w+|updat\w+|edit\w+|chang\w+|refactor\w+|fix(?:es|ed|ing)?\b|add\w+|extend\w+|"
         rf"hard\w+|wir\w+|patch\w+)\s+{_W}[`\"']?(?P<path>{_PATH})[`\"']?", re.I)),
     ("file_touched", re.compile(
         rf"^[\s*-]*[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s+", re.M)),
@@ -107,6 +107,40 @@ def _norm(p: str) -> str:
     return p.replace("\\", "/").lstrip("./").lower()
 
 
+def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
+    """Unified diff text -> ({normalized_path: A|M|D}, added-lines blob).
+
+    Lets the gate run on a raw ``.diff`` (webhook payloads, GitHub's ``.diff`` URL) with
+    no checkout at all — the zero-receipt promise taken literally.
+    """
+    status: dict[str, str] = {}
+    added: list[str] = []
+    old_path = None
+    for line in diff_text.splitlines():
+        if line.startswith("--- "):
+            old_path = line[4:].strip()
+        elif line.startswith("+++ "):
+            new = line[4:].strip()
+            if new == "/dev/null":
+                status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+            elif old_path in ("/dev/null", None):
+                status[_norm(new[2:] if new.startswith("b/") else new)] = "A"
+            else:
+                status[_norm(new[2:] if new.startswith("b/") else new)] = "M"
+        elif line.startswith("+") and not line.startswith("+++"):
+            added.append(line[1:])
+    return status, "\n".join(added)
+
+
+def gate_diff_text(summary_text: str, diff_text: str,
+                   run: str | None = None, strict: bool = False,
+                   repo: str | Path | None = None) -> DiffGate:
+    """Gate a summary against a RAW unified diff — no git checkout required."""
+    status, added_blob = parse_unified_diff(diff_text)
+    return _gate(summary_text, status, added_blob, run=run, strict=strict,
+                 repo=repo, base="(diff-text)", head="(diff-text)")
+
+
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
               run: str | None = None, strict: bool = False) -> DiffGate:
     """Extract diff-shaped claims from *summary_text* and verify against base..head."""
@@ -121,6 +155,12 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     added_lines = [l[1:] for l in _git(repo, "diff", f"{base}..{head}").splitlines()
                    if l.startswith("+") and not l.startswith("+++")]
     added_blob = "\n".join(added_lines)
+    return _gate(summary_text, status, added_blob, run=run, strict=strict,
+                 repo=repo, base=base, head=head)
+
+
+def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
+          run: str | None, strict: bool, repo, base: str, head: str) -> DiffGate:
 
     def find_path(claimed: str):
         c = _norm(claimed)

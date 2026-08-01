@@ -38,5 +38,85 @@
   "l1": 0.0496,
   "random": 0.0244,
   "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "rake",
+  "native": 0.1591,
+  "m1": -0.001,
+  "l1": 0.0076,
+  "random": 0.006,
+  "eps_stability_cos": 0.9988
+ },
+ {
+  "concept": "plate",
+  "native": 0.1097,
+  "m1": 0.033,
+  "l1": 0.0275,
+  "random": 0.0609,
+  "eps_stability_cos": 0.9979
+ },
+ {
+  "concept": "singer",
+  "native": 0.1614,
+  "m1": 0.0397,
+  "l1": -0.0298,
+  "random": -0.0373,
+  "eps_stability_cos": 0.9993
+ },
+ {
+  "concept": "castle",
+  "native": 0.2942,
+  "m1": 0.0651,
+  "l1": 0.0271,
+  "random": 0.0388,
+  "eps_stability_cos": 0.9987
+ },
+ {
+  "concept": "tractor",
+  "native": 0.0161,
+  "m1": 0.0851,
+  "l1": 0.066,
+  "random": 0.0017,
+  "eps_stability_cos": 0.9992
+ },
+ {
+  "concept": "valley",
+  "native": 0.0453,
+  "m1": 0.066,
+  "l1": 0.0691,
+  "random": 0.0058,
+  "eps_stability_cos": 0.9996
+ },
+ {
+  "concept": "zipper",
+  "native": 0.0393,
+  "m1": -0.0123,
+  "l1": 0.0261,
+  "random": 0.0367,
+  "eps_stability_cos": 0.9989
+ },
+ {
+  "concept": "bat",
+  "native": 0.2498,
+  "m1": 0.0249,
+  "l1": 0.0184,
+  "random": -0.0119,
+  "eps_stability_cos": 0.9988
+ },
+ {
+  "concept": "tongue",
+  "native": -0.0146,
+  "m1": -0.0031,
+  "l1": -0.0064,
+  "random": 0.0148,
+  "eps_stability_cos": 0.9989
+ },
+ {
+  "concept": "spider",
+  "native": 0.0672,
+  "m1": 0.0233,
+  "l1": 0.0037,
+  "random": 0.0166,
+  "eps_stability_cos": 0.9989
  }
 ]
