@@ -1,0 +1,41 @@
+{
+  "addendum": "SYNTHESIS_connection_of_minds provenance receipt (2026-08-01). Persists as machine-checkable summary fields the numbers whose committed receipts are run logs or RESULT documents rather than result JSONs (disjoint-worlds JSONs lost to the 2026-07-01 untracked-file cleanup; the logs and RESULT docs are committed). Every field names its committed source. No committed artifact modified.",
+  "read_across_minds": {
+    "same_family_top1": 0.586,
+    "chance": 0.014,
+    "same_family_times_chance": 41,
+    "phi_top1": 0.071,
+    "qwen_top1": 0.057,
+    "gemma_top1": 0.014,
+    "gemma_rsa": 0.955,
+    "provenance": "RESULT_thought_transfer_g0clear_2026_06_21.md; FINDING_rung2_crossfamily_readwrite_2026_06_22.md (log-quoted: _rung2_read*.log)"
+  },
+  "write_across_minds": {
+    "transfer_gain": 0.0245,
+    "native_gain": 0.2151,
+    "nte": 0.114,
+    "sign_rate": 0.71,
+    "pc_cos": 0.818,
+    "provenance": "RESULT_writelayer_decouple_2026_06_21.md (un-confounded read-neq-write)"
+  },
+  "values_portable": {
+    "refusal_auroc_llama": 0.9965,
+    "refusal_auroc_qwen": 0.9809,
+    "perm_null_llama": 0.9497,
+    "perm_null_qwen": 0.9149,
+    "mount_catch": 0.85,
+    "mount_fpr": 0.2,
+    "apex_auroc": 0.995,
+    "apex_p": 0.001,
+    "provenance": "CONSCIENCE_MOUNT_ARC_2026_06_13.md; FINDING_mount_early_warning_b34_2026_06_13.md; FINDING_says_yes_knows_no_v3_2026_06_11.md"
+  },
+  "self_verification_bound": {
+    "auroc_7b": 0.7597,
+    "selective_acc": 0.7797,
+    "selective_floor": 0.8,
+    "saturation_delta": 0.0026,
+    "co_abstain_model_channels": 0.8701,
+    "co_abstain_retrieval": 0.4416,
+    "provenance": "verifier_7b_result.json; belief_asymptote_result.json; source_independence_v2_result.json (papers/agent-conscience/)"
+  }
+}

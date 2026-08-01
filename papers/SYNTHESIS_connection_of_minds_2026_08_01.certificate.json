@@ -1,0 +1,424 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+  "document_sha256": "d9949958192485b67ceb8dce59b5a3c6faaeeaf15c5cb67b9b970767522e95fd",
+  "receipts_sha256": {
+    "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865",
+    "verifier_7b_result.json": "db9a32f22f9d80506df0caacf35115f00d2edd8518fd78b0d3c6a80ddbf6e002",
+    "belief_asymptote_result.json": "6f5d53333244977b1d8bfeedc6b3fde144acc52d163562dafb712475ae32b17c",
+    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
+    "cot_inward_powered_result.json": "4b41fca6829cfd7993452d6bc7e591e96b2e871f1b1722b3f401b757806b9909",
+    "entrainment_result.json": "83be08c11ca60ac8b0919467f9dc1925c31b9e36550296fc5761f9a30fc62803",
+    "entrain_rich_result.json": "50c3c5913e085f8377d2f23e1fd3257d62a07934d40b1fd2ca047d8a240c18ec",
+    "entrain_harm_result.json": "ffe91f274db4dfe0ae06be2465b51d4853ac3848ec69eb72da6619699dac158d",
+    "nest_capacity_result.json": "75679b6740a4fbd1a7f59b68f902c288ca9bbb55cff8c58ae2a24284812d0145"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 36,
+    "ABSTAIN": 5,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 38,
+      "token": "71"
+    },
+    {
+      "line": 94,
+      "token": "10.5281"
+    },
+    {
+      "line": 119,
+      "token": "5"
+    },
+    {
+      "line": 121,
+      "token": "2"
+    },
+    {
+      "line": 121,
+      "token": "5"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 23,
+      "token": "0.586",
+      "value": 0.586,
+      "decimals": 3,
+      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
+    },
+    {
+      "line": 23,
+      "token": "0.014",
+      "value": 0.014,
+      "decimals": 3,
+      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.chance"
+    },
+    {
+      "line": 23,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_times_chance"
+    },
+    {
+      "line": 25,
+      "token": "0.071",
+      "value": 0.071,
+      "decimals": 3,
+      "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.phi_top1"
+    },
+    {
+      "line": 25,
+      "token": "0.057",
+      "value": 0.057,
+      "decimals": 3,
+      "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.qwen_top1"
+    },
+    {
+      "line": 26,
+      "token": "0.955",
+      "value": 0.955,
+      "decimals": 3,
+      "context": "surprise: gemma-2-2b, the *highest*-isometry target in the battery (RSA 0.955, above even the",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.gemma_rsa"
+    },
+    {
+      "line": 35,
+      "token": "0.586",
+      "value": 0.586,
+      "decimals": 3,
+      "context": "The same cleared map that reads at 0.586 was pointed the other way, twice \u2014 the second time at",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
+    },
+    {
+      "line": 36,
+      "token": "0.2151",
+      "value": 0.2151,
+      "decimals": 4,
+      "context": "a layer where the target demonstrably steers natively (native gain 0.2151, subspace hosting",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
+    },
+    {
+      "line": 37,
+      "token": "0.818",
+      "value": 0.818,
+      "decimals": 3,
+      "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.pc_cos"
+    },
+    {
+      "line": 37,
+      "token": "0.0245",
+      "value": 0.0245,
+      "decimals": 4,
+      "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+    },
+    {
+      "line": 38,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:per_item[11].i"
+    },
+    {
+      "line": 38,
+      "token": "71",
+      "value": 71.0,
+      "decimals": 0,
+      "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 51,
+      "token": "0.9965",
+      "value": 0.9965,
+      "decimals": 4,
+      "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+    },
+    {
+      "line": 51,
+      "token": "0.9809",
+      "value": 0.9809,
+      "decimals": 4,
+      "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_qwen"
+    },
+    {
+      "line": 52,
+      "token": "0.9497",
+      "value": 0.9497,
+      "decimals": 4,
+      "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_llama"
+    },
+    {
+      "line": 52,
+      "token": "0.9149",
+      "value": 0.9149,
+      "decimals": 4,
+      "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
+    },
+    {
+      "line": 54,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
+    },
+    {
+      "line": 54,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
+    },
+    {
+      "line": 55,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:per_item[13].i"
+    },
+    {
+      "line": 55,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:per_item[13].i"
+    },
+    {
+      "line": 55,
+      "token": "0.995",
+      "value": 0.995,
+      "decimals": 3,
+      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_auroc"
+    },
+    {
+      "line": 55,
+      "token": "0.001",
+      "value": 0.001,
+      "decimals": 3,
+      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_p"
+    },
+    {
+      "line": 64,
+      "token": "0.7597",
+      "value": 0.7597,
+      "decimals": 4,
+      "context": "its preregistered discrimination floor (AUROC 0.7597) and still fails as a selective",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.auroc_7b"
+    },
+    {
+      "line": 65,
+      "token": "0.7797",
+      "value": 0.7797,
+      "decimals": 4,
+      "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_acc"
+    },
+    {
+      "line": 65,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
+    },
+    {
+      "line": 67,
+      "token": "0.0026",
+      "value": 0.0026,
+      "decimals": 4,
+      "context": "showed the cap is the belief distribution itself (saturation delta 0.0026 across a",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.saturation_delta"
+    },
+    {
+      "line": 71,
+      "token": "0.8701",
+      "value": 0.8701,
+      "decimals": 4,
+      "context": "0.8701 where retrieval co-abstains at 0.4416",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_model_channels"
+    },
+    {
+      "line": 71,
+      "token": "0.4416",
+      "value": 0.4416,
+      "decimals": 4,
+      "context": "0.8701 where retrieval co-abstains at 0.4416",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_retrieval"
+    },
+    {
+      "line": 83,
+      "token": "+0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "drifting period is +0.17 over static; the best realizable detector captures half of it; the",
+      "status": "VERIFIED",
+      "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
+    },
+    {
+      "line": 84,
+      "token": "+0.002",
+      "value": 0.002,
+      "decimals": 3,
+      "context": "richer detectors collapse (harmonic-spread +0.002 at eight-fold parameters; nested",
+      "status": "VERIFIED",
+      "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+    },
+    {
+      "line": 85,
+      "token": "+0.009",
+      "value": 0.009,
+      "decimals": 3,
+      "context": "theta-gamma +0.009 against its headroom). Receipts: `frequency-resonance/CERT_*.json`.",
+      "status": "VERIFIED",
+      "receipt_ref": "nest_capacity_result.json:gate.nest_minus_flat"
+    },
+    {
+      "line": 94,
+      "token": "10.5281",
+      "value": 10.5281,
+      "decimals": 4,
+      "context": "in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 105,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
+    },
+    {
+      "line": 105,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
+    },
+    {
+      "line": 106,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+      "status": "VERIFIED",
+      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+    },
+    {
+      "line": 106,
+      "token": "0.500",
+      "value": 0.5,
+      "decimals": 3,
+      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+      "status": "VERIFIED",
+      "receipt_ref": "verifier_7b_result.json:per_item[10].s_frame"
+    },
+    {
+      "line": 106,
+      "token": "0.4667",
+      "value": 0.4667,
+      "decimals": 4,
+      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+      "status": "VERIFIED",
+      "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_corrupted"
+    },
+    {
+      "line": 106,
+      "token": "0.9833",
+      "value": 0.9833,
+      "decimals": 4,
+      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+      "status": "VERIFIED",
+      "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_held"
+    },
+    {
+      "line": 119,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "Cross-family content reading above 5\u00d7 chance; any cross-mind write channel; any claim that",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 121,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 121,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

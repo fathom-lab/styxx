@@ -398,6 +398,7 @@ from .stream import claim_agent, dashboard_url, ClaimError  # noqa: F401
 from .timeline import timeline, Timeline
 from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
+from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
 from .compare import compare_agents, AgentComparison
 from .antipatterns import antipatterns, AntiPattern
 from .config import set_mood, current_mood_override, gate_multiplier
@@ -819,6 +820,9 @@ __all__ = [
     "agent_audit", "Claim", "AuditResult", "AgentClaimAuditor",
     "extract_claims", "ExtractionReport",
     "attestation", "attest", "verify_attestation", "Attestation", "VerificationResult",
+
+    # 7.18: the measured-boundary harness (SYNTHESIS_connection_of_minds sec 8)
+    "Witness", "WitnessVerdict", "MEASURED_CAPABILITIES",
     "transparency", "TransparencyLog",
     "redact", "redactable_commit", "disclose", "verify_disclosure",
 

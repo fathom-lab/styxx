@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **`styxx.witness` — the measured-boundary harness** (`Witness`, `WitnessVerdict`,
+  `MEASURED_CAPABILITIES`; specified by
+  [SYNTHESIS_connection_of_minds_2026_08_01.md](papers/SYNTHESIS_connection_of_minds_2026_08_01.md) §8,
+  OATH-HELD 36/5/0). One object composes the program's deployable powers — the borrowed
+  conscience, behavioral grounding, the know-say datasheet, the retained probe, the register
+  preflight — behind a registry in which every capability carries its measured operating
+  point and its measured blindspots, quoted from the receipts that produced them and PINNED
+  IN CI (tests re-derive each registry number from its committed receipt, so the harness
+  cannot silently claim more than the program measured). The rails are results, not
+  policies: no steer method exists (read ≠ write is measured — transfer control is 11% of
+  native even where native steering works); `self_verify` always REFUSES with the 7B
+  receipt (a model cannot self-verify past its own self-knowledge); a transcript showing
+  deliberation-at-doubt downgrades any resampling verdict to ABSTAIN citing the c105
+  blindspot (monitors systematically miss reasoned caves). *A second mind as a witness, not
+  a puppeteer.* 13 new tests; B31-v2 (the content-transport door: capacity limit or
+  bedrock) preregistered for the next scored run.
+
 ### Fixed
 
 - **OATH v0.6.2 — full-precision claims join the oath** (`styxx.certify`; B33, three preregs,
