@@ -1,0 +1,5 @@
+{
+  "addendum": "OATH v0.6.2 repair loop -- signed delta for the b22 FINDING's 'delta -0.361' claim; the committed receipt persists the drop as a positive magnitude only.",
+  "signed_delta_text_syc_vs_b18s": -0.3611,
+  "provenance": "negation of behavioral_sycophancy_b22_result.json P_collapse_text_syc_drop_vs_b18s"
+}

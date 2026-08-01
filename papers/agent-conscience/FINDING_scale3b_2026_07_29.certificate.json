@@ -2,21 +2,25 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_scale3b_2026_07_29.md",
-  "document_sha256": "7f1c23fd64e1a099f797110416c961bf10d845856f09f0f37faf9f869e4cdbee",
+  "document_sha256": "99608392076f970e9fc40cf90dc06110a76ca8c87be9073cd6a999cd18582d5b",
   "receipts_sha256": {
     "scale3b_result.json": "b4e74d599e60def3af769780726cf5f741b6bd367ebc010f7bbc050ebf7e8ee2",
     "kp_recovery_result.json": "36947bdc691727b9d58e4f51b979c200f23b534f2f7992eb33a3b498013e606c",
     "frame_recovery_result.json": "5e6c575122aadfe833632bd1eda467c27a15def3a24f403ee54c2ee18ec7cae0"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 13,
-    "ABSTAIN": 7,
+    "VERIFIED": 28,
+    "ABSTAIN": 9,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
+    {
+      "line": 3,
+      "token": "1979391"
+    },
     {
       "line": 6,
       "token": "8"
@@ -28,6 +32,10 @@
     {
       "line": 12,
       "token": "87"
+    },
+    {
+      "line": 23,
+      "token": "0.4533333333333333"
     },
     {
       "line": 57,
@@ -47,6 +55,15 @@
     }
   ],
   "ledger": [
+    {
+      "line": 3,
+      "token": "1979391",
+      "value": 1979391.0,
+      "decimals": 0,
+      "context": "**Cycle 91. Prereg `PREREG_scale3b_2026_07_29.md` (commit `1979391`), harness `run_scale3b.py`, frozen",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
     {
       "line": 6,
       "token": "8",
@@ -90,7 +107,7 @@
       "decimals": 1,
       "context": "imported from cycles 87\u201390. Both attacks took in-frame (flip 1.0); cells are powered (70 flipped each,",
       "status": "VERIFIED",
-      "receipt_ref": "scale3b_result.json:lam"
+      "receipt_ref": "scale3b_result.json:dose.UNREG.inframe_flip"
     },
     {
       "line": 12,
@@ -126,16 +143,52 @@
       "decimals": 1,
       "context": "- **V1 PASS** \u2014 both attacks flip, cells powered, KP preserves held knowledge (held out-of-frame 1.0),",
       "status": "VERIFIED",
-      "receipt_ref": "scale3b_result.json:lam"
+      "receipt_ref": "scale3b_result.json:dose.UNREG.inframe_flip"
+    },
+    {
+      "line": 18,
+      "token": "-0.36363636363636365",
+      "value": -0.36363636363636365,
+      "decimals": 17,
+      "context": "margin **-0.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.UNREG.specificity"
     },
     {
       "line": 18,
       "token": "0.0",
       "value": 0.0,
       "decimals": 1,
-      "context": "margin **\u22120.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The",
+      "context": "margin **-0.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The",
       "status": "VERIFIED",
       "receipt_ref": "scale3b_result.json:dose.UNREG.recovery"
+    },
+    {
+      "line": 18,
+      "token": "0.36363636363636365",
+      "value": 0.36363636363636365,
+      "decimals": 17,
+      "context": "margin **-0.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.UNREG.control"
+    },
+    {
+      "line": 19,
+      "token": "+0.7285714285714286",
+      "value": 0.7285714285714286,
+      "decimals": 16,
+      "context": "knowledge-preserving attack spares: specificity margin **+0.7285714285714286** (recovery",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.specificity"
+    },
+    {
+      "line": 20,
+      "token": "0.9285714285714286",
+      "value": 0.9285714285714286,
+      "decimals": 16,
+      "context": "0.9285714285714286, control 0.2). The sign reversal between the two attacks \u2014 the claim \u2014 is present",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.recovery"
     },
     {
       "line": 20,
@@ -144,7 +197,52 @@
       "decimals": 1,
       "context": "0.9285714285714286, control 0.2). The sign reversal between the two attacks \u2014 the claim \u2014 is present",
       "status": "VERIFIED",
-      "receipt_ref": "scale3b_result.json:frozen_gates.LG3_MARGIN"
+      "receipt_ref": "scale3b_result.json:dose.KP.control"
+    },
+    {
+      "line": 21,
+      "token": "-0.2323232323232323",
+      "value": -0.2323232323232323,
+      "decimals": 16,
+      "context": "and larger than at 1.5B (-0.2323232323232323 / +0.25656565656565655).",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:reference_1p5B.unreg_specificity"
+    },
+    {
+      "line": 21,
+      "token": "+0.25656565656565655",
+      "value": 0.25656565656565655,
+      "decimals": 17,
+      "context": "and larger than at 1.5B (-0.2323232323232323 / +0.25656565656565655).",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:reference_1p5B.kp_specificity"
+    },
+    {
+      "line": 22,
+      "token": "0.6366666666666667",
+      "value": 0.6366666666666667,
+      "decimals": 16,
+      "context": "- **SG2 PASS \u2014 the coupling holds and sharpens.** On a disjoint MMLU battery: BASE 0.6366666666666667,",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:coupling.BASE"
+    },
+    {
+      "line": 23,
+      "token": "0.18333333333333332",
+      "value": 0.18333333333333332,
+      "decimals": 17,
+      "context": "UNREG 0.18333333333333332, KP 0.5966666666666667. The overwriting attack loses 0.4533333333333333 of",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:coupling.UNREG"
+    },
+    {
+      "line": 23,
+      "token": "0.4533333333333333",
+      "value": 0.4533333333333333,
+      "decimals": 16,
+      "context": "UNREG 0.18333333333333332, KP 0.5966666666666667. The overwriting attack loses 0.4533333333333333 of",
+      "status": "ABSTAIN",
+      "receipt_ref": null
     },
     {
       "line": 24,
@@ -166,12 +264,48 @@
     },
     {
       "line": 36,
+      "token": "0.9846153846153847",
+      "value": 0.9846153846153847,
+      "decimals": 16,
+      "context": "went 0.9846153846153847 at 3B \u2192 1.0 at 7B \u2014 the belief gets *more* stably recoverable as models grow.",
+      "status": "VERIFIED",
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 36,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
       "context": "went 0.9846153846153847 at 3B \u2192 1.0 at 7B \u2014 the belief gets *more* stably recoverable as models grow.",
       "status": "VERIFIED",
-      "receipt_ref": "scale3b_result.json:lam"
+      "receipt_ref": "frame_recovery_result.json:recovery_on_caved"
+    },
+    {
+      "line": 37,
+      "token": "0.5111111111111111",
+      "value": 0.5111111111111111,
+      "decimals": 16,
+      "context": "The weight channel now shows the same shape from its own starting point: 0.5111111111111111 at 1.5B \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:recovery_on_attack_flipped"
+    },
+    {
+      "line": 38,
+      "token": "0.9285714285714286",
+      "value": 0.9285714285714286,
+      "decimals": 16,
+      "context": "0.9285714285714286 at 3B. The consistent picture across both channels: **as models scale, attacks",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.recovery"
+    },
+    {
+      "line": 43,
+      "token": "0.18333333333333332",
+      "value": 0.18333333333333332,
+      "decimals": 17,
+      "context": "general capability *below chance* (0.18333333333333332) \u2014 it does not merely damage the model, it",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:coupling.UNREG"
     },
     {
       "line": 52,
@@ -216,7 +350,16 @@
       "decimals": 1,
       "context": "at 3B; it both flipped and preserved (held 1.0), so the knowledge-preserving attack transferred without",
       "status": "VERIFIED",
-      "receipt_ref": "scale3b_result.json:lam"
+      "receipt_ref": "scale3b_result.json:dose.UNREG.inframe_flip"
+    },
+    {
+      "line": 61,
+      "token": "0.9285714285714286",
+      "value": 0.9285714285714286,
+      "decimals": 16,
+      "context": "disjoint in code from all prior pools. The 3B recovery of 0.9285714285714286 is a single 3B draw on 70",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.recovery"
     },
     {
       "line": 61,
@@ -226,6 +369,24 @@
       "context": "disjoint in code from all prior pools. The 3B recovery of 0.9285714285714286 is a single 3B draw on 70",
       "status": "ABSTAIN",
       "receipt_ref": null
+    },
+    {
+      "line": 67,
+      "token": "0.5111111111111111",
+      "value": 0.5111111111111111,
+      "decimals": 16,
+      "context": "with scale, and re-contextualizing the recovery rate with its 1.5B\u21923B trajectory (0.5111111111111111 \u2192",
+      "status": "VERIFIED",
+      "receipt_ref": "kp_recovery_result.json:recovery_on_attack_flipped"
+    },
+    {
+      "line": 68,
+      "token": "0.9285714285714286",
+      "value": 0.9285714285714286,
+      "decimals": 16,
+      "context": "0.9285714285714286).",
+      "status": "VERIFIED",
+      "receipt_ref": "scale3b_result.json:dose.KP.recovery"
     }
   ]
 }

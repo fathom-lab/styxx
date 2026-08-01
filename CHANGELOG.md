@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- **OATH v0.6.2 — full-precision claims join the oath** (`styxx.certify`; B33, three preregs,
+  two reverted attempts, every gate green on the third —
+  [RESULT](papers/closed-model-frontier/RESULT_oath_v062_SHIPPED_2026_07_31.md)). Three
+  defects, each found by the previous attempt's frozen kill-gate: (1) the SHA-scrub ate the
+  fractional part of any decimal with ≥7 fractional digits, so full-precision quotes — the
+  most receipt-verbatim numbers in the corpus — were invisible to extraction and
+  certified-by-omission; (2) a flat `1e-12` tolerance term verified any mutation in fractional
+  digits ≥13 (caught a REAL 16th-digit transcription error in a committed FINDING once
+  closed); (3) the typographic minus U+2212 was not read as a sign, so accurate negative
+  claims could be accused — and two baseline verifications turned out to be sign-blind
+  absolute-value coincidences. Corpus impact, published per-doc in the RESULT delta table:
+  **VERIFIED 3064 → 3395 (+331)**; tamper-catch 0.304 → 0.319 with false-verify 0.184 → 0.166
+  on a battery that grew 2980 → 3287 mutants. Five genuine doc↔receipt gaps surfaced and were
+  repaired via addendum receipts / receipt-set extension / a one-digit doc correction — no
+  committed result receipt modified. Flagship certs re-issued: frame-locality 37→90 verified,
+  program synthesis 9→28, knowsay 93 (already at 4dp). Still owed, named: trigger-recall
+  (0.5227 of the full-precision pool sits on unbound lines) and status-level float
+  claim→field binding.
+
 ### Added
 
 - **`styxx.framelocality.assess_retained_probe()` — the corruption-retaining probe design as

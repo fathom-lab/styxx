@@ -50,6 +50,26 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+- **Cycle 107 (2026-07-31, operator-directed "finish all end to end") — B33 RUN TO GROUND: three preregs, two frozen kill-gates honored, and OATH v0.6.2 SHIPS. `DONE__oath_v062_shipped__B33_closed` (suite 1840/8; corpus VERIFIED 3064→3395).**
+  The full discipline, end to end in one session: **v0.6** (SHA-scrub fix alone, prereg `29094e1`
+  with committed corpus + tamper baselines) — G1 19/20 PASS, **G2 2/20 FAIL → reverted as
+  pre-committed**, and the battery's autopsy found the epsilon hole (flat 1e-12 verifies any
+  digit-≥13 mutation) plus its own sampling flaw. **v0.6.1** (both fixes, corrected battery,
+  prereg `c03c7a1`) — batteries PASS (18/20, 17/20), **G3 fires `V061_FALSE_ACCUSATION` →
+  reverted as pre-committed**: U+2212 sign-blind extraction accused an accurate claim whose
+  receipt held the exact value; the same audit found four GENUINE catches. **v0.6.2** (all
+  three fixes, prereg `1dc6ac6`) — every gate green: G1 18/20, G2 17/20, G3 five failures ALL
+  hand-verified genuine, G4 tamper-catch 0.304→0.319 with false-verify 0.184→0.166 on a
+  battery grown 2980→3287, G5 zero status diffs, G6 1840/8. Repair loop landed the sanctioned
+  way (addendum receipts with provenance; receipt-set extension; the 16th-digit transcription
+  fix — a REAL error the epsilon fix caught in `FINDING_scale3b`): all five certs OATH-HELD.
+  Flagships re-issued under the shipped verifier: **frame-locality 37→90 verified, synthesis
+  9→28, knowsay 93** — both arXiv tarballs rebuilt with the new certs, 18+17 anc receipts
+  sha-verified in code. Named debts that stay open: trigger-recall (G2b measured the unbound
+  share at 0.5227 of the full-precision pool) and status-level float claim→field binding.
+  *Operator-gated unchanged:* two arXiv uploads per SUBMIT.md; fathomlab login (~45 commits
+  local); PyPI cut; outreach recipient.
+
 - **Cycle 106 (2026-07-31, operator-directed "continue / dive deep") — THE INWARD ARC JOINS THE PAPER, AND THE CERTIFIER'S OWN BLINDSPOT IS CAUGHT ON THE WAY IN. `DONE__inward_arc_folded_and_recertified__oath_extractor_blindspot_found` (paper OATH-HELD **93/6/0**).**
   The c105-named cheap certified path: c101+c105 folded into knowsay §7/§8 (deliberation removes
   ~¾ of frontier free-text caving 0.5349→0.1512→0.1224 across two pools; rescue falls
@@ -1705,7 +1725,7 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B11** | **Re-locking protocol** in STYXX_PROTOCOL: verifier-private calibration set spanning prime/abort/lie populations; layer+family search with a **permutation-corrected selection penalty** (refit_max over 28 layers is multiple-comparisons-inflated); certificate encodes calibration-SHA + selected layer + floor + PRIME/ABORT + re-locked-probe hash; **state=ABSTAIN when the deployment input is off-manifold** vs calibration (turn silent failure into honest abstention). | spec section + a runnable re-lock harness. | H | QUEUED |
 | **B12** | **The gamed-model probe-validity experiment** (capture-trust names it irreducible; never run): train the cooperative model to emit clean caving residuals to the FROZEN probe, then test whether audit-time RE-FIT still recovers. Decides whether the cooperative guarantee survives an adversarial-but-checkable insider. | measured EVADABLE/ROBUST for the gamed-model on the re-locked read. | H | QUEUED |
 | **B13** | **Harden all experiment scripts** (the smoke-artifact lesson): `--smoke` writes to a `_smoke`-suffixed file; in-code assert `chance_floor < reference signal` else emit `VOID-INSTRUMENT`; every result JSON carries the scorer SHA. | guard added to the v4+ template; lesson in RESEARCH_LOOP. | H | QUEUED |
-| **B33** | **OATH v0.6 — the SHA-scrub recall class** (caught cycle 106): `certify.py`'s `_SHAISH` scrub eats the fractional part of any decimal with ≥7 fractional digits, so full-precision quotes are invisible to extraction — certified-by-omission, the exact inverse of the oath. Candidate fixes: require ≥1 hex letter in the scrub match, or refuse the scrub when the match is preceded by `\d\.`. Corpus impact must be measured: re-run `corpus_audit` before/after and report every count shift. Also owed same prereg: float claim→field binding (the v0.4 named debt — line-224 class first-hit misattribution). | prereg + single-digit mutant battery per the v0.3–v0.5 precedent; no count regression on the battery; corpus-wide delta table published. | H | QUEUED |
+| **B33** | **OATH v0.6.2 — the SHA-scrub recall class + epsilon hole + signed extraction** (caught cycle 106, shipped cycle 107 on the third prereg after two frozen kill-gates fired and were honored). Full-precision decimals extract and verify; digit-≥13 mutations no longer epsilon-verify; U+2212 reads as a sign. Corpus VERIFIED 3064→3395; delta table + five repaired genuine catches in `RESULT_oath_v062_SHIPPED_2026_07_31.md`. Spawned, still open: **trigger-recall on unbound lines** (G2b measured 0.5227 of the full-precision pool) and **status-level float claim→field binding** (v0.4 debt; v0.6.2 ships attribution-only stem preference). | shipped; successors need their own preregs. | H | **DONE — cycle 107** |
 
 ## Tier 3 — the other rungs
 

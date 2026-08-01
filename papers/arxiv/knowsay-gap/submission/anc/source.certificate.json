@@ -23,7 +23,7 @@
     "cot_inward_result.json": "61af7d5b04a9f6479795bc7747e0490c08aae3621b69060c00e5f9027bc31180",
     "cot_inward_powered_result.json": "4b41fca6829cfd7993452d6bc7e591e96b2e871f1b1722b3f401b757806b9909"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
     "VERIFIED": 93,
     "ABSTAIN": 6,
@@ -110,7 +110,7 @@
       "decimals": 1,
       "context": "3B, and at 7B the recovery pattern is exact \u2014 1.0 on caved, 0.0 on initially-wrong \u2014 because the",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
+      "receipt_ref": "scale_test_result.json:neutral_accuracy_on_wrong_first"
     },
     {
       "line": 24,
@@ -128,7 +128,7 @@
       "decimals": 4,
       "context": "still in context, caved free-text answers recover at 0.6957 against 0.975 for",
       "status": "VERIFIED",
-      "receipt_ref": "self_verification_result.json:not_gated.coverage_curve[0].sel_acc_sc"
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.caved"
     },
     {
       "line": 26,
@@ -236,7 +236,7 @@
       "decimals": 4,
       "context": "currently-served frontier-lab commercial model abandons 0.2056 of its",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:loop.coverage"
+      "receipt_ref": "frontier_freetext_v9_result.json:mc_comparison_context_not_gated.frontier_mc_cave_cycle83"
     },
     {
       "line": 46,
@@ -272,7 +272,7 @@
       "decimals": 2,
       "context": "far too shallow to read as scale solving the problem, and measured against a 0.15 preregistered",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:frozen_gates.CAVE_FLOOR"
+      "receipt_ref": "cot_inward_result.json:within_arm_assess_retained_probe.frame_margin_floor"
     },
     {
       "line": 73,
@@ -317,7 +317,7 @@
       "decimals": 1,
       "context": "families (at 7B: 0.5 on AQuA versus 0.2407 on MMLU and 0.2319 on",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:accuracy.revised"
+      "receipt_ref": "scale_test_result.json:by_dataset.aqua_mc.cave_rate"
     },
     {
       "line": 81,
@@ -371,7 +371,7 @@
       "decimals": 1,
       "context": "**1.0**, held-sanity **1.0**, wrong-first **0.0** (`scale_test_result.json`) \u2014 not truth-finding",
       "status": "VERIFIED",
-      "receipt_ref": "scale_test_result.json:recovery_on_caved"
+      "receipt_ref": "scale_test_result.json:neutral_accuracy_on_held"
     },
     {
       "line": 94,
@@ -380,7 +380,7 @@
       "decimals": 1,
       "context": "**1.0**, held-sanity **1.0**, wrong-first **0.0** (`scale_test_result.json`) \u2014 not truth-finding",
       "status": "VERIFIED",
-      "receipt_ref": "scale_test_result.json:recovery_on_caved"
+      "receipt_ref": "scale_test_result.json:neutral_accuracy_on_held"
     },
     {
       "line": 94,
@@ -389,7 +389,7 @@
       "decimals": 1,
       "context": "**1.0**, held-sanity **1.0**, wrong-first **0.0** (`scale_test_result.json`) \u2014 not truth-finding",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
+      "receipt_ref": "scale_test_result.json:neutral_accuracy_on_wrong_first"
     },
     {
       "line": 97,
@@ -533,7 +533,7 @@
       "decimals": 4,
       "context": "**0.7797** against 0.80 (`verifier_7b_result.json`). The failure is structural, not",
       "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:selective_accuracy_at_G3_coverage.s_frame"
+      "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[3].sel_acc_frame"
     },
     {
       "line": 123,
@@ -542,7 +542,7 @@
       "decimals": 2,
       "context": "**0.7797** against 0.80 (`verifier_7b_result.json`). The failure is structural, not",
       "status": "VERIFIED",
-      "receipt_ref": "scale_test_result.json:frozen_gates.LG2_FLOOR"
+      "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[6].coverage"
     },
     {
       "line": 130,
@@ -614,7 +614,7 @@
       "decimals": 4,
       "context": "reach). **The gap reaches the frontier: cave rate 0.2056** on the initially-correct",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:loop.coverage"
+      "receipt_ref": "frontier_knowsay_result.json:cave_rate_on_first_correct"
     },
     {
       "line": 157,
@@ -668,7 +668,7 @@
       "decimals": 1,
       "context": "1.0 while neutral accuracy on the wrong-first control was 0.0278, a margin",
       "status": "VERIFIED",
-      "receipt_ref": "scale_test_result.json:recovery_on_caved"
+      "receipt_ref": "scale_test_result.json:neutral_accuracy_on_held"
     },
     {
       "line": 164,
@@ -722,7 +722,7 @@
       "decimals": 4,
       "context": "0.975, but caved items recover at only 0.6957 \u2014 a reach margin of",
       "status": "VERIFIED",
-      "receipt_ref": "self_verification_result.json:not_gated.coverage_curve[0].sel_acc_sc"
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.caved"
     },
     {
       "line": 183,
@@ -776,7 +776,7 @@
       "decimals": 4,
       "context": "roughly double the model's multiple-choice rates (0.2056, 0.2740) and",
       "status": "VERIFIED",
-      "receipt_ref": "third_party_bench_result.json:loop.coverage"
+      "receipt_ref": "frontier_knowsay_result.json:cave_rate_on_first_correct"
     },
     {
       "line": 197,
@@ -794,7 +794,7 @@
       "decimals": 4,
       "context": "landing beside the open-7B free-text point (0.5227)",
       "status": "VERIFIED",
-      "receipt_ref": "two_channel_result.json:not_gated.cave_rate_on_first_correct"
+      "receipt_ref": "frontier_freetext_v9_result.json:mc_comparison_context_not_gated.open_7b_freetext_cave_cycle82"
     },
     {
       "line": 199,
@@ -902,7 +902,7 @@
       "decimals": 4,
       "context": "the no-reasoning arm's 0.6957 this is a cross-pool directional delta of",
       "status": "VERIFIED",
-      "receipt_ref": "self_verification_result.json:not_gated.coverage_curve[0].sel_acc_sc"
+      "receipt_ref": "frontier_incontext_oof_result.json:framelocality_crosscheck.recovery_rates.recovery_corrupted"
     },
     {
       "line": 225,

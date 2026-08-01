@@ -4,17 +4,22 @@
   "document": "FINDING_frontier_recovery_2026_07_27.md",
   "document_sha256": "57400b5d269fe070e9d9922203d5c81b7f8730d3adcf414933bd0e3381dc1f02",
   "receipts_sha256": {
-    "frontier_recovery_result.json": "ba3685be0227f5da0afb84e2b89bda304095b4d89a32bab536824c66339bc633"
+    "frontier_recovery_result.json": "ba3685be0227f5da0afb84e2b89bda304095b4d89a32bab536824c66339bc633",
+    "frontier_knowsay_result.json": "9c87a33b07842bd8f6ba508bd6c4000f286f8fb6132070e05c7e55659734d0a4"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 25,
+    "VERIFIED": 37,
     "ABSTAIN": 6,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
   "ungrounded": [],
   "abstained": [
+    {
+      "line": 3,
+      "token": "5154298"
+    },
     {
       "line": 17,
       "token": "200"
@@ -28,10 +33,6 @@
       "token": "5"
     },
     {
-      "line": 60,
-      "token": "0"
-    },
-    {
       "line": 61,
       "token": "200"
     },
@@ -41,6 +42,15 @@
     }
   ],
   "ledger": [
+    {
+      "line": 3,
+      "token": "5154298",
+      "value": 5154298.0,
+      "decimals": 0,
+      "context": "**Cycle 84. Prereg `PREREG_frontier_recovery_2026_07_27.md` (commit `5154298`), harness",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
     {
       "line": 8,
       "token": "182",
@@ -67,6 +77,15 @@
       "context": "Cycle 83 earned the frontier caving claim but left the mechanism three items per cell short of its",
       "status": "VERIFIED",
       "receipt_ref": "frontier_recovery_result.json:per_item[75].i"
+    },
+    {
+      "line": 15,
+      "token": "0.8695652173913043",
+      "value": 0.8695652173913043,
+      "decimals": 16,
+      "context": "specificity 0.8695652173913043) were licensed as observations only. This run answered the",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_knowsay_result.json:specificity_margin"
     },
     {
       "line": 17,
@@ -159,6 +178,24 @@
       "receipt_ref": "frontier_recovery_result.json:strata.wrong_first"
     },
     {
+      "line": 26,
+      "token": "0.027777777777777776",
+      "value": 0.027777777777777776,
+      "decimals": 18,
+      "context": "on the 36 initially-wrong items the neutral modal was correct at 0.027777777777777776 \u2014 a",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:neutral_accuracy_on_wrong_first"
+    },
+    {
+      "line": 27,
+      "token": "0.9722222222222222",
+      "value": 0.9722222222222222,
+      "decimals": 16,
+      "context": "specificity margin of 0.9722222222222222 against the 0.15 floor. **The abandoned answers were",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:specificity_margin"
+    },
+    {
       "line": 27,
       "token": "0.15",
       "value": 0.15,
@@ -184,6 +221,15 @@
       "context": "rescue the initially-*wrong* items too. It does not: neutral accuracy on the 36 wrong-first items",
       "status": "VERIFIED",
       "receipt_ref": "frontier_recovery_result.json:strata.wrong_first"
+    },
+    {
+      "line": 38,
+      "token": "0.027777777777777776",
+      "value": 0.027777777777777776,
+      "decimals": 18,
+      "context": "is 0.027777777777777776, against 1.0 on the caved items \u2014 the frozen-belief signature at its",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:neutral_accuracy_on_wrong_first"
     },
     {
       "line": 38,
@@ -222,6 +268,51 @@
       "receipt_ref": "frontier_recovery_result.json:per_item[133].i"
     },
     {
+      "line": 47,
+      "token": "0.273972602739726",
+      "value": 0.273972602739726,
+      "decimals": 15,
+      "context": "reproduces it as context. Cave rate on the 146 initially-correct items is 0.273972602739726 (the",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:replication_context_not_gated.cave_rate_on_first_correct"
+    },
+    {
+      "line": 48,
+      "token": "0.205607476635514",
+      "value": 0.205607476635514,
+      "decimals": 15,
+      "context": "prior frontier cycle measured 0.205607476635514 on its eleventh pool) \u2014 the frontier model abandons better than one correct",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_knowsay_result.json:cave_rate_on_first_correct"
+    },
+    {
+      "line": 49,
+      "token": "0.8021978021978022",
+      "value": 0.8021978021978022,
+      "decimals": 16,
+      "context": "answer in four on this draw. Overall accuracy falls first 0.8021978021978022 \u2192 revised",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:accuracy.first"
+    },
+    {
+      "line": 50,
+      "token": "0.6318681318681318",
+      "value": 0.6318681318681318,
+      "decimals": 16,
+      "context": "0.6318681318681318 for nothing but being doubted, while the neutral modal accuracy is",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:accuracy.revised"
+    },
+    {
+      "line": 51,
+      "token": "0.8076923076923077",
+      "value": 0.8076923076923077,
+      "decimals": 16,
+      "context": "0.8076923076923077 \u2014 the belief-level accuracy is unmoved; only the pressured report drops. The",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:accuracy.neutral_modal"
+    },
+    {
       "line": 52,
       "token": "0.25",
       "value": 0.25,
@@ -238,6 +329,15 @@
       "context": "rescue rate on wrong-first items is 0.25 here (cycle 83 measured 0.4782608695652174): the same",
       "status": "VERIFIED",
       "receipt_ref": "frontier_recovery_result.json:per_item[75].i"
+    },
+    {
+      "line": 52,
+      "token": "0.4782608695652174",
+      "value": 0.4782608695652174,
+      "decimals": 16,
+      "context": "rescue rate on wrong-first items is 0.25 here (cycle 83 measured 0.4782608695652174): the same",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_knowsay_result.json:rescue_rate_on_wrong_first"
     },
     {
       "line": 54,
@@ -290,8 +390,8 @@
       "value": 0.0,
       "decimals": 0,
       "context": "weights over a commercial API: temperature 0 is not a server-side determinism guarantee; the",
-      "status": "ABSTAIN",
-      "receipt_ref": null
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_knowsay_result.json:temp_greedy"
     },
     {
       "line": 61,
@@ -319,6 +419,15 @@
       "context": "**Does license:** \u00a77 of \"The Know-Say Gap\" upgrades from \"the belief-survival pattern appears in",
       "status": "ABSTAIN",
       "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "0.9722222222222222",
+      "value": 0.9722222222222222,
+      "decimals": 16,
+      "context": "wrong-first items is wrong 0.9722222222222222 of the time. The named follow-ups, each its own",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_recovery_result.json:specificity_margin"
     }
   ]
 }

@@ -16,7 +16,7 @@ imported from cycles 87–90. Both attacks took in-frame (flip 1.0); cells are p
   BASE battery accuracy 0.6366666666666667.
 - **SG1 PASS — the dose reversal holds and sharpens.** The unregularized attack overwrites: specificity
   margin **−0.36363636363636365** (recovery 0.0 on the flipped items, control 0.36363636363636365). The
-  knowledge-preserving attack spares: specificity margin **+0.7285714285714285** (recovery
+  knowledge-preserving attack spares: specificity margin **+0.7285714285714286** (recovery
   0.9285714285714286, control 0.2). The sign reversal between the two attacks — the claim — is present
   and larger than at 1.5B (−0.2323232323232323 / +0.25656565656565655).
 - **SG2 PASS — the coupling holds and sharpens.** On a disjoint MMLU battery: BASE 0.6366666666666667,

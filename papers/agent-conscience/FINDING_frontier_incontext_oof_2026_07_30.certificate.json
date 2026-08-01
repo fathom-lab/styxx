@@ -5,11 +5,12 @@
   "document_sha256": "6c813568f294b2f1eedfc058550534e8abff135a41e95c69b49909e018ae493f",
   "receipts_sha256": {
     "frontier_incontext_oof_result.json": "19e48a113ec9006629c3b83ae64075c2d6e11bbb8c2d03688afedc413abb32b3",
-    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6"
+    "frontier_freetext_v9_result.json": "08b84873208e84dcd0ae2d3336428b3fc37e8fc9fca08550bb72d38ff9209af6",
+    "oath_v062_repair_addendum.json": "9b428bcc06649850e764a849f4d1eb6499f713707582b76122163c9ee56ee277"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 20,
+    "VERIFIED": 26,
     "ABSTAIN": 2,
     "UNGROUNDED": 0
   },
@@ -153,22 +154,40 @@
       "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
     },
     {
+      "line": 27,
+      "token": "-0.2793478260869565",
+      "value": -0.2793478260869565,
+      "decimals": 16,
+      "context": "- **RG1 FAIL** \u2014 margin -0.2793478260869565 (recovery on CAVED 0.6956521739130435 minus",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:margin_oof_caved_minus_held"
+    },
+    {
+      "line": 27,
+      "token": "0.6956521739130435",
+      "value": 0.6956521739130435,
+      "decimals": 16,
+      "context": "- **RG1 FAIL** \u2014 margin -0.2793478260869565 (recovery on CAVED 0.6956521739130435 minus",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.caved"
+    },
+    {
       "line": 28,
       "token": "0.975",
       "value": 0.975,
       "decimals": 3,
-      "context": "recovery on HELD 0.975) vs the \u22120.15 floor. The caved items recover materially less than",
+      "context": "recovery on HELD 0.975) vs the -0.15 floor. The caved items recover materially less than",
       "status": "VERIFIED",
       "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
     },
     {
       "line": 28,
-      "token": "0.15",
-      "value": 0.15,
+      "token": "-0.15",
+      "value": -0.15,
       "decimals": 2,
-      "context": "recovery on HELD 0.975) vs the \u22120.15 floor. The caved items recover materially less than",
+      "context": "recovery on HELD 0.975) vs the -0.15 floor. The caved items recover materially less than",
       "status": "VERIFIED",
-      "receipt_ref": "frontier_incontext_oof_result.json:frozen_gates.LG3_MARGIN"
+      "receipt_ref": "oath_v062_repair_addendum.json:frontier_incontext_oof.rg1_margin_floor_signed"
     },
     {
       "line": 38,
@@ -178,6 +197,42 @@
       "context": "frame the pressure never addressed \u2014 while items that survived the pressure answer at 0.975",
       "status": "VERIFIED",
       "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+    },
+    {
+      "line": 52,
+      "token": "0.6956521739130435",
+      "value": 0.6956521739130435,
+      "decimals": 16,
+      "context": "0.6956521739130435 vs same-frame re-ask recovery 0.5434782608695652 on the same items \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.caved"
+    },
+    {
+      "line": 52,
+      "token": "0.5434782608695652",
+      "value": 0.5434782608695652,
+      "decimals": 16,
+      "context": "0.6956521739130435 vs same-frame re-ask recovery 0.5434782608695652 on the same items \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:same_frame_reask_recovery.caved"
+    },
+    {
+      "line": 56,
+      "token": "0.30434782608695654",
+      "value": 0.30434782608695654,
+      "decimals": 17,
+      "context": "- **Anchoring:** 0.30434782608695654 of caved items repeat the caved claim verbatim under the",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:reported_not_gated.anchoring_rate_oof_repeats_caved_claim"
+    },
+    {
+      "line": 59,
+      "token": "0.6456521739130434",
+      "value": 0.6456521739130434,
+      "decimals": 16,
+      "context": "- **The naive margin** vs WRONG_FIRST is 0.6456521739130434 and is NOT EVIDENCE (the",
+      "status": "VERIFIED",
+      "receipt_ref": "frontier_incontext_oof_result.json:reported_not_gated.naive_margin_vs_wrong_first.value"
     },
     {
       "line": 61,
@@ -204,7 +259,7 @@
       "decimals": 1,
       "context": "0.016666666666666666. Extraction-faithful 1.0 on both probe arms.",
       "status": "VERIFIED",
-      "receipt_ref": "frontier_incontext_oof_result.json:out_of_frame_recovery.held"
+      "receipt_ref": "frontier_incontext_oof_result.json:reported_not_gated.extraction_faithful.oof"
     },
     {
       "line": 71,

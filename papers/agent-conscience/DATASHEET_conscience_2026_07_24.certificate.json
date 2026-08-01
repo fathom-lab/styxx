@@ -13,12 +13,13 @@
     "scale_confirm_result.json": "42f02deaa1904613aaceabb4e35410dd6926626dd87fb67bd8790934eda4e568",
     "selective_escalation_result.json": "88eff9c5ac4931da1d3b4b41673caf7a03b7f5746cefa9919e62dd438221d448",
     "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
-    "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4"
+    "third_party_bench_result.json": "f1cb9743b2d8731350038d4bfef48ae9330798053b68ee5b56ed863c91b4cfa4",
+    "oath_v062_repair_addendum.json": "affc0396880287a21c706934248ef9d45b1fcad469184b3cedd28015dc04a16d"
   },
-  "verifier_sha256": "01f92cc14156691f0ee6a1772b62d8b013aaf78538cf0c4d31209921e08db29c",
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 9,
-    "ABSTAIN": 6,
+    "VERIFIED": 36,
+    "ABSTAIN": 7,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -39,6 +40,10 @@
     {
       "line": 35,
       "token": "287"
+    },
+    {
+      "line": 65,
+      "token": "0.9918699186991871"
     },
     {
       "line": 85,
@@ -87,6 +92,56 @@
       "receipt_ref": "adjudicated_loop_result.json:summary.combined.styxx_adj"
     },
     {
+      "line": 24,
+      "token": "0.9841269841269841",
+      "value": 0.9841269841269841,
+      "decimals": 16,
+      "context": "| answered accuracy | 0.9841269841269841 | 0.7777777777777778 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | answered accuracy | 0.9841269841269841 | 0.7777777777777778 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.styxx_adj.accuracy"
+    },
+    {
+      "line": 24,
+      "token": "0.7777777777777778",
+      "value": 0.7777777777777778,
+      "decimals": 16,
+      "context": "| answered accuracy | 0.9841269841269841 | 0.7777777777777778 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | answered accuracy | 0.9841269841269841 | 0.7777777777777778 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.accuracy_answered"
+    },
+    {
+      "line": 25,
+      "token": "0.8102139406487232",
+      "value": 0.8102139406487232,
+      "decimals": 16,
+      "context": "| refusal informativeness gap | 0.8102139406487232 | 0.4804804804804805 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | refusal informativeness gap | 0.8102139406487232 | 0.4804804804804805 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.informativeness_gap"
+    },
+    {
+      "line": 25,
+      "token": "0.4804804804804805",
+      "value": 0.4804804804804805,
+      "decimals": 16,
+      "context": "| refusal informativeness gap | 0.8102139406487232 | 0.4804804804804805 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | refusal informativeness gap | 0.8102139406487232 | 0.4804804804804805 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.informativeness_gap"
+    },
+    {
+      "line": 26,
+      "token": "0.2674418604651163",
+      "value": 0.2674418604651163,
+      "decimals": 16,
+      "context": "| refusal rate | 0.2674418604651163 | 0.37 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | refusal rate | 0.2674418604651163 | 0.37 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:refusal.abstain_rate"
+    },
+    {
       "line": 26,
       "token": "0.37",
       "value": 0.37,
@@ -95,6 +150,36 @@
       "binding_context": "| characteristic | short-factual | SQuAD | | refusal rate | 0.2674418604651163 | 0.37 |",
       "status": "VERIFIED",
       "receipt_ref": "selective_confirm_result.json:loop.abstain_rate"
+    },
+    {
+      "line": 27,
+      "token": "0.8968253968253969",
+      "value": 0.8968253968253969,
+      "decimals": 16,
+      "context": "| beats ignoring the user (matched coverage) | 0.8968253968253969 | 0.6031746031746031 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | beats ignoring the user (matched coverage) | 0.8968253968253969 | 0.6031746031746031 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:selective_at_matched_coverage.stubborn.accuracy"
+    },
+    {
+      "line": 27,
+      "token": "0.6031746031746031",
+      "value": 0.6031746031746031,
+      "decimals": 16,
+      "context": "| beats ignoring the user (matched coverage) | 0.8968253968253969 | 0.6031746031746031 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | beats ignoring the user (matched coverage) | 0.8968253968253969 | 0.6031746031746031 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:selective_at_matched_coverage.stubborn.accuracy"
+    },
+    {
+      "line": 28,
+      "token": "0.1746031746031746",
+      "value": 0.1746031746031746,
+      "decimals": 16,
+      "context": "| beats the pressured baseline (matched coverage) | -- | 0.1746031746031746 |",
+      "binding_context": "| characteristic | short-factual | SQuAD | | beats the pressured baseline (matched coverage) | -- | 0.1746031746031746 |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:selective_at_matched_coverage.bare.accuracy"
     },
     {
       "line": 33,
@@ -113,6 +198,96 @@
       "context": "**The refusal's informativeness is FORMAT-DEPENDENT and does not hold on multiple choice.** On 287",
       "status": "ABSTAIN",
       "receipt_ref": null
+    },
+    {
+      "line": 36,
+      "token": "-0.027802557240559023",
+      "value": -0.027802557240559023,
+      "decimals": 18,
+      "context": "third-party lettered items (MMLU / TruthfulQA / AQuA) the gap measured **-0.027802557240559023**:",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:loop.informativeness_gap"
+    },
+    {
+      "line": 37,
+      "token": "0.5423728813559322",
+      "value": 0.5423728813559322,
+      "decimals": 16,
+      "context": "answered items scored **0.5423728813559322** while abstained items would have scored",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.loop_answered"
+    },
+    {
+      "line": 38,
+      "token": "0.5701754385964912",
+      "value": 0.5701754385964912,
+      "decimals": 16,
+      "context": "**0.5701754385964912**. The loop declined on items slightly *easier* than the ones it took. With",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.abstained_revised"
+    },
+    {
+      "line": 40,
+      "token": "0.20557491289198607",
+      "value": 0.20557491289198607,
+      "decimals": 17,
+      "context": "three-way disagreement rather than on difficulty; coverage fell to **0.20557491289198607**. Do not",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:loop.coverage"
+    },
+    {
+      "line": 46,
+      "token": "0.30120481927710846",
+      "value": 0.30120481927710846,
+      "decimals": 17,
+      "context": "abandoned a correct answer on **0.30120481927710846** of items -- and on multi-step math (AQuA) on",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:cave_rate"
+    },
+    {
+      "line": 47,
+      "token": "0.8666666666666667",
+      "value": 0.8666666666666667,
+      "decimals": 16,
+      "context": "**0.8666666666666667** of them. Overall accuracy fell from **0.578397212543554** to",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:by_dataset.aqua_mc.cave_rate"
+    },
+    {
+      "line": 47,
+      "token": "0.578397212543554",
+      "value": 0.578397212543554,
+      "decimals": 15,
+      "context": "**0.8666666666666667** of them. Overall accuracy fell from **0.578397212543554** to",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.first"
+    },
+    {
+      "line": 48,
+      "token": "0.5087108013937283",
+      "value": 0.5087108013937283,
+      "decimals": 16,
+      "context": "**0.5087108013937283** for nothing but being doubted. Where the loop does speak on this material it",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.revised"
+    },
+    {
+      "line": 49,
+      "token": "0.5423728813559322",
+      "value": 0.5423728813559322,
+      "decimals": 16,
+      "context": "roughly doubles accuracy: **0.5423728813559322** against **0.2711864406779661** for the bare",
+      "status": "VERIFIED",
+      "receipt_ref": "third_party_bench_result.json:accuracy.loop_answered"
+    },
+    {
+      "line": 49,
+      "token": "0.2711864406779661",
+      "value": 0.2711864406779661,
+      "decimals": 16,
+      "context": "roughly doubles accuracy: **0.5423728813559322** against **0.2711864406779661** for the bare",
+      "status": "VERIFIED",
+      "receipt_ref": "oath_v062_repair_addendum.json:datasheet_conscience.bare_revised_accuracy_answered"
     },
     {
       "line": 52,
@@ -142,6 +317,63 @@
       "receipt_ref": "adjudicated_loop_mechanism.json:channel.channel_accuracy_when_adjudicating"
     },
     {
+      "line": 53,
+      "token": "0.9841269841269841",
+      "value": 0.9841269841269841,
+      "decimals": 16,
+      "context": "adjudications (**0.984375**), reproducing at **0.9841269841269841** on a fresh pool. Receipts:",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_datasheet_result.json:channel_accuracy_when_adjudicating"
+    },
+    {
+      "line": 57,
+      "token": "0.2972972972972973",
+      "value": 0.2972972972972973,
+      "decimals": 16,
+      "context": "otherwise emit scores **0.2972972972972973**, against **0.7777777777777778** on the answered",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.accuracy_abstained_via_fallback"
+    },
+    {
+      "line": 57,
+      "token": "0.7777777777777778",
+      "value": 0.7777777777777778,
+      "decimals": 16,
+      "context": "otherwise emit scores **0.2972972972972973**, against **0.7777777777777778** on the answered",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_confirm_result.json:loop.accuracy_answered"
+    },
+    {
+      "line": 64,
+      "token": "0.8478260869565217",
+      "value": 0.8478260869565217,
+      "decimals": 16,
+      "context": "| a second MODEL channel, different family, same scale | co-abstains **0.8478260869565217** with the first | `tiered_channel_result.json` |",
+      "binding_context": "| attempted route | measured outcome | receipt | | a second MODEL channel, different family, same scale | co-abstains **0.8478260869565217** with the first | `tiered_channel_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "tiered_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 65,
+      "token": "0.8043478260869565",
+      "value": 0.8043478260869565,
+      "decimals": 16,
+      "context": "| a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channel_result.j",
+      "binding_context": "| attempted route | measured outcome | receipt | | a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channel_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "scale_channel_result.json:rescue.tier2_abstain_rate_on_slice"
+    },
+    {
+      "line": 65,
+      "token": "0.9918699186991871",
+      "value": 0.9918699186991871,
+      "decimals": 16,
+      "context": "| a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channel_result.j",
+      "binding_context": "| attempted route | measured outcome | receipt | | a second MODEL channel, same family, 2x scale | co-abstains **0.8043478260869565**, agreeing **0.9918699186991871** where both speak | `scale_channel_result.json` |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
       "line": 66,
       "token": "0.6",
       "value": 0.6,
@@ -149,7 +381,7 @@
       "context": "| the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
       "binding_context": "| attempted route | measured outcome | receipt | | the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
       "status": "VERIFIED",
-      "receipt_ref": "adjudicated_loop_result.json:frozen_gates.STAB_GATE"
+      "receipt_ref": "selective_datasheet_result.json:full_coverage_accuracy.styxx_62"
     },
     {
       "line": 66,
@@ -159,7 +391,45 @@
       "context": "| the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
       "binding_context": "| attempted route | measured outcome | receipt | | the same, on confirmation | rescued items **0.6** vs fallback **1.0** on the same items -- coverage rose while accuracy fell | `scale_confirm_result.json` |",
       "status": "VERIFIED",
-      "receipt_ref": "adjudicated_loop_result.json:summary.wrong_push.stubborn"
+      "receipt_ref": "adjudicated_loop_mechanism.json:channel.channel_accuracy_when_adjudicating"
+    },
+    {
+      "line": 67,
+      "token": "0.06666666666666676",
+      "value": 0.06666666666666676,
+      "decimals": 17,
+      "context": "| gating escalation on the loop's own signals | **0.06666666666666676** selective vs **0.09090909090909094** indiscriminate -- the signal anti-selected | `selec",
+      "binding_context": "| attempted route | measured outcome | receipt | | gating escalation on the loop's own signals | **0.06666666666666676** selective vs **0.09090909090909094** indiscriminate -- the signal anti-selected | `selective_escalation_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:selective.paired_gain"
+    },
+    {
+      "line": 67,
+      "token": "0.09090909090909094",
+      "value": 0.09090909090909094,
+      "decimals": 17,
+      "context": "| gating escalation on the loop's own signals | **0.06666666666666676** selective vs **0.09090909090909094** indiscriminate -- the signal anti-selected | `selec",
+      "binding_context": "| attempted route | measured outcome | receipt | | gating escalation on the loop's own signals | **0.06666666666666676** selective vs **0.09090909090909094** indiscriminate -- the signal anti-selected | `selective_escalation_result.json` |",
+      "status": "VERIFIED",
+      "receipt_ref": "selective_escalation_result.json:indiscriminate_comparison.paired_gain"
+    },
+    {
+      "line": 70,
+      "token": "0.4415584415584416",
+      "value": 0.4415584415584416,
+      "decimals": 16,
+      "context": "**0.4415584415584416** where a model channel co-abstains at **0.8701298701298701** on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:retrieval_tier2.co_abstention"
+    },
+    {
+      "line": 70,
+      "token": "0.8701298701298701",
+      "value": 0.8701298701298701,
+      "decimals": 16,
+      "context": "**0.4415584415584416** where a model channel co-abstains at **0.8701298701298701** on the same",
+      "status": "VERIFIED",
+      "receipt_ref": "source_independence_v2_result.json:model_tier2.co_abstention"
     },
     {
       "line": 71,

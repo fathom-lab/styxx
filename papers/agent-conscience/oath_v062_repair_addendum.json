@@ -1,0 +1,13 @@
+{
+  "addendum": "OATH v0.6.2 repair loop (RESULT_oath_v062_SHIPPED_2026_07_31.md) -- summary fields for values computed in committed receipts' prose/derivations but never persisted as numeric leaves. No committed receipt modified.",
+  "datasheet_conscience": {
+    "bare_revised_accuracy_answered": 0.2711864406779661,
+    "provenance": "third_party_bench_result.json channels[loop].detail string: 'loop 0.5423728813559322 vs bare-revised 0.2711864406779661 on the same answered items' (= 16/59)"
+  },
+  "frontier_incontext_oof": {
+    "recovery_margin_caved_minus_held": -0.2793478260869565,
+    "provenance": "frontier_incontext_oof_result.json out_of_frame_recovery.caved - out_of_frame_recovery.held",
+    "rg1_margin_floor_signed": -0.15,
+    "provenance_floor": "negation of frontier_incontext_oof_result.json frozen_gates.LG3_MARGIN; the RG1 gate is margin >= -0.15 per prereg 122929c"
+  }
+}
