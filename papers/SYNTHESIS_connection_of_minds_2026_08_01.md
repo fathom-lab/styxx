@@ -42,8 +42,22 @@ sentence this program has produced:
 
 **What a mind means crosses; the means to move it does not.**
 
+That sentence was written on a *linear*-map measurement — and §2's whole lesson is that the
+linear class leaves signal on the table (gemma read at chance until a nonlinear map pulled it to
+55× chance). So the obvious attack on our own law was to give the write side the same capacity
+and see if control crosses too. It was run (`b36_result.json`): the paired MLP that opened
+reading, at matched-maximal supervision (392 true pairs), at the steer-optimal layer where the
+target's own directions steer at native gain 0.173 — the positive control fired, and **every
+transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs
+0.70). Capacity roughly *doubled* transferred control (0.0245 → 0.0504) and still landed three
+times under its bar. The sharpest form of the dissociation now has a controlled statement: on
+the same model pair the same upgrade took **reading 0.3429 → 0.8000 and writing 0.0245 →
+0.0504** — capacity multiplies both channels by about the same factor, and only reading was ever
+close enough for that to matter. Reading was capacity-limited; control is not.
+
 Every deployable built here inherits that asymmetry as a *design rail*, not a limitation: the
-conscience is read-only because reading is what the physics honors.
+conscience is read-only, and `styxx.witness` has no `steer` method at all — not a policy choice
+but because the physics refused, now under the strongest attack the program knows how to mount.
 
 ## 4. What crosses cleanly: values
 
