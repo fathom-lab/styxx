@@ -1,0 +1,468 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+  "document_sha256": "36fd61eb992f413c219a3001542752f7fbc8faa81e5a0ad704f33b4b495e10fd",
+  "receipts_sha256": {
+    "b34v3_result.json": "a215a78ab9b3cd4e57e921953f59ab5affcff717c482fda215132fdb3591e6ff",
+    "b34v3_fresh_split_addendum.json": "58e0472970d98b98ee65421dc1fe45d4156cc100abbd67c2d820b647eed1fdc6"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 28,
+    "ABSTAIN": 14,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 22,
+      "token": "0.30"
+    },
+    {
+      "line": 22,
+      "token": "0.143"
+    },
+    {
+      "line": 30,
+      "token": "70"
+    },
+    {
+      "line": 31,
+      "token": "11"
+    },
+    {
+      "line": 35,
+      "token": "1"
+    },
+    {
+      "line": 35,
+      "token": "57"
+    },
+    {
+      "line": 35,
+      "token": "0.5263"
+    },
+    {
+      "line": 35,
+      "token": "57"
+    },
+    {
+      "line": 35,
+      "token": "13"
+    },
+    {
+      "line": 43,
+      "token": "70"
+    },
+    {
+      "line": 43,
+      "token": "2"
+    },
+    {
+      "line": 43,
+      "token": "2"
+    },
+    {
+      "line": 43,
+      "token": "1"
+    },
+    {
+      "line": 59,
+      "token": "392"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 17,
+      "token": "0.7959",
+      "value": 0.7959,
+      "decimals": 4,
+      "context": "| llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.llama_1b.seed_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.6857",
+      "value": 0.6857,
+      "decimals": 4,
+      "context": "| llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.llama_1b.read_top1"
+    },
+    {
+      "line": 17,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "| llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.llama_1b.x_chance_read"
+    },
+    {
+      "line": 17,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "| llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | llama_1b (same family, G0) | 0.7959 | 0.6857 | 48\u00d7 | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:chance"
+    },
+    {
+      "line": 18,
+      "token": "0.5918",
+      "value": 0.5918,
+      "decimals": 4,
+      "context": "| **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.seed_acc"
+    },
+    {
+      "line": 18,
+      "token": "0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "| **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.read_top1"
+    },
+    {
+      "line": 18,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.x_chance_read"
+    },
+    {
+      "line": 18,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "| **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | **gemma_2b (decisive, G1)** | **0.5918** | **0.5714** | **40\u00d7** | 0.0143 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:chance"
+    },
+    {
+      "line": 19,
+      "token": "0.0536",
+      "value": 0.0536,
+      "decimals": 4,
+      "context": "| qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 19,
+      "token": "0.1429",
+      "value": 0.1429,
+      "decimals": 4,
+      "context": "| qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.read_top1"
+    },
+    {
+      "line": 19,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.x_chance_read"
+    },
+    {
+      "line": 19,
+      "token": "0.0286",
+      "value": 0.0286,
+      "decimals": 4,
+      "context": "| qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "binding_context": "| target | seed_acc (discovery) | read top-1 | \u00d7 chance | null | | qwen_1p5b (context) | 0.0536 | 0.1429 | 10\u00d7 | 0.0286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.shuffled_top1"
+    },
+    {
+      "line": 22,
+      "token": "0.7959",
+      "value": 0.7959,
+      "decimals": 4,
+      "context": "(0.7959 \u2265 0.30), G1_bar \u2713 (0.5714 \u2265 0.143), G2_null \u2713 \u2014 verdict computed, not chosen.",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.llama_1b.seed_acc"
+    },
+    {
+      "line": 22,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "(0.7959 \u2265 0.30), G1_bar \u2713 (0.5714 \u2265 0.143), G2_null \u2713 \u2014 verdict computed, not chosen.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "(0.7959 \u2265 0.30), G1_bar \u2713 (0.5714 \u2265 0.143), G2_null \u2713 \u2014 verdict computed, not chosen.",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.read_top1"
+    },
+    {
+      "line": 22,
+      "token": "0.143",
+      "value": 0.143,
+      "decimals": 3,
+      "context": "(0.7959 \u2265 0.30), G1_bar \u2713 (0.5714 \u2265 0.143), G2_null \u2713 \u2014 verdict computed, not chosen.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "different family at 40\u00d7 chance with no labels in the loop.** The read half of the",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.x_chance_read"
+    },
+    {
+      "line": 30,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "Verification falsified that: 13 of 70 concepts overlap** (`b34v3_fresh_split_addendum.json`). A",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:held_out_overlap_with_v1v2"
+    },
+    {
+      "line": 30,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "Verification falsified that: 13 of 70 concepts overlap** (`b34v3_fresh_split_addendum.json`). A",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 31,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "random 70-of-462 draw overlaps another such draw by ~11 on average, so the overlap is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 34,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "lineage rule). **Recomputed on the 57 genuinely-unseen concepts alone (still scored 70-way,",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:genuinely_fresh"
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:n_heldout"
+    },
+    {
+      "line": 35,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_hits"
+    },
+    {
+      "line": 35,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "0.5263",
+      "value": 0.5263,
+      "decimals": 4,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+    },
+    {
+      "line": 35,
+      "token": "38",
+      "value": 38.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:llama_read_fresh_hits"
+    },
+    {
+      "line": 35,
+      "token": "57",
+      "value": 57.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "chance 1/70): gemma 30/57 = 0.5263 (37\u00d7 chance), llama 38/57 = 0.6667.** The 13 shared concepts",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.0286",
+      "value": 0.0286,
+      "decimals": 4,
+      "context": "1. **G2's null passed at exactly the boundary.** qwen's shuffled-pairing read was 0.0286 = 2 of",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.shuffled_top1"
+    },
+    {
+      "line": 42,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "1. **G2's null passed at exactly the boundary.** qwen's shuffled-pairing read was 0.0286 = 2 of",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:qwen_null_hits_of_70"
+    },
+    {
+      "line": 43,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "70 = 2\u00d7 chance, and the gate is \u2264 2\u00d7 chance. Two coincidental hits (Poisson expects ~1) \u2014 a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "70 = 2\u00d7 chance, and the gate is \u2264 2\u00d7 chance. Two coincidental hits (Poisson expects ~1) \u2014 a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "70 = 2\u00d7 chance, and the gate is \u2264 2\u00d7 chance. Two coincidental hits (Poisson expects ~1) \u2014 a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 43,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "70 = 2\u00d7 chance, and the gate is \u2264 2\u00d7 chance. Two coincidental hits (Poisson expects ~1) \u2014 a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 44,
+      "token": "0.0143",
+      "value": 0.0143,
+      "decimals": 4,
+      "context": "knife-edge pass, disclosed. llama and gemma nulls sat at exact chance (0.0143), so the",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:chance"
+    },
+    {
+      "line": 47,
+      "token": "0.5918",
+      "value": 0.5918,
+      "decimals": 4,
+      "context": "seed accuracy 0.5918; qwen's at only 0.0536 \u2014 barely above pairing-chance. qwen's 10\u00d7 read",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.gemma_2b.seed_acc"
+    },
+    {
+      "line": 47,
+      "token": "0.0536",
+      "value": 0.0536,
+      "decimals": 4,
+      "context": "seed accuracy 0.5918; qwen's at only 0.0536 \u2014 barely above pairing-chance. qwen's 10\u00d7 read",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 47,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "seed accuracy 0.5918; qwen's at only 0.0536 \u2014 barely above pairing-chance. qwen's 10\u00d7 read",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_result.json:targets.qwen_1p5b.x_chance_read"
+    },
+    {
+      "line": 57,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "nonlinear lens reads held-out content through the discovered pairing at 37\u201340\u00d7 chance on unseen",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+    },
+    {
+      "line": 59,
+      "token": "392",
+      "value": 392.0,
+      "decimals": 0,
+      "context": "b31v2, which used 392 *true* pairs \u2014 here the pairing is found, not given. Bounded to: this map",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

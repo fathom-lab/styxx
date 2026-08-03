@@ -1,0 +1,30 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b34v3_labelfree_read_2026_08_03.md",
+  "document_sha256": "36fd61eb992f413c219a3001542752f7fbc8faa81e5a0ad704f33b4b495e10fd",
+  "oath": {
+    "counts": {
+      "VERIFIED": 28,
+      "ABSTAIN": 14,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+      "result": "b34v3_result.json",
+      "frozen_verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+      "gates": {
+        "G0_discovery": true,
+        "G2_null": true,
+        "G1_bar": true
+      },
+      "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+      "prereg_commit": "aea406fdbe845dfd1344f9b9e47253bb0d665083"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "4bc9ec75557a1bb27c1f4d561a1aa82fac7e43d776e35c426253bc30cdfddef7"
+}
