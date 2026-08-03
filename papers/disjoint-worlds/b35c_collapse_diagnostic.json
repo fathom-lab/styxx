@@ -1,0 +1,36 @@
+{
+  "hypothesis": "shuffled-pairing MLP mode-collapses to the target centroid",
+  "vocab_size": 462,
+  "n_queries": 70,
+  "targets": {
+    "llama_1b": {
+      "real_distinct_predictions": 56,
+      "null_distinct_predictions": 22,
+      "null_modal_prediction_share": 0.3,
+      "null_output_spread": 0.2564,
+      "real_output_spread": 0.654,
+      "null_hits": 1,
+      "real_hits": 22
+    },
+    "gemma_2b": {
+      "real_distinct_predictions": 51,
+      "null_distinct_predictions": 22,
+      "null_modal_prediction_share": 0.3143,
+      "null_output_spread": 8.12,
+      "real_output_spread": 19.2845,
+      "null_hits": 0,
+      "real_hits": 14
+    },
+    "qwen_1p5b": {
+      "real_distinct_predictions": 44,
+      "null_distinct_predictions": 21,
+      "null_modal_prediction_share": 0.2857,
+      "null_output_spread": 1.6694,
+      "real_output_spread": 3.4136,
+      "null_hits": 1,
+      "real_hits": 1
+    }
+  },
+  "verdict": "NO_COLLAPSE",
+  "collapsed_targets": []
+}

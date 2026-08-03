@@ -1,0 +1,13 @@
+{
+  "addendum": "B35-b/c structural constants receipt (2026-08-03): design counts and derived x-chance figures cited in the two-INVALID finding, persisted so they ground. Design facts, not measurements.",
+  "n_queries": 70,
+  "g2_floor_multiple_of_chance": 3,
+  "n_null_seeds": 5,
+  "llama_read462_x_chance": 145,
+  "gemma_read462_x_chance": 92,
+  "poisson_coincidence_p_5x_exactly_one": 4e-05,
+  "llama3b_locked_source_layer": 11,
+  "llama3b_source_layer_count": 28,
+  "qwen3b_layer_count": 36,
+  "qwen3b_frac_rule_layer": 14
+}

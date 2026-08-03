@@ -1,0 +1,659 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+  "document_sha256": "9d062c2c151c7ec5f538bbf4307feea9df9bc0899fddce4b402b43a8f0ef58e2",
+  "receipts_sha256": {
+    "b35c_result.json": "fd682f000a60d32aedc09338b8cca4898b5b4b44c9f46e292a1dca5dccd40c09",
+    "b35c_null_replication.json": "c06ea48d7b392956ecf25039f4a52b6b25a66abb54e6256bb82c2f7662b3ab45",
+    "b35c_collapse_diagnostic.json": "312c75915807885976b72a82f430b9c9bebdb695b38f60e15cd3b3f9f38822a0",
+    "b35b_result.json": "37ecd1388fe95079c6d8a60a17fe09f5bd329f2ea35a6b0d0c87f61d8dad64ad",
+    "g0clear_result_llama3b.json": "1c2edb29da71a34ee5e15dc058b35dc60bae427c7d9796dc65010516f4fb3611",
+    "b35bc_constants_addendum.json": "244dd2f65a8d9e9a5c67a51e2eeeef9756b8150d279b347268c46084f719d278"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 62,
+    "ABSTAIN": 3,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "145"
+    },
+    {
+      "line": 17,
+      "token": "92"
+    },
+    {
+      "line": 32,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 15,
+      "token": "462",
+      "value": 462.0,
+      "decimals": 0,
+      "context": "Removing the 70-way shortlist (queries scored against all 462 concepts, trained anchors",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:n_concepts"
+    },
+    {
+      "line": 16,
+      "token": "0.3143",
+      "value": 0.3143,
+      "decimals": 4,
+      "context": "included as distractors) produced the largest reads in program history: **llama 0.3143 = 145\u00d7",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.llama_1b.read462"
+    },
+    {
+      "line": 16,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "included as distractors) produced the largest reads in program history: **llama 0.3143 = 145\u00d7",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 17,
+      "token": "0.2000",
+      "value": 0.2,
+      "decimals": 4,
+      "context": "chance, gemma 0.2000 = 92\u00d7 chance** at a 1/462 floor. **These are UNLICENSED and are not",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.read462"
+    },
+    {
+      "line": 17,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "chance, gemma 0.2000 = 92\u00d7 chance** at a 1/462 floor. **These are UNLICENSED and are not",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 17,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "chance, gemma 0.2000 = 92\u00d7 chance** at a 1/462 floor. **These are UNLICENSED and are not",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 17,
+      "token": "462",
+      "value": 462.0,
+      "decimals": 0,
+      "context": "chance, gemma 0.2000 = 92\u00d7 chance** at a 1/462 floor. **These are UNLICENSED and are not",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:n_concepts"
+    },
+    {
+      "line": 19,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "70 queries, above the 3\u00d7-chance floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:n_queries"
+    },
+    {
+      "line": 19,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "70 queries, above the 3\u00d7-chance floor.",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:g2_floor_multiple_of_chance"
+    },
+    {
+      "line": 25,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| target | null hits across 5 seeds | mean |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:n_null_seeds"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.null462"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.null462"
+    },
+    {
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.null462"
+    },
+    {
+      "line": 27,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.null462"
+    },
+    {
+      "line": 27,
+      "token": "0.00286",
+      "value": 0.00286,
+      "decimals": 5,
+      "context": "| llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | llama_1b | 0, 0, 1, 0, 0 | 0.00286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.mean_null"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 28,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 28,
+      "token": "0.01429",
+      "value": 0.01429,
+      "decimals": 5,
+      "context": "| gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | gemma_2b | **1, 1, 1, 1, 1** | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:max_null462"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 29,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.qwen_1p5b.null_hits_of_70[1]"
+    },
+    {
+      "line": 29,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.gemma_2b.null462"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.null_hits_of_70[2]"
+    },
+    {
+      "line": 29,
+      "token": "0.01429",
+      "value": 0.01429,
+      "decimals": 5,
+      "context": "| qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "binding_context": "| target | null hits across 5 seeds | mean | | qwen_1p5b | 1, 2, 0, 1, 1 | 0.01429 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:max_null462"
+    },
+    {
+      "line": 32,
+      "token": "0.152",
+      "value": 0.152,
+      "decimals": 3,
+      "context": "Poisson assumption (0.152 expected hits per draw) that is a ~4\u00d710\u207b\u2075 coincidence. It is not a",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:expected_hits_per_draw_at_chance"
+    },
+    {
+      "line": 32,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "Poisson assumption (0.152 expected hits per draw) that is a ~4\u00d710\u207b\u2075 coincidence. It is not a",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_null_replication.json:targets.llama_1b.n_seeds_with_zero_hits"
+    },
+    {
+      "line": 32,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "Poisson assumption (0.152 expected hits per draw) that is a ~4\u00d710\u207b\u2075 coincidence. It is not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 43,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_distinct_predictions"
+    },
+    {
+      "line": 43,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:n_heldout"
+    },
+    {
+      "line": 43,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_modal_prediction_share"
+    },
+    {
+      "line": 43,
+      "token": "56",
+      "value": 56.0,
+      "decimals": 0,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.real_distinct_predictions"
+    },
+    {
+      "line": 43,
+      "token": "0.2564",
+      "value": 0.2564,
+      "decimals": 4,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_output_spread"
+    },
+    {
+      "line": 43,
+      "token": "0.654",
+      "value": 0.654,
+      "decimals": 3,
+      "context": "| llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | llama_1b | 22 / 70 | 0.30 | 56 | 0.2564 vs 0.654 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.real_output_spread"
+    },
+    {
+      "line": 44,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_distinct_predictions"
+    },
+    {
+      "line": 44,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:n_heldout"
+    },
+    {
+      "line": 44,
+      "token": "0.3143",
+      "value": 0.3143,
+      "decimals": 4,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.llama_1b.read462"
+    },
+    {
+      "line": 44,
+      "token": "51",
+      "value": 51.0,
+      "decimals": 0,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.gemma_2b.real_distinct_predictions"
+    },
+    {
+      "line": 44,
+      "token": "8.12",
+      "value": 8.12,
+      "decimals": 2,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.gemma_2b.null_output_spread"
+    },
+    {
+      "line": 44,
+      "token": "19.2845",
+      "value": 19.2845,
+      "decimals": 4,
+      "context": "| gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | gemma_2b | 22 / 70 | 0.3143 | 51 | 8.12 vs 19.2845 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.gemma_2b.real_output_spread"
+    },
+    {
+      "line": 45,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.null_distinct_predictions"
+    },
+    {
+      "line": 45,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:n_heldout"
+    },
+    {
+      "line": 45,
+      "token": "0.2857",
+      "value": 0.2857,
+      "decimals": 4,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.null_modal_prediction_share"
+    },
+    {
+      "line": 45,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.real_distinct_predictions"
+    },
+    {
+      "line": 45,
+      "token": "1.6694",
+      "value": 1.6694,
+      "decimals": 4,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.null_output_spread"
+    },
+    {
+      "line": 45,
+      "token": "3.4136",
+      "value": 3.4136,
+      "decimals": 4,
+      "context": "| qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "binding_context": "| target | null distinct preds | null modal share | real distinct | null spread vs real | | qwen_1p5b | 21 / 70 | 0.2857 | 44 | 1.6694 vs 3.4136 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.real_output_spread"
+    },
+    {
+      "line": 47,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "The null makes ~22 distinct predictions where the real map makes 44\u201356, with ~30% of queries",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_distinct_predictions"
+    },
+    {
+      "line": 47,
+      "token": "44",
+      "value": 44.0,
+      "decimals": 0,
+      "context": "The null makes ~22 distinct predictions where the real map makes 44\u201356, with ~30% of queries",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.qwen_1p5b.real_distinct_predictions"
+    },
+    {
+      "line": 47,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "The null makes ~22 distinct predictions where the real map makes 44\u201356, with ~30% of queries",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:targets.llama_1b.null_modal_prediction_share"
+    },
+    {
+      "line": 50,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "the 70 queries, exactly one query \u2014 the one that *is* that entry \u2014 scores, reproducibly, every",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_collapse_diagnostic.json:n_queries"
+    },
+    {
+      "line": 58,
+      "token": "145",
+      "value": 145.0,
+      "decimals": 0,
+      "context": "open-vocabulary reads (llama 145\u00d7 chance, gemma 92\u00d7 chance) remain unlicensed observations.",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:llama_read462_x_chance"
+    },
+    {
+      "line": 58,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "open-vocabulary reads (llama 145\u00d7 chance, gemma 92\u00d7 chance) remain unlicensed observations.",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:gemma_read462_x_chance"
+    },
+    {
+      "line": 62,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "Swapping the source to Qwen2.5-3B produced discovery accuracy of **0.0 (qwen_1p5b, the",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.qwen_1p5b.read462"
+    },
+    {
+      "line": 63,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "same-family control), 0.0204 (gemma_2b), 0.0 (llama_1b)** \u2014 total failure of the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "b35b_result.json:targets.gemma_2b.seed_acc"
+    },
+    {
+      "line": 63,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "same-family control), 0.0204 (gemma_2b), 0.0 (llama_1b)** \u2014 total failure of the label-free",
+      "status": "VERIFIED",
+      "receipt_ref": "b35c_result.json:targets.llama_1b.null462"
+    },
+    {
+      "line": 67,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "chosen by a fraction rule \u2014 it was **locked by an explicit G0 optimization** (layer 11, k 150,",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:layers_tested[0]"
+    },
+    {
+      "line": 67,
+      "token": "150",
+      "value": 150.0,
+      "decimals": 0,
+      "context": "chosen by a fraction rule \u2014 it was **locked by an explicit G0 optimization** (layer 11, k 150,",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:selection_grid[11].k"
+    },
+    {
+      "line": 68,
+      "token": "0.9131",
+      "value": 0.9131,
+      "decimals": 4,
+      "context": "pc_cos 0.9131, `g0clear_result_llama3b.json`). This prereg transplanted the resulting *fraction*",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:selection_grid[3].pc_cos_sel"
+    },
+    {
+      "line": 69,
+      "token": "11",
+      "value": 11.0,
+      "decimals": 0,
+      "context": "(11/28) to Qwen2.5-3B's 36 layers \u2192 layer 14, with **no equivalent search**. The frac rule was",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:layers_tested[0]"
+    },
+    {
+      "line": 69,
+      "token": "28",
+      "value": 28.0,
+      "decimals": 0,
+      "context": "(11/28) to Qwen2.5-3B's 36 layers \u2192 layer 14, with **no equivalent search**. The frac rule was",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:llama3b_source_layer_count"
+    },
+    {
+      "line": 69,
+      "token": "36",
+      "value": 36.0,
+      "decimals": 0,
+      "context": "(11/28) to Qwen2.5-3B's 36 layers \u2192 layer 14, with **no equivalent search**. The frac rule was",
+      "status": "VERIFIED",
+      "receipt_ref": "b35bc_constants_addendum.json:qwen3b_layer_count"
+    },
+    {
+      "line": 69,
+      "token": "14",
+      "value": 14.0,
+      "decimals": 0,
+      "context": "(11/28) to Qwen2.5-3B's 36 layers \u2192 layer 14, with **no equivalent search**. The frac rule was",
+      "status": "VERIFIED",
+      "receipt_ref": "g0clear_result_llama3b.json:layers_tested[1]"
+    }
+  ]
+}

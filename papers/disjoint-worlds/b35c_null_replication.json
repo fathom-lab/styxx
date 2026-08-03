@@ -1,0 +1,78 @@
+{
+  "purpose": "b35-c G2 null replication per the frozen prereg's INVALID branch",
+  "read_path": "unchanged from b35c_result.json (reads remain UNLICENSED here)",
+  "null_seeds": [
+    9001,
+    9002,
+    9003,
+    9004,
+    9005
+  ],
+  "vocab_size": 462,
+  "chance462": 0.00216,
+  "targets": {
+    "llama_1b": {
+      "null_top1_by_seed": [
+        0.0,
+        0.0,
+        0.01429,
+        0.0,
+        0.0
+      ],
+      "null_hits_of_70": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "mean_null": 0.00286,
+      "median_null": 0.0,
+      "max_null": 0.01429,
+      "n_seeds_with_zero_hits": 4
+    },
+    "gemma_2b": {
+      "null_top1_by_seed": [
+        0.01429,
+        0.01429,
+        0.01429,
+        0.01429,
+        0.01429
+      ],
+      "null_hits_of_70": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "mean_null": 0.01429,
+      "median_null": 0.01429,
+      "max_null": 0.01429,
+      "n_seeds_with_zero_hits": 0
+    },
+    "qwen_1p5b": {
+      "null_top1_by_seed": [
+        0.01429,
+        0.02857,
+        0.0,
+        0.01429,
+        0.01429
+      ],
+      "null_hits_of_70": [
+        1,
+        2,
+        0,
+        1,
+        1
+      ],
+      "mean_null": 0.01429,
+      "median_null": 0.01429,
+      "max_null": 0.02857,
+      "n_seeds_with_zero_hits": 1
+    }
+  },
+  "pooled_mean_null": 0.01048,
+  "pooled_draws": 15,
+  "expected_hits_per_draw_at_chance": 0.152
+}

@@ -1,0 +1,36 @@
+{
+  "prereg": "PREREG_b35b_second_source_2026_08_03.md",
+  "seed": 343,
+  "smoke": false,
+  "source": "Qwen/Qwen2.5-3B-Instruct",
+  "n_heldout": 70,
+  "chance": 0.0143,
+  "targets": {
+    "qwen_1p5b": {
+      "seed_acc": 0.0,
+      "read": 0.0,
+      "null": 0.0143,
+      "x_chance": 0.0
+    },
+    "gemma_2b": {
+      "seed_acc": 0.0204,
+      "read": 0.0143,
+      "null": 0.0143,
+      "x_chance": 1.0
+    },
+    "llama_1b": {
+      "seed_acc": 0.0,
+      "read": 0.0,
+      "null": 0.0286,
+      "x_chance": 0.0
+    }
+  },
+  "max_null_top1": 0.0286,
+  "verdict": "INVALID__second_source_discovery_broken",
+  "gates": {
+    "G0_same_family": false,
+    "G2_null": true,
+    "G1_cross": false
+  },
+  "prereg_commit": "a3d981fd9dab816a115aad633c9b66954d41a4a3"
+}

@@ -1,0 +1,42 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b35bc_generality_invalids_2026_08_03.md",
+  "document_sha256": "9d062c2c151c7ec5f538bbf4307feea9df9bc0899fddce4b402b43a8f0ef58e2",
+  "oath": {
+    "counts": {
+      "VERIFIED": 62,
+      "ABSTAIN": 3,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b35c_open_vocab_2026_08_03.md",
+      "result": "papers/disjoint-worlds/b35c_result.json",
+      "frozen_verdict": "INVALID__null_artifact",
+      "gates": {
+        "G0_sanity": true,
+        "G2_null": false,
+        "G1_open": true
+      },
+      "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891",
+      "prereg_commit": "6d88a80502a693ebb1b52d4e93265070e4afb8a5"
+    },
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b35b_second_source_2026_08_03.md",
+      "result": "papers/disjoint-worlds/b35b_result.json",
+      "frozen_verdict": "INVALID__second_source_discovery_broken",
+      "gates": {
+        "G0_same_family": false,
+        "G2_null": true,
+        "G1_cross": false
+      },
+      "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749",
+      "prereg_commit": "a3d981fd9dab816a115aad633c9b66954d41a4a3"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "e3e0e641ee2cb46dec4d315a6e03a01ce82c1375d07bf541eb1c3555b2e3e076"
+}

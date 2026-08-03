@@ -118,5 +118,445 @@
   "l1": 0.0037,
   "random": 0.0166,
   "eps_stability_cos": 0.9989
+ },
+ {
+  "concept": "gorilla",
+  "native": 0.046,
+  "m1": 0.0416,
+  "l1": 0.0238,
+  "random": -0.0027,
+  "eps_stability_cos": 0.9988
+ },
+ {
+  "concept": "store",
+  "native": 0.1926,
+  "m1": 0.0414,
+  "l1": 0.0249,
+  "random": 0.0579,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "subway",
+  "native": -0.0083,
+  "m1": -0.0358,
+  "l1": -0.0045,
+  "random": -0.0039,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "farmer",
+  "native": 0.0177,
+  "m1": -0.0041,
+  "l1": -0.002,
+  "random": 0.0039,
+  "eps_stability_cos": 0.9992
+ },
+ {
+  "concept": "butterfly",
+  "native": 0.3208,
+  "m1": 0.1239,
+  "l1": 0.0707,
+  "random": 0.0476,
+  "eps_stability_cos": 0.9992
+ },
+ {
+  "concept": "glass",
+  "native": 0.2835,
+  "m1": 0.0475,
+  "l1": 0.0062,
+  "random": -0.003,
+  "eps_stability_cos": 0.9983
+ },
+ {
+  "concept": "date",
+  "native": 0.1109,
+  "m1": 0.0449,
+  "l1": 0.0909,
+  "random": 0.0156,
+  "eps_stability_cos": 0.998
+ },
+ {
+  "concept": "bank",
+  "native": 0.054,
+  "m1": 0.0122,
+  "l1": -0.0075,
+  "random": 0.0068,
+  "eps_stability_cos": 0.9987
+ },
+ {
+  "concept": "chocolate",
+  "native": 0.3432,
+  "m1": 0.0207,
+  "l1": 0.1188,
+  "random": 0.0399,
+  "eps_stability_cos": 0.9999
+ },
+ {
+  "concept": "cave",
+  "native": 0.1178,
+  "m1": 0.0323,
+  "l1": 0.0396,
+  "random": 0.109,
+  "eps_stability_cos": 0.9987
+ },
+ {
+  "concept": "crystal",
+  "native": 0.0421,
+  "m1": 0.0097,
+  "l1": 0.0151,
+  "random": 0.0359,
+  "eps_stability_cos": 0.9989
+ },
+ {
+  "concept": "corn",
+  "native": 0.3974,
+  "m1": 0.085,
+  "l1": 0.0442,
+  "random": 0.0387,
+  "eps_stability_cos": 0.9999
+ },
+ {
+  "concept": "skirt",
+  "native": 0.1435,
+  "m1": 0.0389,
+  "l1": -0.021,
+  "random": -0.0548,
+  "eps_stability_cos": 0.9979
+ },
+ {
+  "concept": "duck",
+  "native": 0.0577,
+  "m1": 0.0192,
+  "l1": 0.0067,
+  "random": 0.018,
+  "eps_stability_cos": 0.9996
+ },
+ {
+  "concept": "ant",
+  "native": 0.0307,
+  "m1": 0.0589,
+  "l1": 0.0037,
+  "random": 0.0111,
+  "eps_stability_cos": 0.9994
+ },
+ {
+  "concept": "tram",
+  "native": 0.1057,
+  "m1": 0.0234,
+  "l1": -0.0051,
+  "random": 0.0222,
+  "eps_stability_cos": 0.9989
+ },
+ {
+  "concept": "brush",
+  "native": 0.0477,
+  "m1": 0.0627,
+  "l1": -0.0084,
+  "random": -0.0714,
+  "eps_stability_cos": 0.9982
+ },
+ {
+  "concept": "tambourine",
+  "native": 0.1975,
+  "m1": 0.0711,
+  "l1": 0.0044,
+  "random": 0.0559,
+  "eps_stability_cos": 0.9993
+ },
+ {
+  "concept": "gray",
+  "native": 0.4301,
+  "m1": 0.1544,
+  "l1": 0.0853,
+  "random": -0.0314,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "church",
+  "native": 0.1567,
+  "m1": 0.0788,
+  "l1": 0.0354,
+  "random": 0.0476,
+  "eps_stability_cos": 0.9986
+ },
+ {
+  "concept": "forest",
+  "native": 0.1725,
+  "m1": 0.138,
+  "l1": 0.0554,
+  "random": -0.0283,
+  "eps_stability_cos": 0.9996
+ },
+ {
+  "concept": "window",
+  "native": 0.3596,
+  "m1": 0.0703,
+  "l1": -0.0765,
+  "random": 0.0173,
+  "eps_stability_cos": 0.9987
+ },
+ {
+  "concept": "boot",
+  "native": 0.0172,
+  "m1": -0.0168,
+  "l1": 0.0237,
+  "random": 0.0113,
+  "eps_stability_cos": 0.9982
+ },
+ {
+  "concept": "planet",
+  "native": 0.0362,
+  "m1": 0.1592,
+  "l1": -0.0117,
+  "random": 0.0464,
+  "eps_stability_cos": 0.9981
+ },
+ {
+  "concept": "peacock",
+  "native": 0.3156,
+  "m1": 0.1224,
+  "l1": 0.1294,
+  "random": -0.0001,
+  "eps_stability_cos": 0.9993
+ },
+ {
+  "concept": "wood",
+  "native": 0.0465,
+  "m1": 0.0095,
+  "l1": 0.0608,
+  "random": 0.034,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "steam",
+  "native": 0.2609,
+  "m1": 0.1043,
+  "l1": 0.0552,
+  "random": 0.0675,
+  "eps_stability_cos": 0.9998
+ },
+ {
+  "concept": "cloud",
+  "native": 0.4794,
+  "m1": 0.2536,
+  "l1": 0.1434,
+  "random": 0.0374,
+  "eps_stability_cos": 0.9982
+ },
+ {
+  "concept": "pear",
+  "native": 0.0166,
+  "m1": 0.0434,
+  "l1": 0.0547,
+  "random": -0.0046,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "chest",
+  "native": 0.2789,
+  "m1": -0.0005,
+  "l1": 0.0307,
+  "random": -0.0572,
+  "eps_stability_cos": 0.9983
+ },
+ {
+  "concept": "cactus",
+  "native": 0.061,
+  "m1": 0.0444,
+  "l1": 0.0847,
+  "random": 0.0549,
+  "eps_stability_cos": 0.9992
+ },
+ {
+  "concept": "dream",
+  "native": 0.3981,
+  "m1": 0.0151,
+  "l1": 0.06,
+  "random": 0.0333,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "salt",
+  "native": 0.3866,
+  "m1": 0.03,
+  "l1": 0.0073,
+  "random": -0.0523,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "star",
+  "native": 0.1786,
+  "m1": -0.0067,
+  "l1": -0.0427,
+  "random": -0.1338,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "yacht",
+  "native": 0.1153,
+  "m1": 0.0033,
+  "l1": 0.0398,
+  "random": 0.1006,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "mushroom",
+  "native": 0.3922,
+  "m1": 0.0366,
+  "l1": 0.0033,
+  "random": 0.0304,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "train",
+  "native": 0.0593,
+  "m1": -0.0202,
+  "l1": -0.0206,
+  "random": 0.0185,
+  "eps_stability_cos": 0.9985
+ },
+ {
+  "concept": "office",
+  "native": 0.1187,
+  "m1": -0.0317,
+  "l1": 0.0294,
+  "random": -0.0427,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "restaurant",
+  "native": 0.3158,
+  "m1": 0.0203,
+  "l1": 0.005,
+  "random": 0.0301,
+  "eps_stability_cos": 0.9994
+ },
+ {
+  "concept": "tiger",
+  "native": 0.2308,
+  "m1": 0.0306,
+  "l1": 0.0597,
+  "random": 0.0854,
+  "eps_stability_cos": 0.999
+ },
+ {
+  "concept": "wealth",
+  "native": 0.4543,
+  "m1": 0.0535,
+  "l1": 0.0432,
+  "random": 0.0692,
+  "eps_stability_cos": 0.9995
+ },
+ {
+  "concept": "organ",
+  "native": 0.0008,
+  "m1": 0.007,
+  "l1": -0.023,
+  "random": 0.0155,
+  "eps_stability_cos": 0.9979
+ },
+ {
+  "concept": "grape",
+  "native": 0.2145,
+  "m1": 0.1273,
+  "l1": 0.0316,
+  "random": 0.0195,
+  "eps_stability_cos": 0.9996
+ },
+ {
+  "concept": "worry",
+  "native": 0.1525,
+  "m1": 0.0963,
+  "l1": 0.076,
+  "random": 0.0397,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "yogurt",
+  "native": 0.0928,
+  "m1": 0.062,
+  "l1": 0.061,
+  "random": 0.0073,
+  "eps_stability_cos": 0.9998
+ },
+ {
+  "concept": "gratitude",
+  "native": 0.485,
+  "m1": 0.1139,
+  "l1": 0.1296,
+  "random": 0.0508,
+  "eps_stability_cos": 0.9992
+ },
+ {
+  "concept": "melon",
+  "native": 0.1339,
+  "m1": 0.0396,
+  "l1": 0.0515,
+  "random": 0.0609,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "pasta",
+  "native": 0.1459,
+  "m1": 0.0577,
+  "l1": -0.0288,
+  "random": 0.0521,
+  "eps_stability_cos": 0.9997
+ },
+ {
+  "concept": "house",
+  "native": 0.0709,
+  "m1": 0.0829,
+  "l1": 0.0472,
+  "random": 0.0511,
+  "eps_stability_cos": 0.9988
+ },
+ {
+  "concept": "pink",
+  "native": 0.2707,
+  "m1": 0.1062,
+  "l1": 0.138,
+  "random": 0.0704,
+  "eps_stability_cos": 0.9996
+ },
+ {
+  "concept": "dolphin",
+  "native": 0.088,
+  "m1": 0.0399,
+  "l1": 0.15,
+  "random": 0.0428,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "bone",
+  "native": 0.2382,
+  "m1": 0.0175,
+  "l1": 0.0106,
+  "random": -0.0145,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "scooter",
+  "native": 0.054,
+  "m1": 0.0468,
+  "l1": 0.0132,
+  "random": -0.011,
+  "eps_stability_cos": 0.9982
+ },
+ {
+  "concept": "comet",
+  "native": 0.0312,
+  "m1": 0.0519,
+  "l1": -0.0138,
+  "random": 0.049,
+  "eps_stability_cos": 0.9991
+ },
+ {
+  "concept": "lettuce",
+  "native": 0.3346,
+  "m1": 0.0627,
+  "l1": 0.1084,
+  "random": 0.1257,
+  "eps_stability_cos": 0.9998
  }
 ]
