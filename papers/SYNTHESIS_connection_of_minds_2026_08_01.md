@@ -26,9 +26,19 @@ falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And
 surprise: gemma-2-2b, the *highest*-isometry target in the battery (RSA 0.955, above even the
 same-family anchor), reads at exactly chance 0.014. **Representational similarity is not what
 carries the readable signal.** The prereg's smooth-degradation prediction was falsified and
-recorded; whatever makes one mind legible to another, it is not the RSA-visible geometry. This
-is the program's standing open door (B31-v2): whether a higher-capacity, non-linear map opens
-the cross-family channel or the cliff is bedrock.
+recorded; whatever makes one mind legible to another, it is not the RSA-visible geometry.
+
+That door has since been opened — twice, each answering a different question. **With paired
+anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 —
+55× chance — on 70 held-out concepts; the cliff was the linear map class, not the minds.
+**And label-free** (`b34v3_result.json`): the committed linear machinery *discovers* gemma's
+correspondence from geometry alone (seed accuracy 0.5918, zero labels in fitting) and a single
+MLP fit on the discovered pairing reads held-out content at 0.5714 — 40× chance — holding at
+0.5263 on the 57 concepts disjoint from every earlier run
+(`b34v3_fresh_split_addendum.json`). The pairing is not merely usable; it is *findable*.
+Cross-family content reading is now licensed on both axes, bounded honestly: one
+strong-discovery target (gemma), a second (Qwen) whose discovery was weak, ≤3B models, 70-way
+identification. Discovery strength — not isometry — is the variable that now wants a theory.
 
 ## 3. What does not cross: control
 
