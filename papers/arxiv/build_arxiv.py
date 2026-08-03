@@ -30,6 +30,9 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{longtable}
+% pandoc emits \def\LTcaptype{none} for uncaptioned longtables and hyperref then wants a
+% 'none' counter; provide it (no-op for documents that never hit the path)
+\newcounter{none}
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}

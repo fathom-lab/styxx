@@ -1,0 +1,37 @@
+{
+  "prereg": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+  "seed": 343,
+  "smoke": false,
+  "n_tr": 392,
+  "n_heldout": 70,
+  "chance": 0.0143,
+  "targets": {
+    "llama_1b": {
+      "seed_acc": 0.7959,
+      "read_top1": 0.6857,
+      "shuffled_top1": 0.0143,
+      "x_chance_read": 48.0
+    },
+    "gemma_2b": {
+      "seed_acc": 0.5918,
+      "read_top1": 0.5714,
+      "shuffled_top1": 0.0143,
+      "x_chance_read": 40.0
+    },
+    "qwen_1p5b": {
+      "seed_acc": 0.0536,
+      "read_top1": 0.1429,
+      "shuffled_top1": 0.0286,
+      "x_chance_read": 10.0
+    }
+  },
+  "max_shuffled_top1": 0.0286,
+  "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+  "gates": {
+    "G0_discovery": true,
+    "G2_null": true,
+    "G1_bar": true
+  },
+  "prereg_commit": "aea406fdbe845dfd1344f9b9e47253bb0d665083",
+  "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+}

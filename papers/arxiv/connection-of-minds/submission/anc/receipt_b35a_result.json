@@ -1,0 +1,116 @@
+{
+  "prereg": "PREREG_b35_seed_stability_2026_08_03.md",
+  "smoke": false,
+  "seeds": [
+    1001,
+    1002,
+    1003,
+    1004,
+    1005
+  ],
+  "per_seed": [
+    {
+      "seed": 1001,
+      "llama_1b": {
+        "seed_acc": 0.5638,
+        "read": 0.4286,
+        "null": 0.0143
+      },
+      "gemma_2b": {
+        "seed_acc": 0.8469,
+        "read": 0.6857,
+        "null": 0.0286
+      },
+      "qwen_1p5b": {
+        "seed_acc": 0.0434,
+        "read": 0.0857,
+        "null": 0.0143
+      }
+    },
+    {
+      "seed": 1002,
+      "llama_1b": {
+        "seed_acc": 0.5306,
+        "read": 0.4857,
+        "null": 0.0143
+      },
+      "gemma_2b": {
+        "seed_acc": 0.6531,
+        "read": 0.5286,
+        "null": 0.0143
+      },
+      "qwen_1p5b": {
+        "seed_acc": 0.051,
+        "read": 0.0857,
+        "null": 0.0
+      }
+    },
+    {
+      "seed": 1003,
+      "llama_1b": {
+        "seed_acc": 0.2347,
+        "read": 0.2286,
+        "null": 0.0286
+      },
+      "gemma_2b": {
+        "seed_acc": 0.8316,
+        "read": 0.5857,
+        "null": 0.0143
+      },
+      "qwen_1p5b": {
+        "seed_acc": 0.0357,
+        "read": 0.0143,
+        "null": 0.0
+      }
+    },
+    {
+      "seed": 1004,
+      "llama_1b": {
+        "seed_acc": 0.7015,
+        "read": 0.5857,
+        "null": 0.0
+      },
+      "gemma_2b": {
+        "seed_acc": 0.8801,
+        "read": 0.5714,
+        "null": 0.0143
+      },
+      "qwen_1p5b": {
+        "seed_acc": 0.0944,
+        "read": 0.2286,
+        "null": 0.0286
+      }
+    },
+    {
+      "seed": 1005,
+      "llama_1b": {
+        "seed_acc": 0.6684,
+        "read": 0.4857,
+        "null": 0.0
+      },
+      "gemma_2b": {
+        "seed_acc": 0.8418,
+        "read": 0.6571,
+        "null": 0.0143
+      },
+      "qwen_1p5b": {
+        "seed_acc": 0.0918,
+        "read": 0.1,
+        "null": 0.0143
+      }
+    }
+  ],
+  "median_gemma_read": 0.5857,
+  "min_gemma_read": 0.5286,
+  "max_gemma_read": 0.6857,
+  "median_llama_seed_acc": 0.5638,
+  "mean_null_top1": 0.0133,
+  "chance": 0.0143,
+  "verdict": "LABELFREE_READ_SEED_STABLE",
+  "gates": {
+    "G0_discovery": true,
+    "G2_null_mean": true,
+    "G1_stability": true
+  },
+  "prereg_commit": "758b4a5f1ef8cfe528491b78ffab4819f0d62042"
+}

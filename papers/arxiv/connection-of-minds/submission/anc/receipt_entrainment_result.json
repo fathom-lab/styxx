@@ -1,0 +1,110 @@
+{
+  "config": {
+    "steps": 1500,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "L": 96,
+    "seg_len": 32,
+    "S": 3,
+    "periods": [
+      3,
+      12
+    ],
+    "kappa_max": 0.1,
+    "d_sweep": [
+      4,
+      8,
+      16
+    ],
+    "primary_d": 8,
+    "fallback_d": 4,
+    "eval_n": 1024
+  },
+  "params": {
+    "4": {
+      "static": 1384,
+      "entrain": 1520,
+      "oracle": 1384
+    },
+    "8": {
+      "static": 2052,
+      "entrain": 2196,
+      "oracle": 2052,
+      "clamped": 2044
+    },
+    "16": {
+      "static": 3580,
+      "entrain": 3740,
+      "oracle": 3580
+    }
+  },
+  "drift": {
+    "4": {
+      "static": 0.24663065373897552,
+      "entrain": 0.318380743265152,
+      "oracle": 0.35126110911369324
+    },
+    "8": {
+      "static": 0.4604337016741435,
+      "entrain": 0.49999122818311054,
+      "oracle": 0.6306845943133036,
+      "clamped": 0.34846122066179913
+    },
+    "16": {
+      "static": 0.6781367460886637,
+      "entrain": 0.5918801228205363,
+      "oracle": 0.8950320283571879
+    }
+  },
+  "fixed": {
+    "4": {
+      "static": 0.2516241470972697,
+      "entrain": 0.31546348333358765,
+      "oracle": 0.3256966173648834
+    },
+    "8": {
+      "static": 0.45649829506874084,
+      "entrain": 0.48691649238268536,
+      "oracle": 0.5999887188275655,
+      "clamped": 0.3267590602238973
+    },
+    "16": {
+      "static": 0.6812916398048401,
+      "entrain": 0.5904921690622965,
+      "oracle": 0.8690659403800964
+    }
+  },
+  "transformer": {
+    "drift": 0.9163073301315308,
+    "fixed": 0.7821102937062582,
+    "params": 74636
+  },
+  "gate": {
+    "primary": {
+      "d": 8,
+      "entrain_minus_static": 0.0396,
+      "oracle_minus_static": 0.1703,
+      "capture_frac": 0.2323,
+      "oracle_fired": true
+    },
+    "used": {
+      "d": 8,
+      "entrain_minus_static": 0.0396,
+      "oracle_minus_static": 0.1703,
+      "capture_frac": 0.2323,
+      "oracle_fired": true
+    },
+    "noharm_fixed_entrain_minus_static": 0.0304,
+    "entrain_advantage_by_D": {
+      "4": 0.0718,
+      "8": 0.0396,
+      "16": -0.0863
+    },
+    "advantage_falls_with_D": true,
+    "verdict": "KILL",
+    "why": "At D=8, adaptation IS available and rewarded (oracle-static=+0.170 >=0.10) but the learnable loop fails to capture it (entrain-static=+0.040 < 0.05). The premise is falsified: a static bank of equal budget is as good as the learned entrainment. Ship the honest negative; pivot to nested cross-frequency or the profiler tool."
+  }
+}

@@ -2,7 +2,7 @@
   "seal": "seal/v0",
   "verdict": "SEALED",
   "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
-  "document_sha256": "7959f7cc478e0bc2941b34833c17c777e2721cd3a96eb1fe4720aced8830d7fa",
+  "document_sha256": "48a561623590cc05a97a8f194635d37402c50817e119228fc249581a3973fd2d",
   "oath": {
     "counts": {
       "VERIFIED": 59,
@@ -13,5 +13,5 @@
   },
   "protocol": [],
   "refusals": [],
-  "seal_sha256": "b86661517daf3976050bc0e8ebcbee5ad96cbac54438e6e1e79fe6b8b9eb89c8"
+  "seal_sha256": "ff573e562ec59b09602ea9db3feef29fec3ced11d076c902c897194f68e75c57"
 }

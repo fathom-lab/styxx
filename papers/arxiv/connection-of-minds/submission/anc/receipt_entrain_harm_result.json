@@ -1,0 +1,72 @@
+{
+  "config": {
+    "steps": 1500,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "L": 96,
+    "periods": [
+      3,
+      12
+    ],
+    "kappa_max": 0.1,
+    "conv_kw": 7,
+    "conv_hid": 32,
+    "d_sweep": [
+      4,
+      8
+    ],
+    "primary_d": 8
+  },
+  "params": {
+    "4": {
+      "static": 1384,
+      "harm": 15985,
+      "oracle": 1384
+    },
+    "8": {
+      "static": 2052,
+      "harm": 16661,
+      "oracle": 2052
+    }
+  },
+  "drift": {
+    "4": {
+      "static": 0.24663065373897552,
+      "harm": 0.2646811952193578,
+      "oracle": 0.35126110911369324
+    },
+    "8": {
+      "static": 0.4604337016741435,
+      "harm": 0.4626828233400981,
+      "oracle": 0.6306845943133036
+    }
+  },
+  "fixed": {
+    "4": {
+      "static": 0.2516241470972697,
+      "harm": 0.2679156760374705,
+      "oracle": 0.3256966173648834
+    },
+    "8": {
+      "static": 0.45649829506874084,
+      "harm": 0.4773382842540741,
+      "oracle": 0.5999887188275655
+    }
+  },
+  "gate": {
+    "d": 8,
+    "harm_minus_static": 0.0022,
+    "oracle_minus_static": 0.1703,
+    "capture_frac": 0.0132,
+    "harm_advantage_by_D": {
+      "4": 0.0181,
+      "8": 0.0022
+    },
+    "noharm": 0.0208,
+    "verdict": "KILL",
+    "why": "At D=8, harm-static=+0.002<0.05 while oracle +0.170: detector richness did not help here."
+  }
+}

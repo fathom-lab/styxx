@@ -1,0 +1,16 @@
+{
+  "addendum": "B34-v3 fresh-split correction receipt (2026-08-03). The frozen prereg asserted the seed-343 held-out set is disjoint in membership from split_concepts(0). VERIFICATION FALSIFIED THAT: 13 of 70 concepts overlap. This receipt persists the true overlap and the decisive read recomputed on the 57 genuinely-unseen concepts only (still scored 70-way, chance 1/70). No frozen artifact edited; correction lives in the FINDING.",
+  "held_out_overlap_with_v1v2": 13,
+  "held_out_total": 70,
+  "genuinely_fresh": 57,
+  "gemma_read_fresh_only": 0.5263,
+  "gemma_read_fresh_hits": 30,
+  "gemma_read_full70": 0.5714,
+  "llama_read_fresh_only": 0.6667,
+  "llama_read_fresh_hits": 38,
+  "qwen_null_top1": 0.0286,
+  "qwen_null_hits_of_70": 2,
+  "chance": 0.0143,
+  "gemma_read_fresh_x_chance": 37,
+  "llama_read_fresh_x_chance": 47
+}

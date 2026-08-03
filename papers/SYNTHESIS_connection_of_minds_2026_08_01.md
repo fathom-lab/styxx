@@ -1,4 +1,4 @@
-# SYNTHESIS — The Connection of Minds: what crosses, what does not, and the harness built from the difference
+# The Connection of Minds: What Crosses Between Language Models, What Does Not, and the Harness Built from the Difference
 
 Fathom Lab · 2026-08-01. A certified map of every arc this program has run at the question older
 than the instruments: *can one mind know another — and can it be trusted to know itself?* This
