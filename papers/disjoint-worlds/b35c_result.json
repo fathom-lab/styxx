@@ -1,0 +1,36 @@
+{
+  "prereg": "PREREG_b35c_open_vocab_2026_08_03.md",
+  "seed": 343,
+  "smoke": false,
+  "n_heldout": 70,
+  "vocab_size": 462,
+  "chance462": 0.00216,
+  "targets": {
+    "llama_1b": {
+      "seed_acc": 0.7959,
+      "read462": 0.3143,
+      "null462": 0.0143,
+      "x_chance": 145.2
+    },
+    "gemma_2b": {
+      "seed_acc": 0.5918,
+      "read462": 0.2,
+      "null462": 0.0,
+      "x_chance": 92.4
+    },
+    "qwen_1p5b": {
+      "seed_acc": 0.0536,
+      "read462": 0.0143,
+      "null462": 0.0143,
+      "x_chance": 6.6
+    }
+  },
+  "max_null462": 0.01429,
+  "verdict": "INVALID__null_artifact",
+  "gates": {
+    "G0_sanity": true,
+    "G2_null": false,
+    "G1_open": true
+  },
+  "prereg_commit": "6d88a80502a693ebb1b52d4e93265070e4afb8a5"
+}
