@@ -1,0 +1,30 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b35a_seed_stable_2026_08_03.md",
+  "document_sha256": "db98c406160f76a75f087ab7bd617a5cfa600df8c0cdcffaebde48c4c95c9843",
+  "oath": {
+    "counts": {
+      "VERIFIED": 40,
+      "ABSTAIN": 8,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b35_seed_stability_2026_08_03.md",
+      "result": "papers/disjoint-worlds/b35a_result.json",
+      "frozen_verdict": "LABELFREE_READ_SEED_STABLE",
+      "gates": {
+        "G0_discovery": true,
+        "G2_null_mean": true,
+        "G1_stability": true
+      },
+      "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff",
+      "prereg_commit": "758b4a5f1ef8cfe528491b78ffab4819f0d62042"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "8eb2cdf3a5e78aef107ac4ce649320403a14d14c6d5ae02391a53df4ca21eb04"
+}

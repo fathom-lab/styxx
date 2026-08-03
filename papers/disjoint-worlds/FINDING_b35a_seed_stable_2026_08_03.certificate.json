@@ -1,0 +1,508 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b35a_seed_stable_2026_08_03.md",
+  "document_sha256": "db98c406160f76a75f087ab7bd617a5cfa600df8c0cdcffaebde48c4c95c9843",
+  "receipts_sha256": {
+    "b35a_result.json": "a865e6f8faeb293b842308cac648906b8792718f3268d6bc46a308dfcc564522",
+    "b35a_constants_addendum.json": "26f72e97c6891285d58898a26fbc24e654de4ae9d87d20ff9a09c70d8a7652c9"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 40,
+    "ABSTAIN": 8,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 11,
+      "token": "70"
+    },
+    {
+      "line": 19,
+      "token": "40"
+    },
+    {
+      "line": 20,
+      "token": "46"
+    },
+    {
+      "line": 23,
+      "token": "0.30"
+    },
+    {
+      "line": 24,
+      "token": "0.143"
+    },
+    {
+      "line": 25,
+      "token": "0.0286"
+    },
+    {
+      "line": 32,
+      "token": "2"
+    },
+    {
+      "line": 56,
+      "token": "41"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "70",
+      "value": 70.0,
+      "decimals": 0,
+      "context": "the committed linear machinery (zero labels), fit one MLP on the discovered pairing, read 70",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 12,
+      "token": "1001",
+      "value": 1001.0,
+      "decimals": 0,
+      "context": "held-out concepts \u2014 on **five independent fresh seeds** (1001\u20131005), and gated on the medians.",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[0]"
+    },
+    {
+      "line": 16,
+      "token": "1001",
+      "value": 1001.0,
+      "decimals": 0,
+      "context": "| 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[0]"
+    },
+    {
+      "line": 16,
+      "token": "0.8469",
+      "value": 0.8469,
+      "decimals": 4,
+      "context": "| 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[0].gemma_2b.seed_acc"
+    },
+    {
+      "line": 16,
+      "token": "0.6857",
+      "value": 0.6857,
+      "decimals": 4,
+      "context": "| 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[0].gemma_2b.read"
+    },
+    {
+      "line": 16,
+      "token": "48",
+      "value": 48.0,
+      "decimals": 0,
+      "context": "| 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1001 | 0.8469 | 0.6857 | 48\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:max_gemma_x_chance"
+    },
+    {
+      "line": 17,
+      "token": "1002",
+      "value": 1002.0,
+      "decimals": 0,
+      "context": "| 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[1]"
+    },
+    {
+      "line": 17,
+      "token": "0.6531",
+      "value": 0.6531,
+      "decimals": 4,
+      "context": "| 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[1].gemma_2b.seed_acc"
+    },
+    {
+      "line": 17,
+      "token": "0.5286",
+      "value": 0.5286,
+      "decimals": 4,
+      "context": "| 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[1].gemma_2b.read"
+    },
+    {
+      "line": 17,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "| 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1002 | 0.6531 | 0.5286 | 37\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:min_gemma_x_chance"
+    },
+    {
+      "line": 18,
+      "token": "1003",
+      "value": 1003.0,
+      "decimals": 0,
+      "context": "| 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[2]"
+    },
+    {
+      "line": 18,
+      "token": "0.8316",
+      "value": 0.8316,
+      "decimals": 4,
+      "context": "| 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.seed_acc"
+    },
+    {
+      "line": 18,
+      "token": "0.5857",
+      "value": 0.5857,
+      "decimals": 4,
+      "context": "| 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
+    },
+    {
+      "line": 18,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "| 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1003 | 0.8316 | 0.5857 | 41\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:median_gemma_x_chance"
+    },
+    {
+      "line": 19,
+      "token": "1004",
+      "value": 1004.0,
+      "decimals": 0,
+      "context": "| 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[3]"
+    },
+    {
+      "line": 19,
+      "token": "0.8801",
+      "value": 0.8801,
+      "decimals": 4,
+      "context": "| 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[3].gemma_2b.seed_acc"
+    },
+    {
+      "line": 19,
+      "token": "0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "| 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[3].gemma_2b.read"
+    },
+    {
+      "line": 19,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "| 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1004 | 0.8801 | 0.5714 | 40\u00d7 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 20,
+      "token": "1005",
+      "value": 1005.0,
+      "decimals": 0,
+      "context": "| 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[4]"
+    },
+    {
+      "line": 20,
+      "token": "0.8418",
+      "value": 0.8418,
+      "decimals": 4,
+      "context": "| 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[4].gemma_2b.seed_acc"
+    },
+    {
+      "line": 20,
+      "token": "0.6571",
+      "value": 0.6571,
+      "decimals": 4,
+      "context": "| 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[4].gemma_2b.read"
+    },
+    {
+      "line": 20,
+      "token": "46",
+      "value": 46.0,
+      "decimals": 0,
+      "context": "| 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | 1005 | 0.8418 | 0.6571 | 46\u00d7 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 21,
+      "token": "0.5857",
+      "value": 0.5857,
+      "decimals": 4,
+      "context": "| **median** | | **0.5857** | **41\u00d7** |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | **median** | | **0.5857** | **41\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
+    },
+    {
+      "line": 21,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "| **median** | | **0.5857** | **41\u00d7** |",
+      "binding_context": "| seed | gemma discovery | gemma read | \u00d7 chance | | **median** | | **0.5857** | **41\u00d7** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:median_gemma_x_chance"
+    },
+    {
+      "line": 23,
+      "token": "0.5638",
+      "value": 0.5638,
+      "decimals": 4,
+      "context": "`styxx.protocol` walked the frozen table: G0_discovery \u2713 (median llama seed_acc 0.5638 \u2265 0.30),",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[0].llama_1b.seed_acc"
+    },
+    {
+      "line": 23,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "`styxx.protocol` walked the frozen table: G0_discovery \u2713 (median llama seed_acc 0.5638 \u2265 0.30),",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "0.5857",
+      "value": 0.5857,
+      "decimals": 4,
+      "context": "G1_stability \u2713 (median gemma read 0.5857 \u2265 0.143), G2_null_mean \u2713 (mean of 15 nulls 0.0133 \u2264",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
+    },
+    {
+      "line": 24,
+      "token": "0.143",
+      "value": 0.143,
+      "decimals": 3,
+      "context": "G1_stability \u2713 (median gemma read 0.5857 \u2265 0.143), G2_null_mean \u2713 (mean of 15 nulls 0.0133 \u2264",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 24,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "G1_stability \u2713 (median gemma read 0.5857 \u2265 0.143), G2_null_mean \u2713 (mean of 15 nulls 0.0133 \u2264",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:n_null_draws"
+    },
+    {
+      "line": 24,
+      "token": "0.0133",
+      "value": 0.0133,
+      "decimals": 4,
+      "context": "G1_stability \u2713 (median gemma read 0.5857 \u2265 0.143), G2_null_mean \u2713 (mean of 15 nulls 0.0133 \u2264",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:mean_null_top1"
+    },
+    {
+      "line": 25,
+      "token": "0.0286",
+      "value": 0.0286,
+      "decimals": 4,
+      "context": "0.0286, i.e. **at chance**) \u2192 verdict computed, not chosen. **gemma reads content from a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "different model family at 37\u201348\u00d7 chance on every one of five independent splits, with no labels",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:min_gemma_x_chance"
+    },
+    {
+      "line": 32,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "b34-v3's G2 null passed at *exactly* 2\u00d7 chance \u2014 one 2-hit draw of 70. This prereg therefore",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "15",
+      "value": 15.0,
+      "decimals": 0,
+      "context": "gated the null on the **mean of all 15** nulls, stating in advance that a single 2-or-3-hit draw",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:n_null_draws"
+    },
+    {
+      "line": 34,
+      "token": "0.0133",
+      "value": 0.0133,
+      "decimals": 4,
+      "context": "among fifteen is expected by chance and must not fail an honest run. The mean landed at 0.0133 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:mean_null_top1"
+    },
+    {
+      "line": 40,
+      "token": "0.2347",
+      "value": 0.2347,
+      "decimals": 4,
+      "context": "1. **Same-family discovery has real seed variance.** Llama's own discovery ranged 0.2347\u20130.8801",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].llama_1b.seed_acc"
+    },
+    {
+      "line": 41,
+      "token": "1003",
+      "value": 1003.0,
+      "decimals": 0,
+      "context": "across seeds; seed 1003 dipped to 0.2347, **below the per-seed 0.30 floor**, but the *median*",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:seeds[2]"
+    },
+    {
+      "line": 41,
+      "token": "0.2347",
+      "value": 0.2347,
+      "decimals": 4,
+      "context": "across seeds; seed 1003 dipped to 0.2347, **below the per-seed 0.30 floor**, but the *median*",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].llama_1b.seed_acc"
+    },
+    {
+      "line": 41,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "across seeds; seed 1003 dipped to 0.2347, **below the per-seed 0.30 floor**, but the *median*",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:per_seed_g0_floor"
+    },
+    {
+      "line": 42,
+      "token": "0.5638",
+      "value": 0.5638,
+      "decimals": 4,
+      "context": "(0.5638) is what G0 gates and it clears with margin. Discovery works robustly in aggregate;",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[0].llama_1b.seed_acc"
+    },
+    {
+      "line": 46,
+      "token": "0.036",
+      "value": 0.036,
+      "decimals": 3,
+      "context": "prereg flagged for report. Qwen discovery stayed 0.036\u20130.094 on all five seeds (vs gemma's",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 47,
+      "token": "0.65",
+      "value": 0.65,
+      "decimals": 2,
+      "context": "0.65\u20130.88), and its read stayed low (0.014\u20130.229, median ~0.09). The label-free read is",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[1].gemma_2b.seed_acc"
+    },
+    {
+      "line": 47,
+      "token": "0.014",
+      "value": 0.014,
+      "decimals": 3,
+      "context": "0.65\u20130.88), and its read stayed low (0.014\u20130.229, median ~0.09). The label-free read is",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].qwen_1p5b.read"
+    },
+    {
+      "line": 47,
+      "token": "0.09",
+      "value": 0.09,
+      "decimals": 2,
+      "context": "0.65\u20130.88), and its read stayed low (0.014\u20130.229, median ~0.09). The label-free read is",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[0].qwen_1p5b.read"
+    },
+    {
+      "line": 55,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "from geometry alone, single nonlinear lens) is **seed-stable**: 5/5 splits clear the bar, median",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:n_seeds"
+    },
+    {
+      "line": 55,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "from geometry alone, single nonlinear lens) is **seed-stable**: 5/5 splits clear the bar, median",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:n_seeds"
+    },
+    {
+      "line": 56,
+      "token": "41",
+      "value": 41.0,
+      "decimals": 0,
+      "context": "41\u00d7 chance, minimum 37\u00d7, nulls at chance. It is bounded to: this map class, \u22643B models, one",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 56,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "41\u00d7 chance, minimum 37\u00d7, nulls at chance. It is bounded to: this map class, \u22643B models, one",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_constants_addendum.json:min_gemma_x_chance"
+    }
+  ]
+}

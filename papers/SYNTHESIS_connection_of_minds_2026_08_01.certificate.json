@@ -2,7 +2,7 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
-  "document_sha256": "542a5e12a74decf10e8ea58bfa92a35187d7458d3032fe56146d567dabfcf4bc",
+  "document_sha256": "7959f7cc478e0bc2941b34833c17c777e2721cd3a96eb1fe4720aced8830d7fa",
   "receipts_sha256": {
     "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865",
     "verifier_7b_result.json": "db9a32f22f9d80506df0caacf35115f00d2edd8518fd78b0d3c6a80ddbf6e002",
@@ -16,11 +16,12 @@
     "b36_result.json": "0ecf0e57c485debb8a1bc24a6d438b1f5304f4c4f1cfb1de6c597f47d2777193",
     "b31v2_result.json": "21c6c89c3da7a87e520bc998e6c960e631d1ec1f5b751cb8f5ed53f85cccd4a8",
     "b34v3_result.json": "a215a78ab9b3cd4e57e921953f59ab5affcff717c482fda215132fdb3591e6ff",
-    "b34v3_fresh_split_addendum.json": "58e0472970d98b98ee65421dc1fe45d4156cc100abbd67c2d820b647eed1fdc6"
+    "b34v3_fresh_split_addendum.json": "58e0472970d98b98ee65421dc1fe45d4156cc100abbd67c2d820b647eed1fdc6",
+    "b35a_result.json": "a865e6f8faeb293b842308cac648906b8792718f3268d6bc46a308dfcc564522"
   },
   "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 57,
+    "VERIFIED": 59,
     "ABSTAIN": 9,
     "UNGROUNDED": 0
   },
@@ -36,31 +37,31 @@
       "token": "57"
     },
     {
-      "line": 48,
+      "line": 50,
       "token": "71"
     },
     {
-      "line": 55,
+      "line": 57,
       "token": "2"
     },
     {
-      "line": 59,
+      "line": 61,
       "token": "392"
     },
     {
-      "line": 118,
+      "line": 120,
       "token": "10.5281"
     },
     {
-      "line": 143,
+      "line": 145,
       "token": "5"
     },
     {
-      "line": 145,
+      "line": 147,
       "token": "2"
     },
     {
-      "line": 145,
+      "line": 147,
       "token": "5"
     }
   ],
@@ -201,7 +202,25 @@
       "receipt_ref": null
     },
     {
-      "line": 45,
+      "line": 39,
+      "token": "0.5857",
+      "value": 0.5857,
+      "decimals": 4,
+      "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
+      "status": "VERIFIED",
+      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
+    },
+    {
+      "line": 39,
+      "token": "37",
+      "value": 37.0,
+      "decimals": 0,
+      "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
+      "status": "VERIFIED",
+      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+    },
+    {
+      "line": 47,
       "token": "0.586",
       "value": 0.586,
       "decimals": 3,
@@ -210,7 +229,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
     },
     {
-      "line": 46,
+      "line": 48,
       "token": "0.2151",
       "value": 0.2151,
       "decimals": 4,
@@ -219,7 +238,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
     },
     {
-      "line": 47,
+      "line": 49,
       "token": "0.818",
       "value": 0.818,
       "decimals": 3,
@@ -228,7 +247,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.pc_cos"
     },
     {
-      "line": 47,
+      "line": 49,
       "token": "0.0245",
       "value": 0.0245,
       "decimals": 4,
@@ -237,7 +256,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
     },
     {
-      "line": 48,
+      "line": 50,
       "token": "11",
       "value": 11.0,
       "decimals": 0,
@@ -246,7 +265,7 @@
       "receipt_ref": "verifier_7b_result.json:per_item[11].i"
     },
     {
-      "line": 48,
+      "line": 50,
       "token": "71",
       "value": 71.0,
       "decimals": 0,
@@ -255,7 +274,7 @@
       "receipt_ref": null
     },
     {
-      "line": 55,
+      "line": 57,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -264,7 +283,7 @@
       "receipt_ref": null
     },
     {
-      "line": 57,
+      "line": 59,
       "token": "55",
       "value": 55.0,
       "decimals": 0,
@@ -273,7 +292,7 @@
       "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
     },
     {
-      "line": 59,
+      "line": 61,
       "token": "392",
       "value": 392.0,
       "decimals": 0,
@@ -282,7 +301,7 @@
       "receipt_ref": null
     },
     {
-      "line": 60,
+      "line": 62,
       "token": "0.173",
       "value": 0.173,
       "decimals": 3,
@@ -291,7 +310,7 @@
       "receipt_ref": "b36_result.json:native_mean"
     },
     {
-      "line": 61,
+      "line": 63,
       "token": "0.0504",
       "value": 0.0504,
       "decimals": 4,
@@ -300,7 +319,7 @@
       "receipt_ref": "b36_result.json:m1_mean"
     },
     {
-      "line": 61,
+      "line": 63,
       "token": "0.15",
       "value": 0.15,
       "decimals": 2,
@@ -309,7 +328,7 @@
       "receipt_ref": "cot_inward_powered_result.json:frozen_gates.CAVE_FLOOR"
     },
     {
-      "line": 61,
+      "line": 63,
       "token": "0.291",
       "value": 0.291,
       "decimals": 3,
@@ -318,7 +337,7 @@
       "receipt_ref": "b36_result.json:nte"
     },
     {
-      "line": 61,
+      "line": 63,
       "token": "0.40",
       "value": 0.4,
       "decimals": 2,
@@ -327,7 +346,7 @@
       "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[2].coverage"
     },
     {
-      "line": 61,
+      "line": 63,
       "token": "0.6571",
       "value": 0.6571,
       "decimals": 4,
@@ -336,7 +355,7 @@
       "receipt_ref": "b36_result.json:m1_sign_vs_random"
     },
     {
-      "line": 62,
+      "line": 64,
       "token": "0.70",
       "value": 0.7,
       "decimals": 2,
@@ -345,7 +364,7 @@
       "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[5].coverage"
     },
     {
-      "line": 62,
+      "line": 64,
       "token": "0.0245",
       "value": 0.0245,
       "decimals": 4,
@@ -354,7 +373,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
     },
     {
-      "line": 62,
+      "line": 64,
       "token": "0.0504",
       "value": 0.0504,
       "decimals": 4,
@@ -363,7 +382,7 @@
       "receipt_ref": "b36_result.json:m1_mean"
     },
     {
-      "line": 64,
+      "line": 66,
       "token": "0.3429",
       "value": 0.3429,
       "decimals": 4,
@@ -372,7 +391,7 @@
       "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
     },
     {
-      "line": 64,
+      "line": 66,
       "token": "0.8000",
       "value": 0.8,
       "decimals": 4,
@@ -381,7 +400,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
     },
     {
-      "line": 64,
+      "line": 66,
       "token": "0.0245",
       "value": 0.0245,
       "decimals": 4,
@@ -390,7 +409,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
     },
     {
-      "line": 65,
+      "line": 67,
       "token": "0.0504",
       "value": 0.0504,
       "decimals": 4,
@@ -399,7 +418,7 @@
       "receipt_ref": "b36_result.json:m1_mean"
     },
     {
-      "line": 75,
+      "line": 77,
       "token": "0.9965",
       "value": 0.9965,
       "decimals": 4,
@@ -408,7 +427,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
     },
     {
-      "line": 75,
+      "line": 77,
       "token": "0.9809",
       "value": 0.9809,
       "decimals": 4,
@@ -417,7 +436,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_qwen"
     },
     {
-      "line": 76,
+      "line": 78,
       "token": "0.9497",
       "value": 0.9497,
       "decimals": 4,
@@ -426,7 +445,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_llama"
     },
     {
-      "line": 76,
+      "line": 78,
       "token": "0.9149",
       "value": 0.9149,
       "decimals": 4,
@@ -435,7 +454,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
     },
     {
-      "line": 78,
+      "line": 80,
       "token": "0.85",
       "value": 0.85,
       "decimals": 2,
@@ -444,7 +463,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
     },
     {
-      "line": 78,
+      "line": 80,
       "token": "0.20",
       "value": 0.2,
       "decimals": 2,
@@ -453,7 +472,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -462,7 +481,7 @@
       "receipt_ref": "verifier_7b_result.json:per_item[13].i"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "13",
       "value": 13.0,
       "decimals": 0,
@@ -471,7 +490,7 @@
       "receipt_ref": "verifier_7b_result.json:per_item[13].i"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "0.995",
       "value": 0.995,
       "decimals": 3,
@@ -480,7 +499,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_auroc"
     },
     {
-      "line": 79,
+      "line": 81,
       "token": "0.001",
       "value": 0.001,
       "decimals": 3,
@@ -489,7 +508,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_p"
     },
     {
-      "line": 88,
+      "line": 90,
       "token": "0.7597",
       "value": 0.7597,
       "decimals": 4,
@@ -498,7 +517,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.auroc_7b"
     },
     {
-      "line": 89,
+      "line": 91,
       "token": "0.7797",
       "value": 0.7797,
       "decimals": 4,
@@ -507,7 +526,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_acc"
     },
     {
-      "line": 89,
+      "line": 91,
       "token": "0.80",
       "value": 0.8,
       "decimals": 2,
@@ -516,7 +535,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
     },
     {
-      "line": 91,
+      "line": 93,
       "token": "0.0026",
       "value": 0.0026,
       "decimals": 4,
@@ -525,7 +544,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.saturation_delta"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "0.8701",
       "value": 0.8701,
       "decimals": 4,
@@ -534,7 +553,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_model_channels"
     },
     {
-      "line": 95,
+      "line": 97,
       "token": "0.4416",
       "value": 0.4416,
       "decimals": 4,
@@ -543,7 +562,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_retrieval"
     },
     {
-      "line": 107,
+      "line": 109,
       "token": "+0.17",
       "value": 0.17,
       "decimals": 2,
@@ -552,7 +571,7 @@
       "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
     },
     {
-      "line": 108,
+      "line": 110,
       "token": "+0.002",
       "value": 0.002,
       "decimals": 3,
@@ -561,7 +580,7 @@
       "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
     },
     {
-      "line": 109,
+      "line": 111,
       "token": "+0.009",
       "value": 0.009,
       "decimals": 3,
@@ -570,7 +589,7 @@
       "receipt_ref": "nest_capacity_result.json:gate.nest_minus_flat"
     },
     {
-      "line": 118,
+      "line": 120,
       "token": "10.5281",
       "value": 10.5281,
       "decimals": 4,
@@ -579,7 +598,7 @@
       "receipt_ref": null
     },
     {
-      "line": 129,
+      "line": 131,
       "token": "0.85",
       "value": 0.85,
       "decimals": 2,
@@ -589,7 +608,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
     },
     {
-      "line": 129,
+      "line": 131,
       "token": "0.20",
       "value": 0.2,
       "decimals": 2,
@@ -599,7 +618,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
     },
     {
-      "line": 130,
+      "line": 132,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,
@@ -609,7 +628,7 @@
       "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
     },
     {
-      "line": 130,
+      "line": 132,
       "token": "0.500",
       "value": 0.5,
       "decimals": 3,
@@ -619,7 +638,7 @@
       "receipt_ref": "verifier_7b_result.json:per_item[10].s_frame"
     },
     {
-      "line": 130,
+      "line": 132,
       "token": "0.4667",
       "value": 0.4667,
       "decimals": 4,
@@ -629,7 +648,7 @@
       "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_corrupted"
     },
     {
-      "line": 130,
+      "line": 132,
       "token": "0.9833",
       "value": 0.9833,
       "decimals": 4,
@@ -639,7 +658,7 @@
       "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_held"
     },
     {
-      "line": 143,
+      "line": 145,
       "token": "5",
       "value": 5.0,
       "decimals": 0,
@@ -648,7 +667,7 @@
       "receipt_ref": null
     },
     {
-      "line": 145,
+      "line": 147,
       "token": "2",
       "value": 2.0,
       "decimals": 0,
@@ -657,7 +676,7 @@
       "receipt_ref": null
     },
     {
-      "line": 145,
+      "line": 147,
       "token": "5",
       "value": 5.0,
       "decimals": 0,

@@ -35,7 +35,9 @@ anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma a
 correspondence from geometry alone (seed accuracy 0.5918, zero labels in fitting) and a single
 MLP fit on the discovered pairing reads held-out content at 0.5714 — 40× chance — holding at
 0.5263 on the 57 concepts disjoint from every earlier run
-(`b34v3_fresh_split_addendum.json`). The pairing is not merely usable; it is *findable*.
+(`b34v3_fresh_split_addendum.json`), and **seed-stable across five independent splits**
+(`b35a_result.json`: median gemma read 0.5857, every split 37–48× chance, nulls at chance) — a
+replicated property, not one lucky draw. The pairing is not merely usable; it is *findable*.
 Cross-family content reading is now licensed on both axes, bounded honestly: one
 strong-discovery target (gemma), a second (Qwen) whose discovery was weak, ≤3B models, 70-way
 identification. Discovery strength — not isometry — is the variable that now wants a theory.

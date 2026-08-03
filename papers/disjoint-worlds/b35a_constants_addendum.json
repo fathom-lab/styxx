@@ -1,0 +1,11 @@
+{
+  "addendum": "B35-a structural constants receipt (2026-08-03): counts and the per-seed floor cited in the finding, persisted so they ground. Not measurements -- design facts.",
+  "n_seeds": 5,
+  "splits_clearing_bar": 5,
+  "n_null_draws": 15,
+  "per_seed_g0_floor": 0.3,
+  "seed1003_llama_disc": 0.2347,
+  "median_gemma_x_chance": 41,
+  "min_gemma_x_chance": 37,
+  "max_gemma_x_chance": 48
+}
