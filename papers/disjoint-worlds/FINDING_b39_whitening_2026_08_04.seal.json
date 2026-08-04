@@ -1,0 +1,31 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b39_whitening_2026_08_04.md",
+  "document_sha256": "c163412ac7c573f4c7d464f4f76bf0feaeaa95beca8837028070406c14b17edf",
+  "oath": {
+    "counts": {
+      "VERIFIED": 15,
+      "ABSTAIN": 2,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b39_whitening_rescue_2026_08_04.md",
+      "result": "papers/disjoint-worlds/b39_result.json",
+      "frozen_verdict": "INVALID__whitening_breaks_the_clique",
+      "gates": {
+        "G0_baseline": true,
+        "G0b_whiten_preserves_clique": false,
+        "G1_rescue": false,
+        "G2_no_rescue": true
+      },
+      "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5",
+      "prereg_commit": "e43eaa104115aa249830f93bbd6a8de8cc6d879c"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "f2f37e40f2150dac7424d64540fe47072ca88fb97d680683e4145f4dc276eb21"
+}

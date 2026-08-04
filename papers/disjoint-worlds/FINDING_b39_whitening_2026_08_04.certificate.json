@@ -1,0 +1,192 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b39_whitening_2026_08_04.md",
+  "document_sha256": "c163412ac7c573f4c7d464f4f76bf0feaeaa95beca8837028070406c14b17edf",
+  "receipts_sha256": {
+    "b39_result.json": "7369918254e074f92ecb3a838d76fbb56450bc4f9bf1f9a4c473078a9d9d31a4"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 15,
+    "ABSTAIN": 2,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "0.5"
+    },
+    {
+      "line": 54,
+      "token": "+0.17"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "0.6454",
+      "value": 0.6454,
+      "decimals": 4,
+      "context": "| T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t0_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 12,
+      "token": "0.0612",
+      "value": 0.0612,
+      "decimals": 4,
+      "context": "| T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t0_llama_3b__to__qwen_1p5b"
+    },
+    {
+      "line": 12,
+      "token": "0.0612",
+      "value": 0.0612,
+      "decimals": 4,
+      "context": "| T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T0 raw | **0.6454** | 0.0612 | 0.0612 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t0_llama_3b__to__qwen_1p5b"
+    },
+    {
+      "line": 13,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "| T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "| T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t1_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 13,
+      "token": "0.0128",
+      "value": 0.0128,
+      "decimals": 4,
+      "context": "| T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t1_llama_3b__to__qwen_1p5b"
+    },
+    {
+      "line": 13,
+      "token": "0.0102",
+      "value": 0.0102,
+      "decimals": 4,
+      "context": "| T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T1 ZCA-shrink whiten (\u03bb=0.5) | **0.0204** | 0.0128 | 0.0102 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t1_qwen_1p5b__to__llama_3b"
+    },
+    {
+      "line": 14,
+      "token": "0.8138",
+      "value": 0.8138,
+      "decimals": 4,
+      "context": "| T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 14,
+      "token": "0.0434",
+      "value": 0.0434,
+      "decimals": 4,
+      "context": "| T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__qwen_1p5b"
+    },
+    {
+      "line": 14,
+      "token": "0.0000",
+      "value": 0.0,
+      "decimals": 4,
+      "context": "| T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "binding_context": "| treatment | llama_3b\u2192gemma (clique sanity) | llama_3b\u2192qwen (rescue target) | qwen\u2192llama_3b | | T2 per-dim standardize | **0.8138** | 0.0434 | 0.0000 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_qwen_1p5b__to__llama_3b"
+    },
+    {
+      "line": 17,
+      "token": "0.6454",
+      "value": 0.6454,
+      "decimals": 4,
+      "context": "from 0.6454 to 0.0204 \u2014 near chance. Per the frozen table, no rescue verdict can be read.",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t0_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 17,
+      "token": "0.0204",
+      "value": 0.0204,
+      "decimals": 4,
+      "context": "from 0.6454 to 0.0204 \u2014 near chance. Per the frozen table, no rescue verdict can be read.",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t1_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 31,
+      "token": "0.6454",
+      "value": 0.6454,
+      "decimals": 4,
+      "context": "*improved* clique discovery from 0.6454 to **0.8138** (a practical recipe: standardize",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t0_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 31,
+      "token": "0.8138",
+      "value": 0.8138,
+      "decimals": 4,
+      "context": "*improved* clique discovery from 0.6454 to **0.8138** (a practical recipe: standardize",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__gemma_2b"
+    },
+    {
+      "line": 32,
+      "token": "0.0434",
+      "value": 0.0434,
+      "decimals": 4,
+      "context": "per-dimension before discovery), yet qwen stayed an island (0.0434, and 0.0000 in the reverse",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_llama_3b__to__qwen_1p5b"
+    },
+    {
+      "line": 32,
+      "token": "0.0000",
+      "value": 0.0,
+      "decimals": 4,
+      "context": "per-dimension before discovery), yet qwen stayed an island (0.0434, and 0.0000 in the reverse",
+      "status": "VERIFIED",
+      "receipt_ref": "b39_result.json:cells.t2_qwen_1p5b__to__llama_3b"
+    },
+    {
+      "line": 54,
+      "token": "+0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "practical keeper (standardize-then-discover, +0.17 on the clique) and the mechanism statement",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "prereg": "PREREG_b39_whitening_rescue_2026_08_04.md",
+  "seed": 343,
+  "smoke": false,
+  "n_tr": 392,
+  "lam": 0.5,
+  "cells": {
+    "t0_llama_3b__to__qwen_1p5b": 0.0612,
+    "t0_llama_3b__to__gemma_2b": 0.6454,
+    "t0_qwen_1p5b__to__llama_3b": 0.0612,
+    "t1_llama_3b__to__qwen_1p5b": 0.0128,
+    "t1_llama_3b__to__gemma_2b": 0.0204,
+    "t1_qwen_1p5b__to__llama_3b": 0.0102,
+    "t2_llama_3b__to__qwen_1p5b": 0.0434,
+    "t2_llama_3b__to__gemma_2b": 0.8138,
+    "t2_qwen_1p5b__to__llama_3b": 0.0
+  },
+  "t0_llama3b_to_gemma": 0.6454,
+  "t1_llama3b_to_gemma": 0.0204,
+  "t1_llama3b_to_qwen": 0.0128,
+  "t0_llama3b_to_qwen": 0.0612,
+  "t2_llama3b_to_qwen": 0.0434,
+  "verdict": "INVALID__whitening_breaks_the_clique",
+  "gates": {
+    "G0_baseline": true,
+    "G0b_whiten_preserves_clique": false,
+    "G1_rescue": false,
+    "G2_no_rescue": true
+  },
+  "prereg_commit": "e43eaa104115aa249830f93bbd6a8de8cc6d879c"
+}
