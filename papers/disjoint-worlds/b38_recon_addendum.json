@@ -1,0 +1,26 @@
+{
+  "addendum": "B38 disclosed-recon receipt (2026-08-04): the two dead island hypotheses and the RSA gap pattern, measured on banked extractions BEFORE the b38 prereg froze. Licenses the dose-response design and nothing else.",
+  "outlier_hypothesis": "DEAD",
+  "qwen_top1_var_share": 0.007,
+  "gemma_top1_var_share": 0.036,
+  "llama3b_top1_var_share": 0.014,
+  "llama1b_top1_var_share": 0.011,
+  "qwen_eff_dim_pr": 18.7,
+  "clique_eff_dim_pr_range": [
+    15.9,
+    17.3
+  ],
+  "relational_hypothesis": "DEAD_AS_GROSS_DISSIMILARITY",
+  "qwen_to_clique_rsa_mean": 0.881,
+  "qwen_to_clique_rsa_range": [
+    0.877,
+    0.886
+  ],
+  "clique_internal_rsa_mean": 0.948,
+  "clique_internal_rsa_range": [
+    0.934,
+    0.963
+  ],
+  "rsa_gap": 0.067,
+  "b37_anchor_disc_llama3b_gemma": 0.5918
+}
