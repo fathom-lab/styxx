@@ -1,0 +1,11 @@
+{
+  "addendum": "B37 structural constants (2026-08-04): design counts and derived figures cited in the matrix finding. Design facts, not measurements.",
+  "n_pairs": 12,
+  "n_models": 4,
+  "n_exact_ties": 3,
+  "g2_frozen_floor": 0.0,
+  "clique_read_x_chance_low": 40,
+  "clique_read_x_chance_high": 48,
+  "gemma_to_qwen_read_x_chance": 22,
+  "knn_g1_floor": 0.6
+}

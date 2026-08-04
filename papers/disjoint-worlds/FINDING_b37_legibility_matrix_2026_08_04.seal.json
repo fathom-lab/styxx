@@ -1,0 +1,32 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b37_legibility_matrix_2026_08_04.md",
+  "document_sha256": "330880bcb50067b127ef692c46c2189458db7917cacfb4baa749b94534e3931d",
+  "oath": {
+    "counts": {
+      "VERIFIED": 47,
+      "ABSTAIN": 4,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b37_legibility_matrix_2026_08_04.md",
+      "result": "papers/disjoint-worlds/b37_result.json",
+      "frozen_verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+      "gates": {
+        "G0_reproduce": true,
+        "G0b_reproduce_weak": true,
+        "G1_law": true,
+        "G2_beats_rsa": true,
+        "G3_symmetry": true
+      },
+      "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772",
+      "prereg_commit": "978f6196f50d8d54c47f0cbee7f57f94da4fd3a5"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "429d989b02d3e025bdb171a8adf1a4cd3544e3f9b9379b2a2fa90a79dce649f6"
+}

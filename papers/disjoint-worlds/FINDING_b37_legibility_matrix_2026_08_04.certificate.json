@@ -1,0 +1,521 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b37_legibility_matrix_2026_08_04.md",
+  "document_sha256": "330880bcb50067b127ef692c46c2189458db7917cacfb4baa749b94534e3931d",
+  "receipts_sha256": {
+    "b37_result.json": "846c3c911a5ca53ac8d132b065387f2de24a480c64e31dbc4e9aa8eec2bc2308",
+    "b37_constants_addendum.json": "24d2eb0f6880adf3120a812ef33010c8d863710d9d932e2bbf8bb43027e7b810"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 47,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 18,
+      "token": "0.0076"
+    },
+    {
+      "line": 23,
+      "token": "0.0"
+    },
+    {
+      "line": 63,
+      "token": "0.0"
+    },
+    {
+      "line": 64,
+      "token": "12"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 13,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 13,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 13,
+      "token": "0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 13,
+      "token": "0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 13,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 13,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "(llama1b\u2194gemma 0.7398/0.7398; llama1b\u2194qwen 0.0408/0.0408; gemma\u2194qwen 0.1684/0.1684) \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 18,
+      "token": "0.0076",
+      "value": 0.0076,
+      "decimals": 4,
+      "context": "0.0076\u20130.0562). G3's \"pass\" is therefore a property of the instrument. Whether legibility",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 22,
+      "token": "0.6537",
+      "value": 0.6537,
+      "decimals": 4,
+      "context": "0.6537 vs 0.6344 \u2014 a margin of **0.0193 over the twelve non-independent pairs**, through a frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:spearman_knn_vs_disc"
+    },
+    {
+      "line": 22,
+      "token": "0.6344",
+      "value": 0.6344,
+      "decimals": 4,
+      "context": "0.6537 vs 0.6344 \u2014 a margin of **0.0193 over the twelve non-independent pairs**, through a frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:spearman_rsa_vs_disc"
+    },
+    {
+      "line": 22,
+      "token": "0.0193",
+      "value": 0.0193,
+      "decimals": 4,
+      "context": "0.6537 vs 0.6344 \u2014 a margin of **0.0193 over the twelve non-independent pairs**, through a frozen",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:knn_minus_rsa_spearman"
+    },
+    {
+      "line": 23,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "floor of literally `> 0.0`. The gate passed; the honest reading is a **statistical tie**.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "is weaker: kNN-Jaccard clears its own 0.60 floor (G1), but so, nearly, does the incumbent.",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:knn_g1_floor"
+    },
+    {
+      "line": 32,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "12 directed pairs, label-free discovery + read, both anchor cells reproduced (G0: 0.5918;",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:n_pairs"
+    },
+    {
+      "line": 32,
+      "token": "0.5918",
+      "value": 0.5918,
+      "decimals": 4,
+      "context": "12 directed pairs, label-free discovery + read, both anchor cells reproduced (G0: 0.5918;",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 33,
+      "token": "0.0536",
+      "value": 0.0536,
+      "decimals": 4,
+      "context": "G0b: 0.0536), all nulls at/near chance:",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 37,
+      "token": "0.7959",
+      "value": 0.7959,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__llama_1b.seed_acc"
+    },
+    {
+      "line": 37,
+      "token": "0.6857",
+      "value": 0.6857,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__llama_1b.read"
+    },
+    {
+      "line": 37,
+      "token": "0.5918",
+      "value": 0.5918,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 37,
+      "token": "0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__gemma_2b.read"
+    },
+    {
+      "line": 37,
+      "token": "0.0536",
+      "value": 0.0536,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 37,
+      "token": "0.1429",
+      "value": 0.1429,
+      "decimals": 4,
+      "context": "| **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_3b** | \u2014 | 0.7959 (0.6857) | 0.5918 (0.5714) | 0.0536 (0.1429) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__qwen_1p5b.read"
+    },
+    {
+      "line": 38,
+      "token": "0.8316",
+      "value": 0.8316,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__llama_3b.seed_acc"
+    },
+    {
+      "line": 38,
+      "token": "0.6429",
+      "value": 0.6429,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__llama_3b.read"
+    },
+    {
+      "line": 38,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 38,
+      "token": "0.6143",
+      "value": 0.6143,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__gemma_2b.read"
+    },
+    {
+      "line": 38,
+      "token": "0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 38,
+      "token": "0.0571",
+      "value": 0.0571,
+      "decimals": 4,
+      "context": "| **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **llama_1b** | 0.8316 (0.6429) | \u2014 | 0.7398 (0.6143) | 0.0408 (0.0571) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.read"
+    },
+    {
+      "line": 39,
+      "token": "0.6480",
+      "value": 0.648,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__llama_3b.seed_acc"
+    },
+    {
+      "line": 39,
+      "token": "0.5714",
+      "value": 0.5714,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__gemma_2b.read"
+    },
+    {
+      "line": 39,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 39,
+      "token": "0.6429",
+      "value": 0.6429,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__llama_3b.read"
+    },
+    {
+      "line": 39,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 39,
+      "token": "0.3143",
+      "value": 0.3143,
+      "decimals": 4,
+      "context": "| **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **gemma_2b** | 0.6480 (0.5714) | 0.7398 (0.6429) | \u2014 | 0.1684 (0.3143) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.read"
+    },
+    {
+      "line": 40,
+      "token": "0.0612",
+      "value": 0.0612,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.qwen_1p5b__to__llama_3b.seed_acc"
+    },
+    {
+      "line": 40,
+      "token": "0.1000",
+      "value": 0.1,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.qwen_1p5b__to__llama_3b.read"
+    },
+    {
+      "line": 40,
+      "token": "0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_1b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 40,
+      "token": "0.1000",
+      "value": 0.1,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.qwen_1p5b__to__llama_3b.read"
+    },
+    {
+      "line": 40,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 40,
+      "token": "0.2286",
+      "value": 0.2286,
+      "decimals": 4,
+      "context": "| **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "binding_context": "| discovery (read) | \u2192 llama_3b | \u2192 llama_1b | \u2192 gemma_2b | \u2192 qwen_1p5b | | **qwen_1p5b** | 0.0612 (0.1000) | 0.0408 (0.1000) | 0.1684 (0.2286) | \u2014 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.qwen_1p5b__to__gemma_2b.read"
+    },
+    {
+      "line": 43,
+      "token": "0.59",
+      "value": 0.59,
+      "decimals": 2,
+      "context": "**mutually legible clique** \u2014 every pair discovers at 0.59\u20130.83 and reads at 40\u201348\u00d7 chance,",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.llama_3b__to__gemma_2b.seed_acc"
+    },
+    {
+      "line": 43,
+      "token": "40",
+      "value": 40.0,
+      "decimals": 0,
+      "context": "**mutually legible clique** \u2014 every pair discovers at 0.59\u20130.83 and reads at 40\u201348\u00d7 chance,",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:clique_read_x_chance_low"
+    },
+    {
+      "line": 45,
+      "token": "0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "discovers it above 0.17, and it discovers no one above 0.17, in either direction. Cross-family",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 45,
+      "token": "0.17",
+      "value": 0.17,
+      "decimals": 2,
+      "context": "discovers it above 0.17, and it discovers no one above 0.17, in either direction. Cross-family",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 49,
+      "token": "0.3143",
+      "value": 0.3143,
+      "decimals": 4,
+      "context": "Notable cell, flagged not claimed: gemma\u2192qwen reads at 0.3143 (22\u00d7 chance) on discovery of",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.read"
+    },
+    {
+      "line": 49,
+      "token": "22",
+      "value": 22.0,
+      "decimals": 0,
+      "context": "Notable cell, flagged not claimed: gemma\u2192qwen reads at 0.3143 (22\u00d7 chance) on discovery of",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:gemma_to_qwen_read_x_chance"
+    },
+    {
+      "line": 50,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "only 0.1684 \u2014 the strongest qwen channel measured in the program, carrying the prereg's",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:pairs.gemma_2b__to__qwen_1p5b.seed_acc"
+    },
+    {
+      "line": 63,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "machinery; comparative-predictor gates need margins that noise cannot pass (a `> 0.0`",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 64,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "floor on n=12 is not a gate, it is a coin with extra steps).",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 68,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "One seed (343), one split, 70-way read, four models \u22643B, source layers as-banked with",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_result.json:seed"
+    },
+    {
+      "line": 69,
+      "token": "12",
+      "value": 12.0,
+      "decimals": 0,
+      "context": "non-anchor sources labeled unvalidated, 12 non-independent pairs sharing 4 models. The",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:n_pairs"
+    },
+    {
+      "line": 69,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "non-anchor sources labeled unvalidated, 12 non-independent pairs sharing 4 models. The",
+      "status": "VERIFIED",
+      "receipt_ref": "b37_constants_addendum.json:n_models"
+    }
+  ]
+}
