@@ -1,0 +1,137 @@
+{
+  "prereg": "PREREG_b38_legibility_cliff_2026_08_04.md",
+  "seed": 343,
+  "smoke": false,
+  "doses": [
+    0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.6,
+    0.8,
+    1.0
+  ],
+  "qwen_rsa_target": 0.881,
+  "curves": {
+    "gemma": [
+      {
+        "dose": 0,
+        "rsa": 0.9653,
+        "disc": 0.6454
+      },
+      {
+        "dose": 0.05,
+        "rsa": 0.9653,
+        "disc": 0.7092
+      },
+      {
+        "dose": 0.1,
+        "rsa": 0.9653,
+        "disc": 0.6888
+      },
+      {
+        "dose": 0.15,
+        "rsa": 0.9652,
+        "disc": 0.824
+      },
+      {
+        "dose": 0.2,
+        "rsa": 0.9648,
+        "disc": 0.676
+      },
+      {
+        "dose": 0.3,
+        "rsa": 0.9638,
+        "disc": 0.7398
+      },
+      {
+        "dose": 0.4,
+        "rsa": 0.9624,
+        "disc": 0.7628
+      },
+      {
+        "dose": 0.6,
+        "rsa": 0.9566,
+        "disc": 0.7449
+      },
+      {
+        "dose": 0.8,
+        "rsa": 0.9481,
+        "disc": 0.5842
+      },
+      {
+        "dose": 1.0,
+        "rsa": 0.9379,
+        "disc": 0.4286
+      }
+    ],
+    "llama1b": [
+      {
+        "dose": 0,
+        "rsa": 0.9488,
+        "disc": 0.7959
+      },
+      {
+        "dose": 0.05,
+        "rsa": 0.9487,
+        "disc": 0.8393
+      },
+      {
+        "dose": 0.1,
+        "rsa": 0.9484,
+        "disc": 0.8954
+      },
+      {
+        "dose": 0.15,
+        "rsa": 0.9482,
+        "disc": 0.8138
+      },
+      {
+        "dose": 0.2,
+        "rsa": 0.9475,
+        "disc": 0.9311
+      },
+      {
+        "dose": 0.3,
+        "rsa": 0.9458,
+        "disc": 0.4439
+      },
+      {
+        "dose": 0.4,
+        "rsa": 0.9426,
+        "disc": 0.7602
+      },
+      {
+        "dose": 0.6,
+        "rsa": 0.9343,
+        "disc": 0.852
+      },
+      {
+        "dose": 0.8,
+        "rsa": 0.9248,
+        "disc": 0.8418
+      },
+      {
+        "dose": 1.0,
+        "rsa": 0.9114,
+        "disc": 0.1378
+      }
+    ]
+  },
+  "gemma_dose0_disc": 0.6454,
+  "spearman_disc_vs_dose": -0.1879,
+  "disc_at_qwen_rsa": 0.4286,
+  "disc_at_qwen_rsa_note": "nearest_dose_substituted (rsa 0.9379)",
+  "transition_width_rsa": null,
+  "verdict": "INVALID__dose_response_nonmonotone",
+  "gates": {
+    "G0_baseline": true,
+    "G1_monotone": false,
+    "G2_island_matched": false,
+    "G2b_island_not_matched": true
+  },
+  "prereg_commit": "4d382a8f033630b5a6181da4fe351926cdef54d7"
+}

@@ -1,0 +1,522 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b38_cliff_invalid_2026_08_04.md",
+  "document_sha256": "3cd07cf461160e64c368d4d7b88681387fcb5156b20c33ba36e6eee45c00310c",
+  "receipts_sha256": {
+    "b38_result.json": "f84203f0249f3247e43316cfb5da6ca1c42d4a881561879fa9c72c8dbea347cf",
+    "b38_recon_addendum.json": "57c03c0079f1ccb457e61fd24580b802b185c0f77a56eabb4b26b1def8c97ef7",
+    "b38_finding_addendum.json": "7df9793d55d16fc352b67923784ab55e887ebf6f505640ee1ec65c23ac57f456"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 42,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 13,
+      "token": "-0.8"
+    },
+    {
+      "line": 34,
+      "token": "30"
+    },
+    {
+      "line": 46,
+      "token": "0.15"
+    },
+    {
+      "line": 52,
+      "token": "0.1"
+    },
+    {
+      "line": 68,
+      "token": "20"
+    },
+    {
+      "line": 69,
+      "token": "1"
+    },
+    {
+      "line": 70,
+      "token": "2"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "0.881",
+      "value": 0.881,
+      "decimals": 3,
+      "context": "falls to qwen's level (0.881), and read whether discovery collapses to island values. G1 required",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:qwen_rsa_target"
+    },
+    {
+      "line": 13,
+      "token": "-0.8",
+      "value": -0.8,
+      "decimals": 1,
+      "context": "a monotone dose-response (spearman(disc, dose) \u2264 -0.8). Measured: **-0.1879.** The gate fired",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "0.00",
+      "value": 0.0,
+      "decimals": 2,
+      "context": "| 0.00 | 0.9653 | 0.6454 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.00 | 0.9653 | 0.6454 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[0]"
+    },
+    {
+      "line": 18,
+      "token": "0.9653",
+      "value": 0.9653,
+      "decimals": 4,
+      "context": "| 0.00 | 0.9653 | 0.6454 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.00 | 0.9653 | 0.6454 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[0].rsa"
+    },
+    {
+      "line": 18,
+      "token": "0.6454",
+      "value": 0.6454,
+      "decimals": 4,
+      "context": "| 0.00 | 0.9653 | 0.6454 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.00 | 0.9653 | 0.6454 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[0].disc"
+    },
+    {
+      "line": 19,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| 0.05 | 0.9653 | 0.7092 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.05 | 0.9653 | 0.7092 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[1]"
+    },
+    {
+      "line": 19,
+      "token": "0.9653",
+      "value": 0.9653,
+      "decimals": 4,
+      "context": "| 0.05 | 0.9653 | 0.7092 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.05 | 0.9653 | 0.7092 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[0].rsa"
+    },
+    {
+      "line": 19,
+      "token": "0.7092",
+      "value": 0.7092,
+      "decimals": 4,
+      "context": "| 0.05 | 0.9653 | 0.7092 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.05 | 0.9653 | 0.7092 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[1].disc"
+    },
+    {
+      "line": 20,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| 0.10 | 0.9653 | 0.6888 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.10 | 0.9653 | 0.6888 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[2]"
+    },
+    {
+      "line": 20,
+      "token": "0.9653",
+      "value": 0.9653,
+      "decimals": 4,
+      "context": "| 0.10 | 0.9653 | 0.6888 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.10 | 0.9653 | 0.6888 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[0].rsa"
+    },
+    {
+      "line": 20,
+      "token": "0.6888",
+      "value": 0.6888,
+      "decimals": 4,
+      "context": "| 0.10 | 0.9653 | 0.6888 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.10 | 0.9653 | 0.6888 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[2].disc"
+    },
+    {
+      "line": 21,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| **0.15** | 0.9652 | **0.8240** |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | **0.15** | 0.9652 | **0.8240** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[3]"
+    },
+    {
+      "line": 21,
+      "token": "0.9652",
+      "value": 0.9652,
+      "decimals": 4,
+      "context": "| **0.15** | 0.9652 | **0.8240** |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | **0.15** | 0.9652 | **0.8240** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[3].rsa"
+    },
+    {
+      "line": 21,
+      "token": "0.8240",
+      "value": 0.824,
+      "decimals": 4,
+      "context": "| **0.15** | 0.9652 | **0.8240** |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | **0.15** | 0.9652 | **0.8240** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[3].disc"
+    },
+    {
+      "line": 22,
+      "token": "0.20",
+      "value": 0.2,
+      "decimals": 2,
+      "context": "| 0.20 | 0.9648 | 0.6760 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.20 | 0.9648 | 0.6760 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[4]"
+    },
+    {
+      "line": 22,
+      "token": "0.9648",
+      "value": 0.9648,
+      "decimals": 4,
+      "context": "| 0.20 | 0.9648 | 0.6760 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.20 | 0.9648 | 0.6760 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[4].rsa"
+    },
+    {
+      "line": 22,
+      "token": "0.6760",
+      "value": 0.676,
+      "decimals": 4,
+      "context": "| 0.20 | 0.9648 | 0.6760 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.20 | 0.9648 | 0.6760 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[4].disc"
+    },
+    {
+      "line": 23,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| 0.30 | 0.9638 | 0.7398 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.30 | 0.9638 | 0.7398 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[5]"
+    },
+    {
+      "line": 23,
+      "token": "0.9638",
+      "value": 0.9638,
+      "decimals": 4,
+      "context": "| 0.30 | 0.9638 | 0.7398 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.30 | 0.9638 | 0.7398 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[5].rsa"
+    },
+    {
+      "line": 23,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "| 0.30 | 0.9638 | 0.7398 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.30 | 0.9638 | 0.7398 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[5].disc"
+    },
+    {
+      "line": 24,
+      "token": "0.40",
+      "value": 0.4,
+      "decimals": 2,
+      "context": "| 0.40 | 0.9624 | 0.7628 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.40 | 0.9624 | 0.7628 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[6]"
+    },
+    {
+      "line": 24,
+      "token": "0.9624",
+      "value": 0.9624,
+      "decimals": 4,
+      "context": "| 0.40 | 0.9624 | 0.7628 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.40 | 0.9624 | 0.7628 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[6].rsa"
+    },
+    {
+      "line": 24,
+      "token": "0.7628",
+      "value": 0.7628,
+      "decimals": 4,
+      "context": "| 0.40 | 0.9624 | 0.7628 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.40 | 0.9624 | 0.7628 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[6].disc"
+    },
+    {
+      "line": 25,
+      "token": "0.60",
+      "value": 0.6,
+      "decimals": 2,
+      "context": "| 0.60 | 0.9566 | 0.7449 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.60 | 0.9566 | 0.7449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[7]"
+    },
+    {
+      "line": 25,
+      "token": "0.9566",
+      "value": 0.9566,
+      "decimals": 4,
+      "context": "| 0.60 | 0.9566 | 0.7449 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.60 | 0.9566 | 0.7449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[7].rsa"
+    },
+    {
+      "line": 25,
+      "token": "0.7449",
+      "value": 0.7449,
+      "decimals": 4,
+      "context": "| 0.60 | 0.9566 | 0.7449 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.60 | 0.9566 | 0.7449 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[7].disc"
+    },
+    {
+      "line": 26,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "| 0.80 | 0.9481 | 0.5842 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.80 | 0.9481 | 0.5842 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[8]"
+    },
+    {
+      "line": 26,
+      "token": "0.9481",
+      "value": 0.9481,
+      "decimals": 4,
+      "context": "| 0.80 | 0.9481 | 0.5842 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.80 | 0.9481 | 0.5842 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[8].rsa"
+    },
+    {
+      "line": 26,
+      "token": "0.5842",
+      "value": 0.5842,
+      "decimals": 4,
+      "context": "| 0.80 | 0.9481 | 0.5842 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 0.80 | 0.9481 | 0.5842 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[8].disc"
+    },
+    {
+      "line": 27,
+      "token": "1.00",
+      "value": 1.0,
+      "decimals": 2,
+      "context": "| 1.00 | 0.9379 | 0.4286 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 1.00 | 0.9379 | 0.4286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:doses[9]"
+    },
+    {
+      "line": 27,
+      "token": "0.9379",
+      "value": 0.9379,
+      "decimals": 4,
+      "context": "| 1.00 | 0.9379 | 0.4286 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 1.00 | 0.9379 | 0.4286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[9].rsa"
+    },
+    {
+      "line": 27,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "| 1.00 | 0.9379 | 0.4286 |",
+      "binding_context": "| dose \u03c3 | RSA | discovery | | 1.00 | 0.9379 | 0.4286 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[9].disc"
+    },
+    {
+      "line": 33,
+      "token": "0.9379",
+      "value": 0.9379,
+      "decimals": 4,
+      "context": "gemma's RSA fell only to **0.9379**, still far above qwen's **0.881**, and gemma **still",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[9].rsa"
+    },
+    {
+      "line": 33,
+      "token": "0.881",
+      "value": 0.881,
+      "decimals": 3,
+      "context": "gemma's RSA fell only to **0.9379**, still far above qwen's **0.881**, and gemma **still",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:qwen_rsa_target"
+    },
+    {
+      "line": 34,
+      "token": "0.4286",
+      "value": 0.4286,
+      "decimals": 4,
+      "context": "discovered at 0.4286 = 30\u00d7 chance.** No dose brought RSA near qwen's level; the G2 interpolation",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[9].disc"
+    },
+    {
+      "line": 34,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "discovered at 0.4286 = 30\u00d7 chance.** No dose brought RSA near qwen's level; the G2 interpolation",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 35,
+      "token": "0.9379",
+      "value": 0.9379,
+      "decimals": 4,
+      "context": "had to substitute the nearest dose (RSA 0.9379) and is therefore void. The blunt fact: you cannot",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[9].rsa"
+    },
+    {
+      "line": 36,
+      "token": "0.881",
+      "value": 0.881,
+      "decimals": 3,
+      "context": "make a clique member into an island by adding undirected noise. Qwen sits at RSA 0.881 *as a",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:qwen_rsa_target"
+    },
+    {
+      "line": 37,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "whole, functioning representation* and is undiscoverable (~4\u00d7 chance); gemma battered to a",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_finding_addendum.json:qwen_disc_x_chance"
+    },
+    {
+      "line": 46,
+      "token": "0.6454",
+      "value": 0.6454,
+      "decimals": 4,
+      "context": "*rose* from 0.6454 (clean) to **0.8240** at \u03c3=0.15 before eventually falling \u2014 a genuine",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[0].disc"
+    },
+    {
+      "line": 46,
+      "token": "0.8240",
+      "value": 0.824,
+      "decimals": 4,
+      "context": "*rose* from 0.6454 (clean) to **0.8240** at \u03c3=0.15 before eventually falling \u2014 a genuine",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.gemma[3].disc"
+    },
+    {
+      "line": 46,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "*rose* from 0.6454 (clean) to **0.8240** at \u03c3=0.15 before eventually falling \u2014 a genuine",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 52,
+      "token": "0.7959",
+      "value": 0.7959,
+      "decimals": 4,
+      "context": "dose probe. Control (llama_3b\u2192llama_1b) shows the same rise (0.7959 \u2192 0.8954 at \u03c3=0.1): the",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.llama1b[0].disc"
+    },
+    {
+      "line": 52,
+      "token": "0.8954",
+      "value": 0.8954,
+      "decimals": 4,
+      "context": "dose probe. Control (llama_3b\u2192llama_1b) shows the same rise (0.7959 \u2192 0.8954 at \u03c3=0.1): the",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:curves.llama1b[2].disc"
+    },
+    {
+      "line": 52,
+      "token": "0.1",
+      "value": 0.1,
+      "decimals": 1,
+      "context": "dose probe. Control (llama_3b\u2192llama_1b) shows the same rise (0.7959 \u2192 0.8954 at \u03c3=0.1): the",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 61,
+      "token": "0.881",
+      "value": 0.881,
+      "decimals": 3,
+      "context": "0.881, and measure discovery at matched RSA. Only a run that reaches qwen's alignment level can",
+      "status": "VERIFIED",
+      "receipt_ref": "b38_result.json:qwen_rsa_target"
+    },
+    {
+      "line": 68,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "One pair (+one control), one seed, CPU-from-cache, 20 discovery fits. The verdict is INVALID and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 69,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "is honored: no alignment-level conclusion is drawn. The two results above are (1) a licensed",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 70,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "negative about the isotropic route and (2) a reported mechanism (noise regularization), not the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

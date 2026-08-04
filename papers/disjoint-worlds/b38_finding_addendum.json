@@ -1,0 +1,12 @@
+{
+  "addendum": "B38 finding constants (2026-08-04): derived figures cited in the cliff-INVALID finding.",
+  "gemma_max_dose_rsa": 0.9379,
+  "gemma_max_dose_disc": 0.4286,
+  "qwen_rsa": 0.881,
+  "gemma_disc_x_chance_at_max_dose": 30,
+  "qwen_disc_x_chance": 4,
+  "regularization_peak_disc": 0.824,
+  "regularization_peak_dose": 0.15,
+  "control_llama1b_dose0_disc": 0.7959,
+  "control_llama1b_peak_disc": 0.8954
+}

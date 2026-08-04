@@ -1,0 +1,31 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b38_cliff_invalid_2026_08_04.md",
+  "document_sha256": "3cd07cf461160e64c368d4d7b88681387fcb5156b20c33ba36e6eee45c00310c",
+  "oath": {
+    "counts": {
+      "VERIFIED": 42,
+      "ABSTAIN": 7,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b38_legibility_cliff_2026_08_04.md",
+      "result": "papers/disjoint-worlds/b38_result.json",
+      "frozen_verdict": "INVALID__dose_response_nonmonotone",
+      "gates": {
+        "G0_baseline": true,
+        "G1_monotone": false,
+        "G2_island_matched": false,
+        "G2b_island_not_matched": true
+      },
+      "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad",
+      "prereg_commit": "4d382a8f033630b5a6181da4fe351926cdef54d7"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "dab1deb2fa0562520924a68bdd35a6b1cee002b5b2748a954d2135a89d141712"
+}
