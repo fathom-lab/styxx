@@ -20,7 +20,7 @@ lab's own prediction recorded in advance.
 |---|---|---|---|---|
 | [`PREREG_m1_magnetochemistry`](PREREG_m1_magnetochemistry_2026_08_05.md) | an audio-frequency magnetic field alters a radical-pair reaction's light yield | **established** — radical pair mechanism (avian magnetoreception, *Nature Comms* 2024); luminol MFE documented in aqueous solution | **plausible** — effect size unknown; the audio band where modulation period ≈ radical lifetime is thinly studied | a null still yields a field-strength bound — it teaches either way |
 | [`PREREG_w1v3_water_arms`](PREREG_w1v3_water_arms_2026_08_05.md) | water retains a 125.28 Hz "imprint" for hours | **none known** | **no effect** — water's structural memory is measured at ~50 fs; the claim needs 4 h (a gap of ~10²⁰) | the claim was sincerely proposed; a frozen bar beats an argument, and a fair kill test is worth more than a dismissal |
-| *(room legibility — forthcoming)* | an agent can find correspondence with a room's spectral state | the disjoint-worlds legibility machinery, applied to a new pair | **open — the real question** | this is the project; it needs no exotic physics |
+| [`PREREG_r1_room_legibility`](PREREG_r1_room_legibility_2026_08_05.md) | a physical room's state and an agent's internal state share recoverable structure | the disjoint-worlds legibility machinery, pointed at a mind and a room | **open — the real question** | this is the project; needs no exotic physics, and the agent-side telemetry already exists |
 
 **W1 is a kill test, not an endorsement.** It is designed to be *generous to the claim*
 (three arms, dose-response, the proposers' own preferred readout) and *hostile to false
