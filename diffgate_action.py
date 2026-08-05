@@ -85,13 +85,13 @@ def main() -> int:
     for c in g.claims:
         if c.verdict == "CONTRADICTED":
             failing = True
-            print(f"::error title=styxx diffgate — contradicted claim::{c.text[:120]} — {c.why}")
+            print(f"::error title=styxx diffgate - contradicted claim::{c.text[:120]} - {c.why}")
         elif c.verdict == "UNCHECKABLE" and strict:
             failing = True
-            print(f"::error title=styxx diffgate — uncheckable under strict::{c.text[:120]} — {c.why}")
+            print(f"::error title=styxx diffgate - uncheckable under strict::{c.text[:120]} - {c.why}")
         elif c.verdict == "UNCHECKABLE":
-            print(f"::warning title=styxx diffgate — uncheckable::{c.text[:120]} — {c.why}")
-    print(f"styxx diffgate: {g.verdict} — {len(g.claims)} claim(s), "
+            print(f"::warning title=styxx diffgate - uncheckable::{c.text[:120]} - {c.why}")
+    print(f"styxx diffgate: {g.verdict} - {len(g.claims)} claim(s), "
           f"{sum(1 for c in g.claims if c.verdict == 'CONTRADICTED')} contradicted")
     if failing and not soft:
         return 1
