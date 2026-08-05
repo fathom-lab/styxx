@@ -1,0 +1,284 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b40_island_named_2026_08_05.md",
+  "document_sha256": "bd8633ac129bc1276183ce5bd6e491484711073bf6041fb69f9cd3ff8300289f",
+  "receipts_sha256": {
+    "b40_result.json": "afa24ec5a91713e61045c0268800171fbef55d0bad78f2dc47482843e80df0b5",
+    "b40_constants_addendum.json": "15f82d7722435bf939395961f6de9c5fb5e6e82db12c8c2523334540efb7fa48"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 22,
+    "ABSTAIN": 4,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 27,
+      "token": "0.7143"
+    },
+    {
+      "line": 36,
+      "token": "462"
+    },
+    {
+      "line": 59,
+      "token": "20"
+    },
+    {
+      "line": 60,
+      "token": "6"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "0.8717",
+      "value": 0.8717,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 llama_1b | **0.8717** | 0.8137 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 llama_1b | **0.8717** | 0.8137 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_3b__llama_1b"
+    },
+    {
+      "line": 16,
+      "token": "0.8137",
+      "value": 0.8137,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 llama_1b | **0.8717** | 0.8137 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 llama_1b | **0.8717** | 0.8137 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[0]"
+    },
+    {
+      "line": 17,
+      "token": "0.8480",
+      "value": 0.848,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 gemma_2b | **0.8480** | 0.6199 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 gemma_2b | **0.8480** | 0.6199 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_3b__gemma_2b"
+    },
+    {
+      "line": 17,
+      "token": "0.6199",
+      "value": 0.6199,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 gemma_2b | **0.8480** | 0.6199 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 gemma_2b | **0.8480** | 0.6199 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[1]"
+    },
+    {
+      "line": 18,
+      "token": "0.7932",
+      "value": 0.7932,
+      "decimals": 4,
+      "context": "| llama_1b \u2194 gemma_2b | **0.7932** | 0.7398 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_1b \u2194 gemma_2b | **0.7932** | 0.7398 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_1b__gemma_2b"
+    },
+    {
+      "line": 18,
+      "token": "0.7398",
+      "value": 0.7398,
+      "decimals": 4,
+      "context": "| llama_1b \u2194 gemma_2b | **0.7932** | 0.7398 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_1b \u2194 gemma_2b | **0.7932** | 0.7398 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[3]"
+    },
+    {
+      "line": 19,
+      "token": "0.7220",
+      "value": 0.722,
+      "decimals": 4,
+      "context": "| gemma_2b \u2194 qwen_1p5b | 0.7220 | 0.1684 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | gemma_2b \u2194 qwen_1p5b | 0.7220 | 0.1684 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.gemma_2b__qwen_1p5b"
+    },
+    {
+      "line": 19,
+      "token": "0.1684",
+      "value": 0.1684,
+      "decimals": 4,
+      "context": "| gemma_2b \u2194 qwen_1p5b | 0.7220 | 0.1684 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | gemma_2b \u2194 qwen_1p5b | 0.7220 | 0.1684 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[5]"
+    },
+    {
+      "line": 20,
+      "token": "0.7375",
+      "value": 0.7375,
+      "decimals": 4,
+      "context": "| llama_1b \u2194 qwen_1p5b | 0.7375 | 0.0408 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_1b \u2194 qwen_1p5b | 0.7375 | 0.0408 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_1b__qwen_1p5b"
+    },
+    {
+      "line": 20,
+      "token": "0.0408",
+      "value": 0.0408,
+      "decimals": 4,
+      "context": "| llama_1b \u2194 qwen_1p5b | 0.7375 | 0.0408 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_1b \u2194 qwen_1p5b | 0.7375 | 0.0408 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[4]"
+    },
+    {
+      "line": 21,
+      "token": "0.7306",
+      "value": 0.7306,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 qwen_1p5b | 0.7306 | 0.0574 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 qwen_1p5b | 0.7306 | 0.0574 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_3b__qwen_1p5b"
+    },
+    {
+      "line": 21,
+      "token": "0.0574",
+      "value": 0.0574,
+      "decimals": 4,
+      "context": "| llama_3b \u2194 qwen_1p5b | 0.7306 | 0.0574 |",
+      "binding_context": "| pair | affinity | b37 discovery (dir-mean) | | llama_3b \u2194 qwen_1p5b | 0.7306 | 0.0574 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[2]"
+    },
+    {
+      "line": 23,
+      "token": "0.7932",
+      "value": 0.7932,
+      "decimals": 4,
+      "context": "- **G1 (separation): PASS** \u2014 the ranges are disjoint: min clique-internal 0.7932 > max",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:clique_internal_affinities[2]"
+    },
+    {
+      "line": 24,
+      "token": "0.7375",
+      "value": 0.7375,
+      "decimals": 4,
+      "context": "qwen-to-clique 0.7375 (margin 0.0557). Every clique pair agrees more about which contrasts",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_1b__qwen_1p5b"
+    },
+    {
+      "line": 24,
+      "token": "0.0557",
+      "value": 0.0557,
+      "decimals": 4,
+      "context": "qwen-to-clique 0.7375 (margin 0.0557). Every clique pair agrees more about which contrasts",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:min_clique_internal_affinity_minus_max_qwen_affinity"
+    },
+    {
+      "line": 27,
+      "token": "0.7143",
+      "value": 0.7143,
+      "decimals": 4,
+      "context": "- **G2 (tracks legibility): PASS** \u2014 Spearman(affinity, discovery) = 0.7143 across the six",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "0.7",
+      "value": 0.7,
+      "decimals": 1,
+      "context": "pairs, clearing the 0.7 floor the prereg pre-declared as blunt at n=6. Exactly one adjacent",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:pairs.llama_3b__qwen_1p5b"
+    },
+    {
+      "line": 36,
+      "token": "462",
+      "value": 462.0,
+      "decimals": 0,
+      "context": "has both a mechanism and a signature: qwen organizes the *same* 462 concepts around a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 42,
+      "token": "0.79",
+      "value": 0.79,
+      "decimals": 2,
+      "context": "The affinity gap is **modest** (0.79 vs 0.74 \u2014 a 7% relative difference); the legibility gap",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:clique_internal_affinities[2]"
+    },
+    {
+      "line": 42,
+      "token": "0.74",
+      "value": 0.74,
+      "decimals": 2,
+      "context": "The affinity gap is **modest** (0.79 vs 0.74 \u2014 a 7% relative difference); the legibility gap",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:qwen_to_clique_affinities[1]"
+    },
+    {
+      "line": 42,
+      "token": "7",
+      "value": 7.0,
+      "decimals": 0,
+      "context": "The affinity gap is **modest** (0.79 vs 0.74 \u2014 a 7% relative difference); the legibility gap",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_constants_addendum.json:affinity_relative_gap_pct"
+    },
+    {
+      "line": 43,
+      "token": "0.62",
+      "value": 0.62,
+      "decimals": 2,
+      "context": "is **catastrophic** (0.62\u20130.81 vs 0.04\u20130.17 discovery). A small disagreement in dominant",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[1]"
+    },
+    {
+      "line": 43,
+      "token": "0.04",
+      "value": 0.04,
+      "decimals": 2,
+      "context": "is **catastrophic** (0.62\u20130.81 vs 0.04\u20130.17 discovery). A small disagreement in dominant",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:disc_means_b37[4]"
+    },
+    {
+      "line": 59,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "Six pairs sharing four models \u22643B; k=20 frozen; one anchor split (seed 343); order statements",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 59,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "Six pairs sharing four models \u22643B; k=20 frozen; one anchor split (seed 343); order statements",
+      "status": "VERIFIED",
+      "receipt_ref": "b40_result.json:seed"
+    },
+    {
+      "line": 60,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "and a blunt n=6 rank correlation, both declared as such in the frozen prereg; no direction",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b40_island_named_2026_08_05.md",
+  "document_sha256": "bd8633ac129bc1276183ce5bd6e491484711073bf6041fb69f9cd3ff8300289f",
+  "oath": {
+    "counts": {
+      "VERIFIED": 22,
+      "ABSTAIN": 4,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_b40_anisotropy_signature_2026_08_05.md",
+      "result": "b40_result.json",
+      "frozen_verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+      "gates": {
+        "G1_separation": true,
+        "G2_tracks_legibility": true
+      },
+      "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc",
+      "prereg_commit": "f69366c1bdd542efadc9d1d600a68ceb9cc3cdd6"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "895eb98fdfbb4b5bdf574855bc11157325320be37cade4999e350a49eae1bb53"
+}

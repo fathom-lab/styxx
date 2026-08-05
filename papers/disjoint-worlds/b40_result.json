@@ -1,0 +1,41 @@
+{
+  "prereg": "PREREG_b40_anisotropy_signature_2026_08_05.md",
+  "seed": 343,
+  "smoke": false,
+  "k": 20,
+  "n_anchor_rows": 392,
+  "pairs": {
+    "llama_3b__llama_1b": 0.8717,
+    "llama_3b__gemma_2b": 0.848,
+    "llama_3b__qwen_1p5b": 0.7306,
+    "llama_1b__gemma_2b": 0.7932,
+    "llama_1b__qwen_1p5b": 0.7375,
+    "gemma_2b__qwen_1p5b": 0.722
+  },
+  "clique_internal_affinities": [
+    0.8717,
+    0.848,
+    0.7932
+  ],
+  "qwen_to_clique_affinities": [
+    0.7306,
+    0.7375,
+    0.722
+  ],
+  "min_clique_internal_affinity_minus_max_qwen_affinity": 0.0557,
+  "spearman_affinity_vs_disc": 0.7143,
+  "disc_means_b37": [
+    0.8137,
+    0.6199,
+    0.0574,
+    0.7398,
+    0.0408,
+    0.1684
+  ],
+  "verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+  "gates": {
+    "G1_separation": true,
+    "G2_tracks_legibility": true
+  },
+  "prereg_commit": "f69366c1bdd542efadc9d1d600a68ceb9cc3cdd6"
+}

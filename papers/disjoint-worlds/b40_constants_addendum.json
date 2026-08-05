@@ -1,0 +1,19 @@
+{
+  "addendum": "B40 constants (2026-08-05): derived figures cited in the island-named finding.",
+  "k_subspace": 20,
+  "n_pairs": 6,
+  "separation_margin": 0.0557,
+  "clique_min_affinity": 0.7932,
+  "qwen_max_affinity": 0.7375,
+  "affinity_relative_gap_pct": 7,
+  "spearman_floor": 0.7,
+  "n_adjacent_inversions": 1,
+  "clique_disc_range": [
+    0.6199,
+    0.8137
+  ],
+  "qwen_disc_range": [
+    0.0408,
+    0.1684
+  ]
+}
