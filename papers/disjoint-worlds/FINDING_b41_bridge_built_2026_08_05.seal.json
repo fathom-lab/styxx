@@ -1,0 +1,31 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b41_bridge_built_2026_08_05.md",
+  "document_sha256": "763a1cace0165eccd98345dcb80995d71b2ce898fe0347f3adfc8d10de2fee46",
+  "oath": {
+    "counts": {
+      "VERIFIED": 16,
+      "ABSTAIN": 7,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_b41_bridge_2026_08_05.md",
+      "result": "b41_result.json",
+      "frozen_verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+      "gates": {
+        "G0_baseline": true,
+        "G3_no_harm": true,
+        "G1_bridge": true,
+        "G2_specificity": true
+      },
+      "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c",
+      "prereg_commit": "6fe0e5ce5a26abc2d25482ca095cc632ba93fe76"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "e70b3e55d77cc806f0523af3ac0f91bf464a532165832a827cac11808baaff41"
+}

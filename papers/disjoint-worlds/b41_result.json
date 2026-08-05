@@ -1,0 +1,19 @@
+{
+  "prereg": "PREREG_b41_bridge_2026_08_05.md",
+  "seed": 343,
+  "smoke": false,
+  "k": 20,
+  "n_anchor_rows": 392,
+  "a0_baseline_disc": 0.0612,
+  "a1_bridge_disc": 0.9745,
+  "a2_random_frame_disc": 0.0,
+  "a3_gemma_bridged_disc": 1.0,
+  "verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+  "gates": {
+    "G0_baseline": true,
+    "G3_no_harm": true,
+    "G1_bridge": true,
+    "G2_specificity": true
+  },
+  "prereg_commit": "6fe0e5ce5a26abc2d25482ca095cc632ba93fe76"
+}

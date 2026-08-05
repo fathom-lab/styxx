@@ -1,0 +1,8 @@
+{
+  "addendum": "B41 constants (2026-08-05): derived figures in the bridge-built finding.",
+  "k_directions": 20,
+  "n_anchor_dims": 392,
+  "bridge_x_chance": 68,
+  "baseline_x_chance": 4,
+  "bridge_jump_factor": 16
+}

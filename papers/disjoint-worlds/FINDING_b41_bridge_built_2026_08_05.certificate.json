@@ -1,0 +1,268 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b41_bridge_built_2026_08_05.md",
+  "document_sha256": "763a1cace0165eccd98345dcb80995d71b2ce898fe0347f3adfc8d10de2fee46",
+  "receipts_sha256": {
+    "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
+    "b41_constants_addendum.json": "e998e6a8eefe93f88065ff3085740f1d2436caf086a653f998269c19e8a8ff45"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 16,
+    "ABSTAIN": 7,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 17,
+      "token": "0.15"
+    },
+    {
+      "line": 18,
+      "token": "20"
+    },
+    {
+      "line": 18,
+      "token": "0.30"
+    },
+    {
+      "line": 19,
+      "token": "0.15"
+    },
+    {
+      "line": 20,
+      "token": "0.30"
+    },
+    {
+      "line": 53,
+      "token": "20"
+    },
+    {
+      "line": 54,
+      "token": "4"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 11,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "llama_3b's in shared concept space (a rank-20 correction, 20 directions out of 392 anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_constants_addendum.json:k_directions"
+    },
+    {
+      "line": 11,
+      "token": "392",
+      "value": 392.0,
+      "decimals": 0,
+      "context": "llama_3b's in shared concept space (a rank-20 correction, 20 directions out of 392 anchor",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:n_anchor_rows"
+    },
+    {
+      "line": 17,
+      "token": "0.0612",
+      "value": 0.0612,
+      "decimals": 4,
+      "context": "| A0 baseline (qwen, no surgery) | **0.0612** | \u2264 0.15 | \u2713 the island reproduced |",
+      "binding_context": "| arm | discovery | gate | | | A0 baseline (qwen, no surgery) | **0.0612** | \u2264 0.15 | \u2713 the island reproduced |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a0_baseline_disc"
+    },
+    {
+      "line": 17,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| A0 baseline (qwen, no surgery) | **0.0612** | \u2264 0.15 | \u2713 the island reproduced |",
+      "binding_context": "| arm | discovery | gate | | | A0 baseline (qwen, no surgery) | **0.0612** | \u2264 0.15 | \u2713 the island reproduced |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "binding_context": "| arm | discovery | gate | | | **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 18,
+      "token": "0.9745",
+      "value": 0.9745,
+      "decimals": 4,
+      "context": "| **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "binding_context": "| arm | discovery | gate | | | **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a1_bridge_disc"
+    },
+    {
+      "line": 18,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "binding_context": "| arm | discovery | gate | | | **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 18,
+      "token": "16",
+      "value": 16.0,
+      "decimals": 0,
+      "context": "| **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "binding_context": "| arm | discovery | gate | | | **A1 bridge (qwen \u2190 llama's 20 contrasts)** | **0.9745** | \u2265 0.30 | **\u2713 a 16\u00d7 jump** |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_constants_addendum.json:bridge_jump_factor"
+    },
+    {
+      "line": 19,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "| A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "binding_context": "| arm | discovery | gate | | | A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_constants_addendum.json:k_directions"
+    },
+    {
+      "line": 19,
+      "token": "0.0000",
+      "value": 0.0,
+      "decimals": 4,
+      "context": "| A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "binding_context": "| arm | discovery | gate | | | A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a2_random_frame_disc"
+    },
+    {
+      "line": 19,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "binding_context": "| arm | discovery | gate | | | A2 specificity null (qwen \u2190 20 RANDOM directions) | **0.0000** | \u2264 0.15 | \u2713 wrong directions rescue nothing |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "1.0000",
+      "value": 1.0,
+      "decimals": 4,
+      "context": "| A3 no-harm (gemma \u2190 same surgery) | **1.0000** | \u2265 0.30 | \u2713 recipe doesn't damage, it helps |",
+      "binding_context": "| arm | discovery | gate | | | A3 no-harm (gemma \u2190 same surgery) | **1.0000** | \u2265 0.30 | \u2713 recipe doesn't damage, it helps |",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a3_gemma_bridged_disc"
+    },
+    {
+      "line": 20,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "| A3 no-harm (gemma \u2190 same surgery) | **1.0000** | \u2265 0.30 | \u2713 recipe doesn't damage, it helps |",
+      "binding_context": "| arm | discovery | gate | | | A3 no-harm (gemma \u2190 same surgery) | **1.0000** | \u2265 0.30 | \u2713 recipe doesn't damage, it helps |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 23,
+      "token": "0.0612",
+      "value": 0.0612,
+      "decimals": 4,
+      "context": "an island (0.0612, ~4\u00d7 chance) into the single most discoverable pair the program has measured",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a0_baseline_disc"
+    },
+    {
+      "line": 23,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "an island (0.0612, ~4\u00d7 chance) into the single most discoverable pair the program has measured",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_constants_addendum.json:baseline_x_chance"
+    },
+    {
+      "line": 24,
+      "token": "0.9745",
+      "value": 0.9745,
+      "decimals": 4,
+      "context": "(0.9745, 68\u00d7 chance) \u2014 more legible than any *natural* pair, clique members included. The same",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a1_bridge_disc"
+    },
+    {
+      "line": 24,
+      "token": "68",
+      "value": 68.0,
+      "decimals": 0,
+      "context": "(0.9745, 68\u00d7 chance) \u2014 more legible than any *natural* pair, clique members included. The same",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_constants_addendum.json:bridge_x_chance"
+    },
+    {
+      "line": 25,
+      "token": "0.0000",
+      "value": 0.0,
+      "decimals": 4,
+      "context": "rank-20 surgery with a random orthonormal frame rescued **nothing (0.0000)**: it is not that",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a2_random_frame_disc"
+    },
+    {
+      "line": 53,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "One source\u2192island pair with its clique no-harm control, one seed (343), k=20 frozen from B40,",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:seed"
+    },
+    {
+      "line": 53,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "One source\u2192island pair with its clique no-harm control, one seed (343), k=20 frozen from B40,",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 54,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "CPU-from-cache, 4 discovery fits. The A2 null at exactly 0.0 and A3 at exactly 1.0 are strong",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 54,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "CPU-from-cache, 4 discovery fits. The A2 null at exactly 0.0 and A3 at exactly 1.0 are strong",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a2_random_frame_disc"
+    },
+    {
+      "line": 54,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "CPU-from-cache, 4 discovery fits. The A2 null at exactly 0.0 and A3 at exactly 1.0 are strong",
+      "status": "VERIFIED",
+      "receipt_ref": "b41_result.json:a1_bridge_disc"
+    }
+  ]
+}
