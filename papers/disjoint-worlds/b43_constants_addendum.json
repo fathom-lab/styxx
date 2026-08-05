@@ -1,0 +1,8 @@
+{
+  "addendum": "B43 constants (2026-08-05).",
+  "k_directions": 20,
+  "jaccard_floor": 0.15,
+  "chance_jaccard": 0.02,
+  "coherence_floor_p": 0.05,
+  "coherence_obs": 0.0765
+}

@@ -1,0 +1,89 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b43_sub_symbolic_2026_08_05.md",
+  "document_sha256": "d68b49f3601d32be060258bc1aec26c87798b34ab4496735423fb1f15cc21ddb",
+  "receipts_sha256": {
+    "b43_result.json": "815aa61c2f00207a9c7002a3cc5966c4c41559b1d7bc66a4fa60cdb41c851e68",
+    "b43_constants_addendum.json": "6765048f01ff97507a4964f4a87cd8f8cc14c6fa164d9e2ea126054bcb99e398"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 6,
+    "ABSTAIN": 1,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 27,
+      "token": "0.05"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 14,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "most-discordant direction (seed 343):",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_result.json:seeds[0]"
+    },
+    {
+      "line": 22,
+      "token": "0.1368",
+      "value": 0.1368,
+      "decimals": 4,
+      "context": "cross-seed Jaccard **0.1368**, below the 0.15 floor. (Above the ~0.02 chance-overlap, so the",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_result.json:mean_jaccard_top15_across_seeds"
+    },
+    {
+      "line": 22,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "cross-seed Jaccard **0.1368**, below the 0.15 floor. (Above the ~0.02 chance-overlap, so the",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_constants_addendum.json:jaccard_floor"
+    },
+    {
+      "line": 22,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "cross-seed Jaccard **0.1368**, below the 0.15 floor. (Above the ~0.02 chance-overlap, so the",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_constants_addendum.json:chance_jaccard"
+    },
+    {
+      "line": 26,
+      "token": "0.8031",
+      "value": 0.8031,
+      "decimals": 4,
+      "context": "p = **0.8031** (observed mean pairwise MiniLM cosine 0.0765 vs the null mean \u2014  if anything",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_result.json:coherence_perm_p"
+    },
+    {
+      "line": 26,
+      "token": "0.0765",
+      "value": 0.0765,
+      "decimals": 4,
+      "context": "p = **0.8031** (observed mean pairwise MiniLM cosine 0.0765 vs the null mean \u2014  if anything",
+      "status": "VERIFIED",
+      "receipt_ref": "b43_constants_addendum.json:coherence_obs"
+    },
+    {
+      "line": 27,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "*less* coherent than a random 15-word set), far from the p \u2264 0.05 bar.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
+}

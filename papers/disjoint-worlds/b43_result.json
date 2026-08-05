@@ -1,0 +1,75 @@
+{
+  "prereg": "PREREG_b43_name_the_twenty_2026_08_05.md",
+  "smoke": false,
+  "K": 20,
+  "D": 3,
+  "topN": 15,
+  "seeds": [
+    343,
+    1001,
+    1002
+  ],
+  "directions": {
+    "discordant_0": [
+      "fig",
+      "wisdom",
+      "wonder",
+      "hope",
+      "loneliness",
+      "elephant",
+      "floor",
+      "ant",
+      "table",
+      "language",
+      "office",
+      "coal",
+      "chaos",
+      "ice",
+      "galaxy"
+    ],
+    "discordant_1": [
+      "fig",
+      "tram",
+      "palace",
+      "gratitude",
+      "hoe",
+      "goose",
+      "kayak",
+      "ship",
+      "apricot",
+      "pizza",
+      "king",
+      "fisher",
+      "tea",
+      "plumber",
+      "cabbage"
+    ],
+    "discordant_2": [
+      "clock",
+      "idea",
+      "chocolate",
+      "mirror",
+      "wardrobe",
+      "palace",
+      "car",
+      "guitar",
+      "chest",
+      "castle",
+      "kayak",
+      "pocket",
+      "honey",
+      "subway",
+      "galaxy"
+    ]
+  },
+  "mean_jaccard_top15_across_seeds": 0.1368,
+  "coherence_observed": 0.2649,
+  "coherence_null_mean": 0.2789,
+  "coherence_perm_p": 0.8031,
+  "verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+  "gates": {
+    "G1_stability": false,
+    "G2_coherence": false
+  },
+  "prereg_commit": "fc8404f100d2de8651c756200ccfbfc820cacc0b"
+}

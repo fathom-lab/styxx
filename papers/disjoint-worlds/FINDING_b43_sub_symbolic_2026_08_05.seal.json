@@ -1,0 +1,29 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b43_sub_symbolic_2026_08_05.md",
+  "document_sha256": "d68b49f3601d32be060258bc1aec26c87798b34ab4496735423fb1f15cc21ddb",
+  "oath": {
+    "counts": {
+      "VERIFIED": 6,
+      "ABSTAIN": 1,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "papers/disjoint-worlds/PREREG_b43_name_the_twenty_2026_08_05.md",
+      "result": "papers/disjoint-worlds/b43_result.json",
+      "frozen_verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+      "gates": {
+        "G1_stability": false,
+        "G2_coherence": false
+      },
+      "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48",
+      "prereg_commit": "fc8404f100d2de8651c756200ccfbfc820cacc0b"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "0e12ed0769fab4bd38dce5441453b42d78de3fd14bfb5cf1679b100a33c7a1b9"
+}
