@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b42_dose_curve_2026_08_05.md",
+ "document_sha256": "b7de2c6def98c93ba097ccabd53049872afff7bfa968cf9aa908fe132d6df621",
+ "oath": {
+  "counts": {
+   "VERIFIED": 41,
+   "ABSTAIN": 27,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b42_bridge_dose_2026_08_05.md",
+   "result": "b42_result.json",
+   "frozen_verdict": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+   "gates": {
+    "G1_replicates": true,
+    "G2_null_clean": true,
+    "G3_dose_monotone": true
+   },
+   "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe",
+   "prereg_commit": "05141b1db15167f8b030e45ce6a5f500e1df3366"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "5e9cf2a3f34a4a6b455d0a6a20219d42d8685d13f598cc7c3655d20a3b42db52"
+}

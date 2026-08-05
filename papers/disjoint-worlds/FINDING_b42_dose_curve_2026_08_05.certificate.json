@@ -1,0 +1,770 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b42_dose_curve_2026_08_05.md",
+ "document_sha256": "b7de2c6def98c93ba097ccabd53049872afff7bfa968cf9aa908fe132d6df621",
+ "receipts_sha256": {
+  "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 41,
+  "ABSTAIN": 27,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 12,
+   "token": "20"
+  },
+  {
+   "line": 12,
+   "token": "5"
+  },
+  {
+   "line": 12,
+   "token": "0.30"
+  },
+  {
+   "line": 13,
+   "token": "20"
+  },
+  {
+   "line": 13,
+   "token": "5"
+  },
+  {
+   "line": 13,
+   "token": "0.15"
+  },
+  {
+   "line": 14,
+   "token": "0.6"
+  },
+  {
+   "line": 16,
+   "token": "20"
+  },
+  {
+   "line": 17,
+   "token": "20"
+  },
+  {
+   "line": 33,
+   "token": "2"
+  },
+  {
+   "line": 33,
+   "token": "0.30"
+  },
+  {
+   "line": 34,
+   "token": "0.15"
+  },
+  {
+   "line": 43,
+   "token": "2"
+  },
+  {
+   "line": 43,
+   "token": "5"
+  },
+  {
+   "line": 43,
+   "token": "3"
+  },
+  {
+   "line": 45,
+   "token": "8"
+  },
+  {
+   "line": 45,
+   "token": "12"
+  },
+  {
+   "line": 45,
+   "token": "20"
+  },
+  {
+   "line": 46,
+   "token": "40"
+  },
+  {
+   "line": 49,
+   "token": "6"
+  },
+  {
+   "line": 54,
+   "token": "2"
+  },
+  {
+   "line": 54,
+   "token": "3"
+  },
+  {
+   "line": 54,
+   "token": "5"
+  },
+  {
+   "line": 64,
+   "token": "5"
+  },
+  {
+   "line": 78,
+   "token": "0.30"
+  },
+  {
+   "line": 78,
+   "token": "0.15"
+  },
+  {
+   "line": 79,
+   "token": "8"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 12,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 12,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "| G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "| G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_replicates | min bridge at k=20 across 5 seeds \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k20_s343.bridge"
+  },
+  {
+   "line": 13,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 13,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | max matched-null at k=20 across 5 seeds \u2264 0.15 | 0.0026 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 14,
+   "token": "0.6",
+   "value": 0.6,
+   "decimals": 1,
+   "context": "| G3_dose_monotone | Spearman(median bridge, k) \u2265 0.6 | 1.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_dose_monotone | Spearman(median bridge, k) \u2265 0.6 | 1.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| G3_dose_monotone | Spearman(median bridge, k) \u2265 0.6 | 1.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_dose_monotone | Spearman(median bridge, k) \u2265 0.6 | 1.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s343.bridge"
+  },
+  {
+   "line": 16,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "B41's single-seed worry is retired: the weakest seed's bridge at k=20 is 0.9745, and the",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 16,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "B41's single-seed worry is retired: the weakest seed's bridge at k=20 is 0.9745, and the",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k20_s343.bridge"
+  },
+  {
+   "line": 17,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "*strongest* null anywhere at k=20 is 0.0026. The gap between the worst bridge and the best null",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 20,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "## The dose curve (median across 5 seeds per rank)",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[3]"
+  },
+  {
+   "line": 24,
+   "token": "0.1709",
+   "value": 0.1709,
+   "decimals": 4,
+   "context": "| 1 | 0.1709 | 0.0 |",
+   "binding_context": "| rank k | median bridge | median null | | 1 | 0.1709 | 0.0 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k1_s343.bridge"
+  },
+  {
+   "line": 24,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| 1 | 0.1709 | 0.0 |",
+   "binding_context": "| rank k | median bridge | median null | | 1 | 0.1709 | 0.0 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k1_s343.null"
+  },
+  {
+   "line": 25,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "| 2 | 0.5128 | 0.0051 |",
+   "binding_context": "| rank k | median bridge | median null | | 2 | 0.5128 | 0.0051 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 25,
+   "token": "0.0051",
+   "value": 0.0051,
+   "decimals": 4,
+   "context": "| 2 | 0.5128 | 0.0051 |",
+   "binding_context": "| rank k | median bridge | median null | | 2 | 0.5128 | 0.0051 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s1001.null"
+  },
+  {
+   "line": 26,
+   "token": "0.523",
+   "value": 0.523,
+   "decimals": 3,
+   "context": "| 3 | 0.523 | 0.0 |",
+   "binding_context": "| rank k | median bridge | median null | | 3 | 0.523 | 0.0 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s1002.bridge"
+  },
+  {
+   "line": 26,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| 3 | 0.523 | 0.0 |",
+   "binding_context": "| rank k | median bridge | median null | | 3 | 0.523 | 0.0 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k1_s343.null"
+  },
+  {
+   "line": 27,
+   "token": "0.5281",
+   "value": 0.5281,
+   "decimals": 4,
+   "context": "| 5 | 0.5281 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 5 | 0.5281 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k5_s1003.bridge"
+  },
+  {
+   "line": 27,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| 5 | 0.5281 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 5 | 0.5281 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 28,
+   "token": "0.9133",
+   "value": 0.9133,
+   "decimals": 4,
+   "context": "| 8 | 0.9133 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 8 | 0.9133 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s1001.bridge"
+  },
+  {
+   "line": 28,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| 8 | 0.9133 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 8 | 0.9133 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 29,
+   "token": "12",
+   "value": 12.0,
+   "decimals": 0,
+   "context": "| 12 | 0.9592 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 12 | 0.9592 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[5]"
+  },
+  {
+   "line": 29,
+   "token": "0.9592",
+   "value": 0.9592,
+   "decimals": 4,
+   "context": "| 12 | 0.9592 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 12 | 0.9592 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s1001.bridge"
+  },
+  {
+   "line": 29,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| 12 | 0.9592 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 12 | 0.9592 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 30,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| 20 | 0.9821 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 20 | 0.9821 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[6]"
+  },
+  {
+   "line": 30,
+   "token": "0.9821",
+   "value": 0.9821,
+   "decimals": 4,
+   "context": "| 20 | 0.9821 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 20 | 0.9821 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k20_s1001.bridge"
+  },
+  {
+   "line": 30,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| 20 | 0.9821 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 20 | 0.9821 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 31,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "| 40 | 1.0 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 40 | 1.0 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[7]"
+  },
+  {
+   "line": 31,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| 40 | 1.0 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 40 | 1.0 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[0]"
+  },
+  {
+   "line": 31,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| 40 | 1.0 | 0.0026 |",
+   "binding_context": "| rank k | median bridge | median null | | 40 | 1.0 | 0.0026 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s343.null"
+  },
+  {
+   "line": 33,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "**k\\* = 2** under the pre-stated definition (minimum rank with median bridge \u2265 0.30 and median",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 33,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "**k\\* = 2** under the pre-stated definition (minimum rank with median bridge \u2265 0.30 and median",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 34,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "null \u2264 0.15). The headline stands: *the barrier between these two minds is, at its core, two",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 41,
+   "token": "0.1709",
+   "value": 0.1709,
+   "decimals": 4,
+   "context": "1. **One direction is not enough** (median 0.1709 at k=1) \u2014 but **two directions buy half of",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:median_bridge_by_k.1"
+  },
+  {
+   "line": 41,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "1. **One direction is not enough** (median 0.1709 at k=1) \u2014 but **two directions buy half of",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:median_bridge_by_k.40"
+  },
+  {
+   "line": 42,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "full legibility** (0.5128). Whatever the barrier is, it has a dominant 2-dimensional core.",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 43,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 43,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 43,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 43,
+   "token": "0.523",
+   "value": 0.523,
+   "decimals": 3,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s1002.bridge"
+  },
+  {
+   "line": 43,
+   "token": "0.5281",
+   "value": 0.5281,
+   "decimals": 4,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k5_s1003.bridge"
+  },
+  {
+   "line": 43,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "2. **A plateau from k=2 to k=5** (0.5128 \u2192 0.523 \u2192 0.5281; essentially flat). Directions 3\u20135",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 45,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 45,
+   "token": "0.9133",
+   "value": 0.9133,
+   "decimals": 4,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k8_s1001.bridge"
+  },
+  {
+   "line": 45,
+   "token": "0.9592",
+   "value": 0.9592,
+   "decimals": 4,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k12_s1001.bridge"
+  },
+  {
+   "line": 45,
+   "token": "12",
+   "value": 12.0,
+   "decimals": 0,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 45,
+   "token": "0.9821",
+   "value": 0.9821,
+   "decimals": 4,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k20_s1001.bridge"
+  },
+  {
+   "line": 45,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "3. **A second rise at k=8** (0.9133) filling in to 0.9592 at k=12, 0.9821 at k=20, and exactly",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 46,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "1.0 at k=40 \u2014 a secondary band of correctable structure beyond the core.",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:ranks[0]"
+  },
+  {
+   "line": 46,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "1.0 at k=40 \u2014 a secondary band of correctable structure beyond the core.",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 49,
+   "token": "6",
+   "value": 6.0,
+   "decimals": 0,
+   "context": "secondary shell of roughly 6\u201310 directions carrying most of the rest.** \"Low-rank\" was the",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 53,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "(Spearman 1.0), but individual seeds do invert within the plateau \u2014 seed 1001 dips from 0.5714",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:spearman_medianbridge_vs_k"
+  },
+  {
+   "line": 53,
+   "token": "1001",
+   "value": 1001.0,
+   "decimals": 0,
+   "context": "(Spearman 1.0), but individual seeds do invert within the plateau \u2014 seed 1001 dips from 0.5714",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:seeds[1]"
+  },
+  {
+   "line": 53,
+   "token": "0.5714",
+   "value": 0.5714,
+   "decimals": 4,
+   "context": "(Spearman 1.0), but individual seeds do invert within the plateau \u2014 seed 1001 dips from 0.5714",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1001.bridge"
+  },
+  {
+   "line": 54,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 54,
+   "token": "0.3954",
+   "value": 0.3954,
+   "decimals": 4,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k3_s1001.bridge"
+  },
+  {
+   "line": 54,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 54,
+   "token": "1002",
+   "value": 1002.0,
+   "decimals": 0,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:seeds[2]"
+  },
+  {
+   "line": 54,
+   "token": "0.3214",
+   "value": 0.3214,
+   "decimals": 4,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k5_s1002.bridge"
+  },
+  {
+   "line": 54,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 54,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "at k=2 to 0.3954 at k=3, and seed 1002 reads 0.3214 at k=5 below its own 0.5128 at k=2. The",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 64,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "island legible while matched random frames do nothing (B41, now replicated \u00d75),",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 78,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "- k\\* uses the prereg's fixed 0.30/0.15 definition; by construction it says where legibility",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 78,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "- k\\* uses the prereg's fixed 0.30/0.15 definition; by construction it says where legibility",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 79,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "*begins*, not where it saturates (saturation is the k=8\u201312 shell).",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  }
+ ]
+}
