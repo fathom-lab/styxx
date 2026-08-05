@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b44_shared_frame_2026_08_05.md",
+ "document_sha256": "f2aab7d9e48cec27c7451bb6d2e6c6353c66d28b43a7eccccd307fb040a48a88",
+ "oath": {
+  "counts": {
+   "VERIFIED": 29,
+   "ABSTAIN": 9,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b44_wrong_donor_2026_08_05.md",
+   "result": "b44_result.json",
+   "frozen_verdict": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+   "gates": {
+    "G0_positive_control": true,
+    "G1_wrong_max_low": false,
+    "G2_wrong_min_high": true
+   },
+   "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445",
+   "prereg_commit": "b303a356c1a64d21106dda6696487299e1358347"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "f3bce93e415f4dec742447bab6fecfba079e599e49a77b6f4b981aac0f05eb4d"
+}

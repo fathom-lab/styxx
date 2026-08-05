@@ -1,0 +1,423 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b44_shared_frame_2026_08_05.md",
+ "document_sha256": "f2aab7d9e48cec27c7451bb6d2e6c6353c66d28b43a7eccccd307fb040a48a88",
+ "receipts_sha256": {
+  "b44_result.json": "4a0a53a1a20f3450581a0d812476d3a35c441d411671f3e72d5641daf62e63c9",
+  "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 29,
+  "ABSTAIN": 9,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "20"
+  },
+  {
+   "line": 13,
+   "token": "0.30"
+  },
+  {
+   "line": 14,
+   "token": "20"
+  },
+  {
+   "line": 14,
+   "token": "0.15"
+  },
+  {
+   "line": 15,
+   "token": "20"
+  },
+  {
+   "line": 15,
+   "token": "0.30"
+  },
+  {
+   "line": 25,
+   "token": "20"
+  },
+  {
+   "line": 25,
+   "token": "20"
+  },
+  {
+   "line": 25,
+   "token": "2"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "| G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "| G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_positive_control | min bridge at k=20 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s343_bridge.bridge"
+  },
+  {
+   "line": 14,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "| G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.9056",
+   "value": 0.9056,
+   "decimals": 4,
+   "context": "| G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_wrong_max_low | max wrong-donor at k=20 \u2264 0.15 | 0.9056 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1002_L1.wrong"
+  },
+  {
+   "line": 15,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "| G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.3622",
+   "value": 0.3622,
+   "decimals": 4,
+   "context": "| G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_wrong_min_high | min wrong-donor at k=20 \u2265 0.30 | 0.3622 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1001_L1.wrong"
+  },
+  {
+   "line": 17,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "Every wrong-donor surgery \u2014 every donor, every seed \u2014 cleared the 0.30 replication floor at",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k2_s343_L1.wrong"
+  },
+  {
+   "line": 25,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| arm | median at k=20 | seed range at k=20 | median at k=2 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 25,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| arm | median at k=20 | seed range at k=20 | median at k=2 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 25,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "| arm | median at k=20 | seed range at k=20 | median at k=2 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 27,
+   "token": "0.9821",
+   "value": 0.9821,
+   "decimals": 4,
+   "context": "| bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1001_bridge.bridge"
+  },
+  {
+   "line": 27,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "| bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s343_bridge.bridge"
+  },
+  {
+   "line": 27,
+   "token": "0.9847",
+   "value": 0.9847,
+   "decimals": 4,
+   "context": "| bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1004_bridge.bridge"
+  },
+  {
+   "line": 27,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "| bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | bridge (reader llama_3b's frame) | 0.9821 \u2020 | 0.9745 \u2013 0.9847 | 0.5128 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 28,
+   "token": "0.7168",
+   "value": 0.7168,
+   "decimals": 4,
+   "context": "| wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1002_G.wrong"
+  },
+  {
+   "line": 28,
+   "token": "0.5102",
+   "value": 0.5102,
+   "decimals": 4,
+   "context": "| wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1003_G.wrong"
+  },
+  {
+   "line": 28,
+   "token": "0.8316",
+   "value": 0.8316,
+   "decimals": 4,
+   "context": "| wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1004_G.wrong"
+  },
+  {
+   "line": 28,
+   "token": "0.3214",
+   "value": 0.3214,
+   "decimals": 4,
+   "context": "| wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor gemma_2b | 0.7168 | 0.5102 \u2013 0.8316 | 0.3214 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k2_s1001_G.wrong"
+  },
+  {
+   "line": 29,
+   "token": "0.648",
+   "value": 0.648,
+   "decimals": 3,
+   "context": "| wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s343_L1.wrong"
+  },
+  {
+   "line": 29,
+   "token": "0.3622",
+   "value": 0.3622,
+   "decimals": 4,
+   "context": "| wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1001_L1.wrong"
+  },
+  {
+   "line": 29,
+   "token": "0.9056",
+   "value": 0.9056,
+   "decimals": 4,
+   "context": "| wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1002_L1.wrong"
+  },
+  {
+   "line": 29,
+   "token": "0.3036",
+   "value": 0.3036,
+   "decimals": 4,
+   "context": "| wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | wrong-donor llama_1b | 0.648 | 0.3622 \u2013 0.9056 | 0.3036 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k2_s343_L1.wrong"
+  },
+  {
+   "line": 30,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "| random frame (B42) | 0.0026 \u2020 | \u2014 | 0.0051 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | random frame (B42) | 0.0026 \u2020 | \u2014 | 0.0051 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:median_null_by_k.5"
+  },
+  {
+   "line": 30,
+   "token": "0.0051",
+   "value": 0.0051,
+   "decimals": 4,
+   "context": "| random frame (B42) | 0.0026 \u2020 | \u2014 | 0.0051 \u2020 |",
+   "binding_context": "| arm | median at k=20 | seed range at k=20 | median at k=2 | | random frame (B42) | 0.0026 \u2020 | \u2014 | 0.0051 \u2020 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:median_null_by_k.2"
+  },
+  {
+   "line": 41,
+   "token": "0.3214",
+   "value": 0.3214,
+   "decimals": 4,
+   "context": "Even the rank-2 core transfers partially (0.3214 / 0.3036 vs the bridge's 0.5128).",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k5_s1002.bridge"
+  },
+  {
+   "line": 41,
+   "token": "0.3036",
+   "value": 0.3036,
+   "decimals": 4,
+   "context": "Even the rank-2 core transfers partially (0.3214 / 0.3036 vs the bridge's 0.5128).",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k2_s343_L1.wrong"
+  },
+  {
+   "line": 41,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "Even the rank-2 core transfers partially (0.3214 / 0.3036 vs the bridge's 0.5128).",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:grid.k2_s1002.bridge"
+  },
+  {
+   "line": 43,
+   "token": "0.9821",
+   "value": 0.9821,
+   "decimals": 4,
+   "context": "is both better (0.9821 vs 0.7168 / 0.648) and *stable* (five seeds within 0.9745\u20130.9847),",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1001_bridge.bridge"
+  },
+  {
+   "line": 43,
+   "token": "0.7168",
+   "value": 0.7168,
+   "decimals": 4,
+   "context": "is both better (0.9821 vs 0.7168 / 0.648) and *stable* (five seeds within 0.9745\u20130.9847),",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1002_G.wrong"
+  },
+  {
+   "line": 43,
+   "token": "0.648",
+   "value": 0.648,
+   "decimals": 3,
+   "context": "is both better (0.9821 vs 0.7168 / 0.648) and *stable* (five seeds within 0.9745\u20130.9847),",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s343_L1.wrong"
+  },
+  {
+   "line": 43,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "is both better (0.9821 vs 0.7168 / 0.648) and *stable* (five seeds within 0.9745\u20130.9847),",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s343_bridge.bridge"
+  },
+  {
+   "line": 44,
+   "token": "0.3622",
+   "value": 0.3622,
+   "decimals": 4,
+   "context": "while wrong-donor correction is erratic (llama_1b spans 0.3622 to 0.9056 across seeds; gemma",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1001_L1.wrong"
+  },
+  {
+   "line": 44,
+   "token": "0.9056",
+   "value": 0.9056,
+   "decimals": 4,
+   "context": "while wrong-donor correction is erratic (llama_1b spans 0.3622 to 0.9056 across seeds; gemma",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1002_L1.wrong"
+  },
+  {
+   "line": 45,
+   "token": "0.5102",
+   "value": 0.5102,
+   "decimals": 4,
+   "context": "spans 0.5102 to 0.8316). Restoring the shared geometry gets you most of the way,",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1003_G.wrong"
+  },
+  {
+   "line": 45,
+   "token": "0.8316",
+   "value": 0.8316,
+   "decimals": 4,
+   "context": "spans 0.5102 to 0.8316). Restoring the shared geometry gets you most of the way,",
+   "status": "VERIFIED",
+   "receipt_ref": "b44_result.json:grid.k20_s1004_G.wrong"
+  }
+ ]
+}

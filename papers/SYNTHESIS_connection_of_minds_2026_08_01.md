@@ -69,6 +69,16 @@ can share a concept vocabulary, agree on relational structure, and remain mutual
 because of a causal difference two directions wide that human language has no word for. That —
 not any similarity score — is what "discovery strength" was measuring all along.
 
+One more control relocated the cause (`b44_result.json`): frames built by the identical
+construction from the *wrong* models — gemma_2b (another family) and llama_1b — also open the
+island (medians 0.7168 and 0.648 at k=20; every donor × seed clears the 0.30 floor), where
+random frames did nothing. So the bridge was never the reader's property: **the clique shares
+a common concept-frame geometry, and the island's barrier is chiefly qwen's private rotation
+away from it** — with a reader-specific residual that only the reader's own frame closes, and
+closes reliably (0.9745–0.9847 across all five seeds, against wrong-donor swings as wide as
+0.3622–0.9056). A shared cross-family geometry, deviation from which is causal, low-rank, and
+nameless — that is the island arc's final sentence.
+
 ## 4. What does not cross: control
 
 The same cleared map that reads at 0.586 was pointed the other way, twice — the second time at
