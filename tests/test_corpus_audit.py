@@ -62,3 +62,52 @@ def test_mutate_token_changes_a_digit():
     rng = random.Random(1)
     out = mutate_token("0.884", rng)
     assert out != "0.884" and len(out) == len("0.884")
+
+
+def test_cross_directory_receipt_resolves_by_sha(tmp_path):
+    """A receipt living in a SIBLING folder must resolve (sha-verified), not report missing.
+
+    Regression: corpus_audit resolved receipts only next to the doc, so a synthesis citing
+    arcs from several folders re-certified against a crippled receipt set and produced a
+    spurious OATH-FAILED on a document whose committed certificate is HELD. 38 documents in
+    the styxx corpus were affected.
+    """
+    import hashlib, json
+    from pathlib import Path
+    from styxx.corpus_audit import _resolve_receipts
+
+    (tmp_path / "arcA").mkdir()
+    (tmp_path / "arcB").mkdir()
+    receipt = tmp_path / "arcB" / "far_result.json"
+    receipt.write_text(json.dumps({"auc": 0.9}), encoding="utf-8")
+    sha = hashlib.sha256(receipt.read_bytes()).hexdigest()
+
+    cert_path = tmp_path / "arcA" / "DOC.certificate.json"
+    cert = {"receipts_sha256": {"far_result.json": sha}}
+    cert_path.write_text(json.dumps(cert), encoding="utf-8")
+
+    # without a search root: correctly reported missing (old behavior preserved)
+    paths, missing, drift = _resolve_receipts(cert_path, cert)
+    assert missing == ["far_result.json"] and not paths
+
+    # with a search root: resolves, sha-verified
+    paths, missing, drift = _resolve_receipts(cert_path, cert, search_root=tmp_path)
+    assert not missing and not drift and len(paths) == 1
+    assert paths[0].name == "far_result.json"
+
+
+def test_cross_directory_wrong_sha_does_not_resolve(tmp_path):
+    """A same-named file with DIFFERENT content must NOT satisfy the receipt — the search is
+    stricter than location-trust, not looser."""
+    import hashlib, json
+    from styxx.corpus_audit import _resolve_receipts
+
+    (tmp_path / "arcA").mkdir()
+    (tmp_path / "arcB").mkdir()
+    (tmp_path / "arcB" / "far_result.json").write_text('{"auc": 0.1}', encoding="utf-8")
+    cert_path = tmp_path / "arcA" / "DOC.certificate.json"
+    cert = {"receipts_sha256": {"far_result.json": hashlib.sha256(b'{"auc": 0.9}').hexdigest()}}
+    cert_path.write_text(json.dumps(cert), encoding="utf-8")
+
+    paths, missing, drift = _resolve_receipts(cert_path, cert, search_root=tmp_path)
+    assert missing == ["far_result.json"] and not paths

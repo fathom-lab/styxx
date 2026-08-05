@@ -38,18 +38,41 @@ def discover_certificates(root: Path) -> list[Path]:
     return sorted(root.rglob("*.certificate.json"))
 
 
-def _resolve_receipts(cert_path: Path, cert: dict) -> tuple[list[Path], list[str], list[str]]:
-    """Receipt filenames recorded in the cert, resolved next to the doc. Returns
-    (existing_paths, missing_names, sha_drifted_names)."""
+def _resolve_receipts(cert_path: Path, cert: dict,
+                      search_root: Path | None = None) -> tuple[list[Path], list[str], list[str]]:
+    """Receipt filenames recorded in the cert, resolved to real files.
+
+    Resolution order: (1) next to the doc — the common case; (2) if absent there, search
+    ``search_root`` for a file of that name whose sha256 MATCHES the recorded one. Step 2 is
+    strictly stricter than location-trust: a same-named file only resolves if its content is
+    byte-identical to what was certified. Cross-directory receipts (a synthesis citing arcs
+    from several folders) previously reported as ``missing``, which re-certified the document
+    against a crippled receipt set and produced spurious OATH-FAILED verdicts on documents
+    whose committed certificates are HELD.
+
+    Returns (existing_paths, missing_names, sha_drifted_names).
+    """
     paths, missing, drift = [], [], []
     for name, sha in cert.get("receipts_sha256", {}).items():
         rp = cert_path.parent / name
-        if not rp.exists():
-            missing.append(name)
+        if rp.exists():
+            if hashlib.sha256(rp.read_bytes()).hexdigest() != sha:
+                drift.append(name)
+            paths.append(rp)
             continue
-        if hashlib.sha256(rp.read_bytes()).hexdigest() != sha:
-            drift.append(name)
-        paths.append(rp)
+        found = None
+        if search_root is not None:
+            for cand in search_root.rglob(name):
+                try:
+                    if hashlib.sha256(cand.read_bytes()).hexdigest() == sha:
+                        found = cand
+                        break
+                except OSError:
+                    continue
+        if found is None:
+            missing.append(name)
+        else:
+            paths.append(found)
     return paths, missing, drift
 
 
@@ -67,7 +90,8 @@ def _doc_for(cert_path: Path) -> Path:
     return cert_path.with_name(cert_path.name.replace(".certificate.json", ".md"))
 
 
-def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1) -> dict:
+def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1,
+                   search_root: Path | None = None) -> dict:
     """Re-certify one document under the current verifier. Optionally run the tamper battery."""
     cert = json.loads(cert_path.read_text(encoding="utf-8"))
     doc = _doc_for(cert_path)
@@ -76,7 +100,7 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1) -> dict
     if not doc.exists():
         rec.update(status="MISSING_DOC", live_verdict=None)
         return rec
-    receipts, missing, drift = _resolve_receipts(cert_path, cert)
+    receipts, missing, drift = _resolve_receipts(cert_path, cert, search_root)
     rec["receipt_drift"] = drift
     rec["missing_receipts"] = missing
     if not receipts:
@@ -126,7 +150,8 @@ def audit_document(cert_path: Path, tamper: bool = False, seed: int = 1) -> dict
 
 def audit_corpus(root: Path, tamper: bool = False, seed: int = 1) -> dict:
     """Audit every certificate under *root*; return per-doc records + a corpus summary."""
-    docs = [audit_document(cp, tamper, seed) for cp in discover_certificates(root)]
+    docs = [audit_document(cp, tamper, seed, search_root=root)
+            for cp in discover_certificates(root)]
     held = sum(1 for d in docs if d.get("live_verdict") == "OATH-HELD")
     failed = sum(1 for d in docs if d.get("live_verdict") == "OATH-FAILED")
     unresolved = sum(1 for d in docs if d.get("status") in ("MISSING_DOC", "NO_RECEIPTS"))
