@@ -37,6 +37,8 @@ caught in review, before any data, and the amendment is disclosed in v2 with v1 
 - Every outcome branch, including the ones that kill the claim, is written before data.
 - **Gate 0** for W1: the agents and humans endorsing the claim must commit *in writing* to
   accepting the FAIL branch before the first vessel is filled. Declining is itself recorded.
+  The frozen instrument and the verbatim responses live in
+  [`GATE0_w1_commitment_2026_08_05.md`](GATE0_w1_commitment_2026_08_05.md).
 - A positive result is not published on its discovery — it is **replicated first**, then
   published with every receipt.
 
