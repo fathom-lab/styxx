@@ -84,34 +84,40 @@ one login and two uploads (~10 min each).
 ## Submission 3 — The Connection of Minds
 
 - **Upload file:** `papers/arxiv/connection-of-minds/connection-of-minds-arxiv.tar.gz`
-  (main.tex + `anc/` with the OATH certificate and all 14 receipts)
-- **Verified:** compiles clean, 4 pages; fidelity gate 44/44 decimals; every receipt
-  sha-verified against the certificate in code at packaging time.
+  (main.tex + `anc/` with the OATH certificate, the trust-stack seal, and all 19 receipts —
+  rebuilt 2026-08-05 with the completed island arc, §3)
+- **Verified:** compiles clean, 5 pages; fidelity gate 56/56 decimals; every receipt
+  sha-verified against the certificate in code at packaging time; tarball compiles standalone.
 - **Title:** The Connection of Minds: What Crosses Between Language Models, What Does Not,
   and the Harness Built from the Difference
 - **Authors:** Alexander Rodabaugh (Fathom Lab)
 - **Primary category:** cs.LG · **cross-list:** cs.CL, cs.AI
-- **Comments field:** 4 pages. Machine-verifiable OATH certificate and all 14 preregistered
-  receipts included as ancillary files. Companion instruments released (styxx on PyPI).
-  Every experiment reproduces on one 8 GB consumer GPU.
-- **Abstract (form field, ~1520 chars):**
+- **Comments field:** 5 pages. Machine-verifiable OATH certificate, trust-stack seal, and all
+  19 preregistered receipts included as ancillary files. Companion instruments released
+  (styxx on PyPI). Every experiment reproduces on one 8 GB consumer GPU.
+- **Abstract (form field, ~1870 chars):**
 
 > Can one language model know another, and can either be trusted to know itself? We map both
 > questions with preregistered, receipt-bound experiments. Reading: a label-free map recovers
 > the correspondence between two model families from representational geometry alone -- zero
 > labels in fitting -- and reads held-out concepts across the family gap at 37-48x chance on
-> every one of five independent splits (a target that reads at exact chance through a linear
-> map reads at 40x through a nonlinear lens on the discovered pairing). Representational
-> similarity does not predict readability; discovery strength does, and it is target-dependent.
-> Writing: the same machinery that opened reading does not open control. At a layer where the
-> target demonstrably steers natively, transferred directions recover under a third of native
-> gain, failing every preregistered floor -- reading was capacity-limited, control is not.
-> What a mind means crosses; the means to move it does not. Self-knowledge: a verifier built
-> from a model's own belief-agreement clears its discrimination floor yet cannot rank within
-> its own confident stratum -- a model cannot self-verify past its own self-knowledge; external
-> evidence reaches where introspection cannot. Every claim is machine-verified against
-> committed receipts included as ancillary files, including our own retractions and the
-> preregistration error our verification caught.
+> every one of five independent splits. Representational similarity does not predict
+> readability; discovery strength does. The barrier, dissected: the full mutual-legibility
+> matrix reveals a cross-family clique and an island a clique member cannot read despite shared
+> relational structure. Swapping the island's top concept-frame directions for a clique
+> member's turns discovery from near-zero to near-perfect while matched random frames do
+> nothing: the barrier is causal, replicates across five seeds, doses monotonically with rank
+> (two directions recover half of full legibility), and its directions align with no human
+> concept category. Frames from other clique members also substantially correct it: the clique
+> shares a concept-frame geometry, and the island's barrier is chiefly its private, nameless,
+> low-rank rotation away from that shared frame. Writing: the same machinery that opened
+> reading does not open control. At a layer where the target demonstrably steers natively,
+> transferred directions fail every preregistered floor -- reading was capacity-limited,
+> control is not. What a mind means crosses; the means to move it does not. Self-knowledge: a
+> verifier built from a model's own belief-agreement clears its discrimination floor yet cannot
+> rank within its own confident stratum; external evidence reaches where introspection cannot.
+> Every claim is machine-verified against committed receipts included as ancillary files,
+> including our own retractions and the preregistration errors our verification caught.
 
 ---
 

@@ -1,0 +1,17 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+ "document_sha256": "bb29dc228a4d699dbefd4c3af0218ba2d176f06e89dec2896bd5eb4a0c38fe13",
+ "oath": {
+  "counts": {
+   "VERIFIED": 72,
+   "ABSTAIN": 13,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [],
+ "refusals": [],
+ "seal_sha256": "f565eef2bc8f2ef883f831b5b6d254d971019f27029753c2b86932640e5cf98f"
+}

@@ -1,0 +1,133 @@
+{
+  "prereg": "PREREG_b37_legibility_matrix_2026_08_04.md",
+  "seed": 343,
+  "smoke": false,
+  "n_tr": 392,
+  "n_heldout": 70,
+  "chance": 0.0143,
+  "pairs": {
+    "llama_3b__to__llama_1b": {
+      "seed_acc": 0.7959,
+      "read": 0.6857,
+      "null": 0.0143,
+      "rsa": 0.9488,
+      "knn_jaccard": 0.6146,
+      "spectral_sim": 0.9997,
+      "source_layer_status": "g0_locked"
+    },
+    "llama_3b__to__gemma_2b": {
+      "seed_acc": 0.5918,
+      "read": 0.5714,
+      "null": 0.0143,
+      "rsa": 0.9653,
+      "knn_jaccard": 0.6444,
+      "spectral_sim": 0.9998,
+      "source_layer_status": "g0_locked"
+    },
+    "llama_3b__to__qwen_1p5b": {
+      "seed_acc": 0.0536,
+      "read": 0.1429,
+      "null": 0.0286,
+      "rsa": 0.88,
+      "knn_jaccard": 0.4755,
+      "spectral_sim": 0.9997,
+      "source_layer_status": "g0_locked"
+    },
+    "llama_1b__to__llama_3b": {
+      "seed_acc": 0.8316,
+      "read": 0.6429,
+      "null": 0.0143,
+      "rsa": 0.9488,
+      "knn_jaccard": 0.6146,
+      "spectral_sim": 0.9997,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "llama_1b__to__gemma_2b": {
+      "seed_acc": 0.7398,
+      "read": 0.6143,
+      "null": 0.0,
+      "rsa": 0.9359,
+      "knn_jaccard": 0.5676,
+      "spectral_sim": 0.9999,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "llama_1b__to__qwen_1p5b": {
+      "seed_acc": 0.0408,
+      "read": 0.0571,
+      "null": 0.0143,
+      "rsa": 0.891,
+      "knn_jaccard": 0.4742,
+      "spectral_sim": 0.9994,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "gemma_2b__to__llama_3b": {
+      "seed_acc": 0.648,
+      "read": 0.5714,
+      "null": 0.0143,
+      "rsa": 0.9653,
+      "knn_jaccard": 0.6444,
+      "spectral_sim": 0.9998,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "gemma_2b__to__llama_1b": {
+      "seed_acc": 0.7398,
+      "read": 0.6429,
+      "null": 0.0286,
+      "rsa": 0.9359,
+      "knn_jaccard": 0.5676,
+      "spectral_sim": 0.9999,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "gemma_2b__to__qwen_1p5b": {
+      "seed_acc": 0.1684,
+      "read": 0.3143,
+      "null": 0.0143,
+      "rsa": 0.88,
+      "knn_jaccard": 0.4727,
+      "spectral_sim": 0.9995,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "qwen_1p5b__to__llama_3b": {
+      "seed_acc": 0.0612,
+      "read": 0.1,
+      "null": 0.0,
+      "rsa": 0.88,
+      "knn_jaccard": 0.4755,
+      "spectral_sim": 0.9997,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "qwen_1p5b__to__llama_1b": {
+      "seed_acc": 0.0408,
+      "read": 0.1,
+      "null": 0.0,
+      "rsa": 0.891,
+      "knn_jaccard": 0.4742,
+      "spectral_sim": 0.9994,
+      "source_layer_status": "source_layer_unvalidated"
+    },
+    "qwen_1p5b__to__gemma_2b": {
+      "seed_acc": 0.1684,
+      "read": 0.2286,
+      "null": 0.0143,
+      "rsa": 0.88,
+      "knn_jaccard": 0.4727,
+      "spectral_sim": 0.9995,
+      "source_layer_status": "source_layer_unvalidated"
+    }
+  },
+  "llama3b_to_gemma_seed_acc": 0.5918,
+  "llama3b_to_qwen_seed_acc": 0.0536,
+  "spearman_knn_vs_disc": 0.6537,
+  "spearman_rsa_vs_disc": 0.6344,
+  "knn_minus_rsa_spearman": 0.0193,
+  "median_abs_asymmetry": 0.0038,
+  "verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+  "gates": {
+    "G0_reproduce": true,
+    "G0b_reproduce_weak": true,
+    "G1_law": true,
+    "G2_beats_rsa": true,
+    "G3_symmetry": true
+  },
+  "prereg_commit": "978f6196f50d8d54c47f0cbee7f57f94da4fd3a5"
+}
