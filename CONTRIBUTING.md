@@ -4,6 +4,28 @@ Thanks for thinking about contributing. styxx is an active research-backed proje
 and we take contributions from anyone — you don't need a PhD, just a runnable
 reproducer and a clean diff.
 
+## Where to start
+
+Three genuinely open problems, each with a clean success criterion:
+
+- **[#38 Replicate the mutual-legibility matrix](https://github.com/fathom-lab/styxx/issues/38)** —
+  one command, laptop CPU, no GPU, ~20 minutes. The extractions are committed; you reproduce (or
+  break) the clique/island topology. *Breaking it earns the same credit as confirming it.*
+- **[#39 Close the OATH trigger-recall gap](https://github.com/fathom-lab/styxx/issues/39)** —
+  the largest known hole in our own verifier, with the measurement of its size and the history of
+  two failed fixes.
+- **[#40 A direction-sensitive cross-model discovery method](https://github.com/fathom-lab/styxx/issues/40)** —
+  an open research problem nobody has solved; the data is committed and CPU-only.
+
+Replicating a published result is a first-class contribution here — see
+[REPLICATIONS.md](REPLICATIONS.md), where the first independent re-run of each target earns a
+named credit line.
+
+**One rule specific to this repo:** any change to `styxx/certify.py` (the claim verifier) requires
+its own preregistration with frozen bars, committed *before* the mutant battery runs. That
+discipline is why the verifier can be trusted; see `papers/closed-model-frontier/PREREG_oath_v06*`
+for the shape.
+
 ## Ground rules
 
 - **Be kind.** This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md).
