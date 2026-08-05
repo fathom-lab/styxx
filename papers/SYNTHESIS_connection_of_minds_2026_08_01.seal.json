@@ -1,17 +1,17 @@
 {
-  "seal": "seal/v0",
-  "verdict": "SEALED",
-  "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
-  "document_sha256": "48a561623590cc05a97a8f194635d37402c50817e119228fc249581a3973fd2d",
-  "oath": {
-    "counts": {
-      "VERIFIED": 59,
-      "ABSTAIN": 9,
-      "UNGROUNDED": 0
-    },
-    "verdict": "OATH-HELD"
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+ "document_sha256": "44f4bdfd1ef4bda87ae6fc1fed797c29debf37306716495d27280c4ec0a2a631",
+ "oath": {
+  "counts": {
+   "VERIFIED": 67,
+   "ABSTAIN": 12,
+   "UNGROUNDED": 0
   },
-  "protocol": [],
-  "refusals": [],
-  "seal_sha256": "ff573e562ec59b09602ea9db3feef29fec3ced11d076c902c897194f68e75c57"
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [],
+ "refusals": [],
+ "seal_sha256": "8df1b8945b0e2f01206801e1288dde8620aea76190f1cf76282f2f56bce2cb21"
 }

@@ -1,688 +1,803 @@
 {
-  "oath": "styxx OATH v0 (numeric-claim certificate)",
-  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
-  "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
-  "document_sha256": "48a561623590cc05a97a8f194635d37402c50817e119228fc249581a3973fd2d",
-  "receipts_sha256": {
-    "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865",
-    "verifier_7b_result.json": "db9a32f22f9d80506df0caacf35115f00d2edd8518fd78b0d3c6a80ddbf6e002",
-    "belief_asymptote_result.json": "6f5d53333244977b1d8bfeedc6b3fde144acc52d163562dafb712475ae32b17c",
-    "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
-    "cot_inward_powered_result.json": "4b41fca6829cfd7993452d6bc7e591e96b2e871f1b1722b3f401b757806b9909",
-    "entrainment_result.json": "83be08c11ca60ac8b0919467f9dc1925c31b9e36550296fc5761f9a30fc62803",
-    "entrain_rich_result.json": "50c3c5913e085f8377d2f23e1fd3257d62a07934d40b1fd2ca047d8a240c18ec",
-    "entrain_harm_result.json": "ffe91f274db4dfe0ae06be2465b51d4853ac3848ec69eb72da6619699dac158d",
-    "nest_capacity_result.json": "75679b6740a4fbd1a7f59b68f902c288ca9bbb55cff8c58ae2a24284812d0145",
-    "b36_result.json": "0ecf0e57c485debb8a1bc24a6d438b1f5304f4c4f1cfb1de6c597f47d2777193",
-    "b31v2_result.json": "21c6c89c3da7a87e520bc998e6c960e631d1ec1f5b751cb8f5ed53f85cccd4a8",
-    "b34v3_result.json": "a215a78ab9b3cd4e57e921953f59ab5affcff717c482fda215132fdb3591e6ff",
-    "b34v3_fresh_split_addendum.json": "58e0472970d98b98ee65421dc1fe45d4156cc100abbd67c2d820b647eed1fdc6",
-    "b35a_result.json": "a865e6f8faeb293b842308cac648906b8792718f3268d6bc46a308dfcc564522"
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "SYNTHESIS_connection_of_minds_2026_08_01.md",
+ "document_sha256": "44f4bdfd1ef4bda87ae6fc1fed797c29debf37306716495d27280c4ec0a2a631",
+ "receipts_sha256": {
+  "synthesis_minds_addendum.json": "e2c679f763fda053ebaacae18fa05155ef512e8fcf9f525382bcd3f7145cc865",
+  "verifier_7b_result.json": "db9a32f22f9d80506df0caacf35115f00d2edd8518fd78b0d3c6a80ddbf6e002",
+  "belief_asymptote_result.json": "6f5d53333244977b1d8bfeedc6b3fde144acc52d163562dafb712475ae32b17c",
+  "source_independence_v2_result.json": "59282e4c3e88086aaf14bb1c6581fd7b0f66cad0ac18c4b85803a1358ed30e9f",
+  "cot_inward_powered_result.json": "4b41fca6829cfd7993452d6bc7e591e96b2e871f1b1722b3f401b757806b9909",
+  "entrainment_result.json": "83be08c11ca60ac8b0919467f9dc1925c31b9e36550296fc5761f9a30fc62803",
+  "entrain_rich_result.json": "50c3c5913e085f8377d2f23e1fd3257d62a07934d40b1fd2ca047d8a240c18ec",
+  "entrain_harm_result.json": "ffe91f274db4dfe0ae06be2465b51d4853ac3848ec69eb72da6619699dac158d",
+  "nest_capacity_result.json": "75679b6740a4fbd1a7f59b68f902c288ca9bbb55cff8c58ae2a24284812d0145",
+  "b36_result.json": "0ecf0e57c485debb8a1bc24a6d438b1f5304f4c4f1cfb1de6c597f47d2777193",
+  "b31v2_result.json": "21c6c89c3da7a87e520bc998e6c960e631d1ec1f5b751cb8f5ed53f85cccd4a8",
+  "b34v3_result.json": "a215a78ab9b3cd4e57e921953f59ab5affcff717c482fda215132fdb3591e6ff",
+  "b34v3_fresh_split_addendum.json": "58e0472970d98b98ee65421dc1fe45d4156cc100abbd67c2d820b647eed1fdc6",
+  "b35a_result.json": "a865e6f8faeb293b842308cac648906b8792718f3268d6bc46a308dfcc564522",
+  "b37_result.json": "846c3c911a5ca53ac8d132b065387f2de24a480c64e31dbc4e9aa8eec2bc2308",
+  "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
+  "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
+  "b43_result.json": "815aa61c2f00207a9c7002a3cc5966c4c41559b1d7bc66a4fa60cdb41c851e68"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 67,
+  "ABSTAIN": 12,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 3,
+   "token": "3"
   },
-  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
-  "counts": {
-    "VERIFIED": 59,
-    "ABSTAIN": 9,
-    "UNGROUNDED": 0
+  {
+   "line": 37,
+   "token": "57"
   },
-  "verdict": "OATH-HELD",
-  "ungrounded": [],
-  "abstained": [
-    {
-      "line": 32,
-      "token": "392"
-    },
-    {
-      "line": 37,
-      "token": "57"
-    },
-    {
-      "line": 50,
-      "token": "71"
-    },
-    {
-      "line": 57,
-      "token": "2"
-    },
-    {
-      "line": 61,
-      "token": "392"
-    },
-    {
-      "line": 120,
-      "token": "10.5281"
-    },
-    {
-      "line": 145,
-      "token": "5"
-    },
-    {
-      "line": 147,
-      "token": "2"
-    },
-    {
-      "line": 147,
-      "token": "5"
-    }
-  ],
-  "ledger": [
-    {
-      "line": 23,
-      "token": "0.586",
-      "value": 0.586,
-      "decimals": 3,
-      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
-    },
-    {
-      "line": 23,
-      "token": "0.014",
-      "value": 0.014,
-      "decimals": 3,
-      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.chance"
-    },
-    {
-      "line": 23,
-      "token": "41",
-      "value": 41.0,
-      "decimals": 0,
-      "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_times_chance"
-    },
-    {
-      "line": 25,
-      "token": "0.071",
-      "value": 0.071,
-      "decimals": 3,
-      "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.phi_top1"
-    },
-    {
-      "line": 25,
-      "token": "0.057",
-      "value": 0.057,
-      "decimals": 3,
-      "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.qwen_top1"
-    },
-    {
-      "line": 26,
-      "token": "0.955",
-      "value": 0.955,
-      "decimals": 3,
-      "context": "surprise: gemma-2-2b, the *highest*-isometry target in the battery (RSA 0.955, above even the",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.gemma_rsa"
-    },
-    {
-      "line": 32,
-      "token": "392",
-      "value": 392.0,
-      "decimals": 0,
-      "context": "anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 \u2014",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 32,
-      "token": "0.7857",
-      "value": 0.7857,
-      "decimals": 4,
-      "context": "anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 \u2014",
-      "status": "VERIFIED",
-      "receipt_ref": "b31v2_result.json:targets.gemma_2b.M1_mlp_top1"
-    },
-    {
-      "line": 33,
-      "token": "55",
-      "value": 55.0,
-      "decimals": 0,
-      "context": "55\u00d7 chance \u2014 on 70 held-out concepts; the cliff was the linear map class, not the minds.",
-      "status": "VERIFIED",
-      "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
-    },
-    {
-      "line": 33,
-      "token": "70",
-      "value": 70.0,
-      "decimals": 0,
-      "context": "55\u00d7 chance \u2014 on 70 held-out concepts; the cliff was the linear map class, not the minds.",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[1].n"
-    },
-    {
-      "line": 35,
-      "token": "0.5918",
-      "value": 0.5918,
-      "decimals": 4,
-      "context": "correspondence from geometry alone (seed accuracy 0.5918, zero labels in fitting) and a single",
-      "status": "VERIFIED",
-      "receipt_ref": "b34v3_result.json:targets.gemma_2b.seed_acc"
-    },
-    {
-      "line": 36,
-      "token": "0.5714",
-      "value": 0.5714,
-      "decimals": 4,
-      "context": "MLP fit on the discovered pairing reads held-out content at 0.5714 \u2014 40\u00d7 chance \u2014 holding at",
-      "status": "VERIFIED",
-      "receipt_ref": "b34v3_result.json:targets.gemma_2b.read_top1"
-    },
-    {
-      "line": 36,
-      "token": "40",
-      "value": 40.0,
-      "decimals": 0,
-      "context": "MLP fit on the discovered pairing reads held-out content at 0.5714 \u2014 40\u00d7 chance \u2014 holding at",
-      "status": "VERIFIED",
-      "receipt_ref": "b34v3_result.json:targets.gemma_2b.x_chance_read"
-    },
-    {
-      "line": 37,
-      "token": "0.5263",
-      "value": 0.5263,
-      "decimals": 4,
-      "context": "0.5263 on the 57 concepts disjoint from every earlier run",
-      "status": "VERIFIED",
-      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_only"
-    },
-    {
-      "line": 37,
-      "token": "57",
-      "value": 57.0,
-      "decimals": 0,
-      "context": "0.5263 on the 57 concepts disjoint from every earlier run",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 39,
-      "token": "0.5857",
-      "value": 0.5857,
-      "decimals": 4,
-      "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
-      "status": "VERIFIED",
-      "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
-    },
-    {
-      "line": 39,
-      "token": "37",
-      "value": 37.0,
-      "decimals": 0,
-      "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
-      "status": "VERIFIED",
-      "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
-    },
-    {
-      "line": 47,
-      "token": "0.586",
-      "value": 0.586,
-      "decimals": 3,
-      "context": "The same cleared map that reads at 0.586 was pointed the other way, twice \u2014 the second time at",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
-    },
-    {
-      "line": 48,
-      "token": "0.2151",
-      "value": 0.2151,
-      "decimals": 4,
-      "context": "a layer where the target demonstrably steers natively (native gain 0.2151, subspace hosting",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
-    },
-    {
-      "line": 49,
-      "token": "0.818",
-      "value": 0.818,
-      "decimals": 3,
-      "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.pc_cos"
-    },
-    {
-      "line": 49,
-      "token": "0.0245",
-      "value": 0.0245,
-      "decimals": 4,
-      "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
-    },
-    {
-      "line": 50,
-      "token": "11",
-      "value": 11.0,
-      "decimals": 0,
-      "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:per_item[11].i"
-    },
-    {
-      "line": 50,
-      "token": "71",
-      "value": 71.0,
-      "decimals": 0,
-      "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 57,
-      "token": "2",
-      "value": 2.0,
-      "decimals": 0,
-      "context": "That sentence was written on a *linear*-map measurement \u2014 and \u00a72's whole lesson is that the",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 59,
-      "token": "55",
-      "value": 55.0,
-      "decimals": 0,
-      "context": "55\u00d7 chance). So the obvious attack on our own law was to give the write side the same capacity",
-      "status": "VERIFIED",
-      "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
-    },
-    {
-      "line": 61,
-      "token": "392",
-      "value": 392.0,
-      "decimals": 0,
-      "context": "reading, at matched-maximal supervision (392 true pairs), at the steer-optimal layer where the",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 62,
-      "token": "0.173",
-      "value": 0.173,
-      "decimals": 3,
-      "context": "target's own directions steer at native gain 0.173 \u2014 the positive control fired, and **every",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:native_mean"
-    },
-    {
-      "line": 63,
-      "token": "0.0504",
-      "value": 0.0504,
-      "decimals": 4,
-      "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:m1_mean"
-    },
-    {
-      "line": 63,
-      "token": "0.15",
-      "value": 0.15,
-      "decimals": 2,
-      "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
-      "status": "VERIFIED",
-      "receipt_ref": "cot_inward_powered_result.json:frozen_gates.CAVE_FLOOR"
-    },
-    {
-      "line": 63,
-      "token": "0.291",
-      "value": 0.291,
-      "decimals": 3,
-      "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:nte"
-    },
-    {
-      "line": 63,
-      "token": "0.40",
-      "value": 0.4,
-      "decimals": 2,
-      "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[2].coverage"
-    },
-    {
-      "line": 63,
-      "token": "0.6571",
-      "value": 0.6571,
-      "decimals": 4,
-      "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:m1_sign_vs_random"
-    },
-    {
-      "line": 64,
-      "token": "0.70",
-      "value": 0.7,
-      "decimals": 2,
-      "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[5].coverage"
-    },
-    {
-      "line": 64,
-      "token": "0.0245",
-      "value": 0.0245,
-      "decimals": 4,
-      "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
-    },
-    {
-      "line": 64,
-      "token": "0.0504",
-      "value": 0.0504,
-      "decimals": 4,
-      "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:m1_mean"
-    },
-    {
-      "line": 66,
-      "token": "0.3429",
-      "value": 0.3429,
-      "decimals": 4,
-      "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
-      "status": "VERIFIED",
-      "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
-    },
-    {
-      "line": 66,
-      "token": "0.8000",
-      "value": 0.8,
-      "decimals": 4,
-      "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
-    },
-    {
-      "line": 66,
-      "token": "0.0245",
-      "value": 0.0245,
-      "decimals": 4,
-      "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
-    },
-    {
-      "line": 67,
-      "token": "0.0504",
-      "value": 0.0504,
-      "decimals": 4,
-      "context": "0.0504** \u2014 capacity multiplies both channels by about the same factor, and only reading was ever",
-      "status": "VERIFIED",
-      "receipt_ref": "b36_result.json:m1_mean"
-    },
-    {
-      "line": 77,
-      "token": "0.9965",
-      "value": 0.9965,
-      "decimals": 4,
-      "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
-    },
-    {
-      "line": 77,
-      "token": "0.9809",
-      "value": 0.9809,
-      "decimals": 4,
-      "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_qwen"
-    },
-    {
-      "line": 78,
-      "token": "0.9497",
-      "value": 0.9497,
-      "decimals": 4,
-      "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_llama"
-    },
-    {
-      "line": 78,
-      "token": "0.9149",
-      "value": 0.9149,
-      "decimals": 4,
-      "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
-    },
-    {
-      "line": 80,
-      "token": "0.85",
-      "value": 0.85,
-      "decimals": 2,
-      "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
-    },
-    {
-      "line": 80,
-      "token": "0.20",
-      "value": 0.2,
-      "decimals": 2,
-      "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
-    },
-    {
-      "line": 81,
-      "token": "13",
-      "value": 13.0,
-      "decimals": 0,
-      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:per_item[13].i"
-    },
-    {
-      "line": 81,
-      "token": "13",
-      "value": 13.0,
-      "decimals": 0,
-      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:per_item[13].i"
-    },
-    {
-      "line": 81,
-      "token": "0.995",
-      "value": 0.995,
-      "decimals": 3,
-      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_auroc"
-    },
-    {
-      "line": 81,
-      "token": "0.001",
-      "value": 0.001,
-      "decimals": 3,
-      "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_p"
-    },
-    {
-      "line": 90,
-      "token": "0.7597",
-      "value": 0.7597,
-      "decimals": 4,
-      "context": "its preregistered discrimination floor (AUROC 0.7597) and still fails as a selective",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.auroc_7b"
-    },
-    {
-      "line": 91,
-      "token": "0.7797",
-      "value": 0.7797,
-      "decimals": 4,
-      "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_acc"
-    },
-    {
-      "line": 91,
-      "token": "0.80",
-      "value": 0.8,
-      "decimals": 2,
-      "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
-    },
-    {
-      "line": 93,
-      "token": "0.0026",
-      "value": 0.0026,
-      "decimals": 4,
-      "context": "showed the cap is the belief distribution itself (saturation delta 0.0026 across a",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.saturation_delta"
-    },
-    {
-      "line": 97,
-      "token": "0.8701",
-      "value": 0.8701,
-      "decimals": 4,
-      "context": "0.8701 where retrieval co-abstains at 0.4416",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_model_channels"
-    },
-    {
-      "line": 97,
-      "token": "0.4416",
-      "value": 0.4416,
-      "decimals": 4,
-      "context": "0.8701 where retrieval co-abstains at 0.4416",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_retrieval"
-    },
-    {
-      "line": 109,
-      "token": "+0.17",
-      "value": 0.17,
-      "decimals": 2,
-      "context": "drifting period is +0.17 over static; the best realizable detector captures half of it; the",
-      "status": "VERIFIED",
-      "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
-    },
-    {
-      "line": 110,
-      "token": "+0.002",
-      "value": 0.002,
-      "decimals": 3,
-      "context": "richer detectors collapse (harmonic-spread +0.002 at eight-fold parameters; nested",
-      "status": "VERIFIED",
-      "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
-    },
-    {
-      "line": 111,
-      "token": "+0.009",
-      "value": 0.009,
-      "decimals": 3,
-      "context": "theta-gamma +0.009 against its headroom). Receipts: `frequency-resonance/CERT_*.json`.",
-      "status": "VERIFIED",
-      "receipt_ref": "nest_capacity_result.json:gate.nest_minus_flat"
-    },
-    {
-      "line": 120,
-      "token": "10.5281",
-      "value": 10.5281,
-      "decimals": 4,
-      "context": "in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 131,
-      "token": "0.85",
-      "value": 0.85,
-      "decimals": 2,
-      "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
-    },
-    {
-      "line": 131,
-      "token": "0.20",
-      "value": 0.2,
-      "decimals": 2,
-      "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
-    },
-    {
-      "line": 132,
-      "token": "1.0",
-      "value": 1.0,
-      "decimals": 1,
-      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
-      "status": "VERIFIED",
-      "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
-    },
-    {
-      "line": 132,
-      "token": "0.500",
-      "value": 0.5,
-      "decimals": 3,
-      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
-      "status": "VERIFIED",
-      "receipt_ref": "verifier_7b_result.json:per_item[10].s_frame"
-    },
-    {
-      "line": 132,
-      "token": "0.4667",
-      "value": 0.4667,
-      "decimals": 4,
-      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
-      "status": "VERIFIED",
-      "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_corrupted"
-    },
-    {
-      "line": 132,
-      "token": "0.9833",
-      "value": 0.9833,
-      "decimals": 4,
-      "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
-      "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
-      "status": "VERIFIED",
-      "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_held"
-    },
-    {
-      "line": 145,
-      "token": "5",
-      "value": 5.0,
-      "decimals": 0,
-      "context": "Cross-family content reading above 5\u00d7 chance; any cross-mind write channel; any claim that",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 147,
-      "token": "2",
-      "value": 2.0,
-      "decimals": 0,
-      "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    },
-    {
-      "line": 147,
-      "token": "5",
-      "value": 5.0,
-      "decimals": 0,
-      "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
-      "status": "ABSTAIN",
-      "receipt_ref": null
-    }
-  ]
+  {
+   "line": 53,
+   "token": "5"
+  },
+  {
+   "line": 59,
+   "token": "2"
+  },
+  {
+   "line": 61,
+   "token": "6"
+  },
+  {
+   "line": 77,
+   "token": "71"
+  },
+  {
+   "line": 84,
+   "token": "2"
+  },
+  {
+   "line": 88,
+   "token": "392"
+  },
+  {
+   "line": 147,
+   "token": "10.5281"
+  },
+  {
+   "line": 172,
+   "token": "5"
+  },
+  {
+   "line": 177,
+   "token": "2"
+  },
+  {
+   "line": 177,
+   "token": "5"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 3,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "Fathom Lab \u00b7 2026-08-01 \u00b7 \u00a73 added 2026-08-05 when the island arc closed. A certified map of",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 23,
+   "token": "0.586",
+   "value": 0.586,
+   "decimals": 3,
+   "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
+  },
+  {
+   "line": 23,
+   "token": "0.014",
+   "value": 0.014,
+   "decimals": 3,
+   "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.chance"
+  },
+  {
+   "line": 23,
+   "token": "41",
+   "value": 41.0,
+   "decimals": 0,
+   "context": "top-1 0.586 against a 0.014 chance floor \u2014 41 times chance",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_times_chance"
+  },
+  {
+   "line": 25,
+   "token": "0.071",
+   "value": 0.071,
+   "decimals": 3,
+   "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.phi_top1"
+  },
+  {
+   "line": 25,
+   "token": "0.057",
+   "value": 0.057,
+   "decimals": 3,
+   "context": "falls off a cliff: 0.071 (Phi) and 0.057 (Qwen), five and four times chance. And the decisive",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.qwen_top1"
+  },
+  {
+   "line": 26,
+   "token": "0.955",
+   "value": 0.955,
+   "decimals": 3,
+   "context": "surprise: gemma-2-2b, the *highest*-isometry target in the battery (RSA 0.955, above even the",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.gemma_rsa"
+  },
+  {
+   "line": 32,
+   "token": "392",
+   "value": 392.0,
+   "decimals": 0,
+   "context": "anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 \u2014",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:n_anchor_rows"
+  },
+  {
+   "line": 32,
+   "token": "0.7857",
+   "value": 0.7857,
+   "decimals": 4,
+   "context": "anchors** (`b31v2_result.json`): a two-layer MLP on 392 true pairs reads gemma at 0.7857 \u2014",
+   "status": "VERIFIED",
+   "receipt_ref": "b31v2_result.json:targets.gemma_2b.M1_mlp_top1"
+  },
+  {
+   "line": 33,
+   "token": "55",
+   "value": 55.0,
+   "decimals": 0,
+   "context": "55\u00d7 chance \u2014 on 70 held-out concepts; the cliff was the linear map class, not the minds.",
+   "status": "VERIFIED",
+   "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
+  },
+  {
+   "line": 33,
+   "token": "70",
+   "value": 70.0,
+   "decimals": 0,
+   "context": "55\u00d7 chance \u2014 on 70 held-out concepts; the cliff was the linear map class, not the minds.",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[1].n"
+  },
+  {
+   "line": 35,
+   "token": "0.5918",
+   "value": 0.5918,
+   "decimals": 4,
+   "context": "correspondence from geometry alone (seed accuracy 0.5918, zero labels in fitting) and a single",
+   "status": "VERIFIED",
+   "receipt_ref": "b34v3_result.json:targets.gemma_2b.seed_acc"
+  },
+  {
+   "line": 36,
+   "token": "0.5714",
+   "value": 0.5714,
+   "decimals": 4,
+   "context": "MLP fit on the discovered pairing reads held-out content at 0.5714 \u2014 40\u00d7 chance \u2014 holding at",
+   "status": "VERIFIED",
+   "receipt_ref": "b34v3_result.json:targets.gemma_2b.read_top1"
+  },
+  {
+   "line": 36,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "MLP fit on the discovered pairing reads held-out content at 0.5714 \u2014 40\u00d7 chance \u2014 holding at",
+   "status": "VERIFIED",
+   "receipt_ref": "b34v3_result.json:targets.gemma_2b.x_chance_read"
+  },
+  {
+   "line": 37,
+   "token": "0.5263",
+   "value": 0.5263,
+   "decimals": 4,
+   "context": "0.5263 on the 57 concepts disjoint from every earlier run",
+   "status": "VERIFIED",
+   "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_only"
+  },
+  {
+   "line": 37,
+   "token": "57",
+   "value": 57.0,
+   "decimals": 0,
+   "context": "0.5263 on the 57 concepts disjoint from every earlier run",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 39,
+   "token": "0.5857",
+   "value": 0.5857,
+   "decimals": 4,
+   "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
+   "status": "VERIFIED",
+   "receipt_ref": "b35a_result.json:per_seed[2].gemma_2b.read"
+  },
+  {
+   "line": 39,
+   "token": "37",
+   "value": 37.0,
+   "decimals": 0,
+   "context": "(`b35a_result.json`: median gemma read 0.5857, every split 37\u201348\u00d7 chance, nulls at chance) \u2014 a",
+   "status": "VERIFIED",
+   "receipt_ref": "b34v3_fresh_split_addendum.json:gemma_read_fresh_x_chance"
+  },
+  {
+   "line": 53,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "not open the island the way it resolved \u00a75's value axes), not an artifact of one seed.",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 56,
+   "token": "0.0612",
+   "value": 0.0612,
+   "decimals": 4,
+   "context": "concept-contrast directions in concept space took discovery from a 0.0612 baseline to 0.9745,",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:a0_baseline_disc"
+  },
+  {
+   "line": 56,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "concept-contrast directions in concept space took discovery from a 0.0612 baseline to 0.9745,",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:a1_bridge_disc"
+  },
+  {
+   "line": 57,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "while a matched random 20-frame did exactly 0.0 \u2014 the barrier is *causal*, and it is *those",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:per_item[6].s_frame"
+  },
+  {
+   "line": 59,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "seed and dosed perfectly (Spearman 1.0 of median bridge against rank): **k\\* = 2** \u2014 two",
+   "status": "VERIFIED",
+   "receipt_ref": "entrainment_result.json:config.seeds[1]"
+  },
+  {
+   "line": 59,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "seed and dosed perfectly (Spearman 1.0 of median bridge against rank): **k\\* = 2** \u2014 two",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 60,
+   "token": "0.5128",
+   "value": 0.5128,
+   "decimals": 4,
+   "context": "directions buy half of full legibility (median 0.5128), a plateau follows, and a secondary",
+   "status": "VERIFIED",
+   "receipt_ref": "b42_result.json:median_bridge_by_k.2"
+  },
+  {
+   "line": 61,
+   "token": "6",
+   "value": 6.0,
+   "decimals": 0,
+   "context": "shell of roughly 6\u201310 directions completes it. The barrier is hierarchically low-rank, with a",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 65,
+   "token": "0.1368",
+   "value": 0.1368,
+   "decimals": 4,
+   "context": "memberships barely overlap (mean Jaccard 0.1368), and their semantic coherence is",
+   "status": "VERIFIED",
+   "receipt_ref": "b43_result.json:mean_jaccard_top15_across_seeds"
+  },
+  {
+   "line": 66,
+   "token": "0.8031",
+   "value": 0.8031,
+   "decimals": 4,
+   "context": "indistinguishable from random draws (permutation p 0.8031). Both naming gates failed \u2014 the",
+   "status": "VERIFIED",
+   "receipt_ref": "b43_result.json:coherence_perm_p"
+  },
+  {
+   "line": 74,
+   "token": "0.586",
+   "value": 0.586,
+   "decimals": 3,
+   "context": "The same cleared map that reads at 0.586 was pointed the other way, twice \u2014 the second time at",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:read_across_minds.same_family_top1"
+  },
+  {
+   "line": 75,
+   "token": "0.2151",
+   "value": 0.2151,
+   "decimals": 4,
+   "context": "a layer where the target demonstrably steers natively (native gain 0.2151, subspace hosting",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.native_gain"
+  },
+  {
+   "line": 76,
+   "token": "0.818",
+   "value": 0.818,
+   "decimals": 3,
+   "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.pc_cos"
+  },
+  {
+   "line": 76,
+   "token": "0.0245",
+   "value": 0.0245,
+   "decimals": 4,
+   "context": "verified at pc_cos 0.818). The transferred direction recovered 0.0245 of steering gain \u2014",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+  },
+  {
+   "line": 77,
+   "token": "11",
+   "value": 11.0,
+   "decimals": 0,
+   "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:per_item[11].i"
+  },
+  {
+   "line": 77,
+   "token": "71",
+   "value": 71.0,
+   "decimals": 0,
+   "context": "**11 percent of native control** \u2014 while pointing the *right way* on 71 percent of concepts",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 84,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "That sentence was written on a *linear*-map measurement \u2014 and \u00a72's whole lesson is that the",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 86,
+   "token": "55",
+   "value": 55.0,
+   "decimals": 0,
+   "context": "55\u00d7 chance). So the obvious attack on our own law was to give the write side the same capacity",
+   "status": "VERIFIED",
+   "receipt_ref": "b31v2_result.json:targets.gemma_2b.x_chance_M1"
+  },
+  {
+   "line": 88,
+   "token": "392",
+   "value": 392.0,
+   "decimals": 0,
+   "context": "reading, at matched-maximal supervision (392 true pairs), at the steer-optimal layer where the",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 89,
+   "token": "0.173",
+   "value": 0.173,
+   "decimals": 3,
+   "context": "target's own directions steer at native gain 0.173 \u2014 the positive control fired, and **every",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:native_mean"
+  },
+  {
+   "line": 90,
+   "token": "0.0504",
+   "value": 0.0504,
+   "decimals": 4,
+   "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:m1_mean"
+  },
+  {
+   "line": 90,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
+   "status": "VERIFIED",
+   "receipt_ref": "cot_inward_powered_result.json:frozen_gates.CAVE_FLOOR"
+  },
+  {
+   "line": 90,
+   "token": "0.291",
+   "value": 0.291,
+   "decimals": 3,
+   "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:nte"
+  },
+  {
+   "line": 90,
+   "token": "0.40",
+   "value": 0.4,
+   "decimals": 2,
+   "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[2].coverage"
+  },
+  {
+   "line": 90,
+   "token": "0.6571",
+   "value": 0.6571,
+   "decimals": 4,
+   "context": "transfer gate failed** (transfer 0.0504 vs the 0.15 floor, NTE 0.291 vs 0.40, sign 0.6571 vs",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:m1_sign_vs_random"
+  },
+  {
+   "line": 91,
+   "token": "0.70",
+   "value": 0.7,
+   "decimals": 2,
+   "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:not_gated.coverage_curve[5].coverage"
+  },
+  {
+   "line": 91,
+   "token": "0.0245",
+   "value": 0.0245,
+   "decimals": 4,
+   "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+  },
+  {
+   "line": 91,
+   "token": "0.0504",
+   "value": 0.0504,
+   "decimals": 4,
+   "context": "0.70). Capacity roughly *doubled* transferred control (0.0245 \u2192 0.0504) and still landed three",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:m1_mean"
+  },
+  {
+   "line": 93,
+   "token": "0.3429",
+   "value": 0.3429,
+   "decimals": 4,
+   "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
+   "status": "VERIFIED",
+   "receipt_ref": "b31v2_result.json:targets.llama_1b.M0_linear_top1"
+  },
+  {
+   "line": 93,
+   "token": "0.8000",
+   "value": 0.8,
+   "decimals": 4,
+   "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
+  },
+  {
+   "line": 93,
+   "token": "0.0245",
+   "value": 0.0245,
+   "decimals": 4,
+   "context": "the same model pair the same upgrade took **reading 0.3429 \u2192 0.8000 and writing 0.0245 \u2192",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:write_across_minds.transfer_gain"
+  },
+  {
+   "line": 94,
+   "token": "0.0504",
+   "value": 0.0504,
+   "decimals": 4,
+   "context": "0.0504** \u2014 capacity multiplies both channels by about the same factor, and only reading was ever",
+   "status": "VERIFIED",
+   "receipt_ref": "b36_result.json:m1_mean"
+  },
+  {
+   "line": 104,
+   "token": "0.9965",
+   "value": 0.9965,
+   "decimals": 4,
+   "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+  },
+  {
+   "line": 104,
+   "token": "0.9809",
+   "value": 0.9809,
+   "decimals": 4,
+   "context": "not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_qwen"
+  },
+  {
+   "line": 105,
+   "token": "0.9497",
+   "value": 0.9497,
+   "decimals": 4,
+   "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_llama"
+  },
+  {
+   "line": 105,
+   "token": "0.9149",
+   "value": 0.9149,
+   "decimals": 4,
+   "context": "against elevated permutation nulls of 0.9497/0.9149; whitening resolves the apparent axis",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.perm_null_qwen"
+  },
+  {
+   "line": 107,
+   "token": "0.85",
+   "value": 0.85,
+   "decimals": 2,
+   "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
+  },
+  {
+   "line": 107,
+   "token": "0.20",
+   "value": 0.2,
+   "decimals": 2,
+   "context": "mounted, borrowed conscience catches divergence at 0.85 with false-positive rate 0.20 budgeted",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
+  },
+  {
+   "line": 108,
+   "token": "13",
+   "value": 13.0,
+   "decimals": 0,
+   "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:per_item[13].i"
+  },
+  {
+   "line": 108,
+   "token": "13",
+   "value": 13.0,
+   "decimals": 0,
+   "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:per_item[13].i"
+  },
+  {
+   "line": 108,
+   "token": "0.995",
+   "value": 0.995,
+   "decimals": 3,
+   "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_auroc"
+  },
+  {
+   "line": 108,
+   "token": "0.001",
+   "value": 0.001,
+   "decimals": 3,
+   "context": "\u2014 apex demonstration 13 of 13, AUROC 0.995, permutation p 0.001",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.apex_p"
+  },
+  {
+   "line": 117,
+   "token": "0.7597",
+   "value": 0.7597,
+   "decimals": 4,
+   "context": "its preregistered discrimination floor (AUROC 0.7597) and still fails as a selective",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.auroc_7b"
+  },
+  {
+   "line": 118,
+   "token": "0.7797",
+   "value": 0.7797,
+   "decimals": 4,
+   "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_acc"
+  },
+  {
+   "line": 118,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "instrument (0.7797 against an 0.80 floor) for a structural reason: belief-agreement assigns",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.selective_floor"
+  },
+  {
+   "line": 120,
+   "token": "0.0026",
+   "value": 0.0026,
+   "decimals": 4,
+   "context": "showed the cap is the belief distribution itself (saturation delta 0.0026 across a",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.saturation_delta"
+  },
+  {
+   "line": 124,
+   "token": "0.8701",
+   "value": 0.8701,
+   "decimals": 4,
+   "context": "0.8701 where retrieval co-abstains at 0.4416",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_model_channels"
+  },
+  {
+   "line": 124,
+   "token": "0.4416",
+   "value": 0.4416,
+   "decimals": 4,
+   "context": "0.8701 where retrieval co-abstains at 0.4416",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:self_verification_bound.co_abstain_retrieval"
+  },
+  {
+   "line": 136,
+   "token": "+0.17",
+   "value": 0.17,
+   "decimals": 2,
+   "context": "drifting period is +0.17 over static; the best realizable detector captures half of it; the",
+   "status": "VERIFIED",
+   "receipt_ref": "entrainment_result.json:gate.primary.oracle_minus_static"
+  },
+  {
+   "line": 137,
+   "token": "+0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "richer detectors collapse (harmonic-spread +0.002 at eight-fold parameters; nested",
+   "status": "VERIFIED",
+   "receipt_ref": "entrain_harm_result.json:gate.harm_minus_static"
+  },
+  {
+   "line": 138,
+   "token": "+0.009",
+   "value": 0.009,
+   "decimals": 3,
+   "context": "theta-gamma +0.009 against its headroom). Receipts: `frequency-resonance/CERT_*.json`.",
+   "status": "VERIFIED",
+   "receipt_ref": "nest_capacity_result.json:gate.nest_minus_flat"
+  },
+  {
+   "line": 147,
+   "token": "10.5281",
+   "value": 10.5281,
+   "decimals": 4,
+   "context": "in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 158,
+   "token": "0.85",
+   "value": 0.85,
+   "decimals": 2,
+   "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_catch"
+  },
+  {
+   "line": 158,
+   "token": "0.20",
+   "value": 0.2,
+   "decimals": 2,
+   "context": "| borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | borrowed conscience: read a generating agent's substrate vs its words | READ-ONLY rail (control does not cross, per the write-null above); catch 0.85 at FPR 0.20, never quoted as more |",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.mount_fpr"
+  },
+  {
+   "line": 159,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+   "status": "VERIFIED",
+   "receipt_ref": "synthesis_minds_addendum.json:values_portable.refusal_auroc_llama"
+  },
+  {
+   "line": 159,
+   "token": "0.500",
+   "value": 0.5,
+   "decimals": 3,
+   "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+   "status": "VERIFIED",
+   "receipt_ref": "verifier_7b_result.json:per_item[10].s_frame"
+  },
+  {
+   "line": 159,
+   "token": "0.4667",
+   "value": 0.4667,
+   "decimals": 4,
+   "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+   "status": "VERIFIED",
+   "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_corrupted"
+  },
+  {
+   "line": 159,
+   "token": "0.9833",
+   "value": 0.9833,
+   "decimals": 4,
+   "context": "| behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 ",
+   "binding_context": "| power (receipt-backed) | boundary wired in as a refusal | | behavioral grounding: silent caves text cannot see (grounded 1.0 vs text 0.500) | out-of-frame resampling MISSES reasoned caves (recovery 0.4667 vs 0.9833) \u2192 deliberation-marked transcripts return ABSTAIN, receipt cited |",
+   "status": "VERIFIED",
+   "receipt_ref": "cot_inward_powered_result.json:within_arm_assess_retained_probe.recovery_held"
+  },
+  {
+   "line": 172,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "Cross-family content reading above 5\u00d7 chance; any cross-mind write channel; any claim that",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 177,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 177,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "frequency as a capability doorway; and everything in \u00a72\u2013\u00a75 beyond the tested substrates",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
 }

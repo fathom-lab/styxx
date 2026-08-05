@@ -13,7 +13,7 @@ the same volume as positives.
 
 | arc | question | headline |
 |---|---|---|
-| [`disjoint-worlds/`](disjoint-worlds/) | **can one model read another?** | the mutual-legibility matrix: a cross-family legible clique and an illegible island; the barrier is real, causal, low-rank — and **below language** ([REPLICATE in one command](disjoint-worlds/REPLICATE_legibility.md)) |
+| [`disjoint-worlds/`](disjoint-worlds/) | **can one model read another?** | the mutual-legibility matrix: a cross-family legible clique and an illegible island; the barrier is real, causal, **rank-2 at its core (k\*=2, dosed across 5 seeds)** — and **below language** ([REPLICATE in one command](disjoint-worlds/REPLICATE_legibility.md)) |
 | [`agent-conscience/`](agent-conscience/) | **do models say what they know?** | the know-say gap: models abandon correct answers under content-free pressure; deliberation is armor for whatever was said first, not truth-seeking |
 | [`read-neq-write/`](read-neq-write/) · [`calib-poison-general/`](calib-poison-general/) | **can you edit a belief without breaking the mind?** | frame-locality as a dose at the weights; the probe-robustness ladder |
 | [`conscience-mount/`](conscience-mount/) · [`showcase-viz/`](showcase-viz/) | **can a borrowed value axis monitor another model?** | the portable conscience — read-only by construction, because control does not cross |

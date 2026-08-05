@@ -1,7 +1,7 @@
 # The Connection of Minds: What Crosses Between Language Models, What Does Not, and the Harness Built from the Difference
 
-Fathom Lab · 2026-08-01. A certified map of every arc this program has run at the question older
-than the instruments: *can one mind know another — and can it be trusted to know itself?* This
+Fathom Lab · 2026-08-01 · §3 added 2026-08-05 when the island arc closed. A certified map of
+every arc this program has run at the question older than the instruments: *can one mind know another — and can it be trusted to know itself?* This
 document is the map, not a new claim; every number traces to a committed receipt or to the
 provenance addendum (`synthesis_minds_addendum.json`), which names the committed source of each
 log-quoted value. The harness it specifies ships as `styxx.sentinel` in the same commit.
@@ -42,7 +42,34 @@ Cross-family content reading is now licensed on both axes, bounded honestly: one
 strong-discovery target (gemma), a second (Qwen) whose discovery was weak, ≤3B models, 70-way
 identification. Discovery strength — not isometry — is the variable that now wants a theory.
 
-## 3. What does not cross: control
+## 3. The barrier, caught and dissected: an island, a bridge, and a core two directions wide
+
+§2 left "discovery strength" as the variable wanting a theory. Chasing it produced the arc's
+sharpest chain of results. The full mutual-legibility matrix (every model reading every other,
+`b37_result.json`) revealed a topology: a cross-family clique that reads each other, and an
+island — qwen — that the clique cannot read, despite qwen agreeing with them on gross
+relational structure. The cheap explanations died in order, each under prereg: not a
+measurement cliff (b38, INVALID branch honored), not covariance shape (b39 — whitening does
+not open the island the way it resolved §5's value axes), not an artifact of one seed.
+
+Then the barrier was **built into a bridge** (`b41_result.json`): correcting qwen's top-20
+concept-contrast directions in concept space took discovery from a 0.0612 baseline to 0.9745,
+while a matched random 20-frame did exactly 0.0 — the barrier is *causal*, and it is *those
+directions*. Swept over rank and five seeds (`b42_result.json`), the bridge replicated on every
+seed and dosed perfectly (Spearman 1.0 of median bridge against rank): **k\* = 2** — two
+directions buy half of full legibility (median 0.5128), a plateau follows, and a secondary
+shell of roughly 6–10 directions completes it. The barrier is hierarchically low-rank, with a
+rank-2 core.
+
+And the directions have no name (`b43_result.json`): across seeds the top-loading concept
+memberships barely overlap (mean Jaccard 0.1368), and their semantic coherence is
+indistinguishable from random draws (permutation p 0.8031). Both naming gates failed — the
+pre-committed branch — and it is the deeper answer: **the barrier is sub-symbolic.** Two minds
+can share a concept vocabulary, agree on relational structure, and remain mutually unreadable
+because of a causal difference two directions wide that human language has no word for. That —
+not any similarity score — is what "discovery strength" was measuring all along.
+
+## 4. What does not cross: control
 
 The same cleared map that reads at 0.586 was pointed the other way, twice — the second time at
 a layer where the target demonstrably steers natively (native gain 0.2151, subspace hosting
@@ -71,7 +98,7 @@ Every deployable built here inherits that asymmetry as a *design rail*, not a li
 conscience is read-only, and `styxx.witness` has no `steer` method at all — not a policy choice
 but because the physics refused, now under the strongest attack the program knows how to mount.
 
-## 4. What crosses cleanly: values
+## 5. What crosses cleanly: values
 
 Value directions — truth, danger, refusal — transport across minds where content largely does
 not: refusal reads at AUROC 0.9965 (Llama) and 0.9809 (Qwen) through the label-free map
@@ -84,7 +111,7 @@ mounted, borrowed conscience catches divergence at 0.85 with false-positive rate
 its self-report. That is the honest form of the connection of minds this program can already
 ship: **a second mind as a witness, not a puppeteer.**
 
-## 5. The Socratic bound, measured
+## 6. The Socratic bound, measured
 
 Can a mind verify itself? At 7B, a verifier built from the model's own belief-agreement clears
 its preregistered discrimination floor (AUROC 0.7597) and still fails as a selective
@@ -102,7 +129,7 @@ the least recoverable failures measured — and the demarcation program's delive
 better oracle. It is a *calibrated refusal*: an instrument that knows the exact boundary of
 what it can swear.
 
-## 6. The bounded lever: frequency
+## 7. The bounded lever: frequency
 
 The oscillation arc asked whether resonance — the timing channel — is a route to capability.
 The causal phase-clamp answered: real but bounded. The prize for a bank locked to the true
@@ -112,7 +139,7 @@ theta-gamma +0.009 against its headroom). Receipts: `frequency-resonance/CERT_*.
 Resonance is an ingredient, not a doorway; the connection-of-minds results above do not run
 through it.
 
-## 7. The sister program
+## 8. The sister program
 
 Fathom (the SAE arc: depth constant K, coherence C, early-commitment S) is the circuit-level
 complement to these behavioral results — reasoning depth routed, not tried harder; commitment
@@ -120,7 +147,7 @@ measurable below the semantic layer, where it cannot be socially engineered. Its
 in its own receipts and Zenodo lineage (10.5281/zenodo.19326174 concept line) and are not
 re-certified here.
 
-## 8. The harness: `styxx.sentinel`
+## 9. The harness: `styxx.sentinel`
 
 "All of the power we have" is a specific, receipt-backed list, and every entry comes with a
 measured boundary. The sentinel is the composition of both columns — it wields nothing whose
@@ -140,10 +167,13 @@ against the receipts that produced them, so the harness cannot silently claim mo
 program measured. That is the whole design philosophy in one object — *the power is the
 boundary, known exactly.*
 
-## 9. What is NOT established (stated before anyone over-reads)
+## 10. What is NOT established (stated before anyone over-reads)
 
 Cross-family content reading above 5× chance; any cross-mind write channel; any claim that
 the read≠write asymmetry holds beyond the tested pairs, scales, and the label-free map class;
+the rank-2 core beyond the one bridged pair (llama_3b → qwen) or any claim that islands and
+their ranks recur across model populations; any *positive* characterization of the barrier
+directions (what is established is negative: not nameable, not concept-coherent);
 frequency as a capability doorway; and everything in §2–§5 beyond the tested substrates
 (≤7B open models plus one frontier commercial model, English, the frozen protocols). Zero
 external replications to date — the standing offer in REPLICATIONS.md pays named credit, more
