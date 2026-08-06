@@ -1,0 +1,222 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b45_frame_geometry_2026_08_06.md",
+ "document_sha256": "12ce9deddb4c51062b567154d2a4f769fe966b2c12452285eb434c2953ad23f1",
+ "receipts_sha256": {
+  "b45_result.json": "0ab5f5fe91913fee08f1cbe1167cf2af66bd80e98eb0864c550970610636a71d"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 11,
+  "ABSTAIN": 7,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "0.0"
+  },
+  {
+   "line": 14,
+   "token": "5"
+  },
+  {
+   "line": 14,
+   "token": "5"
+  },
+  {
+   "line": 14,
+   "token": "5"
+  },
+  {
+   "line": 22,
+   "token": "20"
+  },
+  {
+   "line": 22,
+   "token": "2"
+  },
+  {
+   "line": 37,
+   "token": "0.13"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G1_clique_frames_shared | median clique affinity - null 95th pct \u2265 0.0 | 0.7914 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_clique_frames_shared | median clique affinity - null 95th pct \u2265 0.0 | 0.7914 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.7914",
+   "value": 0.7914,
+   "decimals": 4,
+   "context": "| G1_clique_frames_shared | median clique affinity - null 95th pct \u2265 0.0 | 0.7914 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_clique_frames_shared | median clique affinity - null 95th pct \u2265 0.0 | 0.7914 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:clique_affinity_minus_null_p95_k20"
+  },
+  {
+   "line": 14,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_island_separated_all_seeds | qwen below clique in \u2265 5 of 5 seeds | 5 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 20,
+   "token": "0.051",
+   "value": 0.051,
+   "decimals": 3,
+   "context": "0.051 in expectation, 0.0566 at the 95th percentile.",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_expectation_k20"
+  },
+  {
+   "line": 20,
+   "token": "0.0566",
+   "value": 0.0566,
+   "decimals": 4,
+   "context": "0.051 in expectation, 0.0566 at the 95th percentile.",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_p95.20"
+  },
+  {
+   "line": 22,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "| pairing | k=20 median | k=2 median |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 22,
+   "token": "2",
+   "value": 2.0,
+   "decimals": 0,
+   "context": "| pairing | k=20 median | k=2 median |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 24,
+   "token": "0.848",
+   "value": 0.848,
+   "decimals": 3,
+   "context": "| clique \u2194 clique | 0.848 | 0.9257 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | clique \u2194 clique | 0.848 | 0.9257 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.llama_3b__gemma_2b_k20_s343"
+  },
+  {
+   "line": 24,
+   "token": "0.9257",
+   "value": 0.9257,
+   "decimals": 4,
+   "context": "| clique \u2194 clique | 0.848 | 0.9257 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | clique \u2194 clique | 0.848 | 0.9257 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.llama_3b__llama_1b_k2_s343"
+  },
+  {
+   "line": 25,
+   "token": "0.7166",
+   "value": 0.7166,
+   "decimals": 4,
+   "context": "| qwen \u2194 clique | 0.7166 | 0.8167 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | qwen \u2194 clique | 0.7166 | 0.8167 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.gemma_2b__qwen_1p5b_k20_s1002"
+  },
+  {
+   "line": 25,
+   "token": "0.8167",
+   "value": 0.8167,
+   "decimals": 4,
+   "context": "| qwen \u2194 clique | 0.7166 | 0.8167 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | qwen \u2194 clique | 0.7166 | 0.8167 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.llama_3b__qwen_1p5b_k2_s1003"
+  },
+  {
+   "line": 26,
+   "token": "0.0566",
+   "value": 0.0566,
+   "decimals": 4,
+   "context": "| random null (95th pct) | 0.0566 | 0.0117 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | random null (95th pct) | 0.0566 | 0.0117 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_p95.20"
+  },
+  {
+   "line": 26,
+   "token": "0.0117",
+   "value": 0.0117,
+   "decimals": 4,
+   "context": "| random null (95th pct) | 0.0566 | 0.0117 |",
+   "binding_context": "| pairing | k=20 median | k=2 median | | random null (95th pct) | 0.0566 | 0.0117 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_p95.2"
+  },
+  {
+   "line": 37,
+   "token": "0.13",
+   "value": 0.13,
+   "decimals": 2,
+   "context": "roughly 0.13 in squared-cosine mass at k=20. The island is not in another galaxy; it is a",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 40,
+   "token": "0.9257",
+   "value": 0.9257,
+   "decimals": 4,
+   "context": "(0.9257 vs 0.8167).",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.llama_3b__llama_1b_k2_s343"
+  },
+  {
+   "line": 40,
+   "token": "0.8167",
+   "value": 0.8167,
+   "decimals": 4,
+   "context": "(0.9257 vs 0.8167).",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.llama_3b__qwen_1p5b_k2_s1003"
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b45_frame_geometry_2026_08_06.md",
+ "document_sha256": "12ce9deddb4c51062b567154d2a4f769fe966b2c12452285eb434c2953ad23f1",
+ "oath": {
+  "counts": {
+   "VERIFIED": 11,
+   "ABSTAIN": 7,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b45_frame_geometry_2026_08_06.md",
+   "result": "b45_result.json",
+   "frozen_verdict": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+   "gates": {
+    "G1_clique_frames_shared": true,
+    "G2_island_separated_all_seeds": true
+   },
+   "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b",
+   "prereg_commit": "22ad3e2862409334b27e755a1e486bc7e48d41b3"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "491e85b6f33fd26d0930e86073a64b318001502fe0bb13d57029fbef9d5d8377"
+}
