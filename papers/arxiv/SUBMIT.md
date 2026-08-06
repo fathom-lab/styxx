@@ -84,16 +84,17 @@ one login and two uploads (~10 min each).
 ## Submission 3 — The Connection of Minds
 
 - **Upload file:** `papers/arxiv/connection-of-minds/connection-of-minds-arxiv.tar.gz`
-  (main.tex + `anc/` with the OATH certificate, the trust-stack seal, and all 19 receipts —
-  rebuilt 2026-08-05 with the completed island arc, §3)
-- **Verified:** compiles clean, 5 pages; fidelity gate 56/56 decimals; every receipt
+  (main.tex + `anc/` with the OATH certificate, the trust-stack seal, and all 21 receipts —
+  rebuilt 2026-08-06 with the island arc's full nine acts incl. the frame-geometry and
+  cliff-function capstones, §3)
+- **Verified:** compiles clean, 5 pages; fidelity gate 64/64 decimals; every receipt
   sha-verified against the certificate in code at packaging time; tarball compiles standalone.
 - **Title:** The Connection of Minds: What Crosses Between Language Models, What Does Not,
   and the Harness Built from the Difference
 - **Authors:** Alexander Rodabaugh (Fathom Lab)
 - **Primary category:** cs.LG · **cross-list:** cs.CL, cs.AI
 - **Comments field:** 5 pages. Machine-verifiable OATH certificate, trust-stack seal, and all
-  19 preregistered receipts included as ancillary files. Companion instruments released
+  21 preregistered receipts included as ancillary files. Companion instruments released
   (styxx on PyPI). Every experiment reproduces on one 8 GB consumer GPU.
 - **Abstract (form field, ~1870 chars):**
 

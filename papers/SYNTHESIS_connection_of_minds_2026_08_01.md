@@ -76,8 +76,17 @@ random frames did nothing. So the bridge was never the reader's property: **the 
 a common concept-frame geometry, and the island's barrier is chiefly qwen's private rotation
 away from it** — with a reader-specific residual that only the reader's own frame closes, and
 closes reliably (0.9745–0.9847 across all five seeds, against wrong-donor swings as wide as
-0.3622–0.9056). A shared cross-family geometry, deviation from which is causal, low-rank, and
-nameless — that is the island arc's final sentence.
+0.3622–0.9056). And the shared frame is directly visible as raw subspace geometry
+(`b45_result.json`): the clique's concept-frames co-align at 0.848 median squared-cosine mass
+against a 0.0566 random ceiling, with the island below the clique in every seed at 0.7166 —
+*mostly aligned, yet discovery-illegible*. The resolution is the shape of the legibility
+function itself (`b46_result.json`): interpolating the island's frame toward the reader's,
+discovery stays flat through most of the rotation (medians 0.0408 → 0.1122 → 0.3622) and
+turns nearly vertical only close to alignment (0.9566 at the knee, t½ = 0.8, transition width
+0.2). **Legibility is switch-like in the frame coordinate** — which is why slope measures
+like RSA never predicted readability anywhere in this arc, as a geometric necessity rather
+than a puzzle. A shared cross-family geometry; a deviation from it that is causal, rank-2 at
+its core, nameless, and switch-like — that is the island arc's final sentence.
 
 ## 4. What does not cross: control
 
