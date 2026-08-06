@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b47_no_islands_2026_08_06.md",
+ "document_sha256": "758c5a9e7a963f2ec2df66dc8b752e61c904efc84310967502e90b5627961b02",
+ "oath": {
+  "counts": {
+   "VERIFIED": 9,
+   "ABSTAIN": 6,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b47_eight_minds_2026_08_06.md",
+   "result": "b47_result.json",
+   "frozen_verdict": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+   "gates": {
+    "G0_cohort": true,
+    "G1_shared_frame": true,
+    "G2_islands_present": false
+   },
+   "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f",
+   "prereg_commit": "bf701ec9548320e582ecf7edc93815bcb420db50"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "ba376d7e3819a8f2e042ce175a9d0d93b32b2519935db89bdf4936e0c508d3b5"
+}

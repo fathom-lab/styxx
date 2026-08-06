@@ -2,17 +2,18 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "b1607c244e059ec053e398fcaf76763b6bbc9e1632fd19497db3d49efb4288f9",
+ "document_sha256": "32a718c68958b7c8f92078d71165d6d81a5fd189a45329b14c809bd40b74b165",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
   "b45_result.json": "0ab5f5fe91913fee08f1cbe1167cf2af66bd80e98eb0864c550970610636a71d",
-  "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07"
+  "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07",
+  "b47_result.json": "bd4df692c5ba2c2b31aca1c5c7e2b67ef7af8008a5f38eaf70c217fd67e7831f"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 13,
-  "ABSTAIN": 5,
+  "VERIFIED": 16,
+  "ABSTAIN": 6,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -37,6 +38,10 @@
   {
    "line": 83,
    "token": "8"
+  },
+  {
+   "line": 140,
+   "token": "0.05"
   }
  ],
  "ledger": [
@@ -199,6 +204,42 @@
    "value": 8.0,
    "decimals": 0,
    "context": "Ideally by someone else. This prediction is scoreable on any cohort of \u2265 8 subjects with",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 118,
+   "token": "0.6924",
+   "value": 0.6924,
+   "decimals": 4,
+   "context": "0.6924 vs a 0.227 random null), but a smooth affinity gradient rather than two clusters",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:pairwise.Llama-3.2-1B__Phi-3.5-mini"
+  },
+  {
+   "line": 118,
+   "token": "0.227",
+   "value": 0.227,
+   "decimals": 3,
+   "context": "0.6924 vs a 0.227 random null), but a smooth affinity gradient rather than two clusters",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:null.p95"
+  },
+  {
+   "line": 119,
+   "token": "0.7003",
+   "value": 0.7003,
+   "decimals": 4,
+   "context": "(gap-screen p 0.7003). B47's prereg declared before the run that this verdict would weaken this",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:bimodality_p"
+  },
+  {
+   "line": 140,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "**any documented unimodality test reported with its explicit null**, at p \u2264 0.05 on the",
    "status": "ABSTAIN",
    "receipt_ref": "spec-or-historical"
   }

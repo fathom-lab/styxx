@@ -1,0 +1,187 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b47_no_islands_2026_08_06.md",
+ "document_sha256": "758c5a9e7a963f2ec2df66dc8b752e61c904efc84310967502e90b5627961b02",
+ "receipts_sha256": {
+  "b47_result.json": "bd4df692c5ba2c2b31aca1c5c7e2b67ef7af8008a5f38eaf70c217fd67e7831f",
+  "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 9,
+  "ABSTAIN": 6,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 12,
+   "token": "8"
+  },
+  {
+   "line": 13,
+   "token": "0"
+  },
+  {
+   "line": 14,
+   "token": "0.05"
+  },
+  {
+   "line": 42,
+   "token": "0.8"
+  },
+  {
+   "line": 49,
+   "token": "45"
+  },
+  {
+   "line": 67,
+   "token": "20"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 12,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 members | 10 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 members | 10 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "10",
+   "value": 10.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 members | 10 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 members | 10 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:n_members"
+  },
+  {
+   "line": 13,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G1_shared_frame | cohort median - random-null p95 > 0 | 0.4654 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_shared_frame | cohort median - random-null p95 > 0 | 0.4654 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.4654",
+   "value": 0.4654,
+   "decimals": 4,
+   "context": "| G1_shared_frame | cohort median - random-null p95 > 0 | 0.4654 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_shared_frame | cohort median - random-null p95 > 0 | 0.4654 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:median_minus_null_p95"
+  },
+  {
+   "line": 14,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "| G2_islands_present | gap-screen p \u2264 0.05 | 0.7003 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_islands_present | gap-screen p \u2264 0.05 | 0.7003 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.7003",
+   "value": 0.7003,
+   "decimals": 4,
+   "context": "| G2_islands_present | gap-screen p \u2264 0.05 | 0.7003 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_islands_present | gap-screen p \u2264 0.05 | 0.7003 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:bimodality_p"
+  },
+  {
+   "line": 16,
+   "token": "0.6924",
+   "value": 0.6924,
+   "decimals": 4,
+   "context": "The cohort is real and it shares a frame emphatically \u2014 median pairwise affinity 0.6924 against",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:pairwise.Llama-3.2-1B__Phi-3.5-mini"
+  },
+  {
+   "line": 18,
+   "token": "0.6439",
+   "value": 0.6439,
+   "decimals": 4,
+   "context": "gradient**, not two clusters: 0.6439 (gpt2) to 0.7316 (Llama-3.2-3B), with nothing bimodal about",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:mean_affinity.gpt2"
+  },
+  {
+   "line": 18,
+   "token": "0.7316",
+   "value": 0.7316,
+   "decimals": 4,
+   "context": "gradient**, not two clusters: 0.6439 (gpt2) to 0.7316 (Llama-3.2-3B), with nothing bimodal about",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:mean_affinity.Llama-3.2-3B"
+  },
+  {
+   "line": 19,
+   "token": "0.6629",
+   "value": 0.6629,
+   "decimals": 4,
+   "context": "the distribution. The prereg's MAD rule does flag two candidates \u2014 Phi-3.5-mini at 0.6629 and",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:mean_affinity.Phi-3.5-mini"
+  },
+  {
+   "line": 20,
+   "token": "0.6439",
+   "value": 0.6439,
+   "decimals": 4,
+   "context": "gpt2 at 0.6439 \u2014 and the finding reports them because the prereg said it would, but the",
+   "status": "VERIFIED",
+   "receipt_ref": "b47_result.json:mean_affinity.gpt2"
+  },
+  {
+   "line": 42,
+   "token": "0.8",
+   "value": 0.8,
+   "decimals": 1,
+   "context": "rotation and turns nearly vertical only near alignment (knee t\u00bd = 0.8). A cohort whose affinities",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 43,
+   "token": "0.09",
+   "value": 0.09,
+   "decimals": 2,
+   "context": "vary smoothly across a 0.09 band can therefore still produce a **bimodal legibility",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.6_s1002"
+  },
+  {
+   "line": 49,
+   "token": "45",
+   "value": 45.0,
+   "decimals": 0,
+   "context": "untested here and would need discovery runs across all 45 pairs.",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 67,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "2026-06-10 for an unrelated purpose), one frame construction, k = 20, a single seed. A gap screen",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

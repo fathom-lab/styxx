@@ -110,6 +110,23 @@ answer we already knew, and it was removed rather than defaulted.
 its authors. If someone would rather score it themselves, the gates are already frozen, the
 instrument is one `pip install` away, and the machinery is [open](../../REPLICATIONS.md).
 
+## FIRST EVIDENCE IN — 2026-08-06, and it points against us
+
+Hours after this prediction was registered, its own precursor was tested and **failed**
+([B47](FINDING_b47_no_islands_2026_08_06.md)): a ten-model cohort over an independent
+96-concept battery shows **no island structure** — a shared frame, emphatically (median affinity
+0.6924 vs a 0.227 random null), but a smooth affinity gradient rather than two clusters
+(gap-screen p 0.7003). B47's prereg declared before the run that this verdict would weaken this
+prediction. It does, and the weakening is recorded here rather than left for a reader to find.
+
+**The narrow reading, which is the honest one:** B47 measured frame *affinity*; this prediction
+is about decoding *accuracy*. Our own b46 result says the two are related by a switch, so a
+smooth affinity gradient can still yield bimodal legibility if the knee falls inside the band.
+That distinction favours us — which is exactly why we treat it as a debt rather than a defence.
+Until the 45-pair discovery matrix is run, the prior on H1 should move **down**, and a reader
+scoring this prediction later should know that its authors' first attempt to support it produced
+a negative.
+
 ## ERRATUM — 2026-08-06, same day, before any scoring
 
 **The gate names a statistic our own shipped instrument does not compute.** `H1_islands` reads
