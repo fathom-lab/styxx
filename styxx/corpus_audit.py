@@ -34,8 +34,14 @@ __all__ = ["discover_certificates", "audit_document", "audit_corpus", "mutate_to
 
 
 def discover_certificates(root: Path) -> list[Path]:
-    """Every ``*.certificate.json`` under *root*, sorted."""
-    return sorted(root.rglob("*.certificate.json"))
+    """Every ``*.certificate.json`` under *root*, sorted.
+
+    Paths with an ``anc`` segment are skipped: arXiv submission staging mirrors the source
+    certificate into ``submission/anc/`` next to a renamed ``source.md`` that does not exist
+    on disk, so auditing those copies reports phantom MISSING_DOC entries for documents whose
+    canonical certificates are audited at their real location.
+    """
+    return sorted(p for p in root.rglob("*.certificate.json") if "anc" not in p.parts)
 
 
 def _resolve_receipts(cert_path: Path, cert: dict,

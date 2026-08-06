@@ -111,3 +111,21 @@ def test_cross_directory_wrong_sha_does_not_resolve(tmp_path):
 
     paths, missing, drift = _resolve_receipts(cert_path, cert, search_root=tmp_path)
     assert missing == ["far_result.json"] and not paths
+
+
+def test_anc_packaging_mirrors_are_skipped(tmp_path):
+    """arXiv staging mirrors a certificate into submission/anc/ beside a renamed source.md
+    that does not exist; auditing the mirror reported phantom MISSING_DOC. The discoverer
+    skips any path with an ``anc`` segment; canonical certificates elsewhere still audit."""
+    import json
+    from styxx.corpus_audit import discover_certificates
+
+    real = tmp_path / "arcA"
+    real.mkdir()
+    (real / "DOC.certificate.json").write_text("{}", encoding="utf-8")
+    mirror = tmp_path / "arxiv" / "paper" / "submission" / "anc"
+    mirror.mkdir(parents=True)
+    (mirror / "source.certificate.json").write_text("{}", encoding="utf-8")
+
+    found = discover_certificates(tmp_path)
+    assert [p.name for p in found] == ["DOC.certificate.json"]
