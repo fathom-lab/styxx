@@ -3,7 +3,7 @@
 **2026-06-12 · Fathom Lab / styxx. Pre-registered: `PREREG_mapped_whitening_2026_06_12.md` (frozen
 pre-run, committed 891b8fa). Receipt: `mapped_whitening_result.json`. Backlog B29. Cycle 5
 (`FINDING_truth_danger_basis_2026_06_12.md`) cleared the (truth × danger) basis in gemma and Qwen-3B but
-missed the primary Llama-3B by 0.0062 (c_truth_invariant_H = 0.6562 vs the 0.65 ceiling). This tests
+in that earlier run missed the primary Llama-3B (0.6562 against the 0.65 ceiling) (c_truth_invariant_H = 0.6562 vs the 0.65 ceiling). This tests
 whether the miss is a whitening-metric artifact or real geometry — and it is an artifact.**
 
 ## Result — re-whiten in the mapped metric and the miss clears, stably

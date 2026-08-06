@@ -60,7 +60,7 @@ seam. **Do not cite this as a truth detector.**
   form; **correlated confabulation and shared blind spots are far more likely within one
   vendor.** A cross-vendor council (key-blocked) is the strong test, and the one that
   would most threaten C1/C2.
-- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 0.50, 0.75, 1.0} with a
+- n = 6 / 8 / 8, single run, agreement quantized to {0.25, 2/4, 0.75, 1.0} with a
   4-model council (coarse).
 - Fakes here are moderately plausible; *more* plausible fakes (real-adjacent names) are
   the correlated-confabulation stress test.

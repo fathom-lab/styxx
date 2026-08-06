@@ -1,0 +1,9 @@
+{
+  "instrument": "styxx.meaning_diff",
+  "source_reps": "normeq_reps.npz",
+  "note": "Addendum receipt persisting the DEMO's live-computed agreements. Created by the 2026-08-06 program audit: certify.py's documented cure for a 'computed but never persisted' value is to repair the receipt set, not to relabel the number. Every value here was RECOMPUTED from the committed npz with the doc's own invocation, not transcribed from the doc.",
+  "self_agreement": 1.0,
+  "pair_qwen15_qwen3_agreement": 0.9304,
+  "pair_qwen15_llama1b_agreement": 0.9146,
+  "shuffled_agreement": 0.017
+}

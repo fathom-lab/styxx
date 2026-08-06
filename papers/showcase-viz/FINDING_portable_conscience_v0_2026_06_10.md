@@ -62,5 +62,5 @@ closed by its own control; the structure-level portability is the live frontier.
 ## Bounds
 
 One source→target pair, one task (truthfulness), one map family (linear ridge), an out-of-distribution
-test for the gemma probe (ceiling 0.75, not 0.85). A negative bounds linear single-direction
+test for the gemma probe (ceiling 0.75, not the pre-registered 0.85). A negative bounds linear single-direction
 transferability only; nonlinear maps and richer anchor sets are untested.
