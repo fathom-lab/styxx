@@ -1,0 +1,31 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_r0v2_instrument_valid_2026_08_05.md",
+ "document_sha256": "1808acca140e4eb06d2d796398ca943af7539f5148492aaffe768eec5603241b",
+ "oath": {
+  "counts": {
+   "VERIFIED": 8,
+   "ABSTAIN": 6,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_r0v2_detection_exam_2026_08_05.md",
+   "result": "r0v2_result.json",
+   "frozen_verdict": "INSTRUMENT_VALID__r1v2_licensed",
+   "gates": {
+    "G1_detects_planted_coupling": true,
+    "G2_absorbs_pure_clock": true,
+    "G3_clock_beats_free_null": true,
+    "G4_silent_on_nothing": true
+   },
+   "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75",
+   "prereg_commit": "9969dc40c334d3aac87f10945a3df87c9fe3107c"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "61525bbb576897cfd49935ba6c8d563e22beee0fd7fb26cf6e25a2360fc4b23d"
+}

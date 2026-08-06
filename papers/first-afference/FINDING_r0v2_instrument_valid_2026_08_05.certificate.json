@@ -1,0 +1,179 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_r0v2_instrument_valid_2026_08_05.md",
+ "document_sha256": "1808acca140e4eb06d2d796398ca943af7539f5148492aaffe768eec5603241b",
+ "receipts_sha256": {
+  "r0v2_result.json": "edac3d7dda15c6462dde13bc28471774440ea5fbc6eb1b160a25697318c867fd"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 8,
+  "ABSTAIN": 6,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 14,
+   "token": "0.01"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 16,
+   "token": "0.01"
+  },
+  {
+   "line": 17,
+   "token": "0.10"
+  },
+  {
+   "line": 28,
+   "token": "240"
+  },
+  {
+   "line": 45,
+   "token": "6"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 14,
+   "token": "0.01",
+   "value": 0.01,
+   "decimals": 2,
+   "context": "| G1_detects_planted_coupling | hour-matched p \u2264 0.01 | 0.002 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G1_detects_planted_coupling | hour-matched p \u2264 0.01 | 0.002 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "| G1_detects_planted_coupling | hour-matched p \u2264 0.01 | 0.002 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G1_detects_planted_coupling | hour-matched p \u2264 0.01 | 0.002 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.C_s11.hourmatched_p"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_absorbs_pure_clock | clock-world hour-matched p \u2265 0.10 | 0.4391 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G2_absorbs_pure_clock | clock-world hour-matched p \u2265 0.10 | 0.4391 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.4391",
+   "value": 0.4391,
+   "decimals": 4,
+   "context": "| G2_absorbs_pure_clock | clock-world hour-matched p \u2265 0.10 | 0.4391 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G2_absorbs_pure_clock | clock-world hour-matched p \u2265 0.10 | 0.4391 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.K_s13.hourmatched_p"
+  },
+  {
+   "line": 16,
+   "token": "0.01",
+   "value": 0.01,
+   "decimals": 2,
+   "context": "| G3_clock_beats_free_null | clock-world free p \u2264 0.01 | 0.002 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G3_clock_beats_free_null | clock-world free p \u2264 0.01 | 0.002 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 16,
+   "token": "0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "| G3_clock_beats_free_null | clock-world free p \u2264 0.01 | 0.002 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G3_clock_beats_free_null | clock-world free p \u2264 0.01 | 0.002 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.C_s11.hourmatched_p"
+  },
+  {
+   "line": 17,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G4_silent_on_nothing | nothing-world hour-matched p \u2265 0.10 | 0.5609 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G4_silent_on_nothing | nothing-world hour-matched p \u2265 0.10 | 0.5609 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 17,
+   "token": "0.5609",
+   "value": 0.5609,
+   "decimals": 4,
+   "context": "| G4_silent_on_nothing | nothing-world hour-matched p \u2265 0.10 | 0.5609 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured (median across seeds) | pass | | G4_silent_on_nothing | nothing-world hour-matched p \u2265 0.10 | 0.5609 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.N_s11.hourmatched_p"
+  },
+  {
+   "line": 20,
+   "token": "0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "pure-clock world is **maximally significant against the free null** (p 0.002 \u2014 the circadian",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.C_s11.hourmatched_p"
+  },
+  {
+   "line": 22,
+   "token": "0.4391",
+   "value": 0.4391,
+   "decimals": 4,
+   "context": "entirely** (p 0.4391). The licensing null does its one job.",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.K_s13.hourmatched_p"
+  },
+  {
+   "line": 27,
+   "token": "0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "(hour-matched p 0.002); the weakest just misses (p 0.0619). An R1-v2 null therefore reads",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:worlds.C_s11.hourmatched_p"
+  },
+  {
+   "line": 27,
+   "token": "0.0619",
+   "value": 0.0619,
+   "decimals": 4,
+   "context": "(hour-matched p 0.002); the weakest just misses (p 0.0619). An R1-v2 null therefore reads",
+   "status": "VERIFIED",
+   "receipt_ref": "r0v2_result.json:power_surface.0.1.hourmatched_p"
+  },
+  {
+   "line": 28,
+   "token": "240",
+   "value": 240.0,
+   "decimals": 0,
+   "context": "\"no coupling above this measured floor at n = 240,\" never \"no coupling.\"",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 45,
+   "token": "6",
+   "value": 6.0,
+   "decimals": 0,
+   "context": "hour-matched licensing null, the G0 coverage bar unchanged, and the roadmap's invariant 6 \u2014",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

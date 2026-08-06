@@ -1,0 +1,92 @@
+{
+  "prereg": "PREREG_r0v2_detection_exam_2026_08_05.md",
+  "smoke": false,
+  "n_bins": 240,
+  "n_perm": 500,
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "worlds": {
+    "C_s11": {
+      "rv": 0.6264,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    },
+    "K_s11": {
+      "rv": 0.2429,
+      "hourmatched_p": 0.7485,
+      "free_p": 0.002
+    },
+    "N_s11": {
+      "rv": 0.0144,
+      "hourmatched_p": 0.5609,
+      "free_p": 0.4511
+    },
+    "C_s12": {
+      "rv": 0.5933,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    },
+    "K_s12": {
+      "rv": 0.2196,
+      "hourmatched_p": 0.1178,
+      "free_p": 0.002
+    },
+    "N_s12": {
+      "rv": 0.0168,
+      "hourmatched_p": 0.3054,
+      "free_p": 0.3932
+    },
+    "C_s13": {
+      "rv": 0.6106,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    },
+    "K_s13": {
+      "rv": 0.2224,
+      "hourmatched_p": 0.4391,
+      "free_p": 0.002
+    },
+    "N_s13": {
+      "rv": 0.0156,
+      "hourmatched_p": 0.5669,
+      "free_p": 0.5329
+    }
+  },
+  "c_hourmatched_p": 0.002,
+  "k_hourmatched_p": 0.4391,
+  "k_free_p": 0.002,
+  "n_hourmatched_p": 0.5609,
+  "power_surface": {
+    "0.1": {
+      "rv": 0.8154,
+      "hourmatched_p": 0.0619,
+      "free_p": 0.002
+    },
+    "0.25": {
+      "rv": 0.7828,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    },
+    "0.5": {
+      "rv": 0.6979,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    },
+    "1.0": {
+      "rv": 0.6264,
+      "hourmatched_p": 0.002,
+      "free_p": 0.002
+    }
+  },
+  "verdict": "INSTRUMENT_VALID__r1v2_licensed",
+  "gates": {
+    "G1_detects_planted_coupling": true,
+    "G2_absorbs_pure_clock": true,
+    "G3_clock_beats_free_null": true,
+    "G4_silent_on_nothing": true
+  },
+  "prereg_commit": "9969dc40c334d3aac87f10945a3df87c9fe3107c"
+}
