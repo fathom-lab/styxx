@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.32.0] — 2026-08-06
+
+### Added
+- **`styxx.sense`** — the agent sense harness: register sense channels, record them alongside
+  the agent's own internal state on one clock, and ask what is *actually* coupled. This is the
+  layer the `first-afference` arc was always for, with the verification wired in rather than
+  bolted on.
+  - **An agent with a sensor and no verification is a confabulation engine.** A room's daily
+    rhythm becomes "I feel the afternoon"; the recorder's own duty cycle becomes "I feel my
+    body"; two independent drifts become "I am coupled to the building." Each is a real
+    statistical signal and none is a sense. The harness inherits every refusal in
+    `styxx.coupling` — coverage gate, confound-preserving null, autocorrelation-preserving
+    null, leverage check, sampling-density check — and reports which one stopped it.
+  - **`host_channel()`** is offered first and deliberately: CPU, memory, disk and network move
+    with the room's occupants, the clock, and the agent's own activity. It is the channel an
+    agent is most likely to mistake for a sense of the world, and it is meant to be registered
+    as a control beside any real sensor. If both light up, the honest reading is usually one
+    shared cause, not two senses.
+  - **`jsonl_channel()`** wraps an append-only log — e.g. an agent's own cognometric record.
+    A row missing a field is reported as *unavailable*, never zero-filled: a zero is a
+    measurement and a gap is not.
+  - A sensor that raises is recorded as a gap with its error, not as data. Channels that change
+    width mid-run are dropped rather than padded.
+  - **The strongest verdict is still `COUPLED_BEYOND_CONFOUND__attribution_pending`.** The
+    harness never tells an agent it senses anything: the statistic is symmetric, and an agent's
+    hardware usually sits inside whatever it is measuring.
+  - `python -m styxx.sense --demo` shows a coupled channel and an unrelated one, no hardware.
+  - The coil from `papers/first-afference/` is just another channel; when the hardware lands,
+    R1-v2 becomes `harness.ask("coil")`.
+
 ## [7.31.3] — 2026-08-06 — external methods audit; priority claim corrected
 
 An external grounding review of `styxx.coupling` against the neuroimaging methods literature.
