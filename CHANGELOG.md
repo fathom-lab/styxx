@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.31.0] — 2026-08-06
+
+### Added
+- **`styxx.coupling`** — one instrument for the question this program kept meeting in different
+  costumes: **mind ↔ mind**, **mind ↔ world**, **mind ↔ brain**. Two timestamped multivariate
+  streams, resampled to a shared grid, scored for dependence (RV coefficient) against a null
+  that **preserves the confound you are worried about**. Same machinery whether the streams are
+  two models' activations, an agent's telemetry and a room's spectrum, or a decoder's features
+  and a subject's neural recording.
+  - Validated on three synthetic worlds with known truth. The decisive one is the clock-only
+    world: a naive shuffle calls it significant (p 0.005) and the confound-matched null absorbs
+    it entirely (p 0.5224). That gap is where false discoveries live.
+  - **Every refusal is a scar from a published failure.** `INVALID__insufficient_overlap` (an
+    under-observed apparatus licenses nothing); the confound-matched null is the licensing null
+    and the free shuffle is a contrast only; `attribution_pending` is in the verdict *string*
+    because the statistic is symmetric and an agent's own hardware usually sits in the room it
+    measures; a null quotes `power_floor` and never says "no coupling".
+  - `python -m styxx.coupling --demo` runs the three-world exam in seconds, no data required.
+
 ## [7.30.0] — 2026-08-06
 
 ### Added
