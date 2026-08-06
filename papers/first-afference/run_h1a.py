@@ -54,7 +54,15 @@ def main() -> int:
 
     per_subj = {}
     for s in SUBJECTS:
-        per_subj[s] = subject_matrix(data, s, shared_mask, indices[s])
+        # Raw betas are deleted as they are consumed (disk hygiene: ~1.7 GB each). A subject
+        # already reduced to its shared-image matrix is loaded from that cache; the values are
+        # byte-identical to what subject_matrix() produced from the raw file.
+        cache = data / f"{s}_shared.npz"
+        if cache.exists():
+            z = np.load(cache)
+            per_subj[s] = {int(c): x for c, x in zip(z["coco"], z["X"])}
+        else:
+            per_subj[s] = subject_matrix(data, s, shared_mask, indices[s])
         print(f">> {s}: {len(per_subj[s])} shared images [{time.time()-t0:.0f}s]", flush=True)
 
     common = sorted(set.intersection(*(set(v) for v in per_subj.values())))
