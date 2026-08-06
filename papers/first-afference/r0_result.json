@@ -1,0 +1,128 @@
+{
+  "prereg": "PREREG_r0_instrument_validation_2026_08_05.md",
+  "smoke": false,
+  "n_bins": 240,
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "worlds": {
+    "C_s11": {
+      "n_paired_bins": 240,
+      "disc": 0.0167,
+      "hourmatched_null": 0.0083,
+      "free_null": 0.0,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0083,
+      "disc_minus_free_null": 0.0167,
+      "disc_over_chance_ratio": 4.0
+    },
+    "K_s11": {
+      "n_paired_bins": 240,
+      "disc": 0.0,
+      "hourmatched_null": 0.0,
+      "free_null": 0.0042,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0,
+      "disc_minus_free_null": -0.0042,
+      "disc_over_chance_ratio": 0.0
+    },
+    "N_s11": {
+      "n_paired_bins": 240,
+      "disc": 0.0042,
+      "hourmatched_null": 0.0042,
+      "free_null": 0.0,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0,
+      "disc_minus_free_null": 0.0042,
+      "disc_over_chance_ratio": 1.0
+    },
+    "C_s12": {
+      "n_paired_bins": 240,
+      "disc": 0.0125,
+      "hourmatched_null": 0.0042,
+      "free_null": 0.0083,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0083,
+      "disc_minus_free_null": 0.0042,
+      "disc_over_chance_ratio": 3.0
+    },
+    "K_s12": {
+      "n_paired_bins": 240,
+      "disc": 0.0,
+      "hourmatched_null": 0.0042,
+      "free_null": 0.0042,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": -0.0042,
+      "disc_minus_free_null": -0.0042,
+      "disc_over_chance_ratio": 0.0
+    },
+    "N_s12": {
+      "n_paired_bins": 240,
+      "disc": 0.0,
+      "hourmatched_null": 0.0083,
+      "free_null": 0.0,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": -0.0083,
+      "disc_minus_free_null": 0.0,
+      "disc_over_chance_ratio": 0.0
+    },
+    "C_s13": {
+      "n_paired_bins": 240,
+      "disc": 0.0208,
+      "hourmatched_null": 0.0,
+      "free_null": 0.0167,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0208,
+      "disc_minus_free_null": 0.0042,
+      "disc_over_chance_ratio": 5.0
+    },
+    "K_s13": {
+      "n_paired_bins": 240,
+      "disc": 0.0042,
+      "hourmatched_null": 0.0167,
+      "free_null": 0.0125,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": -0.0125,
+      "disc_minus_free_null": -0.0083,
+      "disc_over_chance_ratio": 1.0
+    },
+    "N_s13": {
+      "n_paired_bins": 240,
+      "disc": 0.0042,
+      "hourmatched_null": 0.0042,
+      "free_null": 0.0,
+      "chance": 0.0042,
+      "disc_minus_hourmatched_null": 0.0,
+      "disc_minus_free_null": 0.0042,
+      "disc_over_chance_ratio": 1.0
+    }
+  },
+  "c_disc_minus_hourmatched_null": 0.0083,
+  "k_disc_minus_hourmatched_null": -0.0042,
+  "k_disc_minus_free_null": -0.0042,
+  "n_disc_over_chance_ratio": 1.0,
+  "power_surface": {
+    "0.25": {
+      "disc_minus_hourmatched_null": -0.0083,
+      "disc": 0.0083
+    },
+    "0.5": {
+      "disc_minus_hourmatched_null": 0.0042,
+      "disc": 0.0042
+    },
+    "1.0": {
+      "disc_minus_hourmatched_null": 0.0083,
+      "disc": 0.0167
+    }
+  },
+  "verdict": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+  "gates": {
+    "G1_detects_planted_coupling": false,
+    "G2_absorbs_pure_clock": true,
+    "G3_clock_beats_free_null": false,
+    "G4_silent_on_nothing": true
+  },
+  "prereg_commit": "eb78bfd3b072942df9bd764864df2591e3af4926"
+}

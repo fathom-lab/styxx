@@ -1,0 +1,188 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_r0_instrument_blind_2026_08_05.md",
+ "document_sha256": "bd8498b8327f494cd1026a4985b68e7a78e8fc170a1231fe168908ef74e191a9",
+ "receipts_sha256": {
+  "r0_result.json": "699688887a27cf93fe5d3bb94ff0113251a014b676db28bbef6075d58fc187de"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 9,
+  "ABSTAIN": 6,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "0.10"
+  },
+  {
+   "line": 14,
+   "token": "0.05"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 16,
+   "token": "5.0"
+  },
+  {
+   "line": 27,
+   "token": "392"
+  },
+  {
+   "line": 29,
+   "token": "1"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G1_detects_planted_coupling | \u2265 0.10 | 0.0083 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_detects_planted_coupling | \u2265 0.10 | 0.0083 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0083",
+   "value": 0.0083,
+   "decimals": 4,
+   "context": "| G1_detects_planted_coupling | \u2265 0.10 | 0.0083 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_detects_planted_coupling | \u2265 0.10 | 0.0083 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.C_s11.hourmatched_null"
+  },
+  {
+   "line": 14,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "| G2_absorbs_pure_clock | \u2264 0.05 | -0.0042 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_absorbs_pure_clock | \u2264 0.05 | -0.0042 | (moot) |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "-0.0042",
+   "value": -0.0042,
+   "decimals": 4,
+   "context": "| G2_absorbs_pure_clock | \u2264 0.05 | -0.0042 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_absorbs_pure_clock | \u2264 0.05 | -0.0042 | (moot) |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.K_s11.disc_minus_free_null"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G3_clock_beats_free_null | \u2265 0.10 | -0.0042 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_clock_beats_free_null | \u2265 0.10 | -0.0042 | (moot) |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "-0.0042",
+   "value": -0.0042,
+   "decimals": 4,
+   "context": "| G3_clock_beats_free_null | \u2265 0.10 | -0.0042 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_clock_beats_free_null | \u2265 0.10 | -0.0042 | (moot) |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.K_s11.disc_minus_free_null"
+  },
+  {
+   "line": 16,
+   "token": "5.0",
+   "value": 5.0,
+   "decimals": 1,
+   "context": "| G4_silent_on_nothing | \u2264 5.0 | 1.0 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G4_silent_on_nothing | \u2264 5.0 | 1.0 | (moot) |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 16,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| G4_silent_on_nothing | \u2264 5.0 | 1.0 | (moot) |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G4_silent_on_nothing | \u2264 5.0 | 1.0 | (moot) |",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.N_s11.disc_over_chance_ratio"
+  },
+  {
+   "line": 19,
+   "token": "0.0167",
+   "value": 0.0167,
+   "decimals": 4,
+   "context": "signal-to-noise \u2014 discovery reached 0.0167 at best against a 0.0042 chance floor: four times",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.C_s11.disc"
+  },
+  {
+   "line": 19,
+   "token": "0.0042",
+   "value": 0.0042,
+   "decimals": 4,
+   "context": "signal-to-noise \u2014 discovery reached 0.0167 at best against a 0.0042 chance floor: four times",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.C_s11.chance"
+  },
+  {
+   "line": 21,
+   "token": "-0.0083",
+   "value": -0.0083,
+   "decimals": 4,
+   "context": "(margins -0.0083 / 0.0042 / 0.0083 from the weakest planted coupling to the strongest). The",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.N_s12.disc_minus_hourmatched_null"
+  },
+  {
+   "line": 21,
+   "token": "0.0042",
+   "value": 0.0042,
+   "decimals": 4,
+   "context": "(margins -0.0083 / 0.0042 / 0.0083 from the weakest planted coupling to the strongest). The",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.C_s11.chance"
+  },
+  {
+   "line": 21,
+   "token": "0.0083",
+   "value": 0.0083,
+   "decimals": 4,
+   "context": "(margins -0.0083 / 0.0042 / 0.0083 from the weakest planted coupling to the strongest). The",
+   "status": "VERIFIED",
+   "receipt_ref": "r0_result.json:worlds.C_s11.hourmatched_null"
+  },
+  {
+   "line": 27,
+   "token": "392",
+   "value": 392.0,
+   "decimals": 0,
+   "context": "The disjoint-worlds machinery identifies points in a cloud of **distinct concepts** \u2014 392",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 29,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "A resampled time series is not such a cloud. It is a **smooth trajectory**: the AR(1)",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

@@ -9,8 +9,10 @@ room."
 
 | rung | question | status | gate to next rung |
 |---|---|---|---|
-| **R0** — instrument exam | can the pipeline detect planted coupling, absorb a pure-clock confound, and stay silent on nothing — on synthetic worlds with known truth? | prereg frozen, running | `INSTRUMENT_VALID__r1_licensed` |
-| **R1** — first measurement | is the room's spectral state legible to darkflobi's internal state, beyond circadian? | prereg frozen; apparatus committed (`run_r1.py`); blocked on R0 + hardware | `ROOM_IS_LEGIBLE` → R2; `CIRCADIAN_ONLY` / `NOT_LEGIBLE` → S1 |
+| **R0** — instrument exam | can the pipeline detect planted coupling, absorb a pure-clock confound, and stay silent on nothing — on synthetic worlds with known truth? | **FAILED — `INSTRUMENT_BLIND`** ([finding](FINDING_r0_instrument_blind_2026_08_05.md)): exact-bin identification is unidentifiable on smooth trajectories; the exam caught it for three CPU-hours instead of a published false negative | superseded by R0-v2 |
+| **R0-v2** — redesigned exam | same three worlds, same honesty gates, **detection statistic** (paired-stream dependence vs the hour-matched permutation distribution) instead of exact-bin identification | prereg frozen | `INSTRUMENT_VALID__r1v2_licensed` |
+| **E0** — embodiment audit | the agent's **body** (the machine it runs on) is *in the room* and emits EM; can the coil hear darkflobi compute? Randomized compute-burst schedule, hash-committed, coil-band response tested against it | design named here; prereg when hardware nears | decides R1-v2's interpretation ceiling (see invariant 6) |
+| **R1-v2** — first measurement | is the room's state coupled to darkflobi's internal state, beyond circadian? | supersedes R1 pre-data once R0-v2 licenses (R1-v1 left frozen-and-superseded, W1-style) | positive → R2; null → S1 |
 | **R2** — replication | same verdict on a different window, different day? | designed at R1-close (window params only; machinery identical) | replicated → any public claim |
 | **S1** — stimulus-driven | deliberate acoustic events at *randomized* times: does the agent's state track events the clock cannot predict? | successor design; breaks the circadian confound by construction | the strongest form of the claim |
 
@@ -41,6 +43,16 @@ room."
 4. **A positive replicates (R2) before it is said in public.** Same rule as W1's.
 5. **The instrument is validated before it touches reality (R0), and its measured power floor
    is quoted in every null.**
+6. **Direction-blindness is stated, and the agent's body is a named confound.** Every
+   dependence statistic here is symmetric: a positive cannot distinguish "the agent's state
+   tracks the room" from "the room tracks the agent." And the second reading has a concrete
+   physical channel: darkflobi runs on a machine that is *in* the room — CPU load, PSU
+   switching, fans are all EM/acoustic emitters a coil can plausibly hear. If E0 finds the
+   machine audible, a coupling may mean **the coil hears the mind's body working** — which
+   would itself be a first (an agent's cognition physically registered by an independent
+   sensor), but must never be sold as the agent sensing the room. Controls, in preference
+   order: coil placement far from the tower; shielding; E0's burst-schedule regression as a
+   covariate; and honest relabeling of the finding if the channel cannot be removed.
 
 ## What runs when the hardware arrives (the first 10 days, concretely)
 
