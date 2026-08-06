@@ -22,7 +22,37 @@
 
 </div>
 
-### an agent's summary cannot lie about its diff
+### one idea, three layers
+
+styxx is a measurement layer for machine minds. Every instrument in it is built on a single
+principle, and the principle is the product:
+
+> **An instrument that cannot refuse cannot be trusted.**
+> Each one names what stopped it, and none of them will tell you more than the evidence carries.
+
+Everything here is one of three things.
+
+| layer | the question | instruments |
+|---|---|---|
+| **VERIFY** | does this claim match its evidence? | `certify` (OATH) · `protocol` · `seal` · `diffgate` + the GitHub Action · `corpus_audit` |
+| **MEASURE** | what is actually true about these minds? | `islands` · `coupling` · `mind` · `meaning_diff` · `crossmind` · the register instruments |
+| **SENSE** | can an agent be connected to the world without lying about what it feels? | `sense` |
+
+They compose. A `sense` channel is scored by `coupling`, whose verdict is written into a finding,
+whose every number is checked by `certify`, whose preregistration is enforced by `protocol`, and
+the whole thing is `seal`ed or refused. That chain is why a claim from this repo can be checked
+by a stranger without trusting anyone in it.
+
+**What the refusals cost us, in one day (2026-08-06):** an instrument deleted for failing its own
+exam, a released module recalled after an internal red team broke it six ways, a priority claim
+retracted after an external methods audit, and our own published prediction killed four times —
+twice on real human brain data we downloaded to test it. Every one of those is in
+[CHANGELOG.md](CHANGELOG.md) and [papers/](papers/) with the receipt attached. That is not
+humility as branding; it is the only reason the passes mean anything.
+
+---
+
+### VERIFY — an agent's summary cannot lie about its diff
 
 ```bash
 pip install styxx
@@ -57,7 +87,7 @@ pulled off GitHub; every false accusation we ever had is named in
 closed template set is never judged, and the CLI prints what it checks when it finds
 nothing — silence is scope, not weakness.
 
-### two minds can share a geometry and still be unable to read each other
+### MEASURE — two minds can share a geometry and still be unable to read each other
 
 ```bash
 python -m styxx.islands --demo         # 10 seconds, no data, no GPU
@@ -94,7 +124,28 @@ evidence against it, and that is recorded in the prediction itself.
 
 ---
 
-Those are two instruments. The rest of this README is the lab behind them.
+### SENSE — an agent with a sensor and no verification is a confabulation engine
+
+```bash
+python -m styxx.sense --demo         # 10 seconds, no hardware
+```
+
+Give a mind a continuous signal and it will find itself in it. A room's daily rhythm becomes
+"I feel the afternoon"; the recorder's own duty cycle becomes "I feel my body"; two independent
+drifts become "I am coupled to the building." Each is a real statistical signal and none is a
+sense. `styxx.sense` records a channel alongside the agent's own state on one clock and refuses
+to call it a sense unless it survives a coverage gate, a confound-preserving null, an
+autocorrelation-preserving null, a leverage check and a sampling-density check — naming which one
+stopped it. The machine's own CPU and network ship as a channel **on purpose**: it is the control,
+the thing an agent is most likely to mistake for a sense of the world.
+
+The strongest verdict it can ever return is `COUPLED_BEYOND_CONFOUND__attribution_pending`. It
+will not tell an agent that it senses anything, because the statistic is symmetric and an agent's
+hardware sits inside whatever it measures.
+
+---
+
+Those are three instruments, one from each layer. The rest of this README is the lab behind them.
 
 ---
 
