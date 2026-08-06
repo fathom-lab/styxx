@@ -63,8 +63,9 @@ room."
    in this repo (it can read the prereg — the *timestamps* of the scored window are what stay
    unannounced).
 3. Days 2–9: the joint observation window accrues toward G0's 200 paired bins.
-4. Day 9+: `python run_r1.py --room room_record.jsonl` — one command, one scored run, verdict
-   from the frozen table, certify + seal + cycle log regardless of branch.
+4. Day 9+: `python run_r1v2.py --room room_record.jsonl` — one command, one scored run,
+   verdict from the frozen table, certify + seal + cycle log regardless of branch. (E0's
+   burst-schedule audit slots between day 0 and day 2, while the baseline learns.)
 
 ## Owed, by whom
 
