@@ -1,0 +1,9 @@
+{
+  "source": "h1a_result.json",
+  "statistic": "Hartigan dip test (diptest package)",
+  "note": "Reference unimodality statistic run on the alignment vector, 2026-08-06. The frozen H1 gate names Hartigan's dip while styxx.islands ships a gap screen; this receipt records the reference statistic so the erratum is closed with a number rather than a caveat. Gates are unchanged.",
+  "n": 8,
+  "hartigan_dip_p": 0.6036,
+  "gap_screen_p": 0.0779,
+  "agree_on_unimodal": true
+}

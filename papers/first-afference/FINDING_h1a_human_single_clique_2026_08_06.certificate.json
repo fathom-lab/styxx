@@ -2,13 +2,14 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "FINDING_h1a_human_single_clique_2026_08_06.md",
- "document_sha256": "15778c66d6d30559480c76c7c2cf3a0eb5874c354602f225955e0055a1e29441",
+ "document_sha256": "4934a126403e9aff1886105914522df45152787c5930b420de17ec7e1f3858d0",
  "receipts_sha256": {
-  "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91"
+  "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91",
+  "h1a_diptest_addendum.json": "21533eae60747bf026bd62bfbc654c3e059c0fc21be3d2b900003484e2faf669"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 16,
+  "VERIFIED": 17,
   "ABSTAIN": 8,
   "UNGROUNDED": 0
  },
@@ -44,7 +45,7 @@
    "token": "0.1969"
   },
   {
-   "line": 62,
+   "line": 70,
    "token": "8"
   }
  ],
@@ -107,7 +108,7 @@
    "context": "| G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
    "binding_context": "| gate | frozen bar | measured | pass | | G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
    "status": "VERIFIED",
-   "receipt_ref": "h1a_result.json:bimodality_p"
+   "receipt_ref": "h1a_diptest_addendum.json:gap_screen_p"
   },
   {
    "line": 20,
@@ -224,7 +225,7 @@
    "decimals": 4,
    "context": "0.2575 in an unbroken spread, and the gap screen returns p 0.0779 \u2014 above the 0.05 bar the",
    "status": "VERIFIED",
-   "receipt_ref": "h1a_result.json:bimodality_p"
+   "receipt_ref": "h1a_diptest_addendum.json:gap_screen_p"
   },
   {
    "line": 34,
@@ -254,7 +255,16 @@
    "receipt_ref": null
   },
   {
-   "line": 62,
+   "line": 60,
+   "token": "0.6036",
+   "value": 0.6036,
+   "decimals": 4,
+   "context": "literature names \u2014 was run afterwards on the same vector and returns p 0.6036**, agreeing with",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_diptest_addendum.json:hartigan_dip_p"
+  },
+  {
+   "line": 70,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -263,7 +273,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 65,
+   "line": 73,
    "token": "0.0779",
    "value": 0.0779,
    "decimals": 4,

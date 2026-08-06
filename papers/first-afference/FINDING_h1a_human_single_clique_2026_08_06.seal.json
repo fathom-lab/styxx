@@ -2,10 +2,10 @@
  "seal": "seal/v0",
  "verdict": "SEALED",
  "document": "FINDING_h1a_human_single_clique_2026_08_06.md",
- "document_sha256": "15778c66d6d30559480c76c7c2cf3a0eb5874c354602f225955e0055a1e29441",
+ "document_sha256": "4934a126403e9aff1886105914522df45152787c5930b420de17ec7e1f3858d0",
  "oath": {
   "counts": {
-   "VERIFIED": 16,
+   "VERIFIED": 17,
    "ABSTAIN": 8,
    "UNGROUNDED": 0
   },
@@ -13,8 +13,8 @@
  },
  "protocol": [
   {
-   "prereg": "PREREG_h1a_human_alignment_2026_08_06.md",
-   "result": "h1a_result.json",
+   "prereg": "papers/first-afference/PREREG_h1a_human_alignment_2026_08_06.md",
+   "result": "papers/first-afference/h1a_result.json",
    "frozen_verdict": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
    "gates": {
     "G0_cohort": true,
@@ -26,5 +26,5 @@
   }
  ],
  "refusals": [],
- "seal_sha256": "c2c9bf6034bbda77eb750844755ba66830a881d739e3ef882bf9eacb6b003cf3"
+ "seal_sha256": "85c08fa567bf372ec16271c782adde2d2a4f2abb6b1b2c4bba9828d27356b034"
 }

@@ -269,4 +269,19 @@ worth publishing.
 This erratum changes no bar and no branch. It fixes a naming mismatch that would otherwise have
 let us claim a pass under whichever statistic happened to be kinder.
 
+**CLOSED, same day, with numbers rather than a caveat.** The reference statistic has now been run
+on both human cohorts alongside the screen. They agree on the conclusion, and the screen is the
+*more liberal* of the two — which means our non-flag is the stronger statement, not the weaker
+one:
+
+| cohort | gap screen | Hartigan's dip | agree |
+|---|---|---|---|
+| H1a alignment | 0.0779 | 0.6036 | unimodal |
+| H1b readability | 0.6523 | 0.7553 | unimodal |
+
+Had we scored H1 on the screen alone, the alignment result would have sat near the 0.05 bar and
+an unscrupulous reading could have called it borderline-suggestive. Hartigan's dip puts it at
+0.6036 — nowhere near. `styxx.islands.hartigan_dip_p` now exposes the reference statistic
+directly (optional `diptest` dependency), and receipts for both runs are committed.
+
 *A prediction registered before the data is worth more than an explanation offered after it.*

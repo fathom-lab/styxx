@@ -2,13 +2,14 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "FINDING_h1b_no_unreadable_minds_2026_08_06.md",
- "document_sha256": "f6b27b64b63a98f35ecc08c114f6d6c95e4432aefd42cdf01a46712084f7fb1e",
+ "document_sha256": "c56b603d52834b4f3b34bf1d32662aecbf3da1d560dd839cfd7a5aa0fa61dea7",
  "receipts_sha256": {
-  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2"
+  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2",
+  "h1b_diptest_addendum.json": "a130e072db35309be1c066ca70d257de61292be1468a9cd265a47579a2d9d211"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 12,
+  "VERIFIED": 13,
   "ABSTAIN": 16,
   "UNGROUNDED": 0
  },
@@ -72,11 +73,11 @@
    "token": "212"
   },
   {
-   "line": 66,
+   "line": 74,
    "token": "8"
   },
   {
-   "line": 82,
+   "line": 90,
    "token": "212"
   }
  ],
@@ -329,7 +330,16 @@
    "receipt_ref": "h1b_result.json:alignment_vs_readability.pearson_r"
   },
   {
-   "line": 66,
+   "line": 67,
+   "token": "0.7553",
+   "value": 0.7553,
+   "decimals": 4,
+   "context": "literature names \u2014 was run afterwards on the same vector and returns p 0.7553**, agreeing with",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_diptest_addendum.json:hartigan_dip_p"
+  },
+  {
+   "line": 74,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -338,7 +348,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 72,
+   "line": 80,
    "token": "0.8825",
    "value": 0.8825,
    "decimals": 4,
@@ -347,7 +357,7 @@
    "receipt_ref": "h1b_result.json:alignment_vs_readability.pearson_r"
   },
   {
-   "line": 82,
+   "line": 90,
    "token": "212",
    "value": 212.0,
    "decimals": 0,

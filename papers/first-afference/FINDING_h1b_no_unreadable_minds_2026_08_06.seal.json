@@ -2,10 +2,10 @@
  "seal": "seal/v0",
  "verdict": "SEALED",
  "document": "FINDING_h1b_no_unreadable_minds_2026_08_06.md",
- "document_sha256": "f6b27b64b63a98f35ecc08c114f6d6c95e4432aefd42cdf01a46712084f7fb1e",
+ "document_sha256": "c56b603d52834b4f3b34bf1d32662aecbf3da1d560dd839cfd7a5aa0fa61dea7",
  "oath": {
   "counts": {
-   "VERIFIED": 12,
+   "VERIFIED": 13,
    "ABSTAIN": 16,
    "UNGROUNDED": 0
   },
@@ -13,8 +13,8 @@
  },
  "protocol": [
   {
-   "prereg": "PREREG_h1b_human_readability_2026_08_06.md",
-   "result": "h1b_result.json",
+   "prereg": "papers/first-afference/PREREG_h1b_human_readability_2026_08_06.md",
+   "result": "papers/first-afference/h1b_result.json",
    "frozen_verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
    "gates": {
     "G0_cohort": true,
@@ -26,5 +26,5 @@
   }
  ],
  "refusals": [],
- "seal_sha256": "cfab4a1bb4bc700b2fa2b61a55d0a9126ff4494c99c029aa0c83349a4621961f"
+ "seal_sha256": "cda133d26d565832f90eeaa8ed0b1c100c0adca19731f9ddc2a67849f3d0e3bc"
 }

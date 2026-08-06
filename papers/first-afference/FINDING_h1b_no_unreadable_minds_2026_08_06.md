@@ -61,6 +61,14 @@ model pair rather than of minds in general, or the human cohort's alignment rang
 approaches the knee. **We cannot distinguish those two readings with eight subjects, and we are
 not going to pretend the model finding generalized.**
 
+## Confirmed against the reference statistic
+
+The gate above uses this module's gap screen. **Hartigan's dip test — the statistic the methods
+literature names — was run afterwards on the same vector and returns p 0.7553**, agreeing with
+the screen and sitting further from the bar. Receipt: the diptest addendum committed beside this
+finding. The screen is the more liberal of the two here, so its non-flag is the stronger
+statement.
+
 ## Limits, fixed before the run
 
 - **n = 8 is exactly the instrument's floor.** A gap screen on eight points has very little

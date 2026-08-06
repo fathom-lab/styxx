@@ -2,7 +2,7 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "a9ac73af2e43a9a14850f0c72eaf9ad4c837ab36e57e1dccb77d00d26155f722",
+ "document_sha256": "737903ff427955a2724b9436ae6fc4ae981ee687e22ee6a534136ea1e965b107",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
@@ -10,12 +10,14 @@
   "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07",
   "b47_result.json": "bd4df692c5ba2c2b31aca1c5c7e2b67ef7af8008a5f38eaf70c217fd67e7831f",
   "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91",
-  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2"
+  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2",
+  "h1a_diptest_addendum.json": "21533eae60747bf026bd62bfbc654c3e059c0fc21be3d2b900003484e2faf669",
+  "h1b_diptest_addendum.json": "a130e072db35309be1c066ca70d257de61292be1468a9cd265a47579a2d9d211"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 25,
-  "ABSTAIN": 43,
+  "VERIFIED": 30,
+  "ABSTAIN": 44,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -191,6 +193,10 @@
   },
   {
    "line": 262,
+   "token": "0.05"
+  },
+  {
+   "line": 282,
    "token": "0.05"
   }
  ],
@@ -828,6 +834,64 @@
    "context": "**any documented unimodality test reported with its explicit null**, at p \u2264 0.05 on the",
    "status": "ABSTAIN",
    "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 279,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "| H1a alignment | 0.0779 | 0.6036 | unimodal |",
+   "binding_context": "| cohort | gap screen | Hartigan's dip | agree | | H1a alignment | 0.0779 | 0.6036 | unimodal |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_diptest_addendum.json:gap_screen_p"
+  },
+  {
+   "line": 279,
+   "token": "0.6036",
+   "value": 0.6036,
+   "decimals": 4,
+   "context": "| H1a alignment | 0.0779 | 0.6036 | unimodal |",
+   "binding_context": "| cohort | gap screen | Hartigan's dip | agree | | H1a alignment | 0.0779 | 0.6036 | unimodal |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_diptest_addendum.json:hartigan_dip_p"
+  },
+  {
+   "line": 280,
+   "token": "0.6523",
+   "value": 0.6523,
+   "decimals": 4,
+   "context": "| H1b readability | 0.6523 | 0.7553 | unimodal |",
+   "binding_context": "| cohort | gap screen | Hartigan's dip | agree | | H1b readability | 0.6523 | 0.7553 | unimodal |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:bimodality_p_readability"
+  },
+  {
+   "line": 280,
+   "token": "0.7553",
+   "value": 0.7553,
+   "decimals": 4,
+   "context": "| H1b readability | 0.6523 | 0.7553 | unimodal |",
+   "binding_context": "| cohort | gap screen | Hartigan's dip | agree | | H1b readability | 0.6523 | 0.7553 | unimodal |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_diptest_addendum.json:hartigan_dip_p"
+  },
+  {
+   "line": 282,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "Had we scored H1 on the screen alone, the alignment result would have sat near the 0.05 bar and",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 284,
+   "token": "0.6036",
+   "value": 0.6036,
+   "decimals": 4,
+   "context": "0.6036 \u2014 nowhere near. `styxx.islands.hartigan_dip_p` now exposes the reference statistic",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_diptest_addendum.json:hartigan_dip_p"
   }
  ]
 }

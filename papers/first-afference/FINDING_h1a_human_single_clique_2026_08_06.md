@@ -54,6 +54,14 @@ We predicted this outcome in the prereg, in advance, in writing — *"we expect
 `HUMAN_SINGLE_CLIQUE`… predicting our own earlier claim will fail is the point of writing it
 down."* That is the only reason this document gets to claim anything at all.
 
+## Confirmed against the reference statistic
+
+The gate above uses this module's gap screen. **Hartigan's dip test — the statistic the methods
+literature names — was run afterwards on the same vector and returns p 0.6036**, agreeing with
+the screen and sitting further from the bar. Receipt: the diptest addendum committed beside this
+finding. The screen is the more liberal of the two here, so its non-flag is the stronger
+statement.
+
 ## Limits, which are severe and were fixed before the run
 
 - **This measures alignment, not decoding accuracy.** H1 proper is about accuracy. Our own b46
