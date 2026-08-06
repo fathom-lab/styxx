@@ -1,0 +1,275 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_h1a_human_single_clique_2026_08_06.md",
+ "document_sha256": "15778c66d6d30559480c76c7c2cf3a0eb5874c354602f225955e0055a1e29441",
+ "receipts_sha256": {
+  "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 16,
+  "ABSTAIN": 8,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "8"
+  },
+  {
+   "line": 13,
+   "token": "8"
+  },
+  {
+   "line": 14,
+   "token": "0"
+  },
+  {
+   "line": 15,
+   "token": "0.05"
+  },
+  {
+   "line": 21,
+   "token": "41"
+  },
+  {
+   "line": 34,
+   "token": "0.05"
+  },
+  {
+   "line": 39,
+   "token": "0.1969"
+  },
+  {
+   "line": 62,
+   "token": "8"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 members | 8 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 members | 8 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 members | 8 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 members | 8 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G1_shared_frame | cohort median - random-null p95 > 0 | 0.1974 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_shared_frame | cohort median - random-null p95 > 0 | 0.1974 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.1974",
+   "value": 0.1974,
+   "decimals": 4,
+   "context": "| G1_shared_frame | cohort median - random-null p95 > 0 | 0.1974 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_shared_frame | cohort median - random-null p95 > 0 | 0.1974 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:median_minus_null_p95"
+  },
+  {
+   "line": 15,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "| G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "| G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_islands_present | gap-screen p \u2264 0.05 | 0.0779 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:bimodality_p"
+  },
+  {
+   "line": 20,
+   "token": "907",
+   "value": 907.0,
+   "decimals": 0,
+   "context": "subject's repetitions and intersected to the 907 images present for all eight. Voxel counts",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_shared_images"
+  },
+  {
+   "line": 21,
+   "token": "41",
+   "value": 41.0,
+   "decimals": 0,
+   "context": "differ by 41 percent across subjects (12682 to 17907); the instrument works in item space, so",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 21,
+   "token": "12682",
+   "value": 12682.0,
+   "decimals": 0,
+   "context": "differ by 41 percent across subjects (12682 to 17907); the instrument works in item space, so",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_voxels_per_subject.subj07"
+  },
+  {
+   "line": 21,
+   "token": "17907",
+   "value": 17907.0,
+   "decimals": 0,
+   "context": "differ by 41 percent across subjects (12682 to 17907); the instrument works in item space, so",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_voxels_per_subject.subj06"
+  },
+  {
+   "line": 23,
+   "token": "22500",
+   "value": 22500.0,
+   "decimals": 0,
+   "context": "fewer sessions (22500 or 24000 trials against 30000).",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_trials_per_subject.subj04"
+  },
+  {
+   "line": 23,
+   "token": "24000",
+   "value": 24000.0,
+   "decimals": 0,
+   "context": "fewer sessions (22500 or 24000 trials against 30000).",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_trials_per_subject.subj03"
+  },
+  {
+   "line": 23,
+   "token": "30000",
+   "value": 30000.0,
+   "decimals": 0,
+   "context": "fewer sessions (22500 or 24000 trials against 30000).",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:n_trials_per_subject.subj01"
+  },
+  {
+   "line": 28,
+   "token": "0.2222",
+   "value": 0.2222,
+   "decimals": 4,
+   "context": "Median pairwise frame affinity 0.2222 against a random-frame null whose 95th percentile is",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:cohort_median"
+  },
+  {
+   "line": 29,
+   "token": "0.0248",
+   "value": 0.0248,
+   "decimals": 4,
+   "context": "0.0248 and whose largest of 1000 draws reached only 0.0266. The cohort sits roughly nine times",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:null.p95"
+  },
+  {
+   "line": 29,
+   "token": "1000",
+   "value": 1000.0,
+   "decimals": 0,
+   "context": "0.0248 and whose largest of 1000 draws reached only 0.0266. The cohort sits roughly nine times",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:null.n_draws"
+  },
+  {
+   "line": 33,
+   "token": "0.1530",
+   "value": 0.153,
+   "decimals": 4,
+   "context": "**2. That alignment is continuous, not clustered.** Per-subject mean affinity runs 0.1530 to",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:mean_affinity.subj08"
+  },
+  {
+   "line": 34,
+   "token": "0.2575",
+   "value": 0.2575,
+   "decimals": 4,
+   "context": "0.2575 in an unbroken spread, and the gap screen returns p 0.0779 \u2014 above the 0.05 bar the",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:mean_affinity.subj02"
+  },
+  {
+   "line": 34,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "0.2575 in an unbroken spread, and the gap screen returns p 0.0779 \u2014 above the 0.05 bar the",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:bimodality_p"
+  },
+  {
+   "line": 34,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "0.2575 in an unbroken spread, and the gap screen returns p 0.0779 \u2014 above the 0.05 bar the",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 39,
+   "token": "0.1530",
+   "value": 0.153,
+   "decimals": 4,
+   "context": "The prereg's stated MAD rule flags **subj08** at 0.1530, below its 0.1969 cutoff. **That flag",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:mean_affinity.subj08"
+  },
+  {
+   "line": 39,
+   "token": "0.1969",
+   "value": 0.1969,
+   "decimals": 4,
+   "context": "The prereg's stated MAD rule flags **subj08** at 0.1530, below its 0.1969 cutoff. **That flag",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 62,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "- **n = 8 is exactly the instrument's floor.** A gap screen on eight points has very little",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 65,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "- One dataset, one ROI, one modality, one alignment construction, one seed. The p of 0.0779 is",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:bimodality_p"
+  }
+ ]
+}

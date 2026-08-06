@@ -1,0 +1,81 @@
+# FINDING — H1a: eight human brains share a representational frame, and it is continuous — our own island prediction dies on real neural data
+
+Fathom Lab · 2026-08-06 · prereg: `PREREG_h1a_human_alignment_2026_08_06.md` (frozen at
+`e42bf9c`, before a single byte of the dataset existed on disk) · receipt: `h1a_result.json` ·
+scored by `styxx.protocol`.
+
+## Verdict (machine-computed)
+
+**`HUMAN_SINGLE_CLIQUE__alignment_is_continuous`** — the branch we preregistered as expected.
+
+| gate | frozen bar | measured | pass |
+|---|---|---|---|
+| G0_cohort | ≥ 8 members | 8 | ✅ |
+| G1_shared_frame | cohort median − random-null p95 > 0 | 0.1974 | ✅ |
+| G2_islands_present | gap-screen p ≤ 0.05 | 0.0779 | ❌ |
+
+## What was measured
+
+Eight NSD subjects, `nsdgeneral` betas for the images every subject saw, averaged over each
+subject's repetitions and intersected to the 907 images present for all eight. Voxel counts
+differ by 41 percent across subjects (12682 to 17907); the instrument works in item space, so
+that is expected and harmless. **No subject was dropped**, including the four who completed
+fewer sessions (22500 or 24000 trials against 30000).
+
+## Two results, and the second is the interesting one
+
+**1. Eight independently-developed human brains share a representational frame, emphatically.**
+Median pairwise frame affinity 0.2222 against a random-frame null whose 95th percentile is
+0.0248 and whose largest of 1000 draws reached only 0.0266. The cohort sits roughly nine times
+above the ceiling of chance. Convergent structure across separately-grown minds is not subtle
+here — it is the loudest thing in the data.
+
+**2. That alignment is continuous, not clustered.** Per-subject mean affinity runs 0.1530 to
+0.2575 in an unbroken spread, and the gap screen returns p 0.0779 — above the 0.05 bar the
+prereg fixed. There is no island.
+
+## The flagged subject is not an island, and here is why we say so
+
+The prereg's stated MAD rule flags **subj08** at 0.1530, below its 0.1969 cutoff. **That flag
+is not evidence.** Before this run, on the same instrument, we checked what the rule does to a
+cohort of eight streams of *pure independent noise*: it flagged a member there too. A rule that
+draws a line through a continuum will always name whoever is furthest left. The candidate-island
+list means nothing unless the bimodality gate passes, and here it did not. We are stating this
+because subj08 is exactly the kind of number a lab wanting an island would have led with.
+
+## What this does to our own prediction
+
+This morning this lab registered `PREDICTION_h1_human_islands`, betting that human cross-subject
+decoding shows island structure. **Its model-side precursor failed (B47), the published human
+literature leaned against it, and now its neural-side precursor has failed on real brains.**
+Third negative, and the first on human data. The prediction document has been amended again.
+
+We predicted this outcome in the prereg, in advance, in writing — *"we expect
+`HUMAN_SINGLE_CLIQUE`… predicting our own earlier claim will fail is the point of writing it
+down."* That is the only reason this document gets to claim anything at all.
+
+## Limits, which are severe and were fixed before the run
+
+- **This measures alignment, not decoding accuracy.** H1 proper is about accuracy. Our own b46
+  result says the two are joined by a switch rather than a ramp, so a continuous alignment
+  distribution does **not** prove a continuous accuracy distribution. This is H1's precursor.
+- **n = 8 is exactly the instrument's floor.** A gap screen on eight points has very little
+  power, so this is **weak evidence of absence**, not a demonstration that human islands do not
+  exist. NSD has no ninth subject.
+- One dataset, one ROI, one modality, one alignment construction, one seed. The p of 0.0779 is
+  not far from the bar; a differently-composed cohort could land the other side of it.
+
+## What is genuinely new here
+
+To this lab's knowledge, and per an external survey of the neuroimaging methods literature that
+searched for exactly this, **no formal bimodality test had previously been applied to a
+per-subject neural alignment or decoding distribution.** The field describes these distributions
+in words — "varied largely between participants" — and routinely excludes low performers before
+anyone looks. The reconstruction literature built on this very dataset evaluates on the four
+subjects of eight who completed all sessions. This run kept all eight and tested the shape
+statistically. The answer is boring, and it is the first one.
+
+*Prereg frozen before the data was downloaded; the runner committed before any result existed;
+the losing branch written first and it is the one that landed; every number grounds in
+`h1a_result.json`. Sealed before commit. Raw betas were not redistributed and were deleted after
+extraction.*

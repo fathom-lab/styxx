@@ -127,6 +127,29 @@ Until the 45-pair discovery matrix is run, the prior on H1 should move **down**,
 scoring this prediction later should know that its authors' first attempt to support it produced
 a negative.
 
+## THIRD EVIDENCE IN — 2026-08-06 — tested on real human brains, and it failed
+
+We ran H1's neural-side precursor ourselves rather than waiting for anyone else
+([H1a](../first-afference/FINDING_h1a_human_single_clique_2026_08_06.md)): eight NSD subjects,
+the images all of them saw, no subject dropped, prereg frozen before the data was downloaded.
+
+**Verdict `HUMAN_SINGLE_CLIQUE__alignment_is_continuous`.** The eight brains share a
+representational frame emphatically — median pairwise affinity 0.2222 against a random-frame
+null p95 of 0.0248, roughly nine times above chance — and that alignment is a continuous spread
+(0.1530 to 0.2575), gap-screen p 0.0779. No island. The MAD rule did flag the lowest subject,
+and we report that it is **not** evidence: the same rule flags a member of a cohort of pure
+noise.
+
+That is **three independent negatives** for H1 in one day — the model-side precursor (B47), the
+published human literature, and now our own measurement on human neural data. The prediction as
+written is in serious trouble and we are not going to pretend otherwise.
+
+**What still stands:** this measured alignment, and H1 is about decoding *accuracy*; our own b46
+result says those are joined by a switch, so a continuous alignment distribution does not prove
+a continuous accuracy distribution. And n = 8 is exactly our instrument's floor, so this is weak
+evidence of absence. H1 is not falsified. It is unsupported from three directions, and the claim
+we would now defend is the narrower one: **H3 without H1.**
+
 ## SECOND EVIDENCE IN — 2026-08-06 — the published human literature leans AGAINST H1
 
 A survey of what has already been measured in humans came back, and it is a stronger negative
