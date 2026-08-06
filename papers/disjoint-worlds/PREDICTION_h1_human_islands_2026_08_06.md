@@ -86,8 +86,28 @@ low-rank per-subject map — including public neuroimaging corpora. If any group
 included) publishes those three quantities, the verdict computes mechanically from the block
 above and we will report it whichever way it lands.
 
+**The instrument ships with the prediction.** As of styxx 7.30.0, `styxx.islands` is the
+measurement, generalized past language models — it takes any cohort of representations over a
+shared item set (fMRI betas over shared stimuli, MEG epochs, decoder features) and returns the
+island structure, the cliff shape, and the low-rank rescue:
+
+```python
+pip install styxx
+from styxx.islands import survey, cliff, rescue
+s = survey({subject_id: betas for ...})   # betas: (n_shared_stimuli, n_features)
+print(s.verdict, s.islands)
+```
+
+Two deliberate refusals are wired in, because an instrument that cannot refuse cannot be
+trusted: below eight members the verdict is `UNDERPOWERED__n_below_8` rather than a guess at
+bimodality, and a cliff whose endpoint sits at chance returns
+`REFUSED__endpoint_at_chance_no_curve_to_read` rather than a knee computed from noise. `cliff`
+and `rescue` require *your* legibility measure — your decoder's accuracy, not ours. The first
+draft of this module shipped an internal one; it failed its own exam against the case whose
+answer we already knew, and it was removed rather than defaulted.
+
 **Standing offer:** we will run the scoring, publish the receipt, and name the data's authors as
-its authors. If someone would rather score it themselves, the gates are already frozen and the
-machinery is [open](../../REPLICATIONS.md).
+its authors. If someone would rather score it themselves, the gates are already frozen, the
+instrument is one `pip install` away, and the machinery is [open](../../REPLICATIONS.md).
 
 *A prediction registered before the data is worth more than an explanation offered after it.*

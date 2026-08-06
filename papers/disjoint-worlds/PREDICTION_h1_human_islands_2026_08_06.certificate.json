@@ -2,7 +2,7 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "6e189d73c81dac3245d22d8301cc8335cf61dee8407f0f040299ea3f4426ef06",
+ "document_sha256": "b1607c244e059ec053e398fcaf76763b6bbc9e1632fd19497db3d49efb4288f9",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",

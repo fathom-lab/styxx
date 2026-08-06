@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.30.0] — 2026-08-06
+
+### Added
+- **`styxx.islands`** — the disjoint-worlds legibility measurement, generalized and handed to
+  anyone. Give it a cohort of representations over a shared item set (model activations, fMRI
+  betas over a shared stimulus set, MEG epochs, embeddings) and it reports whether the cohort is
+  one legible clique or contains **islands**: pairwise concept-frame affinity against an explicit
+  random-frame null, a stated island rule, and a bimodality screen. `cliff()` maps how legibility
+  rises as an island's frame is rotated toward a reader's; `rescue()` asks whether a *low-rank*
+  correction recovers it, each rank scored against a matched random frame.
+  - Validated against the case whose answer we already knew: on the four committed model banks it
+    recovers the published topology — clique affinity ~0.79–0.82, qwen flagged at 0.7300, random
+    null p95 0.0564.
+  - **Refuses rather than guesses.** Below 8 members the verdict is `UNDERPOWERED__n_below_8`
+    (bimodality is not testable on a handful of points). A cliff whose endpoint sits at chance
+    returns `REFUSED__endpoint_at_chance_no_curve_to_read` instead of a knee computed from noise.
+  - `cliff`/`rescue` require a **caller-supplied** `legibility_fn`. The first draft shipped an
+    internal one (orthogonal Procrustes + Hungarian); it failed its own exam — returning chance on
+    the pair where the arc measured 0.9745, because Procrustes needs a correspondence that
+    recovering the correspondence is the whole task — and was removed rather than defaulted. In a
+    real application the legibility measure already exists and belongs to the user.
+
+### Fixed
+- `styxx.corpus_audit` no longer descends into arXiv `anc/` packaging mirrors, which reported
+  phantom `MISSING_DOC` entries for documents audited canonically elsewhere. Regression test added.
+
 ## [7.29.3] — 2026-08-01 — the GitHub Action, the 30-second demo, legible silence
 
 ### Added
