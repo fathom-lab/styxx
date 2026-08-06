@@ -127,6 +127,52 @@ Until the 45-pair discovery matrix is run, the prior on H1 should move **down**,
 scoring this prediction later should know that its authors' first attempt to support it produced
 a negative.
 
+## SECOND EVIDENCE IN — 2026-08-06 — the published human literature leans AGAINST H1
+
+A survey of what has already been measured in humans came back, and it is a stronger negative
+than B47 because it is in **H1's own currency**: per-subject decoding accuracy, not model frame
+affinity. Recorded here the same day it arrived, before this prediction is promoted anywhere.
+
+**The two best-powered per-subject distributions both look continuous.**
+
+- **Défossez et al., "Decoding speech perception from non-invasive brain recordings," *Nature Machine Intelligence* (2023)** — n = 175 across four datasets, **no subjects
+  excluded for performance**. Per-subject accuracies form an unbroken smear within every
+  dataset; even the worst subjects sit well above chance. (Read off the published figure, not a
+  released table — running a dip test properly would mean re-running their public
+  `brainmagick` code, which is a real cost, not a lookup.)
+- **Blankertz et al., "Neurophysiological predictor of SMR-based BCI performance," *NeuroImage* (2010)** — n = 80, no exclusions, and the numbers are in the text: accuracy
+  "covering the full range from chance-level performance to perfect control," with the
+  neurophysiological predictor relating to performance as a **linear correlation over a
+  scatter, not a threshold**. That is H1 *and* H2 failing on the largest clean cohort available.
+
+**The "BCI illiteracy" literature does not rescue us.** The familiar 15–30% figure is a utility
+cutoff on a continuum, not a measured discontinuity, and the decisive detail is Vidaurre &
+Blankertz (*Brain Topography* 2010): participants with no control in early runs **gained it when
+the calibration method changed**. A floor that dissolves when you change the decoder is not an
+island. Lee et al. (*GigaScience* 2019, n = 54 participants) sharpens it further — below-threshold rates vary
+by paradigm and **no participant was universally illiterate**.
+
+**And the flagship results are structurally incapable of testing H1.** Tang et al. (*Nat.
+Neurosci.* 2023) scanned 7 subjects and used 3, with no stated exclusion criteria; the NSD
+reconstruction literature evaluates on the 4 of 8 subjects who completed all sessions; and
+Algonauts scores are **noise-ceiling-normalized, which divides out exactly the per-subject
+variance H1 is about** — so H1 must not be scored there. Survivorship, precisely as this
+document warned, but it cuts both ways: it means the field's tidy distributions are not
+evidence against islands either.
+
+**The premise is weakening too.** NEED (*NeurIPS* 2025) reports retaining ~94% of within-subject
+performance on unseen subjects in EEG visual decoding. If that replicates, "cross-subject
+transfer is catastrophic" — the intuition the whole island framing leans on — is itself in
+question.
+
+**What we conclude, against our own interest.** The prior on H1 moves **down again**. No paper
+has applied a formal bimodality test to a per-subject decoding distribution, so H1 is
+*unfalsified but unsupported*, and every adjacent distribution described in words is described
+as continuous. The claim that survives the evidence is narrower and better supported: **floor
+membership is a decoder–subject interaction that a per-subject realignment removes** — Vidaurre's
+runs 4–6, Lee's paradigm specificity. That is **H3 without H1**. We are recording that reduction
+here rather than quietly retreating to it later.
+
 ## THIS IS SCOREABLE TODAY — concrete routes, added 2026-08-06
 
 When this prediction was registered we said it was scoreable "on any cohort of ≥ 8 subjects,

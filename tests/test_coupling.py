@@ -196,3 +196,40 @@ def test_a_positive_names_the_confound_it_is_beyond():
     reads as 'coupled'. The caveat must scope the claim to the confound actually supplied."""
     r = _run(coupled=True, clocked=True)
     assert any("ONE confound you supplied" in c for c in r.caveats)
+
+
+def test_debiased_estimator_is_flat_on_independent_noise_where_rv_inflates():
+    """External audit 2026-08-06: rv_coefficient IS linear CKA and inflates with feature count —
+    0.91 on INDEPENDENT random streams at this module's own minimum n. The p-value survives (the
+    null is drawn at the same n and p) but the coefficient is a dimensionality readout, so the
+    debiased estimator is reported beside it."""
+    from styxx.coupling import debiased_cka
+    for p in (100, 500, 2000):
+        rng = np.random.default_rng(0)
+        X, Y = rng.standard_normal((200, p)), rng.standard_normal((200, p))
+        assert abs(debiased_cka(X, Y)) < 0.05, p
+    rv_hi = rv_coefficient(*[np.random.default_rng(0).standard_normal((200, 2000))] * 1,
+                           np.random.default_rng(1).standard_normal((200, 2000)))
+    assert rv_hi > 0.8, "the biased statistic should still show the inflation it is known for"
+
+
+def test_debiased_estimator_does_not_lose_genuine_coupling():
+    from styxx.coupling import debiased_cka
+    z = np.random.default_rng(1).standard_normal((200, 8))
+    X = z @ np.random.default_rng(2).standard_normal((8, 500))
+    Y = z @ np.random.default_rng(3).standard_normal((8, 500))
+    assert debiased_cka(X, Y) > 0.9
+    assert abs(rv_coefficient(X, Y) - debiased_cka(X, Y)) < 0.05
+
+
+def test_frozen_bins_in_singleton_strata_are_reported():
+    """A fine-grained confound freezes some bins at their true pairing in every null draw, so that
+    fraction is never tested. Silent power loss unless it is surfaced."""
+    A, ts, B = _world(True, True)
+    n_bins = 240
+    r = couple(A, ts, B, ts, bin_seconds=3600, n_perm=100, min_bins=200,
+               confound=lambda b: np.arange(len(np.asarray(b))) // 2)
+    assert r.dependence["frozen_bin_fraction"] >= 0.0
+    r2 = couple(A, ts, B, ts, bin_seconds=3600, n_perm=100, min_bins=200,
+                confound=lambda b: np.asarray(b) % 24)
+    assert r2.dependence["frozen_bin_fraction"] == 0.0

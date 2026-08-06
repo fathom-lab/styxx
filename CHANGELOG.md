@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.31.3] — 2026-08-06 — external methods audit; priority claim corrected
+
+An external grounding review of `styxx.coupling` against the neuroimaging methods literature.
+Three of its findings land against us and are fixed here rather than argued with.
+
+- **The confound-preserving null is not novel and the docstring implied it was.** It is a
+  restricted/stratified permutation test — standard since Nichols & Holmes (*HBM* 2002) and
+  Anderson & ter Braak (*JSCS* 2003), generalized as the conditional permutation test by Berrett
+  et al. (*JRSS-B* 2020), shipped in FSL PALM as exchangeability blocks (Winkler et al. 2015),
+  with a dedicated decoding-confound literature (Snoek et al. 2019; Görgen et al. 2018) and
+  standard autocorrelation-preserving surrogates (Theiler et al. 1992; Schreiber & Schmitz 1996).
+  The module now says so and claims only what appears to be ours: the **composition and the
+  defaults** — refusing a positive unless the confound null, the autocorrelation null, the
+  leverage check and the sampling-density check all pass, and naming which one stopped it.
+- **`rv_coefficient` is linear CKA and is upward-biased with feature count.** On *independent
+  random* streams at this module's own minimum of 200 bins it reads 0.054 / 0.340 / 0.717 /
+  0.910 at 12 / 100 / 500 / 2000 features. The permutation p-value is unaffected (the null is
+  drawn at the same n and p, so the bias cancels) but the coefficient is a dimensionality
+  readout, not an effect size. Added `debiased_cka` (unbiased HSIC; Song et al. *JMLR* 2012) and
+  it is now reported beside `rv` on every run: 0.008 where RV reads 0.910, and 0.980 vs 0.981 on
+  genuine coupling — the inflation removed, detection untouched.
+- **The mind↔brain application is marked UNTESTED.** No neural data has been through this
+  module, and the defaults (`bin_seconds=60`, `min_bins=200`) are wrong by two to five orders of
+  magnitude for fMRI or MEG. The field standard for that question is a cross-validated encoding
+  model, which also answers the directional question a symmetric coefficient cannot.
+- **Frozen-bin reporting.** A fine-grained confound leaves bins in singleton strata pinned to
+  their true pairing in every null draw, so that fraction of the data is never tested — silent
+  power loss. `dependence.frozen_bin_fraction` is now reported and warns above 20%. (The
+  reviewer's stronger claim, that this could produce a false COUPLED, was tested and retracted:
+  the module returned the correct verdict on all six adversarial configurations.)
+
 ## [7.31.2] — 2026-08-06 — **coupling hardened after an adversarial audit; 7.31.0 and 7.31.1 yanked**
 
 An internal red team was pointed at `styxx.coupling` hours after release and broke it on the most

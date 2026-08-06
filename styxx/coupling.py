@@ -6,6 +6,12 @@ One instrument for a question this program kept meeting in different costumes:
 * **mind ↔ world** — is a physical room's state coupled to an agent's internal state?
   (``papers/first-afference/``)
 * **mind ↔ brain** — does a decoder's feature stream track a subject's neural stream?
+  **UNTESTED: no neural data has been through this module.** The defaults here
+  (``bin_seconds=60``, ``min_bins=200``) are wrong by two to five orders of magnitude for fMRI
+  (TR 1–2 s) or MEG/EEG (milliseconds), and the field standard for this question is a
+  cross-validated voxelwise encoding model with held-out prediction *r*, which also answers the
+  directional question a symmetric coefficient cannot. Treat this bullet as an intended
+  application, not a demonstrated one, until it has been run on real recordings.
 
 They are the same measurement: two timestamped streams, resampled to a common grid, scored for
 dependence against a null that **preserves the confound you are worried about**. The confound is
@@ -22,7 +28,22 @@ something.
                        # NO_DETECTABLE_COUPLING__above_measured_floor | INVALID__*
     r.power_floor      # what this run could have detected, quoted with every null
 
-**Every refusal in this module was earned by a specific published failure.** They are scars, not
+**What is and is not new here.** The confound-preserving null is **not our invention and not
+novel** — it is a restricted/stratified permutation test, standard in neuroimaging since Nichols
+& Holmes (*HBM* 2002) and Anderson & ter Braak (*JSCS* 2003), generalized as the conditional
+permutation test by Berrett, Wang, Barber & Samworth (*JRSS-B* 2020), and shipped in FSL PALM as
+exchangeability blocks (Winkler et al., *NeuroImage* 2015). Confound control in decoding
+specifically has its own literature (Snoek et al., *NeuroImage* 2019; Görgen et al., *NeuroImage*
+2018). Autocorrelation-preserving surrogates are equally standard (Theiler et al. 1992; Schreiber
+& Schmitz 1996), and circular shift is the default null in intersubject-correlation work (Simony
+et al., *Nat. Commun.* 2016). If you are doing neuroimaging, you already have all of this.
+
+What this module contributes is **the composition and the defaults**: an instrument that refuses
+to license a positive unless a confound-preserving null, an autocorrelation-preserving null, a
+leverage check and a sampling-density check all pass — and that names which one stopped it. The
+sampling-density verdict in particular we could not find in the literature.
+
+**Every refusal was earned by a specific published failure.** They are scars, not
 speculation:
 
 * ``INVALID__insufficient_overlap`` — an under-observed apparatus licenses nothing
@@ -50,7 +71,7 @@ from dataclasses import dataclass, field, asdict
 
 import numpy as np
 
-__all__ = ["couple", "Coupling", "rv_coefficient", "resample_pair"]
+__all__ = ["couple", "Coupling", "rv_coefficient", "debiased_cka", "resample_pair"]
 
 
 def rv_coefficient(X: np.ndarray, Y: np.ndarray) -> float:
@@ -61,6 +82,37 @@ def rv_coefficient(X: np.ndarray, Y: np.ndarray) -> float:
     num = np.trace(Sxy @ Sxy.T)
     den = np.sqrt(np.trace((Xc.T @ Xc) @ (Xc.T @ Xc)) * np.trace((Yc.T @ Yc) @ (Yc.T @ Yc)))
     return float(num / (den + 1e-12))
+
+
+def debiased_cka(X: np.ndarray, Y: np.ndarray) -> float:
+    """Unbiased-HSIC estimator of the same quantity ``rv_coefficient`` computes.
+
+    ``rv_coefficient`` IS linear CKA, and linear CKA is upward-biased when feature count is large
+    relative to sample count: on INDEPENDENT random streams at this module's own minimum of 200
+    bins it reads 0.058 at 12 features, 0.333 at 100, 0.714 at 500 and 0.909 at 2000. The
+    permutation p-value is unaffected (the null is drawn at the same n and p, so the bias
+    cancels), but the raw coefficient is a dimensionality readout, not an effect size, and is not
+    comparable across runs. Reported alongside it, per Song et al. (*JMLR* 2012) and Murphy,
+    Zylberberg & Fyshe (*ICLR Re-Align* 2024), who name fMRI and MEG as exactly this regime.
+    """
+    X = np.asarray(X, float) - np.asarray(X, float).mean(0)
+    Y = np.asarray(Y, float) - np.asarray(Y, float).mean(0)
+    n = X.shape[0]
+    if n < 4:
+        return float("nan")
+    K, L = X @ X.T, Y @ Y.T
+    np.fill_diagonal(K, 0.0)
+    np.fill_diagonal(L, 0.0)
+    ones = np.ones(n)
+
+    def hsic(K, L):
+        t1 = float(np.sum(K * L))
+        t2 = float(ones @ K @ ones) * float(ones @ L @ ones) / ((n - 1) * (n - 2))
+        t3 = 2.0 * float(ones @ K @ L @ ones) / (n - 2)
+        return (t1 + t2 - t3) / (n * (n - 3))
+    hkl, hkk, hll = hsic(K, L), hsic(K, K), hsic(L, L)
+    den = np.sqrt(max(hkk, 0.0) * max(hll, 0.0))
+    return float(hkl / den) if den > 0 else 0.0
 
 
 def _zscore(X):
@@ -180,6 +232,7 @@ class Coupling:
     free_p: float
     power_floor: dict
     confound_used: bool
+    rv_debiased: float = float("nan")
     sampling_density: dict = field(default_factory=dict)
     dependence: dict = field(default_factory=dict)
     caveats: list = field(default_factory=list)
@@ -264,9 +317,18 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
         ge_h = sum(rv_coefficient(Az, Bz[_confound_matched_perm(n, groups, rng_h)]) >= obs
                    for _ in range(n_perm))
         matched_p = (ge_h + 1) / (n_perm + 1)
+        _, gcounts = np.unique(groups, return_counts=True)
+        frozen_note = round(int(gcounts[gcounts == 1].sum()) / n, 4)
+        frozen_frac = frozen_note
         if len(np.unique(groups)) >= n:
             caveats.append("every bin is its own confound group: the matched null is degenerate "
                            "and cannot absorb anything. Use a coarser confound.")
+        elif frozen_frac >= 0.2:
+            caveats.append(
+                f"{frozen_frac:.0%} of bins sit in singleton confound strata and are therefore "
+                f"FROZEN at their true pairing in every null draw — that fraction of the data is "
+                f"never actually tested against the confound. This costs power silently; the "
+                f"power floor below is the honest consequence. Use a coarser confound.")
 
     # every valid shift, capped: the null must be able to RESOLVE p <= alpha, i.e. it needs at
     # least 1/alpha draws. Under-drawing it silently converts real coupling into an INVALID.
@@ -282,7 +344,8 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
     autocorrelated = max(ac_a, ac_b) >= 0.2
     tr_a, tr_b = _trend_r2(Az), _trend_r2(Bz)
     shared_trend = tr_a >= 0.2 and tr_b >= 0.2
-    dependence = {"lag1_autocorr_a": ac_a, "lag1_autocorr_b": ac_b,
+    dependence = {"frozen_bin_fraction": (frozen_note if confound is not None else 0.0),
+                  "lag1_autocorr_a": ac_a, "lag1_autocorr_b": ac_b,
                   "trend_r2_a": tr_a, "trend_r2_b": tr_b, "shared_trend": bool(shared_trend),
                   "autocorrelated": bool(autocorrelated), "circular_shift_p": shift_p,
                   "n_shift_draws": len(shift_nulls),
@@ -353,6 +416,7 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
         caveats.append(f"reads as: no coupling above RV {floor['detectable_rv_at_p01']} at this "
                        f"n, NOT as 'no coupling'.")
     return Coupling(verdict=verdict, n_paired_bins=n, rv=round(obs, 4),
+                    rv_debiased=round(debiased_cka(Az, Bz), 4),
                     matched_p=round(matched_p, 4), free_p=round(free_p, 4),
                     power_floor=floor, confound_used=confound is not None,
                     sampling_density=density, dependence=dependence, caveats=caveats)

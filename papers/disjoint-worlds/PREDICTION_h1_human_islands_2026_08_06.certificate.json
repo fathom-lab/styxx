@@ -2,7 +2,7 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "88706cedfac10c8b5efc4bce7c44c08c8e752f078ffe93652baa6ce285aff506",
+ "document_sha256": "5e13e9c367acabce84993be50c49eb73e206a6a95b30e9edf1701c540c84f9e1",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
@@ -13,7 +13,7 @@
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
   "VERIFIED": 16,
-  "ABSTAIN": 33,
+  "ABSTAIN": 43,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -40,115 +40,155 @@
    "token": "8"
   },
   {
-   "line": 132,
-   "token": "8"
+   "line": 138,
+   "token": "175"
   },
   {
-   "line": 140,
-   "token": "8"
-  },
-  {
-   "line": 140,
-   "token": "12.35"
-  },
-  {
-   "line": 141,
-   "token": "10"
-  },
-  {
-   "line": 141,
-   "token": "1,102"
-  },
-  {
-   "line": 141,
-   "token": "61.8"
-  },
-  {
-   "line": 141,
-   "token": "3.67"
-  },
-  {
-   "line": 141,
-   "token": "3"
-  },
-  {
-   "line": 142,
-   "token": "10"
-  },
-  {
-   "line": 142,
-   "token": "16,740"
-  },
-  {
-   "line": 142,
-   "token": "200"
-  },
-  {
-   "line": 142,
+   "line": 143,
    "token": "80"
   },
   {
-   "line": 143,
-   "token": "40"
-  },
-  {
-   "line": 143,
-   "token": "6"
-  },
-  {
-   "line": 143,
-   "token": "40"
-  },
-  {
-   "line": 143,
-   "token": "6"
-  },
-  {
-   "line": 143,
-   "token": "24"
-  },
-  {
-   "line": 143,
-   "token": "40"
-  },
-  {
-   "line": 144,
-   "token": "82"
-  },
-  {
-   "line": 144,
-   "token": "140"
-  },
-  {
-   "line": 145,
-   "token": "70"
-  },
-  {
-   "line": 145,
-   "token": "40"
-  },
-  {
-   "line": 145,
-   "token": "5.28"
-  },
-  {
-   "line": 147,
-   "token": "4"
-  },
-  {
    "line": 148,
-   "token": "4"
+   "token": "15"
   },
   {
-   "line": 148,
+   "line": 152,
+   "token": "54"
+  },
+  {
+   "line": 156,
+   "token": "7"
+  },
+  {
+   "line": 156,
    "token": "3"
   },
   {
-   "line": 148,
+   "line": 157,
    "token": "4"
   },
   {
-   "line": 171,
+   "line": 157,
+   "token": "8"
+  },
+  {
+   "line": 163,
+   "token": "94"
+  },
+  {
+   "line": 173,
+   "token": "4"
+  },
+  {
+   "line": 178,
+   "token": "8"
+  },
+  {
+   "line": 186,
+   "token": "8"
+  },
+  {
+   "line": 186,
+   "token": "12.35"
+  },
+  {
+   "line": 187,
+   "token": "10"
+  },
+  {
+   "line": 187,
+   "token": "1,102"
+  },
+  {
+   "line": 187,
+   "token": "61.8"
+  },
+  {
+   "line": 187,
+   "token": "3.67"
+  },
+  {
+   "line": 187,
+   "token": "3"
+  },
+  {
+   "line": 188,
+   "token": "10"
+  },
+  {
+   "line": 188,
+   "token": "16,740"
+  },
+  {
+   "line": 188,
+   "token": "200"
+  },
+  {
+   "line": 188,
+   "token": "80"
+  },
+  {
+   "line": 189,
+   "token": "40"
+  },
+  {
+   "line": 189,
+   "token": "6"
+  },
+  {
+   "line": 189,
+   "token": "40"
+  },
+  {
+   "line": 189,
+   "token": "6"
+  },
+  {
+   "line": 189,
+   "token": "24"
+  },
+  {
+   "line": 189,
+   "token": "40"
+  },
+  {
+   "line": 190,
+   "token": "82"
+  },
+  {
+   "line": 190,
+   "token": "140"
+  },
+  {
+   "line": 191,
+   "token": "70"
+  },
+  {
+   "line": 191,
+   "token": "40"
+  },
+  {
+   "line": 191,
+   "token": "5.28"
+  },
+  {
+   "line": 193,
+   "token": "4"
+  },
+  {
+   "line": 194,
+   "token": "4"
+  },
+  {
+   "line": 194,
+   "token": "3"
+  },
+  {
+   "line": 194,
+   "token": "4"
+  },
+  {
+   "line": 217,
    "token": "0.05"
   }
  ],
@@ -343,7 +383,97 @@
    "receipt_ref": "b47_result.json:bimodality_p"
   },
   {
-   "line": 132,
+   "line": 138,
+   "token": "175",
+   "value": 175.0,
+   "decimals": 0,
+   "context": "- **D\u00e9fossez et al., \"Decoding speech perception from non-invasive brain recordings,\" *Nature Machine Intelligence* (2023)** \u2014 n = 175 across four datasets, **n",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 143,
+   "token": "80",
+   "value": 80.0,
+   "decimals": 0,
+   "context": "- **Blankertz et al., \"Neurophysiological predictor of SMR-based BCI performance,\" *NeuroImage* (2010)** \u2014 n = 80, no exclusions, and the numbers are in the tex",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 148,
+   "token": "15",
+   "value": 15.0,
+   "decimals": 0,
+   "context": "**The \"BCI illiteracy\" literature does not rescue us.** The familiar 15\u201330% figure is a utility",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 152,
+   "token": "54",
+   "value": 54.0,
+   "decimals": 0,
+   "context": "island. Lee et al. (*GigaScience* 2019, n = 54 participants) sharpens it further \u2014 below-threshold rates vary",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 156,
+   "token": "7",
+   "value": 7.0,
+   "decimals": 0,
+   "context": "Neurosci.* 2023) scanned 7 subjects and used 3, with no stated exclusion criteria; the NSD",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 156,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "Neurosci.* 2023) scanned 7 subjects and used 3, with no stated exclusion criteria; the NSD",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 157,
+   "token": "4",
+   "value": 4.0,
+   "decimals": 0,
+   "context": "reconstruction literature evaluates on the 4 of 8 subjects who completed all sessions; and",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 157,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "reconstruction literature evaluates on the 4 of 8 subjects who completed all sessions; and",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 163,
+   "token": "94",
+   "value": 94.0,
+   "decimals": 0,
+   "context": "**The premise is weakening too.** NEED (*NeurIPS* 2025) reports retaining ~94% of within-subject",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 173,
+   "token": "4",
+   "value": 4.0,
+   "decimals": 0,
+   "context": "runs 4\u20136, Lee's paradigm specificity. That is **H3 without H1**. We are recording that reduction",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 178,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -352,7 +482,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 140,
+   "line": 186,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -362,7 +492,7 @@
    "receipt_ref": null
   },
   {
-   "line": 140,
+   "line": 186,
    "token": "12.35",
    "value": 12.35,
    "decimals": 2,
@@ -372,7 +502,7 @@
    "receipt_ref": null
   },
   {
-   "line": 141,
+   "line": 187,
    "token": "10",
    "value": 10.0,
    "decimals": 0,
@@ -382,7 +512,7 @@
    "receipt_ref": null
   },
   {
-   "line": 141,
+   "line": 187,
    "token": "1,102",
    "value": 1102.0,
    "decimals": 0,
@@ -392,7 +522,7 @@
    "receipt_ref": null
   },
   {
-   "line": 141,
+   "line": 187,
    "token": "61.8",
    "value": 61.8,
    "decimals": 1,
@@ -402,7 +532,7 @@
    "receipt_ref": null
   },
   {
-   "line": 141,
+   "line": 187,
    "token": "3.67",
    "value": 3.67,
    "decimals": 2,
@@ -412,7 +542,7 @@
    "receipt_ref": null
   },
   {
-   "line": 141,
+   "line": 187,
    "token": "3",
    "value": 3.0,
    "decimals": 0,
@@ -422,7 +552,7 @@
    "receipt_ref": null
   },
   {
-   "line": 142,
+   "line": 188,
    "token": "10",
    "value": 10.0,
    "decimals": 0,
@@ -432,7 +562,7 @@
    "receipt_ref": null
   },
   {
-   "line": 142,
+   "line": 188,
    "token": "16,740",
    "value": 16740.0,
    "decimals": 0,
@@ -442,7 +572,7 @@
    "receipt_ref": null
   },
   {
-   "line": 142,
+   "line": 188,
    "token": "200",
    "value": 200.0,
    "decimals": 0,
@@ -452,7 +582,7 @@
    "receipt_ref": null
   },
   {
-   "line": 142,
+   "line": 188,
    "token": "80",
    "value": 80.0,
    "decimals": 0,
@@ -462,7 +592,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -472,7 +602,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "6",
    "value": 6.0,
    "decimals": 0,
@@ -482,7 +612,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -492,7 +622,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "6",
    "value": 6.0,
    "decimals": 0,
@@ -502,7 +632,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "24",
    "value": 24.0,
    "decimals": 0,
@@ -512,7 +642,7 @@
    "receipt_ref": null
   },
   {
-   "line": 143,
+   "line": 189,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -522,7 +652,7 @@
    "receipt_ref": null
   },
   {
-   "line": 144,
+   "line": 190,
    "token": "82",
    "value": 82.0,
    "decimals": 0,
@@ -532,7 +662,7 @@
    "receipt_ref": null
   },
   {
-   "line": 144,
+   "line": 190,
    "token": "140",
    "value": 140.0,
    "decimals": 0,
@@ -542,7 +672,7 @@
    "receipt_ref": null
   },
   {
-   "line": 145,
+   "line": 191,
    "token": "70",
    "value": 70.0,
    "decimals": 0,
@@ -552,7 +682,7 @@
    "receipt_ref": null
   },
   {
-   "line": 145,
+   "line": 191,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -562,7 +692,7 @@
    "receipt_ref": null
   },
   {
-   "line": 145,
+   "line": 191,
    "token": "5.28",
    "value": 5.28,
    "decimals": 2,
@@ -572,7 +702,7 @@
    "receipt_ref": null
   },
   {
-   "line": 147,
+   "line": 193,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -581,7 +711,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 148,
+   "line": 194,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -590,7 +720,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 148,
+   "line": 194,
    "token": "3",
    "value": 3.0,
    "decimals": 0,
@@ -599,7 +729,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 148,
+   "line": 194,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -608,7 +738,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 171,
+   "line": 217,
    "token": "0.05",
    "value": 0.05,
    "decimals": 2,
