@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b46_cliff_mapped_2026_08_06.md",
+ "document_sha256": "8c75244f5595b51cbfd4dd335bf01770fe09006fa24a01ce472fc66f997807af",
+ "oath": {
+  "counts": {
+   "VERIFIED": 22,
+   "ABSTAIN": 12,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b46_cliff_function_2026_08_06.md",
+   "result": "b46_result.json",
+   "frozen_verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+   "gates": {
+    "G0_baseline_low": true,
+    "G1_bridge_high": true,
+    "G2_monotone": true
+   },
+   "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f",
+   "prereg_commit": "060f8b3ad72f1255b0ff3729d47bd770b8d9bd3d"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "cdb34373a3aec596b9d7eedcd0c485fe079104b5fc22ff54696923dfa8b3e896"
+}

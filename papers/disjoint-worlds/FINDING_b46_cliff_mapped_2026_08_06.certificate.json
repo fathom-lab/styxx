@@ -1,0 +1,395 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b46_cliff_mapped_2026_08_06.md",
+ "document_sha256": "8c75244f5595b51cbfd4dd335bf01770fe09006fa24a01ce472fc66f997807af",
+ "receipts_sha256": {
+  "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 22,
+  "ABSTAIN": 12,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 12,
+   "token": "0"
+  },
+  {
+   "line": 12,
+   "token": "0.15"
+  },
+  {
+   "line": 13,
+   "token": "1"
+  },
+  {
+   "line": 13,
+   "token": "0.30"
+  },
+  {
+   "line": 14,
+   "token": "0.6"
+  },
+  {
+   "line": 27,
+   "token": "0.8"
+  },
+  {
+   "line": 27,
+   "token": "1"
+  },
+  {
+   "line": 29,
+   "token": "0.6"
+  },
+  {
+   "line": 29,
+   "token": "0.8"
+  },
+  {
+   "line": 49,
+   "token": "0.2"
+  },
+  {
+   "line": 49,
+   "token": "0.4"
+  },
+  {
+   "line": 50,
+   "token": "0.6"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 12,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 12,
+   "token": "0.15",
+   "value": 0.15,
+   "decimals": 2,
+   "context": "| G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "0.0612",
+   "value": 0.0612,
+   "decimals": 4,
+   "context": "| G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_baseline_low | max disc at t=0 \u2264 0.15 | 0.0612 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:max_disc_at_t0"
+  },
+  {
+   "line": 13,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 13,
+   "token": "0.30",
+   "value": 0.3,
+   "decimals": 2,
+   "context": "| G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "| G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_bridge_high | min disc at t=1 \u2265 0.30 | 0.9745 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:min_disc_at_t1"
+  },
+  {
+   "line": 14,
+   "token": "0.6",
+   "value": 0.6,
+   "decimals": 1,
+   "context": "| G2_monotone | Spearman(median disc, t) \u2265 0.6 | 1.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_monotone | Spearman(median disc, t) \u2265 0.6 | 1.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| G2_monotone | Spearman(median disc, t) \u2265 0.6 | 1.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_monotone | Spearman(median disc, t) \u2265 0.6 | 1.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.8"
+  },
+  {
+   "line": 20,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| 0.0 | 0.0408 |",
+   "binding_context": "| dose t | median discovery | | 0.0 | 0.0408 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[0]"
+  },
+  {
+   "line": 20,
+   "token": "0.0408",
+   "value": 0.0408,
+   "decimals": 4,
+   "context": "| 0.0 | 0.0408 |",
+   "binding_context": "| dose t | median discovery | | 0.0 | 0.0408 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.0"
+  },
+  {
+   "line": 21,
+   "token": "0.2",
+   "value": 0.2,
+   "decimals": 1,
+   "context": "| 0.2 | 0.0434 |",
+   "binding_context": "| dose t | median discovery | | 0.2 | 0.0434 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[1]"
+  },
+  {
+   "line": 21,
+   "token": "0.0434",
+   "value": 0.0434,
+   "decimals": 4,
+   "context": "| 0.2 | 0.0434 |",
+   "binding_context": "| dose t | median discovery | | 0.2 | 0.0434 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.2"
+  },
+  {
+   "line": 22,
+   "token": "0.4",
+   "value": 0.4,
+   "decimals": 1,
+   "context": "| 0.4 | 0.1122 |",
+   "binding_context": "| dose t | median discovery | | 0.4 | 0.1122 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[2]"
+  },
+  {
+   "line": 22,
+   "token": "0.1122",
+   "value": 0.1122,
+   "decimals": 4,
+   "context": "| 0.4 | 0.1122 |",
+   "binding_context": "| dose t | median discovery | | 0.4 | 0.1122 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.4"
+  },
+  {
+   "line": 23,
+   "token": "0.6",
+   "value": 0.6,
+   "decimals": 1,
+   "context": "| 0.6 | 0.3622 |",
+   "binding_context": "| dose t | median discovery | | 0.6 | 0.3622 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[3]"
+  },
+  {
+   "line": 23,
+   "token": "0.3622",
+   "value": 0.3622,
+   "decimals": 4,
+   "context": "| 0.6 | 0.3622 |",
+   "binding_context": "| dose t | median discovery | | 0.6 | 0.3622 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.6"
+  },
+  {
+   "line": 24,
+   "token": "0.8",
+   "value": 0.8,
+   "decimals": 1,
+   "context": "| 0.8 | 0.9566 |",
+   "binding_context": "| dose t | median discovery | | 0.8 | 0.9566 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[4]"
+  },
+  {
+   "line": 24,
+   "token": "0.9566",
+   "value": 0.9566,
+   "decimals": 4,
+   "context": "| 0.8 | 0.9566 |",
+   "binding_context": "| dose t | median discovery | | 0.8 | 0.9566 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.0.8"
+  },
+  {
+   "line": 25,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| 1.0 | 0.9821 |",
+   "binding_context": "| dose t | median discovery | | 1.0 | 0.9821 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[5]"
+  },
+  {
+   "line": 25,
+   "token": "0.9821",
+   "value": 0.9821,
+   "decimals": 4,
+   "context": "| 1.0 | 0.9821 |",
+   "binding_context": "| dose t | median discovery | | 1.0 | 0.9821 |",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:median_disc_by_t.1.0"
+  },
+  {
+   "line": 27,
+   "token": "0.8",
+   "value": 0.8,
+   "decimals": 1,
+   "context": "Knee at **t\u00bd = 0.8** (first dose crossing half the t=1 median); transition width",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 27,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "Knee at **t\u00bd = 0.8** (first dose crossing half the t=1 median); transition width",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 28,
+   "token": "0.2",
+   "value": 0.2,
+   "decimals": 1,
+   "context": "(quarter-to-three-quarter) **0.2**. Sixty percent of the way to the reader's frame buys about",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:doses[1]"
+  },
+  {
+   "line": 29,
+   "token": "0.6",
+   "value": 0.6,
+   "decimals": 1,
+   "context": "a third of full legibility; the step from t=0.6 to t=0.8 buys most of the rest at once.",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 29,
+   "token": "0.8",
+   "value": 0.8,
+   "decimals": 1,
+   "context": "a third of full legibility; the step from t=0.6 to t=0.8 buys most of the rest at once.",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 49,
+   "token": "343",
+   "value": 343.0,
+   "decimals": 0,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:seeds[0]"
+  },
+  {
+   "line": 49,
+   "token": "0.3214",
+   "value": 0.3214,
+   "decimals": 4,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.2_s343"
+  },
+  {
+   "line": 49,
+   "token": "0.2",
+   "value": 0.2,
+   "decimals": 1,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 49,
+   "token": "0.0281",
+   "value": 0.0281,
+   "decimals": 4,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.4_s343"
+  },
+  {
+   "line": 49,
+   "token": "0.4",
+   "value": 0.4,
+   "decimals": 1,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 49,
+   "token": "1002",
+   "value": 1002.0,
+   "decimals": 0,
+   "context": "transition zone (seed 343 reads 0.3214 at t=0.2 then 0.0281 at t=0.4; seed 1002 dips to",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:seeds[2]"
+  },
+  {
+   "line": 50,
+   "token": "0.0944",
+   "value": 0.0944,
+   "decimals": 4,
+   "context": "0.0944 at t=0.6), which is expected where a near-vertical function meets seed-level frame",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.6_s1002"
+  },
+  {
+   "line": 50,
+   "token": "0.6",
+   "value": 0.6,
+   "decimals": 1,
+   "context": "0.0944 at t=0.6), which is expected where a near-vertical function meets seed-level frame",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 51,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "variation. The medians are perfectly monotone (Spearman 1.0); the per-seed grid ships in the",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t1.0_s343"
+  }
+ ]
+}

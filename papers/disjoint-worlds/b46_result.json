@@ -1,0 +1,58 @@
+{
+  "prereg": "PREREG_b46_cliff_function_2026_08_06.md",
+  "smoke": false,
+  "doses": [
+    0.0,
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1.0
+  ],
+  "seeds": [
+    343,
+    1001,
+    1002
+  ],
+  "k": 20,
+  "grid": {
+    "t0.0_s343": 0.0612,
+    "t0.2_s343": 0.3214,
+    "t0.4_s343": 0.0281,
+    "t0.6_s343": 0.3622,
+    "t0.8_s343": 0.8571,
+    "t1.0_s343": 0.9745,
+    "t0.0_s1001": 0.0408,
+    "t0.2_s1001": 0.0434,
+    "t0.4_s1001": 0.1122,
+    "t0.6_s1001": 0.5842,
+    "t0.8_s1001": 0.9643,
+    "t1.0_s1001": 0.9821,
+    "t0.0_s1002": 0.0306,
+    "t0.2_s1002": 0.0434,
+    "t0.4_s1002": 0.1454,
+    "t0.6_s1002": 0.0944,
+    "t0.8_s1002": 0.9566,
+    "t1.0_s1002": 0.9821
+  },
+  "median_disc_by_t": {
+    "0.0": 0.0408,
+    "0.2": 0.0434,
+    "0.4": 0.1122,
+    "0.6": 0.3622,
+    "0.8": 0.9566,
+    "1.0": 0.9821
+  },
+  "max_disc_at_t0": 0.0612,
+  "min_disc_at_t1": 0.9745,
+  "spearman_mediandisc_vs_t": 1.0,
+  "knee_t_half": 0.8,
+  "transition_width_q1_to_q3": 0.2,
+  "verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+  "gates": {
+    "G0_baseline_low": true,
+    "G1_bridge_high": true,
+    "G2_monotone": true
+  },
+  "prereg_commit": "060f8b3ad72f1255b0ff3729d47bd770b8d9bd3d"
+}
