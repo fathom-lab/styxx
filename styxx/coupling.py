@@ -6,7 +6,15 @@ One instrument for a question this program kept meeting in different costumes:
 * **mind ↔ world** — is a physical room's state coupled to an agent's internal state?
   (``papers/first-afference/``)
 * **mind ↔ brain** — does a decoder's feature stream track a subject's neural stream?
-  **UNTESTED: no neural data has been through this module.** The defaults here
+  **TESTED AND FAILED — do not use this module for neural time series.** On 7 subjects hearing
+  the same story, it licensed intersubject correlation in 1 of 21 pairs, refusing 20 with
+  ``INVALID__autocorrelation_defeats_the_permutation_null``
+  (``papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md``). BOLD is heavily
+  autocorrelated, so a circular shift leaves shared slow structure and the conservative
+  max-of-nulls rule refuses. The control was clean — time-reversed pairs licensed 0 of 21 — so
+  this is a false-negative failure, not a fabrication. The fix is phase-randomisation or
+  block-bootstrap surrogates, and it needs its own exam in BOTH directions before shipping. The
+  defaults here
   (``bin_seconds=60``, ``min_bins=200``) are wrong by two to five orders of magnitude for fMRI
   (TR 1–2 s) or MEG/EEG (milliseconds), and the field standard for this question is a
   cross-validated voxelwise encoding model with held-out prediction *r*, which also answers the

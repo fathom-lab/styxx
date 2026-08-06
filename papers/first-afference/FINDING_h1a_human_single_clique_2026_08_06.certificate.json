@@ -2,15 +2,16 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "FINDING_h1a_human_single_clique_2026_08_06.md",
- "document_sha256": "4934a126403e9aff1886105914522df45152787c5930b420de17ec7e1f3858d0",
+ "document_sha256": "61932b2afdb6e33f2744e617155dfca0f842dae2595c8f9ca2b53b3f1a8c8bb2",
  "receipts_sha256": {
   "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91",
-  "h1a_diptest_addendum.json": "21533eae60747bf026bd62bfbc654c3e059c0fc21be3d2b900003484e2faf669"
+  "h1a_diptest_addendum.json": "21533eae60747bf026bd62bfbc654c3e059c0fc21be3d2b900003484e2faf669",
+  "h1a_amplitude_control.json": "0c6afad90c7052542d580c2bc7fdd3d51fc515ea5ebd88b3f625dc8d3c42c454"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 17,
-  "ABSTAIN": 8,
+  "VERIFIED": 29,
+  "ABSTAIN": 21,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -45,7 +46,59 @@
    "token": "0.1969"
   },
   {
-   "line": 70,
+   "line": 71,
+   "token": "1000"
+  },
+  {
+   "line": 72,
+   "token": "0.05"
+  },
+  {
+   "line": 72,
+   "token": "20000"
+  },
+  {
+   "line": 73,
+   "token": "0.062"
+  },
+  {
+   "line": 74,
+   "token": "7.4"
+  },
+  {
+   "line": 75,
+   "token": "343"
+  },
+  {
+   "line": 81,
+   "token": "25"
+  },
+  {
+   "line": 81,
+   "token": "3.86"
+  },
+  {
+   "line": 81,
+   "token": "6.2"
+  },
+  {
+   "line": 82,
+   "token": "80"
+  },
+  {
+   "line": 86,
+   "token": "1"
+  },
+  {
+   "line": 86,
+   "token": "8"
+  },
+  {
+   "line": 92,
+   "token": "7"
+  },
+  {
+   "line": 108,
    "token": "8"
   }
  ],
@@ -264,7 +317,232 @@
    "receipt_ref": "h1a_diptest_addendum.json:hartigan_dip_p"
   },
   {
-   "line": 70,
+   "line": 71,
+   "token": "1000",
+   "value": 1000.0,
+   "decimals": 0,
+   "context": "p from 1000 permutations; at this value the Monte-Carlo standard error is about a third of the",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 72,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 72,
+   "token": "20000",
+   "value": 20000.0,
+   "decimals": 0,
+   "context": "distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 72,
+   "token": "0.0634",
+   "value": 0.0634,
+   "decimals": 4,
+   "context": "distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:raw.bimodality_p"
+  },
+  {
+   "line": 73,
+   "token": "0.062",
+   "value": 0.062,
+   "decimals": 3,
+   "context": "exhaustive estimate puts the truth near 0.062 \u2014 the published **0.0779 sits at roughly the 98.7th",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 73,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "exhaustive estimate puts the truth near 0.062 \u2014 the published **0.0779 sits at roughly the 98.7th",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:bimodality_p"
+  },
+  {
+   "line": 74,
+   "token": "7.4",
+   "value": 7.4,
+   "decimals": 1,
+   "context": "percentile of its own noise**, and about **7.4% of random seeds return `ISLANDS_PRESENT` on this",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 75,
+   "token": "343",
+   "value": 343.0,
+   "decimals": 0,
+   "context": "identical data at these identical settings**. Seed 343 is this module's documented default and",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 81,
+   "token": "25",
+   "value": 25.0,
+   "decimals": 0,
+   "context": "**about 25% power at the 3.86 SD separation subj08 actually shows**, and would need \u22486.2 SD for",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 81,
+   "token": "3.86",
+   "value": 3.86,
+   "decimals": 2,
+   "context": "**about 25% power at the 3.86 SD separation subj08 actually shows**, and would need \u22486.2 SD for",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 81,
+   "token": "6.2",
+   "value": 6.2,
+   "decimals": 1,
+   "context": "**about 25% power at the 3.86 SD separation subj08 actually shows**, and would need \u22486.2 SD for",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 82,
+   "token": "80",
+   "value": 80.0,
+   "decimals": 0,
+   "context": "80%. And the non-detection was close \u2014 holding the other seven fixed, subj08 would have been",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 83,
+   "token": "0.1496",
+   "value": 0.1496,
+   "decimals": 4,
+   "context": "flagged at 0.1496 against its measured 0.1530, a margin of **0.17 SD**.",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:audit_derived.subj08_flag_threshold"
+  },
+  {
+   "line": 83,
+   "token": "0.1530",
+   "value": 0.153,
+   "decimals": 4,
+   "context": "flagged at 0.1496 against its measured 0.1530, a margin of **0.17 SD**.",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:audit_derived.subj08_measured"
+  },
+  {
+   "line": 83,
+   "token": "0.17",
+   "value": 0.17,
+   "decimals": 2,
+   "context": "flagged at 0.1496 against its measured 0.1530, a margin of **0.17 SD**.",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:normalized.pairwise.subj01__subj08"
+  },
+  {
+   "line": 86,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "confirmation.** Hartigan's dip has **under 1% power against a single island at n = 8** \u2014 flat",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 86,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "confirmation.** Hartigan's dip has **under 1% power against a single island at n = 8** \u2014 flat",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 87,
+   "token": "0.6036",
+   "value": 0.6036,
+   "decimals": 4,
+   "context": "across every separation including infinite. Its p of 0.6036 was not agreement; it was a test with",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_diptest_addendum.json:hartigan_dip_p"
+  },
+  {
+   "line": 92,
+   "token": "7",
+   "value": 7.0,
+   "decimals": 0,
+   "context": "shared per-item *amplitude* profile with no shared geometry whatsoever, and it demonstrated 7\u00d7",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 95,
+   "token": "0.2222",
+   "value": 0.2222,
+   "decimals": 4,
+   "context": "cohort median rises from 0.2222 to 0.2437 against the same 0.0248 null \u2014 9.8\u00d7 rather than",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:cohort_median"
+  },
+  {
+   "line": 95,
+   "token": "0.2437",
+   "value": 0.2437,
+   "decimals": 4,
+   "context": "cohort median rises from 0.2222 to 0.2437 against the same 0.0248 null \u2014 9.8\u00d7 rather than",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:normalized.cohort_median"
+  },
+  {
+   "line": 95,
+   "token": "0.0248",
+   "value": 0.0248,
+   "decimals": 4,
+   "context": "cohort median rises from 0.2222 to 0.2437 against the same 0.0248 null \u2014 9.8\u00d7 rather than",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_result.json:null.p95"
+  },
+  {
+   "line": 95,
+   "token": "9.8",
+   "value": 9.8,
+   "decimals": 1,
+   "context": "cohort median rises from 0.2222 to 0.2437 against the same 0.0248 null \u2014 9.8\u00d7 rather than",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:audit_derived.normalized_ratio_over_null_p95"
+  },
+  {
+   "line": 96,
+   "token": "9.0",
+   "value": 9.0,
+   "decimals": 1,
+   "context": "9.0\u00d7.** The shared frame is not an amplitude artifact. `styxx.islands` now applies this",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:audit_derived.unnormalized_ratio_over_null_p95"
+  },
+  {
+   "line": 100,
+   "token": "0.0866",
+   "value": 0.0866,
+   "decimals": 4,
+   "context": "and it follows under the amplitude control too (gap p 0.0866). What changes is how much the",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:normalized.bimodality_p"
+  },
+  {
+   "line": 108,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -273,7 +551,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 73,
+   "line": 111,
    "token": "0.0779",
    "value": 0.0779,
    "decimals": 4,

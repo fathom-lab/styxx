@@ -2,11 +2,11 @@
  "seal": "seal/v0",
  "verdict": "SEALED",
  "document": "FINDING_h1a_human_single_clique_2026_08_06.md",
- "document_sha256": "4934a126403e9aff1886105914522df45152787c5930b420de17ec7e1f3858d0",
+ "document_sha256": "61932b2afdb6e33f2744e617155dfca0f842dae2595c8f9ca2b53b3f1a8c8bb2",
  "oath": {
   "counts": {
-   "VERIFIED": 17,
-   "ABSTAIN": 8,
+   "VERIFIED": 29,
+   "ABSTAIN": 21,
    "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD"
@@ -26,5 +26,5 @@
   }
  ],
  "refusals": [],
- "seal_sha256": "85c08fa567bf372ec16271c782adde2d2a4f2abb6b1b2c4bba9828d27356b034"
+ "seal_sha256": "7485507944b925c7bba141fd4f3a54b41c0b18221ca2719ae2bb652388ed8a2f"
 }

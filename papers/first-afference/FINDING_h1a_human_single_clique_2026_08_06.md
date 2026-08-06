@@ -62,6 +62,44 @@ the screen and sitting further from the bar. Receipt: the diptest addendum commi
 finding. The screen is the more liberal of the two here, so its non-flag is the stronger
 statement.
 
+## ERRATUM — 2026-08-06, hours after publication, from an adversarial audit of our own instrument
+
+An internal red team attacked `styxx.islands` and impeached parts of this document. Three
+corrections, in descending order of how much they cost us.
+
+**1. The reported p was a lucky draw, and the honest number is worse.** `_gap_p` estimated its
+p from 1000 permutations; at this value the Monte-Carlo standard error is about a third of the
+distance to the 0.05 bar. Re-run at 20000 permutations the value is **0.0634**, and an
+exhaustive estimate puts the truth near 0.062 — the published **0.0779 sits at roughly the 98.7th
+percentile of its own noise**, and about **7.4% of random seeds return `ISLANDS_PRESENT` on this
+identical data at these identical settings**. Seed 343 is this module's documented default and
+appears throughout the repo, so this is coincidence rather than seed-shopping. It is still a
+number a reader would have taken as more stable than it is. `n_perm` now defaults to 100000.
+
+**2. "Weak evidence of absence" was too generous; the honest phrase is "almost no evidence of
+absence."** The audit measured the screen's power directly: against a single island it has
+**about 25% power at the 3.86 SD separation subj08 actually shows**, and would need ≈6.2 SD for
+80%. And the non-detection was close — holding the other seven fixed, subj08 would have been
+flagged at 0.1496 against its measured 0.1530, a margin of **0.17 SD**.
+
+**3. The "confirmed against the reference statistic" section above is vacuous and is withdrawn as
+confirmation.** Hartigan's dip has **under 1% power against a single island at n = 8** — flat
+across every separation including infinite. Its p of 0.6036 was not agreement; it was a test with
+no capacity to disagree. It is retained as a reported number, not as support.
+
+**What we tested rather than conceded, and what survived.** The audit's sharpest claim was that
+this document's headline — a shared frame at nine times the null — can be manufactured by a
+shared per-item *amplitude* profile with no shared geometry whatsoever, and it demonstrated 7×
+that way on synthetic data. We had deleted the betas; we re-derived them and ran the control.
+**With every item's response vector unit-normalised, killing the amplitude channel entirely, the
+cohort median rises from 0.2222 to 0.2437 against the same 0.0248 null — 9.8× rather than
+9.0×.** The shared frame is not an amplitude artifact. `styxx.islands` now applies this
+normalisation by default (`normalize_amplitude=True`).
+
+**None of this changes the verdict.** `HUMAN_SINGLE_CLIQUE` still follows from the frozen gates,
+and it follows under the amplitude control too (gap p 0.0866). What changes is how much the
+non-detection is worth: less than this document originally implied.
+
 ## Limits, which are severe and were fixed before the run
 
 - **This measures alignment, not decoding accuracy.** H1 proper is about accuracy. Our own b46

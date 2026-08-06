@@ -47,10 +47,28 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 
 __all__ = ["frame", "affinity", "survey", "cliff", "rescue", "hartigan_dip_p",
+           "normalize_items",
            "CohortSurvey", "MIN_COHORT"]
 
 MIN_COHORT = 8          # below this, bimodality has no power and the verdict refuses
 _DEF_K = 20
+
+
+def normalize_items(X: np.ndarray) -> np.ndarray:
+    """Center each item's response vector and scale it to unit norm.
+
+    **The amplitude control, and it is not optional in practice.** Frame affinity can be driven
+    entirely by a per-item *magnitude* profile that every member shares, with independent
+    geometry: in fMRI, "some stimuli simply drive the region harder in everybody" is a certainty,
+    not a hypothesis. Red team 2026-08-06: independent members sharing only a lognormal item
+    amplitude profile (spread 0.5) reached 22.4x the random-frame null — more than twice the
+    9.0x this lab published as an "emphatic" shared frame. Normalising items removes that channel
+    and leaves genuine shared geometry intact (verified: a real shared latent survives at
+    0.4667 vs 0.4141 unnormalised).
+    """
+    X = np.asarray(X, dtype=float)
+    Xc = X - X.mean(1, keepdims=True)
+    return Xc / (np.linalg.norm(Xc, axis=1, keepdims=True) + 1e-12)
 
 
 def frame(X: np.ndarray, k: int = _DEF_K) -> np.ndarray:
@@ -60,6 +78,11 @@ def frame(X: np.ndarray, k: int = _DEF_K) -> np.ndarray:
     directly comparable, and it is the construction the disjoint-worlds arc measured.
     """
     X = np.asarray(X, dtype=float)
+    if not np.isfinite(X).all():
+        raise ValueError("frame(): input contains NaN or inf. numpy.linalg.eigh propagates "
+                         "these silently, and a NaN affinity vector made _gap_p return a "
+                         "constant 1/(n_perm+1) — i.e. ISLANDS_PRESENT, deterministically, "
+                         "with an empty islands list and no caveat (red team 2026-08-06).")
     Xc = X - X.mean(0)
     G = Xc @ Xc.T
     n = G.shape[0]
@@ -116,7 +139,10 @@ def _gap_p(values: np.ndarray, n_perm: int, seed: int) -> float:
     scoring the H1 human-islands prediction (``papers/disjoint-worlds/PREDICTION_h1_*``), that
     gate's reference statistic is Hartigan's dip — report whichever you use under its own name.
     """
-    v = np.sort(np.asarray(values, dtype=float))
+    v = np.asarray(values, dtype=float)
+    if not np.isfinite(v).all():
+        return float("nan")          # never emit a verdict from a non-finite statistic
+    v = np.sort(v)
     if len(v) < 3 or v[-1] - v[0] <= 0:
         return 1.0
     obs = float(np.max(np.diff(v)) / (v[-1] - v[0]))
@@ -141,8 +167,9 @@ class CohortSurvey:
     islands: list                        # candidate islands under the stated rule
     null: dict                           # the random-frame null this is measured against
     bimodality_p: float                  # gap screen, NOT Hartigan's dip — see _gap_p
-    cohort_median: float
-    island_rule: str
+    cohort_median: float                 # median of per-member MEAN affinities (not pairwise)
+    median_pairwise_affinity: float = 0.0
+    island_rule: str = ""
     caveats: list = field(default_factory=list)
 
     def to_dict(self) -> dict:
@@ -159,8 +186,9 @@ class CohortSurvey:
         return head + rows + "".join(f"  ! {c}\n" for c in self.caveats)
 
 
-def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
-           seed: int = 343, island_z: float = 1.0) -> CohortSurvey:
+def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 100_000,
+           seed: int = 343, island_z: float = 1.0,
+           normalize_amplitude: bool = True) -> CohortSurvey:
     """Measure a cohort of minds over a shared item set.
 
     ``reps`` maps member name -> ``(n_items, dim)`` array. Item order must be identical across
@@ -176,6 +204,8 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
         raise ValueError(f"members must share the item set; got item counts {sorted(ns)}")
     n_items = ns.pop()
 
+    if normalize_amplitude:
+        reps = {m: normalize_items(v) for m, v in reps.items()}
     U = {m: frame(reps[m], k) for m in names}
     kk = min(u.shape[1] for u in U.values())
     pairwise = {f"{a}__{b}": round(affinity(U[a][:, :kk], U[b][:, :kk]), 4)
@@ -185,6 +215,7 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
 
     vals = np.array([mean_aff[m] for m in names])
     med = float(np.median(vals))
+    med_pairwise = float(np.median(list(pairwise.values())))
     mad = float(np.median(np.abs(vals - med))) or float(vals.std()) or 1e-9
     cut = med - island_z * 1.4826 * mad
     islands = [m for m in names if mean_aff[m] < cut]
@@ -192,6 +223,12 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
     bp = _gap_p(vals, n_perm, seed)
 
     caveats = []
+    if n_items < 3 * kk:
+        caveats.append(
+            f"{n_items} items against k={kk}: the random-frame null is drawn in R^n while frames "
+            f"live in the centered (n-1) subspace, so the null is systematically too easy at this "
+            f"ratio. At n_items <= ~1.5k, pure noise passes the shared-frame gate. Use "
+            f"n_items >= 3k.")
     if len(names) < MIN_COHORT:
         verdict = "UNDERPOWERED__n_below_8"
         caveats.append(f"{len(names)} members: bimodality is not testable and no inferential "
@@ -200,6 +237,13 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
         verdict = "ISLANDS_PRESENT"
     else:
         verdict = "UNIMODAL_COHORT"
+    if med_pairwise <= null["p95"] < med:
+        caveats.append(
+            f"the MEAN-of-means ({round(med, 4)}) clears the null but the true median PAIRWISE "
+            f"affinity ({round(med_pairwise, 4)}) does not. That pattern is the signature of a "
+            f"COHORT SPLIT: two internally-legible groups that cannot read each other leave the "
+            f"per-member means flat. This screen cannot see a balanced split — inspect `pairwise` "
+            f"directly.")
     if med <= null["p95"]:
         caveats.append("cohort median affinity does not clear the random-frame null — these "
                        "members do not share a frame at all, so 'island' is not the right "
@@ -207,6 +251,7 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 1000,
     return CohortSurvey(verdict=verdict, members=names, k=kk, n_items=n_items,
                         pairwise=pairwise, mean_affinity=mean_aff, islands=islands, null=null,
                         bimodality_p=bp, cohort_median=round(med, 4),
+                        median_pairwise_affinity=round(med_pairwise, 4),
                         island_rule=f"mean affinity < median - {island_z}*1.4826*MAD = "
                                     f"{round(cut, 4)}", caveats=caveats)
 

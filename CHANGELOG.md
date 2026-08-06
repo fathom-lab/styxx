@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.33.0] — 2026-08-06 — islands hardened after an adversarial audit; the mind-brain claim WITHDRAWN
+
+### Changed — `styxx.coupling`
+- **The mind↔brain application is withdrawn, not softened.** It was marked UNTESTED; it is now
+  tested and it fails. On seven subjects hearing the same story it licensed intersubject
+  correlation in **1 of 21 pairs**, refusing 20 for autocorrelation — while correctly licensing
+  **0 of 21** time-reversed controls. A false-negative failure, not a fabrication, and the
+  mechanism is analytic: BOLD's autocorrelation means a circular shift preserves shared slow
+  structure, so the conservative max-of-nulls rule refuses. The refusal added in 7.31.2 to stop a
+  false positive on synthetic AR(1) streams made the instrument unusable on the most established
+  real signal in its intended domain. Both directions of its calibration are now measured and
+  neither is satisfactory. Do not use it for neural time series.
+
+### Fixed — `styxx.islands`, from an adversarial audit
+- **A single NaN returned `ISLANDS_PRESENT`, deterministically.** `eigh` propagates NaN silently;
+  `_gap_p`'s range guard is skipped for NaN; every null comparison against NaN is False, so
+  `p = 1/(n_perm+1)` — always ≤ 0.05 — with an empty islands list and no caveat. `frame()` now
+  raises on non-finite input and `_gap_p` returns `nan`.
+- **Shared per-item amplitude manufactured a "shared frame" at up to 22× the null with no shared
+  geometry.** Added `normalize_items` and made it the default (`normalize_amplitude=True`). Our
+  own published h1a headline was re-run against this control and **survived** — 9.0× becomes
+  9.8× — but it could not have been known without the test.
+- **`n_perm` default raised 1000 → 100000.** At the published h1a value the Monte-Carlo standard
+  error was a third of the distance to the bar; the reported p sat near the 98.7th percentile of
+  its own noise and ~7.4% of seeds flipped the verdict on identical data.
+- **The screen is blind to balanced cohort splits by construction** — collapsing to per-member
+  means leaves a two-community cohort exactly flat (missed 10/10 at n=8, 16 and 40). Added
+  `median_pairwise_affinity` and a caveat that fires on the mean-clears-but-pairwise-does-not
+  signature, which is that split's fingerprint.
+- **`cohort_median` was the median of per-member *means*, printed and published as "median
+  pairwise affinity."** Both are now reported under honest names.
+- Added an `n_items < 3k` caveat: the Haar null is drawn in ℝⁿ while frames live in the centered
+  (n−1) subspace, so below roughly 1.5k items pure noise passes the shared-frame gate.
+
+### Known and NOT fixed
+- `_gap_p` is a skew/outlier detector, not a bimodality test: on heteroscedastic-but-exchangeable
+  cohorts it flags at 3–7× nominal, and against a *genuinely* bimodal split it has less power
+  than against pure noise. Hartigan's dip is the inverse. Both are now documented as testing
+  different alternatives; neither is a general bimodality test at small n.
+- Hartigan's dip has **under 1% power against a single island at n = 8**, flat across every
+  separation. Where this repo previously cited its non-flag as "confirmation," that has been
+  withdrawn.
+
 ## [7.32.1] — 2026-08-06 — **sense recalled and hardened after an adversarial audit; 7.32.0 yanked**
 
 An internal red team was pointed at `styxx.sense` hours after it shipped and broke it three

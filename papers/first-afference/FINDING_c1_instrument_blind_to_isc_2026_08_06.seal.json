@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+ "document_sha256": "08f1f9a7ea40396aa9a33a0f120fef6cfb9585bddacb0c6cea5d6346998f82d9",
+ "oath": {
+  "counts": {
+   "VERIFIED": 6,
+   "ABSTAIN": 5,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "papers/first-afference/PREREG_c1_coupling_on_neural_timeseries_2026_08_06.md",
+   "result": "papers/first-afference/c1_result.json",
+   "frozen_verdict": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+   "gates": {
+    "G0_pairs": true,
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true
+   },
+   "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f",
+   "prereg_commit": "9f8cedbce3146cac68075d64295cd35e3a71e571"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "25256ee4a8896febb4803fc863a97d33c7fcd280f200483c71daed9464a252f7"
+}

@@ -1,0 +1,146 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+ "document_sha256": "08f1f9a7ea40396aa9a33a0f120fef6cfb9585bddacb0c6cea5d6346998f82d9",
+ "receipts_sha256": {
+  "c1_result.json": "11938e83869a4ddacaa66edc37d27b2ea24e7f6bd9236c049de8102f30fbc4d8"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 6,
+  "ABSTAIN": 5,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "21"
+  },
+  {
+   "line": 13,
+   "token": "21"
+  },
+  {
+   "line": 14,
+   "token": "0.80"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 26,
+   "token": "95"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "21",
+   "value": 21.0,
+   "decimals": 0,
+   "context": "| G0_pairs | \u2265 21 pairs | 21 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_pairs | \u2265 21 pairs | 21 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "21",
+   "value": 21.0,
+   "decimals": 0,
+   "context": "| G0_pairs | \u2265 21 pairs | 21 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_pairs | \u2265 21 pairs | 21 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "| G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.0476",
+   "value": 0.0476,
+   "decimals": 4,
+   "context": "| G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:frac_real_coupled"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_rejects_reversed | \u2264 0.10 of reversed pairs licensed | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 of reversed pairs licensed | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G2_rejects_reversed | \u2264 0.10 of reversed pairs licensed | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 of reversed pairs licensed | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:reversed.sub-001__sub-002.matched_p"
+  },
+  {
+   "line": 17,
+   "token": "21",
+   "value": 21.0,
+   "decimals": 0,
+   "context": "Seven subjects hearing the same story, all 21 pairs, 500 fixed vertices in a common surface",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:n_pairs"
+  },
+  {
+   "line": 17,
+   "token": "500",
+   "value": 500.0,
+   "decimals": 0,
+   "context": "Seven subjects hearing the same story, all 21 pairs, 500 fixed vertices in a common surface",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:n_vertices"
+  },
+  {
+   "line": 26,
+   "token": "95",
+   "value": 95.0,
+   "decimals": 0,
+   "context": "it in 95 percent of pairs.",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 53,
+   "token": "20",
+   "value": 20.0,
+   "decimals": 0,
+   "context": "- After 7.31.2, it refuses **genuinely coupled** neural time series, 20/21.",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:real_verdict_counts.INVALID__autocorrelation_defeats_the_permutation_null"
+  },
+  {
+   "line": 71,
+   "token": "500",
+   "value": 500.0,
+   "decimals": 0,
+   "context": "Seven subjects, one story, one hemisphere, 500 vertices, one run, one parameterisation. A",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:n_vertices"
+  }
+ ]
+}

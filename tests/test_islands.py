@@ -41,8 +41,14 @@ def test_survey_finds_the_planted_island():
 
 
 def test_survey_finds_no_island_when_none_planted():
-    s = survey(_cohort(island=False), k=6, n_null=100, n_perm=100)
-    assert s.islands == []
+    """Assert the VERDICT, not an empty `.islands` list.
+
+    The MAD rule `median - 1.4826*MAD` sits ~1 SD below the median, so it names roughly 15% of
+    members unconditionally — on a cohort of 8 the list is non-empty about 80% of the time even
+    on pure noise (red team 2026-08-06). The list is a lead; only the bimodality gate is a claim.
+    """
+    s = survey(_cohort(island=False), k=6, n_null=100, n_perm=1000)
+    assert s.verdict != "ISLANDS_PRESENT"
 
 
 def test_survey_refuses_a_verdict_below_min_cohort():

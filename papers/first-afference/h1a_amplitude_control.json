@@ -1,0 +1,147 @@
+{
+  "raw": {
+    "verdict": "UNIMODAL_COHORT",
+    "members": [
+      "subj01",
+      "subj02",
+      "subj03",
+      "subj04",
+      "subj05",
+      "subj06",
+      "subj07",
+      "subj08"
+    ],
+    "k": 20,
+    "n_items": 907,
+    "pairwise": {
+      "subj01__subj02": 0.3572,
+      "subj01__subj03": 0.263,
+      "subj01__subj04": 0.227,
+      "subj01__subj05": 0.282,
+      "subj01__subj06": 0.2328,
+      "subj01__subj07": 0.2523,
+      "subj01__subj08": 0.1483,
+      "subj02__subj03": 0.2758,
+      "subj02__subj04": 0.2341,
+      "subj02__subj05": 0.2834,
+      "subj02__subj06": 0.2292,
+      "subj02__subj07": 0.2463,
+      "subj02__subj08": 0.1766,
+      "subj03__subj04": 0.2292,
+      "subj03__subj05": 0.2499,
+      "subj03__subj06": 0.2192,
+      "subj03__subj07": 0.2124,
+      "subj03__subj08": 0.1618,
+      "subj04__subj05": 0.2406,
+      "subj04__subj06": 0.2157,
+      "subj04__subj07": 0.2008,
+      "subj04__subj08": 0.1522,
+      "subj05__subj06": 0.2411,
+      "subj05__subj07": 0.246,
+      "subj05__subj08": 0.1598,
+      "subj06__subj07": 0.186,
+      "subj06__subj08": 0.1402,
+      "subj07__subj08": 0.1323
+    },
+    "mean_affinity": {
+      "subj01": 0.2518,
+      "subj02": 0.2575,
+      "subj03": 0.2302,
+      "subj04": 0.2142,
+      "subj05": 0.2433,
+      "subj06": 0.2092,
+      "subj07": 0.2109,
+      "subj08": 0.153
+    },
+    "islands": [
+      "subj08"
+    ],
+    "null": {
+      "expectation": 0.0221,
+      "p95": 0.0248,
+      "max": 0.0266,
+      "n_draws": 1000
+    },
+    "bimodality_p": 0.0634,
+    "cohort_median": 0.2222,
+    "median_pairwise_affinity": 0.2292,
+    "island_rule": "mean affinity < median - 1.0*1.4826*MAD = 0.1969",
+    "caveats": []
+  },
+  "normalized": {
+    "verdict": "UNIMODAL_COHORT",
+    "members": [
+      "subj01",
+      "subj02",
+      "subj03",
+      "subj04",
+      "subj05",
+      "subj06",
+      "subj07",
+      "subj08"
+    ],
+    "k": 20,
+    "n_items": 907,
+    "pairwise": {
+      "subj01__subj02": 0.3607,
+      "subj01__subj03": 0.2894,
+      "subj01__subj04": 0.2491,
+      "subj01__subj05": 0.2902,
+      "subj01__subj06": 0.2621,
+      "subj01__subj07": 0.2644,
+      "subj01__subj08": 0.1741,
+      "subj02__subj03": 0.296,
+      "subj02__subj04": 0.2541,
+      "subj02__subj05": 0.2906,
+      "subj02__subj06": 0.2538,
+      "subj02__subj07": 0.2609,
+      "subj02__subj08": 0.2105,
+      "subj03__subj04": 0.2449,
+      "subj03__subj05": 0.2693,
+      "subj03__subj06": 0.2423,
+      "subj03__subj07": 0.2328,
+      "subj03__subj08": 0.1935,
+      "subj04__subj05": 0.2633,
+      "subj04__subj06": 0.2332,
+      "subj04__subj07": 0.2234,
+      "subj04__subj08": 0.1755,
+      "subj05__subj06": 0.2683,
+      "subj05__subj07": 0.2588,
+      "subj05__subj08": 0.1909,
+      "subj06__subj07": 0.2097,
+      "subj06__subj08": 0.1656,
+      "subj07__subj08": 0.1567
+    },
+    "mean_affinity": {
+      "subj01": 0.27,
+      "subj02": 0.2752,
+      "subj03": 0.2526,
+      "subj04": 0.2348,
+      "subj05": 0.2616,
+      "subj06": 0.2336,
+      "subj07": 0.2295,
+      "subj08": 0.181
+    },
+    "islands": [
+      "subj08"
+    ],
+    "null": {
+      "expectation": 0.0221,
+      "p95": 0.0248,
+      "max": 0.0266,
+      "n_draws": 1000
+    },
+    "bimodality_p": 0.0866,
+    "cohort_median": 0.2437,
+    "median_pairwise_affinity": 0.2515,
+    "island_rule": "mean affinity < median - 1.0*1.4826*MAD = 0.2199",
+    "caveats": []
+  },
+  "audit_derived": {
+    "note": "Numbers quoted in the h1a erratum that come from the 2026-08-06 adversarial audit of styxx.islands. The flag threshold is recomputed here from the published affinity vector; the ratio is computed from this file's own normalized survey.",
+    "subj08_flag_threshold": 0.1496,
+    "subj08_measured": 0.153,
+    "normalized_ratio_over_null_p95": 9.8,
+    "unnormalized_ratio_over_null_p95": 9.0
+  }
+}
