@@ -21,13 +21,17 @@ def _harness(tmp_path, n=260, coupled=True, seed=0):
     else:
         ch = Channel("s", lambda: rng.standard_normal(3).tolist())
     store = tmp_path / "sense.jsonl"
-    h = SenseHarness(agent_state, store=store, bin_seconds=1.0)
+    # 60 s bins spanning ~4.3 h: the hour-of-day confound needs a window LONGER THAN AN HOUR or
+    # every bin lands in one stratum and the matched null silently degenerates to the free
+    # shuffle. The earlier version of this fixture used 1 s bins over 260 s and did exactly that,
+    # so the flagship positive test was not testing a confound at all (red team, 2026-08-06).
+    h = SenseHarness(agent_state, store=store, bin_seconds=60.0)
     h.register("sensor", ch)
     rows = []
-    t0 = time.time()
+    t0 = 1_780_000_000.0
     for i in range(n):
         r = h.sample()
-        r["ts"] = t0 + i * 1.0
+        r["ts"] = t0 + i * 60.0
         rows.append(r)
     store.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
     return h
@@ -103,6 +107,66 @@ def test_host_channel_reads_the_machine():
     assert set(v) == set(ch.labels)
     assert all(isinstance(x, float) for x in v.values())
     assert 0.0 <= v["mem_percent"] <= 100.0
+
+
+def test_a_single_stratum_confound_is_refused_not_relabelled(tmp_path):
+    """A confound that takes one value across every bin IS the free shuffle. Reporting that as
+    'beyond confound' is the exact overclaim this module exists to prevent."""
+    h = _harness(tmp_path, coupled=True)
+    r = h.ask("sensor", confound=lambda b: np.zeros(len(np.asarray(b)), dtype=int),
+              n_perm=100, min_bins=200)
+    assert r.verdict == "FREE_SHUFFLE_ONLY__confound_degenerate"
+    assert r.licensed is False
+    assert any("SINGLE value" in c for c in r.caveats)
+
+
+def test_licensed_is_the_source_of_truth_not_the_verdict_string(tmp_path):
+    """Two refusals were once named COUPLED__*, so `startswith("COUPLED")` — the obvious idiom —
+    turned them into positives for any caller."""
+    from styxx.coupling import Coupling
+    r = _harness(tmp_path, coupled=True).ask("sensor", n_perm=100, min_bins=200)
+    assert isinstance(r.licensed, bool)
+    assert r.licensed == r.verdict.startswith("COUPLED_BEYOND_CONFOUND")
+
+
+def test_a_nonfinite_reading_is_a_gap_not_a_zero(tmp_path):
+    """The headline red-team break: nan_to_num turned every gap into a shared sentinel zero, and
+    a stall clock common to two recorders then read as coupling on 8/8 seeds."""
+    h = SenseHarness(lambda: [1.0, float("nan")], store=tmp_path / "s.jsonl", bin_seconds=60.0)
+    h.register("c", Channel("c", lambda: [1.0, 2.0]))
+    row = h.sample()
+    assert row["agent"] is None, "a partly-NaN reading must be a gap"
+    h2 = SenseHarness(lambda: [1.0, 2.0], store=tmp_path / "s2.jsonl", bin_seconds=60.0)
+    h2.register("c", Channel("c", lambda: [1.0, float("inf")]))
+    row2 = h2.sample()
+    assert row2["c"] is None and "c" in row2["errors"]
+
+
+def test_jsonl_channel_rejects_bare_nan_literals(tmp_path):
+    """json.dumps(float('nan')) emits a bare NaN that json.loads parses back to a float, so a
+    stock-library writer can hand this channel a non-finite value past an isinstance check."""
+    p = tmp_path / "log.jsonl"
+    p.write_text('{"a": 1.0, "b": NaN}\n', encoding="utf-8")
+    assert jsonl_channel(p, ["a", "b"]).read() is None
+    p.write_text('{"a": 1.0, "b": Infinity}\n', encoding="utf-8")
+    assert jsonl_channel(p, ["a", "b"]).read() is None
+
+
+def test_jsonl_channel_max_age_rejects_a_stale_row(tmp_path):
+    """A log that writes less often than the harness samples yields the same row repeatedly;
+    duplicate rows inflate n without inflating effective n and the null becomes far too tight."""
+    p = tmp_path / "log.jsonl"
+    p.write_text(json.dumps({"ts": time.time() - 10_000, "a": 1.0}) + "\n", encoding="utf-8")
+    assert jsonl_channel(p, ["a"], max_age=120).read() is None
+    p.write_text(json.dumps({"ts": time.time(), "a": 1.0}) + "\n", encoding="utf-8")
+    assert jsonl_channel(p, ["a"], max_age=120).read() == [1.0]
+
+
+def test_jsonl_channel_survives_a_trailing_blank_line(tmp_path):
+    """A single trailing blank line used to kill a channel permanently and silently."""
+    p = tmp_path / "log.jsonl"
+    p.write_text(json.dumps({"a": 1.0}) + "\n\n   \n", encoding="utf-8")
+    assert jsonl_channel(p, ["a"]).read() == [1.0]
 
 
 def test_channels_that_change_width_midrun_are_dropped_not_padded(tmp_path):

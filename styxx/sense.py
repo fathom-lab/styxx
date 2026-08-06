@@ -31,6 +31,7 @@ Open by design (``docs/governance/OPEN_CORE.md``): a measurement primitive, neve
 from __future__ import annotations
 
 import json
+import math
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -42,12 +43,25 @@ from styxx.coupling import couple
 __all__ = ["SenseHarness", "host_channel", "jsonl_channel", "Channel"]
 
 
-def _flatten(v) -> np.ndarray:
-    """Accept dict / sequence / scalar and return a finite 1-D float vector."""
+def _flatten(v):
+    """dict / sequence / scalar -> 1-D float vector, or ``None`` if it is not a clean reading.
+
+    **A partly-broken reading is a broken reading.** An earlier version called ``nan_to_num``
+    here, which silently turned every gap into a shared sentinel zero — and a stall clock common
+    to two recorders then reads as coupling. Red-team 2026-08-06: a recorder stalling more often
+    than once every twenty minutes was a 100 percent false-positive machine through this path
+    alone. The module's own principle is that a zero is a measurement and a gap is not; this
+    function is where that has to be true.
+    """
     if isinstance(v, dict):
         v = [v[k] for k in sorted(v)]
-    a = np.atleast_1d(np.asarray(v, dtype=float)).ravel()
-    return np.nan_to_num(a, nan=0.0, posinf=0.0, neginf=0.0)
+    try:
+        a = np.atleast_1d(np.asarray(v, dtype=float)).ravel()
+    except (TypeError, ValueError):
+        return None
+    if a.size == 0 or not np.isfinite(a).all():
+        return None
+    return a
 
 
 @dataclass
@@ -69,34 +83,55 @@ def host_channel():
     import psutil
 
     psutil.cpu_percent(percpu=False)          # prime the delta-based counters
-    net0 = psutil.net_io_counters()
-    dsk0 = psutil.disk_io_counters()
-    state = {"net": net0, "dsk": dsk0}
+    state = {"net": psutil.net_io_counters(), "dsk": psutil.disk_io_counters(),
+             "t": time.time()}
 
     def read():
+        now = time.time()
+        dt = max(now - state["t"], 1e-6)
         vm = psutil.virtual_memory()
         net, dsk = psutil.net_io_counters(), psutil.disk_io_counters()
         out = {
             "cpu_percent": float(psutil.cpu_percent(percpu=False)),
             "mem_percent": float(vm.percent),
             "mem_available_gb": float(vm.available) / 1e9,
-            "net_sent_delta": float(net.bytes_sent - state["net"].bytes_sent),
-            "net_recv_delta": float(net.bytes_recv - state["net"].bytes_recv),
-            "disk_read_delta": float((dsk.read_bytes - state["dsk"].read_bytes) if dsk else 0.0),
-            "disk_write_delta": float((dsk.write_bytes - state["dsk"].write_bytes) if dsk else 0.0),
+            # RATES, not counter deltas. A raw delta is rate x dt, and dt is the RECORDER'S own
+            # loop period — longer when the machine is busy, which is when the agent is busy.
+            # Red-team 2026-08-06: with deltas this channel reported the agent coupled to a
+            # network whose true rate was a literal constant, on 8 of 8 seeds.
+            "net_sent_bps": float(net.bytes_sent - state["net"].bytes_sent) / dt,
+            "net_recv_bps": float(net.bytes_recv - state["net"].bytes_recv) / dt,
+            "disk_read_bps": (float(dsk.read_bytes - state["dsk"].read_bytes) / dt) if dsk else 0.0,
+            "disk_write_bps": (float(dsk.write_bytes - state["dsk"].write_bytes) / dt) if dsk else 0.0,
             "load_proc_count": float(len(psutil.pids())),
         }
-        state["net"], state["dsk"] = net, dsk
+        state["net"], state["dsk"], state["t"] = net, dsk, now
         return out
 
     return Channel("host", read, labels=sorted(read().keys()))
 
 
-def jsonl_channel(path, fields: list, name: str = None):
+def _reject_constants(x):
+    raise ValueError(f"non-finite JSON literal {x!r}")
+
+
+def jsonl_channel(path, fields: list, name: str = None, ts_field: str = "ts",
+                  max_age: float = None):
     """A channel backed by an append-only JSONL file — e.g. an agent's own cognometric log.
 
-    Reads the LAST line each sample. Rows missing any field are reported as unavailable rather
-    than zero-filled, because a zero is a measurement and a gap is not.
+    Reads the LAST line each sample. A row missing any field, carrying a non-finite value, or
+    **older than ``max_age`` seconds** is reported as unavailable rather than as data.
+
+    ``max_age`` matters more than it looks. Without it, a log that writes less often than the
+    harness samples yields the same row over and over; duplicate rows inflate *n* without
+    inflating effective *n*, so the permutation null is drawn at the inflated *n* and is far too
+    tight. Red-team 2026-08-06: with two logs whose write moments were gated by the same busy
+    machine, up to 56 percent of runs on INDEPENDENT data returned a licensed positive. Set it to
+    roughly one sample interval.
+
+    ``NaN``/``Infinity`` are rejected explicitly: ``json.dumps(float("nan"))`` emits a bare
+    ``NaN`` literal that ``json.loads`` parses straight back to a float, so a stock-library writer
+    can hand this channel a non-finite value that passes an ``isinstance`` check.
     """
     path = Path(path)
 
@@ -105,18 +140,27 @@ def jsonl_channel(path, fields: list, name: str = None):
             with open(path, "rb") as f:
                 f.seek(0, 2)
                 end = f.tell()
-                back = min(end, 65536)
-                f.seek(end - back)
-                last = f.read().splitlines()[-1].decode("utf-8", "replace")
-            r = json.loads(last)
+                f.seek(max(0, end - 65536))
+                lines = [ln for ln in f.read().splitlines() if ln.strip()]
+            if not lines:
+                return None
+            r = json.loads(lines[-1].decode("utf-8", "replace"),
+                           parse_constant=_reject_constants)
         except Exception:
             return None
+        if max_age is not None:
+            ts = r.get(ts_field)
+            if not isinstance(ts, (int, float)) or (time.time() - float(ts)) > max_age:
+                return None                       # a stale read is not a measurement
         vals = []
         for k in fields:
             v = r.get(k)
-            if isinstance(v, (int, float)):
+            if isinstance(v, bool):
                 vals.append(float(v))
-            elif isinstance(v, (list, tuple)) and all(isinstance(x, (int, float)) for x in v):
+            elif isinstance(v, (int, float)) and math.isfinite(v):
+                vals.append(float(v))
+            elif isinstance(v, (list, tuple)) and v and all(
+                    isinstance(x, (int, float)) and math.isfinite(x) for x in v):
                 vals.extend(float(x) for x in v)
             else:
                 return None
@@ -146,14 +190,18 @@ class SenseHarness:
         ts = time.time()
         row = {"ts": ts}
         a = self.agent_state()
-        row["agent"] = None if a is None else _flatten(a).tolist()
+        fa = None if a is None else _flatten(a)
+        row["agent"] = None if fa is None else fa.tolist()
         for n, ch in self.channels.items():
             try:
                 v = ch.read()
             except Exception as e:  # noqa: BLE001 — a broken sensor must not fake a reading
                 v = None
                 row.setdefault("errors", {})[n] = f"{type(e).__name__}: {e}"
-            row[n] = None if v is None else _flatten(v).tolist()
+            fv = None if v is None else _flatten(v)
+            if v is not None and fv is None:
+                row.setdefault("errors", {})[n] = "non-finite or empty reading -> gap"
+            row[n] = None if fv is None else fv.tolist()
         with open(self.store, "a", encoding="utf-8") as f:
             f.write(json.dumps(row) + "\n")
         return row
@@ -171,8 +219,8 @@ class SenseHarness:
             a, b = r.get("agent"), r.get(name)
             if a is None or b is None:
                 continue
-            wa = wa or len(a)
-            wb = wb or len(b)
+            wa = len(a) if wa is None else wa      # `wa or len(a)` re-fires on a 0-width row
+            wb = len(b) if wb is None else wb
             if len(a) != wa or len(b) != wb:      # a channel that changed width mid-run
                 continue
             ts.append(float(r["ts"]))
@@ -224,14 +272,14 @@ def _demo() -> int:
     coupled = Channel("coupled", lambda: (latent["v"] * 2.0 + 0.3 * rng.standard_normal(3)).tolist())
     unrelated = Channel("unrelated", lambda: rng.standard_normal(4).tolist())
 
-    h = SenseHarness(agent_state, store=store, bin_seconds=1.0)
+    h = SenseHarness(agent_state, store=store, bin_seconds=60.0)
     h.register("coupled_sensor", coupled)
     h.register("unrelated_sensor", unrelated)
     rows = []
-    t0 = time.time()
-    for i in range(260):                       # simulate a run without waiting on a real clock
+    t0 = 1_780_000_000.0
+    for i in range(260):        # 60 s bins over ~4.3 h, so hour-of-day actually has strata
         r = h.sample()
-        r["ts"] = t0 + i * 1.0
+        r["ts"] = t0 + i * 60.0
         rows.append(r)
     store.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
 

@@ -24,8 +24,11 @@ something.
 
     r = couple(agent_rows, agent_ts, room_rows, room_ts,
                confound=lambda ts: [t.hour for t in ts])     # preserve time-of-day
+    r.licensed         # bool — the ONLY thing to branch on. Do not parse the verdict string:
+                       # REFUSED__* verdicts are refusals, and an earlier release named two of
+                       # them COUPLED__*, so `startswith("COUPLED")` read refusals as positives.
     r.verdict          # COUPLED_BEYOND_CONFOUND__attribution_pending | CONFOUND_ONLY |
-                       # NO_DETECTABLE_COUPLING__above_measured_floor | INVALID__*
+                       # NO_DETECTABLE_COUPLING__above_measured_floor | REFUSED__* | INVALID__*
     r.power_floor      # what this run could have detected, quoted with every null
 
 **What is and is not new here.** The confound-preserving null is **not our invention and not
@@ -226,6 +229,7 @@ def _leverage(Az, Bz) -> float:
 @dataclass
 class Coupling:
     verdict: str
+    licensed: bool                       # the single source of truth; never parse the string
     n_paired_bins: int
     rv: float
     matched_p: float
@@ -280,7 +284,8 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
     n = len(Ab)
     caveats = []
     if n < min_bins:
-        return Coupling(verdict="INVALID__insufficient_overlap", n_paired_bins=n, rv=0.0,
+        return Coupling(verdict="INVALID__insufficient_overlap", licensed=False,
+                        n_paired_bins=n, rv=0.0,
                         matched_p=1.0, free_p=1.0,
                         power_floor={"detectable_rv_at_p01": None, "n_calibration_draws": 0,
                                      "note": "not computed: coverage gate failed"},
@@ -288,7 +293,8 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
                         caveats=[f"{n} paired bins < the {min_bins} required before anything is "
                                  f"read. An under-observed apparatus licenses nothing."])
     if not (np.isfinite(Ab).all() and np.isfinite(Bb).all()):
-        return Coupling(verdict="INVALID__nonfinite_input", n_paired_bins=n, rv=float("nan"),
+        return Coupling(verdict="INVALID__nonfinite_input", licensed=False,
+                        n_paired_bins=n, rv=float("nan"),
                         matched_p=1.0, free_p=1.0,
                         power_floor={"detectable_rv_at_p01": None, "n_calibration_draws": 0,
                                      "note": "not computed: non-finite input"},
@@ -305,6 +311,7 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
     ge_f = sum(rv_coefficient(Az, Bz[rng_f.permutation(n)]) >= obs for _ in range(n_perm))
     free_p = (ge_f + 1) / (n_perm + 1)
 
+    degenerate_confound = False
     if confound is None:
         caveats.append("no confound supplied: only the FREE shuffle was run, which any shared "
                        "clock or shared trend will beat. This does not license a coupling claim.")
@@ -320,7 +327,19 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
         _, gcounts = np.unique(groups, return_counts=True)
         frozen_note = round(int(gcounts[gcounts == 1].sum()) / n, 4)
         frozen_frac = frozen_note
-        if len(np.unique(groups)) >= n:
+        if len(np.unique(groups)) < 2:
+            # One stratum: within-group permutation IS the free shuffle. The guard below only
+            # caught the opposite degeneracy (one group per bin), so a run could beat nothing and
+            # still be labelled "beyond confound". Red-team 2026-08-06 found this live in this
+            # module's own demo and flagship test (bin_seconds=1.0 over 260 s = 1 stratum), where
+            # matched_p equalled free_p exactly on every seed.
+            degenerate_confound = True
+            caveats.append(
+                f"the supplied confound took a SINGLE value across all {n} bins, so the matched "
+                f"null is identical to the free shuffle and absorbed nothing. Nothing here is "
+                f"'beyond' any confound. Use a confound that actually varies over your window "
+                f"(hour-of-day needs a window longer than an hour).")
+        elif len(np.unique(groups)) >= n:
             caveats.append("every bin is its own confound group: the matched null is degenerate "
                            "and cannot absorb anything. Use a coarser confound.")
         elif frozen_frac >= 0.2:
@@ -358,7 +377,9 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
         _pf = lambda m, r: r.permutation(m)                      # noqa: E731
     floor = _power_floor(Az, Bz, max(n_perm // 2, 50), np.random.default_rng(seed + 99), _pf)
 
-    if confound is not None and licensing_p <= alpha and shared_trend:
+    if confound is not None and degenerate_confound and licensing_p <= alpha:
+        verdict = "FREE_SHUFFLE_ONLY__confound_degenerate"
+    elif confound is not None and licensing_p <= alpha and shared_trend:
         verdict = "INVALID__shared_temporal_trend"
         caveats.append(
             f"Both streams drift monotonically over the window (linear-in-time R^2 {tr_a} and "
@@ -368,14 +389,14 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
             f"permutation floor. Detrend or difference both streams and re-run — and note that "
             f"doing so changes the question to 'coupled beyond a linear trend'.")
     elif confound is not None and licensing_p <= alpha and dependence["leverage_top_bin_share"] >= 0.5:
-        verdict = "COUPLED__driven_by_a_single_bin"
+        verdict = "REFUSED__driven_by_a_single_bin"
         caveats.append(
             f"REFUSING the coupled verdict: one bin carries "
             f"{dependence['leverage_top_bin_share']:.0%} of the RV. A shared glitch written to "
             f"both logs (power blip, clock-sync marker, log rotation) reproduces this exactly. "
             f"Winsorize or rank-transform, or exclude the bin and re-run.")
     elif confound is not None and licensing_p <= alpha and density.get("shared"):
-        verdict = "COUPLED__sampling_density_confound_unbounded"
+        verdict = "REFUSED__sampling_density_confound_unbounded"
         caveats.append(
             f"REFUSING the coupled verdict: bin record-count explains the magnitude of BOTH "
             f"streams (r {density['corr_count_vs_magnitude_a']} and "
@@ -415,7 +436,9 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
         verdict = "NO_DETECTABLE_COUPLING__above_measured_floor"
         caveats.append(f"reads as: no coupling above RV {floor['detectable_rv_at_p01']} at this "
                        f"n, NOT as 'no coupling'.")
-    return Coupling(verdict=verdict, n_paired_bins=n, rv=round(obs, 4),
+    return Coupling(verdict=verdict,
+                    licensed=verdict.startswith("COUPLED_BEYOND_CONFOUND"),
+                    n_paired_bins=n, rv=round(obs, 4),
                     rv_debiased=round(debiased_cka(Az, Bz), 4),
                     matched_p=round(matched_p, 4), free_p=round(free_p, 4),
                     power_floor=floor, confound_used=confound is not None,

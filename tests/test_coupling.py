@@ -113,7 +113,7 @@ def test_refuses_a_positive_when_shared_sampling_density_is_open():
                bin_seconds=60.0, n_perm=150, min_bins=100)
     assert r.sampling_density["applicable"]
     if r.sampling_density["shared"]:
-        assert r.verdict == "COUPLED__sampling_density_confound_unbounded"
+        assert r.verdict == "REFUSED__sampling_density_confound_unbounded"
         assert any("sampling times" in c for c in r.caveats)
 
 

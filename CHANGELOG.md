@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.32.1] — 2026-08-06 — **sense recalled and hardened after an adversarial audit; 7.32.0 yanked**
+
+An internal red team was pointed at `styxx.sense` hours after it shipped and broke it three
+independent ways, plus found the live deployment recording nothing. 7.32.0 is yanked. Its own
+framing of the findings is the right one: **the harness was recording properties of the
+RECORDER — its stall clock, its loop period, its write cadence — and scoring them as properties
+of the world.** That is the exact failure its opening paragraph names, and no null it ran could
+catch it, because every null permutes or shifts *rows* while the recorder's signature lives in
+the *alignment* of rows.
+
+- **A gap became a shared zero, and that manufactured licensed positives.** `_flatten` called
+  `nan_to_num`, so a stall common to two recorders wrote sentinel zeros to both. On independent
+  streams with a shared stall clock: 8/8 seeds `COUPLED_BEYOND_CONFOUND`, RV ~45× the run's own
+  power floor, every guard passing. A recorder stalling more often than once per twenty minutes
+  was a 100% false-positive machine. `_flatten` now returns a **gap** for any non-finite or empty
+  reading — the module's stated principle, finally true in the function every reading passes
+  through. `jsonl_channel` also rejects bare `NaN`/`Infinity` JSON literals, which
+  `json.dumps(float("nan"))` emits by default and `json.loads` parses straight back past an
+  `isinstance` check.
+- **`host_channel` reported counter deltas, not rates — and the delta is `rate × dt` where `dt`
+  is the recorder's own loop period**, which lengthens when the machine is busy, which is when
+  the agent is busy. It reported the agent coupled to a network whose true rate was a literal
+  constant, 8/8 seeds. The designated *control* channel was the most confounded one in the
+  module. Now divides by measured elapsed time.
+- **Stale rows inflated `n` without inflating effective `n`.** `jsonl_channel` re-read the last
+  line with no freshness check; when two logs' write moments were gated by the same busy machine,
+  up to 56% of runs on independent data returned a licensed positive. Added `max_age`/`ts_field`;
+  a stale read is now a gap.
+- **A single-valued confound was silently the free shuffle.** `couple` guarded the
+  one-group-per-bin degeneracy but not the all-one-group case, so a window shorter than an hour
+  with the hour-of-day confound produced `matched_p == free_p` exactly while the verdict claimed
+  "beyond confound". This module's own demo and flagship positive test did exactly that. Now
+  `FREE_SHUFFLE_ONLY__confound_degenerate`; demo and tests moved to 60 s bins over ~4.3 h.
+- **Two refusals were string-prefix-compatible with a positive.**
+  `COUPLED__driven_by_a_single_bin` and `COUPLED__sampling_density_confound_unbounded` are
+  refusals, but `verdict.startswith("COUPLED")` — the obvious idiom — read them as positives.
+  Renamed to `REFUSED__*`, and `Coupling.licensed` is now the single boolean source of truth.
+- **`wa = wa or len(a)`** re-fired on a zero-width row and crashed `ask()`. Fixed.
+- **Operational: the live collector had recorded 125 rows with usable agent data on exactly 1.**
+  `AGENT_FIELDS` included `features_v2`, which is null on ~55% of the agent's log including most
+  recent rows, making the agent channel a permanent gap — while the collector printed a healthy
+  status line every 60th sample. Field dropped, `max_age` added, and a **watchdog** now shouts
+  when any channel has been a gap for 5, 20, or every 100 consecutive samples. A silent collector
+  is worse than a stopped one.
+
+Reported and NOT broken, from the same audit: a frozen sensor (0/5 across four freeze modes), and
+biased dropout — including a sensor that dies at night while the agent idles at night (0/20). The
+single shared timestamp per sample closes that selection channel by construction.
+
 ## [7.32.0] — 2026-08-06
 
 ### Added
