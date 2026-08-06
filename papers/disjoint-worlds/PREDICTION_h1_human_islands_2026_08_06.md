@@ -110,4 +110,24 @@ answer we already knew, and it was removed rather than defaulted.
 its authors. If someone would rather score it themselves, the gates are already frozen, the
 instrument is one `pip install` away, and the machinery is [open](../../REPLICATIONS.md).
 
+## ERRATUM — 2026-08-06, same day, before any scoring
+
+**The gate names a statistic our own shipped instrument does not compute.** `H1_islands` reads
+`dip_test_p_subject_accuracy` — Hartigan's dip. `styxx.islands.survey` returns `bimodality_p`,
+a *gap-based* unimodality screen (largest normalized gap in the sorted values against a matched
+unimodal null). Those are different tests. Caught by auditing this document against the module
+hours after both were written; recorded here rather than fixed silently, because the gates are
+frozen and rewriting them after publication is the exact move this lab exists to refuse.
+
+**How the gate is satisfied, stated now rather than argued later:** `H1_islands` is satisfied by
+**any documented unimodality test reported with its explicit null**, at p ≤ 0.05 on the
+per-subject accuracy vector. Hartigan's dip (e.g. the `diptest` package) is the reference
+implementation and the one the metric name intends; `styxx.islands`' gap screen is an
+acceptable substitute *only* if reported under its own name with its null described. A scorer
+who runs both and finds they disagree should report both — that disagreement would itself be
+worth publishing.
+
+This erratum changes no bar and no branch. It fixes a naming mismatch that would otherwise have
+let us claim a pass under whichever statistic happened to be kinder.
+
 *A prediction registered before the data is worth more than an explanation offered after it.*

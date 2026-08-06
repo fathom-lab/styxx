@@ -90,7 +90,9 @@ def _gap_p(values: np.ndarray, n_perm: int, seed: int) -> float:
     largest gap of a unimodal (normal) sample with the same mean, spread and count?
 
     Reported as an add-one-smoothed permutation p. This is a *screen*, not Hartigan's dip; it is
-    used because it is exactly reproducible in twenty lines and its null is explicit.
+    used because it is exactly reproducible in twenty lines and its null is explicit. If you are
+    scoring the H1 human-islands prediction (``papers/disjoint-worlds/PREDICTION_h1_*``), that
+    gate's reference statistic is Hartigan's dip — report whichever you use under its own name.
     """
     v = np.sort(np.asarray(values, dtype=float))
     if len(v) < 3 or v[-1] - v[0] <= 0:
@@ -116,7 +118,7 @@ class CohortSurvey:
     mean_affinity: dict                  # member -> mean affinity to the rest
     islands: list                        # candidate islands under the stated rule
     null: dict                           # the random-frame null this is measured against
-    bimodality_p: float
+    bimodality_p: float                  # gap screen, NOT Hartigan's dip — see _gap_p
     cohort_median: float
     island_rule: str
     caveats: list = field(default_factory=list)
@@ -273,15 +275,49 @@ def rescue(reader, island, legibility_fn, ranks=(1, 2, 5, 10, 20, 40), seed: int
                         else "not low-rank at these ranks")}
 
 
+def _demo() -> int:
+    """Ten seconds, no data, no GPU: plant a cohort with one island and watch it get found."""
+    rng = np.random.default_rng(0)
+    n = 120
+    shared = rng.standard_normal((n, 8))                     # the geometry six minds share
+    reps = {f"mind_{i}": shared @ rng.standard_normal((8, 24 + i))
+                          + 0.05 * rng.standard_normal((n, 24 + i)) for i in range(6)}
+    reps["mind_6"] = shared @ rng.standard_normal((8, 24)) + 0.05 * rng.standard_normal((n, 24))
+    reps["ISLAND"] = (rng.standard_normal((n, 8)) @ rng.standard_normal((8, 24)))  # its own geometry
+
+    print("styxx.islands — a cohort of 8 minds over 120 shared items.")
+    print("Seven were built from one shared geometry. One was not. Nothing is labelled.\n")
+    s = survey(reps, n_null=400, n_perm=400)
+    print(s)
+    print("The instrument was given no labels, no pairing, and no hint which member is which.")
+    print("Frame affinity alone separates the planted island from the clique.\n")
+
+    print("And when there is nothing to see, it says so rather than guessing:")
+    out = cliff(reps["mind_0"], reps["ISLAND"], legibility_fn=lambda r, i: 1.0 / len(r))
+    print(f"  cliff(...) with a legibility measure that cannot see -> {out['shape']}")
+    print(f"  {out['why']}\n")
+    print("Your turn:  survey({name: array_of_shape_n_items_by_dim, ...})")
+    print("  fMRI betas over shared stimuli · MEG epochs · activations · embeddings —")
+    print("  anything where several minds saw the same items in the same order.")
+    return 0
+
+
 def main(argv=None) -> int:
     import argparse
     ap = argparse.ArgumentParser(
         prog="styxx.islands",
         description="Survey a cohort of minds for islands: shared frame, cliff, low-rank rescue.")
-    ap.add_argument("npz", help="an .npz whose arrays are (n_items, dim) over the SAME items")
+    ap.add_argument("npz", nargs="?",
+                    help="an .npz whose arrays are (n_items, dim) over the SAME items")
+    ap.add_argument("--demo", action="store_true",
+                    help="run a self-contained demonstration on a planted cohort (no data needed)")
     ap.add_argument("--k", type=int, default=_DEF_K)
     ap.add_argument("--json", default=None)
     a = ap.parse_args(argv)
+    if a.demo or not a.npz:
+        if not a.npz and not a.demo:
+            print("no .npz given — running --demo. Pass a file to survey your own cohort.\n")
+        return _demo()
     z = np.load(a.npz, allow_pickle=True)
     reps = {n: np.asarray(z[n]) for n in z.files}
     s = survey(reps, k=a.k)
