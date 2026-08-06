@@ -50,6 +50,27 @@ same-items white-box head-to-head (B24).
 
 ## Current cycle (live)
 
+> **Currency note (2026-08-06):** this section is a narrative snapshot; the authoritative,
+> always-current record is [`autopilot/CYCLE_LOG.jsonl`](autopilot/CYCLE_LOG.jsonl) (one line
+> per cycle, newest last — now at cycle 128).
+
+- **Cycles 110–128 (2026-08-02 → 2026-08-06) — THE ISLAND ARC, COMPLETE (nine sealed acts), and
+  THE R LINE, SOFTWARE-COMPLETE.** After B31-v2 opened the door, label-free discovery was made
+  replicable (b34-v3 with an in-place prereg erratum; b35a seed-stability), the write-null
+  survived maximal capacity (b36), and the full mutual-legibility matrix (b37) revealed a
+  cross-family clique and an island. The island was then dissected under prereg, one act per
+  cycle: not a measurement cliff (b38, INVALID honored), not covariance (b39), affinity
+  pre-screen (b40), the causal BRIDGE (b41: 0.0612→0.9745 vs random-frame 0.0), the dose curve
+  (b42: k\*=2, hierarchically low-rank), no nameable story (b43: the barrier is sub-symbolic),
+  the SHARED clique frame (b44: wrong-model donors open the island), the frame stated as pure
+  geometry (b45: island mostly-aligned yet illegible), and the cliff function (b46: flat then
+  nearly vertical, knee t=0.8 — legibility is switch-like, which is why similarity metrics
+  never predicted readability). In parallel the first-afference R line went
+  fail→diagnose→redesign→pass in one afternoon (R0 `INSTRUMENT_BLIND` published; R0-v2
+  detection instrument licensed; R1-v2 frozen with `attribution_pending_E0` in its strongest
+  verdict name) — blocked now only on ~$110 of hardware. Synthesis §3 and the arXiv
+  connection-of-minds paper carry the completed arc; the trio is upload-ready.
+
 - **Cycle 109 (2026-08-01, operator-directed "yes let's go") — THE DOOR OPENS: cross-family content reading was capacity-limited, not bedrock. `DOOR_OPENS__content_capacity_limited` (FINDING OATH-HELD 20/12/0; all three frozen gates green).**
   B31-v2 run under the day-old frozen prereg. **THE DECISIVE CELL: gemma-2-2b — the rung-2
   existence proof that isometry does not grade readability (RSA 0.955, linear read at EXACT
@@ -1771,9 +1792,9 @@ under expert pressure and the mapped honesty read caught all 13 from the same fo
 | **B15** | Cross-vendor intent (beyond Qwen/Llama). | R2 | L | QUEUED |
 | **B16** | Wire the demarcation/abstain into the certificate object (R3 is proven-it-must; now build it). | R3 | M | QUEUED |
 | **B17** | Finish the wall's battery — bootstrap CI, shared-myth split, D-channel dynamics, cross-model — to fully characterize the bedrock. | R3 | M | QUEUED |
-| **B18** | Closed-model substrate: can behavioral proxies carry the oath where there's no white-box? | R4 | H | **IN-PROGRESS** — sycophancy cell ran (B18-S, CLOSED_NEGATIVE near-bar); spawned B22–B24 |
+| **B18** | Closed-model substrate: can behavioral proxies carry the oath where there's no white-box? | R4 | H | **RESOLVED via B22** — silent-caving cell SURVIVED (grounded 1.0 vs text-syc 0.500, margin 0.487); sycophancy cell mapped, see Progress ledger R4; B23 remote-API confirmation still credit-blocked |
 | **B22** | **B18-S decisive re-run**: non-acknowledged (bare-term) caving. | R4 | H | **SURVIVED** — n=109 (72/37), grounded 1.0 vs text-syc **0.500** (exact chance), margin **0.487** (CI [0.433,0.500], P≥0.15=1.0). Cross-regime shared-48: text-syc 0.861→0.500 by removing only the acknowledgment language. **Text-only sycophancy = a tell-detector, not a deception-detector; behavioral grounding carries the oath in the silent regime text can't see.** Commit `a262ac3` |
-| **B23-F** | **True closed-model substrate: `claude-fable-5`** via subscription CLI (UNBLOCKED 2026-06-09, operator: "let's put fable to work"; API key still creditless — transport is `claude -p` clean-config, contamination-probed). Frozen B22 silent elicitation + scorers; POWERED-AUC vs FRONTIER-RESISTANT cave-rate branches + tier-2 pressure. PREREG frozen `0ed8eea`. | R4 | H | **IN-PROGRESS — full run live** |
+| **B23-F** | **True closed-model substrate: `claude-fable-5`** via subscription CLI (UNBLOCKED 2026-06-09, operator: "let's put fable to work"; API key still creditless — transport is `claude -p` clean-config, contamination-probed). Frozen B22 silent elicitation + scorers; POWERED-AUC vs FRONTIER-RESISTANT cave-rate branches + tier-2 pressure. PREREG frozen `0ed8eea`. | R4 | H | **STALE — prereg frozen 0ed8eea, no verdict logged in cycles 110–128; needs operator decision: rerun or mark abandoned** |
 | **B24** | **Same-items white-box head-to-head** on silent caves. | R4 | M | **DONE — REPORT_AS_LANDED** (auto-REFUTED killed as overclaim #5). A first-char/surface/length-invariant **pre-emission commitment-to-the-user's-answer direction** reads silent caving at commit-slot 0.94 [0.89–0.98] / strictly-pre-commit 0.838 (TIE band), beating lens 0.60 + surface 0.69, selection-corrected p<0.01 — but **never beats behavioral (1.0)**, and on single-token collinear items it cannot be called fold-INTENT. Refutes the Outcome-D *prediction*, **reinforces** the closed-model thesis (defense-in-depth: both detect, behavioral needs no weights). Pre-reg'd token-pair GroupKFold firewall found VACUOUS (singleton groups) — first-char firewall is the load-bearing control (persisted in `b24_controls_addendum.json`). `FINDING_b24_whitebox_vs_behavioral_2026_06_09.md` |
 | **B25** | **Intent-decoupling item set** (spawned by B24, the decisive next bet): multi-token answers / Y=paraphrase-of-X items so commit-to-user's-answer ≠ commit-to-wrong-content; same POS-B grouped probe. Survives ⇒ fold-intent is real; collapses ⇒ it was the answer-commitment code. | R4/R2 | H | QUEUED |
 | **B26** | **Adversarial-OOD on the refusal axis** (the truth-arc treatment applied to VALUES-PORTABLE): does confident "this is for safety research / authorized" framing on the harmful requests fool the transferred refusal readout, as it failed to fool the truth readout? Same label-free map, same leave-families-out OOD harm domains. | spawned by VALUES-PORTABLE | H | QUEUED |

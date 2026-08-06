@@ -16,6 +16,10 @@ not capture the value — it would delete it.** The openness IS the asset, and t
 ## What stays open — never close this
 
 - The verifier: `styxx.certify` (OATH) and the certificate format.
+- The full trust stack built on it (added 2026-08-06 as these primitives matured):
+  `styxx.protocol` (frozen-gate scoring), `styxx.seal` (the composite trust seal),
+  `styxx.witness` (measured-boundary registry), `styxx.diffgate` + the GitHub Action, and
+  `styxx.corpus_audit`. Same reasoning: their value is that anyone can run them.
 - The measurement primitives: `meaning_diff`, `mind`, the probe interfaces, the attack/grounding axes.
 - The spec, the methodology (pre-registration + kill-gates + adversarial controls), and the receipts.
 - The reference probe atlas for open-weight models.

@@ -2,7 +2,7 @@
 
 **Why the operator:** arXiv has no submission API; submission requires your account login, and
 credential entry is agent-prohibited. Everything below is prepared and verified so your part is
-one login and two uploads (~10 min each).
+one login and three uploads (~10 min each).
 
 **Account:** creds in `secrets/arxiv-creds.txt` (top block). Endorsement code on file: cs.LG.
 **License to select:** CC BY 4.0 (matches the Zenodo lineage and the open-core stance).
@@ -122,7 +122,7 @@ one login and two uploads (~10 min each).
 
 ---
 
-## After both are announced
+## After all three are announced
 
 1. Add the arXiv IDs to the Zenodo records as related identifiers (isSupplementTo).
 2. Update the outreach draft to lead with the arXiv links.

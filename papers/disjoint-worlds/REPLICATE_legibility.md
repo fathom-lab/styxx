@@ -56,18 +56,25 @@ banks, CPU-only:
 python run_b41.py          # the bridge: correct the island's frame, legibility 0.06 -> 0.97
 python run_b42.py          # the dose curve: 8 ranks x 5 seeds, k* = 2  (~9 h CPU)
 python run_b44.py          # wrong-donor control: the clique's SHARED frame is the operative object
+python run_b45.py          # frame geometry, NO fitting: clique co-aligns, island rotated away (~4 s)
+python run_b46.py          # the cliff function: 6 doses x 3 seeds, knee at t=0.8 (~1 h CPU)
 ```
 
 Anchor cells: b41 bridge 0.9745 against a random-frame 0.0 at k=20; b42 median bridge 0.5128
 at rank 2 (half of full legibility from two directions) rising monotonically to 1.0 at rank 40,
-Spearman 1.0; b44 wrong-model donor frames land medians 0.7168 (gemma_2b) / 0.648 (llama_1b) —
-every donor × seed above the 0.30 floor. Each script self-scores through `styxx.protocol`
-against its frozen prereg.
+Spearman 1.0; b44 wrong-model donor frames land medians 0.7168 (gemma_2b) / 0.648 (llama_1b),
+every donor × seed above the 0.30 floor **at k=20** (the k=2 core transfers only partially —
+medians 0.3214/0.3036); b45 clique frame affinity 0.848 median vs a 0.0566 random-null 95th
+percentile, island below the clique in 5/5 seeds; b46 median discovery
+0.0408 → 0.3622 → 0.9566 → 0.9821 across doses with knee t½ = 0.8 and Spearman 1.0. Each
+script self-scores through `styxx.protocol` against its frozen prereg.
 
 **The open challenge here is b43's:** the twenty causal directions have no stable, semantically
 coherent concept story (Jaccard 0.1368 across seeds; coherence permutation p 0.8031). Find a
-representation in which the barrier directions ARE nameable — or show the rank-2 core is a
-stable geometric object across model pairs — and you have beaten our best negative.
+representation in which the barrier directions ARE nameable and you have beaten our best
+negative. (The companion challenge — is the deviation a stable geometric object? — was
+partially settled by b45: the island's frame sits below the clique in every seed; what remains
+open is whether that structure recurs across *other* model pairs.)
 
 ## Extend it
 

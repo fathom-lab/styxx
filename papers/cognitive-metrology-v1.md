@@ -9,7 +9,7 @@
 **Date:** 2026-04-14  
 **Version:** v1  
 **Reference implementation:** [styxx 3.1.0](https://pypi.org/project/styxx/3.1.0/) (MIT)  
-**Companion charter:** [`docs/cognitive-metrology-charter.md`](../docs/cognitive-metrology-charter.md) (CC-BY-4.0, Fathom Lab, 2026-04-14)  
+**Companion charter:** [`docs/cognitive-metrology-charter.md`](../docs/research/cognitive-metrology-charter.md) (CC-BY-4.0, Fathom Lab, 2026-04-14)  
 **Code & data:** https://github.com/fathom-lab/styxx  
 **License:** CC-BY-4.0 (this paper), MIT (reference implementation)  
 
