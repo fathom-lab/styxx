@@ -1,0 +1,206 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "PREDICTION_h1_human_islands_2026_08_06.md",
+ "document_sha256": "6e189d73c81dac3245d22d8301cc8335cf61dee8407f0f040299ea3f4426ef06",
+ "receipts_sha256": {
+  "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
+  "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
+  "b45_result.json": "0ab5f5fe91913fee08f1cbe1167cf2af66bd80e98eb0864c550970610636a71d",
+  "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 13,
+  "ABSTAIN": 5,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 28,
+   "token": "0.8"
+  },
+  {
+   "line": 55,
+   "token": "8"
+  },
+  {
+   "line": 58,
+   "token": "0.50"
+  },
+  {
+   "line": 69,
+   "token": "10"
+  },
+  {
+   "line": 83,
+   "token": "8"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 22,
+   "token": "0.848",
+   "value": 0.848,
+   "decimals": 3,
+   "context": "(`b45_result.json`: clique affinity 0.848 vs a 0.0566 random-null 95th percentile).",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:median_clique_affinity_k20"
+  },
+  {
+   "line": 22,
+   "token": "0.0566",
+   "value": 0.0566,
+   "decimals": 4,
+   "context": "(`b45_result.json`: clique affinity 0.848 vs a 0.0566 random-null 95th percentile).",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_p95.20"
+  },
+  {
+   "line": 23,
+   "token": "0.7166",
+   "value": 0.7166,
+   "decimals": 4,
+   "context": "- Yet one model is an **island**: mostly aligned with the others (0.7166 of the same",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:pairs.gemma_2b__qwen_1p5b_k20_s1002"
+  },
+  {
+   "line": 27,
+   "token": "0.0408",
+   "value": 0.0408,
+   "decimals": 4,
+   "context": "rotation (0.0408 \u2192 0.0434 \u2192 0.1122 \u2192 0.3622) and turns nearly vertical only near alignment",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.0_s1001"
+  },
+  {
+   "line": 27,
+   "token": "0.0434",
+   "value": 0.0434,
+   "decimals": 4,
+   "context": "rotation (0.0408 \u2192 0.0434 \u2192 0.1122 \u2192 0.3622) and turns nearly vertical only near alignment",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.2_s1001"
+  },
+  {
+   "line": 27,
+   "token": "0.1122",
+   "value": 0.1122,
+   "decimals": 4,
+   "context": "rotation (0.0408 \u2192 0.0434 \u2192 0.1122 \u2192 0.3622) and turns nearly vertical only near alignment",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.4_s1001"
+  },
+  {
+   "line": 27,
+   "token": "0.3622",
+   "value": 0.3622,
+   "decimals": 4,
+   "context": "rotation (0.0408 \u2192 0.0434 \u2192 0.1122 \u2192 0.3622) and turns nearly vertical only near alignment",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.6_s343"
+  },
+  {
+   "line": 28,
+   "token": "0.9566",
+   "value": 0.9566,
+   "decimals": 4,
+   "context": "(0.9566 at t = 0.8). A modest, perfectly consistent rotation costs *everything*.",
+   "status": "VERIFIED",
+   "receipt_ref": "b46_result.json:grid.t0.8_s1002"
+  },
+  {
+   "line": 28,
+   "token": "0.8",
+   "value": 0.8,
+   "decimals": 1,
+   "context": "(0.9566 at t = 0.8). A modest, perfectly consistent rotation costs *everything*.",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 30,
+   "token": "0.0612",
+   "value": 0.0612,
+   "decimals": 4,
+   "context": "0.0612 to 0.9745 while matched random frames do 0.0 (`b41_result.json`), with a rank-2 core",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:a0_baseline_disc"
+  },
+  {
+   "line": 30,
+   "token": "0.9745",
+   "value": 0.9745,
+   "decimals": 4,
+   "context": "0.0612 to 0.9745 while matched random frames do 0.0 (`b41_result.json`), with a rank-2 core",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:a1_bridge_disc"
+  },
+  {
+   "line": 30,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "0.0612 to 0.9745 while matched random frames do 0.0 (`b41_result.json`), with a rank-2 core",
+   "status": "VERIFIED",
+   "receipt_ref": "b41_result.json:a2_random_frame_disc"
+  },
+  {
+   "line": 55,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "{\"gates\": {\"G0_cohort\": {\"metric\": \"n_subjects\", \"op\": \">=\", \"value\": 8},",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 56,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "\"H1_islands\": {\"metric\": \"dip_test_p_subject_accuracy\", \"op\": \"<=\", \"value\": 0.05},",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_expectation_k20"
+  },
+  {
+   "line": 57,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "\"H2_cliff\": {\"metric\": \"sigmoid_minus_linear_r2\", \"op\": \">=\", \"value\": 0.05},",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:null_expectation_k20"
+  },
+  {
+   "line": 58,
+   "token": "0.50",
+   "value": 0.5,
+   "decimals": 2,
+   "context": "\"H3_lowrank_rescue\": {\"metric\": \"median_gap_recovered_by_lowrank_align\", \"op\": \">=\", \"value\": 0.50}},",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 69,
+   "token": "10",
+   "value": 10.0,
+   "decimals": 0,
+   "context": "accuracy against an alignment score. `median_gap_recovered_by_lowrank_align` uses rank \u2264 10% of",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 83,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "Ideally by someone else. This prediction is scoreable on any cohort of \u2265 8 subjects with",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  }
+ ]
+}
