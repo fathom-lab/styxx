@@ -88,8 +88,8 @@ def test_degenerate_confound_is_flagged():
 def test_resample_drops_bins_missing_on_either_side():
     a = np.arange(10).reshape(10, 1).astype(float)
     b = np.arange(4).reshape(4, 1).astype(float)
-    A, B, bins = resample_pair(a, np.arange(10) * 60.0, b, np.arange(4) * 60.0, 60.0)
-    assert len(A) == len(B) == len(bins) == 4
+    A, B, bins, counts = resample_pair(a, np.arange(10) * 60.0, b, np.arange(4) * 60.0, 60.0)
+    assert len(A) == len(B) == len(bins) == len(counts) == 4
 
 
 def test_confound_length_mismatch_raises():
@@ -97,3 +97,102 @@ def test_confound_length_mismatch_raises():
     with pytest.raises(ValueError, match="labels for"):
         couple(A, ts, B, ts, confound=lambda b: np.array([0, 1]), bin_seconds=3600,
                n_perm=10, min_bins=200)
+
+
+def test_refuses_a_positive_when_shared_sampling_density_is_open():
+    """The real-data catch, 2026-08-06: a stream against its own TIME-REVERSED copy has no
+    bin-level coupling to find, yet irregular sampling makes both streams' bin averages shrink
+    together and no permutation null absorbs it. The verdict must name that channel instead of
+    claiming coupling."""
+    rng = np.random.default_rng(5)
+    n = 4000
+    # bursty arrivals -> wildly uneven bin counts, the condition that opens the channel
+    ts = np.sort(rng.exponential(20.0, n).cumsum())
+    X = rng.standard_normal((n, 8)) * rng.gamma(2.0, 1.0, (n, 1))     # heteroscedastic
+    r = couple(X[:, :4], ts, X[::-1, 4:], ts, confound=lambda b: np.asarray(b) % 24,
+               bin_seconds=60.0, n_perm=150, min_bins=100)
+    assert r.sampling_density["applicable"]
+    if r.sampling_density["shared"]:
+        assert r.verdict == "COUPLED__sampling_density_confound_unbounded"
+        assert any("sampling times" in c for c in r.caveats)
+
+
+def test_uniform_sampling_reports_the_density_channel_as_inapplicable():
+    A, ts, B = _world(True, True)
+    r = couple(A, ts, B, ts, confound=lambda b: np.asarray(b) % 24, bin_seconds=3600,
+               n_perm=100, min_bins=200)
+    assert r.sampling_density["applicable"] is False
+    assert r.verdict == "COUPLED_BEYOND_CONFOUND__attribution_pending"
+
+
+def _ar1(n, d, rho, rng):
+    z = np.zeros((n, d))
+    z[0] = rng.standard_normal(d)
+    for i in range(1, n):
+        z[i] = rho * z[i - 1] + np.sqrt(1 - rho ** 2) * rng.standard_normal(d)
+    return z
+
+
+@pytest.mark.parametrize("seed", [0, 1, 2, 3, 4])
+def test_independent_autocorrelated_streams_are_not_called_coupled(seed):
+    """Red-team 2026-08-06, the credibility-ending one: two INDEPENDENT AR(1) streams reached the
+    permutation floor on 20/20 seeds, because within-group shuffling destroys the autocorrelation
+    the data actually has, so the null describes white noise the streams are not."""
+    n = 336
+    ts = np.arange(n, dtype=float) * 3600.0
+    A = _ar1(n, 6, 0.98, np.random.default_rng(seed * 1000 + 1))
+    B = _ar1(n, 6, 0.98, np.random.default_rng(seed * 1000 + 2))
+    r = couple(A, ts, B, ts, confound=lambda b: np.asarray(b) % 24, bin_seconds=3600,
+               n_perm=200, min_bins=200)
+    assert not r.verdict.startswith("COUPLED_BEYOND"), r.verdict
+    assert r.dependence["autocorrelated"] is True
+
+
+@pytest.mark.parametrize("seed", [0, 1, 2])
+def test_independent_drifting_streams_are_not_called_coupled(seed):
+    """Red-team: independent linear drifts produced 21/21 false positives. Two streams that
+    merely warmed up during the window must not certify as coupled."""
+    n, rng = 336, np.random.default_rng(seed)
+    ts = np.arange(n, dtype=float) * 3600.0
+    t = np.arange(n)[:, None]
+    A = rng.standard_normal((n, 6)) + t * rng.standard_normal((1, 6)) * 0.05
+    B = rng.standard_normal((n, 6)) + t * rng.standard_normal((1, 6)) * 0.05
+    r = couple(A, ts, B, ts, confound=lambda b: np.asarray(b) % 24, bin_seconds=3600,
+               n_perm=200, min_bins=200)
+    assert not r.verdict.startswith("COUPLED_BEYOND"), r.verdict
+
+
+def test_nonfinite_input_refuses_instead_of_certifying_garbage():
+    """Red-team: a single NaN produced a maximal-confidence COUPLED verdict, because every
+    permuted RV is NaN and `nan >= nan` is False, so zero permutations exceed the observation."""
+    n, rng = 336, np.random.default_rng(0)
+    ts = np.arange(n, dtype=float) * 3600.0
+    A, B = rng.standard_normal((n, 5)), rng.standard_normal((n, 5))
+    A[7, 2] = np.nan
+    r = couple(A, ts, B, ts, confound=lambda b: np.asarray(b) % 24, bin_seconds=3600,
+               n_perm=100, min_bins=200)
+    assert r.verdict == "INVALID__nonfinite_input"
+
+
+@pytest.mark.parametrize("k", [1, 2, 3])
+def test_a_few_shared_glitch_bins_cannot_carry_a_verdict(k):
+    """Red-team: two sentinel bins out of 336 gave RV 0.973 at p 0.002 on independent streams —
+    a glitch written to both logs (power blip, clock-sync marker) reproduces it exactly."""
+    n = 336
+    ts = np.arange(n, dtype=float) * 3600.0
+    A = np.random.default_rng(1).standard_normal((n, 5))
+    B = np.random.default_rng(2).standard_normal((n, 5))
+    for j in range(k):
+        A[100 + 50 * j] = 50.0
+        B[100 + 50 * j] = 50.0
+    r = couple(A, ts, B, ts, confound=lambda b: np.asarray(b) % 24, bin_seconds=3600,
+               n_perm=200, min_bins=200)
+    assert not r.verdict.startswith("COUPLED_BEYOND"), r.verdict
+    assert r.dependence["leverage_top_bin_share"] >= 0.5
+
+
+def test_a_positive_names_the_confound_it_is_beyond():
+    """Red-team: a day-of-week driver survives an hour-of-day null intact, and the verdict string
+    reads as 'coupled'. The caveat must scope the claim to the confound actually supplied."""
+    r = _run(coupled=True, clocked=True)
+    assert any("ONE confound you supplied" in c for c in r.caveats)

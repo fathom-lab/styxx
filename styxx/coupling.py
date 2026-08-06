@@ -36,6 +36,11 @@ speculation:
   (``ROADMAP_r_line_*`` invariant 6).
 * A null result quotes ``power_floor`` and never says "no coupling" — because an instrument that
   cannot see was shipped here once and caught by its own exam (``FINDING_r0_instrument_blind_*``).
+* ``COUPLED__sampling_density_confound_unbounded`` — found by pairing real agent telemetry
+  against its own **time-reversed copy**, where no bin-level coupling can exist, and getting
+  RV 0.3704 at p 0.0033. Irregular sampling makes both streams' bin averages shrink together;
+  the alignment is real, the cause is the clock on the recorder, and no permutation null absorbs
+  it. This verdict fires *instead of* a positive when the channel is open.
 
 Open by design (``docs/governance/OPEN_CORE.md``): a measurement primitive, never gated.
 """
@@ -66,7 +71,7 @@ def _zscore(X):
 def resample_pair(A, ts_a, B, ts_b, bin_seconds: float = 60.0):
     """Mean-pool both streams onto a shared time grid; drop bins missing on either side.
 
-    Returns (A_binned, B_binned, bin_index). Timestamps are epoch seconds.
+    Returns (A_binned, B_binned, bin_index, bin_counts). Timestamps are epoch seconds.
     """
     def to_bins(X, ts):
         out = {}
@@ -74,10 +79,14 @@ def resample_pair(A, ts_a, B, ts_b, bin_seconds: float = 60.0):
             out.setdefault(int(t // bin_seconds), []).append(x)
         return {b: np.mean(np.asarray(v), 0) for b, v in out.items()}
     ba, bb = to_bins(A, ts_a), to_bins(B, ts_b)
+    ca = {}
+    for t_, _ in zip(np.asarray(ts_a, float), np.asarray(A, float)):
+        ca[int(t_ // bin_seconds)] = ca.get(int(t_ // bin_seconds), 0) + 1
     common = sorted(set(ba) & set(bb))
     if not common:
-        return np.empty((0, 0)), np.empty((0, 0)), []
-    return (np.asarray([ba[b] for b in common]), np.asarray([bb[b] for b in common]), common)
+        return np.empty((0, 0)), np.empty((0, 0)), [], np.empty(0)
+    return (np.asarray([ba[b] for b in common]), np.asarray([bb[b] for b in common]),
+            common, np.asarray([ca.get(b, 0) for b in common]))
 
 
 def _confound_matched_perm(n, groups, rng):
@@ -90,6 +99,78 @@ def _confound_matched_perm(n, groups, rng):
     return idx
 
 
+def _density_confound(Az, Bz, counts) -> dict:
+    """How much of each binned stream's magnitude is explained by how many records fell in the bin?
+
+    Irregular sampling makes a bin holding many records average toward the mean and a sparse bin
+    stay extreme — in BOTH streams identically, because they share the grid. That is aligned
+    structure with no shared cause, and a permutation null cannot absorb it (shuffling rows is
+    exactly what destroys the alignment the artifact lives in). Discovered on real agent telemetry
+    2026-08-06: a stream paired against its own TIME-REVERSED copy — no bin-level coupling
+    possible — read RV 0.3704 at p 0.0033 through this channel alone.
+    """
+    if counts.size == 0 or counts.std() == 0:
+        return {"applicable": False, "note": "uniform sampling: bins hold equal counts"}
+    na, nb = np.linalg.norm(Az, axis=1), np.linalg.norm(Bz, axis=1)
+    ra = float(np.corrcoef(counts, na)[0, 1]) if na.std() > 0 else 0.0
+    rb = float(np.corrcoef(counts, nb)[0, 1]) if nb.std() > 0 else 0.0
+    return {"applicable": True, "count_min": int(counts.min()), "count_max": int(counts.max()),
+            "corr_count_vs_magnitude_a": round(ra, 4), "corr_count_vs_magnitude_b": round(rb, 4),
+            "shared": bool(abs(ra) >= 0.3 and abs(rb) >= 0.3)}
+
+
+def _lag1(X):
+    """Lag-1 autocorrelation of the binned stream, averaged over columns."""
+    if len(X) < 3:
+        return 0.0
+    r = []
+    for j in range(X.shape[1]):
+        a, b = X[:-1, j], X[1:, j]
+        if a.std() > 1e-12 and b.std() > 1e-12:
+            r.append(abs(float(np.corrcoef(a, b)[0, 1])))
+    return round(float(np.mean(r)) if r else 0.0, 4)
+
+
+def _trend_r2(X) -> float:
+    """Mean fraction of each column's variance explained by a straight line in bin order.
+
+    A shared drift defeats BOTH nulls: within-group permutation destroys it (so the null is too
+    narrow) and a circular shift preserves enough of it to stay high (so that null fails too).
+    Red-team 2026-08-06: independent linear drifts produced 21/21 false positives.
+    """
+    n = len(X)
+    if n < 5:
+        return 0.0
+    t = np.arange(n, dtype=float)
+    t = (t - t.mean()) / (t.std() + 1e-12)
+    r2 = []
+    for j in range(X.shape[1]):
+        y = X[:, j]
+        if y.std() <= 1e-12:
+            continue
+        r2.append(float(np.corrcoef(t, y)[0, 1] ** 2))
+    return round(float(np.mean(r2)) if r2 else 0.0, 4)
+
+
+def _leverage(Az, Bz) -> float:
+    """Fraction of the RV numerator carried by the single most influential bin.
+
+    RV is a second-moment statistic: a couple of shared glitch bins (a power blip written to both
+    logs, a clock-sync marker) can carry an entire verdict. Red-team 2026-08-06: two sentinel bins
+    out of 336 produced RV 0.973 at p 0.002 on otherwise independent streams.
+    """
+    n = len(Az)
+    full = rv_coefficient(Az, Bz)
+    if full <= 0 or n < 20:
+        return 0.0
+    # target the bins that can actually carry the statistic: highest joint magnitude.
+    joint = np.linalg.norm(Az, axis=1) * np.linalg.norm(Bz, axis=1)
+    k = max(2, n // 100)
+    top = np.argsort(joint)[-k:]
+    without = rv_coefficient(np.delete(Az, top, 0), np.delete(Bz, top, 0))
+    return round(float(max(0.0, (full - without) / (full + 1e-12))), 4)
+
+
 @dataclass
 class Coupling:
     verdict: str
@@ -99,6 +180,8 @@ class Coupling:
     free_p: float
     power_floor: dict
     confound_used: bool
+    sampling_density: dict = field(default_factory=dict)
+    dependence: dict = field(default_factory=dict)
     caveats: list = field(default_factory=list)
 
     def to_dict(self) -> dict:
@@ -114,14 +197,16 @@ class Coupling:
         return s + "".join(f"  ! {c}\n" for c in self.caveats)
 
 
-def _power_floor(A, B, n_draws, rng):
+def _power_floor(A, B, n_draws, rng, perm_fn):
     """Smallest RV this run could have called significant — quoted with every null result.
 
-    Mixes B toward A's own row order in increasing amounts and finds where the matched null
-    stops absorbing it. Reported, never gated.
+    Calibrated against the SAME null that licenses a positive (the confound-matched permutation
+    when one is supplied), not the free shuffle — red-team 2026-08-06 caught the docstring and
+    the code disagreeing, which meant the one number quoted with every null result was
+    calibrated against the wrong distribution. Reported, never gated.
     """
     n = len(A)
-    nulls = sorted(rv_coefficient(A, B[rng.permutation(n)]) for _ in range(n_draws))
+    nulls = sorted(rv_coefficient(A, B[perm_fn(n, rng)]) for _ in range(n_draws))
     p99 = float(nulls[min(int(0.99 * len(nulls)), len(nulls) - 1)])
     return {"detectable_rv_at_p01": round(p99, 4), "n_calibration_draws": int(n_draws),
             "note": "an observed RV at or below this could not have been called significant; "
@@ -138,7 +223,7 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
     coupling. Passing ``None`` runs free-shuffle only and the result says so loudly — that
     configuration answers a weaker question than most callers think.
     """
-    Ab, Bb, bins = resample_pair(A, ts_a, B, ts_b, bin_seconds)
+    Ab, Bb, bins, counts = resample_pair(A, ts_a, B, ts_b, bin_seconds)
     n = len(Ab)
     caveats = []
     if n < min_bins:
@@ -146,10 +231,22 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
                         matched_p=1.0, free_p=1.0,
                         power_floor={"detectable_rv_at_p01": None, "n_calibration_draws": 0,
                                      "note": "not computed: coverage gate failed"},
-                        confound_used=confound is not None,
+                        confound_used=confound is not None, sampling_density={},
                         caveats=[f"{n} paired bins < the {min_bins} required before anything is "
                                  f"read. An under-observed apparatus licenses nothing."])
+    if not (np.isfinite(Ab).all() and np.isfinite(Bb).all()):
+        return Coupling(verdict="INVALID__nonfinite_input", n_paired_bins=n, rv=float("nan"),
+                        matched_p=1.0, free_p=1.0,
+                        power_floor={"detectable_rv_at_p01": None, "n_calibration_draws": 0,
+                                     "note": "not computed: non-finite input"},
+                        confound_used=confound is not None, sampling_density={}, dependence={},
+                        caveats=["NaN or inf in the binned streams. Left unchecked this produced "
+                                 "a maximal-confidence COUPLED verdict, because every permuted RV "
+                                 "is also NaN and `nan >= nan` is False, so zero permutations "
+                                 "exceed the observation. Clean or drop the affected bins."])
     Az, Bz = _zscore(Ab), _zscore(Bb)
+    density = _density_confound(Az, Bz, counts)
+    ac_a, ac_b = _lag1(Az), _lag1(Bz)
     obs = rv_coefficient(Az, Bz)
     rng_f = np.random.default_rng(seed + 62000)
     ge_f = sum(rv_coefficient(Az, Bz[rng_f.permutation(n)]) >= obs for _ in range(n_perm))
@@ -171,14 +268,83 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
             caveats.append("every bin is its own confound group: the matched null is degenerate "
                            "and cannot absorb anything. Use a coarser confound.")
 
-    floor = _power_floor(Az, Bz, max(n_perm // 2, 50), np.random.default_rng(seed + 99))
+    # every valid shift, capped: the null must be able to RESOLVE p <= alpha, i.e. it needs at
+    # least 1/alpha draws. Under-drawing it silently converts real coupling into an INVALID.
+    max_shift_draws = max(n_perm, int(np.ceil(2.0 / max(alpha, 1e-6))))
+    step = max(1, (n - 10) // max_shift_draws)
+    shift_nulls = [rv_coefficient(Az, np.roll(Bz, s, axis=0)) for s in range(5, n - 5, step)]
+    if len(shift_nulls) < np.ceil(1.0 / max(alpha, 1e-6)):
+        caveats.append(
+            f"circular-shift null has only {len(shift_nulls)} draws (n={n} bins), so its "
+            f"smallest attainable p is {1/(len(shift_nulls)+1):.4f} — it cannot resolve "
+            f"alpha={alpha}. Autocorrelated data at this length cannot license a positive here.")
+    shift_p = round((sum(v >= obs for v in shift_nulls) + 1) / (len(shift_nulls) + 1), 4)
+    autocorrelated = max(ac_a, ac_b) >= 0.2
+    tr_a, tr_b = _trend_r2(Az), _trend_r2(Bz)
+    shared_trend = tr_a >= 0.2 and tr_b >= 0.2
+    dependence = {"lag1_autocorr_a": ac_a, "lag1_autocorr_b": ac_b,
+                  "trend_r2_a": tr_a, "trend_r2_b": tr_b, "shared_trend": bool(shared_trend),
+                  "autocorrelated": bool(autocorrelated), "circular_shift_p": shift_p,
+                  "n_shift_draws": len(shift_nulls),
+                  "leverage_top_bin_share": _leverage(Az, Bz)}
+    licensing_p = max(matched_p, shift_p) if autocorrelated else matched_p
+    if confound is not None:
+        _g = np.asarray(confound(np.asarray(bins)))
+        _pf = lambda m, r: _confound_matched_perm(m, _g, r)      # noqa: E731
+    else:
+        _pf = lambda m, r: r.permutation(m)                      # noqa: E731
+    floor = _power_floor(Az, Bz, max(n_perm // 2, 50), np.random.default_rng(seed + 99), _pf)
 
-    if confound is not None and matched_p <= alpha:
+    if confound is not None and licensing_p <= alpha and shared_trend:
+        verdict = "INVALID__shared_temporal_trend"
+        caveats.append(
+            f"Both streams drift monotonically over the window (linear-in-time R^2 {tr_a} and "
+            f"{tr_b}). A shared trend defeats BOTH nulls: within-group permutation destroys it, "
+            f"so that null is too narrow, and a circular shift preserves it, so that null stays "
+            f"high. Two streams that merely warmed up during the observation window reach the "
+            f"permutation floor. Detrend or difference both streams and re-run — and note that "
+            f"doing so changes the question to 'coupled beyond a linear trend'.")
+    elif confound is not None and licensing_p <= alpha and dependence["leverage_top_bin_share"] >= 0.5:
+        verdict = "COUPLED__driven_by_a_single_bin"
+        caveats.append(
+            f"REFUSING the coupled verdict: one bin carries "
+            f"{dependence['leverage_top_bin_share']:.0%} of the RV. A shared glitch written to "
+            f"both logs (power blip, clock-sync marker, log rotation) reproduces this exactly. "
+            f"Winsorize or rank-transform, or exclude the bin and re-run.")
+    elif confound is not None and licensing_p <= alpha and density.get("shared"):
+        verdict = "COUPLED__sampling_density_confound_unbounded"
+        caveats.append(
+            f"REFUSING the coupled verdict: bin record-count explains the magnitude of BOTH "
+            f"streams (r {density['corr_count_vs_magnitude_a']} and "
+            f"{density['corr_count_vs_magnitude_b']}; bins hold {density['count_min']}-"
+            f"{density['count_max']} records). Two streams sharing only their sampling times "
+            f"acquire aligned magnitude structure that no permutation null can absorb, because "
+            f"shuffling rows is exactly what destroys the alignment the artifact lives in. "
+            f"Bound it before claiming coupling: bin uniformly, subsample to equal counts, or "
+            f"pass a confound that strata on bin count.")
+    elif confound is not None and licensing_p <= alpha:
         verdict = "COUPLED_BEYOND_CONFOUND__attribution_pending"
+        caveats.append("'beyond confound' means beyond the ONE confound you supplied; other "
+                       "shared drivers on other timescales are not excluded. A day-of-week "
+                       "driver survives an hour-of-day null intact.")
+        if autocorrelated:
+            caveats.append(f"streams are autocorrelated (lag-1 {ac_a} / {ac_b}); the licensing "
+                           f"p is the CONSERVATIVE max of the confound-matched null and an "
+                           f"autocorrelation-preserving circular-shift null (shift p {shift_p}).")
         caveats.append("attribution is NOT established: this statistic is symmetric and cannot "
                        "distinguish A tracking B from B registering A. If the two streams share "
                        "any physical channel (an agent's own hardware sitting in the room it "
                        "measures), that channel must be bounded before any directional claim.")
+    elif autocorrelated and matched_p <= alpha:
+        verdict = "INVALID__autocorrelation_defeats_the_permutation_null"
+        caveats.append(
+            f"The confound-matched null assumes bins are exchangeable within confound groups. "
+            f"These are not: lag-1 autocorrelation {ac_a} / {ac_b}. Within-group shuffling "
+            f"destroys each stream's own temporal structure, so the null describes white noise "
+            f"the data is not, and two INDEPENDENT drifting streams reach the permutation floor. "
+            f"The circular-shift null, which preserves that structure, gives p {shift_p}. "
+            f"Prewhiten, difference, or use a block/stationary-bootstrap null before claiming "
+            f"coupling.")
     elif free_p <= alpha:
         verdict = ("CONFOUND_ONLY__explained_by_the_supplied_confound" if confound is not None
                    else "FREE_SHUFFLE_ONLY__no_confound_supplied_claim_not_licensed")
@@ -188,7 +354,8 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
                        f"n, NOT as 'no coupling'.")
     return Coupling(verdict=verdict, n_paired_bins=n, rv=round(obs, 4),
                     matched_p=round(matched_p, 4), free_p=round(free_p, 4),
-                    power_floor=floor, confound_used=confound is not None, caveats=caveats)
+                    power_floor=floor, confound_used=confound is not None,
+                    sampling_density=density, dependence=dependence, caveats=caveats)
 
 
 def _demo() -> int:

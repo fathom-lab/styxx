@@ -59,6 +59,24 @@ of `run_r0v2.py` verbatim — nothing new is fit, tuned, or chosen at analysis t
 - **`NO_DETECTABLE_COUPLING`** → the bound is published with the power floor, and S1 remains
   the escalation path.
 
+## REQUIRED DISCLOSURE — added 2026-08-06, before any data, no gate changed
+
+A confound was discovered in this lab's general coupling instrument hours after this prereg was
+frozen, and it is **live for this experiment**: the agent stream is bursty while the room
+recorder emits on a fixed interval, so paired bins will hold very different numbers of agent
+records. Where bin record-count explains the magnitude of both binned streams, the two acquire
+aligned structure with no shared cause, and **no permutation null can absorb it** — the effect
+was found by pairing real agent telemetry against its own time-reversed copy and reading
+RV 0.3704 at p 0.0033 (see CHANGELOG 7.31.1).
+
+Therefore any finding from this prereg **must report the sampling-density diagnostic**
+(`styxx.coupling.Coupling.sampling_density`: the correlation between bin record-count and binned
+magnitude for both streams) alongside its verdict, and a positive verdict is **not licensed**
+while that channel is open. The three admissible closures — uniform binning, equal-count
+subsampling, or stratifying the confound on bin count — are to be chosen and stated before the
+scored run. No gate, bar, or outcome branch in this document is altered by this disclosure; it
+adds a reporting obligation and a licensing precondition that can only make a positive harder.
+
 ## Dependencies
 
 Room side: Tier-0 hardware + `room_cortex --record` (round-trip verified 2026-08-05). Agent

@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.31.2] — 2026-08-06 — **coupling hardened after an adversarial audit; 7.31.0 and 7.31.1 yanked**
+
+An internal red team was pointed at `styxx.coupling` hours after release and broke it on the most
+common properties of real telemetry. The module as shipped in 7.31.0/7.31.1 produced confident
+false positives on **provably independent** streams. Those releases are yanked. Findings and
+fixes, all with regression tests:
+
+- **Autocorrelation defeated the licensing null (20/20 seeds).** Two independent AR(1) streams
+  (rho 0.98, separate RNGs, no shared latent) reached the permutation floor every time.
+  Within-group shuffling destroys each stream's own temporal structure, so the null describes
+  white noise the data is not. Now: lag-1 autocorrelation is measured, an
+  autocorrelation-preserving **circular-shift null** is run alongside, the licensing p is the
+  conservative maximum of the two, and `INVALID__autocorrelation_defeats_the_permutation_null`
+  fires when the permutation null alone would have licensed a positive.
+- **Shared trend defeated *both* nulls (21/21 seeds).** Independent linear drifts certified as
+  coupled. Permutation destroys a trend (null too narrow) and circular shift preserves it (null
+  too high). Now `INVALID__shared_temporal_trend`, with the instruction that detrending changes
+  the question.
+- **A single NaN produced a maximal-confidence positive.** Every permuted RV is also NaN and
+  `nan >= nan` is False, so zero permutations exceeded the observation. Now
+  `INVALID__nonfinite_input`.
+- **Two glitch bins out of 336 carried an entire verdict** (RV 0.973, p 0.002 on independent
+  streams) — a power blip or clock-sync marker written to both logs reproduces it. Now a
+  leverage diagnostic targeting the highest-influence bins, and `COUPLED__driven_by_a_single_bin`.
+- **"Beyond confound" over-read.** A day-of-week driver survives an hour-of-day null intact. A
+  positive now states in its caveats that it is beyond the *one* confound supplied.
+- **`_power_floor` used the free shuffle while its docstring promised the matched null** — the
+  one number quoted with every null result was calibrated against the wrong distribution. Fixed
+  to use the licensing null.
+- Under-drawing the circular-shift null silently converted real coupling into an INVALID (its
+  smallest attainable p exceeded alpha). The draw count now scales with alpha, and a warning
+  fires when the series is too short to resolve it.
+
+Known and documented, not fixed: RV is a lag-0 linear statistic, so lagged coupling
+(`B(t) = A(t-2h)`) and purely nonlinear coupling (`B = A^2`) are missed.
+
+## [7.31.1] — 2026-08-06
+
+### Fixed
+- **`styxx.coupling` had a false-positive channel, found on real data within an hour of release.**
+  Pairing 51 days of real agent telemetry against its own **time-reversed copy** — a pairing where
+  no bin-level coupling can exist — returned `COUPLED_BEYOND_CONFOUND` at RV 0.3704, p 0.0033.
+  Mechanism: with irregular sampling, a bin holding many records averages toward the mean while a
+  sparse bin stays extreme, **identically in both streams because they share the grid**
+  (corr(count, magnitude) = -0.9552 and -0.8131 here). The resulting alignment is real, its cause
+  is the recorder's clock, and no permutation null can absorb it — shuffling rows is precisely
+  what destroys the alignment the artifact lives in. Trend and autocorrelation were ruled out
+  first: no drift (|corr with time| ≤ 0.03), detrending left RV unchanged, and a circular-shift
+  null still gave p 0.0041.
+  - New verdict `COUPLED__sampling_density_confound_unbounded` fires **instead of** a positive
+    when bin count explains the magnitude of both streams, naming the channel and the three ways
+    to close it (uniform binning, equal-count subsampling, or stratifying the confound on count).
+  - `Coupling.sampling_density` is reported on every run; `resample_pair` now also returns
+    per-bin counts.
+  - This confound was live in this lab's own frozen R-line experiment, which pairs bursty agent
+    telemetry against a regular room recorder. Disclosure added to that preregistration.
+
 ## [7.31.0] — 2026-08-06
 
 ### Added
