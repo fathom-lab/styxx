@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_h1b_no_unreadable_minds_2026_08_06.md",
+ "document_sha256": "f6b27b64b63a98f35ecc08c114f6d6c95e4432aefd42cdf01a46712084f7fb1e",
+ "oath": {
+  "counts": {
+   "VERIFIED": 12,
+   "ABSTAIN": 16,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_h1b_human_readability_2026_08_06.md",
+   "result": "h1b_result.json",
+   "frozen_verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+   "gates": {
+    "G0_cohort": true,
+    "G1_group_reads_above_chance": true,
+    "G2_bimodal_readability": false
+   },
+   "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f",
+   "prereg_commit": "c84c7b496c1cec7e890ff9925d58b5a836f1e183"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "cfab4a1bb4bc700b2fa2b61a55d0a9126ff4494c99c029aa0c83349a4621961f"
+}

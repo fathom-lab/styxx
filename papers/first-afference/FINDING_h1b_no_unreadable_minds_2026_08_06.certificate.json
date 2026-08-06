@@ -1,0 +1,359 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_h1b_no_unreadable_minds_2026_08_06.md",
+ "document_sha256": "f6b27b64b63a98f35ecc08c114f6d6c95e4432aefd42cdf01a46712084f7fb1e",
+ "receipts_sha256": {
+  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 12,
+  "ABSTAIN": 16,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 1,
+   "token": "212"
+  },
+  {
+   "line": 13,
+   "token": "8"
+  },
+  {
+   "line": 13,
+   "token": "8"
+  },
+  {
+   "line": 14,
+   "token": "5"
+  },
+  {
+   "line": 15,
+   "token": "0.05"
+  },
+  {
+   "line": 25,
+   "token": "369"
+  },
+  {
+   "line": 26,
+   "token": "349"
+  },
+  {
+   "line": 27,
+   "token": "320"
+  },
+  {
+   "line": 28,
+   "token": "269"
+  },
+  {
+   "line": 29,
+   "token": "259"
+  },
+  {
+   "line": 30,
+   "token": "247"
+  },
+  {
+   "line": 31,
+   "token": "233"
+  },
+  {
+   "line": 32,
+   "token": "212"
+  },
+  {
+   "line": 44,
+   "token": "212"
+  },
+  {
+   "line": 66,
+   "token": "8"
+  },
+  {
+   "line": 82,
+   "token": "212"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 1,
+   "token": "212",
+   "value": 212.0,
+   "decimals": 0,
+   "context": "# FINDING \u2014 H1b: there are no unreadable minds in this cohort \u2014 the worst-read subject sits at 212 times chance",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 13,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 subjects | 8 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 subjects | 8 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| G0_cohort | \u2265 8 subjects | 8 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G0_cohort | \u2265 8 subjects | 8 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| G1_group_reads_above_chance | median \u2265 5\u00d7 chance | 264.001\u00d7 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_group_reads_above_chance | median \u2265 5\u00d7 chance | 264.001\u00d7 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "264.001",
+   "value": 264.001,
+   "decimals": 3,
+   "context": "| G1_group_reads_above_chance | median \u2265 5\u00d7 chance | 264.001\u00d7 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_group_reads_above_chance | median \u2265 5\u00d7 chance | 264.001\u00d7 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:median_readability_over_chance"
+  },
+  {
+   "line": 15,
+   "token": "0.05",
+   "value": 0.05,
+   "decimals": 2,
+   "context": "| G2_bimodal_readability | gap-screen p \u2264 0.05 | 0.6523 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_bimodal_readability | gap-screen p \u2264 0.05 | 0.6523 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.6523",
+   "value": 0.6523,
+   "decimals": 4,
+   "context": "| G2_bimodal_readability | gap-screen p \u2264 0.05 | 0.6523 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_bimodal_readability | gap-screen p \u2264 0.05 | 0.6523 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:bimodality_p_readability"
+  },
+  {
+   "line": 25,
+   "token": "0.8128",
+   "value": 0.8128,
+   "decimals": 4,
+   "context": "| subj02 | 0.8128 | 369 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj02 | 0.8128 | 369 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj02"
+  },
+  {
+   "line": 25,
+   "token": "369",
+   "value": 369.0,
+   "decimals": 0,
+   "context": "| subj02 | 0.8128 | 369 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj02 | 0.8128 | 369 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 26,
+   "token": "0.7687",
+   "value": 0.7687,
+   "decimals": 4,
+   "context": "| subj01 | 0.7687 | 349 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj01 | 0.7687 | 349 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj01"
+  },
+  {
+   "line": 26,
+   "token": "349",
+   "value": 349.0,
+   "decimals": 0,
+   "context": "| subj01 | 0.7687 | 349 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj01 | 0.7687 | 349 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 27,
+   "token": "0.7048",
+   "value": 0.7048,
+   "decimals": 4,
+   "context": "| subj05 | 0.7048 | 320 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj05 | 0.7048 | 320 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj05"
+  },
+  {
+   "line": 27,
+   "token": "320",
+   "value": 320.0,
+   "decimals": 0,
+   "context": "| subj05 | 0.7048 | 320 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj05 | 0.7048 | 320 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 28,
+   "token": "0.5925",
+   "value": 0.5925,
+   "decimals": 4,
+   "context": "| subj03 | 0.5925 | 269 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj03 | 0.5925 | 269 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj03"
+  },
+  {
+   "line": 28,
+   "token": "269",
+   "value": 269.0,
+   "decimals": 0,
+   "context": "| subj03 | 0.5925 | 269 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj03 | 0.5925 | 269 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 29,
+   "token": "0.5705",
+   "value": 0.5705,
+   "decimals": 4,
+   "context": "| subj06 | 0.5705 | 259 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj06 | 0.5705 | 259 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj06"
+  },
+  {
+   "line": 29,
+   "token": "259",
+   "value": 259.0,
+   "decimals": 0,
+   "context": "| subj06 | 0.5705 | 259 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj06 | 0.5705 | 259 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 30,
+   "token": "0.5441",
+   "value": 0.5441,
+   "decimals": 4,
+   "context": "| subj04 | 0.5441 | 247 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj04 | 0.5441 | 247 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj04"
+  },
+  {
+   "line": 30,
+   "token": "247",
+   "value": 247.0,
+   "decimals": 0,
+   "context": "| subj04 | 0.5441 | 247 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj04 | 0.5441 | 247 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 31,
+   "token": "0.5132",
+   "value": 0.5132,
+   "decimals": 4,
+   "context": "| subj07 | 0.5132 | 233 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj07 | 0.5132 | 233 |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj07"
+  },
+  {
+   "line": 31,
+   "token": "233",
+   "value": 233.0,
+   "decimals": 0,
+   "context": "| subj07 | 0.5132 | 233 |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj07 | 0.5132 | 233 |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 32,
+   "token": "0.4670",
+   "value": 0.467,
+   "decimals": 4,
+   "context": "| subj08 | 0.4670 | **212** |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj08 | 0.4670 | **212** |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:readability.subj08"
+  },
+  {
+   "line": 32,
+   "token": "212",
+   "value": 212.0,
+   "decimals": 0,
+   "context": "| subj08 | 0.4670 | **212** |",
+   "binding_context": "| subject | readability | \u00d7 chance | | subj08 | 0.4670 | **212** |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 44,
+   "token": "212",
+   "value": 212.0,
+   "decimals": 0,
+   "context": "measured minimum is 212\u00d7 chance.** We are not going to describe that as anything other than what",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 52,
+   "token": "0.8825",
+   "value": 0.8825,
+   "decimals": 4,
+   "context": "proportionally (Pearson r 0.8825 across eight subjects, with the two orderings agreeing at both",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:alignment_vs_readability.pearson_r"
+  },
+  {
+   "line": 66,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "- **n = 8 is exactly the instrument's floor.** A gap screen on eight points has very little",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 72,
+   "token": "0.8825",
+   "value": 0.8825,
+   "decimals": 4,
+   "context": "r 0.8825 between them is partly a shared-data artifact by construction.",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:alignment_vs_readability.pearson_r"
+  },
+  {
+   "line": 82,
+   "token": "212",
+   "value": 212.0,
+   "decimals": 0,
+   "context": "legible to a template built from strangers**, and the least legible is legible at 212\u00d7 chance.",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

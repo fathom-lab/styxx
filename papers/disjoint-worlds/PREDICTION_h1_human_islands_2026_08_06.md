@@ -127,6 +127,28 @@ Until the 45-pair discovery matrix is run, the prior on H1 should move **down**,
 scoring this prediction later should know that its authors' first attempt to support it produced
 a negative.
 
+## FOURTH EVIDENCE IN — 2026-08-06 — H1 tested in its own currency, and there is no floor
+
+H1a measured alignment; H1 is about **decoding accuracy**, so we measured that too
+([H1b](../first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md)): leave-one-subject-out
+identification against a template built from the other seven, no fitting anywhere.
+
+**Verdict `READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort`.** Every subject is read far
+above chance and the distribution is a smooth two-fold spread among the well-read
+(gap-screen p 0.6523). **The least readable subject sits at 212 times chance.** H1 predicted a
+subpopulation *near the decoding floor*; there is no subject near any floor.
+
+**And the switch did not transfer.** H1b existed because b46 says alignment and legibility are
+joined by a near-vertical knee, which would let continuous alignment yield bimodal readability.
+Instead the two track each other almost proportionally (r 0.8825, ungated — eight points license
+no fit). Either the switch is a property of that model pair rather than of minds in general, or
+this cohort's alignment never approaches the knee. We cannot separate those with eight subjects
+and will not claim the model result generalized.
+
+**Status of this prediction: four independent negatives, none of them supporting it.** It is not
+formally falsified — n = 8 is our instrument's floor and this is weak evidence of absence — but
+nobody should read it as live. What we defend is **H3 without H1**.
+
 ## THIRD EVIDENCE IN — 2026-08-06 — tested on real human brains, and it failed
 
 We ran H1's neural-side precursor ourselves rather than waiting for anyone else

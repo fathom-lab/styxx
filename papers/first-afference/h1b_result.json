@@ -1,0 +1,45 @@
+{
+  "prereg": "PREREG_h1b_human_readability_2026_08_06.md",
+  "smoke": false,
+  "n_subjects": 8,
+  "n_shared_images": 907,
+  "n_train": 453,
+  "n_test": 454,
+  "chance": 0.002203,
+  "readability": {
+    "subj01": 0.7687,
+    "subj02": 0.8128,
+    "subj03": 0.5925,
+    "subj04": 0.5441,
+    "subj05": 0.7048,
+    "subj06": 0.5705,
+    "subj07": 0.5132,
+    "subj08": 0.467
+  },
+  "median_readability": 0.5815,
+  "min_readability": 0.467,
+  "max_readability": 0.8128,
+  "median_readability_over_chance": 264.001,
+  "bimodality_p_readability": 0.6523,
+  "alignment_vs_readability": {
+    "alignment": {
+      "subj01": 0.2518,
+      "subj02": 0.2575,
+      "subj03": 0.2302,
+      "subj04": 0.2142,
+      "subj05": 0.2433,
+      "subj06": 0.2092,
+      "subj07": 0.2109,
+      "subj08": 0.153
+    },
+    "pearson_r": 0.8825,
+    "note": "ungated by prereg; 8 points licenses no fit \u2014 recorded for successors"
+  },
+  "verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+  "gates": {
+    "G0_cohort": true,
+    "G1_group_reads_above_chance": true,
+    "G2_bimodal_readability": false
+  },
+  "prereg_commit": "c84c7b496c1cec7e890ff9925d58b5a836f1e183"
+}

@@ -2,19 +2,20 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "2a54a2775addddac8cb6bbeab81544b4359a67d1cdbd6a43b90a3bf8258d7fb3",
+ "document_sha256": "a9ac73af2e43a9a14850f0c72eaf9ad4c837ab36e57e1dccb77d00d26155f722",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
   "b45_result.json": "0ab5f5fe91913fee08f1cbe1167cf2af66bd80e98eb0864c550970610636a71d",
   "b46_result.json": "b0625203cca15666d58c2ae786f753ac7b1283420f0a4750820759b6d8504d07",
   "b47_result.json": "bd4df692c5ba2c2b31aca1c5c7e2b67ef7af8008a5f38eaf70c217fd67e7831f",
-  "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91"
+  "h1a_result.json": "5922bbb9fdff02141ddc29c10782bf42b4f85e1467f0eacb7c4063eb76932a91",
+  "h1b_result.json": "afd666a21a214ac6050ce2ba665670e71ba9c8962f966e1b38ea7ef57933a5a2"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 20,
-  "ABSTAIN": 44,
+  "VERIFIED": 25,
+  "ABSTAIN": 43,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -23,10 +24,6 @@
   {
    "line": 28,
    "token": "0.8"
-  },
-  {
-   "line": 55,
-   "token": "8"
   },
   {
    "line": 58,
@@ -41,159 +38,159 @@
    "token": "8"
   },
   {
+   "line": 138,
+   "token": "212"
+  },
+  {
    "line": 149,
    "token": "8"
   },
   {
-   "line": 161,
+   "line": 171,
+   "token": "8"
+  },
+  {
+   "line": 183,
    "token": "175"
   },
   {
-   "line": 166,
+   "line": 188,
    "token": "80"
   },
   {
-   "line": 171,
+   "line": 193,
    "token": "15"
   },
   {
-   "line": 175,
+   "line": 197,
    "token": "54"
   },
   {
-   "line": 179,
+   "line": 201,
    "token": "7"
   },
   {
-   "line": 179,
+   "line": 201,
    "token": "3"
   },
   {
-   "line": 180,
+   "line": 202,
    "token": "4"
   },
   {
-   "line": 180,
-   "token": "8"
-  },
-  {
-   "line": 186,
+   "line": 208,
    "token": "94"
   },
   {
-   "line": 196,
+   "line": 218,
    "token": "4"
   },
   {
-   "line": 201,
+   "line": 223,
    "token": "8"
   },
   {
-   "line": 209,
-   "token": "8"
-  },
-  {
-   "line": 209,
+   "line": 231,
    "token": "12.35"
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "10"
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "1,102"
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "61.8"
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "3.67"
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "3"
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "10"
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "16,740"
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "200"
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "80"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "6"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "6"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "24"
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40"
   },
   {
-   "line": 213,
+   "line": 235,
    "token": "82"
   },
   {
-   "line": 213,
+   "line": 235,
    "token": "140"
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "70"
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "40"
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "5.28"
   },
   {
-   "line": 216,
+   "line": 238,
    "token": "4"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "4"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "3"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "4"
   },
   {
-   "line": 240,
+   "line": 262,
    "token": "0.05"
   }
  ],
@@ -312,8 +309,8 @@
    "value": 8.0,
    "decimals": 0,
    "context": "{\"gates\": {\"G0_cohort\": {\"metric\": \"n_subjects\", \"op\": \">=\", \"value\": 8},",
-   "status": "ABSTAIN",
-   "receipt_ref": null
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:n_subjects"
   },
   {
    "line": 56,
@@ -388,7 +385,43 @@
    "receipt_ref": "b47_result.json:bimodality_p"
   },
   {
-   "line": 137,
+   "line": 138,
+   "token": "0.6523",
+   "value": 0.6523,
+   "decimals": 4,
+   "context": "(gap-screen p 0.6523). **The least readable subject sits at 212 times chance.** H1 predicted a",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:bimodality_p_readability"
+  },
+  {
+   "line": 138,
+   "token": "212",
+   "value": 212.0,
+   "decimals": 0,
+   "context": "(gap-screen p 0.6523). **The least readable subject sits at 212 times chance.** H1 predicted a",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "0.8825",
+   "value": 0.8825,
+   "decimals": 4,
+   "context": "Instead the two track each other almost proportionally (r 0.8825, ungated \u2014 eight points license",
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:alignment_vs_readability.pearson_r"
+  },
+  {
+   "line": 149,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "formally falsified \u2014 n = 8 is our instrument's floor and this is weak evidence of absence \u2014 but",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 159,
    "token": "0.2222",
    "value": 0.2222,
    "decimals": 4,
@@ -397,7 +430,7 @@
    "receipt_ref": "h1a_result.json:cohort_median"
   },
   {
-   "line": 138,
+   "line": 160,
    "token": "0.0248",
    "value": 0.0248,
    "decimals": 4,
@@ -406,7 +439,7 @@
    "receipt_ref": "h1a_result.json:null.p95"
   },
   {
-   "line": 139,
+   "line": 161,
    "token": "0.1530",
    "value": 0.153,
    "decimals": 4,
@@ -415,7 +448,7 @@
    "receipt_ref": "h1a_result.json:mean_affinity.subj08"
   },
   {
-   "line": 139,
+   "line": 161,
    "token": "0.2575",
    "value": 0.2575,
    "decimals": 4,
@@ -424,7 +457,7 @@
    "receipt_ref": "h1a_result.json:mean_affinity.subj02"
   },
   {
-   "line": 149,
+   "line": 171,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -433,7 +466,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 161,
+   "line": 183,
    "token": "175",
    "value": 175.0,
    "decimals": 0,
@@ -442,7 +475,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 166,
+   "line": 188,
    "token": "80",
    "value": 80.0,
    "decimals": 0,
@@ -451,7 +484,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 171,
+   "line": 193,
    "token": "15",
    "value": 15.0,
    "decimals": 0,
@@ -460,7 +493,7 @@
    "receipt_ref": null
   },
   {
-   "line": 175,
+   "line": 197,
    "token": "54",
    "value": 54.0,
    "decimals": 0,
@@ -469,7 +502,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 179,
+   "line": 201,
    "token": "7",
    "value": 7.0,
    "decimals": 0,
@@ -478,7 +511,7 @@
    "receipt_ref": null
   },
   {
-   "line": 179,
+   "line": 201,
    "token": "3",
    "value": 3.0,
    "decimals": 0,
@@ -487,7 +520,7 @@
    "receipt_ref": null
   },
   {
-   "line": 180,
+   "line": 202,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -496,16 +529,16 @@
    "receipt_ref": null
   },
   {
-   "line": 180,
+   "line": 202,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
    "context": "reconstruction literature evaluates on the 4 of 8 subjects who completed all sessions; and",
-   "status": "ABSTAIN",
-   "receipt_ref": null
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:n_subjects"
   },
   {
-   "line": 186,
+   "line": 208,
    "token": "94",
    "value": 94.0,
    "decimals": 0,
@@ -514,7 +547,7 @@
    "receipt_ref": null
   },
   {
-   "line": 196,
+   "line": 218,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -523,7 +556,7 @@
    "receipt_ref": null
   },
   {
-   "line": 201,
+   "line": 223,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
@@ -532,17 +565,17 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 209,
+   "line": 231,
    "token": "8",
    "value": 8.0,
    "decimals": 0,
    "context": "| **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas",
    "binding_context": "| route | n | shared items | size / friction | why it fits | | **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas in the `nsdgeneral` ROI; the subject \u00d7 item \u00d7 voxel tensor H3 needs *is the file format* |",
-   "status": "ABSTAIN",
-   "receipt_ref": null
+   "status": "VERIFIED",
+   "receipt_ref": "h1b_result.json:n_subjects"
   },
   {
-   "line": 209,
+   "line": 231,
    "token": "12.35",
    "value": 12.35,
    "decimals": 2,
@@ -552,7 +585,7 @@
    "receipt_ref": null
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "10",
    "value": 10.0,
    "decimals": 0,
@@ -562,7 +595,7 @@
    "receipt_ref": null
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "1,102",
    "value": 1102.0,
    "decimals": 0,
@@ -572,7 +605,7 @@
    "receipt_ref": null
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "61.8",
    "value": 61.8,
    "decimals": 1,
@@ -582,7 +615,7 @@
    "receipt_ref": null
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "3.67",
    "value": 3.67,
    "decimals": 2,
@@ -592,7 +625,7 @@
    "receipt_ref": null
   },
   {
-   "line": 210,
+   "line": 232,
    "token": "3",
    "value": 3.0,
    "decimals": 0,
@@ -602,7 +635,7 @@
    "receipt_ref": null
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "10",
    "value": 10.0,
    "decimals": 0,
@@ -612,7 +645,7 @@
    "receipt_ref": null
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "16,740",
    "value": 16740.0,
    "decimals": 0,
@@ -622,7 +655,7 @@
    "receipt_ref": null
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "200",
    "value": 200.0,
    "decimals": 0,
@@ -632,7 +665,7 @@
    "receipt_ref": null
   },
   {
-   "line": 211,
+   "line": 233,
    "token": "80",
    "value": 80.0,
    "decimals": 0,
@@ -642,7 +675,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -652,7 +685,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "6",
    "value": 6.0,
    "decimals": 0,
@@ -662,7 +695,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -672,7 +705,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "6",
    "value": 6.0,
    "decimals": 0,
@@ -682,7 +715,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "24",
    "value": 24.0,
    "decimals": 0,
@@ -692,7 +725,7 @@
    "receipt_ref": null
   },
   {
-   "line": 212,
+   "line": 234,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -702,7 +735,7 @@
    "receipt_ref": null
   },
   {
-   "line": 213,
+   "line": 235,
    "token": "82",
    "value": 82.0,
    "decimals": 0,
@@ -712,7 +745,7 @@
    "receipt_ref": null
   },
   {
-   "line": 213,
+   "line": 235,
    "token": "140",
    "value": 140.0,
    "decimals": 0,
@@ -722,7 +755,7 @@
    "receipt_ref": null
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "70",
    "value": 70.0,
    "decimals": 0,
@@ -732,7 +765,7 @@
    "receipt_ref": null
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "40",
    "value": 40.0,
    "decimals": 0,
@@ -742,7 +775,7 @@
    "receipt_ref": null
   },
   {
-   "line": 214,
+   "line": 236,
    "token": "5.28",
    "value": 5.28,
    "decimals": 2,
@@ -752,7 +785,7 @@
    "receipt_ref": null
   },
   {
-   "line": 216,
+   "line": 238,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -761,7 +794,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -770,7 +803,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "3",
    "value": 3.0,
    "decimals": 0,
@@ -779,7 +812,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 217,
+   "line": 239,
    "token": "4",
    "value": 4.0,
    "decimals": 0,
@@ -788,7 +821,7 @@
    "receipt_ref": "spec-or-historical"
   },
   {
-   "line": 240,
+   "line": 262,
    "token": "0.05",
    "value": 0.05,
    "decimals": 2,
