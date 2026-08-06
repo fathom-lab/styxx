@@ -57,7 +57,44 @@ pulled off GitHub; every false accusation we ever had is named in
 closed template set is never judged, and the CLI prints what it checks when it finds
 nothing — silence is scope, not weakness.
 
-That gate is one instrument. The rest of this README is the lab behind it.
+### two minds can share a geometry and still be unable to read each other
+
+```bash
+python -m styxx.islands --demo         # 10 seconds, no data, no GPU
+```
+
+```
+cohort of 8 minds over 120 shared items — nothing labelled
+  ISLANDS_PRESENT
+    mind_0 .. mind_6      0.4195 – 0.4263
+    ISLAND                0.1694   <- found from frame geometry alone
+```
+
+Independently trained models converge on a shared concept geometry — and a model can sit
+*mostly inside* it and still be unreadable. We took the barrier apart under preregistered
+gates: it is **causal** (correcting the frame takes cross-model reading 0.0612 -> 0.9745 while
+matched random frames do 0.0), **two directions wide at its core**, **nameless** (its
+directions match no human concept category, permutation p 0.8031), and **switch-like** —
+legibility is flat across most of the rotation and turns vertical only near alignment. Which
+is why representational-similarity scores never predicted readability: slope measures cannot
+see a switch.
+
+Nine sealed acts, every verdict computed from gates frozen in git before the run, and the whole
+chain [replicates on a laptop CPU](papers/disjoint-worlds/REPLICATE_legibility.md) — the
+cheapest check takes four seconds. `styxx.islands` generalizes the measurement past language
+models: hand it any cohort over a shared item set (activations, fMRI betas over shared stimuli,
+MEG epochs) and it reports islands, the cliff, and whether a low-rank correction rescues them.
+It refuses below eight members and refuses a knee read off a noise curve, because an instrument
+that cannot refuse cannot be trusted.
+
+We also [staked a public, falsifiable prediction](papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md)
+that human cross-subject brain decoding will show the same structure — frozen before the data
+exists, with the branch where we are wrong written first. Our own next experiment produced
+evidence against it, and that is recorded in the prediction itself.
+
+---
+
+Those are two instruments. The rest of this README is the lab behind them.
 
 ---
 

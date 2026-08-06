@@ -1,0 +1,12 @@
+{
+  "source": "b48_result.json",
+  "note": "Addendum receipt: diagnostics of the INVALID run, recomputed from the committed b48 receipt (2026-08-06). Persisted because the finding quotes them and certify.py's cure for a computed-but-never-persisted value is to repair the receipt set.",
+  "null_mean": 0.0118,
+  "null_median": 0.0104,
+  "n_nulls_above_g2_bar": 5,
+  "n_null_draws": 45,
+  "n_pairs_total": 45,
+  "n_pairs_exact_direction_tie": 42,
+  "member_legibility_min": 0.037,
+  "member_legibility_max": 0.0914
+}
