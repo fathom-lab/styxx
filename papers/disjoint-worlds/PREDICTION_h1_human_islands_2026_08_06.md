@@ -127,6 +127,37 @@ Until the 45-pair discovery matrix is run, the prior on H1 should move **down**,
 scoring this prediction later should know that its authors' first attempt to support it produced
 a negative.
 
+## THIS IS SCOREABLE TODAY — concrete routes, added 2026-08-06
+
+When this prediction was registered we said it was scoreable "on any cohort of ≥ 8 subjects,
+including public neuroimaging corpora." A survey of what is actually downloadable turned that
+from a gesture into a work order. Every route below was verified reachable; sizes are measured,
+not estimated. **We are naming these so that nobody — including us — can later claim the
+prediction was unfalsifiable in practice.**
+
+| route | n | shared items | size / friction | why it fits |
+|---|---|---|---|---|
+| **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas in the `nsdgeneral` ROI; the subject × item × voxel tensor H3 needs *is the file format* |
+| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB — never sync it whole) | the cleanest sharing design surveyed; two more subjects than NSD and ~3× the shared items |
+| **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure in existence |
+| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** — a far stronger H1 test than one cohort |
+| **Narratives** (`s3://fcp-indi/data/Projects/narratives/`) | **82** (pieman) | one story heard by all | ~140 GB, CC0, anonymous S3, fMRIPrep derivatives shipped | the canonical benchmark for subject→group alignment, which is exactly H3's construction |
+| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check — caveat: SSVEP decoding is near-saturated, so ceiling effects may make the variance uninformative |
+
+Ruled out on cohort size despite being obvious candidates: Algonauts 2025 (n=4), THINGS-MEG
+(n=4), THINGS-fMRI (n=3), BOLD5000 (n=4), LibriBrain (one subject).
+
+**The cheapest decisive move needs no download at all:** several papers already publish
+per-subject decoding accuracies as a figure. Re-scoring those published values with a
+unimodality test would settle H1's core claim against data that already exists. If those
+distributions are smooth and unimodal, we are wrong and should say so.
+
+**One caution we hold against ourselves:** papers routinely *exclude* low-performing subjects,
+which would remove exactly the structure H1 predicts before anyone could see it. A cohort
+reported as unimodal after exclusions is not evidence against islands — and equally, we must
+not treat every exclusion as a hidden island. Any scoring of this prediction must report the
+source's exclusion criteria alongside the verdict.
+
 ## ERRATUM — 2026-08-06, same day, before any scoring
 
 **The gate names a statistic our own shipped instrument does not compute.** `H1_islands` reads

@@ -2,7 +2,7 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "PREDICTION_h1_human_islands_2026_08_06.md",
- "document_sha256": "32a718c68958b7c8f92078d71165d6d81a5fd189a45329b14c809bd40b74b165",
+ "document_sha256": "88706cedfac10c8b5efc4bce7c44c08c8e752f078ffe93652baa6ce285aff506",
  "receipts_sha256": {
   "b41_result.json": "d23acab77cb3fa6ec7851a6e9f48b9344e46273b9b432adf1d729fe9781075e4",
   "b42_result.json": "0102c48e1319684786ac712952a560076c3f513092e17fd3388b19dc3355476a",
@@ -13,7 +13,7 @@
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
   "VERIFIED": 16,
-  "ABSTAIN": 6,
+  "ABSTAIN": 33,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -40,7 +40,115 @@
    "token": "8"
   },
   {
+   "line": 132,
+   "token": "8"
+  },
+  {
    "line": 140,
+   "token": "8"
+  },
+  {
+   "line": 140,
+   "token": "12.35"
+  },
+  {
+   "line": 141,
+   "token": "10"
+  },
+  {
+   "line": 141,
+   "token": "1,102"
+  },
+  {
+   "line": 141,
+   "token": "61.8"
+  },
+  {
+   "line": 141,
+   "token": "3.67"
+  },
+  {
+   "line": 141,
+   "token": "3"
+  },
+  {
+   "line": 142,
+   "token": "10"
+  },
+  {
+   "line": 142,
+   "token": "16,740"
+  },
+  {
+   "line": 142,
+   "token": "200"
+  },
+  {
+   "line": 142,
+   "token": "80"
+  },
+  {
+   "line": 143,
+   "token": "40"
+  },
+  {
+   "line": 143,
+   "token": "6"
+  },
+  {
+   "line": 143,
+   "token": "40"
+  },
+  {
+   "line": 143,
+   "token": "6"
+  },
+  {
+   "line": 143,
+   "token": "24"
+  },
+  {
+   "line": 143,
+   "token": "40"
+  },
+  {
+   "line": 144,
+   "token": "82"
+  },
+  {
+   "line": 144,
+   "token": "140"
+  },
+  {
+   "line": 145,
+   "token": "70"
+  },
+  {
+   "line": 145,
+   "token": "40"
+  },
+  {
+   "line": 145,
+   "token": "5.28"
+  },
+  {
+   "line": 147,
+   "token": "4"
+  },
+  {
+   "line": 148,
+   "token": "4"
+  },
+  {
+   "line": 148,
+   "token": "3"
+  },
+  {
+   "line": 148,
+   "token": "4"
+  },
+  {
+   "line": 171,
    "token": "0.05"
   }
  ],
@@ -235,7 +343,272 @@
    "receipt_ref": "b47_result.json:bimodality_p"
   },
   {
+   "line": 132,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "When this prediction was registered we said it was scoreable \"on any cohort of \u2265 8 subjects,",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
    "line": 140,
+   "token": "8",
+   "value": 8.0,
+   "decimals": 0,
+   "context": "| **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas in the `nsdgeneral` ROI; the subject \u00d7 item \u00d7 voxel tensor H3 needs *is the file format* |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 140,
+   "token": "12.35",
+   "value": 12.35,
+   "decimals": 2,
+   "context": "| **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **NSD via the MindEye2 mirror** (`huggingface.co/datasets/pscotti/mindeyev2`) | 8 | `shared1000` seen by all | **12.35 GB**, ungated, no DUA | GLMsingle betas in the `nsdgeneral` ROI; the subject \u00d7 item \u00d7 voxel tensor H3 needs *is the file format* |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 141,
+   "token": "10",
+   "value": 10.0,
+   "decimals": 0,
+   "context": "| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives t",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB \u2014 never sync it whole) | the cleanest sharing design surveyed; two more subjects tha",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 141,
+   "token": "1,102",
+   "value": 1102.0,
+   "decimals": 0,
+   "context": "| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives t",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB \u2014 never sync it whole) | the cleanest sharing design surveyed; two more subjects tha",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 141,
+   "token": "61.8",
+   "value": 61.8,
+   "decimals": 1,
+   "context": "| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives t",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB \u2014 never sync it whole) | the cleanest sharing design surveyed; two more subjects tha",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 141,
+   "token": "3.67",
+   "value": 3.67,
+   "decimals": 2,
+   "context": "| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives t",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB \u2014 never sync it whole) | the cleanest sharing design surveyed; two more subjects tha",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 141,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "| **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives t",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **BOLD Moments** (OpenNeuro `ds005165`) | **10** | **1,102 videos seen by every subject** | 61.8 GB useful slice, CC0, no registration (the full derivatives tree is 3.67 TB \u2014 never sync it whole) | the cleanest sharing design surveyed; two more subjects tha",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 142,
+   "token": "10",
+   "value": 10.0,
+   "decimals": 0,
+   "context": "| **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure ",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure in existence |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 142,
+   "token": "16,740",
+   "value": 16740.0,
+   "decimals": 0,
+   "context": "| **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure ",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure in existence |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 142,
+   "token": "200",
+   "value": 200.0,
+   "decimals": 0,
+   "context": "| **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure ",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure in existence |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 142,
+   "token": "80",
+   "value": 80.0,
+   "decimals": 0,
+   "context": "| **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure ",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **THINGS-EEG2** (`osf.io/anp5v`, preprocessed) | 10 | **all 16,740 images seen by all**, 200 at 80 reps | a few GB preprocessed | strongest sharing structure in existence |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "6",
+   "value": 6.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "6",
+   "value": 6.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "24",
+   "value": 24.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 143,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "| **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the sa",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **ERP CORE** (`osf.io/thsqg`) | **40** | 6 paradigms, all 40 completed all 6 | 24 GB, CC-BY, seven MOABB one-liners | **six independent replications of the same dip test on the same 40 people** \u2014 a far stronger H1 test than one cohort |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 144,
+   "token": "82",
+   "value": 82.0,
+   "decimals": 0,
+   "context": "| **Narratives** (`s3://fcp-indi/data/Projects/narratives/`) | **82** (pieman) | one story heard by all | ~140 GB, CC0, anonymous S3, fMRIPrep derivatives shipp",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **Narratives** (`s3://fcp-indi/data/Projects/narratives/`) | **82** (pieman) | one story heard by all | ~140 GB, CC0, anonymous S3, fMRIPrep derivatives shipped | the canonical benchmark for subject\u2192group alignment, which is exactly H3's construction |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 144,
+   "token": "140",
+   "value": 140.0,
+   "decimals": 0,
+   "context": "| **Narratives** (`s3://fcp-indi/data/Projects/narratives/`) | **82** (pieman) | one story heard by all | ~140 GB, CC0, anonymous S3, fMRIPrep derivatives shipp",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **Narratives** (`s3://fcp-indi/data/Projects/narratives/`) | **82** (pieman) | one story heard by all | ~140 GB, CC0, anonymous S3, fMRIPrep derivatives shipped | the canonical benchmark for subject\u2192group alignment, which is exactly H3's construction |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 145,
+   "token": "70",
+   "value": 70.0,
+   "decimals": 0,
+   "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-satu",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-saturated, so ceiling effects may make the variance uninformative |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 145,
+   "token": "40",
+   "value": 40.0,
+   "decimals": 0,
+   "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-satu",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-saturated, so ceiling effects may make the variance uninformative |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 145,
+   "token": "5.28",
+   "value": 5.28,
+   "decimals": 2,
+   "context": "| **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-satu",
+   "binding_context": "| route | n | shared items | size / friction | why it fits | | **Liu2020BETA** via MOABB | **70** | 40 identical SSVEP targets | 5.28 GB, one-line loader | an afternoon's sanity check \u2014 caveat: SSVEP decoding is near-saturated, so ceiling effects may make the variance uninformative |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 147,
+   "token": "4",
+   "value": 4.0,
+   "decimals": 0,
+   "context": "Ruled out on cohort size despite being obvious candidates: Algonauts 2025 (n=4), THINGS-MEG",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 148,
+   "token": "4",
+   "value": 4.0,
+   "decimals": 0,
+   "context": "(n=4), THINGS-fMRI (n=3), BOLD5000 (n=4), LibriBrain (one subject).",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 148,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "(n=4), THINGS-fMRI (n=3), BOLD5000 (n=4), LibriBrain (one subject).",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 148,
+   "token": "4",
+   "value": 4.0,
+   "decimals": 0,
+   "context": "(n=4), THINGS-fMRI (n=3), BOLD5000 (n=4), LibriBrain (one subject).",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 171,
    "token": "0.05",
    "value": 0.05,
    "decimals": 2,
