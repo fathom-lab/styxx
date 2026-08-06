@@ -32,7 +32,7 @@ meaning, not just visual form.** The pre-stated bar is met. But the fuller pictu
 | AI → vision | **0.543** | **the LLM's own geometry is itself half-visual** |
 
 ## Variance partition of the human brain RDM (R²)
-Total explainable is capped by the fMRI noise ceiling (RSA ≤ ~0.56 → R² ≤ ~0.16–0.31); the full
+Total explainable is capped by the fMRI noise ceiling (RSA ≤ 0.56 → R² ≤ 0.16–0.31); the full
 model reaches **R² ≈ 0.081**, so these unique slivers are a few % of the *explainable* variance.
 
 | unique contribution to brain R² | value |

@@ -73,7 +73,7 @@ The candidate is reverted, so `styxx/certify.py` on disk is shipped v0.3 (git di
 The next recall attempt must be **range-guarded**, not blunt: fire the correlation/similarity
 register only when the adjacent number lies in a correlation's range (roughly −1 to 1), reusing the
 existing RANGE-SANITY `unit_kw` machinery. That spares `20` (an API cap), stage ordinals, and "2D",
-while still binding an `RSA 0.264` or a `reliability 0.735`. A NEW prereg must name this negative
+while still binding an `RSA 0.264` or a `reliability = 0.735`. A NEW prereg must name this negative
 and re-gate on G3 = 0 artifacts. The 29 REAL gaps this cycle surfaced are also owed a separate
 decision (persist the grid-cell correlations as summary receipts, or scope those docs' claims) —
 the same repair-the-receipt loop the v0.3 NOTE prescribes.

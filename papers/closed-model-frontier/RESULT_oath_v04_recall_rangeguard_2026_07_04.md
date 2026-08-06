@@ -23,8 +23,8 @@ were out of that range. Two edits to `certify.py`: a `_TRIGGERS_CORR` pattern + 
 | G5 | `pytest tests -q` green | green → PASS |
 
 The range guard did **most** of its job: clean UNGROUNDED collapsed from cycle-23's 35 to **4**, of
-which **2** are REAL (derived RSA bounds `~0.56`/`~0.16` the receipts do not hold), **1** REAL
-(a `0.50` agreement value living only in a bulk array), and **1** ARTIFACT. Battery caught **119**
+which **2** are REAL (derived RSA bounds `≤0.56`/`≤0.16` the receipts do not hold), **1** REAL
+(an `agreement = 0.50` value living only in a bulk array), and **1** ARTIFACT. Battery caught **119**
 of 269 mutants (down only 9 from the blunt 128 caught — the recall survives the guard) with
 false-verify still **26**. Four bars pass. But G3 is `= 0`, and there is **one** artifact — a kill.
 

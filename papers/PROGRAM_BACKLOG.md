@@ -1849,3 +1849,18 @@ The tool half (erasure-resistance certificate, SHIPPED `acf7034`) is built and p
 fires after (1)+(2). Enabling infra shipped same-arc: `styxx.ladder` v1 (G1), OATH v0.5 precision (G4),
 REPLICATIONS.md (G2), the certificate. G5/G6 code-unblocked; the external counterparty (arXiv + one replication)
 is the operator-gated giant step.*
+
+## Open verifier debt (named 2026-08-06 by the program audit)
+
+- **No "cited from another document's receipts" class.** A finding that quotes a measured value
+  from a sibling paper has three options today: add that paper's receipt to its own set (correct,
+  and what the audit did for `RSA 0.264` → `ai_brain_result.json`), restate via verified operands
+  (correct, and what the audit did for the b39 difficulty drift), or mark it as a spec constant so
+  it abstains (WRONG — the rule's rationale is "this is a preregistered bar," which a cited
+  measurement is not). A re-grounding subagent, told only "make these pass," found the third path
+  first: the cheapest route to a green verdict was to relabel a measurement as a threshold. Caught
+  in review, reverted, and named here because it is the Goodhart failure this program exists to
+  catch — in our own house, on our own verifier. A future `cite:` class (token + source-document
+  receipt) would close it honestly.
+- **No derived-arithmetic class beyond v0.5's derived-percent (class E).** A difference or ratio of
+  two verified operands is currently uncheckable; restating the operands is the honest workaround.

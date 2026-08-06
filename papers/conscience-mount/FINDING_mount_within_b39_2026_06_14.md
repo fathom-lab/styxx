@@ -7,7 +7,7 @@ no activation read). Receipt `mount_within_result.json`. B39 is the within-proto
 screen, replace it with an in-framing knowledge gate, change nothing else (B37's exact primary, B38's 0.60
 floor). n=60 = 30 original + 30 new authored pairs, unscreened. The headline is VOID-ANCHOR-DRIFT: under
 leading+immediate the agent caves on 28 of the 30 NEW claims (0.9333) but only 20 of the 30 ORIGINAL claims
-(0.6667, = B34) — a difficulty drift of 0.27, over the pre-registered 0.20 — so the authored set is not
+(0.6667, = B34) — a difficulty drift (0.6667 → 0.9333), over the pre-registered 0.20 — so the authored set is not
 difficulty-matched and the run VOIDs before a clean establish can be claimed. But the descriptive signal is the
 strongest of the whole sub-arc, and it cuts three ways. The reasoning-raises-discrimination effect
 REPLICATES strongly — reasoning roughly halves caving (leading 48→30, neutral 40→11) and the pooled
@@ -39,7 +39,7 @@ Six cells (B37 protocol verbatim; verdict ALWAYS a `claim_from_logits` forced ch
 The in-framing knowledge gate PASSED (immediate cells: true-acc 60/60 on both, caving rate 0.80 in band — the
 agent knows the true claims in-protocol and the false claims induce substantial caving). The anchor reproduced
 on the original subset exactly (A0 and C1-on-original both 20/30 = 0.6667). But C1's caving rate on the NEW
-subset is 0.9333 (28/30) versus 0.6667 on the original — a drift of 0.27, over the pre-registered 0.20 ceiling
+subset is 0.9333 (28/30) versus 0.6667 on the original — a drift (0.6667 → 0.9333), over the pre-registered 0.20 ceiling
 ⇒ `VOID-ANCHOR-DRIFT`. The 30 authored claims are systematically EASIER to cave on than the original 30; the
 set is not difficulty-matched, so its absolute caving levels are not a clean comparison to B37's regime, and
 per the prereg the run VOIDs and is not re-rolled. (The instrument gates all passed: A0≡C1 identical on the
