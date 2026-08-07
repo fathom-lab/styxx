@@ -42,7 +42,7 @@ import hashlib
 import json
 import re
 import subprocess
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 __all__ = ["Experiment", "Verdict", "PrologueError", "GateSpecError"]
@@ -68,6 +68,8 @@ class Verdict:
     gates_sha256: str           # hash of the frozen gates block text
     prereg_commit: str          # the earliest commit containing the prereg
     smoke: bool = False
+    power_basis: dict = field(default_factory=dict)      # gate -> how its bar was derived
+    undeclared_power_gates: list = field(default_factory=list)
 
 
 def _resolve(result: dict, dotted: str):
@@ -82,7 +84,9 @@ def _resolve(result: dict, dotted: str):
 class Experiment:
     """One preregistered experiment, scored only on the frozen document's terms."""
 
-    def __init__(self, prereg: str | Path, repo_root: str | Path | None = None):
+    def __init__(self, prereg: str | Path, repo_root: str | Path | None = None,
+                 require_power_basis: bool = False):
+        self.require_power_basis = require_power_basis
         self.prereg = Path(prereg)
         self.repo_root = Path(repo_root) if repo_root else self.prereg.resolve().parent
         if not self.prereg.exists():
@@ -102,6 +106,15 @@ class Experiment:
             if key not in spec:
                 raise GateSpecError(f"gates block missing {key!r}")
         self.spec = spec
+        self.power_basis = {n: g.get("power_basis") for n, g in spec["gates"].items()}
+        self.undeclared_power_gates = sorted(n for n, v in self.power_basis.items() if not v)
+        if self.require_power_basis and self.undeclared_power_gates:
+            raise GateSpecError(
+                f"gates without a declared power basis: {self.undeclared_power_gates}. "
+                f"Each gate must carry \"power_basis\": how its bar was derived, or the literal "
+                f"\"none — exploratory\". Three bars in this program were set without checking "
+                f"whether any instrument could clear them (b37 G2, b48 G2, C5 G1); each was "
+                f"written up and each recurred. An undeclared bar is now a refusal, not a note.")
 
     # -- the freeze check --------------------------------------------------
 
@@ -124,11 +137,15 @@ class Experiment:
     # -- scoring -----------------------------------------------------------
 
     def score(self, result: dict, smoke: bool = False) -> Verdict:
+        # power_basis rides on the Verdict as metadata; verdict STRINGS are untouched so every
+        # committed seal keeps verifying byte-identically.
         """Evaluate the frozen gates against a result dict; walk the frozen outcome table."""
         if smoke:
             return Verdict(verdict=self.spec["smoke_verdict"], gates={},
                            gates_sha256=self.gates_sha256,
-                           prereg_commit=self.prereg_commit, smoke=True)
+                           prereg_commit=self.prereg_commit, smoke=True,
+                           power_basis=self.power_basis,
+                           undeclared_power_gates=self.undeclared_power_gates)
         fired: dict[str, bool] = {}
         for name, g in self.spec["gates"].items():
             op = _OPS.get(g.get("op"))
@@ -139,7 +156,9 @@ class Experiment:
             if all(fired.get(k) == v for k, v in row["when"].items()):
                 return Verdict(verdict=row["verdict"], gates=fired,
                                gates_sha256=self.gates_sha256,
-                               prereg_commit=self.prereg_commit)
+                               prereg_commit=self.prereg_commit,
+                               power_basis=self.power_basis,
+                               undeclared_power_gates=self.undeclared_power_gates)
         raise GateSpecError(
             f"no outcome row matches gates {fired} — the frozen table is not total; "
             "this is a prereg design bug, surfaced instead of guessed around")

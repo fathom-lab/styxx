@@ -1,0 +1,18 @@
+{
+  "prereg": "PREREG_protocol_power_basis_2026_08_07.md",
+  "smoke": false,
+  "existing_preregs_still_score": 32,
+  "verdict_string_diffs": 0,
+  "strict_mode_refusals": 0,
+  "declared_prereg_scores_under_strict": 1,
+  "n_preregs_scanned": 32,
+  "preregs_with_undeclared_gates": 31,
+  "verdict": "INVALID__breaks_existing_preregs",
+  "gates": {
+    "G1_backward_compatible": false,
+    "G2_strict_mode_refuses": false,
+    "G3_declared_passes_strict": true,
+    "G4_verdict_strings_unchanged": true
+  },
+  "prereg_commit": "54247c94dfde768f3f12305856efac82e9713dac"
+}

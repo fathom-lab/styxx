@@ -1,0 +1,169 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_protocol_power_basis_invalid_2026_08_07.md",
+ "document_sha256": "11bb3f77d837ce0c9e73f515c867873716289fcf69f60ebec5349364665b8c87",
+ "receipts_sha256": {
+  "protocol_power_basis_result.json": "036c10bb38c06e12359ec4f23a4f7d8fdae6f674c71314f1615526e9fbc965cf"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 4,
+  "ABSTAIN": 8,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 10,
+   "token": "33"
+  },
+  {
+   "line": 10,
+   "token": "32"
+  },
+  {
+   "line": 11,
+   "token": "1"
+  },
+  {
+   "line": 12,
+   "token": "1"
+  },
+  {
+   "line": 12,
+   "token": "1"
+  },
+  {
+   "line": 13,
+   "token": "0"
+  },
+  {
+   "line": 13,
+   "token": "0"
+  },
+  {
+   "line": 41,
+   "token": "33"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 10,
+   "token": "33",
+   "value": 33.0,
+   "decimals": 0,
+   "context": "| G1_backward_compatible | \u2265 33 | 32 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_backward_compatible | \u2265 33 | 32 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 10,
+   "token": "32",
+   "value": 32.0,
+   "decimals": 0,
+   "context": "| G1_backward_compatible | \u2265 33 | 32 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_backward_compatible | \u2265 33 | 32 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 11,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G2_strict_mode_refuses | \u2265 1 | 0 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G2_strict_mode_refuses | \u2265 1 | 0 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 11,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G2_strict_mode_refuses | \u2265 1 | 0 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G2_strict_mode_refuses | \u2265 1 | 0 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_power_basis_result.json:verdict_string_diffs"
+  },
+  {
+   "line": 12,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G3_declared_passes_strict | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_declared_passes_strict | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G3_declared_passes_strict | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_declared_passes_strict | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G4_verdict_strings_unchanged | \u2264 0 | 0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_verdict_strings_unchanged | \u2264 0 | 0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G4_verdict_strings_unchanged | \u2264 0 | 0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_verdict_strings_unchanged | \u2264 0 | 0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 32,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "**G2.** The harness tested strict mode on `preregs[0]` \u2014 alphabetically the *declared* prereg",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_power_basis_result.json:verdict_string_diffs"
+  },
+  {
+   "line": 41,
+   "token": "33",
+   "value": 33.0,
+   "decimals": 0,
+   "context": "33 sealed findings keep verifying byte-identically. And 31 of 32 preregs are now measured as",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 41,
+   "token": "31",
+   "value": 31.0,
+   "decimals": 0,
+   "context": "33 sealed findings keep verifying byte-identically. And 31 of 32 preregs are now measured as",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_power_basis_result.json:preregs_with_undeclared_gates"
+  },
+  {
+   "line": 41,
+   "token": "32",
+   "value": 32.0,
+   "decimals": 0,
+   "context": "33 sealed findings keep verifying byte-identically. And 31 of 32 preregs are now measured as",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_power_basis_result.json:existing_preregs_still_score"
+  }
+ ]
+}
