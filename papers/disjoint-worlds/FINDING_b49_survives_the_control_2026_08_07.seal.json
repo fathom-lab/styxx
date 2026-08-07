@@ -1,0 +1,30 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_b49_survives_the_control_2026_08_07.md",
+ "document_sha256": "8080e8428688c5d8ebae07bd4a1e4bdfb0defdc1dc886368cb26fab545a2871c",
+ "oath": {
+  "counts": {
+   "VERIFIED": 8,
+   "ABSTAIN": 1,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_b49_amplitude_reaudit_2026_08_07.md",
+   "result": "b49_result.json",
+   "frozen_verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+   "gates": {
+    "G1_b45_clique_still_above_null": true,
+    "G2_b45_island_still_lowest": true,
+    "G3_b47_verdict_unchanged": false
+   },
+   "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d",
+   "prereg_commit": "88239ac694d809159fb39f30305b247db2dbeb06"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "463a7a561bd140a3473886b6c2ef4d5aebef58612cfc8a3f9dac83f0613080d9"
+}

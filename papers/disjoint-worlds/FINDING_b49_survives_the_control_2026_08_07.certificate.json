@@ -1,0 +1,116 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_b49_survives_the_control_2026_08_07.md",
+ "document_sha256": "8080e8428688c5d8ebae07bd4a1e4bdfb0defdc1dc886368cb26fab545a2871c",
+ "receipts_sha256": {
+  "b49_result.json": "1e179603c93dae1f97e3a4f4a025d41b5049f6bf9bd5bc7ff04b0c18eb23df1c",
+  "b47_result.json": "bd4df692c5ba2c2b31aca1c5c7e2b67ef7af8008a5f38eaf70c217fd67e7831f",
+  "b45_result.json": "0ab5f5fe91913fee08f1cbe1167cf2af66bd80e98eb0864c550970610636a71d"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 8,
+  "ABSTAIN": 1,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 27,
+   "token": "3"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 19,
+   "token": "0.848",
+   "value": 0.848,
+   "decimals": 3,
+   "context": "| b45 clique median affinity | 0.848 | **0.862** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 clique median affinity | 0.848 | **0.862** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b45_result.json:median_clique_affinity_k20"
+  },
+  {
+   "line": 19,
+   "token": "0.862",
+   "value": 0.862,
+   "decimals": 3,
+   "context": "| b45 clique median affinity | 0.848 | **0.862** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 clique median affinity | 0.848 | **0.862** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_clique_median"
+  },
+  {
+   "line": 20,
+   "token": "0.7914",
+   "value": 0.7914,
+   "decimals": 4,
+   "context": "| b45 margin over random-null p95 | 0.7914 | **0.8054** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 margin over random-null p95 | 0.7914 | **0.8054** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_published_margin"
+  },
+  {
+   "line": 20,
+   "token": "0.8054",
+   "value": 0.8054,
+   "decimals": 4,
+   "context": "| b45 margin over random-null p95 | 0.7914 | **0.8054** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 margin over random-null p95 | 0.7914 | **0.8054** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_clique_minus_null_p95"
+  },
+  {
+   "line": 21,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_seeds_qwen_below_clique"
+  },
+  {
+   "line": 21,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_seeds_qwen_below_clique"
+  },
+  {
+   "line": 21,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_seeds_qwen_below_clique"
+  },
+  {
+   "line": 21,
+   "token": "5",
+   "value": 5.0,
+   "decimals": 0,
+   "context": "| b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "binding_context": "| | published (uncontrolled) | with the amplitude control | | b45 island below clique | 5 of 5 seeds | **5 of 5 seeds** |",
+   "status": "VERIFIED",
+   "receipt_ref": "b49_result.json:b45_norm_seeds_qwen_below_clique"
+  },
+  {
+   "line": 27,
+   "token": "3",
+   "value": 3.0,
+   "decimals": 0,
+   "context": "The claim in synthesis \u00a73 and in the staged arXiv abstract stands as written.",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "prereg": "PREREG_b49_amplitude_reaudit_2026_08_07.md",
+  "smoke": false,
+  "b45_norm_clique_median": 0.862,
+  "b45_norm_null_p95": 0.0566,
+  "b45_norm_clique_minus_null_p95": 0.8054,
+  "b45_norm_seeds_qwen_below_clique": 5,
+  "b45_published_margin": 0.7914,
+  "b47_norm_verdict": "UNIMODAL_COHORT",
+  "b47_norm_median": 0.6925,
+  "b47_norm_gap_p": 0.7911,
+  "b47_norm_verdict_matches_published": 0,
+  "verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+  "gates": {
+    "G1_b45_clique_still_above_null": true,
+    "G2_b45_island_still_lowest": true,
+    "G3_b47_verdict_unchanged": false
+  },
+  "prereg_commit": "88239ac694d809159fb39f30305b247db2dbeb06",
+  "undeclared_power_gates": []
+}
