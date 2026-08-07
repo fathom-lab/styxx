@@ -1,0 +1,105 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_protocol_metric_identity_2026_08_07.md",
+ "document_sha256": "79c88590fa6bb573259fd24f386deec7ccfdf0b96a8958cab3904a6a79d7a455",
+ "receipts_sha256": {
+  "protocol_metric_identity_result.json": "51534862f9433640fd4f94653aee4937cf1d846fec05bf8fe29135078bb79340"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 0,
+  "ABSTAIN": 6,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 11,
+   "token": "0"
+  },
+  {
+   "line": 11,
+   "token": "0"
+  },
+  {
+   "line": 12,
+   "token": "1"
+  },
+  {
+   "line": 12,
+   "token": "1"
+  },
+  {
+   "line": 13,
+   "token": "1"
+  },
+  {
+   "line": 13,
+   "token": "1"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 11,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G1_no_verdict_strings_change | \u2264 0 | 0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G1_no_verdict_strings_change | \u2264 0 | 0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 11,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "| G1_no_verdict_strings_change | \u2264 0 | 0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G1_no_verdict_strings_change | \u2264 0 | 0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G2_check_metrics_finds_a_missing_path | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_check_metrics_finds_a_missing_path | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G2_check_metrics_finds_a_missing_path | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_check_metrics_finds_a_missing_path | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G3_check_metrics_passes_a_real_result | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_check_metrics_passes_a_real_result | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "| G3_check_metrics_passes_a_real_result | \u2265 1 | 1 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_check_metrics_passes_a_real_result | \u2265 1 | 1 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  }
+ ]
+}

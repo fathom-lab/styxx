@@ -1,0 +1,14 @@
+{
+  "prereg": "PREREG_protocol_metric_identity_2026_08_07.md",
+  "smoke": false,
+  "verdict_string_diffs": 0,
+  "missing_paths_detected": 1,
+  "real_result_paths_all_present": 1,
+  "verdict": "METRIC_IDENTITY_LANDED__paths_checkable_before_a_run_is_spent",
+  "gates": {
+    "G1_no_verdict_strings_change": true,
+    "G2_check_metrics_finds_a_missing_path": true,
+    "G3_check_metrics_passes_a_real_result": true
+  },
+  "prereg_commit": "0a0c024cdae2e3603afd72df923cdc573e25b045"
+}

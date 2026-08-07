@@ -70,6 +70,7 @@ class Verdict:
     smoke: bool = False
     power_basis: dict = field(default_factory=dict)      # gate -> how its bar was derived
     undeclared_power_gates: list = field(default_factory=list)
+    metric_paths: dict = field(default_factory=dict)     # gate -> the dotted path it read
 
 
 def _resolve(result: dict, dotted: str):
@@ -107,6 +108,8 @@ class Experiment:
                 raise GateSpecError(f"gates block missing {key!r}")
         self.spec = spec
         self.power_basis = {n: g.get("power_basis") for n, g in spec["gates"].items()}
+        self.metric_paths = {n: g.get("metric") for n, g in spec["gates"].items()}
+        self.metric_means = {n: g.get("metric_means") for n, g in spec["gates"].items()}
         self.undeclared_power_gates = sorted(n for n, v in self.power_basis.items() if not v)
         if self.require_power_basis and self.undeclared_power_gates:
             raise GateSpecError(
@@ -115,6 +118,28 @@ class Experiment:
                 f"\"none — exploratory\". Three bars in this program were set without checking "
                 f"whether any instrument could clear them (b37 G2, b48 G2, C5 G1); each was "
                 f"written up and each recurred. An undeclared bar is now a refusal, not a note.")
+
+    def check_metrics(self, result: dict) -> dict:
+        """Resolve every gate's metric path against a candidate result WITHOUT scoring.
+
+        Call this before launching a run. ``_resolve`` already raises on a missing path, but only
+        at scoring time — after the compute is spent. B49 lost a whole re-analysis to a gate whose
+        path resolved to a real but *wrong* field; this catches the cheaper cousin (a path that is
+        simply absent) for the cost of one call.
+
+        **It cannot catch B49's actual error.** A path that resolves to an existing field the
+        author did not intend is indistinguishable from a correct one, because the machinery has
+        no access to intent. ``metric_means`` records that intent for a human reader; it is not a
+        check and must not be read as one.
+        """
+        out = {}
+        for name, path in self.metric_paths.items():
+            try:
+                _resolve(result, path)
+                out[name] = {"path": path, "present": True}
+            except GateSpecError:
+                out[name] = {"path": path, "present": False}
+        return out
 
     # -- the freeze check --------------------------------------------------
 
@@ -145,7 +170,8 @@ class Experiment:
                            gates_sha256=self.gates_sha256,
                            prereg_commit=self.prereg_commit, smoke=True,
                            power_basis=self.power_basis,
-                           undeclared_power_gates=self.undeclared_power_gates)
+                           undeclared_power_gates=self.undeclared_power_gates,
+                           metric_paths=self.metric_paths)
         fired: dict[str, bool] = {}
         for name, g in self.spec["gates"].items():
             op = _OPS.get(g.get("op"))
@@ -158,7 +184,8 @@ class Experiment:
                                gates_sha256=self.gates_sha256,
                                prereg_commit=self.prereg_commit,
                                power_basis=self.power_basis,
-                               undeclared_power_gates=self.undeclared_power_gates)
+                               undeclared_power_gates=self.undeclared_power_gates,
+                               metric_paths=self.metric_paths)
         raise GateSpecError(
             f"no outcome row matches gates {fired} — the frozen table is not total; "
             "this is a prereg design bug, surfaced instead of guessed around")
