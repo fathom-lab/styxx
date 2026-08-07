@@ -1,0 +1,31 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_c3_algebra_wrong_2026_08_07.md",
+ "document_sha256": "1893ecd3ae61925ae02b64af5afbcc66b1f0f5a293561855551188b56ad8429b",
+ "oath": {
+  "counts": {
+   "VERIFIED": 5,
+   "ABSTAIN": 4,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_c3_linear_statistic_2026_08_07.md",
+   "result": "c3_result.json",
+   "frozen_verdict": "ALGEBRA_WRONG__linear_statistic_also_blind",
+   "gates": {
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true,
+    "G3_rejects_independent_ar": true,
+    "G4_rejects_shared_trend": false
+   },
+   "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517",
+   "prereg_commit": "0149f25bf63aa91186b98913959d515b8bbaa99a"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "bb049f398f54a0bd1602d7309a4d610bd96d8072ffc61c4cfcc5bba3a887bde9"
+}

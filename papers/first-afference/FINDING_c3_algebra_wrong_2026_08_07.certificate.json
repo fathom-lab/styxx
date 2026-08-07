@@ -1,0 +1,126 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_c3_algebra_wrong_2026_08_07.md",
+ "document_sha256": "1893ecd3ae61925ae02b64af5afbcc66b1f0f5a293561855551188b56ad8429b",
+ "receipts_sha256": {
+  "c3_result.json": "4da3d86a6cd07fd1945b252d8029086558f718862fc5dda53b1659c98a855e4c"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 5,
+  "ABSTAIN": 4,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "0.80"
+  },
+  {
+   "line": 14,
+   "token": "0.10"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 16,
+   "token": "0.10"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 9,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "1.0, because the frozen method omitted the trend refusal that lives in `couple()`.",
+   "status": "VERIFIED",
+   "receipt_ref": "c3_result.json:frac_shared_trend_coupled"
+  },
+  {
+   "line": 13,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0952",
+   "value": 0.0952,
+   "decimals": 4,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c3_result.json:frac_real_coupled"
+  },
+  {
+   "line": 14,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c3_result.json:reversed.sub-001__sub-002.obs"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c3_result.json:independent_ar.s0.matched_p"
+  },
+  {
+   "line": 16,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 1.0 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 1.0 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 16,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 1.0 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 1.0 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c3_result.json:frac_shared_trend_coupled"
+  }
+ ]
+}
