@@ -1,0 +1,130 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_c4_mechanism_incomplete_2026_08_07.md",
+ "document_sha256": "ff119556ac25ebb53bf35e0e8e26cd1d7b948b06c93791effd91eadf33ac328c",
+ "receipts_sha256": {
+  "c4_result.json": "aaee4c0c21165106c214c54f4a3f2484707bdb4867f3105f9b565fd6e5c79457"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 4,
+  "ABSTAIN": 5,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 11,
+   "token": "0.80"
+  },
+  {
+   "line": 12,
+   "token": "0.10"
+  },
+  {
+   "line": 13,
+   "token": "0.10"
+  },
+  {
+   "line": 14,
+   "token": "0.10"
+  },
+  {
+   "line": 23,
+   "token": "500"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 11,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.1429 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.1429 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 11,
+   "token": "0.1429",
+   "value": 0.1429,
+   "decimals": 4,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.1429 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.1429 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c4_result.json:frac_real_coupled"
+  },
+  {
+   "line": 12,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c4_result.json:reversed.sub-001__sub-002.obs"
+  },
+  {
+   "line": 13,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c4_result.json:independent_ar.s0.obs"
+  },
+  {
+   "line": 14,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c4_result.json:frac_shared_trend_coupled"
+  },
+  {
+   "line": 23,
+   "token": "500",
+   "value": 500.0,
+   "decimals": 0,
+   "context": "The one untouched design constant since C1 is the **vertex set**: 500 fixed random vertices",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  }
+ ]
+}

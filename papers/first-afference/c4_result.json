@@ -1,0 +1,467 @@
+{
+  "prereg": "PREREG_c4_signed_statistic_2026_08_07.md",
+  "smoke": false,
+  "real": {
+    "sub-001__sub-002": {
+      "obs": 0.0157,
+      "surrogate_p": 0.01,
+      "matched_p": 0.002,
+      "licensed": true
+    },
+    "sub-001__sub-003": {
+      "obs": 0.0058,
+      "surrogate_p": 0.1317,
+      "matched_p": 0.0898,
+      "licensed": false
+    },
+    "sub-001__sub-004": {
+      "obs": 0.0022,
+      "surrogate_p": 0.3653,
+      "matched_p": 0.3114,
+      "licensed": false
+    },
+    "sub-001__sub-005": {
+      "obs": 0.0012,
+      "surrogate_p": 0.4271,
+      "matched_p": 0.3114,
+      "licensed": false
+    },
+    "sub-001__sub-006": {
+      "obs": 0.0021,
+      "surrogate_p": 0.3633,
+      "matched_p": 0.3393,
+      "licensed": false
+    },
+    "sub-001__sub-008": {
+      "obs": 0.0101,
+      "surrogate_p": 0.0259,
+      "matched_p": 0.008,
+      "licensed": false
+    },
+    "sub-002__sub-003": {
+      "obs": -0.0041,
+      "surrogate_p": 0.7984,
+      "matched_p": 0.8403,
+      "licensed": false
+    },
+    "sub-002__sub-004": {
+      "obs": 0.0019,
+      "surrogate_p": 0.3693,
+      "matched_p": 0.3134,
+      "licensed": false
+    },
+    "sub-002__sub-005": {
+      "obs": 0.0035,
+      "surrogate_p": 0.2475,
+      "matched_p": 0.1597,
+      "licensed": false
+    },
+    "sub-002__sub-006": {
+      "obs": -0.0009,
+      "surrogate_p": 0.5968,
+      "matched_p": 0.6228,
+      "licensed": false
+    },
+    "sub-002__sub-008": {
+      "obs": 0.0139,
+      "surrogate_p": 0.01,
+      "matched_p": 0.002,
+      "licensed": true
+    },
+    "sub-003__sub-004": {
+      "obs": 0.0029,
+      "surrogate_p": 0.2675,
+      "matched_p": 0.2216,
+      "licensed": false
+    },
+    "sub-003__sub-005": {
+      "obs": 0.0042,
+      "surrogate_p": 0.2375,
+      "matched_p": 0.1577,
+      "licensed": false
+    },
+    "sub-003__sub-006": {
+      "obs": 0.0013,
+      "surrogate_p": 0.3693,
+      "matched_p": 0.4152,
+      "licensed": false
+    },
+    "sub-003__sub-008": {
+      "obs": -0.0017,
+      "surrogate_p": 0.6347,
+      "matched_p": 0.6627,
+      "licensed": false
+    },
+    "sub-004__sub-005": {
+      "obs": 0.0214,
+      "surrogate_p": 0.002,
+      "matched_p": 0.002,
+      "licensed": true
+    },
+    "sub-004__sub-006": {
+      "obs": 0.0109,
+      "surrogate_p": 0.022,
+      "matched_p": 0.006,
+      "licensed": false
+    },
+    "sub-004__sub-008": {
+      "obs": 0.0059,
+      "surrogate_p": 0.1317,
+      "matched_p": 0.0719,
+      "licensed": false
+    },
+    "sub-005__sub-006": {
+      "obs": 0.0034,
+      "surrogate_p": 0.2455,
+      "matched_p": 0.1597,
+      "licensed": false
+    },
+    "sub-005__sub-008": {
+      "obs": 0.0036,
+      "surrogate_p": 0.2495,
+      "matched_p": 0.1597,
+      "licensed": false
+    },
+    "sub-006__sub-008": {
+      "obs": 0.0123,
+      "surrogate_p": 0.012,
+      "matched_p": 0.004,
+      "licensed": false
+    }
+  },
+  "reversed": {
+    "sub-001__sub-002": {
+      "obs": 0.0037,
+      "surrogate_p": 0.2814,
+      "matched_p": 0.2355,
+      "licensed": false
+    },
+    "sub-001__sub-003": {
+      "obs": -0.0019,
+      "surrogate_p": 0.6028,
+      "matched_p": 0.7106,
+      "licensed": false
+    },
+    "sub-001__sub-004": {
+      "obs": 0.0088,
+      "surrogate_p": 0.0778,
+      "matched_p": 0.024,
+      "licensed": false
+    },
+    "sub-001__sub-005": {
+      "obs": -0.0021,
+      "surrogate_p": 0.6587,
+      "matched_p": 0.7285,
+      "licensed": false
+    },
+    "sub-001__sub-006": {
+      "obs": 0.0003,
+      "surrogate_p": 0.495,
+      "matched_p": 0.4611,
+      "licensed": false
+    },
+    "sub-001__sub-008": {
+      "obs": 0.0079,
+      "surrogate_p": 0.0898,
+      "matched_p": 0.0319,
+      "licensed": false
+    },
+    "sub-002__sub-003": {
+      "obs": -0.0019,
+      "surrogate_p": 0.6786,
+      "matched_p": 0.6926,
+      "licensed": false
+    },
+    "sub-002__sub-004": {
+      "obs": 0.0015,
+      "surrogate_p": 0.3992,
+      "matched_p": 0.3393,
+      "licensed": false
+    },
+    "sub-002__sub-005": {
+      "obs": -0.0062,
+      "surrogate_p": 0.8643,
+      "matched_p": 0.9301,
+      "licensed": false
+    },
+    "sub-002__sub-006": {
+      "obs": 0.008,
+      "surrogate_p": 0.0639,
+      "matched_p": 0.0299,
+      "licensed": false
+    },
+    "sub-002__sub-008": {
+      "obs": 0.0016,
+      "surrogate_p": 0.3693,
+      "matched_p": 0.3633,
+      "licensed": false
+    },
+    "sub-003__sub-004": {
+      "obs": -0.0014,
+      "surrogate_p": 0.5948,
+      "matched_p": 0.6727,
+      "licensed": false
+    },
+    "sub-003__sub-005": {
+      "obs": -0.0011,
+      "surrogate_p": 0.5968,
+      "matched_p": 0.6487,
+      "licensed": false
+    },
+    "sub-003__sub-006": {
+      "obs": -0.0019,
+      "surrogate_p": 0.6786,
+      "matched_p": 0.7006,
+      "licensed": false
+    },
+    "sub-003__sub-008": {
+      "obs": -0.0002,
+      "surrogate_p": 0.513,
+      "matched_p": 0.513,
+      "licensed": false
+    },
+    "sub-004__sub-005": {
+      "obs": -0.0019,
+      "surrogate_p": 0.6347,
+      "matched_p": 0.6906,
+      "licensed": false
+    },
+    "sub-004__sub-006": {
+      "obs": 0.0063,
+      "surrogate_p": 0.2216,
+      "matched_p": 0.0539,
+      "licensed": false
+    },
+    "sub-004__sub-008": {
+      "obs": 0.0058,
+      "surrogate_p": 0.1577,
+      "matched_p": 0.0639,
+      "licensed": false
+    },
+    "sub-005__sub-006": {
+      "obs": 0.0056,
+      "surrogate_p": 0.1257,
+      "matched_p": 0.0579,
+      "licensed": false
+    },
+    "sub-005__sub-008": {
+      "obs": -0.0014,
+      "surrogate_p": 0.6387,
+      "matched_p": 0.6687,
+      "licensed": false
+    },
+    "sub-006__sub-008": {
+      "obs": 0.0027,
+      "surrogate_p": 0.2974,
+      "matched_p": 0.2295,
+      "licensed": false
+    }
+  },
+  "independent_ar": {
+    "s0": {
+      "obs": -0.001,
+      "surrogate_p": 0.5569,
+      "matched_p": 0.5609,
+      "licensed": false
+    },
+    "s1": {
+      "obs": 0.1124,
+      "surrogate_p": 0.1377,
+      "matched_p": 0.002,
+      "licensed": false
+    },
+    "s2": {
+      "obs": -0.0033,
+      "surrogate_p": 0.525,
+      "matched_p": 0.5469,
+      "licensed": false
+    },
+    "s3": {
+      "obs": -0.1094,
+      "surrogate_p": 0.6766,
+      "matched_p": 1.0,
+      "licensed": false
+    },
+    "s4": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s5": {
+      "obs": 0.0472,
+      "surrogate_p": 0.3313,
+      "matched_p": 0.01,
+      "licensed": false
+    },
+    "s6": {
+      "obs": 0.1811,
+      "surrogate_p": 0.1677,
+      "matched_p": 0.002,
+      "licensed": false
+    },
+    "s7": {
+      "obs": 0.0911,
+      "surrogate_p": 0.1996,
+      "matched_p": 0.002,
+      "licensed": false
+    },
+    "s8": {
+      "obs": 0.0639,
+      "surrogate_p": 0.3253,
+      "matched_p": 0.002,
+      "licensed": false
+    },
+    "s9": {
+      "obs": 0.0093,
+      "surrogate_p": 0.4651,
+      "matched_p": 0.2794,
+      "licensed": false
+    },
+    "s10": {
+      "obs": 0.045,
+      "surrogate_p": 0.491,
+      "matched_p": 0.016,
+      "licensed": false
+    },
+    "s11": {
+      "obs": 0.0237,
+      "surrogate_p": 0.3693,
+      "matched_p": 0.1337,
+      "licensed": false
+    },
+    "s12": {
+      "obs": -0.1868,
+      "surrogate_p": 0.9581,
+      "matched_p": 1.0,
+      "licensed": false
+    },
+    "s13": {
+      "obs": 0.1292,
+      "surrogate_p": 0.0778,
+      "matched_p": 0.002,
+      "licensed": false
+    },
+    "s14": {
+      "obs": -0.2108,
+      "surrogate_p": 0.8323,
+      "matched_p": 1.0,
+      "licensed": false
+    },
+    "s15": {
+      "obs": -0.1708,
+      "surrogate_p": 0.8563,
+      "matched_p": 1.0,
+      "licensed": false
+    },
+    "s16": {
+      "obs": -0.2036,
+      "surrogate_p": 0.8623,
+      "matched_p": 1.0,
+      "licensed": false
+    },
+    "s17": {
+      "obs": 0.0617,
+      "surrogate_p": 0.4431,
+      "matched_p": 0.006,
+      "licensed": false
+    },
+    "s18": {
+      "obs": 0.0423,
+      "surrogate_p": 0.3673,
+      "matched_p": 0.0459,
+      "licensed": false
+    },
+    "s19": {
+      "obs": 0.0763,
+      "surrogate_p": 0.1597,
+      "matched_p": 0.002,
+      "licensed": false
+    }
+  },
+  "shared_trend": {
+    "s0": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s1": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s2": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s3": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s4": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s5": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s6": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s7": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s8": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    },
+    "s9": {
+      "obs": null,
+      "surrogate_p": null,
+      "matched_p": null,
+      "licensed": false,
+      "refused": "shared_trend"
+    }
+  },
+  "frac_real_coupled": 0.1429,
+  "frac_independent_ar_coupled": 0.0,
+  "frac_shared_trend_coupled": 0.0,
+  "frac_reversed_coupled": 0.0,
+  "verdict": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+  "gates": {
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true,
+    "G3_rejects_independent_ar": true,
+    "G4_rejects_shared_trend": true
+  },
+  "prereg_commit": "1020df3fff58fb625a0ea6a5d04cadc8b35fced5"
+}
