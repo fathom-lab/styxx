@@ -1,0 +1,135 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_c2_still_blind_2026_08_07.md",
+ "document_sha256": "c31792049a37265d8e83a2e8209c8b4c111e6d442defb0d82a097ae747de051b",
+ "receipts_sha256": {
+  "c2_result.json": "f9d59d4bd5019ac3b06cd4edeb0cfaec68abd295761d1f841933d3b361238d33"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 6,
+  "ABSTAIN": 4,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 13,
+   "token": "0.80"
+  },
+  {
+   "line": 14,
+   "token": "0.10"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 16,
+   "token": "0.10"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 13,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "| G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0476",
+   "value": 0.0476,
+   "decimals": 4,
+   "context": "| G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G1_finds_isc | \u2265 0.80 of real pairs licensed | 0.0476 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:frac_real_coupled"
+  },
+  {
+   "line": 14,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:frac_reversed_coupled"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:frac_independent_ar_coupled"
+  },
+  {
+   "line": 16,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 16,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | frozen bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:frac_shared_trend_coupled"
+  },
+  {
+   "line": 21,
+   "token": "0.002",
+   "value": 0.002,
+   "decimals": 3,
+   "context": "(median matched p 0.002) and the surrogate absorbs them (median surrogate p 0.1633).",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:real.sub-001__sub-002.matched_p"
+  },
+  {
+   "line": 21,
+   "token": "0.1633",
+   "value": 0.1633,
+   "decimals": 4,
+   "context": "(median matched p 0.002) and the surrogate absorbs them (median surrogate p 0.1633).",
+   "status": "VERIFIED",
+   "receipt_ref": "c2_result.json:real.sub-001__sub-005.surrogate_p"
+  }
+ ]
+}

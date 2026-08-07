@@ -1,0 +1,31 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_c2_still_blind_2026_08_07.md",
+ "document_sha256": "c31792049a37265d8e83a2e8209c8b4c111e6d442defb0d82a097ae747de051b",
+ "oath": {
+  "counts": {
+   "VERIFIED": 6,
+   "ABSTAIN": 4,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_c2_surrogate_recalibration_2026_08_07.md",
+   "result": "c2_result.json",
+   "frozen_verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+   "gates": {
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true,
+    "G3_rejects_independent_ar": true,
+    "G4_rejects_shared_trend": true
+   },
+   "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828",
+   "prereg_commit": "11ec5bdc9f99da2c5de209b1e99f341ba591510d"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "c4d27c6e8adf5396663be7493dd5f79cd0b781464f7faaeec76a9007dc17f200"
+}

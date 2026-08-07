@@ -82,7 +82,8 @@ from dataclasses import dataclass, field, asdict
 
 import numpy as np
 
-__all__ = ["couple", "Coupling", "rv_coefficient", "debiased_cka", "resample_pair"]
+__all__ = ["couple", "Coupling", "rv_coefficient", "debiased_cka", "resample_pair",
+           "phase_randomize"]
 
 
 def rv_coefficient(X: np.ndarray, Y: np.ndarray) -> float:
@@ -150,6 +151,27 @@ def resample_pair(A, ts_a, B, ts_b, bin_seconds: float = 60.0):
         return np.empty((0, 0)), np.empty((0, 0)), [], np.empty(0)
     return (np.asarray([ba[b] for b in common]), np.asarray([bb[b] for b in common]),
             common, np.asarray([ca.get(b, 0) for b in common]))
+
+
+def phase_randomize(B: np.ndarray, rng) -> np.ndarray:
+    """Spectral surrogate: random Fourier phases, full power spectrum preserved.
+
+    The same random phase applies to every column (preserving the stream's internal
+    cross-column structure); DC and Nyquist bins stay real. The result carries the data's exact
+    autocorrelation — not the white noise a permutation implies, and not the misaligned-but-
+    still-shared slow structure a circular shift leaves on heavily autocorrelated data. The
+    latter refused 20 of 21 genuine intersubject-correlation pairs (C1); this is the
+    literature-standard replacement (Theiler et al. 1992; Schreiber & Schmitz 1996), adopted
+    under the preregistered C2 exam.
+    """
+    B = np.asarray(B, dtype=float)
+    n = len(B)
+    F = np.fft.rfft(B, axis=0)
+    ph = np.exp(1j * rng.uniform(0.0, 2.0 * np.pi, F.shape[0]))
+    ph[0] = 1.0
+    if n % 2 == 0:
+        ph[-1] = 1.0
+    return np.fft.irfft(F * ph[:, None], n=n, axis=0)
 
 
 def _confound_matched_perm(n, groups, rng):
@@ -357,27 +379,26 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
                 f"never actually tested against the confound. This costs power silently; the "
                 f"power floor below is the honest consequence. Use a coarser confound.")
 
-    # every valid shift, capped: the null must be able to RESOLVE p <= alpha, i.e. it needs at
-    # least 1/alpha draws. Under-drawing it silently converts real coupling into an INVALID.
-    max_shift_draws = max(n_perm, int(np.ceil(2.0 / max(alpha, 1e-6))))
-    step = max(1, (n - 10) // max_shift_draws)
-    shift_nulls = [rv_coefficient(Az, np.roll(Bz, s, axis=0)) for s in range(5, n - 5, step)]
-    if len(shift_nulls) < np.ceil(1.0 / max(alpha, 1e-6)):
-        caveats.append(
-            f"circular-shift null has only {len(shift_nulls)} draws (n={n} bins), so its "
-            f"smallest attainable p is {1/(len(shift_nulls)+1):.4f} — it cannot resolve "
-            f"alpha={alpha}. Autocorrelated data at this length cannot license a positive here.")
-    shift_p = round((sum(v >= obs for v in shift_nulls) + 1) / (len(shift_nulls) + 1), 4)
+    # Spectral-surrogate null: the correct null for autocorrelated data. Preserves the full
+    # power spectrum (so autocorrelation cannot masquerade as coupling — the failure that
+    # licensed independent AR(1) streams on every seed pre-7.31.2) WITHOUT preserving stimulus
+    # alignment (the failure that made circular shift refuse genuine ISC in 20 of 21 pairs, C1).
+    # Adopted under the preregistered two-direction C2 exam, replacing the circular-shift rule
+    # and the INVALID__autocorrelation refusal.
+    n_surr = max(200, n_perm // 2)
+    rng_s = np.random.default_rng(seed + 41000)
+    ge_s = sum(rv_coefficient(Az, phase_randomize(Bz, rng_s)) >= obs for _ in range(n_surr))
+    surrogate_p = round((ge_s + 1) / (n_surr + 1), 4)
     autocorrelated = max(ac_a, ac_b) >= 0.2
     tr_a, tr_b = _trend_r2(Az), _trend_r2(Bz)
     shared_trend = tr_a >= 0.2 and tr_b >= 0.2
     dependence = {"frozen_bin_fraction": (frozen_note if confound is not None else 0.0),
                   "lag1_autocorr_a": ac_a, "lag1_autocorr_b": ac_b,
                   "trend_r2_a": tr_a, "trend_r2_b": tr_b, "shared_trend": bool(shared_trend),
-                  "autocorrelated": bool(autocorrelated), "circular_shift_p": shift_p,
-                  "n_shift_draws": len(shift_nulls),
+                  "autocorrelated": bool(autocorrelated), "surrogate_p": surrogate_p,
+                  "n_surrogate_draws": n_surr,
                   "leverage_top_bin_share": _leverage(Az, Bz)}
-    licensing_p = max(matched_p, shift_p) if autocorrelated else matched_p
+    licensing_p = max(matched_p, surrogate_p)
     if confound is not None:
         _g = np.asarray(confound(np.asarray(bins)))
         _pf = lambda m, r: _confound_matched_perm(m, _g, r)      # noqa: E731
@@ -421,22 +442,20 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
                        "driver survives an hour-of-day null intact.")
         if autocorrelated:
             caveats.append(f"streams are autocorrelated (lag-1 {ac_a} / {ac_b}); the licensing "
-                           f"p is the CONSERVATIVE max of the confound-matched null and an "
-                           f"autocorrelation-preserving circular-shift null (shift p {shift_p}).")
+                           f"p is the max of the confound-matched null and a spectral-surrogate "
+                           f"null carrying the data's exact autocorrelation (surrogate p "
+                           f"{surrogate_p}, {n_surr} draws).")
         caveats.append("attribution is NOT established: this statistic is symmetric and cannot "
                        "distinguish A tracking B from B registering A. If the two streams share "
                        "any physical channel (an agent's own hardware sitting in the room it "
                        "measures), that channel must be bounded before any directional claim.")
-    elif autocorrelated and matched_p <= alpha:
-        verdict = "INVALID__autocorrelation_defeats_the_permutation_null"
+    elif autocorrelated and matched_p <= alpha and surrogate_p > alpha:
+        verdict = "CONFOUND_ONLY__explained_by_spectrum"
         caveats.append(
-            f"The confound-matched null assumes bins are exchangeable within confound groups. "
-            f"These are not: lag-1 autocorrelation {ac_a} / {ac_b}. Within-group shuffling "
-            f"destroys each stream's own temporal structure, so the null describes white noise "
-            f"the data is not, and two INDEPENDENT drifting streams reach the permutation floor. "
-            f"The circular-shift null, which preserves that structure, gives p {shift_p}. "
-            f"Prewhiten, difference, or use a block/stationary-bootstrap null before claiming "
-            f"coupling.")
+            f"the permutation null would have licensed this (p {matched_p}) but the spectral "
+            f"surrogate — which carries the data's exact autocorrelation — absorbs it "
+            f"(p {surrogate_p}). The dependence is explained by the streams' shared temporal "
+            f"structure, not by bin-level alignment. Lag-1 autocorrelation {ac_a} / {ac_b}.")
     elif free_p <= alpha:
         verdict = ("CONFOUND_ONLY__explained_by_the_supplied_confound" if confound is not None
                    else "FREE_SHUFFLE_ONLY__no_confound_supplied_claim_not_licensed")

@@ -1,0 +1,364 @@
+{
+  "prereg": "PREREG_c2_surrogate_recalibration_2026_08_07.md",
+  "smoke": false,
+  "subjects": [
+    "sub-001",
+    "sub-002",
+    "sub-003",
+    "sub-004",
+    "sub-005",
+    "sub-006",
+    "sub-008"
+  ],
+  "n_pairs": 21,
+  "real": {
+    "sub-001__sub-002": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.4024
+    },
+    "sub-001__sub-003": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.3028
+    },
+    "sub-001__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.2112
+    },
+    "sub-001__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.1633
+    },
+    "sub-001__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.6892
+    },
+    "sub-001__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.1275
+    },
+    "sub-002__sub-003": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.2351
+    },
+    "sub-002__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.4303
+    },
+    "sub-002__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.6056
+    },
+    "sub-002__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.0359
+    },
+    "sub-002__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.3665
+    },
+    "sub-003__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.0598
+    },
+    "sub-003__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.0279
+    },
+    "sub-003__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.1355
+    },
+    "sub-003__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.5219
+    },
+    "sub-004__sub-005": {
+      "verdict": "COUPLED_BEYOND_CONFOUND__attribution_pending",
+      "licensed": true,
+      "matched_p": 0.002,
+      "surrogate_p": 0.004
+    },
+    "sub-004__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.0558
+    },
+    "sub-004__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.1514
+    },
+    "sub-005__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.0438
+    },
+    "sub-005__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.1474
+    },
+    "sub-006__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false,
+      "matched_p": 0.002,
+      "surrogate_p": 0.3625
+    }
+  },
+  "reversed": {
+    "sub-001__sub-002": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-001__sub-003": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-001__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-001__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-001__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-001__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-002__sub-003": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-002__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-002__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-002__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-002__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-003__sub-004": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-003__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-003__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-003__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-004__sub-005": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-004__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-004__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-005__sub-006": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-005__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "sub-006__sub-008": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    }
+  },
+  "independent_ar": {
+    "s0": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s1": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s2": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s3": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s4": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s5": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s6": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s7": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s8": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s9": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s10": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s11": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s12": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s13": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s14": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s15": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s16": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s17": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s18": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    },
+    "s19": {
+      "verdict": "CONFOUND_ONLY__explained_by_spectrum",
+      "licensed": false
+    }
+  },
+  "shared_trend": {
+    "s0": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s1": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s2": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s3": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s4": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s5": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s6": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s7": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s8": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    },
+    "s9": {
+      "verdict": "INVALID__shared_temporal_trend",
+      "licensed": false
+    }
+  },
+  "frac_real_coupled": 0.0476,
+  "frac_reversed_coupled": 0.0,
+  "frac_independent_ar_coupled": 0.0,
+  "frac_shared_trend_coupled": 0.0,
+  "verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+  "gates": {
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true,
+    "G3_rejects_independent_ar": true,
+    "G4_rejects_shared_trend": true
+  },
+  "prereg_commit": "11ec5bdc9f99da2c5de209b1e99f341ba591510d"
+}
