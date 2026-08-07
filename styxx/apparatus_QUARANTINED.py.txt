@@ -1,0 +1,208 @@
+# QUARANTINED IMPLEMENTATION — see styxx/apparatus.py for the audit verdict that killed it.
+# Kept as evidence and as the starting point for a rewrite against the audit's minimum bar.
+from __future__ import annotations
+
+from dataclasses import dataclass, field, asdict
+
+import numpy as np
+
+__all__ = ["audit", "ApparatusAudit", "time_reverse", "normalize_amplitude", "shuffle_within_density"]
+
+
+def time_reverse(B: np.ndarray) -> np.ndarray:
+    """Reverse a stream in time. Marginals identical, autocorrelation identical, world-alignment
+    destroyed — so a statistic that stays high is reading the recorder, not the stimulus."""
+    return np.asarray(B, dtype=float)[::-1]
+
+
+def normalize_amplitude(X: np.ndarray) -> np.ndarray:
+    """Strip each row's magnitude, keep its direction.
+
+    A per-item amplitude profile shared across members is a property of what the recorder wrote
+    loudly, not of what the members represent. On a real cohort this control was the difference
+    between a defensible headline and an artifact.
+    """
+    X = np.asarray(X, dtype=float)
+    Xc = X - X.mean(1, keepdims=True)
+    return Xc / (np.linalg.norm(Xc, axis=1, keepdims=True) + 1e-12)
+
+
+def shuffle_within_density(B: np.ndarray, counts, rng) -> np.ndarray:
+    """Permute rows only among bins that hold the SAME number of records.
+
+    Keeps every row paired with a bin of identical sampling density while destroying world
+    alignment. What survives is the density channel, isolated.
+    """
+    B = np.asarray(B, dtype=float)
+    counts = np.asarray(counts)
+    idx = np.arange(len(B))
+    for c in np.unique(counts):
+        m = np.where(counts == c)[0]
+        idx[m] = m[rng.permutation(len(m))]
+    return B[idx]
+
+
+@dataclass
+class ApparatusAudit:
+    verdict: str
+    survives: bool
+    observed: float
+    counterfactuals: dict = field(default_factory=dict)
+    caveats: list = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    def __str__(self) -> str:
+        s = f"{self.verdict}\n  observed statistic {self.observed}\n"
+        for k, v in self.counterfactuals.items():
+            mark = "!!" if v.get("contaminated") else "ok"
+            s += f"  [{mark}] {k:<22} {v.get('value')}  ({v.get('note','')})\n"
+        return s + "".join(f"  ! {c}\n" for c in self.caveats)
+
+
+def audit(measure, A, B=None, counts=None, seeds=(343, 1, 7, 11, 23),
+          retain: float = 0.5, seed_spread_frac: float = 0.25) -> ApparatusAudit:
+    """Run apparatus counterfactuals against a measurement.
+
+    ``measure(A, B) -> float`` for a two-stream statistic, or ``measure(A) -> float`` for a
+    one-stream one (pass ``B=None``). Higher must mean "more structure"; if your statistic runs
+    the other way, negate it before passing it in.
+
+    The counterfactuals read in **two opposite directions** and conflating them inverts the
+    verdict:
+
+    * *world-destroying* (time reversal, density-matched shuffle) removes the world and keeps the
+      apparatus — contamination is retaining **at least** ``retain`` of the observation.
+    * *confound-removing* (amplitude stripping) removes one recorder channel and keeps the world —
+      contamination is retaining **at most** ``1 - retain``, i.e. the finding collapsed with the
+      channel.
+
+    The seed test flags when the spread across ``seeds`` exceeds ``seed_spread_frac`` of the
+    observation, meaning the number is partly the random draw.
+    """
+    two = B is not None
+    obs = float(measure(A, B) if two else measure(A))
+    out, caveats = {}, []
+    if not np.isfinite(obs):
+        return ApparatusAudit(verdict="INVALID__non_finite_observation", survives=False,
+                              observed=obs, caveats=["the statistic is not finite; nothing can "
+                                                     "be varied against it"])
+    if obs <= 0:
+        caveats.append("observed statistic is <= 0; retention ratios are not meaningful and the "
+                       "counterfactuals below are reported without a contamination call.")
+
+    def record(name, val, note, kind):
+        """kind='world_destroying' or 'confound_removing' — the two read in OPPOSITE directions.
+
+        A **world-destroying** counterfactual (time reversal, density-matched shuffle) removes the
+        world and keeps the apparatus. If the statistic stays high, the finding was the apparatus:
+        contamination is HIGH retention.
+
+        A **confound-removing** counterfactual (amplitude stripping) removes a specific recorder
+        channel and keeps the world. If the statistic collapses, the finding WAS that channel:
+        contamination is LOW retention.
+
+        Conflating the two inverts the verdict. A first draft of this module did exactly that and
+        labelled a genuine shared latent as contaminated while passing a pure amplitude artifact —
+        caught in this module's own demo before release.
+        """
+        frac = (float(val) / obs) if obs > 0 else float("nan")
+        if not (obs > 0 and np.isfinite(frac)):
+            bad = False
+        elif kind == "world_destroying":
+            bad = frac >= retain
+        else:
+            bad = frac <= (1.0 - retain)
+        out[name] = {"value": round(float(val), 6),
+                     "retained_fraction": (round(frac, 4) if np.isfinite(frac) else None),
+                     "kind": kind, "contaminated": bool(bad), "note": note}
+
+    if two:
+        record("time_reversal", measure(A, time_reverse(B)),
+               "world alignment destroyed, marginals and autocorrelation kept; a HIGH value is "
+               "the recorder", "world_destroying")
+        record("amplitude_stripped", measure(normalize_amplitude(A), normalize_amplitude(B)),
+               "per-row magnitude removed; a COLLAPSE means the finding was item amplitude",
+               "confound_removing")
+        if counts is not None and len(np.unique(np.asarray(counts))) > 1:
+            rng = np.random.default_rng(343)
+            record("density_matched_shuffle",
+                   float(np.median([measure(A, shuffle_within_density(B, counts, rng))
+                                    for _ in range(9)])),
+                   "rows permuted only among bins of equal sampling density; a HIGH value is "
+                   "the density channel", "world_destroying")
+        elif counts is not None:
+            caveats.append("sampling density is uniform; that channel cannot be tested and also "
+                           "cannot be open.")
+    else:
+        record("amplitude_stripped", measure(normalize_amplitude(A)),
+               "per-row magnitude removed; a COLLAPSE means the finding was item amplitude",
+               "confound_removing")
+
+    vals = []
+    for s in seeds:
+        try:
+            vals.append(float(measure(A, B, seed=s) if two else measure(A, seed=s)))
+        except TypeError:
+            vals = []
+            caveats.append("measure() takes no `seed` argument, so seed sensitivity was not "
+                           "tested. If your statistic is estimated by sampling, wrap it so it "
+                           "accepts one — a verdict that moves with the seed is partly the seed.")
+            break
+    if vals:
+        spread = float(np.max(vals) - np.min(vals))
+        out["seed_spread"] = {"value": round(spread, 6),
+                              "values": [round(v, 6) for v in vals],
+                              "retained_fraction": round(spread / obs, 4) if obs > 0 else None,
+                              "contaminated": bool(obs > 0 and spread / obs > seed_spread_frac),
+                              "note": f"range across {len(vals)} seeds"}
+
+    bad = [k for k, v in out.items() if v.get("contaminated")]
+    if bad:
+        verdict = "RECORDER_CONTAMINATED__" + "_and_".join(bad)
+        caveats.append("a counterfactual that destroys the world left the finding largely "
+                       "intact. No null can catch this: a null destroys row alignment, which is "
+                       "where the recorder's signature lives.")
+    else:
+        verdict = "SURVIVES_APPARATUS_COUNTERFACTUALS"
+        caveats.append("survival is not proof. These tests simulate specific recorder artifacts; "
+                       "a recorder can be contaminated in a way none of them models.")
+    return ApparatusAudit(verdict=verdict, survives=not bad, observed=round(obs, 6),
+                          counterfactuals=out, caveats=caveats)
+
+
+def _demo() -> int:
+    from styxx.islands import frame, affinity
+    rng = np.random.default_rng(0)
+    n, p = 300, 200
+
+    def stat(X, Y, seed=343):
+        return affinity(frame(X, 20), frame(Y, 20))
+
+    print("styxx.apparatus — hold the world fixed, change the recorder.\n")
+    Z = rng.standard_normal((n, 6))
+    real = (Z @ rng.standard_normal((6, p)), Z @ rng.standard_normal((6, p)))
+    d = np.exp(0.8 * rng.standard_normal(n))
+    fake = (d[:, None] * rng.standard_normal((n, p)), d[:, None] * rng.standard_normal((n, p)))
+
+    for name, (A, B) in {"GENUINE shared latent": real,
+                         "RECORDER artifact (shared item amplitude only)": fake}.items():
+        print(f"{name}:\n{audit(stat, A, B)}")
+    print("Both look identical to a permutation null. Only the apparatus counterfactual")
+    print("separates them — because the artifact lives in the alignment a null destroys.")
+    return 0
+
+
+def main(argv=None) -> int:
+    import argparse
+    ap = argparse.ArgumentParser(prog="styxx.apparatus",
+                                 description="Apparatus counterfactuals for a measurement.")
+    ap.add_argument("--demo", action="store_true")
+    ap.parse_args(argv)
+    return _demo()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
