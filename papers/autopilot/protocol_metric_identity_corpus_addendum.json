@@ -1,0 +1,7 @@
+{
+  "note": "Corpus-wide check_metrics measurement replacing the n=1 specimen the v3 exam used for G3. Recomputed after the red-team fixes made check_metrics smoke-aware and usability-aware.",
+  "committed_results_scored": 148,
+  "smoke_results_all_paths_absent_before_fix": 9,
+  "nonsmoke_results_all_metrics_usable": 28,
+  "nonsmoke_results_with_unusable_metric": 0
+}

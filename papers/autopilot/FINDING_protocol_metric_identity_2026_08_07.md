@@ -16,6 +16,39 @@ Every committed result in the repo was re-scored against its own prereg and **no
 changed anywhere**, so all sealed findings keep verifying byte-identically. `check_metrics()`
 detected a deliberately-absent path and reported a genuine committed result as fully resolved.
 
+## ERRATUM — same day, from the pre-release red team: G3 was measured on a specimen chosen to pass
+
+`G3_check_metrics_passes_a_real_result` reported 1 and I called it a pass. **It was n = 1, on
+`b49_result.json`, and its own `power_basis` states the specimen was chosen because all-present
+was "achievable by construction."** That is a specimen selected to pass — the identical error the
+v2 exam made when it picked its strict-mode specimen by sort order, recurring one document later
+and hidden by a green verdict.
+
+Measured across the corpus instead of on one chosen file, the red team found `check_metrics`
+reporting **every path absent on nine committed results** — all of them smoke runs, which score
+by type and never read gate metrics at all (their count of the denominator; our own corpus sweep
+is in the addendum receipt). That is the branch this prereg itself pre-named
+`INVALID__check_false_alarms_on_a_real_result`. **The gate should have failed.**
+
+Fixed rather than re-argued: `check_metrics` is now smoke-aware and returns `usable` alongside
+`present`, so a value that resolves but cannot be compared is reported as unusable rather than
+green. Re-measured after the fix across every committed result that declares a prereg,
+**28 non-smoke results have every gate metric usable and 0 do not**
+(`protocol_metric_identity_corpus_addendum.json`) — the honest corpus-wide number, replacing an
+n-of-1.
+
+The red team also found five defects this document did not mention because its exam had no gate
+for them: strict mode accepted `" "` and `true` as a power basis; a present-but-non-comparable
+metric green-lit a run that then crashed `score()` with an uncaught `TypeError`; a NaN scored as
+a silent SEALED verdict; a missing `metric` key crashed the checker itself; and every `Verdict`
+from one `Experiment` shared one mutable dict. All are fixed, and the frozen deliverable
+`undeclared_power_gates(path)` — dropped from the implementation without anyone noticing — now
+exists.
+
+**Backward compatibility survived all of it**, independently confirmed before the fixes (zero
+diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes
+re-derived) and re-verified after them: every committed result re-scored, **0 verdict diffs**.
+
 ## What this actually buys
 
 `_resolve` already raised on a missing metric path — but only at scoring time, after the compute

@@ -2,14 +2,15 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "FINDING_protocol_metric_identity_2026_08_07.md",
- "document_sha256": "79c88590fa6bb573259fd24f386deec7ccfdf0b96a8958cab3904a6a79d7a455",
+ "document_sha256": "3b70b514b20b4110231d63f8991d8e6a287cc894fa5310da1142c141731d39a6",
  "receipts_sha256": {
-  "protocol_metric_identity_result.json": "51534862f9433640fd4f94653aee4937cf1d846fec05bf8fe29135078bb79340"
+  "protocol_metric_identity_result.json": "51534862f9433640fd4f94653aee4937cf1d846fec05bf8fe29135078bb79340",
+  "protocol_metric_identity_corpus_addendum.json": "39c605def3c9c1809c8f2172c1190f75a4f923da0fc43c37edce3c0d40a33b58"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 0,
-  "ABSTAIN": 6,
+  "VERIFIED": 5,
+  "ABSTAIN": 11,
   "UNGROUNDED": 0
  },
  "verdict": "OATH-HELD",
@@ -38,6 +39,26 @@
   {
    "line": 13,
    "token": "1"
+  },
+  {
+   "line": 49,
+   "token": "518"
+  },
+  {
+   "line": 49,
+   "token": "28"
+  },
+  {
+   "line": 49,
+   "token": "28"
+  },
+  {
+   "line": 49,
+   "token": "29"
+  },
+  {
+   "line": 49,
+   "token": "29"
   }
  ],
  "ledger": [
@@ -100,6 +121,96 @@
    "binding_context": "| gate | bar | measured | pass | | G3_check_metrics_passes_a_real_result | \u2265 1 | 1 | \u2705 |",
    "status": "ABSTAIN",
    "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 21,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "`G3_check_metrics_passes_a_real_result` reported 1 and I called it a pass. **It was n = 1, on",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_metric_identity_result.json:real_result_paths_all_present"
+  },
+  {
+   "line": 21,
+   "token": "1",
+   "value": 1.0,
+   "decimals": 0,
+   "context": "`G3_check_metrics_passes_a_real_result` reported 1 and I called it a pass. **It was n = 1, on",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_metric_identity_result.json:real_result_paths_all_present"
+  },
+  {
+   "line": 36,
+   "token": "28",
+   "value": 28.0,
+   "decimals": 0,
+   "context": "**28 non-smoke results have every gate metric usable and 0 do not**",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_metric_identity_corpus_addendum.json:nonsmoke_results_all_metrics_usable"
+  },
+  {
+   "line": 36,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "**28 non-smoke results have every gate metric usable and 0 do not**",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_metric_identity_corpus_addendum.json:nonsmoke_results_with_unusable_metric"
+  },
+  {
+   "line": 49,
+   "token": "518",
+   "value": 518.0,
+   "decimals": 0,
+   "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 49,
+   "token": "28",
+   "value": 28.0,
+   "decimals": 0,
+   "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 49,
+   "token": "28",
+   "value": 28.0,
+   "decimals": 0,
+   "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 49,
+   "token": "29",
+   "value": 29.0,
+   "decimals": 0,
+   "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 49,
+   "token": "29",
+   "value": 29.0,
+   "decimals": 0,
+   "context": "diffs across 518 scoring events, 28 of 28 seal blocks byte-identical, 29 of 29 seal hashes",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 50,
+   "token": "0",
+   "value": 0.0,
+   "decimals": 0,
+   "context": "re-derived) and re-verified after them: every committed result re-scored, **0 verdict diffs**.",
+   "status": "VERIFIED",
+   "receipt_ref": "protocol_metric_identity_result.json:verdict_string_diffs"
   }
  ]
 }

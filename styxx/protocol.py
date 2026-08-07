@@ -39,13 +39,24 @@ harness surfaces instead of guessing).
 from __future__ import annotations
 
 import hashlib
+import math
 import json
 import re
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-__all__ = ["Experiment", "Verdict", "PrologueError", "GateSpecError"]
+__all__ = ["Experiment", "Verdict", "PrologueError", "GateSpecError",
+           "undeclared_power_gates"]
+
+
+def undeclared_power_gates(prereg) -> list:
+    """Gate names in *prereg* carrying no usable ``power_basis`` — corpus-auditable.
+
+    Frozen as a deliverable in ``PREREG_protocol_power_basis_2026_08_07.md`` item 4 and silently
+    dropped from the implementation; the red team caught the omission, not the exam.
+    """
+    return Experiment(prereg).undeclared_power_gates
 
 _GATES_RE = re.compile(r"```gates\s*\n(.*?)\n```", re.S)
 _OPS = {">=": lambda a, b: a >= b, "<=": lambda a, b: a <= b,
@@ -109,8 +120,16 @@ class Experiment:
         self.spec = spec
         self.power_basis = {n: g.get("power_basis") for n, g in spec["gates"].items()}
         self.metric_paths = {n: g.get("metric") for n, g in spec["gates"].items()}
+        _bad = sorted(n for n, m in self.metric_paths.items() if not isinstance(m, str) or not m)
+        if _bad:
+            raise GateSpecError(
+                f"gates with a missing or non-string 'metric' path: {_bad}. Left unchecked this "
+                f"put None into metric_paths and made check_metrics() raise AttributeError — the "
+                f"pre-run safety tool crashing on the most mis-specified gate there is.")
         self.metric_means = {n: g.get("metric_means") for n, g in spec["gates"].items()}
-        self.undeclared_power_gates = sorted(n for n, v in self.power_basis.items() if not v)
+        self.undeclared_power_gates = sorted(
+            n for n, v in self.power_basis.items()
+            if not (isinstance(v, str) and v.strip()))   # " " and true are NOT declarations
         if self.require_power_basis and self.undeclared_power_gates:
             raise GateSpecError(
                 f"gates without a declared power basis: {self.undeclared_power_gates}. "
@@ -132,13 +151,23 @@ class Experiment:
         no access to intent. ``metric_means`` records that intent for a human reader; it is not a
         check and must not be read as one.
         """
+        import math
         out = {}
+        smoke = bool(result.get("smoke"))
         for name, path in self.metric_paths.items():
             try:
-                _resolve(result, path)
-                out[name] = {"path": path, "present": True}
+                val = _resolve(result, path)
             except GateSpecError:
-                out[name] = {"path": path, "present": False}
+                out[name] = {"path": path, "present": False, "usable": False,
+                             "note": ("result is a smoke run; smoke scores by type and never "
+                                      "reads gate metrics" if smoke else "path not in result")}
+                continue
+            usable = isinstance(val, (int, float)) and not isinstance(val, bool)                 and math.isfinite(val)
+            out[name] = {"path": path, "present": True, "usable": usable,
+                         "note": None if usable else
+                         f"resolves to {type(val).__name__}"
+                         f"{' (NaN/inf)' if isinstance(val, float) else ''} — score() cannot "
+                         f"compare it"}
         return out
 
     # -- the freeze check --------------------------------------------------
@@ -169,23 +198,29 @@ class Experiment:
             return Verdict(verdict=self.spec["smoke_verdict"], gates={},
                            gates_sha256=self.gates_sha256,
                            prereg_commit=self.prereg_commit, smoke=True,
-                           power_basis=self.power_basis,
-                           undeclared_power_gates=self.undeclared_power_gates,
-                           metric_paths=self.metric_paths)
+                           power_basis=dict(self.power_basis),
+                           undeclared_power_gates=list(self.undeclared_power_gates),
+                           metric_paths=dict(self.metric_paths))
         fired: dict[str, bool] = {}
         for name, g in self.spec["gates"].items():
             op = _OPS.get(g.get("op"))
             if op is None:
                 raise GateSpecError(f"gate {name!r}: unknown op {g.get('op')!r}")
-            fired[name] = bool(op(_resolve(result, g["metric"]), g["value"]))
+            _v = _resolve(result, g["metric"])
+            if isinstance(_v, bool) or not isinstance(_v, (int, float)) or not math.isfinite(_v):
+                raise GateSpecError(
+                    f"gate {name!r}: metric {g['metric']!r} resolves to {_v!r}, which cannot be "
+                    f"compared. A NaN previously made every comparison False and returned the "
+                    f"frozen table's false branch as a SEALED verdict, with no refusal anywhere.")
+            fired[name] = bool(op(_v, g["value"]))
         for row in self.spec["outcomes"]:
             if all(fired.get(k) == v for k, v in row["when"].items()):
                 return Verdict(verdict=row["verdict"], gates=fired,
                                gates_sha256=self.gates_sha256,
                                prereg_commit=self.prereg_commit,
-                               power_basis=self.power_basis,
-                               undeclared_power_gates=self.undeclared_power_gates,
-                               metric_paths=self.metric_paths)
+                               power_basis=dict(self.power_basis),
+                               undeclared_power_gates=list(self.undeclared_power_gates),
+                               metric_paths=dict(self.metric_paths))
         raise GateSpecError(
             f"no outcome row matches gates {fired} — the frozen table is not total; "
             "this is a prereg design bug, surfaced instead of guessed around")
