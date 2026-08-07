@@ -1,0 +1,121 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "SYNTHESIS_recorder_contamination_2026_08_06.md",
+ "document_sha256": "5d2187bf0d10d5e433a102e7d95247f5c2040af8a5d727a2eb4bc49d6aa81a83",
+ "receipts_sha256": {
+  "c1_result.json": "11938e83869a4ddacaa66edc37d27b2ea24e7f6bd9236c049de8102f30fbc4d8",
+  "h1a_amplitude_control.json": "0c6afad90c7052542d580c2bc7fdd3d51fc515ea5ebd88b3f625dc8d3c42c454",
+  "b48_diagnostics_addendum.json": "869c989e83cc901647218bb9e791936478beffa386fa4391f8332080d7b93a6d"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 3,
+  "ABSTAIN": 5,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 12,
+   "token": "0.3704"
+  },
+  {
+   "line": 12,
+   "token": "0.0033"
+  },
+  {
+   "line": 17,
+   "token": "7.0"
+  },
+  {
+   "line": 18,
+   "token": "0.0779"
+  },
+  {
+   "line": 67,
+   "token": "0.0779"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 12,
+   "token": "0.3704",
+   "value": 0.3704,
+   "decimals": 4,
+   "context": "| `styxx.coupling` | two independent streams on one irregular clock | coupled, RV 0.3704 at p 0.0033 | **this lab, on real agent telemetry** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.coupling` | two independent streams on one irregular clock | coupled, RV 0.3704 at p 0.0033 | **this lab, on real agent telemetry** |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 12,
+   "token": "0.0033",
+   "value": 0.0033,
+   "decimals": 4,
+   "context": "| `styxx.coupling` | two independent streams on one irregular clock | coupled, RV 0.3704 at p 0.0033 | **this lab, on real agent telemetry** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.coupling` | two independent streams on one irregular clock | coupled, RV 0.3704 at p 0.0033 | **this lab, on real agent telemetry** |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 17,
+   "token": "7.0",
+   "value": 7.0,
+   "decimals": 1,
+   "context": "| `styxx.islands` | members sharing only a per-item amplitude profile | \"shared frame\" far above the random null | **this lab, reproduced at 7.0\u00d7** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.islands` | members sharing only a per-item amplitude profile | \"shared frame\" far above the random null | **this lab, reproduced at 7.0\u00d7** |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 18,
+   "token": "1000",
+   "value": 1000.0,
+   "decimals": 0,
+   "context": "| `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "status": "VERIFIED",
+   "receipt_ref": "h1a_amplitude_control.json:raw.null.n_draws"
+  },
+  {
+   "line": 18,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "| `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 18,
+   "token": "0.0634",
+   "value": 0.0634,
+   "decimals": 4,
+   "context": "| `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "binding_context": "| instrument | what was planted | what the instrument reported | verified by | | `styxx.islands` | a Monte-Carlo p estimated from 1000 draws | our published 0.0779 against a re-run 0.0634 | **this lab** |",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:reversed.sub-003__sub-008.rv_debiased"
+  },
+  {
+   "line": 67,
+   "token": "0.0779",
+   "value": 0.0779,
+   "decimals": 4,
+   "context": "partly the seed. Our own published p moved from 0.0779 to 0.0634 on a twenty-fold longer run,",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 67,
+   "token": "0.0634",
+   "value": 0.0634,
+   "decimals": 4,
+   "context": "partly the seed. Our own published p moved from 0.0779 to 0.0634 on a twenty-fold longer run,",
+   "status": "VERIFIED",
+   "receipt_ref": "c1_result.json:reversed.sub-003__sub-008.rv_debiased"
+  }
+ ]
+}
