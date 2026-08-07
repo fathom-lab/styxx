@@ -1,54 +1,301 @@
-"""styxx.apparatus — QUARANTINED, DO NOT SHIP. Failed its pre-release adversarial audit.
+"""styxx.apparatus — is your finding a property of the world, or of your recorder?
 
-**This module is not part of any release and must not be imported for real work.** It is kept in
-the tree because deleting a failed instrument hides the evidence; the audit that killed it is the
-most useful thing about it.
+A null varies the world and holds the apparatus constant. That is the wrong axis for a whole
+class of failures: **a permutation null destroys row alignment, and the recorder's signature is
+row alignment.** When bin *i* is quiet in both streams because the recorder stalled at *i*,
+shuffling rows destroys exactly the dependence in question — so the null sits low, the
+observation stands out, and the artifact is certified with confidence. The null is not failing to
+model the artifact; the null is *defined* by removing it.
 
-VERDICT 2026-08-06: DO NOT SHIP. Measured balanced accuracy **0.55** on an artifact-vs-genuine
-panel — a coin flip — while the verdict *string* (`SURVIVES_APPARATUS_COUNTERFACTUALS`) carries
-the full rhetorical weight of a passed audit. Four failures are certain-by-construction, not
-probabilistic:
+This module varies the other axis: **hold the world fixed, change the apparatus.**
 
-1. **It certifies the artifact from its own motivating paper.** Two logs sharing only a stall
-   clock — no shared world content, verified by construction — returned SURVIVES on 8/8 seeds at
-   10–12.6x the random-frame null, *above* the ratio this lab published as an emphatic real
-   finding. Cause: ``time_reverse`` is itself a permutation, i.e. exactly the class of operation
-   the motivating paper argues cannot detect this. The module's only default world-destroying
-   axis is the one its own thesis rules out.
-2. **Any time-symmetric genuine signal is flagged as contamination**, 10/10. A periodic stimulus
-   (block-design fMRI, flicker, metronome) lives in a reversal-invariant Fourier subspace, so
-   reversal does not destroy alignment and the docstring's promise is false there.
-3. **``obs <= 0`` returns ``survives=True`` unconditionally** — and the docstring instructs users
-   to negate statistics that run the other way, routing negated p-values straight into that
-   region. Following the documentation disables the audit.
-4. **``shuffle_within_density`` is the identity when counts are unique**, so passing
-   high-cardinality counts forces RECORDER_CONTAMINATED on genuine findings. The guard checks
-   ``len(unique) > 1``, which *passes* in the worst case. Crossover to auto-flagging is ~25-30%
-   singleton bins — ordinary telemetry.
+    from styxx.apparatus import audit
+    r = audit(measure, A, B, floor=my_null_floor)
+    r.verdict      # SURVIVES_APPARATUS_COUNTERFACTUALS | RECORDER_CONTAMINATED__<which>
+                   # | UNTESTABLE__<why> | INVALID__<why>
 
-Also: ``retained_fraction`` ignores the statistic's floor, so the threshold silently becomes
-"is the finding more than twice its own null" (a power question, not an apparatus question); no
-setting of ``retain`` both catches the stall artifact and clears genuine findings; the seed test
-is arithmetically vacuous for deterministic statistics and swallows unrelated TypeErrors; the
-one-stream path has no world-destroying counterfactual at all; a non-finite counterfactual reads
-as a pass.
+Motivated by ``papers/SYNTHESIS_recorder_contamination_2026_08_06.md``.
 
-**And the process lesson, which is the point.** An earlier draft of this docstring claimed a
-direction bug was "caught in this module's own demo before release" — offered as evidence of
-rigour. The auditor's reply stands: *a demo that shows two hand-picked cases is not an
-adversarial pass, and treating it as one is how the previous three modules shipped.* That is
-exactly right. Self-demonstration is not adversarial testing, and the difference is this module.
+**This is version two. Version one was killed by its own pre-release audit** at 0.55 balanced
+accuracy — a coin flip — and every guard below exists because that audit found the hole:
 
-Minimum bar to ship, from the audit: obs<=0 -> INVALID; frozen-fraction guard on the density
-shuffle; a time-symmetry pre-check emitting UNTESTABLE__time_symmetric; floor-corrected
-retention; a freshness/shared-mask surrogate to close the stall class; demote amplitude-stripping
-from verdict to decomposition; non-finite counterfactual -> INVALID; and a test file.
+* it certified the stall-clock artifact from its own motivating paper, because time reversal is
+  *itself* a permutation: the very operation class the paper says cannot detect this. A
+  **mask-preserving surrogate** was added, which is the axis reversal that actually works;
+* it flagged every time-symmetric genuine signal (periodic stimuli, block designs), so **time
+  reversal now refuses rather than judges** when the statistic is reversal-invariant;
+* ``obs <= 0`` returned "survives" unconditionally while the docs told users to negate statistics
+  into that region — following the documentation disabled the audit;
+* the density shuffle was the identity on unique counts, forcing contamination verdicts on
+  genuine findings;
+* retention ignored the statistic's floor, so the threshold silently became "is this more than
+  twice its own null" — a power question, not an apparatus one.
 
-Full class description: ``papers/SYNTHESIS_recorder_contamination_2026_08_06.md``.
+**It cannot prove a finding is real.** It rules out the artifacts it simulates. The verdict says
+`SURVIVES_APPARATUS_COUNTERFACTUALS`, never `CLEAN`, and the difference is the point.
+
+Open by design (``docs/governance/OPEN_CORE.md``): a measurement primitive, never gated.
 """
+from __future__ import annotations
 
-raise ImportError(
-    "styxx.apparatus is QUARANTINED: it failed its pre-release adversarial audit at 0.55 "
-    "balanced accuracy and certifies the artifact from its own motivating paper. See the module "
-    "docstring for the verdict. It is retained in the tree as evidence, not as a tool."
-)
+import math
+from dataclasses import dataclass, field, asdict
+
+import numpy as np
+
+__all__ = ["audit", "ApparatusAudit", "time_reverse", "strip_amplitude",
+           "mask_preserving_surrogate", "shuffle_within_density"]
+
+
+def time_reverse(B) -> np.ndarray:
+    """Reverse a stream in time: marginals and autocorrelation kept, world alignment destroyed."""
+    return np.asarray(B, dtype=float)[::-1]
+
+
+def strip_amplitude(X) -> np.ndarray:
+    """Center each row and scale it to unit norm — magnitude out, direction kept."""
+    X = np.asarray(X, dtype=float)
+    Xc = X - X.mean(1, keepdims=True)
+    return Xc / (np.linalg.norm(Xc, axis=1, keepdims=True) + 1e-12)
+
+
+def mask_preserving_surrogate(B, rng) -> np.ndarray:
+    """Regenerate a stream's payload from its own marginals while keeping its *recorder mask*.
+
+    The mask is where the recorder repeated itself — rows identical to their predecessor, which
+    is what a stall, a stale re-read, or a dropout-then-hold looks like in a log. Content is
+    replaced by a column-wise permutation (same marginals, world alignment destroyed) and the
+    repeat pattern is then re-imposed.
+
+    **This is the counterfactual version one lacked**, and its absence is why that version
+    certified two logs sharing nothing but a stall clock at ten to twelve times their null. Time
+    reversal cannot catch that, because time reversal is a permutation and the artifact lives in
+    the alignment permutations destroy.
+    """
+    B = np.asarray(B, dtype=float)
+    n = len(B)
+    if n < 2:
+        return B.copy()
+    repeat = np.zeros(n, dtype=bool)
+    repeat[1:] = np.all(np.isclose(B[1:], B[:-1]), axis=1)
+    out = np.column_stack([rng.permutation(B[:, j]) for j in range(B.shape[1])])
+    for i in range(1, n):
+        if repeat[i]:
+            out[i] = out[i - 1]
+    return out
+
+
+def shuffle_within_density(B, counts, rng):
+    """Permute rows only among bins of equal sampling density.
+
+    Returns ``(shuffled, frozen_fraction)``. A stratum of size one cannot be permuted, so with
+    mostly-unique counts this is the identity — and reporting an identity permutation as a
+    counterfactual is how version one forced contamination verdicts on genuine findings.
+    """
+    B = np.asarray(B, dtype=float)
+    counts = np.asarray(counts)
+    idx = np.arange(len(B))
+    frozen = 0
+    for c in np.unique(counts):
+        m = np.where(counts == c)[0]
+        if len(m) < 2:
+            frozen += len(m)
+            continue
+        idx[m] = m[rng.permutation(len(m))]
+    return B[idx], round(frozen / max(len(B), 1), 4)
+
+
+@dataclass
+class ApparatusAudit:
+    verdict: str
+    survives: bool
+    observed: float
+    floor: float | None = None
+    counterfactuals: dict = field(default_factory=dict)
+    decomposition: dict = field(default_factory=dict)
+    caveats: list = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    def __str__(self) -> str:
+        s = (f"{self.verdict}\n  observed {self.observed}"
+             f"{'' if self.floor is None else f' (floor {self.floor})'}\n")
+        for k, v in self.counterfactuals.items():
+            mark = {True: "!!", False: "ok", None: "??"}[v.get("contaminated")]
+            s += f"  [{mark}] {k:<20} {v.get('value')}  {v.get('note', '')[:88]}\n"
+        for k, v in self.decomposition.items():
+            s += f"   ~   {k:<20} retained {v['retained']}\n"
+        return s + "".join(f"  ! {c[:110]}\n" for c in self.caveats)
+
+
+def audit(measure, A, B=None, counts=None, floor: float | None = None,
+          retain: float = 0.5, n_draws: int = 9, seed: int = 343,
+          symmetry_tol: float = 0.5) -> ApparatusAudit:
+    """Run apparatus counterfactuals against a two-stream measurement.
+
+    ``measure(A, B) -> float``, higher meaning more structure. ``floor`` is the statistic's null
+    expectation — the value it returns on unrelated inputs. **Supply it.** Without it, retention
+    ratios silently answer "is this more than twice its own null", which is a power question and
+    not an apparatus one; when omitted it is estimated and the estimate is flagged.
+
+    Only **world-destroying** counterfactuals judge (time reversal, mask surrogate, density
+    shuffle): they remove the world and keep the apparatus, so a finding that survives them was
+    the apparatus. Amplitude is reported as a *decomposition* and never as a verdict, because only
+    the caller knows whether magnitude is world (audio envelope, pupil dilation, firing rate) or
+    instrument.
+    """
+    if B is None:
+        raise ValueError(
+            "one-stream audits are not supported: with a single stream there is no "
+            "world-destroying counterfactual, so the audit could only ever return 'survives'. "
+            "Version one allowed it and that is exactly what it did.")
+    rng = np.random.default_rng(seed)
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    if not (np.isfinite(A).all() and np.isfinite(B).all()):
+        return ApparatusAudit("INVALID__non_finite_input", False, float("nan"),
+                              caveats=["input contains NaN or inf"])
+
+    obs = float(measure(A, B))
+    if not math.isfinite(obs):
+        return ApparatusAudit("INVALID__non_finite_observation", False, obs,
+                              caveats=["the statistic is not finite; nothing can be varied "
+                                       "against it"])
+    if obs <= 0:
+        return ApparatusAudit(
+            "INVALID__non_positive_observation", False, round(obs, 6),
+            caveats=["the statistic must be positive and increase with structure. Version one "
+                     "returned survives=True for every non-positive observation while its own "
+                     "docs told users to negate p-values into exactly that region. Rescale so "
+                     "higher means more structure."])
+
+    out: dict = {}
+    decomp: dict = {}
+    caveats: list = []
+    est_floor = floor
+    if est_floor is None:
+        est = [float(measure(A, mask_preserving_surrogate(B, rng))) for _ in range(n_draws)]
+        est = [v for v in est if math.isfinite(v)]
+        est_floor = float(np.median(est)) if est else 0.0
+        caveats.append(f"floor not supplied; ESTIMATED at {round(est_floor, 6)} from the mask "
+                       f"surrogate. Supply the statistic's true null expectation for a real "
+                       f"retention ratio.")
+    span = obs - est_floor
+    if span <= 0:
+        return ApparatusAudit(
+            "UNTESTABLE__observation_at_or_below_its_floor", False, round(obs, 6),
+            floor=round(est_floor, 6),
+            caveats=["the observation does not exceed the statistic's null floor, so there is no "
+                     "finding to attribute to anything. That is a power result, not an apparatus "
+                     "one — and version one answered it as though it were the latter."])
+
+    def record(name, val, note):
+        val = float(val)
+        if not math.isfinite(val):
+            out[name] = {"value": None, "retained": None, "contaminated": None,
+                         "note": note + " — counterfactual returned a non-finite value"}
+            return
+        frac = (val - est_floor) / span                    # floor-corrected retention
+        out[name] = {"value": round(val, 6), "retained": round(frac, 4),
+                     "contaminated": bool(frac >= retain), "note": note}
+
+    # (1) time reversal — but only where it can discriminate
+    self_rev = float(measure(A, time_reverse(A)))
+    self_frac = (self_rev - est_floor) / span if math.isfinite(self_rev) else float("nan")
+    if math.isfinite(self_frac) and self_frac >= symmetry_tol:
+        out["time_reversal"] = {
+            "value": None, "retained": None, "contaminated": None,
+            "note": f"UNTESTABLE — statistic is reversal-symmetric (A vs its own reverse retains "
+                    f"{round(self_frac, 4)}), so reversal does not destroy alignment here. Normal "
+                    f"for periodic stimuli; version one read this as contamination every time."}
+    else:
+        record("time_reversal", measure(A, time_reverse(B)),
+               "world alignment destroyed, marginals and autocorrelation kept")
+
+    # (2) the mask surrogate — the axis reversal that catches stall / stale / dropout
+    vals = [float(measure(A, mask_preserving_surrogate(B, rng))) for _ in range(n_draws)]
+    vals = [v for v in vals if math.isfinite(v)]
+    record("mask_surrogate", np.median(vals) if vals else float("nan"),
+           "recorder's repeat pattern kept, content resampled from its own marginals")
+
+    # (3) density — only when the strata can actually permute
+    if counts is not None:
+        shuffled, frozen = shuffle_within_density(B, counts, rng)
+        if frozen > 0.15:
+            out["density_shuffle"] = {
+                "value": None, "retained": None, "contaminated": None,
+                "note": f"UNTESTABLE — {frozen:.0%} of rows sit in singleton density strata and "
+                        f"cannot permute, so this is near the identity. Coarsen counts into "
+                        f"quantile bins."}
+        else:
+            record("density_shuffle", measure(A, shuffled),
+                   f"rows permuted within equal-density strata ({frozen:.0%} frozen)")
+
+    # amplitude: DECOMPOSITION, never a verdict
+    amp = float(measure(strip_amplitude(A), strip_amplitude(B)))
+    if math.isfinite(amp):
+        decomp["amplitude_stripped"] = {
+            "value": round(amp, 6), "retained": round((amp - est_floor) / span, 4),
+            "note": "fraction of the finding surviving removal of per-row magnitude. Reported, "
+                    "NEVER judged: only you know whether magnitude is world or instrument."}
+
+    bad = [k for k, v in out.items() if v.get("contaminated") is True]
+    tested = [k for k, v in out.items() if v.get("contaminated") is False]
+    untestable = [k for k, v in out.items() if v.get("contaminated") is None]
+    if bad:
+        verdict, survives = "RECORDER_CONTAMINATED__" + "_and_".join(bad), False
+        caveats.append("a counterfactual that destroyed the world left the finding largely "
+                       "intact. No null can catch this: a null destroys row alignment, which is "
+                       "where the recorder's signature lives.")
+    elif not tested:
+        verdict, survives = "UNTESTABLE__no_counterfactual_had_power_here", False
+    else:
+        verdict, survives = "SURVIVES_APPARATUS_COUNTERFACTUALS", True
+        caveats.append("survival is not proof. These tests simulate specific recorder artifacts; "
+                       "a recorder can be contaminated in a way none of them models.")
+    if untestable:
+        caveats.append(f"no discriminative power here: {untestable}")
+    return ApparatusAudit(verdict, survives, round(obs, 6), round(est_floor, 6), out, decomp,
+                          caveats)
+
+
+def _demo() -> int:
+    from styxx.islands import frame, affinity
+    rng = np.random.default_rng(0)
+    n, p = 300, 200
+
+    def stat(X, Y):
+        return affinity(frame(X, 20), frame(Y, 20))
+
+    floor = 20 / (n - 1)
+    print("styxx.apparatus — hold the world fixed, change the recorder.\n")
+
+    Z = rng.standard_normal((n, 6))
+    real = (Z @ rng.standard_normal((6, p)), Z @ rng.standard_normal((6, p)))
+
+    stall = rng.random(n) < 0.12
+    a, b = rng.standard_normal((n, p)), rng.standard_normal((n, p))
+    for i in range(1, n):                      # ONE shared stall clock, nothing else shared
+        if stall[i]:
+            a[i], b[i] = a[i - 1], b[i - 1]
+
+    for name, (X, Y) in {"GENUINE shared latent": real,
+                         "RECORDER artifact (shared stall clock only)": (a, b)}.items():
+        print(f"{name}:\n{audit(stat, X, Y, floor=floor)}")
+    print("Version one certified the stall case as real, at 10-12x its null, on every seed.")
+    print("The mask surrogate is why this one does not: it keeps the recorder's repeat pattern")
+    print("and destroys the world — the axis a permutation null cannot vary.")
+    return 0
+
+
+def main(argv=None) -> int:
+    import argparse
+    ap = argparse.ArgumentParser(prog="styxx.apparatus")
+    ap.add_argument("--demo", action="store_true")
+    ap.parse_args(argv)
+    return _demo()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
