@@ -1,0 +1,45 @@
+{
+  "source": "narratives pieman run-1 EAC ROI mean timeseries (left hemisphere)",
+  "note": "Effective sample size by the standard Bartlett correction, computed for the C5 finding. BOLD autocorrelation means the nominal timepoint count vastly overstates the degrees of freedom available to a pair-level correlation.",
+  "per_subject": {
+    "sub-001": {
+      "n_timepoints": 300,
+      "lag1": 0.8046,
+      "effective_n_bartlett": 28.5
+    },
+    "sub-002": {
+      "n_timepoints": 300,
+      "lag1": 0.7491,
+      "effective_n_bartlett": 40.2
+    },
+    "sub-003": {
+      "n_timepoints": 300,
+      "lag1": 0.4974,
+      "effective_n_bartlett": 45.8
+    },
+    "sub-004": {
+      "n_timepoints": 300,
+      "lag1": 0.8012,
+      "effective_n_bartlett": 13.4
+    },
+    "sub-005": {
+      "n_timepoints": 300,
+      "lag1": 0.9152,
+      "effective_n_bartlett": 6.9
+    },
+    "sub-006": {
+      "n_timepoints": 300,
+      "lag1": 0.7288,
+      "effective_n_bartlett": 23.8
+    },
+    "sub-008": {
+      "n_timepoints": 300,
+      "lag1": 0.6967,
+      "effective_n_bartlett": 33.3
+    }
+  },
+  "min_effective_n": 6.9,
+  "max_effective_n": 45.8,
+  "significance_threshold_r_at_min_eff": 0.7614,
+  "significance_threshold_r_at_median_eff": 0.3746
+}

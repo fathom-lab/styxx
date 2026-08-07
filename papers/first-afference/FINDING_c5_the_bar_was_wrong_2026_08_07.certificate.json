@@ -1,0 +1,304 @@
+{
+ "oath": "styxx OATH v0 (numeric-claim certificate)",
+ "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+ "document": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+ "document_sha256": "3340de5d76a856f294bcfed2577f899ebaef4d315b6d552da6732e54ad7590b6",
+ "receipts_sha256": {
+  "c5_result.json": "bfa7a54f578e889a187a4bcdd0c4cd24cd2ba4ada8857858d2a4f88dc7602c38",
+  "c5_effective_df_addendum.json": "25fa8f73b339438749e89eee325648d665eb912c0778ae28f31b30217c17d94f"
+ },
+ "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+ "counts": {
+  "VERIFIED": 16,
+  "ABSTAIN": 10,
+  "UNGROUNDED": 0
+ },
+ "verdict": "OATH-HELD",
+ "ungrounded": [],
+ "abstained": [
+  {
+   "line": 12,
+   "token": "0.80"
+  },
+  {
+   "line": 13,
+   "token": "0.10"
+  },
+  {
+   "line": 14,
+   "token": "0.10"
+  },
+  {
+   "line": 15,
+   "token": "0.10"
+  },
+  {
+   "line": 25,
+   "token": "0.4967"
+  },
+  {
+   "line": 25,
+   "token": "0.8054"
+  },
+  {
+   "line": 27,
+   "token": "0.3746"
+  },
+  {
+   "line": 33,
+   "token": "0.80"
+  },
+  {
+   "line": 46,
+   "token": "500"
+  },
+  {
+   "line": 65,
+   "token": "12.6"
+  }
+ ],
+ "ledger": [
+  {
+   "line": 12,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 12,
+   "token": "0.0952",
+   "value": 0.0952,
+   "decimals": 4,
+   "context": "| G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "binding_context": "| gate | bar | measured | pass | | G1_finds_isc | \u2265 0.80 | 0.0952 | \u274c |",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:frac_real_coupled"
+  },
+  {
+   "line": 13,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 13,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G2_rejects_reversed | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:reversed.sub-001__sub-003.surrogate_p"
+  },
+  {
+   "line": 14,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 14,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G3_rejects_independent_ar | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:independent_ar.s0.obs"
+  },
+  {
+   "line": 15,
+   "token": "0.10",
+   "value": 0.1,
+   "decimals": 2,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 15,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "binding_context": "| gate | bar | measured | pass | | G4_rejects_shared_trend | \u2264 0.10 | 0.0 | \u2705 |",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:frac_shared_trend_coupled"
+  },
+  {
+   "line": 19,
+   "token": "0.3742",
+   "value": 0.3742,
+   "decimals": 4,
+   "context": "Two of twenty-one pairs licensed, and they are **the two strongest**: signed mean r of 0.3742",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-003__sub-004.obs"
+  },
+  {
+   "line": 20,
+   "token": "0.2615",
+   "value": 0.2615,
+   "decimals": 4,
+   "context": "and 0.2615, both clearing surrogate and permutation nulls. The rest sit lower, median 0.084.",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-006__sub-008.obs"
+  },
+  {
+   "line": 21,
+   "token": "0.192",
+   "value": 0.192,
+   "decimals": 3,
+   "context": "The pairs that failed while looking substantial \u2014 0.192 to 0.237 \u2014 carry surrogate p between",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-001__sub-008.obs"
+  },
+  {
+   "line": 21,
+   "token": "0.237",
+   "value": 0.237,
+   "decimals": 3,
+   "context": "The pairs that failed while looking substantial \u2014 0.192 to 0.237 \u2014 carry surrogate p between",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-004__sub-005.obs"
+  },
+  {
+   "line": 22,
+   "token": "0.0499",
+   "value": 0.0499,
+   "decimals": 4,
+   "context": "0.0499 and 0.1297. The instrument licensed the strongest coupling and refused the rest.",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-003__sub-008.surrogate_p"
+  },
+  {
+   "line": 25,
+   "token": "0.4967",
+   "value": 0.4967,
+   "decimals": 4,
+   "context": "arithmetic is unambiguous. These BOLD series carry lag-1 autocorrelation of 0.4967 to 0.8054, which by the standard",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 25,
+   "token": "0.8054",
+   "value": 0.8054,
+   "decimals": 4,
+   "context": "arithmetic is unambiguous. These BOLD series carry lag-1 autocorrelation of 0.4967 to 0.8054, which by the standard",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 26,
+   "token": "6.9",
+   "value": 6.9,
+   "decimals": 1,
+   "context": "Bartlett correction leaves **effective sample sizes of 6.9 to 45.8** against a nominal three",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_effective_df_addendum.json:per_subject.sub-005.effective_n_bartlett"
+  },
+  {
+   "line": 26,
+   "token": "45.8",
+   "value": 45.8,
+   "decimals": 1,
+   "context": "Bartlett correction leaves **effective sample sizes of 6.9 to 45.8** against a nominal three",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_effective_df_addendum.json:per_subject.sub-003.effective_n_bartlett"
+  },
+  {
+   "line": 27,
+   "token": "0.3746",
+   "value": 0.3746,
+   "decimals": 4,
+   "context": "hundred timepoints (`c5_effective_df_addendum.json`). At the cohort's median effective n, a correlation must exceed 0.3746 to clear",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 28,
+   "token": "0.3742",
+   "value": 0.3742,
+   "decimals": 4,
+   "context": "significance. The strongest pair, at 0.3742, sits essentially on it. The pairs at 0.19 to 0.24 do not, and **no",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-003__sub-004.obs"
+  },
+  {
+   "line": 28,
+   "token": "0.19",
+   "value": 0.19,
+   "decimals": 2,
+   "context": "significance. The strongest pair, at 0.3742, sits essentially on it. The pairs at 0.19 to 0.24 do not, and **no",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-001__sub-008.obs"
+  },
+  {
+   "line": 28,
+   "token": "0.24",
+   "value": 0.24,
+   "decimals": 2,
+   "context": "significance. The strongest pair, at 0.3742, sits essentially on it. The pairs at 0.19 to 0.24 do not, and **no",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_result.json:real.sub-004__sub-005.obs"
+  },
+  {
+   "line": 33,
+   "token": "0.80",
+   "value": 0.8,
+   "decimals": 2,
+   "context": "`G1_finds_isc >= 0.80` demanded that eighty percent of *individual subject pairs* reach",
+   "status": "ABSTAIN",
+   "receipt_ref": "spec-or-historical"
+  },
+  {
+   "line": 46,
+   "token": "500",
+   "value": 500.0,
+   "decimals": 0,
+   "context": "- **The C1\u2013C4 blindness is NOT explained away by this.** Those runs used 500 vertices and are a",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 65,
+   "token": "12.6",
+   "value": 12.6,
+   "decimals": 1,
+   "context": "A first draft of this document quoted the effective-sample-size range as 12.6 to 45.9. That was",
+   "status": "ABSTAIN",
+   "receipt_ref": null
+  },
+  {
+   "line": 67,
+   "token": "6.9",
+   "value": 6.9,
+   "decimals": 1,
+   "context": "actually committed in `c5_effective_df_addendum.json`, which gives **6.9 to 45.8**. The OATH",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_effective_df_addendum.json:per_subject.sub-005.effective_n_bartlett"
+  },
+  {
+   "line": 67,
+   "token": "45.8",
+   "value": 45.8,
+   "decimals": 1,
+   "context": "actually committed in `c5_effective_df_addendum.json`, which gives **6.9 to 45.8**. The OATH",
+   "status": "VERIFIED",
+   "receipt_ref": "c5_effective_df_addendum.json:per_subject.sub-003.effective_n_bartlett"
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "seal": "seal/v0",
+ "verdict": "SEALED",
+ "document": "FINDING_c5_the_bar_was_wrong_2026_08_07.md",
+ "document_sha256": "3340de5d76a856f294bcfed2577f899ebaef4d315b6d552da6732e54ad7590b6",
+ "oath": {
+  "counts": {
+   "VERIFIED": 16,
+   "ABSTAIN": 10,
+   "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD"
+ },
+ "protocol": [
+  {
+   "prereg": "PREREG_c5_roi_2026_08_07.md",
+   "result": "c5_result.json",
+   "frozen_verdict": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+   "gates": {
+    "G1_finds_isc": false,
+    "G2_rejects_reversed": true,
+    "G3_rejects_independent_ar": true,
+    "G4_rejects_shared_trend": true
+   },
+   "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be",
+   "prereg_commit": "fee777dad070808415438c3fee9a3ebe30709b02"
+  }
+ ],
+ "refusals": [],
+ "seal_sha256": "8c51a1e9c9a9afbb31c26cbc90dff6b119e0027f158f2c01ae54bfd74e3a4aff"
+}
