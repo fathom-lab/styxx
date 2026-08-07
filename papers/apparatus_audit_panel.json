@@ -1,0 +1,29 @@
+{
+  "source": "pre-release adversarial audits of styxx.apparatus, 2026-08-06 (v1) and 2026-08-07 (v2)",
+  "note": "Measured by the auditing agents, not independently reproduced by this lab. Both panels are artifact-vs-genuine cases with disjoint RNG streams per arm, verified by the v2 auditor to carry no shared world signal (pre-artifact statistic 0.92-1.17x floor). v1 and v2 numbers below are like-for-like on the v2 auditor's single panel.",
+  "constant_survives_string": {
+    "specificity": 1.0,
+    "sensitivity": 0.0,
+    "balanced_accuracy": 0.5
+  },
+  "v1": {
+    "specificity": 0.75,
+    "sensitivity": 0.6429,
+    "balanced_accuracy": 0.6964
+  },
+  "v2_floor_supplied": {
+    "specificity": 1.0,
+    "sensitivity": 0.125,
+    "balanced_accuracy": 0.5625
+  },
+  "v2_default_call_floor_omitted": {
+    "balanced_accuracy": 0.5446
+  },
+  "v2_best_over_retain_sweep": {
+    "retain": 0.25,
+    "balanced_accuracy": 0.575
+  },
+  "artifact_families_tested": 8,
+  "artifact_families_v2_detects": 1,
+  "verdict": "DO NOT SHIP (both versions)"
+}

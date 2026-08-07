@@ -2,15 +2,16 @@
  "oath": "styxx OATH v0 (numeric-claim certificate)",
  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
  "document": "SYNTHESIS_recorder_contamination_2026_08_06.md",
- "document_sha256": "5d2187bf0d10d5e433a102e7d95247f5c2040af8a5d727a2eb4bc49d6aa81a83",
+ "document_sha256": "38f7e2dc2fac8ff5e4966ac4ec4fc206fba021ac09a464ba5fd69042a4a3ff70",
  "receipts_sha256": {
   "c1_result.json": "11938e83869a4ddacaa66edc37d27b2ea24e7f6bd9236c049de8102f30fbc4d8",
   "h1a_amplitude_control.json": "0c6afad90c7052542d580c2bc7fdd3d51fc515ea5ebd88b3f625dc8d3c42c454",
-  "b48_diagnostics_addendum.json": "869c989e83cc901647218bb9e791936478beffa386fa4391f8332080d7b93a6d"
+  "b48_diagnostics_addendum.json": "869c989e83cc901647218bb9e791936478beffa386fa4391f8332080d7b93a6d",
+  "apparatus_audit_panel.json": "779209479a983b51e00eafbdb903978b7606d101c95fa78f067d894e2b55b472"
  },
  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
  "counts": {
-  "VERIFIED": 3,
+  "VERIFIED": 12,
   "ABSTAIN": 5,
   "UNGROUNDED": 0
  },
@@ -116,6 +117,96 @@
    "context": "partly the seed. Our own published p moved from 0.0779 to 0.0634 on a twenty-fold longer run,",
    "status": "VERIFIED",
    "receipt_ref": "c1_result.json:reversed.sub-003__sub-008.rv_debiased"
+  },
+  {
+   "line": 120,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:constant_survives_string.specificity"
+  },
+  {
+   "line": 120,
+   "token": "0.0",
+   "value": 0.0,
+   "decimals": 1,
+   "context": "| constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:constant_survives_string.sensitivity"
+  },
+  {
+   "line": 120,
+   "token": "0.5",
+   "value": 0.5,
+   "decimals": 1,
+   "context": "| constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | constant \"SURVIVES\" string | 1.0 | 0.0 | 0.5 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:constant_survives_string.balanced_accuracy"
+  },
+  {
+   "line": 121,
+   "token": "0.75",
+   "value": 0.75,
+   "decimals": 2,
+   "context": "| attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:v1.specificity"
+  },
+  {
+   "line": 121,
+   "token": "0.6429",
+   "value": 0.6429,
+   "decimals": 4,
+   "context": "| attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:v1.sensitivity"
+  },
+  {
+   "line": 121,
+   "token": "0.6964",
+   "value": 0.6964,
+   "decimals": 4,
+   "context": "| attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | attempt one | 0.75 | 0.6429 | 0.6964 |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:v1.balanced_accuracy"
+  },
+  {
+   "line": 122,
+   "token": "1.0",
+   "value": 1.0,
+   "decimals": 1,
+   "context": "| **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:constant_survives_string.specificity"
+  },
+  {
+   "line": 122,
+   "token": "0.125",
+   "value": 0.125,
+   "decimals": 3,
+   "context": "| **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:v2_floor_supplied.sensitivity"
+  },
+  {
+   "line": 122,
+   "token": "0.5625",
+   "value": 0.5625,
+   "decimals": 4,
+   "context": "| **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "binding_context": "| | specificity | sensitivity | balanced accuracy | | **attempt two** | **1.0** | **0.125** | **0.5625** |",
+   "status": "VERIFIED",
+   "receipt_ref": "apparatus_audit_panel.json:v2_floor_supplied.balanced_accuracy"
   }
  ]
 }

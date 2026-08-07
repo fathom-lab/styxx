@@ -109,5 +109,41 @@ in *both* directions — it licensed independent autoregressive streams before i
 and refuses genuine intersubject correlation after it. That is stated in its docstring and it is
 why the mind↔brain application is withdrawn rather than softened.
 
+## ADDENDUM — 2026-08-07: two attempts to build the detector, both failed, the second worse
+
+This document proposed five apparatus counterfactuals and said running them "is cheap enough
+that there is no excuse not to." A module implementing them was built twice and killed twice by
+pre-release adversarial audits, measured on one panel:
+
+| | specificity | sensitivity | balanced accuracy |
+|---|---|---|---|
+| constant "SURVIVES" string | 1.0 | 0.0 | 0.5 |
+| attempt one | 0.75 | 0.6429 | 0.6964 |
+| **attempt two** | **1.0** | **0.125** | **0.5625** |
+
+(Measured by the auditing agents on their panel, not independently reproduced here;
+`apparatus_audit_panel.json`.)
+
+Attempt one flagged genuine periodic-stimulus findings on every seed. Attempt two fixed every
+false alarm and, in doing so, **converted each detection into a refusal**: it now flags nothing
+genuine, ever, and detects one artifact family in eight. Both are near coin flips from opposite
+directions.
+
+**What this changes in the claim above.** The theorem stands — a permutation null destroys row
+alignment, the recorder's signature is row alignment, and apparatus counterfactuals are the
+right axis. What does *not* stand is the implied corollary that a fixed set of them constitutes
+a general detector. Each artifact family needs a counterfactual matched to its own mechanism:
+a mask surrogate keyed on repeated rows catches a recorder that *holds* its last value and sails
+past one that writes a sentinel zero — same artifact, different clothes, and the module cannot
+tell. A shipped instrument with a fixed battery will always be a coin flip against the families
+its author did not anticipate.
+
+So the honest form of the recommendation is narrower than the one above, and it is a practice
+rather than a package: **name the artifact you fear, build the counterfactual that removes it
+specifically, and report what it did.** The five listed here are a starting vocabulary, not a
+test suite. This addendum is written because the section above reads as though the tooling
+followed, and it did not.
+
 *The recorder is part of the world you are measuring. Nothing in a null tells you where the
-instrument ends and the world begins.*
+instrument ends and the world begins — and nothing in a fixed battery of counterfactuals tells
+you which recorder you have.*
