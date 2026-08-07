@@ -96,7 +96,11 @@ def seal(doc_path: str | Path, receipts: list[str | Path],
                 refusals.append({"layer": "protocol", "prereg": str(prereg_path),
                                  "why": f"claimed verdict {claimed!r} != frozen-table "
                                         f"verdict {v.verdict!r}"})
-        except (PrologueError, GateSpecError, OSError, json.JSONDecodeError) as e:
+        except (PrologueError, GateSpecError, OSError, json.JSONDecodeError,
+                TypeError, AttributeError, KeyError) as e:
+            # A malformed result must REFUSE the seal, never crash it. Red team
+            # 2026-08-07: a metric resolving to a string or dict raised TypeError from
+            # score(), which was outside this clause, so seal() died instead of refusing.
             rec["error"] = f"{type(e).__name__}: {e}"
             refusals.append({"layer": "protocol", "prereg": str(prereg_path),
                              "why": rec["error"]})

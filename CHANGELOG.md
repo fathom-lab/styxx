@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.34.0] — 2026-08-07 — protocol records what intent could not, after a red team said DO NOT SHIP
+
+`styxx.protocol` scores every finding in this repo; 169 sealed certificates depend on it. It was
+changed, adversarially audited before release, told **DO NOT SHIP**, fixed, and only then
+shipped. Five gate bars were mis-specified in this program in one week — the machinery now
+records what repeated resolutions did not.
+
+### Added
+- **`power_basis` on a gate** — a plain statement of how its bar was derived, or the literal
+  `"none — exploratory"`. `Experiment(..., require_power_basis=True)` refuses a prereg whose gates
+  do not declare one; `Verdict.power_basis` and `.undeclared_power_gates` record the census, and
+  the module function `undeclared_power_gates(path)` audits any prereg. Declaring is not
+  verifying: this program's first declaration was itself false, and that is stated in the finding
+  rather than hidden.
+- **`check_metrics(result)`** — resolves every gate's metric path *before* a run is launched, and
+  reports `present` **and** `usable`. `_resolve` already raised on a missing path, but only at
+  scoring time, after the compute was spent.
+- **`metric_means`** — a recorded, never-verified statement of what a gate's path should contain.
+  It cannot be checked, and calling it a check would be the overclaim this program retracts for.
+
+### Fixed — every item from the pre-release adversarial audit
+- **Strict mode accepted `" "` and `true` as a power basis.** `if not v` caught the empty string
+  and not a space, making the refusal decorative for the easiest possible evasion.
+- **`check_metrics` false-alarmed on smoke results** (nine committed ones), which score by type
+  and never read gate metrics. Now smoke-aware.
+- **A NaN metric produced a silent SEALED verdict**: every comparison against NaN is `False`, so
+  the frozen outcome table returned its false branch as a legitimate result with no refusal
+  anywhere. Now `GateSpecError`.
+- **A non-comparable metric (string, dict, None) crashed `score()` with a `TypeError` that
+  escaped `seal()`'s except clause** — a malformed result killed the seal instead of refusing it.
+  Now refused at scoring, and `seal()` catches `TypeError`/`AttributeError`/`KeyError`.
+- **A missing or non-string `metric` key crashed `check_metrics` with `AttributeError`** — the
+  pre-run safety tool failing on the most mis-specified gate there is. Now refused at
+  construction.
+- **Every `Verdict` from one `Experiment` shared one mutable dict**, so mutating one receipt
+  rewrote its siblings. Now copied per score.
+- **`undeclared_power_gates(path)` was frozen as a deliverable and silently dropped** from the
+  implementation; neither the exam nor its finding noticed. The red team did.
+
+### Backward compatibility — independently confirmed before and after
+Zero verdict, gates, hash or commit diffs across 518 scoring events and 615 prereg-declaring
+results; 28 of 28 seal protocol blocks byte-identical; 29 of 29 seal hashes re-derive. Verified
+again after the fixes at zero diffs, and now enforced by a test that re-scores the whole corpus.
+29 regression tests, one per defect. Suite 1968.
+
 ## [7.33.0] — 2026-08-06 — islands hardened after an adversarial audit; the mind-brain claim WITHDRAWN
 
 ### Changed — `styxx.coupling`
