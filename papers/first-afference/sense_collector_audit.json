@@ -1,0 +1,22 @@
+{
+  "store": "C:\\Users\\heyzo\\.styxx\\sense.jsonl",
+  "chart": "C:\\Users\\heyzo\\.styxx\\chart.jsonl",
+  "window_hours": 38.18,
+  "n_samples": 4582,
+  "sample_rate_per_hour": 120.02,
+  "n_agent_writes_in_window": 406,
+  "agent_write_rate_per_hour": 10.63,
+  "oversampling_ratio": 11.29,
+  "n_paired_rows_nominal": 52,
+  "n_distinct_agent_payloads": 4,
+  "max_repeats_of_one_payload": 30,
+  "n_duplicate_paired_rows": 48,
+  "duplicate_fraction_of_pairs": 0.9231,
+  "effective_n_upper_bound": 4,
+  "n_inflation_factor": 13.0,
+  "r1v2_required_bins": 200,
+  "hours_to_requirement_at_nominal_rate": 146.8,
+  "hours_to_requirement_at_distinct_rate": 1908.9,
+  "interpretation": "The collector samples faster than the agent writes, and the staleness window carries one agent row forward into several samples. The paired-row count is therefore a property of the recorder's cadence, not of the agent. Any statistic computed over the nominal count would score the staleness window.",
+  "why_the_obvious_fix_is_forbidden": "Widening max_age raises the nominal pair count and lowers the effective one \u2014 it makes the contamination worse while making the harness look healthier. That is the exact failure class of SYNTHESIS_recorder_contamination_2026_08_06.md. The correct fix is to emit a bin only when the agent row is NEW, which cannot inflate n because it cannot produce more bins than the agent produced rows."
+}

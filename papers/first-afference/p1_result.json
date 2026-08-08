@@ -317,5 +317,11 @@
     "G3_beats_constant": true,
     "G4_refuses_degenerate": true
   },
-  "prereg_commit": "5d401d28d0b4e7023cb85e588b981e5081b2f35a"
+  "prereg_commit": "5d401d28d0b4e7023cb85e588b981e5081b2f35a",
+  "SUPERSEDED_2026_08_08": {
+    "status": "VERDICT UNSUPPORTED \u2014 DO NOT SHIP",
+    "why": "The PROCEED_TO_RED_TEAM verdict below was computed from a battery that fabricated all three of its historical cases while claiming to read them from committed receipts, and whose REACHABLE controls were floored with max(corr,0.0625) so the ground-truth labels would hold. Without that undisclosed floor the synthetic balanced accuracy is 0.875, not 1.0. The b48 case could not fail for any input because alt=None. G3_beats_constant hardcoded its baseline at 0.5 rather than scoring one.",
+    "module_status": "styxx.power QUARANTINED, never released",
+    "audit": "papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md"
+  }
 }

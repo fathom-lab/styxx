@@ -1,0 +1,1106 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_p1_third_quarantine_2026_08_08.md",
+  "document_sha256": "ecf86c8106d09cba1d0f669cf42308655bf1295b23855366817f0d71748aa71e",
+  "receipts_sha256": {
+    "p1_redteam_audit.json": "942985c3f270f9901bae478f8de609dcc1f8dd5e45dbbc7c9451ef345402cc42",
+    "p1_result.json": "805d88f828f75b9ee08fb598759069d78d626942f625ac5289f0b8efde519831",
+    "sense_collector_audit.json": "cf0b40591d25bd81ea82e98f0d288e634ff75e14dc2b60cc692c4dc4ec41619f"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 59,
+    "ABSTAIN": 39,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 26,
+      "token": "0.0537"
+    },
+    {
+      "line": 26,
+      "token": "10"
+    },
+    {
+      "line": 26,
+      "token": "45"
+    },
+    {
+      "line": 26,
+      "token": "200"
+    },
+    {
+      "line": 26,
+      "token": "0.05"
+    },
+    {
+      "line": 27,
+      "token": "96"
+    },
+    {
+      "line": 28,
+      "token": "0.0"
+    },
+    {
+      "line": 28,
+      "token": "1.0"
+    },
+    {
+      "line": 29,
+      "token": "0.8"
+    },
+    {
+      "line": 30,
+      "token": "4"
+    },
+    {
+      "line": 33,
+      "token": "96"
+    },
+    {
+      "line": 56,
+      "token": "1"
+    },
+    {
+      "line": 68,
+      "token": "5000"
+    },
+    {
+      "line": 68,
+      "token": "128"
+    },
+    {
+      "line": 69,
+      "token": "18"
+    },
+    {
+      "line": 70,
+      "token": "45"
+    },
+    {
+      "line": 75,
+      "token": "1"
+    },
+    {
+      "line": 77,
+      "token": "10000"
+    },
+    {
+      "line": 84,
+      "token": "24"
+    },
+    {
+      "line": 84,
+      "token": "24"
+    },
+    {
+      "line": 84,
+      "token": "200,000"
+    },
+    {
+      "line": 85,
+      "token": "0.01425"
+    },
+    {
+      "line": 85,
+      "token": "0.47579"
+    },
+    {
+      "line": 86,
+      "token": "-45"
+    },
+    {
+      "line": 86,
+      "token": "-45"
+    },
+    {
+      "line": 87,
+      "token": "+1.640822"
+    },
+    {
+      "line": 89,
+      "token": "100"
+    },
+    {
+      "line": 114,
+      "token": "45"
+    },
+    {
+      "line": 116,
+      "token": "0"
+    },
+    {
+      "line": 116,
+      "token": "96"
+    },
+    {
+      "line": 117,
+      "token": "45"
+    },
+    {
+      "line": 121,
+      "token": "0.02"
+    },
+    {
+      "line": 121,
+      "token": "0.04"
+    },
+    {
+      "line": 122,
+      "token": "2"
+    },
+    {
+      "line": 122,
+      "token": "21"
+    },
+    {
+      "line": 125,
+      "token": "0.0"
+    },
+    {
+      "line": 126,
+      "token": "0.90"
+    },
+    {
+      "line": 129,
+      "token": "0.0625"
+    },
+    {
+      "line": 133,
+      "token": "0.80"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 25,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "binding_context": "| defect | measured | | `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_this_lab.order_stat_bar_corrected_bar"
+    },
+    {
+      "line": 25,
+      "token": "0.1165",
+      "value": 0.1165,
+      "decimals": 4,
+      "context": "| `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "binding_context": "| defect | measured | | `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_this_lab.reachable_alpha_on_that_same_bar"
+    },
+    {
+      "line": 25,
+      "token": "0.9996",
+      "value": 0.9996,
+      "decimals": 4,
+      "context": "| `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "binding_context": "| defect | measured | | `order_stat_bar` returns a bar `reachable` then rejects | claims \u03b1 0.05, scored at 0.1165 here and 0.9996 by the auditor |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.reachable_alpha_on_corrected_bar_worst"
+    },
+    {
+      "line": 26,
+      "token": "0.0537",
+      "value": 0.0537,
+      "decimals": 4,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.2198",
+      "value": 0.2198,
+      "decimals": 4,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.realized_fpr_at_corrected_bar_n45"
+    },
+    {
+      "line": 26,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.1814",
+      "value": 0.1814,
+      "decimals": 4,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.realized_fpr_at_corrected_bar_n200"
+    },
+    {
+      "line": 26,
+      "token": "200",
+      "value": 200.0,
+      "decimals": 0,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 26,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "binding_context": "| defect | measured | | realized false-positive rate at that \"corrected\" bar | 0.0537 (n=10), 0.2198 (n=45), 0.1814 (n=200) against 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0.0788",
+      "value": 0.0788,
+      "decimals": 4,
+      "context": "| `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "binding_context": "| defect | measured | | `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.min_detectable_bar_realized_fpr_poisson1_96"
+    },
+    {
+      "line": 27,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "binding_context": "| defect | measured | | `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.min_detectable_bar_sparse_null_alpha"
+    },
+    {
+      "line": 27,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "| `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "binding_context": "| defect | measured | | `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "binding_context": "| defect | measured | | `min_detectable_bar` exceeds its promised \u03b1 | 0.0788 on a Poisson(1)/96 null at a target of 0.05 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_this_lab.order_stat_bar_corrected_bar"
+    },
+    {
+      "line": 28,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "| the same function on a sparse null | returns 0.0, a bar conceding **\u03b1 = 1.0** |",
+      "binding_context": "| defect | measured | | the same function on a sparse null | returns 0.0, a bar conceding **\u03b1 = 1.0** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 28,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| the same function on a sparse null | returns 0.0, a bar conceding **\u03b1 = 1.0** |",
+      "binding_context": "| defect | measured | | the same function on a sparse null | returns 0.0, a bar conceding **\u03b1 = 1.0** |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.min_detectable_bar_sparse_null_alpha"
+    },
+    {
+      "line": 29,
+      "token": "0.8",
+      "value": 0.8,
+      "decimals": 1,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 29,
+      "token": "33.33",
+      "value": 33.33,
+      "decimals": 2,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_analytic"
+    },
+    {
+      "line": 29,
+      "token": "18.1",
+      "value": 18.1,
+      "decimals": 1,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.realized_fpr_at_corrected_bar_n200"
+    },
+    {
+      "line": 29,
+      "token": "59.5",
+      "value": 59.5,
+      "decimals": 1,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_p95"
+    },
+    {
+      "line": 29,
+      "token": "48.8",
+      "value": 48.8,
+      "decimals": 1,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_within_25pct"
+    },
+    {
+      "line": 29,
+      "token": "25",
+      "value": 25.0,
+      "decimals": 0,
+      "context": "| `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "binding_context": "| defect | measured | | `effective_n` on AR(1) \u03c1=0.8, analytic truth 33.33 | p5\u2013p95 of **18.1 to 59.5**, 48.8% of draws within 25% |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_tolerance_pct"
+    },
+    {
+      "line": 30,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "| disagreement with the shipped `styxx.anchors` | **4\u00d7 on \u03b1, 0.15 on power** for the same question |",
+      "binding_context": "| defect | measured | | disagreement with the shipped `styxx.anchors` | **4\u00d7 on \u03b1, 0.15 on power** for the same question |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "0.15",
+      "value": 0.15,
+      "decimals": 2,
+      "context": "| disagreement with the shipped `styxx.anchors` | **4\u00d7 on \u03b1, 0.15 on power** for the same question |",
+      "binding_context": "| defect | measured | | disagreement with the shipped `styxx.anchors` | **4\u00d7 on \u03b1, 0.15 on power** for the same question |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rule_of_three_upper_bound_at_20_draws"
+    },
+    {
+      "line": 33,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "`np.quantile` interpolates between attainable values, and a proportion over 96 trials has no",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`ceil((n+1)(1-\u03b1))` order statistic, uninterpolated, with a refusal path. I wrote a fourth",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_result.json:degenerate_refusal_rate"
+    },
+    {
+      "line": 35,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "`ceil((n+1)(1-\u03b1))` order statistic, uninterpolated, with a refusal path. I wrote a fourth",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_result.json:degenerate_refusal_rate"
+    },
+    {
+      "line": 40,
+      "token": "31",
+      "value": 31.0,
+      "decimals": 0,
+      "context": "A third adversary built 31 cases the author never saw, every ground truth a closed-form",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rt3_battery_cases"
+    },
+    {
+      "line": 46,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "| a correct six-line implementation of the same idea | **1.0** |",
+      "binding_context": "| predictor | balanced accuracy | | a correct six-line implementation of the same idea | **1.0** |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.reachable_alpha_on_corrected_bar_worst"
+    },
+    {
+      "line": 47,
+      "token": "0.8104",
+      "value": 0.8104,
+      "decimals": 4,
+      "context": "| a three-line heuristic with no order-statistic logic at all | **0.8104** |",
+      "binding_context": "| predictor | balanced accuracy | | a three-line heuristic with no order-statistic logic at all | **0.8104** |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rt3_three_line_heuristic_balanced_accuracy"
+    },
+    {
+      "line": 48,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "| `styxx.power.reachable` | **0.75** |",
+      "binding_context": "| predictor | balanced accuracy | | `styxx.power.reachable` | **0.75** |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.author_call_path_balanced_accuracy_on_holdout"
+    },
+    {
+      "line": 49,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "| a constant answer | 0.5 |",
+      "binding_context": "| predictor | balanced accuracy | | a constant answer | 0.5 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.default_call_path_balanced_accuracy"
+    },
+    {
+      "line": 51,
+      "token": "0.85",
+      "value": 0.85,
+      "decimals": 2,
+      "context": "G2 demanded 0.85 and got 0.75. G3 demanded a 0.30 margin over the best constant and got 0.25.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rt3_own_prereg_G2_bar"
+    },
+    {
+      "line": 51,
+      "token": "0.30",
+      "value": 0.3,
+      "decimals": 2,
+      "context": "G2 demanded 0.85 and got 0.75. G3 demanded a 0.30 margin over the best constant and got 0.25.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rt3_own_prereg_G3_bar"
+    },
+    {
+      "line": 56,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "it more accurate.** On the `n_draws > 1` subset that is the module's entire reason to exist, it",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 57,
+      "token": "0.5833",
+      "value": 0.5833,
+      "decimals": 4,
+      "context": "scores 0.5833 against 0.5 for a constant. The contribution is negative.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.rt3_module_balanced_accuracy_on_ndraws_subset"
+    },
+    {
+      "line": 57,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "scores 0.5833 against 0.5 for a constant. The contribution is negative.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.constant_string_balanced_accuracy_for_comparison"
+    },
+    {
+      "line": 66,
+      "token": "36.5",
+      "value": 36.5,
+      "decimals": 1,
+      "context": "**36.5%** of resamples at 20 draws, where `MIN_DRAWS` licenses it); `effective_n` silently reports",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.verdict_flip_rate_at_20_draws_pct"
+    },
+    {
+      "line": 66,
+      "token": "20",
+      "value": 20.0,
+      "decimals": 0,
+      "context": "**36.5%** of resamples at 20 draws, where `MIN_DRAWS` licenses it); `effective_n` silently reports",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.draws_available_at_extreme_alpha"
+    },
+    {
+      "line": 68,
+      "token": "5000",
+      "value": 5000.0,
+      "decimals": 0,
+      "context": "returning 5000 where the truth is 128, a **39\u00d7** overstatement with no flag; and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 68,
+      "token": "128",
+      "value": 128.0,
+      "decimals": 0,
+      "context": "returning 5000 where the truth is 128, a **39\u00d7** overstatement with no flag; and the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 68,
+      "token": "39",
+      "value": 39.0,
+      "decimals": 0,
+      "context": "returning 5000 where the truth is 128, a **39\u00d7** overstatement with no flag; and the",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar2_overstatement_factor"
+    },
+    {
+      "line": 69,
+      "token": "18",
+      "value": 18.0,
+      "decimals": 0,
+      "context": "independent-draws assumption overstates alpha by up to 18\u00d7 when the draws are correlated, which",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 70,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "45 layer-pairs from one model run always are.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 74,
+      "token": "0.5000",
+      "value": 0.5,
+      "decimals": 4,
+      "context": "**On its default call path the module scores balanced accuracy 0.5000** \u2014 identical to a constant",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.default_call_path_balanced_accuracy"
+    },
+    {
+      "line": 75,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "answer, and the same figure that quarantined `apparatus` v2 at 0.5625. `n_draws` defaults to 1 and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 77,
+      "token": "10000",
+      "value": 10000.0,
+      "decimals": 0,
+      "context": "optional argument the caller must know to supply and supply correctly. At `n_items=10000` on a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 84,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "| `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "binding_context": "| further defect | measured | | `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 84,
+      "token": "24",
+      "value": 24.0,
+      "decimals": 0,
+      "context": "| `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "binding_context": "| further defect | measured | | `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 84,
+      "token": "200,000",
+      "value": 200000.0,
+      "decimals": 0,
+      "context": "| `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "binding_context": "| further defect | measured | | `reachable` rejects the bar `order_stat_bar` recommends | 24 of 24 trials, up to 200,000 draws; the advice loop never converges |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 85,
+      "token": "0.01425",
+      "value": 0.01425,
+      "decimals": 5,
+      "context": "| alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "binding_context": "| further defect | measured | | alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 85,
+      "token": "0.47579",
+      "value": 0.47579,
+      "decimals": 5,
+      "context": "| alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "binding_context": "| further defect | measured | | alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 85,
+      "token": "33",
+      "value": 33.0,
+      "decimals": 0,
+      "context": "| alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "binding_context": "| further defect | measured | | alpha is order-statistic corrected, power is not | power reported 0.01425 where the gate has 0.47579 \u2014 off by 33\u00d7, verdict inverted |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.power_underreport_factor_when_ngraws_45"
+    },
+    {
+      "line": 86,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "| `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "binding_context": "| further defect | measured | | `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_this_lab.run_p1_receipt_reads"
+    },
+    {
+      "line": 86,
+      "token": "-45",
+      "value": -45.0,
+      "decimals": 0,
+      "context": "| `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "binding_context": "| further defect | measured | | `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 86,
+      "token": "-45",
+      "value": -45.0,
+      "decimals": 0,
+      "context": "| `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "binding_context": "| further defect | measured | | `reachable` validates `n_draws` not at all | `0`, `-45`, `True` all return REACHABLE; `detail` records -45 as a sample count |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 87,
+      "token": "+1.640822",
+      "value": 1.640822,
+      "decimals": 6,
+      "context": "| `min_detectable_bar` does not validate `op` | a trailing space flips the returned bar from +1.640822 to -1.650391 |",
+      "binding_context": "| further defect | measured | | `min_detectable_bar` does not validate `op` | a trailing space flips the returned bar from +1.640822 to -1.650391 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 87,
+      "token": "-1.650391",
+      "value": -1.650391,
+      "decimals": 6,
+      "context": "| `min_detectable_bar` does not validate `op` | a trailing space flips the returned bar from +1.640822 to -1.650391 |",
+      "binding_context": "| further defect | measured | | `min_detectable_bar` does not validate `op` | a trailing space flips the returned bar from +1.640822 to -1.650391 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.min_detectable_bar_op_typo_flips_bar_to"
+    },
+    {
+      "line": 88,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "| entry points returning a verdict on a zero-variance null | 3 of 5, contradicting the module's own docstring |",
+      "binding_context": "| further defect | measured | | entry points returning a verdict on a zero-variance null | 3 of 5, contradicting the module's own docstring |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.entry_points_returning_verdict_on_zero_variance_null"
+    },
+    {
+      "line": 88,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| entry points returning a verdict on a zero-variance null | 3 of 5, contradicting the module's own docstring |",
+      "binding_context": "| further defect | measured | | entry points returning a verdict on a zero-variance null | 3 of 5, contradicting the module's own docstring |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.entry_points_total"
+    },
+    {
+      "line": 89,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "| `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "binding_context": "| further defect | measured | | `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 89,
+      "token": "0.01",
+      "value": 0.01,
+      "decimals": 2,
+      "context": "| `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "binding_context": "| further defect | measured | | `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.power_single_draw_reported"
+    },
+    {
+      "line": 89,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "| `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "binding_context": "| further defect | measured | | `bounded_ceiling[\"chance\"]` for 2AFC over 100 trials | reports 0.01; the truth is 0.50 |",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.default_call_path_balanced_accuracy"
+    },
+    {
+      "line": 97,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "- **`G3_beats_constant`** hardcoded its baseline at 0.5 instead of scoring one.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.constant_string_balanced_accuracy_for_comparison"
+    },
+    {
+      "line": 98,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "- **`G4_refuses_degenerate`** scored a perfect 1.0 while the harness exercised only",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_result.json:degenerate_refusal_rate"
+    },
+    {
+      "line": 114,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "- **b48-G2.** The 45 real null draws sit in `b48_result.json[\"pair_null\"]`, already committed and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 116,
+      "token": "0",
+      "value": 0.0,
+      "decimals": 0,
+      "context": "`rng.integers(0,6)/96` instead, carrying **6\u00d7 the real tail mass**. It also inverted the gate",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 116,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`rng.integers(0,6)/96` instead, carrying **6\u00d7 the real tail mass**. It also inverted the gate",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.b48_invented_null_tail_mass_multiple"
+    },
+    {
+      "line": 116,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "`rng.integers(0,6)/96` instead, carrying **6\u00d7 the real tail mass**. It also inverted the gate",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 116,
+      "token": "6",
+      "value": 6.0,
+      "decimals": 0,
+      "context": "`rng.integers(0,6)/96` instead, carrying **6\u00d7 the real tail mass**. It also inverted the gate",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.b48_invented_null_tail_mass_multiple"
+    },
+    {
+      "line": 117,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "direction, so its reported \u03b1 of 1.0 is the probability that at least one of 45 draws is",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.synthetic_balanced_accuracy_as_reported"
+    },
+    {
+      "line": 117,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "direction, so its reported \u03b1 of 1.0 is the probability that at least one of 45 draws is",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 120,
+      "token": "6.9",
+      "value": 6.9,
+      "decimals": 1,
+      "context": "- **C5-G1.** Multiplied a Beta draw by `6.9/300` \u2014 a ratio of sample sizes applied as a scale to",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_published_effective_n_min"
+    },
+    {
+      "line": 120,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "- **C5-G1.** Multiplied a Beta draw by `6.9/300` \u2014 a ratio of sample sizes applied as a scale to",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_result.json:effective_n_demo.nominal"
+    },
+    {
+      "line": 121,
+      "token": "0.02",
+      "value": 0.02,
+      "decimals": 2,
+      "context": "a fraction of pairs \u2014 producing values spanning 0.02 to 0.04 judged against a bar of 0.80. The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 121,
+      "token": "0.04",
+      "value": 0.04,
+      "decimals": 2,
+      "context": "a fraction of pairs \u2014 producing values spanning 0.02 to 0.04 judged against a bar of 0.80. The",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 122,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "real metric is `frac_real_coupled = 2/21`. `effective_n`, the module's headline construction",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 122,
+      "token": "21",
+      "value": 21.0,
+      "decimals": 0,
+      "context": "real metric is `frac_real_coupled = 2/21`. `effective_n`, the module's headline construction",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 123,
+      "token": "6.9",
+      "value": 6.9,
+      "decimals": 1,
+      "context": "and this case's entire premise, **was never called**; 6.9 was hardcoded.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_published_effective_n_min"
+    },
+    {
+      "line": 125,
+      "token": "0.0",
+      "value": 0.0,
+      "decimals": 1,
+      "context": "`> 0.0` floor that our own finding calls *\"a noise-passable gate, and I wrote it\"* \u2014 too",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 126,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "permissive, and it **passed**. P1 reconstructed it as a bar of 0.90 and called it a bar that",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 129,
+      "token": "0.0625",
+      "value": 0.0625,
+      "decimals": 4,
+      "context": "`max(corr, 0.0625)`, lifting them past the module's own correction so the ground-truth labels",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 130,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "hold. Remove the floor and specificity falls from 1.0 to 0.75, balanced accuracy from 1.0 to",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.synthetic_balanced_accuracy_as_reported"
+    },
+    {
+      "line": 130,
+      "token": "0.75",
+      "value": 0.75,
+      "decimals": 2,
+      "context": "hold. Remove the floor and specificity falls from 1.0 to 0.75, balanced accuracy from 1.0 to",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.synthetic_specificity_without_floor"
+    },
+    {
+      "line": 130,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "hold. Remove the floor and specificity falls from 1.0 to 0.75, balanced accuracy from 1.0 to",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.synthetic_balanced_accuracy_as_reported"
+    },
+    {
+      "line": 132,
+      "token": "0.5",
+      "value": 0.5,
+      "decimals": 1,
+      "context": "- **`G3_beats_constant` scored nothing.** Its baseline is the literal 0.5, not a measurement,",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.effective_n_ar1_rho08_within_25pct"
+    },
+    {
+      "line": 133,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "making the gate algebraically `G2 \u2265 0.80`. The `styxx.apparatus` guard it imitated worked",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 147,
+      "token": "6.9",
+      "value": 6.9,
+      "decimals": 1,
+      "context": "seven subjects** \u2014 the published C5 range of 6.9 to 45.8 becomes 4.84 to 53.84 under the new",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_published_effective_n_min"
+    },
+    {
+      "line": 147,
+      "token": "45.8",
+      "value": 45.8,
+      "decimals": 1,
+      "context": "seven subjects** \u2014 the published C5 range of 6.9 to 45.8 becomes 4.84 to 53.84 under the new",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_published_effective_n_max"
+    },
+    {
+      "line": 147,
+      "token": "4.84",
+      "value": 4.84,
+      "decimals": 2,
+      "context": "seven subjects** \u2014 the published C5 range of 6.9 to 45.8 becomes 4.84 to 53.84 under the new",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_recomputed_effective_n_min"
+    },
+    {
+      "line": 147,
+      "token": "53.84",
+      "value": 53.84,
+      "decimals": 2,
+      "context": "seven subjects** \u2014 the published C5 range of 6.9 to 45.8 becomes 4.84 to 53.84 under the new",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_recomputed_effective_n_max"
+    },
+    {
+      "line": 152,
+      "token": "28.5",
+      "value": 28.5,
+      "decimals": 1,
+      "context": "numbers the median effective n moves from 28.5 to 30.82, the implied critical correlation moves",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_median_effective_n_published"
+    },
+    {
+      "line": 152,
+      "token": "30.82",
+      "value": 30.82,
+      "decimals": 2,
+      "context": "numbers the median effective n moves from 28.5 to 30.82, the implied critical correlation moves",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_median_effective_n_recomputed"
+    },
+    {
+      "line": 153,
+      "token": "0.3705",
+      "value": 0.3705,
+      "decimals": 4,
+      "context": "from 0.3705 to 0.3561, and C5's strongest pair at 0.3742 crosses from *below* its bar to *above*",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_critical_r_published"
+    },
+    {
+      "line": 153,
+      "token": "0.3561",
+      "value": 0.3561,
+      "decimals": 4,
+      "context": "from 0.3705 to 0.3561, and C5's strongest pair at 0.3742 crosses from *below* its bar to *above*",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_critical_r_recomputed"
+    },
+    {
+      "line": 153,
+      "token": "0.3742",
+      "value": 0.3742,
+      "decimals": 4,
+      "context": "from 0.3705 to 0.3561, and C5's strongest pair at 0.3742 crosses from *below* its bar to *above*",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_strongest_pair_r"
+    },
+    {
+      "line": 169,
+      "token": "1.0",
+      "value": 1.0,
+      "decimals": 1,
+      "context": "being labelled as receipts. The 1.0 was not evidence. It was a test agreeing with itself.",
+      "status": "VERIFIED",
+      "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.reachable_alpha_on_corrected_bar_worst"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_p1_third_quarantine_2026_08_08.md",
+  "document_sha256": "ecf86c8106d09cba1d0f669cf42308655bf1295b23855366817f0d71748aa71e",
+  "oath": {
+    "counts": {
+      "VERIFIED": 59,
+      "ABSTAIN": 39,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [],
+  "refusals": [],
+  "seal_sha256": "58ec57d767d0593d389d96d3cfcdaedb4da9170b3e4b0f9c725cb6004910b596"
+}
