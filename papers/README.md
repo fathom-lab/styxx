@@ -6,7 +6,9 @@ same in all of them: **a preregistration frozen in git before the apparatus exis
 it), OATH certification of every number against committed receipts, and negatives published at
 the same volume as positives.
 
-**Start here:** [`autopilot/CYCLE_LOG.jsonl`](autopilot/CYCLE_LOG.jsonl) is every cycle's
+**Start here:** [`LEDGER.md`](LEDGER.md) — the count of every cycle, every refusal and every
+INVALID verdict, generated from the receipts themselves and kept honest by a test that rebuilds
+it. Then [`autopilot/CYCLE_LOG.jsonl`](autopilot/CYCLE_LOG.jsonl) is every cycle's
 verdict in one file, newest last — the single most current surface in this repo.
 [`PROGRAM_BACKLOG.md`](PROGRAM_BACKLOG.md) holds the standing queue and tier tables.
 
