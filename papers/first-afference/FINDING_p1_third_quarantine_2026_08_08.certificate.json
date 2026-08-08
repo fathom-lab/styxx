@@ -2,16 +2,16 @@
   "oath": "styxx OATH v0 (numeric-claim certificate)",
   "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
   "document": "FINDING_p1_third_quarantine_2026_08_08.md",
-  "document_sha256": "ecf86c8106d09cba1d0f669cf42308655bf1295b23855366817f0d71748aa71e",
+  "document_sha256": "ebb10e11f5f7242120c4a6cd4bf7070dab09d1e41388f3ba7b87ecdb22132050",
   "receipts_sha256": {
     "p1_redteam_audit.json": "942985c3f270f9901bae478f8de609dcc1f8dd5e45dbbc7c9451ef345402cc42",
     "p1_result.json": "805d88f828f75b9ee08fb598759069d78d626942f625ac5289f0b8efde519831",
-    "sense_collector_audit.json": "cf0b40591d25bd81ea82e98f0d288e634ff75e14dc2b60cc692c4dc4ec41619f"
+    "sense_collector_audit.json": "d8e9f5b1e787294bf23a93b0471b2cbd6f2899ef0b83a0a98ee0bd946d44a347"
   },
   "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
   "counts": {
-    "VERIFIED": 59,
-    "ABSTAIN": 39,
+    "VERIFIED": 63,
+    "ABSTAIN": 40,
     "UNGROUNDED": 0
   },
   "verdict": "OATH-HELD",
@@ -172,6 +172,10 @@
     {
       "line": 133,
       "token": "0.80"
+    },
+    {
+      "line": 169,
+      "token": "92"
     }
   ],
   "ledger": [
@@ -1094,7 +1098,52 @@
       "receipt_ref": "p1_redteam_audit.json:measured_by_red_team.c5_strongest_pair_r"
     },
     {
+      "line": 168,
+      "token": "52",
+      "value": 52.0,
+      "decimals": 0,
+      "context": "**52 nominal paired rows contain four distinct agent payloads**, one repeated 30 times. That is",
+      "status": "VERIFIED",
+      "receipt_ref": "sense_collector_audit.json:n_paired_rows_nominal"
+    },
+    {
+      "line": 168,
+      "token": "30",
+      "value": 30.0,
+      "decimals": 0,
+      "context": "**52 nominal paired rows contain four distinct agent payloads**, one repeated 30 times. That is",
+      "status": "VERIFIED",
+      "receipt_ref": "sense_collector_audit.json:max_repeats_of_one_payload"
+    },
+    {
       "line": 169,
+      "token": "92",
+      "value": 92.0,
+      "decimals": 0,
+      "context": "92% duplicates, nominal n inflated 13\u00d7 over an effective n of at most 4. The collector samples",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 169,
+      "token": "13",
+      "value": 13.0,
+      "decimals": 0,
+      "context": "92% duplicates, nominal n inflated 13\u00d7 over an effective n of at most 4. The collector samples",
+      "status": "VERIFIED",
+      "receipt_ref": "sense_collector_audit.json:n_inflation_factor"
+    },
+    {
+      "line": 170,
+      "token": "11.29",
+      "value": 11.29,
+      "decimals": 2,
+      "context": "11.29\u00d7 faster than the agent writes, and the staleness window carries one agent row forward into",
+      "status": "VERIFIED",
+      "receipt_ref": "sense_collector_audit.json:oversampling_ratio"
+    },
+    {
+      "line": 197,
       "token": "1.0",
       "value": 1.0,
       "decimals": 1,

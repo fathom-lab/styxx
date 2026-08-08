@@ -160,6 +160,34 @@ the kind of work that must not be done by the person who wants a particular answ
 C5's effective-n range should be read as implementation-dependent. `FINDING_c5` is annotated
 with a pointer to this section.
 
+## A third defect, found in the live harness while auditing
+
+The same session audited the deployed sense collector, and it is contaminated in exactly the way
+this lab wrote a paper about.
+
+**52 nominal paired rows contain four distinct agent payloads**, one repeated 30 times. That is
+92% duplicates, nominal n inflated 13× over an effective n of at most 4. The collector samples
+11.29× faster than the agent writes, and the staleness window carries one agent row forward into
+several samples — so the pair count is a property of the recorder's cadence, not of the agent.
+And it was running as **two duplicate processes**, started two hours apart on 2026-08-06, both
+appending to one store, each carrying the same stale row forward independently. The duplication
+is multiplicative with the staleness defect, not additive.
+
+**The obvious fix is forbidden.** Widening the staleness window raises the nominal pair count
+while lowering the effective one — it would make the harness look healthier while making the
+contamination worse. That is the failure class of
+`SYNTHESIS_recorder_contamination_2026_08_06.md` exactly.
+
+Applied instead: consolidated to one process, and agent rows are now deduplicated by payload so a
+carried-forward row records as a **gap**. This cannot inflate n, because it cannot emit more rows
+than the agent wrote. It is deliberately conservative in the other direction — a genuine repeat
+is dropped — because a lost observation costs power while a fabricated one costs the truth.
+
+The store now spans two regimes and the cutover timestamp is committed in
+`sense_collector_audit.json`. **Pre-cutover rows must not be pooled with post-cutover rows.** No
+R1-v2 analysis has been run on either, which is the only reason this is a caught defect rather
+than a retraction.
+
 ## The general lesson, stated as narrowly as the evidence allows
 
 Three instruments, three quarantines, one shared mechanism: **an author's own battery cannot
