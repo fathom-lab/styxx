@@ -1,0 +1,321 @@
+{
+  "prereg": "PREREG_p1_power_refusal_2026_08_08.md",
+  "smoke": false,
+  "seed": 11081,
+  "historical_cases": [
+    {
+      "case": "b48-G2",
+      "source": "papers/disjoint-worlds/b48_result.json",
+      "defect": "single-draw bar read as the max of 45 draws",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar 0.0208 falls between attainable values spaced 0.010417 apart; the effective bar is not the one written; bar concedes 1.0000 across the max of 45 draws against alpha=0.05; a single-draw bar was written where an order statistic is read (corrected bar 0.0); no alternative distribution supplied, so power is unknown; a bar that nothing can clear controls alpha perfectly and is still useless"
+    },
+    {
+      "case": "C5-G1",
+      "source": "papers/first-afference/c5_result.json",
+      "defect": "80% of pairs significant at effective n between 6.9 and 45.8",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__power is 0.0000 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 0.029378)"
+    },
+    {
+      "case": "b37-G2",
+      "source": "papers/disjoint-worlds/b37_result.json",
+      "defect": "bar demanded an effect the apparatus cannot produce",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__power is 0.0000 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 0.084746)"
+    }
+  ],
+  "synthetic_cases": [
+    {
+      "case": "below_null_median_0",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes a false-positive rate of 0.5907 against alpha=0.05"
+    },
+    {
+      "case": "clean_separation_0",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "below_null_median_1",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes a false-positive rate of 0.5740 against alpha=0.05"
+    },
+    {
+      "case": "clean_separation_1",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "below_null_median_2",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes a false-positive rate of 0.5693 against alpha=0.05"
+    },
+    {
+      "case": "clean_separation_2",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "above_bounded_ceiling_0",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar 1.4 exceeds the attainable ceiling 1.0 for a proportion over 50 trials; no effect size can reach it; power is 0.0000 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 0.14)"
+    },
+    {
+      "case": "bounded_attainable_0",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "above_bounded_ceiling_1",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar 1.4 exceeds the attainable ceiling 1.0 for a proportion over 50 trials; no effect size can reach it; power is 0.0000 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 0.14)"
+    },
+    {
+      "case": "bounded_attainable_1",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "above_bounded_ceiling_2",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar 1.4 exceeds the attainable ceiling 1.0 for a proportion over 50 trials; no effect size can reach it; power is 0.0000 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 0.14)"
+    },
+    {
+      "case": "bounded_attainable_2",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "order_stat_naive_n10_0",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes 0.8251 across the max of 10 draws against alpha=0.05; a single-draw bar was written where an order statistic is read (corrected bar 0.052083)"
+    },
+    {
+      "case": "order_stat_corrected_n10_0",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "order_stat_naive_n45_1",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes 0.9996 across the max of 45 draws against alpha=0.05; a single-draw bar was written where an order statistic is read (corrected bar 0.052083)"
+    },
+    {
+      "case": "order_stat_corrected_n45_1",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "order_stat_naive_n200_2",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__bar concedes 1.0000 across the max of 200 draws against alpha=0.05; a single-draw bar was written where an order statistic is read (corrected bar 0.052083)"
+    },
+    {
+      "case": "order_stat_corrected_n200_2",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "underpowered_0",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__power is 0.0187 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 1.617848)"
+    },
+    {
+      "case": "powered_0",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "underpowered_1",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__power is 0.0160 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 1.672678)"
+    },
+    {
+      "case": "powered_1",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "underpowered_2",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__power is 0.0233 against a target of 0.8; the apparatus clears this bar too rarely for the gate to be informative (most permissive alpha-controlling bar is 1.627613)"
+    },
+    {
+      "case": "powered_2",
+      "truth_unreachable": false,
+      "flagged": false,
+      "verdict": "REACHABLE"
+    },
+    {
+      "case": "no_alternative_0",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__no alternative distribution supplied, so power is unknown; a bar that nothing can clear controls alpha perfectly and is still useless"
+    },
+    {
+      "case": "no_alternative_1",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__no alternative distribution supplied, so power is unknown; a bar that nothing can clear controls alpha perfectly and is still useless"
+    },
+    {
+      "case": "no_alternative_2",
+      "truth_unreachable": true,
+      "flagged": true,
+      "verdict": "UNREACHABLE__no alternative distribution supplied, so power is unknown; a bar that nothing can clear controls alpha perfectly and is still useless"
+    }
+  ],
+  "degenerate_cases": [
+    {
+      "case": "too_few_draws",
+      "refused": true,
+      "verdict": "REFUSED: null has 3 draws; need at least 20 to judge a bar"
+    },
+    {
+      "case": "zero_variance",
+      "refused": true,
+      "verdict": "REFUSED: null has zero variance; no bar can be judged against a point mass"
+    },
+    {
+      "case": "nan_in_null",
+      "refused": true,
+      "verdict": "REFUSED: null contains non-finite values; refusing to estimate a tail from it"
+    },
+    {
+      "case": "inf_in_null",
+      "refused": true,
+      "verdict": "REFUSED: null contains non-finite values; refusing to estimate a tail from it"
+    },
+    {
+      "case": "empty_null",
+      "refused": true,
+      "verdict": "REFUSED: null is empty"
+    },
+    {
+      "case": "nan_bar",
+      "refused": true,
+      "verdict": "REFUSED: bar must be a finite real number, got nan"
+    },
+    {
+      "case": "bool_bar",
+      "refused": true,
+      "verdict": "REFUSED: bar must be a finite real number, got True"
+    },
+    {
+      "case": "bad_op",
+      "refused": true,
+      "verdict": "REFUSED: op must be one of ['<', '<=', '>', '>='], got '~='"
+    },
+    {
+      "case": "alpha_zero",
+      "refused": true,
+      "verdict": "REFUSED: alpha and target_power must lie strictly in (0,1)"
+    },
+    {
+      "case": "alpha_one",
+      "refused": true,
+      "verdict": "REFUSED: alpha and target_power must lie strictly in (0,1)"
+    },
+    {
+      "case": "too_few_alt",
+      "refused": true,
+      "verdict": "REFUSED: alt has 2 draws; need at least 20"
+    },
+    {
+      "case": "nan_in_alt",
+      "refused": true,
+      "verdict": "REFUSED: alt contains non-finite values; refusing to estimate a tail from it"
+    }
+  ],
+  "n_cases_scored": 30,
+  "n_synthetic": 27,
+  "n_synthetic_unreachable": 15,
+  "n_synthetic_reachable": 12,
+  "historical_caught": 3,
+  "historical_n": 3,
+  "synthetic_balanced_accuracy": 1.0,
+  "synthetic_sensitivity": 1.0,
+  "synthetic_specificity": 1.0,
+  "constant_all_unreachable_balanced_accuracy": 0.5,
+  "constant_all_reachable_balanced_accuracy": 0.5,
+  "best_constant_balanced_accuracy": 0.5,
+  "synthetic_balanced_accuracy_minus_best_constant": 0.5,
+  "degenerate_refusal_rate": 1.0,
+  "n_degenerate": 12,
+  "disclosure": "historical cases are IN-SAMPLE: the module was written by someone who knew all three. They are a sanity check on the implementation and carry no evidential weight about generalisation.",
+  "effective_n_demo": {
+    "nominal": 300,
+    "rho1": 0.7868,
+    "integrated_autocorrelation": 16.533,
+    "lags_summed": 49,
+    "effective": 18.1455
+  },
+  "metric_check": {
+    "G0_coverage": {
+      "path": "n_cases_scored",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G1_historical_in_sample": {
+      "path": "historical_caught",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G2_synthetic_balanced_accuracy": {
+      "path": "synthetic_balanced_accuracy",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G3_beats_constant": {
+      "path": "synthetic_balanced_accuracy_minus_best_constant",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G4_refuses_degenerate": {
+      "path": "degenerate_refusal_rate",
+      "present": true,
+      "usable": true,
+      "note": null
+    }
+  },
+  "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+  "gates": {
+    "G0_coverage": true,
+    "G1_historical_in_sample": true,
+    "G2_synthetic_balanced_accuracy": true,
+    "G3_beats_constant": true,
+    "G4_refuses_degenerate": true
+  },
+  "prereg_commit": "5d401d28d0b4e7023cb85e588b981e5081b2f35a"
+}
