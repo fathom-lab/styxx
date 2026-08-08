@@ -10,14 +10,14 @@ ratio is visible without reading 158 cycle entries.
 
 | | |
 |---|---|
-| cycles logged | **161** |
-| preregistrations frozen | **348** (36 carrying a machine-scored gates block) |
-| OATH certificates | **171** |
-| trust-stack seals | **32** |
-| cycles ending in a refusal, null, retraction or INVALID | **61** of 161 |
+| cycles logged | **162** |
+| preregistrations frozen | **349** (37 carrying a machine-scored gates block) |
+| OATH certificates | **172** |
+| trust-stack seals | **33** |
+| cycles ending in a refusal, null, retraction or INVALID | **62** of 162 |
 | verdicts that were literally `INVALID__*` — the machinery refusing its own run | **16** |
-| gates declaring a power basis | 5 of 36 gated preregs |
-| — of those frozen *since* the field existed | **4 of 4** |
+| gates declaring a power basis | 6 of 37 gated preregs |
+| — of those frozen *since* the field existed | **5 of 5** |
 
 Both power-basis rows are reported because either alone misleads. A frozen
 preregistration is never edited, so the preregs written before `power_basis` existed can
@@ -25,9 +25,9 @@ never acquire one and their denominator can never move; quoting only the first r
 understates the discipline, and quoting only the second hides how much of the corpus
 predates it.
 
-Certificate verdicts: `OATH-HELD` × 171
+Certificate verdicts: `OATH-HELD` × 172
 
-Seal verdicts: `SEALED` × 31, `REFUSED` × 1
+Seal verdicts: `SEALED` × 32, `REFUSED` × 1
 
 ## Every run the machinery refused
 

@@ -3,6 +3,19 @@
 Fathom Lab · 2026-08-07 · prereg: `PREREG_c5_roi_2026_08_07.md` (frozen before the ROI data was
 downloaded) · receipt: `c5_result.json` · scored by `styxx.protocol`.
 
+> **AMENDED 2026-08-08 — the effective-n range below is estimator-dependent.** A bake-off of five
+> estimators against analytic AR(1) truth (`FINDING_e1_not_estimable_2026_08_08.md`) found that
+> **every one of them overstates the effective sample size at every autocorrelation tested**, and
+> that no eligible candidate reached 20% median error. The committed range 6.9 to 45.8 also has
+> **unidentifiable provenance** — `c5_effective_df_addendum.json` has no generator script and the
+> closest of five standard methods differs from it by up to 7.4805.
+>
+> **This finding's verdict is unchanged and remains a null.** Under the published threshold and
+> under a bias-corrected one, the strongest pair still fails to reach significance. Under the raw
+> winning estimator it would clear. A conclusion that flips across three defensible estimators
+> should not have been stated to four decimal places, and the sentence below about the strongest
+> pair sitting "essentially on" the threshold should be read as exactly that and no more precise.
+
 **Machine verdict: `FRAMEWORK_WRONG__blind_even_on_the_right_tissue`.** The verdict string stands
 as computed. **The interpretation below contradicts its name, and the contradiction is the
 finding.**

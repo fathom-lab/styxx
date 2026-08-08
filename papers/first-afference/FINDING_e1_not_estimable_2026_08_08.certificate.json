@@ -1,0 +1,628 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_e1_not_estimable_2026_08_08.md",
+  "document_sha256": "e5312b199f17326f32f52a749ff80dc930d1f9027611067d7c22a596bd1de9a1",
+  "receipts_sha256": {
+    "e1_result.json": "d5461605fb998ccfe10da1e18e3eed994975bae9ab5bb8d0a10c8be3e160aa23",
+    "c5_effective_df_addendum.json": "25fa8f73b339438749e89eee325648d665eb912c0778ae28f31b30217c17d94f"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 54,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 29,
+      "token": "1"
+    },
+    {
+      "line": 29,
+      "token": "300"
+    },
+    {
+      "line": 31,
+      "token": "1"
+    },
+    {
+      "line": 42,
+      "token": "0.95"
+    },
+    {
+      "line": 91,
+      "token": "1"
+    },
+    {
+      "line": 92,
+      "token": "1"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "0.1436",
+      "value": 0.1436,
+      "decimals": 4,
+      "context": "0.20. It resolves to **0.1436** and passes. But that minimum belongs to `ar1_closed_form`, which",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:pooled_median_abs_rel_error.ar1_closed_form"
+    },
+    {
+      "line": 14,
+      "token": "0.2554",
+      "value": 0.2554,
+      "decimals": 4,
+      "context": "pooled median error of **0.2554** \u2014 it would have failed G1 outright. Written over *eligible*",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:pooled_median_abs_rel_error.truncate_first_nonpositive_pearson"
+    },
+    {
+      "line": 29,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "Five estimators against analytic AR(1) truth, 400 replicates per cell, n=300 to match C5.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 29,
+      "token": "400",
+      "value": 400.0,
+      "decimals": 0,
+      "context": "Five estimators against analytic AR(1) truth, 400 replicates per cell, n=300 to match C5.",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:n_replicates"
+    },
+    {
+      "line": 29,
+      "token": "300",
+      "value": 300.0,
+      "decimals": 0,
+      "context": "Five estimators against analytic AR(1) truth, 400 replicates per cell, n=300 to match C5.",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 31,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "0.50",
+      "value": 0.5,
+      "decimals": 2,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.rho"
+    },
+    {
+      "line": 33,
+      "token": "100.00",
+      "value": 100.0,
+      "decimals": 2,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.analytic_effective_n"
+    },
+    {
+      "line": 33,
+      "token": "101.5",
+      "value": 101.5,
+      "decimals": 1,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 33,
+      "token": "101.1",
+      "value": 101.1,
+      "decimals": 1,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 33,
+      "token": "102.2",
+      "value": 102.2,
+      "decimals": 1,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.estimators.ar1_closed_form.median"
+    },
+    {
+      "line": 33,
+      "token": "115.1",
+      "value": 115.1,
+      "decimals": 1,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.estimators.bartlett_sqrt_n.median"
+    },
+    {
+      "line": 33,
+      "token": "100.2",
+      "value": 100.2,
+      "decimals": 1,
+      "context": "| 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.50 | 100.00 | 101.5 | 101.1 | 102.2 | 115.1 | 100.2 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.5.estimators.initial_positive_sequence.median"
+    },
+    {
+      "line": 34,
+      "token": "0.70",
+      "value": 0.7,
+      "decimals": 2,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.rho"
+    },
+    {
+      "line": 34,
+      "token": "52.94",
+      "value": 52.94,
+      "decimals": 2,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.analytic_effective_n"
+    },
+    {
+      "line": 34,
+      "token": "56.1",
+      "value": 56.1,
+      "decimals": 1,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 34,
+      "token": "55.8",
+      "value": 55.8,
+      "decimals": 1,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 34,
+      "token": "55.0",
+      "value": 55.0,
+      "decimals": 1,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.estimators.ar1_closed_form.median"
+    },
+    {
+      "line": 34,
+      "token": "68.0",
+      "value": 68.0,
+      "decimals": 1,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.estimators.bartlett_sqrt_n.median"
+    },
+    {
+      "line": 34,
+      "token": "55.7",
+      "value": 55.7,
+      "decimals": 1,
+      "context": "| 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.70 | 52.94 | 56.1 | 55.8 | 55.0 | 68.0 | 55.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.7.estimators.initial_positive_sequence.median"
+    },
+    {
+      "line": 35,
+      "token": "0.80",
+      "value": 0.8,
+      "decimals": 2,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.rho"
+    },
+    {
+      "line": 35,
+      "token": "33.33",
+      "value": 33.33,
+      "decimals": 2,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.analytic_effective_n"
+    },
+    {
+      "line": 35,
+      "token": "38.0",
+      "value": 38.0,
+      "decimals": 1,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 35,
+      "token": "37.6",
+      "value": 37.6,
+      "decimals": 1,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 35,
+      "token": "35.8",
+      "value": 35.8,
+      "decimals": 1,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.estimators.ar1_closed_form.median"
+    },
+    {
+      "line": 35,
+      "token": "49.2",
+      "value": 49.2,
+      "decimals": 1,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.estimators.bartlett_sqrt_n.median"
+    },
+    {
+      "line": 35,
+      "token": "38.0",
+      "value": 38.0,
+      "decimals": 1,
+      "context": "| 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.80 | 33.33 | 38.0 | 37.6 | 35.8 | 49.2 | 38.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.8.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 36,
+      "token": "0.90",
+      "value": 0.9,
+      "decimals": 2,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.rho"
+    },
+    {
+      "line": 36,
+      "token": "15.79",
+      "value": 15.79,
+      "decimals": 2,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.analytic_effective_n"
+    },
+    {
+      "line": 36,
+      "token": "20.1",
+      "value": 20.1,
+      "decimals": 1,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 36,
+      "token": "19.7",
+      "value": 19.7,
+      "decimals": 1,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 36,
+      "token": "17.8",
+      "value": 17.8,
+      "decimals": 1,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.estimators.ar1_closed_form.median"
+    },
+    {
+      "line": 36,
+      "token": "30.9",
+      "value": 30.9,
+      "decimals": 1,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.estimators.bartlett_sqrt_n.median"
+    },
+    {
+      "line": 36,
+      "token": "20.0",
+      "value": 20.0,
+      "decimals": 1,
+      "context": "| 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.90 | 15.79 | 20.1 | 19.7 | 17.8 | 30.9 | 20.0 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.9.estimators.initial_positive_sequence.median"
+    },
+    {
+      "line": 37,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.rho"
+    },
+    {
+      "line": 37,
+      "token": "7.69",
+      "value": 7.69,
+      "decimals": 2,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.analytic_effective_n"
+    },
+    {
+      "line": 37,
+      "token": "11.6",
+      "value": 11.6,
+      "decimals": 1,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.truncate_first_nonpositive_biased.median"
+    },
+    {
+      "line": 37,
+      "token": "11.1",
+      "value": 11.1,
+      "decimals": 1,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 37,
+      "token": "9.9",
+      "value": 9.9,
+      "decimals": 1,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.ar1_closed_form.median"
+    },
+    {
+      "line": 37,
+      "token": "24.3",
+      "value": 24.3,
+      "decimals": 1,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.bartlett_sqrt_n.median"
+    },
+    {
+      "line": 37,
+      "token": "11.7",
+      "value": 11.7,
+      "decimals": 1,
+      "context": "| 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "binding_context": "| \u03c1 | analytic n_eff | truncate (biased) | truncate (Pearson) | AR(1) closed form | Bartlett \u221an | initial positive seq | | 0.95 | 7.69 | 11.6 | 11.1 | 9.9 | 24.3 | 11.7 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.initial_positive_sequence.median"
+    },
+    {
+      "line": 42,
+      "token": "0.95",
+      "value": 0.95,
+      "decimals": 2,
+      "context": "grows exactly where BOLD lives. At \u03c1=0.95 the best eligible estimator reports 11.1 against a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 42,
+      "token": "11.1",
+      "value": 11.1,
+      "decimals": 1,
+      "context": "grows exactly where BOLD lives. At \u03c1=0.95 the best eligible estimator reports 11.1 against a",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:grid.rho_0.95.estimators.truncate_first_nonpositive_pearson.median"
+    },
+    {
+      "line": 45,
+      "token": "0.1436",
+      "value": 0.1436,
+      "decimals": 4,
+      "context": "`ar1_closed_form` scored best on accuracy (0.1436) and was disqualified anyway: on a process with",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:pooled_median_abs_rel_error.ar1_closed_form"
+    },
+    {
+      "line": 52,
+      "token": "0.0004",
+      "value": 0.0004,
+      "decimals": 4,
+      "context": "strongest pair sits within 0.0004 of it. Three defensible numbers:",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_strongest_pair_margin_below_published_threshold"
+    },
+    {
+      "line": 54,
+      "token": "0.3742",
+      "value": 0.3742,
+      "decimals": 4,
+      "context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_strongest_pair_r"
+    },
+    {
+      "line": 56,
+      "token": "28.5",
+      "value": 28.5,
+      "decimals": 1,
+      "context": "| the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "c5_effective_df_addendum.json:per_subject.sub-001.effective_n_bartlett"
+    },
+    {
+      "line": 56,
+      "token": "0.3746",
+      "value": 0.3746,
+      "decimals": 4,
+      "context": "| the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_published_median_threshold_r"
+    },
+    {
+      "line": 56,
+      "token": "0.0004",
+      "value": 0.0004,
+      "decimals": 4,
+      "context": "| the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the committed C5 addendum | 28.5 | 0.3746 | **no** \u2014 by 0.0004 |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_strongest_pair_margin_below_published_threshold"
+    },
+    {
+      "line": 57,
+      "token": "30.4799",
+      "value": 30.4799,
+      "decimals": 4,
+      "context": "| the winning estimator, raw | 30.4799 | 0.3581 | **yes** |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the winning estimator, raw | 30.4799 | 0.3581 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_recomputed_median"
+    },
+    {
+      "line": 57,
+      "token": "0.3581",
+      "value": 0.3581,
+      "decimals": 4,
+      "context": "| the winning estimator, raw | 30.4799 | 0.3581 | **yes** |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the winning estimator, raw | 30.4799 | 0.3581 | **yes** |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_recomputed_threshold_r"
+    },
+    {
+      "line": 58,
+      "token": "24.279",
+      "value": 24.279,
+      "decimals": 3,
+      "context": "| the winner corrected for its own measured bias | 24.279 | 0.4020 | **no** |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the winner corrected for its own measured bias | 24.279 | 0.4020 | **no** |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:bias_corrected.bias_corrected_median_effective_n"
+    },
+    {
+      "line": 58,
+      "token": "0.4020",
+      "value": 0.402,
+      "decimals": 4,
+      "context": "| the winner corrected for its own measured bias | 24.279 | 0.4020 | **no** |",
+      "binding_context": "| basis | median n_eff | threshold r | does the strongest pair (0.3742) clear it? | | the winner corrected for its own measured bias | 24.279 | 0.4020 | **no** |",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:bias_corrected.bias_corrected_threshold_r"
+    },
+    {
+      "line": 68,
+      "token": "0.3742",
+      "value": 0.3742,
+      "decimals": 4,
+      "context": "sentence *\"The strongest pair, at 0.3742, sits essentially on it\"* is now known to be",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_strongest_pair_r"
+    },
+    {
+      "line": 76,
+      "token": "7.4805",
+      "value": 7.4805,
+      "decimals": 4,
+      "context": "**7.4805** \u2014 far too large to call a match. The committed range 6.9 to 45.8 therefore has",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:addendum_identification_detail.initial_positive_sequence.max_abs_diff_vs_addendum"
+    },
+    {
+      "line": 76,
+      "token": "6.9",
+      "value": 6.9,
+      "decimals": 1,
+      "context": "**7.4805** \u2014 far too large to call a match. The committed range 6.9 to 45.8 therefore has",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_published_min"
+    },
+    {
+      "line": 76,
+      "token": "45.8",
+      "value": 45.8,
+      "decimals": 1,
+      "context": "**7.4805** \u2014 far too large to call a match. The committed range 6.9 to 45.8 therefore has",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:c5_published_max"
+    },
+    {
+      "line": 91,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "What this does **not** license: any claim that a particular estimator is correct for BOLD. AR(1)",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 92,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "agreement disqualifies; it cannot establish correctness on a process that is not AR(1). Every",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 93,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "number above is a statement about estimators on AR(1) and about the spread they produce on real",
+      "status": "VERIFIED",
+      "receipt_ref": "e1_result.json:winner_flags_the_silent_probe"
+    }
+  ]
+}

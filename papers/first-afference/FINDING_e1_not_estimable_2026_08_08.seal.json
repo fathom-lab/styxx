@@ -1,0 +1,31 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_e1_not_estimable_2026_08_08.md",
+  "document_sha256": "e5312b199f17326f32f52a749ff80dc930d1f9027611067d7c22a596bd1de9a1",
+  "oath": {
+    "counts": {
+      "VERIFIED": 54,
+      "ABSTAIN": 6,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+      "result": "e1_result.json",
+      "frozen_verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+      "gates": {
+        "G0_grid_complete": true,
+        "G1_a_candidate_is_usable": true,
+        "G2_winner_not_silently_blind": true,
+        "G3_c5_range_recomputed": true
+      },
+      "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9",
+      "prereg_commit": "af2d76384d7b8db925d0ca91c30dbdcf9fa30f63"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "8ae8a7172bf5324b5fa1e03bcad65c20116e374771f99d0d80055e52869da9fa"
+}

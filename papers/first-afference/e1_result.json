@@ -1,0 +1,328 @@
+{
+  "prereg": "PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+  "smoke": false,
+  "seed": 5150,
+  "n_replicates": 400,
+  "n_cells_scored": 5,
+  "grid": {
+    "rho_0.5": {
+      "rho": 0.5,
+      "analytic_effective_n": 100.0,
+      "estimators": {
+        "truncate_first_nonpositive_biased": {
+          "median": 101.5155,
+          "median_rel_error": 0.1583,
+          "p5": 63.8228,
+          "p95": 137.6452
+        },
+        "truncate_first_nonpositive_pearson": {
+          "median": 101.1077,
+          "median_rel_error": 0.1591,
+          "p5": 63.5568,
+          "p95": 137.2654
+        },
+        "ar1_closed_form": {
+          "median": 102.2096,
+          "median_rel_error": 0.0862,
+          "p5": 81.5655,
+          "p95": 127.0326
+        },
+        "bartlett_sqrt_n": {
+          "median": 115.0699,
+          "median_rel_error": 0.1838,
+          "p5": 82.8838,
+          "p95": 187.709
+        },
+        "initial_positive_sequence": {
+          "median": 100.2399,
+          "median_rel_error": 0.1636,
+          "p5": 62.006,
+          "p95": 137.6081
+        }
+      }
+    },
+    "rho_0.7": {
+      "rho": 0.7,
+      "analytic_effective_n": 52.9412,
+      "estimators": {
+        "truncate_first_nonpositive_biased": {
+          "median": 56.0558,
+          "median_rel_error": 0.2011,
+          "p5": 32.951,
+          "p95": 79.8609
+        },
+        "truncate_first_nonpositive_pearson": {
+          "median": 55.8077,
+          "median_rel_error": 0.1996,
+          "p5": 32.5808,
+          "p95": 79.6742
+        },
+        "ar1_closed_form": {
+          "median": 55.0267,
+          "median_rel_error": 0.1054,
+          "p5": 42.7339,
+          "p95": 71.036
+        },
+        "bartlett_sqrt_n": {
+          "median": 68.0235,
+          "median_rel_error": 0.2897,
+          "p5": 49.0343,
+          "p95": 98.2239
+        },
+        "initial_positive_sequence": {
+          "median": 55.7468,
+          "median_rel_error": 0.2047,
+          "p5": 31.4549,
+          "p95": 79.3962
+        }
+      }
+    },
+    "rho_0.8": {
+      "rho": 0.8,
+      "analytic_effective_n": 33.3333,
+      "estimators": {
+        "truncate_first_nonpositive_biased": {
+          "median": 37.9835,
+          "median_rel_error": 0.2653,
+          "p5": 19.336,
+          "p95": 56.9589
+        },
+        "truncate_first_nonpositive_pearson": {
+          "median": 37.6499,
+          "median_rel_error": 0.2655,
+          "p5": 18.7153,
+          "p95": 56.3296
+        },
+        "ar1_closed_form": {
+          "median": 35.8145,
+          "median_rel_error": 0.1427,
+          "p5": 26.5953,
+          "p95": 48.2375
+        },
+        "bartlett_sqrt_n": {
+          "median": 49.1694,
+          "median_rel_error": 0.4751,
+          "p5": 36.3714,
+          "p95": 69.8045
+        },
+        "initial_positive_sequence": {
+          "median": 38.0119,
+          "median_rel_error": 0.2664,
+          "p5": 19.336,
+          "p95": 56.5696
+        }
+      }
+    },
+    "rho_0.9": {
+      "rho": 0.9,
+      "analytic_effective_n": 15.7895,
+      "estimators": {
+        "truncate_first_nonpositive_biased": {
+          "median": 20.0693,
+          "median_rel_error": 0.3659,
+          "p5": 9.3888,
+          "p95": 34.9236
+        },
+        "truncate_first_nonpositive_pearson": {
+          "median": 19.7415,
+          "median_rel_error": 0.3574,
+          "p5": 8.9352,
+          "p95": 34.577
+        },
+        "ar1_closed_form": {
+          "median": 17.8494,
+          "median_rel_error": 0.2,
+          "p5": 11.8642,
+          "p95": 28.0565
+        },
+        "bartlett_sqrt_n": {
+          "median": 30.8809,
+          "median_rel_error": 0.9558,
+          "p5": 25.2624,
+          "p95": 43.4607
+        },
+        "initial_positive_sequence": {
+          "median": 20.0237,
+          "median_rel_error": 0.3639,
+          "p5": 9.393,
+          "p95": 34.9287
+        }
+      }
+    },
+    "rho_0.95": {
+      "rho": 0.95,
+      "analytic_effective_n": 7.6923,
+      "estimators": {
+        "truncate_first_nonpositive_biased": {
+          "median": 11.6488,
+          "median_rel_error": 0.5143,
+          "p5": 6.0363,
+          "p95": 20.896
+        },
+        "truncate_first_nonpositive_pearson": {
+          "median": 11.0954,
+          "median_rel_error": 0.4669,
+          "p5": 5.2479,
+          "p95": 20.2834
+        },
+        "ar1_closed_form": {
+          "median": 9.8627,
+          "median_rel_error": 0.297,
+          "p5": 6.1366,
+          "p95": 16.0857
+        },
+        "bartlett_sqrt_n": {
+          "median": 24.268,
+          "median_rel_error": 2.1548,
+          "p5": 20.696,
+          "p95": 30.7521
+        },
+        "initial_positive_sequence": {
+          "median": 11.6512,
+          "median_rel_error": 0.5147,
+          "p5": 6.0365,
+          "p95": 20.896
+        }
+      }
+    }
+  },
+  "pooled_median_abs_rel_error": {
+    "truncate_first_nonpositive_biased": 0.2583,
+    "truncate_first_nonpositive_pearson": 0.2554,
+    "ar1_closed_form": 0.1436,
+    "bartlett_sqrt_n": 0.619,
+    "initial_positive_sequence": 0.2612
+  },
+  "best_median_abs_rel_error": 0.1436,
+  "silent_probe": {
+    "truncate_first_nonpositive_biased": {
+      "effective": 162.15,
+      "nominal": 5000,
+      "flags": true
+    },
+    "truncate_first_nonpositive_pearson": {
+      "effective": 161.47,
+      "nominal": 5000,
+      "flags": true
+    },
+    "ar1_closed_form": {
+      "effective": 4674.2,
+      "nominal": 5000,
+      "flags": false
+    },
+    "bartlett_sqrt_n": {
+      "effective": 238.63,
+      "nominal": 5000,
+      "flags": true
+    },
+    "initial_positive_sequence": {
+      "effective": 115.3,
+      "nominal": 5000,
+      "flags": true
+    }
+  },
+  "disqualified_by_silent_probe": [
+    "ar1_closed_form"
+  ],
+  "winner": "truncate_first_nonpositive_pearson",
+  "winner_pooled_median_abs_rel_error": 0.2554,
+  "winner_flags_the_silent_probe": 1.0,
+  "addendum_method_identified_as": "initial_positive_sequence",
+  "addendum_identification_detail": {
+    "truncate_first_nonpositive_biased": {
+      "max_abs_diff_vs_addendum": 8.0364,
+      "mean_abs_diff_vs_addendum": 4.0046
+    },
+    "truncate_first_nonpositive_pearson": {
+      "max_abs_diff_vs_addendum": 8.924,
+      "mean_abs_diff_vs_addendum": 3.5668
+    },
+    "ar1_closed_form": {
+      "max_abs_diff_vs_addendum": 56.3977,
+      "mean_abs_diff_vs_addendum": 19.8912
+    },
+    "bartlett_sqrt_n": {
+      "max_abs_diff_vs_addendum": 33.6487,
+      "mean_abs_diff_vs_addendum": 21.5371
+    },
+    "initial_positive_sequence": {
+      "max_abs_diff_vs_addendum": 7.4805,
+      "mean_abs_diff_vs_addendum": 3.9309
+    }
+  },
+  "n_c5_subjects_recomputed": 7,
+  "c5_recomputed_effective_n": {
+    "sub-001": 30.4799,
+    "sub-002": 46.2677,
+    "sub-003": 49.8861,
+    "sub-004": 12.5942,
+    "sub-005": 3.8224,
+    "sub-006": 14.876,
+    "sub-008": 33.2733
+  },
+  "c5_recomputed_min": 3.8224,
+  "c5_recomputed_max": 49.8861,
+  "c5_recomputed_median": 30.4799,
+  "c5_published_min": 6.9,
+  "c5_published_max": 45.8,
+  "c5_published_median_threshold_r": 0.3746,
+  "c5_recomputed_threshold_r": 0.3581,
+  "c5_strongest_pair_r": 0.3742,
+  "c5_strongest_pair_clears_published_threshold": false,
+  "c5_strongest_pair_clears_recomputed_threshold": true,
+  "c5_conclusion_sensitive_to_estimator": true,
+  "interpretation_limit": "AR(1) agreement disqualifies; it does not establish correctness on BOLD, which is not AR(1). The winner is the least disqualified candidate, not a correct one.",
+  "metric_check": {
+    "G0_grid_complete": {
+      "path": "n_cells_scored",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G1_a_candidate_is_usable": {
+      "path": "best_median_abs_rel_error",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G2_winner_not_silently_blind": {
+      "path": "winner_flags_the_silent_probe",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G3_c5_range_recomputed": {
+      "path": "n_c5_subjects_recomputed",
+      "present": true,
+      "usable": true,
+      "note": null
+    }
+  },
+  "verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+  "gates": {
+    "G0_grid_complete": true,
+    "G1_a_candidate_is_usable": true,
+    "G2_winner_not_silently_blind": true,
+    "G3_c5_range_recomputed": true
+  },
+  "prereg_commit": "af2d76384d7b8db925d0ca91c30dbdcf9fa30f63",
+  "bias_corrected": {
+    "winner_pooled_bias": 0.2554,
+    "bias_corrected_median_effective_n": 24.279,
+    "bias_corrected_threshold_r": 0.402,
+    "strongest_pair_clears_bias_corrected": false,
+    "formula": "median_effective_n / (1 + winner_pooled_median_abs_rel_error)",
+    "why": "every estimator on the grid overstates n_eff at every rho, so a downward correction is the direction the measurement supports"
+  },
+  "G1_defect": {
+    "gate_as_written_resolves_to": 0.1436,
+    "that_value_belongs_to": "ar1_closed_form",
+    "which_was_disqualified_by_G2": true,
+    "best_among_ELIGIBLE_candidates": 0.2554,
+    "G1_bar": 0.2,
+    "verdict_under_eligible_reading": "NOT_ESTIMABLE__c5_effective_n_range_is_unusable_at_this_length",
+    "operative_reading": "NOT_ESTIMABLE",
+    "class": "G1 and G2 were written as independent gates but G1s population depends on G2s outcome. Gate, metric path, power basis and implementation were each individually correct; the COMPOSITION was wrong. styxx.protocol has no check on relationships between gates."
+  },
+  "c5_strongest_pair_margin_below_published_threshold": 0.0004
+}
