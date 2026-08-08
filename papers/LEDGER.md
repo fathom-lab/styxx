@@ -11,12 +11,19 @@ ratio is visible without reading 158 cycle entries.
 | | |
 |---|---|
 | cycles logged | **160** |
-| preregistrations frozen | **347** (35 carrying a machine-scored gates block) |
+| preregistrations frozen | **348** (36 carrying a machine-scored gates block) |
 | OATH certificates | **170** |
 | trust-stack seals | **31** |
 | cycles ending in a refusal, null, retraction or INVALID | **60** of 160 |
 | verdicts that were literally `INVALID__*` — the machinery refusing its own run | **16** |
-| gates now declaring a power basis | 4 of 35 gated preregs |
+| gates declaring a power basis | 5 of 36 gated preregs |
+| — of those frozen *since* the field existed | **4 of 4** |
+
+Both power-basis rows are reported because either alone misleads. A frozen
+preregistration is never edited, so the preregs written before `power_basis` existed can
+never acquire one and their denominator can never move; quoting only the first row
+understates the discipline, and quoting only the second hides how much of the corpus
+predates it.
 
 Certificate verdicts: `OATH-HELD` × 170
 

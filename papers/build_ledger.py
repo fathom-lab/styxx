@@ -23,6 +23,38 @@ invalids = [c for c in cy if "INVALID__" in c.get("verdict", "")]
 gated = [p for p in preregs if "```gates" in p.read_text(encoding="utf-8")]
 with_power = sum(1 for p in gated if '"power_basis"' in p.read_text(encoding="utf-8"))
 
+
+def _first_commit(path):
+    r = subprocess.run(["git", "log", "--diff-filter=A", "--format=%H", "--follow", "--",
+                        path.name], cwd=path.parent, capture_output=True, text=True)
+    h = [x for x in r.stdout.split() if x]
+    return h[-1] if h else None
+
+
+def _power_basis_split():
+    """Gated preregs frozen AFTER ``power_basis`` existed, and how many declare one.
+
+    Reporting ``with_power`` against every gated prereg understates the discipline: most were
+    frozen before the field existed and a frozen prereg is never edited, so their denominator can
+    never move. The honest ratio is over the ones that could have carried it.
+    """
+    r = subprocess.run(["git", "log", "--reverse", "--format=%H", "-S", "power_basis", "--",
+                        "styxx/protocol.py"], cwd=ROOT.parent, capture_output=True, text=True)
+    intro = next((x for x in r.stdout.split() if x), None)
+    if intro is None:
+        return None
+    eligible = []
+    for p in gated:
+        add = _first_commit(p)
+        if add and subprocess.run(["git", "merge-base", "--is-ancestor", intro, add],
+                                  cwd=ROOT.parent, capture_output=True).returncode == 0:
+            eligible.append(p)
+    declaring = [p for p in eligible if '"power_basis"' in p.read_text(encoding="utf-8")]
+    return len(declaring), len(eligible)
+
+
+_split = _power_basis_split()
+
 _LINES = []
 
 
@@ -47,8 +79,17 @@ emit(f"| OATH certificates | **{len(certs)}** |")
 emit(f"| trust-stack seals | **{len(seals)}** |")
 emit(f"| cycles ending in a refusal, null, retraction or INVALID | **{len(negatives)}** of {len(cy)} |")
 emit(f"| verdicts that were literally `INVALID__*` — the machinery refusing its own run | **{len(invalids)}** |")
-emit(f"| gates now declaring a power basis | {with_power} of {len(gated)} gated preregs |")
+emit(f"| gates declaring a power basis | {with_power} of {len(gated)} gated preregs |")
+if _split:
+    emit(f"| — of those frozen *since* the field existed | **{_split[0]} of {_split[1]}** |")
 emit()
+if _split:
+    emit("Both power-basis rows are reported because either alone misleads. A frozen")
+    emit("preregistration is never edited, so the preregs written before `power_basis` existed can")
+    emit("never acquire one and their denominator can never move; quoting only the first row")
+    emit("understates the discipline, and quoting only the second hides how much of the corpus")
+    emit("predates it.")
+    emit()
 emit("Certificate verdicts: " + ", ".join(f"`{k}` × {v}" for k, v in cert_verdicts.most_common()))
 emit()
 emit("Seal verdicts: " + ", ".join(f"`{k}` × {v}" for k, v in seal_verdicts.most_common()))
