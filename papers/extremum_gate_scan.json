@@ -1,0 +1,106 @@
+{
+  "n_preregs_with_precondition": 13,
+  "confirmed_defects": [
+    "PREREG_e1_effective_n_bakeoff_2026_08_08.md"
+  ],
+  "WARNING": "n_preregs_with_precondition is a COUNT OF PRECONDITIONS, not of defects. A gate judging an extremum over a set is vulnerable only if another gate restricts that set, which this scan cannot determine. Quoting this number as a defect count would be exactly the kind of overclaim this program exists to refuse.",
+  "preregs": [
+    {
+      "prereg": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G2_null": "max_shuffled_top1"
+      }
+    },
+    {
+      "prereg": "PREREG_b35b_second_source_2026_08_03.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G2_null": "max_null_top1"
+      }
+    },
+    {
+      "prereg": "PREREG_b35c_open_vocab_2026_08_03.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G2_null": "max_null462"
+      }
+    },
+    {
+      "prereg": "PREREG_b40_anisotropy_signature_2026_08_05.md",
+      "n_gates": 2,
+      "extremum_gates": {
+        "G1_separation": "min_clique_internal_affinity_minus_max_qwen_affinity"
+      }
+    },
+    {
+      "prereg": "PREREG_b42_bridge_dose_2026_08_05.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G1_replicates": "min_bridge_disc_at_k20",
+        "G2_null_clean": "max_null_disc_at_k20"
+      }
+    },
+    {
+      "prereg": "PREREG_b44_wrong_donor_2026_08_05.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G0_positive_control": "min_bridge_disc_at_k20",
+        "G1_wrong_max_low": "max_wrong_donor_disc_at_k20",
+        "G2_wrong_min_high": "min_wrong_donor_disc_at_k20"
+      }
+    },
+    {
+      "prereg": "PREREG_b46_cliff_function_2026_08_06.md",
+      "n_gates": 3,
+      "extremum_gates": {
+        "G0_baseline_low": "max_disc_at_t0",
+        "G1_bridge_high": "min_disc_at_t1"
+      }
+    },
+    {
+      "prereg": "PREREG_b48_legibility_matrix_ten_2026_08_06.md",
+      "n_gates": 4,
+      "extremum_gates": {
+        "G1_signal_present": "max_pair_legibility",
+        "G2_null_clean": "max_null_legibility"
+      }
+    },
+    {
+      "prereg": "PREREG_b50_legibility_islands_2026_08_08.md",
+      "n_gates": 5,
+      "extremum_gates": {
+        "G1_signal_present": "max_pair_legibility"
+      }
+    },
+    {
+      "prereg": "PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+      "n_gates": 4,
+      "extremum_gates": {
+        "G1_a_candidate_is_usable": "best_median_abs_rel_error"
+      }
+    },
+    {
+      "prereg": "PREREG_m1_magnetochemistry_2026_08_05.md",
+      "n_gates": 4,
+      "extremum_gates": {
+        "G1_thermal": "max_abs_delta_t_celsius"
+      }
+    },
+    {
+      "prereg": "PREREG_w1v2_water_imprint_2026_08_05.md",
+      "n_gates": 4,
+      "extremum_gates": {
+        "G3_thermal": "max_abs_delta_t_celsius"
+      }
+    },
+    {
+      "prereg": "PREREG_w1v3_water_arms_2026_08_05.md",
+      "n_gates": 6,
+      "extremum_gates": {
+        "G3_thermal": "max_abs_delta_t_celsius",
+        "G1_any_arm": "best_arm_correct_of_10"
+      }
+    }
+  ]
+}
