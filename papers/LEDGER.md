@@ -10,17 +10,17 @@ ratio is visible without reading 158 cycle entries.
 
 | | |
 |---|---|
-| cycles logged | **159** |
-| preregistrations frozen | **346** (34 carrying a machine-scored gates block) |
-| OATH certificates | **169** |
-| trust-stack seals | **29** |
-| cycles ending in a refusal, null, retraction or INVALID | **59** of 159 |
-| verdicts that were literally `INVALID__*` — the machinery refusing its own run | **15** |
-| gates now declaring a power basis | 3 of 34 gated preregs |
+| cycles logged | **160** |
+| preregistrations frozen | **347** (35 carrying a machine-scored gates block) |
+| OATH certificates | **170** |
+| trust-stack seals | **31** |
+| cycles ending in a refusal, null, retraction or INVALID | **60** of 160 |
+| verdicts that were literally `INVALID__*` — the machinery refusing its own run | **16** |
+| gates now declaring a power basis | 4 of 35 gated preregs |
 
-Certificate verdicts: `OATH-HELD` × 169
+Certificate verdicts: `OATH-HELD` × 170
 
-Seal verdicts: `SEALED` × 29
+Seal verdicts: `SEALED` × 30, `REFUSED` × 1
 
 ## Every run the machinery refused
 
@@ -43,6 +43,7 @@ one cost real compute and produced no claim.
 - **cycle 152** (2026-08-07) — `DO`
 - **cycle 154** (2026-08-07) — `REWRITTEN`
 - **cycle 156** (2026-08-07) — `BUILT`
+- **cycle 157** (2026-08-08) — `NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize`
 
 ## The rule, measured
 

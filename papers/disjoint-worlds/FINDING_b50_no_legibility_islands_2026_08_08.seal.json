@@ -1,0 +1,32 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+  "document_sha256": "c35f0918e2899a278fafd794a6fef96452b197a68e541b1955405da853e9a672",
+  "oath": {
+    "counts": {
+      "VERIFIED": 21,
+      "ABSTAIN": 16,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_b50_legibility_islands_2026_08_08.md",
+      "result": "b50_result.json",
+      "frozen_verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+      "gates": {
+        "G0_coverage": true,
+        "G1_signal_present": true,
+        "G2_null_at_chance": true,
+        "G3_null_tail_bounded": true,
+        "G4_islands": false
+      },
+      "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22",
+      "prereg_commit": "44b49537f2a9364eb7c248fea03e1927ad1de935"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "04334c03feefd4545e3772bbb0e95c071bc56c55ba08499d734486b461f935ca"
+}

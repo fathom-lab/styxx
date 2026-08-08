@@ -1,0 +1,436 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b50_no_legibility_islands_2026_08_08.md",
+  "document_sha256": "c35f0918e2899a278fafd794a6fef96452b197a68e541b1955405da853e9a672",
+  "receipts_sha256": {
+    "b50_result.json": "2711704da1824cbeb5277b8fa6ec995d6886dc47083b80ef11e5f09ace6b6b58",
+    "b50_derived.json": "2785ba935e361e0ff92af417d153c409c4e5cdbcab5d83777493f3bcfa58d06a"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 16,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 12,
+      "token": "45"
+    },
+    {
+      "line": 12,
+      "token": "45"
+    },
+    {
+      "line": 13,
+      "token": "0.0521"
+    },
+    {
+      "line": 14,
+      "token": "0.0208"
+    },
+    {
+      "line": 15,
+      "token": "5"
+    },
+    {
+      "line": 15,
+      "token": "0.10"
+    },
+    {
+      "line": 15,
+      "token": "45"
+    },
+    {
+      "line": 16,
+      "token": "0.05"
+    },
+    {
+      "line": 26,
+      "token": "45"
+    },
+    {
+      "line": 28,
+      "token": "45"
+    },
+    {
+      "line": 30,
+      "token": "45"
+    },
+    {
+      "line": 30,
+      "token": "343"
+    },
+    {
+      "line": 33,
+      "token": "343"
+    },
+    {
+      "line": 38,
+      "token": "5"
+    },
+    {
+      "line": 39,
+      "token": "45"
+    },
+    {
+      "line": 51,
+      "token": "10"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 12,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 12,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 13,
+      "token": "0.2396",
+      "value": 0.2396,
+      "decimals": 4,
+      "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
+    },
+    {
+      "line": 14,
+      "token": "0.0208",
+      "value": 0.0208,
+      "decimals": 4,
+      "context": "| G2_null_at_chance | median null \u2264 0.0208 | 0.0104 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G2_null_at_chance | median null \u2264 0.0208 | 0.0104 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 14,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "| G2_null_at_chance | median null \u2264 0.0208 | 0.0104 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G2_null_at_chance | median null \u2264 0.0208 | 0.0104 | \u2705 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:chance"
+    },
+    {
+      "line": 15,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "| G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "0.10",
+      "value": 0.1,
+      "decimals": 2,
+      "context": "| G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 15,
+      "token": "0.0444",
+      "value": 0.0444,
+      "decimals": 4,
+      "context": "| G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:frac_nulls_above_5x_chance"
+    },
+    {
+      "line": 15,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "| G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:n_nulls_above_5x_chance"
+    },
+    {
+      "line": 15,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_null_tail_bounded | fraction of nulls \u2265 5\u00d7 chance \u2264 0.10 | 0.0444 (2 of 45) | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 16,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| G4_islands | bimodality p \u2264 0.05 | 0.1774 | \u274c |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G4_islands | bimodality p \u2264 0.05 | 0.1774 | \u274c |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 16,
+      "token": "0.1774",
+      "value": 0.1774,
+      "decimals": 4,
+      "context": "| G4_islands | bimodality p \u2264 0.05 | 0.1774 | \u274c |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G4_islands | bimodality p \u2264 0.05 | 0.1774 | \u274c |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:bimodality_p_member_legibility"
+    },
+    {
+      "line": 19,
+      "token": "0.2396",
+      "value": 0.2396,
+      "decimals": 4,
+      "context": "0.2396, **23.0385\u00d7 the 0.0104 chance rate** \u2014 and the nulls sit exactly on chance. What fails is the",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
+    },
+    {
+      "line": 19,
+      "token": "23.0385",
+      "value": 23.0385,
+      "decimals": 4,
+      "context": "0.2396, **23.0385\u00d7 the 0.0104 chance rate** \u2014 and the nulls sit exactly on chance. What fails is the",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_derived.json:max_pair_legibility_over_chance"
+    },
+    {
+      "line": 19,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "0.2396, **23.0385\u00d7 the 0.0104 chance rate** \u2014 and the nulls sit exactly on chance. What fails is the",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:chance"
+    },
+    {
+      "line": 20,
+      "token": "0.0914",
+      "value": 0.0914,
+      "decimals": 4,
+      "context": "island claim: ten per-member mean legibilities descend smoothly from 0.0914 to 0.0370, a range of",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:member_mean_legibility.pythia-410m"
+    },
+    {
+      "line": 20,
+      "token": "0.0370",
+      "value": 0.037,
+      "decimals": 4,
+      "context": "island claim: ten per-member mean legibilities descend smoothly from 0.0914 to 0.0370, a range of",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:member_mean_legibility.Qwen2.5-3B"
+    },
+    {
+      "line": 21,
+      "token": "0.0544",
+      "value": 0.0544,
+      "decimals": 4,
+      "context": "0.0544 whose largest internal gap is 0.0215. A ramp, not a cliff.",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_derived.json:member_mean_range"
+    },
+    {
+      "line": 26,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "about our arithmetic, not our data.** B48's G2 judged the **maximum of 45 null draws** against a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 27,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "bar written for a single draw. With chance at 0.0104, one draw landing on 0.0521 is ordinary luck",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:chance"
+    },
+    {
+      "line": 27,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "bar written for a single draw. With chance at 0.0104, one draw landing on 0.0521 is ordinary luck",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:five_x_chance"
+    },
+    {
+      "line": 28,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "across 45 tries; the machinery dutifully called it a leak.",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "B50 re-drew all 45 nulls at seed 8080 \u2014 a different family from b48's 343, because a criterion",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "8080",
+      "value": 8080.0,
+      "decimals": 0,
+      "context": "B50 re-drew all 45 nulls at seed 8080 \u2014 a different family from b48's 343, because a criterion",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:null_seed"
+    },
+    {
+      "line": 30,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "B50 re-drew all 45 nulls at seed 8080 \u2014 a different family from b48's 343, because a criterion",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "343",
+      "value": 343.0,
+      "decimals": 0,
+      "context": "| | b48 (seed 343) | B50 (seed 8080) |",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 33,
+      "token": "8080",
+      "value": 8080.0,
+      "decimals": 0,
+      "context": "| | b48 (seed 343) | B50 (seed 8080) |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:null_seed"
+    },
+    {
+      "line": 35,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "| median null | 0.0104 | 0.0104 |",
+      "binding_context": "| | b48 (seed 343) | B50 (seed 8080) | | median null | 0.0104 | 0.0104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_null_fresh.Qwen2.5-1.5B__Qwen2.5-3B"
+    },
+    {
+      "line": 35,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "| median null | 0.0104 | 0.0104 |",
+      "binding_context": "| | b48 (seed 343) | B50 (seed 8080) | | median null | 0.0104 | 0.0104 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_null_fresh.Qwen2.5-1.5B__Qwen2.5-3B"
+    },
+    {
+      "line": 36,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "| max null | 0.0521 | 0.0521 |",
+      "binding_context": "| | b48 (seed 343) | B50 (seed 8080) | | max null | 0.0521 | 0.0521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_null_fresh.Qwen2.5-1.5B__Llama-3.2-1B"
+    },
+    {
+      "line": 36,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "| max null | 0.0521 | 0.0521 |",
+      "binding_context": "| | b48 (seed 343) | B50 (seed 8080) | | max null | 0.0521 | 0.0521 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:pair_null_fresh.Qwen2.5-1.5B__Llama-3.2-1B"
+    },
+    {
+      "line": 38,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "**Identical to four decimal places on both statistics.** The maximum reaching 5\u00d7 chance is not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 39,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "leak that recurred; it is a stable property of the largest of 45 draws from a discrete",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 40,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "distribution whose floor is the 0.0104 chance rate. Two independent families agreeing this precisely is the strongest",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_result.json:chance"
+    },
+    {
+      "line": 51,
+      "token": "10",
+      "value": 10.0,
+      "decimals": 0,
+      "context": "**Stated in advance, and it binds us here:** at n = 10 the gap screen has little power against a",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 66,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "tail bound**, permitting 4 such draws, to catch what a median would hide. That decomposition is the",
+      "status": "VERIFIED",
+      "receipt_ref": "b50_derived.json:g3_tail_bound_permitted_draws"
+    }
+  ]
+}

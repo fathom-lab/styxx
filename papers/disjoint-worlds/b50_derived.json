@@ -1,0 +1,14 @@
+{
+  "derived_from": "b50_result.json",
+  "source_verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+  "source_prereg_commit": "44b49537f2a9364eb7c248fea03e1927ad1de935",
+  "note": "every field below is arithmetic on the source receipt; no new computation was run",
+  "max_pair_legibility_over_chance": 23.0385,
+  "max_pair_legibility_over_chance_formula": "max_pair_legibility / chance",
+  "member_mean_range": 0.0544,
+  "member_mean_largest_internal_gap": 0.0215,
+  "member_mean_largest_gap_formula": "max of successive differences, members sorted descending",
+  "g3_tail_bound_permitted_draws": 4,
+  "g3_tail_bound_permitted_draws_formula": "floor(0.10 * n_pairs), the G3 bar as a draw count",
+  "g3_tail_bound_observed_draws": 2
+}

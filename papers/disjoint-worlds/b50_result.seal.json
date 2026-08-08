@@ -1,0 +1,288 @@
+{
+  "seal": "seal/v0",
+  "verdict": "REFUSED",
+  "document": "b50_result.json",
+  "document_sha256": "5e3f735ed4dd0c604ad64e21ec39f7230bc50e95afa8f407db5192643cea7be6",
+  "oath": {
+    "counts": {
+      "VERIFIED": 0,
+      "ABSTAIN": 206,
+      "UNGROUNDED": 45
+    },
+    "verdict": "OATH-FAILED"
+  },
+  "protocol": [],
+  "refusals": [
+    {
+      "layer": "oath",
+      "line": 26,
+      "token": "0.0625",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 31,
+      "token": "0.0417",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 36,
+      "token": "0.0521",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 41,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 46,
+      "token": "0.0521",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 51,
+      "token": "0.0625",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 56,
+      "token": "0.0312",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 61,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 66,
+      "token": "0.0938",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 71,
+      "token": "0.0417",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 76,
+      "token": "0.0312",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 81,
+      "token": "0.0",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 86,
+      "token": "0.0729",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 91,
+      "token": "0.0417",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 96,
+      "token": "0.0104",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 101,
+      "token": "0.0417",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 106,
+      "token": "0.0312",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 111,
+      "token": "0.0938",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 116,
+      "token": "0.0521",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 121,
+      "token": "0.0625",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 126,
+      "token": "0.0833",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 131,
+      "token": "0.1146",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 136,
+      "token": "0.1875",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 141,
+      "token": "0.1042",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 146,
+      "token": "0.0312",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 151,
+      "token": "0.0729",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 156,
+      "token": "0.0729",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 161,
+      "token": "0.0885",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 166,
+      "token": "0.0521",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 171,
+      "token": "0.0",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 176,
+      "token": "0.0625",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 181,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 186,
+      "token": "0.0938",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 191,
+      "token": "0.0625",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 196,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 201,
+      "token": "0.0833",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 206,
+      "token": "0.0729",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 211,
+      "token": "0.0729",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 216,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 221,
+      "token": "0.0104",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 226,
+      "token": "0.125",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 231,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 236,
+      "token": "0.2396",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 241,
+      "token": "0.1042",
+      "why": "numeric claim grounds in no provided receipt"
+    },
+    {
+      "layer": "oath",
+      "line": 246,
+      "token": "0.0208",
+      "why": "numeric claim grounds in no provided receipt"
+    }
+  ],
+  "seal_sha256": "4ca3ceceebcc6ef7ed8266908d5107fb5ea4e39c2f07dabd0b09037a449897f8"
+}

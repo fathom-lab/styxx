@@ -1,0 +1,411 @@
+{
+  "prereg": "PREREG_b50_legibility_islands_2026_08_08.md",
+  "smoke": false,
+  "members": [
+    "Qwen2.5-1.5B",
+    "Qwen2.5-3B",
+    "Llama-3.2-1B",
+    "Llama-3.2-3B",
+    "Phi-3.5-mini",
+    "gemma-2-2b",
+    "gpt2",
+    "gpt2-large",
+    "pythia-410m",
+    "Qwen2.5-0.5B"
+  ],
+  "n_items": 96,
+  "chance": 0.0104,
+  "n_pairs": 45,
+  "null_seed": 8080,
+  "legibility_matrix_reused_from": "b48_result.json",
+  "legibility_matrix_source_commit": "90bd04d0121bd9af2febd67350b4af95c8922b82",
+  "pair_legibility": {
+    "Qwen2.5-1.5B__Qwen2.5-3B": {
+      "ab": 0.0625,
+      "ba": 0.0625,
+      "mean": 0.0625
+    },
+    "Qwen2.5-1.5B__Llama-3.2-1B": {
+      "ab": 0.0417,
+      "ba": 0.0417,
+      "mean": 0.0417
+    },
+    "Qwen2.5-1.5B__Llama-3.2-3B": {
+      "ab": 0.0521,
+      "ba": 0.0521,
+      "mean": 0.0521
+    },
+    "Qwen2.5-1.5B__Phi-3.5-mini": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "Qwen2.5-1.5B__gemma-2-2b": {
+      "ab": 0.0521,
+      "ba": 0.0521,
+      "mean": 0.0521
+    },
+    "Qwen2.5-1.5B__gpt2": {
+      "ab": 0.0,
+      "ba": 0.125,
+      "mean": 0.0625
+    },
+    "Qwen2.5-1.5B__gpt2-large": {
+      "ab": 0.0312,
+      "ba": 0.0312,
+      "mean": 0.0312
+    },
+    "Qwen2.5-1.5B__pythia-410m": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "Qwen2.5-1.5B__Qwen2.5-0.5B": {
+      "ab": 0.0938,
+      "ba": 0.0938,
+      "mean": 0.0938
+    },
+    "Qwen2.5-3B__Llama-3.2-1B": {
+      "ab": 0.0417,
+      "ba": 0.0417,
+      "mean": 0.0417
+    },
+    "Qwen2.5-3B__Llama-3.2-3B": {
+      "ab": 0.0312,
+      "ba": 0.0312,
+      "mean": 0.0312
+    },
+    "Qwen2.5-3B__Phi-3.5-mini": {
+      "ab": 0.0,
+      "ba": 0.0,
+      "mean": 0.0
+    },
+    "Qwen2.5-3B__gemma-2-2b": {
+      "ab": 0.0729,
+      "ba": 0.0729,
+      "mean": 0.0729
+    },
+    "Qwen2.5-3B__gpt2": {
+      "ab": 0.0417,
+      "ba": 0.0417,
+      "mean": 0.0417
+    },
+    "Qwen2.5-3B__gpt2-large": {
+      "ab": 0.0104,
+      "ba": 0.0104,
+      "mean": 0.0104
+    },
+    "Qwen2.5-3B__pythia-410m": {
+      "ab": 0.0417,
+      "ba": 0.0417,
+      "mean": 0.0417
+    },
+    "Qwen2.5-3B__Qwen2.5-0.5B": {
+      "ab": 0.0312,
+      "ba": 0.0312,
+      "mean": 0.0312
+    },
+    "Llama-3.2-1B__Llama-3.2-3B": {
+      "ab": 0.1042,
+      "ba": 0.0833,
+      "mean": 0.0938
+    },
+    "Llama-3.2-1B__Phi-3.5-mini": {
+      "ab": 0.0521,
+      "ba": 0.0521,
+      "mean": 0.0521
+    },
+    "Llama-3.2-1B__gemma-2-2b": {
+      "ab": 0.0625,
+      "ba": 0.0625,
+      "mean": 0.0625
+    },
+    "Llama-3.2-1B__gpt2": {
+      "ab": 0.0833,
+      "ba": 0.0833,
+      "mean": 0.0833
+    },
+    "Llama-3.2-1B__gpt2-large": {
+      "ab": 0.1146,
+      "ba": 0.1146,
+      "mean": 0.1146
+    },
+    "Llama-3.2-1B__pythia-410m": {
+      "ab": 0.1875,
+      "ba": 0.1875,
+      "mean": 0.1875
+    },
+    "Llama-3.2-1B__Qwen2.5-0.5B": {
+      "ab": 0.1042,
+      "ba": 0.1042,
+      "mean": 0.1042
+    },
+    "Llama-3.2-3B__Phi-3.5-mini": {
+      "ab": 0.0312,
+      "ba": 0.0312,
+      "mean": 0.0312
+    },
+    "Llama-3.2-3B__gemma-2-2b": {
+      "ab": 0.0729,
+      "ba": 0.0729,
+      "mean": 0.0729
+    },
+    "Llama-3.2-3B__gpt2": {
+      "ab": 0.0729,
+      "ba": 0.0729,
+      "mean": 0.0729
+    },
+    "Llama-3.2-3B__gpt2-large": {
+      "ab": 0.0833,
+      "ba": 0.0938,
+      "mean": 0.0885
+    },
+    "Llama-3.2-3B__pythia-410m": {
+      "ab": 0.0521,
+      "ba": 0.0521,
+      "mean": 0.0521
+    },
+    "Llama-3.2-3B__Qwen2.5-0.5B": {
+      "ab": 0.0,
+      "ba": 0.0,
+      "mean": 0.0
+    },
+    "Phi-3.5-mini__gemma-2-2b": {
+      "ab": 0.0625,
+      "ba": 0.0625,
+      "mean": 0.0625
+    },
+    "Phi-3.5-mini__gpt2": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "Phi-3.5-mini__gpt2-large": {
+      "ab": 0.0938,
+      "ba": 0.0938,
+      "mean": 0.0938
+    },
+    "Phi-3.5-mini__pythia-410m": {
+      "ab": 0.0625,
+      "ba": 0.0625,
+      "mean": 0.0625
+    },
+    "Phi-3.5-mini__Qwen2.5-0.5B": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "gemma-2-2b__gpt2": {
+      "ab": 0.0833,
+      "ba": 0.0833,
+      "mean": 0.0833
+    },
+    "gemma-2-2b__gpt2-large": {
+      "ab": 0.0729,
+      "ba": 0.0729,
+      "mean": 0.0729
+    },
+    "gemma-2-2b__pythia-410m": {
+      "ab": 0.0729,
+      "ba": 0.0729,
+      "mean": 0.0729
+    },
+    "gemma-2-2b__Qwen2.5-0.5B": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "gpt2__gpt2-large": {
+      "ab": 0.0104,
+      "ba": 0.0104,
+      "mean": 0.0104
+    },
+    "gpt2__pythia-410m": {
+      "ab": 0.125,
+      "ba": 0.125,
+      "mean": 0.125
+    },
+    "gpt2__Qwen2.5-0.5B": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    },
+    "gpt2-large__pythia-410m": {
+      "ab": 0.2396,
+      "ba": 0.2396,
+      "mean": 0.2396
+    },
+    "gpt2-large__Qwen2.5-0.5B": {
+      "ab": 0.1042,
+      "ba": 0.1042,
+      "mean": 0.1042
+    },
+    "pythia-410m__Qwen2.5-0.5B": {
+      "ab": 0.0208,
+      "ba": 0.0208,
+      "mean": 0.0208
+    }
+  },
+  "pair_null_fresh": {
+    "Qwen2.5-1.5B__Qwen2.5-3B": 0.0104,
+    "Qwen2.5-1.5B__Llama-3.2-1B": 0.0521,
+    "Qwen2.5-1.5B__Llama-3.2-3B": 0.0104,
+    "Qwen2.5-1.5B__Phi-3.5-mini": 0.0104,
+    "Qwen2.5-1.5B__gemma-2-2b": 0.0104,
+    "Qwen2.5-1.5B__gpt2": 0.0208,
+    "Qwen2.5-1.5B__gpt2-large": 0.0521,
+    "Qwen2.5-1.5B__pythia-410m": 0.0104,
+    "Qwen2.5-1.5B__Qwen2.5-0.5B": 0.0312,
+    "Qwen2.5-3B__Llama-3.2-1B": 0.0208,
+    "Qwen2.5-3B__Llama-3.2-3B": 0.0312,
+    "Qwen2.5-3B__Phi-3.5-mini": 0.0104,
+    "Qwen2.5-3B__gemma-2-2b": 0.0,
+    "Qwen2.5-3B__gpt2": 0.0104,
+    "Qwen2.5-3B__gpt2-large": 0.0,
+    "Qwen2.5-3B__pythia-410m": 0.0312,
+    "Qwen2.5-3B__Qwen2.5-0.5B": 0.0104,
+    "Llama-3.2-1B__Llama-3.2-3B": 0.0,
+    "Llama-3.2-1B__Phi-3.5-mini": 0.0104,
+    "Llama-3.2-1B__gemma-2-2b": 0.0104,
+    "Llama-3.2-1B__gpt2": 0.0104,
+    "Llama-3.2-1B__gpt2-large": 0.0,
+    "Llama-3.2-1B__pythia-410m": 0.0208,
+    "Llama-3.2-1B__Qwen2.5-0.5B": 0.0,
+    "Llama-3.2-3B__Phi-3.5-mini": 0.0208,
+    "Llama-3.2-3B__gemma-2-2b": 0.0104,
+    "Llama-3.2-3B__gpt2": 0.0208,
+    "Llama-3.2-3B__gpt2-large": 0.0104,
+    "Llama-3.2-3B__pythia-410m": 0.0104,
+    "Llama-3.2-3B__Qwen2.5-0.5B": 0.0104,
+    "Phi-3.5-mini__gemma-2-2b": 0.0104,
+    "Phi-3.5-mini__gpt2": 0.0104,
+    "Phi-3.5-mini__gpt2-large": 0.0208,
+    "Phi-3.5-mini__pythia-410m": 0.0104,
+    "Phi-3.5-mini__Qwen2.5-0.5B": 0.0104,
+    "gemma-2-2b__gpt2": 0.0104,
+    "gemma-2-2b__gpt2-large": 0.0,
+    "gemma-2-2b__pythia-410m": 0.0,
+    "gemma-2-2b__Qwen2.5-0.5B": 0.0208,
+    "gpt2__gpt2-large": 0.0,
+    "gpt2__pythia-410m": 0.0,
+    "gpt2__Qwen2.5-0.5B": 0.0104,
+    "gpt2-large__pythia-410m": 0.0208,
+    "gpt2-large__Qwen2.5-0.5B": 0.0312,
+    "pythia-410m__Qwen2.5-0.5B": 0.0
+  },
+  "pair_null_b48": {
+    "Qwen2.5-1.5B__Qwen2.5-3B": 0.0104,
+    "Qwen2.5-1.5B__Llama-3.2-1B": 0.0,
+    "Qwen2.5-1.5B__Llama-3.2-3B": 0.0104,
+    "Qwen2.5-1.5B__Phi-3.5-mini": 0.0104,
+    "Qwen2.5-1.5B__gemma-2-2b": 0.0,
+    "Qwen2.5-1.5B__gpt2": 0.0208,
+    "Qwen2.5-1.5B__gpt2-large": 0.0,
+    "Qwen2.5-1.5B__pythia-410m": 0.0104,
+    "Qwen2.5-1.5B__Qwen2.5-0.5B": 0.0104,
+    "Qwen2.5-3B__Llama-3.2-1B": 0.0104,
+    "Qwen2.5-3B__Llama-3.2-3B": 0.0208,
+    "Qwen2.5-3B__Phi-3.5-mini": 0.0104,
+    "Qwen2.5-3B__gemma-2-2b": 0.0417,
+    "Qwen2.5-3B__gpt2": 0.0,
+    "Qwen2.5-3B__gpt2-large": 0.0,
+    "Qwen2.5-3B__pythia-410m": 0.0,
+    "Qwen2.5-3B__Qwen2.5-0.5B": 0.0521,
+    "Llama-3.2-1B__Llama-3.2-3B": 0.0104,
+    "Llama-3.2-1B__Phi-3.5-mini": 0.0,
+    "Llama-3.2-1B__gemma-2-2b": 0.0312,
+    "Llama-3.2-1B__gpt2": 0.0104,
+    "Llama-3.2-1B__gpt2-large": 0.0104,
+    "Llama-3.2-1B__pythia-410m": 0.0,
+    "Llama-3.2-1B__Qwen2.5-0.5B": 0.0,
+    "Llama-3.2-3B__Phi-3.5-mini": 0.0208,
+    "Llama-3.2-3B__gemma-2-2b": 0.0,
+    "Llama-3.2-3B__gpt2": 0.0,
+    "Llama-3.2-3B__gpt2-large": 0.0104,
+    "Llama-3.2-3B__pythia-410m": 0.0104,
+    "Llama-3.2-3B__Qwen2.5-0.5B": 0.0208,
+    "Phi-3.5-mini__gemma-2-2b": 0.0104,
+    "Phi-3.5-mini__gpt2": 0.0104,
+    "Phi-3.5-mini__gpt2-large": 0.0208,
+    "Phi-3.5-mini__pythia-410m": 0.0,
+    "Phi-3.5-mini__Qwen2.5-0.5B": 0.0208,
+    "gemma-2-2b__gpt2": 0.0312,
+    "gemma-2-2b__gpt2-large": 0.0,
+    "gemma-2-2b__pythia-410m": 0.0104,
+    "gemma-2-2b__Qwen2.5-0.5B": 0.0,
+    "gpt2__gpt2-large": 0.0104,
+    "gpt2__pythia-410m": 0.0104,
+    "gpt2__Qwen2.5-0.5B": 0.0,
+    "gpt2-large__pythia-410m": 0.0208,
+    "gpt2-large__Qwen2.5-0.5B": 0.0312,
+    "pythia-410m__Qwen2.5-0.5B": 0.0208
+  },
+  "median_null_legibility": 0.0104,
+  "mean_null_legibility": 0.0136,
+  "max_null_legibility": 0.0521,
+  "frac_nulls_above_5x_chance": 0.0444,
+  "n_nulls_above_5x_chance": 2,
+  "five_x_chance": 0.0521,
+  "member_mean_legibility": {
+    "Qwen2.5-1.5B": 0.0486,
+    "Qwen2.5-3B": 0.037,
+    "Llama-3.2-1B": 0.0868,
+    "Llama-3.2-3B": 0.055,
+    "Phi-3.5-mini": 0.0405,
+    "gemma-2-2b": 0.0636,
+    "gpt2": 0.0579,
+    "gpt2-large": 0.0851,
+    "pythia-410m": 0.0914,
+    "Qwen2.5-0.5B": 0.0463
+  },
+  "max_pair_legibility": 0.2396,
+  "bimodality_p_member_legibility": 0.1774,
+  "null_replication": {
+    "b48_median": 0.0104,
+    "fresh_median": 0.0104,
+    "b48_max": 0.0521,
+    "fresh_max": 0.0521,
+    "note": "two independent 45-draw null families; b48's max cleared a single-draw bar by ordinary luck, which is the defect B50 exists to correct"
+  },
+  "metric_check": {
+    "G0_coverage": {
+      "path": "n_pairs",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G1_signal_present": {
+      "path": "max_pair_legibility",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G2_null_at_chance": {
+      "path": "median_null_legibility",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G3_null_tail_bounded": {
+      "path": "frac_nulls_above_5x_chance",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G4_islands": {
+      "path": "bimodality_p_member_legibility",
+      "present": true,
+      "usable": true,
+      "note": null
+    }
+  },
+  "verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+  "gates": {
+    "G0_coverage": true,
+    "G1_signal_present": true,
+    "G2_null_at_chance": true,
+    "G3_null_tail_bounded": true,
+    "G4_islands": false
+  },
+  "prereg_commit": "44b49537f2a9364eb7c248fea03e1927ad1de935"
+}
