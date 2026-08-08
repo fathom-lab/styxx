@@ -3,6 +3,13 @@
 Fathom Lab · 2026-08-06 · prereg: `PREREG_b48_legibility_matrix_ten_2026_08_06.md` (frozen
 before the run) · receipt: `b48_result.json` · scored by `styxx.protocol`.
 
+> **SUPERSEDED 2026-08-08 by B50** — `FINDING_b50_no_legibility_islands_2026_08_08.md`. B50 redrew
+> all 45 nulls at a different seed and got a null family **identical to four decimal places on
+> both statistics** (median 0.0104, max 0.0521). The nulls below never leaked; the bar that judged
+> them was wrong, exactly as this document says. On a correctly specified bar the same data reads
+> `NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize`. This finding and its receipt stay
+> in the tree unedited — a retraction that deletes its own evidence is not a retraction.
+
 ## Verdict (machine-computed)
 
 **`INVALID__null_leaks`** — the run licenses nothing about islands, and the reason is a

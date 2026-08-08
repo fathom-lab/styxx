@@ -1,308 +1,335 @@
 {
- "oath": "styxx OATH v0 (numeric-claim certificate)",
- "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
- "document": "FINDING_b48_invalid_null_bar_2026_08_06.md",
- "document_sha256": "d95f9e1d62178905862a6c5cf8ea689a295e02671204c1d5a61ce0d148c4ba85",
- "receipts_sha256": {
-  "b48_result.json": "d9bddb4a2418c45a0850af48ba0edc641e9377d422375ced951a9a1471d285fc",
-  "b48_diagnostics_addendum.json": "869c989e83cc901647218bb9e791936478beffa386fa4391f8332080d7b93a6d"
- },
- "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
- "counts": {
-  "VERIFIED": 18,
-  "ABSTAIN": 9,
-  "UNGROUNDED": 0
- },
- "verdict": "OATH-HELD",
- "ungrounded": [],
- "abstained": [
-  {
-   "line": 13,
-   "token": "45"
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_b48_invalid_null_bar_2026_08_06.md",
+  "document_sha256": "faa798ffdf1f1f7a90855dc368ad15ec44159f3df964214f5b22be6cba5264b2",
+  "receipts_sha256": {
+    "b48_result.json": "d9bddb4a2418c45a0850af48ba0edc641e9377d422375ced951a9a1471d285fc",
+    "b48_diagnostics_addendum.json": "869c989e83cc901647218bb9e791936478beffa386fa4391f8332080d7b93a6d"
   },
-  {
-   "line": 13,
-   "token": "45"
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 21,
+    "ABSTAIN": 9,
+    "UNGROUNDED": 0
   },
-  {
-   "line": 14,
-   "token": "0.0521"
-  },
-  {
-   "line": 15,
-   "token": "0.0208"
-  },
-  {
-   "line": 16,
-   "token": "0.05"
-  },
-  {
-   "line": 23,
-   "token": "1"
-  },
-  {
-   "line": 24,
-   "token": "0.0521"
-  },
-  {
-   "line": 48,
-   "token": "0.0485"
-  },
-  {
-   "line": 66,
-   "token": "60"
-  }
- ],
- "ledger": [
-  {
-   "line": 13,
-   "token": "45",
-   "value": 45.0,
-   "decimals": 0,
-   "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 13,
-   "token": "45",
-   "value": 45.0,
-   "decimals": 0,
-   "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 14,
-   "token": "0.0521",
-   "value": 0.0521,
-   "decimals": 4,
-   "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 14,
-   "token": "0.2396",
-   "value": 0.2396,
-   "decimals": 4,
-   "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
-  },
-  {
-   "line": 15,
-   "token": "0.0208",
-   "value": 0.0208,
-   "decimals": 4,
-   "context": "| G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 15,
-   "token": "0.0521",
-   "value": 0.0521,
-   "decimals": 4,
-   "context": "| G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:pair_legibility.Qwen2.5-1.5B__Llama-3.2-3B.ab"
-  },
-  {
-   "line": 16,
-   "token": "0.05",
-   "value": 0.05,
-   "decimals": 2,
-   "context": "| G3_legibility_islands | gap-screen p \u2264 0.05 | (moot) | \u274c |",
-   "binding_context": "| gate | frozen bar | measured | pass | | G3_legibility_islands | gap-screen p \u2264 0.05 | (moot) | \u274c |",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 20,
-   "token": "0.0104",
-   "value": 0.0104,
-   "decimals": 4,
-   "context": "The nulls did not leak. They behaved almost exactly as chance demands: **median 0.0104 \u2014",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:chance"
-  },
-  {
-   "line": 21,
-   "token": "0.0104",
-   "value": 0.0104,
-   "decimals": 4,
-   "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:chance"
-  },
-  {
-   "line": 21,
-   "token": "0.0118",
-   "value": 0.0118,
-   "decimals": 4,
-   "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_diagnostics_addendum.json:null_mean"
-  },
-  {
-   "line": 21,
-   "token": "5",
-   "value": 5.0,
-   "decimals": 0,
-   "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_diagnostics_addendum.json:n_nulls_above_g2_bar"
-  },
-  {
-   "line": 21,
-   "token": "45",
-   "value": 45.0,
-   "decimals": 0,
-   "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
-  },
-  {
-   "line": 22,
-   "token": "45",
-   "value": 45.0,
-   "decimals": 0,
-   "context": "The failure is that G2 gated the **maximum of 45 draws** against a bar set for a *single* draw",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
-  },
-  {
-   "line": 23,
-   "token": "1",
-   "value": 1.0,
-   "decimals": 0,
-   "context": "(2\u00d7 chance). Legibility here is a discrete statistic in steps of 1/96; a single null landing on",
-   "status": "ABSTAIN",
-   "receipt_ref": null
-  },
-  {
-   "line": 23,
-   "token": "96",
-   "value": 96.0,
-   "decimals": 0,
-   "context": "(2\u00d7 chance). Legibility here is a discrete statistic in steps of 1/96; a single null landing on",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:n_items"
-  },
-  {
-   "line": 24,
-   "token": "96",
-   "value": 96.0,
-   "decimals": 0,
-   "context": "5/96 = 0.0521 across forty-five independent draws is an ordinary outcome under the null, not",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:n_items"
-  },
-  {
-   "line": 24,
-   "token": "0.0521",
-   "value": 0.0521,
-   "decimals": 4,
-   "context": "5/96 = 0.0521 across forty-five independent draws is an ordinary outcome under the null, not",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 38,
-   "token": "0.2396",
-   "value": 0.2396,
-   "decimals": 4,
-   "context": "- **There is real discovery signal on this battery** (G1 passed): the strongest pair read 0.2396,",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
-  },
-  {
-   "line": 40,
-   "token": "0.037",
-   "value": 0.037,
-   "decimals": 3,
-   "context": "- **Per-member mean legibility spans 0.037 to 0.0914** \u2014 a smooth spread with no bimodality, the",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:member_mean_legibility.Qwen2.5-3B"
-  },
-  {
-   "line": 40,
-   "token": "0.0914",
-   "value": 0.0914,
-   "decimals": 4,
-   "context": "- **Per-member mean legibility spans 0.037 to 0.0914** \u2014 a smooth spread with no bimodality, the",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:member_mean_legibility.pythia-410m"
-  },
-  {
-   "line": 42,
-   "token": "42",
-   "value": 42.0,
-   "decimals": 0,
-   "context": "- **The direction-blindness is near-total: 42 of 45 pairs returned exactly equal scores in both",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_diagnostics_addendum.json:n_pairs_exact_direction_tie"
-  },
-  {
-   "line": 42,
-   "token": "45",
-   "value": 45.0,
-   "decimals": 0,
-   "context": "- **The direction-blindness is near-total: 42 of 45 pairs returned exactly equal scores in both",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:n_pairs"
-  },
-  {
-   "line": 47,
-   "token": "0.1141",
-   "value": 0.1141,
-   "decimals": 4,
-   "context": "- The registered ungated cliff check fit a threshold better than a line (0.1141 vs 0.0656, a",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:cliff_check.sigmoid_r2"
-  },
-  {
-   "line": 47,
-   "token": "0.0656",
-   "value": 0.0656,
-   "decimals": 4,
-   "context": "- The registered ungated cliff check fit a threshold better than a line (0.1141 vs 0.0656, a",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:cliff_check.linear_r2"
-  },
-  {
-   "line": 48,
-   "token": "0.0485",
-   "value": 0.0485,
-   "decimals": 4,
-   "context": "difference of 0.0485, best threshold near affinity 0.7524) \u2014 but **both fits are weak**, and on",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  },
-  {
-   "line": 48,
-   "token": "0.7524",
-   "value": 0.7524,
-   "decimals": 4,
-   "context": "difference of 0.0485, best threshold near affinity 0.7524) \u2014 but **both fits are weak**, and on",
-   "status": "VERIFIED",
-   "receipt_ref": "b48_result.json:cliff_check.best_threshold_affinity"
-  },
-  {
-   "line": 66,
-   "token": "60",
-   "value": 60.0,
-   "decimals": 0,
-   "context": "Ten models, one 96-concept battery, one extraction, k = 60, single seed, and an INVALID verdict",
-   "status": "ABSTAIN",
-   "receipt_ref": "spec-or-historical"
-  }
- ]
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 20,
+      "token": "45"
+    },
+    {
+      "line": 20,
+      "token": "45"
+    },
+    {
+      "line": 21,
+      "token": "0.0521"
+    },
+    {
+      "line": 22,
+      "token": "0.0208"
+    },
+    {
+      "line": 23,
+      "token": "0.05"
+    },
+    {
+      "line": 30,
+      "token": "1"
+    },
+    {
+      "line": 31,
+      "token": "0.0521"
+    },
+    {
+      "line": 55,
+      "token": "0.0485"
+    },
+    {
+      "line": 73,
+      "token": "60"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 7,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "> all 45 nulls at a different seed and got a null family **identical to four decimal places on",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
+    },
+    {
+      "line": 8,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "> both statistics** (median 0.0104, max 0.0521). The nulls below never leaked; the bar that judged",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:pair_null.Qwen2.5-1.5B__Qwen2.5-3B"
+    },
+    {
+      "line": 8,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "> both statistics** (median 0.0104, max 0.0521). The nulls below never leaked; the bar that judged",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:pair_null.Qwen2.5-3B__Qwen2.5-0.5B"
+    },
+    {
+      "line": 20,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 20,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "| G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G0_coverage | \u2265 45 pairs | 45 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 21,
+      "token": "0.2396",
+      "value": 0.2396,
+      "decimals": 4,
+      "context": "| G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G1_signal_present | max pair legibility \u2265 0.0521 | 0.2396 | \u2705 |",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
+    },
+    {
+      "line": 22,
+      "token": "0.0208",
+      "value": 0.0208,
+      "decimals": 4,
+      "context": "| G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 22,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "| G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G2_null_clean | **max** null legibility \u2264 0.0208 | 0.0521 | \u274c |",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:pair_legibility.Qwen2.5-1.5B__Llama-3.2-3B.ab"
+    },
+    {
+      "line": 23,
+      "token": "0.05",
+      "value": 0.05,
+      "decimals": 2,
+      "context": "| G3_legibility_islands | gap-screen p \u2264 0.05 | (moot) | \u274c |",
+      "binding_context": "| gate | frozen bar | measured | pass | | G3_legibility_islands | gap-screen p \u2264 0.05 | (moot) | \u274c |",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 27,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "The nulls did not leak. They behaved almost exactly as chance demands: **median 0.0104 \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:chance"
+    },
+    {
+      "line": 28,
+      "token": "0.0104",
+      "value": 0.0104,
+      "decimals": 4,
+      "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:chance"
+    },
+    {
+      "line": 28,
+      "token": "0.0118",
+      "value": 0.0118,
+      "decimals": 4,
+      "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:null_mean"
+    },
+    {
+      "line": 28,
+      "token": "5",
+      "value": 5.0,
+      "decimals": 0,
+      "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:n_nulls_above_g2_bar"
+    },
+    {
+      "line": 28,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "identical to the chance floor of 0.0104 \u2014 and mean 0.0118**, with only 5 of 45 draws above the bar.",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
+    },
+    {
+      "line": 29,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "The failure is that G2 gated the **maximum of 45 draws** against a bar set for a *single* draw",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:n_null_draws"
+    },
+    {
+      "line": 30,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(2\u00d7 chance). Legibility here is a discrete statistic in steps of 1/96; a single null landing on",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 30,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "(2\u00d7 chance). Legibility here is a discrete statistic in steps of 1/96; a single null landing on",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:n_items"
+    },
+    {
+      "line": 31,
+      "token": "96",
+      "value": 96.0,
+      "decimals": 0,
+      "context": "5/96 = 0.0521 across forty-five independent draws is an ordinary outcome under the null, not",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:n_items"
+    },
+    {
+      "line": 31,
+      "token": "0.0521",
+      "value": 0.0521,
+      "decimals": 4,
+      "context": "5/96 = 0.0521 across forty-five independent draws is an ordinary outcome under the null, not",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 45,
+      "token": "0.2396",
+      "value": 0.2396,
+      "decimals": 4,
+      "context": "- **There is real discovery signal on this battery** (G1 passed): the strongest pair read 0.2396,",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:pair_legibility.gpt2-large__pythia-410m.ab"
+    },
+    {
+      "line": 47,
+      "token": "0.037",
+      "value": 0.037,
+      "decimals": 3,
+      "context": "- **Per-member mean legibility spans 0.037 to 0.0914** \u2014 a smooth spread with no bimodality, the",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:member_mean_legibility.Qwen2.5-3B"
+    },
+    {
+      "line": 47,
+      "token": "0.0914",
+      "value": 0.0914,
+      "decimals": 4,
+      "context": "- **Per-member mean legibility spans 0.037 to 0.0914** \u2014 a smooth spread with no bimodality, the",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:member_mean_legibility.pythia-410m"
+    },
+    {
+      "line": 49,
+      "token": "42",
+      "value": 42.0,
+      "decimals": 0,
+      "context": "- **The direction-blindness is near-total: 42 of 45 pairs returned exactly equal scores in both",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_diagnostics_addendum.json:n_pairs_exact_direction_tie"
+    },
+    {
+      "line": 49,
+      "token": "45",
+      "value": 45.0,
+      "decimals": 0,
+      "context": "- **The direction-blindness is near-total: 42 of 45 pairs returned exactly equal scores in both",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:n_pairs"
+    },
+    {
+      "line": 54,
+      "token": "0.1141",
+      "value": 0.1141,
+      "decimals": 4,
+      "context": "- The registered ungated cliff check fit a threshold better than a line (0.1141 vs 0.0656, a",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:cliff_check.sigmoid_r2"
+    },
+    {
+      "line": 54,
+      "token": "0.0656",
+      "value": 0.0656,
+      "decimals": 4,
+      "context": "- The registered ungated cliff check fit a threshold better than a line (0.1141 vs 0.0656, a",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:cliff_check.linear_r2"
+    },
+    {
+      "line": 55,
+      "token": "0.0485",
+      "value": 0.0485,
+      "decimals": 4,
+      "context": "difference of 0.0485, best threshold near affinity 0.7524) \u2014 but **both fits are weak**, and on",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    },
+    {
+      "line": 55,
+      "token": "0.7524",
+      "value": 0.7524,
+      "decimals": 4,
+      "context": "difference of 0.0485, best threshold near affinity 0.7524) \u2014 but **both fits are weak**, and on",
+      "status": "VERIFIED",
+      "receipt_ref": "b48_result.json:cliff_check.best_threshold_affinity"
+    },
+    {
+      "line": 73,
+      "token": "60",
+      "value": 60.0,
+      "decimals": 0,
+      "context": "Ten models, one 96-concept battery, one extraction, k = 60, single seed, and an INVALID verdict",
+      "status": "ABSTAIN",
+      "receipt_ref": "spec-or-historical"
+    }
+  ]
 }
