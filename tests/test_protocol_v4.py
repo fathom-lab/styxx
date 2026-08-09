@@ -110,6 +110,63 @@ def test_near_miss_within_rounding_refuses(mk):
         Experiment(mk()).score({"m": 0.250001, "pool": POOL, "dq": ["b"]})
 
 
+def _mk_raw(tmp_path, md_text):
+    p = tmp_path / "PREREG_raw.md"
+    p.write_text(md_text, encoding="utf-8")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "-A"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "-c", "user.email=t@t", "-c", "user.name=t",
+                    "commit", "-qm", "raw"], cwd=tmp_path, check=True)
+    return p
+
+
+def test_multi_fence_refuses(tmp_path):
+    """Red team D1: a hidden or display fence must not shadow the visible block."""
+    F = "```"
+    honest = json.dumps(BASE)
+    decoy = honest.replace("0.2", "99")
+    p = _mk_raw(tmp_path,
+                f"# d\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n\n{F}gates\n{honest}\n{F}\n")
+    with pytest.raises(GateSpecError, match="2 .*fences"):
+        Experiment(p)
+
+
+def test_duplicate_json_key_refuses(tmp_path):
+    """Red team D2: json.loads keeping the last duplicate key was a shadowing channel."""
+    F = "```"
+    dup = json.dumps(BASE).replace('"excluding": "dq"',
+                                   '"excluding": "dq", "excluding": "dq_decoy"')
+    p = _mk_raw(tmp_path, f"# d\n\n{F}gates\n{dup}\n{F}\n")
+    with pytest.raises(GateSpecError, match="duplicate key"):
+        Experiment(p)
+
+
+def test_mixed_type_excluding_refuses_typed(mk):
+    """Red team D8: previously a raw TypeError, i.e. a crash instead of a refusal."""
+    with pytest.raises(GateSpecError, match="must be strings"):
+        Experiment(mk()).score({"m": 0.25, "pool": POOL, "dq": [1, "b"]})
+
+
+def test_numpy_members_aggregate(mk):
+    """Red team D9: finite numpy scalars are numbers, not refusals."""
+    np = pytest.importorskip("numpy")
+    pool = {"a": np.float32(0.30), "b": np.float64(0.15), "c": np.int64(1)}
+    # The quoted metric must come from the same stored values — float32(0.30) widens to
+    # 0.30000001..., and quoting the python literal 0.30 against it is a genuine mismatch the
+    # exact comparison correctly refuses (same-precision-both-sides convention, red team D5).
+    v = Experiment(mk()).score({"m": float(pool["a"]), "pool": pool, "dq": ["b", "c"]})
+    assert v.verdict == "FAIL"          # scored (0.3000... > 0.2), not refused
+
+
+def test_check_metrics_sees_composition_paths(mk):
+    """Red team D4: the pre-run tool must catch an absent over-path before the compute."""
+    e = Experiment(mk())
+    out = e.check_metrics({"m": 0.25, "dq": ["b"]})     # pool missing
+    assert out["G:over"]["present"] is False and out["G:over"]["usable"] is False
+    ok = e.check_metrics({"m": 0.25, "pool": POOL, "dq": ["b"]})
+    assert ok["G:over"]["usable"] is True and ok["G:excluding"]["usable"] is True
+
+
 def test_e1_retro_case_refuses_against_committed_receipt():
     """The real defect, pinned forever: E1's G1 with a v4 declaration against e1_result.json."""
     e1 = json.loads((ROOT / "papers" / "first-afference" / "e1_result.json")

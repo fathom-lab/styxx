@@ -1,6 +1,7 @@
 {
   "prereg": "PREREG_protocol_v4_composition_2026_08_09.md",
   "smoke": false,
+  "refusal_site_note": "agg_not_min_or_max and half_declaration_agg_without_over refuse at Experiment construction (spec validation), not in score(); the frozen metric_means says 'score() raised' and is imprecise on those two (red team D7). Both refusals occur before any verdict, which is the property the gate protects.",
   "violation_cases": {
     "e1_shape_quotes_unrestricted_min": {
       "refused": true,
@@ -53,6 +54,26 @@
     "max_agg_quotes_excluded_max": {
       "refused": true,
       "detail": "refused: gate 'G': COMPOSITION VIOLATION \u2014 metric quotes 0.3 but the declared max over 'pool' excluding ['a']"
+    },
+    "mixed_type_excluding_list": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'excluding' entries must be strings naming members of 'over'; got [1]"
+    },
+    "hidden_fence_in_html_comment": {
+      "refused": true,
+      "detail": "refused: prereg contains 2 ```gates fences \u2014 the frozen block must be unambiguous. A document that can show a"
+    },
+    "second_display_fence": {
+      "refused": true,
+      "detail": "refused: prereg contains 2 ```gates fences \u2014 the frozen block must be unambiguous. A document that can show a"
+    },
+    "duplicate_excluding_key": {
+      "refused": true,
+      "detail": "refused: duplicate key 'excluding' in the gates block \u2014 a block that declares the same key twice shows a read"
+    },
+    "duplicate_gates_toplevel_key": {
+      "refused": true,
+      "detail": "refused: duplicate key 'gates' in the gates block \u2014 a block that declares the same key twice shows a reader b"
     }
   },
   "valid_cases": {
@@ -85,7 +106,7 @@
     "refused": true,
     "detail": "refused: gate 'G1': COMPOSITION VIOLATION \u2014 metric quotes 0.1436 but the declared min over 'pooled_median_abs_rel_error' excluding ['ar1_closed_form'] recomputes to 0.25"
   },
-  "n_violation_mutants": 13,
+  "n_violation_mutants": 18,
   "frac_violation_mutants_refused": 1.0,
   "n_valid_cases": 6,
   "frac_valid_cases_scored": 1.0,

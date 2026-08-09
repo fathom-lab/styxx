@@ -41,6 +41,7 @@ from __future__ import annotations
 import hashlib
 import math
 import json
+import numbers
 import re
 import subprocess
 from dataclasses import dataclass, field
@@ -105,13 +106,38 @@ class Experiment:
             raise PrologueError(f"prereg not found: {self.prereg}")
         self.prereg_commit = self._committed_at()
         text = self.prereg.read_text(encoding="utf-8")
-        m = _GATES_RE.search(text)
-        if not m:
+        matches = _GATES_RE.findall(text)
+        if not matches:
             raise GateSpecError("prereg has no ```gates block — nothing frozen to score against")
-        self._gates_text = m.group(1)
+        if len(matches) > 1:
+            # Red team 2026-08-09 (v4 audit, D1): re.search takes the FIRST fence anywhere in
+            # the file — including one hidden in an HTML comment, or a display fence showing an
+            # example block — so the frozen document could show a reader one gates block and
+            # score against another. This held for every protocol version since v1; the corpus
+            # was measured clean (0 multi-fence preregs), so refusing rewrites no history.
+            raise GateSpecError(
+                f"prereg contains {len(matches)} ```gates fences — the frozen block must be "
+                f"unambiguous. A document that can show a reader one block and score against "
+                f"another is not frozen. Remove or de-fence all but one.")
+        self._gates_text = matches[0]
         self.gates_sha256 = hashlib.sha256(self._gates_text.encode("utf-8")).hexdigest()
+
+        def _no_dup_keys(pairs):
+            # Red team 2026-08-09 (v4 audit, D2): json.loads silently keeps the LAST duplicate
+            # key, so '"excluding": "real", "excluding": "decoy"' displayed both while the
+            # machine honoured only the decoy. Corpus measured clean; refusal rewrites nothing.
+            seen = {}
+            for k, v in pairs:
+                if k in seen:
+                    raise GateSpecError(
+                        f"duplicate key {k!r} in the gates block — a block that declares the "
+                        f"same key twice shows a reader both and honours only the last, which "
+                        f"is a shadowing channel, not a typo to forgive")
+                seen[k] = v
+            return seen
+
         try:
-            spec = json.loads(self._gates_text)
+            spec = json.loads(self._gates_text, object_pairs_hook=_no_dup_keys)
         except json.JSONDecodeError as e:
             raise GateSpecError(f"gates block is not valid JSON: {e}") from e
         for key in ("gates", "outcomes", "smoke_verdict"):
@@ -200,6 +226,27 @@ class Experiment:
                          f"resolves to {type(val).__name__}"
                          f"{' (NaN/inf)' if isinstance(val, float) else ''} — score() cannot "
                          f"compare it"}
+        # v4 composition paths get the same pre-run resolution (red team D4: the pre-run safety
+        # tool previously passed a result whose 'over' path was absent, and score() then refused
+        # after the compute was spent — the exact failure mode this method exists to prevent).
+        for name, c in self.composition.items():
+            for kind in ("over", "excluding"):
+                if kind not in c:
+                    continue
+                key = f"{name}:{kind}"
+                try:
+                    val = _resolve(result, c[kind])
+                except GateSpecError:
+                    out[key] = {"path": c[kind], "present": False, "usable": False,
+                                "note": ("smoke run" if smoke else
+                                         f"composition path ({kind}) not in result")}
+                    continue
+                want = dict if kind == "over" else list
+                ok = isinstance(val, want) and (bool(val) if kind == "over" else True)
+                out[key] = {"path": c[kind], "present": True, "usable": ok,
+                            "note": None if ok else
+                            f"composition path ({kind}) resolves to {type(val).__name__}; "
+                            f"score() will refuse it"}
         return out
 
     # -- the freeze check --------------------------------------------------
@@ -243,6 +290,14 @@ class Experiment:
                 raise GateSpecError(
                     f"gate {name!r}: 'excluding' path {c['excluding']!r} must resolve to a "
                     f"list of member names, got {type(exc).__name__}")
+            bad_names = [e for e in exc if not isinstance(e, str)]
+            if bad_names:
+                # A mixed-type list previously crashed the sorted(set-difference) below with a
+                # raw TypeError, which a harness catching only GateSpecError records as a crash
+                # rather than a refusal (red team D8).
+                raise GateSpecError(
+                    f"gate {name!r}: 'excluding' entries must be strings naming members of "
+                    f"'over'; got {bad_names!r}")
             unknown = sorted(set(exc) - set(pop))
             if unknown:
                 raise GateSpecError(
@@ -257,13 +312,22 @@ class Experiment:
                 f"an empty population is not a measurement")
         vals = []
         for k, v in eligible.items():
-            if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v):
+            # numbers.Real admits numpy float32/int64 scalars in in-process receipts (red team
+            # D9: they are finite numbers and were refused with a wrong diagnosis); bool is a
+            # Real and stays banned.
+            if isinstance(v, bool) or not isinstance(v, numbers.Real) \
+                    or not math.isfinite(float(v)):
                 raise GateSpecError(
                     f"gate {name!r}: member {k!r} of {c['over']!r} is {v!r}, which cannot be "
                     f"aggregated")
             vals.append(float(v))
         recomputed = min(vals) if c["agg"] == "min" else max(vals)
         if not math.isclose(float(quoted), recomputed, rel_tol=0.0, abs_tol=1e-12):
+            # The comparison is exact (1e-12) by design: rounding forgiveness would readmit
+            # near-miss shadowing. The convention this imposes (red team D5): store per-member
+            # values at the same precision you quote the metric — round both or neither. A
+            # runner quoting round(min, 4) over full-precision members refuses HERE, loudly,
+            # before any verdict; that is the fail-safe direction and it is intentional.
             members = sorted(k for k, v in eligible.items()
                              if math.isclose(float(v), recomputed, rel_tol=0.0, abs_tol=1e-12))
             raise GateSpecError(

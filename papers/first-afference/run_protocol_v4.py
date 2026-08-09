@@ -91,7 +91,47 @@ def main() -> int:
         "max_agg_quotes_excluded_max":
             _case(gates={"agg": "max", "op": ">=", "value": 0.1},
                   result={"m": 0.30, "pool": ok_pool, "dq": ["a"]}),
+        "mixed_type_excluding_list":
+            _case(result={"m": 0.25, "pool": ok_pool, "dq": [1, "b"]}),
     }
+
+    # ---- parser-shadowing mutants (red team D1/D2): the frozen document must not be able to
+    # show a reader one gates block while the machine scores another. These need raw prereg
+    # text, not the BASE-spec path.
+    def _raw_case(md_text, result):
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            p = tmp / "PREREG_case.md"
+            p.write_text(md_text, encoding="utf-8")
+            subprocess.run(["git", "init", "-q"], cwd=tmp, check=True)
+            subprocess.run(["git", "add", "-A"], cwd=tmp, check=True)
+            subprocess.run(["git", "-c", "user.email=exam@local", "-c", "user.name=exam",
+                            "commit", "-qm", "case"], cwd=tmp, check=True)
+            try:
+                v = Experiment(p).score(result)
+                return False, f"scored {v.verdict}"
+            except GateSpecError as e:
+                return True, f"refused: {str(e)[:100]}"
+
+    honest = json.dumps(BASE)
+    decoy = json.dumps({"gates": {"G": {"metric": "m", "op": "<=", "value": 99}},
+                        "outcomes": [{"when": {"G": True}, "verdict": "PASS"},
+                                     {"when": {"G": False}, "verdict": "FAIL"}],
+                        "smoke_verdict": "SMOKE"})
+    e1_shape = {"m": 0.15, "pool": ok_pool, "dq": ["b"]}
+    F = "```"
+    violations["hidden_fence_in_html_comment"] = _raw_case(
+        f"# doc\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n\n{F}gates\n{honest}\n{F}\n", e1_shape)
+    violations["second_display_fence"] = _raw_case(
+        f"# doc\n\n{F}gates\n{honest}\n{F}\n\nexample:\n\n{F}gates\n{decoy}\n{F}\n", e1_shape)
+    violations["duplicate_excluding_key"] = _raw_case(
+        f"# doc\n\n{F}gates\n"
+        + honest.replace('"excluding": "dq"', '"excluding": "dq", "excluding": "dq_decoy"')
+        + f"\n{F}\n", {"m": 0.15, "pool": ok_pool, "dq": ["b"], "dq_decoy": []})
+    violations["duplicate_gates_toplevel_key"] = _raw_case(
+        f"# doc\n\n{F}gates\n" + honest[:-1] + ', "gates": '
+        + json.dumps({"G": {"metric": "m", "op": "<=", "value": 99}}) + "}" + f"\n{F}\n",
+        e1_shape)
 
     valids = {
         "correct_min_with_exclusion":
@@ -163,6 +203,11 @@ def main() -> int:
             diffs.append({"result": res_file.name, "was": old, "now": new})
 
     res = {"prereg": PREREG, "smoke": SMOKE,
+           "refusal_site_note": ("agg_not_min_or_max and half_declaration_agg_without_over "
+                                 "refuse at Experiment construction (spec validation), not in "
+                                 "score(); the frozen metric_means says 'score() raised' and "
+                                 "is imprecise on those two (red team D7). Both refusals occur "
+                                 "before any verdict, which is the property the gate protects."),
            "violation_cases": {k: {"refused": r, "detail": s} for k, (r, s) in violations.items()},
            "valid_cases": {k: {"scored": not r, "detail": s} for k, (r, s) in valids.items()},
            "e1_retro_case": {"refused": retro[0], "detail": retro[1]},
