@@ -132,6 +132,21 @@ def main() -> int:
         f"# doc\n\n{F}gates\n" + honest[:-1] + ', "gates": '
         + json.dumps({"G": {"metric": "m", "op": "<=", "value": 99}}) + "}" + f"\n{F}\n",
         e1_shape)
+    # Verification-pass F1/F2 vectors: the fence guard must count blocks a HUMAN could read as
+    # gates, and keys a human cannot distinguish must refuse.
+    violations["tilde_honest_fence_hidden_backtick_decoy"] = _raw_case(
+        f"# doc\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n\n~~~gates\n{honest}\n~~~\n", e1_shape)
+    violations["uppercase_gates_fence_only"] = _raw_case(
+        f"# doc\n\n{F}GATES\n{honest}\n{F}\n", e1_shape)
+    violations["zero_width_char_in_fence_info"] = _raw_case(
+        f"# doc\n\n{F}ga​tes\n{honest}\n{F}\n", e1_shape)
+    violations["fence_only_inside_html_comment"] = _raw_case(
+        f"# doc\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n", e1_shape)
+    violations["homoglyph_excluding_key"] = _raw_case(
+        f"# doc\n\n{F}gates\n"
+        + honest.replace('"excluding": "dq"',
+                         '"exсluding": "dq", "excluding": "dq_decoy"')
+        + f"\n{F}\n", {"m": 0.15, "pool": ok_pool, "dq": ["b"], "dq_decoy": []})
 
     valids = {
         "correct_min_with_exclusion":

@@ -127,7 +127,7 @@ def test_multi_fence_refuses(tmp_path):
     decoy = honest.replace("0.2", "99")
     p = _mk_raw(tmp_path,
                 f"# d\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n\n{F}gates\n{honest}\n{F}\n")
-    with pytest.raises(GateSpecError, match="2 .*fences"):
+    with pytest.raises(GateSpecError, match="2 gates-like"):
         Experiment(p)
 
 
@@ -165,6 +165,39 @@ def test_check_metrics_sees_composition_paths(mk):
     assert out["G:over"]["present"] is False and out["G:over"]["usable"] is False
     ok = e.check_metrics({"m": 0.25, "pool": POOL, "dq": ["b"]})
     assert ok["G:over"]["usable"] is True and ok["G:excluding"]["usable"] is True
+
+
+def test_tilde_fence_cannot_shadow(tmp_path):
+    """Verification F1: a ~~~gates block renders as gates to a human; a hidden backtick decoy
+    must not become the machine's single match."""
+    F = "```"
+    honest, decoy = json.dumps(BASE), json.dumps(BASE).replace("0.2", "99")
+    p = _mk_raw(tmp_path,
+                f"# d\n\n<!--\n{F}gates\n{decoy}\n{F}\n-->\n\n~~~gates\n{honest}\n~~~\n")
+    with pytest.raises(GateSpecError, match="gates-like"):
+        Experiment(p)
+
+
+def test_case_variant_fence_refuses(tmp_path):
+    p = _mk_raw(tmp_path, "# d\n\n```GATES\n" + json.dumps(BASE) + "\n```\n")
+    with pytest.raises(GateSpecError, match="not a plain unindented"):
+        Experiment(p)
+
+
+def test_fence_only_in_comment_refuses(tmp_path):
+    p = _mk_raw(tmp_path, "# d\n\n<!--\n```gates\n" + json.dumps(BASE) + "\n```\n-->\n")
+    with pytest.raises(GateSpecError, match="not a plain unindented"):
+        Experiment(p)
+
+
+def test_homoglyph_key_refuses(tmp_path):
+    """Verification F2: a Cyrillic-с 'exсluding' is a different key to json and the same word
+    to a human — non-ASCII keys refuse outright."""
+    dup = json.dumps(BASE).replace('"excluding": "dq"',
+                                   '"exсluding": "dq_shown", "excluding": "dq_decoy"')
+    p = _mk_raw(tmp_path, "# d\n\n```gates\n" + dup + "\n```\n")
+    with pytest.raises(GateSpecError, match="non-ASCII key"):
+        Experiment(p)
 
 
 def test_e1_retro_case_refuses_against_committed_receipt():

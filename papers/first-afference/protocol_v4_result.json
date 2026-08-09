@@ -61,11 +61,11 @@
     },
     "hidden_fence_in_html_comment": {
       "refused": true,
-      "detail": "refused: prereg contains 2 ```gates fences \u2014 the frozen block must be unambiguous. A document that can show a"
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '```gates']) \u2014 the frozen block must be una"
     },
     "second_display_fence": {
       "refused": true,
-      "detail": "refused: prereg contains 2 ```gates fences \u2014 the frozen block must be unambiguous. A document that can show a"
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '```gates']) \u2014 the frozen block must be una"
     },
     "duplicate_excluding_key": {
       "refused": true,
@@ -74,6 +74,26 @@
     "duplicate_gates_toplevel_key": {
       "refused": true,
       "detail": "refused: duplicate key 'gates' in the gates block \u2014 a block that declares the same key twice shows a reader b"
+    },
+    "tilde_honest_fence_hidden_backtick_decoy": {
+      "refused": true,
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '~~~gates']) \u2014 the frozen block must be una"
+    },
+    "uppercase_gates_fence_only": {
+      "refused": true,
+      "detail": "refused: the single gates-like block ('```GATES') is not a plain unindented ```gates fence outside HTML comme"
+    },
+    "zero_width_char_in_fence_info": {
+      "refused": true,
+      "detail": "refused: the single gates-like block ('```ga\\u200btes') is not a plain unindented ```gates fence outside HTML"
+    },
+    "fence_only_inside_html_comment": {
+      "refused": true,
+      "detail": "refused: the single gates-like block ('```gates') is not a plain unindented ```gates fence outside HTML comme"
+    },
+    "homoglyph_excluding_key": {
+      "refused": true,
+      "detail": "refused: non-ASCII key 'ex\u0441luding' in the gates block \u2014 a key a human cannot distinguish from an ASCII one is"
     }
   },
   "valid_cases": {
@@ -106,7 +126,7 @@
     "refused": true,
     "detail": "refused: gate 'G1': COMPOSITION VIOLATION \u2014 metric quotes 0.1436 but the declared min over 'pooled_median_abs_rel_error' excluding ['ar1_closed_form'] recomputes to 0.25"
   },
-  "n_violation_mutants": 18,
+  "n_violation_mutants": 23,
   "frac_violation_mutants_refused": 1.0,
   "n_valid_cases": 6,
   "frac_valid_cases_scored": 1.0,

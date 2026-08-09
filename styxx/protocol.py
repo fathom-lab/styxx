@@ -60,6 +60,27 @@ def undeclared_power_gates(prereg) -> list:
     return Experiment(prereg).undeclared_power_gates
 
 _GATES_RE = re.compile(r"```gates\s*\n(.*?)\n```", re.S)
+# Any fence-opener line whose info string could read as "gates" to a HUMAN: backtick or tilde
+# fences, any indent. The info string is normalized (Unicode format chars stripped, casefolded)
+# before comparison, so ```GATES, ~~~gates and a zero-width-corrupted ```ga​tes all count.
+_FENCE_OPENER_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})[ \t]*(\S*)", re.M)   # >3 spaces = not a
+# fence to a CommonMark renderer, so not to this count either; a 4-space-indented decoy that the
+# strict extractor might still match is caught by the matches-count check below instead.
+
+
+def _gates_like_fences(text: str) -> list[str]:
+    """Every fence-opener whose normalized info string is 'gates' — the human's view, not the
+    regex's. Verification pass F1 (2026-08-09): the multiplicity guard originally counted only
+    exact-lowercase-backtick fences, so a ~~~gates block could show a reader the honest
+    declaration while the machine's single ```gates match was a decoy hidden in an HTML comment.
+    The guard must be over blocks a human could read as gates, not over exact matches."""
+    import unicodedata
+    out = []
+    for m in _FENCE_OPENER_RE.finditer(text):
+        info = "".join(ch for ch in m.group(2) if unicodedata.category(ch) != "Cf").casefold()
+        if info == "gates":
+            out.append(m.group(0).strip())
+    return out
 _OPS = {">=": lambda a, b: a >= b, "<=": lambda a, b: a <= b,
         ">": lambda a, b: a > b, "<": lambda a, b: a < b,
         "==": lambda a, b: a == b}
@@ -106,19 +127,27 @@ class Experiment:
             raise PrologueError(f"prereg not found: {self.prereg}")
         self.prereg_commit = self._committed_at()
         text = self.prereg.read_text(encoding="utf-8")
-        matches = _GATES_RE.findall(text)
-        if not matches:
+        # The authority question, settled before any parsing: how many blocks could a HUMAN read
+        # as the gates block? Counted on the ORIGINAL text (an HTML comment hides a fence from a
+        # renderer but not from this count) and normalized (tilde fences, any case, zero-width
+        # chars — verification pass F1 broke the exact-match version of this guard with all
+        # three). Anything other than exactly one, in the one supported form, refuses.
+        gates_like = _gates_like_fences(text)
+        if not gates_like:
             raise GateSpecError("prereg has no ```gates block — nothing frozen to score against")
-        if len(matches) > 1:
-            # Red team 2026-08-09 (v4 audit, D1): re.search takes the FIRST fence anywhere in
-            # the file — including one hidden in an HTML comment, or a display fence showing an
-            # example block — so the frozen document could show a reader one gates block and
-            # score against another. This held for every protocol version since v1; the corpus
-            # was measured clean (0 multi-fence preregs), so refusing rewrites no history.
+        if len(gates_like) > 1:
             raise GateSpecError(
-                f"prereg contains {len(matches)} ```gates fences — the frozen block must be "
-                f"unambiguous. A document that can show a reader one block and score against "
-                f"another is not frozen. Remove or de-fence all but one.")
+                f"prereg contains {len(gates_like)} gates-like fenced blocks ({gates_like}) — "
+                f"the frozen block must be unambiguous. A document that can show a reader one "
+                f"block and score against another is not frozen; remove or rename all but one.")
+        stripped = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+        matches = _GATES_RE.findall(stripped)
+        if len(matches) != 1 or gates_like[0] != "```gates":
+            raise GateSpecError(
+                f"the single gates-like block ({gates_like[0]!r}) is not a plain unindented "
+                f"```gates fence outside HTML comments — the one form both a renderer and this "
+                f"parser read identically. A block only one of them can see is a shadowing "
+                f"channel, not a style choice.")
         self._gates_text = matches[0]
         self.gates_sha256 = hashlib.sha256(self._gates_text.encode("utf-8")).hexdigest()
 
@@ -128,6 +157,15 @@ class Experiment:
             # machine honoured only the decoy. Corpus measured clean; refusal rewrites nothing.
             seen = {}
             for k, v in pairs:
+                if not k.isascii():
+                    # Verification pass F2 (2026-08-09): "exсluding" with a Cyrillic с is a
+                    # DIFFERENT key to json and the same word to a human — two live
+                    # declarations, machine honours one. Byte-equality dup detection cannot see
+                    # it; an ASCII allowlist can. No committed gates block has non-ASCII keys.
+                    raise GateSpecError(
+                        f"non-ASCII key {k!r} in the gates block — a key a human cannot "
+                        f"distinguish from an ASCII one is a shadowing channel. Keys must be "
+                        f"ASCII.")
                 if k in seen:
                     raise GateSpecError(
                         f"duplicate key {k!r} in the gates block — a block that declares the "
@@ -355,7 +393,11 @@ class Experiment:
             if op is None:
                 raise GateSpecError(f"gate {name!r}: unknown op {g.get('op')!r}")
             _v = _resolve(result, g["metric"])
-            if isinstance(_v, bool) or not isinstance(_v, (int, float)) or not math.isfinite(_v):
+            # numbers.Real for consistency with the composition member guard (verification pass
+            # F4: the two guards disagreed on what a number is — np.float32 aggregated as a
+            # member but refused as a quoted metric). bool stays banned; both refuse safely.
+            if isinstance(_v, bool) or not isinstance(_v, numbers.Real) \
+                    or not math.isfinite(float(_v)):
                 raise GateSpecError(
                     f"gate {name!r}: metric {g['metric']!r} resolves to {_v!r}, which cannot be "
                     f"compared. A NaN previously made every comparison False and returned the "
