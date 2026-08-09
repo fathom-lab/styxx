@@ -127,6 +127,38 @@ class Experiment:
                 f"put None into metric_paths and made check_metrics() raise AttributeError — the "
                 f"pre-run safety tool crashing on the most mis-specified gate there is.")
         self.metric_means = {n: g.get("metric_means") for n, g in spec["gates"].items()}
+
+        # -- v4: declared gate composition ------------------------------------------------------
+        # E1 (cycle 159): G1 judged the minimum over ALL candidates while G2 disqualified one of
+        # them in the same run. Every component was individually correct; the composition was
+        # wrong, and nothing here looked at relationships between gates. A gate whose metric is
+        # an aggregate over a set may now declare that set:
+        #   "agg": "min"|"max"  — which extremum the metric claims to be
+        #   "over": path        — a dict of per-member values in the result
+        #   "excluding": path   — optional; a list of member names to exclude first
+        # score() recomputes the aggregate over the declared population minus the declared
+        # exclusions and REFUSES if the quoted metric does not equal the recomputation. This
+        # checks declared composition only — a ratchet, not a proof.
+        self.composition = {}
+        for n, g in spec["gates"].items():
+            keys = {k: g.get(k) for k in ("agg", "over", "excluding") if k in g}
+            if not keys:
+                continue
+            if "agg" not in keys or "over" not in keys:
+                raise GateSpecError(
+                    f"gate {n!r}: a composition declaration needs both 'agg' and 'over' "
+                    f"(got {sorted(keys)}). Half a declaration checks nothing while looking "
+                    f"like it checks something, which is worse than no declaration.")
+            if keys["agg"] not in ("min", "max"):
+                raise GateSpecError(
+                    f"gate {n!r}: 'agg' must be \"min\" or \"max\", got {keys['agg']!r}")
+            if not isinstance(keys["over"], str) or not keys["over"]:
+                raise GateSpecError(f"gate {n!r}: 'over' must be a non-empty result path")
+            if "excluding" in keys and (not isinstance(keys["excluding"], str)
+                                        or not keys["excluding"]):
+                raise GateSpecError(
+                    f"gate {n!r}: 'excluding' must be a non-empty result path when present")
+            self.composition[n] = keys
         self.undeclared_power_gates = sorted(
             n for n, v in self.power_basis.items()
             if not (isinstance(v, str) and v.strip()))   # " " and true are NOT declarations
@@ -190,6 +222,58 @@ class Experiment:
 
     # -- scoring -----------------------------------------------------------
 
+    def _check_composition(self, name: str, quoted: float, result: dict) -> None:
+        """Recompute a declared aggregate and refuse if the quoted metric disagrees.
+
+        The E1 defect made concrete: a metric quoting the unrestricted minimum cannot equal the
+        eligible-restricted recomputation when the two differ, so declaring the population turns
+        that mistake from a silent pass into a refusal. Everything ill-formed refuses — a
+        composition check that guesses is a composition check that can be gamed.
+        """
+        c = self.composition[name]
+        pop = _resolve(result, c["over"])
+        if not isinstance(pop, dict) or not pop:
+            raise GateSpecError(
+                f"gate {name!r}: 'over' path {c['over']!r} must resolve to a non-empty dict of "
+                f"per-member values, got {type(pop).__name__}")
+        excluded: set = set()
+        if "excluding" in c:
+            exc = _resolve(result, c["excluding"])
+            if not isinstance(exc, list):
+                raise GateSpecError(
+                    f"gate {name!r}: 'excluding' path {c['excluding']!r} must resolve to a "
+                    f"list of member names, got {type(exc).__name__}")
+            unknown = sorted(set(exc) - set(pop))
+            if unknown:
+                raise GateSpecError(
+                    f"gate {name!r}: 'excluding' names members absent from 'over': {unknown}. "
+                    f"An exclusion that excludes nothing hides a key mismatch between the two "
+                    f"fields, and the check would silently pass on the full population.")
+            excluded = set(exc)
+        eligible = {k: v for k, v in pop.items() if k not in excluded}
+        if not eligible:
+            raise GateSpecError(
+                f"gate {name!r}: every member of {c['over']!r} is excluded — an aggregate over "
+                f"an empty population is not a measurement")
+        vals = []
+        for k, v in eligible.items():
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v):
+                raise GateSpecError(
+                    f"gate {name!r}: member {k!r} of {c['over']!r} is {v!r}, which cannot be "
+                    f"aggregated")
+            vals.append(float(v))
+        recomputed = min(vals) if c["agg"] == "min" else max(vals)
+        if not math.isclose(float(quoted), recomputed, rel_tol=0.0, abs_tol=1e-12):
+            members = sorted(k for k, v in eligible.items()
+                             if math.isclose(float(v), recomputed, rel_tol=0.0, abs_tol=1e-12))
+            raise GateSpecError(
+                f"gate {name!r}: COMPOSITION VIOLATION — metric quotes {quoted!r} but the "
+                f"declared {c['agg']} over {c['over']!r}"
+                + (f" excluding {sorted(excluded)}" if excluded else "")
+                + f" recomputes to {recomputed!r} (attained by {members}). The quoted value "
+                f"belongs to a population this prereg's own declarations rule out. This is the "
+                f"E1 defect (cycle 159): a gate passing on a candidate another gate disqualified.")
+
     def score(self, result: dict, smoke: bool = False) -> Verdict:
         # power_basis rides on the Verdict as metadata; verdict STRINGS are untouched so every
         # committed seal keeps verifying byte-identically.
@@ -212,6 +296,8 @@ class Experiment:
                     f"gate {name!r}: metric {g['metric']!r} resolves to {_v!r}, which cannot be "
                     f"compared. A NaN previously made every comparison False and returned the "
                     f"frozen table's false branch as a SEALED verdict, with no refusal anywhere.")
+            if name in self.composition:
+                self._check_composition(name, _v, result)
             fired[name] = bool(op(_v, g["value"]))
         for row in self.spec["outcomes"]:
             if all(fired.get(k) == v for k, v in row["when"].items()):

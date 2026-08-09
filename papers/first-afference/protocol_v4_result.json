@@ -1,0 +1,130 @@
+{
+  "prereg": "PREREG_protocol_v4_composition_2026_08_09.md",
+  "smoke": false,
+  "violation_cases": {
+    "e1_shape_quotes_unrestricted_min": {
+      "refused": true,
+      "detail": "refused: gate 'G': COMPOSITION VIOLATION \u2014 metric quotes 0.15 but the declared min over 'pool' excluding ['b'"
+    },
+    "over_path_missing": {
+      "refused": true,
+      "detail": "refused: metric 'pool' not present in result"
+    },
+    "over_not_a_dict": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'over' path 'pool' must resolve to a non-empty dict of per-member values, got list"
+    },
+    "over_empty_dict": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'over' path 'pool' must resolve to a non-empty dict of per-member values, got dict"
+    },
+    "excluding_unknown_member": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'excluding' names members absent from 'over': ['zz']. An exclusion that excludes nothing h"
+    },
+    "excluding_not_a_list": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'excluding' path 'dq' must resolve to a list of member names, got str"
+    },
+    "every_member_excluded": {
+      "refused": true,
+      "detail": "refused: gate 'G': every member of 'pool' is excluded \u2014 an aggregate over an empty population is not a measur"
+    },
+    "member_value_nan": {
+      "refused": true,
+      "detail": "refused: gate 'G': member 'b' of 'pool' is nan, which cannot be aggregated"
+    },
+    "member_value_bool": {
+      "refused": true,
+      "detail": "refused: gate 'G': member 'b' of 'pool' is True, which cannot be aggregated"
+    },
+    "agg_not_min_or_max": {
+      "refused": true,
+      "detail": "refused: gate 'G': 'agg' must be \"min\" or \"max\", got 'mean'"
+    },
+    "half_declaration_agg_without_over": {
+      "refused": true,
+      "detail": "refused: gate 'G': a composition declaration needs both 'agg' and 'over' (got ['agg']). Half a declaration ch"
+    },
+    "quoted_off_by_rounding_1e6": {
+      "refused": true,
+      "detail": "refused: gate 'G': COMPOSITION VIOLATION \u2014 metric quotes 0.250001 but the declared min over 'pool' excluding "
+    },
+    "max_agg_quotes_excluded_max": {
+      "refused": true,
+      "detail": "refused: gate 'G': COMPOSITION VIOLATION \u2014 metric quotes 0.3 but the declared max over 'pool' excluding ['a']"
+    }
+  },
+  "valid_cases": {
+    "correct_min_with_exclusion": {
+      "scored": true,
+      "detail": "scored FAIL"
+    },
+    "correct_min_no_exclusion_list_empty": {
+      "scored": true,
+      "detail": "scored PASS"
+    },
+    "correct_without_excluding_key": {
+      "scored": true,
+      "detail": "scored PASS"
+    },
+    "correct_max": {
+      "scored": true,
+      "detail": "scored PASS"
+    },
+    "no_declaration_at_all_still_scores": {
+      "scored": true,
+      "detail": "scored PASS"
+    },
+    "single_member_after_exclusion": {
+      "scored": true,
+      "detail": "scored FAIL"
+    }
+  },
+  "e1_retro_case": {
+    "refused": true,
+    "detail": "refused: gate 'G1': COMPOSITION VIOLATION \u2014 metric quotes 0.1436 but the declared min over 'pooled_median_abs_rel_error' excluding ['ar1_closed_form'] recomputes to 0.25"
+  },
+  "n_violation_mutants": 13,
+  "frac_violation_mutants_refused": 1.0,
+  "n_valid_cases": 6,
+  "frac_valid_cases_scored": 1.0,
+  "e1_retro_case_refused": 1.0,
+  "n_corpus_results_rescored": 32,
+  "n_corpus_verdict_diffs": 0,
+  "corpus_diffs": [],
+  "metric_check": {
+    "G0_mutants_refused": {
+      "path": "frac_violation_mutants_refused",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G1_valid_still_scores": {
+      "path": "frac_valid_cases_scored",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G2_e1_retro_refused": {
+      "path": "e1_retro_case_refused",
+      "present": true,
+      "usable": true,
+      "note": null
+    },
+    "G3_corpus_byte_identical": {
+      "path": "n_corpus_verdict_diffs",
+      "present": true,
+      "usable": true,
+      "note": null
+    }
+  },
+  "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+  "gates": {
+    "G0_mutants_refused": true,
+    "G1_valid_still_scores": true,
+    "G2_e1_retro_refused": true,
+    "G3_corpus_byte_identical": true
+  },
+  "prereg_commit": "0a3d24c80b800d5b6eb1cd747f31b657b38be931"
+}
