@@ -1,0 +1,31 @@
+{
+  "seal": "seal/v0",
+  "verdict": "SEALED",
+  "document": "FINDING_protocol_v4_2026_08_09.md",
+  "document_sha256": "fd7303d4c63ea883eecd94bbc695dea13317af8b5b140b00748d7f68347fcadd",
+  "oath": {
+    "counts": {
+      "VERIFIED": 3,
+      "ABSTAIN": 6,
+      "UNGROUNDED": 0
+    },
+    "verdict": "OATH-HELD"
+  },
+  "protocol": [
+    {
+      "prereg": "PREREG_protocol_v4_composition_2026_08_09.md",
+      "result": "protocol_v4_result.json",
+      "frozen_verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+      "gates": {
+        "G0_mutants_refused": true,
+        "G1_valid_still_scores": true,
+        "G2_e1_retro_refused": true,
+        "G3_corpus_byte_identical": true
+      },
+      "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d",
+      "prereg_commit": "0a3d24c80b800d5b6eb1cd747f31b657b38be931"
+    }
+  ],
+  "refusals": [],
+  "seal_sha256": "ae791f5e4cb4b94644b2822b6216f9ba42309bbaac2da87d6e4fca8f0fa32bc8"
+}

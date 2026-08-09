@@ -1,0 +1,127 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "FINDING_protocol_v4_2026_08_09.md",
+  "document_sha256": "fd7303d4c63ea883eecd94bbc695dea13317af8b5b140b00748d7f68347fcadd",
+  "receipts_sha256": {
+    "protocol_v4_result.json": "3ad9e1ba44180900334865db97b6f7a567cddbf54d7df837c001ddbd60e3211b",
+    "protocol_v4_redteam_audit.json": "da5ec2f9fd01f69a0360267eee24c4bede44c98ee29e965a4acc83cb61f5e221"
+  },
+  "verifier_sha256": "d42a79cad59795c6f99b7c142f50b651df9ee44c7072868719bc954e9dcfb018",
+  "counts": {
+    "VERIFIED": 3,
+    "ABSTAIN": 6,
+    "UNGROUNDED": 0
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [
+    {
+      "line": 16,
+      "token": "159"
+    },
+    {
+      "line": 23,
+      "token": "0.1436"
+    },
+    {
+      "line": 32,
+      "token": "1"
+    },
+    {
+      "line": 46,
+      "token": "1"
+    },
+    {
+      "line": 53,
+      "token": "3"
+    },
+    {
+      "line": 88,
+      "token": "4"
+    }
+  ],
+  "ledger": [
+    {
+      "line": 16,
+      "token": "159",
+      "value": 159.0,
+      "decimals": 0,
+      "context": "E1 (cycle 159) produced a gate that passed on a value belonging to a candidate another gate had",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 23,
+      "token": "0.1436",
+      "value": 0.1436,
+      "decimals": 4,
+      "context": "`e1_result.json`, refuses with the violation named \u2014 the metric quotes 0.1436, the declared",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 32,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "The two ship-blocking defects in round 1 were not in the new mechanic. They were in the",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 46,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "- **Round 1** found the class (hidden fence, duplicate key). The fix counted exact-lowercase",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 48,
+      "token": "2",
+      "value": 2.0,
+      "decimals": 0,
+      "context": "- **Round 2 broke it**: a `~~~gates` fence \u2014 identical to ```` ```gates ```` in any renderer \u2014",
+      "status": "VERIFIED",
+      "receipt_ref": "protocol_v4_redteam_audit.json:measured_by_red_team.round1_ship_blockers"
+    },
+    {
+      "line": 53,
+      "token": "3",
+      "value": 3.0,
+      "decimals": 0,
+      "context": "- **Round 3 broke it again with one character**: Cyrillic `\u0430` in `g\u0430tes` \u2014 a letter, not a",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    },
+    {
+      "line": 57,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "- **Round 4 verified the rewrite**: one line-based tokenizer counts, validates, and extracts",
+      "status": "VERIFIED",
+      "receipt_ref": "protocol_v4_redteam_audit.json:rounds"
+    },
+    {
+      "line": 78,
+      "token": "1",
+      "value": 1.0,
+      "decimals": 0,
+      "context": "(`~~~gates`, case variants, extra backticks, 1\u20133-space indents) render as fences but refuse by",
+      "status": "VERIFIED",
+      "receipt_ref": "protocol_v4_result.json:frac_violation_mutants_refused"
+    },
+    {
+      "line": 88,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "exact fence semantics; the CommonMark rules used (3-space indent, tab as 4) are the spec's, and",
+      "status": "ABSTAIN",
+      "receipt_ref": null
+    }
+  ]
+}

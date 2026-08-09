@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.35.0] — 2026-08-09 — declared gate composition, and a parser rebuilt after its red team broke two fixes
+
+`styxx.protocol` gained the check that would have caught this program's sixth bar defect — and
+its pre-release red team found shadowing holes in the gates-block parser **every version since
+v1 had shared**. Four adversarial rounds; the fixes of rounds 1 and 2 were both broken by the
+verifier before the round-3 rewrite held. Shipped only on the adversary's explicit verdict.
+
+### Added
+- **Composition declarations on a gate** — `agg` (`"min"`/`"max"`), `over` (result path to a
+  dict of per-member values), `excluding` (optional path to a list of member names). `score()`
+  recomputes the aggregate over the declared population minus the declared exclusions and
+  **refuses on mismatch**, so a gate quoting a value that belongs to a member another gate
+  disqualified (the E1 defect, cycle 159) becomes a refusal instead of a silent pass. Checks
+  *declared* composition only — a ratchet, not a proof, and the prereg says so.
+- **`check_metrics` resolves composition paths** pre-run (`GATE:over` / `GATE:excluding`
+  entries), so an absent population field is caught before the compute is spent, not after.
+
+### Fixed — the parser, after four red-team rounds
+- **One scanner, one definition.** The gates block is now selected by a single line-based
+  tokenizer that counts, validates, and extracts from the same match. The old design — an
+  unanchored regex extractor plus (after round 1) a separate human-view counter — let every
+  divergence between the two act as a shadowing channel: a fence hidden in an HTML comment, a
+  `~~~gates` twin, a Cyrillic `а` in the info string, a tab-indented opener. All four scored an
+  E1-defective result in some round; all four now refuse.
+- **Duplicate JSON keys refuse** (previously `json.loads` silently honoured the last — a block
+  could display two `excluding` declarations and execute the decoy).
+- **Non-ASCII keys and non-ASCII fence info strings refuse as a class** — a homoglyph is
+  indistinguishable to a reader and distinct to the machine, and no normalization table is
+  trusted to enumerate that class.
+- Unterminated gates fences and gates fences inside (possibly unterminated) HTML comments
+  refuse; mixed-type exclusion lists get a typed refusal instead of a `TypeError`; both number
+  guards agree on `numbers.Real` (finite numpy scalars aggregate; `bool` stays banned).
+
+The committed corpus was measured clean of every one of these patterns — zero multi-fence,
+duplicate-key, non-ASCII-key or non-ASCII-info preregs — so nothing in frozen history changes
+meaning: 32 protocol-scored results re-score byte-identically, and the real v4 prereg's gates
+sha is stable across the rewrite.
+
+### Known fail-safe residuals (refuse, never mis-score)
+- An unpaired `<!--` inside a display code fence above the gates block false-refuses.
+- Non-plain fence forms (`~~~gates`, case variants, ≥4 backticks, 1–3-space indent) render as
+  fences to a human but refuse by design: the plain unindented lowercase ```` ```gates ```` is
+  the one form renderer and parser read identically.
+- A runner that forges the declared `over`/`excluding` fields is not caught (receipt-internal
+  consistency, not provenance): the residual defence remains an adversary reading the prereg.
+
+---
+
 ## [7.34.0] — 2026-08-07 — protocol records what intent could not, after a red team said DO NOT SHIP
 
 `styxx.protocol` scores every finding in this repo; 169 sealed certificates depend on it. It was
