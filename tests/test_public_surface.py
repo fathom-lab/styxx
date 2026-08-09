@@ -944,6 +944,72 @@ def test_learned_classifier_smoke(isolated_data_dir):
     assert isinstance(result, TrainResult)
 
 
+def _seed_classifier_audit(data_dir, monkeypatch):
+    """Write a synthetic chart.jsonl with two labeled categories."""
+    import json as _json
+    import time as _time
+    import styxx.config as config
+    # Earlier tests (autoboot) leave a sticky programmatic agent-name
+    # override that redirects data_dir() to agents/<name>/ — neutralize
+    # both override and env so chart.jsonl lands at the flat path.
+    monkeypatch.setattr(config, "_AGENT_NAME_OVERRIDE", None)
+    monkeypatch.delenv("STYXX_AGENT_NAME", raising=False)
+    now = _time.time()
+    lines = []
+    for i in range(15):
+        lines.append({"ts": now, "source": "live", "outcome": "correct",
+                      "prompt": f"prove that theorem {i} holds for every case",
+                      "phase4_pred": "reasoning"})
+        lines.append({"ts": now, "source": "live", "outcome": "correct",
+                      "prompt": f"what year did event number {i} happen",
+                      "phase4_pred": "recall"})
+    (data_dir / "chart.jsonl").write_text(
+        "\n".join(_json.dumps(e) for e in lines) + "\n", encoding="utf-8")
+
+
+def test_learned_classifier_roundtrip(isolated_data_dir, monkeypatch):
+    """Train saves JSON (not pickle); load reconstructs and classifies."""
+    pytest.importorskip("sklearn")
+    from styxx import train_text_classifier
+    from styxx.learned_classifier import classify_with_trained_model
+    _seed_classifier_audit(isolated_data_dir, monkeypatch)
+
+    result = train_text_classifier(min_samples=10, agent_name="rt-agent")
+    assert result.error is None
+    assert result.n_train == 30
+    assert result.n_categories == 2
+    assert result.saved_to is not None
+    assert result.saved_to.endswith("_text_clf.json")
+    saved = Path(result.saved_to)
+    assert saved.exists()
+    # Payload is plain JSON — no pickle anywhere on disk
+    payload = saved.read_text(encoding="utf-8")
+    assert payload.startswith("{")
+    assert list(isolated_data_dir.glob("**/*.pkl")) == []
+
+    out = classify_with_trained_model(
+        "prove that the theorem holds for case 3", agent_name="rt-agent")
+    assert out is not None
+    category, confidence = out
+    assert category == "reasoning"
+    assert 0.0 < confidence <= 1.0
+
+
+def test_learned_classifier_ignores_legacy_pickle(isolated_data_dir, monkeypatch, capsys):
+    """Legacy .pkl models are treated as absent, never unpickled."""
+    from styxx.learned_classifier import classify_with_trained_model
+    monkeypatch.delenv("STYXX_AGENT_NAME", raising=False)
+    models = isolated_data_dir / "models"
+    models.mkdir(parents=True, exist_ok=True)
+    # If this ever gets unpickled, pickle raises — the assert below
+    # proves the bytes are never fed to a loader at all.
+    (models / "legacy-agent_text_clf.pkl").write_bytes(b"\x80\x04not-a-model")
+    assert classify_with_trained_model("anything", agent_name="legacy-agent") is None
+    err = capsys.readouterr().err
+    assert "legacy pickle" in err
+    assert "retrain" in err
+
+
 def test_scan_symbol():
     """styxx.scan.run_scan exists and has the documented signature."""
     from styxx.scan import run_scan

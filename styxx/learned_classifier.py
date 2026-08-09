@@ -24,13 +24,19 @@ Why logistic regression / TF-IDF:
   - Falls back to the regex heuristic if sklearn isn't available
     or there aren't enough training examples
 
+Persistence is JSON (vocabulary, idf, coefficients), never pickle:
+the model dir may be attacker-writable, and pickle.load executes
+arbitrary code — same class as the 7.17.x RCE fix. Legacy .pkl
+models are never loaded; retrain to regenerate.
+
 1.0.0+.
 """
 
 from __future__ import annotations
 
+import json
 import os
-import pickle
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -54,6 +60,19 @@ class TrainResult:
         )
 
 
+# Vectorizer construction params — stored in the JSON payload and
+# re-applied on load so transform() matches training exactly.
+_VECTORIZER_PARAMS = {
+    "max_features": 5000,
+    "ngram_range": (1, 2),
+    "min_df": 2,
+    "sublinear_tf": True,
+}
+
+# Legacy pickle files we already noted on stderr (once per process).
+_LEGACY_PKL_NOTED: set = set()
+
+
 def _model_dir() -> Path:
     data_dir = os.environ.get("STYXX_DATA_DIR", "").strip()
     if data_dir:
@@ -62,6 +81,21 @@ def _model_dir() -> Path:
         d = Path.home() / ".styxx" / "models"
     d.mkdir(parents=True, exist_ok=True)
     return d
+
+
+def _logreg():
+    """LogisticRegression with the training config.
+
+    multi_class was removed in sklearn 1.7+ (multinomial is the only
+    behavior there); older versions need it pinned explicitly so
+    binary predict_proba matches across versions.
+    """
+    from sklearn.linear_model import LogisticRegression
+    try:
+        return LogisticRegression(max_iter=1000, C=1.0,
+                                  multi_class="multinomial", solver="lbfgs")
+    except TypeError:
+        return LogisticRegression(max_iter=1000, C=1.0, solver="lbfgs")
 
 
 def _load_training_data() -> Tuple[List[str], List[str]]:
@@ -105,7 +139,6 @@ def train_text_classifier(
 
     try:
         from sklearn.feature_extraction.text import TfidfVectorizer
-        from sklearn.linear_model import LogisticRegression
         from sklearn.model_selection import cross_val_score
     except ImportError:
         result.error = (
@@ -131,19 +164,9 @@ def train_text_classifier(
     result.n_categories = len(set(labels))
 
     # Train
-    vectorizer = TfidfVectorizer(
-        max_features=5000,
-        ngram_range=(1, 2),
-        min_df=2,
-        sublinear_tf=True,
-    )
+    vectorizer = TfidfVectorizer(**_VECTORIZER_PARAMS)
     X = vectorizer.fit_transform(texts)
-    model = LogisticRegression(
-        max_iter=1000,
-        C=1.0,
-        multi_class="multinomial",
-        solver="lbfgs",
-    )
+    model = _logreg()
     model.fit(X, labels)
 
     # Cross-validate if enough data
@@ -154,18 +177,55 @@ def train_text_classifier(
     else:
         result.accuracy = model.score(X, labels)
 
-    # Save model + vectorizer
-    model_path = _model_dir() / f"{agent_name}_text_clf.pkl"
+    # Save model + vectorizer as plain JSON (see module docstring —
+    # pickle here would be an RCE vector)
+    model_path = _model_dir() / f"{agent_name}_text_clf.json"
+    payload = {
+        "format": "styxx-text-clf-v1",
+        "trained_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "n_train": len(texts),
+        "accuracy": result.accuracy,
+        "vectorizer": {
+            "params": _VECTORIZER_PARAMS,
+            "vocabulary": {t: int(i) for t, i in vectorizer.vocabulary_.items()},
+            "idf": [float(v) for v in vectorizer.idf_],
+        },
+        "model": {
+            "coef": [[float(v) for v in row] for row in model.coef_],
+            "intercept": [float(v) for v in model.intercept_],
+            "classes": [str(c) for c in model.classes_],
+        },
+    }
     try:
-        with open(model_path, "wb") as f:
-            pickle.dump({"vectorizer": vectorizer, "model": model,
-                         "trained_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
-                         "n_train": len(texts), "accuracy": result.accuracy}, f)
+        with open(model_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f)
         result.saved_to = str(model_path)
     except OSError as e:
         result.error = f"could not save model: {e}"
 
     return result
+
+
+def _load_json_model(model_path: Path):
+    """Rebuild the fitted vectorizer + model from the JSON payload."""
+    import numpy as np
+    from sklearn.feature_extraction.text import TfidfVectorizer
+
+    with open(model_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    vparams = dict(data["vectorizer"]["params"])
+    if "ngram_range" in vparams:
+        vparams["ngram_range"] = tuple(vparams["ngram_range"])
+    vocabulary = {t: int(i) for t, i in data["vectorizer"]["vocabulary"].items()}
+    vectorizer = TfidfVectorizer(vocabulary=vocabulary, **vparams)
+    vectorizer.idf_ = np.asarray(data["vectorizer"]["idf"], dtype=np.float64)
+
+    model = _logreg()
+    model.classes_ = np.asarray(data["model"]["classes"])
+    model.coef_ = np.asarray(data["model"]["coef"], dtype=np.float64)
+    model.intercept_ = np.asarray(data["model"]["intercept"], dtype=np.float64)
+    return vectorizer, model
 
 
 def classify_with_trained_model(
@@ -177,23 +237,31 @@ def classify_with_trained_model(
 
     Returns (category, confidence) or None if no trained model exists.
     Falls back to None so the caller can use the regex heuristic.
+
+    Legacy pickle models (*.pkl, written before the JSON format) are
+    treated as absent — unpickling from a possibly attacker-writable
+    dir is arbitrary code execution. A one-line stderr note asks for
+    a retrain instead.
     """
     if agent_name is None:
         agent_name = os.environ.get("STYXX_AGENT_NAME", "").strip() or "default"
 
-    model_path = _model_dir() / f"{agent_name}_text_clf.pkl"
+    model_path = _model_dir() / f"{agent_name}_text_clf.json"
     if not model_path.exists():
+        legacy = model_path.with_suffix(".pkl")
+        if legacy.exists() and str(legacy) not in _LEGACY_PKL_NOTED:
+            _LEGACY_PKL_NOTED.add(str(legacy))
+            sys.stderr.write(
+                f"styxx: ignoring legacy pickle model {legacy.name}; "
+                "retrain with styxx.train_text_classifier()\n"
+            )
         return None
 
     try:
-        with open(model_path, "rb") as f:
-            data = pickle.load(f)
-        vectorizer = data["vectorizer"]
-        model = data["model"]
+        vectorizer, model = _load_json_model(model_path)
         X = vectorizer.transform([text])
         proba = model.predict_proba(X)[0]
-        classes = model.classes_
         best_idx = proba.argmax()
-        return (classes[best_idx], float(proba[best_idx]))
+        return (str(model.classes_[best_idx]), float(proba[best_idx]))
     except Exception:
         return None

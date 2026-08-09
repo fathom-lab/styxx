@@ -32,6 +32,7 @@ from __future__ import annotations
 import json
 import os
 import queue
+import subprocess
 import threading
 import time
 import urllib.request
@@ -84,11 +85,31 @@ def _load_creds() -> dict:
         return {}
 
 
+def _restrict_acl_windows(p: Path) -> None:
+    # chmod 600 is a no-op on Windows; best-effort NTFS equivalent:
+    # drop inherited ACEs, grant only the current user. Fail-open —
+    # a locked-down file is preferable but never worth crashing a claim.
+    user = os.environ.get("USERNAME")
+    if not user:
+        return
+    try:
+        subprocess.run(
+            ["icacls", str(p), "/inheritance:r", "/grant:r", f"{user}:F"],
+            capture_output=True,
+            timeout=10,
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
+    except Exception:
+        pass
+
+
 def _save_creds(data: dict) -> None:
     p = _creds_path()
     p.parent.mkdir(parents=True, exist_ok=True)
-    # Write with mode 600 on POSIX; on Windows rely on user profile perms.
     p.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    if os.name == "nt":
+        _restrict_acl_windows(p)
+        return
     try:
         os.chmod(p, 0o600)
     except (OSError, NotImplementedError):
