@@ -346,7 +346,7 @@ class WatchSession:
         if hasattr(response, "choices") and not isinstance(response, dict):
             _warn_missing_logprobs_once()
 
-        # 4. Anthropic / no-logprob fallback: text-based classification.
+        # 5. Anthropic / no-logprob fallback: text-based classification.
         #    When logprobs aren't available (Anthropic, local models),
         #    classify the response text using heuristic patterns.
         #    Less accurate than logprob-based, but provides real signal
@@ -358,7 +358,7 @@ class WatchSession:
             self._fire_gates_if_needed()
             return self.vitals
 
-        # 5. Unknown response shape — fail open.
+        # 6. Unknown response shape — fail open.
         self.error = (
             f"unknown response shape ({type(response).__module__}."
             f"{type(response).__name__}); cannot extract logprobs. "
@@ -569,21 +569,6 @@ def _extract_openai_logprobs(response: Any) -> Optional[tuple]:
     if not entropy_traj:
         return None
     return entropy_traj, logprob_traj, top2_traj
-
-
-def _looks_like_anthropic_response(response: Any) -> bool:
-    """Heuristic detection of an anthropic Message object."""
-    # anthropic.types.Message has these specific attributes
-    has_content = hasattr(response, "content")
-    has_stop_reason = hasattr(response, "stop_reason")
-    has_usage = hasattr(response, "usage")
-    # Also check the module path for a stronger signal
-    mod = type(response).__module__
-    from_anthropic = "anthropic" in mod.lower()
-    return (from_anthropic and has_content and has_stop_reason) or (
-        has_content and has_stop_reason and has_usage
-        and not hasattr(response, "choices")  # openai has .choices
-    )
 
 
 # ══════════════════════════════════════════════════════════════════

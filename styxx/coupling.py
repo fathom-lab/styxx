@@ -475,7 +475,7 @@ def couple(A, ts_a, B, ts_b, confound=None, bin_seconds: float = 60.0,
 def _demo() -> int:
     """Three worlds with known truth — the exam this module's design had to pass."""
     rng = np.random.default_rng(11)
-    n, day = 240, 86400
+    n = 240
     ts = np.sort(rng.choice(14 * 24, size=n, replace=False)).astype(float) * 3600.0
     hours = ((ts // 3600) % 24).astype(int)
     ang = 2 * np.pi * hours / 24

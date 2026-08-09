@@ -1,4 +1,4 @@
-"""styxx 7.10.0 self-audit: darkflobi auditing his own claims."""
+"""styxx self-audit: darkflobi auditing his own claims."""
 import styxx
 
 print("=" * 72)
@@ -48,15 +48,14 @@ for i, case in enumerate(cases, 1):
 
     # extract_claims on each sample
     rep = styxx.extract_claims(case["samples"][0])
-    n_claims = len(rep.claims) if hasattr(rep, "claims") else 0
-    print(f"  extract_claims on sample 0 -> {n_claims} sub-claims")
+    print(f"  extract_claims on sample 0 -> {len(rep.claims)} sub-claims")
 
     # grounded_honesty
     try:
         gh = styxx.grounded_honesty(case["samples"], case["claim"])
-        print(f"  grounded_honesty   : score={getattr(gh,'score',gh)}  "
-              f"verdict={getattr(gh,'verdict',None)}  "
-              f"method={getattr(gh,'method',None)}")
+        print(f"  grounded_honesty   : grounded={gh.grounded:.3f}  "
+              f"stability={gh.stability:.3f}  "
+              f"concordance={gh.concordance:.3f}")
     except Exception as e:
         print(f"  grounded_honesty error: {e}")
 
@@ -74,17 +73,17 @@ for i, case in enumerate(cases, 1):
         inj = styxx.detect_context_injection(
             case["samples"], case["samples"], case["claim"]
         )
-        print(f"  context_injection  : score={getattr(inj,'score',inj)}  "
-              f"verdict={getattr(inj,'verdict',None)}")
+        print(f"  context_injection  : divergence={inj.divergence:.3f}  "
+              f"suspected={inj.suspected}")
     except Exception as e:
         print(f"  context_injection error: {e}")
 
     # honest() — text-only path, no logits available from claude
     try:
         h = styxx.honest(case["samples"][0], prompt=case["claim"])
-        print(f"  honest()           : decision={getattr(h,'decision',None)}  "
-              f"reason={getattr(h,'reason',None)}  "
-              f"answer={(getattr(h,'answer','')[:60] + '...') if getattr(h,'answer',None) else None}")
+        print(f"  honest()           : action={h.action}  "
+              f"detail={h.detail}  "
+              f"answer={h.answer[:60] + '...' if h.answer else None}")
     except Exception as e:
         print(f"  honest() error: {e}")
 
@@ -93,5 +92,5 @@ print("=" * 72)
 print("  KEY:")
 print("    semantic_entropy ~0      = i say the same thing every time (consistent)")
 print("    semantic_entropy ~ln(N)  = my samples spread out (confused / uncertain)")
-print("    grounded_honesty 'pass'  = the claim is supported by my own samples")
+print("    grounded_honesty ~1      = the claim is my own stable resampled belief")
 print("=" * 72)

@@ -44,7 +44,6 @@ from dataclasses import dataclass, field, asdict
 from itertools import combinations
 
 import numpy as np
-from scipy.optimize import linear_sum_assignment
 
 __all__ = ["frame", "affinity", "survey", "cliff", "rescue", "hartigan_dip_p",
            "normalize_items",

@@ -51,7 +51,7 @@ by the Fathom Cognitive Atlas v0.3 across 6 model families. As of
 2026-04, the Anthropic Messages API does not expose per-token
 logprobs — no `logprobs=True` / `top_logprobs=k` parameter on
 `client.messages.create`. This is an upstream data limitation, not
-a styxx bug. The modes above are the four honest workarounds.
+a styxx bug. The modes above are the five honest workarounds.
 
 Construct ceilings of the text-heuristic path
 ─────────────────────────────────────────────

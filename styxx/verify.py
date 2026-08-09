@@ -15,7 +15,8 @@ wrong.
 The model's words don't tell you. RLHF trained it to sound confident
 regardless of correctness. But the logprob trajectory does tell you.
 Knowledge converges (entropy falls, logprob rises). Fabrication
-diverges (entropy rises, logprob falls). d=2.04 on matched controls.
+diverges (entropy rises, logprob falls). d=2.04 on matched controls
+(ent_slope, N=92; papers/logprob-trajectory-confabulation.md, section 3.1).
 
 styxx.verify() reads the trajectory shape and gives you the answer
 no one else can.
@@ -251,7 +252,10 @@ def verify(
     reasons = []
     trustworthy = True
 
-    # Signal 1: confabulation centroid proximity (production-calibrated, d=2.01)
+    # Signal 1: confabulation centroid proximity. d=2.01 is the ent_slope
+    # effect size of the v0.4 production calibration set (42 confab / 18
+    # control; centroids/confabulation_v0.4.json, effect_sizes_d[12]) --
+    # a separate measurement from the paper's d=2.04 (N=92 matched controls).
     if confab_check is True:
         trustworthy = False
         reasons.append(

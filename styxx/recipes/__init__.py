@@ -10,7 +10,6 @@ code is minimal, readable, and documented inline.
 Modules
 -------
     styxx.recipes.memory  -- tag agent memory entries with vitals
-    styxx.recipes.reflect -- self-reflection at task boundaries
 
 0.2.0+.
 """

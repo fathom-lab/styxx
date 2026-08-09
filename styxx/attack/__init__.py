@@ -24,11 +24,14 @@ Usage:
     for c in result.candidates[:3]:
         print(f"score={c.score:.3f}  →  {c.inputs['response'][:80]}...")
 
-7.0.0rc1 ships only `mine` (corpus mining of a bundled adversarial
-seed library, no LLM calls required). 7.1 will add `mutate` for
-LLM-driven adversarial paraphrase. Six of the nine cognometric
-instruments are registered for rc1; refusal, hallucination, and
-tool-call drift are deferred pending corpus-format work.
+Shipped surfaces: `mine` / `mine_adversarial` (corpus mining of a
+bundled adversarial seed library, no LLM calls required),
+`craft_adversarial` / `find_universal_suffix` (synthetic generation
+by greedy hill-climb, also zero LLM calls — this superseded the
+once-planned LLM-driven `mutate`), `score_all` / `cross_fire_matrix`
+fingerprinting, and `cognometric_basis`. Six of the nine cognometric
+instruments are registered; refusal, hallucination, and tool-call
+drift are deferred pending corpus-format work.
 """
 from __future__ import annotations
 
