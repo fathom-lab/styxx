@@ -61,11 +61,11 @@
     },
     "hidden_fence_in_html_comment": {
       "refused": true,
-      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '```gates']) \u2014 the frozen block must be una"
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (```gates)) \u2014 the frozen block"
     },
     "second_display_fence": {
       "refused": true,
-      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '```gates']) \u2014 the frozen block must be una"
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (line 3 (```gates), line 9 (```gates)) \u2014 the frozen block"
     },
     "duplicate_excluding_key": {
       "refused": true,
@@ -77,23 +77,39 @@
     },
     "tilde_honest_fence_hidden_backtick_decoy": {
       "refused": true,
-      "detail": "refused: prereg contains 2 gates-like fenced blocks (['```gates', '~~~gates']) \u2014 the frozen block must be una"
+      "detail": "refused: prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (~~~gates)) \u2014 the frozen block"
     },
     "uppercase_gates_fence_only": {
       "refused": true,
-      "detail": "refused: the single gates-like block ('```GATES') is not a plain unindented ```gates fence outside HTML comme"
+      "detail": "refused: the single gates-like block (line 3, ''```GATES) is not a plain unindented ```gates fence \u2014 the one "
     },
     "zero_width_char_in_fence_info": {
       "refused": true,
-      "detail": "refused: the single gates-like block ('```ga\\u200btes') is not a plain unindented ```gates fence outside HTML"
+      "detail": "refused: fence info string 'ga\\u200btes' (line 3) contains non-ASCII characters \u2014 a confusable info string is"
     },
     "fence_only_inside_html_comment": {
       "refused": true,
-      "detail": "refused: the single gates-like block ('```gates') is not a plain unindented ```gates fence outside HTML comme"
+      "detail": "refused: the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides "
     },
     "homoglyph_excluding_key": {
       "refused": true,
       "detail": "refused: non-ASCII key 'ex\u0441luding' in the gates block \u2014 a key a human cannot distinguish from an ASCII one is"
+    },
+    "cyrillic_fence_honest_then_ascii_evil": {
+      "refused": true,
+      "detail": "refused: fence info string 'g\u0430tes' (line 3) contains non-ASCII characters \u2014 a confusable info string is a sha"
+    },
+    "tab_indented_opener_with_commented_honest": {
+      "refused": true,
+      "detail": "refused: the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides "
+    },
+    "unterminated_comment_hides_block_from_renderer": {
+      "refused": true,
+      "detail": "refused: the ```gates fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides "
+    },
+    "unclosed_gates_fence": {
+      "refused": true,
+      "detail": "refused: the ```gates fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code a"
     }
   },
   "valid_cases": {
@@ -126,7 +142,7 @@
     "refused": true,
     "detail": "refused: gate 'G1': COMPOSITION VIOLATION \u2014 metric quotes 0.1436 but the declared min over 'pooled_median_abs_rel_error' excluding ['ar1_closed_form'] recomputes to 0.25"
   },
-  "n_violation_mutants": 23,
+  "n_violation_mutants": 27,
   "frac_violation_mutants_refused": 1.0,
   "n_valid_cases": 6,
   "frac_valid_cases_scored": 1.0,

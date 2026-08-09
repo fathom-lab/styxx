@@ -147,6 +147,15 @@ def main() -> int:
         + honest.replace('"excluding": "dq"',
                          '"exсluding": "dq", "excluding": "dq_decoy"')
         + f"\n{F}\n", {"m": 0.15, "pool": ok_pool, "dq": ["b"], "dq_decoy": []})
+    # Round-3 vectors: the counter and the extractor must be ONE scanner.
+    violations["cyrillic_fence_honest_then_ascii_evil"] = _raw_case(
+        f"# doc\n\n{F}gаtes\n{honest}\n{F}\n\n{F}gates\n{decoy}\n{F}\n", e1_shape)
+    violations["tab_indented_opener_with_commented_honest"] = _raw_case(
+        f"# doc\n\n<!--\n{F}gates\n{honest}\n{F}\n-->\n\n\t{F}gates\n{decoy}\n{F}\n", e1_shape)
+    violations["unterminated_comment_hides_block_from_renderer"] = _raw_case(
+        f"# doc\n\n<!--\n\n{F}gates\n{honest}\n{F}\n", e1_shape)
+    violations["unclosed_gates_fence"] = _raw_case(
+        f"# doc\n\n{F}gates\n{honest}\n", e1_shape)
 
     valids = {
         "correct_min_with_exclusion":

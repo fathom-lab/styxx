@@ -186,7 +186,7 @@ def test_case_variant_fence_refuses(tmp_path):
 
 def test_fence_only_in_comment_refuses(tmp_path):
     p = _mk_raw(tmp_path, "# d\n\n<!--\n```gates\n" + json.dumps(BASE) + "\n```\n-->\n")
-    with pytest.raises(GateSpecError, match="not a plain unindented"):
+    with pytest.raises(GateSpecError, match="HTML comment"):
         Experiment(p)
 
 
@@ -197,6 +197,40 @@ def test_homoglyph_key_refuses(tmp_path):
                                    '"exсluding": "dq_shown", "excluding": "dq_decoy"')
     p = _mk_raw(tmp_path, "# d\n\n```gates\n" + dup + "\n```\n")
     with pytest.raises(GateSpecError, match="non-ASCII key"):
+        Experiment(p)
+
+
+def test_confusable_fence_info_refuses(tmp_path):
+    """Round-3 G1: a Cyrillic-а 'gаtes' info string is gates to a reader, distinct to the
+    machine. Non-ASCII info strings refuse as a class."""
+    honest, decoy = json.dumps(BASE), json.dumps(BASE).replace("0.2", "99")
+    p = _mk_raw(tmp_path,
+                "# d\n\n```gаtes\n" + honest + "\n```\n\n```gates\n" + decoy + "\n```\n")
+    with pytest.raises(GateSpecError, match="non-ASCII"):
+        Experiment(p)
+
+
+def test_tab_indented_opener_cannot_shadow(tmp_path):
+    """Round-3 G2: a tab-indented opener renders as literal text, so it must neither count nor
+    extract — one scanner, one definition."""
+    honest, decoy = json.dumps(BASE), json.dumps(BASE).replace("0.2", "99")
+    p = _mk_raw(tmp_path, "# d\n\n<!--\n```gates\n" + honest
+                + "\n```\n-->\n\n\t```gates\n" + decoy + "\n```\n")
+    with pytest.raises(GateSpecError, match="HTML comment"):
+        Experiment(p)
+
+
+def test_unterminated_comment_refuses(tmp_path):
+    """Round-3 G3: a renderer hides everything after an unterminated <!--; scoring what a
+    reader cannot see divorces the two authorities."""
+    p = _mk_raw(tmp_path, "# d\n\n<!--\n\n```gates\n" + json.dumps(BASE) + "\n```\n")
+    with pytest.raises(GateSpecError, match="HTML comment"):
+        Experiment(p)
+
+
+def test_unclosed_fence_refuses(tmp_path):
+    p = _mk_raw(tmp_path, "# d\n\n```gates\n" + json.dumps(BASE) + "\n")
+    with pytest.raises(GateSpecError, match="never closed"):
         Experiment(p)
 
 

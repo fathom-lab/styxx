@@ -59,28 +59,92 @@ def undeclared_power_gates(prereg) -> list:
     """
     return Experiment(prereg).undeclared_power_gates
 
-_GATES_RE = re.compile(r"```gates\s*\n(.*?)\n```", re.S)
-# Any fence-opener line whose info string could read as "gates" to a HUMAN: backtick or tilde
-# fences, any indent. The info string is normalized (Unicode format chars stripped, casefolded)
-# before comparison, so ```GATES, ~~~gates and a zero-width-corrupted ```ga​tes all count.
-_FENCE_OPENER_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})[ \t]*(\S*)", re.M)   # >3 spaces = not a
-# fence to a CommonMark renderer, so not to this count either; a 4-space-indented decoy that the
-# strict extractor might still match is caught by the matches-count check below instead.
+_FENCE_LINE_RE = re.compile(r"^([ \t]*)(`{3,}|~{3,})[ \t]*(\S*)[ \t]*$")
+_CLOSER_RE = re.compile(r"^ {0,3}`{3,}[ \t]*$")
 
 
-def _gates_like_fences(text: str) -> list[str]:
-    """Every fence-opener whose normalized info string is 'gates' — the human's view, not the
-    regex's. Verification pass F1 (2026-08-09): the multiplicity guard originally counted only
-    exact-lowercase-backtick fences, so a ~~~gates block could show a reader the honest
-    declaration while the machine's single ```gates match was a decoy hidden in an HTML comment.
-    The guard must be over blocks a human could read as gates, not over exact matches."""
-    import unicodedata
-    out = []
-    for m in _FENCE_OPENER_RE.finditer(text):
-        info = "".join(ch for ch in m.group(2) if unicodedata.category(ch) != "Cf").casefold()
-        if info == "gates":
-            out.append(m.group(0).strip())
-    return out
+def _select_gates_block(text: str) -> str:
+    """The ONE gates block, or a refusal. Single scanner, single definition.
+
+    Three red-team rounds (2026-08-09) broke every version of this that used two notions of "a
+    gates fence" — a human-view counter and a machine extractor — because each divergence between
+    them is a shadowing channel: round 1 hid a fence in an HTML comment, round 2 swapped a tilde
+    for a backtick, round 3 swapped one Latin letter for a Cyrillic one in the info string and
+    tab-indented an opener the counter skipped but the unanchored extractor matched. This
+    function is the round-3 recipe: tokenize every fence line ONCE, on the ORIGINAL text, and
+    extract from the very match the multiplicity guard validated. There is no second regex to
+    disagree with.
+
+    Rules, each a refusal:
+    * a fence info string containing any non-ASCII character refuses outright — a confusable
+      info string ("gаtes") is indistinguishable from "gates" to a reader and distinct to
+      the machine, and no normalization table is trusted to enumerate that class;
+    * gates-like = a CommonMark-rendered fence (indent ≤ 3 columns, tab = 4) whose casefolded
+      info is "gates", counted comments-included so hidden fences count;
+    * exactly one gates-like block must exist, it must be the plain unindented lowercase
+      backtick form, it must not sit inside an HTML comment (unterminated comments extend to
+      EOF — a renderer hides everything after one), and its closing fence must exist.
+    """
+    lines = text.split("\n")
+    # HTML comment spans, computed on character offsets; an unterminated opener hides to EOF.
+    spans, pos = [], 0
+    while True:
+        s = text.find("<!--", pos)
+        if s < 0:
+            break
+        e = text.find("-->", s + 4)
+        spans.append((s, len(text) if e < 0 else e + 3))
+        pos = s + 4 if e < 0 else e + 3
+    offsets, off = [], 0
+    for ln in lines:
+        offsets.append(off)
+        off += len(ln) + 1
+
+    gates_like = []          # (line_index, indent, marker, info)
+    for i, ln in enumerate(lines):
+        m = _FENCE_LINE_RE.match(ln)
+        if not m:
+            continue
+        indent, marker, info = m.groups()
+        if not info.isascii():
+            raise GateSpecError(
+                f"fence info string {info!r} (line {i + 1}) contains non-ASCII characters — a "
+                f"confusable info string is a shadowing channel, and this parser refuses the "
+                f"class rather than trusting a normalization table to enumerate it")
+        cols = 0
+        for ch in indent:
+            cols = cols + 4 - cols % 4 if ch == "\t" else cols + 1
+        rendered = cols <= 3
+        if rendered and info.casefold() == "gates":
+            gates_like.append((i, indent, marker, info))
+
+    if not gates_like:
+        raise GateSpecError("prereg has no ```gates block — nothing frozen to score against")
+    if len(gates_like) > 1:
+        where = [f"line {i + 1} ({marker}{info})" for i, _, marker, info in gates_like]
+        raise GateSpecError(
+            f"prereg contains {len(gates_like)} gates-like fenced blocks ({', '.join(where)}) "
+            f"— the frozen block must be unambiguous. A document that can show a reader one "
+            f"block and score against another is not frozen; remove or rename all but one.")
+
+    i, indent, marker, info = gates_like[0]
+    if indent or marker != "```" or info != "gates":
+        raise GateSpecError(
+            f"the single gates-like block (line {i + 1}, {indent!r}{marker}{info}) is not a "
+            f"plain unindented ```gates fence — the one form a renderer and this parser read "
+            f"identically. A block only one of them recognises is a shadowing channel, not a "
+            f"style choice.")
+    if any(s <= offsets[i] < e for s, e in spans):
+        raise GateSpecError(
+            f"the ```gates fence at line {i + 1} sits inside an HTML comment (possibly "
+            f"unterminated) — a renderer hides it, so scoring it would divorce the machine's "
+            f"authority from the reader's. De-comment it.")
+    for j in range(i + 1, len(lines)):
+        if _CLOSER_RE.match(lines[j]):
+            return "\n".join(lines[i + 1:j])
+    raise GateSpecError(
+        f"the ```gates fence at line {i + 1} is never closed — an unterminated block renders "
+        f"as everything-is-code and freezes nothing")
 _OPS = {">=": lambda a, b: a >= b, "<=": lambda a, b: a <= b,
         ">": lambda a, b: a > b, "<": lambda a, b: a < b,
         "==": lambda a, b: a == b}
@@ -127,28 +191,7 @@ class Experiment:
             raise PrologueError(f"prereg not found: {self.prereg}")
         self.prereg_commit = self._committed_at()
         text = self.prereg.read_text(encoding="utf-8")
-        # The authority question, settled before any parsing: how many blocks could a HUMAN read
-        # as the gates block? Counted on the ORIGINAL text (an HTML comment hides a fence from a
-        # renderer but not from this count) and normalized (tilde fences, any case, zero-width
-        # chars — verification pass F1 broke the exact-match version of this guard with all
-        # three). Anything other than exactly one, in the one supported form, refuses.
-        gates_like = _gates_like_fences(text)
-        if not gates_like:
-            raise GateSpecError("prereg has no ```gates block — nothing frozen to score against")
-        if len(gates_like) > 1:
-            raise GateSpecError(
-                f"prereg contains {len(gates_like)} gates-like fenced blocks ({gates_like}) — "
-                f"the frozen block must be unambiguous. A document that can show a reader one "
-                f"block and score against another is not frozen; remove or rename all but one.")
-        stripped = re.sub(r"<!--.*?-->", "", text, flags=re.S)
-        matches = _GATES_RE.findall(stripped)
-        if len(matches) != 1 or gates_like[0] != "```gates":
-            raise GateSpecError(
-                f"the single gates-like block ({gates_like[0]!r}) is not a plain unindented "
-                f"```gates fence outside HTML comments — the one form both a renderer and this "
-                f"parser read identically. A block only one of them can see is a shadowing "
-                f"channel, not a style choice.")
-        self._gates_text = matches[0]
+        self._gates_text = _select_gates_block(text)
         self.gates_sha256 = hashlib.sha256(self._gates_text.encode("utf-8")).hexdigest()
 
         def _no_dup_keys(pairs):
