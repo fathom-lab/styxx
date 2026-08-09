@@ -15,6 +15,14 @@ def test_ledger_matches_a_fresh_regeneration_from_the_receipts(tmp_path):
     if not ledger.exists():
         import pytest
         pytest.skip("LEDGER.md not present")
+    if (root / ".git" / "shallow").exists():
+        # build_ledger's power-basis split needs full git history (git log -S,
+        # --follow, merge-base); a shallow clone regenerates a shorter ledger
+        # and this test would fail on the missing rows, not on drift. CI's
+        # actions/checkout defaults to depth 1 — the real fix is fetch-depth: 0
+        # in test.yml, which is staged in the local workflow commit.
+        import pytest
+        pytest.skip("shallow clone — ledger regeneration needs full git history")
     committed = ledger.read_text(encoding="utf-8")
     r = subprocess.run([sys.executable, str(root / "papers" / "build_ledger.py")],
                        capture_output=True, text=True, cwd=str(root))

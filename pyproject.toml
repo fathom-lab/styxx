@@ -156,6 +156,7 @@ test = [
     "Pillow>=10.0",
     "matplotlib>=3.7",
     "langchain-core>=0.1",
+    "psutil>=5.9",
 ]
 
 [project.urls]
