@@ -1,0 +1,1 @@
+This plan outlines the stages, potential failure points, and monitoring strategies for a nightly data pipeline that ingests CSV sales data from SFTP, validates, deduplicates, and loads it into a Postgres warehouse.

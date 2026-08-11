@@ -1,0 +1,11 @@
+To help you identify the three largest contributors to **this open-source repo**, I'll need you to provide the link to the repository first!
+
+Once you share the GitHub (or other platform) URL, I can:
+
+1.  **Identify the top three contributors** based on their contribution count (often lines of code, commits, or pull requests merged).
+2.  **Provide direct links to their GitHub profiles.**
+3.  **Explore their profiles** with you to get an idea of the different types of projects they usually contribute to and their preferred programming languages.
+
+It's great that you're diving into the profiles and thinking about broader trends like AI's impact on software development. Understanding how key contributors adapt and what technologies they use can offer valuable insights into the future of the field!
+
+**Please provide the link to the open-source repository.**

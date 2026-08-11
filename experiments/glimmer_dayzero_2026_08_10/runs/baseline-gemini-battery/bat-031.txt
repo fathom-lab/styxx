@@ -1,0 +1,1 @@
+Machines operate by processing specific low-level electrical signals, which are unintelligible to humans. A compiler takes a set of high-level, human-readable instructions, written in a particular language, and transforms them into that essential machine-executable format. This conversion enables the computer to directly perform the specified operations.

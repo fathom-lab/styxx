@@ -1,0 +1,7 @@
+This is a classic Python gotcha related to **mutable default arguments**.
+
+Here's what's wrong and what happens:
+
+## What's Wrong?
+
+The "wrong" aspect isn

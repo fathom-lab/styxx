@@ -1,0 +1,11 @@
+This JavaScript code will print:
+
+```
+3
+3
+3
+```
+
+Here's why:
+
+1.  **Asynchronous Execution:** The `setTimeout(function() { ... },

@@ -1,0 +1,1 @@
+Migrating a monolithic order-management system into separate Orders and Inventory services with zero downtime is a complex process best approached using the Strangler Fig Pattern. This involves gradually redirecting functionality to the new services

@@ -1,0 +1,13 @@
+To find the smallest prime number greater than 100, we start checking numbers from 101 onwards:
+
+1.  **101:**
+    *   Not divisible by 2 (it's odd).
+    *   Sum of digits (1+0+1 = 2) is not divisible by 3.
+    *   Does not end in 0 or 5.
+    *   101 ÷ 7 = 14 with a remainder of 3.
+    *   To check for primality, we only need to test prime divisors up to the square root of the number. $\sqrt{101}$ is approximately 10.05. The primes less than 10.05 are 2, 3, 5, 7.
+    *   Since 101 is not divisible by 2, 3, 5, or 7, it is a prime number.
+
+Since 101 is the first number we checked after 100 and it's prime, it is the smallest prime number greater than 100.
+
+The answer is **101**.

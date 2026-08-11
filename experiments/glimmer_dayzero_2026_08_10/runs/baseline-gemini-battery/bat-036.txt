@@ -1,0 +1,20 @@
+The value that ends up stored in `x` is **3.0**.
+
+Here's why:
+
+1.  **Integer Division:** The expression `7 / 2` involves two integer literals (`7` and `2`). In C (and many other languages), when both operands of the division operator (`/`) are integers, C performs **integer division**.
+    *   Integer division calculates how many times the divisor goes into the dividend, discarding any remainder.
+    *   `7 / 2` evaluates to `3` (since 2 goes into 7 three times, with a remainder of 1, which is discarded).
+
+2.  **Type Conversion:** The result of `7 / 2` is the integer `3`. This integer `3` is then assigned to the `double` variable `x`.
+    *   When an integer is assigned to a `double` variable, C automatically converts the integer to its floating-point equivalent.
+    *   So, the integer `3` is converted to `3.0`.
+
+Therefore, `x` will store `3.0`.
+
+---
+
+**If you wanted `x` to store `3.5`, you would need to make at least one of the operands a floating-point number:**
+
+*   `double x = 7.0 / 2;`
+*   `double x = 7 / 2.0;

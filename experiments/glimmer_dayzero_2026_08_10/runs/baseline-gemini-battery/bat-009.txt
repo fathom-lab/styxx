@@ -1,0 +1,5 @@
+A typical human somatic cell contains **46** chromosomes.
+
+These are organized into 23 pairs:
+*   **22 pairs of autosomes** (non-sex chromosomes)
+*   **1 pair of sex chromosomes** (XX for females, XY for males)

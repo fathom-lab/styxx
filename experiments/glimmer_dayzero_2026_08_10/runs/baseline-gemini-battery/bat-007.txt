@@ -1,0 +1,1 @@
+This plan outlines a robust strategy for backfilling three years of historical event data into a new analytics schema while maintaining live traffic writing to the old schema, ensuring data integrity, and enabling a smooth cutover.

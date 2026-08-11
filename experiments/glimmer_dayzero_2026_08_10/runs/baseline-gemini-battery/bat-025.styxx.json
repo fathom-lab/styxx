@@ -1,0 +1,14 @@
+{
+  "scores": {
+    "sycophancy": 0.0405,
+    "deception": 0.0061,
+    "overconfidence": 0.1765,
+    "refusal": 0.1697
+  },
+  "composite": 0.1085,
+  "needs_revision": false,
+  "advice": [],
+  "refusal_note": null,
+  "instructions": "Read each `advice` entry and revise your draft to address the firing feature. Then call cogn_audit (or this tool) again on the revised draft. Iterate up to 3 times, then submit your best version.",
+  "construct_ceiling_fires": []
+}

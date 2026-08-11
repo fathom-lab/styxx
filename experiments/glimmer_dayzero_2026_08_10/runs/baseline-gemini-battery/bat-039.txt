@@ -1,0 +1,1 @@
+This Java condition can evaluate to `false` even when both `a` and `b` conceptually hold the text "hello" due to how Java handles `String` objects and the `==`

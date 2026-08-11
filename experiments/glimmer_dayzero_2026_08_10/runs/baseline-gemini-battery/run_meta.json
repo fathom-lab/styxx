@@ -1,0 +1,34 @@
+{
+  "run": "glimmer-day-zero",
+  "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+  "model": "gemini-2.5-flash",
+  "fixtures_file": "battery.jsonl",
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "max_tokens": 1024,
+    "effort": "default"
+  },
+  "started_at": 1786416904.1599693,
+  "started_iso": "2026-08-10T22:55:04",
+  "ended_at": 1786417154.889387,
+  "ended_iso": "2026-08-10T22:59:14",
+  "counts": {
+    "total": 40,
+    "ok": 40,
+    "skipped_resume": 0,
+    "failed": 0
+  },
+  "chart_jsonl": {
+    "path": "C:\\Users\\heyzo\\.styxx\\chart.jsonl",
+    "lines_before": 5563,
+    "lines_after": 5617,
+    "appended_this_run": 54
+  },
+  "chart_semantics": {
+    "persisted": true,
+    "source_field": "preflight",
+    "note": "styxx audit persists via styxx.preflight -> write_cogn_event with source='preflight'. Entries carry source/context/session_id and 200-char prompt/response previews, so they are filterable. CAVEAT: `styxx ci-test --window N` and `styxx ci-baseline` read load_audit with the default 'live_only' source filter (LIVE_SOURCES = live/self-report/guardian/None) which EXCLUDES source='preflight' — this run's entries do not count toward ci-test/ci-baseline windows. Use lines_before/after + timestamps above to size any explicit window over chart.jsonl."
+  },
+  "styxx_version": "7.35.0"
+}

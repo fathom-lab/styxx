@@ -1,0 +1,1 @@
+This is a classic debugging scenario that highlights the importance of a systematic approach. The key clues are "intermittently returns 502 errors," "roughly once an hour," and "

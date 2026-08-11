@@ -1,0 +1,21 @@
+The bug is that you cannot use an aggregate function (like `COUNT(*)`) directly in the `WHERE` clause. The `WHERE` clause filters individual rows *before* any grouping or aggregation takes place.
+
+To filter the results based on an aggregate condition (like the count of employees per department), you need to use the `HAVING` clause, which operates *after* the `GROUP BY` clause has aggregated the data.
+
+**Bug Identification:**
+`WHERE COUNT(*) > 10` is incorrect because `COUNT(*)` is an aggregate function that makes sense only after rows have been grouped.
+
+**Corrected Query:**
+
+```sql
+SELECT department, COUNT(*)
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 10;
+```
+
+**Explanation of the fix:**
+
+1.  **`FROM employees`**: Specifies the table to query.
+2.  **`GROUP BY department`**: This aggregates all rows with the same `department` value into a single group. For each group, the `COUNT(*)` function will then calculate the total number of employees in that specific department.
+3.  **`HAVING COUNT(*) > 10`**: This clause filters the *groups* created by `GROUP BY`. It only keeps those departments (groups) where the calculated `COUNT(*)` (

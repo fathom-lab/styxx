@@ -1,0 +1,3 @@
+The speed of light in a vacuum is approximately **299,792,458 meters per second (m/s)**.
+
+This value is often represented by the symbol **c**.

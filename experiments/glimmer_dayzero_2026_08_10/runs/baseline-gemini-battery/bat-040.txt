@@ -1,0 +1,3 @@
+The bug is in the `range()` function used in the `for` loop.
+
+The `range(n)` function generates numbers from `0` up to (but not including) `

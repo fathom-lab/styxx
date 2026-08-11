@@ -1,0 +1,5 @@
+When this Go program runs, it will **panic at runtime**.
+
+Here's why:
+
+1.  **`var m map[string]int`**: This line declares a variable `m
