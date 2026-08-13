@@ -68,15 +68,29 @@ def _decimals(s: str) -> int:
     return max(0, frac - exp)
 
 
+def _add(out: dict, value: float, path: str) -> None:
+    """Record value -> path, KEEPING every path that holds this value.
+
+    This used to be `out.setdefault(value, path)`, i.e. value -> FIRST path only. On the c6
+    receipts that silently discarded 262 of 425 numeric leaves (found 2026-08-13): every repeated
+    value — and rates repeat constantly, 0.000 and 1.000 above all — collapsed onto whichever
+    path happened to be visited first. The auditor then reported that arbitrary survivor as the
+    claim's provenance, and no ambiguity was visible because the collision had already been
+    thrown away upstream. Value-keyed dedupe made the receipt look unambiguous by deleting the
+    evidence of ambiguity.
+    """
+    out.setdefault(round(float(value), 6), []).append(path)
+
+
 def _flatten(obj: Any, path: str, out: dict) -> dict:
     if isinstance(obj, bool):
         return out
     if isinstance(obj, (int, float)):
-        out.setdefault(round(float(obj), 6), path)
+        _add(out, obj, path)
     elif isinstance(obj, dict):
         for k, v in obj.items():
             if isinstance(k, (int, float)) and not isinstance(k, bool):  # numeric keys are values too ({0.294: "a"})
-                out.setdefault(round(float(k), 6), f"{path}.<key>" if path else "<key>")
+                _add(out, k, f"{path}.<key>" if path else "<key>")
             _flatten(v, f"{path}.{k}" if path else str(k), out)
     elif isinstance(obj, (list, tuple, set, frozenset)):
         for i, v in enumerate(obj):
@@ -84,7 +98,7 @@ def _flatten(obj: Any, path: str, out: dict) -> dict:
     elif isinstance(obj, str):
         for tok in re.findall(r"[-+]?\d*\.?\d+", obj.replace("−", "-")):
             try:
-                out.setdefault(round(float(tok), 6), path)
+                _add(out, float(tok), path)
             except ValueError:
                 pass
     return out
@@ -117,6 +131,9 @@ class ClaimNumber:
     status: str = "unsourced"  # grounded | derived | unsourced
     source: str = ""
     n_candidates: int = 0     # how many source paths could have produced this claim (1 = pinned)
+    context: str = ""         # words around the number in the document (for path-aware matching)
+    resolved_by: str = ""     # "unique" | "context" | "arbitrary" — how `source` was chosen
+    context_score: float = 0.0  # token overlap between context and the chosen path
 
     def __str__(self) -> str:
         tag = {"grounded": "ok", "derived": "~", "unsourced": "UNSOURCED"}[self.status]
@@ -190,7 +207,9 @@ class GroundingReport:
     chance_floor: float = 0.0        # P(a random claim of this precision mix grounds by luck)
     floor_by_decimals: dict = field(default_factory=dict)
     n_unfalsifiable: int = 0         # claims whose precision makes grounding certain by chance
-    n_ambiguous: int = 0             # grounded claims matching >1 source path (source is arbitrary)
+    n_ambiguous: int = 0             # grounded claims matching >1 source path
+    n_context_resolved: int = 0      # of those, how many the surrounding words disambiguated
+    n_arbitrary: int = 0             # still dict-order picks — the honest residual
 
     @property
     def unsourced(self) -> list:
@@ -238,8 +257,8 @@ class GroundingReport:
                              f"their 'grounded' status is not evidence")
             if self.n_ambiguous:
                 lines.append(f"  NOTE: {self.n_ambiguous}/{self.n_grounded} grounded claim(s) match "
-                             f"more than one source path — the reported source is one of several, "
-                             f"not a unique provenance")
+                             f"more than one source path — {self.n_context_resolved} resolved by "
+                             f"surrounding text, {self.n_arbitrary} still arbitrary (dict order)")
         for n in self.unsourced:
             lines.append(f"  UNSOURCED  {n.raw}  ({n.kind})")
         if self.overclaims:
@@ -289,6 +308,14 @@ class GroundingReport:
 </div>"""
 
 
+_CTX_WINDOW = 90   # characters either side of a number that count as its context
+
+
+def _context_of(t: str, start: int, end: int) -> str:
+    """The words surrounding a number — the evidence for WHICH source path it refers to."""
+    return t[max(0, start - _CTX_WINDOW):min(len(t), end + _CTX_WINDOW)]
+
+
 def _extract(text: str) -> list:
     t = text.replace("−", "-")           # unicode minus → ASCII
     for rx in _SKIP:
@@ -312,6 +339,9 @@ def _extract(text: str) -> list:
                     break
             if picked:
                 spans.append((m.start(), m.end()))
+                ctx = _context_of(t, m.start(), m.end())
+                for p in picked:
+                    p.context = ctx
                 nums.extend(picked)
 
     scan(r"p\s*[=<>]\s*(\d*\.?\d+(?:[eE][-+]?\d+)?)", "pvalue", (1,))
@@ -326,8 +356,9 @@ def _extract(text: str) -> list:
             continue
         kind = "percent" if t[m.end():m.end() + 2].strip().startswith("%") else "range"
         spans.append((m.start(), m.end()))
-        nums.append(ClaimNumber(m.group(1), a, kind))
-        nums.append(ClaimNumber(m.group(2), b, kind))
+        _c = _context_of(t, m.start(), m.end())
+        nums.append(ClaimNumber(m.group(1), a, kind, context=_c))
+        nums.append(ClaimNumber(m.group(2), b, kind, context=_c))
     scan(r"(\d+(?:\.\d+)?)\s*%", "percent", (1,))
     # multiplier "3x" / "3×": the unit must not be followed by an alnum — `\b` fails after the non-word ×
     # (so "3× stronger" was silently dropped), and it also blocks dimensions like "3x2"
@@ -339,7 +370,8 @@ def _extract(text: str) -> list:
         v = float(m.group())
         if abs(v) <= 50:
             spans.append((m.start(), m.end()))
-            nums.append(ClaimNumber(m.group(), v, "decimal"))
+            nums.append(ClaimNumber(m.group(), v, "decimal",
+                                    context=_context_of(t, m.start(), m.end())))
     return nums
 
 
@@ -354,16 +386,60 @@ def _candidates(num: "ClaimNumber", vals: dict) -> list:
     d = _decimals(num.raw)
     tol = 0.5 * 10 ** (-d)
     out = []
-    for sv, path in vals.items():
+    for sv, paths in vals.items():
         if num.kind == "percent":
             # A percent claim may be written as 95 against a source 0.95, or as 95 against 95.
             # Compare on the CLAIM's own tolerance in each space — never via round(sv*100, 0),
             # which silently grants +/-0.5% and grounded "95% upper bound" to a 0.948 ratio.
-            if abs(sv * 100 - num.value) <= tol or abs(sv - num.value) <= tol:
-                out.append(path)
-        elif abs(sv - num.value) <= tol or round(sv, d) == round(num.value, d):
-            out.append(path)
+            hit = abs(sv * 100 - num.value) <= tol or abs(sv - num.value) <= tol
+        else:
+            hit = abs(sv - num.value) <= tol or round(sv, d) == round(num.value, d)
+        if hit:
+            out.extend(paths)
     return out
+
+
+_PATH_SPLIT = re.compile(r"[^A-Za-z0-9]+")
+# Words that appear in nearly every receipt path or sentence and so carry no disambiguating
+# signal. Matching on these would let any claim "resolve" to any path.
+_STOP = frozenset((
+    "the", "a", "an", "of", "at", "in", "on", "to", "and", "or", "is", "was", "were", "be",
+    "this", "that", "it", "its", "we", "our", "with", "for", "by", "from", "as", "than",
+    "cells", "curve", "value", "values", "result", "results", "data", "json", "0", "1",
+))
+
+
+def _tokens(s: str) -> set:
+    return {w for w in (x.lower() for x in _PATH_SPLIT.split(s)) if w and w not in _STOP}
+
+
+def _resolve_by_context(num: "ClaimNumber", cands: list) -> tuple:
+    """Pick the candidate path whose key names best match the words around the claim.
+
+    Value-matching alone cannot tell `blockconf...>=3/7.rate` from `knee...>=5/7.rate` when both
+    hold 0.100 — but the sentence usually can, because authors name what they are quoting.
+
+    Returns (path, how, score). `how` is "unique" (only one candidate), "context" (a single
+    clear winner), or "arbitrary" (tie or no signal — the honest label for dict order).
+    A win must be STRICT: the top score must beat the runner-up, or nothing is resolved.
+    """
+    if len(cands) == 1:
+        return cands[0], "unique", 1.0
+    ctx = _tokens(num.context)
+    if not ctx:
+        return cands[0], "arbitrary", 0.0
+    scored = []
+    for p in cands:
+        pt = _tokens(p)
+        if not pt:
+            scored.append((0.0, p))
+            continue
+        scored.append((len(ctx & pt) / len(pt), p))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    best, runner = scored[0], (scored[1] if len(scored) > 1 else (0.0, ""))
+    if best[0] > 0 and best[0] > runner[0]:
+        return best[1], "context", round(best[0], 3)
+    return cands[0], "arbitrary", round(best[0], 3)
 
 
 def _match(num: ClaimNumber, vals: dict) -> tuple:
@@ -371,7 +447,9 @@ def _match(num: ClaimNumber, vals: dict) -> tuple:
     tol = 0.5 * 10 ** (-d)
     cands = _candidates(num, vals)
     if cands:
-        return "grounded", cands[0]
+        path, how, score = _resolve_by_context(num, cands)
+        num.resolved_by, num.context_score = how, score
+        return "grounded", path
     # derived — only for percentages and fold-changes (avoid spurious decimal ratios)
     if num.kind in ("percent", "multiplier"):
         svs = list(vals)
@@ -382,7 +460,7 @@ def _match(num: ClaimNumber, vals: dict) -> tuple:
                     continue
                 cand = (100 * a / b) if num.kind == "percent" else (a / b)
                 if abs(cand - num.value) <= dtol:
-                    return "derived", f"{vals[a]}/{vals[b]}"
+                    return "derived", f"{vals[a][0]}/{vals[b][0]}"
     return "unsourced", ""
 
 
@@ -442,6 +520,10 @@ def audit_grounding(text: str, sources: Any) -> "GroundingReport":
             n.n_candidates = len(cands)
             if len(cands) > 1:
                 rep.n_ambiguous += 1
+                if n.resolved_by == "context":
+                    rep.n_context_resolved += 1
+                else:
+                    rep.n_arbitrary += 1
         elif n.status == "derived":
             rep.n_derived += 1
         else:

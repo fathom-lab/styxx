@@ -1,0 +1,19 @@
+{
+  "easy": {
+    "n_cases": 12,
+    "n_ambiguous": 12,
+    "dict_order_accuracy": 0.4167,
+    "context_accuracy": 1.0,
+    "lift": 0.5833,
+    "verdict": "RESOLVER_EARNS_ITS_KEEP"
+  },
+  "hard": {
+    "n_cases": 8,
+    "n_ambiguous": 8,
+    "dict_order_accuracy": 0.5,
+    "context_accuracy": 0.75,
+    "lift": 0.25,
+    "verdict": "RESOLVER_EARNS_ITS_KEEP"
+  },
+  "note": "The EASY fixture reuses the receipt's own key names and scores 1.000; that was pre-stated as a sign the fixture is too easy, and it is kept only as a floor. The HARD fixture is the number to quote."
+}

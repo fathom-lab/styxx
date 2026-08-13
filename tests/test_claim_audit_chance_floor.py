@@ -144,6 +144,45 @@ def test_grounded_always_has_at_least_one_candidate():
             assert it.n_candidates >= 1, f"{it.raw!r} grounded with no candidate path"
 
 
+def test_duplicate_values_in_a_receipt_are_all_retained():
+    """Regression: `_flatten` kept value -> FIRST path only.
+
+    On the real c6 receipts that discarded 262 of 425 numeric leaves. Every repeated value —
+    and rates repeat constantly — collapsed onto whichever path was visited first, and the
+    auditor reported that arbitrary survivor as provenance. The collision was deleted upstream,
+    so no ambiguity was ever visible. Value-keyed dedupe made the receipt look unambiguous by
+    destroying the evidence of ambiguity.
+    """
+    src = {"a": {"x": 0.25}, "b": {"y": 0.25}, "c": {"z": 0.25}}
+    rep = audit_grounding("the rate was 0.25", src)
+    grounded = [i for i in rep.items if i.status == "grounded"]
+    assert grounded and grounded[0].n_candidates == 3, grounded[0].n_candidates
+
+
+def test_context_resolution_beats_dict_order_and_admits_when_it_cannot():
+    """The resolver must pick the right path from surrounding words — or say 'arbitrary'."""
+    src = {"null": {"rho_low": {"mean_licensed": 0.25}},
+           "knee": {"rho_low": {"mean_licensed": 0.25}}}
+    rep = audit_grounding("under knee at rho_low the mean_licensed was 0.25", src)
+    it = [i for i in rep.items if i.status == "grounded"][0]
+    assert it.n_candidates == 2
+    assert it.resolved_by == "context", it.resolved_by
+    assert it.source == "knee.rho_low.mean_licensed", it.source
+
+    # No disambiguating signal -> must NOT claim resolution
+    rep2 = audit_grounding("the value was 0.25", src)
+    it2 = [i for i in rep2.items if i.status == "grounded"][0]
+    assert it2.resolved_by == "arbitrary", it2.resolved_by
+    assert rep2.n_arbitrary == 1
+
+
+def test_ambiguity_accounting_is_exhaustive():
+    """Every ambiguous claim is either context-resolved or arbitrary — no third bucket."""
+    src = {"alpha": {"rate": 0.5}, "beta": {"rate": 0.5}, "gamma": {"other": 0.9}}
+    rep = audit_grounding("alpha rate was 0.5 and separately 0.5 appeared", src)
+    assert rep.n_ambiguous == rep.n_context_resolved + rep.n_arbitrary
+
+
 def test_confidence_level_labels_are_not_treated_as_claims():
     """'95% upper bound' / '95% interval' are labels, not statistics. None may be extracted."""
     src = {"dispersion": 0.948, "rate": 0.5}
