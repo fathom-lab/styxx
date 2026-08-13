@@ -76,6 +76,39 @@ strike, where a gate firing 6/6 on attacks *and* 6/6 on benign had its two numbe
 counted once and named twice. That was caught by argument, days later. A receipt asks the
 apparatus directly, at the moment of measurement.
 
+## Second receipt: the gate shipped four hours earlier
+
+`execution_receipt_gate.py` was extended today after returning zero claims on a status
+report containing a fabricated work item. Its validation set went from four cases to six
+and all six pass — which establishes it *can* fire and *can* stay quiet on hand-built
+examples, and establishes nothing at all about its behaviour on real traffic. That
+distinction is the original defect restated: the gate had been validated against
+phrasings its author could think of.
+
+```
+receipt-gate fire rate : 0.1852  (15/81)
+terms on path          : 13
+live / constant        : 8 / 5   (underpowered 0)
+VERDICT                : OK__path_could_have_failed   (61.5% live)
+```
+
+A non-degenerate rate on real drafts, with a majority-live decision path. But the receipt
+also names something the six-case validation set could not have surfaced:
+
+```
+CONSTANT_FALSE n=11  review L246 [or] len(ev_terms) < TOPIC_POWER_FLOOR
+```
+
+**The `TOPIC_POWER_FLOOR` abstention never fires on real traffic.** That branch was added
+hours earlier specifically to stop the topical-evidence check from vetoing on sources too
+terse to discriminate — it is the fix that rescued a validated negative case. On 81 real
+drafts, every evidence blob carried at least eight content words, so the branch that
+makes the check safe is exercised only by the selftest that motivated it.
+
+That is not a defect. It is a **coverage fact about a safety branch**, and there was no
+way to learn it from a passing test suite: the suite exercises it by construction. Nobody
+would have gone looking.
+
 ## What a receipt licenses
 
 **Licensed:** the apparatus could (or could not) have produced a different value on this

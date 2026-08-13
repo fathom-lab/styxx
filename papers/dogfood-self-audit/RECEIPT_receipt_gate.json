@@ -1,0 +1,71 @@
+{
+ "measurement": "receipt_gate_fire_rate",
+ "value": 0.1852,
+ "verdict": "OK__path_could_have_failed",
+ "why": "8 of 13 adjudicable terms varied (61.5%). The apparatus could have returned a different answer on this population.",
+ "generated_utc": "2026-08-13T21:43:41Z",
+ "scope_obs_floor": 4,
+ "n_terms_on_path": 13,
+ "n_live": 8,
+ "n_constant": 5,
+ "n_underpowered": 0,
+ "live_fraction_of_adjudicable": 0.6154,
+ "pinned_terms": [
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 115,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 897,
+   "src": "not s"
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "evidence_toolcalls",
+   "line": 168,
+   "op": "or",
+   "verdict": "CONSTANT_TRUE",
+   "n": 81,
+   "src": "not log_path"
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 234,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 28,
+   "src": "[]"
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 246,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 11,
+   "src": "not subject"
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 246,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 11,
+   "src": "len(ev_terms) < TOPIC_POWER_FLOOR"
+  }
+ ],
+ "limits": [
+  "Attribution is by observation delta, not data-flow taint: a term evaluated inside the scope is credited even if its result never reached the value. This biases the receipt toward looking FALSIFIABLE, so REFUSED is strong evidence and OK is weak evidence.",
+  "Single-threaded only. Concurrent work inside the scope is misattributed to this measurement.",
+  "A CONSTANT verdict is about this measurement's population, not about the term in principle."
+ ],
+ "population": {
+  "source": "darkflobi_glimmer_log.jsonl",
+  "n_drafts": 81,
+  "n_fired": 15
+ },
+ "subject": "execution_receipt_gate.review \u2014 the gate extended earlier today"
+}
