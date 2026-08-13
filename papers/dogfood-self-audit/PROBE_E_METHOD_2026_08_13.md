@@ -114,6 +114,16 @@ file, so a crashing module costs one file instead of the run. Files that fail to
 listed in the report, because a term left unmeasured by harness failure must not be
 confused with a term the code kept quiet.
 
+**One file is unmeasurable by this instrument, and the instrument is at fault.**
+`tests/test_anthropic_hack.py` dies with an access violation (`0xC0000005`) under
+instrumentation. Run without it, the same file passes 14/14 in 23s. The crash is
+therefore mine, not the subject's — the extra frame per decision term is enough to break
+something in that module's execution — and every term only that file would have
+exercised is reported `NEVER_REACHED` **for a reason that has nothing to do with the
+code under audit**. Checking this took one command and it inverts the reading of that
+file's rows completely; without the control, an instrument-induced crash would have been
+silently recorded as dead code in the subject.
+
 The suite is a convenience population, not a designed one. It over-represents what the
 authors thought to test, which biases *against* finding dead gates in well-tested code
 and *toward* `NEVER_REACHED` elsewhere. A gate that is dead under its own test suite is

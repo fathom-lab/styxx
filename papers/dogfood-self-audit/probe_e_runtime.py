@@ -220,7 +220,16 @@ def report(census_path=None):
     for tid, o in _OBS.items():
         n = o["t"] + o["f"]
         meta = _META.get(tid, {})
-        if n < OBS_FLOOR:
+        if n == 0:
+            # Must be checked BEFORE the floor. In chunked mode every term the rewriter
+            # created is merged in with a count, including zeros, so the "tid not in
+            # _OBS" test below never fires and every never-evaluated term was silently
+            # relabelled UNDERPOWERED. Those are different facts -- "the population
+            # touched this too rarely to answer" versus "the population never reached
+            # it at all" -- and collapsing them hides how much of the code the suite
+            # does not execute.
+            verdict = "NEVER_REACHED"
+        elif n < OBS_FLOOR:
             verdict = "UNDERPOWERED"
         elif o["t"] == 0:
             verdict = "CONSTANT_FALSE"
@@ -415,6 +424,18 @@ def run_chunked(pkg, tests_dir, out_json, census=None, stack_mb=256, timeout_s=3
             try:
                 with open(cj, encoding="utf-8") as f:
                     r = json.load(f)
+                # A written JSON file is NOT evidence that the population ran. On the
+                # first external run every one of numpy's 178 chunks was recorded "ok"
+                # while pytest was exiting 4 on `ModuleNotFoundError: hypothesis` --
+                # no test executed, and the observations came from import time alone.
+                # That produced a confident 69% dead rate for a mainstream library off
+                # a suite that never ran, which is the exact overstatement this whole
+                # program exists to catch, committed by its own harness. pytest exit 0
+                # and 1 mean tests ran (1 = some failed, still a valid population);
+                # 2-5 mean they did not.
+                pexit = (r.get("population") or {}).get("pytest_exit_code")
+                if pexit is not None and pexit not in (0, 1):
+                    status = f"pytest_exit({pexit}) — no population"
                 for row in r.get("rows", []):
                     tid = row["term_id"]
                     m = merged_obs.setdefault(tid, {"t": 0, "f": 0})
@@ -488,8 +509,8 @@ def main():
 
     if a.selftest:
         return selftest()
-    if not (a.pkg and a.tests):
-        ap.error("--pkg and --tests are required unless --selftest")
+    if not (a.pkg and a.tests) and not a.join_only:
+        ap.error("--pkg and --tests are required unless --selftest or --join-only")
 
     if a.join_only:
         # Re-derive the report (and the census join) from an existing run's rows,
