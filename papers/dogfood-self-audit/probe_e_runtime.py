@@ -623,7 +623,7 @@ def run_chunked(pkg, tests_dir, out_json, census=None, stack_mb=256, timeout_s=3
                     m["f"] += row.get("n_false", 0)
                     merged_meta.setdefault(tid, {k: row.get(k) for k in
                                                  ("module", "func", "path", "line",
-                                                  "op", "src")})
+                                                  "op", "pos", "src")})
             except Exception as e:                           # noqa: BLE001
                 status = f"unreadable({type(e).__name__})"
         chunks.append({"test_file": os.path.relpath(tf, tests_dir), "status": status})
@@ -666,6 +666,10 @@ def _summarise(rep):
     print(f"  UNDERPOWERED       : {c.get('UNDERPOWERED', 0)}")
     print(f"  NEVER_REACHED      : {c.get('NEVER_REACHED', 0)}")
     print(f"  dead rate (of powered): {rep['dead_rate_of_powered']}")
+    if rep.get("n_adjudicative_powered") == 0 and rep.get("n_powered"):
+        print("  !! POSITION DATA MISSING — every powered term classified "
+              "value-position. The headline cannot be computed; this is an instrument "
+              "fault (metadata dropped in transit), not a property of the subject.")
     print(f"  -- adjudicative only (the headline) --")
     print(f"  adjudicative powered  : {rep.get('n_adjudicative_powered')}")
     print(f"  adjudicative dead     : {rep.get('n_adjudicative_dead')}")
@@ -715,8 +719,14 @@ def main():
         for row in prior.get("rows", []):
             _OBS[row["term_id"]] = {"t": row.get("n_true", 0),
                                     "f": row.get("n_false", 0)}
+            # `pos` MUST be in this list. Omitting it from the chunk-merge copy silently
+            # dropped every term's position, so report() saw pos=None, classified all
+            # 4,995 terms as value-position, and printed "adjudicative powered: 0" with
+            # a headline rate of None. It failed loudly, which is the only reason it was
+            # caught in one run -- a defaulted-to-plausible value would have shipped.
             _META[row["term_id"]] = {k: row.get(k) for k in
-                                     ("module", "func", "path", "line", "op", "src")}
+                                     ("module", "func", "path", "line", "op", "pos",
+                                      "src")}
         rep = report(a.census)
         rep["population"] = prior.get("population", {})
         rep["population"]["rejoined_from"] = a.join_only
