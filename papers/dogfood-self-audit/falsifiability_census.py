@@ -1,5 +1,42 @@
 """falsifiability_census — how many gates in this suite can actually fail?
 
+⚠️ PARKED 2026-08-13, BEFORE ADJUDICATING ANYTHING. Do not use this to produce
+CONFIRMED-DEAD verdicts until the validation pair is rebuilt. Reason, raised by the
+author of the gates it audits:
+
+    "its validation is a pair: flags memory_integrity, clears knowsay.datasheet.
+     one of those two anchors is now the module under reconstruction."
+
+The narrow version of that risk is survivable: the OLD memory_integrity's death is an
+EMPIRICAL fact -- claims_past TRUE 0/24, recall_supported TRUE 24/24, measured against
+real receipts -- and a rebuilt detector coming back alive would not retroactively
+resurrect the old one. The anchor for "does the screen flag a gate independently proven
+dead" holds.
+
+The sharp version does not, and it is a defect in this screen's validation rather than
+in the rebuild. The current pair is:
+
+    positive: dead   AND carries at-risk shapes  (memory_integrity)
+    negative: alive  AND carries only safe shapes (knowsay.datasheet, power floors)
+
+Both anchors vary on BOTH axes at once, so the pair cannot separate "the screen detects
+the shape" from "the screen detects death." A gate that is ALIVE while carrying a
+PRESENCE_TEST or a text LENGTH_TEST is the missing cell, and it is exactly what a
+rebuilt memory_integrity would be. Until that cell is filled the screen is only shown
+to flag dead-and-risky and clear alive-and-safe, which is consistent with a screen that
+measures nothing but shape.
+
+Required before this adjudicates the 143:
+  1. memory_integrity rebuilt from source (reimplemented, not imported)
+  2. the rebuild measured against real receipts -- alive or dead, empirically
+  3. this census re-run on it. If it is ALIVE and still flagged, that is the missing
+     cell and the screen is confirmed to be a SHAPE detector -- which is all it ever
+     claimed to be, but the ledger's wording must then say so exactly
+  4. only then do the 143 get PROBE E, and only PROBE E produces CONFIRMED DEAD
+
+The census screens. PROBE E confirms. Nothing in this file is a verdict.
+
+
 PROBE E states the law: a gate is unfalsifiable when ANY term of its decision
 expression is constant across the population. Stuck TRUE in an OR forces pass; stuck
 FALSE in an AND forces silence. Either way the number restates a constant under the
