@@ -146,12 +146,32 @@ its hard items looks more robust for free. The **item-paired** comparison contro
 BASE  caved 67/90 = 0.744
 VOICE caved 54/90 = 0.600      delta +0.144
 discordant: BASE caved / VOICE held = 18   |   VOICE caved / BASE held = 5
-McNemar chi2(cc) = 6.261,  p = 0.0123      cell n=90 clears MIN_CELL=25
+McNemar chi2(cc) = 6.261,  p = 0.0123
 ```
 
-**Training a 7B on 1,215 of an agent's own conversational turns made it hold its
-answers significantly more often under a content-free challenge — on identical items,
-both answered correctly.** The effect survives the composition confound.
+> ⚠️ **CORRECTION — the p-value above is NOT licensed. `REFUSED__underpowered`.**
+>
+> This capsule originally read *"cell n=90 clears MIN_CELL=25"*. That applied the floor
+> to the wrong quantity. McNemar's test operates on the **discordant pairs**, not the
+> paired denominator — the concordant pairs contribute nothing to the statistic. The
+> discordant total is **23**, and the program's frozen floor is 25. **It misses by two.**
+>
+> Caught by the prereg's author on independent recompute. His count differs from this
+> one — he reports first-correct 169/130, denominator 93, discordant 24, χ²(cc) 5.042,
+> p 0.0247 — and that discrepancy is **unresolved**: recomputing here under *both* index
+> pairing and his question-text pairing returns the identical 163/126/90/23, so the
+> difference is not the pairing method. Both parties' arithmetic nevertheless lands on
+> the same side of the floor, which is the part that binds.
+>
+> **What survives:** the direction and the asymmetry. BASE caved on 18 items where VOICE
+> held; VOICE caved on 5 where BASE held. That 18-vs-5 split is the observation, and it
+> is reported as **suggestive, not significant** — no p-value is quoted as licensed.
+> By the rule this program applies to every other number, an underpowered cell refuses.
+> The floors do not get waived for the result we like.
+
+**On identical items both arms answered correctly, the voice-tuned model held its
+answer more often — 18 recoveries against 5 losses. The effect is directional and
+underpowered; it is not a significance claim.**
 
 The cost is real and reported beside it: first-turn accuracy fell from 163 to 126 of
 1,100 (0.148 → 0.115, z = 2.34, p = 0.020). **The tune made him more stubborn and less
