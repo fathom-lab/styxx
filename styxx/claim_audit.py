@@ -210,6 +210,7 @@ class GroundingReport:
     n_ambiguous: int = 0             # grounded claims matching >1 source path
     n_context_resolved: int = 0      # of those, how many the surrounding words disambiguated
     n_arbitrary: int = 0             # still dict-order picks — the honest residual
+    floor_band: tuple = (0.0, 1.0)   # the range the floor was measured over (auditable reference)
 
     @property
     def unsourced(self) -> list:
@@ -236,8 +237,13 @@ class GroundingReport:
 
     @property
     def verdict(self) -> str:
+        # A gate that extracted nothing has CHECKED nothing. Reporting that as a pass asserts a
+        # check that did not occur — and in the flattering direction. This repo's doctrine is
+        # explicit ("a leg that cannot fail must not gate") and its other instruments obey it,
+        # refusing rather than certifying on insufficient input. Zero claims is not a passing
+        # document, it is an INAPPLICABLE gate. (Red team, 2026-08-13, lane 4: ABDICATION.)
         if self.n_total == 0:
-            return "NO NUMERIC CLAIMS"
+            return "VOID__no_claims_extracted"
         return "ALL GROUNDED" if self.n_unsourced == 0 else f"UNSOURCED: {self.n_unsourced}/{self.n_total}"
 
     @property
@@ -428,18 +434,46 @@ def _resolve_by_context(num: "ClaimNumber", cands: list) -> tuple:
     ctx = _tokens(num.context)
     if not ctx:
         return cands[0], "arbitrary", 0.0
+
+    # Scoring must not reward SHORT paths. The first version divided the overlap by
+    # len(path_tokens), so a bare summary key ("rate") needed one lucky word to score 1.0 while
+    # a long, specific path ("cells.blockconf_ge3_of_7.cave_rate") was penalised for every token
+    # the prose did not repeat. Net effect: the more precisely a sentence named its source, the
+    # more the correct path was punished. Confirmed by red team 2026-08-13 as a CONFIDENT-WRONG
+    # resolution — the worst failure mode available to this function, because it is labelled
+    # `context` rather than `arbitrary`.
+    #
+    # Jaccard is symmetric, so neither side's length buys an advantage. The absolute overlap is
+    # kept as the primary key: a path that matches three of the sentence's words is better
+    # evidenced than one that matches a single word, whatever the normalisation says.
     scored = []
     for p in cands:
         pt = _tokens(p)
         if not pt:
-            scored.append((0.0, p))
+            scored.append((0, 0.0, p))
             continue
-        scored.append((len(ctx & pt) / len(pt), p))
-    scored.sort(key=lambda x: (-x[0], x[1]))
-    best, runner = scored[0], (scored[1] if len(scored) > 1 else (0.0, ""))
-    if best[0] > 0 and best[0] > runner[0]:
-        return best[1], "context", round(best[0], 3)
-    return cands[0], "arbitrary", round(best[0], 3)
+        inter = ctx & pt
+        jac = len(inter) / len(ctx | pt)
+        scored.append((len(inter), jac, p))
+    scored.sort(key=lambda x: (-x[0], -x[1], x[2]))
+    best = scored[0]
+    runner = scored[1] if len(scored) > 1 else (0, 0.0, "")
+
+    # A specific path is never LESS named than a generic path contained within it. If the
+    # winner's matched tokens are a strict subset of the runner-up's, the winner is the more
+    # generic candidate and the evidence does not separate them — decline instead of asserting.
+    best_tok = ctx & _tokens(best[2])
+    run_tok = ctx & _tokens(runner[2]) if runner[2] else set()
+    if best_tok and run_tok and best_tok <= run_tok:
+        # `<=` not `<`: on a TIE (identical matched tokens) Jaccard still favours the shorter
+        # path, which reintroduces the short-path premium through the back door. Equal evidence
+        # must mean equal standing, so decline. Caught by this module's own test, 2026-08-13.
+        if best_tok < run_tok or len(_tokens(best[2])) < len(_tokens(runner[2])):
+            return cands[0], "arbitrary", round(best[1], 3)
+
+    if best[0] > 0 and (best[0], best[1]) > (runner[0], runner[1]):
+        return best[2], "context", round(best[1], 3)
+    return cands[0], "arbitrary", round(best[1], 3)
 
 
 def _match(num: ClaimNumber, vals: dict) -> tuple:
@@ -464,7 +498,8 @@ def _match(num: ClaimNumber, vals: dict) -> tuple:
     return "unsourced", ""
 
 
-def _chance_floor(vals: dict, decimals: int, trials: int = 4000, seed: int = 7) -> float:
+def _chance_floor(vals: dict, decimals: int, trials: int = 4000, seed: int = 7,
+                  band: tuple | None = None) -> float:
     """P(a uniformly-random claim with `decimals` places grounds against `vals` by luck).
 
     `_match` grounds on ANY source value within 0.5*10^-decimals, so the floor is set by source
@@ -483,8 +518,17 @@ def _chance_floor(vals: dict, decimals: int, trials: int = 4000, seed: int = 7) 
     # The honest reference is the band the audited numbers themselves occupy: rates, p-values and
     # effect sizes sit in [0,1], and grounding one of those against a receipt of a few hundred
     # leaves is easy. Sample the claim's own magnitude class.
-    hi_ref = 1.0 if decimals >= 1 else max(10.0, min(1000.0, max(abs(v) for v in xs)))
-    lo, hi = 0.0, hi_ref
+    # v3 (red team, 2026-08-13): fixing the ORDER OF MAGNITUDE was not enough — the BAND matters.
+    # When the audited claims cluster in a narrow sub-range where the source leaves also cluster
+    # (the shape of every rate receipt here), a uniform [0,1] draw spends most of its mass in
+    # empty territory and the floor reads far LOWER than the luck a real claim enjoys. Measured
+    # gap on a 94-leaf receipt confined to [0, 0.25]: shipped 0.0925 vs band-matched 0.3735.
+    # Flattering, again, in the same function, for the third time.
+    if band is not None and band[1] > band[0]:
+        lo, hi = band
+    else:
+        hi_ref = 1.0 if decimals >= 1 else max(10.0, min(1000.0, max(abs(v) for v in xs)))
+        lo, hi = 0.0, hi_ref
     tol = 0.5 * 10 ** (-decimals)
     rng = _r.Random(seed + decimals)
     hits = 0
@@ -536,14 +580,24 @@ def audit_grounding(text: str, sources: Any) -> "GroundingReport":
     # i.e. that class of claim CANNOT fail against a receipt of a few hundred leaves. A rate
     # quoted without its floor is the fire-rate wearing the antibody's name.
     if nums:
+        # Reference band = the range the document's OWN claims occupy, widened to a round
+        # decade so it is not hostage to a single extreme claim. Reported in `floor_band` so the
+        # reference distribution is auditable rather than implicit.
+        cv = [n.value for n in nums if n.kind != "percent"] or [n.value for n in nums]
+        blo, bhi = min(cv), max(cv)
+        if bhi <= blo:
+            bhi = blo + max(abs(blo), 1.0) * 0.1 or 1.0
+        pad = (bhi - blo) * 0.1
+        band = (max(0.0, blo - pad), bhi + pad)
         floors, weighted = {}, 0.0
         for n in nums:
             d = _decimals(n.raw)
             if d not in floors:
-                floors[d] = _chance_floor(vals, d)
+                floors[d] = _chance_floor(vals, d, band=band)
             weighted += floors[d]
         rep.floor_by_decimals = {str(k): round(v, 5) for k, v in sorted(floors.items())}
         rep.chance_floor = round(weighted / len(nums), 4)
+        rep.floor_band = (round(band[0], 4), round(band[1], 4))
         rep.n_unfalsifiable = sum(1 for n in nums if floors[_decimals(n.raw)] >= 0.995)
     return rep
 

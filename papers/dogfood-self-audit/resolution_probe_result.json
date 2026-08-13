@@ -1,0 +1,59 @@
+{
+  "before": {
+    "A/chance-floor(d=1)": {
+      "verdict": "FAIL",
+      "random_document_scores": 1.0,
+      "floor_disclosed_by_instrument": false,
+      "reading": "a document of pure noise scores this well; the instrument must say so alongside any headline rate"
+    },
+    "A/chance-floor(d=3)": {
+      "verdict": "PASS",
+      "random_document_scores": 0.1875,
+      "floor_disclosed_by_instrument": false,
+      "reading": "a document of pure noise scores this well; the instrument must say so alongside any headline rate"
+    },
+    "B/collision-blindness": {
+      "verdict": "FAIL",
+      "paths_holding_the_value": 6,
+      "paths_the_instrument_can_see": 1,
+      "reading": "if it sees 1, its loader deleted the collision and no ambiguity can ever be reported"
+    },
+    "C/provenance-overclaim": {
+      "verdict": "FAIL",
+      "named_source": "alpha.score",
+      "ambiguity_disclosed": false,
+      "reading": "with three identical candidates and no context, naming one without disclosure is dict order presented as evidence"
+    }
+  },
+  "after": {
+    "A/chance-floor(d=1)": {
+      "verdict": "PASS",
+      "random_document_scores": 1.0,
+      "floor_disclosed_by_instrument": true,
+      "reading": "a document of pure noise scores this well; the instrument must say so alongside any headline rate"
+    },
+    "A/chance-floor(d=3)": {
+      "verdict": "PASS",
+      "random_document_scores": 0.1875,
+      "floor_disclosed_by_instrument": true,
+      "reading": "a document of pure noise scores this well; the instrument must say so alongside any headline rate"
+    },
+    "B/collision-blindness": {
+      "verdict": "PASS",
+      "paths_holding_the_value": 6,
+      "paths_the_instrument_can_see": 6,
+      "reading": "if it sees 1, its loader deleted the collision and no ambiguity can ever be reported"
+    },
+    "C/provenance-overclaim": {
+      "verdict": "PASS",
+      "named_source": "alpha.score",
+      "ambiguity_disclosed": true,
+      "reading": "with three identical candidates and no context, naming one without disclosure is dict order presented as evidence"
+    }
+  },
+  "separation": {
+    "before_fails": 3,
+    "after_fails": 0,
+    "verdict": "PROBES_DISCRIMINATE__they_separate_the_known_defective_from_the_fixed"
+  }
+}

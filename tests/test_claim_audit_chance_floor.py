@@ -183,6 +183,73 @@ def test_ambiguity_accounting_is_exhaustive():
     assert rep.n_ambiguous == rep.n_context_resolved + rep.n_arbitrary
 
 
+# --- red-team findings, 2026-08-13 (Claude Fable 5) ------------------------------------
+# Commissioned adversary on commits 1fb1de5 / 4de77d1 / af62490. Confirmed both defects the
+# author flagged as most likely, and called the zero-claims PASS an abdication. All three fixed.
+
+
+def test_specific_path_is_not_beaten_by_a_bare_summary_key():
+    """LANE 2 regression — the CONFIDENT-WRONG case, worst failure available to the resolver.
+
+    Scoring divided overlap by len(path_tokens), so a bare key ("rate") needed one lucky word to
+    score 1.0 while a long specific path was penalised for every token the prose did not repeat.
+    The more precisely a sentence named its source, the more the correct path was punished — and
+    the result was labelled `context`, not `arbitrary`, so it asserted a provenance it had
+    actively mis-derived.
+    """
+    src = {"rate": 0.1, "cells": {"blockconf_ge3_of_7": {"cave_rate": 0.1}}}
+    rep = audit_grounding(
+        "The blockconf arm at >=3/7 shows a cave rate of 0.100 on the frozen protocol.", src)
+    it = [i for i in rep.items if i.status == "grounded"][0]
+    assert it.source == "cells.blockconf_ge3_of_7.cave_rate", (it.source, it.resolved_by)
+    assert it.resolved_by == "context"
+
+
+def test_generic_winner_contained_in_specific_runner_up_declines():
+    """If the winner's matched tokens are a strict subset of the runner-up's, decline.
+
+    A specific path is never LESS named than the generic path contained within it, so a
+    'win' of that shape is an artifact, not evidence.
+    """
+    src = {"cave_rate": 0.75, "arm": {"cave_rate": 0.75}}
+    rep = audit_grounding("the cave_rate was 0.75", src)
+    it = [i for i in rep.items if i.status == "grounded"][0]
+    assert it.resolved_by in ("context", "arbitrary")
+    if it.resolved_by == "context":
+        assert it.source != "cave_rate" or it.n_candidates == 1
+
+
+def test_chance_floor_uses_the_band_the_claims_occupy():
+    """LANE 1 regression — third flattering error in the same function.
+
+    Fixing the order of magnitude was not enough. When claims and source leaves both cluster in
+    a narrow sub-range, a uniform [0,1] draw wastes its mass on empty territory and the floor
+    reads far too LOW. Measured gap on a 94-leaf receipt in [0, 0.25]: 0.0925 vs 0.3735.
+    """
+    import random
+    rng = random.Random(5)
+    src = {f"k{i}": round(rng.uniform(0, 0.25), 4) for i in range(94)}
+    r2 = random.Random(11)
+    doc = " and ".join(f"the rate was {round(r2.uniform(0, 0.25), 3):.3f}" for _ in range(10))
+    rep = audit_grounding(doc, src)
+    assert rep.floor_by_decimals["3"] > 0.20, rep.floor_by_decimals
+    assert rep.floor_band[1] <= 0.30, rep.floor_band
+    # a document of pure noise must NOT come out above chance
+    assert rep.excess_over_chance <= 0.05, rep.excess_over_chance
+
+
+def test_zero_claims_is_void_not_pass():
+    """LANE 4 — a gate that extracted nothing has checked nothing.
+
+    'PASS' asserts a check that did not occur, in the flattering direction. The repo's doctrine
+    is that a leg which cannot fail must not gate; the honest verdict is a refusal.
+    """
+    rep = audit_grounding("this document contains no statistics whatsoever", {"a": 0.5})
+    assert rep.n_total == 0
+    assert rep.verdict.startswith("VOID__"), rep.verdict
+    assert "PASS" not in rep.verdict
+
+
 def test_confidence_level_labels_are_not_treated_as_claims():
     """'95% upper bound' / '95% interval' are labels, not statistics. None may be extracted."""
     src = {"dispersion": 0.948, "rate": 0.5}
