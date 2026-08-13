@@ -1,0 +1,43 @@
+{
+  "note": "ceiling table for FINDING_c6; all inputs already committed in c6_basis_v2.json and c6_result.json",
+  "bar": ">=5/7",
+  "rho": 0.8054,
+  "rows": {
+    "c=0.32": {
+      "planted_coupling_c": 0.32,
+      "pairwise_r_implied": 0.1024,
+      "P_bar_cleared": 0.2,
+      "mean_licensed_fraction": 0.4881
+    },
+    "c=0.36": {
+      "planted_coupling_c": 0.36,
+      "pairwise_r_implied": 0.1296,
+      "P_bar_cleared": 0.5667,
+      "mean_licensed_fraction": 0.6976
+    },
+    "c=0.40": {
+      "planted_coupling_c": 0.4,
+      "pairwise_r_implied": 0.16,
+      "P_bar_cleared": 0.95,
+      "mean_licensed_fraction": 0.8429
+    },
+    "c=0.44": {
+      "planted_coupling_c": 0.44,
+      "pairwise_r_implied": 0.1936,
+      "P_bar_cleared": 1.0,
+      "mean_licensed_fraction": 0.95
+    },
+    "c=0.48": {
+      "planted_coupling_c": 0.48,
+      "pairwise_r_implied": 0.2304,
+      "P_bar_cleared": 1.0,
+      "mean_licensed_fraction": 0.9833
+    }
+  },
+  "first_c_with_95pct_power": 0.4,
+  "first_c_with_100pct_power": 0.44,
+  "ceiling_pairwise_r": 0.16,
+  "c6_cohort_license_rate": 0.1429,
+  "c5_pair_license_rate": 0.0952,
+  "c5_reference": "FINDING_c5: 2 of 21 pairs licensed"
+}

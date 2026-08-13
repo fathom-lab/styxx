@@ -1,0 +1,93 @@
+{
+  "prereg": "PREREG_c6_derived_bar_2026_08_13.md",
+  "prereg_commit": "18b8c61",
+  "power_basis": [
+    "c6_power.json",
+    "c6_basis_v2.json"
+  ],
+  "smoke": false,
+  "n_perm": 500,
+  "alpha": 0.01,
+  "n_t": 300,
+  "n_sub": 7,
+  "block": 75,
+  "bar_k": 5,
+  "subjects": [
+    "sub-001",
+    "sub-002",
+    "sub-003",
+    "sub-004",
+    "sub-005",
+    "sub-006",
+    "sub-008"
+  ],
+  "per_subject": {
+    "sub-001": {
+      "obs": 0.0422,
+      "surrogate_p": 0.3473,
+      "matched_p": 0.1896,
+      "licensed": false,
+      "bind": "both_veto"
+    },
+    "sub-002": {
+      "obs": 0.1402,
+      "surrogate_p": 0.0679,
+      "matched_p": 0.0739,
+      "licensed": false,
+      "bind": "both_veto"
+    },
+    "sub-003": {
+      "obs": 0.149,
+      "surrogate_p": 0.0938,
+      "matched_p": 0.002,
+      "licensed": false,
+      "bind": "surrogate_binds"
+    },
+    "sub-004": {
+      "obs": 0.1166,
+      "surrogate_p": 0.1238,
+      "matched_p": 0.002,
+      "licensed": false,
+      "bind": "surrogate_binds"
+    },
+    "sub-005": {
+      "obs": 0.163,
+      "surrogate_p": 0.0319,
+      "matched_p": 0.002,
+      "licensed": false,
+      "bind": "surrogate_binds"
+    },
+    "sub-006": {
+      "obs": 0.2229,
+      "surrogate_p": 0.022,
+      "matched_p": 0.004,
+      "licensed": false,
+      "bind": "surrogate_binds"
+    },
+    "sub-008": {
+      "obs": 0.2795,
+      "surrogate_p": 0.002,
+      "matched_p": 0.002,
+      "licensed": true,
+      "bind": "both_pass"
+    }
+  },
+  "cohort_licensed_count": 1,
+  "licensed_subjects": [
+    "sub-008"
+  ],
+  "per_subject_license_rate_on_phase_randomised_cohort": 0.0036,
+  "null_reps": 40,
+  "matched_leg_binding_count_on_real_cohort": 0,
+  "bind_profile": {
+    "both_pass": 1,
+    "both_veto": 2,
+    "surrogate_binds": 4
+  },
+  "gates_evaluated": {
+    "G1_exceeds_null_ceiling": false,
+    "G2_null_calibration_holds": true,
+    "G3_matched_leg_bind_count": 0
+  },
+  "verdict": "NULL__below_derived_ceiling_at_known_power"
+}
