@@ -1,0 +1,22 @@
+{
+ "status": "EXPLORATORY \u2014 post-hoc test on pre-registered data; the prereg listed know-say as reported context, not a gate",
+ "design": "item-paired: items BOTH arms answered correctly on turn 1",
+ "n_items_compared": 1100,
+ "paired_cell_n": 90,
+ "floor_MIN_CELL": 25,
+ "powered": true,
+ "base_caved": 67,
+ "base_cave_rate": 0.7444444444444445,
+ "voice_caved": 54,
+ "voice_cave_rate": 0.6,
+ "delta_base_minus_voice": 0.14444444444444443,
+ "discordant_base_caved_voice_held": 18,
+ "discordant_voice_caved_base_held": 5,
+ "mcnemar_chi2_cc": 6.260869565217392,
+ "mcnemar_p": 0.012343360353455029,
+ "caveats": [
+  "single model, single corpus, single training seed",
+  "the VOICE arm is also LESS accurate on turn 1 (126 vs 163 first-correct of 1100); the paired design controls composition but the accuracy cost is real and reported alongside",
+  "direction is protective, which is surprising and needs replication before it is a claim about voice tuning in general"
+ ]
+}

@@ -74,6 +74,45 @@ claim in either direction, and n=6 per arm makes the difference direction, not e
 `VOID` was considered and rejected on adjudication: voiding deletes the finding that
 the instrument was broken, which lives inside G3's provenance block.
 
+## The know-say result — EXPLORATORY, and the most interesting number of the day
+
+The prereg listed the know-say datasheet as **reported context, not a gate**. What
+follows was specified after seeing the arms' rates: a post-hoc test on pre-registered
+data, labelled as such here and everywhere it is quoted. It is not a confirmatory
+result and must not be read as one.
+
+Full 1,100-item frozen protocol, both arms, same pool (`items_md5 234008bc139c…`):
+
+| arm | first-correct | caved | cave rate | verdict |
+|---|---|---|---|---|
+| BASE | 163 / 1100 | 127 | **0.779** | MEASURED |
+| VOICE | 126 / 1100 | 74 | **0.587** | MEASURED |
+
+Unpaired, that is a 0.192 drop (z = 3.51, p = 0.00044). But `cave_rate` is a ratio over
+first-correct items and the arms do not get the same items right, so an arm that loses
+its hard items looks more robust for free. The **item-paired** comparison controls that
+— restricted to the 90 items **both** arms answered correctly on turn 1:
+
+```
+BASE  caved 67/90 = 0.744
+VOICE caved 54/90 = 0.600      delta +0.144
+discordant: BASE caved / VOICE held = 18   |   VOICE caved / BASE held = 5
+McNemar chi2(cc) = 6.261,  p = 0.0123      cell n=90 clears MIN_CELL=25
+```
+
+**Training a 7B on 1,215 of an agent's own conversational turns made it hold its
+answers significantly more often under a content-free challenge — on identical items,
+both answered correctly.** The effect survives the composition confound.
+
+The cost is real and reported beside it: first-turn accuracy fell from 163 to 126 of
+1,100 (0.148 → 0.115, z = 2.34, p = 0.020). **The tune made him more stubborn and less
+accurate.** On this evidence a voice LoRA is not honesty-neutral; it moved a measured
+honesty property, and in the protective direction, which is the opposite of the
+frame-locality prior for weight-channel edits.
+
+Scope: one model, one corpus, one training seed, post-hoc. Receipt:
+`runs/PAIRED_KNOWSAY_ANALYSIS.json`, script `paired_knowsay_analysis.py`.
+
 ## Provenance of the finding
 
 The contaminated gate was found by the red-team adversary whose own experiment it

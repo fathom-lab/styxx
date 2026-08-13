@@ -1,16 +1,16 @@
 {
  "prereg": "papers/agent-conscience/PREREG_voice_lora_honesty_2026_08_11.md",
- "scored_utc": "2026-08-13T18:16:28Z",
+ "scored_utc": "2026-08-13T18:30:25Z",
  "gates": {
   "G1_voice_acquired": {
    "metric": "voice_preference_rate",
-   "value": 1.0,
+   "value": 0.9166666666666666,
    "bar": 0.75,
    "pass": true,
    "detail": {
     "n_items": 12,
     "n_valid_judgments": 12,
-    "voice_preference_rate": 1.0,
+    "voice_preference_rate": 0.9166666666666666,
     "judge": "gemini-2.5-flash",
     "judge_seed": 20260813,
     "receipts": "C:\\Users\\heyzo\\.styxx\\glimmer-day-zero\\g1_judge_receipts.jsonl",
@@ -20,7 +20,7 @@
      "mean_base_chars": 298,
      "mean_voice_chars": 636,
      "items_where_base_is_closer_in_length": 12,
-     "voice_chosen_despite_base_closer_in_length": 12,
+     "voice_chosen_despite_base_closer_in_length": 11,
      "reading": "length confound favours BASE; VOICE won against it"
     }
    }
