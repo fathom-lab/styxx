@@ -1,0 +1,243 @@
+{
+  "total_rate_functions": 43,
+  "counts": {
+    "DISCLOSES": 2,
+    "INTERNAL_ONLY": 5,
+    "NO_NULL": 33,
+    "ANALYTIC_NULL": 3
+  },
+  "no_null": [
+    {
+      "file": "agent_audit.py",
+      "func": "coverage",
+      "line": 462,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "calibrate.py",
+      "func": "calibrate",
+      "line": 90,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "calibrate.py",
+      "func": "calibration_status",
+      "line": 259,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "calibration.py",
+      "func": "calibrate_transfer_safe",
+      "line": 379,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "cli.py",
+      "func": "cmd_log_migrate_provenance",
+      "line": 2178,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "critique.py",
+      "func": "score",
+      "line": 108,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "crossmind.py",
+      "func": "score",
+      "line": 169,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "d_axis.py",
+      "func": "score_trajectory",
+      "line": 213,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "d_axis.py",
+      "func": "score_single",
+      "line": 280,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "framelocality.py",
+      "func": "recovery_rates",
+      "line": 139,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "generate_safe.py",
+      "func": "generate_safe",
+      "line": 105,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "guardian.py",
+      "func": "generate",
+      "line": 235,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "intercept.py",
+      "func": "default_strategy",
+      "line": 159,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "kcs.py",
+      "func": "score",
+      "line": 389,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "kcs.py",
+      "func": "score_trajectory",
+      "line": 502,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "meaning_integrity.py",
+      "func": "calibrate",
+      "line": 166,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "mind.py",
+      "func": "grounded_score",
+      "line": 119,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "mount.py",
+      "func": "calibrate",
+      "line": 182,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "probe.py",
+      "func": "probe",
+      "line": 107,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "profile.py",
+      "func": "duration_s",
+      "line": 338,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "protocol.py",
+      "func": "score",
+      "line": 422,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "reward.py",
+      "func": "score_with_breakdown",
+      "line": 283,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "single_pass.py",
+      "func": "calibrate_single_pass",
+      "line": 173,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "spec_exec.py",
+      "func": "calibrate_threshold",
+      "line": 124,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "steer.py",
+      "func": "steered_generate",
+      "line": 236,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "synth.py",
+      "func": "generate_preference_pairs",
+      "line": 168,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "thought.py",
+      "func": "mean_probs",
+      "line": 399,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "transport.py",
+      "func": "transported_score",
+      "line": 256,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "transport.py",
+      "func": "score",
+      "line": 104,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "vitals.py",
+      "func": "logprobs_to_entropy_margin",
+      "line": 941,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "vitals.py",
+      "func": "calibrate",
+      "line": 195,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "vitals.py",
+      "func": "trust_score",
+      "line": 816,
+      "bucket": "NO_NULL"
+    },
+    {
+      "file": "witness.py",
+      "func": "substrate_divergence",
+      "line": 251,
+      "bucket": "NO_NULL"
+    }
+  ],
+  "internal_only": [
+    {
+      "file": "claim_audit.py",
+      "func": "pct_grounded",
+      "line": 250,
+      "bucket": "INTERNAL_ONLY"
+    },
+    {
+      "file": "framelocality.py",
+      "func": "assess_retained_probe",
+      "line": 240,
+      "bucket": "INTERNAL_ONLY"
+    },
+    {
+      "file": "memory.py",
+      "func": "recall",
+      "line": 245,
+      "bucket": "INTERNAL_ONLY"
+    },
+    {
+      "file": "mount.py",
+      "func": "calibrate_threshold",
+      "line": 192,
+      "bucket": "INTERNAL_ONLY"
+    },
+    {
+      "file": "probe_validity.py",
+      "func": "validate_probe",
+      "line": 116,
+      "bucket": "INTERNAL_ONLY"
+    }
+  ],
+  "method": "lexical/AST triage, NOT a semantic proof; counts are candidates for manual review, never defects",
+  "reading": "claim_audit was not special \u2014 it was the one that got dogfooded"
+}

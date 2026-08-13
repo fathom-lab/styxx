@@ -248,7 +248,27 @@ class GroundingReport:
 
     @property
     def pct_grounded(self) -> float:
+        """Headline percentage. **Do not quote this without `pct_chance_floor`.**
+
+        This is the number that gets copy-pasted into a slide, and on its own it is the exact
+        artefact this module spent 2026-08-13 learning not to produce: a rate with an undisclosed
+        null. `summary()` and `render_html()` state the floor beside it; a caller reading the
+        attribute directly gets no such protection, so `pct_excess_over_chance` exists to be
+        quoted instead. Found by surveying styxx's own rate-returning functions — the survey
+        flagged this property even after the report object had been fixed, because the fix was in
+        the *renderers* and not in the API shape.
+        """
         return 0.0 if self.n_total == 0 else round(100 * (self.n_grounded + self.n_derived) / self.n_total, 1)
+
+    @property
+    def pct_chance_floor(self) -> float:
+        """The headline's null, in the same units, so the two travel together."""
+        return round(100 * self.chance_floor, 1)
+
+    @property
+    def pct_excess_over_chance(self) -> float:
+        """The part of `pct_grounded` that is about the document rather than the receipt."""
+        return round(100 * self.excess_over_chance, 1)
 
     def summary(self) -> str:
         lines = [f"claim audit: {self.verdict}  ({self.pct_grounded}% backed; "

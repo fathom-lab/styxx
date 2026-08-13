@@ -250,6 +250,23 @@ def test_zero_claims_is_void_not_pass():
     assert "PASS" not in rep.verdict
 
 
+def test_headline_percentage_has_a_companion_floor_in_the_same_units():
+    """The number that gets copy-pasted must not be quotable without its null.
+
+    Found by surveying styxx's own rate-returning functions: the report object had been fixed,
+    but the fix lived in summary()/render_html(). A caller reading `pct_grounded` directly still
+    got a bare rate — the exact artefact this module spent the day learning not to produce.
+    """
+    src = {f"k{i}": round(i * 0.011, 3) for i in range(60)}
+    rep = audit_grounding("rates of 0.011, 0.022 and 0.033 were seen", src)
+    assert hasattr(rep, "pct_chance_floor")
+    assert hasattr(rep, "pct_excess_over_chance")
+    # same units as the headline, and the identity must hold
+    assert abs((rep.pct_grounded - rep.pct_chance_floor)
+               - rep.pct_excess_over_chance) < 0.15, (
+        rep.pct_grounded, rep.pct_chance_floor, rep.pct_excess_over_chance)
+
+
 def test_confidence_level_labels_are_not_treated_as_claims():
     """'95% upper bound' / '95% interval' are labels, not statistics. None may be extracted."""
     src = {"dispersion": 0.948, "rate": 0.5}
