@@ -1,3 +1,37 @@
+> ## THE CENTRAL MECHANISM WAS BROKEN. Corrected same day, after adversarial review.
+>
+> **The receipt returned `OK__path_could_have_failed` on measurements that could not
+> have come out differently.** Re-scoped on the 58 drafts where the conscience fired
+> every single time (value literally 1.0) and on the 25 where it never fired (0.0), it
+> certified "the apparatus could have returned a different answer" at 37.5% and 25.5%
+> live — while its own rows correctly recorded every terminal decision term as CONSTANT.
+>
+> The mechanism was **pooling**. Character-level tokenisation loops inside the instrument
+> generate tens of thousands of live observations with no bearing on the verdict, and
+> they outvoted the handful of terms that decide. The single heaviest "live" term was
+> `' ' in phrase` at n=30,174 — a compile-time property of a lexicon file, invariant
+> under every possible input, certified LIVE.
+>
+> That is a pass verdict decoupled from the question it claims to answer, inside the
+> instrument built to detect exactly that, violating this lab's own standing rule that
+> *a leg which cannot fail must not gate*. It is the worst defect of the day because it
+> is the one artifact whose entire purpose **is** the verdict.
+>
+> **Two checks now stand in front of the verdict.** `mark_item()` per unit the value
+> aggregates over, refusing outright when every item produced the same outcome; and a
+> phi coefficient between each term's per-item value and the outcome, refusing when no
+> live term tracks the result. Restricting to adjudicative terms alone does *not* fix it
+> — a tokenisation loop's `if` is adjudicative too.
+>
+> **`RECEIPT_receipt_gate.json` was withdrawn and re-cut.** The original was
+> unauditable: the source was edited 22 minutes after it was issued, five commits
+> followed, the line numbers it cited matched no version on disk, and `live_terms` were
+> never serialised at all — so the evidence *for* its OK verdict could not be recovered.
+> Receipts now pin the subject commit, record whether the tree was dirty, and serialise
+> the live terms with their phi.
+>
+> Numbers below are superseded by the re-cut receipts; the argument stands.
+
 # Falsifiability receipts: attaching to a number the proof it could have been different
 
 **Date:** 2026-08-13. **Code:** `falsifiability_receipt.py`, `certify_conscience_rate.py`.

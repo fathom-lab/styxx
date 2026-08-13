@@ -1,3 +1,44 @@
+> ## CORRECTED AND PARTLY WITHDRAWN, same day, after adversarial verification
+>
+> Twelve independent agents attacked this finding; four defects survived a second
+> reviewer re-running the decisive check. **The headline number is wrong and the
+> headline sentence is wrong in a second, independent way.**
+>
+> **The rate.** 175 of the 800 "dead gates" (21.9%) are not decisions at all — they sit
+> in value position (`float(x or 0.5)` picks a default, `prefix or "$"` coalesces), and
+> 21 are constant by mathematical construction so no population could ever move them. A
+> further 14 clear the observation floor on *process count* rather than population
+> variety, because `run_chunked` sums observations across 128 interpreters and the floor
+> is applied to the sum. **On decision terms alone the rate is 39.9% (625/1,566), and
+> ~36% if defensive guards are also excluded** — two careful readers got 36.9% and
+> 36.1%, and that ~15-point spread on the guard boundary is itself worth disclosing.
+> The instrument has been fixed to record term position and the run re-done; final
+> figures are in `probe_e_styxx_v2.json`.
+>
+> **The showcase table is the worst part of this document.** Row 1 (n=53,771) is
+> `if w and w[0].isupper()` where `w` comes from `\b\w+\b` — a logical tautology, not a
+> coverage fact; 50,000 random strings produce no empty match. Row 2 is a value
+> coalesce, rows 3–4 are early-exit guards (`if not line: continue`). **Only row 5
+> survives**: `weather:_bucket_for_hour` L103 is genuinely dead, and proves the suite
+> never passed an hour between 22:00 and 05:00.
+>
+> **`tests/test_anthropic_hack.py` — WITHDRAWN ENTIRELY.** This document claimed it
+> "cannot be measured by this instrument" and that "the crash is the instrument's, not
+> the subject's." Both are false: it runs to completion under instrumentation **5 times
+> out of 5**, exit 0, writing a full report each time. The stated mechanism was also
+> wrong — `_probe_e_rec(tid, EXPR)` evaluates `EXPR` as a call argument *before* the
+> recorder's frame is pushed, so instrumentation cannot deepen the subject's recursion.
+> The `--stack-mb 256` apparatus rests on a diagnosis that does not hold.
+>
+> **The numpy section's fix claim — WITHDRAWN.** "The status check now reads pytest's
+> exit code" is true and did not fix the defect: the check set the label and fell
+> through into the merge with no `continue`, so every no-population chunk's rows were
+> merged anyway. Fixed now, for real, with the case tested.
+>
+> The census miss and false-positive rates (68.8% / 92.6%, 15.8% / 39.4%) were
+> reproduced exactly under a collision-free join key and **stand** — but must be quoted
+> as **"at least"**, since the coarse key can only manufacture matches, never hide them.
+
 # PROBE E on styxx: 43% of exercised decision terms could not have gone the other way
 
 **Date:** 2026-08-13. **Instrument:** `probe_e_runtime.py` (method and limits in

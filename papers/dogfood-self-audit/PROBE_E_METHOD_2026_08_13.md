@@ -19,10 +19,27 @@ can say *this gate did not fail, on this data, and could not have*.
 
 ## What it does
 
-The prober rewrites the target package's ASTs in memory at import time. Every operand of
-every `BoolOp`, plus bare comparisons in `if` and `return` position, is wrapped in a
-recorder that notes the truthiness and returns the value unchanged. The package is then
-driven by its own test suite, and each term's observed value set is reported.
+The prober rewrites the target package's ASTs in memory at import time. Operands of
+`BoolOp` are wrapped in a recorder that notes the truthiness and returns the value
+unchanged; so are the tests of `if`/`while`/`assert`/`IfExp` and bare comparisons in
+`return` position. The package is then driven by its own test suite, and each term's
+observed value set is reported.
+
+**This is an instrument-defined population, not a census of the package's gates.** An
+earlier version of this sentence claimed "every operand of every `BoolOp`, plus bare
+comparisons in `if` and `return` position," which was wrong in both directions: the `if`
+handler accepts a wider node set than `return` does, and there was no handling of
+`while`, conditional expressions, or comprehension filters at all. A term count is a
+property of what the rewriter reaches, and 106 terms in 15 modules that the suite never
+imports are absent from the denominator rather than counted against coverage.
+
+Each term also records its **position**: `adjudicative` if its value is consumed as a
+decision (an `if`/`while`/`assert` test, a returned expression, a conditional test), or
+`value` if it merely selects a result — `float(x or 0.5)` picks a default and
+`prefix or "$"` coalesces. Adversarial review found 175 of styxx's 800 originally
+reported dead terms sitting in value position, 21 of them constant by mathematical
+construction. **The headline rate is computed on adjudicative terms alone**; pooling the
+two counts default-picking as dead logic.
 
 Wrapping **operands** rather than whole expressions preserves short-circuit evaluation
 exactly — a right-hand operand records only when Python would have evaluated it. That is
@@ -114,7 +131,17 @@ file, so a crashing module costs one file instead of the run. Files that fail to
 listed in the report, because a term left unmeasured by harness failure must not be
 confused with a term the code kept quiet.
 
-**One file is unmeasurable by this instrument, and the instrument is at fault.**
+> **WITHDRAWN — the paragraph below is false and is kept only because deleting a
+> retracted claim hides that it was made.** Adversarial verification ran
+> `tests/test_anthropic_hack.py` under instrumentation **5 times out of 5**: exit 0,
+> full report written each time, 69 terms observed. It is measurable. The stated
+> mechanism is also wrong: `_probe_e_rec(tid, EXPR)` evaluates `EXPR` as a call argument
+> *before* the recorder's frame is pushed, so instrumentation cannot deepen the
+> subject's recursion. One observed crash was generalised into a property of the
+> instrument on a sample of one, by the same reasoning this program exists to catch —
+> and the `--stack-mb 256` apparatus was built on it.
+
+~~**One file is unmeasurable by this instrument, and the instrument is at fault.**
 `tests/test_anthropic_hack.py` dies with an access violation (`0xC0000005`) under
 instrumentation. Run without it, the same file passes 14/14 in 23s. The crash is
 therefore mine, not the subject's — the extra frame per decision term is enough to break
@@ -122,7 +149,7 @@ something in that module's execution — and every term only that file would hav
 exercised is reported `NEVER_REACHED` **for a reason that has nothing to do with the
 code under audit**. Checking this took one command and it inverts the reading of that
 file's rows completely; without the control, an instrument-induced crash would have been
-silently recorded as dead code in the subject.
+silently recorded as dead code in the subject.~~
 
 The suite is a convenience population, not a designed one. It over-represents what the
 authors thought to test, which biases *against* finding dead gates in well-tested code
