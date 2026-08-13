@@ -1,0 +1,37 @@
+{
+ "rows": [
+  {
+   "run": "probe_e_styxx_joined.json",
+   "terms": 4985,
+   "powered": 1848,
+   "exercised_frac": 0.3707,
+   "live": 1048,
+   "constant": 800,
+   "underpowered": 1407,
+   "never_reached": 1730,
+   "dead_rate_of_powered": 0.4329,
+   "n_test_files": 129,
+   "files_no_population": 1,
+   "census_candidates": 108,
+   "census_confirmed": 48,
+   "census_refuted": 9
+  },
+  {
+   "run": "probe_e_numpy_joined.json",
+   "terms": 6410,
+   "powered": 3418,
+   "exercised_frac": 0.5332,
+   "live": 2757,
+   "constant": 661,
+   "underpowered": 615,
+   "never_reached": 2377,
+   "dead_rate_of_powered": 0.1934,
+   "n_test_files": 178,
+   "files_no_population": 30,
+   "census_candidates": 68,
+   "census_confirmed": 20,
+   "census_refuted": 13
+  }
+ ],
+ "caveat": "dead_rate_of_powered is computed over the exercised minority; rows with small exercised_frac are not comparable to rows with large ones."
+}
