@@ -25,6 +25,11 @@ import argparse
 import json
 import os
 
+# Two runs whose exercised fractions differ by more than this factor are not compared at
+# all. 1.5 is a judgement call and is stated rather than buried: styxx at 37.1% against
+# numpy at 78.5% is a factor of 2.1, which is exactly the pair that prompted the guard.
+MAX_COVERAGE_SPREAD = 1.5
+
 
 def summarise(path):
     with open(path, encoding="utf-8") as f:
@@ -45,6 +50,11 @@ def summarise(path):
         "underpowered": c.get("UNDERPOWERED", 0),
         "never_reached": c.get("NEVER_REACHED", 0),
         "dead_rate_of_powered": r.get("dead_rate_of_powered"),
+        "dead_rate_adjudicative": r.get("dead_rate_adjudicative"),
+        "adjudicative_powered": r.get("n_adjudicative_powered"),
+        "adjudicative_dead": r.get("n_adjudicative_dead"),
+        "value_dead": r.get("n_value_position_dead"),
+        "dead_at_process_multiple": r.get("n_dead_at_process_multiple"),
         "n_test_files": pop.get("n_test_files"),
         "files_no_population": pop.get("n_files_failed_to_run"),
         "census_candidates": cj.get("n_static_candidate_functions"),
@@ -64,22 +74,45 @@ def main():
         print("no readable runs")
         return 2
 
-    print(f"{'run':34s} {'terms':>7s} {'exercised':>10s} {'dead/powered':>13s} "
-          f"{'live':>6s} {'const':>6s} {'no-pop files':>13s}")
+    print(f"{'run':30s} {'terms':>7s} {'exercised':>10s} {'dead/pow':>9s} "
+          f"{'DEAD/adj':>9s} {'val-dead':>9s} {'no-pop':>8s}")
     for r in rows:
         ef = f"{r['exercised_frac']:.1%}" if r["exercised_frac"] is not None else "-"
         dr = (f"{r['dead_rate_of_powered']:.1%}"
               if r["dead_rate_of_powered"] is not None else "-")
+        da = (f"{r['dead_rate_adjudicative']:.1%}"
+              if r.get("dead_rate_adjudicative") is not None else "-")
         npf = (f"{r['files_no_population']}/{r['n_test_files']}"
                if r["n_test_files"] else "-")
-        print(f"{r['run'][:34]:34s} {r['terms']:7d} {ef:>10s} {dr:>13s} "
-              f"{r['live']:6d} {r['constant']:6d} {npf:>13s}")
+        print(f"{r['run'][:30]:30s} {r['terms']:7d} {ef:>10s} {dr:>9s} "
+              f"{da:>9s} {str(r.get('value_dead', '-')):>9s} {npf:>8s}")
+    print("  (DEAD/adj is the headline: decision terms only. dead/pow pools in "
+          "value-position\n   operands, 21.9% of which were not decisions at all "
+          "when this was audited.)")
 
-    print("\n  READ WITH THE COVERAGE COLUMN. The dead rate is computed over terms the")
-    print("  suite exercised at least 8 times; where 'exercised' is small, the rate is")
-    print("  a statement about a sliver of the package and must not be quoted as a")
-    print("  property of the codebase. Comparing dead rates across rows with very")
-    print("  different exercised fractions repeats the error this file exists to avoid.")
+    # A WARNING IS NOT A GUARD. The first version printed a paragraph asking the reader
+    # not to compare rows whose coverage differs -- which is the same move as labelling
+    # a chunk "no population" and merging its rows anyway, and it was flagged in review
+    # for exactly that reason. If two rows are not comparable the tool refuses to
+    # present them as a comparison, rather than presenting one and appealing to the
+    # reader's restraint.
+    fracs = [r["exercised_frac"] for r in rows if r["exercised_frac"]]
+    if len(fracs) >= 2:
+        spread = max(fracs) / min(fracs)
+        if spread > MAX_COVERAGE_SPREAD:
+            print(f"\n  !! REFUSING TO COMPARE. Exercised fractions span "
+                  f"{min(fracs):.1%}-{max(fracs):.1%}, a factor of {spread:.2f} "
+                  f"(limit {MAX_COVERAGE_SPREAD}). `dead_rate_of_powered` is computed "
+                  f"over each suite's exercised minority, so these rows answer "
+                  f"different questions. The per-row numbers above stand on their own; "
+                  f"the pairwise reading does not.")
+            return 3
+
+    print("\n  Rows are within the coverage spread limit, which makes them arguably")
+    print("  comparable and does NOT make them a quality ranking: dead_rate_of_powered")
+    print("  is a joint property of code composition, suite design, and observations")
+    print("  per term. A suite that parametrises heavily over the very parameters its")
+    print("  gates read will move those terms by construction.")
 
     if a.json:
         with open(a.json, "w", encoding="utf-8", newline="\n") as f:
