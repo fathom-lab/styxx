@@ -1,3 +1,18 @@
+> **WITHDRAWN IN PLACE, same day, by execution.** The cross-repository comparison below
+> — styxx 19.4% against a pooled third-party 14.6% — **must not be cited as evidence
+> about defect prevalence in either direction.** `FINDING_probe_e_styxx_2026_08_13.md`
+> measured what this screen actually detects by running the gates instead of reading
+> them: it over-calls by ~16% among functions it can adjudicate and **misses 68.8% of
+> real dead terms**, because most dead gates carry no suspicious vocabulary at all.
+>
+> This file's framing — "the static rate is an **upper bound** on the defect rate" — is
+> therefore wrong. It is not a bound. It is a differently biased sample, and the two
+> errors point opposite ways rather than cancelling. Every count below is still
+> accurate as a count of the *shapes this screen matches*; nothing below licenses an
+> inference about how many gates are dead, here or in anyone else's code.
+>
+> Kept rather than deleted, with the reason, per `PRECOMMIT_ledger_rules_2026_08_13.md`.
+
 # External census — the shape is not ours, and neither is the rate
 
 **Run:** 2026-08-13. **Subject:** nine widely-used Python libraries, installed from
