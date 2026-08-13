@@ -1,0 +1,161 @@
+{
+  "smoke": false,
+  "n_perm": 300,
+  "n_rep": 60,
+  "alpha": 0.01,
+  "n_t": 300,
+  "n_sub": 7,
+  "n_col": 2,
+  "note": "synthetic only; no real effect size was read",
+  "curve": {
+    "rho=0.4967|c=0.00": {
+      "pairwise_r_implied": 0.0,
+      "mean_licensed_fraction": 0.0095,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.4967|c=0.10": {
+      "pairwise_r_implied": 0.01,
+      "mean_licensed_fraction": 0.0357,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.4967|c=0.20": {
+      "pairwise_r_implied": 0.04,
+      "mean_licensed_fraction": 0.3214,
+      "frac_of_cohorts_at_or_above_0.80": 0.05,
+      "frac_of_cohorts_at_or_above_0.60": 0.1167
+    },
+    "rho=0.4967|c=0.30": {
+      "pairwise_r_implied": 0.09,
+      "mean_licensed_fraction": 0.8524,
+      "frac_of_cohorts_at_or_above_0.80": 0.7,
+      "frac_of_cohorts_at_or_above_0.60": 0.9167
+    },
+    "rho=0.4967|c=0.40": {
+      "pairwise_r_implied": 0.16,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.4967|c=0.50": {
+      "pairwise_r_implied": 0.25,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.4967|c=0.60": {
+      "pairwise_r_implied": 0.36,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.4967|c=0.70": {
+      "pairwise_r_implied": 0.49,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.6511|c=0.00": {
+      "pairwise_r_implied": 0.0,
+      "mean_licensed_fraction": 0.0119,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.6511|c=0.10": {
+      "pairwise_r_implied": 0.01,
+      "mean_licensed_fraction": 0.0262,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.6511|c=0.20": {
+      "pairwise_r_implied": 0.04,
+      "mean_licensed_fraction": 0.169,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.6511|c=0.30": {
+      "pairwise_r_implied": 0.09,
+      "mean_licensed_fraction": 0.719,
+      "frac_of_cohorts_at_or_above_0.80": 0.4,
+      "frac_of_cohorts_at_or_above_0.60": 0.6667
+    },
+    "rho=0.6511|c=0.40": {
+      "pairwise_r_implied": 0.16,
+      "mean_licensed_fraction": 0.9905,
+      "frac_of_cohorts_at_or_above_0.80": 0.9833,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.6511|c=0.50": {
+      "pairwise_r_implied": 0.25,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.6511|c=0.60": {
+      "pairwise_r_implied": 0.36,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.6511|c=0.70": {
+      "pairwise_r_implied": 0.49,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.8054|c=0.00": {
+      "pairwise_r_implied": 0.0,
+      "mean_licensed_fraction": 0.0143,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.8054|c=0.10": {
+      "pairwise_r_implied": 0.01,
+      "mean_licensed_fraction": 0.0238,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.8054|c=0.20": {
+      "pairwise_r_implied": 0.04,
+      "mean_licensed_fraction": 0.0905,
+      "frac_of_cohorts_at_or_above_0.80": 0.0,
+      "frac_of_cohorts_at_or_above_0.60": 0.0
+    },
+    "rho=0.8054|c=0.30": {
+      "pairwise_r_implied": 0.09,
+      "mean_licensed_fraction": 0.4333,
+      "frac_of_cohorts_at_or_above_0.80": 0.05,
+      "frac_of_cohorts_at_or_above_0.60": 0.2333
+    },
+    "rho=0.8054|c=0.40": {
+      "pairwise_r_implied": 0.16,
+      "mean_licensed_fraction": 0.831,
+      "frac_of_cohorts_at_or_above_0.80": 0.6667,
+      "frac_of_cohorts_at_or_above_0.60": 0.8833
+    },
+    "rho=0.8054|c=0.50": {
+      "pairwise_r_implied": 0.25,
+      "mean_licensed_fraction": 0.9952,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.8054|c=0.60": {
+      "pairwise_r_implied": 0.36,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    },
+    "rho=0.8054|c=0.70": {
+      "pairwise_r_implied": 0.49,
+      "mean_licensed_fraction": 1.0,
+      "frac_of_cohorts_at_or_above_0.80": 1.0,
+      "frac_of_cohorts_at_or_above_0.60": 1.0
+    }
+  },
+  "false_positive_at_c0": {
+    "rho=0.4967|c=0.00": 0.0095,
+    "rho=0.6511|c=0.00": 0.0119,
+    "rho=0.8054|c=0.00": 0.0143
+  }
+}
