@@ -1,47 +1,199 @@
 {
  "measurement": "receipt_gate_fire_rate",
- "value": 0.1852,
+ "value": 0.2169,
  "verdict": "OK__path_could_have_failed",
- "why": "8 of 13 adjudicable terms varied (61.5%). The apparatus could have returned a different answer on this population.",
- "generated_utc": "2026-08-13T21:43:41Z",
+ "why": "11 of 15 adjudicable terms varied (73.3%). The apparatus could have returned a different answer on this population.",
+ "generated_utc": "2026-08-13T22:43:12Z",
  "scope_obs_floor": 4,
- "n_terms_on_path": 13,
- "n_live": 8,
- "n_constant": 5,
- "n_underpowered": 0,
- "live_fraction_of_adjudicable": 0.6154,
+ "n_items": 83,
+ "n_distinct_outcomes": 2,
+ "verdict_basis": "adjudicative",
+ "n_terms_in_scope": 22,
+ "n_terms_on_path": 20,
+ "n_live": 11,
+ "n_constant": 4,
+ "n_underpowered": 5,
+ "live_fraction_of_adjudicable": 0.7333,
+ "n_live_outcome_linked": 2,
+ "min_abs_phi": 0.1,
+ "outcome_linked_terms": [
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 181,
+   "op": "and",
+   "n": 10,
+   "src": "not SUBORDINATOR_RE.search(s[:m.start()])",
+   "phi": 0.6547
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 350,
+   "op": "and",
+   "n": 83,
+   "src": "ambient",
+   "phi": 0.2099
+  }
+ ],
+ "live_terms": [
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 168,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 901,
+   "n_true": 26,
+   "n_false": 875,
+   "src": "NEGATED_RE.search(s)",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 171,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 875,
+   "n_true": 12,
+   "n_false": 863,
+   "src": "m",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 176,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 863,
+   "n_true": 9,
+   "n_false": 854,
+   "src": "m",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 181,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 854,
+   "n_true": 10,
+   "n_false": 844,
+   "src": "m",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 185,
+   "op": "or",
+   "verdict": "LIVE",
+   "n": 847,
+   "n_true": 2,
+   "n_false": 845,
+   "src": "NOMINAL_RE.search(s)",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 185,
+   "op": "or",
+   "verdict": "LIVE",
+   "n": 845,
+   "n_true": 2,
+   "n_false": 843,
+   "src": "NOW_PROVIDE_RE.search(s)",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 350,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 1,
+   "n_false": 82,
+   "src": "ambient",
+   "phi": 0.2099
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 310,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 46,
+   "n_true": 35,
+   "n_false": 11,
+   "src": "not blob",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 331,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 32,
+   "n_true": 30,
+   "n_false": 2,
+   "src": "not found",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "review",
+   "line": 325,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 11,
+   "n_true": 2,
+   "n_false": 9,
+   "src": "hits",
+   "phi": 0.0
+  },
+  {
+   "module": "execution_receipt_gate",
+   "func": "extract_claims",
+   "line": 181,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 10,
+   "n_true": 7,
+   "n_false": 3,
+   "src": "not SUBORDINATOR_RE.search(s[:m.start()])",
+   "phi": 0.6547
+  }
+ ],
+ "live_terms_truncated": 0,
  "pinned_terms": [
   {
    "module": "execution_receipt_gate",
    "func": "extract_claims",
-   "line": 115,
+   "line": 166,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 897,
+   "n": 901,
    "src": "not s"
   },
   {
    "module": "execution_receipt_gate",
    "func": "evidence_toolcalls",
-   "line": 168,
+   "line": 224,
    "op": "or",
    "verdict": "CONSTANT_TRUE",
-   "n": 81,
+   "n": 83,
    "src": "not log_path"
   },
   {
    "module": "execution_receipt_gate",
    "func": "review",
-   "line": 234,
-   "op": "or",
-   "verdict": "CONSTANT_FALSE",
-   "n": 28,
-   "src": "[]"
-  },
-  {
-   "module": "execution_receipt_gate",
-   "func": "review",
-   "line": 246,
+   "line": 320,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
    "n": 11,
@@ -50,22 +202,26 @@
   {
    "module": "execution_receipt_gate",
    "func": "review",
-   "line": 246,
+   "line": 320,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
    "n": 11,
    "src": "len(ev_terms) < TOPIC_POWER_FLOOR"
   }
  ],
+ "pinned_terms_truncated": 0,
  "limits": [
   "Attribution is by observation delta, not data-flow taint: a term evaluated inside the scope is credited even if its result never reached the value. This biases the receipt toward looking FALSIFIABLE, so REFUSED is strong evidence and OK is weak evidence.",
   "Single-threaded only. Concurrent work inside the scope is misattributed to this measurement.",
-  "A CONSTANT verdict is about this measurement's population, not about the term in principle."
+  "A CONSTANT verdict is about this measurement's population, not about the term in principle.",
+  "WITHOUT mark_item() the receipt can only speak about the pooled observation bag. That is a weaker question than whether the VALUE could have differed, and pooling is how an earlier version certified a rate of exactly 1.0 as falsifiable. Call mark_item() per unit the value aggregates over whenever the measurement is an aggregate."
  ],
  "population": {
   "source": "darkflobi_glimmer_log.jsonl",
-  "n_drafts": 81,
-  "n_fired": 15
+  "n_drafts": 83,
+  "n_fired": 18
  },
- "subject": "execution_receipt_gate.review \u2014 the gate extended earlier today"
+ "subject_commit": "6e399a6b282cb2d238f6d291ec8d181c6f4f12c6",
+ "subject_dirty": false,
+ "subject": "execution_receipt_gate.review \u2014 pinned at subject_commit; a dirty tree invalidates this receipt"
 }

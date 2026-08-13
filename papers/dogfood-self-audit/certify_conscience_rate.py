@@ -71,9 +71,15 @@ def main():
         fired = 0
         for d in drafts:
             v = review(d)
-            if bool(getattr(v, "fired", False)
-                    or getattr(v, "needs_revision", False)):
-                fired += 1
+            hit = bool(getattr(v, "fired", False)
+                       or getattr(v, "needs_revision", False))
+            fired += hit
+            # One item per draft. Without this the receipt could only speak about the
+            # pooled observation bag, and adversarial review showed that pooling let it
+            # certify a rate of literally 1.0 as falsifiable -- the conscience's
+            # character-level tokenisation loops generate tens of thousands of live
+            # observations that outvote the handful of terms that actually decide.
+            sc.mark_item(hit)
         rate = fired / len(drafts)
 
     rec = sc.receipt(value=round(rate, 4))

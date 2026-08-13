@@ -52,6 +52,11 @@ from collections import defaultdict
 # this file exists to detect.
 OBS_FLOOR = 8
 
+# How many interpreters contributed observations. Set by run_chunked so report() can
+# flag terms whose count is an exact multiple of it -- those clear the floor on process
+# count, not on population variety, and are pseudo-replicates rather than measurements.
+_N_PROCESSES = 0
+
 # term_id -> {"vals": set of bools, "n": int, "loc": str, "op": str, "func": str}
 _OBS: dict = {}
 _META: dict = {}
@@ -92,20 +97,40 @@ class _Rewriter(ast.NodeTransformer):
         self.path, self.mod = path, mod
         self.func = "<module>"
         self.n = 0
+        # True while descending a subtree whose value is CONSUMED AS A DECISION --
+        # an if/while/assert test, a returned expression, a conditional-expression
+        # test, a comprehension filter. Added 2026-08-13 after adversarial review
+        # classified all 4,985 styxx terms by consumer position and found that 175 of
+        # the 800 scored dead (21.9%) are not decisions at all: `float(x or 0.5)`
+        # picks a default, `prefix or "$"` coalesces a value, and 21 of them are
+        # constant by mathematical construction so no population could ever move them.
+        # Reporting those beside genuine branch conditions is the overstatement this
+        # whole program exists to detect, so position is now recorded per term and the
+        # headline rate is computed on adjudicative terms alone.
+        self.adjudicative = False
 
     def visit_FunctionDef(self, node):                       # noqa: N802
         prev, self.func = self.func, node.name
+        prev_adj, self.adjudicative = self.adjudicative, False
         self.generic_visit(node)
-        self.func = prev
+        self.func, self.adjudicative = prev, prev_adj
         return node
 
     visit_AsyncFunctionDef = visit_FunctionDef
+
+    def _visit_decision(self, node):
+        """Visit a subtree whose value is consumed as a decision."""
+        prev, self.adjudicative = self.adjudicative, True
+        out = self.visit(node)
+        self.adjudicative = prev
+        return out
 
     def _wrap(self, node, op):
         tid = f"{self.mod}:{self.func}:{getattr(node, 'lineno', 0)}:{self.n}"
         self.n += 1
         _META[tid] = {"module": self.mod, "func": self.func, "path": self.path,
                       "line": getattr(node, "lineno", 0), "op": op,
+                      "pos": "adjudicative" if self.adjudicative else "value",
                       "src": _src(node)}
         call = ast.Call(
             func=ast.Name(id="_probe_e_rec", ctx=ast.Load()),
@@ -113,22 +138,88 @@ class _Rewriter(ast.NodeTransformer):
         return ast.copy_location(call, node)
 
     def visit_BoolOp(self, node):                            # noqa: N802
-        self.generic_visit(node)
+        # The decision context covers THIS BoolOp's operands and nothing deeper. In
+        # `return float(x or 0.5)` the returned value is the call; the `or` inside its
+        # argument list picks a default. A flag that propagated through the whole
+        # returned subtree marked that operand adjudicative, which is precisely the
+        # misclassification this field was added to prevent -- caught by the fixture
+        # written for it, on the first run.
+        adj_here = self.adjudicative
+        vals = []
+        for v in node.values:
+            prev = self.adjudicative
+            # only a nested boolean/negation keeps the operand itself a decision
+            self.adjudicative = adj_here and isinstance(v, (ast.BoolOp, ast.UnaryOp))
+            vals.append(self.visit(v))
+            self.adjudicative = prev
+        node.values = vals
         op = "or" if isinstance(node.op, ast.Or) else "and"
+        prev, self.adjudicative = self.adjudicative, adj_here
         node.values = [self._wrap(v, op) for v in node.values]
+        self.adjudicative = prev
         return node
 
-    def visit_If(self, node):                                # noqa: N802
+    def _visit_value_children(self, node):
+        """Visit children in VALUE context: a call's arguments, an index, an operand
+        of arithmetic. The node's own result may still be a decision; its parts are
+        not."""
+        prev, self.adjudicative = self.adjudicative, False
         self.generic_visit(node)
-        if isinstance(node.test, (ast.Compare, ast.Call, ast.Name, ast.Attribute,
-                                  ast.UnaryOp)):
+        self.adjudicative = prev
+        return node
+
+    visit_Call = _visit_value_children
+    visit_BinOp = _visit_value_children
+    visit_Subscript = _visit_value_children
+    visit_Dict = _visit_value_children
+    visit_List = _visit_value_children
+    visit_Tuple = _visit_value_children
+    visit_Set = _visit_value_children
+    visit_JoinedStr = _visit_value_children
+    visit_Lambda = _visit_value_children
+
+    _TEST_KINDS = (ast.Compare, ast.Call, ast.Name, ast.Attribute, ast.UnaryOp)
+
+    def visit_If(self, node):                                # noqa: N802
+        node.test = self._visit_decision(node.test)
+        node.body = [self.visit(x) for x in node.body]
+        node.orelse = [self.visit(x) for x in node.orelse]
+        if isinstance(node.test, self._TEST_KINDS):
+            prev, self.adjudicative = self.adjudicative, True
             node.test = self._wrap(node.test, "if")
+            self.adjudicative = prev
+        return node
+
+    def visit_While(self, node):                             # noqa: N802
+        node.test = self._visit_decision(node.test)
+        node.body = [self.visit(x) for x in node.body]
+        node.orelse = [self.visit(x) for x in node.orelse]
+        if isinstance(node.test, self._TEST_KINDS):
+            prev, self.adjudicative = self.adjudicative, True
+            node.test = self._wrap(node.test, "while")
+            self.adjudicative = prev
+        return node
+
+    def visit_IfExp(self, node):                             # noqa: N802
+        node.test = self._visit_decision(node.test)
+        node.body = self.visit(node.body)
+        node.orelse = self.visit(node.orelse)
+        return node
+
+    def visit_Assert(self, node):                            # noqa: N802
+        node.test = self._visit_decision(node.test)
+        if node.msg is not None:
+            node.msg = self.visit(node.msg)
         return node
 
     def visit_Return(self, node):                            # noqa: N802
-        self.generic_visit(node)
+        if node.value is None:
+            return node
+        node.value = self._visit_decision(node.value)
         if isinstance(node.value, (ast.Compare, ast.UnaryOp)):
+            prev, self.adjudicative = self.adjudicative, True
             node.value = self._wrap(node.value, "return")
+            self.adjudicative = prev
         return node
 
 
@@ -238,7 +329,8 @@ def report(census_path=None):
         else:
             verdict = "LIVE"
         rows.append({**meta, "term_id": tid, "n": n, "n_true": o["t"],
-                     "n_false": o["f"], "verdict": verdict})
+                     "n_false": o["f"], "verdict": verdict,
+                     "pos": meta.get("pos", "unknown")})
 
     # terms the rewriter created but the population never evaluated even once
     for tid, meta in _META.items():
@@ -253,6 +345,22 @@ def report(census_path=None):
     powered = [r for r in rows
                if r["verdict"] in ("CONSTANT_TRUE", "CONSTANT_FALSE", "LIVE")]
     dead = [r for r in powered if r["verdict"] != "LIVE"]
+
+    # ADJUDICATIVE terms only: those whose value is consumed as a decision. A constant
+    # operand in `float(x or 0.5)` is a default, not a gate that could not fire, and
+    # pooling the two inflates the headline by counting value coalescing as dead logic.
+    adj = [r for r in powered if r.get("pos") == "adjudicative"]
+    adj_dead = [r for r in adj if r["verdict"] != "LIVE"]
+
+    # Cross-process pseudo-replication: `run_chunked` sums observations over one
+    # interpreter per test file, and OBS_FLOOR is applied to that sum. A term evaluated
+    # exactly once per process (module-scope `__name__ == "__main__"`, TYPE_CHECKING,
+    # a version check) therefore clears a floor of 8 on process COUNT rather than on
+    # population variety. Those are flagged, not silently dropped.
+    n_proc = (_N_PROCESSES or 0)
+    replicated = ([r for r in dead
+                   if n_proc >= OBS_FLOOR and r["n"] % n_proc == 0 and r["n"] > 0]
+                  if n_proc else [])
     out = {
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "obs_floor": OBS_FLOOR,
@@ -265,6 +373,22 @@ def report(census_path=None):
         # would silently credit unreached code as healthy.
         "dead_rate_of_powered": (round(len(dead) / len(powered), 4)
                                  if powered else None),
+        # THE HEADLINE. Everything above it is a component.
+        "n_adjudicative_powered": len(adj),
+        "n_adjudicative_dead": len(adj_dead),
+        "dead_rate_adjudicative": (round(len(adj_dead) / len(adj), 4)
+                                   if adj else None),
+        "n_value_position_powered": len(powered) - len(adj),
+        "n_value_position_dead": len(dead) - len(adj_dead),
+        "n_dead_at_process_multiple": len(replicated),
+        "n_processes": n_proc or None,
+        "dead_rate_adjudicative_ex_replicates": (
+            round((len(adj_dead) - len([r for r in replicated
+                                        if r.get("pos") == "adjudicative"]))
+                  / (len(adj) - len([r for r in replicated
+                                     if r.get("pos") == "adjudicative"])), 4)
+            if adj and len(adj) > len([r for r in replicated
+                                       if r.get("pos") == "adjudicative"]) else None),
         "scope_note": (
             "CONSTANT means constant UNDER THIS POPULATION (the repository's own test "
             "suite), not constant in principle. The licensed reading is that the suite "
@@ -289,8 +413,17 @@ def report(census_path=None):
             # granularity both sides actually agree on, and labelled as such rather
             # than dressed up as per-term precision the data cannot support.
             def _key(mod, fn):
-                return (os.path.basename(str(mod or "")).replace(".py", "")
-                        .split(".")[-1], fn)
+                # `.replace(".py", "")` is a SUBSTRING replace and would mangle any
+                # module with ".py" inside its name; strip a suffix instead. The key is
+                # deliberately coarser than module identity, so collisions can only
+                # ever MANUFACTURE matches between a flagged function and a dead term
+                # -- never hide one. Miss rates derived from it are therefore lower
+                # bounds, and must be published as "at least". Verified against a
+                # collision-free full-dotted-path key on both repos: identical.
+                base = os.path.basename(str(mod or ""))
+                if base.endswith(".py"):
+                    base = base[:-3]
+                return (base.split(".")[-1], fn)
 
             flagged = {_key(c.get("module"), c.get("function") or c.get("func"))
                        for c in cen.get("rows", []) if c.get("n_at_risk")}
@@ -340,12 +473,27 @@ def selftest():
         "def stuck_false(x):\n"
         "    return NEVER and x > 10\n"
         "def live(x):\n"
-        "    return x > 10 or x < -10\n")
+        "    return x > 10 or x < -10\n"
+        # A constant in VALUE position: `x or 0.5` picks a default, it is not a gate
+        # that failed to fire. Adversarial review found 175 such terms among styxx's
+        # 800 "dead gates" -- 21.9% -- including 21 constant by construction.
+        "def coalesce(x):\n"
+        "    return float(x or 0.5)\n"
+        # A CONSTANT operand in value position -- the real case from the audit:
+        # `prefix or \"$\"` where prefix is always set. Scored dead by the pooled rate,
+        # it is not a gate at all, and no population could move it.
+        "def default_pick(x):\n"
+        "    return str(PREFIX or '$')\n"
+        # A genuine branch condition, for contrast, in the same fixture.
+        "def branch(x):\n"
+        "    if x > 1000000:\n"
+        "        return 'big'\n"
+        "    return 'small'\n")
     tree = ast.parse(src)
     rw = _Rewriter("<fixture>", "fixture")
     tree = rw.visit(tree)
     ast.fix_missing_locations(tree)
-    ns = {"_probe_e_rec": _rec, "ALWAYS": True, "NEVER": False}
+    ns = {"_probe_e_rec": _rec, "ALWAYS": True, "NEVER": False, "PREFIX": "styxx"}
     exec(compile(tree, "<fixture>", "exec"), ns)             # noqa: S102
     # The driving range is part of the fixture, not decoration. The first version swept
     # x over [-10, 9], on which BOTH of `live`'s terms are constant -- and the prober
@@ -357,6 +505,9 @@ def selftest():
         ns["stuck_true"](x)
         ns["stuck_false"](x)
         ns["live"](x)
+        ns["coalesce"](x)
+        ns["default_pick"](x)
+        ns["branch"](x)
 
     rep = report()
     by_func = defaultdict(set)
@@ -374,6 +525,19 @@ def selftest():
         ("short-circuited operand reported, not dropped",
          any(r["verdict"] in ("NEVER_REACHED", "UNDERPOWERED")
              for r in rep["rows"] if r["func"] == "stuck_true")),
+
+        # POSITION. A default-picking operand must not be counted as a dead gate, and
+        # a real branch condition must be. Without this the headline pools the two.
+        ("coalesce's constant is VALUE position, not adjudicative",
+         all(r.get("pos") == "value" for r in rep["rows"]
+             if r["func"] == "coalesce" and r["verdict"].startswith("CONSTANT"))),
+        ("branch's condition is ADJUDICATIVE",
+         any(r.get("pos") == "adjudicative" for r in rep["rows"]
+             if r["func"] == "branch")),
+        ("the headline rate excludes value-position terms",
+         rep.get("n_value_position_dead", 0) >= 1
+         and rep.get("n_adjudicative_powered", 0) >= 1
+         and rep.get("dead_rate_adjudicative") != rep.get("dead_rate_of_powered")),
     ]
     ok = True
     for label, good in checks:
@@ -435,7 +599,23 @@ def run_chunked(pkg, tests_dir, out_json, census=None, stack_mb=256, timeout_s=3
                 # 2-5 mean they did not.
                 pexit = (r.get("population") or {}).get("pytest_exit_code")
                 if pexit is not None and pexit not in (0, 1):
+                    # RENAMING THE FAILURE IS NOT EXCLUDING IT. The first version of
+                    # this check set the status string and then fell straight through
+                    # into the merge below with no `continue`, so all 30 of numpy's
+                    # f2py chunks -- pytest exit 5, zero tests collected -- had their
+                    # import-time observations merged anyway: 2,075 terms, 15 of them
+                    # crossing the observation floor and 12 scored dead, from suites
+                    # that never ran. The label said "no population" while the rows
+                    # went in. A fix that changes what the log says and not what the
+                    # code does is the same defect wearing the fix's clothes, and it
+                    # survived because the fix was never tested against the case it
+                    # was written for.
                     status = f"pytest_exit({pexit}) — no population"
+                    chunks.append({"test_file": os.path.relpath(tf, tests_dir),
+                                   "status": status})
+                    print(f"[probe-e] {i}/{len(files)} "
+                          f"{os.path.basename(tf):45s} {status}", flush=True)
+                    continue
                 for row in r.get("rows", []):
                     tid = row["term_id"]
                     m = merged_obs.setdefault(tid, {"t": 0, "f": 0})
@@ -450,6 +630,8 @@ def run_chunked(pkg, tests_dir, out_json, census=None, stack_mb=256, timeout_s=3
         print(f"[probe-e] {i}/{len(files)} {os.path.basename(tf):45s} {status}",
               flush=True)
 
+    global _N_PROCESSES
+    _N_PROCESSES = len([c for c in chunks if c["status"] == "ok"])
     _OBS.clear()
     _OBS.update(merged_obs)
     _META.clear()
@@ -461,10 +643,10 @@ def run_chunked(pkg, tests_dir, out_json, census=None, stack_mb=256, timeout_s=3
         "target": tests_dir,
         "n_test_files": len(files),
         "n_files_failed_to_run": len(bad),
-        # A file that never ran contributed no observations, so any term only that file
-        # would have exercised is now NEVER_REACHED for a reason that has nothing to do
-        # with the code under audit. Naming them keeps that distinction visible instead
-        # of letting harness failure masquerade as dead code.
+        # Rows from these chunks are DISCARDED, not merged. A file whose suite never
+        # ran still produces import-time observations, and those describe module load
+        # order rather than the population -- counting them lets a missing compiler or
+        # a missing dependency masquerade as measured code.
         "files_failed_to_run": bad[:40],
     }
     if out_json:
@@ -484,6 +666,18 @@ def _summarise(rep):
     print(f"  UNDERPOWERED       : {c.get('UNDERPOWERED', 0)}")
     print(f"  NEVER_REACHED      : {c.get('NEVER_REACHED', 0)}")
     print(f"  dead rate (of powered): {rep['dead_rate_of_powered']}")
+    print(f"  -- adjudicative only (the headline) --")
+    print(f"  adjudicative powered  : {rep.get('n_adjudicative_powered')}")
+    print(f"  adjudicative dead     : {rep.get('n_adjudicative_dead')}")
+    print(f"  DEAD RATE (decisions) : {rep.get('dead_rate_adjudicative')}")
+    print(f"  value-position dead   : {rep.get('n_value_position_dead')} "
+          f"(defaults/coalesces, NOT gates)")
+    if rep.get("n_dead_at_process_multiple"):
+        print(f"  !! {rep['n_dead_at_process_multiple']} dead terms sit at an exact "
+              f"multiple of the {rep.get('n_processes')} contributing processes — "
+              f"they clear the floor on process count, not population variety")
+        print(f"  dead rate ex-replicates: "
+              f"{rep.get('dead_rate_adjudicative_ex_replicates')}")
     if pop.get("n_files_failed_to_run"):
         print(f"  !! test files that failed to run: "
               f"{pop['n_files_failed_to_run']}/{pop.get('n_test_files')} "

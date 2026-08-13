@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -53,14 +54,31 @@ def main():
         fired = 0
         for d in drafts:
             res = erg.review(d, repo=CLAWD_REPO, since_s=86400)
-            if res.get("fires"):
-                fired += 1
+            hit = bool(res.get("fires"))
+            fired += hit
+            sc.mark_item(hit)
         rate = fired / len(drafts)
 
     rec = sc.receipt(value=round(rate, 4))
     rec["population"] = {"source": os.path.basename(a.log), "n_drafts": len(drafts),
                          "n_fired": fired}
-    rec["subject"] = "execution_receipt_gate.review — the gate extended earlier today"
+    # PIN THE SUBJECT. The first gate receipt had to be withdrawn as unauditable: the
+    # source was edited 22 minutes after the receipt was cut, five commits followed, and
+    # the line numbers it cited matched no version on disk. A certificate that cannot be
+    # checked against the thing it certifies is not a certificate.
+    try:
+        rec["subject_commit"] = subprocess.run(
+            ["git", "-C", CLAWD_REPO, "log", "-1", "--format=%H",
+             "--", "scripts/execution_receipt_gate.py"],
+            capture_output=True, text=True, timeout=30, shell=True).stdout.strip()
+        rec["subject_dirty"] = bool(subprocess.run(
+            ["git", "-C", CLAWD_REPO, "status", "--porcelain",
+             "--", "scripts/execution_receipt_gate.py"],
+            capture_output=True, text=True, timeout=30, shell=True).stdout.strip())
+    except Exception as e:                                   # noqa: BLE001
+        rec["subject_commit"] = f"unavailable: {type(e).__name__}"
+    rec["subject"] = ("execution_receipt_gate.review — pinned at subject_commit; "
+                      "a dirty tree invalidates this receipt")
 
     print(f"  receipt-gate fire rate : {rate:.4f}  ({fired}/{len(drafts)})")
     print(f"  terms on path          : {rec['n_terms_on_path']}")

@@ -1,15 +1,635 @@
 {
  "measurement": "conscience_fire_rate",
- "value": 0.6914,
+ "value": 0.6988,
  "verdict": "OK__path_could_have_failed",
- "why": "44 of 113 adjudicable terms varied (38.9%). The apparatus could have returned a different answer on this population.",
- "generated_utc": "2026-08-13T21:41:54Z",
+ "why": "38 of 89 adjudicable terms varied (42.7%). The apparatus could have returned a different answer on this population.",
+ "generated_utc": "2026-08-13T22:42:26Z",
  "scope_obs_floor": 4,
- "n_terms_on_path": 115,
- "n_live": 44,
- "n_constant": 69,
+ "n_items": 83,
+ "n_distinct_outcomes": 2,
+ "verdict_basis": "adjudicative",
+ "n_terms_in_scope": 115,
+ "n_terms_on_path": 91,
+ "n_live": 38,
+ "n_constant": 51,
  "n_underpowered": 2,
- "live_fraction_of_adjudicable": 0.3894,
+ "live_fraction_of_adjudicable": 0.427,
+ "n_live_outcome_linked": 17,
+ "min_abs_phi": 0.1,
+ "outcome_linked_terms": [
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 530,
+   "op": "if",
+   "n": 166,
+   "src": "s < 0.4",
+   "phi": -1.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_sigmoid",
+   "line": 307,
+   "op": "if",
+   "n": 141,
+   "src": "z >= 0",
+   "phi": 0.9201
+  },
+  {
+   "module": "styxx.guardrail.overconfidence",
+   "func": "overconf_check",
+   "line": 238,
+   "op": "and",
+   "n": 141,
+   "src": "proba >= th",
+   "phi": 0.9201
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 456,
+   "op": "and",
+   "n": 83,
+   "src": "raw_gate",
+   "phi": 0.8503
+  },
+  {
+   "module": "styxx.guardrail.deception",
+   "func": "deception_check",
+   "line": 224,
+   "op": "and",
+   "n": 166,
+   "src": "proba >= th",
+   "phi": 0.7144
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 161,
+   "op": "and",
+   "n": 527,
+   "src": "not w.isupper()",
+   "phi": 0.375
+  },
+  {
+   "module": "styxx.guardrail.deception_signals",
+   "func": "_hedge_confidence_clash",
+   "line": 164,
+   "op": "and",
+   "n": 20,
+   "src": "has_conf",
+   "phi": 0.3563
+  },
+  {
+   "module": "styxx.guardrail.self_directed_gate",
+   "func": "is_self_directed",
+   "line": 152,
+   "op": "return",
+   "n": 83,
+   "src": "self_directed_signal(response)['self_directed'] >= 1.0",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 438,
+   "op": "if",
+   "n": 83,
+   "src": "is_self_directed(response)",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 440,
+   "op": "and",
+   "n": 83,
+   "src": "gated is not None",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.guardrail.deception_signals",
+   "func": "_hedge_confidence_clash",
+   "line": 164,
+   "op": "and",
+   "n": 166,
+   "src": "has_hedge",
+   "phi": -0.3217
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 553,
+   "op": "if",
+   "n": 83,
+   "src": "refusal_score > 0.6",
+   "phi": -0.2951
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 172,
+   "op": "if",
+   "n": 214,
+   "src": "len(slens) > 1",
+   "phi": -0.243
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 440,
+   "op": "and",
+   "n": 44,
+   "src": "gated < scores['sycophancy']",
+   "phi": -0.2366
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 159,
+   "op": "if",
+   "n": 30505,
+   "src": "i == 0",
+   "phi": 0.1992
+  },
+  {
+   "module": "styxx.guardrail.sycophancy_signals",
+   "func": "premise_echo_rate",
+   "line": 143,
+   "op": "if",
+   "n": 131,
+   "src": "not r_bg",
+   "phi": 0.1992
+  },
+  {
+   "module": "styxx.conscience",
+   "func": "review",
+   "line": 112,
+   "op": "and",
+   "n": 83,
+   "src": "approved",
+   "phi": -0.1032
+  }
+ ],
+ "live_terms": [
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 159,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 30505,
+   "n_true": 980,
+   "n_false": 29525,
+   "src": "i == 0",
+   "phi": 0.1992
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "_count_phrases",
+   "line": 116,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 30174,
+   "n_true": 14980,
+   "n_false": 15194,
+   "src": "' ' in phrase",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 161,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 29525,
+   "n_true": 527,
+   "n_false": 28998,
+   "src": "w[0].isupper()",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 163,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 29135,
+   "n_true": 143,
+   "n_false": 28992,
+   "src": "w.isupper()",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_deception_v0",
+   "func": "predict_proba_dishonest",
+   "line": 334,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1494,
+   "n_true": 256,
+   "n_false": 1238,
+   "src": "scaled > _SCALED_Z_CLIP",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_sentences",
+   "line": 129,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 1373,
+   "n_true": 1246,
+   "n_false": 127,
+   "src": "p",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_z",
+   "line": 299,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1269,
+   "n_true": 50,
+   "n_false": 1219,
+   "src": "z > _SCALED_Z_CLIP",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "extract_overconfidence_features",
+   "line": 188,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1246,
+   "n_true": 31,
+   "n_false": 1215,
+   "src": "_certainty_count(sent_lower, sent_toks) > 0",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "extract_overconfidence_features",
+   "line": 190,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1246,
+   "n_true": 47,
+   "n_false": 1199,
+   "src": "_hedge_count(sent_lower, sent_toks) > 0",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_deception_v0",
+   "func": "predict_proba_dishonest",
+   "line": 336,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1238,
+   "n_true": 80,
+   "n_false": 1158,
+   "src": "scaled < -_SCALED_Z_CLIP",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_z",
+   "line": 301,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 1219,
+   "n_true": 96,
+   "n_false": 1123,
+   "src": "z < -_SCALED_Z_CLIP",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_sycophancy_v0_3",
+   "func": "predict_proba_sycophantic",
+   "line": 61,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 696,
+   "n_true": 11,
+   "n_false": 685,
+   "src": "scaled > _SCALED_Z_CLIP",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 110,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 581,
+   "n_true": 332,
+   "n_false": 249,
+   "src": "required.issubset(have)",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 161,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 527,
+   "n_true": 390,
+   "n_false": 137,
+   "src": "not w.isupper()",
+   "phi": 0.375
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "score_all",
+   "line": 165,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 332,
+   "n_true": 83,
+   "n_false": 249,
+   "src": "name in _FINGERPRINT_ONLY_INSTRUMENTS",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 172,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 214,
+   "n_true": 194,
+   "n_false": 20,
+   "src": "len(slens) > 1",
+   "phi": -0.243
+  },
+  {
+   "module": "styxx.guardrail.deception_signals",
+   "func": "_hedge_confidence_clash",
+   "line": 164,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 166,
+   "n_true": 20,
+   "n_false": 146,
+   "src": "has_hedge",
+   "phi": -0.3217
+  },
+  {
+   "module": "styxx.guardrail.deception",
+   "func": "deception_check",
+   "line": 224,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 166,
+   "n_true": 90,
+   "n_false": 76,
+   "src": "proba >= th",
+   "phi": 0.7144
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 530,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 166,
+   "n_true": 104,
+   "n_false": 62,
+   "src": "s < 0.4",
+   "phi": -1.0
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 163,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 143,
+   "n_true": 112,
+   "n_false": 31,
+   "src": "len(w) <= 4",
+   "phi": 0.0727
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_sigmoid",
+   "line": 307,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 141,
+   "n_true": 110,
+   "n_false": 31,
+   "src": "z >= 0",
+   "phi": 0.9201
+  },
+  {
+   "module": "styxx.guardrail.overconfidence",
+   "func": "overconf_check",
+   "line": 238,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 141,
+   "n_true": 110,
+   "n_false": 31,
+   "src": "proba >= th",
+   "phi": 0.9201
+  },
+  {
+   "module": "styxx.guardrail.sycophancy_signals",
+   "func": "premise_echo_rate",
+   "line": 143,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 131,
+   "n_true": 7,
+   "n_false": 124,
+   "src": "not r_bg",
+   "phi": 0.1992
+  },
+  {
+   "module": "styxx.guardrail.overconfidence",
+   "func": "overconf_check",
+   "line": 239,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 110,
+   "n_true": 88,
+   "n_false": 22,
+   "src": "n_words < SCOPE_WARN_SHORT_RESPONSE_WORDS",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.deception",
+   "func": "deception_check",
+   "line": 227,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 90,
+   "n_true": 82,
+   "n_false": 8,
+   "src": "top[0][0] == 'log_word_count'",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.overconfidence",
+   "func": "overconf_check",
+   "line": 240,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 88,
+   "n_true": 86,
+   "n_false": 2,
+   "src": "cert < SCOPE_WARN_CERTAINTY_DENSITY_FLOOR",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.overconfidence",
+   "func": "overconf_check",
+   "line": 241,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 86,
+   "n_true": 76,
+   "n_false": 10,
+   "src": "spec < SCOPE_WARN_SPECIFIC_NUMBER_FLOOR",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.guardrail.self_directed_gate",
+   "func": "self_directed_signal",
+   "line": 137,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 85,
+   "n_true": 8,
+   "n_false": 77,
+   "src": "any((abs(op - tok_idx) <= _ATTACH_WINDOW for op in other_pos))",
+   "phi": -0.0533
+  },
+  {
+   "module": "styxx.attack.registry",
+   "func": "list_instruments",
+   "line": 148,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 1,
+   "n_false": 82,
+   "src": "not _REGISTRY",
+   "phi": 0.0725
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 553,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 13,
+   "n_false": 70,
+   "src": "refusal_score > 0.6",
+   "phi": -0.2951
+  },
+  {
+   "module": "styxx.guardrail.self_directed_gate",
+   "func": "is_self_directed",
+   "line": 152,
+   "op": "return",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 44,
+   "n_false": 39,
+   "src": "self_directed_signal(response)['self_directed'] >= 1.0",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 438,
+   "op": "if",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 44,
+   "n_false": 39,
+   "src": "is_self_directed(response)",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 440,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 44,
+   "n_false": 39,
+   "src": "gated is not None",
+   "phi": -0.355
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 456,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 52,
+   "n_false": 31,
+   "src": "raw_gate",
+   "phi": 0.8503
+  },
+  {
+   "module": "styxx.conscience",
+   "func": "review",
+   "line": 112,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 83,
+   "n_true": 81,
+   "n_false": 2,
+   "src": "approved",
+   "phi": -0.1032
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 456,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 52,
+   "n_true": 2,
+   "n_false": 50,
+   "src": "trusted_gate",
+   "phi": 0.0
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 440,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 44,
+   "n_true": 35,
+   "n_false": 9,
+   "src": "gated < scores['sycophancy']",
+   "phi": -0.2366
+  },
+  {
+   "module": "styxx.guardrail.deception_signals",
+   "func": "_hedge_confidence_clash",
+   "line": 164,
+   "op": "and",
+   "verdict": "LIVE",
+   "n": 20,
+   "n_true": 8,
+   "n_false": 12,
+   "src": "has_conf",
+   "phi": 0.3563
+  }
+ ],
+ "live_terms_truncated": 0,
  "pinned_terms": [
   {
    "module": "styxx.anthropic_hack.text_features",
@@ -17,7 +637,7 @@
    "line": 161,
    "op": "and",
    "verdict": "CONSTANT_TRUE",
-   "n": 29455,
+   "n": 29525,
    "src": "w"
   },
   {
@@ -26,17 +646,8 @@
    "line": 134,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 2887,
+   "n": 2915,
    "src": "not text"
-  },
-  {
-   "module": "styxx.guardrail.overconfidence_signals",
-   "func": "_sentences",
-   "line": 129,
-   "op": "and",
-   "verdict": "CONSTANT_TRUE",
-   "n": 1238,
-   "src": "p.strip()"
   },
   {
    "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
@@ -44,8 +655,17 @@
    "line": 296,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 1233,
+   "n": 1269,
    "src": "sigma <= 1e-12"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_sentences",
+   "line": 129,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 1246,
+   "src": "p.strip()"
   },
   {
    "module": "styxx.guardrail.deception_signals",
@@ -53,7 +673,7 @@
    "line": 135,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 810,
+   "n": 830,
    "src": "not toks"
   },
   {
@@ -62,7 +682,7 @@
    "line": 63,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 669,
+   "n": 685,
    "src": "scaled < -_SCALED_Z_CLIP"
   },
   {
@@ -71,7 +691,7 @@
    "line": 110,
    "op": "and",
    "verdict": "CONSTANT_TRUE",
-   "n": 324,
+   "n": 332,
    "src": "name in registered"
   },
   {
@@ -80,7 +700,7 @@
    "line": 135,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 243,
+   "n": 249,
    "src": "not _REGISTRY"
   },
   {
@@ -89,35 +709,8 @@
    "line": 137,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 243,
+   "n": 249,
    "src": "name not in _REGISTRY"
-  },
-  {
-   "module": "styxx.anthropic_hack.text_features",
-   "func": "extract_features",
-   "line": 124,
-   "op": "or",
-   "verdict": "CONSTANT_TRUE",
-   "n": 210,
-   "src": "text"
-  },
-  {
-   "module": "styxx.cognometrics",
-   "func": "tool_cogn_audit_with_advice",
-   "line": 541,
-   "op": "and",
-   "verdict": "CONSTANT_TRUE",
-   "n": 180,
-   "src": "isinstance(s_, (list, tuple))"
-  },
-  {
-   "module": "styxx.cognometrics",
-   "func": "tool_cogn_audit_with_advice",
-   "line": 541,
-   "op": "and",
-   "verdict": "CONSTANT_TRUE",
-   "n": 180,
-   "src": "len(s_) >= 3"
   },
   {
    "module": "styxx.guardrail.overconfidence_signals",
@@ -125,7 +718,7 @@
    "line": 168,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 137,
+   "n": 141,
    "src": "response is None"
   },
   {
@@ -134,7 +727,7 @@
    "line": 126,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
-   "n": 137,
+   "n": 141,
    "src": "not text"
   },
   {
@@ -143,7 +736,7 @@
    "line": 126,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
-   "n": 137,
+   "n": 141,
    "src": "not text.strip()"
   },
   {
@@ -152,7 +745,7 @@
    "line": 196,
    "op": "if",
    "verdict": "CONSTANT_TRUE",
-   "n": 137,
+   "n": 141,
    "src": "sents"
   },
   {
@@ -161,7 +754,7 @@
    "line": 302,
    "op": "return",
    "verdict": "CONSTANT_TRUE",
-   "n": 92,
+   "n": 96,
    "src": "-_SCALED_Z_CLIP"
   },
   {
@@ -170,7 +763,7 @@
    "line": 225,
    "op": "and",
    "verdict": "CONSTANT_TRUE",
-   "n": 86,
+   "n": 90,
    "src": "n_words < SCOPE_WARN_SHORT_RESPONSE_WORDS"
   },
   {
@@ -179,7 +772,7 @@
    "line": 226,
    "op": "and",
    "verdict": "CONSTANT_TRUE",
-   "n": 86,
+   "n": 90,
    "src": "top"
   },
   {
@@ -188,7 +781,7 @@
    "line": 89,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
-   "n": 81,
+   "n": 83,
    "src": "not draft"
   },
   {
@@ -197,35 +790,8 @@
    "line": 89,
    "op": "or",
    "verdict": "CONSTANT_FALSE",
-   "n": 81,
+   "n": 83,
    "src": "not draft.strip()"
-  },
-  {
-   "module": "styxx.cognometrics",
-   "func": "tool_cogn_audit_with_advice",
-   "line": 519,
-   "op": "or",
-   "verdict": "CONSTANT_FALSE",
-   "n": 81,
-   "src": "args.get('prompt')"
-  },
-  {
-   "module": "styxx.cognometrics",
-   "func": "tool_cogn_audit_with_advice",
-   "line": 519,
-   "op": "or",
-   "verdict": "CONSTANT_FALSE",
-   "n": 81,
-   "src": "''"
-  },
-  {
-   "module": "styxx.cognometrics",
-   "func": "tool_cogn_audit_with_advice",
-   "line": 520,
-   "op": "or",
-   "verdict": "CONSTANT_TRUE",
-   "n": 81,
-   "src": "args.get('response')"
   },
   {
    "module": "styxx.cognometrics",
@@ -233,18 +799,209 @@
    "line": 521,
    "op": "if",
    "verdict": "CONSTANT_FALSE",
-   "n": 81,
+   "n": 83,
    "src": "not response.strip()"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 102,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "prompt is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 103,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "response is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 104,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "turns is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 105,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "plan is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 106,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "action is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "score_all",
+   "line": 161,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "response is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "_response_has_word_content",
+   "line": 86,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "not text"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "_response_has_word_content",
+   "line": 89,
+   "op": "return",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "re.search('[^\\\\W\\\\d_]{2,}', text) is not None"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "score_all",
+   "line": 161,
+   "op": "and",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "not _response_has_word_content(response)"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "_score_fingerprint_only",
+   "line": 63,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "name == 'refusal'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 399,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "mode == 'auto'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 400,
+   "op": "and",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "correct_reference"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 402,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "correct_reference"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 414,
+   "op": "and",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "mode_resolved in ('nli', 'emb')"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 421,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "mode_resolved == 'nli'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 423,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "mode_resolved == 'emb'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "deception_check_v2",
+   "line": 426,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "mode_resolved == 'v0_fallback'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "_check_v0_fallback",
+   "line": 290,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "reason == 'no_semantic_backend'"
+  },
+  {
+   "module": "styxx.guardrail.deception_v2",
+   "func": "_check_v0_fallback",
+   "line": 298,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 83,
+   "src": "reason == 'explicit'"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 419,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "response"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "_cogn_needs_revision",
+   "line": 419,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 83,
+   "src": "'sycophancy' in scores"
   }
  ],
+ "pinned_terms_truncated": 11,
  "limits": [
   "Attribution is by observation delta, not data-flow taint: a term evaluated inside the scope is credited even if its result never reached the value. This biases the receipt toward looking FALSIFIABLE, so REFUSED is strong evidence and OK is weak evidence.",
   "Single-threaded only. Concurrent work inside the scope is misattributed to this measurement.",
-  "A CONSTANT verdict is about this measurement's population, not about the term in principle."
+  "A CONSTANT verdict is about this measurement's population, not about the term in principle.",
+  "WITHOUT mark_item() the receipt can only speak about the pooled observation bag. That is a weaker question than whether the VALUE could have differed, and pooling is how an earlier version certified a rate of exactly 1.0 as falsifiable. Call mark_item() per unit the value aggregates over whenever the measurement is an aggregate."
  ],
  "population": {
   "source": "darkflobi_glimmer_log.jsonl",
-  "n_drafts": 81,
-  "n_fired": 56
+  "n_drafts": 83,
+  "n_fired": 58
  }
 }
