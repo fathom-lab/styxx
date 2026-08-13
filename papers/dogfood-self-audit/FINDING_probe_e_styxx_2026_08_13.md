@@ -1,3 +1,20 @@
+> ## CORRECTED HEADLINE, measured on the fixed instrument
+>
+> **40.4% of exercised *decision* terms never took more than one value** — 617 of 1,526
+> adjudicative powered terms, from `probe_e_styxx_v2.json`. Not 43.3%.
+>
+> The 43.3% pooled in 186 value-position operands that are not gates at all. The
+> adversarial reviewers, reconstructing the classification independently and by a
+> different method, got **39.9% (625/1,566)**; this run gets **40.4% (617/1,526)**. Two
+> independent classifications of the same property landing 0.5 points apart is the
+> strongest evidence in this document, and neither is 43.3%.
+>
+> Excluding the 2 terms that clear the observation floor on process count rather than
+> population variety: **40.35%**. Census join unchanged: 108 static candidates, 48
+> confirmed dead by execution, 9 refuted, 51 unmeasured.
+>
+> Everything below the next heading is the original text, corrected in place.
+
 > ## CORRECTED AND PARTLY WITHDRAWN, same day, after adversarial verification
 >
 > Twelve independent agents attacked this finding; four defects survived a second
