@@ -1,0 +1,22 @@
+{
+  "mine_easy": {
+    "correct": 12,
+    "declined": 0,
+    "WRONG": 0,
+    "NO-MATCH": 0
+  },
+  "mine_hard": {
+    "correct": 6,
+    "declined": 2,
+    "WRONG": 0,
+    "NO-MATCH": 0
+  },
+  "redteam": {
+    "correct": 3,
+    "declined": 0,
+    "WRONG": 0,
+    "NO-MATCH": 0
+  },
+  "confident_wrong_total": 0,
+  "verdict": "BATTERY_CLEAN__no_confident_wrong_resolution_in_any_fixture"
+}

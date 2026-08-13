@@ -126,3 +126,45 @@ This lane is judgment, not a reproduced defect, and is labelled as such.
 - Lane 3's negative result is reported as a negative result.
 
 **REDTEAM_VERDICT: 2/2 confirmed | lanes=chance-floor:DEFECT,context-resolver:DEFECT,accounting:CLEAN,zero-claims-gate:ABDICATION | 2026-08-13**
+
+---
+
+## ADDENDUM — independent verification of the author's fix (`f44c8f4`)
+
+The author reproduced every finding, fixed all three, and found a fourth defect this
+red team missed (his subset rule used `<`, so on a Jaccard tie the short-path premium
+came back through the door he had just closed). Reciprocity requires the reverse check:
+the fix re-run against **this** fixture, by the party that wrote it.
+
+**Lane 2 — fix verified, and it is not the lazy fix.**
+
+```
+A_summary_key_beats_named_cell : -> cells.blockconf_ge3_of_7.cave_rate [context 0.364]  CORRECT
+B_longer_named_path_loses      : -> blockconf_high_confidence_arm.cave_rate [context 0.6] CORRECT
+C_control_equal_length         : -> arm_two.cave_rate [context 0.667]                    CORRECT
+confident-wrong cases: 0
+```
+
+Case B is the informative one: pre-fix it *declined* (`arbitrary`), post-fix it resolves
+**correctly**. A resolver made safe by refusing everything would have left B declined —
+this one gained resolution while losing the false confidence. That is the harder fix.
+
+**Lane 1 — fix verified to four decimals by two independent implementations.**
+
+```
+band-matched reference (this red team's own Monte Carlo) : 0.3735
+shipped floor via the author's `band` parameter           : 0.3735
+gap: 0.0
+```
+
+**A false alarm by this red team, recorded because the rule is symmetric.** On the first
+post-fix re-run, lane 1 still reported the 0.281 gap. That was wrong: the fix added a
+`band` parameter and routed `audit_grounding` through it, while this script still called
+`_chance_floor` with the legacy signature — exercising the fallback, not the shipped path.
+The script has been corrected to call both and report each; the defect it briefly
+re-asserted did not exist. An adversary that mis-measures a fix is the same failure class
+as an author who over-reports one, and it belongs in the same receipt.
+
+**Post-fix regression status of this fixture: `LANES WITH A DEFECT: none`.**
+
+**VERIFICATION_VERDICT: fix confirmed 2/2 | lane2=0 confident-wrong, B upgraded decline->correct | lane1=exact agreement 0.3735 | redteam false-alarm recorded | 2026-08-13**

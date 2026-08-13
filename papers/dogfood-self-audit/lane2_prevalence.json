@@ -1,0 +1,10 @@
+{
+  "files_scanned": 1416,
+  "files_with_short_long_collision": 1250,
+  "realised_collisions": 54701,
+  "collisions_evaluated_under_paraphrase": 54695,
+  "old_scoring_misresolves": 178,
+  "misresolve_rate_of_evaluated": 0.0033,
+  "reading": "prevalence of the DEFECT FIRING on real receipts, not of the shape",
+  "note": "first version of this script set ctx = full token set of the specific path, under which the old scoring cannot lose; it reported 0/54701 in the author's favour. Corrected to simulate paraphrase (drop one token), which is the realistic case and the one the red team's fixture modelled."
+}

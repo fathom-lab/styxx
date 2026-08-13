@@ -93,7 +93,17 @@ def lane1_chance_floor():
     vals = {round(rng.uniform(0.0, 0.25), 3): (f"cells.c{i}.cave_rate", None)
             for i in range(120)}
     decimals = 3
-    shipped = _chance_floor(vals, decimals)
+    # POST-FIX (f44c8f4): _chance_floor grew a `band` parameter and audit_grounding
+    # now passes the claims' own band. Calling it WITHOUT a band exercises the legacy
+    # fallback, not the shipped path — on the first re-run this script did exactly
+    # that and reported a defect that no longer exists. Recorded because the rule is
+    # symmetric: my false alarm belongs in the receipt beside his defects.
+    legacy = _chance_floor(vals, decimals)                    # no band: old behaviour
+    try:
+        shipped = _chance_floor(vals, decimals, band=(0.0, 0.25))
+        band_param_available = True
+    except TypeError:                                          # pre-fix module
+        shipped, band_param_available = legacy, False
 
     # Band-matched reference: draw from the claims' own range instead of [0,1].
     xs = list(vals)
@@ -110,8 +120,11 @@ def lane1_chance_floor():
     RESULTS["lane1"] = {
         "n_source_leaves": len(vals), "decimals": decimals,
         "claim_band": [lo, hi],
+        "band_param_available": band_param_available,
+        "legacy_floor_no_band": legacy,
         "shipped_floor": shipped, "band_matched_floor": band_matched,
         "gap": round(band_matched - shipped, 4),
+        "gap_before_fix": round(band_matched - legacy, 4),
         "flattering": band_matched > shipped,
         "found_defect": bool(band_matched - shipped >= 0.05),
     }
