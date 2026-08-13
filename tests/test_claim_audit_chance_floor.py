@@ -103,3 +103,53 @@ def test_empty_document_is_safe():
     assert rep.n_total == 0
     assert rep.chance_floor == 0.0
     assert rep.excess_over_chance == 0.0
+
+
+# --- provenance uniqueness -------------------------------------------------------------
+# Second pass, same day: the floor says how impressed to be by the RATE; it says nothing about
+# whether an individual match is CORRECT. `_match` returned the first dict-order hit. On the real
+# C6 audit, 20% of grounded claims matched more than one path (one matched ten), so the reported
+# `source` was dict ordering presented as provenance.
+
+
+def test_ambiguous_matches_are_counted_and_disclosed():
+    """A claim matching many paths must be reported as ambiguous, not as pinned provenance."""
+    src = {"a": 0.5, "b": 0.5001, "c": 0.4999, "d": 0.9}
+    rep = audit_grounding("the rate was 0.50", src)
+    grounded = [i for i in rep.items if i.status == "grounded"]
+    assert grounded, rep.summary()
+    assert grounded[0].n_candidates >= 3, grounded[0].n_candidates
+    assert rep.n_ambiguous >= 1
+    assert "more than one source path" in rep.summary()
+
+
+def test_uniquely_pinned_claim_is_not_flagged_ambiguous():
+    rep = audit_grounding("the rate was 0.4213", {"a": 0.4213, "b": 0.9, "c": 0.1})
+    grounded = [i for i in rep.items if i.status == "grounded"]
+    assert grounded and grounded[0].n_candidates == 1
+    assert rep.n_ambiguous == 0
+
+
+def test_grounded_always_has_at_least_one_candidate():
+    """Regression: 'grounded' with zero candidates is a contradiction the tool used to emit.
+
+    The percent branch compared round(sv*100, d) == round(claim, d). At d=0 that grants a silent
+    +/-0.5% tolerance, so "95% upper bound" grounded against a dispersion ratio of 0.948 while no
+    source value was actually within the claim's own tolerance.
+    """
+    src = {"dispersion": 0.948, "other": 0.12}
+    rep = audit_grounding("we report 95 % coverage and a rate of 0.42", src)
+    for it in rep.items:
+        if it.status == "grounded":
+            assert it.n_candidates >= 1, f"{it.raw!r} grounded with no candidate path"
+
+
+def test_confidence_level_labels_are_not_treated_as_claims():
+    """'95% upper bound' / '95% interval' are labels, not statistics. None may be extracted."""
+    src = {"dispersion": 0.948, "rate": 0.5}
+    for phrase in ("the Clopper-Pearson 95% upper bound was tight",
+                   "a 95% interval was used",
+                   "the 95% credible region",
+                   "reported at 95% confidence"):
+        rep = audit_grounding(phrase, src)
+        assert all(i.value != 95.0 for i in rep.items), f"{phrase!r} -> {[i.raw for i in rep.items]}"

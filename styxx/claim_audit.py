@@ -36,7 +36,14 @@ from typing import Any
 _SKIP = [
     re.compile(r"\b\d{4}-\d{1,2}-\d{1,2}(?:[ T]\d{1,2}:\d{2}(?::\d{2})?(?:\.\d+)?Z?)?(?!\d)"),  # ISO date/datetime YYYY-MM-DD[ Thh:mm:ss[.f]Z] (MM-DD / hh:mm must not read as a range; a T-suffix must not defeat the mask)
     re.compile(r"\b\d+(?:-\d+){2,}\b"),           # dash-run identifier: intl phone / DD-MM-YYYY / any 3+ dash-joined groups (a real range is always exactly two numbers) — must run before the year mask below
-    re.compile(r"\b\d{1,2}\s*%\s*(?:CI|confidence)", re.I),  # "95% CI" — confidence-level label, not a claim
+    # Confidence-level LABELS are not claims. "95% CI" was masked, but "95% upper bound" /
+    # "95% interval" / "95% credible" were not, so they reached _match and grounded against
+    # whatever unrelated value sat near 0.95 (found 2026-08-13: "Clopper-Pearson 95% upper bound"
+    # grounded to a dispersion ratio of 0.948). Cover the whole family, incl. a bare
+    # "at 95%" and the CL spelled with a leading "level".
+    re.compile(r"\b\d{1,2}(?:\.\d+)?\s*%\s*(?:CI\b|confidence|credible|interval|upper|lower|"
+               r"one[- ]sided|two[- ]sided|coverage|level)", re.I),
+    re.compile(r"\b(?:at|to|a)\s+\d{1,2}(?:\.\d+)?\s*%\s*(?:confidence|significance)", re.I),
     re.compile(r"10\.\d{4,}/\S+"),               # DOI
     re.compile(r"arxiv:\s*\d{4}\.\d{4,}", re.I),  # arXiv id (labelled)
     re.compile(r"\b\d{4}\.\d{4,}\b"),             # bare arXiv-style id
@@ -109,6 +116,7 @@ class ClaimNumber:
     kind: str                 # decimal | percent | pvalue | ci | range | multiplier
     status: str = "unsourced"  # grounded | derived | unsourced
     source: str = ""
+    n_candidates: int = 0     # how many source paths could have produced this claim (1 = pinned)
 
     def __str__(self) -> str:
         tag = {"grounded": "ok", "derived": "~", "unsourced": "UNSOURCED"}[self.status]
@@ -182,6 +190,7 @@ class GroundingReport:
     chance_floor: float = 0.0        # P(a random claim of this precision mix grounds by luck)
     floor_by_decimals: dict = field(default_factory=dict)
     n_unfalsifiable: int = 0         # claims whose precision makes grounding certain by chance
+    n_ambiguous: int = 0             # grounded claims matching >1 source path (source is arbitrary)
 
     @property
     def unsourced(self) -> list:
@@ -227,6 +236,10 @@ class GroundingReport:
                 lines.append(f"  WARNING: {self.n_unfalsifiable}/{self.n_total} claim(s) carry too "
                              f"few decimals to fail against this receipt (floor >= 0.995) — "
                              f"their 'grounded' status is not evidence")
+            if self.n_ambiguous:
+                lines.append(f"  NOTE: {self.n_ambiguous}/{self.n_grounded} grounded claim(s) match "
+                             f"more than one source path — the reported source is one of several, "
+                             f"not a unique provenance")
         for n in self.unsourced:
             lines.append(f"  UNSOURCED  {n.raw}  ({n.kind})")
         if self.overclaims:
@@ -330,15 +343,35 @@ def _extract(text: str) -> list:
     return nums
 
 
+def _candidates(num: "ClaimNumber", vals: dict) -> list:
+    """EVERY source path whose value could have produced this claim, not just the first.
+
+    `_match` used to return the first dict-order hit. On the author's own C6 audit, 20% of
+    'grounded' claims matched more than one path (one matched ten), so the reported `source` was
+    an artifact of dict ordering presented as provenance. Collecting all of them lets the report
+    say how uniquely a claim is pinned.
+    """
+    d = _decimals(num.raw)
+    tol = 0.5 * 10 ** (-d)
+    out = []
+    for sv, path in vals.items():
+        if num.kind == "percent":
+            # A percent claim may be written as 95 against a source 0.95, or as 95 against 95.
+            # Compare on the CLAIM's own tolerance in each space — never via round(sv*100, 0),
+            # which silently grants +/-0.5% and grounded "95% upper bound" to a 0.948 ratio.
+            if abs(sv * 100 - num.value) <= tol or abs(sv - num.value) <= tol:
+                out.append(path)
+        elif abs(sv - num.value) <= tol or round(sv, d) == round(num.value, d):
+            out.append(path)
+    return out
+
+
 def _match(num: ClaimNumber, vals: dict) -> tuple:
     d = _decimals(num.raw)
     tol = 0.5 * 10 ** (-d)
-    for sv, path in vals.items():
-        if num.kind == "percent":
-            if round(sv * 100, d) == round(num.value, d) or round(sv, d) == round(num.value, d):
-                return "grounded", path
-        elif abs(sv - num.value) <= tol or round(sv, d) == round(num.value, d):
-            return "grounded", path
+    cands = _candidates(num, vals)
+    if cands:
+        return "grounded", cands[0]
     # derived — only for percentages and fold-changes (avoid spurious decimal ratios)
     if num.kind in ("percent", "multiplier"):
         svs = list(vals)
@@ -405,6 +438,10 @@ def audit_grounding(text: str, sources: Any) -> "GroundingReport":
         n.status, n.source = _match(n, vals)
         if n.status == "grounded":
             rep.n_grounded += 1
+            cands = _candidates(n, vals)
+            n.n_candidates = len(cands)
+            if len(cands) > 1:
+                rep.n_ambiguous += 1
         elif n.status == "derived":
             rep.n_derived += 1
         else:

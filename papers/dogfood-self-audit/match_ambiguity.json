@@ -1,0 +1,16 @@
+{
+  "n_grounded_examined": 64,
+  "n_ambiguous": 14,
+  "ambiguous_fraction": 0.2188,
+  "candidate_count_distribution": {
+    "1": 50,
+    "2": 9,
+    "10": 5
+  },
+  "mean_candidates_by_precision": {
+    "0": 2.0,
+    "2": 3.409,
+    "3": 1.0,
+    "4": 1.0
+  }
+}
