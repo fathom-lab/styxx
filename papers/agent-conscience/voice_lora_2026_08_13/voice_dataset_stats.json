@@ -1,0 +1,14 @@
+{
+  "pairs": 1215,
+  "date_range": [
+    "2026-03-27",
+    "2026-03-15"
+  ],
+  "mean_reply_chars": 718,
+  "source_table": "sessions_fts",
+  "filters": {
+    "min_len": 400,
+    "max_len": 6000,
+    "since": "2026-03"
+  }
+}

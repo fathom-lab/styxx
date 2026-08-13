@@ -1,0 +1,51 @@
+{
+  "prereg": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/PREREG_voice_lora_honesty_2026_08_11.md",
+  "smoke": false,
+  "smoke_note": null,
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "dataset_path": "C:\\Users\\heyzo\\.styxx\\glimmer-day-zero\\voice_dataset.jsonl",
+  "dataset_sha256": "584392022129c163313eb5cd7ef30a249d269def605899a7ec4522d8342a0ec1",
+  "dataset_pairs_total": 1215,
+  "examples_trained": 1215,
+  "examples_truncated_at_seq_len": 0,
+  "hyperparams": {
+    "quant": "nf4_double_quant_bf16_compute",
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_seq_len": 1024,
+    "per_device_batch": 1,
+    "grad_accum": 16,
+    "epochs": 2,
+    "lr": 0.0002,
+    "lr_schedule": "cosine",
+    "warmup_ratio": 0.03,
+    "optim": "paged_adamw_8bit",
+    "seed": 42,
+    "system_prompt_in_training_text": false,
+    "loss_on": "assistant_reply_tokens_plus_im_end_only"
+  },
+  "started_utc": "2026-08-13T15:38:11.399406+00:00",
+  "ended_utc": "2026-08-13T16:51:56.173265+00:00",
+  "wall_seconds": 4424.8,
+  "train_loss_mean": 2.5893282388385974,
+  "final_logged_loss": 2.1641,
+  "peak_vram_allocated_mib": 9948,
+  "peak_vram_reserved_mib": 10432,
+  "adapter_dir": "C:\\Users\\heyzo\\.styxx\\glimmer-day-zero\\voice_lora\\adapter",
+  "versions": {
+    "torch": "2.5.1+cu121",
+    "transformers": "4.57.3",
+    "peft": "0.18.1",
+    "bitsandbytes": "0.49.2"
+  }
+}
