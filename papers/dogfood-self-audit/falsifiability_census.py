@@ -1,8 +1,25 @@
 """falsifiability_census — how many gates in this suite can actually fail?
 
-⚠️ PARKED 2026-08-13, BEFORE ADJUDICATING ANYTHING. Do not use this to produce
-CONFIRMED-DEAD verdicts until the validation pair is rebuilt. Reason, raised by the
-author of the gates it audits:
+⚠️ STATUS RESOLVED 2026-08-13 by `census_discrimination_control.py`. THIS SCREEN
+DETECTS SHAPE, NOT DEATH — measured, not assumed. Two gates were built with an
+identical PRESENCE_TEST shape and exercised on one population: one matched the prompt
+(fires 3/8, varies — ALIVE), one matched the reply (fires 0/8, constant — DEAD, the
+memory_integrity defect). **The census flagged both.**
+
+BINDING WORDING RULE, and it governs every downstream artifact:
+
+    A census hit is a CANDIDATE. It may never be written as "dead", "broken",
+    "unfalsifiable", or "confirmed" anywhere — not in the ledger, not in a commit
+    message, not in a paper. Only PROBE E, run against a real population, may use
+    those words. The 20.5% figure is a count of SHAPES, and any sentence that lets a
+    reader hear "defects" is the same overstatement this program exists to catch.
+
+That result also settles the circularity below in the screen's disfavour, which is the
+honest direction: the anchors were never going to separate the two axes, and now they
+do not have to, because the axis question was answered directly.
+
+Original parking note, kept because the reasoning still holds — raised by the author
+of the gates it audits:
 
     "its validation is a pair: flags memory_integrity, clears knowsay.datasheet.
      one of those two anchors is now the module under reconstruction."
@@ -26,15 +43,17 @@ rebuilt memory_integrity would be. Until that cell is filled the screen is only 
 to flag dead-and-risky and clear alive-and-safe, which is consistent with a screen that
 measures nothing but shape.
 
-Required before this adjudicates the 143:
-  1. memory_integrity rebuilt from source (reimplemented, not imported)
-  2. the rebuild measured against real receipts -- alive or dead, empirically
-  3. this census re-run on it. If it is ALIVE and still flagged, that is the missing
-     cell and the screen is confirmed to be a SHAPE detector -- which is all it ever
-     claimed to be, but the ledger's wording must then say so exactly
-  4. only then do the 143 get PROBE E, and only PROBE E produces CONFIRMED DEAD
+Step 3 of that plan was run directly rather than waiting on the rebuild — a synthetic
+alive-and-risky gate answered the same question and answered it faster. Remaining:
 
-The census screens. PROBE E confirms. Nothing in this file is a verdict.
+  1. memory_integrity rebuilt from source (reimplemented, not imported) — the author's
+  2. the rebuild measured against real receipts — alive or dead, empirically
+  3. the 143 get PROBE E, one module at a time, against the receipts that exist
+  4. UNTESTABLE splits two ways: no receipts and no downstream claim is dead code;
+     no receipts UNDER a published number is worse than confirmed-dead
+
+The census screens. PROBE E confirms. Nothing in this file is a verdict, and after the
+discrimination control that is a measured statement rather than a modest one.
 
 
 PROBE E states the law: a gate is unfalsifiable when ANY term of its decision

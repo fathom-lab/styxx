@@ -72,7 +72,26 @@ Design constraints, frozen:
 - roles logged per pass, classification pre-registered before the passes run
 - n=1 decides nothing
 
-## 6. Scope of this file
+## 6. Wording rule — added after the census's own status was measured
+
+`census_discrimination_control.py` built two gates with an identical at-risk shape and
+exercised them on one population: one alive (fires 3/8, varies), one dead (fires 0/8,
+constant, the `memory_integrity` defect). **The census flagged both.** It detects
+SHAPE, not death — which is what its docstring always claimed, and is now measured
+rather than asserted.
+
+Binding on every artifact downstream of the census:
+
+> A census hit is a **CANDIDATE**. It may never be written as *dead*, *broken*,
+> *unfalsifiable*, or *confirmed* — not in this ledger, not in a commit message, not
+> in a paper. Only **PROBE E**, run against a real population, may use those words.
+> The 20.5% figure is a count of **shapes**; any sentence that lets a reader hear
+> "defects" is the same overstatement this program exists to catch.
+
+The rule is here rather than in the census file because the census cannot enforce its
+own reading. The place a screen's result gets overstated is never the screen.
+
+## 7. Scope of this file
 
 This fixes dispositions, not findings. It says what happens to each category; it says
 nothing about which gates fall where, because that is unknown at the time of writing —

@@ -1,0 +1,13 @@
+{
+ "variance": {
+  "alive_gate_fires": 3,
+  "alive_gate_n": 8,
+  "alive_gate_varies": true,
+  "dead_gate_fires": 0,
+  "dead_gate_n": 8,
+  "dead_gate_varies": false
+ },
+ "flagged_alive": true,
+ "flagged_dead": true,
+ "conclusion": "shape_detector"
+}
