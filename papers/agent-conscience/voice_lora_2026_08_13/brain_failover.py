@@ -42,6 +42,10 @@ CREDIT_RE = re.compile(
     r"credit balance is too low|insufficient[_ ]quota|billing|"
     r"purchase credits|402", re.I)
 
+# log path -> byte offset already inspected. Seeded at the size the log had when this
+# process started, so pre-existing refusals are never re-fired.
+_SEEN: dict = {}
+
 
 def log(msg):
     print(f"[failover] {time.strftime('%Y-%m-%dT%H:%M:%S')} {msg}", flush=True)
@@ -75,23 +79,47 @@ def local_model_up() -> bool:
         return False
 
 
+def _started_at():
+    """Refusals older than this process are history, not events.
+
+    Without this the daemon flaps: after an operator restores credits and restarts
+    the gateway, the ORIGINAL refusal is still sitting in today's log, and the
+    gateway keeps appending so the file mtime is always fresh. The daemon would read
+    a months-old-in-context refusal as live and yank the agent back to local silicon
+    seconds after it was deliberately put on the API. A tripwire that cannot tell a
+    scar from a wound is a tripwire that fires on scars.
+    """
+    return _START
+
+
+_START = time.time()
+
+
 def fresh_credit_refusal() -> bool:
-    """A credit refusal written to the gateway log inside the freshness window."""
+    """A credit refusal written to the gateway log inside the freshness window AND
+    after this process started."""
     files = sorted(glob.glob(LOG_GLOB), key=os.path.getmtime, reverse=True)
     if not files:
         return False
     newest = files[0]
     if time.time() - os.path.getmtime(newest) > FRESH_S:
         return False
+    # only consider content appended since we started watching
     try:
-        with open(newest, "rb") as f:                        # tail, not whole file
-            f.seek(0, os.SEEK_END)
-            back = min(f.tell(), 200_000)
-            f.seek(-back, os.SEEK_END)
-            tail = f.read().decode("utf-8", errors="replace")
+        size_now = os.path.getsize(newest)
     except OSError:
         return False
-    return bool(CREDIT_RE.search(tail))
+    seen = _SEEN.setdefault(newest, size_now)
+    if size_now <= seen:
+        return False                    # nothing new written since we started
+    try:
+        with open(newest, "rb") as f:      # ONLY the bytes appended since we started
+            f.seek(seen)
+            new_bytes = f.read().decode("utf-8", errors="replace")
+    except OSError:
+        return False
+    _SEEN[newest] = size_now
+    return bool(CREDIT_RE.search(new_bytes))
 
 
 def cut_over():
