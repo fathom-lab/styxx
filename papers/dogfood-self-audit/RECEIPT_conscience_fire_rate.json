@@ -1,0 +1,250 @@
+{
+ "measurement": "conscience_fire_rate",
+ "value": 0.6914,
+ "verdict": "OK__path_could_have_failed",
+ "why": "44 of 113 adjudicable terms varied (38.9%). The apparatus could have returned a different answer on this population.",
+ "generated_utc": "2026-08-13T21:41:54Z",
+ "scope_obs_floor": 4,
+ "n_terms_on_path": 115,
+ "n_live": 44,
+ "n_constant": 69,
+ "n_underpowered": 2,
+ "live_fraction_of_adjudicable": 0.3894,
+ "pinned_terms": [
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 161,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 29455,
+   "src": "w"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_phrase_count",
+   "line": 134,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 2887,
+   "src": "not text"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_sentences",
+   "line": 129,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 1238,
+   "src": "p.strip()"
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_z",
+   "line": 296,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 1233,
+   "src": "sigma <= 1e-12"
+  },
+  {
+   "module": "styxx.guardrail.deception_signals",
+   "func": "_word_density",
+   "line": 135,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 810,
+   "src": "not toks"
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_sycophancy_v0_3",
+   "func": "predict_proba_sycophantic",
+   "line": 63,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 669,
+   "src": "scaled < -_SCALED_Z_CLIP"
+  },
+  {
+   "module": "styxx.attack.fingerprint",
+   "func": "applicable_instruments",
+   "line": 110,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 324,
+   "src": "name in registered"
+  },
+  {
+   "module": "styxx.attack.registry",
+   "func": "get_instrument",
+   "line": 135,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 243,
+   "src": "not _REGISTRY"
+  },
+  {
+   "module": "styxx.attack.registry",
+   "func": "get_instrument",
+   "line": 137,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 243,
+   "src": "name not in _REGISTRY"
+  },
+  {
+   "module": "styxx.anthropic_hack.text_features",
+   "func": "extract_features",
+   "line": 124,
+   "op": "or",
+   "verdict": "CONSTANT_TRUE",
+   "n": 210,
+   "src": "text"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 541,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 180,
+   "src": "isinstance(s_, (list, tuple))"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 541,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 180,
+   "src": "len(s_) >= 3"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "extract_overconfidence_features",
+   "line": 168,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 137,
+   "src": "response is None"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_sentences",
+   "line": 126,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 137,
+   "src": "not text"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "_sentences",
+   "line": 126,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 137,
+   "src": "not text.strip()"
+  },
+  {
+   "module": "styxx.guardrail.overconfidence_signals",
+   "func": "extract_overconfidence_features",
+   "line": 196,
+   "op": "if",
+   "verdict": "CONSTANT_TRUE",
+   "n": 137,
+   "src": "sents"
+  },
+  {
+   "module": "styxx.guardrail.calibrated_weights_overconfidence_v0",
+   "func": "_z",
+   "line": 302,
+   "op": "return",
+   "verdict": "CONSTANT_TRUE",
+   "n": 92,
+   "src": "-_SCALED_Z_CLIP"
+  },
+  {
+   "module": "styxx.guardrail.deception",
+   "func": "deception_check",
+   "line": 225,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 86,
+   "src": "n_words < SCOPE_WARN_SHORT_RESPONSE_WORDS"
+  },
+  {
+   "module": "styxx.guardrail.deception",
+   "func": "deception_check",
+   "line": 226,
+   "op": "and",
+   "verdict": "CONSTANT_TRUE",
+   "n": 86,
+   "src": "top"
+  },
+  {
+   "module": "styxx.conscience",
+   "func": "review",
+   "line": 89,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 81,
+   "src": "not draft"
+  },
+  {
+   "module": "styxx.conscience",
+   "func": "review",
+   "line": 89,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 81,
+   "src": "not draft.strip()"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 519,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 81,
+   "src": "args.get('prompt')"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 519,
+   "op": "or",
+   "verdict": "CONSTANT_FALSE",
+   "n": 81,
+   "src": "''"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 520,
+   "op": "or",
+   "verdict": "CONSTANT_TRUE",
+   "n": 81,
+   "src": "args.get('response')"
+  },
+  {
+   "module": "styxx.cognometrics",
+   "func": "tool_cogn_audit_with_advice",
+   "line": 521,
+   "op": "if",
+   "verdict": "CONSTANT_FALSE",
+   "n": 81,
+   "src": "not response.strip()"
+  }
+ ],
+ "limits": [
+  "Attribution is by observation delta, not data-flow taint: a term evaluated inside the scope is credited even if its result never reached the value. This biases the receipt toward looking FALSIFIABLE, so REFUSED is strong evidence and OK is weak evidence.",
+  "Single-threaded only. Concurrent work inside the scope is misattributed to this measurement.",
+  "A CONSTANT verdict is about this measurement's population, not about the term in principle."
+ ],
+ "population": {
+  "source": "darkflobi_glimmer_log.jsonl",
+  "n_drafts": 81,
+  "n_fired": 56
+ }
+}
