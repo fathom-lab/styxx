@@ -1,0 +1,50 @@
+{
+  "real_rate": 0.8684,
+  "real": [
+    66,
+    76
+  ],
+  "fabricated_rate": 0.3026,
+  "fabricated": [
+    23,
+    76
+  ],
+  "separation": 0.5658,
+  "P1_judge_fails_to_discriminate": false,
+  "cardinality_curve": [
+    {
+      "frac": 0.02,
+      "n_sources": 3,
+      "rate": 0.0263
+    },
+    {
+      "frac": 0.05,
+      "n_sources": 8,
+      "rate": 0.0526
+    },
+    {
+      "frac": 0.1,
+      "n_sources": 16,
+      "rate": 0.1184
+    },
+    {
+      "frac": 0.25,
+      "n_sources": 40,
+      "rate": 0.3816
+    },
+    {
+      "frac": 0.5,
+      "n_sources": 81,
+      "rate": 0.6053
+    },
+    {
+      "frac": 1.0,
+      "n_sources": 163,
+      "rate": 0.8684
+    }
+  ],
+  "P2_rate_tracks_cardinality": true,
+  "random_number_ground_rate": 0.5735,
+  "n_source_leaf_values": 163,
+  "verdict": "JUDGE_DISCRIMINATES__grounded_rate_is_evidence"
+}

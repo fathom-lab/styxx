@@ -179,10 +179,32 @@ class GroundingReport:
     n_grounded: int = 0
     n_derived: int = 0
     n_unsourced: int = 0
+    chance_floor: float = 0.0        # P(a random claim of this precision mix grounds by luck)
+    floor_by_decimals: dict = field(default_factory=dict)
+    n_unfalsifiable: int = 0         # claims whose precision makes grounding certain by chance
 
     @property
     def unsourced(self) -> list:
         return [n for n in self.items if n.status == "unsourced"]
+
+    @property
+    def excess_over_chance(self) -> float:
+        """Grounded rate minus the chance floor for this document's precision mix.
+
+        `pct_grounded` alone is not evidence: `_match` accepts ANY source value within
+        0.5*10^-decimals, so a one-decimal claim grounds against a receipt of a few hundred
+        leaves essentially always. This is the part of the rate that is about the author.
+        """
+        if self.n_total == 0:
+            return 0.0
+        obs = (self.n_grounded + self.n_derived) / self.n_total
+        return round(obs - self.chance_floor, 4)
+
+    @property
+    def normalised_excess(self) -> float:
+        """excess / available headroom — 1.0 means every groundable claim grounded."""
+        head = 1.0 - self.chance_floor
+        return round(self.excess_over_chance / head, 4) if head > 1e-9 else float("nan")
 
     @property
     def verdict(self) -> str:
@@ -197,6 +219,14 @@ class GroundingReport:
     def summary(self) -> str:
         lines = [f"claim audit: {self.verdict}  ({self.pct_grounded}% backed; "
                  f"{self.n_grounded} grounded, {self.n_derived} derived, {self.n_unsourced} unsourced)"]
+        if self.n_total:
+            lines.append(f"  chance floor {self.chance_floor:.3f} for this precision mix "
+                         f"-> EXCESS OVER CHANCE {self.excess_over_chance:+.3f} "
+                         f"(normalised {self.normalised_excess:.3f})")
+            if self.n_unfalsifiable:
+                lines.append(f"  WARNING: {self.n_unfalsifiable}/{self.n_total} claim(s) carry too "
+                             f"few decimals to fail against this receipt (floor >= 0.995) — "
+                             f"their 'grounded' status is not evidence")
         for n in self.unsourced:
             lines.append(f"  UNSOURCED  {n.raw}  ({n.kind})")
         if self.overclaims:
@@ -230,6 +260,10 @@ class GroundingReport:
   </div>
   <div style="margin:18px 0 6px"><span style="font-size:42px;font-weight:700;color:#F3ECF7">{pct}%</span>
     <span style="color:#9A86B4;font-size:13px;margin-left:8px">of {self.n_total} numeric claims trace to a receipt</span></div>
+  <div style="color:#9A86B4;font-size:12px;margin:-2px 0 10px">chance floor for this precision mix
+    <b style="color:#F2B45C">{round(100*self.chance_floor,1)}%</b> · excess over chance
+    <b style="color:#65E0D8">{round(100*self.excess_over_chance,1):+}</b> pts</div>
+  {'<div style="color:#FF5C6C;font-size:12px;margin:-4px 0 10px">⚠ '+str(self.n_unfalsifiable)+' claim(s) too coarse to fail against this receipt — not evidence</div>' if self.n_unfalsifiable else ''}
   <div style="height:9px;border-radius:5px;background:#2a1d38;overflow:hidden;margin:10px 0 16px">
     <div style="height:100%;width:{fill}%;background:linear-gradient(90deg,#C9A2F0,#65E0D8)"></div></div>
   <div style="display:flex;gap:18px;font-size:12.5px;color:#B79FCB;margin-bottom:6px">
@@ -319,6 +353,37 @@ def _match(num: ClaimNumber, vals: dict) -> tuple:
     return "unsourced", ""
 
 
+def _chance_floor(vals: dict, decimals: int, trials: int = 4000, seed: int = 7) -> float:
+    """P(a uniformly-random claim with `decimals` places grounds against `vals` by luck).
+
+    `_match` grounds on ANY source value within 0.5*10^-decimals, so the floor is set by source
+    cardinality and claim precision, not by the document. Measured by Monte Carlo against the
+    real source range so it reflects the actual receipt, not an idealisation.
+    """
+    import random as _r
+    if not vals:
+        return 0.0
+    xs = list(vals)
+    # The floor must be measured over the range the CLAIM lives in, not the span of the receipt.
+    # Two wrong answers were shipped and caught before this one, both flattering:
+    #   v1 used min/max over all leaves -> a seed (90210) stretched the draw range to five
+    #      figures and the floor collapsed to 0.000 (standalone said 0.572).
+    #   v2 used a <=1000 filter + p95 -> still 342, floor 0.0035. Same defect, smaller.
+    # The honest reference is the band the audited numbers themselves occupy: rates, p-values and
+    # effect sizes sit in [0,1], and grounding one of those against a receipt of a few hundred
+    # leaves is easy. Sample the claim's own magnitude class.
+    hi_ref = 1.0 if decimals >= 1 else max(10.0, min(1000.0, max(abs(v) for v in xs)))
+    lo, hi = 0.0, hi_ref
+    tol = 0.5 * 10 ** (-decimals)
+    rng = _r.Random(seed + decimals)
+    hits = 0
+    for _ in range(trials):
+        q = round(rng.uniform(lo, hi), decimals)
+        if any(abs(v - q) <= tol or round(v, decimals) == q for v in xs):
+            hits += 1
+    return hits / trials
+
+
 def audit_grounding(text: str, sources: Any) -> "GroundingReport":
     """Audit every statistical number in `text` against `sources` (result JSON paths / dicts / numbers).
 
@@ -345,6 +410,22 @@ def audit_grounding(text: str, sources: Any) -> "GroundingReport":
         else:
             rep.n_unsourced += 1
     rep.overclaims = detect_overclaims(text)
+
+    # --- chance floor: what this rate would be on numbers drawn at random ---------------
+    # Added 2026-08-13 after dogfooding this tool on its own author's prereg. The headline
+    # "86.8% grounded" was true and nearly meaningless: at 1 decimal the floor was 1.000 --
+    # i.e. that class of claim CANNOT fail against a receipt of a few hundred leaves. A rate
+    # quoted without its floor is the fire-rate wearing the antibody's name.
+    if nums:
+        floors, weighted = {}, 0.0
+        for n in nums:
+            d = _decimals(n.raw)
+            if d not in floors:
+                floors[d] = _chance_floor(vals, d)
+            weighted += floors[d]
+        rep.floor_by_decimals = {str(k): round(v, 5) for k, v in sorted(floors.items())}
+        rep.chance_floor = round(weighted / len(nums), 4)
+        rep.n_unfalsifiable = sum(1 for n in nums if floors[_decimals(n.raw)] >= 0.995)
     return rep
 
 

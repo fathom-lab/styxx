@@ -1,0 +1,35 @@
+{
+  "n_source_leaf_values": 163,
+  "chance_floor_by_decimals": {
+    "1": 1.0,
+    "2": 0.57195,
+    "3": 0.1009,
+    "4": 0.0102
+  },
+  "prereg_by_precision": {
+    "0": {
+      "grounded": 2,
+      "total": 2
+    },
+    "1": {
+      "grounded": 1,
+      "total": 1
+    },
+    "2": {
+      "grounded": 22,
+      "total": 27
+    },
+    "3": {
+      "grounded": 35,
+      "total": 36
+    },
+    "4": {
+      "grounded": 6,
+      "total": 10
+    }
+  },
+  "observed_overall": 0.8684,
+  "precision_weighted_chance_floor": 0.2918,
+  "excess_over_chance": 0.5766,
+  "normalised_excess": 0.8142
+}
