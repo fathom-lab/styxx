@@ -6,6 +6,39 @@ has been looked at. This file is committed before the analysis script is written
 is the practice `PRIOR_ART_2026_08_13.md` demanded after today's ledger was classified
 retrospectively.
 
+## AMENDMENT 1 — the first exposure build was not blind, and the harness was the leak
+
+**Attempt 1 is void as a blind classification.** It is recorded here rather than
+discarded, because a pre-registration that quietly replaces a failed attempt is worth
+nothing.
+
+The blinding rule was given to every agent and every agent obeyed it: none opened a
+PROBE E artifact. **The leak was in the harness.** Each phase passed the previous
+phase's full JSON downstream, and the agents' own contamination declarations quoted
+outcome-side numbers verbatim inside free-text notes — so the adjudicator read
+repo-level rates, one module-level deadness fact, and two conscience-chain terms with
+their phi values *before* classifying anything.
+
+It was caught only because the adjudicator **declared it unprompted**, quoted exactly
+what it had seen, and assessed the direction of the resulting bias. Its assessment: the
+leak runs **against H1 or is neutral** — it kept the whole conscience chain (known live,
+which dilutes the effect) and declined to add `styxx.weather` to the exposure set
+despite knowing it is dead, because the causal path did not justify it. That is the
+conservative direction, and it is still not blind.
+
+Two of four harvest arms also died on API 529s, so the exposure set was incomplete
+independently of the contamination.
+
+**Attempt 2** passes only a whitelist of structured fields between phases
+(`claim`, `status`, `receipt_path`, `quote`, `date`), scrubs percentages, n-of-m ratios
+and phi values from those, and re-runs the two failed arms. Free text never crosses a
+phase boundary.
+
+Amendments to a pre-registration are themselves suspect, so the boundary is stated: this
+amendment changes **only how the exposure variable is transported between agents**. The
+hypotheses, the exposure definition, the outcome, the test, `MIN_MODULES = 5`, and the
+recorded expectation of H2 are all unchanged from the original commit `c2340ed`.
+
 ## The question
 
 PROBE E measures whether a decision term could have gone the other way on the population
