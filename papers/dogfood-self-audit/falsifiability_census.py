@@ -224,7 +224,23 @@ def classify_term(node, producers=None, _depth=0):
     return ("OTHER", "")
 
 
-def gate_functions(tree):
+def gate_functions(tree, strict=False):
+    """Functions to inspect.
+
+    Two modes, because they answer different questions and conflating them makes a
+    cross-repo comparison meaningless:
+
+      BROAD (default) -- gate-named, OR carrying a boolean decision that reaches the
+        return value. Needed to catch `memory_integrity`, which is named like nothing
+        and assigns its verdict to `invented`. But it admits ordinary boolean logic,
+        so the denominator is "decision expressions in general", not "gates".
+
+      STRICT (--strict) -- gate VOCABULARY only. Comparable across codebases, because
+        it selects on what the author called the thing rather than on how much boolean
+        logic a library happens to contain. Use this for any number quoted next to
+        another repo's number: a library made of gates will look worse under BROAD for
+        reasons that have nothing to do with its quality.
+    """
     for node in ast.walk(tree):
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
@@ -236,10 +252,7 @@ def gate_functions(tree):
                         w in sub.id.lower() for w in ("verdict", "gate", "fired")):
                     hit = True
                     break
-        # ...or it simply HAS a boolean decision reaching its return value. This is
-        # the clause that catches memory_integrity; without it the screen depends on
-        # the author having named the thing like a gate.
-        if not hit and decision_boolops(node):
+        if not hit and not strict and decision_boolops(node):
             hit = True
         if hit:
             yield node
@@ -286,7 +299,7 @@ def decision_boolops(fn):
     return out
 
 
-def census(pkg_dir):
+def census(pkg_dir, strict=False):
     rows, files = [], 0
     for root, _dirs, names in os.walk(pkg_dir):
         for n in sorted(names):
@@ -299,7 +312,7 @@ def census(pkg_dir):
                 continue
             files += 1
             mod = os.path.relpath(path, pkg_dir).replace("\\", "/")
-            for fn in gate_functions(tree):
+            for fn in gate_functions(tree, strict):
                 prods = _producers(fn)
                 for where, bo in decision_boolops(fn):
                     op = "AND" if isinstance(bo.op, ast.And) else "OR"
@@ -327,9 +340,11 @@ def main():
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--show", default=None, help="print every candidate in a module")
     ap.add_argument("--pkg", default=PKG)
+    ap.add_argument("--strict", action="store_true",
+                    help="gate-vocabulary only -- use for cross-repo comparison")
     args = ap.parse_args()
 
-    files, rows = census(args.pkg)
+    files, rows = census(args.pkg, strict=args.strict)
     at_risk = [r for r in rows if r["n_at_risk"]]
     by_mod = {}
     for r in at_risk:
