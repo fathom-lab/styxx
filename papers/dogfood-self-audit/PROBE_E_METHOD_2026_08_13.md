@@ -60,6 +60,20 @@ Only `LIVE`, `CONSTANT_TRUE`, and `CONSTANT_FALSE` enter the denominator. Counti
 unreached or barely-reached terms as healthy would credit thin coverage as evidence of
 soundness, which is the overstatement this whole program exists to catch.
 
+## PROBE E measures code, not knowledge — tested, pre-registered, and settled
+
+This is stated permanently because a pre-registered test said it should be. **Whether an
+instrument could have failed does not predict whether the claims it produced were later
+withdrawn.** On 131 modules, against 75 verified retraction entries, modules on the
+causal path of a retracted claim have a *slightly lower* dead-term rate than the rest
+(median 0.333 vs 0.369, U = 1052, p = 0.248).
+
+The prereg fixed the consequence of a null in advance and this file honours it. A dead
+gate is a real defect in a real instrument; it is **not** a marker for results that will
+need retracting. Anyone quoting a dead-term rate as evidence about the reliability of a
+lab's *findings* is making a claim this repository tested and failed to support.
+`FINDING_prereg_retraction_null_2026_08_13.md` has the design and the confound.
+
 ## What a CONSTANT verdict licenses, and what it does not
 
 **Licensed:** the population could not distinguish this gate from one with that term

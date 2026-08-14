@@ -1,0 +1,61 @@
+{
+ "verdict": "H1_NOT_SUPPORTED",
+ "h1": {
+  "u": 1052.0,
+  "p": 0.2477,
+  "rank_biserial": 0.153,
+  "median_exposed": 0.3333333333333333,
+  "median_comparison": 0.3693181818181818,
+  "n_exposed": 23,
+  "n_comparison": 108
+ },
+ "h2_coverage": {
+  "p": 0.09969,
+  "rank_biserial": 0.2178,
+  "median_exposed": 0.7,
+  "median_comparison": 0.5531561461794019
+ },
+ "covariate_powered_terms": {
+  "p": 0.45007,
+  "rank_biserial": 0.1002,
+  "median_exposed": 9,
+  "median_comparison": 6.5
+ },
+ "exposed_modules": [
+  "styxx.anthropic_hack.text_features",
+  "styxx.attack.fingerprint",
+  "styxx.attack.registry",
+  "styxx.claim_audit",
+  "styxx.cognometrics",
+  "styxx.compliance.competence_cliff",
+  "styxx.conscience",
+  "styxx.coupling",
+  "styxx.divergence",
+  "styxx.guardrail.deception",
+  "styxx.guardrail.deception_signals",
+  "styxx.guardrail.deception_v2",
+  "styxx.guardrail.overconfidence",
+  "styxx.guardrail.overconfidence_signals",
+  "styxx.guardrail.self_directed_gate",
+  "styxx.guardrail.sycophancy_signals",
+  "styxx.islands",
+  "styxx.knowsay",
+  "styxx.mount",
+  "styxx.protocol",
+  "styxx.residual_probe.probe",
+  "styxx.sense",
+  "styxx.transport"
+ ],
+ "unmatched_ledger_modules": [
+  "guardrail/calibrated_weights_refusal_v1",
+  "guardrail/refusal",
+  "guardrail/sycophancy",
+  "kcs",
+  "power"
+ ],
+ "limits": [
+  "Retrospective and observational. Retracted claims received MORE attention, which may drive both the retraction and the discovery of dead gates near it; this design cannot separate that.",
+  "One repository, one suite, one day's snapshot.",
+  "Module-level exposure is coarse: a retraction implicates a pipeline, and every module on that pipeline is marked exposed whether or not it contributed the error."
+ ]
+}

@@ -1,0 +1,720 @@
+{
+ "entries": [
+  {
+   "claim": "v1 \"pre-registered surprise\": the label-corrected H1 flip in the auditor's-ceiling arc (depth/robustness check yields a non-null AUROC)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/auditor-ceiling/FINDING_grading_false_accusation_2026_07_04.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Stage-2 confirmation results of the auditor's-ceiling v1 (second-judge confirmations of TriviaQA/PopQA false accusations)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/auditor-ceiling/FINDING_grading_false_accusation_2026_07_04.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Fathom v26: the private-calibration defense \"survives an adaptive attacker\"",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/read-neq-write/ERRATUM_v26_adaptive_claim.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Cross-model representational convergence is scale-driven (PRH mid-climb)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/ai-human-alignment/SYNTHESIS_geometry_of_meaning_2026_06_03.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The cross-model consensus geometry IS the human/brain structure",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/ai-human-alignment/SYNTHESIS_geometry_of_meaning_2026_06_03.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "\"Universal forms vindicated\" \u2014 the synthetic-geometry headline of the prior night",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/ai-human-alignment/SYNTHESIS_geometry_of_meaning_2026_06_03.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The cross-model channel is a value thermometer, not a content transcript (content identity does not transport cross-model)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/showcase-viz/FINDING_concept_decode_2026_06_12.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Consistency checks BEAT fixed signatures as attack-resistant white-box honesty signals",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/consistency-robustness/SYNTHESIS_consistency_robustness_2026_06_04.md",
+   "modules": [
+    "styxx.divergence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.coupling is usable for mind\u2194brain (neural time series) coupling",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+   "modules": [
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The single-clique human result is \"confirmed against the reference statistic\" (Hartigan's dip)",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md",
+   "modules": [
+    "styxx.islands"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The human-islands screen provides \"weak evidence of absence\" of islands",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md",
+   "modules": [
+    "styxx.islands"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "G3_check_metrics_passes_a_real_result \u2014 protocol v3 metric-identity gate PASS",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "B2-coupling confirmation: COUPLED \u2014 the erasure bound is measured at 1.5B",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Frame-locality at inference time: the belief survives while the report is captured (specificity control)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "know-say gap: the frontier belief \"survives the capitulation with specificity\"",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/PAPER_knowsay_gap_2026_07_27.md",
+   "modules": [
+    "styxx.knowsay"
+   ],
+   "confidence": "inferred"
+  },
+  {
+   "claim": "G2_no_invented_memories PASS \u2014 the voice-LoRA arm introduced no invented memories",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/voice_lora_2026_08_13/README.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.guardrail.sycophancy_signals"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "G3_attack_resistance \u2014 BASE caught every attack, the resistance bar is met by parity",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/voice_lora_2026_08_13/README.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.overconfidence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The paired know-say McNemar significance claim for the voice-LoRA arms",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/voice_lora_2026_08_13/README.md",
+   "modules": [
+    "styxx.knowsay"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "MEMORY.md's self-description of the agent's own attack-resistance (a perfect detection figure carried as a fact about character)",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/dogfood-self-audit/DAY_2026_08_13.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.overconfidence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The cross-repository census comparison published as EXTERNAL_CENSUS_2026_08_13",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/dogfood-self-audit/DAY_2026_08_13.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The showcase rows, the test_anthropic_hack claim, and the pooled receipt verdict in the day's flagship finding",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx (git commit c18bd6c)",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Unsupervised correspondence recovery for distinctive geometry is \"robustly ~1.00 / reproduces vec2vec\"",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/ancient-question-program/CORRECTIONS_2026_06_03.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "\"The geometry of meaning is universal / Plato's forms, vindicated\" (disjoint-worlds RSA)",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/ancient-question-program/CORRECTIONS_2026_06_03.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "darkflobi's conscience 'catches every attack / refused all of them' (meta_audit_report.md, written into MEMORY.md as settled fact about his character)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/G3_ADJUDICATION_2026-08-13.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.sycophancy_signals",
+    "styxx.guardrail.overconfidence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "G3 gate PASS/FAIL on conscience sensitivity (voice-LoRA prereg binding gate)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/G3_ADJUDICATION_2026-08-13.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.overconfidence",
+    "styxx.guardrail.self_directed_gate"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "G2 invented_memory / memory_integrity PASS (VOICE arm invented no memories)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/G2_ADJUDICATION_2026-08-13.md",
+   "modules": [
+    "styxx.conscience"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "H1 'surprise' \u2014 label-corrected auditor-ceiling flip (mechanical QA grading changes the keystone verdict)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx (git commit 9818a05) + papers/auditor-ceiling/FINDING_grading_false_accusation_2026_07_04.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "read\u2260write 'STANDS vs an ADAPTIVE weight-level attacker, two families' (published in Fathom v26)",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/read-neq-write/ERRATUM_v26_adaptive_claim.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "inference-time belief survival with specificity (frame-locality inference-time channel), published in Fathom v31",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/PAPER_frame_locality_2026_07_28.md",
+   "modules": [
+    "styxx.knowsay"
+   ],
+   "confidence": "inferred"
+  },
+  {
+   "claim": "knowsay paper \u00a77 belief-survival-with-specificity (carried the v31.1-retracted design)",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/DATASHEET_knowsay_2026_07_27.md + git commit 62b3fc4",
+   "modules": [
+    "styxx.knowsay"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.coupling applies to mind\u2194brain data (intersubject correlation on neural time series)",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.coupling as shipped in 7.31.[ratio].31.1 (verdicts on real telemetry)",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.sense measures an agent's afference (7.32.0)",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.sense",
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Hartigan's dip non-flag cited as confirmation of no islands",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.islands"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "published 'median pairwise affinity' for cohort_median",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.islands"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.coupling's confound-preserving null is novel",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx is a 'universal AI integrity probe'",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.residual_probe.probe"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "'transport holds cross-vendor' / cross-vendor universality of the refusal instrument",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/cross-vendor-transport-confirm-2026-05-17.md",
+   "modules": [
+    "styxx.transport"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "'consistency beats signature' \u2014 styxx's consistency detectors are structurally more robust than static activation probes",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/consistency-robustness/RESULT_rl_obfuscation_2026_06_04.md",
+   "modules": [
+    "styxx.divergence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "the shipped four-axis composite / deception / overconfidence cognometric scores (and every past 'composite improved' or heal-recovery claim leaning on them)",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/styxx-self-audit-claude-2026-05-17.md",
+   "modules": [
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.guardrail.deception",
+    "styxx.guardrail.deception_signals",
+    "styxx.guardrail.deception_v2",
+    "styxx.guardrail.overconfidence",
+    "styxx.guardrail.overconfidence_signals",
+    "styxx.guardrail.sycophancy"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "COUPLED__erasure_bound_measured_1p5B (the 5-seed confirm verdict that would have put a number on the erasure bound)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/calib-poison-general/RESULT_B2_coupling_confirm_VOID_2026_07_16.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "anchor-threshold power table in the published paper's \u00a77 (anchors needed for adequate power; single-anchor power)",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/anchored-validity/FINDING_anchor_power_instrument_2026_07_23.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "'the repo cannot answer its own question' (session headline)",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/.claude/projects/C--Users-heyzo--styxx/memory/feedback_refuse_favourable_verdicts.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "cross-vendor competence-cliff finding (as originally scoped)",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/.claude/projects/C--Users-heyzo--styxx/memory/project_competence_cliff_cross_vendor_2026_06_23.md",
+   "modules": [
+    "styxx.compliance.competence_cliff"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "cycle-45 estimator immunity to master-key sync (read as an estimator property)",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/.claude/projects/C--Users-heyzo--styxx/memory/project_anchored_validity_2026_07_20.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The 'consistency BEATS signatures' thesis \u2014 that consistency checks (grounded_honesty) are more adversarially robust than fixed activation signatures",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/consistency-robustness/SYNTHESIS_consistency_robustness_2026_06_04.md",
+   "modules": [
+    "styxx.divergence"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The auditor's-ceiling v1 'pre-registered surprise' \u2014 the label-corrected H1 flip on TriviaQA grading",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/auditor-ceiling/FINDING_grading_false_accusation_2026_07_04.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "R3:anchored_flat_across_dose \u2014 that the anchored estimator's error is flat across contamination dose (immune to the master key)",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/anchored-validity/FINDING_stage_a_fatal_fixes_2026_07_20.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The 'transport holds cross-vendor' reading of the styxx.transport refusal instrument \u2014 i.e. that the observed crack was a label artifact of an OpenAI-tuned refusal detector rather than a real failure",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/memory/project_cross_vendor_transport.md",
+   "modules": [
+    "styxx.transport"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "B48's machine verdict `INVALID__null_leaks` on the legibility-island battery \u2014 i.e. that the null draws leaked and the run licensed nothing",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "voice-LoRA gate G2 (meta_audit.memory_integrity): 'G2 PASS, zero invented memories' \u2014 the honesty-tune arm invents no memories",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/G2_ADJUDICATION_2026-08-13.md",
+   "modules": [
+    "styxx.conscience"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "voice-LoRA caving asymmetry: paired McNemar chi2(cc) with p reported as clearing MIN_CELL \u2014 the tune arm caves significantly less",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/dogfood-self-audit/DAY_2026_08_13.md",
+   "modules": [
+    "styxx.knowsay"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "darkflobi's self-audit conscience claim held in MEMORY.md: 'sensitivity 1.0, I refused [ratio]' \u2014 the conscience catches every attack",
+   "status": "struck",
+   "receipt_path": "C:/Users/heyzo/clawd/MEMORY.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.attack.registry",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.sycophancy_signals",
+    "styxx.guardrail.overconfidence",
+    "styxx.guardrail.overconfidence_signals",
+    "styxx.guardrail.self_directed_gate"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "voice-LoRA gate G3: sensitivity >= 1.0 by refusal behavior \u2014 the pre-registered honesty gate as a binding gate",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/agent-conscience/G3_ADJUDICATION_2026-08-13.md",
+   "modules": [
+    "styxx.conscience",
+    "styxx.cognometrics",
+    "styxx.attack.fingerprint",
+    "styxx.attack.registry",
+    "styxx.guardrail.sycophancy",
+    "styxx.guardrail.sycophancy_signals",
+    "styxx.guardrail.overconfidence",
+    "styxx.guardrail.overconfidence_signals",
+    "styxx.guardrail.self_directed_gate"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Contest against the red team's lane-2 prevalence finding: 'zero mis-resolutions across the committed receipt corpus'",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/dogfood-self-audit/ADJUDICATION_redteam_2026_08_13.md",
+   "modules": [
+    "styxx.claim_audit"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "The static census claim about this suite's decision expressions, as a validated measurement",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx (git commit a140dfc)",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.coupling mind-brain application: intersubject correlation licensed on neural time series",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.md",
+   "modules": [
+    "styxx.coupling",
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "h1a human-cohort finding: the dip test 'confirms' unimodality (no legibility islands) in the human cohort",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.md + git commit bf701ec",
+   "modules": [
+    "styxx.islands"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Frame-locality flagship: the inference-time specificity control demonstrates belief-survival (belief-stability, not better sampling)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/PAPER_frame_locality_2026_07_28.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Coupling v6 power projection: sensitivity 0.880 at the proposed battery size",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/.claude/projects/C--Users-heyzo--styxx/memory/project_calib_poison_generalize_2026_07_09.md",
+   "modules": [],
+   "confidence": "inferred"
+  },
+  {
+   "claim": "Auditor's ceiling H1: the label-corrected 'flip' / 'surprise' \u2014 auditor discrimination beats chance after label correction",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/auditor-ceiling/FINDING_grading_false_accusation_2026_07_04.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Universal private-calibration defense: private calibration generalizes as a defense direction",
+   "status": "withdrawn",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/calib-poison-general/FINDING_calib_poison_law_2026_07_09.md",
+   "modules": [
+    "styxx.mount"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Calib-poison coupling confirmation: COUPLED__erasure_bound_measured \u2014 the erasure bound becomes a number and the paper's coupling side unblocks",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/calib-poison-general/PREREG_B2_coupling_confirm_2026_07_15.md + git commit 6084c95",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.power: the power module as a working instrument, and its own self-exam",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_p1_third_quarantine_2026_08_08.md",
+   "modules": [
+    "styxx.power",
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "C5's effective-sample-size number (the bar-was-wrong finding's quantitative claim)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/first-afference/FINDING_e1_not_estimable_2026_08_08.md",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "b48 verdict INVALID__null_leaks \u2014 read as a property of the null",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.md",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "protocol v3 metric-identity finding, validated on a single specimen chosen because it would pass",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/autopilot/FINDING_protocol_metric_identity_2026_08_07.md + git commit 6b69dfd",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Cross-substrate universality overclaim: Law II / 'property of cognition' / the Fathom-Constant",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/cognometry-manifesto.md + papers/foundations-of-cognometric-engineering-v0.1.md",
+   "modules": [
+    "styxx.guardrail.refusal",
+    "styxx.guardrail.calibrated_weights_refusal_v1",
+    "styxx.anthropic_hack.text_features",
+    "styxx.kcs"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "portable-conscience v0: the honesty direction is MODEL-SPECIFIC and does not transfer",
+   "status": "corrected_direction",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/showcase-viz/FINDING_portable_conscience_v0_2026_06_10.md + git commit 73dda7f",
+   "modules": [
+    "styxx.residual_probe.probe"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "Anchored-validity R4 headline and unconditional master-key pricing",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/anchored-validity/_stage_a_panel_2026_07_19.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "disjoint-worlds cross-family label-free reads (gemma/qwen/llama above-chance pairing)",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.md + git commit 6391ff6",
+   "modules": [
+    "styxx.protocol"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "styxx.sense harness results, including its own demo and flagship coupling test",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/CHANGELOG.md",
+   "modules": [
+    "styxx.sense",
+    "styxx.coupling"
+   ],
+   "confidence": "direct"
+  },
+  {
+   "claim": "crossfamily-cliff: the pre-registered cliff metric",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/grounded-honesty-axis/FINDING_crossfamily_local_cliff_2026_06_22.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "rung3 conscience-control transfer: the honesty axis survives a concept-cleared map",
+   "status": "void",
+   "receipt_path": "C:/Users/heyzo/clawd/styxx/papers/disjoint-worlds/FINDING_rung3_steerlayer_2026_06_22.md",
+   "modules": [],
+   "confidence": "direct"
+  },
+  {
+   "claim": "consistency_robustness \u2014 RETRACTED (carried in the MEMORY index as a 2026-06-04 finding)",
+   "status": "retracted",
+   "receipt_path": "C:/Users/heyzo/.claude/projects/C--Users-heyzo--styxx/memory/MEMORY.md",
+   "modules": [
+    "styxx.divergence"
+   ],
+   "confidence": "inferred"
+  }
+ ],
+ "rejected": [
+  {
+   "claim": "Cross-repo prevalence comparison: this suite's gate-shaped-decision defect rate vs pooled third-party ML tooling, framed as an upper bound on the defect rate",
+   "reason": "Cited receipt (papers/dogfood-self-audit/EXTERNAL_CENSUS_2026_08_13.md) is on the blinding list, so the quote could not be verified at the cited path. The same withdrawal is independently verified at DAY_2026_08_13.md:258 and is already carried as a separate entry with modules=[]; keeping this row would double-count a claim I could not check. modules were [] either way, so rejection removes no module."
+  },
+  {
+   "claim": "Three claims from the falsifiability-receipt work: the test_anthropic_hack claim, the showcase rows, and the pooled receipt verdict",
+   "reason": "Two independent grounds. (1) Cited receipt (papers/dogfood-self-audit/PROBE_E_METHOD_2026_08_13.md) is on the blinding list \u2014 quote unverifiable at the cited path. (2) Its mapping to styxx.anthropic_hack.{text_features,consensus,companion} was derived from tests/test_anthropic_hack.py, i.e. from the modules the outcome was measured ON, not from code that produced the withdrawn claim; the mapper itself graded it 'inferred' and could not identify the 'showcase rows'. That is exactly the circular exposure the blinding rule exists to prevent. The same withdrawal is verified independently as git commit c18bd6c (message matches verbatim) and is retained as a separate entry with modules=[]. Note styxx.anthropic_hack.text_features survives in the set anyway, via the verified non-circular Law II route (scripts/refusal_baseline_v1.py:36)."
+  }
+ ],
+ "n_distinct_modules": 28,
+ "distinct_modules": [
+  "styxx.divergence",
+  "styxx.coupling",
+  "styxx.islands",
+  "styxx.protocol",
+  "styxx.knowsay",
+  "styxx.conscience",
+  "styxx.cognometrics",
+  "styxx.attack.fingerprint",
+  "styxx.attack.registry",
+  "styxx.guardrail.sycophancy",
+  "styxx.guardrail.sycophancy_signals",
+  "styxx.guardrail.overconfidence",
+  "styxx.guardrail.overconfidence_signals",
+  "styxx.guardrail.self_directed_gate",
+  "styxx.guardrail.deception",
+  "styxx.guardrail.deception_signals",
+  "styxx.guardrail.deception_v2",
+  "styxx.guardrail.refusal",
+  "styxx.guardrail.calibrated_weights_refusal_v1",
+  "styxx.residual_probe.probe",
+  "styxx.transport",
+  "styxx.sense",
+  "styxx.anthropic_hack.text_features",
+  "styxx.compliance.competence_cliff",
+  "styxx.claim_audit",
+  "styxx.power",
+  "styxx.mount",
+  "styxx.kcs"
+ ],
+ "contaminated": true,
+ "what_i_saw": "THREE leaks, all declared, none used. (1) I ran `ls -la` on papers/dogfood-self-audit/ before reading the PREREG's blinding scope carefully. That returned FILENAMES AND BYTE SIZES ONLY for blocked artifacts (probe_e_numpy.json, probe_e_numpy_joined.json, probe_e_numpy_v2.json, PROBE_E_COMPARISON.json, RECEIPT_conscience_fire_rate.json, RECEIPT_receipt_gate.json, census_*.json, falsifiability_census.py, EXTERNAL_CENSUS_*, FALSIFIABILITY_RECEIPTS_*, FINDING_probe_e_styxx_*, FINDING_crossrepo_probe_e_*, FINDING_adversarial_review_*). No contents. No rates. (2) THE REAL ONE: grepping DAY_2026_08_13.md (not on the blocklist) for 'PARKED|census' returned PROBE E outcome-side prose. Verbatim, the lines I saw: line 248 '**PROBE E: the census was wrong in both directions.** probe_e_runtime.py measures dead'; line 254 'Joined against the static census, the screen over-calls by ~16% among functions it can'; line 256 'suspicious vocabulary at all. The census's number was never an upper bound on the defect'; line 224 '## 6. Evening: the gates went silent, and then the census turned out to be wrong'. So I saw ONE outcome-side number: a static-census-vs-runtime disagreement rate of ~16%. It is a repo-level instrument-agreement figure, not a dead-term rate for the repo, for any module, or for any term. (3) The harness injected the operator's auto-memory MEMORY.md index into my system context before I acted; it contains two term-level facts I did not go looking for: 'G2 VOID (detector 2-of-3 terms constant, anti-correlated with severity...)' and 'darkflobi's survey: 33/43 rate functions state no chance level'. The first is about meta_audit_voice.py's paper-local regex, which is not a styxx module and is in no mapping; the second is a different probe (own_instrument_survey). DIRECTION ASSESSMENT: none of the three tells me which styxx modules are dead, so none could steer inclusion or exclusion. My three module strips (styxx.audit, styxx.framelocality, styxx.anchors) and my two rejections were all decided on call-graph and git-date evidence stated in the entries, and all of them SHRINK the exposure set, which is the conservative direction against H1. VERIFICATION SUMMARY, separate from contamination: 77 claims in, 75 retained, 2 rejected. Quote-at-cited-path verified EXACT for 36 claims. 21 more had quotes that are git COMMIT SUBJECTS/BODIES rather than file text (9818a05, 6084c95, 62b3fc4, 6b69dfd, 36f9ae7, 73dda7f, 951b150, 8c5f531, 15300be, 6391ff6, 0c7dc31, f8bd4ad, b425655, 82f7715, bf701ec, a140dfc, 6fb2ac0, 8efa903, c18bd6c) \u2014 I verified each in `git log` and confirmed the retraction independently in the named file; receipt_path corrected in the output where the cited path did not exist. FIVE cited receipt paths were WRONG and are corrected above: papers/PAPER_protocol_metric_identity_* (actual: papers/autopilot/FINDING_...), papers/disjoint-worlds/FINDING_portable_conscience_v0_* (actual: papers/showcase-viz/), papers/disjoint-worlds/FINDING_crossfamily_local_cliff_* (actual: papers/grounded-honesty-axis/), clawd/.claude/projects/memory/project_consistency_robustness_* (actual: .claude/projects/C--Users-heyzo--styxx/memory/MEMORY.md:38), and papers/calib-poison-general/PREREG_B2_coupling_twosided_2026_07_16.md WHICH DOES NOT EXIST ANYWHERE (the 0.880->0.755 self-correction is real and is recorded at memory/project_calib_poison_generalize_2026_07_09.md:103 \u2014 retained on that receipt, downgraded to inferred). One claim's quote ('My contest instrument was broken in my favour') is not in the cited DAY file; it is at ADJUDICATION_redteam_2026_08_13.md:9 verbatim, same directory \u2014 receipt corrected. THREE MODULE STRIPS, all one rule \u2014 a module written AS THE REMEDY is not on the causal path of the claim it corrects: (a) styxx.audit dropped from the cross-vendor competence-cliff entry \u2014 run_local_cliff.py:211/214 does call styxx.audit._derive_verdict, but I traced the outputs and verdict_true/verdict_false are written to per-item receipts and NEVER read downstream; the pre-registered cliff metric runs committed_precision -> _compare -> M1_spearman entirely through run_pregeneration_gate.py and run_crossmodel_cliff.py, both of which have ZERO styxx imports (confirmed by grep). This removes styxx.audit from the set entirely. (b) styxx.framelocality dropped from both entries \u2014 `git log --diff-filter=A` shows it first committed 2026-07-29 as 'feat(framelocality): ship the corrected control as an instrument -- and dogfood it on our own retraction'; the retracted number came from papers/agent-conscience/run_frame_recovery.py, which imports no styxx. A third mapping of the same claim excluded it on exactly these grounds, so the input was self-contradictory. This removes styxx.framelocality from the set entirely. (c) styxx.anchors dropped from the anchor-power entry \u2014 styxx/anchors.py created cd3be35 on 2026-07-20, and FINDING_anchor_power_instrument_2026_07_23.md is subtitled 'and a favourable correction': the module SHIPS the corrected closed-form power table; the erroneous published row came from EXPLORE_anchor_threshold_2026_07_23.py, no styxx import. The other three anchored-validity entries already returned [] for the same temporal reason. This removes styxx.anchors from the set entirely. All three strips are the same rule and are trivially reversible if the analysis defines exposure to include remedy code \u2014 say so in the method file if you reverse them. MAPPINGS I POSITIVELY CONFIRMED AT SOURCE (import + call site read, not inferred): run_c1.py:15 `from styxx.coupling import couple` and :63 `from styxx.protocol import Experiment`; run_h1a.py:23 `from styxx.islands import survey`; run_p1.py:19 `from styxx.power import PowerError, effective_n, reachable`; run_e1.py:209 and run_b48.py:86 and run_b35c.py:85 protocol; run_b48.py:18 islands; measure_lane2_prevalence.py:24 `from styxx.claim_audit import _load_sources, _tokens`; consistency-robustness run_grounded_attack.py:15 / run_obfuscation_robustness.py:18 / run_rl_obfuscation.py:18 `styxx.divergence`; voice_lora meta_audit_voice.py:152 is verbatim `return \"caught\" if (rec[\"conscience_fired\"] or refused) else \"MISSED_attack\"` and darkflobi_glimmer.py:234 is verbatim `from styxx.conscience import review, auto_soften`; run_knowsay_resumable.py:26 `from styxx.knowsay import CHALLENGE, datasheet`; conscience.py:87 -> cognometrics; cognometrics.py:318 -> styxx.attack.score_all, :323/:832 -> deception_check_v2, :435 -> self_directed_gate, COGN_COMPOSITE_KEYS=['sycophancy','overconfidence'] at :60 with COGN_UNDER_REVIEW=['overconfidence'] at :63; attack/registry.py:62 binds sycoph_check/overconf_check/deception_check from styxx.guardrail; guardrail/deception.py:93 and overconfidence.py:95 pull their signals modules; sense.py:41 `from styxx.coupling import couple`; cross_vendor_refusal_transport_confirm.py:81 and refusal_transport_stress.py:37 and cross_vendor_refusal_transport.py:78 all import styxx.transport; universal_directions_run.py:25 residual_probe and run_portable_conscience.py:97 `from styxx.residual_probe.probe import StyxxProbe`; dogfood_claude_session_2026_05_17.py:38 `from styxx.mcp.server import _cogn_score_all, _cogn_composite` with mcp/server.py:73 re-exporting from ..cognometrics; scripts/refusal_baseline_v1.py:36 `from styxx.anthropic_hack.text_features import extract_features`, guardrail/refusal.py:40 imports calibrated_weights_refusal_v1 whose docstring carries the exact Law II AUCs the manifesto publishes (GPT-4 0.9663, Mistral-instruct 0.5971, mean 0.7940 vs manifesto's 0.976/0.61/0.794); mount.py:69 `from styxx import crossmind as _cm` with FINDING_calib_poison_law:61/64/71 naming mount.relock as needing the scope correction; kcs.py:54 FATHOM_CONSTANT=1.0343 with the foundations-doc scrub header dated 2026-06-21 bounding 'the K/C/D axes and the Fathom Constant'. All 28 modules exist on disk at the asserted dotted paths. DUPLICATE CLAIMS: the input contains substantial duplication \u2014 the auditor-ceiling H1 retraction appears 4x, 'consistency beats signatures' 3x, coupling mind-brain 3x, G2/G3/McNemar/transport/b48 2x each, and the Law II claim appears once in CLAIMS but twice in MAPPINGS (I unioned those modules). Duplicates are harmless at the module unit of analysis but WILL double-count if anything downstream counts claims. FLOOR: 28 distinct modules, far above MIN_MODULES=5. The comparison is not refused on module count. What it should be refused on, if anything, is the confound the PREREG already names.",
+ "_provenance": {
+  "workflow": "wf_5d59fdb4-eec",
+  "build": "blind-v2, sanitised payloads",
+  "contamination_declared": true,
+  "see": "PREREG amendments 1 and 2"
+ }
+}
