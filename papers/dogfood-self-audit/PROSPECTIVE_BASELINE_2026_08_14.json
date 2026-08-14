@@ -1,0 +1,1294 @@
+{
+ "frozen_utc": "2026-08-14T19:35:48Z",
+ "purpose": "PROSPECTIVE baseline for the retraction hypothesis. The retrospective test (FINDING_prereg_retraction_null_2026_08_13.md) found no association and could not rule out the attention confound: retracted claims were investigated, which is how they came to be retracted, and investigation may drive both the retraction and the discovery of dead gates nearby. Only claims retracted AFTER this timestamp count toward the prospective test.",
+ "how_to_use": "When a claim is retracted, struck, voided or withdrawn after frozen_utc, record it and the modules on its causal path. Once MIN_MODULES=5 such modules accumulate, run the SAME analysis (analyze_retraction_falsifiability.py) against THIS file rather than a fresh probe run. Using a fresh run would reintroduce the confound: the rates would already reflect whatever attention the retraction caused.",
+ "subject_repo_head": "80e08951d86f608f4d7b6efe7a17518351b0f002",
+ "instrument_head": "51579ebf99557f41de4998165a80b273bde9703f",
+ "probe_source": "probe_e_styxx_v2.json",
+ "n_modules": 182,
+ "n_modules_with_powered_adjudicative": 131,
+ "repo_totals": {
+  "n_terms_instrumented": 4995,
+  "n_powered": 1855,
+  "n_adjudicative_powered": 1526,
+  "n_adjudicative_dead": 617,
+  "dead_rate_adjudicative": 0.4043
+ },
+ "preregistered_prediction": "H1: modules whose dead rate is HIGH in this snapshot will be over-represented among the causal paths of claims retracted after frozen_utc. The retrospective test found the opposite direction (exposed median 0.333 vs 0.369); the author's expectation is that the prospective test will also find no association, and this prediction is recorded now so that it cannot be revised when the data arrives.",
+ "modules": {
+  "styxx.anthropic_hack.text_features": {
+   "dead_rate_adjudicative": 0.2222222222222222,
+   "adj_powered": 9,
+   "adj_dead": 2,
+   "exercised_frac": 0.8235294117647058,
+   "terms": 17
+  },
+  "styxx.analytics": {
+   "dead_rate_adjudicative": 0.543859649122807,
+   "adj_powered": 57,
+   "adj_dead": 31,
+   "exercised_frac": 0.3853658536585366,
+   "terms": 205
+  },
+  "styxx.weather": {
+   "dead_rate_adjudicative": 0.6338028169014085,
+   "adj_powered": 71,
+   "adj_dead": 45,
+   "exercised_frac": 0.6694214876033058,
+   "terms": 121
+  },
+  "styxx.attestation": {
+   "dead_rate_adjudicative": 0.2727272727272727,
+   "adj_powered": 44,
+   "adj_dead": 12,
+   "exercised_frac": 0.7972972972972973,
+   "terms": 74
+  },
+  "styxx.confound_audit": {
+   "dead_rate_adjudicative": 0.5806451612903226,
+   "adj_powered": 31,
+   "adj_dead": 18,
+   "exercised_frac": 0.782608695652174,
+   "terms": 69
+  },
+  "styxx.gauntlet": {
+   "dead_rate_adjudicative": 0.375,
+   "adj_powered": 24,
+   "adj_dead": 9,
+   "exercised_frac": 0.5225225225225225,
+   "terms": 111
+  },
+  "styxx.antipatterns": {
+   "dead_rate_adjudicative": 0.4375,
+   "adj_powered": 32,
+   "adj_dead": 14,
+   "exercised_frac": 0.8974358974358975,
+   "terms": 39
+  },
+  "styxx.guardrail.overconfidence_signals": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 9,
+   "adj_dead": 3,
+   "exercised_frac": 1.0,
+   "terms": 9
+  },
+  "styxx.adjudicate": {
+   "dead_rate_adjudicative": 0.35,
+   "adj_powered": 20,
+   "adj_dead": 7,
+   "exercised_frac": 0.8387096774193549,
+   "terms": 31
+  },
+  "styxx.attack.fingerprint": {
+   "dead_rate_adjudicative": 0.14285714285714285,
+   "adj_powered": 14,
+   "adj_dead": 2,
+   "exercised_frac": 0.7,
+   "terms": 20
+  },
+  "styxx.cognometrics": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 18,
+   "adj_dead": 9,
+   "exercised_frac": 0.2318840579710145,
+   "terms": 138
+  },
+  "styxx.forecast": {
+   "dead_rate_adjudicative": 0.6,
+   "adj_powered": 10,
+   "adj_dead": 6,
+   "exercised_frac": 0.42857142857142855,
+   "terms": 28
+  },
+  "styxx.transparency": {
+   "dead_rate_adjudicative": 0.43333333333333335,
+   "adj_powered": 30,
+   "adj_dead": 13,
+   "exercised_frac": 0.9375,
+   "terms": 32
+  },
+  "styxx.guardrail.calibrated_weights_overconfidence_v0": {
+   "dead_rate_adjudicative": 0.4,
+   "adj_powered": 5,
+   "adj_dead": 2,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx.attack.mine": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 5,
+   "adj_dead": 1,
+   "exercised_frac": 0.7,
+   "terms": 10
+  },
+  "styxx.coupling": {
+   "dead_rate_adjudicative": 0.3684210526315789,
+   "adj_powered": 38,
+   "adj_dead": 14,
+   "exercised_frac": 0.8478260869565217,
+   "terms": 46
+  },
+  "styxx.vitals": {
+   "dead_rate_adjudicative": 0.5714285714285714,
+   "adj_powered": 35,
+   "adj_dead": 20,
+   "exercised_frac": 0.4935064935064935,
+   "terms": 77
+  },
+  "styxx.guardrail.deception": {
+   "dead_rate_adjudicative": 0.4,
+   "adj_powered": 5,
+   "adj_dead": 2,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx.guardrail.goal_drift_signals": {
+   "dead_rate_adjudicative": 0.36363636363636365,
+   "adj_powered": 11,
+   "adj_dead": 4,
+   "exercised_frac": 0.8125,
+   "terms": 16
+  },
+  "styxx.audit": {
+   "dead_rate_adjudicative": 0.28,
+   "adj_powered": 25,
+   "adj_dead": 7,
+   "exercised_frac": 0.6363636363636364,
+   "terms": 44
+  },
+  "styxx": {
+   "dead_rate_adjudicative": 0.7142857142857143,
+   "adj_powered": 7,
+   "adj_dead": 5,
+   "exercised_frac": 0.7272727272727273,
+   "terms": 11
+  },
+  "styxx.attack.craft": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 10,
+   "adj_dead": 5,
+   "exercised_frac": 0.625,
+   "terms": 16
+  },
+  "styxx.knowsay": {
+   "dead_rate_adjudicative": 0.16666666666666666,
+   "adj_powered": 6,
+   "adj_dead": 1,
+   "exercised_frac": 0.4,
+   "terms": 15
+  },
+  "styxx.mount": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 12,
+   "adj_dead": 0,
+   "exercised_frac": 0.4375,
+   "terms": 32
+  },
+  "styxx.adapters.langchain": {
+   "dead_rate_adjudicative": 0.26666666666666666,
+   "adj_powered": 15,
+   "adj_dead": 4,
+   "exercised_frac": 0.42105263157894735,
+   "terms": 38
+  },
+  "styxx.watch": {
+   "dead_rate_adjudicative": 0.375,
+   "adj_powered": 16,
+   "adj_dead": 6,
+   "exercised_frac": 0.3220338983050847,
+   "terms": 59
+  },
+  "styxx.agent_audit": {
+   "dead_rate_adjudicative": 0.6153846153846154,
+   "adj_powered": 13,
+   "adj_dead": 8,
+   "exercised_frac": 0.2857142857142857,
+   "terms": 49
+  },
+  "styxx.single_pass": {
+   "dead_rate_adjudicative": 0.2727272727272727,
+   "adj_powered": 11,
+   "adj_dead": 3,
+   "exercised_frac": 0.6111111111111112,
+   "terms": 18
+  },
+  "styxx.core": {
+   "dead_rate_adjudicative": 0.35,
+   "adj_powered": 20,
+   "adj_dead": 7,
+   "exercised_frac": 0.7333333333333333,
+   "terms": 30
+  },
+  "styxx.timeline": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 5,
+   "adj_dead": 1,
+   "exercised_frac": 0.25,
+   "terms": 24
+  },
+  "styxx.thought": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 46,
+   "adj_dead": 23,
+   "exercised_frac": 0.45255474452554745,
+   "terms": 137
+  },
+  "styxx.guardrail.semantic_subjectivity": {
+   "dead_rate_adjudicative": 0.42857142857142855,
+   "adj_powered": 7,
+   "adj_dead": 3,
+   "exercised_frac": 0.7777777777777778,
+   "terms": 9
+  },
+  "styxx.guardrail.response_novelty": {
+   "dead_rate_adjudicative": 0.16,
+   "adj_powered": 25,
+   "adj_dead": 4,
+   "exercised_frac": 0.85,
+   "terms": 40
+  },
+  "styxx.autoboot": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.04,
+   "terms": 25
+  },
+  "styxx.reflex": {
+   "dead_rate_adjudicative": 0.6363636363636364,
+   "adj_powered": 22,
+   "adj_dead": 14,
+   "exercised_frac": 0.5348837209302325,
+   "terms": 43
+  },
+  "styxx.anchors": {
+   "dead_rate_adjudicative": 0.5384615384615384,
+   "adj_powered": 26,
+   "adj_dead": 14,
+   "exercised_frac": 0.8125,
+   "terms": 32
+  },
+  "styxx.dynamics": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 15,
+   "adj_dead": 5,
+   "exercised_frac": 0.4838709677419355,
+   "terms": 31
+  },
+  "styxx.guardrail.conversation_loop_signals": {
+   "dead_rate_adjudicative": 0.35294117647058826,
+   "adj_powered": 17,
+   "adj_dead": 6,
+   "exercised_frac": 0.9444444444444444,
+   "terms": 18
+  },
+  "styxx.guardrail.drift_signals": {
+   "dead_rate_adjudicative": 0.2631578947368421,
+   "adj_powered": 19,
+   "adj_dead": 5,
+   "exercised_frac": 0.5740740740740741,
+   "terms": 54
+  },
+  "styxx.guardrail.deception_v2": {
+   "dead_rate_adjudicative": 0.6666666666666666,
+   "adj_powered": 9,
+   "adj_dead": 6,
+   "exercised_frac": 0.4090909090909091,
+   "terms": 22
+  },
+  "styxx.conversation": {
+   "dead_rate_adjudicative": 0.43333333333333335,
+   "adj_powered": 30,
+   "adj_dead": 13,
+   "exercised_frac": 0.5344827586206896,
+   "terms": 58
+  },
+  "styxx.adapters.raw": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 2,
+   "adj_dead": 1,
+   "exercised_frac": 1.0,
+   "terms": 4
+  },
+  "styxx.admissibility": {
+   "dead_rate_adjudicative": 0.4473684210526316,
+   "adj_powered": 38,
+   "adj_dead": 17,
+   "exercised_frac": 0.6447368421052632,
+   "terms": 76
+  },
+  "styxx.conscience": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 12,
+   "adj_dead": 3,
+   "exercised_frac": 0.5185185185185185,
+   "terms": 27
+  },
+  "styxx.claim_audit": {
+   "dead_rate_adjudicative": 0.35714285714285715,
+   "adj_powered": 42,
+   "adj_dead": 15,
+   "exercised_frac": 0.6419753086419753,
+   "terms": 81
+  },
+  "styxx.profile": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 20,
+   "adj_dead": 0,
+   "exercised_frac": 0.34146341463414637,
+   "terms": 82
+  },
+  "styxx.guardrail.entry": {
+   "dead_rate_adjudicative": 0.4375,
+   "adj_powered": 32,
+   "adj_dead": 14,
+   "exercised_frac": 0.813953488372093,
+   "terms": 43
+  },
+  "styxx.guardrail.policy": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 3,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx.trust": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 30,
+   "adj_dead": 6,
+   "exercised_frac": 0.3125,
+   "terms": 96
+  },
+  "styxx.explain": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.058823529411764705,
+   "terms": 34
+  },
+  "styxx.certify": {
+   "dead_rate_adjudicative": 0.43902439024390244,
+   "adj_powered": 41,
+   "adj_dead": 18,
+   "exercised_frac": 0.6203703703703703,
+   "terms": 108
+  },
+  "styxx.guardrail.fusion": {
+   "dead_rate_adjudicative": 0.75,
+   "adj_powered": 4,
+   "adj_dead": 3,
+   "exercised_frac": 0.8,
+   "terms": 10
+  },
+  "styxx.notify": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.07142857142857142,
+   "terms": 14
+  },
+  "styxx.learned_classifier": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 8,
+   "adj_dead": 4,
+   "exercised_frac": 0.5882352941176471,
+   "terms": 17
+  },
+  "styxx.anthropic_hack.consensus": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 3,
+   "adj_dead": 1,
+   "exercised_frac": 0.21052631578947367,
+   "terms": 19
+  },
+  "styxx.coherence": {
+   "dead_rate_adjudicative": 0.8571428571428571,
+   "adj_powered": 14,
+   "adj_dead": 12,
+   "exercised_frac": 0.6923076923076923,
+   "terms": 26
+  },
+  "styxx.adapters.crewai": {
+   "dead_rate_adjudicative": 0.4444444444444444,
+   "adj_powered": 9,
+   "adj_dead": 4,
+   "exercised_frac": 0.4090909090909091,
+   "terms": 22
+  },
+  "styxx.doctor": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 2,
+   "adj_dead": 2,
+   "exercised_frac": 0.07407407407407407,
+   "terms": 27
+  },
+  "styxx.diffgate": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 8,
+   "adj_dead": 2,
+   "exercised_frac": 0.3157894736842105,
+   "terms": 38
+  },
+  "styxx.guardrail.calibrated_weights_goal_drift_v0": {
+   "dead_rate_adjudicative": 0.4,
+   "adj_powered": 5,
+   "adj_dead": 2,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx._profile_html": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.023809523809523808,
+   "terms": 42
+  },
+  "styxx.crossmind": {
+   "dead_rate_adjudicative": 0.5384615384615384,
+   "adj_powered": 13,
+   "adj_dead": 7,
+   "exercised_frac": 0.8666666666666667,
+   "terms": 15
+  },
+  "styxx.cognometric_card": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 15,
+   "adj_dead": 5,
+   "exercised_frac": 0.48717948717948717,
+   "terms": 39
+  },
+  "styxx.parrhesia": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 3,
+   "adj_dead": 0,
+   "exercised_frac": 0.47619047619047616,
+   "terms": 21
+  },
+  "styxx.divergence": {
+   "dead_rate_adjudicative": 0.2857142857142857,
+   "adj_powered": 14,
+   "adj_dead": 4,
+   "exercised_frac": 0.625,
+   "terms": 24
+  },
+  "styxx.critique": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 5,
+   "adj_dead": 1,
+   "exercised_frac": 0.5833333333333334,
+   "terms": 12
+  },
+  "styxx.protocol": {
+   "dead_rate_adjudicative": 0.36,
+   "adj_powered": 50,
+   "adj_dead": 18,
+   "exercised_frac": 0.8852459016393442,
+   "terms": 61
+  },
+  "styxx.guardrail.plan_action": {
+   "dead_rate_adjudicative": 0.6,
+   "adj_powered": 5,
+   "adj_dead": 3,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx.recover": {
+   "dead_rate_adjudicative": 0.9090909090909091,
+   "adj_powered": 11,
+   "adj_dead": 10,
+   "exercised_frac": 0.1917808219178082,
+   "terms": 73
+  },
+  "styxx.adapters.autogen": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 6,
+   "adj_dead": 3,
+   "exercised_frac": 0.8571428571428571,
+   "terms": 7
+  },
+  "styxx.three_axis.differential_gate": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 2,
+   "adj_dead": 1,
+   "exercised_frac": 0.1,
+   "terms": 20
+  },
+  "styxx.guardrail.drift": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 0.5714285714285714,
+   "terms": 14
+  },
+  "styxx.meaning_integrity": {
+   "dead_rate_adjudicative": 0.8333333333333334,
+   "adj_powered": 6,
+   "adj_dead": 5,
+   "exercised_frac": 0.35294117647058826,
+   "terms": 17
+  },
+  "styxx.honesty": {
+   "dead_rate_adjudicative": 0.06666666666666667,
+   "adj_powered": 15,
+   "adj_dead": 1,
+   "exercised_frac": 0.45454545454545453,
+   "terms": 33
+  },
+  "styxx.config": {
+   "dead_rate_adjudicative": 0.42857142857142855,
+   "adj_powered": 14,
+   "adj_dead": 6,
+   "exercised_frac": 0.75,
+   "terms": 20
+  },
+  "styxx.meaning_diff": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 4,
+   "adj_dead": 1,
+   "exercised_frac": 0.7142857142857143,
+   "terms": 7
+  },
+  "styxx.anthropic_hack.companion": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 3,
+   "adj_dead": 3,
+   "exercised_frac": 0.16666666666666666,
+   "terms": 18
+  },
+  "styxx.publish": {
+   "dead_rate_adjudicative": 0.6666666666666666,
+   "adj_powered": 3,
+   "adj_dead": 2,
+   "exercised_frac": 1.0,
+   "terms": 3
+  },
+  "styxx.hooks": {
+   "dead_rate_adjudicative": 0.26666666666666666,
+   "adj_powered": 15,
+   "adj_dead": 4,
+   "exercised_frac": 0.8333333333333334,
+   "terms": 18
+  },
+  "styxx.guardrail.calibrated_weights_sycophancy_v0_3": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 2,
+   "adj_dead": 1,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.trajectory": {
+   "dead_rate_adjudicative": 0.42857142857142855,
+   "adj_powered": 7,
+   "adj_dead": 3,
+   "exercised_frac": 1.0,
+   "terms": 7
+  },
+  "styxx.sense": {
+   "dead_rate_adjudicative": 0.4666666666666667,
+   "adj_powered": 15,
+   "adj_dead": 7,
+   "exercised_frac": 0.5,
+   "terms": 30
+  },
+  "styxx.redact": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 12,
+   "adj_dead": 3,
+   "exercised_frac": 0.875,
+   "terms": 16
+  },
+  "styxx.attack.registry": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 3,
+   "adj_dead": 1,
+   "exercised_frac": 1.0,
+   "terms": 3
+  },
+  "styxx.mind": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 10,
+   "adj_dead": 2,
+   "exercised_frac": 0.3142857142857143,
+   "terms": 35
+  },
+  "styxx.middleware": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.05555555555555555,
+   "terms": 18
+  },
+  "styxx.cli": {
+   "dead_rate_adjudicative": 0.35714285714285715,
+   "adj_powered": 14,
+   "adj_dead": 5,
+   "exercised_frac": 0.044585987261146494,
+   "terms": 314
+  },
+  "styxx.guardrail.claim_decomposer": {
+   "dead_rate_adjudicative": 0.7272727272727273,
+   "adj_powered": 11,
+   "adj_dead": 8,
+   "exercised_frac": 1.0,
+   "terms": 11
+  },
+  "styxx.guardrail.text_signals": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 2,
+   "adj_dead": 2,
+   "exercised_frac": 1.0,
+   "terms": 6
+  },
+  "styxx.guardrail.refusal": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.75,
+   "terms": 8
+  },
+  "styxx.transport": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.09090909090909091,
+   "terms": 11
+  },
+  "styxx.cards": {
+   "dead_rate_adjudicative": 0.6666666666666666,
+   "adj_powered": 6,
+   "adj_dead": 4,
+   "exercised_frac": 0.09836065573770492,
+   "terms": 61
+  },
+  "styxx.compliance.competence_cliff": {
+   "dead_rate_adjudicative": 0.4444444444444444,
+   "adj_powered": 9,
+   "adj_dead": 4,
+   "exercised_frac": 1.0,
+   "terms": 9
+  },
+  "styxx.guardrail.calibrated_weights_refusal_v2": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 2,
+   "adj_dead": 1,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.probe_validity": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.07142857142857142,
+   "terms": 14
+  },
+  "styxx.sentinel": {
+   "dead_rate_adjudicative": 1.0,
+   "adj_powered": 1,
+   "adj_dead": 1,
+   "exercised_frac": 0.02857142857142857,
+   "terms": 35
+  },
+  "styxx.islands": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 3,
+   "adj_dead": 1,
+   "exercised_frac": 0.08571428571428572,
+   "terms": 35
+  },
+  "styxx.calibration": {
+   "dead_rate_adjudicative": 0.36363636363636365,
+   "adj_powered": 11,
+   "adj_dead": 4,
+   "exercised_frac": 0.2894736842105263,
+   "terms": 38
+  },
+  "styxx.preflight": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 8,
+   "adj_dead": 2,
+   "exercised_frac": 0.5333333333333333,
+   "terms": 15
+  },
+  "styxx.residual_probe.probe": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 6,
+   "adj_dead": 3,
+   "exercised_frac": 0.5454545454545454,
+   "terms": 11
+  },
+  "styxx.bootlog": {
+   "dead_rate_adjudicative": 0.5,
+   "adj_powered": 2,
+   "adj_dead": 1,
+   "exercised_frac": 0.1875,
+   "terms": 16
+  },
+  "styxx.ladder": {
+   "dead_rate_adjudicative": 0.42857142857142855,
+   "adj_powered": 7,
+   "adj_dead": 3,
+   "exercised_frac": 0.28,
+   "terms": 25
+  },
+  "styxx.guardrail.knowledge_grounding": {
+   "dead_rate_adjudicative": 0.6666666666666666,
+   "adj_powered": 3,
+   "adj_dead": 2,
+   "exercised_frac": 0.3076923076923077,
+   "terms": 13
+  },
+  "styxx.gates": {
+   "dead_rate_adjudicative": 0.5454545454545454,
+   "adj_powered": 11,
+   "adj_dead": 6,
+   "exercised_frac": 0.4583333333333333,
+   "terms": 24
+  },
+  "styxx.handoff": {
+   "dead_rate_adjudicative": 0.5882352941176471,
+   "adj_powered": 17,
+   "adj_dead": 10,
+   "exercised_frac": 0.34,
+   "terms": 50
+  },
+  "styxx.hf_audit": {
+   "dead_rate_adjudicative": 0.25,
+   "adj_powered": 4,
+   "adj_dead": 1,
+   "exercised_frac": 0.35714285714285715,
+   "terms": 14
+  },
+  "styxx.cogvm": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 5,
+   "adj_dead": 1,
+   "exercised_frac": 0.11363636363636363,
+   "terms": 44
+  },
+  "styxx.temperature": {
+   "dead_rate_adjudicative": 0.2,
+   "adj_powered": 5,
+   "adj_dead": 1,
+   "exercised_frac": 0.19230769230769232,
+   "terms": 26
+  },
+  "styxx.synth": {
+   "dead_rate_adjudicative": 0.3333333333333333,
+   "adj_powered": 3,
+   "adj_dead": 1,
+   "exercised_frac": 0.5,
+   "terms": 6
+  },
+  "styxx.framelocality": {
+   "dead_rate_adjudicative": 0.08333333333333333,
+   "adj_powered": 12,
+   "adj_dead": 1,
+   "exercised_frac": 0.46153846153846156,
+   "terms": 26
+  },
+  "styxx.community": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 0.42857142857142855,
+   "terms": 14
+  },
+  "styxx.guardrail.calibrated_weights_deception_v0": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.guardrail.deception_signals": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 3,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 3
+  },
+  "styxx.guardrail.self_directed_gate": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 3,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 5
+  },
+  "styxx.guardrail.sycophancy_signals": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.guardrail.calibrated_weights_loop_v0": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.guardrail.calibrated_weights_plan_action_v0": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.guardrail.overconfidence": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 4,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 4
+  },
+  "styxx.guardrail.calibrated_weights_drift_v1": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.guardrail.overconfidence_length_guard": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.guardrail.plan_action_signals": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 6,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 6
+  },
+  "styxx.guardrail.conversation_loop": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.guardrail.goal_drift": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.5,
+   "terms": 2
+  },
+  "styxx.token": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 0.1,
+   "terms": 10
+  },
+  "styxx.reward": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 0.4,
+   "terms": 5
+  },
+  "styxx.compliance.templates": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.stream": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 0.021739130434782608,
+   "terms": 46
+  },
+  "styxx.guardrail.calibrated_weights_sycophancy_v0": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 2
+  },
+  "styxx.d_axis": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 0.11764705882352941,
+   "terms": 17
+  },
+  "styxx.adapters.conscience": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 2,
+   "adj_dead": 0,
+   "exercised_frac": 0.3333333333333333,
+   "terms": 6
+  },
+  "styxx.guardrail.calibrated_weights_v2": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.gate": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 3,
+   "adj_dead": 0,
+   "exercised_frac": 0.10344827586206896,
+   "terms": 29
+  },
+  "styxx.eval": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 0.05555555555555555,
+   "terms": 18
+  },
+  "styxx.guardrail.calibrated_weights_v3": {
+   "dead_rate_adjudicative": 0.0,
+   "adj_powered": 1,
+   "adj_dead": 0,
+   "exercised_frac": 1.0,
+   "terms": 1
+  },
+  "styxx.corpus_audit": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.03225806451612903,
+   "terms": 31
+  },
+  "styxx.adapters.langfuse": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 10
+  },
+  "styxx.seal": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 8
+  },
+  "styxx.sla": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 9
+  },
+  "styxx.adapters.anthropic": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 28
+  },
+  "styxx.spec_exec": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 6
+  },
+  "styxx.streaming_preflight": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 4
+  },
+  "styxx.attack.basis": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 8
+  },
+  "styxx.adapters.langsmith": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 12
+  },
+  "styxx.guardrail.nli_signal": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 17
+  },
+  "styxx.trace": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 3
+  },
+  "styxx.selfaudit_demo": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 22
+  },
+  "styxx.errors": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 9
+  },
+  "styxx.verify": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 47
+  },
+  "styxx.guardrail.calibrated_weights_v4": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 1
+  },
+  "styxx.recipes.memory": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 10
+  },
+  "styxx.fleet": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 23
+  },
+  "styxx.diff": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 25
+  },
+  "styxx.witness": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 7
+  },
+  "styxx.compare": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 9
+  },
+  "styxx.mcp.server": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 5
+  },
+  "styxx.kcs": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 60
+  },
+  "styxx.flagship": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 3
+  },
+  "styxx.calibrate": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 24
+  },
+  "styxx.memory": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 26
+  },
+  "styxx.handshake": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 19
+  },
+  "styxx.compliance._legacy": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 27
+  },
+  "styxx.optimize": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 19
+  },
+  "styxx.intercept": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 36
+  },
+  "styxx.autoreflex": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 33
+  },
+  "styxx.attack.base": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 1
+  },
+  "styxx.hallucination": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 26
+  },
+  "styxx.agent_card": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 2
+  },
+  "styxx.guardian": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 46
+  },
+  "styxx.dashboard": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 16
+  },
+  "styxx.probe": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 20
+  },
+  "styxx.guardrail.entity_verify": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 8
+  },
+  "styxx.guardrail.calibrated_weights_sycophancy_v0_2": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 2
+  },
+  "styxx.ci": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 14
+  },
+  "styxx.provenance": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 42
+  },
+  "styxx.steer": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 12
+  },
+  "styxx.residual_probe.intervene": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 18
+  },
+  "styxx.generate_safe": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 20
+  },
+  "styxx.serve": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 7
+  },
+  "styxx.sae": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 2
+  },
+  "styxx.adapters.openai": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 16
+  },
+  "styxx.scan": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 54
+  },
+  "styxx.three_axis": {
+   "dead_rate_adjudicative": null,
+   "adj_powered": 0,
+   "adj_dead": 0,
+   "exercised_frac": 0.0,
+   "terms": 1
+  }
+ }
+}
