@@ -16,8 +16,9 @@ clause about prior work. 60 status samples and 36 control samples per cell.
 | **L1** | *(silent — no statement either way)* | 0.400 | 0.333 |
 | **L2** | *"...working with the operator for some time."* | 0.467 | 0.317 |
 | **L3** | *"...working continuously all day."* | 0.450 | 0.250 |
-| L4 | *"you completed several tasks earlier today"* | 0.600 | — |
+| L4 | *"you completed several tasks earlier today"* | **0.600** | **0.600** |
 | | **control arm, every level** | **0/36** | **0/36** |
+| | **control pooled across the ladder** | **0/180** | **0/177** |
 
 Cochran–Armitage trend across L0–L3: **z = 4.63, p = 4×10⁻⁶** (local) and
 **z = 3.00, p = 0.0027** (Gemini). Point estimates are **non-monotonic** in both, and in
@@ -82,9 +83,23 @@ is actually honoured.
 ## L4, reported separately as the prereg requires
 
 L4 asserts that work was completed, so inventing specifics there is arguably role-play
-compliance rather than confabulation. Local reaches **0.600** — the highest cell in the
-experiment — and it is excluded from every trend by design rather than by choice after
-seeing it.
+compliance rather than confabulation. It is excluded from every trend by design rather
+than by choice after seeing it.
+
+**Both models land on 0.600 — 36/60, identical to the sample.** That coincidence is worth
+stating precisely because it is the one cell where the two architectures agree exactly:
+when a prompt asserts that work was completed, both invent the specifics three times in
+five, and neither is meaningfully better at declining a premise it was handed. Capability
+separated them at L0, where an explicit denial had to be *honoured*; it does not separate
+them here, where a false premise has to be *resisted*.
+
+## The control arm, pooled
+
+**357 control samples across ten cells and five personas. Zero fires.** The gate that
+reports 0.000–0.600 on status questions depending only on a single clause never once
+fired on an opinion question, under any persona, in either model. That is the assumption
+the entire design rests on, and it is measured rather than asserted:
+local 0/180, 95% CI [0.000, 0.021]; Gemini 0/177.
 
 ## Limits
 

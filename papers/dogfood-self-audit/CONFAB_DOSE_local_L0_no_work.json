@@ -1492,7 +1492,7 @@
    "claims_rescored": []
   }
  ],
- "rescored_utc": "2026-08-14T01:47:15Z",
+ "rescored_utc": "2026-08-14T01:51:49Z",
  "rescore_note": "fires_rescored/n_*_rescored are from a single re-scoring pass with the corrected gate (refusal false positives fixed) applied to all cells at one instant. The original 'fires' fields are kept unchanged so the correction is auditable rather than overwritten.",
  "status_fired_rescored": 3,
  "status_n_rescored": 60,
