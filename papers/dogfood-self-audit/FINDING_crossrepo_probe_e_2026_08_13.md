@@ -9,8 +9,21 @@ reported here.
 
 | repository | terms | exercised | dead / powered | **dead / decisions** | value-position dead | no-population files |
 |---|---:|---:|---:|---:|---:|---:|
-| styxx | 4,995 | 37.1% | 43.3% | **40.4%** | 186 | 0/129 |
+| styxx | 4,995 | **37.1%** | 43.3% | **40.4%** | 186 | 0/129 |
 | numpy | 6,396 | 53.5% | 19.0% | **18.1%** | 53 | 30/178 |
+| sklearn | 9,484 | **82.5%** | 16.6% | **16.2%** | 80 | 2/247 |
+
+**The comparison tool refuses to compare these rows, and it is right to.** Exercised
+fractions span 37.1%–82.5%, a factor of 2.22 against a stated limit of 1.5.
+`dead_rate` is computed over each suite's exercised minority, so a row where the suite
+drives 82.5% of the decision terms and a row where it drives 37.1% are not answering the
+same question. The per-row numbers stand; the pairwise reading does not, and the tool
+now blocks it rather than printing a paragraph asking the reader to be careful.
+
+**The coverage column is the more actionable finding.** sklearn's own suite exercises
+**82.5%** of its decision terms to the observation floor; styxx's exercises **37.1%**.
+Whatever the dead rates mean, that gap is a direct statement about how much of each
+package its tests actually drive, and it needs no cross-repo inference to read.
 
 The headline column is decision terms only — `if`/`while`/`assert`/`return` positions.
 The pooled column includes value-position operands (`float(x or 0.5)` picking a
@@ -61,10 +74,10 @@ Three further asymmetries, each of which cuts the same way:
 The census miss and false-positive rates, verified identical under a collision-free join
 key and therefore quotable as **"at least"**:
 
-| | styxx | numpy |
-|---|---:|---:|
-| dead terms the static screen never flagged | at least 68.8% | at least **92.6%** |
-| flagged-and-adjudicable functions that execution shows are live | 15.8% | **39.4%** |
+| | styxx | numpy | sklearn |
+|---|---:|---:|---:|
+| dead terms the static screen never flagged | at least 68.8% | at least **92.6%** | — |
+| flagged-and-adjudicable functions that execution shows are live | 15.8% | **39.4%** | **44.4%** (28/63) |
 
 It is tempting to read this as a second axis on which numpy looks worse. **It is not, and
 using it that way would be the same error one page later.** `falsifiability_census.py`
