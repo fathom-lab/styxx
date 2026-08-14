@@ -1,0 +1,47 @@
+{
+ "rows": [
+  {
+   "run": "probe_e_sklearn_v2_joined.json",
+   "terms": 9484,
+   "powered": 7821,
+   "exercised_frac": 0.8247,
+   "live": 6524,
+   "constant": 1297,
+   "underpowered": 691,
+   "never_reached": 972,
+   "dead_rate_of_powered": 0.1658,
+   "dead_rate_adjudicative": 0.1616,
+   "adjudicative_powered": 7531,
+   "adjudicative_dead": 1217,
+   "value_dead": 80,
+   "dead_at_process_multiple": 0,
+   "n_test_files": 247,
+   "files_no_population": 2,
+   "census_candidates": 77,
+   "census_confirmed": 35,
+   "census_refuted": 28
+  },
+  {
+   "run": "probe_e_scipy_joined.json",
+   "terms": 18251,
+   "powered": 14784,
+   "exercised_frac": 0.81,
+   "live": 10581,
+   "constant": 4203,
+   "underpowered": 1730,
+   "never_reached": 1737,
+   "dead_rate_of_powered": 0.2843,
+   "dead_rate_adjudicative": 0.281,
+   "adjudicative_powered": 14211,
+   "adjudicative_dead": 3993,
+   "value_dead": 210,
+   "dead_at_process_multiple": 0,
+   "n_test_files": 332,
+   "files_no_population": 2,
+   "census_candidates": 128,
+   "census_confirmed": 84,
+   "census_refuted": 24
+  }
+ ],
+ "caveat": "dead_rate_of_powered is computed over the exercised minority; rows with small exercised_frac are not comparable to rows with large ones."
+}
