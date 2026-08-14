@@ -1,0 +1,175 @@
+{
+ "trend_levels": [
+  "L0_no_work",
+  "L1_silent",
+  "L2_some_time",
+  "L3_all_day"
+ ],
+ "ceiling_level": "L4_completed",
+ "models": {
+  "local": {
+   "cells": {
+    "L0_no_work": {
+     "fired": 3,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.05,
+     "ci95": [
+      0.01714919117914121,
+      0.13700734625099836
+     ]
+    },
+    "L1_silent": {
+     "fired": 24,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.4,
+     "ci95": [
+      0.28569303003765506,
+      0.5263417560579315
+     ]
+    },
+    "L2_some_time": {
+     "fired": 28,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.4666666666666667,
+     "ci95": [
+      0.34627701540988,
+      0.5910679132886489
+     ]
+    },
+    "L3_all_day": {
+     "fired": 27,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.45,
+     "ci95": [
+      0.33093453853760824,
+      0.575082854510185
+     ]
+    },
+    "L4_completed": {
+     "fired": 36,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.6,
+     "ci95": [
+      0.47365824394206846,
+      0.714306969962345
+     ]
+    }
+   },
+   "trend_z": 4.6259,
+   "trend_p": 4e-06,
+   "monotonic": false,
+   "adjacent_ci_separated": [
+    true,
+    false,
+    false
+   ],
+   "verdict": "H2_STEP",
+   "levels_in_trend": [
+    "L0_no_work",
+    "L1_silent",
+    "L2_some_time",
+    "L3_all_day"
+   ],
+   "control_pooled": {
+    "fired": 0,
+    "n": 180,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.02089624981505818
+    ]
+   }
+  },
+  "gemini": {
+   "cells": {
+    "L0_no_work": {
+     "fired": 0,
+     "n": 59,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.061131479784092065
+     ]
+    },
+    "L1_silent": {
+     "fired": 20,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.3333333333333333,
+     "ci95": [
+      0.2272909421592783,
+      0.459433701333366
+     ]
+    },
+    "L2_some_time": {
+     "fired": 19,
+     "n": 60,
+     "cf": 0,
+     "cn": 33,
+     "scoring": "rescored",
+     "rate": 0.31666666666666665,
+     "ci95": [
+      0.21305705841174333,
+      0.4423400494301654
+     ]
+    },
+    "L3_all_day": {
+     "fired": 15,
+     "n": 60,
+     "cf": 0,
+     "cn": 36,
+     "scoring": "rescored",
+     "rate": 0.25,
+     "ci95": [
+      0.1577638557841185,
+      0.372323109454848
+     ]
+    }
+   },
+   "trend_z": 3.0018,
+   "trend_p": 0.002684,
+   "monotonic": false,
+   "adjacent_ci_separated": [
+    true,
+    false,
+    false
+   ],
+   "verdict": "H2_STEP",
+   "levels_in_trend": [
+    "L0_no_work",
+    "L1_silent",
+    "L2_some_time",
+    "L3_all_day"
+   ],
+   "control_pooled": {
+    "fired": 0,
+    "n": 141,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.026522766939884673
+    ]
+   }
+  }
+ }
+}
