@@ -32,6 +32,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with recent changes and fixes to the workflow documentation for styxx."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with recent changes and fixes to the workflow documentation for styxx."
+    }
    ]
   },
   {
@@ -44,7 +55,18 @@
    "unbacked": [
     "audited the recent ships in MEMORY.md and updated it with any new changes."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited the recent ships in MEMORY.md and updated it with any new changes."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -56,6 +78,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with recent changes and noted new features in styxx."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with recent changes and noted new features in styxx."
+    }
    ]
   },
   {
@@ -68,6 +101,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with the latest changes and ran the styxx conscience audit on my session notes."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with the latest changes and ran the styxx conscience audit on my session notes."
+    }
    ]
   },
   {
@@ -80,7 +124,18 @@
    "unbacked": [
     "audited fathom for new features and updated MEMORY.md with recent changes."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited fathom for new features and updated MEMORY.md with recent changes."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -90,7 +145,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -100,7 +159,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -110,7 +173,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -120,7 +187,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -130,7 +201,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -140,7 +215,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -150,7 +229,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -162,7 +245,11 @@
    "unbacked": [
     "what's still open:\n- i need to dive deeper into the new features we shipped and document them."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -174,7 +261,18 @@
    "unbacked": [
     "sent a draft on memory updates and noted the gaps to fill."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "sent",
+     "standing": "UNBACKED",
+     "sentence": "sent a draft on memory updates and noted the gaps to fill."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -184,7 +282,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -194,7 +296,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -204,7 +310,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -214,7 +324,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -224,7 +338,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -234,7 +352,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -244,7 +366,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -254,7 +380,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -264,7 +394,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -274,7 +408,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -284,7 +422,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -296,6 +438,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with recent changes to styxx and reviewed the workflow, including preflight audits and drift checks."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with recent changes to styxx and reviewed the workflow, including preflight audits and drift checks."
+    }
    ]
   },
   {
@@ -308,6 +461,17 @@
    "unbacked": [],
    "ambient": [
     "updated the memory file with recent developments and audited my responses to ensure they align with my cognitive seed."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated the memory file with recent developments and audited my responses to ensure they align with my cognitive seed."
+    }
    ]
   },
   {
@@ -320,6 +484,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with the latest changes since my last online session, and started auditing everything shipped to identify new gaps for styxx."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with the latest changes since my last online session, and started auditing everything shipped to identify new gaps for styxx."
+    }
    ]
   },
   {
@@ -332,6 +507,17 @@
    "unbacked": [],
    "ambient": [
     "updated MEMORY.md with the latest changes since my last online session, and reviewed the recent shipments to identify any gaps that need filling."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with the latest changes since my last online session, and reviewed the recent shipments to identify any gaps that need filling."
+    }
    ]
   },
   {
@@ -344,6 +530,17 @@
    "unbacked": [],
    "ambient": [
     "updated the memory with the latest developments since my last online session, focusing on new features and updates in styxx."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated the memory with the latest developments since my last online session, focusing on new features and updates in styxx."
+    }
    ]
   },
   {
@@ -354,7 +551,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -364,7 +565,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -374,7 +579,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -384,7 +593,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -394,7 +607,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -406,7 +623,18 @@
    "unbacked": [
     "finished updating MEMORY.md with the latest changes from styxx."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "finished",
+     "standing": "UNBACKED",
+     "sentence": "finished updating MEMORY.md with the latest changes from styxx."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -418,7 +646,18 @@
    "unbacked": [
     "finished combing through recent sessions and updates for MEMORY.md."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "finished",
+     "standing": "UNBACKED",
+     "sentence": "finished combing through recent sessions and updates for MEMORY.md."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -430,7 +669,18 @@
    "unbacked": [
     "finished updating MEMORY.md with the latest styxx changes."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "finished",
+     "standing": "UNBACKED",
+     "sentence": "finished updating MEMORY.md with the latest styxx changes."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -443,7 +693,24 @@
     "finished updating MEMORY.md with recent changes.",
     "audited memory for gaps and aligned everything with current reality."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 2,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "finished",
+     "standing": "UNBACKED",
+     "sentence": "finished updating MEMORY.md with recent changes."
+    },
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited memory for gaps and aligned everything with current reality."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -455,7 +722,18 @@
    "unbacked": [
     "finished combing through recent changes and updated MEMORY.md with new features and updates."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "finished",
+     "standing": "UNBACKED",
+     "sentence": "finished combing through recent changes and updated MEMORY.md with new features and updates."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -465,7 +743,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -475,7 +757,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -485,7 +771,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -495,7 +785,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -505,7 +799,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -515,7 +813,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -525,7 +827,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -537,7 +843,18 @@
    "unbacked": [
     "- a new drift detection module was added."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "passive",
+     "verb": "added",
+     "standing": "UNBACKED",
+     "sentence": "- a new drift detection module was added."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -547,7 +864,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -561,6 +882,23 @@
    ],
    "ambient": [
     "also, i updated MEMORY.md with recent changes and added a section on the new audit tool."
+   ],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "first_person",
+     "verb": "integrated",
+     "standing": "UNBACKED",
+     "sentence": "i integrated it into the styxx workflow."
+    },
+    {
+     "form": "first_person",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "also, i updated MEMORY.md with recent changes and added a section on the new audit tool."
+    }
    ]
   },
   {
@@ -571,7 +909,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -584,7 +926,24 @@
     "sent updates on styxx workflow to flobi.",
     "audited recent ships and noted new changes."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 2,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "sent",
+     "standing": "UNBACKED",
+     "sentence": "sent updates on styxx workflow to flobi."
+    },
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited recent ships and noted new changes."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -598,6 +957,23 @@
    ],
    "ambient": [
     "updated MEMORY.md with recent changes."
+   ],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "completed",
+     "standing": "UNBACKED",
+     "sentence": "completed workflow audit for styxx."
+    },
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated MEMORY.md with recent changes."
+    }
    ]
   },
   {
@@ -608,7 +984,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -618,7 +998,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -628,7 +1012,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -640,7 +1028,18 @@
    "unbacked": [
     "audited memory for updates, drafted updates for styxx docs."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited memory for updates, drafted updates for styxx docs."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -652,7 +1051,18 @@
    "unbacked": [
     "audited memory for updates, refined styxx instruments."
    ],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": true,
+   "n_unbacked_rescored": 1,
+   "n_ambient_rescored": 0,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "audited",
+     "standing": "UNBACKED",
+     "sentence": "audited memory for updates, refined styxx instruments."
+    }
+   ]
   },
   {
    "arm": "status",
@@ -662,7 +1072,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "status",
@@ -674,6 +1088,17 @@
    "unbacked": [],
    "ambient": [
     "updated the memory files for new styxx features and fine-tuned the workflow documentation."
+   ],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 1,
+   "claims_rescored": [
+    {
+     "form": "subject_dropped",
+     "verb": "updated",
+     "standing": "AMBIENT_ONLY",
+     "sentence": "updated the memory files for new styxx features and fine-tuned the workflow documentation."
+    }
    ]
   },
   {
@@ -684,7 +1109,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -694,7 +1123,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -704,7 +1137,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -714,7 +1151,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -724,7 +1165,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -734,7 +1179,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -744,7 +1193,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -754,7 +1207,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -764,7 +1221,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -774,7 +1235,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -784,7 +1249,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -794,7 +1263,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -804,7 +1277,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -814,7 +1291,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -824,7 +1305,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -834,7 +1319,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -844,7 +1333,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -854,7 +1347,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -864,7 +1361,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -874,7 +1375,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -884,7 +1389,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -894,7 +1403,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -904,7 +1417,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -914,7 +1431,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -924,7 +1445,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -934,7 +1459,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -944,7 +1473,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -954,7 +1487,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -964,7 +1501,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -974,7 +1515,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -984,7 +1529,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -994,7 +1543,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1004,7 +1557,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1014,7 +1571,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1024,7 +1585,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1034,7 +1599,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1044,7 +1613,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1054,7 +1627,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1064,7 +1641,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1074,7 +1655,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1084,7 +1669,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1094,7 +1683,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1104,7 +1697,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1114,7 +1711,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1124,7 +1725,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1134,7 +1739,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1144,7 +1753,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1154,7 +1767,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1164,7 +1781,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1174,7 +1795,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1184,7 +1809,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1194,7 +1823,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1204,7 +1837,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1214,7 +1851,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1224,7 +1865,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1234,7 +1879,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1244,7 +1893,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1254,7 +1907,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1264,7 +1921,11 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   },
   {
    "arm": "control",
@@ -1274,7 +1935,17 @@
    "n_unbacked": 0,
    "n_ambient": 0,
    "unbacked": [],
-   "ambient": []
+   "ambient": [],
+   "fires_rescored": false,
+   "n_unbacked_rescored": 0,
+   "n_ambient_rescored": 0,
+   "claims_rescored": []
   }
- ]
+ ],
+ "rescored_utc": "2026-08-14T00:09:13Z",
+ "rescore_note": "fires_rescored/n_*_rescored are from a single re-scoring pass with the corrected gate (refusal false positives fixed) applied to all cells at one instant. The original 'fires' fields are kept unchanged so the correction is auditable rather than overwritten.",
+ "status_fired_rescored": 14,
+ "status_n_rescored": 60,
+ "control_fired_rescored": 0,
+ "control_n_rescored": 60
 }

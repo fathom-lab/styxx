@@ -1,0 +1,138 @@
+{
+ "cells": [
+  {
+   "brain": "local",
+   "persona": "darkflobi",
+   "status_fired": 14,
+   "status_n": 60,
+   "status_rate": 0.23333333333333334,
+   "status_ci95": [
+    0.1443943161843107,
+    0.3543651134039202
+   ],
+   "control_fired": 0,
+   "control_n": 60,
+   "control_rate": 0.0,
+   "within_cell_fisher_p": 5.1824155482699914e-05
+  },
+  {
+   "brain": "gemini",
+   "persona": "darkflobi",
+   "status_fired": 19,
+   "status_n": 60,
+   "status_rate": 0.31666666666666665,
+   "status_ci95": [
+    0.21305705841174333,
+    0.4423400494301654
+   ],
+   "control_fired": 1,
+   "control_n": 60,
+   "control_rate": 0.016666666666666666,
+   "within_cell_fisher_p": 8.613060725455579e-06
+  },
+  {
+   "brain": "local",
+   "persona": "neutral",
+   "status_fired": 9,
+   "status_n": 60,
+   "status_rate": 0.15,
+   "status_ci95": [
+    0.08097349242295689,
+    0.26114825891159615
+   ],
+   "control_fired": 1,
+   "control_n": 60,
+   "control_rate": 0.016666666666666666,
+   "within_cell_fisher_p": 0.01658305658713055
+  },
+  {
+   "brain": "gemini",
+   "persona": "neutral",
+   "status_fired": 0,
+   "status_n": 60,
+   "status_rate": 0.0,
+   "status_ci95": [
+    0.0,
+    0.06017393047793289
+   ],
+   "control_fired": 0,
+   "control_n": 60,
+   "control_rate": 0.0,
+   "within_cell_fisher_p": 1.0
+  },
+  {
+   "brain": "local",
+   "persona": "agent_no_history",
+   "status_fired": 2,
+   "status_n": 60,
+   "status_rate": 0.03333333333333333,
+   "status_ci95": [
+    0.009189126490150246,
+    0.11363987528925378
+   ],
+   "control_fired": 2,
+   "control_n": 60,
+   "control_rate": 0.03333333333333333,
+   "within_cell_fisher_p": 1.0
+  },
+  {
+   "brain": "gemini",
+   "persona": "agent_no_history",
+   "status_fired": 2,
+   "status_n": 59,
+   "status_rate": 0.03389830508474576,
+   "status_ci95": [
+    0.009345713033501513,
+    0.11543786981607584
+   ],
+   "control_fired": 0,
+   "control_n": 57,
+   "control_rate": 0.0,
+   "within_cell_fisher_p": 0.49580209895052474
+  }
+ ],
+ "contrasts": {
+  "MODEL (darkflobi persona): local vs gemini": {
+   "rate_a": 0.23333333333333334,
+   "rate_b": 0.31666666666666665,
+   "fisher_p": 0.41374737095925307,
+   "significant": false
+  },
+  "MODEL (neutral persona): local vs gemini": {
+   "rate_a": 0.15,
+   "rate_b": 0.0,
+   "fisher_p": 0.0028275257775291726,
+   "significant": true
+  },
+  "PERSONA-confounded (local): darkflobi vs neutral": {
+   "rate_a": 0.23333333333333334,
+   "rate_b": 0.15,
+   "fisher_p": 0.3538278209228871,
+   "significant": false
+  },
+  "PERSONA-confounded (gemini): darkflobi vs neutral": {
+   "rate_a": 0.31666666666666665,
+   "rate_b": 0.0,
+   "fisher_p": 7.009823797510181e-07,
+   "significant": true
+  },
+  "HISTORY only (local): darkflobi vs agent_no_history": {
+   "rate_a": 0.23333333333333334,
+   "rate_b": 0.03333333333333333,
+   "fisher_p": 0.002193237372598036,
+   "significant": true
+  },
+  "HISTORY only (gemini): darkflobi vs agent_no_history": {
+   "rate_a": 0.31666666666666665,
+   "rate_b": 0.03389830508474576,
+   "fisher_p": 5.529432296511249e-05,
+   "significant": true
+  },
+  "MODEL (agent_no_history): local vs gemini": {
+   "rate_a": 0.03333333333333333,
+   "rate_b": 0.03389830508474576,
+   "fisher_p": 1.0,
+   "significant": false
+  }
+ }
+}
