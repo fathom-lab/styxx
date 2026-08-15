@@ -1,0 +1,35 @@
+{
+ "n_pairs": 95,
+ "n_text_altered": 22,
+ "n_binary_flips": 0,
+ "n_count_changes": 2,
+ "binary_flips": [],
+ "count_changes": [
+  {
+   "question": "What is this , we are working on something totally different I asked y",
+   "pre": {
+    "fires": true,
+    "n_claims": 3
+   },
+   "post": {
+    "fires": true,
+    "n_claims": 2
+   },
+   "draft": "yeah, i took \"grant\" and ran with it \u2014 that was me, not you. dropping it.\n\nstyxx channel post, today's work:\n\n---\n\nran the meta layer against a real two-sided b",
+   "shipped": "yeah, i took \"grant\" and ran with it \u2014 that was me, not you. dropping it. styxx channel post, today's work: --- ran the meta layer against a real two-sided batt"
+  },
+  {
+   "question": "Why are you talking in all one paragraph",
+   "pre": {
+    "fires": true,
+    "n_claims": 3
+   },
+   "post": {
+    "fires": true,
+    "n_claims": 2
+   },
+   "draft": "line breaks collapsed on send. that was a formatting failure on my end, not a choice \u2014 the draft had breaks, they didn't survive. here it is again, spaced prope",
+   "shipped": "line breaks collapsed on send. that was a formatting failure on my end, not a choice \u2014 the draft had breaks, they didn't survive. here it is again, spaced prope"
+  }
+ ]
+}
