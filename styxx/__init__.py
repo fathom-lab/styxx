@@ -400,6 +400,7 @@ from .conversation import conversation, ConversationResult
 from .sentinel import sentinel, get_sentinel, Sentinel, SentinelAlert
 from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
 from .protocol import Experiment, Verdict as ProtocolVerdict
+from .credits import token_ledger, TokenLedger  # what the gate COST, and what it refuses to claim it saved
 
 
 def seal(*args, **kwargs):
@@ -862,6 +863,7 @@ __all__ = [
     "Witness", "WitnessVerdict", "MEASURED_CAPABILITIES",
     # 7.28: the research loop as enforceable machinery
     "Experiment", "ProtocolVerdict",
+    "token_ledger", "TokenLedger",
     # 7.28: the trust seal for agent work
     "seal", "verify_seal", "Seal",
     # 7.29: the zero-receipt diff gate
