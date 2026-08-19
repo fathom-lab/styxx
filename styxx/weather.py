@@ -184,6 +184,11 @@ def _compute_trends(
     last_third = entries[2 * n // 3:]
 
     trends: List[CategoryTrend] = []
+    # An empty third makes every rate 0.0, and `delta = l_rate - f_rate` then
+    # declares "rising"/"falling" against a baseline that was never measured.
+    # No thirds, no trend -- found by styxx.absence on our own tree.
+    if not first_third or not last_third:
+        return trends
     for cat in _CATEGORY_ORDER:
         # Rate in first third
         f_count = sum(1 for e in first_third if e.get("phase4_pred") == cat)

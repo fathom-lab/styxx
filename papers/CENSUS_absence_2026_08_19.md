@@ -46,6 +46,27 @@ documented threshold default (`bars.get("D4_..._delta", 0.10)`).
 14 is a small sample and the interval is wide. It is reported because a number
 without one is worse than no number.
 
+## the before/after that undercuts the headline
+
+The five confirmed instances were then fixed (`weather.py` no longer computes a
+trend direction from an empty window; `fleet.py` and `probe.py` stopped dropping
+zero readings from their means; `preflight.py` treats an absent composite as
+malformed input; `analytics.py` carries the counts its means were taken over, so
+`n/a (unmeasured)` and a measured `0.000` print differently).
+
+**Density moved 1.38 -> 1.36.** One candidate.
+
+That is the most useful number in this document. The screen reads SHAPE, not
+semantics: a `... if xs else 0.0` that now sits under an explicit guard, or
+whose counts are disclosed alongside, looks identical to the fabricating version
+it replaced. Five real defects were removed and the metric barely noticed.
+
+So: **candidate density is a weak proxy for defect density**, demonstrated on
+the one codebase where we know the ground truth. Any reading of the table above
+— including our own last place — has to carry that. A package scoring 0.00 is
+not clean, and a package scoring 1.38 is not five times worse than one scoring
+0.28. The table measures how often a shape appears, and nothing more.
+
 ## the confound, stated plainly
 
 **The rules were written from styxx's own defects, using styxx's own naming

@@ -230,7 +230,11 @@ def probe(
             ))
 
     # Aggregate
-    all_confs = [r.confidence for r in report.results if r.confidence > 0]
+    # Exclude error rows by what they ARE (gate == "error"), not by their
+    # value: `> 0` also silently dropped genuine zero-confidence successes,
+    # the worst real readings, from the mean.
+    all_confs = [r.confidence for r in report.results
+                 if getattr(r, "gate", None) != "error"]
     report.mean_confidence = sum(all_confs) / len(all_confs) if all_confs else 0.0
     report.category_confidence = {
         cat: round(sum(cs) / len(cs), 3)

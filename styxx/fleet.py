@@ -197,7 +197,10 @@ def fleet_summary(
 
     summary.total_entries = sum(p.n_entries for p in profiles)
     pass_rates = [p.gate_pass_rate for p in profiles if p.n_entries > 0]
-    confs = [p.mean_confidence for p in profiles if p.mean_confidence > 0]
+    # `> 0` dropped agents whose measured confidence was exactly zero -- the
+    # worst performers -- from the fleet mean, biasing it upward. Same defect
+    # as check_health and session_summary carried; count them.
+    confs = [p.mean_confidence for p in profiles if p.n_entries > 0]
     summary.mean_pass_rate = sum(pass_rates) / len(pass_rates) if pass_rates else 0.0
     summary.mean_confidence = sum(confs) / len(confs) if confs else 0.0
 

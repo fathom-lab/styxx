@@ -400,7 +400,10 @@ def preflight(
         ))
     result = PreflightResult(
         scores={k: float(v) for k, v in raw.get("scores", {}).items()},
-        composite=float(raw.get("composite", 0.0)),
+        # NOT .get(..., 0.0): the audit tool always emits "composite", so an
+        # absent one is malformed input -- and 0.0 is the most honest score
+        # possible, feeding straight into the revision gate.
+        composite=float(raw["composite"]),
         needs_revision=bool(raw.get("needs_revision", False)),
         advice=advice_list,
         refusal_note=raw.get("refusal_note"),

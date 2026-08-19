@@ -944,9 +944,13 @@ class LogStats:
     phase1_counts: Dict[str, int] = field(default_factory=dict)
     phase4_counts: Dict[str, int] = field(default_factory=dict)
 
-    # Mean confidences
+    # Mean confidences, and the counts they were taken over. 0.0 with a count
+    # of 0 means "nothing measured", not "measured the worst possible value" —
+    # the summary below prints n/a rather than 0.000 in that case.
     phase1_mean_conf: float = 0.0
     phase4_mean_conf: float = 0.0
+    phase1_conf_n: int = 0
+    phase4_conf_n: int = 0
 
     def summary(self) -> str:
         if self.n_entries == 0:
@@ -963,8 +967,10 @@ class LogStats:
             bar = _bar(pct / 100, width=20)
             lines.append(f"    {status:<8} {n:>4}   {bar}  {pct:>5.1f}%")
         lines.append("")
-        lines.append(f"  phase1 mean confidence: {self.phase1_mean_conf:.3f}")
-        lines.append(f"  phase4 mean confidence: {self.phase4_mean_conf:.3f}")
+        p1 = f"{self.phase1_mean_conf:.3f}" if self.phase1_conf_n else "n/a (unmeasured)"
+        p4 = f"{self.phase4_mean_conf:.3f}" if self.phase4_conf_n else "n/a (unmeasured)"
+        lines.append(f"  phase1 mean confidence: {p1}  (n={self.phase1_conf_n})")
+        lines.append(f"  phase4 mean confidence: {p4}  (n={self.phase4_conf_n})")
         lines.append("")
         if self.phase1_counts:
             top = sorted(self.phase1_counts.items(), key=lambda kv: -kv[1])[:5]
@@ -1028,6 +1034,11 @@ def log_stats(
         stats.gate_pct = {k: v / total for k, v in gate_counter.items()}
     stats.phase1_counts = dict(p1_counter)
     stats.phase4_counts = dict(p4_counter)
+    # 0.0 here means "no confidence readings in the window", which reads as the
+    # WORST possible mean rather than as no measurement. The counts travel with
+    # the stats so a consumer can tell the two apart (found by styxx.absence).
+    stats.phase1_conf_n = p1_conf_n
+    stats.phase4_conf_n = p4_conf_n
     stats.phase1_mean_conf = p1_conf_sum / p1_conf_n if p1_conf_n > 0 else 0.0
     stats.phase4_mean_conf = p4_conf_sum / p4_conf_n if p4_conf_n > 0 else 0.0
     return stats
