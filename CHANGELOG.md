@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [7.37.0] — 2026-08-19 — an absence is not a measurement
 
 Wave 3 of the adversarial audit reached the modules the first two waves never
 touched (adapters/watch, preflight/gates, receipts/signing, the vitals pipeline,
@@ -54,6 +54,33 @@ Same dominant shape as 7.36.0: **an absence that presents as a measurement.**
   — while the result stayed shape-identical to a grounded run. `PreflightResult`
   now carries `deception_mode` / `composite_keys` / `.grounded`, exports them,
   warns on a downgrade, and says so in `instructions`.
+
+### Fixed — verdicts manufactured from no data (numeric scoring)
+- `forecast()`: empty or absent trajectories became an all-zero feature vector —
+  a valid point in feature space — so a bootstrapped forecaster returned
+  `reasoning` at 0.695 confidence, risk `low`, from nothing. It now refuses to
+  name a category (`predicted_category="unknown"`, `confidence=0.0`,
+  `measured=False`), and `ForecastGate` returns None on an unmeasured result
+  instead of comparing a fabricated low-risk verdict. Streaming callers start at
+  zero tokens legitimately, so this is marked rather than raised.
+- `dynamics.fit()`: with zero target variance (a broken collector feeding
+  constant vectors) `r2` was hardcoded to **1.0 — perfect explained variance —
+  regardless of the residuals**, and that is the exact metric the docstring
+  tells callers to check. R² is undefined there; it is NaN now, which fails a
+  `r2 > threshold` health test rather than passing it.
+- `coherence`: Pearson r is undefined when a series is constant, but the guard
+  returned 0.0 — asserting "no relationship" for a hypothesis-bearing,
+  prereg-locked measurement that never happened. The upstream cause was the
+  loader defaulting an **absent** `cogn_composite` to 0.0, producing exactly
+  that constant series; a missing field is malformed input now. Series with real
+  variance are numerically unchanged — the locked scorer is bit-identical on
+  valid data; only the degenerate branch stops fabricating.
+
+### Not changed (deliberately)
+- `divergence.council_agreement`'s single-answer → 1.0 was flagged as a silent
+  denominator shrink, but the docstring states it outright ("a single answer →
+  1.0, trivially agreed"). That is a documented contract, not a fabrication;
+  changing it is an API decision, not an audit fix.
 
 ### Fixed — feedback landing on the wrong generation
 - `feedback()` skipped any entry that already carried an outcome and kept
