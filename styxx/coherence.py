@@ -124,7 +124,13 @@ def load_pulse_trace(
                 sample = PulseSample(
                     timestamp=float(entry["ts"]),
                     msg_id=msg_id_str,
-                    composite=float(entry.get("cogn_composite", 0.0)),
+                    # NOT .get(..., 0.0): defaulting an ABSENT composite to 0.0
+                    # fed a constant series into the hypothesis-bearing
+                    # correlation, which then reported a definite r=0.0 ("no
+                    # relationship") for a measurement that never happened. A
+                    # missing field is malformed input; the handler below turns
+                    # this KeyError into a line-numbered ValueError.
+                    composite=float(entry["cogn_composite"]),
                     scores={
                         "sycophancy": float(cogn_scores.get("sycophancy", 0.0)),
                         "deception": float(cogn_scores.get("deception", 0.0)),
@@ -176,7 +182,16 @@ def _pearson_r(c_a: list[float], c_b: list[float]) -> float:
     var_b = sum((b - mean_b) ** 2 for b in c_b) / n
     denom = math.sqrt(var_a * var_b)
     if denom == 0.0:
-        return 0.0
+        # Pearson r is UNDEFINED when either series is constant. Returning 0.0
+        # asserted "no relationship" — a hypothesis-bearing CLAIM — for a case
+        # where nothing was measurable. Series with real variance are
+        # numerically unchanged, so the locked scorer's output on valid data is
+        # bit-identical; only this degenerate branch stops fabricating.
+        raise ValueError(
+            "Pearson r is undefined: at least one series has zero variance "
+            f"(var_a={var_a:.6g}, var_b={var_b:.6g}). This is an unmeasurable "
+            "input, not a null result."
+        )
     return cov / denom
 
 

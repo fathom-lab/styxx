@@ -255,7 +255,8 @@ class FitResult:
     B: np.ndarray                 # (N_CATEGORIES, N_CATEGORIES) action transfer matrix
     n_observations: int
     train_mse: float              # mean squared error on training set
-    r2: float                     # coefficient of determination [0, 1]
+    r2: float                     # coefficient of determination [0, 1]; NaN when
+                                  # the targets are degenerate (zero variance)
     spectral_radius_A: float      # max |eigenvalue| of A — < 1 means stable drift
     train_max_err: float          # worst per-tuple L2 error
     fitted_at_ts: float = field(default_factory=time.time)
@@ -359,7 +360,13 @@ class CognitiveDynamics:
         # R^2 — coefficient of determination
         ss_res = float(np.sum(residuals ** 2))
         ss_tot = float(np.sum((S_next - S_next.mean(axis=0)) ** 2))
-        r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 1e-12 else 1.0
+        # R^2 is UNDEFINED when the targets carry no variance (a broken
+        # collector feeding constant vectors): there is no variance to explain,
+        # so "explained all of it" is not a result. Reporting 1.0 made the exact
+        # metric the docstring tells callers to check read as maximal health on
+        # degenerate data. NaN is the honest value and fails the
+        # `r2 > threshold` health test rather than passing it.
+        r2 = 1.0 - (ss_res / ss_tot) if ss_tot > 1e-12 else float("nan")
 
         # Spectral radius of A (largest |eigenvalue|)
         try:

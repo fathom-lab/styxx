@@ -1357,3 +1357,66 @@ def test_preflight_grounded_path_reports_grounded():
         assert r.grounded is True
         assert "deception" in r.composite_keys
         assert not any("correct_reference" in str(c.message) for c in caught)
+
+
+def test_forecast_refuses_to_name_a_category_without_data():
+    """Regression: empty/absent trajectories became an all-zero feature vector —
+    a valid point in feature space — so forecast() returned a real-looking
+    'reasoning' at 0.695 confidence, risk low, manufactured from nothing."""
+    from styxx.forecast import CognitiveForecaster, ForecastGate
+
+    f = CognitiveForecaster.bootstrap()
+    for traj in ({"entropy": [], "logprob": [], "top2_margin": []}, {}):
+        r = f.forecast(traj)
+        assert r.measured is False
+        assert r.predicted_category == "unknown"
+        assert r.confidence == 0.0
+        assert r.as_dict()["measured"] is False
+    # the gate must not read a fabricated verdict as a low-risk pass
+    assert ForecastGate(f).check({"entropy": [], "logprob": [], "top2_margin": []}, 0) is None
+
+    real = {"entropy": [0.5, 0.6, 0.7, 0.8, 0.9],
+            "logprob": [-1.0, -1.2, -1.1, -1.3, -1.4],
+            "top2_margin": [0.3, 0.2, 0.25, 0.2, 0.15]}
+    r = f.forecast(real)
+    assert r.measured is True and r.predicted_category != "unknown"
+
+
+def test_dynamics_r2_is_undefined_on_degenerate_targets():
+    """Regression: with zero target variance (a broken collector feeding constant
+    vectors) r2 was hardcoded to 1.0 — perfect explained variance — so the exact
+    metric the docstring tells callers to check read as maximal health."""
+    import math
+    import numpy as np
+    from styxx.dynamics import CognitiveDynamics, Observation
+
+    rng = np.random.default_rng(0)
+    const = np.array([0.5] * 6)
+    degenerate = [Observation(state_vec=rng.random(6), action_vec=rng.random(6),
+                              next_state_vec=const.copy()) for _ in range(20)]
+    r = CognitiveDynamics().fit(degenerate)
+    assert math.isnan(r.r2)
+    assert not (r.r2 > 0.9)          # the health test now fails instead of passing
+    assert "nan" in repr(r)
+
+    A = rng.random((6, 6))
+    good = []
+    for _ in range(30):
+        s, a = rng.random(6), rng.random(6)
+        good.append(Observation(state_vec=s, action_vec=a, next_state_vec=A @ s))
+    assert CognitiveDynamics().fit(good).r2 > 0.99
+
+
+def test_coherence_refuses_undefined_correlation_instead_of_reporting_zero():
+    """Regression: Pearson r is UNDEFINED when a series is constant, but the
+    guard returned 0.0 — asserting 'no relationship' for a hypothesis-bearing
+    measurement that never happened (an absent cogn_composite defaulted to 0.0
+    upstream, producing exactly that constant series)."""
+    import pytest as _pytest
+    from styxx.coherence import _pearson_r
+
+    with _pytest.raises(ValueError, match="undefined"):
+        _pearson_r([0.0] * 5, [0.1, 0.2, 0.3, 0.4, 0.5])
+    # series with real variance are numerically unchanged (locked scorer intact)
+    assert _pearson_r([1, 2, 3, 4, 5], [2, 4, 6, 8, 10]) == 1.0
+    assert _pearson_r([1, 2, 3, 4, 5], [10, 8, 6, 4, 2]) == -1.0

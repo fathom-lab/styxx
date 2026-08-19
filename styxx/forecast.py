@@ -65,6 +65,13 @@ class ForecastResult:
     horizon: int             # tokens used for prediction
     probabilities: Dict[str, float]
     early_signals: Dict[str, float]  # key trajectory features that drove prediction
+    # False when there was no trajectory data to forecast FROM. Empty or absent
+    # signals used to become an all-zero feature vector — a valid point in
+    # feature space — so forecast() returned a real-looking category at real-
+    # looking confidence ("reasoning", 0.695, risk low) manufactured from
+    # nothing. Streaming callers legitimately start at zero tokens, so this is
+    # marked rather than raised.
+    measured: bool = True
 
     def as_dict(self) -> dict:
         return {
@@ -74,6 +81,7 @@ class ForecastResult:
             "horizon": self.horizon,
             "probabilities": {k: round(v, 4) for k, v in self.probabilities.items()},
             "early_signals": {k: round(v, 4) for k, v in self.early_signals.items()},
+            "measured": self.measured,
         }
 
 
@@ -273,6 +281,19 @@ class CognitiveForecaster:
             ForecastResult with prediction, confidence, and risk level.
         """
         n = n_tokens or self._horizon
+        # No data => no forecast. Refuse to name a category rather than read one
+        # off the origin of feature space (see ForecastResult.measured).
+        if not any((trajectories or {}).get(k) for k in
+                   ("entropy", "logprob", "top2_margin")):
+            return ForecastResult(
+                predicted_category="unknown",
+                confidence=0.0,
+                risk_level="low",      # keeps the RISK_LEVELS contract; measured=False is the signal
+                horizon=n,
+                probabilities={},
+                early_signals={},
+                measured=False,
+            )
         feats = extract_features_v2(trajectories, n)
         z = (feats - self._mu) / self._sigma
 
@@ -516,6 +537,10 @@ class ForecastGate:
         Returns ForecastResult if risk >= threshold, None otherwise.
         """
         result = self._forecaster.forecast(trajectories, n_tokens)
+        if not result.measured:
+            # Nothing to gate on. Returning None here means "not evaluated",
+            # not "safe" — the old path compared a fabricated low-risk verdict.
+            return None
         result_idx = RISK_LEVELS.index(result.risk_level)
         if result_idx >= self._risk_idx:
             return result
