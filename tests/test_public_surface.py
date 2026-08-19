@@ -1420,3 +1420,41 @@ def test_coherence_refuses_undefined_correlation_instead_of_reporting_zero():
     # series with real variance are numerically unchanged (locked scorer intact)
     assert _pearson_r([1, 2, 3, 4, 5], [2, 4, 6, 8, 10]) == 1.0
     assert _pearson_r([1, 2, 3, 4, 5], [10, 8, 6, 4, 2]) == -1.0
+
+
+def test_session_summary_does_not_drop_zero_confidence_readings(tmp_path, monkeypatch):
+    """Found by styxx.absence, not by hand: session_summary carried the SAME
+    two defects as check_health — `cv > 0` dropped exactly-zero readings (the
+    worst ones) from the mean, and an empty window produced a fabricated 0.0
+    indistinguishable from a genuinely terrible session."""
+    import styxx.analytics as analytics
+
+    monkeypatch.setattr(analytics, "load_audit", lambda **kw:
+                        [{"gate": "pass", "phase4_conf": 0.0, "source": "live"}] * 3
+                        + [{"gate": "pass", "phase4_conf": 0.8, "source": "live"}])
+    s = analytics.session_summary()
+    assert s is not None
+    assert abs(s.mean_confidence - 0.2) < 1e-9, "zero readings must count"
+    assert s.confidence_measured is True
+
+    monkeypatch.setattr(analytics, "load_audit", lambda **kw:
+                        [{"gate": "pass", "source": "live"}] * 3)
+    s2 = analytics.session_summary()
+    assert s2.confidence_measured is False        # unmeasured, disclosed
+    assert "n/a" in repr(s2)
+
+
+def test_coupling_refuses_an_undefined_correlation():
+    """Also found by the screen: the count-vs-magnitude channel returned 0.0 when
+    a magnitude vector was constant — r is UNDEFINED there — and fed that into
+    its `shared` verdict, so an unmeasurable channel read as measured absence.
+    The sibling guard three lines above already refused; now both do."""
+    import numpy as np
+    from styxx.coupling import _density_confound
+
+    counts = np.array([1.0, 2.0, 3.0, 4.0])
+    const = np.ones((4, 3))                        # constant magnitude vector
+    varied = np.array([[1.0, 0, 0], [2, 0, 0], [3, 0, 0], [4, 0, 0]])
+    out = _density_confound(const, varied, counts)
+    assert out["applicable"] is False
+    assert "undefined" in out["note"]

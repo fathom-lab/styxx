@@ -689,12 +689,17 @@ class SessionSummary:
     prompt_type_breakdown: Dict[str, int]
     outcome_coverage: float      # % of entries with outcome set
     narrative: str               # one-sentence summary
+    # False when NO entry in the window carried a confidence reading, so
+    # mean_confidence is a placeholder rather than a measurement.
+    confidence_measured: bool = True
 
     def __repr__(self) -> str:
+        conf = (f"{self.mean_confidence:.2f}" if self.confidence_measured
+                else "n/a (unmeasured)")
         return (
             f"<SessionSummary {self.n_entries} entries, "
             f"{self.gate_pass_rate*100:.0f}% pass, "
-            f"conf {self.mean_confidence:.2f} ({self.conf_trend}), "
+            f"conf {conf} ({self.conf_trend}), "
             f"{self.dominant_category}>"
         )
 
@@ -756,10 +761,17 @@ def session_summary(
         if c is not None:
             try:
                 cv = float(c)
-                if cv > 0 and cv == cv:  # skip 0 and nan
+                # `cv > 0` used to drop exactly-zero readings — the WORST ones —
+                # biasing the mean upward (the same defect fixed in sla.py's
+                # check_health). NaN is still excluded: it is not a reading.
+                if cv == cv:
                     confs.append(cv)
             except (ValueError, TypeError):
                 pass
+    # An empty window means UNMEASURED, not "confidence 0.0" — which would read
+    # as the worst possible session. The float contract is kept for consumers;
+    # confidence_measured is the disclosure (mirrors SLAReport).
+    conf_measured = bool(confs)
     mean_conf = sum(confs) / len(confs) if confs else 0.0
     # Trend: compare first half vs second half
     if len(confs) >= 4:
@@ -828,6 +840,7 @@ def session_summary(
         warn_count=gate_warn,
         fail_count=gate_fail,
         mean_confidence=mean_conf,
+        confidence_measured=conf_measured,
         conf_trend=conf_trend,
         conf_delta=conf_delta,
         dominant_category=dominant,

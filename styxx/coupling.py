@@ -197,8 +197,16 @@ def _density_confound(Az, Bz, counts) -> dict:
     if counts.size == 0 or counts.std() == 0:
         return {"applicable": False, "note": "uniform sampling: bins hold equal counts"}
     na, nb = np.linalg.norm(Az, axis=1), np.linalg.norm(Bz, axis=1)
-    ra = float(np.corrcoef(counts, na)[0, 1]) if na.std() > 0 else 0.0
-    rb = float(np.corrcoef(counts, nb)[0, 1]) if nb.std() > 0 else 0.0
+    # r is UNDEFINED against a constant magnitude vector. Returning 0.0 fed a
+    # fabricated "no correlation" into the `shared` verdict below, so an
+    # UNMEASURABLE channel read as a measured absence of coupling. The guard
+    # three lines up already refuses the sibling degenerate case
+    # (counts.std() == 0) — this one now refuses on the same terms.
+    if na.std() == 0 or nb.std() == 0:
+        return {"applicable": False,
+                "note": "constant magnitude vector: count-vs-magnitude r is undefined"}
+    ra = float(np.corrcoef(counts, na)[0, 1])
+    rb = float(np.corrcoef(counts, nb)[0, 1])
     return {"applicable": True, "count_min": int(counts.min()), "count_max": int(counts.max()),
             "corr_count_vs_magnitude_a": round(ra, 4), "corr_count_vs_magnitude_b": round(rb, 4),
             "shared": bool(abs(ra) >= 0.3 and abs(rb) >= 0.3)}
