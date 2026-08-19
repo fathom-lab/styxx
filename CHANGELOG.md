@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.38.0] — 2026-08-19 — the ledger that will not flatter you
+
+### Added
+- **`styxx.credits` — a token ledger over the gate's own decisions.** Reads the
+  trajectory JSONL that `cogn_audit_on_send(log_path=...)` already writes; no new
+  instrumentation. `styxx-credits <log>` prints the card, `--json` emits the dict,
+  `styxx.token_ledger()` is the API.
+
+  The discipline is the feature:
+  - **COST is observed and always reported** — the tokens spent on revision
+    passes. The FIRST draft is never billed to the gate: the agent was going to
+    write it regardless, so only the revision passes are the gate's bill.
+  - **NET is REFUSED** unless the caller declares `rework_tokens` (their own
+    measured cost of shipping a bad draft and correcting it later). Supplied, the
+    net is computed *and* labelled conditional on that declared number — in the
+    card, in `as_dict()`, in the same breath. What an unrevised draft would have
+    cost downstream is a counterfactual nobody measured, and this module will not
+    print one.
+  - **A log with no draft text yields `cost=None` with a named reason — not 0**,
+    which would be a claim. Same for an absent log; `catch_rate` is None on an
+    empty log rather than 0.0.
+  - **Misses are stated as uncountable on every card.** A draft that shipped clean
+    and was wrong anyway leaves no trace in this log, so the catch count is
+    explicitly not the whole story.
+  - Token counts are estimates (~4 chars/token) unless a real `tokenizer` is
+    passed; every figure derived from the estimate carries its source.
+
+  Dogfooded on a live middleware trajectory, not fixtures. 10 tests pin the
+  refusals as hard as the arithmetic.
+
+---
+
 ## [7.37.0] — 2026-08-19 — an absence is not a measurement
 
 Wave 3 of the adversarial audit reached the modules the first two waves never
