@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.40.0] — 2026-08-19 — acting on the census, and the number that undercuts it
+
+### Fixed — the five instances `styxx.absence` confirmed in our own tree
+- `weather`: an empty third made every category rate `0.0`, so
+  `delta = l_rate - f_rate` declared a **trend direction** against a baseline
+  that was never measured. No thirds, no trend.
+- `fleet`: `> 0` dropped agents whose measured confidence was exactly zero — the
+  worst performers — from the fleet mean. Fourth instance of the idiom fixed in
+  `check_health` (7.37.0) and `session_summary` (7.39.0).
+- `probe`: the same `> 0` filter, doing double duty as an error-row exclusion.
+  Error rows are excluded by what they **are** (`gate == "error"`) now, so
+  genuine zero-confidence successes stay in the mean.
+- `preflight`: an absent composite became `0.0` — the most honest score
+  possible — feeding straight into the revision gate. Absence is malformed
+  input now; the audit tool always emits the key.
+- `analytics.log_stats`: means carry the counts they were taken over, so
+  `n/a (unmeasured)` and a measured `0.000` no longer print identically.
+
+### Measured
+- **Fixing all five moved candidate density 1.38 → 1.36 per KLOC.** One
+  candidate, for five real defects. The screen reads *shape*, not semantics, so
+  a `... if xs else 0.0` under a new explicit guard looks identical to the
+  fabricating version it replaced. **Candidate density is a weak proxy for
+  defect density** — demonstrated on the one codebase where we know the ground
+  truth, and it applies to our own last-place finish in the census.
+  (`papers/CENSUS_absence_2026_08_19.md`, `scripts/absence_census.py`.)
+
+---
+
 ## [7.39.0] — 2026-08-19 — the defect class, turned into an instrument
 
 Three releases fixed *instances* of one shape: a scoring path that failed, or
