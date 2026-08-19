@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [7.36.0] — 2026-08-19 — a scoring failure must not read as health
 
 Two multi-agent adversarial audits (15 finders/verifiers, then 23 verifiers on the
 tail) confirmed 29 defects; 26 are fixed here, 2 are staged CI changes awaiting a
@@ -90,6 +90,20 @@ disjunct at its call site.
   the endpoint already accepts.
 - `stream` credentials: POSIX creates owner-only from the first byte; Windows
   icacls failure warns instead of failing open silently.
+
+### Fixed — claim_audit (the 2026-08-13..15 red-team arc, previously unreleased)
+- The receipt loader was deleting ~62% of a receipt's numeric leaves before
+  matching, then reporting the survivors as provenance; provenance uniqueness
+  and a live false positive fixed alongside; a grounding rate now states its
+  chance floor (a rate without its floor is the fire-rate wearing the
+  antibody's name), and `survey(self)` reports which of styxx's own
+  rate-reporting functions still lack one (33 of 43 at first measurement).
+
+### Fixed — earlier hardening in this range (2026-08-09, previously unreleased)
+- `learned_classifier` persistence moved pickle → JSON (RCE class; also fixed a
+  latent sklearn ≥1.7 `multi_class` breakage); dashboard SSE no longer sends
+  `Access-Control-Allow-Origin: *`; stream credentials get an NTFS ACL on
+  Windows; dead code + doc drift sweep from the full-repo survey.
 
 ### Honesty of claims
 - `verify_seal` states its exact scope: an unkeyed self-hash detects corruption,
