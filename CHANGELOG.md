@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.39.0] — 2026-08-19 — the defect class, turned into an instrument
+
+Three releases fixed *instances* of one shape: a scoring path that failed, or
+never ran, and returned a value indistinguishable from a healthy measurement.
+This one makes the **class** detectable — and points it at code that is not ours.
+
+### Added
+- **`styxx.absence` — a screen for "not measuring" reading as a good result.**
+  `styxx-absence <path>`, `--json`, or `styxx.absence_scan()`. Five rules:
+  `HEALTHY_ON_CRASH` (a failure path returning a healthy verdict, polarity-aware
+  so `trust_score=1.0` and `risk=0.0` both register as best-case),
+  `SENTINEL_DEFAULT` (an absent *measurement* defaulted to a number),
+  `UNDEFINED_AS_NUMBER` (a degenerate statistic returned instead of refused),
+  `TRUTHY_GATE` (a decision made by an object's truthiness, or an `or` whose
+  second term can never decide), and `CRASH_TO_HEALTHY_SENTINEL` (a crash
+  swallowed into a sentinel, healthy on the sentinel — intra-procedural).
+
+  **Characterized, not asserted: recall 8 of 9** against ground truth — the
+  defects fixed in 7.36.0–7.38.0, pre-fix, corpus inlined in
+  `tests/test_absence.py` (CI clones shallow, so a characterization must not
+  depend on clone depth). The first pass scored **2 of 9**; the gaps were
+  ternaries, non-Attribute operands, and numeric polarity. The one remaining
+  miss — `forecast()` had no guard at all — is asserted **as a miss**, because
+  no pass over source can flag code that was never written.
+
+  It exits 0 even with findings. A screen that can fail your build is a screen
+  someone silences to go green.
+
+### Fixed — found by the screen, in files never hand-audited
+- `analytics.session_summary` carried **both** `check_health` defects: `cv > 0`
+  dropped exactly-zero readings — the worst ones — from the mean, and an empty
+  window fabricated `0.0`. Zeros now count; `confidence_measured` discloses an
+  unmeasured window (mirroring `SLAReport`).
+- `coupling._density_confound` returned `r = 0.0` when a magnitude vector was
+  constant — r is **undefined** there — and fed it into its `shared` verdict, so
+  an unmeasurable channel read as a measured *absence* of coupling. The guard
+  three lines above already refused the sibling degenerate case; now both do.
+
+### Fixed — the screen's own bug
+- `1 in {True}` is `True` in Python, so every CLI `return 1` — which means
+  **failure** — was flagged as a healthy-on-crash return. 24 phantom findings
+  from a type confusion, inside the tool built to find type confusions.
+
+---
+
 ## [7.38.0] — 2026-08-19 — the ledger that will not flatter you
 
 ### Added
