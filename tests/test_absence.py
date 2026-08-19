@@ -190,3 +190,32 @@ def test_cli_exits_zero_even_with_findings(tmp_path, capsys):
     (tmp_path / "m.py").write_text(PEARSON_UNDEFINED, encoding="utf-8")
     assert main([str(tmp_path)]) == 0
     assert "UNDEFINED_AS_NUMBER" in capsys.readouterr().out
+
+
+def test_a_report_that_scanned_nothing_is_not_a_clean_report(tmp_path):
+    """The census's first run printed `candidates 0` for 2.4M lines of torch and
+    transformers — because scan_path's default skip list contains
+    'site-packages', where every installed package lives. The screen built to
+    find measurements-that-never-ran had produced one. Nothing scanned must
+    never read as nothing found."""
+    import warnings
+
+    pkg = tmp_path / "site-packages" / "somelib"
+    pkg.mkdir(parents=True)
+    (pkg / "m.py").write_text(PEARSON_UNDEFINED, encoding="utf-8")
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        rep = scan_path(pkg)                      # default skip eats it
+    assert rep.measured is False
+    assert rep.files_scanned == 0
+    assert not rep.findings
+    assert "SCANNED NOTHING" in rep.render()
+    assert "not a clean result" in rep.render().lower()
+    assert "SCANNED NOTHING" in repr(rep)
+    assert rep.as_dict()["measured"] is False
+    assert any("scanned NOTHING" in str(c.message) for c in caught)
+
+    # with an explicit skip the same tree screens normally
+    rep2 = scan_path(pkg, skip=["__pycache__"])
+    assert rep2.measured is True and rep2.findings

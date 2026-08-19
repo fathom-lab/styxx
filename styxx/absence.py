@@ -159,6 +159,17 @@ class AbsenceReport:
     files_scanned: int = 0
     files_unparsed: List[str] = field(default_factory=list)
 
+    @property
+    def measured(self) -> bool:
+        """False when the screen scanned NOTHING — which is not a clean result.
+
+        The census run that first used this module skipped every external
+        package (site-packages was in the default skip list) and printed
+        "candidates 0" for 2.4M lines of torch and transformers. The screen
+        built to find measurements-that-never-ran had produced one.
+        """
+        return self.files_scanned > 0
+
     def by_rule(self) -> Dict[str, int]:
         out: Dict[str, int] = {}
         for f in self.findings:
@@ -170,6 +181,7 @@ class AbsenceReport:
                 "files_scanned": self.files_scanned,
                 "files_unparsed": list(self.files_unparsed),
                 "by_rule": self.by_rule(),
+                "measured": self.measured,
                 "limits": LIMITS}
 
     def render(self, *, limit: int = 40) -> str:
@@ -177,6 +189,14 @@ class AbsenceReport:
         lines.append(f"  files scanned   {self.files_scanned}")
         if self.files_unparsed:
             lines.append(f"  unparsed        {len(self.files_unparsed)}")
+        if not self.measured:
+            lines.append("")
+            lines.append("  SCANNED NOTHING — every candidate file was skipped or")
+            lines.append("  unreadable. This is NOT a clean result; it is no result.")
+            lines.append("  (Check the skip list: 'site-packages' is skipped by")
+            lines.append("  default, so screening an installed package needs an")
+            lines.append("  explicit skip= argument.)")
+            return "\n".join(lines)
         counts = self.by_rule()
         if not self.findings:
             lines.append("  candidates      0")
@@ -202,6 +222,8 @@ class AbsenceReport:
         return "\n".join(lines)
 
     def __repr__(self) -> str:
+        if not self.measured:
+            return "<AbsenceReport SCANNED NOTHING — not a clean result>"
         return (f"<AbsenceReport {len(self.findings)} candidates across "
                 f"{self.files_scanned} files>")
 
@@ -502,6 +524,13 @@ def scan_path(path: str | Path, *, skip: Optional[List[str]] = None) -> AbsenceR
             report.files_unparsed.append(str(f))
             continue
         report.files_scanned += 1
+    if not report.files_scanned:
+        import warnings
+        warnings.warn(
+            f"styxx.absence: scanned NOTHING under {p} — every file was skipped "
+            f"or unreadable, so 0 candidates means 'no result', not 'clean'. "
+            f"The default skip list excludes site-packages; pass skip=[...] to "
+            f"screen an installed package.", RuntimeWarning, stacklevel=2)
     return report
 
 
