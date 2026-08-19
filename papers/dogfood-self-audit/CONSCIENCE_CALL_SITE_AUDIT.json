@@ -1,5 +1,5 @@
 {
- "n": 94,
+ "n": 100,
  "trusted_gate_keys": [
   "sycophancy"
  ],
@@ -9,5 +9,5 @@
  "live_only": 62,
  "calibrated_only": 0,
  "both": 2,
- "neither": 30
+ "neither": 36
 }
