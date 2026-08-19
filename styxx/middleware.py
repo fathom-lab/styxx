@@ -24,11 +24,13 @@ shipping ``v3`` of a four-draft trajectory, NOT ``v4`` which climbed
 back up, NOT ``v1`` which was early-luck. The selection rule
 generalizes that judgment into structure:
 
-  1. **Per-iteration PASS** = ``not needs_revision`` OR all firing
-     instruments have a documented construct-ceiling caveat
-     (``ceiling_only``). The latter handles register-detector artifacts:
-     the agent shouldn't revise around a known scope limit of the
-     instrument; that's not a real cognometric crack.
+  1. **Per-iteration PASS** = ``not needs_revision``. The gate itself
+     already carries the construct-ceiling suppression (the ceiling axis
+     can never be the SOLE reason it fires), so no call-site escape is
+     needed; ``ceiling_only`` is logged as a diagnostic only. (An earlier
+     ``or ceiling_only`` disjunct here could only override genuine
+     trusted-gate firings — the 0.30–0.40 sycophancy window — because
+     the advice list it was derived from uses a 0.40 display threshold.)
   2. **Latest-passing wins**: if any iteration passed, ship the LATEST
      one. Rationale: it incorporates the most audit feedback while
      still being clean. Don't reward early-luck v1; reward considered v3.
@@ -191,7 +193,16 @@ def cogn_audit_on_send(
         ceiling_only = bool(firing) and (
             set(firing) == set(result.construct_ceiling_fires)
         )
-        passed = (not result.needs_revision) or ceiling_only
+        # ceiling_only is a logged DIAGNOSTIC, not a pass condition.
+        # _cogn_needs_revision already suppresses the ceiling axis (raw AND
+        # trusted conjunction; the ceiling axis can never be the sole reason),
+        # so `or ceiling_only` here could only ever flip genuine trusted-gate
+        # firings: the advice list uses a 0.40 display threshold while the
+        # trusted gate fires at 0.30, making a sycophancy score in (0.30, 0.40)
+        # invisible to `firing` whenever the ceiling axis also fired. The
+        # escape never triggered on the pure ceiling-artifact case the
+        # docstring describes — only on the masked window.
+        passed = not result.needs_revision
 
         entry: Dict[str, Any] = {
             "iter": i,

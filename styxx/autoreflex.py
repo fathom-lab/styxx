@@ -89,7 +89,7 @@ import re
 import threading
 import warnings
 from dataclasses import dataclass
-from typing import Callable, List, Optional, Union
+from typing import Any, Callable, List, Optional, Union
 
 from .vitals import Vitals
 
@@ -287,6 +287,12 @@ class AutoReflexRule:
     max_fires: int = 0         # 0 = unlimited
     cooldown_s: float = 0.0    # min seconds between fires
     _last_fired: float = 0.0
+    # Strong ref to the last Vitals this rule dispatched on. A rule with N OR
+    # branches registers N gate hooks; when several branches match the same
+    # vitals, every hook invokes dispatch_rule with the same object — this
+    # identity guard keeps one vitals computation to at most one fire. (Strong
+    # ref on purpose: while held, the id cannot be recycled by a new object.)
+    _last_vitals: Any = None
 
     def __repr__(self) -> str:
         status = f"fired {self.fire_count}x"
@@ -370,20 +376,54 @@ def autoreflex(
     with _RULES_LOCK:
         _RULES.append(rule)
 
-    # Auto-register a gate callback that dispatches this rule's actions.
+    # Auto-register gate callbacks that dispatch this rule's actions.
     # This piggybacks on the existing gate dispatch infrastructure so
     # autoreflex rules fire on every vitals computation automatically.
     #
-    # Extract the first atomic clause (strip AND/OR) for the gate hook.
-    # The full compound condition is evaluated by dispatch_rule().
+    # One gate hook per OR branch, keyed on that branch's first atomic
+    # clause. Registering only the first clause of the WHOLE string made
+    # every OR branch beyond the first unreachable: the gate predicate had
+    # to match before dispatch_rule() ever saw the compound, so
+    # "A OR B" effectively dispatched as A AND (A OR B) = A. With one hook
+    # per branch the gate layer covers a necessary condition of the
+    # compound (branch_i true => its first clause true), and dispatch_rule()
+    # still evaluates the full predicate before firing.
     from .gates import on_gate
 
     def _rule_callback(vitals: Vitals, rule=rule) -> None:
         dispatch_rule(rule, vitals)
 
-    # Get the first atomic clause by splitting on both AND and OR
-    first_clause = re.split(r'\s+(?:AND|OR)\s+', when, flags=re.IGNORECASE)[0].strip()
-    on_gate(first_clause, _rule_callback, name=f"autoreflex:{auto_name}")
+    # For each OR branch, hook on the first of its AND clauses that the gates
+    # DSL can express (any AND clause is a necessary condition of the branch).
+    # A branch whose clauses are ALL beyond the gates grammar — e.g.
+    # "confidence < 0.25", valid here but not in gates — hooks on the explicit
+    # "always" catch-all: dispatch_rule() evaluates the compound anyway.
+    # Previously such clauses made on_gate raise AFTER the rule was already in
+    # _RULES, leaving a zombie rule that was listed but could never fire (and
+    # autoreflex_from_prescriptions swallowed the error, so both shipped
+    # confidence-based prescription rules were silently absent).
+    from .gates import parse_condition
+
+    or_branches = re.split(r'\s+OR\s+', when, flags=re.IGNORECASE)
+    hook_conditions = set()
+    for branch in or_branches:
+        clauses = re.split(r'\s+AND\s+', branch, flags=re.IGNORECASE)
+        for clause in clauses:
+            clause = clause.strip()
+            try:
+                parse_condition(clause)
+            except ValueError:
+                continue
+            hook_conditions.add(clause)
+            break
+        else:
+            hook_conditions = {"always"}
+            break
+    if "always" in hook_conditions:
+        hook_conditions = {"always"}    # subsumes every other hook
+
+    for cond in sorted(hook_conditions):
+        on_gate(cond, _rule_callback, name=f"autoreflex:{auto_name}")
 
     return rule
 
@@ -395,6 +435,12 @@ def dispatch_rule(rule: AutoReflexRule, vitals: Vitals) -> bool:
     Returns True if the rule fired.
     """
     import time
+
+    # One fire per vitals computation, however many of the rule's OR-branch
+    # gate hooks matched it (see AutoReflexRule._last_vitals).
+    if vitals is rule._last_vitals:
+        return False
+    rule._last_vitals = vitals
 
     # Check max fires
     if rule.max_fires > 0 and rule.fire_count >= rule.max_fires:
@@ -552,7 +598,15 @@ def autoreflex_from_prescriptions(
                     )
                     registered.append(rule)
                     existing_names.add(rule_def["name"])
-                except Exception:
-                    pass
+                except Exception as e:
+                    # Surface, don't swallow: a prescription that fails to
+                    # become a rule is a silently-absent reflex. (The bare
+                    # `pass` here hid a ValueError that kept BOTH shipped
+                    # confidence-based prescriptions from ever registering.)
+                    warnings.warn(
+                        f"autoreflex_from_prescriptions: could not register "
+                        f"{rule_def['name']!r} ({type(e).__name__}: {e})",
+                        stacklevel=2,
+                    )
 
     return registered

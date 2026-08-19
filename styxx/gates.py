@@ -148,6 +148,16 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
     """
     cond = condition.strip()
 
+    # 0. explicit catch-all: fires on every vitals computation. For callers
+    # (styxx.autoreflex) whose own grammar exceeds this DSL — e.g. a
+    # confidence/context clause — and that carry their own full predicate
+    # behind the hook. Explicit token on purpose: an unparseable condition
+    # must still fail loudly, never silently degrade to always-fire.
+    if cond.lower() in ("always", "*"):
+        def pred_always(v: Vitals) -> bool:
+            return True
+        return pred_always
+
     # 1. gate status check
     m = _RE_GATE_STATUS.match(cond)
     if m:

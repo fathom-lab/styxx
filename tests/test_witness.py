@@ -57,6 +57,36 @@ def test_substrate_divergence_refused_without_mount():
     assert v.status == "REFUSED"
 
 
+class _StubMount:
+    """read() returns a real ConscienceReading so the call site faces the actual
+    truthiness trap: the dataclass is truthy even when nothing was caught."""
+
+    def __init__(self, caught):
+        from styxx.mount import ConscienceReading
+        self._reading = ConscienceReading(coords={}, z={}, claims={}, divergence={},
+                                          flags=[], caught=caught)
+
+    def read(self, *a, **k):
+        return self._reading
+
+
+def test_substrate_divergence_calm_read_is_ok_not_flag():
+    # regression: status was computed from the truthiness of the ConscienceReading
+    # object (always truthy), so OK was unreachable and every honest read FLAGged.
+    flagged = []
+    v = Witness(mount=_StubMount(caught=False), on_flag=flagged.append).substrate_divergence(None)
+    assert v.status == "OK"
+    assert not flagged                      # policy hook must not fire on a calm read
+    assert v.payload is not None and v.payload.caught is False
+
+
+def test_substrate_divergence_caught_read_flags_and_fires_hook():
+    flagged = []
+    v = Witness(mount=_StubMount(caught=True), on_flag=flagged.append).substrate_divergence(None)
+    assert v.status == "FLAG"
+    assert flagged and flagged[0] is v
+
+
 def test_report_names_every_capability_and_the_refusals():
     r = Witness().report()
     for cap in MEASURED_CAPABILITIES:

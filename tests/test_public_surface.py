@@ -1065,3 +1065,100 @@ def test_validate_probe_smoke():
     assert report.in_construct_auc >= 0.8              # looks great in-construct
     assert report.verdict.startswith("SURFACE-ARTIFACT")  # but caught as an artifact
     assert "verdict" in report.as_dict()
+
+
+def test_cogn_audit_on_send_ceiling_only_cannot_override_the_gate(tmp_path, monkeypatch):
+    """Regression: `passed` was `(not needs_revision) or ceiling_only`, but
+    ceiling_only derives from the advice list (0.40 display threshold) while the
+    trusted gate fires at 0.30 — so a draft the calibrated gate flagged
+    (sycophancy in the 0.30-0.40 window) shipped as passed whenever the ceiling
+    axis was the only instrument loud enough to make the advice list. The gate
+    already suppresses the ceiling axis; the call-site escape only ever masked
+    genuine firings."""
+    import sys
+    from styxx import cogn_audit_on_send
+    from styxx.preflight import PreflightAdvice, PreflightResult
+    # `import styxx.preflight` yields the FUNCTION (styxx/__init__ rebinds the
+    # name); the module object must come from sys.modules.
+    preflight_mod = sys.modules["styxx.preflight"]
+
+    def masked_window_preflight(prompt, draft, correct_reference=None, persist=True):
+        return PreflightResult(
+            scores={"sycophancy": 0.35, "overconfidence": 0.95,
+                    "deception": 0.10, "refusal": 0.05},
+            composite=0.65,
+            needs_revision=True,          # trusted gate: sycophancy 0.35 > 0.30
+            advice=[PreflightAdvice(instrument="overconfidence", score=0.95,
+                                    scope_caveat="text-only register detector")],
+            refusal_note=None,
+            instructions="",
+            construct_ceiling_fires=["overconfidence"],
+        )
+
+    monkeypatch.setattr(preflight_mod, "preflight", masked_window_preflight)
+    chosen, traj = cogn_audit_on_send(
+        prompt="is my code good?", draft="yes, wonderful",
+        llm_revise=None, log_path=tmp_path / "t.jsonl", persist_to_chart=False,
+    )
+    entry = traj.iterations[0]
+    assert entry["ceiling_only"] is True          # the diagnostic still records it
+    assert entry["passed"] is False               # ...but it cannot flip the gate
+    assert traj.decision_reason != "latest_passing"
+
+
+def _phase(cat, margin=0.9):
+    from styxx.vitals import PhaseReading
+    return PhaseReading(phase="p4", n_tokens_used=10, features=[0.0],
+                        predicted_category=cat, margin=margin,
+                        distances={cat: 0.1}, probs={cat: 0.9})
+
+
+def test_autoreflex_or_branch_beyond_the_first_can_fire():
+    """Regression: only the FIRST atomic clause of `when` was registered as the
+    gate hook, so "A OR B" dispatched as A AND (A OR B) = A — the B branch
+    could never trigger the rule."""
+    from styxx.autoreflex import clear_autoreflex
+    from styxx.gates import clear_gates, dispatch_gates
+    from styxx.vitals import Vitals
+    from styxx import autoreflex
+
+    clear_autoreflex(); clear_gates()
+    fired = []
+    autoreflex(when="hallucination > 0.6 OR refusal > 0.7",
+               then=lambda v: fired.append(v), name="or-branch-test",
+               cooldown_s=0.0)   # so the same-vitals guard, not cooldown, is under test
+    # vitals that satisfy ONLY the second branch
+    v = Vitals(phase1_pre=_phase("refusal", margin=0.95))
+    dispatch_gates(v)
+    assert len(fired) == 1, "the OR branch beyond the first clause must dispatch"
+    # both-branch vitals fire the rule ONCE, not once per matching hook
+    fired.clear()
+    v2 = Vitals(phase1_pre=_phase("hallucination", margin=0.95),
+                phase4_late=_phase("refusal", margin=0.95))
+    dispatch_gates(v2)
+    assert len(fired) == 1, "one vitals computation must fire the rule at most once"
+    clear_autoreflex(); clear_gates()
+
+
+def test_autoreflex_confidence_clause_registers_and_prescriptions_survive():
+    """Regression: a confidence/context first clause made on_gate raise AFTER
+    the rule was appended — a zombie rule that could never fire — and
+    autoreflex_from_prescriptions swallowed the error, so both shipped
+    confidence-based prescription rules were silently absent on every install."""
+    from styxx.autoreflex import clear_autoreflex, autoreflex_from_prescriptions
+    from styxx.gates import clear_gates, list_gates
+    from styxx import autoreflex
+
+    clear_autoreflex(); clear_gates()
+    rule = autoreflex(when="confidence < 0.25", then=lambda v: None,
+                      name="confidence-clause-test")
+    assert rule is not None
+    hooks = [g for g in list_gates() if "autoreflex:confidence-clause-test" in (g.name or "")]
+    assert hooks, "a gates-inexpressible clause must still register a hook (always)"
+    clear_autoreflex(); clear_gates()
+
+    registered = autoreflex_from_prescriptions(
+        ["Watch for session fatigue: confidence has drifted down."])
+    assert any(r.name == "rx:log-session-fatigue" for r in registered), \
+        "the shipped fatigue prescription must register, not vanish in a bare except"
+    clear_autoreflex(); clear_gates()

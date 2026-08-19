@@ -255,12 +255,16 @@ class Witness:
                                   detail="no mount configured; the witness will not "
                                          "improvise a substrate read")
         cap = self.capabilities["borrowed_conscience"]
-        flags = self._mount.read(*read_args, **read_kwargs)
-        v = WitnessVerdict(status="FLAG" if flags else "OK", capability=cap.name,
+        reading = self._mount.read(*read_args, **read_kwargs)
+        # Gate on the mount's calibrated verdict, not on the truthiness of the
+        # reading object — a ConscienceReading is a plain dataclass and is truthy
+        # on every read, which would make OK unreachable and the mount's per-axis
+        # calibration decorative (the fired-or-needs_revision bug class).
+        v = WitnessVerdict(status="FLAG" if reading.caught else "OK", capability=cap.name,
                            detail=f"mount read at catch {cap.operating_point['catch']} / "
                                   f"FPR budget {cap.operating_point['fpr_budget']} — a "
                                   "cooperative monitor, not an adversarial defense",
-                           payload=flags)
+                           payload=reading)
         self._emit(v)
         return v
 
