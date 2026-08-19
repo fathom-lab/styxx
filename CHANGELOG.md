@@ -7,6 +7,100 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+Two multi-agent adversarial audits (15 finders/verifiers, then 23 verifiers on the
+tail) confirmed 29 defects; 26 are fixed here, 2 are staged CI changes awaiting a
+workflow-scoped token, 1 (open-ended `requires-python` vs CI matrix) is noted only.
+The recurring shape: **a scoring failure that reads as health** — a crash returning
+trust 1.0, an unmeasured probe recording 0.0, a calibrated gate bypassed by a looser
+disjunct at its call site.
+
+### Fixed — gate bypasses (the `fired or needs_revision` class, 3 more instances)
+- `Witness.substrate_divergence` gated on the truthiness of the always-truthy
+  `ConscienceReading` dataclass: OK was unreachable and the mount's per-axis
+  calibration decorative. Gates on `.caught` now.
+- `cogn_audit_on_send`: the `or ceiling_only` escape (derived from the 0.40-display
+  advice list) could only override genuine trusted-gate firings in the sycophancy
+  0.30–0.40 window. `passed = not needs_revision`; `ceiling_only` stays as a logged
+  diagnostic.
+- `autoreflex` registered only the FIRST atomic clause as its gate hook, so
+  `"A OR B"` dispatched as `A`; confidence/context first clauses crashed
+  registration after the rule was appended (zombie rules), and the prescriptions
+  translator swallowed the error — both shipped confidence-based prescription rules
+  were silently absent on every install. One hook per OR branch, an explicit
+  `always` token in the gates DSL, same-vitals dedup, a warning instead of a bare
+  `except`.
+
+### Fixed — verdict noise in the OATH instrument
+- Percent↔fraction scaling compared `doc_val == r_val*100` with bare float `==`:
+  0.29·100 is 28.999999999999996, so *which* correct integer-percent claims failed
+  depended on the binary representation of the receipt fraction. `math.isclose`
+  (rel 1e-9) forgives representation error only.
+- The line-start artifact filter dropped EVERY line-initial single-digit integer:
+  `"9/12 held"` at line start certified OATH-HELD against `n_held: 7` because the
+  doctored 9 never entered the ledger. The filter now applies only on markdown
+  STRUCTURE lines and never to slash-pair numerators.
+- `anchors.audit_panel`'s noise margin divided both binomial variance terms by
+  `len(neg)`; with a small pos stratum a deaf judge cleared the 3σ gate ~5.5%
+  instead of ~0.1%. Per-stratum variances now. (Stage-A characterization ran at
+  400/400 where the two forms coincide — the published VOID rate stands at its
+  design point.)
+
+### Fixed — scoring failures that read as health
+- `gate()`: the crash path returned `trust_score=1.0` / risks 0.0 — an invalid API
+  key read as a PERFECT measurement. Falls back to the text heuristic (a real,
+  labelled reading), neutral 0.5s as last resort; the empty-prompt noop verdict is
+  0.5 too.
+- `guardian`: hidden-state hook failure silently produced C_delta=0.0 for the rest
+  of the session — a guardian that measured nothing looked healthy. Unmeasured is
+  now `None` (`observe_degraded` events, one-time warning, no steering on None).
+- guardrail NLI: model-load failure became contradiction=0.0 fed into v3 calibrated
+  fusion as real evidence. Load failure now EXCLUDES the signal (v2 fallback).
+- `@trust`: unreadable response shapes passed through silently — and generator
+  reprs (which do not match `" object at 0x"`) were VERIFIED as text. Warns once
+  per shape, `on_halt="annotate"` always returns `TrustResult` as documented, the
+  repr bail is `" at 0x"`, and the docstring no longer promises stream
+  accumulation that does not exist.
+- `verify`: a missing/corrupt confabulation centroid silently disabled Signal 1
+  while verdicts read "all signals clear". One-time warning + a visible reason
+  line; missing keys no longer KeyError mid-verify.
+- `honesty`: the attestation detail stamped "verified -> answered" whenever a
+  verifier was PRESENT, even when it raised or returned unclear. The detail now
+  binds the tri-state.
+- MCP `weather_report` called `styxx.weather(window=N)` — a kwarg the engine does
+  not have — so EVERY call raised, was swallowed, and shipped `gate: "pass"`.
+  Crash / empty window / healthy fleet are now three distinguishable payloads, and
+  the input is `window_hours` (matching the engine).
+- `cogn_deception_v2` set `needs_revision` to a truthy advisory STRING in fallback
+  mode (anti-correlated with the verdict); now a boolean tracking
+  `shows_signature`, advisory in `fallback_note`.
+
+### Fixed — import order
+- `styxx.seal` was callable exactly once (its own lazy import rebound the name to
+  the submodule); `styxx.certify` became a non-callable module whenever
+  seal/corpus_audit loaded first. The function wins the name, permanently.
+
+### Security
+- `styxx.islands` CLI: `np.load(..., allow_pickle=True)` on the user-supplied
+  `.npz` — the pickle-RCE class this repo already fixed elsewhere. Now False.
+- `dashboard()` bound ALL interfaces with no auth while announcing localhost.
+  Default `host="127.0.0.1"`; explicit exposure prints an all-interfaces warning.
+- Atlas Pro token moved from the URL query string to the `Authorization` header
+  the endpoint already accepts.
+- `stream` credentials: POSIX creates owner-only from the first byte; Windows
+  icacls failure warns instead of failing open silently.
+
+### Honesty of claims
+- `verify_seal` states its exact scope: an unkeyed self-hash detects corruption,
+  not adversarial tampering.
+- `mcp/README`: 12 → 14 tools, the two undocumented tools documented.
+- `docs/REFERENCE.md` no longer claims "every public symbol".
+- `sense.host_channel`: psutil guarded with a clear install message + a
+  `styxx[sense]` extra.
+
+---
+
 ## [7.35.0] — 2026-08-09 — declared gate composition, and a parser rebuilt after its red team broke two fixes
 
 `styxx.protocol` gained the check that would have caught this program's sixth bar defect — and
