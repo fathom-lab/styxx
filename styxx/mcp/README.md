@@ -46,7 +46,7 @@ Per-attack: v7 universal **176%** recovery, craft attacks 77-92%.
 training signal — healed output is more honest than the original
 clean output.**
 
-## Tools exposed (v0.4.1 — 12 tools)
+## Tools exposed (14 tools)
 
 ### Cognometric instruments — measurement (text-only, no logprobs needed)
 
@@ -78,7 +78,9 @@ clean output.**
 | `observe_response` | Observe an LLM response, return `{classification, confidence, gate}`. |
 | `verify_response` | Verify a response, return `VerificationResult` with trajectory features + anomalies. |
 | `classify_trajectory` | Classify a raw logprob sequence into one of six cognitive classes. |
-| `weather_report` | Fleet-level cognitive weather over the last N observations. |
+| `weather_report` | Fleet-level cognitive weather over the last `window_hours` of audit entries. `gate` is `pass`/`warn` from the window's own entries, `no_data` below 5 entries, `error` when the engine failed — never a defaulted pass. |
+| `cogn_recover_posture` | Agent-side recovery: structured posture summary from your own recent cognometric log (gate distribution, category mix, coherence trend, active construct-ceiling caveats) to re-anchor operating state across a context-compaction boundary. |
+| `cogn_share_card` | Registry card: render a 1200×630 cognometric share-card PNG (single or paired heal variant) and register it in `~/.styxx/cards/cards.jsonl`. Requires `styxx[agent-card]`. |
 
 Six cognitive classes: **reasoning · retrieval · refusal · creative · adversarial · hallucination**.
 

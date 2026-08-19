@@ -1,6 +1,6 @@
 # styxx — API reference
 
-Technical reference for advanced users. Every public symbol, signature, and a minimal example.
+Technical reference for advanced users: the load-bearing public entry points, each with signature and a minimal example. NOT exhaustive — `styxx.__all__` exports more names than this file documents; for anything absent here, the module docstring is the reference.
 
 For narrative intros see [`README.md`](../README.md). For data-format and dynamics specs see [`research/`](research/). For provider compatibility see [`users/COMPATIBILITY.md`](users/COMPATIBILITY.md).
 

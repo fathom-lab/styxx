@@ -1162,3 +1162,26 @@ def test_autoreflex_confidence_clause_registers_and_prescriptions_survive():
     assert any(r.name == "rx:log-session-fatigue" for r in registered), \
         "the shipped fatigue prescription must register, not vanish in a bare except"
     clear_autoreflex(); clear_gates()
+
+
+def test_lazy_submodule_loads_do_not_clobber_public_callables(tmp_path):
+    """Regression: first init of a submodule setattrs it onto the package,
+    clobbering same-named function bindings. styxx.seal was callable exactly
+    ONCE (its own lazy import replaced it with the module), and styxx.certify
+    became a non-callable module whenever seal/corpus_audit loaded first."""
+    import subprocess, sys
+    code = (
+        "import json, styxx\n"
+        "doc = r'%s'\n"
+        "open(doc, 'w').write('# t')\n"
+        "s1 = styxx.seal(doc, [])\n"
+        "s2 = styxx.seal(doc, [])\n"          # second call used to TypeError
+        "assert callable(styxx.certify), type(styxx.certify)\n"
+        "import styxx.seal\n"
+        "assert callable(styxx.certify)\n"    # clobbered via seal.py's import
+        "print('OK')\n"
+    ) % (tmp_path / "d.md")
+    r = subprocess.run([sys.executable, "-X", "utf8", "-c", code],
+                       capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr[-800:]
+    assert "OK" in r.stdout

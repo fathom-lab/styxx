@@ -103,7 +103,10 @@ def test_v05_derived_percent_rejects_ungrounded_operands(tmp_path):
 
 def test_v05_class_a_is_dropped():
     # class A (approx-notation) was dropped by the severability procedure; the flag must stay off
-    import styxx.certify as C
+    # (importlib, not `import styxx.certify as C`: the package attr `styxx.certify`
+    # is the provenance FUNCTION by convention — the module lives in sys.modules)
+    import importlib
+    C = importlib.import_module("styxx.certify")
     assert C.V05_APPROX_NOTATION is False
     assert C.V05_SELF_SCOPED_N is True and C.V05_DERIVED_PCT is True
 

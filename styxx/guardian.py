@@ -65,9 +65,9 @@ from . import config
 @dataclass
 class SteeringEvent:
     """One entry in the guardian session's event log."""
-    kind: str           # "observe" | "steer" | "backoff" | "complete"
+    kind: str           # "observe" | "observe_degraded" | "steer" | "backoff" | "complete"
     token_idx: int      # which token triggered this event
-    c_delta: float = 0.0
+    c_delta: Optional[float] = 0.0   # None = measurement unavailable this step
     d_honesty: float = 0.0
     steer_strength: float = 0.0
     steer_layer: int = 0
@@ -280,16 +280,28 @@ class GuardianSession:
 
                 try:
                     logits = inner.run_with_hooks(toks, fwd_hooks=capture_hooks)
-                except Exception:
-                    # Hook failure — fall back to plain forward
+                except Exception as e:
+                    # Hook failure — fall back to plain forward, but say so ONCE:
+                    # with no captured states every C_delta this session is
+                    # unmeasured, and silence here made a guardian that measured
+                    # nothing produce a fully healthy-looking transcript.
+                    if not getattr(self, "_hook_failure_warned", False):
+                        self._hook_failure_warned = True
+                        import warnings as _warnings
+                        _warnings.warn(
+                            f"styxx.guardian: hidden-state capture failed "
+                            f"({type(e).__name__}: {e}); C_delta is UNMEASURED "
+                            f"from token {step} on — no steering will occur.",
+                            RuntimeWarning, stacklevel=2)
                     logits = inner(toks)
 
-                # ── 2. MEASURE: compute C_delta ──
+                # ── 2. MEASURE: compute C_delta (None = unmeasured) ──
                 c_delta = self._fast_c_delta(hidden_states)
-                self.c_delta_trajectory.append(c_delta)
+                if c_delta is not None:
+                    self.c_delta_trajectory.append(c_delta)
 
                 self.events.append(SteeringEvent(
-                    kind="observe",
+                    kind="observe" if c_delta is not None else "observe_degraded",
                     token_idx=step,
                     c_delta=c_delta,
                 ))
@@ -297,6 +309,7 @@ class GuardianSession:
                 # ── 3. DECIDE: should we steer? ──
                 should_steer = (
                     not disabled
+                    and c_delta is not None
                     and c_delta > self.c_delta_threshold
                     and (step - self._last_steer_step) >= self.cooldown
                     and self._tc_list is not None
@@ -407,8 +420,11 @@ class GuardianSession:
 
     # ── internal helpers ──────────────────────────────────────
 
-    def _fast_c_delta(self, hidden_states: Dict[int, Any]) -> float:
-        """Compute C_delta from captured hidden states.
+    def _fast_c_delta(self, hidden_states: Dict[int, Any]) -> Optional[float]:
+        """Compute C_delta from captured hidden states. Returns None when the
+        measurement could not be taken (no captured states, no encoder list, or
+        an empty early/late band) — a 0.0 here is a MEASURED zero, never a
+        sentinel, so downstream cannot mistake a dead probe for a calm one.
 
         Uses the encoder pathway: residual -> W_enc -> ReLU -> top-k
         -> W_dec -> mean pairwise cosine -> per-layer C -> C_delta.
@@ -417,7 +433,7 @@ class GuardianSession:
         import torch.nn.functional as F
 
         if self._tc_list is None or not hidden_states:
-            return 0.0
+            return None
 
         layer_c: Dict[int, Optional[float]] = {}
         for layer_idx in self._early_layers + self._late_layers:
@@ -470,7 +486,7 @@ class GuardianSession:
         late_vals = [layer_c[l] for l in self._late_layers if layer_c.get(l) is not None]
 
         if not early_vals or not late_vals:
-            return 0.0
+            return None
 
         import numpy as np
         return float(np.mean(late_vals) - np.mean(early_vals))

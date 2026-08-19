@@ -101,3 +101,28 @@ def test_commitment_depth_optional():
     v = gate(prompt="test")
     # Text-heuristic fallback has no commitment depth
     assert v.commitment_depth is None
+
+
+def test_error_verdict_never_reads_as_maximal_trust():
+    """Regression: the top-level except returned trust_score=1.0 / risks 0.0, so
+    an invalid API key or rate limit read as a PERFECT measurement to a caller
+    thresholding on trust_score. A crash must yield a real fallback measurement
+    (text heuristic) or neutral 0.5s — never a fabricated perfect score."""
+    from styxx.gate import gate
+
+    class Anthropic:  # _client_kind matches on the class NAME, then dies at call time
+        class messages:
+            @staticmethod
+            def create(**kwargs):
+                raise RuntimeError("invalid x-api-key")
+
+    v = gate(client=Anthropic(), model="claude-x", prompt="what is 2+2?")
+    assert v.trust_score < 1.0
+    assert any("raised" in w for w in v.warnings)
+
+
+def test_empty_prompt_verdict_is_neutral_not_perfect():
+    from styxx.gate import gate, RECOMMEND_UNKNOWN
+    v = gate(client=None, model="m", prompt="")
+    assert v.trust_score == 0.5
+    assert v.recommendation == RECOMMEND_UNKNOWN

@@ -318,14 +318,6 @@ def _gate_huggingface(
 ) -> GateVerdict:
     """Tier-1 residual probe path. Returns an 'unavailable' verdict
     when the atlas probe for (model, task) is not shipped yet."""
-    try:
-        pass
-    except Exception as e:
-        return _fallback_text_heuristic(
-            prompt, model, runtime=0.0,
-            reason=f"residual_probe import failed: {e}"
-        )
-
     return _fallback_text_heuristic(
         prompt, model, runtime=0.0,
         reason=(
@@ -399,9 +391,11 @@ def gate(
     Never raises — on error, returns a permissive "unknown" verdict.
     """
     if not prompt:
+        # A non-measurement must not read as a perfect one: 0.5 keeps a
+        # trust_score-thresholding caller from proceeding on nothing.
         return GateVerdict(
             prompt="", model=model, method="noop",
-            will_refuse=0.0, will_confabulate=0.0, trust_score=1.0,
+            will_refuse=0.5, will_confabulate=0.5, trust_score=0.5,
             recommendation=RECOMMEND_UNKNOWN,
             warnings=["empty prompt"],
         )
@@ -426,15 +420,28 @@ def gate(
             reason=f"unknown client kind: {kind}"
         )
     except Exception as e:
+        # Fail open (never block the caller's loop) but never fabricate a
+        # measurement: the old handler returned trust_score=1.0 / risks 0.0,
+        # so an invalid API key or rate limit read as a PERFECT reading to any
+        # caller thresholding on trust_score (docs/gate.md routes power users
+        # exactly there). Fall back to the text heuristic — a real, labelled
+        # measurement — and only if that too fails, return neutral 0.5s.
         warnings.warn(
-            f"styxx.gate: unexpected error, returning permissive "
-            f"verdict: {e}", RuntimeWarning, stacklevel=2)
-        return GateVerdict(
-            prompt=prompt, model=model, method="error",
-            will_refuse=0.0, will_confabulate=0.0, trust_score=1.0,
-            recommendation=RECOMMEND_UNKNOWN,
-            warnings=[f"gate() raised {type(e).__name__}: {e}"],
-        )
+            f"styxx.gate: unexpected error, falling back to text "
+            f"heuristic: {e}", RuntimeWarning, stacklevel=2)
+        try:
+            v = _fallback_text_heuristic(
+                prompt, model, runtime=0.0,
+                reason=f"gate() raised {type(e).__name__}: {e}")
+            v.warnings.append(f"gate() raised {type(e).__name__}: {e}")
+            return v
+        except Exception:
+            return GateVerdict(
+                prompt=prompt, model=model, method="error",
+                will_refuse=0.5, will_confabulate=0.5, trust_score=0.5,
+                recommendation=RECOMMEND_UNKNOWN,
+                warnings=[f"gate() raised {type(e).__name__}: {e}"],
+            )
 
 
 __all__ = [

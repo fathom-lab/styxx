@@ -267,19 +267,28 @@ def honest(
             abstention, "abstained", True, signal, method, conf,
             f"confab gate fired via {method} (signal {sig_s}) -> abstained")
 
-    if verify is not None:
-        v = _run_verify(verify, answer)
-        if v is False:
-            return HonestyVerdict(
-                abstention, "refuted", True, signal, "retrieval", conf,
-                "external verification refuted the answer -> withheld")
+    # tri-state: True (supported) / False (refuted) / None (verifier raised,
+    # returned None, or said "unclear"). The detail string is the human-facing
+    # audit trail — it must never stamp "verified" on a check that did not
+    # succeed, only on v is True.
+    v = _run_verify(verify, answer) if verify is not None else None
+    if v is False:
+        return HonestyVerdict(
+            abstention, "refuted", True, signal, "retrieval", conf,
+            "external verification refuted the answer -> withheld")
+
+    if verify is None:
+        note = "UNVERIFIED (pass verify= for the truth check) -> answered"
+    elif v is True:
+        note = "verified -> answered"
+    else:
+        note = ("verification inconclusive (verifier returned unknown or "
+                "raised) -> answered")
 
     sig_s = f"{signal:.3f}" if signal is not None else "n/a"
     if engine_flagged:
-        note = ("verified -> answered" if verify is not None
-                else "UNVERIFIED (pass verify= for the truth check) -> answered")
         detail = f"engine flagged a claim for verification (risk {sig_s}); {note}"
     else:
-        verified = " (verified)" if verify is not None else ""
+        verified = " (verified)" if v is True else ""
         detail = f"passed via {method} (signal {sig_s}){verified} -> answered"
     return HonestyVerdict(answer, "answered", False, signal, method, conf, detail)

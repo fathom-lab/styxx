@@ -170,9 +170,12 @@ def _extract_text(obj: Any) -> str:
             except Exception:
                 pass
 
-    # Last resort: stringify, but bail if it looks like an object repr
+    # Last resort: stringify, but bail if it looks like an object repr.
+    # " at 0x" (not " object at 0x") on purpose: a generator repr is
+    # "<generator object NAME at 0x...>" — the old check missed it and the
+    # decorator VERIFIED the repr string as if it were the response text.
     s = str(obj)
-    if s.startswith("<") and " object at 0x" in s:
+    if s.startswith("<") and " at 0x" in s:
         return ""
     return s
 
@@ -345,8 +348,12 @@ def _replace_text(original: Any, new_text: str) -> Any:
 #   @trust(threshold=0.8)            # configured
 #
 # Works with sync and async functions (auto-detected). Streaming
-# generators are accumulated, verified, and replayed.
+# generators are NOT accumulated: a generator return is unreadable to
+# the extractor and passes through UNVERIFIED (with a warning) —
+# accumulate the stream to a str before returning if you want coverage.
 # ────────────────────────────────────────────────────────────────────
+_UNREADABLE_WARNED: set = set()
+
 _REFERENCE_KWARG_ALIASES = (
     "context", "reference", "references", "passage", "passages",
     "docs", "documents", "source", "sources",
@@ -528,7 +535,30 @@ def trust(
             should_retry, halted)."""
             response_text = _extract_text(response)
             if not response_text:
-                # nothing to verify → pass through
+                # Distinguish "the model returned nothing" (response falsy —
+                # nothing to verify, quiet pass) from "we could not READ this
+                # response shape" (response truthy, extraction empty). The
+                # second used to pass through in total silence: the guardrail
+                # believed engaged, providing zero coverage — including for
+                # generators, despite the module docstring. Say so, once per
+                # shape.
+                if response is not None and response != "":
+                    tname = type(response).__name__
+                    if tname not in _UNREADABLE_WARNED:
+                        _UNREADABLE_WARNED.add(tname)
+                        import warnings as _w
+                        _w.warn(
+                            f"styxx.trust: could not extract text from a "
+                            f"{tname} response; it passed through "
+                            f"UNVERIFIED. Return a str (or a recognized "
+                            f"client shape) from the wrapped function, or "
+                            f"accumulate streams before returning.",
+                            RuntimeWarning, stacklevel=3)
+                    if verbose:
+                        import sys
+                        print(f"[styxx.trust] pass-through UNVERIFIED: "
+                              f"unreadable response type {tname}",
+                              file=sys.stderr)
                 return response, None, False, False
             verdict = _verify(prompt, response_text, reference)
 
@@ -570,7 +600,11 @@ def trust(
                     response, prompt, reference, attempt
                 )
                 if not should_retry:
-                    if on_halt == "annotate" and verdict is not None:
+                    # "annotate" is documented as ALWAYS returning a
+                    # TrustResult; verdict=None marks a skipped verification
+                    # (empty or unreadable response), which the caller must be
+                    # able to see rather than receive the raw shape back.
+                    if on_halt == "annotate":
                         return TrustResult(
                             response=final,
                             verdict=verdict,
@@ -592,7 +626,11 @@ def trust(
                     response, prompt, reference, attempt
                 )
                 if not should_retry:
-                    if on_halt == "annotate" and verdict is not None:
+                    # "annotate" is documented as ALWAYS returning a
+                    # TrustResult; verdict=None marks a skipped verification
+                    # (empty or unreadable response), which the caller must be
+                    # able to see rather than receive the raw shape back.
+                    if on_halt == "annotate":
                         return TrustResult(
                             response=final,
                             verdict=verdict,

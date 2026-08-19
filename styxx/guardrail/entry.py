@@ -167,9 +167,17 @@ def check(
                     premise=reference, hypothesis=response,
                 )
             else:
-                from .nli_signal import nli_contradiction_score
-                nli_contradict = nli_contradiction_score(
-                    reference=reference, response=response,
+                # get_default_scorer().score raises on missing deps / load
+                # failure, which the except below maps to None = EXCLUDED
+                # (v2 fallback) — the same semantics the explicit-scorer path
+                # has always had. The old call went through
+                # nli_contradiction_score, whose documented standalone
+                # behavior returns 0.0 on error: composed into fusion that
+                # fabricated a "no contradiction" reading (one of the two
+                # strongest v3 coefficients) whenever the model failed to load.
+                from .nli_signal import get_default_scorer
+                nli_contradict = get_default_scorer().score(
+                    premise=reference, hypothesis=response,
                 )
         except Exception:
             nli_contradict = None

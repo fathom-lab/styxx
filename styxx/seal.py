@@ -40,6 +40,18 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .certify import certify_doc
+
+# That import is the FIRST init of the styxx.certify submodule in most
+# processes; importlib then setattrs the submodule onto the styxx package,
+# clobbering the styxx.certify provenance FUNCTION that __init__ bound —
+# styxx.certify(vitals) raised TypeError afterwards, and which instrument the
+# name meant depended on import order. Restore the function (the package-wide
+# convention: the function wins the name; the OATH CLI is python -m
+# styxx.certify and is unaffected).
+import styxx as _styxx_pkg
+from .provenance import certify as _provenance_certify
+_styxx_pkg.certify = _provenance_certify
+del _styxx_pkg, _provenance_certify
 from .protocol import Experiment, PrologueError, GateSpecError
 
 __all__ = ["seal", "verify_seal", "Seal"]
@@ -120,7 +132,15 @@ def seal(doc_path: str | Path, receipts: list[str | Path],
 
 
 def verify_seal(seal_dict: dict) -> bool:
-    """Re-derive the seal's content hash; True iff untampered."""
+    """Re-derive the seal's content hash; True iff the dict matches its own hash.
+
+    Scope, stated exactly: this is an UNKEYED self-hash. It detects accidental
+    corruption, truncation, and copy-paste drift — it is NOT tamper-evidence
+    against an adversary, who can edit the dict and recompute seal_sha256 in
+    one line. Adversarial integrity needs a signature over the hash with a key
+    the adversary does not hold (see styxx.attestation's Ed25519 path) or an
+    external anchor (a committed git object, a timestamping service).
+    """
     d = dict(seal_dict)
     claimed = d.pop("seal_sha256", "")
     return hashlib.sha256(

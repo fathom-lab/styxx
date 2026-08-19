@@ -84,6 +84,8 @@ langfuse = ["langfuse>=2.0", "langchain-core>=0.1"]
 # 7.4.x: the cognometric registry card (luxury register) renders via matplotlib.
 # Both renderers are pulled in by the same extra.
 agent-card = ["Pillow>=10.0", "matplotlib>=3.7"]
+# 7.35.x: styxx.sense host_channel reads CPU/mem/disk/net via psutil.
+sense = ["psutil>=5.9"]
 # 0.3.0: tier 1 D-axis honesty — needs a local model
 tier1 = [
     "torch>=2.1",

@@ -30,6 +30,13 @@ from pathlib import Path
 
 from styxx.certify import certify_doc
 
+# restore styxx.certify (the provenance function) over the submodule the line
+# above just setattr'd onto the package — see the twin note in styxx/seal.py.
+import styxx as _styxx_pkg
+from styxx.provenance import certify as _provenance_certify
+_styxx_pkg.certify = _provenance_certify
+del _styxx_pkg, _provenance_certify
+
 __all__ = ["discover_certificates", "audit_document", "audit_corpus", "mutate_token"]
 
 

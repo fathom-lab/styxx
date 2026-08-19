@@ -406,12 +406,17 @@ def seal(*args, **kwargs):
     """The trust seal for agent work — lazy import so ``python -m styxx.seal`` stays
     warning-free (see styxx.seal for the full contract)."""
     from .seal import seal as _seal
+    # first init of the submodule setattrs it onto the package, clobbering THIS
+    # wrapper — without the restore, styxx.seal was callable exactly once
+    # (TypeError: 'module' object is not callable on the second call).
+    globals()["seal"] = _seal
     return _seal(*args, **kwargs)
 
 
 def verify_seal(*args, **kwargs):
     """Re-derive a seal's content hash; True iff untampered (lazy, see styxx.seal)."""
-    from .seal import verify_seal as _verify
+    from .seal import seal as _seal, verify_seal as _verify
+    globals()["seal"] = _seal      # same clobber via this path — see seal() above
     return _verify(*args, **kwargs)
 
 
@@ -424,7 +429,8 @@ def gate_diff(*args, **kwargs):
 
 def __getattr__(name):
     if name == "Seal":
-        from .seal import Seal
+        from .seal import Seal, seal as _seal
+        globals()["seal"] = _seal  # same clobber via this path — see seal() above
         return Seal
     if name == "DiffGate":
         from .diffgate import DiffGate

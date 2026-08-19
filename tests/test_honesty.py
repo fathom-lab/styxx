@@ -205,3 +205,27 @@ def test_exported_from_package_root():
     assert styxx.honest is honest
     assert styxx.HonestyVerdict is HonestyVerdict
     assert "honest" in styxx.__all__ and "HonestyVerdict" in styxx.__all__
+
+
+# --- the detail string is an audit trail: only v is True may say "verified" ---
+
+def test_inconclusive_verification_is_not_stamped_verified():
+    """Regression: the detail branched on `verify is not None` (the verifier's
+    mere PRESENCE), so a raising or unclear verifier produced 'verified ->
+    answered' on a claim the engine itself escalated for a truth check."""
+    def boom(a):
+        raise RuntimeError("network down")
+    # engine escalates (risk >= threshold, action retry) -> engine_flagged
+    class EngineVerdict:
+        risk, threshold, action = 0.75, 0.4, "retry"
+    v = honest("42", prompt="q", engine=lambda p, a: EngineVerdict(),
+               verify=boom)
+    assert v.action == "answered"                 # action semantics unchanged
+    assert "verified ->" not in v.detail
+    assert "inconclusive" in v.detail
+
+
+def test_supported_verification_still_says_verified():
+    v = honest("42", confidence=0.9, verify=lambda a: True)
+    assert v.action == "answered"
+    assert "(verified)" in v.detail or "verified ->" in v.detail

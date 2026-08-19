@@ -227,3 +227,22 @@ def test_check_v3_preferred_over_v2_when_nli_present():
     # v3 is only preferred when nli_contradict is present; and high
     # contradiction should drive risk up strictly.
     assert v_high.risk > v_low.risk
+
+
+def test_default_scorer_load_failure_excludes_signal_not_zero(monkeypatch):
+    """Regression: check(use_nli=True) without styxx[nli] went through
+    nli_contradiction_score, whose error path returns 0.0 — a fabricated
+    'no contradiction' reading fed into v3 calibrated fusion. A load failure on
+    the default-scorer path must EXCLUDE the signal (v2 fallback), matching the
+    explicit-scorer path."""
+    import styxx.guardrail.nli_signal as nli_mod
+    from styxx.guardrail import check
+
+    def boom():
+        raise ImportError("pip install styxx[nli]")
+    monkeypatch.setattr(nli_mod, "get_default_scorer", boom)
+    v = check("q?", "The sky is green.", reference="The sky is blue.",
+              use_nli=True)
+    names = {s.name for s in v.signals}
+    assert "nli_contradict" not in names          # excluded, not fabricated 0.0
+    assert names                                   # ...while other signals ran

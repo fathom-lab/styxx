@@ -80,7 +80,13 @@ def host_channel():
     tell "I sense the room" from "I sense my own fans," it is not a harness. Register it as a
     control alongside any real sensor.
     """
-    import psutil
+    try:
+        import psutil
+    except ImportError as e:
+        raise ImportError(
+            "styxx.sense.host_channel needs psutil, which the base install "
+            "does not carry: pip install psutil  (or: pip install 'styxx[sense]')"
+        ) from e
 
     psutil.cpu_percent(percpu=False)          # prime the delta-based counters
     state = {"net": psutil.net_io_counters(), "dsk": psutil.disk_io_counters(),

@@ -1126,6 +1126,7 @@ def dashboard(
     *,
     port: int = 9800,
     agent_name: str = "styxx agent",
+    host: str = "127.0.0.1",
 ) -> None:
     """Start the live cognitive display server.
 
@@ -1136,6 +1137,10 @@ def dashboard(
     Args:
         port:        HTTP port (default 9800)
         agent_name:  displayed in the header
+        host:        bind address. Default 127.0.0.1 — the display serves
+                     prompt/response text with NO auth, so it must not face
+                     the network unless you opt in explicitly ("" or
+                     "0.0.0.0" to expose; the banner then says so).
 
     Usage:
         import styxx
@@ -1144,10 +1149,18 @@ def dashboard(
     _watcher.start()
 
     handler = _make_handler()
-    server = _ThreadedServer(("", port), handler)
+    # ("", port) bound ALL interfaces while the banner announced localhost —
+    # unauthenticated prompt/response text served to the LAN by default.
+    server = _ThreadedServer((host, port), handler)
 
     log_path = _audit_log_path()
-    print(f"[styxx] cognitive display at http://localhost:{port}", file=sys.stderr)
+    shown = host or "0.0.0.0"
+    if shown == "0.0.0.0":
+        print(f"[styxx] cognitive display at http://{shown}:{port} "
+              f"(ALL interfaces — no auth; anyone on the network can read "
+              f"prompt/response text)", file=sys.stderr)
+    else:
+        print(f"[styxx] cognitive display at http://{shown}:{port}", file=sys.stderr)
     print(f"[styxx] watching {log_path}", file=sys.stderr)
     print("[styxx] press ctrl+c to stop", file=sys.stderr)
 

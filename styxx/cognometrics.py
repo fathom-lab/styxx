@@ -864,9 +864,14 @@ def tool_cogn_deception_v2(args: Dict[str, Any]) -> Dict[str, Any]:
         return {"error": str(e)}
 
     out = verdict.as_dict()
-    # add a top-level usability note
+    # needs_revision is the BOOLEAN revision gate every other cogn tool exposes;
+    # it used to carry a truthy advisory STRING in v0_fallback mode (an agent
+    # following the documented protocol revised clean answers in fallback mode
+    # and skipped revision on nli-mode deceptive ones — anti-correlated with the
+    # verdict). The gate now tracks the verdict; the advisory has its own key.
+    out["needs_revision"] = bool(verdict.shows_signature)
     if verdict.mode == "v0_fallback":
-        out["needs_revision"] = (
+        out["fallback_note"] = (
             "v2 fell back to v0 lexical detector. Provide a `correct_reference` "
             "and use mode='nli' for ground-truth-grounded scoring (AUC 0.82 vs "
             "v0's 0.59 on TruthfulQA)."

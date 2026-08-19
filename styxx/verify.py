@@ -53,22 +53,47 @@ from typing import Any, List, Optional, Sequence, Tuple
 
 
 _CONFAB_CENTROID_CACHE: Optional[dict] = None
+_CONFAB_CENTROID_WARNED = False
 
 
 def _load_confab_centroid() -> Optional[dict]:
-    """Load the production-calibrated confabulation centroid (v0.4)."""
-    global _CONFAB_CENTROID_CACHE
+    """Load the production-calibrated confabulation centroid (v0.4).
+
+    Returns None — with a ONE-TIME warning — when the file is missing, corrupt,
+    or missing required keys. Silence here made Signal 1 (the headline
+    calibrated signal) silently absent: a response closer to the confabulation
+    centroid than recall verified "all signals clear" on a partial install.
+    """
+    global _CONFAB_CENTROID_CACHE, _CONFAB_CENTROID_WARNED
     if _CONFAB_CENTROID_CACHE is not None:
         return _CONFAB_CENTROID_CACHE
+
+    def _warn(msg: str) -> None:
+        global _CONFAB_CENTROID_WARNED
+        if not _CONFAB_CENTROID_WARNED:
+            _CONFAB_CENTROID_WARNED = True
+            import warnings
+            warnings.warn(
+                f"styxx.verify: {msg} — the confabulation-centroid signal "
+                f"(Signal 1) will NOT be evaluated.", RuntimeWarning, stacklevel=3)
+
     path = Path(__file__).resolve().parent / "centroids" / "confabulation_v0.4.json"
     if not path.exists():
+        _warn(f"centroid file missing: {path}")
         return None
     try:
         with open(path, "r", encoding="utf-8") as f:
-            _CONFAB_CENTROID_CACHE = json.load(f)
-        return _CONFAB_CENTROID_CACHE
-    except Exception:
+            data = json.load(f)
+    except Exception as e:
+        _warn(f"centroid file unreadable ({type(e).__name__}: {e})")
         return None
+    missing = [k for k in ("pooled_sigma", "confab_centroid", "control_centroid")
+               if k not in data]
+    if missing:  # a parseable file without the keys used to KeyError mid-verify
+        _warn(f"centroid file lacks required keys {missing}")
+        return None
+    _CONFAB_CENTROID_CACHE = data
+    return _CONFAB_CENTROID_CACHE
 
 
 @dataclass
@@ -256,6 +281,8 @@ def verify(
     # effect size of the v0.4 production calibration set (42 confab / 18
     # control; centroids/confabulation_v0.4.json, effect_sizes_d[12]) --
     # a separate measurement from the paper's d=2.04 (N=92 matched controls).
+    if _confab_centroid is None:
+        reasons.append("confab centroid unavailable — centroid signal not evaluated")
     if confab_check is True:
         trustworthy = False
         reasons.append(

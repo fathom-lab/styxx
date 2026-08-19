@@ -289,3 +289,42 @@ def test_is_trusted_false():
     def a(q):
         return q
     assert is_trusted(a) is False
+
+
+# ---- unreadable response shapes must be visible, not silent (2026-08-19) ----
+
+def test_unreadable_shape_passes_through_with_a_warning():
+    """Regression: a truthy response the extractor cannot read (a generator,
+    a custom client object with a default repr) passed through with no verdict,
+    no warning, and no verbose line — the guardrail silently provided zero
+    coverage while the caller believed it engaged."""
+    import sys
+    import warnings as w
+    from styxx import trust
+
+    # `import styxx.trust` yields the decorator FUNCTION (styxx/__init__
+    # rebinds the name); the module object lives in sys.modules.
+    sys.modules["styxx.trust"]._UNREADABLE_WARNED.clear()
+
+    @trust
+    def streamer(prompt="q"):
+        return (x for x in "abc")   # generator: unreadable to the extractor
+
+    with w.catch_warnings(record=True) as caught:
+        w.simplefilter("always")
+        out = streamer(prompt="q")
+    assert hasattr(out, "__next__")            # raw response preserved
+    assert any("UNVERIFIED" in str(c.message) for c in caught)
+
+
+def test_annotate_always_returns_trustresult_even_when_skipped():
+    from styxx import trust
+    from styxx.trust import TrustResult
+
+    @trust(on_halt="annotate")
+    def streamer(prompt="q"):
+        return (x for x in "abc")
+
+    out = streamer(prompt="q")
+    assert isinstance(out, TrustResult)        # documented contract
+    assert out.verdict is None                 # verification was skipped, visibly

@@ -93,25 +93,43 @@ def _restrict_acl_windows(p: Path) -> None:
     if not user:
         return
     try:
-        subprocess.run(
+        r = subprocess.run(
             ["icacls", str(p), "/inheritance:r", "/grant:r", f"{user}:F"],
             capture_output=True,
             timeout=10,
             creationflags=subprocess.CREATE_NO_WINDOW,
         )
-    except Exception:
-        pass
+        if r.returncode != 0:
+            import warnings
+            warnings.warn(
+                f"styxx.stream: could not restrict ACL on {p} (icacls exit "
+                f"{r.returncode}) — the credentials file keeps its inherited "
+                f"permissions.", RuntimeWarning, stacklevel=2)
+    except Exception as e:
+        import warnings
+        warnings.warn(
+            f"styxx.stream: could not restrict ACL on {p} "
+            f"({type(e).__name__}: {e}) — the credentials file keeps its "
+            f"inherited permissions.", RuntimeWarning, stacklevel=2)
 
 
 def _save_creds(data: dict) -> None:
     p = _creds_path()
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    payload = json.dumps(data, indent=2)
     if os.name == "nt":
+        # No mode-at-create on Windows; write then restrict, and _restrict_acl_windows
+        # now WARNS instead of failing open silently.
+        p.write_text(payload, encoding="utf-8")
         _restrict_acl_windows(p)
         return
+    # POSIX: create owner-only from the first byte — write-then-chmod left a
+    # window where the token sat world-readable under the default umask.
+    fd = os.open(str(p), os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as fh:
+        fh.write(payload)
     try:
-        os.chmod(p, 0o600)
+        os.chmod(p, 0o600)     # pre-existing file: O_CREAT mode does not apply
     except (OSError, NotImplementedError):
         pass
 
