@@ -114,11 +114,12 @@ def _to_dict(obj: Any) -> Any:
         return [_to_dict(v) for v in obj]
     if is_dataclass(obj):
         return _to_dict(asdict(obj))
-    if hasattr(obj, "to_dict"):
-        try:
-            return _to_dict(obj.to_dict())
-        except Exception:
-            pass
+    for spelling in ("to_dict", "as_dict"):     # styxx result objects use both
+        if hasattr(obj, spelling):
+            try:
+                return _to_dict(getattr(obj, spelling)())
+            except Exception:
+                pass
     # fall back to public attrs
     out: Dict[str, Any] = {}
     for name in dir(obj):
@@ -265,24 +266,36 @@ def tool_classify_trajectory(args: Dict[str, Any]) -> Dict[str, Any]:
 
 def tool_weather_report(args: Dict[str, Any]) -> Dict[str, Any]:
     import styxx
-    window = int(args.get("window") or 100)
+    # weather() takes a TIME window (hours), keyword-only. The old call passed
+    # window=<count>, which raised TypeError on every invocation — and the
+    # except below then reported the crash as gate:"pass". A crash, an empty
+    # window and a healthy fleet must be three distinguishable payloads.
+    window_hours = float(args.get("window_hours") or args.get("window") or 24.0)
     try:
-        report = styxx.weather(window=window) if callable(getattr(styxx, "weather", None)) else None
-    except Exception:
-        report = None
-    if report is None:
+        report = styxx.weather(window_hours=window_hours) if callable(getattr(styxx, "weather", None)) else None
+    except Exception as e:
         return {
-            "summary": "no recent cognitive vitals in this process",
-            "gate": "pass",
-            "window": window,
+            "error": f"{type(e).__name__}: {e}",
+            "gate": "error",
+            "window_hours": window_hours,
+        }
+    if report is None:
+        # weather() returns None below 5 entries: genuinely no data, not a pass.
+        return {
+            "summary": "no recent cognitive vitals in this process (< 5 audit entries in window)",
+            "gate": "no_data",
+            "window_hours": window_hours,
         }
     data = _to_dict(report)
     if isinstance(data, dict):
         data.setdefault("summary", str(report))
-        data.setdefault("gate", "pass")
-        data.setdefault("window", window)
+        # factual aggregation, not calibration: any warn/fail entry in the
+        # window makes the fleet gate "warn"; never stamp "pass" by default.
+        warn_rate = float(data.get("warn_rate") or 0.0)
+        data.setdefault("gate", "warn" if warn_rate > 0 else "pass")
+        data.setdefault("window_hours", window_hours)
         return data
-    return {"summary": str(report), "gate": "pass", "window": window}
+    return {"summary": str(report), "gate": "unknown", "window_hours": window_hours}
 
 
 # ---------------------------------------------------------------------------

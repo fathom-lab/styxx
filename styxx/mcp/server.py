@@ -161,7 +161,12 @@ WEATHER_INPUT = {
     "type": "object",
     "additionalProperties": False,
     "properties": {
-        "window": {"type": "integer", "minimum": 1, "default": 100},
+        # styxx.weather() reads a TIME window (keyword-only window_hours); the
+        # old "window" (a count) never matched the engine's signature and every
+        # call raised TypeError. "window" is still accepted, interpreted as hours.
+        "window_hours": {"type": "number", "exclusiveMinimum": 0, "default": 24},
+        "window": {"type": "integer", "minimum": 1,
+                   "description": "deprecated alias for window_hours"},
     },
 }
 
@@ -407,7 +412,12 @@ async def list_tools() -> List[Tool]:
         ),
         Tool(
             name="weather_report",
-            description="Return a fleet-level cognitive weather report over the last N observations.",
+            description=(
+                "Return a fleet-level cognitive weather report over the last "
+                "window_hours of audit entries. gate is 'pass'/'warn' from the "
+                "window's own entries, 'no_data' below 5 entries, 'error' with "
+                "an error field if the engine failed — never a defaulted pass."
+            ),
             inputSchema=WEATHER_INPUT,
         ),
         Tool(

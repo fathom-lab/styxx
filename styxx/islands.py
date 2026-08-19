@@ -384,7 +384,10 @@ def main(argv=None) -> int:
         if not a.npz and not a.demo:
             print("no .npz given — running --demo. Pass a file to survey your own cohort.\n")
         return _demo()
-    z = np.load(a.npz, allow_pickle=True)
+    # allow_pickle stays False: the declared contract is numeric (n_items, dim)
+    # arrays, and cohort files are exchanged between labs — unpickling an
+    # attacker's object array executes code before survey() sees a number.
+    z = np.load(a.npz, allow_pickle=False)
     reps = {n: np.asarray(z[n]) for n in z.files}
     s = survey(reps, k=a.k)
     print(s)
