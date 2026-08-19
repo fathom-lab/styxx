@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -58,6 +59,13 @@ def _decimals(tok: str) -> int:
 
 _TABLE_SEP = re.compile(r"^\s*\|[\s:|-]+\|?\s*$")
 _FORMULA_AFTER = re.compile(r"^\s?[−–-]\s?[A-Za-z]")   # '1−syc', '1-dec': notation, not a claim
+# markdown STRUCTURE lines whose leading small int is an artifact (heading number,
+# bullet content marker, blockquote, footnote def) rather than a claim. The line-start
+# filter below applies ONLY on these: an unconditional positional drop made every
+# line-initial single-digit count invisible to extraction ("9/12 held" led its line ->
+# the doctored 9 never entered the ledger -> OATH-HELD by omission, the inverse of the
+# oath), while the identical token mid-line was correctly flagged.
+_MD_STRUCTURE = re.compile(r"^\s{0,3}(?:#{1,6}\s|[-*+]\s|>\s|\[\^?\d+\]:)")
 
 
 def extract_numbers(text: str) -> list[dict]:
@@ -90,8 +98,11 @@ def extract_numbers(text: str) -> list[dict]:
             raw = tok.replace(",", "")
             if _YEAR.match(raw.lstrip("+-")):
                 continue
-            # markdown heading/bullet/link artifacts: a bare int at line start
-            if m.start() <= 2 and "." not in raw and abs(int(raw)) < 10:
+            # markdown heading/bullet artifacts: a bare int at the start of a
+            # STRUCTURE line only — and never a slash-pair numerator ("7/12").
+            if (m.start() <= 2 and "." not in raw and abs(int(raw)) < 10
+                    and scrub[m.end():m.end() + 1] != "/"
+                    and _MD_STRUCTURE.match(line)):
                 continue
             if _FORMULA_AFTER.match(scrub[m.end():]):
                 continue   # notation like '1−syc' — not a numeric claim
@@ -171,7 +182,14 @@ def _match(doc_val: float, doc_dec: int, r_val: float, allow_scaling: bool = Tru
         # percent <-> fraction (doc says 80%, receipt holds 0.80; or doc 0.8 vs receipt 80)
         for scale in (100.0, 0.01):
             rv = r_val * scale
-            if doc_val == rv:
+            # The product is ARITHMETIC, not a parsed decimal: 0.29*100 is
+            # 28.999999999999996 in float64, so bare == made integer-percent
+            # verdicts value-dependent noise (29% vs {"recall": 0.29} was
+            # UNGROUNDED while 13% vs 0.13 verified — which correct claims
+            # failed depended on the binary representation of the fraction).
+            # rel_tol 1e-9 admits only representation error; a real mutation
+            # differs at the first meaningful digit and still fails.
+            if math.isclose(doc_val, rv, rel_tol=1e-9, abs_tol=1e-12):
                 return True
             if doc_dec > 0 and abs(round(rv, doc_dec) - doc_val) <= 0.5 * 10 ** (-doc_dec) + 1e-12:
                 return True

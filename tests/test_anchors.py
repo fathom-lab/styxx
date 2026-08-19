@@ -163,3 +163,24 @@ def test_p_alt_direct_and_input_validation():
         blindspot_power(20, J=3, fp_rate=0.10)                  # neither trap_rate nor p_alt
     with pytest.raises(ValueError):
         min_anchors_for_power(0.99999, J=3, fp_rate=0.10, trap_rate=0.15, k_max=5)  # unreachable
+
+
+def test_deaf_panel_voids_with_a_small_pos_stratum():
+    """Regression: the noise margin divided BOTH binomial variance terms by len(neg),
+    understating the 3-sigma band whenever pos was the smaller stratum — a coin-flip
+    judge cleared the gate ~5.5% of the time at 400/10 instead of ~0.1%. The margin
+    now uses per-stratum variances (like the garbage z eight lines below always did)."""
+    rng = np.random.default_rng(7)
+    deaf_a = np.full(4, 0.5)
+    n_void = 0
+    trials = 40
+    for t in range(trials):
+        y, V = make_panel(1000 + t, alphas=deaf_a, betas=deaf_a)
+        neg = (rng.random((400, 4)) < 0.5).astype(int)
+        pos = (rng.random((10, 4)) < 0.5).astype(int)   # tiny pos stratum
+        rep = audit_panel(V, neg, pos, n_boot=50, null_sims=0)
+        if rep["verdict"] == "VOID_PANEL__uninformative":
+            n_void += 1
+    # binomial(40, per-panel escape ~0.4%) — even 2 escapes across 40 panels is
+    # p<1e-2 under the fixed gate, while the buggy gate escaped ~20% of panels.
+    assert n_void >= trials - 1

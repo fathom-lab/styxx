@@ -153,8 +153,13 @@ def audit_panel(V, neg, pos, *, garbage=None, gate=INFORMATIVENESS_GATE, n_boot=
     rng = np.random.default_rng(seed)
     a_hat, b_hat = neg.mean(0), pos.mean(0)
     # noise-margin informativeness gate: measured deaf-panel VOID 1.000 vs 0.967 for the plain
-    # gate on the Stage-A characterization run
-    margin = gate + 3 * np.sqrt((a_hat * (1 - a_hat) + b_hat * (1 - b_hat)) / len(neg))
+    # gate on the Stage-A characterization run. Per-stratum variances: b_hat is estimated from
+    # pos, so its binomial term divides by len(pos) — dividing both by len(neg) understated the
+    # 3-sigma band whenever pos was the smaller stratum (a deaf judge passed ~5.5% instead of
+    # ~0.1% at 400/10), a favourable-direction failure: the gate silently lost its refusal.
+    # (The garbage-stratum z below always had the per-stratum form; Stage-A ran at 400/400
+    # where the two coincide, so the published VOID rate is unaffected at its design point.)
+    margin = gate + 3 * np.sqrt(a_hat * (1 - a_hat) / len(neg) + b_hat * (1 - b_hat) / len(pos))
     keep = (b_hat - a_hat) >= margin
     garb = None
     if garbage is not None:

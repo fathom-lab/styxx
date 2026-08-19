@@ -170,3 +170,62 @@ def test_v062_en_dash_range_second_half_not_extracted(tmp_path):
     cert = certify_doc(doc, [rp])
     toks = [e["token"] for e in cert["ledger"]]
     assert "0.51" in toks and "31" not in toks
+
+
+# ---- percent<->fraction scaling: representation-tolerant equality (2026-08-19) ----
+# 0.29*100 is 28.999999999999996 in float64; bare == in the scaling branch made
+# integer-percent verdicts value-dependent noise (29% failed, 13% passed, against
+# exactly-matching receipts). The comparison now uses math.isclose so only
+# representation error is forgiven — a genuine mutation still fails.
+
+def test_integer_percent_verifies_against_inexact_fraction_product(tmp_path):
+    assert _status(tmp_path, "the held-out recall reached 29% this run.",
+                   {"recall": 0.29}, "29") == "VERIFIED"
+
+
+def test_integer_percent_still_fails_on_a_real_mutation(tmp_path):
+    assert _status(tmp_path, "the held-out recall reached 30% this run.",
+                   {"recall": 0.29}, "30") == "UNGROUNDED"
+
+
+def test_fraction_claim_verifies_against_inexact_percent_product(tmp_path):
+    # the 0.01 scale direction: doc quotes the fraction, receipt holds the percent
+    assert _status(tmp_path, "the held-out recall reached 0.57 this run (57%).",
+                   {"recall_pct": 57.0}, "0.57") == "VERIFIED"
+
+
+# ---- line-start artifact filter gated on markdown structure (2026-08-19) ----
+# The unconditional positional drop made every line-initial single-digit count
+# invisible to extraction: "9/12 held" at line start certified OATH-HELD against
+# a receipt holding 7 because the doctored 9 never entered the ledger.
+
+def test_line_initial_slash_pair_numerator_is_audited(tmp_path):
+    # doctored numerator at line start must be visible and UNGROUNDED
+    assert _status(tmp_path, "9/12 held at 0/12 false alarms in this run.",
+                   {"n_held": 7, "n": 12, "false_alarms": 0}, "9") == "UNGROUNDED"
+
+
+def test_line_initial_slash_pair_numerator_verifies_when_true(tmp_path):
+    assert _status(tmp_path, "7/12 held at 0/12 false alarms in this run.",
+                   {"n_held": 7, "n": 12, "false_alarms": 0}, "7") == "VERIFIED"
+
+
+def test_heading_number_is_still_an_artifact(tmp_path):
+    # "# 3 overview" — the 3 is a heading number, not a claim; must stay out
+    doc = tmp_path / "d.md"
+    doc.write_text("# 3 overview\n\nprose sentence.\n", encoding="utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_text("{}", encoding="utf-8")
+    from styxx.certify import certify_doc
+    cert = certify_doc(doc, [rp])
+    assert all(e["token"] != "3" for e in cert["ledger"])
+
+
+def test_bullet_marker_small_int_is_still_an_artifact(tmp_path):
+    doc = tmp_path / "d.md"
+    doc.write_text("intro sentence.\n\n- 3 point summary follows\n", encoding="utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_text("{}", encoding="utf-8")
+    from styxx.certify import certify_doc
+    cert = certify_doc(doc, [rp])
+    assert all(e["token"] != "3" for e in cert["ledger"])
