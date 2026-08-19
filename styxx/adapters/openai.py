@@ -142,23 +142,34 @@ class _CompletionsShim:
         support logprobs), we fall through to a normal call with
         .vitals = None.
         """
-        # Inject logprob request fields if missing
-        injected = False
+        # Inject logprob request fields if missing. Track WHICH keys we added:
+        # the retry below must never strip a value the caller supplied.
+        injected_keys = []
         if "logprobs" not in kwargs:
             kwargs["logprobs"] = True
-            injected = True
+            injected_keys.append("logprobs")
         if "top_logprobs" not in kwargs:
             kwargs["top_logprobs"] = 5
-            injected = True
+            injected_keys.append("top_logprobs")
 
         try:
             response = self._inner.create(*args, **kwargs)
-        except Exception:
-            if injected:
-                # Some models/providers reject top_logprobs.
-                # Retry without the injection.
-                kwargs.pop("logprobs", None)
-                kwargs.pop("top_logprobs", None)
+        except Exception as e:
+            # The retry costs a SECOND PAID CALL. It is only justified when the
+            # provider rejected the fields we injected. A bare `except
+            # Exception` retried on rate limits, timeouts and auth failures too
+            # — silently doubling spend, immediately re-hitting a rate-limited
+            # endpoint, and (because `injected` was true whenever EITHER field
+            # was missing) stripping a logprobs=True the caller passed
+            # explicitly, so their own request came back unscored.
+            if injected_keys and _is_param_rejection(e, injected_keys):
+                for k in injected_keys:
+                    kwargs.pop(k, None)
+                warnings.warn(
+                    f"styxx.OpenAI: provider rejected {injected_keys} "
+                    f"({type(e).__name__}); retrying once without them. This "
+                    f"response will carry vitals=None.",
+                    RuntimeWarning, stacklevel=2)
                 response = self._inner.create(*args, **kwargs)
                 try:
                     _attach_vitals(response, None)
@@ -201,6 +212,29 @@ class _CompletionsShim:
             )
             _attach_vitals(response, None)
         return response
+
+
+def _is_param_rejection(exc: Exception, keys: List[str]) -> bool:
+    """True iff this error looks like the provider rejecting `keys`.
+
+    Deliberately narrow: the caller of this pays for a duplicate request when it
+    returns True, so a rate limit, timeout, auth failure or server error must
+    read as False. Vendor SDK exception classes are not imported (styxx stays
+    dependency-light), so the discrimination is on the error TEXT naming one of
+    the injected parameters, plus a bad-request-shaped status/type.
+    """
+    text = f"{type(exc).__name__}: {exc}".lower()
+    # An explicit non-400 status is never a parameter problem.
+    status = getattr(exc, "status_code", None) or getattr(exc, "http_status", None)
+    if isinstance(status, int) and status != 400:
+        return False
+    if any(k.lower() in text for k in keys):
+        return True
+    # Some providers reject without naming the field; accept only clearly
+    # bad-request-shaped errors, never transport/limit/auth ones.
+    shape = ("badrequest", "invalidrequest", "unprocessable", "unsupported",
+             "not supported", "unrecognized", "unknown parameter")
+    return any(s in text for s in shape)
 
 
 def _attach_vitals(response: Any, vitals: Optional[Vitals]) -> None:
