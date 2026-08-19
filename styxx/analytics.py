@@ -89,22 +89,22 @@ def _audit_log_path() -> Path:
 # Cache is invalidated automatically when the file is written (mtime
 # advances) or rotated (different path shape). No TTL needed.
 
-_AUDIT_CACHE_KEY: Optional[tuple] = None
-_AUDIT_CACHE_ENTRIES: Optional[List[dict]] = None
+# Per-path cache (was a single slot): load_audit reads the rotated archive as
+# well as the live log, and one slot would thrash between the two on every call.
+_AUDIT_CACHE: dict = {}
 
 
 def _read_and_cache_audit(path: Path) -> List[dict]:
-    """Read + parse the audit log once, cached on (path, mtime, size)."""
-    global _AUDIT_CACHE_KEY, _AUDIT_CACHE_ENTRIES
-
+    """Read + parse one audit log file, cached on (path, mtime, size)."""
     try:
         stat = path.stat()
     except OSError:
         return []
     key = (str(path), stat.st_mtime_ns, stat.st_size)
 
-    if _AUDIT_CACHE_KEY == key and _AUDIT_CACHE_ENTRIES is not None:
-        return _AUDIT_CACHE_ENTRIES
+    hit = _AUDIT_CACHE.get(str(path))
+    if hit is not None and hit[0] == key:
+        return hit[1]
 
     entries: List[dict] = []
     try:
@@ -120,8 +120,7 @@ def _read_and_cache_audit(path: Path) -> List[dict]:
     except OSError:
         return []
 
-    _AUDIT_CACHE_KEY = key
-    _AUDIT_CACHE_ENTRIES = entries
+    _AUDIT_CACHE[str(path)] = (key, entries)
     return entries
 
 
@@ -132,9 +131,7 @@ def clear_audit_cache() -> None:
     automatically. Call this from tests or after external editors
     touch the file in a way that doesn't change size/mtime.
     """
-    global _AUDIT_CACHE_KEY, _AUDIT_CACHE_ENTRIES
-    _AUDIT_CACHE_KEY = None
-    _AUDIT_CACHE_ENTRIES = None
+    _AUDIT_CACHE.clear()
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -840,10 +837,17 @@ def load_audit(
     applied on top of the cached list.
     """
     path = _audit_log_path()
-    if not path.exists():
+    archive = path.with_suffix(path.suffix + ".1")
+    if not path.exists() and not archive.exists():
         return []
 
-    entries = _read_and_cache_audit(path)
+    # Read the rotated archive too. Rotation (10MB) used to amputate every
+    # window silently: no reader ever opened chart.jsonl.1, so the moment the
+    # live log rotated, a caller asking for 24h/7d/30d got only post-rotation
+    # entries while believing it had the window. Archive entries are older, so
+    # they lead. (One generation is kept — history beyond the previous archive
+    # is still dropped by rotation; that cap is now the only loss.)
+    entries = _read_and_cache_audit(archive) + _read_and_cache_audit(path)         if archive.exists() else _read_and_cache_audit(path)
 
     # Provenance filter (0.7.1): exclude demo/test data by default
     if source == "live_only":

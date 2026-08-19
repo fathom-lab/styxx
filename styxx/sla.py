@@ -20,7 +20,7 @@ a customer-facing task. This is the gate that prevents that.
 from __future__ import annotations
 
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 class CognitiveSLAViolation(Exception):
@@ -40,12 +40,22 @@ class SLAReport:
     fail_count: int
     n_entries: int
     violations: list  # list of string descriptions
+    # False when the window carried NO confidence readings at all. The
+    # min_confidence leg is then unevaluable: it used to run against a
+    # fabricated mean of 0.5 — above the 0.30 default floor — so the violation
+    # could never fire and an unmeasured axis certified as healthy. The leg is
+    # now skipped explicitly and the absence is disclosed here and in `notes`.
+    # (Text-only deployments legitimately log no phase4_conf; disclosing beats
+    # false-alarming them, but a fabricated pass is not disclosure.)
+    confidence_measured: bool = True
+    notes: list = field(default_factory=list)
 
     def __repr__(self) -> str:
         status = "HEALTHY" if self.healthy else "VIOLATION"
+        conf = f"{self.mean_confidence:.2f}" if self.confidence_measured else "n/a (unmeasured)"
         return (
             f"<SLA {status}: pass={self.gate_pass_rate*100:.0f}%, "
-            f"conf={self.mean_confidence:.2f}, "
+            f"conf={conf}, "
             f"{len(self.violations)} violations>"
         )
 
@@ -85,6 +95,8 @@ def check_health(
             fail_count=0,
             n_entries=n,
             violations=[],
+            confidence_measured=False,
+            notes=[f"insufficient data (n={n} < 3): no SLA leg was evaluated"],
         )
 
     gates = [e.get("gate") or "pending" for e in entries]
@@ -94,16 +106,25 @@ def check_health(
     pass_rate = pass_count / n
     warn_rate = (warn_count + fail_count) / n
 
+    # `!= 0` used to drop exactly-zero readings — the WORST ones — from the
+    # denominator, biasing the mean upward. A measured 0.0 is a reading.
     confs = [float(e["phase4_conf"]) for e in entries
-             if e.get("phase4_conf") is not None and e.get("phase4_conf") != 0]
+             if e.get("phase4_conf") is not None]
+    conf_measured = bool(confs)
     mean_conf = sum(confs) / len(confs) if confs else 0.5
 
     violations = []
+    notes = []
     if pass_rate < min_pass_rate:
         violations.append(
             f"gate pass rate {pass_rate*100:.0f}% < {min_pass_rate*100:.0f}% minimum"
         )
-    if mean_conf < min_confidence:
+    if not conf_measured:
+        notes.append(
+            f"min_confidence ({min_confidence:.2f}) NOT evaluated: no entry in "
+            f"the window carried a confidence reading"
+        )
+    elif mean_conf < min_confidence:
         violations.append(
             f"mean confidence {mean_conf:.2f} < {min_confidence:.2f} minimum"
         )
@@ -120,6 +141,8 @@ def check_health(
         fail_count=fail_count,
         n_entries=n,
         violations=violations,
+        confidence_measured=conf_measured,
+        notes=notes,
     )
 
 

@@ -223,10 +223,21 @@ def _parse_single_clause(clause: str) -> Callable[[Vitals], bool]:
             return bool(op_fn(v.phase4_late.confidence, thr))
         return _conf_pred
 
-    # prompt_type check (pass-through for now)
+    # prompt_type: REFUSED, not stubbed. `lambda v: True` here made a written
+    # constraint silently vanish — "gate == fail AND prompt_type == code" fired
+    # on every gate==fail regardless of prompt type, so a rule an operator
+    # scoped to one prompt shape ran globally (and `prompt_type != X`
+    # exclusions never excluded). Vitals carries no prompt_type field, so the
+    # clause cannot be evaluated at all; the rest of this grammar fails loudly
+    # at registration on an unparseable clause, and so does this.
     m = _RE_PROMPT_TYPE_CHECK.match(clause)
     if m:
-        return lambda v: True
+        raise ValueError(
+            f"prompt_type conditions are not supported in an autoreflex 'when' "
+            f"string ({clause!r}): Vitals does not carry prompt_type, so the "
+            f"clause cannot be evaluated. Remove it, or gate on context == "
+            f"<name> (set via styxx.set_context) instead."
+        )
 
     # Standard gate condition (handles phase-pinned, any-phase, gate status)
     return parse_condition(clause)
@@ -240,7 +251,6 @@ def _parse_compound_condition(when: str) -> Callable[[Vitals], bool]:
       - OR for alternative conditions (any must match) (0.9.5)
       - context == <name> / context != <name>
       - confidence > <threshold>
-      - prompt_type == <type>
 
     Precedence: AND binds tighter than OR.
     "A AND B OR C AND D" = "(A AND B) OR (C AND D)"

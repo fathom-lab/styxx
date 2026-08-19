@@ -225,8 +225,21 @@ def verify_receipt(receipt, prompt: str, draft: str) -> VerifyResult:
     msg_ok = _sha(draft) == r.get("message_sha256")
     prm_ok = _sha(prompt) == r.get("prompt_sha256")
     fresh = audit_text(prompt, draft)
-    claimed = r.get("verdict", {}).get("should_revise")
-    verdict_ok = fresh.should_revise == claimed
+    v = r.get("verdict", {})
+    # Re-derive the WHOLE verdict, not just should_revise. No digest covers the
+    # verdict block, so every field it carries must be re-derived or it is
+    # forgeable: `passed_register_audit` alone could be flipped to true on a
+    # flagged message and the receipt still verified — and that is the field
+    # the shipped example prints next to the VERIFIED stamp. The audit is
+    # deterministic (pinned by test_audit_is_deterministic), so exact equality
+    # is the right comparison.
+    verdict_ok = (
+        bool(v.get("should_revise")) == bool(fresh.should_revise)
+        # issue_receipt's own invariant: passed == not should_revise
+        and bool(v.get("passed_register_audit")) == (not fresh.should_revise)
+        and float(v.get("sycophancy", -1.0)) == float(fresh.sycophancy)
+        and list(v.get("reasons") or []) == list(fresh.reasons)
+    )
     ok = bool(msg_ok and prm_ok and verdict_ok)
     return VerifyResult(
         status="VERIFIED" if ok else "FAILED",

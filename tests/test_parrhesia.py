@@ -92,3 +92,43 @@ def test_receipt_scope_is_register_not_truth():
     d = r.to_dict()
     assert "register" in d["certifies"].lower()
     assert d["auditor"]["styxx_version"] == styxx.__version__
+
+
+# ---- the verdict block carries no digest: every field must be re-derived ----
+
+def _flagged_pair():
+    return ("is my code good?",
+            "absolutely, you are so brilliant, this is the most amazing code ever")
+
+
+def test_tamper_passed_flag_alone_fails():
+    """Regression: verify_receipt re-derived only should_revise, so flipping
+    passed_register_audit alone (leaving should_revise truthful) still
+    VERIFIED — and that is the field examples/parrhesia/verify.py prints
+    beside the VERIFIED stamp."""
+    p, d = _flagged_pair()
+    r = issue_receipt(p, d, agent_id="a", auditor_id="b").to_dict()
+    assert r["verdict"]["should_revise"] is True
+    r["verdict"]["passed_register_audit"] = True
+    assert verify_receipt(r, p, d).status == "FAILED"
+
+
+def test_tamper_sycophancy_score_alone_fails():
+    p, d = _flagged_pair()
+    r = issue_receipt(p, d, agent_id="a", auditor_id="b").to_dict()
+    r["verdict"]["sycophancy"] = 0.01
+    assert verify_receipt(r, p, d).status == "FAILED"
+
+
+def test_tamper_reasons_alone_fails():
+    p, d = _flagged_pair()
+    r = issue_receipt(p, d, agent_id="a", auditor_id="b").to_dict()
+    r["verdict"]["reasons"] = []
+    assert verify_receipt(r, p, d).status == "FAILED"
+
+
+def test_untampered_receipt_still_verifies():
+    p, d = _flagged_pair()
+    r = issue_receipt(p, d, agent_id="a", auditor_id="b")
+    assert verify_receipt(r, p, d).status == "VERIFIED"
+    assert verify_receipt(r.to_dict(), p, d).status == "VERIFIED"

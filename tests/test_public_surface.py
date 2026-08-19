@@ -1185,3 +1185,83 @@ def test_lazy_submodule_loads_do_not_clobber_public_callables(tmp_path):
                        capture_output=True, text=True)
     assert r.returncode == 0, r.stderr[-800:]
     assert "OK" in r.stdout
+
+
+def test_autoreflex_prompt_type_clause_refuses_instead_of_vanishing():
+    """Regression: `prompt_type == X` compiled to `lambda v: True`, so a rule
+    written as "gate == fail AND prompt_type == code" fired on EVERY gate==fail
+    — the operator's scoping silently vanished (and `!=` exclusions never
+    excluded). Vitals carries no prompt_type, so the clause must refuse."""
+    import pytest as _pytest
+    from styxx import autoreflex, list_autoreflex
+    from styxx.autoreflex import clear_autoreflex
+    from styxx.gates import clear_gates, list_gates
+
+    clear_autoreflex(); clear_gates()
+    with _pytest.raises(ValueError, match="prompt_type"):
+        autoreflex(when="gate == fail AND prompt_type == code",
+                   then=lambda v: None, name="scoped-rule")
+    # and it refuses BEFORE registering, so no zombie rule or hook is left
+    assert list_autoreflex() == []
+    assert not [g for g in list_gates() if "autoreflex" in (g.name or "")]
+    clear_autoreflex(); clear_gates()
+
+
+def test_check_health_does_not_fabricate_a_passing_confidence(monkeypatch):
+    """Regression: with no confidence readings in the window, mean_confidence was
+    a fabricated 0.5 — above the 0.30 default floor — so the min_confidence leg
+    could never fire and an unmeasured axis certified as healthy. The leg is now
+    skipped explicitly and the absence disclosed."""
+    import styxx.analytics as analytics
+    from styxx import check_health
+
+    monkeypatch.setattr(analytics, "load_audit", lambda last_n=None: [{"gate": "pass"}] * 4)
+    r = check_health()
+    assert r.confidence_measured is False
+    assert any("NOT evaluated" in n for n in r.notes)
+    assert "n/a" in repr(r)
+
+
+def test_check_health_counts_zero_confidence_readings(monkeypatch):
+    """Regression: `!= 0` dropped exactly-zero readings — the worst ones — from
+    the mean's denominator, biasing it upward (three 0.0s + one 0.9 read as 0.90
+    and healthy; the true mean is 0.225 and violates the floor)."""
+    import styxx.analytics as analytics
+    from styxx import check_health
+
+    monkeypatch.setattr(analytics, "load_audit", lambda last_n=None:
+                        [{"gate": "pass", "phase4_conf": 0.0}] * 3
+                        + [{"gate": "pass", "phase4_conf": 0.9}])
+    r = check_health(min_confidence=0.30)
+    assert abs(r.mean_confidence - 0.225) < 1e-9
+    assert r.confidence_measured is True
+    assert r.healthy is False
+
+
+def test_load_audit_spans_the_rotation_boundary(tmp_path, monkeypatch):
+    """Regression: rotation (10MB) renamed chart.jsonl -> chart.jsonl.1, but no
+    reader ever opened the archive — so the moment the log rotated, every
+    window query (weather, check_health, compliance) silently returned only
+    post-rotation entries while believing it had the full window."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
+    older = [{"ts": now - 3600, "gate": "pass", "source": "live"} for _ in range(5)]
+    newer = [{"ts": now - 60, "gate": "fail", "source": "live"} for _ in range(2)]
+    p.with_suffix(p.suffix + ".1").write_text(
+        "\n".join(json.dumps(e) for e in older) + "\n", encoding="utf-8")
+    p.write_text("\n".join(json.dumps(e) for e in newer) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+
+    got = analytics.load_audit(since_s=24 * 3600)
+    assert len(got) == 7
+    assert got[0]["gate"] == "pass" and got[-1]["gate"] == "fail"   # archive leads
+
+    # a fresh rotation leaves the live log empty — history must survive
+    p.write_text("", encoding="utf-8")
+    analytics.clear_audit_cache()
+    assert len(analytics.load_audit(since_s=24 * 3600)) == 5
