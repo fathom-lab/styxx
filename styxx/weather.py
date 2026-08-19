@@ -453,6 +453,13 @@ class WeatherReport:
             "narrative": self.narrative,
             "drift_vs_yesterday": round(self.drift_vs_yesterday, 4),
             "drift_vs_week": round(self.drift_vs_week, 4),
+            # The labels ride along: both drifts default to 1.0 when there is
+            # no baseline, and the ASCII render shows the qualifier while the
+            # machine-readable exports dropped it — so "insufficient history"
+            # was indistinguishable from measured perfect stability for every
+            # JSON consumer.
+            "drift_label_yesterday": self.drift_label_yesterday,
+            "drift_label_week": self.drift_label_week,
             "prescriptions": list(self.prescriptions),
             "trends": [
                 {"category": t.category, "direction": t.direction, "delta": t.delta}
@@ -469,7 +476,8 @@ class WeatherReport:
         lines.append(f"condition: {self.condition}")
         lines.append(f"mood: {self.current_mood}")
         lines.append(f"gate pass: {self.gate_pass_rate * 100:.0f}%")
-        lines.append(f"drift vs yesterday: {self.drift_vs_yesterday:.2f}")
+        lines.append(f"drift vs yesterday: {self.drift_vs_yesterday:.2f} "
+                     f"({self.drift_label_yesterday})")
         lines.append("")
         if self.prescriptions:
             lines.append("prescriptions:")

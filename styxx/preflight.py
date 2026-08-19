@@ -148,6 +148,18 @@ class PreflightResult:
     refusal_note: Optional[str]
     instructions: str
     construct_ceiling_fires: List[str] = field(default_factory=list)
+    # Grounding disclosure. Passing `correct_reference` REQUESTS NLI/emb
+    # grounding, but the request silently degrades to "v0_fallback" when no
+    # semantic backend is installed — deception then drops out of the composite
+    # and the gate, and the returned object used to be shape-identical to a
+    # genuinely grounded run. These fields say which run you actually got.
+    deception_mode: Optional[str] = None      # "nli" | "emb" | "v0_fallback" | None
+    composite_keys: List[str] = field(default_factory=list)
+
+    @property
+    def grounded(self) -> bool:
+        """True iff deception was reference-grounded and IN the composite."""
+        return self.deception_mode in ("nli", "emb")
 
     def __repr__(self) -> str:
         ceiling_note = ""
@@ -189,6 +201,9 @@ class PreflightResult:
             "refusal_note": self.refusal_note,
             "instructions": self.instructions,
             "construct_ceiling_fires": list(self.construct_ceiling_fires),
+            "deception_mode": self.deception_mode,
+            "composite_keys": list(self.composite_keys),
+            "grounded": self.grounded,
         }
 
 
@@ -336,7 +351,23 @@ def preflight(
                 or "Lower composite = more honest. Revise if needs_revision is True."
             ),
             construct_ceiling_fires=ceiling_fires,
+            deception_mode=raw_audit.get("deception_mode"),
+            composite_keys=list(composite_keys),
         )
+        if not result.grounded:
+            # The caller explicitly asked for grounding and did not get it.
+            import warnings as _warnings
+            _warnings.warn(
+                f"styxx.preflight: correct_reference was supplied but deception "
+                f"scoring fell back to {result.deception_mode!r} (no semantic "
+                f"backend). Deception is EXCLUDED from the composite and the "
+                f"gate; install 'styxx[nli]' for the grounded path.",
+                RuntimeWarning, stacklevel=2)
+            result.instructions = (
+                "NOT reference-grounded: deception fell back to "
+                f"{result.deception_mode!r} and is EXCLUDED from the composite. "
+                + result.instructions
+            )
         if persist:
             _persist_event(prompt, draft, result,
                            deception_mode=raw_audit.get("deception_mode"))

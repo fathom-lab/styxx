@@ -294,6 +294,12 @@ def write_audit(
             entry["outcome"] = "correct"
         elif gate in ("warn", "fail"):
             entry["outcome"] = "incorrect"
+        # Provenance: an auto-stamp is a heuristic; a human feedback() call is
+        # ground truth. Without this mark feedback() cannot tell them apart, so
+        # it skipped every auto-stamped entry and silently patched an OLDER one
+        # instead -- the correction landed on a different generation.
+        if entry.get("outcome") is not None:
+            entry["outcome_source"] = "auto"
 
     try:
         with open(path, "a", encoding="utf-8") as f:
@@ -527,6 +533,12 @@ def log(
             entry["outcome"] = "correct"
         elif gate in ("warn", "fail"):
             entry["outcome"] = "incorrect"
+        # Provenance: an auto-stamp is a heuristic; a human feedback() call is
+        # ground truth. Without this mark feedback() cannot tell them apart, so
+        # it skipped every auto-stamped entry and silently patched an OLDER one
+        # instead -- the correction landed on a different generation.
+        if entry.get("outcome") is not None:
+            entry["outcome_source"] = "auto"
 
     try:
         with open(path, "a", encoding="utf-8") as f:
@@ -604,9 +616,16 @@ def feedback(
         return 0
 
     patched = 0
-    # Walk backwards from end, patch up to last_n entries that lack outcome
+    considered = 0
+    blocked = 0
+    # Walk backwards over the last `last_n` PARSEABLE entries only — the window
+    # the caller means. The old loop scanned arbitrarily far back, skipping any
+    # entry that already carried an outcome, so with auto-feedback enabled
+    # (which stamps every entry at write time) a correction aimed at the latest
+    # generation silently landed on some much older outcome-less row — possibly
+    # a demo or cognometric one, since nothing filtered by source either.
     for i in range(len(lines) - 1, -1, -1):
-        if patched >= last_n:
+        if considered >= last_n:
             break
         line = lines[i].strip()
         if not line:
@@ -615,11 +634,25 @@ def feedback(
             entry = json.loads(line)
         except (json.JSONDecodeError, ValueError):
             continue
-        if entry.get("outcome") is not None:
-            continue  # already has feedback, skip
+        considered += 1
+        # A human correction outranks an auto-stamp, but never silently
+        # overwrites another human's verdict.
+        if entry.get("outcome") is not None and entry.get("outcome_source") != "auto":
+            blocked += 1
+            continue
         entry["outcome"] = outcome
+        entry["outcome_source"] = "human"
         lines[i] = json.dumps(entry) + "\n"
         patched += 1
+
+    if blocked and not patched:
+        import warnings as _warnings
+        _warnings.warn(
+            f"styxx.feedback({outcome!r}): the last {last_n} audit "
+            f"{'entry' if last_n == 1 else 'entries'} already carry a human "
+            f"outcome; nothing was patched (feedback is NOT applied to older "
+            f"entries — that would label a different generation).",
+            RuntimeWarning, stacklevel=2)
 
     if patched > 0:
         try:

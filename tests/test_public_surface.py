@@ -1265,3 +1265,95 @@ def test_load_audit_spans_the_rotation_boundary(tmp_path, monkeypatch):
     p.write_text("", encoding="utf-8")
     analytics.clear_audit_cache()
     assert len(analytics.load_audit(since_s=24 * 3600)) == 5
+
+
+def test_feedback_targets_the_intended_generation(tmp_path, monkeypatch):
+    """Regression: feedback() skipped any entry that already had an outcome and
+    walked further back — so with auto-feedback on (which stamps EVERY entry at
+    write time) a correction aimed at the latest generation silently labeled an
+    older, unrelated one."""
+    import json, warnings
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+
+    def append(entry):
+        with open(p, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+        analytics.clear_audit_cache()
+
+    def rows():
+        return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+    append({"ts": 1, "gate": "pending", "source": "live"})            # older, unlabeled
+    append({"ts": 2, "gate": "pass", "source": "live",
+            "outcome": "correct", "outcome_source": "auto"})          # auto-stamped latest
+
+    assert analytics.feedback("incorrect") == 1
+    r = rows()
+    assert r[-1]["outcome"] == "incorrect" and r[-1]["outcome_source"] == "human"
+    assert r[0].get("outcome") is None, "the older entry must never absorb the correction"
+
+    # the latest now carries a HUMAN verdict: refuse + warn rather than walk back
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        assert analytics.feedback("correct") == 0
+    assert any("feedback" in str(c.message) for c in caught)
+    assert rows()[0].get("outcome") is None
+
+
+def test_weather_exports_carry_the_drift_qualifier():
+    """Regression: drift defaults to 1.0 with no baseline and the ASCII render
+    showed 'insufficient history', but as_dict()/as_markdown() emitted the bare
+    1.0 — machine consumers could not tell it from measured perfect stability."""
+    import dataclasses
+    from styxx.weather import WeatherReport
+
+    req = [f.name for f in dataclasses.fields(WeatherReport)
+           if f.default is dataclasses.MISSING and f.default_factory is dataclasses.MISSING]
+    kw = {n: (0 if n in ("n_entries", "current_streak") else
+              (0.0 if n in ("gate_pass_rate", "warn_rate", "mean_confidence",
+                            "hall_rate", "window_hours") else "x")) for n in req}
+    r = WeatherReport(**kw)
+    d = r.as_dict()
+    assert d["drift_vs_yesterday"] == 1.0
+    assert d["drift_label_yesterday"] == "insufficient history"
+    assert d["drift_label_week"] == "insufficient history"
+    assert "insufficient history" in r.as_markdown()
+
+
+def test_preflight_discloses_a_silent_grounding_downgrade(monkeypatch):
+    """Regression: passing correct_reference REQUESTS NLI grounding, but with no
+    semantic backend it silently resolved to v0_fallback — deception dropped out
+    of the composite and the gate while the returned object stayed shape-
+    identical to a genuinely grounded run."""
+    import warnings
+    import styxx.guardrail.deception_v2 as deception_v2
+    from styxx import preflight
+
+    monkeypatch.setattr(deception_v2, "_has_sentence_transformers", lambda: False)
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        r = preflight("q?", "the sky is green",
+                      correct_reference="the sky is blue", persist=False)
+    assert r.grounded is False
+    assert r.deception_mode == "v0_fallback"
+    assert "deception" not in r.composite_keys      # excluded from the composite
+    assert any("correct_reference" in str(c.message) for c in caught)
+    assert "NOT reference-grounded" in r.instructions
+    assert r.as_dict()["grounded"] is False
+
+
+def test_preflight_grounded_path_reports_grounded():
+    import warnings
+    from styxx import preflight
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        r = preflight("q?", "the sky is green",
+                      correct_reference="the sky is blue", persist=False)
+    if r.deception_mode in ("nli", "emb"):          # backend present in this env
+        assert r.grounded is True
+        assert "deception" in r.composite_keys
+        assert not any("correct_reference" in str(c.message) for c in caught)
