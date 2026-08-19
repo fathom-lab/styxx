@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+Wave 3 of the adversarial audit reached the modules the first two waves never
+touched (adapters/watch, preflight/gates, receipts/signing, the vitals pipeline,
+MCP/CLI, numeric scoring). The verification fleet ran out of credits mid-wave, so
+every defect below was confirmed by reading the code directly rather than by a
+refuter — and each carries a regression test that fails against the old behavior.
+
+Same dominant shape as 7.36.0: **an absence that presents as a measurement.**
+
+### Fixed — gate bypass
+- `autoreflex`: a `prompt_type == X` clause compiled to `lambda v: True`, so a
+  written constraint silently vanished — `"gate == fail AND prompt_type == code"`
+  fired on EVERY gate failure regardless of prompt type, and `!=` exclusions
+  never excluded. `Vitals` carries no `prompt_type` field, so the clause never
+  could be evaluated; it now refuses at registration, before the rule is
+  appended, leaving no zombie rule or hook.
+
+### Fixed — an unverifiable claim that verified
+- `parrhesia.verify_receipt` re-derived only `should_revise`. Nothing digests
+  the verdict block, so flipping `passed_register_audit` alone on a flagged
+  message still returned VERIFIED — and that is the field the shipped example
+  prints beside the VERIFIED stamp. The whole verdict is re-derived now
+  (`passed`, `sycophancy`, `reasons`), including issue_receipt's own
+  `passed == not should_revise` invariant.
+
+### Fixed — absences presenting as measurements
+- `check_health` fabricated a passing confidence: with no readings,
+  `mean_confidence` defaulted to 0.5 — above the 0.30 floor — so the
+  `min_confidence` leg could never fire; and `!= 0` dropped exactly-zero
+  readings, the worst ones, from the denominator (three 0.0s + one 0.9 read as
+  0.90/healthy; the true mean is 0.225/violation). Zeros now count, and an
+  unmeasured window is disclosed (`confidence_measured`, a note, `n/a` in the
+  repr) instead of certified.
+- The 10MB log rotation amputated every analytics window: `chart.jsonl` became
+  `chart.jsonl.1`, which **no reader ever opened**, so a 24h/7d/30d query
+  returned only post-rotation entries while believing it had the window.
+  `load_audit` reads the archive too; the parse cache went per-path.
+- `weather`: drift defaults to 1.0 with no baseline, and while the ASCII render
+  showed "insufficient history", `as_dict()`/`as_markdown()` emitted the bare
+  1.0 — indistinguishable from measured perfect stability. Both exports now
+  carry the labels.
+- `preflight(correct_reference=...)` silently degraded to ungrounded `v0_fallback`
+  with no semantic backend — deception dropped out of the composite AND the gate
+  — while the result stayed shape-identical to a grounded run. `PreflightResult`
+  now carries `deception_mode` / `composite_keys` / `.grounded`, exports them,
+  warns on a downgrade, and says so in `instructions`.
+
+### Fixed — feedback landing on the wrong generation
+- `feedback()` skipped any entry that already carried an outcome and kept
+  walking back, so with auto-feedback enabled (which stamps every entry at write
+  time) a correction aimed at the latest generation silently labeled an older,
+  unrelated row — possibly a demo entry, since nothing filtered by source.
+  Outcomes now carry provenance: a human call overrides an auto-stamp on the
+  intended entry, never silently overwrites another human verdict, and never
+  displaces onto an older row (it refuses and warns). The walk is bounded to the
+  last `last_n` parseable entries.
+
+---
+
 ## [7.36.0] — 2026-08-19 — a scoring failure must not read as health
 
 Two multi-agent adversarial audits (15 finders/verifiers, then 23 verifiers on the
