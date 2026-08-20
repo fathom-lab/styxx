@@ -552,3 +552,37 @@ def test_K3_chain_vitals_reproduction_preserved(substrate):
     assert res.links_ok is True        # Merkle structure intact
     assert res.ok is False             # but the vitals don't re-derive
     assert res.per_link[0]["attestation_ok"] is False
+
+
+# ── the portable chain leg was written and never verified ──────────────────
+
+def test_portable_chain_leg_is_actually_verified(substrate):
+    """attest_chain writes a parallel CROSS-LANGUAGE chain
+    (attestation_portable_digest per link + head_chain_portable_digest), and
+    verify_chain recomputed neither. The leg whose entire purpose is
+    third-party verification could hold anything and this verifier still
+    returned ok — a verification leg that cannot fail."""
+    import copy
+
+    ch = attest_chain([('The version is 1.2.3.', None)], substrate)
+    good = verify_chain(ch, substrate)
+    assert good.ok is True
+    assert good.portable_present is True
+    assert good.portable_links_ok and good.portable_head_ok
+
+    # forge ONLY the portable per-link digest — the Merkle leg stays intact
+    art = copy.deepcopy(ch.artifact)
+    art["links"][0]["attestation_portable_digest"] = "0" * 64
+    res = verify_chain(art, substrate)
+    assert res.links_ok is True, "the Python Merkle leg is untouched"
+    assert res.portable_links_ok is False
+    assert res.ok is False, "a forged cross-language leg must not certify"
+    assert res.to_dict()["portable_links_ok"] is False
+
+    # forge ONLY the portable head
+    art2 = copy.deepcopy(ch.artifact)
+    art2["head_chain_portable_digest"] = "1" * 64
+    res2 = verify_chain(art2, substrate)
+    assert res2.head_ok is True and res2.links_ok is True
+    assert res2.portable_head_ok is False
+    assert res2.ok is False

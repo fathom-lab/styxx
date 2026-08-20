@@ -773,6 +773,14 @@ class ChainVerificationResult:
     per_link: list[dict[str, Any]] = field(default_factory=list)
     broken_at: int | None = None
     reason: str = ""
+    # The PORTABLE (cross-language) chain the builder writes alongside the
+    # Python one. It was written and never verified: attestation_portable_digest
+    # and head_chain_portable_digest were recomputed by nobody, so the leg whose
+    # entire purpose is third-party verification could hold anything and this
+    # verifier still returned ok. A leg that cannot fail must not certify.
+    portable_present: bool = False
+    portable_links_ok: bool = True
+    portable_head_ok: bool = True
 
     @property
     def ok(self) -> bool:
@@ -781,6 +789,8 @@ class ChainVerificationResult:
         return (
             self.links_ok
             and self.head_ok
+            and self.portable_links_ok
+            and self.portable_head_ok
             and self.broken_at is None
             and all(p["attestation_ok"] for p in self.per_link)
         )
@@ -788,6 +798,9 @@ class ChainVerificationResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "ok": self.ok,
+            "portable_present": self.portable_present,
+            "portable_links_ok": self.portable_links_ok,
+            "portable_head_ok": self.portable_head_ok,
             "links_ok": self.links_ok,
             "head_ok": self.head_ok,
             "broken_at": self.broken_at,
@@ -912,6 +925,11 @@ def verify_chain(
     broken_at: int | None = None
     reason = ""
     prev = _CHAIN_GENESIS
+    # Portable leg, walked in lockstep and recomputed from each attestation's
+    # own content — never read back from what the link claims.
+    portable_present = any("attestation_portable_digest" in ln for ln in links)
+    portable_prev = _CHAIN_GENESIS
+    portable_links_ok = True
 
     for i, link in enumerate(links):
         att = link.get("attestation", {})
@@ -922,6 +940,24 @@ def verify_chain(
         stored_chain = link.get("chain_digest")
 
         att_res = verify_attestation(att, repo)
+
+        portable_link_ok = True
+        if portable_present:
+            try:
+                recomputed_att_portable = _compute_portable_digest(att)
+            except Exception:
+                recomputed_att_portable = None
+            recomputed_portable_chain = (
+                _chain_digest(portable_prev, recomputed_att_portable)
+                if recomputed_att_portable is not None else None)
+            portable_link_ok = (
+                recomputed_att_portable is not None
+                and recomputed_att_portable == link.get("attestation_portable_digest")
+            )
+            if not portable_link_ok:
+                portable_links_ok = False
+            portable_prev = (recomputed_portable_chain
+                             if recomputed_portable_chain is not None else portable_prev)
 
         link_intact = (
             recomputed_att_digest == stored_att_digest
@@ -934,8 +970,12 @@ def verify_chain(
                 "attestation_ok": att_res.ok,
                 "attestation_digest_ok": recomputed_att_digest == stored_att_digest,
                 "chain_link_ok": link_intact,
+                "portable_digest_ok": portable_link_ok,
             }
         )
+        # NOT broken_at / links_ok: those mean "the Merkle structure is intact",
+        # and the portable leg is a separate claim — exactly as attestation_ok
+        # is kept separate. It feeds .ok through portable_links_ok instead.
         if broken_at is None and not link_intact:
             broken_at = i
             reason = f"chain broken at link {i}: recomputed digest != stored"
@@ -951,10 +991,23 @@ def verify_chain(
             else "head_chain_digest does not match the recomputed chain head"
         )
 
+    # The portable head gets the same treatment as the Python one: recomputed
+    # from the walk, compared to what the artifact claims.
+    portable_head_ok = True
+    if portable_present:
+        portable_anchor = art.get("head_chain_portable_digest")
+        portable_head_ok = bool(links) and portable_prev == portable_anchor
+        if links_ok and head_ok and not portable_head_ok and not reason:
+            reason = ("head_chain_portable_digest does not match the recomputed "
+                      "cross-language chain head")
+
     return ChainVerificationResult(
         links_ok=links_ok,
         head_ok=head_ok,
         per_link=per_link,
         broken_at=broken_at,
         reason=reason,
+        portable_present=portable_present,
+        portable_links_ok=portable_links_ok,
+        portable_head_ok=portable_head_ok,
     )

@@ -1519,3 +1519,29 @@ def test_truthmap_on_an_empty_trajectory_is_not_a_calm_reading():
                                       logprob=[-1.0, -1.2, -1.1],
                                       top2_margin=[0.3, 0.2, 0.25])
     assert real.measured is True and real.n_tokens == 3
+
+
+def test_mcp_schemas_declare_every_field_their_handlers_read():
+    """cogn_audit's schema was additionalProperties:False with only
+    prompt/response — while the handler read `correct_reference`, the field
+    that switches deception to NLI grounding and back INTO the composite. A
+    strict MCP client literally could not reach the tool's headline
+    capability."""
+    import jsonschema
+    from styxx.mcp.server import COGN_AUDIT_INPUT
+
+    assert "correct_reference" in COGN_AUDIT_INPUT["properties"]
+    jsonschema.validate({"prompt": "q", "response": "a",
+                         "correct_reference": "ref"}, COGN_AUDIT_INPUT)
+
+
+def test_cogn_audit_description_matches_what_the_composite_actually_contains():
+    """The description claimed 'mean of first 3'; deception only joins the
+    composite when a correct_reference grounds it."""
+    from styxx.cognometrics import tool_cogn_audit
+
+    ungrounded = tool_cogn_audit({"prompt": "q", "response": "the sky is green"})
+    assert "deception" not in ungrounded["composite_keys"]
+    grounded = tool_cogn_audit({"prompt": "q", "response": "the sky is green",
+                                "correct_reference": "the sky is blue"})
+    assert "deception" in grounded["composite_keys"]
