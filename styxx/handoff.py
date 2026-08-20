@@ -146,7 +146,12 @@ class ProtocolEnvelope:
         vitals = Vitals(**{k: v for k, v in vitals_raw.items() if k in known})
         env = cls(
             protocol=d.get("protocol", PROTOCOL),
-            timestamp=float(d.get("timestamp") or time.time()),
+            # NOT `or time.time()`: validate() requires a positive timestamp
+            # (see below), and stamping "now" onto a missing one made that
+            # requirement unfailable on any deserialized envelope -- while
+            # making an undated or forged envelope read as freshly created.
+            # 0.0 preserves the absence so the validator can reject it.
+            timestamp=float(d.get("timestamp") or 0.0),
             sender_id=d.get("sender_id", ""),
             receiver_id=d.get("receiver_id"),
             last_vitals=vitals,

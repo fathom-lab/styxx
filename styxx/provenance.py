@@ -14,7 +14,16 @@ styxx.provenance — cognitive provenance certificates.
     result = styxx.verify_certificate(cert)
     assert result.valid
 
-Every AI output should carry a signed attestation of the cognitive
+SCOPE, stated before the pitch: a certificate is bound by an UNKEYED SHA-256
+over its own payload. That detects accidental corruption and copy-paste drift.
+It is NOT a signature and NOT tamper-evidence: anyone holding the certificate
+can edit a field and recompute the hash in one line. Adversarial integrity
+needs a key the adversary does not hold (styxx.attestation's chain, or an
+external anchor -- a committed git object, a timestamping service). The words
+"signed" and "immutable" below describe the INTENT of the format, not a
+cryptographic guarantee this module currently provides.
+
+Every AI output should carry an attestation of the cognitive
 state that produced it. Not "GPT-4o generated this." But:
 
     "this text was produced at phase4=reasoning, confidence=0.87,

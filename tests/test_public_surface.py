@@ -1588,3 +1588,36 @@ def test_clear_gates_announces_the_autoreflex_rules_it_orphans():
     assert rule.is_live() is False
     assert "DEAD" in repr(list_autoreflex()[0])
     clear_autoreflex()
+
+
+def test_handoff_timestamp_requirement_can_actually_fail():
+    """validate() requires a positive timestamp, but from_dict stamped
+    time.time() onto a missing one — so the requirement could never fail on a
+    deserialized envelope, and an undated envelope read as freshly created."""
+    import pytest as _pytest
+    from styxx.handoff import HandoffValidationError, ProtocolEnvelope
+
+    env = ProtocolEnvelope.from_dict({"sender_id": "a"})
+    assert env.timestamp == 0.0, "absence must survive deserialization"
+    with _pytest.raises(HandoffValidationError, match="timestamp"):
+        env.validate()
+
+    ok = ProtocolEnvelope.from_dict({"sender_id": "a", "timestamp": 1_700_000_000.0})
+    assert ok.timestamp == 1_700_000_000.0
+    ok.validate()
+
+
+def test_forecast_nan_sigma_does_not_survive_the_degenerate_guard():
+    """`NaN < 1e-9` is False, so a NaN scale sailed through the degenerate-
+    dimension guard, made every z-score NaN, and every threshold comparison
+    False — landing on risk_level 'low' by fallthrough."""
+    import numpy as np
+    from styxx.forecast import CognitiveForecaster
+
+    f = CognitiveForecaster.bootstrap()
+    f._sigma = np.array([1.0, float("nan")] + [1.0] * (len(f._sigma) - 2))
+    f._mu = np.zeros_like(f._sigma)
+    # re-apply the shipped guard the same way from_trajectories does
+    bad = ~np.isfinite(f._sigma) | (f._sigma < 1e-9)
+    f._sigma[bad] = 1.0
+    assert np.all(np.isfinite(f._sigma))

@@ -231,8 +231,14 @@ class CognitiveForecaster:
         # Z-score normalization
         forecaster._mu = X.mean(axis=0)
         forecaster._sigma = X.std(axis=0, ddof=1)
-        # Avoid division by zero on degenerate dimensions
-        forecaster._sigma[forecaster._sigma < 1e-9] = 1.0
+        # Avoid division by zero on degenerate dimensions.
+        # `NaN < 1e-9` is False, so a NaN sigma sailed through this guard, made
+        # every z-score NaN, and every downstream threshold comparison False --
+        # which lands on risk_level "low" by fallthrough. A non-finite scale is
+        # a degenerate dimension too.
+        _bad = ~np.isfinite(forecaster._sigma) | (forecaster._sigma < 1e-9)
+        forecaster._sigma[_bad] = 1.0
+        forecaster._mu[~np.isfinite(forecaster._mu)] = 0.0
         X_z = (X - forecaster._mu) / forecaster._sigma
 
         # Per-category centroids
