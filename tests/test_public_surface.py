@@ -1545,3 +1545,46 @@ def test_cogn_audit_description_matches_what_the_composite_actually_contains():
     grounded = tool_cogn_audit({"prompt": "q", "response": "the sky is green",
                                 "correct_reference": "the sky is blue"})
     assert "deception" in grounded["composite_keys"]
+
+
+def test_dynamics_from_dict_does_not_fabricate_a_perfect_fit():
+    """A .cogdyn with no fit block reconstructed train_mse=0.0 (a PERFECT fit)
+    and spectral_radius_A=0.0, which makes is_stable() True — an unfitted or
+    truncated file loaded as a perfectly fit, perfectly stable model."""
+    import math
+    import numpy as np
+    from styxx.dynamics import (CATEGORIES, COGDYN_FORMAT, COGDYN_VERSION,
+                                N_CATEGORIES, CognitiveDynamics)
+
+    base = {"cogdyn_format": COGDYN_FORMAT, "cogdyn_version": COGDYN_VERSION,
+            "schema": {"categories": list(CATEGORIES), "state_dim": N_CATEGORIES,
+                       "action_dim": N_CATEGORIES},
+            "model": {"A": np.eye(6).tolist(), "B": np.eye(6).tolist()}}
+
+    assert CognitiveDynamics.from_dict(dict(base)).last_fit is None
+
+    partial = CognitiveDynamics.from_dict(dict(base, fit={"n_observations": 20}))
+    assert math.isnan(partial.last_fit.train_mse)
+    assert partial.last_fit.is_stable() is False, "stability must not be claimed"
+
+
+def test_clear_gates_announces_the_autoreflex_rules_it_orphans():
+    """Dispatch runs through styxx.gates, so clear_gates() left rules listed as
+    active that could never fire again."""
+    import warnings
+    from styxx import autoreflex, list_autoreflex
+    from styxx.autoreflex import clear_autoreflex
+    from styxx.gates import clear_gates
+
+    clear_autoreflex(); clear_gates()
+    rule = autoreflex(when="hallucination > 0.6", then=lambda v: None,
+                      name="orphan-check")
+    assert rule.is_live() is True
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        clear_gates()
+    assert any("CANNOT FIRE" in str(c.message) for c in caught)
+    assert rule.is_live() is False
+    assert "DEAD" in repr(list_autoreflex()[0])
+    clear_autoreflex()

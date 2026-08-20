@@ -327,11 +327,26 @@ def remove_gate(gate: RegisteredGate) -> bool:
 
 def clear_gates() -> int:
     """Remove all registered gates. Returns the number removed.
-    Useful in tests."""
+    Useful in tests.
+
+    NOTE: styxx.autoreflex registers its dispatch through this registry, so
+    clearing gates leaves any autoreflex rule ALIVE IN ITS OWN REGISTRY but
+    unable to ever fire. That state is announced here (and `AutoReflexRule`
+    reports itself DEAD) rather than left for someone to discover when a rule
+    silently stops working.
+    """
     with _LOCK:
         n = len(_GATES)
+        orphaned = sorted({g.name for g in _GATES
+                           if (g.name or "").startswith("autoreflex:")})
         _GATES.clear()
-        return n
+    if orphaned:
+        warnings.warn(
+            f"styxx.clear_gates(): removed {len(orphaned)} autoreflex dispatch "
+            f"hook(s) ({', '.join(orphaned)}). Those rules remain registered but "
+            f"CANNOT FIRE until re-registered — call styxx.clear_autoreflex() too, "
+            f"or re-create them.", RuntimeWarning, stacklevel=2)
+    return n
 
 
 def list_gates() -> List[RegisteredGate]:

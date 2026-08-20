@@ -304,8 +304,22 @@ class AutoReflexRule:
     # ref on purpose: while held, the id cannot be recycled by a new object.)
     _last_vitals: Any = None
 
+    def is_live(self) -> bool:
+        """True iff a gate hook for this rule is still registered.
+
+        Dispatch runs through styxx.gates, so `clear_gates()` (or removing the
+        hook directly) leaves a rule listed here that can never fire again. A
+        rule that reports itself active while being unable to act is the same
+        defect class this package exists to find.
+        """
+        from .gates import list_gates
+        tag = f"autoreflex:{self.name}"
+        return any((g.name or "") == tag for g in list_gates())
+
     def __repr__(self) -> str:
         status = f"fired {self.fire_count}x"
+        if not self.is_live():
+            status += ", DEAD: no gate hook — cannot fire"
         return f"<autoreflex '{self.name}': when='{self.when}' then='{self.then_repr}' ({status})>"
 
 

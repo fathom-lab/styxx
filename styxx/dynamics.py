@@ -612,14 +612,24 @@ class CognitiveDynamics:
         dyn.dynamics_id = data.get("dynamics_id") or str(uuid.uuid4())
 
         fit_meta = data.get("fit", {})
+        # A file with no fit block used to reconstruct train_mse=0.0 (a PERFECT
+        # fit) and spectral_radius_A=0.0, which makes is_stable() return True —
+        # so an unfitted or truncated .cogdyn loaded as a perfectly fit,
+        # perfectly stable model. No fit metadata, no FitResult.
+        if not fit_meta:
+            dyn.last_fit = None
+            return dyn
+        # Present but partial: NaN, not 0.0. NaN < 1.0 is False, so is_stable()
+        # refuses to claim stability it cannot derive.
+        _nan = float("nan")
         dyn.last_fit = FitResult(
             A=A.copy(),
             B=B.copy(),
             n_observations=int(fit_meta.get("n_observations", 0)),
-            train_mse=float(fit_meta.get("train_mse", 0.0)),
-            r2=float(fit_meta.get("r2", 0.0)),
-            spectral_radius_A=float(fit_meta.get("spectral_radius_A", 0.0)),
-            train_max_err=float(fit_meta.get("train_max_err", 0.0)),
+            train_mse=float(fit_meta.get("train_mse", _nan)),
+            r2=float(fit_meta.get("r2", _nan)),
+            spectral_radius_A=float(fit_meta.get("spectral_radius_A", _nan)),
+            train_max_err=float(fit_meta.get("train_max_err", _nan)),
             fitted_at_ts=float(fit_meta.get("fitted_at_ts", 0.0)),
             fitted_at_iso=fit_meta.get("fitted_at_iso", ""),
         )
