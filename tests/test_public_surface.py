@@ -1692,3 +1692,28 @@ def test_calibrate_refuses_labels_derived_from_its_own_gate(tmp_path, monkeypatc
     assert len(usable) == 2, "the auto-stamped label must not train the classifier"
     assert {e.get("outcome_source") for e in usable} == {"human", None}
     assert _load_labeled_entries.n_auto_excluded == 1
+
+
+def test_self_report_does_not_manufacture_a_passing_gate(tmp_path, monkeypatch):
+    """styxx.log() writes a DECLARATION — nothing scored it — yet it defaulted
+    gate to "pass". self-report is in LIVE_SOURCES, so those entries inflated
+    every gate_pass_rate, and with auto-feedback on they became
+    outcome="correct" labels feeding the calibrator."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+
+    analytics.log(mood="focused", note="did a thing")
+    analytics.log(mood="off", note="made something up", category="hallucination")
+    rows = [json.loads(l) for l in
+            analytics._audit_log_path().read_text(encoding="utf-8").splitlines() if l.strip()]
+
+    assert rows[0]["gate"] is None, "an unmeasured declaration is not a pass"
+    assert rows[1]["gate"] == "warn", "a caller-declared risky category still warns"
+
+    # and storing None rather than "pending" keeps the 6h stale-pending expiry
+    # from deleting the operator's own notes
+    stale = dict(rows[0], ts=time.time() - 7 * 3600)
+    analytics._audit_log_path().write_text(json.dumps(stale) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+    assert len(analytics.load_audit(since_s=24 * 3600)) == 1

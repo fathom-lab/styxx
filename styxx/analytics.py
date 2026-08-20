@@ -508,9 +508,21 @@ def log(
         "phase1_conf": round(confidence, 3) if confidence is not None else None,
         "phase4_pred": category,
         "phase4_conf": round(confidence, 3) if confidence is not None else None,
+        # A self-report is a DECLARATION, not a measurement: nothing scored this
+        # entry. Defaulting it to "pass" manufactured a passing measurement --
+        # it inflated every gate_pass_rate (self-report is in LIVE_SOURCES) and,
+        # with auto-feedback on, became an outcome="correct" label.
+        #
+        # None, not "pending": consumers render a missing gate as "pending"
+        # anyway (`e.get("gate") or "pending"`), while load_audit's 6h
+        # stale-pending expiry matches the literal string — storing "pending"
+        # would quietly delete the operator's own notes after six hours.
+        #
+        # The "warn" branch stays: it is derived from the category the CALLER
+        # declared, not invented on their behalf.
         "gate": gate or ("warn" if category in (
             "hallucination", "refusal", "adversarial",
-        ) else "pass"),
+        ) else None),
         "abort": None,
         # Self-report-specific fields
         "mood": mood,
