@@ -244,6 +244,7 @@ def semantic_entropy(
     method: str = "auto",
     threshold: Optional[float] = None,
     same_fn: Optional[Callable[[str, str], bool]] = None,
+    strict: bool = False,
 ) -> float:
     """Across-sample semantic entropy (nats) — the confident-confabulation signal.
 
@@ -278,6 +279,21 @@ def semantic_entropy(
     """
     vals = [s for s in samples if s is not None]
     if len(vals) < 2:
+        # DOCUMENTED CONTRACT (module docstring, pinned by
+        # test_semantic_entropy_lt_two_samples_is_zero): < 2 non-None samples
+        # -> 0.0. Kept as-is.
+        #
+        # But know what it means: 0.0 is the most CONFIDENT reading this
+        # function emits ("one cluster -- the model knows the answer"), so a
+        # failed collection (every sample None, or only one arrived) is
+        # numerically identical to perfect self-consistency. Pass strict=True
+        # to refuse instead; any GATE built on this should, because a gate that
+        # reads a failed resample as maximal validity cannot fail.
+        if strict:
+            raise ValueError(
+                f"semantic_entropy(strict=True): need >= 2 non-None samples, got "
+                f"{len(vals)} of {len(samples)} — a failed collection, not a "
+                f"consistent model.")
         return 0.0
     assign = _cluster_assignments(vals, method, threshold, same_fn)
     n = len(assign)

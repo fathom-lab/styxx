@@ -105,6 +105,29 @@ from ..vitals import Vitals
 # Module-level flag so the informational warning fires exactly once
 # per process, not on every call.
 _WARNED_ONCE = False
+_STREAM_WARNED_ONCE = False
+
+
+def _warn_stream_once() -> None:
+    """Streaming's own notice.
+
+    stream() used to call _warn_once(), whose text is specifically about
+    mode='off' — so a mode='text' caller was told they had "selected the no-op
+    pass-through mode", which was false, AND the call consumed the global
+    once-per-process flag, so a genuine mode='off' user who streamed first
+    never saw the warning that actually applied to them.
+    """
+    global _STREAM_WARNED_ONCE
+    if _STREAM_WARNED_ONCE:
+        return
+    _STREAM_WARNED_ONCE = True
+    warnings.warn(
+        "styxx.Anthropic.stream(): streaming is passed through UNSCORED — "
+        "streamed responses carry .vitals=None regardless of mode, because "
+        "styxx scores a completed text and this path never sees one. Use the "
+        "non-streaming create() if you need vitals, or accumulate the stream "
+        "yourself and score it with styxx.observe()/preflight().",
+        RuntimeWarning, stacklevel=3)
 
 
 def _warn_once() -> None:
@@ -360,8 +383,13 @@ class _MessagesShim:
         return response
 
     def stream(self, *args, **kwargs):
-        """Pass streaming through unchanged — same fail-open guarantee."""
-        _warn_once()
+        """Pass streaming through unchanged — same fail-open guarantee.
+
+        Streamed responses carry NO .vitals: styxx scores a completed text, and
+        this path never sees one. That is a real coverage gap, so it is stated
+        rather than implied.
+        """
+        _warn_stream_once()
         return self._inner.stream(*args, **kwargs)
 
 

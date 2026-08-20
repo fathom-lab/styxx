@@ -71,7 +71,12 @@ def entropy_gate(samples: Sequence[str], *, method: str = "auto") -> float:
     """Self-consistency gate: ``styxx.semantic_entropy`` over K resamples of one
     model (higher entropy = lower validity). Model-agnostic; needs only text."""
     from . import semantic_entropy
-    return float(semantic_entropy(list(samples), method=method))
+    # strict=True on purpose: this is a GATE. semantic_entropy's documented
+    # contract returns 0.0 for < 2 usable samples, which is its MOST confident
+    # reading -- so a failed resample would score maximal validity here and the
+    # gate could never fail on it. Measurement keeps its contract; the gate
+    # refuses.
+    return float(semantic_entropy(list(samples), method=method, strict=True))
 
 
 def council_gate(answers: Sequence[str], *, method: str = "auto") -> float:

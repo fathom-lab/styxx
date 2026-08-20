@@ -186,10 +186,19 @@ class _SampledMessages:
         sample with ensemble vitals attached."""
         n = self._n
         # honor explicit temperature if caller passed one
+        had_temp = "temperature" in kwargs
         temp = kwargs.pop("temperature", self._temp)
         # single fast path if n<=1
         if n <= 1:
-            r = self._inner.create(*args, temperature=temp, **kwargs)
+            # Pure pass-through: do NOT inject a sampling temperature the caller
+            # never asked for. The ensemble path below needs a fixed temp to
+            # sample a distribution; this path scores nothing (vitals=None), so
+            # forcing self._temp here silently changed the caller's sampling
+            # behaviour — and the vendor default, or the greedy decode they
+            # expected by omitting the argument, is theirs to choose.
+            if had_temp:
+                kwargs["temperature"] = temp
+            r = self._inner.create(*args, **kwargs)
             try:
                 r.vitals = None
                 r.ensemble = None

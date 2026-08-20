@@ -189,6 +189,10 @@ class TruthMap:
     n_cold: int             # tokens in cold/cooling state
     n_steady: int           # tokens in steady state
     confabulation_ratio: float  # fraction of hot tokens
+    # False when there was no trajectory to map. An empty/1-token input used to
+    # produce confabulation_ratio 0.0 and a "steady" aggregate state -- a
+    # perfectly healthy-looking reading of nothing at all.
+    measured: bool = True
 
     @classmethod
     def from_trajectories(
@@ -210,6 +214,10 @@ class TruthMap:
         """
         temps = measure_temperature(entropy, window)
         n = len(entropy)
+        # A temperature map needs a trajectory. With none, every count is 0 and
+        # confabulation_ratio falls to 0.0 with a "steady" aggregate — a
+        # perfectly healthy reading of nothing. Mark it instead of implying it.
+        measured = n > 0
         if tokens is None:
             tokens = [f"t{i}" for i in range(n)]
 
@@ -248,11 +256,15 @@ class TruthMap:
             n_cold=n_cold,
             n_steady=n_steady,
             confabulation_ratio=n_hot / n if n > 0 else 0.0,
+            measured=measured,
         )
 
     def render(self, use_color: bool = True) -> str:
         """Render the truth map as colored text with temperature annotations."""
         lines = []
+        if not self.measured:
+            return ("  NO TRAJECTORY — nothing was mapped. This is not a calm "
+                    "generation; it is no reading at all.")
         lines.append("=" * 62)
         lines.append("  COGNITIVE TRUTH MAP")
         lines.append(f"  {self.n_tokens} tokens | "

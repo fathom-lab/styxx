@@ -1458,3 +1458,64 @@ def test_coupling_refuses_an_undefined_correlation():
     out = _density_confound(const, varied, counts)
     assert out["applicable"] is False
     assert "undefined" in out["note"]
+
+
+def test_verify_response_does_not_call_an_incomplete_measurement_valid():
+    """`valid = gate != "fail"` called BOTH 'pending' (the trajectory never
+    reached a verdict) and 'error' (scoring failed) valid — a measurement that
+    never completed was indistinguishable from one that passed."""
+    from styxx.cognometrics import tool_verify_response
+
+    for gate in ("pending", "error"):
+        out = tool_verify_response({"logprobs": [], "gate_override": gate}) \
+            if False else None
+    # drive it through the real payload path instead of a private override
+    import styxx.cognometrics as cog
+    payload = {"gate": "pending", "classification": "reasoning", "confidence": 0.9}
+    monkey = cog._vitals_payload
+    try:
+        cog._vitals_payload = lambda v: dict(payload)
+        r = cog.tool_verify_response({"logprobs": [0.1, 0.2, 0.3]})
+        assert r["valid"] is False
+        assert r["measured"] is False
+        assert any("measurement_incomplete" in a for a in r["anomalies"])
+
+        payload["gate"] = "pass"
+        r2 = cog.tool_verify_response({"logprobs": [0.1, 0.2, 0.3]})
+        assert r2["valid"] is True and r2["measured"] is True
+    finally:
+        cog._vitals_payload = monkey
+
+
+def test_entropy_gate_refuses_a_failed_collection():
+    """semantic_entropy's `< 2 samples -> 0.0` is a DOCUMENTED contract (and
+    0.0 is its most confident reading: "one cluster, the model knows"). The
+    measurement keeps it. The GATE built on it must not, or a failed resample
+    scores maximal validity and the gate can never fail."""
+    import pytest as _pytest
+    from styxx.divergence import semantic_entropy
+    from styxx.spec_exec import entropy_gate
+
+    # contract intact
+    assert semantic_entropy([], same_fn=lambda a, b: a == b) == 0.0
+    assert semantic_entropy(["only one"], same_fn=lambda a, b: a == b) == 0.0
+
+    # the gate refuses the same input
+    with _pytest.raises(ValueError, match="failed collection"):
+        entropy_gate([None, None])
+    with _pytest.raises(ValueError):
+        entropy_gate(["only one answer"])
+    assert entropy_gate(["Paris.", "The capital is Paris.", "Lyon."]) > 0
+
+
+def test_truthmap_on_an_empty_trajectory_is_not_a_calm_reading():
+    from styxx.temperature import TruthMap
+
+    empty = TruthMap.from_trajectories(entropy=[], logprob=[], top2_margin=[])
+    assert empty.measured is False
+    assert "NO TRAJECTORY" in empty.render()
+
+    real = TruthMap.from_trajectories(entropy=[0.5, 0.6, 0.7],
+                                      logprob=[-1.0, -1.2, -1.1],
+                                      top2_margin=[0.3, 0.2, 0.25])
+    assert real.measured is True and real.n_tokens == 3

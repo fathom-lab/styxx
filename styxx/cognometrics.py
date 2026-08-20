@@ -245,8 +245,17 @@ def tool_verify_response(args: Dict[str, Any]) -> Dict[str, Any]:
     if payload["confidence"] < 0.3:
         anomalies.append("low_confidence")
 
+    # "pending" means the trajectory never reached a verdict and "error" means
+    # scoring failed; `gate != "fail"` called both of them VALID, so a
+    # measurement that never completed was indistinguishable from one that
+    # passed. Verification is asserted only on a completed, non-failing gate.
+    incomplete = payload["gate"] in ("pending", "error")
+    if incomplete:
+        anomalies.append(f"measurement_incomplete:{payload['gate']}")
+
     return {
-        "valid": payload["gate"] != "fail",
+        "valid": (not incomplete) and payload["gate"] != "fail",
+        "measured": not incomplete,
         "confidence": payload["confidence"],
         "gate": payload["gate"],
         "classification": payload["classification"],
