@@ -7,6 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.41.0] — 2026-08-19 — legs that could not fail, and a log that fed itself
+
+Continued triage of the wave-3 audit tail, by hand. A cluster of these turned
+out to be one story: **the audit log was accumulating fabricated rows from three
+directions, and the calibrator was learning from them.**
+
+### Fixed — the audit-log loop
+- **`calibrate()` was training the classifier on labels the classifier wrote.**
+  With auto-feedback on, `write_audit` derives `outcome` from the entry's own
+  gate (`pass → correct`), and `calibrate()` split exactly those labels to shift
+  the centroids. The classifier confirmed itself, drifted, and the drift read as
+  evidence — **calibration poisoning**, the mechanism this lab published on
+  (Fathom v26, DOI 10.5281/zenodo.21241185). Auto-stamped labels are refused;
+  human and legacy labels are kept, and `n_auto_excluded` is reported.
+- **`log()` stamped `gate="pass"` on self-reports.** A self-report is a
+  declaration — nothing scored it — yet it entered every `gate_pass_rate`
+  (self-report is in `LIVE_SOURCES`) and became a `correct` label. Now `None`
+  (not `"pending"`, which the 6h stale-expiry would have deleted); the `warn`
+  branch stays because it derives from the caller's own declared category.
+
+### Fixed — verification legs that could not fail
+- **`attestation.verify_chain` never checked the portable chain it writes.**
+  `attest_chain` emits a parallel cross-language leg
+  (`attestation_portable_digest`, `head_chain_portable_digest`) for third-party
+  verification; our verifier recomputed neither, so those values could hold
+  anything and still certify. Now walked in lockstep and surfaced as
+  `portable_present` / `portable_links_ok` / `portable_head_ok`.
+- **`handoff.from_dict` made its own timestamp check unfailable** by stamping
+  `time.time()` onto a missing one — so an undated envelope read as freshly
+  created and `validate()`'s "required positive number" could never fire.
+- **`provenance`** advertised "signed" and "immutable" certificates bound by an
+  unkeyed SHA-256. Scope now stated before the pitch (as `seal.py` got).
+
+### Fixed — measurements that never ran, reported as good
+- `verify_response` called `pending` and `error` gates **valid**.
+- `TruthMap` on an empty trajectory reported `confabulation_ratio 0.0` and a
+  `steady` aggregate. Now `measured=False` / `NO TRAJECTORY`.
+- `entropy_gate` scored a **failed resample as maximal validity** (`< 2 samples
+  → 0.0` is `semantic_entropy`'s most confident reading). The measurement keeps
+  its documented contract and gains `strict=`; the *gate* refuses.
+- `detect_context_injection` reported **no injection when it never sampled** —
+  and *accused* on a single failed arm. One rule now: either arm unsampled →
+  `measured=False`, NaN divergence, **suspected** (fail closed).
+- `dynamics.from_dict` loaded a fit-less file as `train_mse=0.0` and
+  `is_stable()==True` — a perfectly fit, perfectly stable model from no data.
+- `forecast`: `NaN < 1e-9` is False, so a NaN scale survived the
+  degenerate-dimension guard, made every z-score NaN, and landed `risk_level`
+  on `low` by fallthrough.
+
+### Fixed — state that presents as live
+- `clear_gates()` orphaned autoreflex rules, which kept reporting as active
+  while unable to fire. It warns now; rules report `DEAD`.
+- Gate conditions used `re.match` (start-anchored only), so
+  `"forecast.risk == critical AND junk"` matched and **silently dropped** the
+  trailing clause. Anchored at both ends.
+- MCP `cogn_audit` declared `additionalProperties: False` while its handler read
+  `correct_reference` — the field that unlocks NLI grounding. A strict client
+  could not reach the tool's headline capability.
+
+---
+
 ## [7.40.0] — 2026-08-19 — acting on the census, and the number that undercuts it
 
 ### Fixed — the five instances `styxx.absence` confirmed in our own tree
