@@ -1542,9 +1542,19 @@ def test_cogn_audit_description_matches_what_the_composite_actually_contains():
 
     ungrounded = tool_cogn_audit({"prompt": "q", "response": "the sky is green"})
     assert "deception" not in ungrounded["composite_keys"]
+
+    # Backend-agnostic: supplying a reference REQUESTS grounding, but with no
+    # semantic backend installed it resolves to v0_fallback and deception stays
+    # excluded -- correctly. CI has no backend; a dev box usually does. Assert
+    # the CONTRACT (membership tracks the mode that actually ran), not the
+    # environment. deception_mode is exposed precisely so this is answerable.
     grounded = tool_cogn_audit({"prompt": "q", "response": "the sky is green",
                                 "correct_reference": "the sky is blue"})
-    assert "deception" in grounded["composite_keys"]
+    if grounded.get("deception_mode") in ("nli", "emb"):
+        assert "deception" in grounded["composite_keys"]
+    else:
+        assert "deception" not in grounded["composite_keys"]
+        assert "EXCLUDED" in grounded.get("composite_caveat", "").upper()
 
 
 def test_dynamics_from_dict_does_not_fabricate_a_perfect_fit():
