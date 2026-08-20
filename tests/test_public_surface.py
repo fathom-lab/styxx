@@ -1661,3 +1661,34 @@ def test_gate_conditions_refuse_trailing_clauses_instead_of_dropping_them():
                  "forecast.category == hallucination",
                  "coherence < 0.5"):
         assert callable(parse_condition(good))
+
+
+def test_calibrate_refuses_labels_derived_from_its_own_gate(tmp_path, monkeypatch):
+    """With auto-feedback on, write_audit derives `outcome` from the entry's own
+    gate — and the gate comes from the classifier calibrate() recalibrates.
+    Training on those labels is a closed loop: the classifier confirms itself
+    and the drift reads as evidence. That is calibration poisoning, which this
+    lab published a paper on."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+    from styxx.calibrate import _load_labeled_entries
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
+    rows = [
+        {"ts": now, "gate": "pass", "source": "live",
+         "outcome": "correct", "outcome_source": "auto"},      # self-confirming
+        {"ts": now, "gate": "pass", "source": "live",
+         "outcome": "correct", "outcome_source": "human"},     # ground truth
+        {"ts": now, "gate": "fail", "source": "live",
+         "outcome": "incorrect"},                              # legacy, unknown
+    ]
+    p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+
+    usable = _load_labeled_entries()
+    assert len(usable) == 2, "the auto-stamped label must not train the classifier"
+    assert {e.get("outcome_source") for e in usable} == {"human", None}
+    assert _load_labeled_entries.n_auto_excluded == 1

@@ -62,11 +62,18 @@ class CalibrationResult:
     # reported here as skipped rather than counted as (no-op) shifts.
     categories_skipped: Dict[str, float] = field(default_factory=dict)
     saved_to: Optional[str] = None
+    # Labels refused because they were auto-stamped from the entry's own gate.
+    # Training on those would recalibrate the classifier against its own
+    # verdicts -- a closed loop. Reported so a caller can see how much of the
+    # log was unusable rather than wondering why n_correct is small.
+    n_auto_excluded: int = 0
 
     def __repr__(self) -> str:
+        excl = (f", {self.n_auto_excluded} auto-labels refused"
+                if self.n_auto_excluded else "")
         return (
             f"<Calibration {self.n_correct} correct, {self.n_incorrect} incorrect, "
-            f"{self.n_phases_adjusted} phases adjusted>"
+            f"{self.n_phases_adjusted} phases adjusted{excl}>"
         )
 
 
@@ -81,10 +88,31 @@ def _calibration_dir() -> Path:
 
 
 def _load_labeled_entries() -> List[dict]:
-    """Load audit entries that have outcome labels."""
+    """Load audit entries carrying a label this calibrator may learn from.
+
+    AUTO-STAMPED OUTCOMES ARE EXCLUDED. With auto-feedback enabled,
+    ``analytics.write_audit`` derives ``outcome`` from the entry's own gate
+    ("pass" -> correct, "warn"/"fail" -> incorrect) — and the gate is produced by
+    the very classifier this function recalibrates. Training on those labels is
+    a closed loop: the classifier confirms itself, drifts, and the drift reads
+    as evidence. That is calibration poisoning, and this lab published a paper
+    on it (Fathom v26, "Calibration Poisoning, Not Erasure").
+
+    Kept: human ``feedback()`` calls (outcome_source == "human") and legacy
+    entries written before provenance existed (no outcome_source — unknown, and
+    discarding them would throw away real history). Excluded: anything
+    explicitly stamped "auto". The count of exclusions is returned alongside so
+    the caller can see how much of the log was unusable.
+    """
     from .analytics import load_audit
     entries = load_audit(last_n=5000)
-    return [e for e in entries if e.get("outcome") in ("correct", "incorrect")]
+    labeled = [e for e in entries if e.get("outcome") in ("correct", "incorrect")]
+    usable = [e for e in labeled if e.get("outcome_source") != "auto"]
+    _load_labeled_entries.n_auto_excluded = len(labeled) - len(usable)
+    return usable
+
+
+_load_labeled_entries.n_auto_excluded = 0
 
 
 def calibrate(
@@ -123,6 +151,7 @@ def calibrate(
 
     # Load labeled entries
     labeled = _load_labeled_entries()
+    result.n_auto_excluded = _load_labeled_entries.n_auto_excluded
     correct = [e for e in labeled if e.get("outcome") == "correct"]
     incorrect = [e for e in labeled if e.get("outcome") == "incorrect"]
     result.n_correct = len(correct)
