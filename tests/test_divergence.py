@@ -356,3 +356,34 @@ def test_detect_injection_namedtuple_fields():
         "measured",
     )
     assert r.measured is True
+
+
+# ── the lexical backend was blind outside the latin alphabet ───────────────
+
+def test_lexical_clustering_is_not_blind_to_non_latin_scripts():
+    """`[a-z0-9]+` matched NOTHING outside latin, so every CJK/Cyrillic/Arabic
+    answer tokenized to the empty set, two empty sets were called identical,
+    all samples collapsed into one cluster, and semantic_entropy returned 0.0 —
+    its most confident reading, "the model knows the answer". Measured before
+    the fix: four DIFFERENT Japanese city names scored 0.0 while the same four
+    in latin script scored 1.386. Blind, and blind in the flattering direction."""
+    import math
+
+    for answers in (["東京", "大阪", "京都", "札幌"],          # japanese
+                    ["Москва", "Киев", "Минск", "Рига"],        # cyrillic
+                    ["Tokyo", "Osaka", "Kyoto", "Sapporo"]):    # latin, control
+        e = semantic_entropy(answers, method="lexical")
+        assert e == pytest.approx(math.log(4), abs=1e-6), answers
+
+    # genuine agreement still reads as agreement, in any script
+    assert semantic_entropy(["東京"] * 4, method="lexical") == pytest.approx(0.0)
+
+
+def test_untokenizable_but_different_strings_are_not_called_identical():
+    """Two strings this backend cannot read must not be merged — that
+    manufactures agreement out of its own blind spot."""
+    from styxx.divergence import _lexical_same
+
+    assert _lexical_same("🙂", "🙂", 0.5) is True
+    assert _lexical_same("🙂", "🙃", 0.5) is False
+    assert _lexical_same("", "", 0.5) is True

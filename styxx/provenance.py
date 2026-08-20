@@ -18,8 +18,11 @@ SCOPE, stated before the pitch: a certificate is bound by an UNKEYED SHA-256
 over its own payload. That detects accidental corruption and copy-paste drift.
 It is NOT a signature and NOT tamper-evidence: anyone holding the certificate
 can edit a field and recompute the hash in one line. Adversarial integrity
-needs a key the adversary does not hold (styxx.attestation's chain, or an
-external anchor -- a committed git object, a timestamping service). The words
+needs a key the adversary does not hold -- styxx.handoff.ProtocolEnvelope.sign()
+/ .verify() are the Ed25519 path here, requiring `cryptography` (the
+styxx[handoff] extra) -- or an external anchor, which is what
+styxx.attestation provides by pinning a git commit as substrate and
+re-verifying against that tree. The words
 "signed" and "immutable" below describe the INTENT of the format, not a
 cryptographic guarantee this module currently provides.
 

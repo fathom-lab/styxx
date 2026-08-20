@@ -138,8 +138,15 @@ def verify_seal(seal_dict: dict) -> bool:
     corruption, truncation, and copy-paste drift — it is NOT tamper-evidence
     against an adversary, who can edit the dict and recompute seal_sha256 in
     one line. Adversarial integrity needs a signature over the hash with a key
-    the adversary does not hold (see styxx.attestation's Ed25519 path) or an
-    external anchor (a committed git object, a timestamping service).
+    the adversary does not hold -- styxx.handoff.ProtocolEnvelope.sign() /
+    .verify() are the Ed25519 path in this package, and need `cryptography`
+    (the styxx[handoff] extra) -- or an external anchor, which is what
+    styxx.attestation provides: it pins a git commit as substrate and
+    re-verifies against that tree, so tampering has to survive the repo too.
+
+    (Corrected 2026-08-20: this line previously sent readers to "attestation's
+    Ed25519 path", which does not exist. attestation anchors, handoff signs. A
+    scope note that misdirects is worth no more than the overclaim it replaced.)
     """
     d = dict(seal_dict)
     claimed = d.pop("seal_sha256", "")

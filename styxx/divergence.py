@@ -167,13 +167,38 @@ def _ensure_model():
 
 
 def _tokens(s: str) -> set:
-    return set(re.findall(r"[a-z0-9]+", (s or "").lower()))
+    r"""Unicode-aware tokens, with character bigrams for scripts that do not
+    space their words.
+
+    This was `[a-z0-9]+`, which matches NOTHING outside the latin alphabet. Every
+    Japanese, Chinese, Korean, Arabic, Hebrew, Greek, Cyrillic, Thai or Devanagari
+    answer tokenized to the empty set, `_lexical_same` called two empty sets
+    identical, every sample collapsed into one cluster, and semantic_entropy
+    returned 0.0 -- its most confident reading, "the model knows the answer".
+
+    Measured before the fix: four DIFFERENT Japanese city names scored 0.0
+    (perfect consistency) while the same four in latin script scored 1.386
+    (maximum divergence). The confabulation detector was silently blind across
+    most of the world's writing systems, and blind in the flattering direction.
+    """
+    text = (s or "").lower()
+    out: set = set()
+    for tok in re.findall(r"\w+", text, flags=re.UNICODE):
+        out.add(tok)
+        # Space-free scripts (CJK) yield one long run per phrase, so whole-token
+        # Jaccard is all-or-nothing. Character bigrams restore partial overlap.
+        if not re.search(r"[a-z0-9]", tok) and len(tok) > 1:
+            out.update(tok[i:i + 2] for i in range(len(tok) - 1))
+    return out
 
 
 def _lexical_same(a: str, b: str, threshold: float) -> bool:
     ta, tb = _tokens(a), _tokens(b)
     if not ta and not tb:
-        return True
+        # Both untokenizable (punctuation, emoji, empty). Two DIFFERENT strings
+        # must not be called identical just because this backend could not read
+        # them -- that manufactures agreement out of its own blind spot.
+        return (a or "") == (b or "")
     if not ta or not tb:
         return False
     return (len(ta & tb) / len(ta | tb)) >= threshold
