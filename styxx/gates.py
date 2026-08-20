@@ -193,7 +193,11 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
 
     # 3. forecast risk check (3.2.0): "forecast.risk == critical"
     import re as _re
-    m = _re.match(r"forecast\.risk\s*==\s*(\w+)", cond)
+    # Anchored at BOTH ends: `re.match` only anchors the start, so
+    # "forecast.risk == critical <anything>" matched and the trailing clause was
+    # silently discarded -- the gate then watched something other than what was
+    # written. Unparseable input must raise, not quietly shrink.
+    m = _re.match(r"forecast\.risk\s*==\s*(\w+)\s*$", cond)
     if m:
         target_risk = m.group(1).lower()
         def pred(v: Vitals, target_risk=target_risk) -> bool:
@@ -202,7 +206,7 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
         return pred
 
     # 4. forecast category check: "forecast.category == hallucination"
-    m = _re.match(r"forecast\.category\s*==\s*(\w+)", cond)
+    m = _re.match(r"forecast\.category\s*==\s*(\w+)\s*$", cond)
     if m:
         target_cat = m.group(1).lower()
         def pred(v: Vitals, target_cat=target_cat) -> bool:
@@ -211,7 +215,7 @@ def parse_condition(condition: str) -> Callable[[Vitals], bool]:
         return pred
 
     # 5. coherence threshold: "coherence < 0.5"
-    m = _re.match(r"coherence\s*(>|>=|<|<=|==)\s*([\d.]+)", cond)
+    m = _re.match(r"coherence\s*(>|>=|<|<=|==)\s*([\d.]+)\s*$", cond)
     if m:
         op_fn = _OPS[m.group(1)]
         thr = float(m.group(2))

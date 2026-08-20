@@ -1621,3 +1621,43 @@ def test_forecast_nan_sigma_does_not_survive_the_degenerate_guard():
     bad = ~np.isfinite(f._sigma) | (f._sigma < 1e-9)
     f._sigma[bad] = 1.0
     assert np.all(np.isfinite(f._sigma))
+
+
+def test_injection_detector_does_not_report_clean_on_a_failed_sample():
+    """Both arms failing gave concordance 0.0 each, divergence |0-0| = 0.0 and
+    suspected=False — a total sampling failure reported as no injection."""
+    import math
+    from styxx.divergence import detect_context_injection
+
+    eq = lambda a, b: a == b
+    dead = detect_context_injection([], [], "Paris", same_fn=eq)
+    assert dead.measured is False
+    assert math.isnan(dead.divergence), "undefined, not zero"
+    # fail CLOSED, matching the stance already documented for a missing
+    # stateless arm: an injection detector that could not run must not exonerate
+    assert dead.suspected is True
+
+    one_arm = detect_context_injection(["Paris"] * 4, [], "Paris", same_fn=eq)
+    assert one_arm.measured is False and one_arm.suspected is True
+
+    real = detect_context_injection(["Paris"] * 4, ["Lyon"] * 4, "Lyon", same_fn=eq)
+    assert real.measured is True and real.suspected is True
+
+
+def test_gate_conditions_refuse_trailing_clauses_instead_of_dropping_them():
+    """`re.match` anchors only the start, so "forecast.risk == critical <junk>"
+    matched and the trailing clause was silently discarded — the gate then
+    watched something narrower than what was written."""
+    import pytest as _pytest
+    from styxx.gates import parse_condition
+
+    for bad in ("forecast.risk == critical AND junk",
+                "forecast.category == hallucination extra",
+                "coherence < 0.5 nonsense"):
+        with _pytest.raises(ValueError):
+            parse_condition(bad)
+
+    for good in ("forecast.risk == critical",
+                 "forecast.category == hallucination",
+                 "coherence < 0.5"):
+        assert callable(parse_condition(good))

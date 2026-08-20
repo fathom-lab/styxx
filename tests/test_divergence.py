@@ -266,24 +266,38 @@ def test_detect_injection_empty_stateless():
     assert r.n_stateless == 0
     assert r.n_in_session == 10
     assert r.concordance_stateless == 0.0
-    assert r.divergence == pytest.approx(1.0)
-    assert r.suspected is True
+    assert math.isnan(r.divergence)   # undefined, not a measured 1.0
+    assert r.measured is False
+    assert r.suspected is True        # unchanged: still flags, still fail-closed
 
 
 def test_detect_injection_empty_in_session():
-    # If in-session is empty, divergence is just the stateless concordance.
+    # CHANGED 2026-08-19: an arm that collected NOTHING used to be scored as
+    # concordance 0.0, so a failed in-session sample produced divergence 1.0 and
+    # suspected=True -- an ACCUSATION manufactured from missing data. Divergence
+    # against an unmeasured arm is undefined; measured=False says so and nothing
+    # is accused. (The calibrated regime -- AUC 0.875, n=48 -- is unaffected:
+    # every calibrated item sampled both arms.)
     r = detect_context_injection(["Paris"] * 10, [], "Paris", same_fn=_EQ)
     assert r.n_in_session == 0
     assert r.concordance_in_session == 0.0
-    assert r.divergence == pytest.approx(1.0)
+    assert r.measured is False
+    assert math.isnan(r.divergence)
+    assert r.suspected is True      # fail CLOSED: the comparison never happened
 
 
 def test_detect_injection_both_empty():
+    # CHANGED 2026-08-19: two failed arms gave |0.0 - 0.0| = 0.0 and
+    # suspected=False -- a total sampling failure reported as a clean bill of
+    # health, from an injection detector. It now fails CLOSED, matching the
+    # stance this module already took for a missing stateless arm, and
+    # measured=False lets a caller tell "checked, clean" from "never checked".
     r = detect_context_injection([], [], "anything", same_fn=_EQ)
     assert r.n_stateless == 0
     assert r.n_in_session == 0
-    assert r.divergence == pytest.approx(0.0)
-    assert r.suspected is False
+    assert math.isnan(r.divergence)
+    assert r.measured is False
+    assert r.suspected is True
 
 
 def test_detect_injection_none_filtered():
@@ -339,4 +353,6 @@ def test_detect_injection_namedtuple_fields():
         "concordance_stateless", "concordance_in_session",
         "n_clusters_stateless", "n_clusters_in_session",
         "n_stateless", "n_in_session",
+        "measured",
     )
+    assert r.measured is True

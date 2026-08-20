@@ -530,6 +530,10 @@ class InjectionScore(NamedTuple):
     n_clusters_in_session: int
     n_stateless: int
     n_in_session: int
+    # False when either arm collected no usable samples. divergence is NaN
+    # there: an arm that was never measured cannot diverge from anything, and
+    # suspected=False must not be read as "clean".
+    measured: bool = True
 
     def __float__(self) -> float:  # so it compares/sorts like its scalar score
         return self.divergence
@@ -661,10 +665,23 @@ def detect_context_injection(
     c_s, k_s, n_s = _concordance(samples_stateless)
     c_i, k_i, n_i = _concordance(samples_in_session)
 
-    divergence = abs(c_s - c_i)
+    # An arm that collected nothing has concordance 0.0. Two failed arms
+    # therefore gave divergence |0.0 - 0.0| = 0.0 and suspected=False -- a total
+    # sampling failure reported as a clean bill of health, from an INJECTION
+    # DETECTOR.
+    #
+    # Fail CLOSED, which is the posture this module already took for a missing
+    # stateless arm ("can't compute the defense -- flag honestly"): if either
+    # arm was not sampled, the comparison did not happen, so the item is
+    # suspected and `measured` is False. Divergence is NaN because a difference
+    # against an unmeasured arm is undefined -- never 0.0, which would be a
+    # clean reading, and never 1.0, which would be a measured accusation.
+    measured = n_s > 0 and n_i > 0
+    divergence = abs(c_s - c_i) if measured else float("nan")
     return InjectionScore(
         divergence=divergence,
-        suspected=divergence > threshold,
+        suspected=bool(divergence > threshold) if measured else True,
+        measured=measured,
         concordance_stateless=c_s,
         concordance_in_session=c_i,
         n_clusters_stateless=k_s,
