@@ -1717,3 +1717,41 @@ def test_self_report_does_not_manufacture_a_passing_gate(tmp_path, monkeypatch):
     analytics._audit_log_path().write_text(json.dumps(stale) + "\n", encoding="utf-8")
     analytics.clear_audit_cache()
     assert len(analytics.load_audit(since_s=24 * 3600)) == 1
+
+
+def test_weather_warn_rate_is_a_warn_rate(tmp_path, monkeypatch):
+    """The prescription divided warns by `failure_entries` — entries whose
+    outcome != "correct". Under auto-feedback outcome IS the gate (pass ->
+    correct), so that denominator was already "everything that didn't pass":
+    the ratio measured warns-among-non-passes, tended to 1.0, and fired on
+    healthy agents. A true 20% warn rate was reported as 100%."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+    from styxx.weather import weather
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
+    rows = [{"ts": now - i * 60, "gate": "pass", "source": "live",
+             "phase4_pred": "reasoning", "phase4_conf": 0.9,
+             "outcome": "correct", "outcome_source": "auto"} for i in range(8)]
+    rows += [{"ts": now - i * 60, "gate": "warn", "source": "live",
+              "phase4_pred": "hallucination", "phase4_conf": 0.5} for i in range(2)]
+    p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+
+    report = weather(window_hours=24)
+    assert report is not None
+    warn_rx = [x for x in report.prescriptions if "warn rate" in x]
+    assert not warn_rx, "a true 20% warn rate must not fire the >25% prescription"
+
+    # and a genuinely high warn rate still does, over the honest denominator
+    rows = [{"ts": now - i * 60, "gate": "warn", "source": "live",
+             "phase4_pred": "hallucination", "phase4_conf": 0.5} for i in range(8)]
+    rows += [{"ts": now - i * 60, "gate": "pass", "source": "live",
+              "phase4_pred": "reasoning", "phase4_conf": 0.9} for i in range(2)]
+    p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+    report2 = weather(window_hours=24)
+    assert any("warn rate" in x for x in report2.prescriptions)

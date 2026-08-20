@@ -701,7 +701,15 @@ def weather(
     ctx_expected = _CTX_EXPECTED.get(ctx, set()) if ctx else set()
     all_expected = expected | ctx_expected
 
-    failure_entries = [e for e in entries if e.get("outcome") != "correct"]
+    # Only a HUMAN "correct" exonerates an entry. Under auto-feedback the
+    # outcome is derived from the entry's own gate (pass -> correct), so
+    # filtering on it just re-selects the non-pass entries -- and any rate
+    # computed over that set is a ratio of warns to non-passes, not a warn rate.
+    # Same reasoning as calibrate()'s refusal to train on auto labels.
+    failure_entries = [
+        e for e in entries
+        if not (e.get("outcome") == "correct" and e.get("outcome_source") != "auto")
+    ]
 
     def _find_break(category: str) -> Optional[str]:
         """Find the last time a pattern of `category` ended and what came next."""
@@ -886,8 +894,11 @@ def weather(
         )
 
     # ── 5. Gate rate prescriptions ───────────────────────────
+    # Denominator is every entry in the window. Dividing by failure_entries
+    # measured warns-among-non-passes, which under auto-feedback tends to 1.0
+    # and fired this prescription on essentially every report.
     filtered_warns = sum(1 for e in failure_entries if e.get("gate") in ("warn", "fail"))
-    filtered_warn_rate = filtered_warns / max(1, len(failure_entries))
+    filtered_warn_rate = filtered_warns / max(1, len(entries))
     if filtered_warn_rate > 0.25:
         # Find which category is triggering the most warns
         warn_cats = Counter(
@@ -898,7 +909,8 @@ def weather(
             top_warn_cat, top_warn_n = warn_cats.most_common(1)[0]
             prescriptions.append(
                 f"warn rate at {filtered_warn_rate * 100:.0f}% "
-                f"({filtered_warns} events). {top_warn_cat} is the top "
+                f"({filtered_warns} of {len(entries)} entries). "
+                f"{top_warn_cat} is the top "
                 f"trigger ({top_warn_n}x). review recent warn events "
                 f"with 'styxx log stats --gate warn' and look for the "
                 f"specific prompt patterns causing it."
