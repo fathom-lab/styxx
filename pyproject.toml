@@ -178,6 +178,7 @@ styxx-demo = "styxx.selfaudit_demo:main"
 styxx-conscience = "styxx.conscience:main"
 styxx-credits = "styxx.credits:main"
 styxx-absence = "styxx.absence:main"
+styxx-loops = "styxx.loops:main"
 styxx-flagship = "styxx.flagship:main"
 
 [tool.setuptools.dynamic]

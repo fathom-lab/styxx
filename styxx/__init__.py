@@ -402,6 +402,7 @@ from .witness import Witness, WitnessVerdict, MEASURED_CAPABILITIES
 from .protocol import Experiment, Verdict as ProtocolVerdict
 from .credits import token_ledger, TokenLedger  # what the gate COST, and what it refuses to claim it saved
 from .absence import scan_path as absence_scan, AbsenceReport  # where NOT measuring reads as a good result
+from .loops import scan_path as loops_scan, LoopReport  # fields derived from the system's own output, then trusted
 
 
 def seal(*args, **kwargs):
@@ -866,6 +867,7 @@ __all__ = [
     "Experiment", "ProtocolVerdict",
     "token_ledger", "TokenLedger",
     "absence_scan", "AbsenceReport",
+    "loops_scan", "LoopReport",
     # 7.28: the trust seal for agent work
     "seal", "verify_seal", "Seal",
     # 7.29: the zero-receipt diff gate

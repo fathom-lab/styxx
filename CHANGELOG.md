@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.42.0] — 2026-08-20 — the instrument for self-confirming systems
+
+7.41.0 fixed a contaminated field. This ships the instrument that finds the
+**class**: a system deriving a field from its own output, then trusting it.
+
+### Added
+- **`styxx.loops`** — `styxx-loops <path>`, `--json`, or `styxx.loops_scan()`.
+  Two passes and a join: **derivation** (`rec[F] = ...` under control or data
+  flow from another field of the same record), **trust** (anywhere else
+  filtering or branching on `F`), then the join. Consumers are ranked by whether
+  they CALIBRATE, TRAIN, SCORE or GATE on the field — the cases where the system
+  is grading itself.
+
+  Run against this repo's own pre-fix history it recovers the entire `outcome`
+  loop that took a day of cross-file reasoning to find by hand: the derivation
+  at `analytics.py`, and every consumer — `calibrate` ×3, `learned_classifier`,
+  `antipatterns` ×6, `weather` ×2, `feedback`, `session_summary` — with `!!` on
+  exactly the three worst.
+
+  **Provenance-aware**: a consumer that consults an `*_source` / `*_provenance`
+  field alongside the value is marked `ok`, so a codebase that has *fixed* its
+  loop stops being flagged. Credit is function-level and therefore over-credits
+  — the direction that loses findings rather than inventing them, stated in the
+  report.
+
+  Known false positive, pinned in the tests rather than tuned away:
+  `write_audit` reads `outcome` only to check presence before stamping, which
+  the rule counts as trust.
+
+### Fixed — in the new module, before it shipped
+- `scan_path` applied its default skip list (`/tests/`) to an **explicitly named
+  file**, so scanning one silently scanned nothing and reported it clean — the
+  same failure `styxx.absence` had with `site-packages`. A path the caller names
+  is never skipped; skip patterns filter a directory walk.
+
+---
+
 ## [7.41.0] — 2026-08-19 — legs that could not fail, and a log that fed itself
 
 Continued triage of the wave-3 audit tail, by hand. A cluster of these turned
