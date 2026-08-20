@@ -42,6 +42,20 @@ class AntiPattern:
     example_turns: List[int] = field(default_factory=list)
 
 
+def _human_confirmed_correct(entry: dict) -> bool:
+    """True only when a PERSON vouched for this entry.
+
+    These detectors skip entries labelled correct — the point being not to
+    re-flag work already confirmed good. Under auto-feedback, though, the
+    outcome is derived from the entry's own gate (pass -> correct), so that skip
+    excluded every entry the gate liked. An anti-pattern detector exists to
+    catch what the GATE MISSED; blinding it to exactly those entries left it
+    able to examine only what was already flagged.
+    """
+    return (entry.get("outcome") == "correct"
+            and entry.get("outcome_source") != "auto")
+
+
 def antipatterns(
     *,
     last_n: int = 500,
@@ -75,7 +89,7 @@ def antipatterns(
     low_conf_warns = 0
     low_conf_last = ""
     for i, e in enumerate(entries):
-        if e.get("outcome") == "correct":
+        if _human_confirmed_correct(e):
             continue
         conf = float(e.get("phase4_conf") or 0.5)
         gate = e.get("gate") or "pass"
@@ -98,7 +112,7 @@ def antipatterns(
     refusal_last = ""
     streak_count = 0
     for e in entries:
-        if e.get("outcome") == "correct" or "refusal" in expected:
+        if _human_confirmed_correct(e) or "refusal" in expected:
             streak_count = 0
             continue
         if e.get("phase4_pred") == "refusal":
@@ -123,7 +137,7 @@ def antipatterns(
     creative_warns = 0
     creative_last = ""
     for e in entries:
-        if e.get("outcome") == "correct" or "creative" in expected:
+        if _human_confirmed_correct(e) or "creative" in expected:
             continue
         if (e.get("phase4_pred") == "creative"
                 and e.get("gate") in ("warn", "fail")):
@@ -144,7 +158,7 @@ def antipatterns(
     adv_preflight = 0
     adv_last = ""
     for e in entries:
-        if e.get("outcome") == "correct" or "adversarial" in expected:
+        if _human_confirmed_correct(e) or "adversarial" in expected:
             continue
         if e.get("phase1_pred") == "adversarial" and e.get("gate") in ("warn", "fail"):
             adv_preflight += 1
@@ -165,7 +179,7 @@ def antipatterns(
     cautious_last = ""
     c_streak = 0
     for e in entries:
-        if e.get("outcome") == "correct":
+        if _human_confirmed_correct(e):
             c_streak = 0
             continue
         if e.get("mood") == "cautious" or (e.get("source") == "self-report" and "hedg" in (e.get("note") or "").lower()):
@@ -190,7 +204,7 @@ def antipatterns(
     # Look for sessions where confidence trends downward
     sessions: Dict[str, List[float]] = {}
     for e in entries:
-        if e.get("outcome") == "correct":
+        if _human_confirmed_correct(e):
             continue
         sid = e.get("session_id")
         conf = e.get("phase4_conf")

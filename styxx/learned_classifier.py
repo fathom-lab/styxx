@@ -99,12 +99,25 @@ def _logreg():
 
 
 def _load_training_data() -> Tuple[List[str], List[str]]:
-    """Load (prompt_text, category) pairs from correct-labeled entries."""
+    """Load (prompt_text, category) pairs from HUMAN-confirmed entries.
+
+    AUTO-STAMPED OUTCOMES ARE REFUSED. With auto-feedback enabled the outcome is
+    derived from the entry's own gate (pass -> correct), and the label used here
+    is ``phase4_pred`` -- the classifier's own prediction. Training on those
+    pairs is a closed loop with no external signal at all: prompts the gate
+    liked, labelled with what the classifier already said. It would relearn its
+    own mistakes and read the agreement as accuracy.
+
+    Standing caveat even for human labels: ``outcome="correct"`` means the
+    ANSWER was right, not that the CATEGORY was. This selects entries a human
+    vouched for; it does not verify the label itself. A properly supervised
+    corpus would carry category labels a human actually assigned.
+    """
     from .analytics import load_audit
     entries = load_audit(last_n=5000)
     texts, labels = [], []
     for e in entries:
-        if e.get("outcome") != "correct":
+        if e.get("outcome") != "correct" or e.get("outcome_source") == "auto":
             continue
         prompt = e.get("prompt")
         cat = e.get("phase4_pred")

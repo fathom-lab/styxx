@@ -1755,3 +1755,58 @@ def test_weather_warn_rate_is_a_warn_rate(tmp_path, monkeypatch):
     analytics.clear_audit_cache()
     report2 = weather(window_hours=24)
     assert any("warn rate" in x for x in report2.prescriptions)
+
+
+def test_antipatterns_is_not_blinded_by_the_gates_own_verdict(tmp_path, monkeypatch):
+    """These detectors skip entries labelled correct — sensible, until
+    auto-feedback derives that label from the entry's own gate. Then the skip
+    excluded every entry the gate liked, and an anti-pattern detector exists to
+    catch what the GATE MISSED."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+    from styxx.antipatterns import antipatterns
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
+    base = [{"ts": now - i * 60, "gate": "warn", "source": "live",
+             "phase4_pred": "hallucination", "phase4_conf": 0.1,
+             "outcome": "correct"} for i in range(12)]
+
+    p.write_text("\n".join(json.dumps(dict(r, outcome_source="auto")) for r in base) + "\n",
+                 encoding="utf-8")
+    analytics.clear_audit_cache()
+    assert antipatterns(), "auto-labelled entries must still be examined"
+
+    p.write_text("\n".join(json.dumps(dict(r, outcome_source="human")) for r in base) + "\n",
+                 encoding="utf-8")
+    analytics.clear_audit_cache()
+    assert not antipatterns(), "a human's confirmation still exempts an entry"
+
+
+def test_learned_classifier_refuses_self_generated_training_pairs(tmp_path, monkeypatch):
+    """It selected entries by outcome and labelled them with phase4_pred — the
+    classifier's OWN prediction. Under auto-feedback that is a closed loop with
+    no external signal: prompts the gate liked, labelled with what the
+    classifier already said."""
+    import json, time
+    monkeypatch.setenv("STYXX_DATA_DIR", str(tmp_path))
+    import styxx.analytics as analytics
+    from styxx.learned_classifier import _load_training_data
+
+    p = analytics._audit_log_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    now = time.time()
+    rows = [
+        {"ts": now, "source": "live", "outcome": "correct", "outcome_source": "auto",
+         "prompt": "auto labelled prompt", "phase4_pred": "reasoning"},
+        {"ts": now, "source": "live", "outcome": "correct", "outcome_source": "human",
+         "prompt": "human confirmed prompt", "phase4_pred": "reasoning"},
+    ]
+    p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    analytics.clear_audit_cache()
+
+    texts, labels = _load_training_data()
+    assert texts == ["human confirmed prompt"]
+    assert labels == ["reasoning"]
