@@ -1810,3 +1810,53 @@ def test_learned_classifier_refuses_self_generated_training_pairs(tmp_path, monk
     texts, labels = _load_training_data()
     assert texts == ["human confirmed prompt"]
     assert labels == ["reasoning"]
+
+
+def _p4(cat, p=0.9):
+    from styxx.vitals import PhaseReading
+    return PhaseReading(phase="p4", n_tokens_used=10, features=[0.0],
+                        predicted_category=cat, margin=p,
+                        distances={cat: 0.1}, probs={cat: p})
+
+
+def test_gate_verdict_is_frozen_at_first_read():
+    """`gate` recomputed against mutable global config on EVERY access, so the
+    same object answered `fail` then `pass` after an expect() call. expect() is
+    an autoreflex ACTION — a rule firing during dispatch rewrote the verdict of
+    the object being dispatched, and two callbacks could disagree about the same
+    generation."""
+    from styxx import config
+    from styxx.vitals import Vitals
+
+    config.clear_expected()
+    try:
+        v = Vitals(phase1_pre=_p4("hallucination"), phase4_late=_p4("hallucination"))
+        first = v.gate
+        assert first == "fail"
+        config.expect("hallucination")
+        assert v.gate == first, "a decided verdict must not be rewritten"
+
+        # config still governs NEW measurements
+        fresh = Vitals(phase1_pre=_p4("hallucination"), phase4_late=_p4("hallucination"))
+        assert fresh.gate == "pass"
+    finally:
+        config.clear_expected()
+
+
+def test_code_review_context_is_inert_and_says_so():
+    """Measured: set_context("code_review") produces identical gates to no
+    context on every category, because `all_expected` is never consulted for
+    "reasoning". Pinned so the day someone makes it meaningful, this fails and
+    the calibration decision gets made deliberately."""
+    from styxx import config
+    from styxx.vitals import Vitals
+
+    cats = ("hallucination", "refusal", "adversarial", "reasoning")
+    try:
+        config.clear_expected(); config.set_context(None)
+        base = {c: Vitals(phase1_pre=_p4(c), phase4_late=_p4(c)).gate for c in cats}
+        config.set_context("code_review")
+        ctx = {c: Vitals(phase1_pre=_p4(c), phase4_late=_p4(c)).gate for c in cats}
+        assert base == ctx
+    finally:
+        config.set_context(None); config.clear_expected()

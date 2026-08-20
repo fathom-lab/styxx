@@ -865,7 +865,17 @@ class Vitals:
 
     @property
     def gate(self) -> str:
-        """Default gate status computed from phase 4.
+        """Default gate status computed from phase 4, FROZEN at first read.
+
+        The verdict is about ONE generation, decided against the config in force
+        when it was decided. This used to recompute on every access, so the same
+        Vitals object answered differently as config moved underneath it —
+        `fail` on one read and `pass` on the next after an `expect()` call. That
+        is not hypothetical: `expect(...)` is an autoreflex ACTION, so a rule
+        firing during dispatch rewrote the verdict of the object being
+        dispatched, and two gate callbacks in one dispatch could disagree about
+        the same generation while write_audit recorded whichever was read last.
+        Frozen on first access; a later config change cannot rewrite history.
 
         Returns one of:
           'pass'    - quiet reasoning / retrieval / creative
@@ -892,6 +902,10 @@ class Vitals:
         pred = self.phase4_late.predicted_category
         conf = self.phase4_late.confidence
 
+        cached = self.__dict__.get("_gate_frozen")
+        if cached is not None:
+            return cached
+
         # 0.9.7: suppress hallucination gate on creative/code contexts.
         # Creative writing and code generation produce logprob signatures
         # near the hallucination centroid (specific details, confident
@@ -901,23 +915,41 @@ class Vitals:
         ctx = config.current_context()
         _CTX_EXPECTED = {
             "creative_writing": {"creative", "hallucination"},
+            # INERT, measured 2026-08-20: `all_expected` is consulted only in
+            # the hallucination and refusal/adversarial branches and the
+            # forecast override. "reasoning" appears in none of them, and a
+            # reasoning prediction already falls through to "pass" -- so
+            # set_context("code_review") produces byte-identical gates to no
+            # context at all, on every category. It reads like protection and
+            # configures nothing.
+            #
+            # Left as-is deliberately: code review DOES generate the confident,
+            # specific, unhedged register that sits near the hallucination
+            # centroid, so the plausible repair is {"reasoning", "hallucination"}
+            # -- but that widens a calibrated gate, which is an operator
+            # calibration decision with a receipt, not a bug fix to slip into a
+            # sweep. Documented here so nobody mistakes the knob for a lever.
             "code_review": {"reasoning"},
         }
         ctx_expected = _CTX_EXPECTED.get(ctx, set()) if ctx else set()
         all_expected = expected | ctx_expected
 
+        def _freeze(verdict: str) -> str:
+            self.__dict__["_gate_frozen"] = verdict
+            return verdict
+
         if pred == "hallucination" and conf > floor:
             if "hallucination" in all_expected:
-                return "pass"  # expected hallucination-like signal
+                return _freeze("pass")  # expected hallucination-like signal
             # Low confidence hallucination (< 0.35) on a marginal call
             # is more likely centroid confusion than real hallucination
             if conf < 0.35:
-                return "warn"  # downgrade to warn instead of fail
-            return "fail"
+                return _freeze("warn")  # downgrade to warn instead of fail
+            return _freeze("fail")
         if pred in ("refusal", "adversarial") and conf > floor:
             if pred in all_expected:
-                return "pass"
-            return "warn"
+                return _freeze("pass")
+            return _freeze("warn")
         # 3.2.0: forecast override — if the phase4 classifier says "pass"
         # but the forecast predicted critical risk, downgrade to "warn".
         # The forecast reads trajectory shape features that the atlas
@@ -926,8 +958,8 @@ class Vitals:
         if fc and fc.risk_level == "critical":
             fc_cat = fc.predicted_category
             if fc_cat not in all_expected and fc_cat in ("hallucination", "adversarial"):
-                return "warn"
-        return "pass"
+                return _freeze("warn")
+        return _freeze("pass")
 
 
 # ══════════════════════════════════════════════════════════════════
