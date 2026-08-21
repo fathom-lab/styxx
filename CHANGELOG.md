@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.43.0] — 2026-08-20 — a detector that was blind outside the latin alphabet
+
+### Fixed
+- **`semantic_entropy` was inoperative for most of the world's writing systems,
+  and failed toward "consistent".** `_tokens` used `[a-z0-9]+`, which matches
+  nothing in Japanese, Chinese, Korean, Arabic, Hebrew, Greek, Cyrillic, Thai or
+  Devanagari. Every non-latin answer tokenized to the empty set, two empty sets
+  were called identical, all samples collapsed into one cluster, and the
+  function returned **0.0 — its most confident reading**, "one cluster: the
+  model knows the answer".
+
+  Measured: four *different* Japanese city names scored **0.0** while the same
+  four in latin script scored **1.386**. Now unicode-aware, with character
+  bigrams for space-free scripts so CJK keeps partial overlap. Japanese,
+  Cyrillic and latin all score log(4) for four distinct answers.
+- Two strings the lexical backend **cannot read** are no longer called
+  identical: empty-vs-empty falls back to exact comparison, so an emoji-only
+  pair stops manufacturing agreement out of the backend's own blind spot.
+- `seal.py` and `provenance.py` scope notes pointed at "styxx.attestation's
+  Ed25519 path", which does not exist — attestation *anchors* (it pins a git
+  commit), `handoff` *signs*. Both now name paths that exist.
+
+### Added — benchmark (repo-only, deliberately not in the wheel)
+- **SILENT-PASS** (`benchmarks/silent_pass/`): 20 real defects where a
+  measurement failed and the system returned a healthy-looking value, each
+  citing a commit rather than a snapshot. Ships a scorer that measures **recall
+  only** — the corpus holds no true negatives — and a **localization sweep**
+  that separates detection from proximity.
+
+  Our own baseline, published: `styxx.absence` **9/20**, `styxx.loops` **5/20**,
+  union **13/20**. `absence` plateaus across the tolerance sweep (a real
+  number); **`loops` climbs 5→9 at tolerance 50, so part of its recall is the
+  window** — stated so the flattering end is never quoted. SP-6 is 1/5 for both
+  tools: an absent guard is code that was never written, and no pass over source
+  can flag it.
+
+---
+
 ## [7.42.0] — 2026-08-20 — the instrument for self-confirming systems
 
 7.41.0 fixed a contaminated field. This ships the instrument that finds the

@@ -93,8 +93,16 @@ class ScoreResult:
         lines = ["SILENT-PASS — recall against real failures that reported success", ""]
         if self.recall is None:
             lines.append("  NO CASES SCORED — every pre-fix source was unavailable.")
-            lines.append("  That is not a score of zero; it is no score. Check that")
-            lines.append("  the repository has full history (CI clones shallow).")
+            lines.append("  That is not a score of zero; it is no score.")
+            lines.append("")
+            lines.append("  SILENT-PASS scores against real history, so it needs a full")
+            lines.append("  clone: `git clone https://github.com/fathom-lab/styxx`, then")
+            lines.append("  run from the repo root (or pass repo=<path>). It is NOT in")
+            lines.append("  the pip wheel — shipping a copy that cannot reach the commits")
+            lines.append("  it cites would be an artifact that looks available and does")
+            lines.append("  nothing, which is the class this corpus documents.")
+            lines.append("  If you DO have a clone: CI checkouts are shallow by default;")
+            lines.append("  fetch full history with `git fetch --unshallow`.")
             return "\n".join(lines)
         lines.append(f"  recall      {self.n_caught}/{self.n_cases} = {self.recall:.0%}")
         if self.n_unavailable:

@@ -42,6 +42,24 @@ Remove (4) and it is a latent bug. Remove (3) and it is an ordinary one.
 | SP-7 | SELF_CONFIRMING | ground truth derived from the system's own verdict, then trusted |
 | SP-8 | INERT_CONTROL | a knob, guard or verification leg that cannot change any outcome |
 
+## running it
+
+SILENT-PASS is **repo-only, on purpose**. It scores against real history —
+pre-fix source is fetched from `fix_commit~1` — so it needs a full clone:
+
+```bash
+git clone https://github.com/fathom-lab/styxx && cd styxx
+python -c "from benchmarks.silent_pass import main; main([])"
+```
+
+It is deliberately **not** in the pip wheel. A packaged copy could not reach the
+commits it cites, so it would score nothing while looking installed — an
+artifact that appears available and does nothing, which is the exact class this
+corpus documents. Better to require the clone than to ship the shape.
+
+(`git fetch --unshallow` if you cloned shallow; the scorer says so when the
+history is missing, and reports NO CASES SCORED rather than a recall of zero.)
+
 ## how to score against it
 
 ```python
