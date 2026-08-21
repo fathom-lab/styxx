@@ -1,0 +1,368 @@
+{
+ "n_q1": 415,
+ "n_shaped": 17,
+ "by_repo": {
+  "cleanlab": 1,
+  "deepeval": 2,
+  "garak": 1,
+  "giskard": 2,
+  "great_expectations": 1,
+  "inspect_ai": 9,
+  "lm-evaluation-harness": 1
+ },
+ "candidates": [
+  {
+   "sha": "6ec5b173dd81fb604398ab9f90843676ca24b3cb",
+   "author": "El\u00edas Snorrason",
+   "date": "Fri Sep 2 00:07:39 2022 +0000",
+   "subject": "Cleanup token classification utils (#390)",
+   "body": "* :label: restrict parameters for list types\n\n* :bug: only process characters in input token\n\nExample: process_token(\"Cleanlab\", [(\"C\", \"a\"), (\"a\", \"C\")]) should return \"aleCnlCb\", not \"CleCnlCb\".\n\n* :white_check_mark: use all sentences in test_get_sentence\n\n* :white_check_mark: add test cases to test_filter_sentence\n\n* :white_check_mark: extent test cases in test_mapping\n\n* :memo: clean up docstrings\n\nRestrict arg types based on docstrings. Fix punctuation and typos. Add examples to docstring.\n\n* :white_check_mark: split tests for filter_sentence\n\n* :white_check_mark: extend test_merge_probs\n\n* :white_check_mark: test merge_probs with ignored/normalized columns in probs\n\n* :white_check_mark: extend test cases for get_sentences\n\n* :coffin: remove unused pandas import\n\n* :label: pass strict mypy check\n\nWe ignore np.max as it is untyped.\n\nNo issues found in token_classification_utils.py by running\n```\nmypy --install-types --non-interactive --strict cleanlab/internal/token_classification_utils.py\n```\n\n* :construction_worker: add strict type-checking in CI\n\n* :green_heart: use strict type-check for single file\n\n* :rewind: remove strict type check in CI\n\n* refactor: :label: use np.ndarr",
+   "repo": "cleanlab",
+   "query": "Q1",
+   "n_files": 2,
+   "py_files": [
+    "cleanlab/internal/token_classification_utils.py",
+    "tests/test_token_classification.py"
+   ],
+   "head": "750625747de1",
+   "shape_removed": "-    sentences: list, condition: Optional[Callable] = None, return_mask: bool = True",
+   "shape_added": "+    condition: Optional[Callable[[str], bool]] = None,",
+   "diff_chars": 10185
+  },
+  {
+   "sha": "65f84098d9970c436d0a9a0d697c8e22e75f63e0",
+   "author": "Frederico Schuh",
+   "date": "Mon Aug 5 01:38:53 2024 -0400",
+   "subject": "Refactored test_hybrid_tracing into a pytest test, and disabled it due to missing data files",
+   "body": "\n",
+   "repo": "deepeval",
+   "query": "Q1",
+   "n_files": 1,
+   "py_files": [
+    "tests/test_hybrid_tracing.py"
+   ],
+   "head": "50c123b15252",
+   "shape_removed": "-    index_loaded = True",
+   "shape_added": "+@pytest.mark.skip(reason=\"data files used by this test are missing\")",
+   "diff_chars": 13491
+  },
+  {
+   "sha": "aab6d31bcc9362a0a7adf4a404fbe0b94d7caf64",
+   "author": "Jeffrey Ip",
+   "date": "Fri Aug 21 18:39:17 2026 +0800",
+   "subject": "refactor(voice): group duplex/connector state and drop dynamic attribute probing",
+   "body": "The duplex run loop tracked the agent utterance across ~24 flat locals with\nthree near-identical reset blocks, and read its own tuning knobs off the\nconnector via getattr string probes -- so a typo in a knob name degraded\nsilently into a default instead of failing. Contracts the duplex loop relies\non (end_of_turn_silence_ms, max_turn_timeout_s, recv_sample_rate,\ndrain_downlink) are now declared on the connector base class and accessed as\nattributes, and the utterance state lives in one object with a single reset.\n\nAlso consolidates duplication the refactor exposed: a shared UplinkStream and\niter_downlink helper replace per-connector copies across the websocket,\ncallback and livekit transports; the websocket's nine wire-dialect parameters\nmove into a validated schema model behind an unchanged public constructor;\nfloor control's timer state groups into one object with a single _BARGE_STATES\nconstant; and the simulator's thirteen voice-only attributes group into a\nrun object, with tts_cost/stt_cost/voice_config/voice_connector kept as\nread-only properties so the public surface is unchanged.\n\nRemoves three pieces of code that could not affect behavior: an\ninterrupted_assistant flag tha",
+   "repo": "deepeval",
+   "query": "Q1",
+   "n_files": 10,
+   "py_files": [
+    "deepeval/models/base_model.py",
+    "deepeval/simulator/conversation_simulator.py",
+    "deepeval/voice/connectors/providers/livekit.py",
+    "deepeval/voice/connectors/transports/base.py",
+    "deepeval/voice/connectors/transports/callback.py",
+    "deepeval/voice/connectors/transports/websocket.py",
+    "deepeval/voice/duplex.py",
+    "deepeval/voice/floor_control.py"
+   ],
+   "head": "50c123b15252",
+   "shape_removed": "-        self.tts_cost: float = 0.0",
+   "shape_added": "+        self._voice: Optional[_VoiceRun] = None",
+   "diff_chars": 92208
+  },
+  {
+   "sha": "e5a08c7b7f138c29f241097983b6c7deb790b02f",
+   "author": "Jeffrey Martin",
+   "date": "Thu Nov 7 13:59:33 2024 -0800",
+   "subject": "Streamline translation use case",
+   "body": "* refactor for encapsulation\n* set default config entries for early load support\n  * adds docs for new entries\n  * initializes `lang_spec` to `en`\n  * intializes `translators` to an empty list\n* revised test config formats\n* only maintain prompts in one language\n* limit to only translated prompts\n* treat \"$\" as a special line bypassing translation attempt\n* NLI detector should support None response\n* check translation required carefully\n  * strings that do not contain \"words\" should bypass translation\n  * tests of translation configuration require `lang_spec`\n  * add remote translator specific class to tests\n* clarify base model prefix as opus-mt-*\n* detectors need translators in config\n* always return a translator even if just target to target\n  * always have a translator\n  * only attempt to translate output that is not None\n* force garbage collection after translator tests\n* validate probe trigger type during tranlation\n* translation needs lists of strings\n  * support for nested lists is added for existing probes content\n* remove direct _config access in plugins\n  * remove access to _config.run from `probe` classes\n  * adjust goodside translations to not retain original prompts\n*",
+   "repo": "garak",
+   "query": "Q1",
+   "n_files": 35,
+   "py_files": [
+    "garak/_config.py",
+    "garak/attempt.py",
+    "garak/detectors/base.py",
+    "garak/detectors/encoding.py",
+    "garak/detectors/leakreplay.py",
+    "garak/detectors/misleading.py",
+    "garak/detectors/promptinject.py",
+    "garak/detectors/snowball.py"
+   ],
+   "head": "384575716258",
+   "shape_removed": "-    return True",
+   "shape_added": "+    translator_instance = None",
+   "diff_chars": 139344
+  },
+  {
+   "sha": "dd75e974ee767236c06bb5553aff1ccd76d0d05d",
+   "author": "David Berenstein",
+   "date": "Thu Aug 13 05:43:42 2026 +0200",
+   "subject": "fix(checks)!: return None from SuiteResult.pass_rate when nothing evaluated (#2753)",
+   "body": "* fix(checks)!: return None from SuiteResult.pass_rate when nothing evaluated\n\nAn empty suite (or one where every scenario was skipped) reported a\nvacuous pass_rate of 1.0. Return None instead, matching the existing\nGroupStats.pass_rate convention, and render it as \"\u2014\" in the console\nsummary.\n\nCloses #2726\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\n\n* test(checks): address review feedback on pass_rate None (#2753)\n\n- Pin Hub export of null pass_rate for empty suites\n- Assert console renders \u2014 when pass_rate is None\n- Align Suite docstring example with README None handling\n- Restate garak errored-scenario guard rationale\n\nCo-authored-by: Kevin Messiaen <kevinmessiaen@users.noreply.github.com>\n\n---------\n\nCo-authored-by: Claude Fable 5 <noreply@anthropic.com>\nCo-authored-by: Cursor Agent <cursoragent@cursor.com>\nCo-authored-by: Kevin Messiaen <kevinmessiaen@users.noreply.github.com>\nCo-authored-by: Kevin Messiaen <114553769+kevinmessiaen@users.noreply.github.com>\n",
+   "repo": "giskard",
+   "query": "Q1",
+   "n_files": 7,
+   "py_files": [
+    ".../src/giskard/checks/core/result.py",
+    ".../src/giskard/checks/scenarios/suite.py",
+    "libs/giskard-checks/tests/core/test_suite.py",
+    "libs/giskard-checks/tests/export/test_hub.py",
+    ".../giskard/scan/integrations/garak/_adapter.py",
+    ".../tests/integrations/garak/test_garak_run.py"
+   ],
+   "head": "39f4bb250233",
+   "shape_removed": "-            return 1.0",
+   "shape_added": "+    def pass_rate(self) -> float | None:",
+   "diff_chars": 7913
+  },
+  {
+   "sha": "696c7cd3f6734736ec8879f29e2bd22cb420b1a0",
+   "author": "Kevin Messiaen",
+   "date": "Fri Jul 17 15:09:39 2026 +0700",
+   "subject": "fix(hooks): fail open on malformed tool input",
+   "body": "Both hooks crashed with a traceback (exit 1) on unexpected payload shapes:\na non-string file_path raised TypeError at Path(), and a non-dict tool_input\nraised AttributeError. Exit 1 means \"non-blocking, user-visible\", so a\ncrashing hook neither blocked nor cleanly allowed -- it spammed tracebacks on\nevery edit while performing no checks, violating the fail-open contract.\n\nAdds explicit isinstance guards on tool_input/file_path/command plus a\ntop-level catch-all, so future tool-input shape drift cannot wedge the agent.\n\nAlso documents that CI typechecks tests while the hook does not: the gap is\nintentional and one-directional, so the hook never blocks what CI would pass.\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>\n\n",
+   "repo": "giskard",
+   "query": "Q1",
+   "n_files": 2,
+   "py_files": [
+    ".claude/hooks/enforce_uv.py",
+    ".claude/hooks/quality_gate.py"
+   ],
+   "head": "39f4bb250233",
+   "shape_removed": "-        return 0",
+   "shape_added": "+        if proc is None:",
+   "diff_chars": 6735
+  },
+  {
+   "sha": "ccb4b8c728acdbdb300fdd4188f2e72aad3944b9",
+   "author": "Abe Gong",
+   "date": "Wed Dec 20 19:20:28 2017 -0800",
+   "subject": "Straighten out missing value handling in expect_table_row_count_to_be_between",
+   "body": "\n",
+   "repo": "great_expectations",
+   "query": "Q1",
+   "n_files": 1,
+   "py_files": [
+    "great_expectations/dataset/pandas_dataset.py"
+   ],
+   "head": "b94159e0d589",
+   "shape_removed": "-            outcome = True",
+   "shape_added": "+        max_value=None,",
+   "diff_chars": 2136
+  },
+  {
+   "sha": "745b2ec9c37ae11df022700525e73253460f96fe",
+   "author": "rasmusfaber",
+   "date": "Tue Apr 28 22:20:42 2026 +0200",
+   "subject": "Handle multi-frame zstd in async ZIP read paths (#3771)",
+   "body": "* test: extract shared zstd test helpers to test_helpers/zstd.py\n\nNo behavior change. Moves moderately_compressible_payload and\nread_raw_compressed_entry out of test_zipfile_multiframe.py so the\nforthcoming async multi-frame tests can reuse them.\n\n* fix: handle multi-frame zstd in async ZIP read path\n\nA single zstandard decompressobj only spans one frame; on eof it\nrejects further input. The previous ZstdDecompressor crashed with\n'cannot use a decompressobj multiple times' on the second chunk of\nany multi-frame entry -- exactly the entries PR #3746's writer\nproduces for samples whose JSON exceeds 200 MiB.\n\nMirror the _MultiFrameZstdDecompressObj pattern from _util/zipfile.py\ninside ZstdDecompressor: track a _pending buffer for unused_data\ncarryover and replace the inner decompressobj on every frame boundary.\n\nAdds an integration test through AsyncZipReader that monkey-patches\nthe per-frame cap to 64 KiB so the round-trip is fast (<1s).\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\n\n* fix: handle multi-frame zstd in HTTP transcoding path\n\nSame fix as the previous commit, applied to _ZstdDecompressIterator\nin compression_transcoding.py. This class is used by\nCompressedTo",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 7,
+   "py_files": [
+    "src/inspect_ai/_util/compression.py",
+    "src/inspect_ai/_util/compression_transcoding.py",
+    "tests/test_helpers/zstd.py",
+    "tests/util/test_async_zip.py",
+    "tests/util/test_compression_transcoding.py",
+    "tests/util/test_zipfile_multiframe.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-                self._exhausted = True",
+   "shape_added": "+            raise StopAsyncIteration",
+   "diff_chars": 17314
+  },
+  {
+   "sha": "1c25452bd6d74dc2b75b1a6bfb63829e4bdf8bb2",
+   "author": "Charles Teague",
+   "date": "Fri Dec 6 12:37:36 2024 -0500",
+   "subject": "Show real-time metric (#953)",
+   "body": "* create stable layout for sample count\n\n* Basic realtime metrics display\n\nThe first metric for the first scorer is now displayed in real time as the evaluation is running and updated periodically (depending upon how expensive metrics computations are).\n\n* Improve score name display\n\n* Allow scoring empty lists of samples\n\nIt will return Nan for metric values when there are no samples.\n\nFix merge conflits / lint\n\nupdate compute metrics\n\n* Improve metric display\n\n- move clock to end\n- add a bit of color to metric\n\n* Fix lint error\n",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 8,
+   "py_files": [
+    "src/inspect_ai/_display/core/display.py",
+    "src/inspect_ai/_display/core/panel.py",
+    "src/inspect_ai/_display/core/progress.py",
+    "src/inspect_ai/_display/core/results.py",
+    "src/inspect_ai/_display/rich/display.py",
+    "src/inspect_ai/_display/textual/widgets/tasks.py",
+    "src/inspect_ai/_eval/task/results.py",
+    "src/inspect_ai/_eval/task/run.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-            task_id=self.task_id, count=f\"[{complete:,}/{total:,}]\", refresh=True",
+   "shape_added": "+    def update_score(self, score: str) -> None:",
+   "diff_chars": 23597
+  },
+  {
+   "sha": "b7c982aa26c8dfefd9e514344a283ab9a2ed0d2b",
+   "author": "jjallaire",
+   "date": "Fri Feb 6 14:21:01 2026 -0500",
+   "subject": "native compaction for anthropic models (#3186)",
+   "body": "* initial work on anthropic compaction\n\n* more on compaction api\n\n* anthropic impl\n\n* type issue\n\n* more anthrpoic\n\n* handle compation blocks in all branches\n\n* emphasize compation native in docs\n\n* filter compaction content from anthropic count_tokens\n\n* default max tokens for compact\n\n* improved native compaction tests\n\n* add instructions to summary\n\n* compaction auto\n\n* count compaction tokens\n\n* ensure that compaction never triggers on normal generate\n\n* make type optional\n",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 27,
+   "py_files": [
+    "src/inspect_ai/agent/_bridge/sandbox/proxy.py",
+    "src/inspect_ai/model/__init__.py",
+    "src/inspect_ai/model/_compaction/__init__.py",
+    "src/inspect_ai/model/_compaction/_compaction.py",
+    "src/inspect_ai/model/_compaction/auto.py",
+    "src/inspect_ai/model/_compaction/edit.py",
+    "src/inspect_ai/model/_compaction/native.py",
+    "src/inspect_ai/model/_compaction/summary.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-                    self._use_fallback = True",
+   "shape_added": "+        instructions: str | None = None,",
+   "diff_chars": 194223
+  },
+  {
+   "sha": "442f027039a1fc8d2130e1fc137cd966697091f9",
+   "author": "Charles Teague",
+   "date": "Mon Jun 1 19:12:15 2026 -0400",
+   "subject": "viewer config: rename Samples* \u2192 TaskSamples*, drop filter, score-panel `default` (#4110)",
+   "body": "* viewer config: rename Samples* \u2192 TaskSamples*, drop filter\n\nPublic viewer-config surface cleanup:\n- Rename SamplesView/SamplesColumn/SamplesSort \u2192 TaskSamples* with\n  deprecation shims (relocated_module_attribute) resolving the old\n  names until 0.4. SampleScoreView/SampleScoreViewSort keep their names.\n- Add TaskSamplesColumnId literal of built-in column ids and\n  TaskSamplesColumn.score()/TaskSamplesSort.score() helpers that build\n  the score__{scorer}__{name} wire id.\n- Rename SampleScoreView.view field \u2192 default.\n- Remove the unreleased TaskSamplesView.filter field.\n- Add design/viewer-config.md reference doc; update tests.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>\n\n* update types\n\n* viewer: bump ts-mono to viewer-config rename\n\nPoints the submodule at the client-side counterpart\n(meridianlabs-ai/ts-mono#272): score-panel `default` read + TaskSamples*\nwire-type rename + filter removal.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>\n\n* viewer config: simplify TaskSamplesColumn/Sort.score() score reference\n\nThe `.score()` helpers required two strings (scorer + name) where, for the\ncommon scalar-scorer case, both are identical \u2014",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 16,
+   "py_files": [
+    "src/inspect_ai/viewer/__init__.py",
+    "src/inspect_ai/viewer/_config.py",
+    "tests/view/test_viewer_config.py",
+    "tests/view/test_viewer_config_task.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-\t\t\treturn true;",
+   "shape_added": "+\t\t\t\tconsole.warn(\"[zustand devtools middleware] \\\"__setState\\\" action type is reserved to",
+   "diff_chars": 815111
+  },
+  {
+   "sha": "0527f1768bffc87966811a7fbea465688247f5c2",
+   "author": "Ransom Richardson",
+   "date": "Tue Jul 14 13:33:24 2026 -0400",
+   "subject": "Rename the samples-listing errors_only param to an extensible filter enum",
+   "body": "`GET /evals/{id}/samples` now takes `filter=errors` instead of the\nboolean `errors_only=true`, so future listing filters are one new enum\nmember rather than an accumulation of boolean params. The value is\ntyped as a Literal end to end; an unrecognized filter is rejected (422)\nrather than silently answered with the full listing, and the CLI trusts\nthe server-filtered result \u2014 the client-side fallback filter (and the\n`select` hook it required) is removed. Skew with a server from an older\ninstall is not defended: the server runs locally from the same install\nas the CLI in all but upgraded-mid-eval cases.\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\n\n",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 7,
+   "py_files": [
+    "src/inspect_ai/_cli/ctl.py",
+    "src/inspect_ai/_control/server.py",
+    "src/inspect_ai/_control/state.py",
+    "tests/_control/test_ctl.py",
+    "tests/_control/test_server.py",
+    "tests/_control/test_state.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-        params[\"errors_only\"] = True",
+   "shape_added": "+    if sample_filter is not None:",
+   "diff_chars": 19707
+  },
+  {
+   "sha": "acd139cc75aa0778685618a78f9c470613e53208",
+   "author": "Yufeng He",
+   "date": "Thu Jul 16 06:11:47 2026 +0800",
+   "subject": "fix(web_browser): warn once when AppKit is missing on the macOS scale-factor probe",
+   "body": "Per review: catch the missing-AppKit ModuleNotFoundError specifically and log a\none-time warning (pointing at `pip install pyobjc-framework-AppKit`) before\nreturning the default scale factor of 1, instead of degrading silently. The\ndarwin probe is extracted into a helper and the warning is gated with\nfunctools.cache so it fires at most once per process.\n\n",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 1,
+   "py_files": [
+    ".../_remote_tools/_web_browser/scale_factor.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-            return 1.0",
+   "shape_added": "+def _warn_missing_appkit() -> None:",
+   "diff_chars": 2569
+  },
+  {
+   "sha": "2f7f7c8a53ffc6fccd6ba18a2c27f7dc6775d482",
+   "author": "Kai Fronsdal",
+   "date": "Tue May 12 01:50:51 2026 +0000",
+   "subject": "fix(scorer): three metrics edge cases",
+   "body": "- grouped(): raise ValueError when a group's name collides with\n  all_label (default \"all\") instead of silently overwriting that\n  group's metric with the aggregate.\n- stderr(cluster=...): return 0.0 when there is only one cluster,\n  mirroring the non-clustered n < 2 guard, instead of dividing by\n  zero and returning NaN/inf.\n- value_to_float(): reject non-finite string literals (\"nan\", \"inf\")\n  in is_number() so a single Score(value=\"nan\") no longer poisons\n  accuracy() and similar metrics; falls through to the warn-and-\n  return-0 path like other unrecognised strings.\n\nCo-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>\n\n",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 5,
+   "py_files": [
+    "src/inspect_ai/scorer/_metric.py",
+    "src/inspect_ai/scorer/_metrics/grouped.py",
+    "src/inspect_ai/scorer/_metrics/std.py",
+    "tests/scorer/test_metric.py",
+    "tests/scorer/test_value_to_float.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-        return True",
+   "shape_added": "+        # Reject non-finite literals like \"nan\" / \"inf\" \u2014 float() accepts",
+   "diff_chars": 5069
+  },
+  {
+   "sha": "34beafda81d31fd42e4652fe943b99818dcbf955",
+   "author": "Eric Winsor",
+   "date": "Tue Aug 11 01:39:48 2026 +0100",
+   "subject": "Prevent math scorer from executing model output (#4361)",
+   "body": "* Prevent math scorer from executing answer text\n\n`math()` currently passes normalized model output to SymPy `parse_expr()`.\nThat compiles and evaluates the string with Python builtins, so an ordinary\nmodel answer can execute arbitrary code on the evaluator host during scoring.\n\nParse answers and targets as data with a pinned mathematical grammar and a\nstrict plain-expression AST. Bound extraction and symbolic work, run parsing\nand comparison in cancellable worker processes, and keep model rejection\nincorrect while invalid targets are unscored.\n\n* Harden math scorer parser boundaries\n\nThe LaTeX dependency can mis-score percentages under supported ANTLR 4.11 runtimes and perform some expensive SymPy operations before Inspect applies its structural limits. Abrupt worker exits also surface without enough scorer context.\n\nNormalize percentages before dependency parsing, constrain and validate supported ANTLR runtimes, keep binomial and gamma construction symbolic, and reject remaining eager operations before parsing. Preserve worker exits as scorer errors while identifying whether they occurred during target parsing or answer scoring.\n\n* Remove residual math parser evaluation paths\n\nTh",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 9,
+   "py_files": [
+    "src/inspect_ai/scorer/_math.py",
+    "tests/scorer/test_math.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-            matched = True",
+   "shape_added": "+    expression: Any | None",
+   "diff_chars": 123372
+  },
+  {
+   "sha": "657ad982ddb710c2fb23997501e277d98c6986b1",
+   "author": "Ransom Richardson",
+   "date": "Tue Jul 21 18:11:00 2026 -0400",
+   "subject": "Persist inspect ctl config changes in the eval log (#4575)",
+   "body": "* Add design doc for persisting ctl config changes in the eval log\n\nDesign for meridianlabs-ai/inspect_ai#82: enumerates every inspect ctl\nconfig knob and its recorded counterpart in the log, and designs an\nappend-only EvalLog.config_updates record (journal-backed, provenance-\ncarrying) so mid-run retunes are persisted without mutating the launch\nconfig.\n\nCo-authored-by: Ransom Richardson <1209015+ransomr@users.noreply.github.com>\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\n\n* Address design review feedback and session refinements\n\n- Add explicit `cleared` flag to ConfigValueChange so \"set nullable knob\n  to null\" (e.g. lifting a time limit) is distinguishable from \"revert\n  to launch value\" (review comment)\n- Correct eval_retry field count: ~30, not ~20 (review comment)\n- Clarify task_identifier interaction is not an issue for shipped knobs,\n  only for planned per-sample limits\n- Strengthen Alternative B rejection with discriminated-union\n  backward-compatibility argument\n- Note why journaling beats mid-run header rewrite in the .eval format\n- Adopt inspect_flow tag-step author convention (--author flag, git\n  identity default) for provenance\n\nCo-Authored-By: Claude Fab",
+   "repo": "inspect_ai",
+   "query": "Q1",
+   "n_files": 37,
+   "py_files": [
+    "src/inspect_ai/_cli/ctl.py",
+    "src/inspect_ai/_cli/score.py",
+    "src/inspect_ai/_control/__init__.py",
+    "src/inspect_ai/_control/config_record.py",
+    "src/inspect_ai/_control/eval_state.py",
+    "src/inspect_ai/_control/limits.py",
+    "src/inspect_ai/_control/server.py",
+    "src/inspect_ai/_eval/task/log.py"
+   ],
+   "head": "b3c6e5687b0e",
+   "shape_removed": "-\t\t\treturn true;",
+   "shape_added": "+\t\twarning: \"bi bi-exclamation-triangle\",",
+   "diff_chars": 751538
+  },
+  {
+   "sha": "b0195a94f4fe98c10acc043255081506b5d453f8",
+   "author": "Thiago Crepaldi",
+   "date": "Fri Aug 21 08:20:42 2026 -0400",
+   "subject": "feat(models): add cross-platform onnxruntime-genai backend + refactor winml (#3960)",
+   "body": "* feat(models): add cross-platform onnxruntime-genai backend + refactor winml\n\nAdd a cross-platform `onnxruntime-genai` backend that runs ONNX LLMs exported\nby the ONNX Runtime GenAI Model Builder on CPU/CUDA/DirectML/WebGPU/AMD-NPU via\nthe `og.Config` provider API. All lm-eval logic (single-pass log-likelihood,\nmultiple-choice, rolling perplexity, generation) lives in\n`ONNXRuntimeGenAILM(TemplateLM)`, following the `OptimumLM(HFLM)` single-file\nsubclass precedent.\n\nRefactor `winml` into a thin `WindowsML(ONNXRuntimeGenAILM)` subclass that\noverrides only execution-provider selection, inheriting the shared scoring\ncore. This removes the previous winml quality debt: the per-token\nteacher-forcing loop (now a single `get_output(\"logits\")` pass), the direct\n`loglikelihood` override that bypassed `TemplateLM` token handling, and the\nsilent `(0.0, False)`-on-exception path that corrupted scores.\n\nAdd a shared parametrized test suite (unit tests for the scoring math with a\nfake `_forward_logits`, plus CPU smoke tests over hellaswag/wikitext/gsm8k\nusing a tiny Model Builder fixture), packaging extra, and docs. The test is\nadded to the CI `--ignore` list since the ONNX runtimes are not insta",
+   "repo": "lm-evaluation-harness",
+   "query": "Q1",
+   "n_files": 9,
+   "py_files": [
+    "lm_eval/models/__init__.py",
+    "lm_eval/models/onnxruntime_genai.py",
+    "lm_eval/models/winml.py",
+    "tests/models/test_onnxruntime_genai.py",
+    "tests/models/test_winml.py"
+   ],
+   "head": "4e7e0d47f33b",
+   "shape_removed": "-                total_ll = 0.0",
+   "shape_added": "+            eval_logger.warning(\"Windows ML import error: %s\", e)",
+   "diff_chars": 73538
+  }
+ ]
+}
