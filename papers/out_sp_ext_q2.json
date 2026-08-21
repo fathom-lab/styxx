@@ -1,0 +1,1434 @@
+{
+ "frozen_removed": "return\\s+(0|0\\.0|True|1\\.0|\"(pass|ok|valid|healthy)\")",
+ "frozen_added": "raise|nan|None|warn|skip|log\\.(warn|error)",
+ "seeds": [
+  "return 0.0",
+  "return 0",
+  "return True",
+  "return 1.0",
+  "return \"pass\"",
+  "return \"ok\"",
+  "return \"valid\"",
+  "return \"healthy\""
+ ],
+ "n_pickaxe_commits": 2914,
+ "n_q2": 140,
+ "by_repo": {
+  "alibi-detect": 0,
+  "cleanlab": 0,
+  "deepchecks": 5,
+  "deepeval": 18,
+  "evidently": 3,
+  "garak": 4,
+  "giskard": 4,
+  "great_expectations": 28,
+  "inspect_ai": 34,
+  "lm-evaluation-harness": 18,
+  "pandera": 2,
+  "ragas": 3,
+  "trulens": 14,
+  "whylogs": 7
+ },
+ "candidates": [
+  {
+   "repo": "deepchecks",
+   "sha": "aa747ce72d35d3ddd5e223d299ab71d9d7364b28",
+   "head": "98475d17b08a",
+   "subject": "Update table print (#136)",
+   "shape_removed": "-            return True  # Jupyter notebook or qtconsole",
+   "shape_added": "+    if _is_notebook is None:",
+   "n_files": 9,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepchecks",
+   "sha": "ab8cc096fb5b278bfb8dc1b4c101712fb6f69096",
+   "head": "98475d17b08a",
+   "subject": "Recsys base (#2610)",
+   "shape_removed": "-        return 0",
+   "shape_added": "+    def issue_reciprocal_rank_warning():",
+   "n_files": 27,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepchecks",
+   "sha": "17c4a38e40b83d168822c68cf4f4c7c77b4a7292",
+   "head": "98475d17b08a",
+   "subject": "Recsys base (#2530)",
+   "shape_removed": "-        return 0",
+   "shape_added": "+def recall_k(relevant_items: Union[List[int], np.array, None],",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepchecks",
+   "sha": "2672ac2b68e5e8f5371a25c308619dd6ab035325",
+   "head": "98475d17b08a",
+   "subject": "aggregation methods for object detection (#1870)",
+   "shape_removed": "-    return True",
+   "shape_added": "+                if np.isnan(class_score) or class_id not in data_classes:",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepchecks",
+   "sha": "950c11de8b11b845f595042bf213c90025974351",
+   "head": "98475d17b08a",
+   "subject": "remove dependency on datasets",
+   "shape_removed": "-        \"\"\"Return the number of classes from label column. if no label column defined, return 0.",
+   "shape_added": "+        if self._classes is None and self.has_label():",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "987b02a6199c23de3dc14dd6c48b1719984b48f1",
+   "head": "c2ed008e6b82",
+   "subject": "`refactor(optimization): validate list mutation index and remove FIRST list target mode`",
+   "shape_removed": "-        return 0",
+   "shape_added": "+        raise DeepEvalError(",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "99013c3bf6ee655b74e03cfa88a77add0703617f",
+   "head": "c2ed008e6b82",
+   "subject": "tests(integrations): Add helper to detect tool usage in trace obj",
+   "shape_removed": "-                return True",
+   "shape_added": "+            # Compare keys that exist in both (skip allowed_missing keys not in actual)",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "85c90b195f458c2c798dbaa2fb6a5d4340ca5d16",
+   "head": "c2ed008e6b82",
+   "subject": "Update gateway provider models to use standardized base class",
+   "shape_removed": "-        return True",
+   "shape_added": "+        if temperature is not None:",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "9b14e3278726f00ebb1dcdf4d6ba8dd5a350b380",
+   "head": "c2ed008e6b82",
+   "subject": "copro updated",
+   "shape_removed": "-            return True",
+   "shape_added": "+        random_state: Optional[Union[int, random.Random]] = None,",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "1996a05226e1f96521e017347ce5f2803e96503d",
+   "head": "c2ed008e6b82",
+   "subject": "simba updated",
+   "shape_removed": "-            return True",
+   "shape_added": "+        random_state: Optional[Union[int, random.Random]] = None,",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "407c2cf0f6b391a9846bc395bb85d4f87548aac7",
+   "head": "c2ed008e6b82",
+   "subject": "trace done",
+   "shape_removed": "-        return True",
+   "shape_added": "+        # if span is not relevant confident spans, return None",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "48fbb0dddfc6302d931ae7ef848dcd3dfb9491d1",
+   "head": "c2ed008e6b82",
+   "subject": "Revert \"Exact match metric\"",
+   "shape_removed": "-            return 0",
+   "shape_added": "+        raise NotImplementedError()",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "f6f7ef7d0eedb185842897b0ed5da07694a7d871",
+   "head": "c2ed008e6b82",
+   "subject": "reformat",
+   "shape_removed": "-        return True",
+   "shape_added": "+    # Otherwise (the model is a wrong type), we raise an error",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "9d4ab7a5d2d8ef98b400467a57979b0b8124edb4",
+   "head": "c2ed008e6b82",
+   "subject": ".",
+   "shape_removed": "-        return \"ok\"",
+   "shape_added": "+            return None",
+   "n_files": 11,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "b1dec13531f752e96c82e2368fa194063d4341f5",
+   "head": "c2ed008e6b82",
+   "subject": "feat(config,utils)!: introduce Pydantic-based Settings and unified dotenv autoload",
+   "shape_removed": "-            return True",
+   "shape_added": "+def should_skip_on_missing_params() -> bool:",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "a66bb1f7e547423a8cc439cdb78639f3727ddb29",
+   "head": "c2ed008e6b82",
+   "subject": "Revert \"Exact match metric\"",
+   "shape_removed": "-            return 0",
+   "shape_added": "+        raise NotImplementedError()",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "96375e5f4d35a96a3e33b023235408b858f43ecd",
+   "head": "c2ed008e6b82",
+   "subject": "feat(openrouter): add CLI set / unset command and update docs",
+   "shape_removed": "-        return 0.0",
+   "shape_added": "+        # Priority 3: Return None since cost is unknown",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "9c860a19a50b5b4f9d0097166ebb9a086611021d",
+   "head": "c2ed008e6b82",
+   "subject": "fix(models): update GeminiModel capabilities and cleanup",
+   "shape_removed": "-        return True",
+   "shape_added": "+    def supports_log_probs(self) -> Union[bool, None]:",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "f2538f046cab8f28bff4c11a10fced6c0b965b92",
+   "head": "c2ed008e6b82",
+   "subject": "Rewrote MIPROv2",
+   "shape_removed": "-            return True",
+   "shape_added": "+    ) -> None:",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "0bb7105c181474a74220d9ea329538ad5e2dbdb1",
+   "head": "c2ed008e6b82",
+   "subject": "feat(optimization): add prompt optimizer and refactor GEPA runner with status callbacks and docs",
+   "shape_removed": "-                    return 0",
+   "shape_added": "+        if self.status_callback is not None:",
+   "n_files": 11,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "18161dd9a3cd1e6f9704e8cc0941cd117981facf",
+   "head": "c2ed008e6b82",
+   "subject": "Add tracing turns",
+   "shape_removed": "-        return \"ok\"",
+   "shape_added": "+            return None",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "4534a1262312fa2f8757004734ee670c6cb080b9",
+   "head": "c2ed008e6b82",
+   "subject": "fix models",
+   "shape_removed": "-            return 0, 0",
+   "shape_added": "+            return None, None",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "deepeval",
+   "sha": "4ee1683103d612e7fccbe767371f11944d9fa799",
+   "head": "c2ed008e6b82",
+   "subject": "feat(metric-data): add tokens usage",
+   "shape_removed": "-            return 0.0",
+   "shape_added": "+            return TokenCost(0.0, None, None)",
+   "n_files": 18,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "evidently",
+   "sha": "4c57484a90211eebec4342bb39aefe7d294c65ef",
+   "head": "a4aa4c2b37fe",
+   "subject": "Fix metric hash filter (#976)",
+   "shape_removed": "-            return True",
+   "shape_added": "+        if self.metric_hash is not None:",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "evidently",
+   "sha": "238619fea3ad6eaa5d5f3c552fc94172e439412c",
+   "head": "a4aa4c2b37fe",
+   "subject": "Feature/better optimizer (#1704)",
+   "shape_removed": "-        return 0",
+   "shape_added": "+            raise OptimizationConfigurationError(\"Judge scorer only supports binary classification\"",
+   "n_files": 11,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "evidently",
+   "sha": "f5696da7e1b10e96486c482ef0be11404313587c",
+   "head": "a4aa4c2b37fe",
+   "subject": "Feature/rbac (#961)",
+   "shape_removed": "-        return True",
+   "shape_added": "+        return None",
+   "n_files": 19,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "garak",
+   "sha": "d306071c1b5e7b3d0e5d5767ce3175eef97ef9d9",
+   "head": "384575716258",
+   "subject": "Refactor rebuild_cis into standalone analysis tool",
+   "shape_removed": "-    assert result == 0, \"rebuild_cis_for_report should return 0 on success\"",
+   "shape_added": "+def _assert_rebuilt_entries(target_path: Path) -> None:",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "garak",
+   "sha": "d27e4eefed90c1592e8241ad756f563ac49a1c04",
+   "head": "384575716258",
+   "subject": "addressed additional reviewer feedback, cleaned up docs/code, fixed detector edge cases",
+   "shape_removed": "-    assert result == [0.0], \"Should return 0.0 when no system prompt to match\"",
+   "shape_added": "+def _make_attempt(system_prompt=SYSTEM_PROMPT, output_text=None):",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "garak",
+   "sha": "5673ce75faef83d2155972dede831546887b1a55",
+   "head": "384575716258",
+   "subject": "log None if no sysprompt in conversation",
+   "shape_removed": "-            # If there's no system prompt to match against, return 0.0",
+   "shape_added": "+            if output is None or output.text is None or system_prompt is None:",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "garak",
+   "sha": "e5a08c7b7f138c29f241097983b6c7deb790b02f",
+   "head": "384575716258",
+   "subject": "Streamline translation use case",
+   "shape_removed": "-    return True",
+   "shape_added": "+    translator_instance = None",
+   "n_files": 35,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "giskard",
+   "sha": "696c7cd3f6734736ec8879f29e2bd22cb420b1a0",
+   "head": "39f4bb250233",
+   "subject": "fix(hooks): fail open on malformed tool input",
+   "shape_removed": "-        return 0",
+   "shape_added": "+        if proc is None:",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "giskard",
+   "sha": "e12224062a21673c5a1a56f91eb84a358562b8ea",
+   "head": "39f4bb250233",
+   "subject": "Refactoring savable for test and transformation",
+   "shape_removed": "-        return True",
+   "shape_added": "+        if meta is None:",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "giskard",
+   "sha": "eada50ef48d82583b6d82980949dbd9fe1079115",
+   "head": "39f4bb250233",
+   "subject": "Create BasePerturbationDetector",
+   "shape_removed": "-        return 0.15",
+   "shape_added": "+        raise NotImplementedError",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "giskard",
+   "sha": "dd75e974ee767236c06bb5553aff1ccd76d0d05d",
+   "head": "39f4bb250233",
+   "subject": "fix(checks)!: return None from SuiteResult.pass_rate when nothing evaluated (#2753)",
+   "shape_removed": "-            return 1.0",
+   "shape_added": "+    def pass_rate(self) -> float | None:",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "72ea8025854941feeaa279ed1da15afc5198c8a5",
+   "head": "b94159e0d589",
+   "subject": "[BUGFIX] Databricks shared compute fix (#9034)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    spark_config: Optional[dict[str, str]] = None,",
+   "n_files": 36,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "a433e1dd8e4b3efdb6981aef35e42a08bec99bd0",
+   "head": "b94159e0d589",
+   "subject": "Rough outlines for docstrings in base.py. The order of the expectations now agrees between base.py and pandas_dataset.py. Some expectations were added to pandas_dataset.py because it did not contain them.",
+   "shape_removed": "-                return True",
+   "shape_added": "+    def expect_column_values_to_be_null(self, column, mostly=None, suppress_exceptions=False):",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "021014e7031c26ae2c5bc6844b279b679cfc61ac",
+   "head": "b94159e0d589",
+   "subject": "Add better error handling and timeout",
+   "shape_removed": "-                return True",
+   "shape_added": "+            response.raise_for_status()",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "468bc89432cab45322e3160c7619bbde672f30f1",
+   "head": "b94159e0d589",
+   "subject": "finished expect_column_values_to_be_of_type and extended unit tests",
+   "shape_removed": "-#                return True,exceptions",
+   "shape_added": "+    def expect_column_values_to_be_of_type(self, column, type_, target_datasource, mostly=None, sup",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "d70b8d70b76f93131f9e7514005cfdbcebbc0662",
+   "head": "b94159e0d589",
+   "subject": "[ENHANCEMENT] Edtf with support levels (#2594)",
+   "shape_removed": "-                return True",
+   "shape_added": "+        if level is not None and type(level) != int:",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "a87ab641d506429b87fdbaab2d85bffc43645f33",
+   "head": "b94159e0d589",
+   "subject": "[BUGFIX] Delete ExpectationSuite by name in GX Cloud (#7881)",
+   "shape_removed": "-            return True",
+   "shape_added": "+            resource_object_name = None",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "c79ba897d7087b5207da51de9f0f7ac19b2f9b8b",
+   "head": "b94159e0d589",
+   "subject": "[BUGFIX] Simplify metric results processing and improve detection of Decimal types in columns (#6610)",
+   "shape_removed": "-                    return True",
+   "shape_added": "+            if values is not None and len(values) > 0:",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "ec9ca47f058e5560e0379e94a40025abe96ba0e9",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Add `AddedDiagnostics` helper class to `is_added` flows (#10249)",
+   "shape_removed": "-            return True, []",
+   "shape_added": "+        diagnostics.raise_for_error()",
+   "n_files": 9,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "de396741659dd10abe57143b8c227cf7f9d787c1",
+   "head": "b94159e0d589",
+   "subject": "vectorize regex expectations",
+   "shape_removed": "-                    return True",
+   "shape_added": "+            raise ValueError(\"match_on must be either 'any' or 'all'\")",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "863ac93c6bfeebc1737bed38d874bb55fdab9c30",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Make CLI Check-Config and CLI More Robust (#3562)",
+   "shape_removed": "-        return True, None, context",
+   "shape_added": "+            raise ge_exceptions.UnsupportedConfigVersionError(",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "e61aa581f5b92d91ba34cc549f6b208d32bd3796",
+   "head": "b94159e0d589",
+   "subject": "working on storing unit tests in list of dictionaries, partially finished",
+   "shape_removed": "-        #        return True,exceptions",
+   "shape_added": "+#    def expect_column_values_to_be_of_type(self, column, type_, target_datasource, mostly=None, su",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "fb1fbb0324391fbcdd3c54ea9af8e7d2e0dc75fa",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Cloud integration tests documentation (#8871)",
+   "shape_removed": "-        return True",
+   "shape_added": "+        pytest.skip(\"no snowflake credentials\")",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "3918a99c60c201801cfcdc42b7f0e5dfee9ab613",
+   "head": "b94159e0d589",
+   "subject": "[HACKATHON] expect_column_values_to_be_valid_eth_address (#4763)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    #     raise NotImplementedError",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "0412d5e874380425bc2b9ee8d4fd357f169109fd",
+   "head": "b94159e0d589",
+   "subject": "All expectations (except table-level expectations) converted to use new decorator syntax.",
+   "shape_removed": "-        #        return True",
+   "shape_added": "+            raise ValueError(\"Unable to use provided format. \" + e.message)",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "af78242efa8db27bbe8a15ab0fa964e677b305a3",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Cache the latest great_expectations version (#7785)",
+   "shape_removed": "-            return True",
+   "shape_added": "+    _LATEST_GX_VERSION_CACHE: ClassVar[version.Version | None] = None",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "ff0f0726a44711f1351d26cea08369ac98e37b80",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Add datasources to ConfigurationBundle (#6092)",
+   "shape_removed": "-    return True",
+   "shape_added": "+            anonymous_usage_stats_is_none: Set usage stats to None, overrides anonymous_usage_stats",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "c5aac5cf4fb4abd12dc7032ccee17960344cc548",
+   "head": "b94159e0d589",
+   "subject": "parsimonious querying of metrics",
+   "shape_removed": "-    #     return True",
+   "shape_added": "+        if metric_fn is None:",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "f5078f67013f00bc1117a5021d75cfb656df0e50",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] Refactor validations in Checkpoint to use `CheckpointValidationConfig` (#8225)",
+   "shape_removed": "-                return True",
+   "shape_added": "+    return any(val.batch_request is not None for val in validations)",
+   "n_files": 13,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "b0a39c2983a2507c0dff8b51d9f17cd5797675af",
+   "head": "b94159e0d589",
+   "subject": "Refactor snippets. WIP",
+   "shape_removed": "-        return True",
+   "shape_added": "+        raise NotImplementedError",
+   "n_files": 32,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "76590a2d119f1c667d631c79525edf1ebac4d78d",
+   "head": "b94159e0d589",
+   "subject": "[BUGFIX] Databricks shared compute fix (#9490)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    spark_config: Optional[dict[str, str]] = None,",
+   "n_files": 40,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "cf5cc4086db06b6164cddecfe24c12a5b9d30c39",
+   "head": "b94159e0d589",
+   "subject": "[MAINTENANCE] split data context files (#4879)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    def _get_metric_configuration_tuples(metric_configuration, base_kwargs=None):",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "947c27b3e3af4e8081e2f99838b3b06e285a1284",
+   "head": "b94159e0d589",
+   "subject": "Resolve #93",
+   "shape_removed": "-                return True",
+   "shape_added": "+    def expect_column_values_to_match_regex_list(self, column, regex_list, match_on=\"any\", mostly=N",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "a565932f79f2b1f46d1065016558a86bd40c6df4",
+   "head": "b94159e0d589",
+   "subject": "Name changes, examples, documentation for distributional expectations and partition_objects (see #135)",
+   "shape_removed": "-    return True",
+   "shape_added": "+    if partition_object is None or (\"weights\" not in partition_object) or (\"values\" not in partitio",
+   "n_files": 11,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "1821fa4084220b94bef120ba249287f1faf8719e",
+   "head": "b94159e0d589",
+   "subject": "[DOCS] Clean up snippets and line number validation in docs (#6142)",
+   "shape_removed": "-            return True",
+   "shape_added": "+        target_lines = None",
+   "n_files": 19,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "85c8f84abdbb66b2d1f68fdc663c8f3261c9ea25",
+   "head": "b94159e0d589",
+   "subject": "Finish converting unittests to new framework and update documenatation. Close #28",
+   "shape_removed": "-            return True",
+   "shape_added": "+    def expect_column_values_to_be_prime(self, column, mostly=None, suppress_expectations=False):",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "5bdef2f03e7a560766f0c1777d278494b46c62a3",
+   "head": "b94159e0d589",
+   "subject": "Convert a bunch more expectations Add expect_column_value_lengths_to_equal Add parameters to validate",
+   "shape_removed": "-                return True",
+   "shape_added": "+        #     #!!! This depends on the definition of null. Should we include np.nan in the definiti",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "5d39175438ea8d1456f11c80fb6331047a5f61a9",
+   "head": "b94159e0d589",
+   "subject": "[BUGFIX] Check for datetime-parseable strings in validate_metric_value_between_configuration (#2419)",
+   "shape_removed": "-        return True",
+   "shape_added": "+            min_val is not None or max_val is not None",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "great_expectations",
+   "sha": "725a4e63210031e22fc0c214d49677febb731d8c",
+   "head": "b94159e0d589",
+   "subject": "Fix datasource delete cli help text and refactor (#1386)",
+   "shape_removed": "-            return True",
+   "shape_added": "+    if context.get_datasource(datasource) is None:",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "6b401ca68be716cb97667150a53e013145e92c5c",
+   "head": "b3c6e5687b0e",
+   "subject": "better ctl-server parsing",
+   "shape_removed": "-        return True",
+   "shape_added": "+        raise click.BadParameter(",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "712282aaf89081440a4d46b1dd1f0480e4d5a0c7",
+   "head": "b3c6e5687b0e",
+   "subject": "multimodal output for selected google and openai models (#3458)",
+   "shape_removed": "-            return True",
+   "shape_added": "+            result=None,",
+   "n_files": 21,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "588e4b91caf10ada27892e5d8523861e6e15acc8",
+   "head": "b3c6e5687b0e",
+   "subject": "retry improvements (#1430)",
+   "shape_removed": "-            return True",
+   "shape_added": "+def report_http_retry() -> None:",
+   "n_files": 37,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "657ad982ddb710c2fb23997501e277d98c6986b1",
+   "head": "b3c6e5687b0e",
+   "subject": "Persist inspect ctl config changes in the eval log (#4575)",
+   "shape_removed": "-\t\tif (!rect || rect.width === 0) return 0;",
+   "shape_added": "+\t\twarning: \"bi bi-exclamation-triangle\",",
+   "n_files": 37,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "22c04027cd03d5305dc423182c51071ccfd88a1a",
+   "head": "b3c6e5687b0e",
+   "subject": "ctl: show keep-alive status in tasks + add `keep` command to set it (#4276)",
+   "shape_removed": "-        return True, False",
+   "shape_added": "+def request_keep_alive() -> None:",
+   "n_files": 14,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "ed34d0492812f631e5b564dfa7d41ab54a968adc",
+   "head": "b3c6e5687b0e",
+   "subject": "Round-3 review fixes",
+   "shape_removed": "-        return True",
+   "shape_added": "+    # compare reducers, treating the unrecorded default (None) and an",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "f4531b5935c3b519d6096f3f42d0442a2e9eb7f3",
+   "head": "b3c6e5687b0e",
+   "subject": "discover compose.yaml for filesystem tasks w/ chdir=True (#294)",
+   "shape_removed": "-            return True",
+   "shape_added": "+def find_compose_file(parent: str = \"\") -> str | None:",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "e3f45aa2e1c2e1d6622f0e0ff0242ba1062db404",
+   "head": "b3c6e5687b0e",
+   "subject": "Convert Bedrock to Converse API (#853)",
+   "shape_removed": "-                return True",
+   "shape_added": "+            tool_config = None",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "1e2046dd464bfd22602e0fd8740e9f63e8d2604c",
+   "head": "b3c6e5687b0e",
+   "subject": "discover compose.yaml for filesystem tasks w/ chdir=True (#294)",
+   "shape_removed": "-            return True",
+   "shape_added": "+def find_compose_file(parent: str = \"\") -> str | None:",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "acd139cc75aa0778685618a78f9c470613e53208",
+   "head": "b3c6e5687b0e",
+   "subject": "fix(web_browser): warn once when AppKit is missing on the macOS scale-factor probe",
+   "shape_removed": "-            return 1.0",
+   "shape_added": "+def _warn_missing_appkit() -> None:",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "8ac6c446e5d86d14ff39b8cab1254ddacde9406e",
+   "head": "b3c6e5687b0e",
+   "subject": "log_shared as an integer",
+   "shape_removed": "-            return 0  # Default when not specified",
+   "shape_added": "+        # 2. The user did specify the flag. If value is None,",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "442f027039a1fc8d2130e1fc137cd966697091f9",
+   "head": "b3c6e5687b0e",
+   "subject": "viewer config: rename Samples* \u2192 TaskSamples*, drop filter, score-panel `default` (#4110)",
+   "shape_removed": "-\tif (e.length === 0) return 0;",
+   "shape_added": "+\t* Pass false to use faster iteration that skips non-enumerable properties",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "804a30dad39ae0cb2ed08325db6d2f6e9f2ae598",
+   "head": "b3c6e5687b0e",
+   "subject": "Raise error when value_to_float can\u2019t convert a value",
+   "shape_removed": "-        return 0.0",
+   "shape_added": "+        raise ValueError(",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "a0bb23201fdae1f9a3c0d924a4446583848b0d8a",
+   "head": "b3c6e5687b0e",
+   "subject": "improved metrics value_to_float string conversion (#196)",
+   "shape_removed": "-    and return 0.",
+   "shape_added": "+    give a warning and return 0.",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "a9a9ec00169ce87ae1ed49188f57de1c309ec6a6",
+   "head": "b3c6e5687b0e",
+   "subject": "Record dead sandboxes as sandbox_unavailable tool errors",
+   "shape_removed": "-\tif (e.length === 0) return 0;",
+   "shape_added": "+\t\tif ((opts == null ? void 0 : opts.onChange) && !(isInitial && opts.skipInitialOnChange)) opts.onC",
+   "n_files": 10,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "b3c6e5687b0e09260f425b02ffbf0e4c7f7ae33d",
+   "head": "b3c6e5687b0e",
+   "subject": "Add sandbox_prebuilt option to skip docker sandbox builds (#4934)",
+   "shape_removed": "-\t\t\treturn 0;",
+   "shape_added": "+* Hot-path slices that skip guarding entirely (selection maps that scale with",
+   "n_files": 21,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "d980d3f4b39191c73dc5e57b57b4d1c8d095ead1",
+   "head": "b3c6e5687b0e",
+   "subject": "fix counts on reused logs; test rework",
+   "shape_removed": "-            return True",
+   "shape_added": "+    assert evals is not None, \"both tasks never reached 'in flight' together\"",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "d56ece57125592ee3297734a6f07453d4d8b335d",
+   "head": "b3c6e5687b0e",
+   "subject": "compaction: improve error messages/logging for improved visibility when native compaction fails",
+   "shape_removed": "-                return True",
+   "shape_added": "+    return _compaction_from_message(message) is not None",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "d951f19eeca6f2441293e57193499a5a08dd0cdb",
+   "head": "b3c6e5687b0e",
+   "subject": "Grouped metrics display (#2668)",
+   "shape_removed": "-        return 0;",
+   "shape_added": "+      so, the line at the start of that node is tried, again skipping",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "a28b172cfb96fdb1e3eacdbf86a80164584c15b5",
+   "head": "b3c6e5687b0e",
+   "subject": "Categorical score support: frequency() metric, StrEnum values, value_schema round-trip (#4058)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    # compare reducers, treating the unrecorded default (None) and an",
+   "n_files": 30,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "c5d66080a41afe527534754260ccaa5e81cca631",
+   "head": "b3c6e5687b0e",
+   "subject": "log_shared as an integer",
+   "shape_removed": "-            return 0  # Default when not specified",
+   "shape_added": "+        # 2. The user did specify the flag. If value is None,",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "020d9690245521c1da859817089490a19f9fe346",
+   "head": "b3c6e5687b0e",
+   "subject": "Make TaskSource feed work with the task_retry_attempts path",
+   "shape_removed": "-            return True",
+   "shape_added": "+    feed: PreparedFeed | None = None,",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "34beafda81d31fd42e4652fe943b99818dcbf955",
+   "head": "b3c6e5687b0e",
+   "subject": "Prevent math scorer from executing model output (#4361)",
+   "shape_removed": "-                return True",
+   "shape_added": "+    expression: Any | None",
+   "n_files": 9,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "898f03802033a0b2e39e7885ed0745469db53716",
+   "head": "b3c6e5687b0e",
+   "subject": "refine operator tagging",
+   "shape_removed": "-                return True",
+   "shape_added": "+    def clear_pending_operators(self) -> None:",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "08483a2ca3e2db022fa46e14e8110e166d51b8b1",
+   "head": "b3c6e5687b0e",
+   "subject": "improve tui code",
+   "shape_removed": "-        return True",
+   "shape_added": "+    ) -> None:",
+   "n_files": 14,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "ee979517efc0a257a583efef82910fab729ec3e9",
+   "head": "b3c6e5687b0e",
+   "subject": "improved metrics value_to_float string conversion (#196)",
+   "shape_removed": "-    and return 0.",
+   "shape_added": "+    give a warning and return 0.",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "efd04a8dade7818d8d3514f7fa17197337a8426f",
+   "head": "b3c6e5687b0e",
+   "subject": "run_multiple refactor",
+   "shape_removed": "-            return True",
+   "shape_added": "+    async def next() -> list[TaskRunOptions] | None:",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "630081cb32b8f755761b9d8cd78780c2b5b455ed",
+   "head": "b3c6e5687b0e",
+   "subject": "compaction: improve error messages/logging for improved visibility when native compaction fails (#3480)",
+   "shape_removed": "-                return True",
+   "shape_added": "+    return _compaction_from_message(message) is not None",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "9c413b27da00d1f66d98a42b46bfede4cee17799",
+   "head": "b3c6e5687b0e",
+   "subject": "Use FastAPI for viewer",
+   "shape_removed": "-        return True",
+   "shape_added": "+        auth_callback=auth_callback if authorization else None,",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "47308618a93cf5c179d38651171330fc594ec7cd",
+   "head": "b3c6e5687b0e",
+   "subject": "Batch processing bug fixes and enhancements. (#2106)",
+   "shape_removed": "-        return True if batch_info.processing_status == \"ended\" else None",
+   "shape_added": "+                request_id = extra_headers.pop(HttpxHooks.REQUEST_ID_HEADER, None)",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "2f7f7c8a53ffc6fccd6ba18a2c27f7dc6775d482",
+   "head": "b3c6e5687b0e",
+   "subject": "fix(scorer): three metrics edge cases",
+   "shape_removed": "-        return True",
+   "shape_added": "+        # Reject non-finite literals like \"nan\" / \"inf\" \u2014 float() accepts",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "f4d72521065e5975c421fa91f2154bcdb5593f31",
+   "head": "b3c6e5687b0e",
+   "subject": "Add ci() metric for confidence intervals on the mean",
+   "shape_removed": "-        # mirror the non-clustered path's n < 2 guard and return 0 rather",
+   "shape_added": "+    if cluster is not None:",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "fd7c850714385870e6122a492e981a43afbdfce6",
+   "head": "b3c6e5687b0e",
+   "subject": "compaction: improve error messages/logging for improved visibility when native compaction fails (#3480)",
+   "shape_removed": "-                return True",
+   "shape_added": "+    return _compaction_from_message(message) is not None",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "inspect_ai",
+   "sha": "d7bff892d70992388b5352fdfe83edc0c95bb8de",
+   "head": "b3c6e5687b0e",
+   "subject": "log_shared as an integer",
+   "shape_removed": "-            return 0  # Default when not specified",
+   "shape_added": "+        # 2. The user did specify the flag. If value is None,",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "7585ec563b51741e2c0d1dc519016756c2d91e8c",
+   "head": "4e7e0d47f33b",
+   "subject": "Revert \"Merge branch 'master' into master\"",
+   "shape_removed": "-            return True",
+   "shape_added": "+    def fewshot_context(self, doc, num_fewshot, provide_description=None, rnd=None, description=Non",
+   "n_files": 33,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "d714fc951b719f53616da95c83ec4179ec8f7d83",
+   "head": "4e7e0d47f33b",
+   "subject": "Faster Task and Group Loading, Allow Recursive Groups (#1321)",
+   "shape_removed": "-    return 0",
+   "shape_added": "+        include_path=None",
+   "n_files": 33,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "55ea2888491f0989201948b64f8d3b33beb0855b",
+   "head": "4e7e0d47f33b",
+   "subject": "initialize_tasks returns list of tasks and groups",
+   "shape_removed": "-    return 0",
+   "shape_added": "+def initialize_tasks(verbosity=\"INFO\", include_path=None):",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "b3b6aa0330c4292417f3174aef83b4c9de409426",
+   "head": "4e7e0d47f33b",
+   "subject": "removed test lines",
+   "shape_removed": "-    return 0",
+   "shape_added": "+#                                 task_name: (group_name, None),",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "e3fee7ea811f7f839be444b4d70de0962ed018b1",
+   "head": "4e7e0d47f33b",
+   "subject": "nit",
+   "shape_removed": "-            return True",
+   "shape_added": "+        return self.config.training_split is not None",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "fea3d34fb8495a986121a145d9c3a26135bc020c",
+   "head": "4e7e0d47f33b",
+   "subject": "fix metrics",
+   "shape_removed": "-        return True",
+   "shape_added": "+    is_greedy: list[bool] | None = None,",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "480a83848fad2e7c1caf310272058ea2b22da7b5",
+   "head": "4e7e0d47f33b",
+   "subject": "initialize_tasks returns list of tasks and groups",
+   "shape_removed": "-    return 0",
+   "shape_added": "+def initialize_tasks(verbosity=\"INFO\", include_path=None):",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "c9772b90a8ee95b0df1ba76651443a0534c96aad",
+   "head": "4e7e0d47f33b",
+   "subject": "hotfix: `fewshot_config` not applied to fewshot docs; move `TaskConfig` (#3461)",
+   "shape_removed": "-            return True",
+   "shape_added": "+        return self.config.training_split is not None",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "bddcb9c6cb5f1a14eda89a918fdf99760b8f3ecd",
+   "head": "4e7e0d47f33b",
+   "subject": "wire reduction",
+   "shape_removed": "-        return 1.0",
+   "shape_added": "+        k: k in pass@k. If None, uses sensible defaults based on n.",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "0f9c162470822b4a0dd2d1a678a99080c82ae555",
+   "head": "4e7e0d47f33b",
+   "subject": "Refactor and implement SAT evaluation",
+   "shape_removed": "-        return True",
+   "shape_added": "+            raise NotImplementedError('SAT Analogies dataset is not provided. Follow instructions o",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "9e98d1a91a0a71c2dad9de06f6c3437c6cb0c6ff",
+   "head": "4e7e0d47f33b",
+   "subject": "removed test lines",
+   "shape_removed": "-    return 0",
+   "shape_added": "+#                                 task_name: (group_name, None),",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "5ff06615d1fe4edfdcd22c13e499fa025e466de6",
+   "head": "4e7e0d47f33b",
+   "subject": "fix tests",
+   "shape_removed": "-        return True",
+   "shape_added": "+    agg: dict[str, Any] | None = None,",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "23f30926f3ce738e3eee4e6be5c29fb3467e3a6e",
+   "head": "4e7e0d47f33b",
+   "subject": "Fix LLaMA tokenization issue (#531)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    parser.add_argument(\"--tasks\", default=None, choices=utils.MultiChoice(tasks.ALL_TASKS))",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "69d14fb30a8d3612f167c2b128f740fa9365fdda",
+   "head": "4e7e0d47f33b",
+   "subject": "cleanup",
+   "shape_removed": "-            return True",
+   "shape_added": "+        return self.config.training_split is not None",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "ae4030d358a258de201e67af3de9353693901019",
+   "head": "4e7e0d47f33b",
+   "subject": "wire reduction",
+   "shape_removed": "-        return 1.0",
+   "shape_added": "+        k: k in pass@k. If None, uses sensible defaults based on n.",
+   "n_files": 6,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "bfa57687e48d44782e376fe5def71c9d8c8aa472",
+   "head": "4e7e0d47f33b",
+   "subject": "Add the original `LAMBADA` dataset",
+   "shape_removed": "-        return True",
+   "shape_added": "+    VERSION = None",
+   "n_files": 26,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "120e5724dc868b4c41865db26fe5c409888c3d25",
+   "head": "4e7e0d47f33b",
+   "subject": "add scorer",
+   "shape_removed": "-        return True",
+   "shape_added": "+    scorers = build_scorers_from_config(None, metrics, output_type=\"multiple_choice\")",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "lm-evaluation-harness",
+   "sha": "3d1602f8784bc1afa9b176476f280e47eb13c74a",
+   "head": "4e7e0d47f33b",
+   "subject": "fix metrics",
+   "shape_removed": "-        return True",
+   "shape_added": "+    is_greedy: list[bool] | None = None,",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "pandera",
+   "sha": "7bf2fe8cb525f9d917ff081b1fe4ccc536355070",
+   "head": "582b62734c87",
+   "subject": "clean up Check.__call__ and SeriesSchemaBase.__call__  API (#153)",
+   "shape_removed": "-                return True",
+   "shape_added": "+            column: str = None,",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "pandera",
+   "sha": "c9e7a6e2f974e67c31dbeb7c5ba5e25b63d1c895",
+   "head": "582b62734c87",
+   "subject": "Refactor schema backends (#1144)",
+   "shape_removed": "-                return True",
+   "shape_added": "+        failure_cases = None",
+   "n_files": 22,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "ragas",
+   "sha": "4cb829df9855bb2950fefbc7f9bf304b01b31224",
+   "head": "298b68274234",
+   "subject": "chore: remove deprecated functions (#2412)",
+   "shape_removed": "-    \"        return 0\\n\",",
+   "shape_added": "+    \"    def init(self, run_config=None):\\n\",",
+   "n_files": 5,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "ragas",
+   "sha": "5df03eeebef8e9546d54ac3a78132a6464f06488",
+   "head": "298b68274234",
+   "subject": "Fix/tool call accuracy (#2300)",
+   "shape_removed": "-            return 0.0",
+   "shape_added": "+            warnings.warn(\"No tool calls found in the user input\")",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "ragas",
+   "sha": "911a12719fd0b108994802727e985e9f3507c87e",
+   "head": "298b68274234",
+   "subject": "Simplify earlier how to guides in docs (#2319)",
+   "shape_removed": "-            return True, table_names",
+   "shape_added": "+        db_path: Path to database file (uses BookSQL default if None)",
+   "n_files": 17,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "69e909568dfd7f84e51ce7e7a5d84b2e9d6a985a",
+   "head": "97f531aee755",
+   "subject": "Fix up all tests.",
+   "shape_removed": "-    return 0.2",
+   "shape_added": "+    def _suspend_task(self) -> None:",
+   "n_files": 2,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "0dca78eb67696ac7b56836a2e9ee5881dfa7e545",
+   "head": "97f531aee755",
+   "subject": "ci: certify the DCO per pull request instead of per commit",
+   "shape_removed": "-        return 0",
+   "shape_added": "+    mark: str | None = None",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "7ff866ef74915d87a60e266d8cd1719256b5ef4f",
+   "head": "97f531aee755",
+   "subject": "Set up server-side evaluations. (#1377)",
+   "shape_removed": "-    return 0.2",
+   "shape_added": "+    def _suspend_task(self) -> None:",
+   "n_files": 17,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "e2108c1b09d29cc82b08d0283c033ba491fe5f8c",
+   "head": "97f531aee755",
+   "subject": "instrumentation notebook updates and fixes (#953)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    Will raise an error if accessed in some dynamic way. Accesses that are",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "be0cfe2b2d87529c64f605175c774a6a8b53455d",
+   "head": "97f531aee755",
+   "subject": "faiss example and better component detection (#345)",
+   "shape_removed": "-        #    return True",
+   "shape_added": "+        None if no module from `among_modules` is named in `bases`.",
+   "n_files": 10,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "1bbeb78d53f02157b44aa846784f08e44dfd1f83",
+   "head": "97f531aee755",
+   "subject": "adding otel export to Tru",
+   "shape_removed": "-        return True",
+   "shape_added": "+    recording: Optional[Any] = pydantic.Field(None, exclude=True)",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "1592a6181dee93566b61646b4d217cd6b017f21b",
+   "head": "97f531aee755",
+   "subject": "work",
+   "shape_removed": "-            return True",
+   "shape_added": "+logger.warning(\"`trulens_eval.tru_db` is deprecated, use `trulens_eval.db` instead.\")",
+   "n_files": 33,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "cd8a215af92665e3b21c009c214c461e8bd850af",
+   "head": "97f531aee755",
+   "subject": "Loosen trace compression (#2312)",
+   "shape_removed": "-                    return True",
+   "shape_added": "+                raise ValueError(\"Invalid JSON trace data\")",
+   "n_files": 10,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "da5da7a37431a34724641e6988151d26f906b1de",
+   "head": "97f531aee755",
+   "subject": "instrumentation notebook updates and fixes (#953)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    Will raise an error if accessed in some dynamic way. Accesses that are",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "24bcbd7e667a251dd30f2f6c8a29c35286f978cf",
+   "head": "97f531aee755",
+   "subject": "Don't require a main method. (#2009)",
+   "shape_removed": "-                return 0",
+   "shape_added": "+    def test_legacy_app(self) -> None:",
+   "n_files": 24,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "b4a078b1afa1089b8c84512408535c124d780ede",
+   "head": "97f531aee755",
+   "subject": "Set up server-side evaluations. (#1377)",
+   "shape_removed": "-    return 0.2",
+   "shape_added": "+    def _suspend_task(self) -> None:",
+   "n_files": 17,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "5ba63fc5a218a452da6c71bbd9b60976f5b3ec3b",
+   "head": "97f531aee755",
+   "subject": "faiss example and better component detection (#345)",
+   "shape_removed": "-        #    return True",
+   "shape_added": "+        None if no module from `among_modules` is named in `bases`.",
+   "n_files": 10,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "a8d473e4045098e50c011fc0eb862b8dfa25e9bd",
+   "head": "97f531aee755",
+   "subject": "instrumentation notebook updates and fixes (#953)",
+   "shape_removed": "-        return True",
+   "shape_added": "+    Will raise an error if accessed in some dynamic way. Accesses that are",
+   "n_files": 16,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "trulens",
+   "sha": "ed476fe4df63e37c447e1941846974dc05a63001",
+   "head": "97f531aee755",
+   "subject": "faiss example and better component detection (#345)",
+   "shape_removed": "-        #    return True",
+   "shape_added": "+        None if no module from `among_modules` is named in `bases`.",
+   "n_files": 10,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "cf978bfca3c572e8590dc434bfb38d0de8037299",
+   "head": "976bc4c15ca1",
+   "subject": "saving",
+   "shape_removed": "-        return True",
+   "shape_added": "+    def upload_reference_profiles(self, profile_aliases: Dict[str, ResultSet]) -> None:",
+   "n_files": 13,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "fae1600fb2552d8fbf125d285f96faae9932fc8c",
+   "head": "976bc4c15ca1",
+   "subject": "Remove exception handling as means of inspecting environment",
+   "shape_removed": "-            return True  # Jupyter notebook or qtconsole",
+   "shape_added": "+    return importlib.util.find_spec(\"google.colab\") is not None",
+   "n_files": 1,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "5614361a3c698340008588f67102e7a70191f136",
+   "head": "976bc4c15ca1",
+   "subject": "Table shape constraints as SummaryConstraint, changes in datasetprofile needed for implementation, modify DatasetConstraints accordingly, tests for table shape constraints and DatasetConstraints serialization",
+   "shape_removed": "-    return True",
+   "shape_added": "+    :return None if not parseable, otherwise the parsed datetime.datetime object",
+   "n_files": 4,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "538eb05fa01f5cb1ee08fd9a0bfd4376f6685c2d",
+   "head": "976bc4c15ca1",
+   "subject": "Ranking Metrics - Better Precision/Recall/MRR calculation (#1492)",
+   "shape_removed": "-            return 0",
+   "shape_added": "+    mrr = (1 / formatted_data[\"top_rank\"]).replace([np.inf, np.nan], 0)",
+   "n_files": 3,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "7304990150854d4320f13ea7d22b261dd7bc3f59",
+   "head": "976bc4c15ca1",
+   "subject": "helper constraints (#1024)",
+   "shape_removed": "-            return True if skip_missing else False",
+   "shape_added": "+        require_column_existence=not skip_missing,",
+   "n_files": 8,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "fab54d3c69267624981187b05bc8208b3d238d2f",
+   "head": "976bc4c15ca1",
+   "subject": "Use time-based scheduler and validate writers (#50)",
+   "shape_removed": "-            return True",
+   "shape_added": "+    def check_writer(self, writer: Writer) -> None:",
+   "n_files": 7,
+   "query": "Q2-frozen"
+  },
+  {
+   "repo": "whylogs",
+   "sha": "945d3251c175d6bd03f222f1a09d53a9913d5896",
+   "head": "976bc4c15ca1",
+   "subject": "Several changes to support why.init for authenticated users (#1311)",
+   "shape_removed": "-            return True",
+   "shape_added": "+            raise ValueError(f\"Unknown session type: {session_type}\")",
+   "n_files": 14,
+   "query": "Q2-frozen"
+  }
+ ]
+}
