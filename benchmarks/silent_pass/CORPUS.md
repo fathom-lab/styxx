@@ -90,6 +90,31 @@ to beat this benchmark, that is where the room is.
 We publish our own 45% because a benchmark whose author scores 100% on it is a
 benchmark that was fitted, not measured.
 
+### does the detector LOCALIZE, or just land in the right file?
+
+Any recall number is quoted at a line tolerance, and the tolerance is a choice
+the benchmark author makes. So the scorer sweeps it:
+
+| detector | tol 0 | tol 3 | tol 10 | tol 50 | verdict |
+|---|---:|---:|---:|---:|---|
+| `styxx.absence` | 6 | 9 | 9 | 9 | **plateaus** — the hits are on the defect |
+| `styxx.loops` | 3 | 4 | 5 | **9** | **climbs** — the extra hits are proximity |
+| both | 9 | 12 | 13 | 14 | plateaus |
+
+Growth from tol 0 to tol 3 is expected: a defect and the line that returns its
+value are routinely a couple of lines apart inside one multi-line call. Growth
+that continues at 50 lines is not detection — in a 900-line module that is a
+coincidence.
+
+So `absence`'s 45% is a real number, and **`loops`' 25% is partly the window**.
+Quoting its tol-50 score (45%) would double it by choosing a parameter. The
+scorer prints this profile with every result so the flattering end is never the
+quoted one.
+
+A detector that catches nothing gets `localized: None`, not `True` — flat at
+zero is not a plateau, and a do-nothing detector should not collect a quality
+property it never earned.
+
 ## provenance and bias, stated
 
 Every case comes from **one codebase** — styxx itself — found during three

@@ -33,7 +33,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Set
 
-__all__ = ["Case", "ScoreResult", "load_cases", "score", "CAVEAT"]
+__all__ = ["Case", "ScoreResult", "load_cases", "score",
+           "localization_profile", "CAVEAT"]
 
 _HERE = Path(__file__).resolve().parent
 _REPO = _HERE.parent.parent
@@ -165,6 +166,53 @@ def score(
     return res
 
 
+def localization_profile(
+    detector: Callable[[str, str], Set[int]],
+    *,
+    tolerances: tuple = (0, 3, 10, 50),
+    repo: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Does the detector LOCALIZE the defect, or just land in the right file?
+
+    Recall is reported at a line tolerance, and any tolerance is a choice the
+    benchmark author makes. If a detector's recall keeps climbing as that window
+    widens, its extra hits are proximity rather than detection -- 50 lines away
+    in a 900-line module is a coincidence, not a finding. A detector that has
+    genuinely located the defect PLATEAUS.
+
+    Measured on our own tools: styxx.absence plateaus at 9/20 from tolerance 3
+    onward (robust). styxx.loops climbs 3 -> 5 -> 7 -> 9 across the same sweep,
+    so part of its headline recall is the window, and the report says so rather
+    than quoting the flattering end.
+    """
+    profile = {t: score(detector, tolerance=t, repo=repo).n_caught for t in tolerances}
+    # Compare the WIDE end against the REPORTED tolerance, not against zero.
+    # Growing from tol0 to tol3 is expected and healthy: a defect and the line
+    # that returns its value are routinely a couple of lines apart inside one
+    # multi-line call. The pathology is growth that continues at wide windows,
+    # where a hit is just "somewhere in the same module".
+    hi = max(tolerances)
+    mid = max(t for t in tolerances if t <= 10) if any(t <= 10 for t in tolerances) else hi
+    reported, loose = profile[mid], profile[hi]
+    if reported == 0 and loose == 0:
+        # Flat at zero is NOT a plateau. A detector that finds nothing has no
+        # localization to assess, and calling that "localized" would hand a
+        # do-nothing detector a quality property it never earned -- the exact
+        # move this corpus exists to catch.
+        return {"profile": profile, "localized": None, "reported_at": mid,
+                "note": "UNDEFINED — the detector caught nothing to localize"}
+    localized = loose <= reported + max(1, round(0.15 * max(reported, 1)))
+    return {
+        "profile": profile,
+        "localized": localized,
+        "reported_at": mid,
+        "note": (f"plateaus after tol{mid} — the hits are on the defect"
+                 if localized else
+                 f"CLIMBS past tol{mid} ({reported} -> {loose} at tol{hi}) — those "
+                 f"extra hits are proximity, not detection; quote the tight number"),
+    }
+
+
 def main(argv=None) -> int:
     """Score the detectors that ship with styxx."""
     import argparse
@@ -196,8 +244,13 @@ def main(argv=None) -> int:
                            ("styxx.loops", loops_detector),
                            ("both", either)):
             r = score(det)
+            prof = localization_profile(det)
             print(f"=== {label} ===")
             print(r.render())
+            print()
+            print("  localization  " + "  ".join(
+                f"tol{t}:{n}/{r.n_cases or 20}" for t, n in prof["profile"].items()))
+            print(f"  {prof['note']}")
             print()
             if label == "both":
                 blind = sorted(st for st, b in r.by_subtype.items() if b["caught"] == 0)
