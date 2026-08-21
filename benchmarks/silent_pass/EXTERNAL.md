@@ -62,22 +62,31 @@ to **reject**:
 to reject.** Every verdict is published with its rationale so a reader can
 overturn a label rather than trust it.
 
-Six of the seven adjudicated candidates were rejected **3/3**. That rate is the
-point, not an embarrassment: a corpus whose admission process accepts most of what
-it sees is not measuring anything.
+**54 of 57 adjudicated candidates were rejected** across the two runs — an accept
+rate of 5%. That is the point, not an embarrassment: a corpus whose admission
+process accepts most of what it sees is not measuring anything.
+
+One acceptance was **overturned by hand**: `inspect_ai 34beafda81` passed 2-of-3
+because an unparseable target made a scorer emit `INCORRECT` — which fails
+*closed*, the alarming direction, and so fails R2. The R2 lens now says so
+explicitly, and on a later run the same candidate was rejected 3/3. *A 2-of-3
+majority is not evidence; the source is.*
 
 ## recall is unknown, and this is load-bearing
 
-Candidates come from a frozen commit-message regex intersected with a frozen diff
-shape. **A silent-pass fix described some other way is invisible to this harvest.**
+Candidates come from two frozen queries — a commit-message regex (Q1) and a diff
+shape (Q2). **A silent-pass fix that neither describes nor takes those shapes is
+invisible to this harvest.** In particular Q2 requires a flattering constant to be
+*removed*; a fix that adds a guard above an unchanged return is not found at all,
+and that is a large, unmeasured class.
 
 > **SP-EXT is a lower bound on incidence. It must never be quoted as a rate.**
 > No sentence of the form *"X% of eval libraries contain this"* is licensed by any
 > version of this corpus.
 
-The harvest is also currently a lower bound *on that lower bound*: the
-preregistration's second query could not execute (see the interim result), so only
-the intersection of the two queries ran.
+Scale of the funnel, for anyone judging how much this establishes: Q1 returned
+415 candidates, Q2 returned 140, the two intersected returned 8, 57 were
+adjudicated in total, and **3 survived**.
 
 ## the entries
 
@@ -102,8 +111,41 @@ reading `1.0` from an empty suite was reading exactly what the API promised.
 
 Consumers, confirmed by the fix's own diff rather than inferred: the README
 example, the Hub upload payload (`tests/export/test_hub.py`), and the garak scan
-adapter. Fixed upstream as a breaking change. Subtype **SP-2 SENTINEL_DEFAULT**,
-agreed 3/3.
+adapter. Fixed upstream as a **breaking change**. Accepted 0 rejections of 3, in
+both independent runs.
+
+### SPX-2026-0002 — `UKGovernmentBEIS/inspect_ai`, `_darwin_scale_factor`
+
+```python
+try:
+    from AppKit import NSScreen
+    screen = NSScreen.mainScreen()
+except Exception:
+    return 1.0
+```
+
+A bare handler swallowed `ModuleNotFoundError` for an optional package. **1.0 is
+a legitimate scale factor** — every non-HiDPI display measures exactly 1.0 — so
+nothing distinguishes *"measured, not HiDPI"* from *"the probe never ran"*. A
+HiDPI screen silently treated as 1x mis-scales the browser tool's coordinates.
+
+Recorded with a caveat: **the fix still returns `1.0`**, adding only a cached
+`logger.warning`. The absence became visible to a human reading logs, not to a
+program reading the value. The same file carries a second, untouched
+`except Exception: return 1.0` for the Windows DPI probe.
+
+### SPX-2026-0003 — `truera/trulens`, `Dummy.__instancecheck__`
+
+```python
+def __instancecheck__(self, __instance: Any) -> bool:
+    return True
+```
+
+`Dummy` is the placeholder installed when an **optional dependency fails to
+import**. So `isinstance(anything, MissingOptionalClass)` returned **True for any
+object**, and every `if isinstance(x, SomeOptionalClass):` guard took its branch
+as though the object really were that type. The pre-fix tree holds 291
+`isinstance` call sites. Fixed to `return False` — failing closed.
 
 ## using it
 
