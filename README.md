@@ -298,6 +298,38 @@ conscience is a cooperative monitor — the adversarial version was tested and f
 failure is documented rather than papered over. ceilings are part of the API surface, not the fine
 print.
 
+## what the gate cost you
+
+`styxx.credits` accounts the honesty gate's own spend, over the trajectory log
+`cogn_audit_on_send(log_path=...)` already writes. no new instrumentation.
+
+```
+$ styxx-credits ~/.styxx/trajectory.jsonl
+
+  messages gated      12
+  catches              3  (flagged first, clean when shipped)
+
+  COST      1,204 tokens spent on revision  [estimate (~4 chars/token)]
+  NET       REFUSED - no counterfactual declared.
+```
+
+the refusal is the design. every tool in this space quotes savings; none can
+ground one, because what an unrevised draft would have cost downstream is a
+counterfactual nobody measured. so the ledger reports the side it observes --
+what the gate **cost** -- and nets only against a rework figure *you* declare:
+
+```
+$ styxx-credits trajectory.jsonl --rework-tokens 1800
+  NET  +4196 tokens, CONDITIONAL on rework_tokens=1800 (your number, not a measurement)
+```
+
+three more things it will not do: it does not bill the first draft to the gate
+(you were writing that anyway -- only revision passes are the gate's bill); a
+log with no draft text yields `cost=None` with a named reason rather than `0`,
+which would be a claim; and every card states that misses are uncountable here,
+because a draft that shipped clean and was wrong anyway leaves no trace in this
+log. api: `styxx.token_ledger(path, tokenizer=None, rework_tokens=None)`.
+
 ## the discipline
 
 the differentiator is not any single AUC — it is that this repo attacks its own numbers before you

@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.44.0] — 2026-08-21 — a guard that publishes the score that killed it
+
+### Added
+- **`styxx.contract`** — `@measures(...)`, a runtime guard that fires when a
+  function returns a confident value from an input with nothing in it. Two
+  questions, and the *conjunction* is the finding: *was there anything to
+  measure?* (arguments) and *did it claim something anyway?* (return). Polarity
+  is two-sided, because `trust=1.0` and `risk=0.0` are the same statement.
+  Records and warns by default; `strict=True` raises for CI. A `Measured` that
+  knows it is unmeasured is never a violation.
+
+### Measured, and it failed
+- A kill criterion was **frozen and published before the module was written**:
+  replayed against the 5 **SP-6** cases in `benchmarks/silent_pass`, catch **≥ 4**,
+  or the idea dies and the number gets published.
+  **It scored 3 of 5. The criterion was not met, and `contract.py`'s own
+  docstring now carries that number.** See
+  `papers/RESULT_contract_sp6_2026_08_21.md`.
+- The failure was informative: **SP-6 is two mechanisms, not one.**
+  *Boundary-degenerate* (nothing arrives, something confident leaves) — **3/3**.
+  *Interior-degenerate* (a well-formed argument arrives and the emptiness is
+  manufactured inside) — **0/2, and unreachable by any boundary test at any
+  tuning.** SP-2026-0011 is a normal 20-token response whose scoring never
+  completed; SP-2026-0020 is four valid Japanese strings emptied by an
+  `[a-z0-9]+` tokenizer.
+- **3/3 on the reachable subset is not a pass.** Redefining the denominator
+  after seeing which cases failed is the move this project forbids. The subset
+  structure is a post-hoc observation and licenses a new preregistration on
+  cases it has never seen, nothing more.
+- Blind spots are **asserted in `tests/test_contract.py`**, not merely
+  documented, so a later change cannot quietly turn a published failure into a
+  silent pass.
+
+### Fixed (in the benchmark harness, before it could inflate a result)
+- The first replay used **hand-written reproductions** of the pre-fix functions
+  and scored **4 of 5 — a pass.** It was wrong: two reproductions passed an empty
+  sequence at the call boundary where the shipped code received a well-formed
+  argument. The reconstruction was *easier to catch than the code*. Replaced by
+  `scripts/contract_sp6_replay_real.py`, which extracts each function with
+  `git archive <fix_commit>~1` and imports the package in isolation. Fidelity
+  check: SP-2026-0008 replays to `confidence=0.6951217…`, matching the corpus.
+
+---
+
 ## [7.43.0] — 2026-08-20 — a detector that was blind outside the latin alphabet
 
 ### Fixed

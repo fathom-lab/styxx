@@ -404,6 +404,7 @@ from .credits import token_ledger, TokenLedger  # what the gate COST, and what i
 from .absence import scan_path as absence_scan, AbsenceReport  # where NOT measuring reads as a good result
 from .loops import scan_path as loops_scan, LoopReport  # fields derived from the system's own output, then trusted
 from .measured import Measured, NoComputedData, measure, lenient  # the validity channel: a value that knows whether it was measured
+from .contract import measures, ContractViolation, contract_violations  # confident value from an empty input, caught at call time (3/5 on SP-6 — see RESULT_contract_sp6)
 
 
 def seal(*args, **kwargs):
@@ -869,6 +870,7 @@ __all__ = [
     "token_ledger", "TokenLedger",
     "absence_scan", "AbsenceReport",
     "loops_scan", "LoopReport",
+    "measures", "ContractViolation", "contract_violations",
     "Measured", "NoComputedData", "measure", "lenient",
     # 7.28: the trust seal for agent work
     "seal", "verify_seal", "Seal",
