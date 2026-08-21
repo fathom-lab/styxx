@@ -26,7 +26,9 @@ from sklearn.preprocessing import StandardScaler
 
 SEED = 20260821
 N_BOOT = 2000
-IN = Path(__file__).resolve().parent.parent / "papers" / "out_rdm_reliability_2026_08_21.json"
+import sys
+_name = sys.argv[1] if len(sys.argv) > 1 else "out_rdm_reliability_2026_08_21.json"
+IN = Path(__file__).resolve().parent.parent / "papers" / _name
 
 
 def cv_auc(X, y, seed=SEED):
