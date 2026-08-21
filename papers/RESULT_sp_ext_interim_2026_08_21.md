@@ -25,9 +25,19 @@ if denominator == 0:
     return 1.0          # a suite that evaluated NOTHING reports 100% pass
 ```
 
-The documented contract read *"pass_rate : float — Fraction of non-skipped..."*.
+The pre-fix docstring — read directly from git, not from an agent — is the part
+that matters most:
+
+> `pass_rate : float` — *Fraction of non-skipped scenarios that passed*
+> **(1.0 when all scenarios are skipped).**
+
+**The flattering default was documented as the intended contract.** A consumer
+reading 1.0 from an empty suite was reading exactly what the API promised. This is
+the defect class at its most complete: not an oversight in an edge case, but a
+value that never measured anything, specified in writing as a perfect score.
+
 An empty suite, or one where every scenario was skipped or the producing probe
-crashed, reported a **perfect score**.
+crashed, reported that perfect score.
 
 Consumers, traced independently by all three reviewers:
 - the Rich console summary line — `Summary: … | Pass Rate: 100.0%`
@@ -38,6 +48,17 @@ Consumers, traced independently by all three reviewers:
 
 Subtype **SP-2 SENTINEL_DEFAULT**, unanimous. Fixed by Giskard's own maintainers
 as a breaking change — the `!` in `fix(checks)!`.
+
+Verified independently: the fix's own diff touches the README example (changed to
+handle `None`), `tests/export/test_hub.py` (the Hub payload carried the value), and
+the garak scan adapter — **three distinct consumers, confirmed by the fix itself**
+rather than inferred.
+
+One correction to this record before it goes further: an earlier draft named the
+module `giskard/core/suite.py`, which does not exist. It is
+`libs/giskard-checks/src/giskard/checks/core/result.py`. Found by reading git
+rather than trusting the summary, which is the only reason it is not now sitting
+in a benchmark other people would rely on.
 
 **Ground truth here is not our judgment.** Somebody else read that code, decided a
 100% pass rate from zero evaluations was wrong, and shipped a breaking change to

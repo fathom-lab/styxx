@@ -15,16 +15,16 @@
     {
       "id": "SPX-2026-0001",
       "repo": "Giskard-AI/giskard",
-      "url": "https://github.com/Giskard-AI/giskard/commit/dd75e974ee",
-      "fix_commit": "dd75e974ee",
+      "url": "https://github.com/Giskard-AI/giskard/commit/dd75e974ee767236c06bb5553aff1ccd76d0d05d",
+      "fix_commit": "dd75e974ee767236c06bb5553aff1ccd76d0d05d",
       "fix_subject": "fix(checks)!: return None from SuiteResult.pass_rate when nothing evaluated (#2753)",
-      "module": "giskard/core/suite.py",
+      "module": "libs/giskard-checks/src/giskard/checks/core/result.py",
       "symbol": "SuiteResult.pass_rate",
       "subtype": "SP-2 SENTINEL_DEFAULT",
       "what_failed": "the suite evaluated nothing — an empty suite, or every scenario skipped, or the producing probe crashed",
       "prefix_code": "denominator = len(self.results) - self.skipped_count\nif denominator == 0:\n    return 1.0",
       "what_was_returned": "pass_rate = 1.0 — a perfect 100% score",
-      "why_it_reads_healthy": "the documented contract was 'pass_rate : float — Fraction of non-skipped...', so a consumer reading 1.0 sees a suite in which everything passed, which is exactly what it sees when a suite genuinely passes",
+      "why_it_reads_healthy": "the pre-fix DOCSTRING documented the flattering default as intended behaviour — '1.0 when all scenarios are skipped' — so a consumer reading 1.0 was reading the documented contract, and a suite that evaluated nothing was indistinguishable from one in which everything passed",
       "consumer": "the Rich console summary line 'Summary: … | Pass Rate: 100.0%'; the Giskard Hub upload payload via to_hub_format/model_dump, which shipped 1.0 as a genuine success_rate; the project's own README example print(f'Aggregated pass rate: {results.pass_rate * 100}%'); and user CI gates thresholding the field",
       "fix": "the zero-denominator branch returns None, the signature becomes float | None, the console renders '—' when None, and the Hub payload serialises the absence",
       "breaking_change": true,
@@ -34,7 +34,20 @@
         "verdict": "ACCEPTED unanimously",
         "subtype_agreement": "3/3 agreed SP-2 SENTINEL_DEFAULT",
         "confidence": "high on all three lenses"
-      }
+      },
+      "fix_author": "David Berenstein",
+      "fix_date": "2026-08-13",
+      "prefix_docstring": "pass_rate : float — Fraction of non-skipped scenarios that passed (1.0 when all scenarios are skipped).",
+      "files_touched": [
+        "libs/giskard-checks/src/giskard/checks/core/result.py",
+        "libs/giskard-checks/src/giskard/checks/scenarios/suite.py",
+        "libs/giskard-checks/README.md",
+        "libs/giskard-checks/tests/core/test_suite.py",
+        "libs/giskard-checks/tests/export/test_hub.py",
+        "giskard/scan/integrations/garak/_adapter.py"
+      ],
+      "consumer_evidence": "confirmed by the fix's own diff: the README example was changed to handle None, tests/export/test_hub.py was extended (the Hub payload carried the value), and the garak scan adapter was updated — three distinct consumers touched by the one fix",
+      "verification": "read directly from git at dd75e974ee by the author of this entry, not taken from the adjudicating agents. An earlier draft of this record named the module as giskard/core/suite.py, which does not exist; corrected before publication."
     }
   ]
 }
