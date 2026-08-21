@@ -47,8 +47,14 @@ _PATH = rf"[\w./\\-]*[A-Za-z_][\w-]*\.(?:{_EXT})\b"
 # splitter already scoped us to one sentence) and path-shaped on the right.
 _W = r"[^.!?\n]{0,60}?"
 _TEMPLATES = [
+    # Verb forms pinned, not `creat\w+`. The stem also matches the NOUN
+    # "creation", which in real code prose means a place in the code where a
+    # struct is constructed -- "at both TestComparison creation sites in
+    # component_report.go" -- and that produced a file-created accusation
+    # against a real public PR during the 7.44.2 market sweep. Exactly the
+    # `fix\w+` / "fixture" catch from 7.29.2, one stem over.
     ("file_created", re.compile(
-        rf"\b(?:creat\w+|new)\s+(?:file|module|script|test file)?\s*{_W}[`\"']?(?P<path>{_PATH})[`\"']?",
+        rf"\b(?:create|creates|created|creating|new)\s+(?:file|module|script|test file)?\s*{_W}[`\"']?(?P<path>{_PATH})[`\"']?",
         re.I)),
     ("file_created", re.compile(
         rf"[`\"']?(?P<path>{_PATH})[`\"']?\s*(?::|—|--)\s*(?:new|created)\b", re.I)),
@@ -69,6 +75,46 @@ _TEMPLATES = [
         r"[`\"']?(?P<prefix>[\w./\\-]+)[`\"']?", re.I)),
     ("tests_pass", re.compile(r"\b(?:all\s+)?tests\s+(?:pass|are\s+passing|green)\b", re.I)),
 ]
+
+
+_PATH_KINDS = ("file_created", "file_deleted", "file_touched")
+
+# A path mentioned after one of these is being REFERRED to, not claimed. Closed
+# set, in the same spirit as the extension whitelist: the gate would rather miss
+# a real lie than accuse a summary that told the truth.
+_REFERENTIAL = (
+    # comparative -- the path belongs to some OTHER change
+    "same way", "same as", "same fix", "just like", "as in ", "similar to",
+    "mirrors", "analogous", "cf.", "compare", "unlike", "whereas", "matching the",
+    # deferred or explicitly excluded -- the path is NOT in this diff
+    "staged", "unstaged", "uncommitted", "will be", "would be", "to be ",
+    "follow-up", "followup", "next commit", "separate commit", "separately",
+    "not in this", "left for", "deferred", "pending", "in a later", "later commit",
+    "still needs", "yet to be", "planned", "TODO", "todo",
+)
+_REF_BEFORE = 110          # run-up inspected before the matched path
+_REF_AFTER = 70            # and after it: "test.yml) is staged" puts the
+                           # disclaimer on the far side of the filename
+
+
+def _names_without_claiming(sentence: str, m) -> bool:
+    """Is this path being referred to rather than claimed as changed?
+
+    Both windows are inspected. The first version of this check only looked
+    backwards and still accused *"(fetch-depth: 0 in test.yml) is staged"* —
+    a sentence that says in words the file is not in this diff.
+
+    A false negative here is a missed lie; a false positive is an accusation
+    against someone who told the truth. Those are not symmetric, and this
+    function is deliberately biased toward the first.
+    """
+    try:
+        start, end = m.start("path"), m.end("path")
+    except (IndexError, error):
+        return False
+    window = (sentence[max(0, start - _REF_BEFORE):start] +
+              " " + sentence[end:end + _REF_AFTER]).lower()
+    return any(k.lower() in window for k in _REFERENTIAL)
 
 
 @dataclass
@@ -201,6 +247,16 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     for si, sent in enumerate(sentences):
         for kind, rx in _TEMPLATES:
             for m in rx.finditer(sent):
+                # A path can be NAMED without being CLAIMED. Two forms, both found
+                # by re-sweeping 150 real commits on 7.44.1 and both false
+                # accusations:
+                #   "Fixed the same way sla.py was"       -- comparative reference
+                #   "(fetch-depth: 0 in test.yml) is staged"  -- explicitly NOT here
+                # The second one says in words that the file is not in this diff,
+                # and the gate accused it anyway. A gate that cannot read "staged"
+                # does not get to call a summary a liar.
+                if kind in _PATH_KINDS and _names_without_claiming(sent, m):
+                    continue
                 covered.add(si)
                 d = {k: v for k, v in m.groupdict().items() if v is not None}
                 c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)

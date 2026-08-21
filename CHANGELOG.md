@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [7.44.2] — 2026-08-21 — the product page made a claim nobody could re-run
+
+`action.yml` told every prospective user the gate was *"validated on real
+agent-authored PRs with zero false accusations."* The receipts were real — 80
+commits at 7.29.1, 24 agent PRs at 7.29.2, both of which found and fixed
+false-accusation classes before claiming zero. But that was **fifteen releases
+ago**, the sweeps were run ad hoc, **no harness was ever committed**, and the
+sentence was written in the present tense. An unreproducible receipt is a claim,
+not evidence.
+
+### Added
+- **`scripts/diffgate_validation_sweep.py`** — the sweep, committed, re-runnable
+  by anyone: this repo's own commits (message vs its own diff) and real public
+  PRs whose body carries the Claude Code marker (body vs the diff GitHub serves).
+  It refuses to call a contradiction a caught lie on its own: every CONTRADICTED
+  is printed with its evidence for adjudication, and it prints **coverage**
+  alongside the headline, because zero contradictions is also what a gate that
+  extracts nothing produces.
+
+### Fixed — three false-accusation classes, found by re-running it on 7.44.1
+- **A path NAMED is not a path CLAIMED, comparative form.** *"Fixed the same way
+  `sla.py` was"* — an analogy to an earlier change — was accused of not touching
+  `sla.py`.
+- **Explicit non-inclusion.** *"(fetch-depth: 0 in `test.yml`) is staged"* — a
+  sentence that says **in words** the file is not in this diff — was accused
+  anyway. A gate that cannot read "staged" does not get to call a summary a liar.
+  Both windows around the path are now inspected; the first attempt at this fix
+  only looked backwards and still accused the second one.
+- **`creat\w+` matched the NOUN "creation".** On a real public PR, *"at both
+  `TestComparison` creation sites in `component_report.go`"* became a
+  file-**created** claim against a file the diff only modified. Verb forms pinned
+  — exactly the 7.29.2 `fix\w+`/"fixture" catch, one stem over.
+
+### The number, now reproducible
+**150 commits + 40 public agent PRs → 30 claims, 21 VERIFIED, 3 UNCHECKABLE
+locally / 6 in market, 0 CONTRADICTED, 15 claim-bearing items.** Narrowing removed
+only the accusations: VERIFIED held at 16 locally across the fix. `action.yml`
+now cites these figures and points at the harness instead of at a changelog.
+
+14 regression tests carry all three catches by name, plus the two-sided check
+that true claims still VERIFY — a fix that stops accusing by stopping extracting
+is not a fix.
+
+---
+
 ## [7.44.1] — 2026-08-21 — the Action reported a pass when the gate had not run
 
 The published `styxx diffgate` GitHub Action carried the product-level instance of

@@ -104,6 +104,15 @@ def test_soft_fail_still_never_breaks_the_job(env, monkeypatch):
 
 def test_the_action_pins_a_version_that_has_the_bypass_fix():
     """Releases before 7.44.0 contain the `only_touches` bypass in this very
-    gate. The Action must not offer them as a default."""
+    gate. The Action must never offer one as its default.
+
+    Asserts the PROPERTY, not the literal string — the first version of this
+    test hard-coded `styxx>=7.44.0` and failed the moment the floor was raised
+    to 7.44.2, which is a test that breaks on the fix rather than on the defect.
+    """
+    import re
+
     y = (ACTION.parent / "action.yml").read_text(encoding="utf-8")
-    assert "styxx>=7.44.0" in y
+    m = re.search(r'default:\s*"styxx>=(\d+)\.(\d+)\.(\d+)"', y)
+    assert m, "action.yml must pin a minimum styxx version"
+    assert tuple(int(g) for g in m.groups()) >= (7, 44, 0)

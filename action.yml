@@ -3,8 +3,11 @@ description: >-
   Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
   via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
-  summary and as an annotation. Validated on real agent-authored PRs with zero false
-  accusations before release (see the styxx CHANGELOG for the receipts).
+  summary and as an annotation. Re-validated at 7.44.2 against 150 commits and 40 real
+  agent-authored public PRs — 30 claims, 21 VERIFIED, ZERO false accusations — and the
+  sweep harness is committed (scripts/diffgate_validation_sweep.py) so you can re-run that
+  number rather than take our word for it. It judges a CLOSED template set; prose outside
+  it is never scored, and that limit is the reason to trust the verdicts it does give.
 author: "Fathom Lab"
 branding:
   icon: "shield"
@@ -21,12 +24,14 @@ inputs:
     default: "false"
   styxx-version:
     description: >-
-      styxx version spec to install. The floor is 7.44.0 deliberately: every release
-      before it contained a bypass in this very gate — `only touches <prefix>` was
+      styxx version spec to install. The floor is deliberate. Every release before
+      7.44.0 contained a bypass in this very gate — `only touches <prefix>` was
       VERIFIED against an unreadable diff, because "is any path outside the prefix?"
-      is vacuously false when no paths were parsed. Do not pin below it.
+      is vacuously false when no paths were parsed. 7.44.2 additionally closes three
+      false-accusation classes found by re-sweeping 150 commits and 40 public agent
+      PRs. Do not pin below it.
     required: false
-    default: "styxx>=7.44.0"
+    default: "styxx>=7.44.2"
 
 runs:
   using: "composite"
