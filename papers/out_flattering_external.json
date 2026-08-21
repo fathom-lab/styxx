@@ -1,0 +1,2813 @@
+{
+  "frozen_commit": "4272d44a6",
+  "seed": 20260821,
+  "files_scanned": 19632,
+  "files_unparsed": 1,
+  "n_tier_a": 8,
+  "n_tier_b": 662,
+  "per_package": [
+    {
+      "package": "accelerate",
+      "files": 66,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 6
+    },
+    {
+      "package": "aiohttp",
+      "files": 53,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "anthropic",
+      "files": 545,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "anyio",
+      "files": 39,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "av",
+      "files": 61,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "beartype",
+      "files": 230,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "bitsandbytes",
+      "files": 60,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "botocore",
+      "files": 76,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "chardet",
+      "files": 49,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "chromadb",
+      "files": 144,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 17
+    },
+    {
+      "package": "coverage",
+      "files": 44,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "Cryptodome",
+      "files": 124,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "cryptography",
+      "files": 72,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "datasets",
+      "files": 128,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 9
+    },
+    {
+      "package": "debugpy",
+      "files": 223,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 7
+    },
+    {
+      "package": "dill",
+      "files": 14,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "docutils",
+      "files": 129,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 4
+    },
+    {
+      "package": "fastapi",
+      "files": 47,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "fontTools",
+      "files": 329,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 23
+    },
+    {
+      "package": "fsspec",
+      "files": 47,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "gensim",
+      "files": 82,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "glmsingle",
+      "files": 54,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "google",
+      "files": 666,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 6
+    },
+    {
+      "package": "grpc",
+      "files": 56,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "h5py",
+      "files": 17,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "huggingface_hub",
+      "files": 161,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "hypothesis",
+      "files": 102,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "inspect_ai",
+      "files": 595,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 18
+    },
+    {
+      "package": "ipykernel",
+      "files": 42,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "IPython",
+      "files": 165,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "ipywidgets",
+      "files": 35,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "jedi",
+      "files": 83,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "joblib",
+      "files": 49,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "kubernetes",
+      "files": 822,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "markdown_it",
+      "files": 66,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "matplotlib",
+      "files": 153,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 13
+    },
+    {
+      "package": "mcp",
+      "files": 109,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 7
+    },
+    {
+      "package": "mpl_toolkits",
+      "files": 24,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "mpmath",
+      "files": 51,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 6
+    },
+    {
+      "package": "multiprocess",
+      "files": 24,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "mypy",
+      "files": 150,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 19
+    },
+    {
+      "package": "mypyc",
+      "files": 102,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "networkx",
+      "files": 286,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 14
+    },
+    {
+      "package": "nibabel",
+      "files": 110,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "nilearn",
+      "files": 171,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "nnsight",
+      "files": 55,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "numba",
+      "files": 317,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 27
+    },
+    {
+      "package": "numpy",
+      "files": 171,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 0
+    },
+    {
+      "package": "oauthlib",
+      "files": 75,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "onnxruntime",
+      "files": 299,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 8
+    },
+    {
+      "package": "openai",
+      "files": 1073,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "openpyxl",
+      "files": 190,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "opentelemetry",
+      "files": 255,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "pandas",
+      "files": 295,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 15
+    },
+    {
+      "package": "peft",
+      "files": 182,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "PIL",
+      "files": 97,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "pip",
+      "files": 411,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 24
+    },
+    {
+      "package": "pkg_resources",
+      "files": 44,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "playwright",
+      "files": 60,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 3
+    },
+    {
+      "package": "prompt_toolkit",
+      "files": 145,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 11
+    },
+    {
+      "package": "pyarrow",
+      "files": 32,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "pyasn1_modules",
+      "files": 132,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "pydantic",
+      "files": 105,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "pygments",
+      "files": 337,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "pypdf",
+      "files": 55,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "pytablewriter",
+      "files": 65,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "pythonwin",
+      "files": 99,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 2
+    },
+    {
+      "package": "reportlab",
+      "files": 155,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 7
+    },
+    {
+      "package": "rich",
+      "files": 100,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 5
+    },
+    {
+      "package": "scipy",
+      "files": 589,
+      "unparsed": 0,
+      "tier_a": 2,
+      "tier_b": 28
+    },
+    {
+      "package": "seaborn",
+      "files": 53,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 8
+    },
+    {
+      "package": "sentence_transformers",
+      "files": 169,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "sentry_sdk",
+      "files": 188,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 6
+    },
+    {
+      "package": "setuptools",
+      "files": 201,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 12
+    },
+    {
+      "package": "sklearn",
+      "files": 318,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 10
+    },
+    {
+      "package": "sympy",
+      "files": 824,
+      "unparsed": 1,
+      "tier_a": 0,
+      "tier_b": 49
+    },
+    {
+      "package": "textual",
+      "files": 247,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 12
+    },
+    {
+      "package": "torch",
+      "files": 1845,
+      "unparsed": 0,
+      "tier_a": 1,
+      "tier_b": 84
+    },
+    {
+      "package": "torchgen",
+      "files": 73,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "tornado",
+      "files": 37,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "transformer_lens",
+      "files": 72,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "transformers",
+      "files": 2213,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 108
+    },
+    {
+      "package": "typepy",
+      "files": 50,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "uvicorn",
+      "files": 40,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "vcs_versioning",
+      "files": 39,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "wandb",
+      "files": 922,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 23
+    },
+    {
+      "package": "websockets",
+      "files": 48,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 1
+    },
+    {
+      "package": "win32",
+      "files": 111,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "win32com",
+      "files": 52,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "win32comext",
+      "files": 71,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    },
+    {
+      "package": "zmq",
+      "files": 66,
+      "unparsed": 0,
+      "tier_a": 0,
+      "tier_b": 0
+    }
+  ],
+  "tier_a": [
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\analysis\\_dataframe\\columns.py",
+      "line": 105,
+      "function": "validate_path",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:_validated",
+      "snippet": "jsonpath_in_schema(self.path, schema) if schema else True",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\server\\transport_security.py",
+      "line": 71,
+      "function": "_validate_origin",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_validate_origin",
+      "snippet": "return True",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 4689,
+      "function": "is_valid_defaultdict_partial_value_type",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:is_valid_defaultdict_partial_value_type",
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\numpy\\testing\\_private\\utils.py",
+      "line": 1643,
+      "function": "_assert_valid_refcount",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_assert_valid_refcount",
+      "snippet": "return True",
+      "package": "numpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\scipy\\optimize\\_trustregion_constr\\equality_constrained_sqp.py",
+      "line": 102,
+      "function": "equality_constrained_sqp",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:constr_violation",
+      "snippet": "constr_violation = norm(b, np.inf) if len(b) > 0 else 0",
+      "package": "scipy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\scipy\\optimize\\_trustregion_constr\\equality_constrained_sqp.py",
+      "line": 226,
+      "function": "equality_constrained_sqp",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:constr_violation",
+      "snippet": "constr_violation = norm(b, np.inf) if len(b) > 0 else 0",
+      "package": "scipy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\sklearn\\impute\\_base.py",
+      "line": 361,
+      "function": "_validate_input",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "function:_validate_input",
+      "snippet": "force_writeable=True if not in_fit else None,",
+      "package": "sklearn"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\torch\\_numpy\\testing\\utils.py",
+      "line": 1201,
+      "function": "_assert_valid_refcount",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_assert_valid_refcount",
+      "snippet": "return True",
+      "package": "torch"
+    }
+  ],
+  "tier_a_sampled": [
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\analysis\\_dataframe\\columns.py",
+      "line": 105,
+      "function": "validate_path",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:_validated",
+      "snippet": "jsonpath_in_schema(self.path, schema) if schema else True",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\server\\transport_security.py",
+      "line": 71,
+      "function": "_validate_origin",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_validate_origin",
+      "snippet": "return True",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 4689,
+      "function": "is_valid_defaultdict_partial_value_type",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:is_valid_defaultdict_partial_value_type",
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\numpy\\testing\\_private\\utils.py",
+      "line": 1643,
+      "function": "_assert_valid_refcount",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_assert_valid_refcount",
+      "snippet": "return True",
+      "package": "numpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\scipy\\optimize\\_trustregion_constr\\equality_constrained_sqp.py",
+      "line": 102,
+      "function": "equality_constrained_sqp",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:constr_violation",
+      "snippet": "constr_violation = norm(b, np.inf) if len(b) > 0 else 0",
+      "package": "scipy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\scipy\\optimize\\_trustregion_constr\\equality_constrained_sqp.py",
+      "line": 226,
+      "function": "equality_constrained_sqp",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "name:constr_violation",
+      "snippet": "constr_violation = norm(b, np.inf) if len(b) > 0 else 0",
+      "package": "scipy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\sklearn\\impute\\_base.py",
+      "line": 361,
+      "function": "_validate_input",
+      "tier": "A",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": "function:_validate_input",
+      "snippet": "force_writeable=True if not in_fit else None,",
+      "package": "sklearn"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\torch\\_numpy\\testing\\utils.py",
+      "line": 1201,
+      "function": "_assert_valid_refcount",
+      "tier": "A",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": "name:_assert_valid_refcount",
+      "snippet": "return True",
+      "package": "torch"
+    }
+  ],
+  "tier_b_sample": [
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\accelerator.py",
+      "line": 1363,
+      "function": "join_uneven_inputs",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "enable_join = False if even_batches else True",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\utils\\environment.py",
+      "line": 67,
+      "function": "str_to_bool",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return 1 if not to_bool else True",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\utils\\environment.py",
+      "line": 69,
+      "function": "str_to_bool",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return 0 if not to_bool else False",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\utils\\imports.py",
+      "line": 131,
+      "function": "is_torch_xla_available",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\utils\\modeling.py",
+      "line": 869,
+      "function": "clean_device_map",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "idx = len(module_name.split(\".\")) + 1 if len(module_name) > 0 else 1",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\accelerate\\utils\\modeling.py",
+      "line": 1021,
+      "function": "get_balanced_memory",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "buffer = max(no_split_children.values()) if len(no_split_children) > 0 else 0",
+      "package": "accelerate"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\aiohttp\\client_middleware_digest_auth.py",
+      "line": 405,
+      "function": "_authenticate",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False  # No authentication header present",
+      "package": "aiohttp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\aiohttp\\helpers.py",
+      "line": 484,
+      "function": "is_ip_address",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "aiohttp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\aiohttp\\multipart.py",
+      "line": 103,
+      "function": "parse_content_disposition.is_continuous_param",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "aiohttp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\aiohttp\\web_urldispatcher.py",
+      "line": 850,
+      "function": "match",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "aiohttp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\aiohttp\\_websocket\\writer.py",
+      "line": 135,
+      "function": "_write_websocket_frame",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "mask_bit = 0x80 if use_mask else 0",
+      "package": "aiohttp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\anthropic\\_base_client.py",
+      "line": 192,
+      "function": "has_next_page",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "anthropic"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\av\\audio\\resampler.py",
+      "line": 29,
+      "function": "__cinit__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.rate = int(rate) if rate else 0",
+      "package": "av"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\av\\audio\\resampler.py",
+      "line": 30,
+      "function": "__cinit__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.frame_size = int(frame_size) if frame_size else 0",
+      "package": "av"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\av\\codec\\hwaccel.py",
+      "line": 137,
+      "function": "__init__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.flags = 0 if not flags else flags",
+      "package": "av"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\av\\video\\format.py",
+      "line": 124,
+      "function": "chroma_width",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return -((-luma_width) >> self.ptr.log2_chroma_w) if luma_width else 0",
+      "package": "av"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\av\\video\\format.py",
+      "line": 136,
+      "function": "chroma_height",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return -((-luma_height) >> self.ptr.log2_chroma_h) if luma_height else 0",
+      "package": "av"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\beartype\\_util\\func\\arg\\utilfuncargiter.py",
+      "line": 345,
+      "function": "iter_func_args",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "func_codeobj.co_posonlyargcount  # type: ignore[attr-defined]",
+      "package": "beartype"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\beartype\\_util\\hint\\pep\\proposal\\utilpep585.py",
+      "line": 111,
+      "function": "is_hint_pep585_generic",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "beartype"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\bitsandbytes\\functional.py",
+      "line": 191,
+      "function": "create_linear_map",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "sign = -1.0 if signed else 0.0",
+      "package": "bitsandbytes"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\bitsandbytes\\functional.py",
+      "line": 297,
+      "function": "create_fp8_map",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "has_sign = 1 if signed else 0",
+      "package": "bitsandbytes"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\compat.py",
+      "line": 297,
+      "function": "has_minimum_crt_version",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "botocore"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\handlers.py",
+      "line": 1235,
+      "function": "_has_expires_shape",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "botocore"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\monitoring.py",
+      "line": 443,
+      "function": "_serialize_retries_exceeded",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "event_dict['MaxRetriesExceeded'] = 1 if retries_exceeded else 0",
+      "package": "botocore"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\retryhandler.py",
+      "line": 302,
+      "function": "__call__",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "botocore"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\utils.py",
+      "line": 3220,
+      "function": "determine_content_length",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "botocore"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\async_fastapi.py",
+      "line": 594,
+      "function": "_delete",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return DeleteResult(deleted=resp.get(\"deleted\", 0) if resp else 0)",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\fastapi.py",
+      "line": 567,
+      "function": "_delete",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return DeleteResult(deleted=resp.get(\"deleted\", 0) if resp else 0)",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 398,
+      "function": "_get",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "ids_amount = len(ids) if ids else 0",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 403,
+      "function": "_get",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "limit=limit if limit else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 481,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_embeddings=len(embeddings) if embeddings else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 482,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_metadata=len(metadatas) if metadatas else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 483,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_documents=len(documents) if documents else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 484,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_uris=len(uris) if uris else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\rust.py",
+      "line": 536,
+      "function": "_query",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "filtered_ids_amount = len(ids) if ids else 0",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 582,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_embeddings=len(embeddings) if embeddings else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 583,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_metadata=len(metadatas) if metadatas else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 584,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_documents=len(documents) if documents else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 585,
+      "function": "_update",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "with_uris=len(uris) if uris else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 684,
+      "function": "_get",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "ids_amount = len(ids) if ids else 0",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 689,
+      "function": "_get",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "limit=limit if limit else 0,",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\api\\segment.py",
+      "line": 860,
+      "function": "_query",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "ids_amount = len(ids) if ids else 0",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\chromadb\\segment\\impl\\manager\\local.py",
+      "line": 178,
+      "function": "_get_segment_disk_size",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "chromadb"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\coverage\\core.py",
+      "line": 118,
+      "function": "__init__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.tracer_kwargs[\"tool_id\"] = 3 if metacov else 1",
+      "package": "coverage"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\coverage\\files.py",
+      "line": 303,
+      "function": "match",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "coverage"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\coverage\\python.py",
+      "line": 258,
+      "function": "should_be_python",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "coverage"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\Cryptodome\\Util\\asn1.py",
+      "line": 140,
+      "function": "__init__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "constructed_bit = 0x20 if constructed else 0x00",
+      "package": "Cryptodome"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\arrow_dataset.py",
+      "line": 3184,
+      "function": "cleanup_cache_files",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\iterable_dataset.py",
+      "line": 142,
+      "function": "_batch_to_examples",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "n_examples = 0 if len(batch) == 0 else len(batch[next(iter(batch))])",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\iterable_dataset.py",
+      "line": 3426,
+      "function": "map",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "batch_size=batch_size if batched else 1,",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\iterable_dataset.py",
+      "line": 3433,
+      "function": "map",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self._ex_iterable, batch_size=batch_size if batched else 1, drop_last_batch=drop_last_batch",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\utils\\extract.py",
+      "line": 420,
+      "function": "is_extractable",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return True if not return_extractor else (True, cls.extractors[extractor_format])",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\utils\\extract.py",
+      "line": 421,
+      "function": "is_extractable",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return False if not return_extractor else (False, None)",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\utils\\sharding.py",
+      "line": 42,
+      "function": "_distribute_shards",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "start = shards_indices_per_group[-1].stop if shards_indices_per_group else 0",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\packaged_modules\\spark\\spark.py",
+      "line": 57,
+      "function": "_generate_iterable_examples",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "partition_idx_start = state_dict[\"partition_idx\"] if state_dict else 0",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\datasets\\packaged_modules\\spark\\spark.py",
+      "line": 62,
+      "function": "_generate_iterable_examples",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "row_id = state_dict[\"partition_example_idx\"] if state_dict else 0",
+      "package": "datasets"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_process_net_command_json.py",
+      "line": 964,
+      "function": "on_setexceptionbreakpoints_request",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "notify_on_handled_exceptions = 1 if break_raised else 0",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_process_net_command_json.py",
+      "line": 965,
+      "function": "on_setexceptionbreakpoints_request",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "notify_on_unhandled_exceptions = 1 if break_uncaught else 0",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_process_net_command_json.py",
+      "line": 966,
+      "function": "on_setexceptionbreakpoints_request",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "notify_on_user_unhandled_exceptions = 1 if break_user else 0",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydev_bundle\\_pydev_calltip_util.py",
+      "line": 78,
+      "function": "create_method_stub",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "fn_stub = create_function_stub(fn_name, argspec, doc_string, indent=1 if fn_class else 0)",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydev_runfiles\\pydev_runfiles.py",
+      "line": 731,
+      "function": "__match_tests",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 1",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\pydevd_attach_to_process\\winappdbg\\sql.py",
+      "line": 533,
+      "function": "_parse_access",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\debugpy\\_vendored\\pydevd\\_pydevd_frame_eval\\vendored\\bytecode\\cfg.py",
+      "line": 204,
+      "function": "compute_stacksize",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "debugpy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\docutils\\transforms\\frontmatter.py",
+      "line": 434,
+      "function": "check_empty_biblio_field",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "docutils"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\docutils\\utils\\math\\math2html.py",
+      "line": 812,
+      "function": "isending",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "docutils"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\docutils\\utils\\math\\math2html.py",
+      "line": 1250,
+      "function": "checkforlower",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "docutils"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\docutils\\utils\\math\\math2html.py",
+      "line": 1659,
+      "function": "computesize",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 1",
+      "package": "docutils"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fastapi\\dependencies\\utils.py",
+      "line": 890,
+      "function": "_should_embed_body_fields",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "fastapi"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\fontBuilder.py",
+      "line": 401,
+      "function": "setupCharacterMap",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "highestUnicode = max(cmapping) if cmapping else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\cffLib\\specializer.py",
+      "line": 730,
+      "function": "specializeCommands",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "stackUse = _argsStackUse(commands[-1][1]) if commands else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\cffLib\\__init__.py",
+      "line": 85,
+      "function": "decompile",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "expected_major = 2 if isCFF2 else 1",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\cffLib\\__init__.py",
+      "line": 152,
+      "function": "compile",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "expected_major = 2 if isCFF2 else 1",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\cu2qu\\ufo.py",
+      "line": 191,
+      "function": "_glyphs_to_quadratic",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\diff\\__init__.py",
+      "line": 353,
+      "function": "run",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return 0 if identical else 1",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\diff\\__init__.py",
+      "line": 436,
+      "function": "run",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return 1 if output else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\mtiLib\\__init__.py",
+      "line": 516,
+      "function": "parseMarkToSomething",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.classCount = 0 if not baseData else 1 + max(k[1] for k, v in baseData.items())",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\mtiLib\\__init__.py",
+      "line": 727,
+      "function": "__init__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.ClassDefIndex = 1 if Chain else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\otlLib\\builder.py",
+      "line": 392,
+      "function": "getCompiledSize_",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\subset\\__init__.py",
+      "line": 1205,
+      "function": "__subset_classify_context.__init__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "self.ClassDefIndex = 1 if Chain else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\subset\\__init__.py",
+      "line": 2726,
+      "function": "prune_post_subset",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ufoLib\\validators.py",
+      "line": 129,
+      "function": "fontInfoOpenTypeGaspRangeRecordsValidator",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ufoLib\\validators.py",
+      "line": 397,
+      "function": "fontInfoWOFFMetadataCreditsValidator",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ufoLib\\validators.py",
+      "line": 508,
+      "function": "fontInfoWOFFMetadataExtensionsValidator",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\varLib\\featureVars.py",
+      "line": 565,
+      "function": "buildSubstitutionLookups",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "firstIndex = len(gsub.LookupList.Lookup) if processLast else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\varLib\\merger.py",
+      "line": 462,
+      "function": "_ClassDef_invert",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "m = max(classDefs.values()) if classDefs else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\varLib\\models.py",
+      "line": 41,
+      "function": "allEqual",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\otlLib\\optimize\\gpos.py",
+      "line": 167,
+      "function": "_classDef_bytes",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ttLib\\tables\\otConverters.py",
+      "line": 1588,
+      "function": "write",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "count = max(items) + 1 if items else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ttLib\\tables\\otConverters.py",
+      "line": 1635,
+      "function": "write",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "count = max(items) + 1 if items else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\ttLib\\tables\\_g_l_y_f.py",
+      "line": 584,
+      "function": "flagBest",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "flag = flagOnCurve if onCurve else 0",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fontTools\\varLib\\instancer\\__init__.py",
+      "line": 1382,
+      "function": "_isValidAvarSegmentMap",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "fontTools"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\gensim\\matutils.py",
+      "line": 162,
+      "function": "corpus2csc",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "num_terms = max(indices) + 1 if indices else 0",
+      "package": "gensim"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\gensim\\matutils.py",
+      "line": 644,
+      "function": "veclen",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0.0",
+      "package": "gensim"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\gensim\\corpora\\svmlightcorpus.py",
+      "line": 120,
+      "function": "save_corpus",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "label = labels[docno] if labels else 0  # target class is 0 by default",
+      "package": "gensim"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\api_core\\operation_async.py",
+      "line": 181,
+      "function": "cancel",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\oauth2\\_client.py",
+      "line": 57,
+      "function": "_handle_error_response",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "retryable_error = retryable_error if retryable_error else False",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\protobuf\\text_format.py",
+      "line": 441,
+      "function": "_TryPrintAsAnyMessage",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\auth\\transport\\urllib3.py",
+      "line": 341,
+      "function": "configure_mtls_channel",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\auth\\transport\\_mtls_helper.py",
+      "line": 497,
+      "function": "check_use_client_cert",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\generativeai\\notebook\\flag_def.py",
+      "line": 177,
+      "function": "_has_non_default_value",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "google"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\hypothesis\\extra\\cli.py",
+      "line": 230,
+      "function": "codemod",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return 1 if errors else 0",
+      "package": "hypothesis"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\hypothesis\\internal\\conjecture\\choice.py",
+      "line": 204,
+      "function": "_size_to_index",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "hypothesis"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\hypothesis\\internal\\conjecture\\choice.py",
+      "line": 214,
+      "function": "_index_to_size",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "hypothesis"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\hypothesis\\internal\\conjecture\\datatree.py",
+      "line": 164,
+      "function": "_count_distinct_strings",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 1",
+      "package": "hypothesis"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\hypothesis\\internal\\conjecture\\providers.py",
+      "line": 1124,
+      "function": "_draw_bits",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "hypothesis"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\agent\\_handoff.py",
+      "line": 114,
+      "function": "has_handoff",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\event\\_timeline.py",
+      "line": 165,
+      "function": "_compute_idle_time",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0.0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\scorer\\_unicode.py",
+      "line": 457,
+      "function": "_parse_chinese_number",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "int_val = int(\"\".join(digits)) if digits else 0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\util\\_subprocess.py",
+      "line": 217,
+      "function": "default_max_subprocesses",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return cpus if cpus else 1",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_cli\\eval.py",
+      "line": 1313,
+      "function": "eval_set_command",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "bundle_overwrite=True if bundle_overwrite else False,",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_cli\\eval.py",
+      "line": 1314,
+      "function": "eval_set_command",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "embed_viewer=True if embed_viewer else False,",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_cli\\eval.py",
+      "line": 1666,
+      "function": "eval_exec",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "score = False if no_score else True",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_cli\\eval.py",
+      "line": 2131,
+      "function": "eval_retry_command",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "score = False if no_score else True",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_eval\\evalset.py",
+      "line": 288,
+      "function": "eval_set",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "task_retry_attempts = num_retry_attempts if retry_immediate else 0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_eval\\evalset.py",
+      "line": 868,
+      "function": "log_samples_complete",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "epoch_count = epochs.epochs if epochs else 1",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_util\\asyncfiles.py",
+      "line": 434,
+      "function": "iter_dirs",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "base_depth = len(prefix.rstrip(\"/\").split(\"/\")) if prefix else 0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_util\\asyncfiles.py",
+      "line": 640,
+      "function": "s3_iter_dirs",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "base_depth = len(prefix.rstrip(\"/\").split(\"/\")) if prefix else 0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_util\\registry.py",
+      "line": 469,
+      "function": "is_registry_object",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\model\\_compaction\\_compaction.py",
+      "line": 133,
+      "function": "compaction.compact_fn",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "prefix_tokens = await target_model.count_tokens(prefix) if prefix else 0",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\model\\_compaction\\_compaction.py",
+      "line": 169,
+      "function": "compaction.compact_fn",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "await target_model.count_tokens(new_since_baseline)",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\model\\_providers\\vllm.py",
+      "line": 504,
+      "function": "_is_dead_local_vllm_endpoint",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\model\\_providers\\_openai_computer_use.py",
+      "line": 95,
+      "function": "_supports_native_computer_use",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\inspect_ai\\_eval\\task\\scan.py",
+      "line": 1056,
+      "function": "_sample_matches_filters",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "inspect_ai"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\IPython\\core\\display.py",
+      "line": 436,
+      "function": "__init__.warn",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "IPython"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\IPython\\core\\inputtransformer2.py",
+      "line": 858,
+      "function": "find_last_indent",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "IPython"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\IPython\\lib\\display.py",
+      "line": 215,
+      "function": "_get_normalization_factor",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return max_abs_value if normalize else 1",
+      "package": "IPython"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\joblib\\parallel.py",
+      "line": 662,
+      "function": "_verbosity_filter",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "joblib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\colors.py",
+      "line": 1799,
+      "function": "reversed",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "r_0 = -1 if axis_0 else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\colors.py",
+      "line": 1800,
+      "function": "reversed",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "r_1 = -1 if axis_1 else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\contour.py",
+      "line": 994,
+      "function": "_autolev",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "i0 = under[-1] if len(under) else 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\figure.py",
+      "line": 3320,
+      "function": "__setstate__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "num = max(allnums) + 1 if allnums else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\pyplot.py",
+      "line": 1004,
+      "function": "figure",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "next_num = max(allnums) + 1 if allnums else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\texmanager.py",
+      "line": 365,
+      "function": "get_text_width_height_descent",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "dpi_fraction = renderer.points_to_pixels(1.) if renderer else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\transforms.py",
+      "line": 571,
+      "function": "count_contains",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\axes\\_axes.py",
+      "line": 2966,
+      "function": "bar_label",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "y_direction = -1 if y_inverted else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\axes\\_axes.py",
+      "line": 2969,
+      "function": "bar_label",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "x_direction = -1 if x_inverted else 1",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\backends\\backend_pdf.py",
+      "line": 2064,
+      "function": "draw_path_collection",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "len_path = len(paths[0].vertices) if len(paths) > 0 else 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\backends\\backend_ps.py",
+      "line": 683,
+      "function": "draw_path_collection",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "len_path = len(paths[0].vertices) if len(paths) > 0 else 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\backends\\backend_svg.py",
+      "line": 745,
+      "function": "draw_path_collection",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "len_path = len(paths[0].vertices) if len(paths) > 0 else 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\matplotlib\\testing\\compare.py",
+      "line": 130,
+      "function": "__call__",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "stack_size = int(stack[:-1]) if stack else 0",
+      "package": "matplotlib"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\server\\streamable_http.py",
+      "line": 848,
+      "function": "_validate_session",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\server\\transport_security.py",
+      "line": 49,
+      "function": "_validate_host",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\server\\transport_security.py",
+      "line": 93,
+      "function": "_validate_content_type",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\client\\auth\\oauth2.py",
+      "line": 174,
+      "function": "should_include_resource_param",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\client\\auth\\utils.py",
+      "line": 258,
+      "function": "is_valid_client_metadata_url",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\client\\auth\\utils.py",
+      "line": 284,
+      "function": "should_use_client_metadata_url",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mcp\\client\\auth\\utils.py",
+      "line": 287,
+      "function": "should_use_client_metadata_url",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mcp"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpl_toolkits\\axes_grid1\\axes_divider.py",
+      "line": 162,
+      "function": "_calc_k",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return (total - abs_sum) / rel_sum if rel_sum else 0",
+      "package": "mpl_toolkits"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpl_toolkits\\mplot3d\\axes3d.py",
+      "line": 2391,
+      "function": "plot_wireframe",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "rstride = int(max(np.ceil(rows / rcount), 1)) if rcount else 0",
+      "package": "mpl_toolkits"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpl_toolkits\\mplot3d\\axes3d.py",
+      "line": 2392,
+      "function": "plot_wireframe",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "cstride = int(max(np.ceil(cols / ccount), 1)) if ccount else 0",
+      "package": "mpl_toolkits"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpl_toolkits\\mplot3d\\axes3d.py",
+      "line": 2397,
+      "function": "plot_wireframe",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "rstride = int(max(np.ceil(rows / rcount), 1)) if rcount else 0",
+      "package": "mpl_toolkits"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpl_toolkits\\mplot3d\\axes3d.py",
+      "line": 2398,
+      "function": "plot_wireframe",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "cstride = int(max(np.ceil(cols / ccount), 1)) if ccount else 0",
+      "package": "mpl_toolkits"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\ctx_mp.py",
+      "line": 377,
+      "function": "isnpint",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\libmp\\libintmath.py",
+      "line": 65,
+      "function": "python_trailing",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\libmp\\libintmath.py",
+      "line": 81,
+      "function": "gmpy_trailing",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "else: return 0",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\libmp\\libintmath.py",
+      "line": 86,
+      "function": "gmpy_trailing",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "else: return 0",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\libmp\\libintmath.py",
+      "line": 102,
+      "function": "gmpy_bitcount",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "else: return 0",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mpmath\\libmp\\libmpf.py",
+      "line": 699,
+      "function": "mpf_sign",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "mpmath"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\multiprocess\\shared_memory.py",
+      "line": 73,
+      "function": "<module>",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "_prepend_leading_slash = True if _USE_POSIX else False",
+      "package": "multiprocess"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\multiprocess\\util.py",
+      "line": 118,
+      "function": "is_abstract_socket_namespace",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "multiprocess"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 1803,
+      "function": "is_var_redefined_in_outer_context",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 2111,
+      "function": "is_unsafe_overlapping_op",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 2406,
+      "function": "check_method_override_for_base_with_name",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checker.py",
+      "line": 9523,
+      "function": "is_untyped_decorator",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checkexpr.py",
+      "line": 6865,
+      "function": "all_same_types",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\checkexpr.py",
+      "line": 6967,
+      "function": "is_operator_method",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\dmypy_server.py",
+      "line": 835,
+      "function": "increment_output",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "status = 1 if messages else 0",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\main.py",
+      "line": 174,
+      "function": "main",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "code = 2 if blockers else 1",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\main.py",
+      "line": 1755,
+      "function": "install_types",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\modulefinder.py",
+      "line": 681,
+      "function": "matches_exclude",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\semanal.py",
+      "line": 4750,
+      "function": "process_typevar_declaration",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\semanal.py",
+      "line": 5046,
+      "function": "process_paramspec_declaration",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\semanal.py",
+      "line": 5111,
+      "function": "process_typevartuple_declaration",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\semanal.py",
+      "line": 6712,
+      "function": "is_defined_in_current_module",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\semanal.py",
+      "line": 8389,
+      "function": "is_trivial_body",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\typeanal.py",
+      "line": 1884,
+      "function": "is_defined_type_var",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\typeops.py",
+      "line": 1310,
+      "function": "can_have_shared_disjoint_base",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\plugins\\functools.py",
+      "line": 62,
+      "function": "functools_total_ordering_maker_callback",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypy\\server\\astdiff.py",
+      "line": 252,
+      "function": "snapshot_definition",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "is_trivial_body = impl.is_trivial_body if impl else False",
+      "package": "mypy"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\mypyc\\irbuild\\specialize.py",
+      "line": 1291,
+      "function": "translate_object_setattr",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "name_idx = 0 if is_super else 1",
+      "package": "mypyc"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\cluster.py",
+      "line": 537,
+      "function": "transitivity",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\link_prediction.py",
+      "line": 170,
+      "function": "jaccard_coefficient.predict",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\similarity.py",
+      "line": 1370,
+      "function": "_simrank_similarity_python.avg_sim",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return sum(newsim[w][x] for (w, x) in s) / len(s) if s else 0.0",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\simple_paths.py",
+      "line": 74,
+      "function": "is_simple_path",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\generators\\line.py",
+      "line": 183,
+      "function": "_lg_undirected",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "shift = 0 if selfloops else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\generators\\random_graphs.py",
+      "line": 589,
+      "function": "random_regular_graph._suitable",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return True",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\bipartite\\link_analysis.py",
+      "line": 240,
+      "function": "birank",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "alpha = 0.8 if top_personalization else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\bipartite\\link_analysis.py",
+      "line": 242,
+      "function": "birank",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "beta = 0.8 if bottom_personalization else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\bipartite\\matching.py",
+      "line": 361,
+      "function": "_is_connected_by_alternating_path._alternating_dfs",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "initial_depth = 0 if along_matched else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\centrality\\eigenvector.py",
+      "line": 183,
+      "function": "eigenvector_centrality",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "w = G[n][nbr].get(weight, 1) if weight else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\centrality\\katz.py",
+      "line": 330,
+      "function": "katz_centrality_numpy",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "norm = np.sign(sum(centrality)) * np.linalg.norm(centrality) if normalized else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\community\\local.py",
+      "line": 131,
+      "function": "_calculate_local_modularity_for_candidate",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "R_tmp = len(I_tmp) / len(T_tmp) if len(T_tmp) > 0 else 1",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\connectivity\\kcomponents.py",
+      "line": 198,
+      "function": "_reconstruct_k_components",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "max_k = max(k_comps) if k_comps else 0",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\networkx\\algorithms\\isomorphism\\vf2userfunc.py",
+      "line": 170,
+      "function": "semantic_feasibility",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "networkx"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nibabel\\nifti1.py",
+      "line": 1560,
+      "function": "get_intent",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "n_params = len(recoder.parameters[code]) if known_intent else 0",
+      "package": "nibabel"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nibabel\\gifti\\parse_gifti_fast.py",
+      "line": 140,
+      "function": "_str2int",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "return int(in_str) if in_str else 0",
+      "package": "nibabel"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nibabel\\streamlines\\array_sequence.py",
+      "line": 199,
+      "function": "_get_next_offset",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return 0",
+      "package": "nibabel"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nilearn\\masking.py",
+      "line": 354,
+      "function": "compute_epi_mask",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "smooth=(1 if opening else False),",
+      "package": "nilearn"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nilearn\\signal.py",
+      "line": 1206,
+      "function": "_check_filter_parameters",
+      "tier": "B",
+      "rule": "R1_empty_guard_returns_constant",
+      "polarity_from": null,
+      "snippet": "return False",
+      "package": "nilearn"
+    },
+    {
+      "path": "C:\\Users\\heyzo\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\nilearn\\image\\image.py",
+      "line": 1006,
+      "function": "new_img_like",
+      "tier": "B",
+      "rule": "R2_ifexp_empty_fallback_constant",
+      "polarity_from": null,
+      "snippet": "header[\"cal_max\"] = np.max(data) if data.size > 0 else 0.0",
+      "package": "nilearn"
+    }
+  ]
+}

@@ -44,8 +44,24 @@ class RegenResult:
 
 
 def _entropy_topk(top_logprobs: list[Any]) -> float:
+    """Shannon entropy over the top-k alternatives, in nats. NaN when there are none.
+
+    It returned 0.0 here until 2026-08-21, and 0.0 nats is not a neutral value —
+    it is *maximum certainty*, the most confident reading the scale has.
+
+    The subtler damage was one level up. `mean_entropy_topk_nats` is guarded by
+    `sum(Hs) / len(Hs) if Hs else float("nan")`, which is correct. But a provider
+    that returns `logprob` without `top_logprobs` (several OpenAI-compatible
+    gateways do) made every call here return a real-looking 0.0, so `Hs` filled
+    with zeros, the guard saw a non-empty list, and **the honest refusal upstream
+    never fired**. The mean came out 0.0: perfect confidence, measured from
+    nothing.
+
+    NaN propagates through the mean on its own, so the guard now reports what
+    actually happened.
+    """
     if not top_logprobs:
-        return 0.0
+        return float("nan")
     lps = [tlp.logprob for tlp in top_logprobs]
     m = max(lps)
     exps = [math.exp(lp - m) for lp in lps]
